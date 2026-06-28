@@ -60,6 +60,7 @@ static void   gimp_sample_point_set_property       (GObject              *object
 static void   gimp_sample_point_savable_save       (GimpSavable          *savable,
                                                     GOutputStream        *output,
                                                     gint                  n_indent,
+                                                    GFile                *xcf_file,
                                                     GHashTable           *icc_references);
 
 
@@ -169,6 +170,7 @@ static void
 gimp_sample_point_savable_save (GimpSavable   *savable,
                                 GOutputStream *output,
                                 gint           n_indent,
+                                GFile         *xcf_file,
                                 GHashTable    *icc_references)
 {
   GimpSamplePoint   *sample_point = GIMP_SAMPLE_POINT (savable);

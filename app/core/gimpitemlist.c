@@ -95,6 +95,7 @@ static void       gimp_item_list_get_property        (GObject               *obj
 static void       gimp_item_list_savable_save        (GimpSavable           *savable,
                                                       GOutputStream         *output,
                                                       gint                   n_indent,
+                                                      GFile                 *xcf_file,
                                                       GHashTable            *icc_references);
 
 static void       gimp_item_list_item_add            (GimpContainer         *container,
@@ -333,6 +334,7 @@ static void
 gimp_item_list_savable_save (GimpSavable   *savable,
                              GOutputStream *output,
                              gint           n_indent,
+                             GFile         *xcf_file,
                              GHashTable    *icc_references)
 {
   GimpItemList     *list = GIMP_ITEM_LIST (savable);

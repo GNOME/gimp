@@ -46,6 +46,7 @@ struct _GimpSavableInterface
   void   (* save) (GimpSavable   *savable,
                    GOutputStream *output,
                    gint           n_ident,
+                   GFile         *xcf_file,
                    GHashTable    *icc_references);
 };
 
@@ -53,6 +54,7 @@ struct _GimpSavableInterface
 void         gimp_savable_save                 (GimpSavable            *savable,
                                                 GOutputStream          *output,
                                                 gint                    n_ident,
+                                                GFile                  *xcf_file,
                                                 GHashTable             *icc_references);
 
 

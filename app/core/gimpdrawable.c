@@ -173,6 +173,7 @@ static void       gimp_drawable_get_pixel_average  (GimpPickable      *pickable,
 static void       gimp_drawable_save               (GimpSavable       *savable,
                                                     GOutputStream     *output,
                                                     gint               indent,
+                                                    GFile             *xcf_file,
                                                     GHashTable        *icc_references);
 
 static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
@@ -980,6 +981,7 @@ static void
 gimp_drawable_save (GimpSavable   *savable,
                     GOutputStream *output,
                     gint           n_indent,
+                    GFile         *xcf_file,
                     GHashTable    *icc_references)
 {
   GimpDrawable  *drawable = GIMP_DRAWABLE (savable);
@@ -1045,7 +1047,7 @@ gimp_drawable_save (GimpSavable   *savable,
               if (mask    != NULL &&
                   op_node != NULL &&
                   strcmp (gegl_node_get_operation (op_node), "GraphNode") != 0)
-                gimp_savable_save (GIMP_SAVABLE (filter), output, n_indent + 2, icc_references);
+                gimp_savable_save (GIMP_SAVABLE (filter), output, n_indent + 2, xcf_file, icc_references);
             }
         }
 

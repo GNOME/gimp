@@ -123,6 +123,7 @@ void
 gimp_savable_save (GimpSavable   *savable,
                    GOutputStream *output,
                    gint           n_ident,
+                   GFile         *xcf_file,
                    GHashTable    *icc_references)
 {
   GimpSavableInterface *savable_iface;
@@ -132,7 +133,7 @@ gimp_savable_save (GimpSavable   *savable,
   savable_iface = GIMP_SAVABLE_GET_IFACE (savable);
 
   if (savable_iface->save)
-    savable_iface->save (savable, output, n_ident, icc_references);
+    savable_iface->save (savable, output, n_ident, xcf_file, icc_references);
 }
 
 void

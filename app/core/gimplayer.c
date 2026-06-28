@@ -55,6 +55,7 @@
 #include "gimplayer-floating-selection.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
+#include "gimplinklayer.h"
 #include "gimpobjectqueue.h"
 #include "gimpparasitelist.h"
 #include "gimppickable.h"
@@ -219,8 +220,9 @@ static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
 
 
 static void    gimp_layer_savable_save          (GimpSavable        *savable,
-                                                 GOutputStream *output,
+                                                 GOutputStream      *output,
                                                  gint                indent,
+                                                 GFile              *xcf_file,
                                                  GHashTable         *icc_references);
 
 static gboolean gimp_layer_real_is_alpha_locked (GimpLayer          *layer,
@@ -1650,11 +1652,11 @@ static void
 gimp_layer_savable_save (GimpSavable   *savable,
                          GOutputStream *output,
                          gint           n_indent,
+                         GFile         *xcf_file,
                          GHashTable    *icc_references)
 {
   GimpLayer              *layer = GIMP_LAYER (savable);
   GimpImage              *image = gimp_item_get_image (GIMP_ITEM (layer));
-  gchar                  *layer_name;
   const Babl             *image_format;
   const Babl             *format;
   GimpParasiteList       *parasites;
@@ -1663,11 +1665,21 @@ gimp_layer_savable_save (GimpSavable   *savable,
   GimpLayerCompositeMode  composite_mode;
   gint                    offset_x;
   gint                    offset_y;
+  gboolean                drop_root;
 
-  layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<layer name='%s' type='%s'>\n",
-                          n_indent, ' ', layer_name,
-                          g_type_name (G_TYPE_FROM_INSTANCE (layer)));
+  drop_root = (G_TYPE_FROM_INSTANCE (layer) == GIMP_TYPE_LINK_LAYER);
+
+  if (! drop_root)
+    {
+      gchar *layer_name;
+
+      layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<layer name='%s' type='%s'>\n",
+                              n_indent, ' ', layer_name,
+                              g_type_name (G_TYPE_FROM_INSTANCE (layer)));
+
+      g_free (layer_name);
+    }
 
   if (gimp_image_get_floating_selection (image) == layer)
     g_output_stream_printf (output, NULL, NULL, NULL, "%*c<floating/>\n", n_indent + 2, ' ');
@@ -1684,7 +1696,7 @@ gimp_layer_savable_save (GimpSavable   *savable,
   if (image_format != format)
     gimp_savable_format_save (format, output, n_indent + 2, icc_references);
 
-  parent_savable_interface->save (savable, output, n_indent + 2, icc_references);
+  parent_savable_interface->save (savable, output, n_indent + 2, xcf_file, icc_references);
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<offsets x='%d' y='%d'/>\n",
@@ -1739,7 +1751,8 @@ gimp_layer_savable_save (GimpSavable   *savable,
                               gimp_layer_get_apply_mask (layer) ? "" : " apply='false'",
                               gimp_layer_get_edit_mask (layer) ? " edit='true'" : "",
                               gimp_layer_get_show_mask (layer) ? " show='true'" : "");
-      gimp_savable_save (GIMP_SAVABLE (gimp_layer_get_mask (layer)), output, n_indent + 4, icc_references);
+      gimp_savable_save (GIMP_SAVABLE (gimp_layer_get_mask (layer)),
+                         output, n_indent + 4, xcf_file, icc_references);
       g_output_stream_printf (output, NULL, NULL, NULL, "%*c</mask>\n", n_indent + 2, ' ');
     }
 
@@ -1752,18 +1765,18 @@ gimp_layer_savable_save (GimpSavable   *savable,
 
       child = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (stack));
       for (; child; child = child->next)
-        gimp_savable_save (GIMP_SAVABLE (child->data), output, n_indent + 4, icc_references);
+        gimp_savable_save (GIMP_SAVABLE (child->data),
+                           output, n_indent + 4, xcf_file, icc_references);
 
       g_output_stream_printf (output, NULL, NULL, NULL, "%*c</layers>\n", n_indent + 2, ' ');
     }
 
   parasites = gimp_item_get_parasites (GIMP_ITEM (layer));
   if (gimp_parasite_list_length (parasites) > 0)
-    gimp_savable_save (GIMP_SAVABLE (parasites), output, n_indent + 2, icc_references);
+    gimp_savable_save (GIMP_SAVABLE (parasites), output, n_indent + 2, xcf_file, icc_references);
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</layer>\n", n_indent, ' ');
-
-  g_free (layer_name);
+  if (! drop_root)
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c</layer>\n", n_indent, ' ');
 }
 
 static gboolean

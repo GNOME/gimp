@@ -96,6 +96,7 @@ static gchar       * gimp_palette_get_checksum        (GimpTagged           *tag
 static void          gimp_palette_savable_save        (GimpSavable          *savable,
                                                        GOutputStream        *output,
                                                        gint                  indent,
+                                                       GFile                *xcf_file,
                                                        GHashTable           *icc_references);
 
 static void          gimp_palette_image_space_updated (GimpImage            *image,
@@ -451,6 +452,7 @@ static void
 gimp_palette_savable_save (GimpSavable   *savable,
                            GOutputStream *output,
                            gint           n_indent,
+                           GFile         *xcf_file,
                            GHashTable    *icc_references)
 {
   GimpPalette *palette = GIMP_PALETTE (savable);

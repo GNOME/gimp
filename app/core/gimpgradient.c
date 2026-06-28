@@ -80,6 +80,7 @@ static gchar       * gimp_gradient_get_checksum       (GimpTagged           *tag
 static void          gimp_gradient_savable_save       (GimpSavable          *savable,
                                                        GOutputStream        *output,
                                                        gint                  n_indent,
+                                                       GFile                *xcf_file,
                                                        GHashTable           *icc_references);
 
 static inline GimpGradientSegment *
@@ -432,6 +433,7 @@ void
 gimp_gradient_savable_save (GimpSavable   *savable,
                             GOutputStream *output,
                             gint           n_indent,
+                            GFile         *xcf_file,
                             GHashTable    *icc_references)
 {
   GimpGradient        *gradient = GIMP_GRADIENT (savable);

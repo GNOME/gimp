@@ -67,6 +67,7 @@ static void     gimp_parasite_list_save_parasite_func  (gchar                   
 static void     gimp_parasite_list_savable_save        (GimpSavable                 *savable,
                                                         GOutputStream               *output,
                                                         gint                         n_indent,
+                                                        GFile                       *xcf_file,
                                                         GHashTable                  *icc_references);
 
 static void     parasite_serialize                     (const gchar                 *key,
@@ -315,6 +316,7 @@ static void
 gimp_parasite_list_savable_save (GimpSavable   *savable,
                                  GOutputStream *output,
                                  gint           n_indent,
+                                 GFile         *xcf_file,
                                  GHashTable    *icc_references)
 {
   GimpParasiteList            *list = GIMP_PARASITE_LIST (savable);

@@ -182,7 +182,8 @@ void            gimp_image_exported              (GimpImage          *image,
                                                   GFile              *file);
 
 const gchar   * gimp_image_get_buffers_folder    (GimpImage          *image);
-void            gimp_image_save_to_cache         (GimpImage          *image);
+void            gimp_image_save_to_cache         (GimpImage          *image,
+                                                  GFile              *xcf_file);
 gint            gimp_image_get_xcf_version       (GimpImage          *image,
                                                   gboolean            zlib_compression,
                                                   gint               *gimp_version,

@@ -145,6 +145,7 @@ static void       gimp_drawable_filter_finalize              (GObject           
 static void       gimp_drawable_filter_save                  (GimpSavable          *savable,
                                                               GOutputStream        *output,
                                                               gint                  n_indent,
+                                                              GFile                *xcf_file,
                                                               GHashTable           *icc_references);
 
 static void       gimp_drawable_filter_sync_active           (GimpDrawableFilter   *filter);
@@ -396,6 +397,7 @@ static void
 gimp_drawable_filter_save (GimpSavable   *savable,
                            GOutputStream *output,
                            gint           n_indent,
+                           GFile         *xcf_file,
                            GHashTable    *icc_references)
 {
   GimpDrawableFilter      *filter = GIMP_DRAWABLE_FILTER (savable);
@@ -482,7 +484,7 @@ gimp_drawable_filter_save (GimpSavable   *savable,
                                         "%*c<argument name='%s' type='%s'>\n",
                                         n_indent + 4, ' ',
                                         pspec->name, g_type_name (G_VALUE_TYPE (&value)));
-                gimp_savable_save (g_value_get_object (&value), output, n_indent + 6, icc_references);
+                gimp_savable_save (g_value_get_object (&value), output, n_indent + 6, xcf_file, icc_references);
                 g_output_stream_printf (output, NULL, NULL, NULL, "%*c</argument>\n", n_indent + 4, ' ');
               }
             else if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_CONFIG))
@@ -548,7 +550,7 @@ gimp_drawable_filter_save (GimpSavable   *savable,
   if ((mask = gimp_drawable_filter_get_mask (filter)))
     {
       g_output_stream_printf (output, NULL, NULL, NULL, "%*c<mask>\n", n_indent + 2, ' ');
-      gimp_savable_save (GIMP_SAVABLE (mask), output, n_indent + 4, icc_references);
+      gimp_savable_save (GIMP_SAVABLE (mask), output, n_indent + 4, xcf_file, icc_references);
       g_output_stream_printf (output, NULL, NULL, NULL, "%*c</mask>\n", n_indent + 2, ' ');
     }
 

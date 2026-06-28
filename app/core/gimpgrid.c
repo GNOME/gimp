@@ -71,6 +71,7 @@ static void   gimp_grid_set_property       (GObject              *object,
 static void   gimp_grid_savable_save       (GimpSavable           *savable,
                                             GOutputStream         *output,
                                             gint                   n_indent,
+                                            GFile                 *xcf_file,
                                             GHashTable            *icc_references);
 
 
@@ -282,6 +283,7 @@ static void
 gimp_grid_savable_save (GimpSavable   *savable,
                         GOutputStream *output,
                         gint           n_indent,
+                        GFile         *xcf_file,
                         GHashTable    *icc_references)
 {
   GimpGrid *grid = GIMP_GRID (savable);

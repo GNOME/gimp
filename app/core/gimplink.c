@@ -36,6 +36,7 @@
 #include "gimpmarshal.h"
 #include "gimppickable.h"
 #include "gimpprojection.h"
+#include "gimpsavable.h"
 
 #include "file/file-open.h"
 
@@ -79,34 +80,45 @@ struct _GimpLinkPrivate
   const gchar         *mime_type;
 };
 
-static void       gimp_link_finalize          (GObject           *object);
-static void       gimp_link_get_property      (GObject           *object,
-                                               guint              property_id,
-                                               GValue            *value,
-                                               GParamSpec        *pspec);
-static void       gimp_link_set_property      (GObject           *object,
-                                               guint              property_id,
-                                               const GValue      *value,
-                                               GParamSpec        *pspec);
+static void       gimp_link_savable_iface_init (GimpSavableInterface  *iface);
 
-static void       gimp_link_file_changed      (GFileMonitor      *monitor,
-                                               GFile             *file,
-                                               GFile             *other_file,
-                                               GFileMonitorEvent  event_type,
-                                               GimpLink          *link);
-static gboolean   gimp_link_emit_changed      (gpointer           data);
+static void       gimp_link_finalize           (GObject               *object);
+static void       gimp_link_get_property       (GObject               *object,
+                                                guint                  property_id,
+                                                GValue                *value,
+                                                GParamSpec            *pspec);
+static void       gimp_link_set_property       (GObject               *object,
+                                                guint                  property_id,
+                                                const GValue          *value,
+                                                GParamSpec            *pspec);
 
-static void       gimp_link_update_buffer     (GimpLink          *link,
-                                               GimpProgress      *progress,
-                                               GError           **error);
-static void       gimp_link_start_monitoring  (GimpLink          *link);
-static gchar    * gimp_link_get_relative_path (GimpLink          *link,
-                                               GFile             *parent,
-                                               gint               n_back);
+static void       gimp_link_savable_save       (GimpSavable           *savable,
+                                                GOutputStream         *output,
+                                                gint                   n_indent,
+                                                GFile                 *xcf_file,
+                                                GHashTable            *icc_references);
+
+static void       gimp_link_file_changed       (GFileMonitor          *monitor,
+                                                GFile                 *file,
+                                                GFile                 *other_file,
+                                                GFileMonitorEvent      event_type,
+                                                GimpLink              *link);
+static gboolean   gimp_link_emit_changed       (gpointer               data);
+
+static void       gimp_link_update_buffer      (GimpLink              *link,
+                                                GimpProgress          *progress,
+                                                GError               **error);
+static void       gimp_link_start_monitoring   (GimpLink              *link);
+static gchar    * gimp_link_get_relative_path  (GimpLink              *link,
+                                                GFile                 *parent,
+                                                gint                   n_back);
 
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpLink, gimp_link, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpLink, gimp_link, GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpLink)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_link_savable_iface_init))
 
 #define parent_class gimp_link_parent_class
 
@@ -144,6 +156,12 @@ gimp_link_class_init (GimpLinkClass *klass)
                                                          GIMP_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, N_PROPS, link_props);
+}
+
+static void
+gimp_link_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_link_savable_save;
 }
 
 static void
@@ -228,6 +246,34 @@ gimp_link_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_link_savable_save (GimpSavable   *savable,
+                        GOutputStream *output,
+                        gint           n_indent,
+                        GFile         *xcf_file,
+                        GHashTable    *icc_references)
+{
+  GimpLink *link = GIMP_LINK (savable);
+  gchar    *path = NULL;
+  gchar    *encoded;
+
+  if (link->p->is_vector)
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<link width='%u' height='%u'>",
+                            n_indent, ' ', link->p->width, link->p->height);
+  else
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<link>\n", n_indent, ' ');
+  gimp_link_get_file (link, xcf_file, &path);
+  encoded = g_markup_escape_text (path, -1);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<path absolute='%s'>%s</path>\n",
+                          n_indent + 2, ' ',
+                          link->p->absolute_path ? "true" : "false",
+                          encoded);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</link>\n", n_indent, ' ');
+
+  g_free (path);
+  g_free (encoded);
 }
 
 static void

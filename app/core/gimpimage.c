@@ -248,6 +248,7 @@ static void         gimp_image_get_pixel_average (GimpPickable      *pickable,
 static void     gimp_image_savable_save          (GimpSavable       *savable,
                                                   GOutputStream     *output,
                                                   gint               n_ident,
+                                                  GFile             *xcf_file,
                                                   GHashTable        *icc_references);
 
 static void     gimp_image_projection_buffer_notify
@@ -1807,6 +1808,7 @@ static void
 gimp_image_savable_save (GimpSavable   *savable,
                          GOutputStream *output,
                          gint           n_indent,
+                         GFile         *xcf_file,
                          GHashTable    *icc_references)
 {
   GimpImage        *image   = GIMP_IMAGE (savable);
@@ -1836,14 +1838,14 @@ gimp_image_savable_save (GimpSavable   *savable,
   if (gimp_image_get_colormap_palette (image))
     {
       GimpPalette *palette = gimp_image_get_colormap_palette (image);
-      gimp_savable_save (GIMP_SAVABLE (palette), output, 4, icc_refs);
+      gimp_savable_save (GIMP_SAVABLE (palette), output, 4, xcf_file, icc_refs);
     }
   if (gimp_image_get_guides (image))
     {
       g_output_stream_printf (output, NULL, NULL, NULL, "    <guides>\n");
       iter = gimp_image_get_guides (image);
       for (; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
       g_output_stream_printf (output, NULL, NULL, NULL, "    </guides>\n");
     }
   if (gimp_image_get_sample_points (image))
@@ -1851,7 +1853,7 @@ gimp_image_savable_save (GimpSavable   *savable,
       g_output_stream_printf (output, NULL, NULL, NULL, "    <sample-points>\n");
       iter = gimp_image_get_sample_points (image);
       for (; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
       g_output_stream_printf (output, NULL, NULL, NULL, "    </sample-points>\n");
     }
   /* TODO: should we make resolution optional? E.g. for images "made for
@@ -1869,7 +1871,7 @@ gimp_image_savable_save (GimpSavable   *savable,
   gimp_savable_unit_save (gimp_image_get_unit (image), output, 4);
 
   if (gimp_image_get_grid (image))
-    gimp_savable_save (GIMP_SAVABLE (gimp_image_get_grid (image)), output, 4, icc_refs);
+    gimp_savable_save (GIMP_SAVABLE (gimp_image_get_grid (image)), output, 4, xcf_file, icc_refs);
 
   if (gimp_image_get_metadata (image))
     gimp_savable_metadata_save (gimp_image_get_metadata (image), output, 4);
@@ -1893,34 +1895,34 @@ gimp_image_savable_save (GimpSavable   *savable,
 
   if (gimp_parasite_list_length (private->parasites) > 0 &&
       gimp_parasite_list_persistent_length (private->parasites) > 0)
-    gimp_savable_save (GIMP_SAVABLE (private->parasites), output, 4, icc_refs);
+    gimp_savable_save (GIMP_SAVABLE (private->parasites), output, 4, xcf_file, icc_refs);
 
   if (private->stored_layer_sets)
     {
       g_output_stream_printf (output, NULL, NULL, NULL, "    <layer-sets>\n");
       for (iter = private->stored_layer_sets; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
       g_output_stream_printf (output, NULL, NULL, NULL, "    </layer-sets>\n");
     }
   if (private->stored_channel_sets)
     {
       g_output_stream_printf (output, NULL, NULL, NULL, "    <channel-sets>\n");
       for (iter = private->stored_channel_sets; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
       g_output_stream_printf (output, NULL, NULL, NULL, "    </channel-sets>\n");
     }
   if (private->stored_path_sets)
     {
       g_output_stream_printf (output, NULL, NULL, NULL, "    <path-sets>\n");
       for (iter = private->stored_path_sets; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
       g_output_stream_printf (output, NULL, NULL, NULL, "    </path-sets>\n");
     }
 
   g_output_stream_printf (output, NULL, NULL, NULL, "    <layers>\n");
   iter = gimp_image_get_layer_iter (image);
   for (; iter; iter = iter->next)
-    gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, icc_refs);
+    gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
   g_output_stream_printf (output, NULL, NULL, NULL, "    </layers>\n");
   g_output_stream_printf (output, NULL, NULL, NULL, "  </project>\n");
 
@@ -3099,7 +3101,8 @@ gimp_image_get_buffers_folder (GimpImage *image)
 }
 
 void
-gimp_image_save_to_cache (GimpImage *image)
+gimp_image_save_to_cache (GimpImage *image,
+                          GFile     *xcf_file)
 {
   GimpImagePrivate *private;
   const gchar      *folder;
@@ -3136,7 +3139,7 @@ gimp_image_save_to_cache (GimpImage *image)
   g_output_stream_printf (output, NULL, NULL, NULL, "<?xml version='1.0' encoding='UTF-8'?>\n");
   g_output_stream_printf (output, NULL, NULL, NULL, "<xcf version='%d'>\n", WLBR_VERSION);
 
-  gimp_image_savable_save (GIMP_SAVABLE (image), output, 0, NULL);
+  gimp_image_savable_save (GIMP_SAVABLE (image), output, 0, xcf_file, NULL);
 
   g_output_stream_printf (output, NULL, NULL, NULL, "</xcf>");
 

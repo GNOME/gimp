@@ -47,6 +47,7 @@
 #include "gimpobjectqueue.h"
 #include "gimpprogress.h"
 #include "gimprasterizable.h"
+#include "gimpsavable.h"
 #include "gimp-transform-utils.h"
 
 #include "gimp-intl.h"
@@ -87,6 +88,8 @@ struct _GimpLinkLayerPrivate
 
 static void       gimp_link_layer_rasterizable_iface_init
                                                  (GimpRasterizableInterface *iface);
+static void       gimp_link_layer_savable_iface_init
+                                                 (GimpSavableInterface      *iface);
 
 static void       gimp_link_layer_finalize       (GObject           *object);
 static void       gimp_link_layer_get_property   (GObject           *object,
@@ -145,6 +148,12 @@ static void       gimp_link_layer_push_undo      (GimpDrawable      *drawable,
 static void       gimp_link_layer_set_rasterized (GimpRasterizable  *rasterizable,
                                                   gboolean           rasterized);
 
+static void       gimp_link_layer_savable_save   (GimpSavable       *savable,
+                                                  GOutputStream     *output,
+                                                  gint               n_indent,
+                                                  GFile             *xcf_file,
+                                                  GHashTable        *icc_references);
+
 static void       gimp_link_layer_convert_type   (GimpLayer         *layer,
                                                   GimpImage         *dest_image,
                                                   const Babl        *new_format,
@@ -170,9 +179,13 @@ static gboolean
 G_DEFINE_TYPE_WITH_CODE (GimpLinkLayer, gimp_link_layer, GIMP_TYPE_LAYER,
                          G_ADD_PRIVATE (GimpLinkLayer)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RASTERIZABLE,
-                                                gimp_link_layer_rasterizable_iface_init))
+                                                gimp_link_layer_rasterizable_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_link_layer_savable_iface_init))
 
 #define parent_class gimp_link_layer_parent_class
+
+static GimpSavableInterface *parent_savable_interface = NULL;
 
 static GParamSpec *link_layer_props[N_PROPS] = { NULL, };
 
@@ -251,6 +264,14 @@ static void
 gimp_link_layer_rasterizable_iface_init (GimpRasterizableInterface *iface)
 {
   iface->set_rasterized = gimp_link_layer_set_rasterized;
+}
+
+static void
+gimp_link_layer_savable_iface_init (GimpSavableInterface *iface)
+{
+  parent_savable_interface = g_type_interface_peek_parent (iface);
+
+  iface->save = gimp_link_layer_savable_save;
 }
 
 static void
@@ -705,6 +726,36 @@ gimp_link_layer_set_rasterized (GimpRasterizable *rasterizable,
       gimp_matrix3_identity (&layer->p->matrix);
       gimp_link_layer_render_link (layer);
     }
+}
+
+static void
+gimp_link_layer_savable_save (GimpSavable   *savable,
+                              GOutputStream *output,
+                              gint           n_indent,
+                              GFile         *xcf_file,
+                              GHashTable    *icc_references)
+{
+  GimpLinkLayer *layer = GIMP_LINK_LAYER (savable);
+  gchar         *layer_name;
+
+  layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<link-layer name='%s'>\n",
+                          n_indent, ' ', layer_name);
+
+  parent_savable_interface->save (savable, output, n_indent, xcf_file, icc_references);
+
+  gimp_savable_save (GIMP_SAVABLE (layer->p->link), output, n_indent + 2, xcf_file, icc_references);
+
+  if (! gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (layer)))
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<auto-rename disabled='true'/>\n",
+                            n_indent + 2, ' ');
+
+  if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<rasterized/>\n", n_indent + 2, ' ');
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</link-layer>\n", n_indent, ' ');
+
+  g_free (layer_name);
 }
 
 static void
