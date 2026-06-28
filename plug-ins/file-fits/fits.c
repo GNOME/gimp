@@ -490,11 +490,11 @@ load_image (GFile        *file,
       /* If RGB FITS image, we need to read in the whole image so we can
        * convert the planes format to RGB */
       if (hdu.naxis == 2)
-        pixels =
-          (gdouble *) g_try_malloc (width * sizeof (gdouble) * channels);
+        pixels = (gdouble *) g_try_malloc ((gsize) width * sizeof (gdouble) *
+                                           channels);
       else
-        pixels =
-          (gdouble *) g_try_malloc (width * height * sizeof (gdouble) * channels);
+        pixels = (gdouble *) g_try_malloc ((gsize) width * height *
+                                           sizeof (gdouble) * channels);
 
       if (pixels == NULL)
         {
