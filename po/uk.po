@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-22 22:00+0000\n"
-"PO-Revision-Date: 2026-06-23 14:52+0300\n"
+"POT-Creation-Date: 2026-06-28 18:03+0000\n"
+"PO-Revision-Date: 2026-06-28 21:40+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -15643,22 +15643,22 @@ msgstr "Файл шаблону інструментів - пошкоджени�
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:159
+#: app/dialogs/about-dialog.c:241
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (модифікація %d)"
 
-#: app/dialogs/about-dialog.c:167
+#: app/dialogs/about-dialog.c:249
 msgid "About GIMP"
 msgstr "Про програму GIMP"
 
-#: app/dialogs/about-dialog.c:176
+#: app/dialogs/about-dialog.c:258
 msgid "Visit the GIMP website"
 msgstr "Відвідайте сайт GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:182
+#: app/dialogs/about-dialog.c:264
 msgid "translator-credits"
 msgstr ""
 "Юрій Сирота\n"
@@ -15666,33 +15666,33 @@ msgstr ""
 "Максим Дзюманенко <dziumanenko@gmail.com>\n"
 "Daniel Korostil <ted.korostiled@gmail.com>"
 
-#: app/dialogs/about-dialog.c:236 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:318 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "_Довідка"
 
-#: app/dialogs/about-dialog.c:413
+#: app/dialogs/about-dialog.c:495
 msgid "Update available!"
 msgstr "Маємо оновлення!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:443
+#: app/dialogs/about-dialog.c:525
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Отримати GIMP %s, модифікація %d (випущено %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:453
+#: app/dialogs/about-dialog.c:535
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Коментар до випуску</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:458
+#: app/dialogs/about-dialog.c:540
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Отримати GIMP %s (випущено %s)\n"
 
-#: app/dialogs/about-dialog.c:483 app/dialogs/about-dialog.c:506
+#: app/dialogs/about-dialog.c:565 app/dialogs/about-dialog.c:588
 msgid "Check for updates"
 msgstr "Шукати оновлення"
 
@@ -15700,7 +15700,7 @@ msgstr "Шукати оновлення"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:603
+#: app/dialogs/about-dialog.c:609
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Остання перевірка на %s, %s"
@@ -15709,16 +15709,16 @@ msgstr "Остання перевірка на %s, %s"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:609
+#: app/dialogs/about-dialog.c:615
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "Є актуальним станом на %s, %s"
 
-#: app/dialogs/about-dialog.c:837
+#: app/dialogs/about-dialog.c:843
 msgid "GIMP is brought to you by"
 msgstr "GIMP створили для вас"
 
-#: app/dialogs/about-dialog.c:912
+#: app/dialogs/about-dialog.c:918
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -21067,6 +21067,12 @@ msgstr "Документи"
 msgid "GIMP Startup"
 msgstr "Запуск GIMP"
 
+#: app/gui/splash.c:364
+#| msgctxt "image-action"
+#| msgid "_Encoding"
+msgid "Loading"
+msgstr "Завантаження"
+
 #: app/gui/themes.c:518
 #, c-format
 msgid ""
@@ -25186,7 +25192,6 @@ msgid "Create Vector Layer from Path"
 msgstr "Створити векторний шар з контуру"
 
 #: app/tools/gimppathtool.c:865
-#| msgid "Vector Layer"
 msgid "Add Vector Layer"
 msgstr "Додати векторний шар"
 
@@ -28457,7 +28462,7 @@ msgstr "Прикріпити рухомий шар"
 msgid "No channels to create a layer mask from."
 msgstr "Немає каналів, з яких можна було б створити маску шару."
 
-#: app/widgets/gimpmessagebox.c:446
+#: app/widgets/gimpmessagebox.c:498
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
