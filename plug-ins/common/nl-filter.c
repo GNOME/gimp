@@ -150,7 +150,7 @@ nlfilter_create_procedure (GimpPlugIn  *plug_in,
                                             GIMP_PDB_PROC_TYPE_PLUGIN,
                                             nlfilter_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY");
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
