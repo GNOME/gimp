@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-22 22:00+0000\n"
-"PO-Revision-Date: 2026-06-23 08:35+0800\n"
+"POT-Creation-Date: 2026-06-27 14:32+0000\n"
+"PO-Revision-Date: 2026-06-28 08:11+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -15277,22 +15277,22 @@ msgstr "工具预设文件已损坏。"
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:159
+#: app/dialogs/about-dialog.c:241
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s（修订版本 %d）"
 
-#: app/dialogs/about-dialog.c:167
+#: app/dialogs/about-dialog.c:249
 msgid "About GIMP"
 msgstr "关于 GIMP"
 
-#: app/dialogs/about-dialog.c:176
+#: app/dialogs/about-dialog.c:258
 msgid "Visit the GIMP website"
 msgstr "访问 GIMP 网站"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:182
+#: app/dialogs/about-dialog.c:264
 msgid "translator-credits"
 msgstr ""
 "Yuheng Xie <elephant@linux.net.cn>, 2001-2004.\n"
@@ -15310,33 +15310,33 @@ msgstr ""
 "lumingzh <lumingzh@qq.com>, 2016-2026.\n"
 "驿窗 <classenu@163.com>, 2024."
 
-#: app/dialogs/about-dialog.c:236 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:318 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: app/dialogs/about-dialog.c:413
+#: app/dialogs/about-dialog.c:495
 msgid "Update available!"
 msgstr "有更新可用！"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:443
+#: app/dialogs/about-dialog.c:525
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "下载 GIMP %s 修订版本 %d（发布于 %s）\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:453
+#: app/dialogs/about-dialog.c:535
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>发布注释</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:458
+#: app/dialogs/about-dialog.c:540
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "下载 GIMP %s（发布于 %s）\n"
 
-#: app/dialogs/about-dialog.c:483 app/dialogs/about-dialog.c:506
+#: app/dialogs/about-dialog.c:565 app/dialogs/about-dialog.c:588
 msgid "Check for updates"
 msgstr "检查更新"
 
@@ -15344,7 +15344,7 @@ msgstr "检查更新"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:603
+#: app/dialogs/about-dialog.c:609
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "上次检查于 %s 的 %s"
@@ -15353,16 +15353,16 @@ msgstr "上次检查于 %s 的 %s"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:609
+#: app/dialogs/about-dialog.c:615
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "已是最新 %s %s"
 
-#: app/dialogs/about-dialog.c:837
+#: app/dialogs/about-dialog.c:843
 msgid "GIMP is brought to you by"
 msgstr "GIMP 的提供者为"
 
-#: app/dialogs/about-dialog.c:912
+#: app/dialogs/about-dialog.c:918
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -20601,6 +20601,10 @@ msgstr "文档"
 #: app/gui/splash.c:203
 msgid "GIMP Startup"
 msgstr "GIMP 启动"
+
+#: app/gui/splash.c:364
+msgid "Loading"
+msgstr "正在加载"
 
 #: app/gui/themes.c:518
 #, c-format
@@ -27836,7 +27840,7 @@ msgstr "固定浮动图层"
 msgid "No channels to create a layer mask from."
 msgstr "没有可用于创建图层蒙板的通道。"
 
-#: app/widgets/gimpmessagebox.c:446
+#: app/widgets/gimpmessagebox.c:498
 #, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
@@ -31617,10 +31621,6 @@ msgstr "撤消历史菜单"
 #~ msgctxt "dashboard-action"
 #~ msgid "Reset"
 #~ msgstr "重置"
-
-#~ msgctxt "dashboard-variable"
-#~ msgid "Reading"
-#~ msgstr "读取中"
 
 #~ msgid "Whether data is being read from the swap"
 #~ msgstr "是否正在从交换区域读取数据"
