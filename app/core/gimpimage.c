@@ -2040,7 +2040,6 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GList            *layers  = gimp_image_get_selected_layers (image);
-  GList            *iter;
 
   if (layers)
     {
@@ -2063,8 +2062,9 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
   /* When changing the layer selection, we try and save all layers which
    * are not selected.
    */
-  iter = gimp_image_get_layer_list (image);
-  for (; iter; iter = iter->next)
+#if 0
+  /* XXX Disabling the whole buffer saving code for now. */
+  for (GList *iter = gimp_image_get_layer_list (image); iter; iter = iter->next)
     {
       GimpLayer *layer = GIMP_LAYER (iter->data);
 
@@ -2075,6 +2075,7 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
             gimp_drawable_save_buffer (GIMP_DRAWABLE (gimp_layer_get_mask (layer)));
         }
     }
+#endif
 
   g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
 }
