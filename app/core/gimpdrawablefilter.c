@@ -564,23 +564,13 @@ gimp_drawable_filter_save (GimpSavable   *savable,
   g_type_class_unref (enum_class);
 
   space = gimp_drawable_filter_get_blend_space (GIMP_DRAWABLE_FILTER (filter));
-  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_COLOR_SPACE);
-  enum_value = g_enum_get_value (enum_class, space);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<blend-space>%s</blend-space>\n",
-                          n_indent + 2, ' ', enum_value->value_nick);
+  gimp_savable_blend_space_save (space, mode, output, n_indent + 2);
 
   space = gimp_drawable_filter_get_composite_space (GIMP_DRAWABLE_FILTER (filter));
-  enum_value = g_enum_get_value (enum_class, space);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<composite-space>%s</composite-space>\n",
-                          n_indent + 2, ' ', enum_value->value_nick);
-  g_type_class_unref (enum_class);
+  gimp_savable_composite_space_save (space, mode, output, n_indent + 2);
 
   composite_mode = gimp_drawable_filter_get_composite_mode (filter);
-  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_COMPOSITE_MODE);
-  enum_value = g_enum_get_value (enum_class, composite_mode);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<composite-mode>%s</composite-mode>\n",
-                          n_indent + 2, ' ', enum_value->value_nick);
-  g_type_class_unref (enum_class);
+  gimp_savable_composite_mode_save (composite_mode, mode, output, n_indent + 2);
 
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<clip>%s</clip>\n", n_indent + 2, ' ',
                           gimp_drawable_filter_get_clip (filter) ?  "true" : "false");

@@ -29,6 +29,8 @@
 
 #include "core-types.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpdrawable.h"
@@ -434,4 +436,89 @@ gimp_savable_parasite_save (GimpParasite  *parasite,
       g_free (escaped);
       g_free (data_b64);
     }
+}
+
+void
+gimp_savable_composite_mode_save (GimpLayerCompositeMode  composite_mode,
+                                  GimpLayerMode           mode,
+                                  GOutputStream          *output,
+                                  gint                    n_indent)
+{
+  GEnumClass *enum_class;
+  GEnumValue *enum_value;
+  gboolean    auto_set = FALSE;
+
+  if (composite_mode == GIMP_LAYER_COMPOSITE_AUTO)
+    {
+      /* if composite_mode is AUTO, save the actual value AUTO maps to
+       * for the given mode, so that we can correctly load it even if
+       * the mapping changes in the future.
+       */
+      composite_mode = gimp_layer_mode_get_composite_mode (mode);
+      auto_set       = TRUE;
+    }
+
+  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_COMPOSITE_MODE);
+  enum_value = g_enum_get_value (enum_class, composite_mode);
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "%*c<composite-mode%s>%s</composite-mode>\n",
+                          n_indent, ' ', auto_set ? " auto='true'" : "",
+                          enum_value->value_nick);
+  g_type_class_unref (enum_class);
+}
+
+void
+gimp_savable_composite_space_save (GimpLayerColorSpace  composite_space,
+                                   GimpLayerMode        mode,
+                                   GOutputStream       *output,
+                                   gint                 n_indent)
+{
+  GEnumClass *enum_class;
+  GEnumValue *enum_value;
+  gboolean    auto_set = FALSE;
+
+  if (composite_space == GIMP_LAYER_COLOR_SPACE_AUTO)
+    {
+      /* if composite_space is AUTO, save the actual value AUTO maps to
+       * for the given mode, so that we can correctly load it even if
+       * the mapping changes in the future.
+       */
+      composite_space = gimp_layer_mode_get_composite_space (mode);
+      auto_set        = TRUE;
+    }
+
+  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_COLOR_SPACE);
+  enum_value = g_enum_get_value (enum_class, composite_space);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<composite-space%s>%s</composite-space>\n",
+                          n_indent, ' ', auto_set ? " auto='true'" : "",
+                          enum_value->value_nick);
+  g_type_class_unref (enum_class);
+}
+
+void
+gimp_savable_blend_space_save (GimpLayerColorSpace  blend_space,
+                               GimpLayerMode        mode,
+                               GOutputStream       *output,
+                               gint                 n_indent)
+{
+  GEnumClass *enum_class;
+  GEnumValue *enum_value;
+  gboolean    auto_set = FALSE;
+
+  if (blend_space == GIMP_LAYER_COLOR_SPACE_AUTO)
+    {
+      /* if blend_space is AUTO, save the actual value AUTO maps to for
+       * the given mode, so that we can correctly load it even if the
+       * mapping changes in the future.
+       */
+      blend_space = gimp_layer_mode_get_blend_space (mode);
+      auto_set    = TRUE;
+    }
+
+  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_COLOR_SPACE);
+  enum_value = g_enum_get_value (enum_class, blend_space);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<blend-space%s>%s</blend-space>\n",
+                          n_indent, ' ', auto_set ? " auto='true'" : "",
+                          enum_value->value_nick);
+  g_type_class_unref (enum_class);
 }

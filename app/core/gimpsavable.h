@@ -50,47 +50,60 @@ struct _GimpSavableInterface
 };
 
 
-void   gimp_savable_save        (GimpSavable   *savable,
-                                 GOutputStream *output,
-                                 gint           n_ident,
-                                 GHashTable    *icc_references);
+void         gimp_savable_save                 (GimpSavable            *savable,
+                                                GOutputStream          *output,
+                                                gint                    n_ident,
+                                                GHashTable             *icc_references);
 
 
 /* Shared Utils */
 
-void         gimp_savable_config_save     (GimpConfig    *config,
-                                           const gchar   *element_name,
-                                           GOutputStream *output,
-                                           gint           n_indent,
-                                           GHashTable    *icc_references);
+void         gimp_savable_config_save          (GimpConfig             *config,
+                                                const gchar            *element_name,
+                                                GOutputStream          *output,
+                                                gint                    n_indent,
+                                                GHashTable             *icc_references);
 
-void         gimp_savable_format_save     (const Babl    *format,
-                                           GOutputStream *output,
-                                           gint           n_indent,
-                                           GHashTable    *icc_references);
-void         gimp_savable_space_save      (const Babl    *space,
-                                           GOutputStream *output,
-                                           gint           n_indent,
-                                           GHashTable    *icc_references,
-                                           gint           space_id);
-void         gimp_savable_color_save      (GeglColor     *color,
-                                           const gchar   *name,
-                                           const Babl    *restricted_format,
-                                           GOutputStream *output,
-                                           gint           n_indent,
-                                           GHashTable    *icc_references);
+void         gimp_savable_format_save          (const Babl             *format,
+                                                GOutputStream          *output,
+                                                gint                    n_indent,
+                                                GHashTable             *icc_references);
+void         gimp_savable_space_save           (const Babl             *space,
+                                                GOutputStream          *output,
+                                                gint                    n_indent,
+                                                GHashTable             *icc_references,
+                                                gint                    space_id);
+void         gimp_savable_color_save           (GeglColor              *color,
+                                                const gchar            *name,
+                                                const Babl             *restricted_format,
+                                                GOutputStream          *output,
+                                                gint                    n_indent,
+                                                GHashTable             *icc_references);
 
-GHashTable * gimp_savable_save_all_spaces (GimpImage     *image,
-                                           GOutputStream *output,
-                                           gint           n_indent);
+GHashTable * gimp_savable_save_all_spaces      (GimpImage              *image,
+                                                GOutputStream          *output,
+                                                gint                    n_indent);
 
-void         gimp_savable_unit_save       (GimpUnit      *unit,
-                                           GOutputStream *output,
-                                           gint           n_indent);
-void         gimp_savable_metadata_save   (GimpMetadata  *metadata,
-                                           GOutputStream *output,
-                                           gint           n_indent);
+void         gimp_savable_unit_save            (GimpUnit               *unit,
+                                                GOutputStream          *output,
+                                                gint                    n_indent);
+void         gimp_savable_metadata_save        (GimpMetadata           *metadata,
+                                                GOutputStream          *output,
+                                                gint                    n_indent);
 
-void         gimp_savable_parasite_save   (GimpParasite  *parasite,
-                                           GOutputStream *output,
-                                           gint           n_indent);
+void         gimp_savable_parasite_save        (GimpParasite           *parasite,
+                                                GOutputStream          *output,
+                                                gint                    n_indent);
+
+void         gimp_savable_composite_mode_save  (GimpLayerCompositeMode  composite_mode,
+                                                GimpLayerMode           mode,
+                                                GOutputStream          *output,
+                                                gint                    n_indent);
+void         gimp_savable_composite_space_save (GimpLayerColorSpace     composite_space,
+                                                GimpLayerMode           mode,
+                                                GOutputStream          *output,
+                                                gint                    n_indent);
+void         gimp_savable_blend_space_save     (GimpLayerColorSpace     blend_space,
+                                                GimpLayerMode           mode,
+                                                GOutputStream          *output,
+                                                gint                    n_indent);
