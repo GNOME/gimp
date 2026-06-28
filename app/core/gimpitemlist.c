@@ -29,6 +29,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpitem.h"
@@ -342,20 +343,14 @@ gimp_item_list_savable_save (GimpSavable   *savable,
 
   if (gimp_item_list_is_pattern (list, &pattern_syntax))
     {
-      GEnumClass *enum_class;
-      GEnumValue *enum_value;
-
-      enum_class = g_type_class_ref (GIMP_TYPE_SELECT_METHOD);
-      enum_value = g_enum_get_value (enum_class, pattern_syntax);
-
       g_output_stream_printf (output, NULL, NULL, NULL,
                               "%*c<item-set type='%s'>\n", n_indent, ' ',
                               g_type_name (gimp_item_list_get_item_type (list)));
       g_output_stream_printf (output, NULL, NULL, NULL,
                               "%*c<pattern method='%s'>%s</pattern>\n",
-                              n_indent + 2, ' ', enum_value->value_nick, encoded);
-
-      g_type_class_unref (enum_class);
+                              n_indent + 2, ' ',
+                              gimp_get_enum_value_nick (GIMP_TYPE_SELECT_METHOD, pattern_syntax),
+                              encoded);
     }
   else
     {

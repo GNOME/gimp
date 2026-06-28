@@ -31,6 +31,7 @@
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
+#include "gimp-utils.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpdrawable.h"
@@ -361,17 +362,12 @@ gimp_savable_unit_save (GimpUnit      *unit,
 {
   if (gimp_unit_is_built_in (unit))
     {
-      GEnumClass *enum_class;
-      GEnumValue *enum_value;
-      guint32     uid = gimp_unit_get_id (unit);
+      guint32 uid = gimp_unit_get_id (unit);
 
       g_return_if_fail (uid > GIMP_UNIT_PIXEL && uid < GIMP_UNIT_END);
 
-      enum_class = g_type_class_ref (GIMP_TYPE_UNIT_ID);
-      enum_value = g_enum_get_value (enum_class, uid);
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<unit built-in='%s'/>\n",
-                              n_indent, ' ', enum_value->value_nick);
-      g_type_class_unref (enum_class);
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<unit built-in='%s'/>\n", n_indent, ' ',
+                              gimp_get_enum_value_nick (GIMP_TYPE_UNIT_ID, uid));
     }
   else
     {
@@ -444,9 +440,7 @@ gimp_savable_composite_mode_save (GimpLayerCompositeMode  composite_mode,
                                   GOutputStream          *output,
                                   gint                    n_indent)
 {
-  GEnumClass *enum_class;
-  GEnumValue *enum_value;
-  gboolean    auto_set = FALSE;
+  gboolean auto_set = FALSE;
 
   if (composite_mode == GIMP_LAYER_COMPOSITE_AUTO)
     {
@@ -458,13 +452,10 @@ gimp_savable_composite_mode_save (GimpLayerCompositeMode  composite_mode,
       auto_set       = TRUE;
     }
 
-  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_COMPOSITE_MODE);
-  enum_value = g_enum_get_value (enum_class, composite_mode);
   g_output_stream_printf (output, NULL, NULL, NULL,
                           "%*c<composite-mode%s>%s</composite-mode>\n",
                           n_indent, ' ', auto_set ? " auto='true'" : "",
-                          enum_value->value_nick);
-  g_type_class_unref (enum_class);
+                          gimp_get_enum_value_nick (GIMP_TYPE_LAYER_COMPOSITE_MODE, composite_mode));
 }
 
 void
@@ -473,9 +464,7 @@ gimp_savable_composite_space_save (GimpLayerColorSpace  composite_space,
                                    GOutputStream       *output,
                                    gint                 n_indent)
 {
-  GEnumClass *enum_class;
-  GEnumValue *enum_value;
-  gboolean    auto_set = FALSE;
+  gboolean auto_set = FALSE;
 
   if (composite_space == GIMP_LAYER_COLOR_SPACE_AUTO)
     {
@@ -487,12 +476,9 @@ gimp_savable_composite_space_save (GimpLayerColorSpace  composite_space,
       auto_set        = TRUE;
     }
 
-  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_COLOR_SPACE);
-  enum_value = g_enum_get_value (enum_class, composite_space);
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<composite-space%s>%s</composite-space>\n",
                           n_indent, ' ', auto_set ? " auto='true'" : "",
-                          enum_value->value_nick);
-  g_type_class_unref (enum_class);
+                          gimp_get_enum_value_nick (GIMP_TYPE_LAYER_COLOR_SPACE, composite_space));
 }
 
 void
@@ -501,9 +487,7 @@ gimp_savable_blend_space_save (GimpLayerColorSpace  blend_space,
                                GOutputStream       *output,
                                gint                 n_indent)
 {
-  GEnumClass *enum_class;
-  GEnumValue *enum_value;
-  gboolean    auto_set = FALSE;
+  gboolean auto_set = FALSE;
 
   if (blend_space == GIMP_LAYER_COLOR_SPACE_AUTO)
     {
@@ -515,10 +499,7 @@ gimp_savable_blend_space_save (GimpLayerColorSpace  blend_space,
       auto_set    = TRUE;
     }
 
-  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_COLOR_SPACE);
-  enum_value = g_enum_get_value (enum_class, blend_space);
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<blend-space%s>%s</blend-space>\n",
                           n_indent, ' ', auto_set ? " auto='true'" : "",
-                          enum_value->value_nick);
-  g_type_class_unref (enum_class);
+                          gimp_get_enum_value_nick (GIMP_TYPE_LAYER_COLOR_SPACE, blend_space));
 }

@@ -27,6 +27,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpbrush.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpchannel.h"
@@ -599,24 +600,6 @@ gimp_pdb_layer_is_text_layer (GimpLayer          *layer,
   return gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, modify, error);
 }
 
-static const gchar *
-gimp_pdb_enum_value_get_nick (GType enum_type,
-                              gint  value)
-{
-  GEnumClass  *enum_class;
-  GEnumValue  *enum_value;
-  const gchar *nick;
-
-  enum_class = g_type_class_ref (enum_type);
-  enum_value = g_enum_get_value (enum_class, value);
-
-  nick = enum_value->value_nick;
-
-  g_type_class_unref (enum_class);
-
-  return nick;
-}
-
 gboolean
 gimp_pdb_image_is_base_type (GimpImage          *image,
                              GimpImageBaseType   type,
@@ -633,9 +616,9 @@ gimp_pdb_image_is_base_type (GimpImage          *image,
                  "but an image of type '%s' is expected"),
                gimp_image_get_display_name (image),
                gimp_image_get_id (image),
-               gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE,
-                                             gimp_image_get_base_type (image)),
-               gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE, type));
+               gimp_get_enum_value_nick (GIMP_TYPE_IMAGE_BASE_TYPE,
+                                         gimp_image_get_base_type (image)),
+               gimp_get_enum_value_nick (GIMP_TYPE_IMAGE_BASE_TYPE, type));
 
   return FALSE;
 }
@@ -655,7 +638,7 @@ gimp_pdb_image_is_not_base_type (GimpImage          *image,
                _("Image '%s' (%d) must not be of type '%s'"),
                gimp_image_get_display_name (image),
                gimp_image_get_id (image),
-               gimp_pdb_enum_value_get_nick (GIMP_TYPE_IMAGE_BASE_TYPE, type));
+               gimp_get_enum_value_nick (GIMP_TYPE_IMAGE_BASE_TYPE, type));
 
   return FALSE;
 }
@@ -676,9 +659,9 @@ gimp_pdb_image_is_precision (GimpImage      *image,
                  "but an image of precision '%s' is expected"),
                gimp_image_get_display_name (image),
                gimp_image_get_id (image),
-               gimp_pdb_enum_value_get_nick (GIMP_TYPE_PRECISION,
-                                             gimp_image_get_precision (image)),
-               gimp_pdb_enum_value_get_nick (GIMP_TYPE_PRECISION, precision));
+               gimp_get_enum_value_nick (GIMP_TYPE_PRECISION,
+                                         gimp_image_get_precision (image)),
+               gimp_get_enum_value_nick (GIMP_TYPE_PRECISION, precision));
 
   return FALSE;
 }
@@ -698,7 +681,7 @@ gimp_pdb_image_is_not_precision (GimpImage      *image,
                _("Image '%s' (%d) must not be of precision '%s'"),
                gimp_image_get_display_name (image),
                gimp_image_get_id (image),
-               gimp_pdb_enum_value_get_nick (GIMP_TYPE_PRECISION, precision));
+               gimp_get_enum_value_nick (GIMP_TYPE_PRECISION, precision));
 
   return FALSE;
 }

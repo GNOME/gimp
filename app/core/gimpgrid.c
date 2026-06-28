@@ -34,6 +34,7 @@
 
 #include "core-types.h"
 
+#include "gimp-utils.h"
 #include "gimpgrid.h"
 #include "gimpsavable.h"
 
@@ -283,16 +284,13 @@ gimp_grid_savable_save (GimpSavable   *savable,
                         gint           n_indent,
                         GHashTable    *icc_references)
 {
-  GimpGrid   *grid = GIMP_GRID (savable);
-  GEnumClass *enum_class;
-  GEnumValue *enum_value;
+  GimpGrid *grid = GIMP_GRID (savable);
 
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<grid>\n", n_indent, ' ');
 
-  enum_class = g_type_class_ref (GIMP_TYPE_GRID_STYLE);
-  enum_value = g_enum_get_value (enum_class, grid->style);
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<style>%s</style>\n",
-                          n_indent + 2, ' ', enum_value->value_nick);
+                          n_indent + 2, ' ',
+                          gimp_get_enum_value_nick (GIMP_TYPE_GRID_STYLE, grid->style));
 
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<foreground>\n", n_indent + 2, ' ');
   gimp_savable_color_save (grid->fgcolor, NULL, NULL, output, n_indent + 4, icc_references);

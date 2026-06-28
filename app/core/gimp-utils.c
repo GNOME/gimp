@@ -1713,6 +1713,25 @@ gimp_get_type_children (GType  type,
   return types;
 }
 
+const gchar *
+gimp_get_enum_value_nick (GType enum_type,
+                          gint  value)
+{
+  GEnumClass  *enum_class;
+  GEnumValue  *enum_value;
+  const gchar *nick;
+
+  enum_class = g_type_class_ref (enum_type);
+  enum_value = g_enum_get_value (enum_class, value);
+
+  nick = enum_value->value_nick;
+
+  g_type_class_unref (enum_class);
+
+  return nick;
+}
+
+
 /* Private functions */
 
 

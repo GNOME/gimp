@@ -24,6 +24,7 @@
 
 #include "core-types.h"
 
+#include "gimp-utils.h"
 #include "gimpsamplepoint.h"
 #include "gimpsavable.h"
 
@@ -171,8 +172,6 @@ gimp_sample_point_savable_save (GimpSavable   *savable,
                                 GHashTable    *icc_references)
 {
   GimpSamplePoint   *sample_point = GIMP_SAMPLE_POINT (savable);
-  GEnumClass        *enum_class;
-  GEnumValue        *enum_value;
   GimpColorPickMode  pick_mode;
 
   /* XXX At this point, I just store the enum because that's what we
@@ -181,12 +180,9 @@ gimp_sample_point_savable_save (GimpSavable   *savable,
    * a random model and space in the future?
    */
   pick_mode  = gimp_sample_point_get_pick_mode (sample_point);
-  enum_class = g_type_class_ref (GIMP_TYPE_COLOR_PICK_MODE);
-  enum_value = g_enum_get_value (enum_class, pick_mode);
   g_output_stream_printf (output, NULL, NULL, NULL,
-                          "%*c<sample-point pick-mode='%s' />\n",
-                          n_indent, ' ', enum_value->value_nick);
-  g_type_class_unref (enum_class);
+                          "%*c<sample-point pick-mode='%s' />\n", n_indent, ' ',
+                          gimp_get_enum_value_nick (GIMP_TYPE_COLOR_PICK_MODE, pick_mode));
 }
 
 GimpSamplePoint *

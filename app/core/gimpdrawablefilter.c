@@ -46,6 +46,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-filters.h"
@@ -557,11 +558,9 @@ gimp_drawable_filter_save (GimpSavable   *savable,
                           gimp_drawable_filter_get_opacity (GIMP_DRAWABLE_FILTER (filter)));
 
   mode = gimp_drawable_filter_get_paint_mode (GIMP_DRAWABLE_FILTER (filter));
-  enum_class = g_type_class_ref (GIMP_TYPE_LAYER_MODE);
-  enum_value = g_enum_get_value (enum_class, mode);
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<mode>%s</mode>\n",
-                          n_indent + 2, ' ', enum_value->value_nick);
-  g_type_class_unref (enum_class);
+                          n_indent + 2, ' ',
+                          gimp_get_enum_value_nick (GIMP_TYPE_LAYER_MODE, mode));
 
   space = gimp_drawable_filter_get_blend_space (GIMP_DRAWABLE_FILTER (filter));
   gimp_savable_blend_space_save (space, mode, output, n_indent + 2);
@@ -576,11 +575,8 @@ gimp_drawable_filter_save (GimpSavable   *savable,
                           gimp_drawable_filter_get_clip (filter) ?  "true" : "false");
 
   region = gimp_drawable_filter_get_region (filter);
-  enum_class = g_type_class_ref (GIMP_TYPE_FILTER_REGION);
-  enum_value = g_enum_get_value (enum_class, region);
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<region>%s</region>\n", n_indent + 2, ' ',
-                          enum_value->value_nick);
-  g_type_class_unref (enum_class);
+                          gimp_get_enum_value_nick (GIMP_TYPE_FILTER_REGION, region));
 
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c</filter>\n", n_indent, ' ');
 
