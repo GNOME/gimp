@@ -985,15 +985,21 @@ gimp_drawable_save (GimpSavable   *savable,
   GimpDrawable  *drawable = GIMP_DRAWABLE (savable);
   GimpContainer *filters;
   GList         *iter;
-  gchar         *filename;
   gint           num_effects = 0;
 
-  /* Trigger a saving to be sure we have the latest buffer on disk. */
-  gimp_drawable_save_buffer (drawable);
+  if (! GIMP_IS_GROUP_LAYER (drawable))
+    {
+      gchar *filename;
 
-  filename = g_path_get_basename (gimp_drawable_get_cache_file (drawable));
-  g_output_stream_printf (output, NULL, NULL, NULL,
-                          "%*c<buffer file='%s'/>\n", n_indent, ' ', filename);
+      /* Trigger a saving to be sure we have the latest buffer on disk. */
+      gimp_drawable_save_buffer (drawable);
+
+      filename = g_path_get_basename (gimp_drawable_get_cache_file (drawable));
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              "%*c<buffer file='%s'/>\n", n_indent, ' ', filename);
+
+      g_free (filename);
+    }
 
   /* Get filter information */
   filters = gimp_drawable_get_filters (drawable);
@@ -1045,8 +1051,6 @@ gimp_drawable_save (GimpSavable   *savable,
 
       g_output_stream_printf (output, NULL, NULL, NULL, "%*c</filters>\n", n_indent, ' ');
     }
-
-  g_free (filename);
 }
 
 static void

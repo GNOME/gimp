@@ -38,6 +38,7 @@
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 
+#include "gimp-utils.h"
 #include "gimpboundary.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
@@ -55,6 +56,7 @@
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpobjectqueue.h"
+#include "gimpparasitelist.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
 #include "gimpsavable.h"
@@ -1650,22 +1652,31 @@ gimp_layer_savable_save (GimpSavable   *savable,
                          gint           n_indent,
                          GHashTable    *icc_references)
 {
-  GimpLayer  *layer = GIMP_LAYER (savable);
-  GimpImage  *image = gimp_item_get_image (GIMP_ITEM (layer));
-  gchar      *layer_name;
-  const Babl *image_format;
-  const Babl *format;
+  GimpLayer              *layer = GIMP_LAYER (savable);
+  GimpImage              *image = gimp_item_get_image (GIMP_ITEM (layer));
+  gchar                  *layer_name;
+  const Babl             *image_format;
+  const Babl             *format;
+  GimpParasiteList       *parasites;
+  GimpLayerMode           mode;
+  GimpLayerColorSpace     space;
+  GimpLayerCompositeMode  composite_mode;
+  gint                    offset_x;
+  gint                    offset_y;
 
   layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<layer name='%s'>\n", n_indent, ' ', layer_name);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<layer name='%s' type='%s'>\n",
+                          n_indent, ' ', layer_name,
+                          g_type_name (G_TYPE_FROM_INSTANCE (layer)));
+
   if (gimp_image_get_floating_selection (image) == layer)
     g_output_stream_printf (output, NULL, NULL, NULL, "%*c<floating/>\n", n_indent + 2, ' ');
+  else if (g_list_find (gimp_image_get_selected_layers (image), layer))
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<selected/>\n", n_indent + 2, ' ');
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<dimensions width='%d' height='%d'/>\n",
                           n_indent + 2, ' ',
                           gimp_item_get_width (GIMP_ITEM (layer)),
                           gimp_item_get_height (GIMP_ITEM (layer)));
-
-  parent_savable_interface->save (savable, output, n_indent + 2, icc_references);
 
   /* Do not store the format if it's the same as the image. */
   image_format = gimp_image_get_layer_format (image, TRUE);
@@ -1673,9 +1684,61 @@ gimp_layer_savable_save (GimpSavable   *savable,
   if (image_format != format)
     gimp_savable_format_save (format, output, n_indent + 2, icc_references);
 
+  parent_savable_interface->save (savable, output, n_indent + 2, icc_references);
+
+  gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<offsets x='%d' y='%d'/>\n",
+                          n_indent + 2, ' ', offset_x, offset_y);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<opacity>%f</opacity>\n", n_indent + 2, ' ',
+                          gimp_layer_get_opacity (layer));
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<visible>%s</visible>\n", n_indent + 2, ' ',
+                          gimp_item_get_visible (GIMP_ITEM (layer)) ? "true" : "false");
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<color-tag>%s</color-tag>\n", n_indent + 2, ' ',
+                          gimp_get_enum_value_nick (GIMP_TYPE_COLOR_TAG,
+                                                    gimp_item_get_color_tag (GIMP_ITEM (layer))));
+
+  mode = gimp_layer_get_mode (layer);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<mode>%s</mode>\n",
+                          n_indent + 2, ' ',
+                          gimp_get_enum_value_nick (GIMP_TYPE_LAYER_MODE, mode));
+
+  space = gimp_layer_get_blend_space (layer);
+  gimp_savable_blend_space_save (space, mode, output, n_indent + 2);
+
+  space = gimp_layer_get_composite_space (layer);
+  gimp_savable_composite_space_save (space, mode, output, n_indent + 2);
+
+  composite_mode = gimp_layer_get_composite_mode (layer);
+  gimp_savable_composite_mode_save (composite_mode, mode, output, n_indent + 2);
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<tattoo>%u</tattoo>\n",
+                          n_indent + 2, ' ',
+                          (guint) gimp_item_get_tattoo (GIMP_ITEM (layer)));
+
+  if (gimp_item_get_lock_content (GIMP_ITEM (layer))  ||
+      gimp_layer_get_lock_alpha (layer)               ||
+      gimp_item_get_lock_position (GIMP_ITEM (layer)) ||
+      gimp_item_get_lock_visibility (GIMP_ITEM (layer)))
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<locks>\n", n_indent + 2, ' ');
+      if (gimp_item_get_lock_content (GIMP_ITEM (layer)))
+        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<lock-content/>\n", n_indent + 4, ' ');
+      if (gimp_layer_get_lock_alpha (layer))
+        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<lock-alpha/>\n", n_indent + 4, ' ');
+      if (gimp_item_get_lock_position (GIMP_ITEM (layer)))
+        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<lock-position/>\n", n_indent + 4, ' ');
+      if (gimp_item_get_lock_visibility (GIMP_ITEM (layer)))
+        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<lock-visibility/>\n", n_indent + 4, ' ');
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</locks>\n", n_indent + 2, ' ');
+    }
+
   if (gimp_layer_get_mask (layer))
     {
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<mask>\n", n_indent + 2, ' ');
+      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<mask%s%s%s>\n", n_indent + 2, ' ',
+                              gimp_layer_get_apply_mask (layer) ? "" : " apply='false'",
+                              gimp_layer_get_edit_mask (layer) ? " edit='true'" : "",
+                              gimp_layer_get_show_mask (layer) ? " show='true'" : "");
       gimp_savable_save (GIMP_SAVABLE (gimp_layer_get_mask (layer)), output, n_indent + 4, icc_references);
       g_output_stream_printf (output, NULL, NULL, NULL, "%*c</mask>\n", n_indent + 2, ' ');
     }
@@ -1693,6 +1756,11 @@ gimp_layer_savable_save (GimpSavable   *savable,
 
       g_output_stream_printf (output, NULL, NULL, NULL, "%*c</layers>\n", n_indent + 2, ' ');
     }
+
+  parasites = gimp_item_get_parasites (GIMP_ITEM (layer));
+  if (gimp_parasite_list_length (parasites) > 0)
+    gimp_savable_save (GIMP_SAVABLE (parasites), output, n_indent + 2, icc_references);
+
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c</layer>\n", n_indent, ' ');
 
   g_free (layer_name);
