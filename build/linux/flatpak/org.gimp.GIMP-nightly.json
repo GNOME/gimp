@@ -424,18 +424,12 @@
                         {
                             "type": "git",
                             "url": "https://github.com/json-c/json-c.git",
-                            "tag": "json-c-0.18-20240915",
-                            "commit": "41a55cfcedb54d9c1874f2f0eb07b504091d7e37",
+                            "tag": "json-c-0.19-20260627",
+                            "commit": "aa716cd8d663c976b99b0f30f102ee1d8ef63146",
                             "x-checker-data": {
                                 "type": "git",
                                 "tag-pattern": "^json-c-([\\d.]+)-[\\d]+$"
                             }
-                        },
-                        {
-                            "type": "shell",
-                            "commands": [
-                                "perl -i -pe 'BEGIN{$m=0} $m=1 if s/cmake_minimum_required\\(VERSION 2\\.8\\)/cmake_minimum_required(VERSION 3.9...3.12)/; END{ if(!$m){ warn \"Patch failed on $ARGV\\n\"; exit 1 } }' apps/CMakeLists.txt"
-                            ]
                         }
                     ],
                     "buildsystem": "cmake-ninja",
