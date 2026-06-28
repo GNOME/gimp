@@ -621,7 +621,7 @@ typedef struct
   gfloat     intensity;
   guint16    color[5];
   gchar      blendsig[4];
-  guint32    effect;
+  gchar      effect[4];
   guchar     effecton;
   guchar     opacity;
   /* Version 2 only */

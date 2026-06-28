@@ -1815,7 +1815,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                                 ls_a->oglw.size, ls_a->oglw.ver,
                                 ls_a->oglw.effecton,
                                 ls_a->oglw.blur, ls_a->oglw.intensity,
-                                ls_a->oglw.blendsig, (gchar *) &ls_a->oglw.effect);
+                                ls_a->oglw.blendsig, ls_a->oglw.effect);
 
               if (ls_a->oglw.size == 42)
                 {
@@ -1842,7 +1842,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   ! psd_read_uint16      (input, &ls_a->iglw.color[3], res_a->ibm_pc_format, error) ||
                   ! psd_read_uint16      (input, &ls_a->iglw.color[4], res_a->ibm_pc_format, error) ||
                   ! psd_read_chars       (input, ls_a->iglw.blendsig,  4, res_a->ibm_pc_format, error) ||
-                  ! psd_read_chars       (input, (gchar *) &ls_a->iglw.effect, 4, res_a->ibm_pc_format, error) ||
+                  ! psd_read_chars       (input, ls_a->iglw.effect,    4, res_a->ibm_pc_format, error) ||
                   psd_read (input, &ls_a->iglw.effecton, 1, error) < 1 ||
                   psd_read (input, &ls_a->iglw.opacity,  1, error) < 1)
                 {
@@ -1854,7 +1854,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                                 ls_a->iglw.size, ls_a->iglw.ver,
                                 ls_a->iglw.effecton,
                                 ls_a->iglw.blur, ls_a->iglw.intensity,
-                                ls_a->iglw.blendsig, (gchar *) &ls_a->iglw.effect);
+                                ls_a->iglw.blendsig, ls_a->iglw.effect);
 
               if (ls_a->iglw.size == 43)
                 {
