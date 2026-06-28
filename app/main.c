@@ -365,7 +365,7 @@ gimp_macos_setenv (const char * progname)
       /* Detect if we are running from bundle or from prefix */
       if (g_str_has_suffix (bin_dir, "MacOS"))
         {
-          g_print ("GIMP is started as MacOS application\n");
+          g_printerr ("GIMP is started as MacOS application\n");
         }
       else
         {
