@@ -1888,7 +1888,7 @@ gimp_image_savable_save (GimpSavable   *savable,
             /* Do not save the identity symmetry. */
             continue;
 
-          gimp_savable_config_save (GIMP_CONFIG (symmetry), "symmetry", output, 6, icc_references);
+          gimp_savable_config_save (GIMP_CONFIG (symmetry), "symmetry", output, 6, xcf_file, icc_references);
         }
       g_output_stream_printf (output, NULL, NULL, NULL, "    </symmetries>\n");
     }

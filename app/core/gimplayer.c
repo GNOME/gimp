@@ -38,6 +38,8 @@
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 
+#include "text/gimptextlayer.h"
+
 #include "gimp-utils.h"
 #include "gimpboundary.h"
 #include "gimpchannel-select.h"
@@ -1667,7 +1669,8 @@ gimp_layer_savable_save (GimpSavable   *savable,
   gint                    offset_y;
   gboolean                drop_root;
 
-  drop_root = (G_TYPE_FROM_INSTANCE (layer) == GIMP_TYPE_LINK_LAYER);
+  drop_root = (G_TYPE_FROM_INSTANCE (layer) == GIMP_TYPE_LINK_LAYER ||
+               G_TYPE_FROM_INSTANCE (layer) == GIMP_TYPE_TEXT_LAYER);
 
   if (! drop_root)
     {

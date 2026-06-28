@@ -495,7 +495,7 @@ gimp_drawable_filter_save (GimpSavable   *savable,
                                         pspec->name, g_type_name (G_VALUE_TYPE (&value)));
                 gimp_savable_config_save (g_value_get_object (&value),
                                           g_type_name (G_VALUE_TYPE (&value)),
-                                          output, n_indent + 6, icc_references);
+                                          output, n_indent + 6, xcf_file, icc_references);
                 g_output_stream_printf (output, NULL, NULL, NULL, "%*c</argument>\n", n_indent + 4, ' ');
               }
             else if (g_type_is_a (G_VALUE_TYPE (&value), G_TYPE_ENUM))

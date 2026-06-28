@@ -55,6 +55,7 @@ gimp_savable_config_save (GimpConfig    *config,
                           const gchar   *element_name,
                           GOutputStream *output,
                           gint           n_indent,
+                          GFile         *xcf_file,
                           GHashTable    *icc_references)
 {
   GObjectClass  *klass;
@@ -88,29 +89,80 @@ gimp_savable_config_save (GimpConfig    *config,
       g_object_get_property (G_OBJECT (config), prop_spec->name, &value);
 
       if (G_VALUE_HOLDS_BOOLEAN (&value))
-        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%s</%s>\n",
-                                n_indent + 2, ' ', prop_spec->name,
-                                g_value_get_boolean (&value) ? "true" : "false",
-                                prop_spec->name);
+        {
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%s</%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name,
+                                  g_value_get_boolean (&value) ? "true" : "false",
+                                  prop_spec->name);
+        }
       else if (G_VALUE_HOLDS_INT (&value))
-        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%d</%s>\n",
-                                n_indent + 2, ' ', prop_spec->name,
-                                g_value_get_int (&value), prop_spec->name);
+        {
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%d</%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name,
+                                  g_value_get_int (&value), prop_spec->name);
+        }
+      else if (G_VALUE_HOLDS_ENUM (&value))
+        {
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%s</%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name,
+                                  gimp_get_enum_value_nick (prop_spec->value_type,
+                                                            g_value_get_enum (&value)),
+                                  prop_spec->name);
+        }
       else if (G_VALUE_HOLDS_STRING (&value))
-        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%s</%s>\n",
-                                n_indent + 2, ' ', prop_spec->name,
-                                g_value_get_string (&value), prop_spec->name);
+        {
+          const gchar *str = g_value_get_string (&value);
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%s</%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name,
+                                  str ? str : "", prop_spec->name);
+        }
       else if (G_VALUE_HOLDS_DOUBLE (&value))
-        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%f</%s>\n",
-                                n_indent + 2, ' ', prop_spec->name,
-                                g_value_get_double (&value), prop_spec->name);
+        {
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%f</%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name,
+                                  g_value_get_double (&value), prop_spec->name);
+        }
       else if (G_VALUE_HOLDS_FLOAT (&value))
-        g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%f</%s>\n",
-                                n_indent + 2, ' ', prop_spec->name,
-                                g_value_get_float (&value), prop_spec->name);
+        {
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%f</%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name,
+                                  g_value_get_float (&value), prop_spec->name);
+        }
+      else if (G_VALUE_HOLDS_OBJECT (&value) &&
+               GIMP_IS_UNIT (g_value_get_object (&value)))
+        {
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name);
+          gimp_savable_unit_save (GIMP_UNIT (g_value_get_object (&value)),
+                                  output, n_indent + 4);
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c</%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name);
+        }
+      else if (G_VALUE_HOLDS_OBJECT (&value) &&
+               GEGL_IS_COLOR (g_value_get_object (&value)))
+        {
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name);
+          gimp_savable_color_save (GEGL_COLOR (g_value_get_object (&value)), NULL, NULL,
+                                   output, n_indent + 4, icc_references);
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c</%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name);
+        }
+      else if (G_VALUE_HOLDS_OBJECT (&value) &&
+               GIMP_IS_SAVABLE (g_value_get_object (&value)))
+        {
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name);
+          gimp_savable_save (GIMP_SAVABLE (g_value_get_object (&value)), output,
+                             n_indent + 4, xcf_file, icc_references);
+          g_output_stream_printf (output, NULL, NULL, NULL, "%*c</%s>\n",
+                                  n_indent + 2, ' ', prop_spec->name);
+        }
       else
-        g_critical ("%s: value for property '%s' of type '%s' is not supported.",
-                    G_STRFUNC, prop_spec->name, g_type_name (prop_spec->value_type));
+        {
+          g_critical ("%s: value for property '%s' of type '%s' is not supported.",
+                      G_STRFUNC, prop_spec->name, g_type_name (prop_spec->value_type));
+        }
     }
 
   g_free (property_specs);
@@ -364,8 +416,6 @@ gimp_savable_unit_save (GimpUnit      *unit,
   if (gimp_unit_is_built_in (unit))
     {
       guint32 uid = gimp_unit_get_id (unit);
-
-      g_return_if_fail (uid > GIMP_UNIT_PIXEL && uid < GIMP_UNIT_END);
 
       g_output_stream_printf (output, NULL, NULL, NULL, "%*c<unit built-in='%s'/>\n", n_indent, ' ',
                               gimp_get_enum_value_nick (GIMP_TYPE_UNIT_ID, uid));

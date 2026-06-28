@@ -64,6 +64,7 @@ void         gimp_savable_config_save          (GimpConfig             *config,
                                                 const gchar            *element_name,
                                                 GOutputStream          *output,
                                                 gint                    n_indent,
+                                                GFile                  *xcf_file,
                                                 GHashTable             *icc_references);
 
 void         gimp_savable_format_save          (const Babl             *format,

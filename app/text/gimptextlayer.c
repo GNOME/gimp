@@ -49,6 +49,7 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimppattern.h"
 #include "core/gimprasterizable.h"
+#include "core/gimpsavable.h"
 #include "core/gimptempbuf.h"
 
 #include "gimptext.h"
@@ -79,6 +80,8 @@ struct _GimpTextLayerPrivate
 
 static void       gimp_text_layer_rasterizable_iface_init
                                                  (GimpRasterizableInterface *iface);
+static void       gimp_text_layer_savable_iface_init
+                                                 (GimpSavableInterface      *iface);
 
 static void       gimp_text_layer_finalize       (GObject           *object);
 static void       gimp_text_layer_get_property   (GObject           *object,
@@ -92,6 +95,12 @@ static void       gimp_text_layer_set_property   (GObject           *object,
 
 static void       gimp_text_layer_set_rasterized (GimpRasterizable  *rasterizable,
                                                   gboolean           rasterized);
+
+static void       gimp_text_layer_savable_save   (GimpSavable       *savable,
+                                                  GOutputStream     *output,
+                                                  gint               n_indent,
+                                                  GFile             *xcf_file,
+                                                  GHashTable        *icc_references);
 
 static gint64     gimp_text_layer_get_memsize    (GimpObject        *object,
                                                   gint64            *gui_size);
@@ -131,9 +140,13 @@ static void       gimp_text_layer_render_layout  (GimpTextLayer     *layer,
 G_DEFINE_TYPE_WITH_CODE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER,
                          G_ADD_PRIVATE (GimpTextLayer)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RASTERIZABLE,
-                                                gimp_text_layer_rasterizable_iface_init))
+                                                gimp_text_layer_rasterizable_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_text_layer_savable_iface_init))
 
 #define parent_class gimp_text_layer_parent_class
+
+static GimpSavableInterface *parent_savable_interface = NULL;
 
 
 static void
@@ -201,6 +214,14 @@ gimp_text_layer_rasterizable_iface_init (GimpRasterizableInterface *iface)
 }
 
 static void
+gimp_text_layer_savable_iface_init (GimpSavableInterface *iface)
+{
+  parent_savable_interface = g_type_interface_peek_parent (iface);
+
+  iface->save = gimp_text_layer_savable_save;
+}
+
+static void
 gimp_text_layer_finalize (GObject *object)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (object);
@@ -261,6 +282,36 @@ gimp_text_layer_set_rasterized (GimpRasterizable *rasterizable,
 
       gimp_text_layer_render (GIMP_TEXT_LAYER (rasterizable));
     }
+}
+
+static void
+gimp_text_layer_savable_save (GimpSavable   *savable,
+                              GOutputStream *output,
+                              gint           n_indent,
+                              GFile         *xcf_file,
+                              GHashTable    *icc_references)
+{
+  GimpTextLayer *layer = GIMP_TEXT_LAYER (savable);
+  gchar         *layer_name;
+
+  layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<text-layer name='%s'>\n",
+                          n_indent, ' ', layer_name);
+
+  parent_savable_interface->save (savable, output, n_indent, xcf_file, icc_references);
+
+  gimp_savable_config_save (GIMP_CONFIG (layer->text), "text", output, n_indent + 2, xcf_file, icc_references);
+
+  if (! gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (layer)))
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<auto-rename disabled='true'/>\n",
+                            n_indent + 2, ' ');
+
+  if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<rasterized/>\n", n_indent + 2, ' ');
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</text-layer>\n", n_indent, ' ');
+
+  g_free (layer_name);
 }
 
 static gint64
