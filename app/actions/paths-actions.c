@@ -152,7 +152,7 @@ static const GimpActionEntry paths_actions[] =
     GIMP_HELP_PATH_EXPORT },
 
   { "paths-export-all", GIMP_ICON_DOCUMENT_SAVE,
-    NC_("paths-action", "E_xport _All Paths..."), NULL, { NULL }, NULL,
+    NC_("paths-action", "Export _All Paths..."), NULL, { NULL }, NULL,
     paths_export_all_cmd_callback,
     GIMP_HELP_PATH_EXPORT },
 
