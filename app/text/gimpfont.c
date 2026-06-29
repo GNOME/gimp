@@ -45,6 +45,7 @@
 
 #include "core/gimp-memsize.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpsavable.h"
 
 #include "gimpfont.h"
 #include "gimpfontfactory.h"
@@ -116,6 +117,9 @@ struct _GimpFontClass
 };
 
 
+static void          gimp_font_config_iface_init  (GimpConfigInterface  *iface);
+static void          gimp_font_savable_iface_init (GimpSavableInterface *iface);
+
 static void          gimp_font_finalize           (GObject               *object);
 
 static void          gimp_font_get_preview_size   (GimpViewable          *viewable,
@@ -137,7 +141,6 @@ static GimpTempBuf * gimp_font_get_new_preview    (GimpViewable          *viewab
                                                    gint                   scale_factor,
                                                    GeglColor             *fg_color);
 
-static void          gimp_font_config_iface_init  (GimpConfigInterface  *iface);
 static gboolean      gimp_font_serialize          (GimpConfig           *config,
                                                    GimpConfigWriter     *writer,
                                                    gpointer              data);
@@ -145,6 +148,12 @@ static GimpConfig  * gimp_font_deserialize_create (GType                 type,
                                                    GScanner             *scanner,
                                                    gint                  nest_level,
                                                    gpointer              data);
+
+static void          gimp_font_savable_save       (GimpSavable          *savable,
+                                                   GOutputStream        *output,
+                                                   gint                  n_indent,
+                                                   GFile                *xcf_file,
+                                                   GHashTable           *icc_references);
 
 static gint64        gimp_font_get_memsize        (GimpObject           *object,
                                                    gint64               *gui_size);
@@ -160,7 +169,9 @@ static const gchar * gimp_font_get_hash           (GimpFont             *font);
 
 G_DEFINE_TYPE_WITH_CODE (GimpFont, gimp_font, GIMP_TYPE_DATA,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                         gimp_font_config_iface_init))
+                                                gimp_font_config_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_font_savable_iface_init))
 
 
 #define parent_class gimp_font_parent_class
@@ -170,6 +181,12 @@ gimp_font_config_iface_init (GimpConfigInterface *iface)
 {
   iface->serialize          = gimp_font_serialize;
   iface->deserialize_create = gimp_font_deserialize_create;
+}
+
+static void
+gimp_font_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_font_savable_save;
 }
 
 static gboolean
@@ -529,6 +546,30 @@ gimp_font_deserialize_create (GType     type,
   g_free (style);
 
   return GIMP_CONFIG (font);
+}
+
+static void
+gimp_font_savable_save (GimpSavable   *savable,
+                        GOutputStream *output,
+                        gint           n_indent,
+                        GFile         *xcf_file,
+                        GHashTable    *icc_references)
+{
+  GimpFont *font = GIMP_FONT (savable);
+
+  gimp_savable_print_element_start (output, n_indent, "font", NULL);
+  gimp_savable_print_element (output, n_indent + 2, "font-hash", "%s", gimp_font_get_hash (font), NULL);
+  gimp_savable_print_element (output, n_indent + 2, "full-name", "%s", font->fullname, NULL);
+  gimp_savable_print_element (output, n_indent + 2, "family", "%s", font->family, NULL);
+  gimp_savable_print_element (output, n_indent + 2, "style", "%s", font->style, NULL);
+  gimp_savable_print_element (output, n_indent + 2, "psname", "%s", font->psname, NULL);
+
+  gimp_savable_print_element (output, n_indent + 2, "index", "%d", font->index, NULL);
+  gimp_savable_print_element (output, n_indent + 2, "weight", "%d", font->weight, NULL);
+  gimp_savable_print_element (output, n_indent + 2, "slant", "%d", font->slant, NULL);
+  gimp_savable_print_element (output, n_indent + 2, "width", "%d", font->width, NULL);
+  gimp_savable_print_element (output, n_indent + 2, "font-version", "%d", font->fontversion, NULL);
+  gimp_savable_print_element_end (output, n_indent, "font");
 }
 
 void
