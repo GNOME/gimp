@@ -1,6 +1,6 @@
 patterns:
   deny:
-    - regex: '^(?!((Issue #[0-9]+)|([A-Za-z0-9][A-Za-z0-9+_.-]*(,\s*[A-Za-z0-9][A-Za-z0-9+_.-]*)*)):\s).+'
+    - regex: '^(?!((Issue #[0-9]+)|([A-Za-z0-9][A-Za-z0-9+_/.-]*(,\s*[A-Za-z0-9][A-Za-z0-9+_/.-]*)*)):\s).+'
       message: "Commit message subject must start with '<section>:' (comma-separated allowed) or 'Issue #<id>:'. See: https://developer.gimp.org/core/coding_style/#commit-messages"
       where: subject
     - regex: '^(fix|feat|chore)(\([^)]+\))?!?:\s'
