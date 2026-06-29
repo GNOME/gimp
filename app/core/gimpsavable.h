@@ -60,6 +60,19 @@ void         gimp_savable_save                 (GimpSavable            *savable,
 
 /* Shared Utils */
 
+void         gimp_savable_print_element_start  (GOutputStream          *output,
+                                                gint                    n_indent,
+                                                const gchar            *element_name,
+                                                ...) G_GNUC_NULL_TERMINATED;
+void         gimp_savable_print_element_end    (GOutputStream          *output,
+                                                gint                    n_indent,
+                                                const gchar            *element_name);
+void         gimp_savable_print_element        (GOutputStream          *output,
+                                                gint                    n_indent,
+                                                const gchar            *element_name,
+                                                const gchar            *format_value,
+                                                ...) G_GNUC_NULL_TERMINATED;
+
 void         gimp_savable_config_save          (GimpConfig             *config,
                                                 const gchar            *element_name,
                                                 GOutputStream          *output,

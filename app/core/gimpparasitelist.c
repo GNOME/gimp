@@ -325,9 +325,9 @@ gimp_parasite_list_savable_save (GimpSavable   *savable,
   data.output   = output;
   data.n_indent = n_indent + 2;
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<parasites>\n", n_indent, ' ');
+  gimp_savable_print_element_start (output, n_indent, "parasites", NULL);
   gimp_parasite_list_foreach (list, (GHFunc) gimp_parasite_list_save_parasite_func, &data);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</parasites>\n", n_indent, ' ');
+  gimp_savable_print_element_end (output, n_indent, "parasites");
 }
 
 GimpParasiteList *

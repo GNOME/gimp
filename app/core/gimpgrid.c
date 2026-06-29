@@ -288,33 +288,38 @@ gimp_grid_savable_save (GimpSavable   *savable,
 {
   GimpGrid *grid = GIMP_GRID (savable);
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<grid>\n", n_indent, ' ');
+  gimp_savable_print_element_start (output, n_indent, "grid", NULL);
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<style>%s</style>\n",
-                          n_indent + 2, ' ',
-                          gimp_get_enum_value_nick (GIMP_TYPE_GRID_STYLE, grid->style));
+  gimp_savable_print_element (output, n_indent + 2, "style",
+                              "%s", gimp_get_enum_value_nick (GIMP_TYPE_GRID_STYLE, grid->style),
+                              NULL);
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<foreground>\n", n_indent + 2, ' ');
+  gimp_savable_print_element_start (output, n_indent + 2, "foreground", NULL);
   gimp_savable_color_save (grid->fgcolor, NULL, NULL, output, n_indent + 4, icc_references);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</foreground>\n", n_indent + 2, ' ');
+  gimp_savable_print_element_end (output, n_indent + 2, "foreground");
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<background>\n", n_indent + 2, ' ');
+  gimp_savable_print_element_start (output, n_indent + 2, "background", NULL);
   gimp_savable_color_save (grid->bgcolor, NULL, NULL, output, n_indent + 4, icc_references);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</background>\n", n_indent + 2, ' ');
+  gimp_savable_print_element_end (output, n_indent + 2, "background");
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<spacing x='%f' y='%f'/>\n",
-                          n_indent + 2, ' ', grid->xspacing, grid->yspacing);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<spacing-unit>\n", n_indent + 2, ' ');
+  gimp_savable_print_element (output, n_indent + 2, "spacing", NULL, NULL,
+                              "x", "%f", grid->xspacing,
+                              "y", "%f", grid->yspacing,
+                              NULL);
+
+  gimp_savable_print_element_start (output, n_indent + 2, "spacing-unit", NULL);
   gimp_savable_unit_save (grid->spacing_unit, output, n_indent + 4);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</spacing-unit>\n", n_indent + 2, ' ');
+  gimp_savable_print_element_end (output, n_indent + 2, "spacing-unit");
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<offset x='%f' y='%f'/>\n",
-                          n_indent + 2, ' ', grid->xoffset, grid->yoffset);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<offset-unit>\n", n_indent + 2, ' ');
+  gimp_savable_print_element (output, n_indent + 2, "offset", NULL, NULL,
+                              "x", "%f", grid->xoffset,
+                              "y", "%f", grid->yoffset,
+                              NULL);
+  gimp_savable_print_element_start (output, n_indent + 2, "offset-unit", NULL);
   gimp_savable_unit_save (grid->offset_unit, output, n_indent + 4);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</offset-unit>\n", n_indent + 2, ' ');
+  gimp_savable_print_element_end (output, n_indent + 2, "offset-unit");
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</grid>\n", n_indent, ' ');
+  gimp_savable_print_element_end (output, n_indent, "grid");
 }
 
 

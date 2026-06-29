@@ -450,10 +450,11 @@ gimp_gradient_savable_save (GimpSavable   *savable,
   gradient_segment_type_class  = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_TYPE);
   gradient_segment_color_class = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_COLOR);
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<gradient name='%s' version='%d'>\n",
-                          n_indent, ' ', name, version);
-
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<segments>\n", n_indent + 2, ' ');
+  gimp_savable_print_element_start (output, n_indent, "gradient",
+                                    "name",    "%s", name,
+                                    "version", "%d", version,
+                                    NULL);
+  gimp_savable_print_element_start (output, n_indent + 2, "segments", NULL);
   for (seg = gradient->segments; seg; seg = seg->next)
     {
       GEnumValue               *enum_value;
@@ -468,34 +469,35 @@ gimp_gradient_savable_save (GimpSavable   *savable,
 
       enum_value  = g_enum_get_value (gradient_segment_type_class, type);
       enum_value2 = g_enum_get_value (gradient_segment_color_class, color);
-      g_output_stream_printf (output, NULL, NULL, NULL,
-                              "%*c<segment blend='%s' color='%s'>\n",
-                              n_indent + 4, ' ',
-                              enum_value->value_nick, enum_value2->value_nick);
+      gimp_savable_print_element_start (output, n_indent + 4, "segment",
+                                        "blend", "%s", enum_value->value_nick,
+                                        "color", "%s", enum_value2->value_nick,
+                                        NULL);
 
       enum_value = g_enum_get_value (gradient_color_class, left_color_type);
-      g_output_stream_printf (output, NULL, NULL, NULL,
-                              "%*c<left position='%f' type='%s'>\n",
-                              n_indent + 6, ' ', left, enum_value->value_nick);
+      gimp_savable_print_element_start (output, n_indent + 6, "left",
+                                        "position", "%f", left,
+                                        "type",     "%s", enum_value->value_nick,
+                                        NULL);
       gimp_savable_color_save (seg->left_color, NULL, NULL, output, n_indent + 8, icc_references);
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</left>\n", n_indent + 6, ' ');
+      gimp_savable_print_element_end (output, n_indent + 6, "left");
 
-      g_output_stream_printf (output, NULL, NULL, NULL,
-                              "%*c<center position='%f'/>\n",
-                              n_indent + 6, ' ', middle);
+      gimp_savable_print_element (output, n_indent + 6, "middle", NULL, NULL,
+                                  "position", "%f", middle, NULL);
 
       enum_value = g_enum_get_value (gradient_color_class, right_color_type);
-      g_output_stream_printf (output, NULL, NULL, NULL,
-                              "%*c<right position='%f' type='%s'>\n",
-                              n_indent + 6, ' ', right, enum_value->value_nick);
+      gimp_savable_print_element_start (output, n_indent + 6, "right",
+                                        "position", "%f", right,
+                                        "type",     "%s", enum_value->value_nick,
+                                        NULL);
       gimp_savable_color_save (seg->right_color, NULL, NULL, output, n_indent + 8, icc_references);
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</right>\n", n_indent + 6, ' ');
+      gimp_savable_print_element_end (output, n_indent + 6, "right");
 
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</segment>\n", n_indent + 4, ' ');
+      gimp_savable_print_element_end (output, n_indent + 4, "segment");
     }
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</segments>\n", n_indent + 2, ' ');
+  gimp_savable_print_element_end (output, n_indent + 2, "segments");
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</gradient>\n", n_indent, ' ');
+  gimp_savable_print_element_end (output, n_indent, "gradient");
 
   g_type_class_unref (gradient_color_class);
   g_type_class_unref (gradient_segment_type_class);

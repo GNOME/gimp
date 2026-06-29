@@ -295,21 +295,19 @@ gimp_text_layer_savable_save (GimpSavable   *savable,
   gchar         *layer_name;
 
   layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<text-layer name='%s'>\n",
-                          n_indent, ' ', layer_name);
+  gimp_savable_print_element_start (output, n_indent, "text-layer", "name", layer_name, NULL);
 
   parent_savable_interface->save (savable, output, n_indent, xcf_file, icc_references);
 
   gimp_savable_config_save (GIMP_CONFIG (layer->text), "text", output, n_indent + 2, xcf_file, icc_references);
 
   if (! gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (layer)))
-    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<auto-rename disabled='true'/>\n",
-                            n_indent + 2, ' ');
+    gimp_savable_print_element (output, n_indent + 2, "auto-rename", NULL, NULL, "disable", "true", NULL);
 
   if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
-    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<rasterized/>\n", n_indent + 2, ' ');
+    gimp_savable_print_element (output, n_indent + 2, "rasterized", NULL, NULL, NULL);
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</text-layer>\n", n_indent, ' ');
+  gimp_savable_print_element_end (output, n_indent, "text-layer");
 
   g_free (layer_name);
 }

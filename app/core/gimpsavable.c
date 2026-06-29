@@ -39,6 +39,12 @@
 #include "gimpsavable.h"
 
 
+static void gimp_savable_print_incomplete_element (GOutputStream *output,
+                                                   gint           n_indent,
+                                                   const gchar   *element_name,
+                                                   va_list        args);
+
+
 G_DEFINE_INTERFACE (GimpSavable, gimp_savable, G_TYPE_OBJECT)
 
 
@@ -49,6 +55,150 @@ gimp_savable_default_init (GimpSavableInterface *iface)
 
 
 /*  public functions  */
+
+void
+gimp_savable_save (GimpSavable   *savable,
+                   GOutputStream *output,
+                   gint           n_ident,
+                   GFile         *xcf_file,
+                   GHashTable    *icc_references)
+{
+  GimpSavableInterface *savable_iface;
+
+  g_return_if_fail (GIMP_IS_SAVABLE (savable));
+
+  savable_iface = GIMP_SAVABLE_GET_IFACE (savable);
+
+  if (savable_iface->save)
+    savable_iface->save (savable, output, n_ident, xcf_file, icc_references);
+}
+
+void
+gimp_savable_print_element_start (GOutputStream *output,
+                                  gint           n_indent,
+                                  const gchar   *element_name,
+                                  ...)
+{
+  va_list args;
+
+  va_start (args, element_name);
+  gimp_savable_print_incomplete_element (output, n_indent, element_name, args);
+  g_output_stream_printf (output, NULL, NULL, NULL, ">\n");
+  va_end (args);
+}
+
+void
+gimp_savable_print_element_end (GOutputStream *output,
+                                gint           n_indent,
+                                const gchar   *element_name)
+{
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</%s>\n",
+                          n_indent, ' ', element_name);
+}
+
+/**
+ * gimp_savable_print_element:
+ * @output:
+ * @n_indent:
+ * @element_name:
+ * @value_format:
+ * @...: a main value (or %NULL) followed by (name, format, value)
+ *       triplets for each attribute.
+ *
+ * This will create the element `<@element_name>`.
+ *
+ * If @value_format is not %NULL, then the next argument needs to be
+ * non-%NULL either and of the type corresponding to @value_format.
+ *
+ * Then, the arguments will be in triplets, with the first being an
+ * attribute name, the second a printf-style format (containing a single
+ * conversion specifier), the third an attribute value of corresponding
+ * type.
+ * End the list of attributes with %NULL.
+ *
+ * Ex:
+ * ```C
+ * gimp_savable_print_element (output, 0, "plop", "%f", 0.5,
+ *                             "hello", "%s", "world",
+ *                             "id", "%d", 10,
+ *                             NULL);
+ * ```
+ *
+ * will print: `<plop hello='world' id='10'>0.5</plop>`
+ */
+void
+gimp_savable_print_element (GOutputStream *output,
+                            gint           n_indent,
+                            const gchar   *element_name,
+                            const gchar   *value_format,
+                            ...)
+{
+  gchar   *strval = NULL;
+  va_list  args;
+
+  g_return_if_fail (G_IS_OUTPUT_STREAM (output));
+  g_return_if_fail (element_name != NULL);
+
+  va_start (args, value_format);
+
+  if (value_format)
+    {
+      if (g_strcmp0 ("%s", value_format) == 0)
+        {
+          const gchar *value = va_arg (args, gchar *);
+          strval = g_strdup_printf (value_format, value);
+        }
+      else if (g_strcmp0 ("%d", value_format) == 0)
+        {
+          gint value = va_arg (args, gint);
+          strval = g_strdup_printf (value_format, value);
+        }
+      else if (g_strcmp0 ("%u", value_format) == 0)
+        {
+          guint value = va_arg (args, guint);
+          strval = g_strdup_printf (value_format, value);
+        }
+      else if (g_strcmp0 ("%f", value_format) == 0)
+        {
+          gdouble value = va_arg (args, gdouble);
+          strval = g_strdup_printf (value_format, value);
+        }
+      else
+        {
+          g_return_if_reached ();
+        }
+
+      g_return_if_fail (strval != NULL);
+    }
+    else
+    {
+      /* Ignore the next arg which should be NULL too. */
+      void *value = va_arg (args, void *);
+
+      g_return_if_fail (value == NULL);
+    }
+
+  gimp_savable_print_incomplete_element (output, n_indent, element_name, args);
+
+  if (strval)
+    {
+      gchar *encoded;
+
+      encoded = g_markup_escape_text (strval, -1);
+
+      g_output_stream_printf (output, NULL, NULL, NULL, ">%s</%s>\n",
+                              encoded, element_name);
+
+      g_free (strval);
+      g_free (encoded);
+    }
+  else
+    {
+      g_output_stream_printf (output, NULL, NULL, NULL, "/>\n");
+    }
+
+  va_end (args);
+}
 
 void
 gimp_savable_config_save (GimpConfig    *config,
@@ -169,23 +319,6 @@ gimp_savable_config_save (GimpConfig    *config,
 
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c</%s>\n",
                           n_indent, ' ', element_name);
-}
-
-void
-gimp_savable_save (GimpSavable   *savable,
-                   GOutputStream *output,
-                   gint           n_ident,
-                   GFile         *xcf_file,
-                   GHashTable    *icc_references)
-{
-  GimpSavableInterface *savable_iface;
-
-  g_return_if_fail (GIMP_IS_SAVABLE (savable));
-
-  savable_iface = GIMP_SAVABLE_GET_IFACE (savable);
-
-  if (savable_iface->save)
-    savable_iface->save (savable, output, n_ident, xcf_file, icc_references);
 }
 
 void
@@ -553,4 +686,64 @@ gimp_savable_blend_space_save (GimpLayerColorSpace  blend_space,
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<blend-space%s>%s</blend-space>\n",
                           n_indent, ' ', auto_set ? " auto='true'" : "",
                           gimp_get_enum_value_nick (GIMP_TYPE_LAYER_COLOR_SPACE, blend_space));
+}
+
+
+/* Private Functions */
+
+static void
+gimp_savable_print_incomplete_element (GOutputStream *output,
+                                       gint           n_indent,
+                                       const gchar   *element_name,
+                                       va_list        args)
+{
+  const gchar *attr;
+  const gchar *format;
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s",
+                          n_indent, ' ', element_name);
+
+  attr  = va_arg (args, char *);
+  while (attr)
+    {
+      gchar *strval;
+      gchar *encoded;
+
+      format = va_arg (args, char *);
+      g_return_if_fail (format != NULL);
+
+      if (g_strcmp0 ("%s", format) == 0)
+        {
+          const gchar *value = va_arg (args, gchar *);
+          strval = g_strdup_printf (format, value);
+        }
+      else if (g_strcmp0 ("%d", format) == 0)
+        {
+          gint value = va_arg (args, gint);
+          strval = g_strdup_printf (format, value);
+        }
+      else if (g_strcmp0 ("%u", format) == 0)
+        {
+          guint value = va_arg (args, guint);
+          strval = g_strdup_printf (format, value);
+        }
+      else if (g_strcmp0 ("%f", format) == 0)
+        {
+          gdouble value = va_arg (args, gdouble);
+          strval = g_strdup_printf (format, value);
+        }
+      else
+        {
+          g_return_if_reached ();
+        }
+      g_return_if_fail (strval != NULL);
+
+      encoded = g_markup_escape_text (strval, -1);
+      g_output_stream_printf (output, NULL, NULL, NULL, " %s='%s'", attr, encoded);
+
+      attr  = va_arg (args, char *);
+
+      g_free (strval);
+      g_free (encoded);
+    }
 }

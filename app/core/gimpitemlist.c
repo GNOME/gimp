@@ -345,32 +345,32 @@ gimp_item_list_savable_save (GimpSavable   *savable,
 
   if (gimp_item_list_is_pattern (list, &pattern_syntax))
     {
-      g_output_stream_printf (output, NULL, NULL, NULL,
-                              "%*c<item-set type='%s'>\n", n_indent, ' ',
-                              g_type_name (gimp_item_list_get_item_type (list)));
-      g_output_stream_printf (output, NULL, NULL, NULL,
-                              "%*c<pattern method='%s'>%s</pattern>\n",
-                              n_indent + 2, ' ',
-                              gimp_get_enum_value_nick (GIMP_TYPE_SELECT_METHOD, pattern_syntax),
-                              encoded);
+      gimp_savable_print_element_start (output, n_indent, "item-set",
+                                        "type", "%s",
+                                        g_type_name (gimp_item_list_get_item_type (list)),
+                                        NULL);
+      gimp_savable_print_element (output, n_indent, "pattern", "%s", encoded,
+                                  "method", "%s",
+                                  gimp_get_enum_value_nick (GIMP_TYPE_SELECT_METHOD, pattern_syntax),
+                                  NULL);
     }
   else
     {
       GList *iter;
 
-      g_output_stream_printf (output, NULL, NULL, NULL,
-                              "%*c<item-set type='%s' name='%s'>\n",
-                              n_indent, ' ',
-                              g_type_name (gimp_item_list_get_item_type (list)),
-                              encoded);
+      gimp_savable_print_element_start (output, n_indent, "item-set",
+                                        "type", "%s",
+                                        g_type_name (gimp_item_list_get_item_type (list)),
+                                        "name", "%s", encoded,
+                                        NULL);
       for (iter = list->p->items; iter; iter = iter->next)
-        g_output_stream_printf (output, NULL, NULL, NULL,
-                                "%*c<item tattooref='%u'/>\n",
-                                n_indent + 2, ' ',
-                                (guint) gimp_item_get_tattoo (GIMP_ITEM (iter->data)));
+        gimp_savable_print_element (output, n_indent, "item", NULL, NULL,
+                                    "tattooref", "%u",
+                                    (guint) gimp_item_get_tattoo (GIMP_ITEM (iter->data)),
+                                    NULL);
     }
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</item-set>\n", n_indent, ' ');
+  gimp_savable_print_element_end (output, n_indent, "item-set");
 
   g_free (encoded);
 }
