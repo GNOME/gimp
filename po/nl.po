@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-27 11:19+0000\n"
-"PO-Revision-Date: 2026-06-27 14:41+0200\n"
+"POT-Creation-Date: 2026-06-28 19:11+0000\n"
+"PO-Revision-Date: 2026-06-29 10:24+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -41,7 +41,7 @@ msgstr "Project-Id-Version: GIMP 3.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: OmegaT 6.1.0\n"
+"X-Generator: OmegaT 6.2.0\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -490,7 +490,7 @@ msgstr "Bewerker gereedschapsvoorinstellingen"
 msgid "Help"
 msgstr "Hulp"
 
-#: app/actions/actions.c:192 app/core/gimpimage.c:629
+#: app/actions/actions.c:192 app/core/gimpimage.c:630
 msgid "Image"
 msgstr "Afbeelding"
 
@@ -2502,7 +2502,7 @@ msgstr "240 Seconden"
 #: app/dialogs/resize-dialog.c:227 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
-#: app/dialogs/path-export-dialog.c:87 app/dialogs/path-import-dialog.c:93
+#: app/dialogs/path-export-dialog.c:83 app/dialogs/path-import-dialog.c:93
 #: app/display/gimpdisplayshell-close.c:181
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
@@ -2524,7 +2524,7 @@ msgstr "_Annuleren"
 msgid "_Record"
 msgstr "_Opnemen"
 
-#: app/actions/dashboard-commands.c:144
+#: app/actions/dashboard-commands.c:144 app/dialogs/path-export-dialog.c:93
 msgid "All Files"
 msgstr "Alle bestanden"
 
@@ -2591,8 +2591,8 @@ msgstr "Openen van ‘%s’ is mislukt:\n"
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2699
-#: app/core/gimppalette.c:632 app/core/gimppalette-import.c:223
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2706
+#: app/core/gimppalette.c:634 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Naamloos"
@@ -4124,7 +4124,7 @@ msgid "Save Error Log to File"
 msgstr "Foutenlog in bestand opslaan"
 
 #: app/actions/error-console-commands.c:97 app/actions/gradients-commands.c:80
-#: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:88
+#: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:83
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
 #: app/widgets/gimpsettingsbox.c:704
 msgid "_Save"
@@ -7256,7 +7256,7 @@ msgid "Remove Alpha Channel"
 msgstr "Alfakanaal verwijderen"
 
 #: app/actions/layers-commands.c:1967 app/core/gimpchannel-select.c:433
-#: app/core/gimplayer.c:449
+#: app/core/gimplayer.c:455
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa naar selectie"
@@ -7694,308 +7694,313 @@ msgstr "Pa_d plakken"
 
 #: app/actions/paths-actions.c:145
 msgctxt "paths-action"
-msgid "E_xport Paths..."
-msgstr "Paden e_xporteren..."
-
-#: app/actions/paths-actions.c:150
-msgctxt "paths-action"
 msgid "I_mport Path..."
 msgstr "Pad i_mporteren..."
 
+#: app/actions/paths-actions.c:150
+msgctxt "paths-action"
+msgid "E_xport Selected Paths..."
+msgstr "Geselecteerde paden e_xporteren…"
+
 #: app/actions/paths-actions.c:155
+msgctxt "paths-action"
+msgid "Export _All Paths..."
+msgstr "_Alle paden exporteren…"
+
+#: app/actions/paths-actions.c:160
 msgctxt "paths-action"
 msgid "Path to Vector Layer"
 msgstr "Pad naar vectorlaag"
 
-#: app/actions/paths-actions.c:163
+#: app/actions/paths-actions.c:168
 msgctxt "paths-action"
 msgid "Toggle Path _Visibility"
 msgstr "_Zichtbaarheid pad in- en uitschakelen"
 
-#: app/actions/paths-actions.c:169
+#: app/actions/paths-actions.c:174
 msgctxt "paths-action"
 msgid "L_ock Strokes of Path"
 msgstr "Lijnen pad ver_grendelen"
 
-#: app/actions/paths-actions.c:175
+#: app/actions/paths-actions.c:180
 msgctxt "paths-action"
 msgid "L_ock Position of Path"
 msgstr "Positie kanaal vast_zetten"
 
-#: app/actions/paths-actions.c:184
+#: app/actions/paths-actions.c:189
 msgctxt "paths-action"
 msgid "None"
 msgstr "Geen"
 
-#: app/actions/paths-actions.c:185
+#: app/actions/paths-actions.c:190
 msgctxt "paths-action"
 msgid "Path Color Tag: Clear"
 msgstr "Kleurlabel pad: wissen"
 
-#: app/actions/paths-actions.c:190
+#: app/actions/paths-actions.c:195
 msgctxt "paths-action"
 msgid "Blue"
 msgstr "Blauw"
 
-#: app/actions/paths-actions.c:191
+#: app/actions/paths-actions.c:196
 msgctxt "paths-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Kleurlabel pad: naar blauw"
 
-#: app/actions/paths-actions.c:196
+#: app/actions/paths-actions.c:201
 msgctxt "paths-action"
 msgid "Green"
 msgstr "Groen"
 
-#: app/actions/paths-actions.c:197
+#: app/actions/paths-actions.c:202
 msgctxt "paths-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "Kleurlabel pad: naar groen"
 
-#: app/actions/paths-actions.c:202
+#: app/actions/paths-actions.c:207
 msgctxt "paths-action"
 msgid "Yellow"
 msgstr "Geel"
 
-#: app/actions/paths-actions.c:203
+#: app/actions/paths-actions.c:208
 msgctxt "paths-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "Kleurlabel pad: naar geel"
 
 # 24/05/08: of "mate"
-#: app/actions/paths-actions.c:208
+#: app/actions/paths-actions.c:213
 msgctxt "paths-action"
 msgid "Orange"
 msgstr "Oranje"
 
-#: app/actions/paths-actions.c:209
+#: app/actions/paths-actions.c:214
 msgctxt "paths-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "Kleurlabel pad: naar oranje"
 
-#: app/actions/paths-actions.c:214
+#: app/actions/paths-actions.c:219
 msgctxt "paths-action"
 msgid "Brown"
 msgstr "Bruin"
 
-#: app/actions/paths-actions.c:215
+#: app/actions/paths-actions.c:220
 msgctxt "paths-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "Kleurlabel pad: naar bruin"
 
-#: app/actions/paths-actions.c:220
+#: app/actions/paths-actions.c:225
 msgctxt "paths-action"
 msgid "Red"
 msgstr "Rood"
 
-#: app/actions/paths-actions.c:221
+#: app/actions/paths-actions.c:226
 msgctxt "paths-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "Kleurlabel pad: naar rood"
 
-#: app/actions/paths-actions.c:226
+#: app/actions/paths-actions.c:231
 msgctxt "paths-action"
 msgid "Violet"
 msgstr "Paars"
 
-#: app/actions/paths-actions.c:227
+#: app/actions/paths-actions.c:232
 msgctxt "paths-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Kleurlabel pad: naar paars"
 
-#: app/actions/paths-actions.c:232
+#: app/actions/paths-actions.c:237
 msgctxt "paths-action"
 msgid "Gray"
 msgstr "Grijswaarden"
 
 # grijswaarden/grijstinten
-#: app/actions/paths-actions.c:233
+#: app/actions/paths-actions.c:238
 msgctxt "paths-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "Kleurlabel pad: naar grijs"
 
-#: app/actions/paths-actions.c:241
+#: app/actions/paths-actions.c:246
 msgctxt "paths-action"
 msgid "Paths to Sele_ction"
 msgstr "Paden naar sele_ctie"
 
-#: app/actions/paths-actions.c:242
+#: app/actions/paths-actions.c:247
 msgctxt "paths-action"
 msgid "Path to selection"
 msgstr "Pad naar selectie"
 
-#: app/actions/paths-actions.c:247
+#: app/actions/paths-actions.c:252
 msgctxt "paths-action"
 msgid "Selection Fr_om Paths"
 msgstr "Selectie _uit paden"
 
-#: app/actions/paths-actions.c:248
+#: app/actions/paths-actions.c:253
 msgctxt "paths-action"
 msgid "Replace selection with paths"
 msgstr "Selectie vervangen door paden"
 
-#: app/actions/paths-actions.c:253
+#: app/actions/paths-actions.c:258
 msgctxt "paths-action"
 msgid "_Add Paths to Selection"
 msgstr "Paden _toevoegen aan selectie"
 
-#: app/actions/paths-actions.c:254
+#: app/actions/paths-actions.c:259
 msgctxt "paths-action"
 msgid "Add paths to selection"
 msgstr "Deze paden aan de selectie toevoegen"
 
 # afhalen
-#: app/actions/paths-actions.c:259
+#: app/actions/paths-actions.c:264
 msgctxt "paths-action"
 msgid "_Subtract Paths from Selection"
 msgstr "Paden _van selectie aftrekken"
 
 # afhalen
-#: app/actions/paths-actions.c:260
+#: app/actions/paths-actions.c:265
 msgctxt "paths-action"
 msgid "Subtract paths from selection"
 msgstr "Paden van selectie aftrekken"
 
-#: app/actions/paths-actions.c:265
+#: app/actions/paths-actions.c:270
 msgctxt "paths-action"
 msgid "_Intersect Paths with Selection"
 msgstr "Door_snede van paden met selectie"
 
-#: app/actions/paths-actions.c:266
+#: app/actions/paths-actions.c:271
 msgctxt "paths-action"
 msgid "Intersect paths with selection"
 msgstr "Doorsnede maken van de paden met de huidige selectie"
 
-#: app/actions/paths-actions.c:274
+#: app/actions/paths-actions.c:279
 msgctxt "paths-action"
 msgid "Selecti_on to Path"
 msgstr "S_electie naar pad"
 
-#: app/actions/paths-actions.c:275
+#: app/actions/paths-actions.c:280
 msgctxt "paths-action"
 msgid "To _Path"
 msgstr "Naar _pad"
 
-#: app/actions/paths-actions.c:276
+#: app/actions/paths-actions.c:281
 msgctxt "paths-action"
 msgid "Selection to path"
 msgstr "Selectie naar pad"
 
-#: app/actions/paths-actions.c:281
+#: app/actions/paths-actions.c:286
 msgctxt "paths-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Selectie naar pad (ge_avanceerd)"
 
-#: app/actions/paths-actions.c:282
+#: app/actions/paths-actions.c:287
 msgctxt "paths-action"
 msgid "Advanced options"
 msgstr "Geavanceerde opties"
 
-#: app/actions/paths-actions.c:290
+#: app/actions/paths-actions.c:295
 msgctxt "paths-action"
 msgid "Select _Top Path"
 msgstr "Bovens_te pad selecteren"
 
-#: app/actions/paths-actions.c:291
+#: app/actions/paths-actions.c:296
 msgctxt "paths-action"
 msgid "Select the topmost path"
 msgstr "Bovenste pad selecteren"
 
-#: app/actions/paths-actions.c:296
+#: app/actions/paths-actions.c:301
 msgctxt "paths-action"
 msgid "Select _Bottom Path"
 msgstr "_Onderste pad selecteren"
 
-#: app/actions/paths-actions.c:297
+#: app/actions/paths-actions.c:302
 msgctxt "paths-action"
 msgid "Select the bottommost path"
 msgstr "Het onderste pad selecteren"
 
-#: app/actions/paths-actions.c:302
+#: app/actions/paths-actions.c:307
 msgctxt "paths-action"
 msgid "Select _Previous Path"
 msgstr "_Vorig pad selecteren"
 
-#: app/actions/paths-actions.c:303
+#: app/actions/paths-actions.c:308
 msgctxt "paths-action"
 msgid "Select the path above the current path"
 msgstr "Het pad boven het huidige pad selecteren"
 
-#: app/actions/paths-actions.c:308
+#: app/actions/paths-actions.c:313
 msgctxt "paths-action"
 msgid "Select _Next Path"
 msgstr "Volge_nd pad selecteren"
 
-#: app/actions/paths-actions.c:309
+#: app/actions/paths-actions.c:314
 msgctxt "paths-action"
 msgid "Select the path below the current path"
 msgstr "Het pad onder het huidige pad selecteren"
 
-#: app/actions/paths-commands.c:176 app/actions/paths-commands.c:958
+#: app/actions/paths-commands.c:178 app/actions/paths-commands.c:967
 msgid "Path Attributes"
 msgstr "Padattributen"
 
-#: app/actions/paths-commands.c:179
+#: app/actions/paths-commands.c:181
 msgid "Edit Path Attributes"
 msgstr "Padattributen bewerken"
 
-#: app/actions/paths-commands.c:218
+#: app/actions/paths-commands.c:220
 msgid "New Path"
 msgstr "Nieuw pad"
 
-#: app/actions/paths-commands.c:221
+#: app/actions/paths-commands.c:223
 msgid "Create a New Path"
 msgstr "Nieuw pad aanmaken"
 
-#: app/actions/paths-commands.c:288
+#: app/actions/paths-commands.c:290
 msgid "Raise Path"
 msgid_plural "Raise Paths"
 msgstr[0] "Pad omhoog"
 msgstr[1] "Paden omhoog"
 
-#: app/actions/paths-commands.c:326
+#: app/actions/paths-commands.c:328
 msgid "Raise Path to Top"
 msgid_plural "Raise Paths to Top"
 msgstr[0] "Pad bovenaan"
 msgstr[1] "Paden bovenaan"
 
-#: app/actions/paths-commands.c:373
+#: app/actions/paths-commands.c:375
 msgid "Lower Path"
 msgid_plural "Lower Paths"
 msgstr[0] "Pad omlaag"
 msgstr[1] "Paden omlaag"
 
-#: app/actions/paths-commands.c:413
+#: app/actions/paths-commands.c:415
 msgid "Lower Path to Bottom"
 msgid_plural "Lower Paths to Bottom"
 msgstr[0] "Pad onderaan"
 msgstr[1] "Paden onderaan"
 
-#: app/actions/paths-commands.c:443
+#: app/actions/paths-commands.c:445
 msgid "Duplicate Paths"
 msgstr "Paden dupliceren"
 
-#: app/actions/paths-commands.c:488
+#: app/actions/paths-commands.c:490
 msgid "Cannot delete paths attached to vector layers"
 msgstr "Kan geen paden verwijderen die verbonden zijn met vectorlagen"
 
-#: app/actions/paths-commands.c:499
+#: app/actions/paths-commands.c:501
 msgid "Remove Paths"
 msgstr "Paden verwijderen"
 
-#: app/actions/paths-commands.c:535
+#: app/actions/paths-commands.c:537
 msgid "Cannot merge paths attached to vector layers"
 msgstr "Kan geen paden samenvoegen die verbonden zijn met vectorlagen"
 
-#: app/actions/paths-commands.c:589
+#: app/actions/paths-commands.c:591
 msgid "Paths to selection"
 msgstr "Paden naar selectie"
 
-#: app/actions/paths-commands.c:669
+#: app/actions/paths-commands.c:671
 msgid "Fill Path"
 msgstr "Pad vullen"
 
-#: app/actions/paths-commands.c:697
+#: app/actions/paths-commands.c:699
 msgid "Stroke Path"
 msgstr "Pad belijnen"
 
@@ -10715,7 +10720,7 @@ msgstr "Er trad een fout op bij het parsen van uw bestand ‘%s’. Standaard wa
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Patroonsyntaxis voor het zoeken en selecteren van items:"
 
-#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:420
+#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:426
 msgid "Layer"
 msgstr "Laag"
 
@@ -13052,7 +13057,7 @@ msgstr "Kon dochterproces \"%s\" (%s) niet uitvoeren"
 msgid "tags-locale:C"
 msgstr "tags-locale:nl"
 
-#: app/core/gimp-tags.c:156 app/core/gimpimage.c:3142 app/gui/themes.c:731
+#: app/core/gimp-tags.c:156 app/core/gimpimage.c:3150 app/gui/themes.c:731
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Fout bij het sluiten van ‘%s’: %s"
@@ -13100,17 +13105,17 @@ msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
 msgstr "Fatale fout bij parsen in Photoshop bronbestand: RLE gecomprimeerde gegevens zijn corrupt."
 
-#: app/core/gimp-utils.c:1827
+#: app/core/gimp-utils.c:1846
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Deze parser ondersteunt geen overlappende lijsten."
 
-#: app/core/gimp-utils.c:1850
+#: app/core/gimp-utils.c:1869
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> moet tussen <ol> of <ul> labels."
 
-#: app/core/gimp-utils.c:1855
+#: app/core/gimp-utils.c:1874
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Onbekend label <%s>."
@@ -13505,7 +13510,7 @@ msgstr "Selectiemasker"
 msgid "Foreground"
 msgstr "Voorgrond"
 
-#: app/core/gimpcontext.c:669 app/core/gimpgrid.c:105
+#: app/core/gimpcontext.c:669 app/core/gimpgrid.c:107
 msgid "Foreground color"
 msgstr "Voorgrondkleur"
 
@@ -13513,7 +13518,7 @@ msgstr "Voorgrondkleur"
 msgid "Background"
 msgstr "Achtergrond"
 
-#: app/core/gimpcontext.c:676 app/core/gimpgrid.c:112
+#: app/core/gimpcontext.c:676 app/core/gimpgrid.c:114
 msgid "Background color"
 msgstr "Achtergrondkleur"
 
@@ -13542,14 +13547,14 @@ msgid "Pattern"
 msgstr "Patroon"
 
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
-#: app/core/gimpgradient.c:125 app/pdb/drawable-edit-cmds.c:255
+#: app/core/gimpgradient.c:136 app/pdb/drawable-edit-cmds.c:255
 #: app/tools/gimpgradientoptions.c:286 app/tools/gimpgradienttool.c:174
 #: app/tools/gimpgradienttool.c:862 app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "Kleurverlopen"
 
 #: app/core/gimpcontext.c:734 app/core/gimpcontext.c:735
-#: app/core/gimppalette.c:139 app/widgets/gimpcolorselectorpalette.c:59
+#: app/core/gimppalette.c:140 app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "Palet"
 
@@ -13649,7 +13654,7 @@ msgstr "Kon gegevens niet laden:\n"
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:692 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:693 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Schalen"
@@ -13670,7 +13675,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Gelijkmaken"
 
-#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:794
+#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:800
 msgid "Floating Selection"
 msgstr "Zwevende selectie"
 
@@ -13730,7 +13735,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Draaien"
 
-#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:448
+#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:454
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Laag transformeren"
@@ -13739,21 +13744,21 @@ msgstr "Laag transformeren"
 msgid "Transformation"
 msgstr "Transformatie"
 
-#: app/core/gimpdrawablefilter.c:959
+#: app/core/gimpdrawablefilter.c:1177
 #, c-format
 msgid ""
 "GEGL operation '%s' has been called with a non-existent argument name '%s' "
 "(#%d)."
 msgstr "GEGL-bewerking '%s' werd aangeroepen met een niet bestaande naam voor een argument ‘%s’ (#%d)."
 
-#: app/core/gimpdrawablefilter.c:1023
+#: app/core/gimpdrawablefilter.c:1241
 #, c-format
 msgid ""
 "GEGL operation '%s' has been called with a wrong value type for argument "
 "'%s' (#%d). Expected %s, got %s."
 msgstr "GEGL bewerking ‘%s’ is geannuleerd met een verkeerd type waarde voor het argument ‘%s’ (#%d). Verwachtte %s, kreeg %s."
 
-#: app/core/gimpdrawablefilter.c:1098
+#: app/core/gimpdrawablefilter.c:1316
 #, c-format
 msgid ""
 "GEGL operation '%s' has been called with an invalid aux input name '%s'."
@@ -13764,8 +13769,8 @@ msgstr "GEGL-bewerking ‘%s’ werd aangeroepen met een ongeldige invoernaam vo
 msgid "Cannot rename effect masks."
 msgstr "Kan effectmaskers niet hernoemen."
 
-#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:754
-#: app/core/gimplayer.c:2102 app/core/gimplayermask.c:304
+#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:760
+#: app/core/gimplayer.c:2192 app/core/gimplayermask.c:304
 #, c-format
 msgid "%s mask"
 msgstr "%s masker"
@@ -13882,61 +13887,61 @@ msgstr "Geen lineaire kleurverlopen gevonden."
 msgid "Writing POV file '%s' failed: %s"
 msgstr "Wegschrijven POV-bestand ‘%s’ mislukt: %s"
 
-#: app/core/gimpgrid.c:97
+#: app/core/gimpgrid.c:99
 msgid "Line style"
 msgstr "Lijnstijl"
 
-#: app/core/gimpgrid.c:98
+#: app/core/gimpgrid.c:100
 msgid "Line style used for the grid."
 msgstr "Lijnstijl van het raster."
 
-#: app/core/gimpgrid.c:106
+#: app/core/gimpgrid.c:108
 msgid "The foreground color of the grid."
 msgstr "De voorgrondkleur van het raster."
 
-#: app/core/gimpgrid.c:113
+#: app/core/gimpgrid.c:115
 msgid ""
 "The background color of the grid; only used in double dashed line style."
 msgstr "De achtergrondkleur van het raster; wordt alleen gebruikt in dubbelgestreepte lijnstijl."
 
-#: app/core/gimpgrid.c:120
+#: app/core/gimpgrid.c:122
 msgid "Spacing X"
 msgstr "Tussenruimte X"
 
-#: app/core/gimpgrid.c:121
+#: app/core/gimpgrid.c:123
 msgid "Horizontal spacing of grid lines."
 msgstr "Horizontale afstand tussen rasterlijnen."
 
-#: app/core/gimpgrid.c:127
+#: app/core/gimpgrid.c:129
 msgid "Spacing Y"
 msgstr "Tussenruimte Y"
 
-#: app/core/gimpgrid.c:128
+#: app/core/gimpgrid.c:130
 msgid "Vertical spacing of grid lines."
 msgstr "Verticale afstand tussen rasterlijnen."
 
-#: app/core/gimpgrid.c:134
+#: app/core/gimpgrid.c:136
 msgid "Spacing unit"
 msgstr "Tussenruimte-maat"
 
-#: app/core/gimpgrid.c:141
+#: app/core/gimpgrid.c:143
 msgid "Offset X"
 msgstr "Verschuiving X"
 
-#: app/core/gimpgrid.c:142
+#: app/core/gimpgrid.c:144
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
 msgstr "Horizontale verschuiving van de eerste rasterlijn; dit mag een negatief getal zijn."
 
-#: app/core/gimpgrid.c:150
+#: app/core/gimpgrid.c:152
 msgid "Offset Y"
 msgstr "Verschuiving Y"
 
-#: app/core/gimpgrid.c:151
+#: app/core/gimpgrid.c:153
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "Verticale verschuiving van de eerste rasterlijn; dit mag een negatief getal zijn."
 
-#: app/core/gimpgrid.c:159
+#: app/core/gimpgrid.c:161
 msgid "Offset unit"
 msgstr "Eenheid verschuiving"
 
@@ -13979,200 +13984,200 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Laaggroep transformeren"
 
-#: app/core/gimpimage.c:716 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:717 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "Symmetrie"
 
-#: app/core/gimpimage.c:2290 app/pdb/drawable-filter-cmds.c:661
+#: app/core/gimpimage.c:2297 app/pdb/drawable-filter-cmds.c:661
 #: app/widgets/gimpdrawabletreeview-filters.c:974
 msgid "Remove filter"
 msgstr "Filter verwijderen"
 
-#: app/core/gimpimage.c:2944
+#: app/core/gimpimage.c:2951
 msgid " (exported)"
 msgstr " (geëxporteerd)"
 
-#: app/core/gimpimage.c:2948
+#: app/core/gimpimage.c:2955
 msgid " (overwritten)"
 msgstr " (overschreven)"
 
-#: app/core/gimpimage.c:2957
+#: app/core/gimpimage.c:2964
 msgid " (imported)"
 msgstr " (geïmporteerd)"
 
-#: app/core/gimpimage.c:3125
+#: app/core/gimpimage.c:3133
 #, c-format
 msgid "Error creating '%s': %s"
 msgstr "Fout bij maken van ‘%s’: %s"
 
-#: app/core/gimpimage.c:3213 app/core/gimpimage.c:3227
-#: app/core/gimpimage.c:3270
+#: app/core/gimpimage.c:3221 app/core/gimpimage.c:3235
+#: app/core/gimpimage.c:3278
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Laagmodus ‘%s’ is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3291
+#: app/core/gimpimage.c:3299
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Laaggroepen toegevoegd in %s"
 
-#: app/core/gimpimage.c:3298
+#: app/core/gimpimage.c:3306
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maskers op laaggroepen zijn toegevoegd in %s"
 
-#: app/core/gimpimage.c:3305
+#: app/core/gimpimage.c:3313
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Positie vergrendelen op laaggroepen werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:3312
+#: app/core/gimpimage.c:3320
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Alfakanaal vergrendelen op laaggroepen werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:3320 app/core/gimpimage.c:3387
+#: app/core/gimpimage.c:3328 app/core/gimpimage.c:3395
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Vergrendelen van zichtbaarheid is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3331
+#: app/core/gimpimage.c:3339
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Weergave van de tekst in de tekstlaag is veranderd in %s"
 
-#: app/core/gimpimage.c:3339
+#: app/core/gimpimage.c:3347
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Laageffecten toegevoegd in %s"
 
-#: app/core/gimpimage.c:3351
+#: app/core/gimpimage.c:3359
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Een nieuwe perceptuele mengruimte werd toegevoegd %s"
 
-#: app/core/gimpimage.c:3365
+#: app/core/gimpimage.c:3373
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "Vectorlagen werden toegevoegd %s"
 
-#: app/core/gimpimage.c:3373
+#: app/core/gimpimage.c:3381
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "Koppelingslagen werden toegevoegd in %s"
 
-#: app/core/gimpimage.c:3396
+#: app/core/gimpimage.c:3404
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Selectie van meerdere paden is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3408
+#: app/core/gimpimage.c:3416
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Ondersteuning van kleurlabels in een pad toegevoegd in %s"
 
-#: app/core/gimpimage.c:3415
+#: app/core/gimpimage.c:3423
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Positie vergrendelen op paden werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:3429
+#: app/core/gimpimage.c:3437
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Ondersteuning van grotere bitdiepte in %s"
 
-#: app/core/gimpimage.c:3437
+#: app/core/gimpimage.c:3445
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Fout tijdens coderen van afbeeldingen met grote bitdiepte hersteld in %s"
 
-#: app/core/gimpimage.c:3445
+#: app/core/gimpimage.c:3453
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Interne zlib-compressie toegevoegd in %s"
 
-#: app/core/gimpimage.c:3462
+#: app/core/gimpimage.c:3470
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Ondersteuning van afbeeldingen groter dan 4 GB toegevoegd in %s"
 
-#: app/core/gimpimage.c:3469
+#: app/core/gimpimage.c:3477
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Selectie van meerdere lagen is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3486
+#: app/core/gimpimage.c:3494
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Hulplijnen buiten het canvas toegevoegd in %s"
 
-#: app/core/gimpimage.c:3497
+#: app/core/gimpimage.c:3505
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Item instellen en patroon zoeken in itemnaam zijn toegevoegd in %s"
 
-#: app/core/gimpimage.c:3503
+#: app/core/gimpimage.c:3511
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Selectie van meerdere kanalen is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3623
+#: app/core/gimpimage.c:3631
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Afbeeldingsresolutie wijzigen"
 
-#: app/core/gimpimage.c:3675
+#: app/core/gimpimage.c:3683
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Afbeeldingseenheid wijzigen"
 
-#: app/core/gimpimage.c:4700
+#: app/core/gimpimage.c:4708
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "'gimp-commentaar' parasietvalidatie faalde: commentaar bevat ongeldige UTF-8 tekens"
 
-#: app/core/gimpimage.c:4762
+#: app/core/gimpimage.c:4770
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Parasiet aan afbeelding koppelen"
 
-#: app/core/gimpimage.c:4807
+#: app/core/gimpimage.c:4815
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Parasiet uit afbeelding verwijderen"
 
-#: app/core/gimpimage.c:5780
+#: app/core/gimpimage.c:5788
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Laag toevoegen"
 
-#: app/core/gimpimage.c:5840 app/core/gimpimage.c:5871
+#: app/core/gimpimage.c:5848 app/core/gimpimage.c:5879
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Laag verwijderen"
 
-#: app/core/gimpimage.c:5865
+#: app/core/gimpimage.c:5873
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Zwevende selectie verwijderen"
 
-#: app/core/gimpimage.c:6028
+#: app/core/gimpimage.c:6036
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanaal toevoegen"
 
-#: app/core/gimpimage.c:6058 app/core/gimpimage.c:6086
+#: app/core/gimpimage.c:6066 app/core/gimpimage.c:6094
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanaal verwijderen"
 
-#: app/core/gimpimage.c:6148
+#: app/core/gimpimage.c:6156
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Pad toevoegen"
 
-#: app/core/gimpimage.c:6183 app/core/gimpimage.c:6191
+#: app/core/gimpimage.c:6191 app/core/gimpimage.c:6199
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Pad verwijderen"
@@ -14249,7 +14254,7 @@ msgstr "Conversie kleurprofiel"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Kleurenkaart van afbeelding #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:953
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:955
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Kleurenkaart instellen"
@@ -14259,7 +14264,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Kleurenkaart weghalen"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:744
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:746
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Item in kleurenkaart wijzigen"
@@ -14552,7 +14557,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zwevende selectie verankeren"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1100
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1106
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14563,79 +14568,79 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Zwevende selectie naar laag"
 
-#: app/core/gimplayer.c:442
+#: app/core/gimplayer.c:448
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Laag hernoemen"
 
-#: app/core/gimplayer.c:443
+#: app/core/gimplayer.c:449
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Laag verplaatsen"
 
-#: app/core/gimplayer.c:444
+#: app/core/gimplayer.c:450
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Laag schalen"
 
-#: app/core/gimplayer.c:445
+#: app/core/gimplayer.c:451
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Grootte laag wijzigen"
 
-#: app/core/gimplayer.c:446
+#: app/core/gimplayer.c:452
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Laag spiegelen"
 
-#: app/core/gimplayer.c:447
+#: app/core/gimplayer.c:453
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Laag draaien"
 
 # What does this mean?
-#: app/core/gimplayer.c:450
+#: app/core/gimplayer.c:456
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Laag herschikken"
 
-#: app/core/gimplayer.c:451
+#: app/core/gimplayer.c:457
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Laag omhoog"
 
-#: app/core/gimplayer.c:452
+#: app/core/gimplayer.c:458
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Laag bovenaan"
 
-#: app/core/gimplayer.c:453
+#: app/core/gimplayer.c:459
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Laag omlaag"
 
-#: app/core/gimplayer.c:454
+#: app/core/gimplayer.c:460
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Laag onderaan"
 
-#: app/core/gimplayer.c:455
+#: app/core/gimplayer.c:461
 msgid "Layer cannot be raised higher."
 msgstr "Laag kan niet verder naar boven."
 
-#: app/core/gimplayer.c:456
+#: app/core/gimplayer.c:462
 msgid "Layer cannot be lowered more."
 msgstr "Laag kan niet verder naar beneden."
 
-#: app/core/gimplayer.c:798
+#: app/core/gimplayer.c:804
 msgid "Floating Mask"
 msgstr "Zwevend masker"
 
-#: app/core/gimplayer.c:800
+#: app/core/gimplayer.c:806
 msgid "Floating Channel"
 msgstr "Zwevend kanaal"
 
-#: app/core/gimplayer.c:802
+#: app/core/gimplayer.c:808
 msgid "Floating Layer"
 msgstr "Zwevende laag"
 
@@ -14643,7 +14648,7 @@ msgstr "Zwevende laag"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:807
+#: app/core/gimplayer.c:813
 #, c-format
 msgid ""
 "%s\n"
@@ -14651,73 +14656,73 @@ msgid ""
 msgstr "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1993
+#: app/core/gimplayer.c:2083
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan geen laagmasker toevoegen omdat de laag er al een heeft."
 
-#: app/core/gimplayer.c:2005
+#: app/core/gimplayer.c:2095
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Kan geen laagmasker toevoegen met andere afmetingen dan de gespecificeerde laag."
 
-#: app/core/gimplayer.c:2011
+#: app/core/gimplayer.c:2101
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Laagmaskers toevoegen"
 
-#: app/core/gimplayer.c:2141
+#: app/core/gimplayer.c:2231
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Alfa naar masker verplaatsen"
 
-#: app/core/gimplayer.c:2305
+#: app/core/gimplayer.c:2395
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Laagmaskers toepassen"
 
-#: app/core/gimplayer.c:2306
+#: app/core/gimplayer.c:2396
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Laagmaskers verwijderen"
 
-#: app/core/gimplayer.c:2416
+#: app/core/gimplayer.c:2506
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Laagmaskers inschakelen"
 
-#: app/core/gimplayer.c:2417
+#: app/core/gimplayer.c:2507
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Laagmaskers uitschakelen"
 
-#: app/core/gimplayer.c:2498
+#: app/core/gimplayer.c:2588
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Laagmaskers tonen"
 
-#: app/core/gimplayer.c:2577
+#: app/core/gimplayer.c:2667
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Alfakanaal toevoegen"
 
-#: app/core/gimplayer.c:2607
+#: app/core/gimplayer.c:2697
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Alfakanaal verwijderen"
 
-#: app/core/gimplayer.c:2628
+#: app/core/gimplayer.c:2718
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Laag naar afbeeldingsgrootte"
 
-#: app/core/gimplayer.c:2811
+#: app/core/gimplayer.c:2901
 msgid "Set layer's blend space"
 msgstr "De overvloeiruimte van de laag instellen"
 
-#: app/core/gimplayer.c:2858
+#: app/core/gimplayer.c:2948
 msgid "Set layer's composite space"
 msgstr "De composietruimte van de laag instellen"
 
-#: app/core/gimplayer.c:2905
+#: app/core/gimplayer.c:2995
 msgid "Set layer's composite mode"
 msgstr "Laagcompositiemodus instellen"
 
@@ -14776,47 +14781,47 @@ msgstr "Maximale rechte lengte om te sluiten"
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Maximale rechte lengte (in pixels) om contouren te sluiten"
 
-#: app/core/gimplink.c:256
+#: app/core/gimplink.c:302
 msgid "The file got deleted"
 msgstr "Het bestand werd verwijderd"
 
-#: app/core/gimplink.c:351
+#: app/core/gimplink.c:397
 msgid "No file was set"
 msgstr "Er werd geen bestand ingesteld"
 
-#: app/core/gimplinklayer.c:198
+#: app/core/gimplinklayer.c:211
 msgid "Link Layer"
 msgstr "Koppelingslaag"
 
-#: app/core/gimplinklayer.c:207
+#: app/core/gimplinklayer.c:220
 msgid "Rename Link Layer"
 msgstr "Koppelingslaag hernoemen"
 
-#: app/core/gimplinklayer.c:208
+#: app/core/gimplinklayer.c:221
 msgid "Move Link Layer"
 msgstr "Koppelingslaag verplaatsen"
 
-#: app/core/gimplinklayer.c:209
+#: app/core/gimplinklayer.c:222
 msgid "Scale Link Layer"
 msgstr "Koppelingslaag schalen"
 
-#: app/core/gimplinklayer.c:210
+#: app/core/gimplinklayer.c:223
 msgid "Resize Link Layer"
 msgstr "Koppelingslaag grootte aanpassen"
 
-#: app/core/gimplinklayer.c:211
+#: app/core/gimplinklayer.c:224
 msgid "Flip Link Layer"
 msgstr "Koppelingslaag spiegelen"
 
-#: app/core/gimplinklayer.c:212
+#: app/core/gimplinklayer.c:225
 msgid "Rotate Link Layer"
 msgstr "Koppelingslaag draaien"
 
-#: app/core/gimplinklayer.c:213 app/core/gimplinklayer.c:566
+#: app/core/gimplinklayer.c:226 app/core/gimplinklayer.c:587
 msgid "Transform Link Layer"
 msgstr "Koppelingslaag transformeren"
 
-#: app/core/gimplinklayer.c:812
+#: app/core/gimplinklayer.c:863
 msgid "Set layer link"
 msgstr "Koppelingslaag instellen"
 
@@ -14830,7 +14835,7 @@ msgstr "MyPaint-penseelbestand is onredelijk groot, wordt overgeslagen."
 msgid "Failed to deserialize MyPaint brush."
 msgstr "Kon MyPaint-penseel niet deserializeren (bit naar byte)."
 
-#: app/core/gimppalette.c:549
+#: app/core/gimppalette.c:551
 msgctxt "undo-type"
 msgid "Change Colormap format restriction"
 msgstr "Beperking indeling kleurenkaart wijzigen"
@@ -15514,16 +15519,16 @@ msgstr "Bestand met voorinstellingen gereedschappen is gecorrumpeerd."
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:159
+#: app/dialogs/about-dialog.c:244
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revisie %d)"
 
-#: app/dialogs/about-dialog.c:167
+#: app/dialogs/about-dialog.c:252
 msgid "About GIMP"
 msgstr "Over GIMP"
 
-#: app/dialogs/about-dialog.c:176
+#: app/dialogs/about-dialog.c:261
 msgid "Visit the GIMP website"
 msgstr "Bezoek de website van GIMP"
 
@@ -15531,7 +15536,7 @@ msgstr "Bezoek de website van GIMP"
 #  we’d prefer just the names, please no email adresses.
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:182
+#: app/dialogs/about-dialog.c:267
 msgid "translator-credits"
 msgstr "vertalers:\n"
 "Wing Tung Leung\n"
@@ -15551,34 +15556,34 @@ msgstr "vertalers:\n"
 "Dick Groskamp\n"
 "Meer info over GNOME-NL https://matrix.to/#/#nl:gnome.org"
 
-#: app/dialogs/about-dialog.c:236 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:321 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "_Hulp"
 
 # types/typen/soorten
-#: app/dialogs/about-dialog.c:413
+#: app/dialogs/about-dialog.c:498
 msgid "Update available!"
 msgstr "Update beschikbaar!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:443
+#: app/dialogs/about-dialog.c:528
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Download GIMP %s versie %d (uitgegeven op %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:453
+#: app/dialogs/about-dialog.c:538
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>opmerkingen bij deze versie</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:458
+#: app/dialogs/about-dialog.c:543
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Download GIMP %s (van %s)\n"
 
-#: app/dialogs/about-dialog.c:483 app/dialogs/about-dialog.c:506
+#: app/dialogs/about-dialog.c:568 app/dialogs/about-dialog.c:591
 msgid "Check for updates"
 msgstr "Controleren op nieuwe versie"
 
@@ -15586,7 +15591,7 @@ msgstr "Controleren op nieuwe versie"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:603
+#: app/dialogs/about-dialog.c:612
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Laatste controle was op %s om %s"
@@ -15595,16 +15600,16 @@ msgstr "Laatste controle was op %s om %s"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:609
+#: app/dialogs/about-dialog.c:618
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "Up-to-date vanaf %s om %s"
 
-#: app/dialogs/about-dialog.c:837
+#: app/dialogs/about-dialog.c:846
 msgid "GIMP is brought to you by"
 msgstr "GIMP is gemaakt door"
 
-#: app/dialogs/about-dialog.c:912
+#: app/dialogs/about-dialog.c:921
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -18583,17 +18588,13 @@ msgstr "De GIMP gebruikersinstallatie is mislukt; zie het log voor details."
 msgid "Installation Log"
 msgstr "Installatielog"
 
-#: app/dialogs/path-export-dialog.c:84
-msgid "Export Path to SVG"
-msgstr "Pad naar SVG exporteren"
+#: app/dialogs/path-export-dialog.c:81
+msgid "Export Paths to SVG"
+msgstr "Paden naar SVG exporteren"
 
-#: app/dialogs/path-export-dialog.c:134
-msgid "Export the selected paths"
-msgstr "De geselecteerde paden exporteren"
-
-#: app/dialogs/path-export-dialog.c:135
-msgid "Export all paths from this image"
-msgstr "Alle paden van deze afbeelding exporteren"
+#: app/dialogs/path-export-dialog.c:98
+msgid "SVG (*.svg)"
+msgstr "SVG (*.svg)"
 
 #: app/dialogs/path-import-dialog.c:90
 msgid "Import Paths from SVG"
@@ -21666,8 +21667,8 @@ msgstr "Wegschrijven PDB-bestand ‘%s’ is mislukt: %s"
 #. TRANSLATOR: %s is a data label from the
 #. * PDB-error-data-label context.
 #.
-#: app/pdb/gimppdb-utils.c:84 app/pdb/gimppdb-utils.c:168
-#: app/pdb/gimppdb-utils.c:235
+#: app/pdb/gimppdb-utils.c:85 app/pdb/gimppdb-utils.c:169
+#: app/pdb/gimppdb-utils.c:236
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s name cannot be empty"
@@ -21677,8 +21678,8 @@ msgstr "%s naam mag niet leeg zijn"
 #. * PDB-error-data-label context. The second %s is a data
 #. * name.
 #.
-#: app/pdb/gimppdb-utils.c:111 app/pdb/gimppdb-utils.c:183
-#: app/pdb/gimppdb-utils.c:250
+#: app/pdb/gimppdb-utils.c:112 app/pdb/gimppdb-utils.c:184
+#: app/pdb/gimppdb-utils.c:251
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' not found"
@@ -21688,8 +21689,8 @@ msgstr "%s ‘%s’ is niet gevonden"
 #. * PDB-error-data-label context. The second %s is a data
 #. * name.
 #.
-#: app/pdb/gimppdb-utils.c:126 app/pdb/gimppdb-utils.c:193
-#: app/pdb/gimppdb-utils.c:260
+#: app/pdb/gimppdb-utils.c:127 app/pdb/gimppdb-utils.c:194
+#: app/pdb/gimppdb-utils.c:261
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not editable"
@@ -21699,179 +21700,179 @@ msgstr "%s ‘%s’ is niet bewerkbaar"
 #. * PDB-error-data-label context. The second %s is a data
 #. * name.
 #.
-#: app/pdb/gimppdb-utils.c:137 app/pdb/gimppdb-utils.c:204
-#: app/pdb/gimppdb-utils.c:271
+#: app/pdb/gimppdb-utils.c:138 app/pdb/gimppdb-utils.c:205
+#: app/pdb/gimppdb-utils.c:272
 #, c-format
 msgctxt "PDB-error-message"
 msgid "%s '%s' is not renamable"
 msgstr "%s ‘%s’ is niet te hernoemen"
 
-#: app/pdb/gimppdb-utils.c:294
+#: app/pdb/gimppdb-utils.c:295
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "Penseel ‘%s’ is geen aangemaakt penseel"
 
-#: app/pdb/gimppdb-utils.c:314
+#: app/pdb/gimppdb-utils.c:315
 msgid "Invalid empty buffer name"
 msgstr "Ongeldige lege buffernaam"
 
-#: app/pdb/gimppdb-utils.c:324
+#: app/pdb/gimppdb-utils.c:325
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Benoemde buffer ‘%s’ is niet gevonden"
 
-#: app/pdb/gimppdb-utils.c:343
+#: app/pdb/gimppdb-utils.c:344
 msgid "Invalid empty paint method name"
 msgstr "Ongeldige lege naam tekenmodus"
 
-#: app/pdb/gimppdb-utils.c:353
+#: app/pdb/gimppdb-utils.c:354
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Tekenmodus ‘%s’ bestaat niet"
 
-#: app/pdb/gimppdb-utils.c:372
+#: app/pdb/gimppdb-utils.c:373
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr "Object ‘%s’ (%d) kan niet worden gebruikt, omdat het niet toegevoegd is aan een afbeelding"
 
-#: app/pdb/gimppdb-utils.c:382
+#: app/pdb/gimppdb-utils.c:383
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr "Object ‘%s’ (%d) kan niet worden gebruikt, omdat het gekoppeld is aan aan een andere afbeelding"
 
-#: app/pdb/gimppdb-utils.c:408
+#: app/pdb/gimppdb-utils.c:409
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
 msgstr "Object ‘%s’ (%d) kan niet worden gebruikt, omdat het niet een direct kind van een objectboom is"
 
-#: app/pdb/gimppdb-utils.c:436
+#: app/pdb/gimppdb-utils.c:437
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr "Objecten ‘%s’ (%d) en ‘%s’ (%d) kunnen niet worden gebruikt, omdat ze geen onderdeel zijn van dezelfde boomstructuur van objecten"
 
-#: app/pdb/gimppdb-utils.c:461
+#: app/pdb/gimppdb-utils.c:462
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "Object ‘%s’ (%d) moet een voorouder van ‘%s’ (%d) zijn"
 
-#: app/pdb/gimppdb-utils.c:485
+#: app/pdb/gimppdb-utils.c:486
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "Object ‘%s’ (%d) is reeds toegevoegd aan een afbeelding"
 
-#: app/pdb/gimppdb-utils.c:493
+#: app/pdb/gimppdb-utils.c:494
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Proberen om ‘%s’ (%d) toe te voegen aan verkeerde afbeelding"
 
-#: app/pdb/gimppdb-utils.c:520
+#: app/pdb/gimppdb-utils.c:521
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr "Object ‘%s’ (%d) kan niet worden aangepast, omdat de inhoud ervan vergrendeld is"
 
-#: app/pdb/gimppdb-utils.c:530
+#: app/pdb/gimppdb-utils.c:531
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
 msgstr "Object ‘%s’ (%d) kan niet worden aangepast, omdat de positie en de grootte ervan vergrendeld zijn"
 
-#: app/pdb/gimppdb-utils.c:550
+#: app/pdb/gimppdb-utils.c:551
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr "Object ‘%s’ (%d) kan niet worden gebruikt, omdat het geen groepsobject is"
 
-#: app/pdb/gimppdb-utils.c:570
+#: app/pdb/gimppdb-utils.c:571
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "Object ‘%s’ (%d) kan niet worden aangepast, omdat het een groepsobject is"
 
-#: app/pdb/gimppdb-utils.c:591
+#: app/pdb/gimppdb-utils.c:592
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr "Laag ‘%s’ (%d) kan niet worden gebruikt, omdat het geen tekstlaag is"
 
-#: app/pdb/gimppdb-utils.c:632
+#: app/pdb/gimppdb-utils.c:615
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr "Afbeelding ‘%s’ (%d) is van het type ‘%s’, maar een afbeelding van het type ‘%s’ werd verwacht"
 
-#: app/pdb/gimppdb-utils.c:655
+#: app/pdb/gimppdb-utils.c:638
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "Afbeelding ‘%s’ (%d) moet niet van het type ‘%s’ zijn"
 
-#: app/pdb/gimppdb-utils.c:675
+#: app/pdb/gimppdb-utils.c:658
 #, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
 "expected"
 msgstr "Afbeelding ‘%s’ (%d) heeft precisie ‘%s’, maar een afbeelding met precisie ‘%s’ werd verwacht"
 
-#: app/pdb/gimppdb-utils.c:698
+#: app/pdb/gimppdb-utils.c:681
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "Afbeelding ‘%s’ (%d) mag geen precisie ‘%s’ hebben"
 
-#: app/pdb/gimppdb-utils.c:722 app/pdb/image-guides-cmds.c:177
+#: app/pdb/gimppdb-utils.c:705 app/pdb/image-guides-cmds.c:177
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr "Afbeelding ‘%s’ (%d) bevat geen hulplijn met ID %d"
 
-#: app/pdb/gimppdb-utils.c:745 app/pdb/image-sample-points-cmds.c:146
+#: app/pdb/gimppdb-utils.c:728 app/pdb/image-sample-points-cmds.c:146
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "Afbeelding ‘%s’ (%d) bevat geen monsterpunt met ID %d"
 
-#: app/pdb/gimppdb-utils.c:773
+#: app/pdb/gimppdb-utils.c:756
 #, c-format
 msgid "Path object %d does not contain stroke with ID %d"
 msgstr "Padobject %d bevat geen lijn met ID %d"
 
-#: app/pdb/gimppdb-utils.c:789
+#: app/pdb/gimppdb-utils.c:772
 #, c-format
 msgid "Procedure name '%s' is not a canonical identifier"
 msgstr "Procedurenaam ‘%s’ is geen canonieke aanduiding"
 
-#: app/pdb/gimppdb-utils.c:806
+#: app/pdb/gimppdb-utils.c:789
 msgctxt "PDB-error-data-label"
 msgid "Generated brush"
 msgstr "Aangemaakt penseel"
 
-#: app/pdb/gimppdb-utils.c:808
+#: app/pdb/gimppdb-utils.c:791
 msgctxt "PDB-error-data-label"
 msgid "Brush"
 msgstr "Penseel"
 
-#: app/pdb/gimppdb-utils.c:810
+#: app/pdb/gimppdb-utils.c:793
 msgctxt "PDB-error-data-label"
 msgid "Pattern"
 msgstr "Patroon"
 
-#: app/pdb/gimppdb-utils.c:812
+#: app/pdb/gimppdb-utils.c:795
 msgctxt "PDB-error-data-label"
 msgid "Gradient"
 msgstr "Kleurverloop"
 
-#: app/pdb/gimppdb-utils.c:814
+#: app/pdb/gimppdb-utils.c:797
 msgctxt "PDB-error-data-label"
 msgid "Palette"
 msgstr "Palet"
 
-#: app/pdb/gimppdb-utils.c:816
+#: app/pdb/gimppdb-utils.c:799
 msgctxt "PDB-error-data-label"
 msgid "Font"
 msgstr "Lettertype"
 
-#: app/pdb/gimppdb-utils.c:818
+#: app/pdb/gimppdb-utils.c:801
 msgctxt "PDB-error-data-label"
 msgid "Paint dynamics"
 msgstr "Penseelgedrag"
 
-#: app/pdb/gimppdb-utils.c:820
+#: app/pdb/gimppdb-utils.c:803
 msgctxt "PDB-error-data-label"
 msgid "MyPaint brush"
 msgstr "MyPaint-penseel"
@@ -22752,43 +22753,43 @@ msgstr "Ongeldige opmaak in tekst parasiet"
 msgid "Empty text parasite"
 msgstr "Lege tekstparasiet"
 
-#: app/text/gimptextlayer.c:156
+#: app/text/gimptextlayer.c:169
 msgid "Text Layer"
 msgstr "Tekstlaag"
 
-#: app/text/gimptextlayer.c:168
+#: app/text/gimptextlayer.c:181
 msgid "Rename Text Layer"
 msgstr "Tekstlaag hernoemen"
 
-#: app/text/gimptextlayer.c:169 app/tools/gimptexttool.c:1246
+#: app/text/gimptextlayer.c:182 app/tools/gimptexttool.c:1246
 msgid "Move Text Layer"
 msgstr "Tekstlaag verplaatsen"
 
-#: app/text/gimptextlayer.c:170
+#: app/text/gimptextlayer.c:183
 msgid "Scale Text Layer"
 msgstr "Tekstlaag schalen"
 
-#: app/text/gimptextlayer.c:171
+#: app/text/gimptextlayer.c:184
 msgid "Resize Text Layer"
 msgstr "Grootte tekstlaag wijzigen"
 
-#: app/text/gimptextlayer.c:172
+#: app/text/gimptextlayer.c:185
 msgid "Flip Text Layer"
 msgstr "Tekstlaag spiegelen"
 
-#: app/text/gimptextlayer.c:173
+#: app/text/gimptextlayer.c:186
 msgid "Rotate Text Layer"
 msgstr "Tekstlaag draaien"
 
-#: app/text/gimptextlayer.c:174
+#: app/text/gimptextlayer.c:187
 msgid "Transform Text Layer"
 msgstr "Tekstlaag transformeren"
 
-#: app/text/gimptextlayer.c:675 app/text/gimptextlayer.c:816
+#: app/text/gimptextlayer.c:726 app/text/gimptextlayer.c:867
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Tekstfunctionaliteit ontbreekt, omdat er geen lettertypes zijn."
 
-#: app/text/gimptextlayer.c:1030
+#: app/text/gimptextlayer.c:1081
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -29703,6 +29704,12 @@ msgstr "Menu Gereedschapsvoorinstellingen"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Menu Geschiedenis"
+
+#~ msgid "Export the selected paths"
+#~ msgstr "De geselecteerde paden exporteren"
+
+#~ msgid "Export all paths from this image"
+#~ msgstr "Alle paden van deze afbeelding exporteren"
 
 #~ msgid "Wheel/Rotation"
 #~ msgstr "Wiel/Rotatie"
