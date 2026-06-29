@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-28 18:04+0000\n"
-"PO-Revision-Date: 2026-06-28 20:26+0200\n"
+"POT-Creation-Date: 2026-06-28 19:11+0000\n"
+"PO-Revision-Date: 2026-06-29 13:46+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -7696,7 +7696,7 @@ msgstr "_Izvozi izbrane poti ..."
 
 #: app/actions/paths-actions.c:155
 msgctxt "paths-action"
-msgid "E_xport _All Paths..."
+msgid "Export _All Paths..."
 msgstr "Izvozi _vse poti ..."
 
 #: app/actions/paths-actions.c:160
