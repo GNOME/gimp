@@ -29,6 +29,9 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#ifdef G_OS_WIN32
+#include <libgimpbase/gimpwin32-io.h>
+#endif
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
