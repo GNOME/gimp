@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-06-28 19:11+0000\n"
-"PO-Revision-Date: 2026-06-29 07:55+0800\n"
+"PO-Revision-Date: 2026-06-29 08:21+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -25165,7 +25165,7 @@ msgstr "缩进"
 
 #: app/tools/gimptextoptions.c:219
 msgid "Indentation of the first line"
-msgstr "第一行的缩进深度"
+msgstr "首行缩进深度"
 
 #: app/tools/gimptextoptions.c:226
 msgid "Line spacing"
@@ -25181,7 +25181,7 @@ msgstr "字符间距"
 
 #: app/tools/gimptextoptions.c:235
 msgid "Adjust letter spacing"
-msgstr "调整字符符距"
+msgstr "调整字符间距"
 
 #: app/tools/gimptextoptions.c:242
 msgid "Box"
