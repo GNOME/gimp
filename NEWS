@@ -41,6 +41,8 @@ Core:
     (mtime) is 0. This is because on some environment (such as ostree,
     hence flatpak), all files mtimes are set to the UNIX epoch.
   * Added support of dashboard backtraces on Windows ARM64.
+  * Krita KPL palette import support added.
+  * Work started on a new project format.
 
 Tools:
 
@@ -52,6 +54,12 @@ Tools:
     what it does.
   * MyPaint Brush tool: new "Spectral Blending" checkbox and "Pigment"
     slider to blend spectrally while painting.
+  * Color Picker tool: there was an exception ignoring Sample Merged
+    option when a single layer was visible (allowing to retrieve the
+    exact palette color from indexed images). This exception has been
+    further restricted to the absence of filters. Sample Merged, even of
+    single layer images, should return the color after filters are
+    applied.
 
 Graphical User Interface:
 
@@ -158,6 +166,9 @@ Plug-Ins:
       color conversion and resampling.
   * APNG: add frame delay to layer names, just like in GIF and WebP
     support.
+  * Mail: Windows support added through MAPI.
+  * NL Filter: alpha restriction added, allowing the plug-in to work on
+    all RGB and grayscale images, with or without alpha.
 
 API:
 
