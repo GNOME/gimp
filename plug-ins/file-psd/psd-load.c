@@ -184,14 +184,15 @@ load_image (GFile        *file,
   GimpImage     *image = NULL;
   GError        *error = NULL;
 
-  img_a.ibm_pc_format = FALSE;
-  img_a.cmyk_transform = img_a.cmyk_transform_alpha = NULL;
-  img_a.cmyk_profile = NULL;
-  img_a.rgb_space = NULL;
+  img_a.ibm_pc_format            = FALSE;
+  img_a.cmyk_transform           = NULL;
+  img_a.cmyk_transform_alpha     = NULL;
+  img_a.cmyk_profile             = NULL;
+  img_a.rgb_space                = NULL;
   img_a.linked_files.linked_data = NULL;
-  img_a.linked_files.last = NULL;
-  img_a.psd_file = file;
-  img_a.global_text_data = NULL;
+  img_a.linked_files.last        = NULL;
+  img_a.psd_file                 = file;
+  img_a.global_text_data         = NULL;
 
   initialize_unsupported (unsupported_features);
   img_a.unsupported_features = unsupported_features;
@@ -915,9 +916,8 @@ read_layer_info (PSDimage      *img_a,
       img_a->transparency = TRUE;
       if (img_a->num_layers == G_MININT16)
         {
-          /* FIXME After string freeze should be set translatable */
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       "Invalid value for number of layers: %d.",
+                       _("Invalid value for number of layers: %d."),
                        img_a->num_layers);
           img_a->num_layers = -1;
           return NULL;
@@ -2946,7 +2946,7 @@ add_legacy_layer_effects (GimpLayer *layer,
       else if (oglw.ver == 2)
         convert_legacy_psd_color (color, oglw.natcolor, space, img_a->ibm_pc_format);
 
-      convert_psd_mode (oglw.blendsig, &mode);
+      convert_psd_mode (oglw.effect, &mode);
 
       filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
                                                 "gegl:dropshadow",

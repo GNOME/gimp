@@ -1789,20 +1789,18 @@ load_resource_lrfx (const PSDlayerres  *res_a,
             }
           else if (memcmp (effectname, "oglw", 4) == 0)
             {
-              gchar bim[4];
-
-              if (! psd_read_uint32      (input, &ls_a->oglw.size,      res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint32      (input, &ls_a->oglw.ver,       res_a->ibm_pc_format, error) ||
-                  ! psd_read_fixed_float (input, &ls_a->oglw.blur,      res_a->ibm_pc_format, error) ||
-                  ! psd_read_fixed_float (input, &ls_a->oglw.intensity, res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint16      (input, &ls_a->oglw.color[0],  res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint16      (input, &ls_a->oglw.color[1],  res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint16      (input, &ls_a->oglw.color[2],  res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint16      (input, &ls_a->oglw.color[3],  res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint16      (input, &ls_a->oglw.color[4],  res_a->ibm_pc_format, error) ||
-                  ! psd_read_chars       (input, bim,                  4, res_a->ibm_pc_format, error) ||
-                  ! psd_read_chars       (input, ls_a->oglw.blendsig,   4, res_a->ibm_pc_format, error) ||
-                  psd_read (input, &ls_a->oglw.effecton, 1, error) < 1 ||
+              if (! psd_read_uint32      (input, &ls_a->oglw.size,        res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint32      (input, &ls_a->oglw.ver,         res_a->ibm_pc_format, error) ||
+                  ! psd_read_fixed_float (input, &ls_a->oglw.blur,        res_a->ibm_pc_format, error) ||
+                  ! psd_read_fixed_float (input, &ls_a->oglw.intensity,   res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16      (input, &ls_a->oglw.color[0],    res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16      (input, &ls_a->oglw.color[1],    res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16      (input, &ls_a->oglw.color[2],    res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16      (input, &ls_a->oglw.color[3],    res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16      (input, &ls_a->oglw.color[4],    res_a->ibm_pc_format, error) ||
+                  ! psd_read_chars       (input, ls_a->oglw.blendsig,  4, res_a->ibm_pc_format, error) ||
+                  ! psd_read_chars       (input, ls_a->oglw.effect,    4, res_a->ibm_pc_format, error) ||
+                  psd_read (input, &ls_a->oglw.effecton, 1, error) < 1                                 ||
                   psd_read (input, &ls_a->oglw.opacity,  1, error) < 1)
                 {
                   psd_set_error (error);
@@ -1832,25 +1830,28 @@ load_resource_lrfx (const PSDlayerres  *res_a,
             }
           else if (memcmp (effectname, "iglw", 4) == 0)
             {
-              if (! psd_read_uint32      (input, &ls_a->iglw.size,    res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint32      (input, &ls_a->iglw.ver,     res_a->ibm_pc_format, error) ||
-                  ! psd_read_fixed_float (input, &ls_a->iglw.blur,    res_a->ibm_pc_format, error) ||
-                  ! psd_read_fixed_float (input, &ls_a->iglw.intensity, res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint16      (input, &ls_a->iglw.color[0], res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint16      (input, &ls_a->iglw.color[1], res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint16      (input, &ls_a->iglw.color[2], res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint16      (input, &ls_a->iglw.color[3], res_a->ibm_pc_format, error) ||
-                  ! psd_read_uint16      (input, &ls_a->iglw.color[4], res_a->ibm_pc_format, error) ||
+              if (! psd_read_uint32      (input, &ls_a->iglw.size,        res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint32      (input, &ls_a->iglw.ver,         res_a->ibm_pc_format, error) ||
+                  ! psd_read_fixed_float (input, &ls_a->iglw.blur,        res_a->ibm_pc_format, error) ||
+                  ! psd_read_fixed_float (input, &ls_a->iglw.intensity,   res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16      (input, &ls_a->iglw.color[0],    res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16      (input, &ls_a->iglw.color[1],    res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16      (input, &ls_a->iglw.color[2],    res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16      (input, &ls_a->iglw.color[3],    res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16      (input, &ls_a->iglw.color[4],    res_a->ibm_pc_format, error) ||
                   ! psd_read_chars       (input, ls_a->iglw.blendsig,  4, res_a->ibm_pc_format, error) ||
                   ! psd_read_chars       (input, ls_a->iglw.effect,    4, res_a->ibm_pc_format, error) ||
-                  psd_read (input, &ls_a->iglw.effecton, 1, error) < 1 ||
+                  psd_read (input, &ls_a->iglw.effecton, 1, error) < 1                                 ||
                   psd_read (input, &ls_a->iglw.opacity,  1, error) < 1)
                 {
                   psd_set_error (error);
                   return -1;
                 }
 
-              IFDBG(3) g_debug ("iglw - size %u, version %u, effect enabled: %u, blur (pixels): %f, intensity (pct): %f, blendsig: %.4s, effect %.4s",
+              IFDBG(3) g_debug ("iglw - size %u, version %u, effect "
+                                "enabled: %u, blur (pixels): %f, "
+                                "intensity (pct): %f, blendsig: %.4s, "
+                                "effect %.4s",
                                 ls_a->iglw.size, ls_a->iglw.ver,
                                 ls_a->iglw.effecton,
                                 ls_a->iglw.blur, ls_a->iglw.intensity,
