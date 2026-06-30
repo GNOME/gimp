@@ -130,8 +130,8 @@ struct mng_globals_t
 typedef struct
 {
   FILE        *file;
-  BYTE        *pixels;
-  HANDLE       thread;
+  guchar      *pixels;
+  mng_uint32   thread;
   mng_uint32   delay;
   mng_uint32   width;
   mng_uint32   height;
