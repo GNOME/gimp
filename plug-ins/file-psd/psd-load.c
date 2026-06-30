@@ -1300,6 +1300,17 @@ read_layer_info (PSDimage      *img_a,
 
           if (! img_a->ibm_pc_format)
             block_len = GUINT32_FROM_BE (block_len);
+
+          if (block_len + 4 > block_rem)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("invalid block size."));
+              /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
+              g_debug ("Invalid block size: %" G_GSIZE_FORMAT, (gsize) block_len);
+              free_lyr_a (lyr_a, img_a->num_layers);
+              return NULL;
+            }
+
           block_rem -= (block_len + 4);
           IFDBG(3) g_debug ("Blending ranges size %" G_GSIZE_FORMAT
                             " (not imported)", (gsize) block_len);
@@ -1324,6 +1335,16 @@ read_layer_info (PSDimage      *img_a,
               return NULL;
             }
 
+          if (read_len > block_rem)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("invalid block size."));
+              /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
+              g_debug ("Invalid block size: %" G_GSIZE_FORMAT, (gsize) read_len);
+              free_lyr_a (lyr_a, img_a->num_layers);
+              return NULL;
+            }
+
           block_rem -= read_len;
           IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT ", Remaining length %" G_GSIZE_FORMAT,
                             PSD_TELL(input), (gsize) block_rem);
@@ -1341,6 +1362,15 @@ read_layer_info (PSDimage      *img_a,
               if (header_size < 0)
                 {
                   psd_set_error (error);
+                  free_lyr_a (lyr_a, img_a->num_layers);
+                  return NULL;
+                }
+              if (header_size > block_rem)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("invalid block size."));
+                  /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
+                  g_debug ("Invalid block size: %" G_GSIZE_FORMAT, (gsize) header_size);
                   free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
@@ -1372,6 +1402,16 @@ read_layer_info (PSDimage      *img_a,
                   free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
+              if (res_a.data_len > block_rem)
+                {
+                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("invalid block size."));
+                  /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
+                  g_debug ("Invalid block size: %" G_GSIZE_FORMAT, res_a.data_len);
+                  free_lyr_a (lyr_a, img_a->num_layers);
+                  return NULL;
+                }
+
               block_rem -= res_a.data_len;
               IFDBG(3) g_debug ("Remaining length in block: %" G_GSIZE_FORMAT, (gsize) block_rem);
             }
