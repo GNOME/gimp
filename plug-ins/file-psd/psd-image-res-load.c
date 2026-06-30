@@ -986,6 +986,12 @@ load_resource_1032 (const PSDimageres  *res_a,
       guide.fLocation = GUINT32_FROM_BE (guide.fLocation);
       guide.fLocation /= 32;
 
+      if (guide.fLocation > GIMP_MAX_IMAGE_SIZE)
+        {
+          g_debug ("Invalid guide position %u reset to 0", guide.fLocation);
+          guide.fLocation = 0;
+        }
+
       IFDBG(3) g_debug ("Guide: %d px, %d",
                          guide.fLocation,
                          guide.fDirection);
