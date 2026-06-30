@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-30 15:46+0000\n"
-"PO-Revision-Date: 2026-06-30 18:44+0200\n"
+"POT-Creation-Date: 2026-06-30 19:50+0000\n"
+"PO-Revision-Date: 2026-06-30 23:36+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -146,7 +146,7 @@ msgstr "Primer vstavka v JavaScriptu (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5096 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5135 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -625,7 +625,7 @@ msgstr "Rolete"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:259
 #: plug-ins/file-psd/psd-image-res-load.c:1109
-#: plug-ins/file-psd/psd-load.c:4271 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:4310 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -2491,7 +2491,7 @@ msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:4650 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:4689 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -10818,7 +10818,7 @@ msgstr ""
 "Photoshop ne podpira indeksiranih slik, ki imajo več kot eno plast. Plasti "
 "bodo združene ob izvozu."
 
-#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5135
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5174
 msgid "Compatibility Notice"
 msgstr "Obvestilo o združljivosti"
 
@@ -10888,7 +10888,7 @@ msgid "Unsupported bit depth: %d"
 msgstr "Nepodprta bitna globina: %d"
 
 #: plug-ins/file-psd/psd-load.c:764 plug-ins/file-psd/psd-load.c:774
-#: plug-ins/file-psd/psd-load.c:1013 plug-ins/file-psd/psd-load.c:1348
+#: plug-ins/file-psd/psd-load.c:1013 plug-ins/file-psd/psd-load.c:1377
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Datoteka je okvarjena!"
@@ -10938,56 +10938,62 @@ msgstr "Nepodprta ali neveljavna širina plasti maske: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nepodprta ali neveljavna velikost plasti maske: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1878 plug-ins/file-psd/psd-load.c:4642
+#: plug-ins/file-psd/psd-load.c:1287 plug-ins/file-psd/psd-load.c:1321
+#: plug-ins/file-psd/psd-load.c:1355 plug-ins/file-psd/psd-load.c:1392
+#, c-format
+msgid "Invalid block size."
+msgstr "Neveljavna velikost bloka."
+
+#: plug-ins/file-psd/psd-load.c:1917 plug-ins/file-psd/psd-load.c:4681
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nepodprta ali neveljavna velikost kanala"
 
-#: plug-ins/file-psd/psd-load.c:2264
+#: plug-ins/file-psd/psd-load.c:2303
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Neveljavne mere kanala %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2332 plug-ins/file-psd/psd-load.c:4240
+#: plug-ins/file-psd/psd-load.c:2371 plug-ins/file-psd/psd-load.c:4279
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nepodprti način stiskanja: %d"
 
-#: plug-ins/file-psd/psd-load.c:2983 plug-ins/file-psd/psd-load.c:3632
+#: plug-ins/file-psd/psd-load.c:3022 plug-ins/file-psd/psd-load.c:3671
 msgid "Inner Shadow"
 msgstr "Notranja senca"
 
-#: plug-ins/file-psd/psd-load.c:2984 plug-ins/file-psd/psd-load.c:3633
-#: plug-ins/file-psd/psd-load.c:3644 plug-ins/file-psd/psd-load.c:3660
+#: plug-ins/file-psd/psd-load.c:3023 plug-ins/file-psd/psd-load.c:3672
+#: plug-ins/file-psd/psd-load.c:3683 plug-ins/file-psd/psd-load.c:3699
 msgid "imported"
 msgstr "uvoženo"
 
-#: plug-ins/file-psd/psd-load.c:3643
+#: plug-ins/file-psd/psd-load.c:3682
 msgid "Outer Glow"
 msgstr "Žarenje navzven"
 
-#: plug-ins/file-psd/psd-load.c:3659
+#: plug-ins/file-psd/psd-load.c:3698
 msgid "Stroke"
 msgstr "Poteza"
 
-#: plug-ins/file-psd/psd-load.c:3663
+#: plug-ins/file-psd/psd-load.c:3702
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "Neobdelana vrsta poteze: pričakujte napačno izrisovanje."
 
-#: plug-ins/file-psd/psd-load.c:4417
+#: plug-ins/file-psd/psd-load.c:4456
 msgid "Extra"
 msgstr "Dodatno"
 
-#: plug-ins/file-psd/psd-load.c:4719
+#: plug-ins/file-psd/psd-load.c:4758
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Podatkov ni mogoče razpakirati"
 
-#: plug-ins/file-psd/psd-load.c:5112
+#: plug-ins/file-psd/psd-load.c:5151
 msgid "Duotone Import"
 msgstr "Uvoz duotone"
 
-#: plug-ins/file-psd/psd-load.c:5113
+#: plug-ins/file-psd/psd-load.c:5152
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10997,7 +11003,7 @@ msgstr ""
 "Podatki o barvnem prostoru duotone so shranjeni\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
-#: plug-ins/file-psd/psd-load.c:5136
+#: plug-ins/file-psd/psd-load.c:5175
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
