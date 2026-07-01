@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-30 00:48+0000\n"
-"PO-Revision-Date: 2026-06-30 09:45+0200\n"
+"POT-Creation-Date: 2026-07-01 04:13+0000\n"
+"PO-Revision-Date: 2026-07-01 10:43+020011\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -145,7 +145,7 @@ msgstr "Plug-in voorbeeld in Javascript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5096 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5135 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -617,8 +617,8 @@ msgstr "Rolgordijnen"
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:259
-#: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:4271 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-image-res-load.c:1109
+#: plug-ins/file-psd/psd-load.c:4310 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1238,7 +1238,7 @@ msgstr "CML-verkennerparameters opslaan"
 
 #: plug-ins/common/cml-explorer.c:2197 plug-ins/common/curve-bend.c:755
 #: plug-ins/common/file-dicom.c:1582 plug-ins/common/file-farbfeld.c:372
-#: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
+#: plug-ins/common/file-mng.c:1217 plug-ins/common/file-mng.c:1567
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1948 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
@@ -1980,14 +1980,14 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/common/file-drhalo.c:201 plug-ins/common/file-farbfeld.c:273
 #: plug-ins/common/file-gif-load.c:481 plug-ins/common/file-iff.c:277
 #: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:198
-#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:191
-#: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
-#: plug-ins/common/file-png.c:801 plug-ins/common/file-png.c:1372
-#: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3756
-#: plug-ins/common/file-psp.c:2844 plug-ins/common/file-psp.c:2894
-#: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
-#: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:810
-#: plug-ins/common/file-raw-data.c:1861
+#: plug-ins/common/file-mng.c:1020 plug-ins/common/file-mng.c:1751
+#: plug-ins/common/file-paa.c:191 plug-ins/common/file-pcx.c:490
+#: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:801
+#: plug-ins/common/file-png.c:1372 plug-ins/common/file-ps.c:1158
+#: plug-ins/common/file-ps.c:3756 plug-ins/common/file-psp.c:2844
+#: plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:256
+#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
+#: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861
 #: plug-ins/common/file-seattle-filmworks.c:232
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:772
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
@@ -2465,15 +2465,16 @@ msgid "White level"
 msgstr "Witniveau"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
-#: plug-ins/common/file-pcx.c:719 plug-ins/file-bmp/bmp-load.c:800
-#: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
+#: plug-ins/common/file-mng.c:1070 plug-ins/common/file-pcx.c:719
+#: plug-ins/file-bmp/bmp-load.c:800 plug-ins/file-cin/cineon-lib.c:114
+#: plug-ins/file-cin/dpx-lib.c:185
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:4650 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:4689 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -3119,7 +3120,7 @@ msgid ""
 "from the 'gimp-comment' parasite."
 msgstr "Exporteer een bestand in de indeling GIF, met mogelijke animatie, transparantie en opmerking. Exporteren van een animatie, werk op een bestand met meerdere lagen en stel de parameter 'as-animation' in op TRUE. De plug-in zal <50% alfa interpreteren als transparant. Indien niet-interactief uitgevoerd wordt de waarde voor de opmerking genomen uit de parasiet 'gimp-comment'."
 
-#: plug-ins/common/file-gif-export.c:192 plug-ins/common/file-mng.c:285
+#: plug-ins/common/file-gif-export.c:192 plug-ins/common/file-mng.c:369
 msgid "_Interlace"
 msgstr "_Interlace"
 
@@ -3259,7 +3260,7 @@ msgid ""
 msgstr "De indeling GIF ondersteunt alleen 8bit integer precisie.\n"
 "Uw afbeelding zal worden geconverteerd bij exporteren, wat de pixelwaarden zou kunnen wijzigen."
 
-#: plug-ins/common/file-gif-export.c:1351 plug-ins/common/file-mng.c:1645
+#: plug-ins/common/file-gif-export.c:1351 plug-ins/common/file-mng.c:1988
 msgid "milliseconds"
 msgstr "milliseconden"
 
@@ -3411,8 +3412,8 @@ msgstr "‘%s’ wordt geopend (frame %d)"
 msgid "Frame %d"
 msgstr "Frame %d"
 
-#: plug-ins/common/file-gif-load.c:1289 plug-ins/common/file-png.c:3018
-#: plug-ins/file-webp/file-webp-load.c:227
+#: plug-ins/common/file-gif-load.c:1289 plug-ins/common/file-mng.c:1089
+#: plug-ins/common/file-png.c:3018 plug-ins/file-webp/file-webp-load.c:227
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Frame %d (%d%s)"
@@ -4344,138 +4345,146 @@ msgstr "MacPaint-afbeelding"
 msgid "Load MacPaint image format"
 msgstr "Laad MacPaint afbeeldingsindeling"
 
-#: plug-ins/common/file-mng.c:254
+#: plug-ins/common/file-mng.c:311 plug-ins/common/file-mng.c:338
 msgid "MNG animation"
 msgstr "MNG-animatie"
 
-#: plug-ins/common/file-mng.c:256
+#: plug-ins/common/file-mng.c:314
+msgid "Loads files in MNG file format"
+msgstr "Laadt bestanden in bestandsindeling MNG"
+
+#: plug-ins/common/file-mng.c:315
+msgid "This plug-in loads Multiple-image Network Graphics (MNG) files."
+msgstr "Deze plug-in laadt bestanden in de bestandsindeling Multiple-image Network Graphics (MNG)."
+
+#: plug-ins/common/file-mng.c:340
 msgid "MNG"
 msgstr "MNG"
 
-#: plug-ins/common/file-mng.c:259
+#: plug-ins/common/file-mng.c:343
 msgid "Exports images in the MNG file format"
 msgstr "Exporteert afbeeldingen in de indeling MNG"
 
-#: plug-ins/common/file-mng.c:260
+#: plug-ins/common/file-mng.c:344
 msgid ""
 "This plug-in exports images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
 msgstr "Deze plug-in exporteert afbeeldingen in de indeling Multiple-image Network Graphics (MNG), die kan worden gebruikt als vervanging voor geanimeerde GIF's, en meer."
 
-#: plug-ins/common/file-mng.c:286
+#: plug-ins/common/file-mng.c:370
 msgid "Use interlacing"
 msgstr "Interlacing gebruiken"
 
-#: plug-ins/common/file-mng.c:291
+#: plug-ins/common/file-mng.c:375
 msgid "_PNG compression level"
 msgstr "_PNG-compressieniveau"
 
-#: plug-ins/common/file-mng.c:292
+#: plug-ins/common/file-mng.c:376
 msgid ""
 "PNG compression level, choose a high compression level for small file size"
 msgstr "PNG compressieniveau, kies een hoog compressieniveau voor een kleiner bestand"
 
-#: plug-ins/common/file-mng.c:298
+#: plug-ins/common/file-mng.c:382
 msgid "JPEG compression _quality"
 msgstr "JPEG-compressiekwaliteit"
 
-#: plug-ins/common/file-mng.c:299
+#: plug-ins/common/file-mng.c:383
 msgid "JPEG quality factor"
 msgstr "JPEG-kwaliteitsfactor"
 
-#: plug-ins/common/file-mng.c:304
+#: plug-ins/common/file-mng.c:388
 msgid "_JPEG smoothing factor"
 msgstr "_JPEG-gladmaakfactor"
 
-#: plug-ins/common/file-mng.c:305
+#: plug-ins/common/file-mng.c:389
 msgid "JPEG smoothing factor"
 msgstr "JPEG-gladmaakfactor"
 
-#: plug-ins/common/file-mng.c:310
+#: plug-ins/common/file-mng.c:394
 msgid "L_oop"
 msgstr "_Herhalen"
 
-#: plug-ins/common/file-mng.c:311
+#: plug-ins/common/file-mng.c:395
 msgid "(ANIMATED MNG) Loop infinitely"
 msgstr "(Bewegende MNG) Eindeloos herhalen"
 
-#: plug-ins/common/file-mng.c:316
+#: plug-ins/common/file-mng.c:400
 msgid "Default fra_me delay"
 msgstr "Standaard _framevertraging"
 
-#: plug-ins/common/file-mng.c:317
+#: plug-ins/common/file-mng.c:401
 msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
 msgstr "(Bewegende MNG) Default vertraging tussen frames in miliseconden"
 
-#: plug-ins/common/file-mng.c:323
+#: plug-ins/common/file-mng.c:407
 msgid "Default chunks t_ype"
 msgstr "Standaard blokt_ype"
 
-#: plug-ins/common/file-mng.c:324
+#: plug-ins/common/file-mng.c:408
 msgid "(ANIMATED MNG) Default chunks type"
 msgstr "(Bewegende MNG) Standaard bloktype"
 
-#: plug-ins/common/file-mng.c:325
+#: plug-ins/common/file-mng.c:409
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:326
+#: plug-ins/common/file-mng.c:410
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:327
+#: plug-ins/common/file-mng.c:411
 msgid "All PNG"
 msgstr "Alle PNG"
 
-#: plug-ins/common/file-mng.c:328
+#: plug-ins/common/file-mng.c:412
 msgid "All JNG"
 msgstr "Alle JNG"
 
-#: plug-ins/common/file-mng.c:334
+#: plug-ins/common/file-mng.c:418
 msgid "De_fault frame disposal"
 msgstr "Standaard_overgang tussen frames"
 
-#: plug-ins/common/file-mng.c:335
+#: plug-ins/common/file-mng.c:419
 msgid "(ANIMATED MNG) Default dispose type"
 msgstr "(Bewegende MNG) standaardmanier van overgang naar volgende frame"
 
-#: plug-ins/common/file-mng.c:336
+#: plug-ins/common/file-mng.c:420
 msgid "Combine"
 msgstr "Combineren"
 
-#: plug-ins/common/file-mng.c:337
+#: plug-ins/common/file-mng.c:421
 msgid "Replace"
 msgstr "Vervangen"
 
-#: plug-ins/common/file-mng.c:343 plug-ins/common/file-png.c:358
+#: plug-ins/common/file-mng.c:427 plug-ins/common/file-png.c:358
 msgid "Save _background color"
 msgstr "_Achtergrondkleur opslaan"
 
-#: plug-ins/common/file-mng.c:344
+#: plug-ins/common/file-mng.c:428
 msgid "Write bKGd (background color) chunk"
 msgstr "De achtergrondkleur (bKGd) opslaan"
 
-#: plug-ins/common/file-mng.c:349
+#: plug-ins/common/file-mng.c:433
 msgid "Save _gamma"
 msgstr "_Gamma opslaan"
 
-#: plug-ins/common/file-mng.c:350
+#: plug-ins/common/file-mng.c:434
 msgid "Write gAMA (gamma) chunk"
 msgstr "Een gAMA (gamma) blok opslaan"
 
-#: plug-ins/common/file-mng.c:355
+#: plug-ins/common/file-mng.c:439
 msgid "Sa_ve resolution"
 msgstr "_Resolutie opslaan"
 
-#: plug-ins/common/file-mng.c:356
+#: plug-ins/common/file-mng.c:440
 msgid "Write pHYs (image resolution) chunk"
 msgstr "Een pHYs (afbeelding resolutie) blok opslaan"
 
-#: plug-ins/common/file-mng.c:361 plug-ins/common/file-png.c:376
+#: plug-ins/common/file-mng.c:445 plug-ins/common/file-png.c:376
 msgid "Save creation _time"
 msgstr "Creatie_tijdstip opslaan"
 
-#: plug-ins/common/file-mng.c:362
+#: plug-ins/common/file-mng.c:446
 msgid "Write tIME (creation time) chunk"
 msgstr "Aanmaakdatum-en-tijd opslaan"
 
@@ -4484,19 +4493,19 @@ msgstr "Aanmaakdatum-en-tijd opslaan"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2807
+#: plug-ins/common/file-mng.c:951 plug-ins/common/file-png.c:2807
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Kon de transparantie niet zonder verlies opslaan, in de plaats daarvan wordt de dekking opgeslagen."
 
-#: plug-ins/common/file-mng.c:1598
+#: plug-ins/common/file-mng.c:1940
 msgid "MNG Options"
 msgstr "MNG-opties"
 
-#: plug-ins/common/file-mng.c:1658
+#: plug-ins/common/file-mng.c:2001
 msgid "Animated MNG Options"
 msgstr "Opties voor geanimeerde MNG's"
 
-#: plug-ins/common/file-mng.c:1668
+#: plug-ins/common/file-mng.c:2011
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -7012,7 +7021,7 @@ msgstr "Inladen van bestanden in de bestandsindeling X11 Muis Cursor"
 
 #: plug-ins/common/file-xmc.c:305
 msgid "This plug-in loads X11 Mouse Cursor (XMC) files."
-msgstr "Deze plug-in laadt van bestanden in de bestandsindeling X11 Muis Cursor (XMC)."
+msgstr "Deze plug-in laadt bestanden in de bestandsindeling X11 Muis Cursor (XMC)."
 
 #: plug-ins/common/file-xmc.c:330
 msgid ""
@@ -10607,7 +10616,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop ondersteunt geen geïndexeerde afbeeldingen die meer dan een laag hebben. Lagen zullen bij exporteren worden samengevoegd."
 
-#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5135
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5174
 msgid "Compatibility Notice"
 msgstr "Melding compatibiliteit"
 
@@ -10673,7 +10682,7 @@ msgid "Unsupported bit depth: %d"
 msgstr "Niet-ondersteunde bitdiepte: %d"
 
 #: plug-ins/file-psd/psd-load.c:764 plug-ins/file-psd/psd-load.c:774
-#: plug-ins/file-psd/psd-load.c:1013 plug-ins/file-psd/psd-load.c:1348
+#: plug-ins/file-psd/psd-load.c:1013 plug-ins/file-psd/psd-load.c:1377
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Het bestand is beschadigd!"
@@ -10723,56 +10732,62 @@ msgstr "Niet-ondersteunde of ongeldige breedte laagmasker: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige grootte laagmasker: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1878 plug-ins/file-psd/psd-load.c:4642
+#: plug-ins/file-psd/psd-load.c:1287 plug-ins/file-psd/psd-load.c:1321
+#: plug-ins/file-psd/psd-load.c:1355 plug-ins/file-psd/psd-load.c:1392
+#, c-format
+msgid "Invalid block size."
+msgstr "Ongeldige blokgrootte"
+
+#: plug-ins/file-psd/psd-load.c:1917 plug-ins/file-psd/psd-load.c:4681
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ongeldige of niet-ondersteunde kanaalgrootte"
 
-#: plug-ins/file-psd/psd-load.c:2264
+#: plug-ins/file-psd/psd-load.c:2303
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Ongeldige dimensies kanaal %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2332 plug-ins/file-psd/psd-load.c:4240
+#: plug-ins/file-psd/psd-load.c:2371 plug-ins/file-psd/psd-load.c:4279
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Niet-ondersteunde compressiemethode: %d"
 
-#: plug-ins/file-psd/psd-load.c:2983 plug-ins/file-psd/psd-load.c:3632
+#: plug-ins/file-psd/psd-load.c:3022 plug-ins/file-psd/psd-load.c:3671
 msgid "Inner Shadow"
 msgstr "Binnenste schaduw"
 
-#: plug-ins/file-psd/psd-load.c:2984 plug-ins/file-psd/psd-load.c:3633
-#: plug-ins/file-psd/psd-load.c:3644 plug-ins/file-psd/psd-load.c:3660
+#: plug-ins/file-psd/psd-load.c:3023 plug-ins/file-psd/psd-load.c:3672
+#: plug-ins/file-psd/psd-load.c:3683 plug-ins/file-psd/psd-load.c:3699
 msgid "imported"
 msgstr "geïmporteerd"
 
-#: plug-ins/file-psd/psd-load.c:3643
+#: plug-ins/file-psd/psd-load.c:3682
 msgid "Outer Glow"
 msgstr "Buitenste gloed"
 
-#: plug-ins/file-psd/psd-load.c:3659
+#: plug-ins/file-psd/psd-load.c:3698
 msgid "Stroke"
 msgstr "Lijn"
 
-#: plug-ins/file-psd/psd-load.c:3663
+#: plug-ins/file-psd/psd-load.c:3702
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "Niet afgehandeld type Streek: verwacht onjuist renderen."
 
-#: plug-ins/file-psd/psd-load.c:4417
+#: plug-ins/file-psd/psd-load.c:4456
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:4719
+#: plug-ins/file-psd/psd-load.c:4758
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Kon gegevens niet decomprimeren"
 
-#: plug-ins/file-psd/psd-load.c:5112
+#: plug-ins/file-psd/psd-load.c:5151
 msgid "Duotone Import"
 msgstr "Duotone Import"
 
-#: plug-ins/file-psd/psd-load.c:5113
+#: plug-ins/file-psd/psd-load.c:5152
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10780,7 +10795,7 @@ msgid ""
 msgstr "Afbeelding zal worden geïmporteerd als Grijswaarden.\n"
 "Duotoon kleurruimte informatie is opgeslagen en kan bij exporteren opnieuw worden gebruikt."
 
-#: plug-ins/file-psd/psd-load.c:5136
+#: plug-ins/file-psd/psd-load.c:5175
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -11047,7 +11062,7 @@ msgstr "Inladen van bestanden in de SGI-bestandsindeling"
 
 #: plug-ins/file-sgi/sgi.c:150
 msgid "This plug-in loads SGI image files."
-msgstr "Deze plug-in laadt van bestanden in de SGI-bestandsindeling."
+msgstr "Deze plug-in laadt bestanden in de SGI-bestandsindeling."
 
 #: plug-ins/file-sgi/sgi.c:179
 msgid "Exports files in SGI image file format"
