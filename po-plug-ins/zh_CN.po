@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-21 19:34+0000\n"
-"PO-Revision-Date: 2026-06-22 07:49+0800\n"
+"POT-Creation-Date: 2026-06-30 19:50+0000\n"
+"PO-Revision-Date: 2026-07-01 08:05+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -143,7 +143,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5158 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5135 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -618,9 +618,9 @@ msgstr "百叶窗"
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
-#: plug-ins/file-jpeg/jpeg-load.c:252
-#: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:4333 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-jpeg/jpeg-load.c:259
+#: plug-ins/file-psd/psd-image-res-load.c:1109
+#: plug-ins/file-psd/psd-load.c:4310 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1972,7 +1972,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-drhalo.c:201 plug-ins/common/file-farbfeld.c:273
 #: plug-ins/common/file-gif-load.c:481 plug-ins/common/file-iff.c:277
 #: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:198
-#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
+#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:191
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:801 plug-ins/common/file-png.c:1372
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3756
@@ -1993,9 +1993,9 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:631
 #: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
-#: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
+#: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711
 #: plug-ins/file-psd/psd-export.c:2538 plug-ins/file-psd/psd-export.c:2706
-#: plug-ins/file-psd/psd-load.c:206 plug-ins/file-psd/psd-load.c:211
+#: plug-ins/file-psd/psd-load.c:207 plug-ins/file-psd/psd-load.c:212
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
@@ -2460,7 +2460,7 @@ msgstr "图像尺寸过大：宽 %d x 高 %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:4712 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:4689 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -2597,8 +2597,8 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
 #: plug-ins/file-icns/file-icns-load.c:623 plug-ins/file-ico/ico-load.c:703
-#: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
-#: plug-ins/file-psd/psd-load.c:219
+#: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:101
+#: plug-ins/file-psd/psd-load.c:220
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
@@ -4497,20 +4497,20 @@ msgid ""
 msgstr ""
 "这些选项仅在被导出的图像有多个图层时可用。您正在试图导出的图像仅有一个图层。"
 
-#: plug-ins/common/file-paa.c:150
+#: plug-ins/common/file-paa.c:151
 msgid "PAA Image"
 msgstr "PAA 图像"
 
-#: plug-ins/common/file-paa.c:153
+#: plug-ins/common/file-paa.c:154
 msgid "Load file in the PAA file format"
 msgstr "加载 PAA 格式的文件"
 
-#: plug-ins/common/file-paa.c:154
+#: plug-ins/common/file-paa.c:155
 msgid "Load file in the Bohemia Interactive PAA file format"
 msgstr "加载波希米亚互动 PAA 格式的文件"
 
-#: plug-ins/common/file-paa.c:232 plug-ins/common/file-paa.c:269
-#: plug-ins/common/file-paa.c:290 plug-ins/common/file-pcx.c:647
+#: plug-ins/common/file-paa.c:233 plug-ins/common/file-paa.c:270
+#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:647
 #: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
 #: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:363
 #: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
@@ -4519,37 +4519,37 @@ msgstr "加载波希米亚互动 PAA 格式的文件"
 msgid "Could not read header from '%s'"
 msgstr "无法从“%s”读取文件头"
 
-#: plug-ins/common/file-paa.c:255
+#: plug-ins/common/file-paa.c:256
 #, c-format
 msgid "Currently unsupported PAA format: '%d'"
 msgstr "当前不支持的 PAA 格式：“%d”"
 
-#: plug-ins/common/file-paa.c:305
-#, c-format
-msgid "Couldn't read image data from '%s'"
-msgstr "无法从“%s”读取图像数据"
-
-#: plug-ins/common/file-paa.c:313
-msgid "Main surface"
-msgstr "主表面"
-
-#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
-#: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
-#: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:574
-#: plug-ins/common/file-tim.c:613 plug-ins/file-cin/cineon-lib.c:169
-#: plug-ins/file-cin/dpx-lib.c:280 plug-ins/file-fli/fli-gimp.c:550
-#: plug-ins/file-fli/fli-gimp.c:819
+#: plug-ins/common/file-paa.c:306 plug-ins/common/file-paa.c:348
+#: plug-ins/common/file-paa.c:360 plug-ins/common/file-tim.c:421
+#: plug-ins/common/file-tim.c:451 plug-ins/common/file-tim.c:498
+#: plug-ins/common/file-tim.c:574 plug-ins/common/file-tim.c:613
+#: plug-ins/file-cin/cineon-lib.c:169 plug-ins/file-cin/dpx-lib.c:280
+#: plug-ins/file-fli/fli-gimp.c:550 plug-ins/file-fli/fli-gimp.c:819
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "无法分配内存。"
 
-#: plug-ins/common/file-paa.c:361
+#: plug-ins/common/file-paa.c:313
+#, c-format
+msgid "Couldn't read image data from '%s'"
+msgstr "无法从“%s”读取图像数据"
+
+#: plug-ins/common/file-paa.c:320
+msgid "Main surface"
+msgstr "主表面"
+
+#: plug-ins/common/file-paa.c:369
 #, c-format
 msgid "Couldn't decompress image data from '%s'"
 msgstr "无法解压缩“%s”中的图像数据"
 
-#: plug-ins/common/file-paa.c:437 plug-ins/common/file-paa.c:454
-#: plug-ins/common/file-paa.c:465
+#: plug-ins/common/file-paa.c:445 plug-ins/common/file-paa.c:462
+#: plug-ins/common/file-paa.c:473
 #, c-format
 msgid "Could not read tag"
 msgstr "无法读取标签"
@@ -4653,14 +4653,14 @@ msgstr "“%s”不是 PCX 文件"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:668
+#: plug-ins/file-psd/psd-load.c:669
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "不支持或无效的图像宽度：%d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:660
+#: plug-ins/file-psd/psd-load.c:661
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "不支持或无效的图像高度：%d"
@@ -5753,7 +5753,7 @@ msgid "Error reading color palette"
 msgstr "读取颜色色板时出错"
 
 #: plug-ins/common/file-psp.c:1639 plug-ins/common/file-psp.c:1662
-#: plug-ins/file-psd/psd-util.c:210
+#: plug-ins/file-psd/psd-util.c:214
 #, c-format
 msgid "Error reading data. Most likely unexpected end of file."
 msgstr "读取数据时出错。很可能是意料之外的文件尾。"
@@ -6264,7 +6264,7 @@ msgstr "平面配置"
 msgid "Raw Data"
 msgstr "Raw 数据"
 
-#: plug-ins/common/file-raw-data.c:623 plug-ins/file-psd/psd-util.c:233
+#: plug-ins/common/file-raw-data.c:623 plug-ins/file-psd/psd-util.c:237
 #, c-format
 msgid "Unexpected end of file"
 msgstr "意料之外的文件尾"
@@ -6882,7 +6882,7 @@ msgid "Write a comment at the beginning of the file."
 msgstr "在文件开头写入注释。"
 
 #: plug-ins/common/file-xbm.c:225 plug-ins/common/file-xmc.c:448
-#: plug-ins/common/mail.c:233
+#: plug-ins/common/mail.c:254
 msgid "Co_mment"
 msgstr "注释(_M)"
 
@@ -7824,73 +7824,73 @@ msgstr "分块数量"
 msgid "Bevel Edges"
 msgstr "倒角边缘"
 
-#: plug-ins/common/mail.c:186
+#: plug-ins/common/mail.c:207
 msgid "Send by E_mail..."
 msgstr "用邮件发送(_M)…"
 
-#: plug-ins/common/mail.c:191
+#: plug-ins/common/mail.c:212
 msgid "Send the image by email"
 msgstr "用电子邮件发送图像"
 
-#: plug-ins/common/mail.c:193
+#: plug-ins/common/mail.c:214
 msgid "Sendmail is used to send emails and must be properly configured."
 msgstr "Sendmail 是用来发送邮件的因此必须正确配置。"
 
-#: plug-ins/common/mail.c:196
+#: plug-ins/common/mail.c:217
 msgid ""
 "The preferred email composer is used to send emails and must be properly "
 "configured."
 msgstr "首选的电子邮件撰写工具是用来发送邮件的因此必须正确配置。"
 
-#: plug-ins/common/mail.c:209
+#: plug-ins/common/mail.c:230
 msgid "File_name"
 msgstr "文件名(_N)"
 
-#: plug-ins/common/mail.c:210
+#: plug-ins/common/mail.c:231
 msgid "The name of the file to save the image in"
 msgstr "保存图像文件的名称"
 
-#: plug-ins/common/mail.c:215
+#: plug-ins/common/mail.c:236
 msgid "_To"
 msgstr "收件人(_T)"
 
-#: plug-ins/common/mail.c:216
+#: plug-ins/common/mail.c:237
 msgid "The email address to send to"
 msgstr "要发送的邮箱地址"
 
-#: plug-ins/common/mail.c:221
+#: plug-ins/common/mail.c:242
 msgid "_From"
 msgstr "发件人(_F)"
 
-#: plug-ins/common/mail.c:222
+#: plug-ins/common/mail.c:243
 msgid "The email address for the From: field"
 msgstr "接收到的邮箱地址"
 
-#: plug-ins/common/mail.c:227
+#: plug-ins/common/mail.c:248
 msgid "Su_bject"
 msgstr "主题(_B)"
 
-#: plug-ins/common/mail.c:228
+#: plug-ins/common/mail.c:249
 msgid "The subject"
 msgstr "邮件主题"
 
-#: plug-ins/common/mail.c:234
+#: plug-ins/common/mail.c:255
 msgid "The comment"
 msgstr "邮件注释"
 
-#: plug-ins/common/mail.c:535
+#: plug-ins/common/mail.c:681
 msgid "Send by Email"
 msgstr "用邮件发送"
 
-#: plug-ins/common/mail.c:539
+#: plug-ins/common/mail.c:685
 msgid "Send"
 msgstr "发送"
 
-#: plug-ins/common/mail.c:675
+#: plug-ins/common/mail.c:821
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "文件扩展名缺失或者存在某种错误"
 
-#: plug-ins/common/mail.c:860
+#: plug-ins/common/mail.c:1006
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "无法启动 sendmail（%s）"
@@ -10209,7 +10209,7 @@ msgstr "试图打开临时的 %s 文件“%s”用于加载 icns 时出错：%s"
 
 #. ----- Open PSD file -----
 #: plug-ins/file-icns/file-icns-load.c:676 plug-ins/file-ico/ico-load.c:1068
-#: plug-ins/file-jpeg/jpeg-load.c:690 plug-ins/file-psd/psd-thumb-load.c:72
+#: plug-ins/file-jpeg/jpeg-load.c:697 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:620
 #: plug-ins/file-raw/file-rawtherapee.c:466
@@ -10368,11 +10368,11 @@ msgstr "不带元数据的文件大小：未知"
 msgid "Enable preview to obtain the approximate file size."
 msgstr "启用预览以获得近似文件大小。"
 
-#: plug-ins/file-jpeg/jpeg-load.c:241
+#: plug-ins/file-jpeg/jpeg-load.c:248
 msgid "JPEG preview"
 msgstr "JPEG 预览"
 
-#: plug-ins/file-jpeg/jpeg-load.c:577
+#: plug-ins/file-jpeg/jpeg-load.c:584
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
@@ -10616,7 +10616,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop 不支持多于一个图层的索引图像。图层将在导出时合并。"
 
-#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5197
+#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5174
 msgid "Compatibility Notice"
 msgstr "兼容性注意"
 
@@ -10631,155 +10631,166 @@ msgstr ""
 "图层混合成组”功能所需的剪裁至背景。如果您遇到显示问题，可以考虑切换为那些图层"
 "模式。"
 
-#: plug-ins/file-psd/psd-layer-res-load.c:2102
+#: plug-ins/file-psd/psd-layer-res-load.c:2104
 msgid "Invalid root node!"
 msgstr "无效的根节点！"
 
-#: plug-ins/file-psd/psd-layer-res-load.c:2442
+#: plug-ins/file-psd/psd-layer-res-load.c:2445
 #, c-format
 msgid "Error creating json node."
 msgstr "创建 json 节点时出错。"
 
-#: plug-ins/file-psd/psd-layer-res-load.c:3139
+#: plug-ins/file-psd/psd-layer-res-load.c:3142
 msgid "Could not read enough bytes!"
 msgstr "无法读取足够的字节！"
 
-#: plug-ins/file-psd/psd-load.c:330 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:331 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "打开 PSD 文件出错：%s"
 
-#: plug-ins/file-psd/psd-load.c:533
+#: plug-ins/file-psd/psd-load.c:534
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "无效的 PSD 元数据图层格式"
 
-#: plug-ins/file-psd/psd-load.c:639
+#: plug-ins/file-psd/psd-load.c:640
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "不是有效的 Photoshop 文档文件"
 
-#: plug-ins/file-psd/psd-load.c:646
+#: plug-ins/file-psd/psd-load.c:647
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "不支持的文件格式版本：%d"
 
-#: plug-ins/file-psd/psd-load.c:653
+#: plug-ins/file-psd/psd-load.c:654
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "文件中的通道数太多：%d"
 
-#: plug-ins/file-psd/psd-load.c:677
+#: plug-ins/file-psd/psd-load.c:678
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "不支持或无效的图像尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:692 plug-ins/file-psd/psd-load.c:702
+#: plug-ins/file-psd/psd-load.c:693 plug-ins/file-psd/psd-load.c:703
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "不支持的色彩模式：%s"
 
-#: plug-ins/file-psd/psd-load.c:729
+#: plug-ins/file-psd/psd-load.c:730
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "不支持的位深度：%d"
 
-#: plug-ins/file-psd/psd-load.c:763 plug-ins/file-psd/psd-load.c:773
-#: plug-ins/file-psd/psd-load.c:1043 plug-ins/file-psd/psd-load.c:1408
+#: plug-ins/file-psd/psd-load.c:764 plug-ins/file-psd/psd-load.c:774
+#: plug-ins/file-psd/psd-load.c:1013 plug-ins/file-psd/psd-load.c:1377
 #, c-format
 msgid "The file is corrupt!"
 msgstr "文件损坏！"
 
-#: plug-ins/file-psd/psd-load.c:972
+#: plug-ins/file-psd/psd-load.c:920
+#, c-format
+msgid "Invalid value for number of layers: %d."
+msgstr "无效的图层数量：%d。"
+
+#: plug-ins/file-psd/psd-load.c:962
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "图层中的通道数太多：%d"
 
-#: plug-ins/file-psd/psd-load.c:1079
+#: plug-ins/file-psd/psd-load.c:1047
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "不支持的或无效的图层高度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1088
+#: plug-ins/file-psd/psd-load.c:1056
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "不支持的或无效的图层宽度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1098
+#: plug-ins/file-psd/psd-load.c:1066
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "不支持的或无效的图层尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1123
+#: plug-ins/file-psd/psd-load.c:1087
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "不支持或无效的蒙板信息大小。"
 
-#: plug-ins/file-psd/psd-load.c:1306
+#: plug-ins/file-psd/psd-load.c:1247
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "不支持的或无效的图层蒙板高度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1315
+#: plug-ins/file-psd/psd-load.c:1256
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "不支持的或无效的图层蒙板宽度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1325
+#: plug-ins/file-psd/psd-load.c:1266
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "不支持的或无效的图层蒙板尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1940 plug-ins/file-psd/psd-load.c:4704
+#: plug-ins/file-psd/psd-load.c:1287 plug-ins/file-psd/psd-load.c:1321
+#: plug-ins/file-psd/psd-load.c:1355 plug-ins/file-psd/psd-load.c:1392
+#, c-format
+msgid "Invalid block size."
+msgstr "无效的数据块大小。"
+
+#: plug-ins/file-psd/psd-load.c:1917 plug-ins/file-psd/psd-load.c:4681
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "不支持或无效的通道尺寸"
 
-#: plug-ins/file-psd/psd-load.c:2326
+#: plug-ins/file-psd/psd-load.c:2303
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "无效通道尺寸 %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2394 plug-ins/file-psd/psd-load.c:4302
+#: plug-ins/file-psd/psd-load.c:2371 plug-ins/file-psd/psd-load.c:4279
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "不支持的压缩模式：%d"
 
-#: plug-ins/file-psd/psd-load.c:3045 plug-ins/file-psd/psd-load.c:3694
+#: plug-ins/file-psd/psd-load.c:3022 plug-ins/file-psd/psd-load.c:3671
 msgid "Inner Shadow"
 msgstr "内阴影"
 
-#: plug-ins/file-psd/psd-load.c:3046 plug-ins/file-psd/psd-load.c:3695
-#: plug-ins/file-psd/psd-load.c:3706 plug-ins/file-psd/psd-load.c:3722
+#: plug-ins/file-psd/psd-load.c:3023 plug-ins/file-psd/psd-load.c:3672
+#: plug-ins/file-psd/psd-load.c:3683 plug-ins/file-psd/psd-load.c:3699
 msgid "imported"
 msgstr "已导入"
 
-#: plug-ins/file-psd/psd-load.c:3705
+#: plug-ins/file-psd/psd-load.c:3682
 msgid "Outer Glow"
 msgstr "外发光"
 
-#: plug-ins/file-psd/psd-load.c:3721
+#: plug-ins/file-psd/psd-load.c:3698
 msgid "Stroke"
 msgstr "描边"
 
-#: plug-ins/file-psd/psd-load.c:3725
+#: plug-ins/file-psd/psd-load.c:3702
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "未处理的描边类型：预期为错误的渲染。"
 
-#: plug-ins/file-psd/psd-load.c:4479
+#: plug-ins/file-psd/psd-load.c:4456
 msgid "Extra"
 msgstr "附加的"
 
-#: plug-ins/file-psd/psd-load.c:4781
+#: plug-ins/file-psd/psd-load.c:4758
 #, c-format
 msgid "Failed to decompress data"
 msgstr "解压缩数据失败"
 
-#: plug-ins/file-psd/psd-load.c:5174
+#: plug-ins/file-psd/psd-load.c:5151
 msgid "Duotone Import"
 msgstr "双色导入"
 
-#: plug-ins/file-psd/psd-load.c:5175
+#: plug-ins/file-psd/psd-load.c:5152
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10789,7 +10800,7 @@ msgstr ""
 "双色调颜色空间数据已保存\n"
 "且可在导出时重新应用。"
 
-#: plug-ins/file-psd/psd-load.c:5198
+#: plug-ins/file-psd/psd-load.c:5175
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
