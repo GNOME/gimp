@@ -170,9 +170,9 @@ struct _MngClass
 
 GType                   mng_get_type                 (void) G_GNUC_CONST;
 
-static GList          * mng_query_procedures         (GimpPlugIn           *plug_in);
-static GimpProcedure  * mng_create_procedure         (GimpPlugIn           *plug_in,
-                                                      const gchar          *name);
+static GList          * mng_query_procedures         (GimpPlugIn            *plug_in);
+static GimpProcedure  * mng_create_procedure         (GimpPlugIn            *plug_in,
+                                                      const gchar           *name);
 
 static GimpValueArray * mng_load                     (GimpProcedure         *procedure,
                                                       GimpRunMode            run_mode,
@@ -181,84 +181,84 @@ static GimpValueArray * mng_load                     (GimpProcedure         *pro
                                                       GimpMetadataLoadFlags *flags,
                                                       GimpProcedureConfig   *config,
                                                       gpointer               run_data);
-static GimpValueArray * mng_export                   (GimpProcedure        *procedure,
-                                                      GimpRunMode           run_mode,
-                                                      GimpImage            *image,
-                                                      GFile                *file,
-                                                      GimpExportOptions    *options,
-                                                      GimpMetadata         *metadata,
-                                                      GimpProcedureConfig  *config,
-                                                      gpointer              run_data);
+static GimpValueArray * mng_export                   (GimpProcedure         *procedure,
+                                                      GimpRunMode            run_mode,
+                                                      GimpImage             *image,
+                                                      GFile                 *file,
+                                                      GimpExportOptions     *options,
+                                                      GimpMetadata          *metadata,
+                                                      GimpProcedureConfig   *config,
+                                                      gpointer               run_data);
 
-static mng_ptr    MNG_DECL  myalloc                  (mng_size_t            size);
-static void       MNG_DECL  myfree                   (mng_ptr               ptr,
-                                                      mng_size_t            size);
-static mng_bool   MNG_DECL  myopenstream             (mng_handle            handle);
-static mng_bool   MNG_DECL  myreadstream             (mng_handle            handle,
-                                                      mng_ptr               buffer,
-                                                      mng_uint32            size,
-                                                      mng_uint32           *bytes_read);
-static mng_bool   MNG_DECL  myclosestream            (mng_handle            handle);
-static mng_bool   MNG_DECL  myprocessheader          (mng_handle            handle,
-                                                      mng_uint32            width,
-                                                      mng_uint32            height);
-static mng_ptr    MNG_DECL  mygetcanvasline          (mng_handle            handle,
-                                                      mng_uint32            line);
-static mng_bool   MNG_DECL  myrefresh                (mng_handle            handle,
-                                                      mng_uint32            x,
-                                                      mng_uint32            y,
-                                                      mng_uint32            w,
-                                                      mng_uint32            h);
-static mng_bool   MNG_DECL  mysettimer               (mng_handle            handle,
-                                                      mng_uint32            msecs);
-static mng_uint32 MNG_DECL  mygetticks               (mng_handle            handle);
-static mng_bool   MNG_DECL  mywritedata              (mng_handle            handle,
-                                                      mng_ptr               buf,
-                                                      mng_uint32            size,
-                                                      mng_uint32           *written_size);
-static mng_bool   MNG_DECL  myerror                  (mng_handle            handle,
-                                                      mng_int32             code,
-                                                      mng_int8              severity,
-                                                      mng_chunkid           chunktype,
-                                                      mng_uint32            chunkseq,
-                                                      mng_int32             extra1,
-                                                      mng_int32             extra2,
-                                                      mng_pchar             text);
+static mng_ptr    MNG_DECL  myalloc                  (mng_size_t             size);
+static void       MNG_DECL  myfree                   (mng_ptr                ptr,
+                                                      mng_size_t             size);
+static mng_bool   MNG_DECL  myopenstream             (mng_handle             handle);
+static mng_bool   MNG_DECL  myreadstream             (mng_handle             handle,
+                                                      mng_ptr                buffer,
+                                                      mng_uint32             size,
+                                                      mng_uint32            *bytes_read);
+static mng_bool   MNG_DECL  myclosestream            (mng_handle             handle);
+static mng_bool   MNG_DECL  myprocessheader          (mng_handle             handle,
+                                                      mng_uint32             width,
+                                                      mng_uint32             height);
+static mng_ptr    MNG_DECL  mygetcanvasline          (mng_handle             handle,
+                                                      mng_uint32             line);
+static mng_bool   MNG_DECL  myrefresh                (mng_handle             handle,
+                                                      mng_uint32             x,
+                                                      mng_uint32             y,
+                                                      mng_uint32             w,
+                                                      mng_uint32             h);
+static mng_bool   MNG_DECL  mysettimer               (mng_handle             handle,
+                                                      mng_uint32             msecs);
+static mng_uint32 MNG_DECL  mygetticks               (mng_handle             handle);
+static mng_bool   MNG_DECL  mywritedata              (mng_handle             handle,
+                                                      mng_ptr                buf,
+                                                      mng_uint32             size,
+                                                      mng_uint32            *written_size);
+static mng_bool   MNG_DECL  myerror                  (mng_handle             handle,
+                                                      mng_int32              code,
+                                                      mng_int8               severity,
+                                                      mng_chunkid            chunktype,
+                                                      mng_uint32             chunkseq,
+                                                      mng_int32              extra1,
+                                                      mng_int32              extra2,
+                                                      mng_pchar              text);
 
-static gint32    parse_chunks_type_from_layer_name   (const gchar          *str,
-                                                      gint                  default_chunks);
-static gint32    parse_disposal_type_from_layer_name (const gchar          *str,
-                                                      gint                  default_dispose);
-static gint32    parse_ms_tag_from_layer_name        (const gchar          *str,
-                                                      gint                  default_delay);
-static gint      find_unused_ia_color                (guchar               *pixels,
-                                                      gint                  numpixels,
-                                                      gint                 *colors);
-static gboolean  ia_has_transparent_pixels           (guchar               *pixels,
-                                                      gint                  numpixels);
+static gint32    parse_chunks_type_from_layer_name   (const gchar           *str,
+                                                      gint                   default_chunks);
+static gint32    parse_disposal_type_from_layer_name (const gchar           *str,
+                                                      gint                   default_dispose);
+static gint32    parse_ms_tag_from_layer_name        (const gchar           *str,
+                                                      gint                   default_delay);
+static gint      find_unused_ia_color                (guchar                *pixels,
+                                                      gint                   numpixels,
+                                                      gint                  *colors);
+static gboolean  ia_has_transparent_pixels           (guchar                *pixels,
+                                                      gint                   numpixels);
 
-static gboolean  respin_cmap                         (png_structp           png_ptr,
-                                                      png_infop             png_info_ptr,
-                                                      guchar               *remap,
-                                                      GimpImage            *image,
-                                                      GeglBuffer           *buffer,
-                                                      int                  *bit_depth);
+static gboolean  respin_cmap                         (png_structp            png_ptr,
+                                                      png_infop              png_info_ptr,
+                                                      guchar                *remap,
+                                                      GimpImage             *image,
+                                                      GeglBuffer            *buffer,
+                                                      int                   *bit_depth);
 
-static GimpImage * load_image                        (GFile                *file,
-                                                      gboolean              report_progress,
-                                                      gboolean             *resolution_loaded,
-                                                      gboolean             *profile_loaded,
-                                                      GError              **error);
+static GimpImage * load_image                        (GFile                 *file,
+                                                      gboolean               report_progress,
+                                                      gboolean              *resolution_loaded,
+                                                      gboolean              *profile_loaded,
+                                                      GError               **error);
 
-static gboolean  mng_export_image                    (GFile                *file,
-                                                      GimpImage            *image,
-                                                      gint                  n_drawables,
-                                                      GList                *drawables,
-                                                      GObject              *config,
-                                                      GError              **error);
-static gboolean  mng_export_dialog                   (GimpImage            *image,
-                                                      GimpProcedure        *procedure,
-                                                      GObject              *config);
+static gboolean  mng_export_image                    (GFile                 *file,
+                                                      GimpImage             *image,
+                                                      gint                   n_drawables,
+                                                      GList                 *drawables,
+                                                      GObject               *config,
+                                                      GError               **error);
+static gboolean  mng_export_dialog                   (GimpImage             *image,
+                                                      GimpProcedure         *procedure,
+                                                      GObject               *config);
 
 
 G_DEFINE_TYPE (Mng, mng, GIMP_TYPE_PLUG_IN)
@@ -311,17 +311,17 @@ mng_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("MNG animation"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files in MNG file format",
-                                        "This plug-in loads Multiple-image "
-                                        "Network Graphics (MNG) files.",
-                                        name);
+                                        _("Loads files in MNG file format"),
+                                        _("This plug-in loads Multiple-image "
+                                          "Network Graphics (MNG) files."),
+                                          name);
       gimp_procedure_set_attribution (procedure,
                                       "Alex S.",
                                       "Alex S.",
                                       "2026");
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
-                                          "image/mng");
+                                          "image/x-mng");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "mng");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
@@ -999,11 +999,11 @@ mng_putchunk_trns_wrapper (mng_handle    handle,
 }
 
 static GimpImage *
-load_image (GFile        *file,
-            gboolean      report_progress,
-            gboolean     *resolution_loaded,
-            gboolean     *profile_loaded,
-            GError      **error)
+load_image (GFile     *file,
+            gboolean   report_progress,
+            gboolean  *resolution_loaded,
+            gboolean  *profile_loaded,
+            GError   **error)
 {
   FILE         *fp;
   GimpImage    *image = NULL;
@@ -1107,6 +1107,7 @@ load_image (GFile        *file,
         }
     }
   mng_cleanup (&handle);
+  fclose (fp);
 
   return image;
 }
