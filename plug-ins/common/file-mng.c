@@ -93,11 +93,12 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC      "file-mng-load"
-#define EXPORT_PROC    "file-mng-export"
-#define PLUG_IN_BINARY "file-mng"
-#define PLUG_IN_ROLE   "gimp-file-mng"
-#define SCALE_WIDTH    125
+#define LOAD_PROC       "file-mng-load"
+#define LOAD_THUMB_PROC "file-mng-load-thumb"
+#define EXPORT_PROC     "file-mng-export"
+#define PLUG_IN_BINARY  "file-mng"
+#define PLUG_IN_ROLE    "gimp-file-mng"
+#define SCALE_WIDTH     125
 
 enum
 {
@@ -181,6 +182,11 @@ static GimpValueArray * mng_load                     (GimpProcedure         *pro
                                                       GimpMetadataLoadFlags *flags,
                                                       GimpProcedureConfig   *config,
                                                       gpointer               run_data);
+static GimpValueArray * mng_load_thumb               (GimpProcedure         *procedure,
+                                                      GFile                 *file,
+                                                      gint                   size,
+                                                      GimpProcedureConfig   *config,
+                                                      gpointer               run_data);
 static GimpValueArray * mng_export                   (GimpProcedure         *procedure,
                                                       GimpRunMode            run_mode,
                                                       GimpImage             *image,
@@ -246,8 +252,7 @@ static gboolean  respin_cmap                         (png_structp            png
 
 static GimpImage * load_image                        (GFile                 *file,
                                                       gboolean               report_progress,
-                                                      gboolean              *resolution_loaded,
-                                                      gboolean              *profile_loaded,
+                                                      gboolean               is_thumbnail,
                                                       GError               **error);
 
 static gboolean  mng_export_image                    (GFile                 *file,
@@ -290,6 +295,7 @@ mng_query_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
+  list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
   list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (EXPORT_PROC));
 
@@ -326,6 +332,23 @@ mng_create_procedure (GimpPlugIn  *plug_in,
                                           "mng");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,\212MNG\r\n\032\n");
+      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+                                                LOAD_THUMB_PROC);
+    }
+  else if (! strcmp (name, LOAD_THUMB_PROC))
+    {
+      procedure = gimp_thumbnail_procedure_new (plug_in, name,
+                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+                                                mng_load_thumb, NULL, NULL);
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads a preview from a MNG file",
+                                        "",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Alex S.",
+                                      "Alex S.",
+                                      "2026");
     }
   else if (! strcmp (name, EXPORT_PROC))
     {
@@ -462,8 +485,6 @@ mng_load (GimpProcedure         *procedure,
 {
   GimpValueArray *return_vals;
   gboolean        report_progress   = FALSE;
-  gboolean        resolution_loaded = FALSE;
-  gboolean        profile_loaded    = FALSE;
   GimpImage      *image = NULL;
   GError         *error = NULL;
 
@@ -475,22 +496,12 @@ mng_load (GimpProcedure         *procedure,
       report_progress = TRUE;
     }
 
-  image = load_image (file,
-                      report_progress,
-                      &resolution_loaded,
-                      &profile_loaded,
-                      &error);
+  image = load_image (file, report_progress, FALSE, &error);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
-
-  if (resolution_loaded)
-    *flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
-
-  if (profile_loaded)
-    *flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
@@ -501,6 +512,38 @@ mng_load (GimpProcedure         *procedure,
   return return_vals;
 }
 
+static GimpValueArray *
+mng_load_thumb (GimpProcedure       *procedure,
+                GFile               *file,
+                gint                 size,
+                GimpProcedureConfig *config,
+                gpointer             run_data)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GError         *error = NULL;
+
+  gegl_init (NULL, NULL);
+
+  image = load_image (file, FALSE, TRUE, &error);
+
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  GIMP_VALUES_SET_INT   (return_vals, 2, gimp_image_get_width (image));
+  GIMP_VALUES_SET_INT   (return_vals, 3, gimp_image_get_height (image));
+
+  gimp_value_array_truncate (return_vals, 4);
+
+  return return_vals;
+}
 
 static GimpValueArray *
 mng_export (GimpProcedure        *procedure,
@@ -1001,8 +1044,7 @@ mng_putchunk_trns_wrapper (mng_handle    handle,
 static GimpImage *
 load_image (GFile     *file,
             gboolean   report_progress,
-            gboolean  *resolution_loaded,
-            gboolean  *profile_loaded,
+            gboolean   is_thumbnail,
             GError   **error)
 {
   FILE         *fp;
@@ -1011,6 +1053,11 @@ load_image (GFile     *file,
   mng_info_t    mng_info;
   gint          ret_code;
   guint         frame_count = 0;
+  guint         i           = 1;
+
+  if (report_progress)
+    gimp_progress_init_printf (_("Opening '%s'"),
+                               gimp_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -1057,7 +1104,11 @@ load_image (GFile     *file,
       return NULL;
     }
   mng_display (handle);
-  mng_display_freeze (handle);
+
+  /* MNGs in the wild are messy, so they might throw errors even when
+   * loading properly. We'll initialize to ready so we can still retrieve
+   * some data */
+  ret_code = MNG_NEEDTIMERWAIT;
 
   frame_count = mng_get_totallayers (handle);
   if (frame_count == 0)
@@ -1077,14 +1128,14 @@ load_image (GFile     *file,
                                          GIMP_RGB,
                                          GIMP_PRECISION_U8_NON_LINEAR);
 
-  for (gint i = 1; i < frame_count; i++)
+  while (ret_code == MNG_NEEDTIMERWAIT && (i < frame_count))
     {
       GimpLayer  *layer;
       GeglBuffer *buffer;
       gchar      *layer_name;
 
-      ret_code = mng_display_goframe (handle, i);
-      mng_display_resume (handle);
+      if (mng_info.delay < 100)
+        mng_info.delay = 100;
 
       layer_name = g_strdup_printf (_("Frame %d (%d%s)"),
                                     i, mng_info.delay, "ms");
@@ -1105,9 +1156,21 @@ load_image (GFile     *file,
 
           g_object_unref (buffer);
         }
+
+      /* Only load the first layer for thumbnails */
+      if (is_thumbnail)
+        break;
+
+      mng_display_resume (handle);
+
+      if (report_progress)
+        gimp_progress_update ((gdouble) i++ / frame_count);
     }
   mng_cleanup (&handle);
   fclose (fp);
+
+  if (report_progress)
+    gimp_progress_update (1.0);
 
   return image;
 }
