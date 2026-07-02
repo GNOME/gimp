@@ -66,8 +66,12 @@
  * to denote values.
  *
  * SF-ADJUSTMENT:SF-SLIDER is custom.
- * Default widget for propety of type DOUBLE is an entry w/ spinner.
+ * Default widget for property of type DOUBLE is an entry w/ spinner.
  * Override with a slider w/ spinner.
+ * 
+ * SF-ADJUSTMENT:SF-SPINNER is custom.
+ * Override to set increments and digits from the script author's declaration
+ * instead of the stock widget's auto-computed increments and digits.
  */
 
 /* Does SFArg type need custom widget? */
@@ -83,8 +87,8 @@ sf_arg_type_is_custom (SFScript *script,
       result = TRUE;
       break;
     case SF_ADJUSTMENT:
-      if (script->args[arg_index].default_value.sfa_adjustment.type == SF_SLIDER)
-        result = TRUE;
+      /* Both SF_SLIDER and SF_SPINNER subtypes are custom */
+      result = TRUE;
       break;
     default:
       result = FALSE;
@@ -154,7 +158,9 @@ sf_widget_custom_option (GimpProcedureDialog *dialog,
  * For SF-ADJUSTMENT:SF-SLIDER or SF-ADJUSTMENT:SF-SPINNER.
  * The stock widget has already computed increments and digits based on the range,
  * which is not what the script author declared for increments and digits.
- * Note "arg->default_value.sfa_adjustment" is what the author declared.
+ * Step and page increments are NOT from properties of the arg, 
+ * like some PDB procedure arguments.
+ * "arg->default_value.sfa_adjustment" is what the author declared.
  */
 static void
 sf_widget_adjustment_set_digits_and_increments (GimpLabelSpin *label_spin,
@@ -178,8 +184,6 @@ sf_widget_adjustment_set_digits_and_increments (GimpLabelSpin *label_spin,
  * Customizes the widget: 
  *  - ScaleEntry (slider) instead of entry (both having spin buttons)
  *  - sets digits and increments from the author's declaration, in arg
- * Need this because step and page increments are auto computed by the stock widget,
- * and NOT from properties of the arg's declaration, as for some other PDB procedure arguments.
  */
 static void
 sf_widget_custom_slider (GimpProcedureDialog *dialog,
@@ -197,6 +201,22 @@ sf_widget_custom_slider (GimpProcedureDialog *dialog,
   /* A GimpScaleEntry is-a GimpLabelSpin, so just cast to GimpLabelSpin */
   sf_widget_adjustment_set_digits_and_increments (GIMP_LABEL_SPIN (scale_entry),
                                                   arg);
+}
+
+/* Adds widget for arg of type SF-ADJUSTMENT:SF_SPINNER to the dialog.
+ * Similar to sf_widget_custom_slider, but for spinner widget.
+ */
+static void
+sf_widget_custom_spinner (GimpProcedureDialog *dialog,
+                         SFArg               *arg)
+{
+  GimpLabelSpin * label_spin;
+
+  label_spin = GIMP_LABEL_SPIN (gimp_procedure_dialog_get_widget (dialog,
+                                                                  arg->property_name,
+                                                                  GIMP_TYPE_LABEL_SPIN));
+
+  sf_widget_adjustment_set_digits_and_increments (label_spin, arg);
 }
 
 /* Add a custom widget for a script's arg to the script's dialog.
@@ -217,8 +237,18 @@ sf_widget_custom_add_to_dialog (GimpProcedureDialog *dialog,
       sf_widget_custom_option (dialog, arg);
       break;
     case SF_ADJUSTMENT:
-      /* We already know sfa_adjustment.type == SF_SLIDER. */
-      sf_widget_custom_slider (dialog, arg);
+      if (arg->default_value.sfa_adjustment.type == SF_SLIDER)
+        {
+          sf_widget_custom_slider (dialog, arg);
+        }
+      else if (arg->default_value.sfa_adjustment.type == SF_SPINNER)
+        {
+          sf_widget_custom_spinner (dialog, arg);
+        }
+      else
+        {
+          g_warning ("%s Unhandled SF-ADJUSTMENT subtype.", G_STRFUNC);
+        }
       break;
     default:
       g_warning ("%s Unhandled custom widget type.", G_STRFUNC);
