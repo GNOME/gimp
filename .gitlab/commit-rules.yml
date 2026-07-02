@@ -6,7 +6,7 @@ patterns:
     - regex: '^[^:]*,[^:\s]'
       message: "Commit message subject sections inside the prefix must have a space after commas so '<section>, <section>: '. See: https://developer.gimp.org/core/coding_style/#commit-messages"
       where: subject
-    - regex: '^(fix|feat|chore)(\([^)]+\))?!?:\s'
+    - regex: '(?i)^(fix|feat|chore)(\([^)]+\))?!?:\s'
       message: "Commit message subject must not use the so-called 'Conventional Commits' format (fix, feat, chore). See: https://developer.gimp.org/core/coding_style/#commit-messages"
       where: subject
     - regex: '\n(?!.*https?://).{80,}'
