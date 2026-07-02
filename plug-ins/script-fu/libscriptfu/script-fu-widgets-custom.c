@@ -67,10 +67,10 @@
  *
  * SF-ADJUSTMENT:SF-SLIDER is custom.
  * Default widget for property of type DOUBLE is an entry w/ spinner.
- * Override with a slider w/ spinner.
+ * Customize to a slider w/ spinner.
  * 
  * SF-ADJUSTMENT:SF-SPINNER is custom.
- * Override to set increments and digits from the script author's declaration
+ * Customize to set increments and digits from the script author's declaration
  * instead of the stock widget's auto-computed increments and digits.
  */
 
@@ -208,7 +208,7 @@ sf_widget_custom_slider (GimpProcedureDialog *dialog,
  */
 static void
 sf_widget_custom_spinner (GimpProcedureDialog *dialog,
-                         SFArg               *arg)
+                          SFArg               *arg)
 {
   GimpLabelSpin * label_spin;
 
