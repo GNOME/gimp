@@ -332,6 +332,11 @@ sgiOpenFile(FILE *file, /* I - File to open */
         getint32 (sgip);         /* Minimum pixel */
         getint32 (sgip);         /* Maximum pixel */
 
+        if (sgip->zsize > 4)
+          {
+            g_message (_("Invalid number of channels: %hu"), sgip->zsize);
+            sgip->zsize = 4;
+          }
 
         if (sgip->comp)
         {
