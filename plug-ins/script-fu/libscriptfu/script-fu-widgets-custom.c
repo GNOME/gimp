@@ -150,17 +150,53 @@ sf_widget_custom_option (GimpProcedureDialog *dialog,
                                        GIMP_INT_STORE (store));
 }
 
+/* Customize a stock GimpLabelSpin using script author's declared values.
+ * For SF-ADJUSTMENT:SF-SLIDER or SF-ADJUSTMENT:SF-SPINNER.
+ * The stock widget has already computed increments and digits based on the range,
+ * which is not what the script author declared for increments and digits.
+ * Note "arg->default_value.sfa_adjustment" is what the author declared.
+ */
+static void
+sf_widget_adjustment_set_digits_and_increments (GimpLabelSpin *label_spin,
+                                                SFArg         *arg)
+{
+  g_return_if_fail (label_spin != NULL);
+  g_return_if_fail (GIMP_IS_LABEL_SPIN (label_spin));
+  g_return_if_fail (arg->type == SF_ADJUSTMENT);
+
+  /* Order important: set digits before increments 
+   * since setting digits auto recomputes and sets increments.
+   */
+  gimp_label_spin_set_digits (label_spin,
+                              arg->default_value.sfa_adjustment.digits);
+  gimp_label_spin_set_increments (label_spin,
+                                  arg->default_value.sfa_adjustment.step,
+                                  arg->default_value.sfa_adjustment.page);
+}
+
 /* Adds widget for arg of type SF-ADJUSTMENT:SF_SLIDER to the dialog.
- * Specializes the widget: slider instead of entry, and a spinner
+ * Customizes the widget: 
+ *  - ScaleEntry (slider) instead of entry (both having spin buttons)
+ *  - sets digits and increments from the author's declaration, in arg
+ * Need this because step and page increments are auto computed by the stock widget,
+ * and NOT from properties of the arg's declaration, as for some other PDB procedure arguments.
  */
 static void
 sf_widget_custom_slider (GimpProcedureDialog *dialog,
                          SFArg               *arg)
 {
-  /* Widget belongs to dialog, discard the returned ref. */
-  (void) gimp_procedure_dialog_get_widget (dialog,
-                                           arg->property_name,
-                                           GIMP_TYPE_SCALE_ENTRY);
+  GtkWidget *scale_entry;
+
+  /* Widget belongs to dialog, 
+   * retain ref only long enough to set increments and digits.
+   */
+  scale_entry = gimp_procedure_dialog_get_widget (dialog,
+                                                  arg->property_name,
+                                                  GIMP_TYPE_SCALE_ENTRY);
+
+  /* A GimpScaleEntry is-a GimpLabelSpin, so just cast to GimpLabelSpin */
+  sf_widget_adjustment_set_digits_and_increments (GIMP_LABEL_SPIN (scale_entry),
+                                                  arg);
 }
 
 /* Add a custom widget for a script's arg to the script's dialog.
