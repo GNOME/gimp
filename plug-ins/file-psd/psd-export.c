@@ -278,6 +278,7 @@ static GimpLayer   * create_merged_image        (GimpImage      *image,
 
 static gint          get_bpc                    (GimpImage      *image);
 static const Babl  * get_pixel_format           (GimpDrawable   *drawable,
+                                                 gboolean        cmyk,
                                                  GError        **error);
 
 static const Babl  * get_channel_format         (GimpDrawable   *drawable);
@@ -1974,7 +1975,7 @@ write_pixel_data (GOutputStream       *output,
   if (gimp_item_is_channel (GIMP_ITEM (drawable)))
     format = get_channel_format (drawable);
   else
-    format = get_pixel_format (drawable, error);
+    format = get_pixel_format (drawable, options->cmyk, error);
 
   if (options->cmyk && ! gimp_item_is_channel (GIMP_ITEM (drawable)))
     {
@@ -2331,7 +2332,8 @@ create_merged_image (GimpImage           *image,
       GeglBufferIterator *iter;
 
       buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (projection));
-      format = get_pixel_format (GIMP_DRAWABLE (projection), error);
+      format = get_pixel_format (GIMP_DRAWABLE (projection), options->cmyk,
+                                 error);
       bpp    = babl_format_get_bytes_per_pixel (format);
 
       iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
@@ -2777,28 +2779,19 @@ get_bpc (GimpImage *image)
     case GIMP_PRECISION_FLOAT_LINEAR:
     case GIMP_PRECISION_FLOAT_NON_LINEAR:
     case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+      return 4;
+
     default:
-      /* FIXME: we *should* encode the image as u32 in this case, but simply
-       * using the same code as for the other cases produces invalid psd files
-       * (they're rejected by photoshop, although they can be read by the
-       * corresponding psd-load.c code, which in turn can't actually read
-       * photoshop-generated u32 files.)
-       *
-       * simply encode the image as u16 for now.
-       */
-      /* return 4; */
       return 2;
     }
 }
 
 static const Babl *
 get_pixel_format (GimpDrawable  *drawable,
+                  gboolean       cmyk,
                   GError       **error)
 {
   GimpImage        *image;
-  const gchar      *model;
-  gint              bpc;
-  gchar             format[32];
   GimpColorProfile *profile = NULL;
   const Babl       *space   = NULL;
 
@@ -2826,20 +2819,72 @@ get_pixel_format (GimpDrawable  *drawable,
   switch (gimp_drawable_type (drawable))
     {
     case GIMP_GRAY_IMAGE:
-      model = "Y'";
-      break;
+      switch (get_bpc (image))
+        {
+        case 4:
+          return babl_format_with_space ("Y' float", NULL);
+
+        case 2:
+          return babl_format_with_space ("Y' u16", NULL);
+
+        case 1:
+          return babl_format_with_space ("Y' u8", NULL);
+
+        default:
+          return NULL;
+        }
 
     case GIMP_GRAYA_IMAGE:
-      model = "Y'A";
-      break;
+      switch (get_bpc (image))
+        {
+        case 4:
+          return babl_format_with_space ("Y'A float", NULL);
+
+        case 2:
+          return babl_format_with_space ("Y'A u16", NULL);
+
+        case 1:
+          return babl_format_with_space ("Y'A u8", NULL);
+
+        default:
+          return NULL;
+        }
 
     case GIMP_RGB_IMAGE:
-      model = "R'G'B'";
-      break;
+      switch (get_bpc (image))
+        {
+        case 4:
+          return babl_format_with_space ("R'G'B' float", space);
+
+        case 2:
+          return babl_format_with_space (cmyk ? "R'G'B' float" : "R'G'B' u16",
+                                         space);
+
+        case 1:
+          return babl_format_with_space (cmyk ? "R'G'B' float" : "R'G'B' u8",
+                                         space);
+
+        default:
+          return NULL;
+        }
 
     case GIMP_RGBA_IMAGE:
-      model = "R'G'B'A";
-      break;
+      switch (get_bpc (image))
+        {
+        case 4:
+          return babl_format_with_space ("R'G'B'A float", space);
+
+        case 2:
+          return babl_format_with_space (cmyk ? "R'G'B'A float" : "R'G'B'A u16",
+                                         space);
+
+        case 1:
+          return babl_format_with_space (cmyk ? "R'G'B'A float" : "R'G'B'A u8",
+                                         space);
+
+        default:
+          return NULL;
+        }
 
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
@@ -2848,44 +2893,51 @@ get_pixel_format (GimpDrawable  *drawable,
     default:
       g_return_val_if_reached (NULL);
     }
-
-  bpc = get_bpc (image);
-
-  sprintf (format, "%s u%d", model, 8 * bpc);
-
-  return babl_format_with_space (format, space);
 }
 
 static const Babl *
 get_channel_format (GimpDrawable *drawable)
 {
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-  gint       bpc;
-  gchar      format[32];
 
-  /* see gimp_image_get_channel_format() */
-  if (gimp_image_get_precision (image) == GIMP_PRECISION_U8_NON_LINEAR)
-    return babl_format ("Y' u8");
+  switch (get_bpc (image))
+    {
+    case 4:
+      return babl_format ("Y float");
 
-  bpc = get_bpc (image);
+    case 2:
+      return babl_format ("Y u16");
 
-  sprintf (format, "Y u%d", 8 * bpc);
+    case 1:
+      return babl_format ("Y' u8");
 
-  return babl_format (format);
+    default:
+      g_return_val_if_reached (NULL);
+    }
 }
 
 static const Babl *
 get_mask_format (GimpLayerMask *mask)
 {
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (mask));
-  gint       bpc;
-  gchar      format[32];
 
-  bpc = get_bpc (image);
+  switch (get_bpc (image))
+    {
+    case 4:
+      return babl_format ("Y float");
+      break;
 
-  sprintf (format, "Y u%d", 8 * bpc);
+    case 2:
+      return babl_format ("Y u16");
+      break;
 
-  return babl_format (format);
+    case 1:
+      return babl_format ("Y u8");
+      break;
+
+    default:
+      g_return_val_if_reached (NULL);
+    }
 }
 
 static GList *
