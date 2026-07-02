@@ -23,9 +23,9 @@
  *   sgiOpen()     - Open an SGI image file for reading or writing.
  *   sgiOpenFile() - Open an SGI image file for reading or writing.
  *   sgiPutRow()   - Put a row of image data to a file.
- *   getlong()     - Get a 32-bit big-endian integer.
+ *   getint32()    - Get a 32-bit big-endian integer.
  *   getshort()    - Get a 16-bit big-endian integer.
- *   putlong()     - Put a 32-bit big-endian integer.
+ *   putint32()    - Put a 32-bit big-endian integer.
  *   putshort()    - Put a 16-bit big-endian integer.
  *   read_rle8()   - Read 8-bit RLE data.
  *   read_rle16()  - Read 16-bit RLE data.
@@ -108,14 +108,16 @@
 
 #include "sgi-lib.h"
 
+#include "libgimp/stdplugins-intl.h"
+
 
 /*
  * Local functions...
  */
 
-static int      getlong(sgi_t*);
+static int      getint32(sgi_t*);
 static int      getshort(sgi_t*);
-static int      putlong(long, sgi_t*);
+static int      putint32(gint32, sgi_t*);
 static int      putshort(unsigned short, sgi_t*);
 static int      read_rle8(sgi_t*, unsigned short *, int);
 static int      read_rle16(sgi_t*, unsigned short *, int);
@@ -130,8 +132,8 @@ static int      write_rle16(sgi_t*, unsigned short *, int);
 int
 sgiClose(sgi_t *sgip)   /* I - SGI image */
 {
-  int   i;              /* Return status */
-  long  *offset;        /* Looping var for offset table */
+  int      i;             /* Return status */
+  goffset *offset;        /* Looping var for offset table */
 
 
   if (sgip == NULL)
@@ -148,13 +150,13 @@ sgiClose(sgi_t *sgip)   /* I - SGI image */
     for (i = sgip->ysize * sgip->zsize, offset = sgip->table[0];
          i > 0;
          i --, offset ++)
-      if (putlong(offset[0], sgip) < 0)
+      if (putint32 (offset[0], sgip) < 0)
         return (-1);
 
     for (i = sgip->ysize * sgip->zsize, offset = sgip->length[0];
          i > 0;
          i --, offset ++)
-      if (putlong(offset[0], sgip) < 0)
+      if (putint32 (offset[0], sgip) < 0)
         return (-1);
   };
 
@@ -190,8 +192,8 @@ sgiGetRow(sgi_t          *sgip, /* I - SGI image */
           int            y,     /* I - Line to read */
           int            z)     /* I - Channel to read */
 {
-  int   x;              /* X coordinate */
-  long  offset;         /* File offset */
+  int     x;              /* X coordinate */
+  goffset offset;         /* File offset */
 
 
   if (sgip == NULL ||
@@ -327,8 +329,9 @@ sgiOpenFile(FILE *file, /* I - File to open */
         sgip->xsize = getshort (sgip);
         sgip->ysize = getshort (sgip);
         sgip->zsize = getshort (sgip);
-        getlong (sgip);          /* Minimum pixel */
-        getlong (sgip);          /* Maximum pixel */
+        getint32 (sgip);         /* Minimum pixel */
+        getint32 (sgip);         /* Maximum pixel */
+
 
         if (sgip->comp)
         {
@@ -338,13 +341,13 @@ sgiOpenFile(FILE *file, /* I - File to open */
 
           fseek(sgip->file, 512, SEEK_SET);
 
-          sgip->table    = calloc(sgip->zsize, sizeof(long *));
+          sgip->table = calloc (sgip->zsize, sizeof (goffset *));
           if (sgip->table == NULL)
             {
               free(sgip);
               return (NULL);
             }
-          sgip->table[0] = g_try_malloc ((gsize) sgip->ysize * sgip->zsize * 4);
+          sgip->table[0] = g_try_malloc ((gsize) sgip->ysize * sgip->zsize * sizeof (goffset));
           if (sgip->table[0] == NULL)
             {
               free(sgip->table);
@@ -356,7 +359,7 @@ sgiOpenFile(FILE *file, /* I - File to open */
 
           for (i = 0; i < sgip->zsize; i ++)
             for (j = 0; j < sgip->ysize; j ++)
-              sgip->table[i][j] = getlong(sgip);
+              sgip->table[i][j] = getint32 (sgip);
         };
         break;
 
@@ -382,21 +385,21 @@ sgiOpenFile(FILE *file, /* I - File to open */
         putshort(sgip->zsize = zsize, sgip);
         if (bpp == 1)
         {
-          putlong(0, sgip);     /* Minimum pixel */
-          putlong(255, sgip);   /* Maximum pixel */
+          putint32 (0, sgip);     /* Minimum pixel */
+          putint32 (255, sgip);   /* Maximum pixel */
         }
         else
         {
-          putlong(-32768, sgip);        /* Minimum pixel */
-          putlong(32767, sgip); /* Maximum pixel */
+          putint32 (-32768, sgip);        /* Minimum pixel */
+          putint32 (32767, sgip); /* Maximum pixel */
         };
-        putlong(0, sgip);               /* Reserved */
+        putint32 (0, sgip);               /* Reserved */
 
         memset(name, 0, sizeof(name));
         fwrite(name, sizeof(name), 1, sgip->file);
 
         for (i = 0; i < 102; i ++)
-          putlong(0, sgip);
+          putint32 (0, sgip);
 
         switch (comp)
         {
@@ -433,11 +436,11 @@ sgiOpenFile(FILE *file, /* I - File to open */
               */
 
               for (i = 2 * ysize * zsize; i > 0; i --)
-                putlong(0, sgip);
+                putint32 (0, sgip);
 
               sgip->firstrow = ftell(sgip->file);
               sgip->nextrow  = ftell(sgip->file);
-              sgip->table    = calloc(sgip->zsize, sizeof(long *));
+              sgip->table    = calloc(sgip->zsize, sizeof(goffset *));
               if (sgip->table == NULL)
                 {
                   free(sgip->arle_row);
@@ -455,7 +458,7 @@ sgiOpenFile(FILE *file, /* I - File to open */
                 }
               for (i = 1; i < sgip->zsize; i ++)
                 sgip->table[i] = sgip->table[0] + i * sgip->ysize;
-              sgip->length    = calloc(sgip->zsize, sizeof(long *));
+              sgip->length    = calloc(sgip->zsize, sizeof(goffset *));
               sgip->length[0] =
                 g_try_malloc ((gsize) sgip->ysize * sgip->zsize * 4);
               for (i = 1; i < sgip->zsize; i ++)
@@ -483,8 +486,8 @@ sgiPutRow(sgi_t          *sgip, /* I - SGI image */
           int            y,     /* I - Line to write */
           int            z)     /* I - Channel to write */
 {
-  int   x;              /* X coordinate */
-  long  offset;         /* File offset */
+  int     x;              /* X coordinate */
+  goffset offset;         /* File offset */
 
 
   if (sgip == NULL ||
@@ -621,11 +624,11 @@ sgiPutRow(sgi_t          *sgip, /* I - SGI image */
 
 
 /*
- * 'getlong()' - Get a 32-bit big-endian integer.
+ * 'getint32()' - Get a 32-bit big-endian integer.
  */
 
 static int
-getlong(sgi_t *sgip)    /* I - SGI image to read from */
+getint32 (sgi_t *sgip)    /* I - SGI image to read from */
 {
   unsigned char b[4];
 
@@ -657,12 +660,12 @@ getshort(sgi_t *sgip)   /* I - SGI image to read from */
 
 
 /*
- * 'putlong()' - Put a 32-bit big-endian integer.
+ * 'putint32()' - Put a 32-bit big-endian integer.
  */
 
 static int
-putlong(long n,         /* I - Long to write */
-        sgi_t *sgip)    /* I - File to write to */
+putint32 (gint32 n,       /* I - int32 to write */
+          sgi_t *sgip)    /* I - File to write to */
 {
   if (putc(n >> 24, sgip->file) == EOF)
     return (EOF);

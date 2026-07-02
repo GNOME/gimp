@@ -50,12 +50,12 @@ typedef struct
   unsigned short        xsize,          /* Width in pixels */
                         ysize,          /* Height in pixels */
                         zsize;          /* Number of channels */
-  long                  firstrow,       /* File offset for first row */
+  goffset               firstrow,       /* File offset for first row */
                         nextrow,        /* File offset for next row */
                         **table,        /* Offset table for compression */
                         **length;       /* Length table for compression */
   unsigned short        *arle_row;      /* Advanced RLE compression buffer */
-  long                  arle_offset,    /* Advanced RLE buffer offset */
+  goffset               arle_offset,    /* Advanced RLE buffer offset */
                         arle_length;    /* Advanced RLE buffer length */
 } sgi_t;
 
