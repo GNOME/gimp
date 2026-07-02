@@ -45,6 +45,7 @@ scripts_independent = [
   { 'name': 'test-bytes' },
   { 'name': 'test-display' },
   { 'name': 'ts-helloworld' },
+  { 'name': 'test-slider-spinner'},
 ]
 
 foreach plugin : scripts_independent
