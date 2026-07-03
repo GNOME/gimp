@@ -166,6 +166,7 @@ typedef struct _GimpDrawableFilterMask          GimpDrawableFilterMask;
 typedef struct _GimpRasterizable                GimpRasterizable;
 typedef struct _GimpChannel                     GimpChannel;
 typedef struct _GimpLayerMask                   GimpLayerMask;
+typedef struct _GimpLayerVectorMask             GimpLayerVectorMask;
 typedef struct _GimpSelection                   GimpSelection;
 typedef struct _GimpLayer                       GimpLayer;
 typedef struct _GimpGroupLayer                  GimpGroupLayer;

@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimplayervectormask.h"
 #include "core/gimplinklayer.h"
 #include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
@@ -749,6 +750,7 @@ gimp_tool_button_press (GimpTool            *tool,
           if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
               gimp_item_is_link_layer (GIMP_ITEM (drawable))   ||
               gimp_item_is_text_layer (GIMP_ITEM (drawable))   ||
+              GIMP_IS_LAYER_VECTOR_MASK (drawable)             ||
               gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
             {
               gboolean constrain_only;
@@ -758,29 +760,50 @@ gimp_tool_button_press (GimpTool            *tool,
                                 ! (state & gimp_get_extend_selection_mask ()));
               if (! GIMP_IS_SOURCE_TOOL (tool) || ! constrain_only)
                 {
+                  GimpLayer *layer = GIMP_LAYER (drawable);
                   /* TRANSLATORS: this is a menu path. Make sure you use
                    * the same translations you used for the "Rasterize"
                    * action under the "Layer" menu.
                    */
                   gchar *menu_path = _("Layer > Rasterize");
 
+                  if (GIMP_IS_LAYER_VECTOR_MASK (drawable))
+                    layer = gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable));
+
                   if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
                     {
                       /* TRANSLATORS: the string between parentheses will be a menu path. */
-                      gimp_tool_message (tool, display, _("Text layers must be rasterized (%s)."), menu_path);
-                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (drawable));
+                      gimp_tool_message (tool, display,
+                                         _("Text layers must be rasterized (%s)."),
+                                         menu_path);
+                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (layer));
                     }
                   else if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
                     {
                       /* TRANSLATORS: the string between parentheses will be a menu path. */
-                      gimp_tool_message (tool, display, _("Link layers must be rasterized (%s)."), menu_path);
-                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (drawable));
+                      gimp_tool_message (tool, display,
+                                         _("Link layers must be rasterized (%s)."),
+                                         menu_path);
+                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (layer));
                     }
                   else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
                     {
                       /* TRANSLATORS: the string between parentheses will be a menu path. */
-                      gimp_tool_message (tool, display, _("Vector layers must be rasterized (%s)."), menu_path);
-                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (drawable));
+                      gimp_tool_message (tool, display,
+                                         _("Vector layers must be rasterized (%s)."),
+                                         menu_path);
+                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (layer));
+                    }
+                  else if (GIMP_IS_LAYER_VECTOR_MASK (drawable))
+                    {
+                      GimpLayer *layer =
+                        gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable));
+
+                      /* TRANSLATORS: the string between parentheses will be a menu path. */
+                      gimp_tool_message (tool, display,
+                                         _("Vector masks must be rasterized (%s)."),
+                                         menu_path);
+                      gimp_tools_blink_item (display->gimp, GIMP_ITEM (layer));
                     }
                   else
                     {
