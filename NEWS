@@ -112,6 +112,7 @@ Plug-Ins:
         layers (embedded files are not supported at this time).
       + TXT2 layer resources
       + Compositor layer resources
+    - Added 32-bit precision support for export.
   * New import support for MacPaint images.
   * GBR: fix exporting grayscale GBRs with alpha channels.
   * file-raw-data: various code improvements.
@@ -169,6 +170,7 @@ Plug-Ins:
   * Mail: Windows support added through MAPI.
   * NL Filter: alpha restriction added, allowing the plug-in to work on
     all RGB and grayscale images, with or without alpha.
+  * MNG: initial import support (we only had export support until now).
 
 API:
 
