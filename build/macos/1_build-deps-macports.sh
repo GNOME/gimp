@@ -107,7 +107,8 @@ self_build()
   if [ ! -f "_build-$(uname -m)/build.ninja" ]; then
     meson setup _build-$(uname -m) -Dprefix="$GIMP_PREFIX" $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI \
                 -Dbuildtype=debugoptimized \
-                -Dc_args="-I${OPT_PREFIX}/include" -Dcpp_args="-I${OPT_PREFIX}/include" -Dc_link_args="-L${OPT_PREFIX}/lib" -Dcpp_link_args="-L${OPT_PREFIX}/lib"
+                -Dc_args="-I${OPT_PREFIX}/include" -Dcpp_args="-I${OPT_PREFIX}/include" -Dc_link_args="-L${OPT_PREFIX}/lib" -Dcpp_link_args="-L${OPT_PREFIX}/lib" \
+                $(if [ "${2#-}" != "$2" ]; then echo "$2"; elif [ "${3#-}" != "$3" ]; then echo "$3"; else echo "$4"; fi)
   fi
   cd _build-$(uname -m)
   ninja
