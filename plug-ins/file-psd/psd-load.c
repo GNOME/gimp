@@ -1391,7 +1391,7 @@ read_layer_info (PSDimage      *img_a,
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("Invalid block size."));
                   /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
-                  g_debug ("Invalid block size: %" G_GSIZE_FORMAT, res_a.data_len);
+                  g_debug ("Invalid block size: %" G_GUINT64_FORMAT, (guint64)(res_a.data_len));
                   free_lyr_a (lyr_a, img_a->num_layers);
                   return NULL;
                 }
