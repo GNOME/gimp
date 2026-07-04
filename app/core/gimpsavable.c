@@ -39,10 +39,12 @@
 #include "gimpsavable.h"
 
 
-static void gimp_savable_print_incomplete_element (GOutputStream *output,
-                                                   gint           n_indent,
-                                                   const gchar   *element_name,
-                                                   va_list        args);
+static void    gimp_savable_print_incomplete_element (GOutputStream *output,
+                                                      gint           n_indent,
+                                                      const gchar   *element_name,
+                                                      va_list        args);
+static gchar * gimp_savable_printf                   (const gchar   *format,
+                                                      va_list        args);
 
 
 G_DEFINE_INTERFACE (GimpSavable, gimp_savable, G_TYPE_OBJECT)
@@ -143,39 +145,13 @@ gimp_savable_print_element (GOutputStream *output,
 
   if (value_format)
     {
-      if (g_strcmp0 ("%s", value_format) == 0)
-        {
-          const gchar *value = va_arg (args, gchar *);
-          strval = g_strdup_printf (value_format, value);
-        }
-      else if (g_strcmp0 ("%d", value_format) == 0)
-        {
-          gint value = va_arg (args, gint);
-          strval = g_strdup_printf (value_format, value);
-        }
-      else if (g_strcmp0 ("%u", value_format) == 0)
-        {
-          guint value = va_arg (args, guint);
-          strval = g_strdup_printf (value_format, value);
-        }
-      else if (g_strcmp0 ("%f", value_format) == 0)
-        {
-          gdouble value = va_arg (args, gdouble);
-          strval = g_strdup_printf (value_format, value);
-        }
-      else
-        {
-          g_return_if_reached ();
-        }
-
+      strval = gimp_savable_printf (value_format, args);
       g_return_if_fail (strval != NULL);
     }
     else
     {
-      /* Ignore the next arg which should be NULL too. */
-      void *value = va_arg (args, void *);
-
-      g_return_if_fail (value == NULL);
+      /* Ignore the next arg. */
+      (void) va_arg (args, void *);
     }
 
   gimp_savable_print_incomplete_element (output, n_indent, element_name, args);
@@ -216,9 +192,10 @@ gimp_savable_config_save (GimpConfig    *config,
   g_return_if_fail (G_IS_OBJECT (config));
   g_return_if_fail (element_name != NULL);
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s type='%s'>\n",
-                          n_indent, ' ', element_name,
-                          g_type_name (G_TYPE_FROM_INSTANCE (config)));
+  gimp_savable_print_element_start (output, n_indent, element_name,
+                                    "type", "%s",
+                                    g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                                    NULL);
 
   klass = G_OBJECT_GET_CLASS (config);
 
@@ -240,73 +217,66 @@ gimp_savable_config_save (GimpConfig    *config,
 
       if (G_VALUE_HOLDS_BOOLEAN (&value))
         {
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%s</%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name,
-                                  g_value_get_boolean (&value) ? "true" : "false",
-                                  prop_spec->name);
+          gimp_savable_print_element (output, n_indent + 2, prop_spec->name, "%b",
+                                      g_value_get_boolean (&value),
+                                      NULL);
         }
       else if (G_VALUE_HOLDS_INT (&value))
         {
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%d</%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name,
-                                  g_value_get_int (&value), prop_spec->name);
+          gimp_savable_print_element (output, n_indent + 2, prop_spec->name,
+                                      "%d", g_value_get_int (&value),
+                                      NULL);
         }
       else if (G_VALUE_HOLDS_ENUM (&value))
         {
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%s</%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name,
-                                  gimp_get_enum_value_nick (prop_spec->value_type,
-                                                            g_value_get_enum (&value)),
-                                  prop_spec->name);
+          gimp_savable_print_element (output, n_indent + 2, prop_spec->name, "%s",
+                                      gimp_get_enum_value_nick (prop_spec->value_type,
+                                                                g_value_get_enum (&value)),
+                                      NULL);
         }
       else if (G_VALUE_HOLDS_STRING (&value))
         {
           const gchar *str = g_value_get_string (&value);
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%s</%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name,
-                                  str ? str : "", prop_spec->name);
+          gimp_savable_print_element (output, n_indent + 2, prop_spec->name,
+                                      "%s", str ? str : "", NULL);
         }
       else if (G_VALUE_HOLDS_DOUBLE (&value))
         {
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%f</%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name,
-                                  g_value_get_double (&value), prop_spec->name);
+          gimp_savable_print_element (output, n_indent + 2, prop_spec->name,
+                                      "%f", g_value_get_double (&value), NULL);
         }
       else if (G_VALUE_HOLDS_FLOAT (&value))
         {
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>%f</%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name,
-                                  g_value_get_float (&value), prop_spec->name);
+          gimp_savable_print_element (output, n_indent + 2, prop_spec->name,
+                                      "%f", g_value_get_float (&value), NULL);
         }
       else if (G_VALUE_HOLDS_OBJECT (&value) &&
                GIMP_IS_UNIT (g_value_get_object (&value)))
         {
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name);
+          gimp_savable_print_element_start (output, n_indent + 2, prop_spec->name, NULL);
           gimp_savable_unit_save (GIMP_UNIT (g_value_get_object (&value)),
                                   output, n_indent + 4);
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c</%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name);
+          gimp_savable_print_element_end (output, n_indent + 2, prop_spec->name);
         }
       else if (G_VALUE_HOLDS_OBJECT (&value) &&
                GEGL_IS_COLOR (g_value_get_object (&value)))
         {
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name);
+          gimp_savable_print_element_start (output, n_indent + 2, prop_spec->name, NULL);
           gimp_savable_color_save (GEGL_COLOR (g_value_get_object (&value)), NULL, NULL,
                                    output, n_indent + 4, icc_references);
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c</%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name);
+          gimp_savable_print_element_end (output, n_indent + 2, prop_spec->name);
         }
       else if (G_VALUE_HOLDS_OBJECT (&value) &&
                GIMP_IS_SAVABLE (g_value_get_object (&value)))
         {
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name);
-          gimp_savable_save (GIMP_SAVABLE (g_value_get_object (&value)), output,
+          GObject *object = g_value_get_object (&value);
+
+          gimp_savable_print_element_start (output, n_indent + 2, prop_spec->name,
+                                            "type", "%s", g_type_name (G_TYPE_FROM_INSTANCE (object)),
+                                            NULL);
+          gimp_savable_save (GIMP_SAVABLE (object), output,
                              n_indent + 4, xcf_file, icc_references);
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c</%s>\n",
-                                  n_indent + 2, ' ', prop_spec->name);
+          gimp_savable_print_element_end (output, n_indent + 2, prop_spec->name);
         }
       else
         {
@@ -317,8 +287,7 @@ gimp_savable_config_save (GimpConfig    *config,
 
   g_free (property_specs);
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</%s>\n",
-                          n_indent, ' ', element_name);
+  gimp_savable_print_element_end (output, n_indent, element_name);
 }
 
 void
@@ -333,12 +302,12 @@ gimp_savable_format_save (const Babl    *format,
   g_return_if_fail (space_references != NULL);
 
   encoding = g_markup_escape_text (babl_format_get_encoding (format), -1);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<format encoding='%s'>\n", n_indent, ' ', encoding);
+  gimp_savable_print_element_start (output, n_indent, "format", "encoding", "%s", encoding, NULL);
 
   space = babl_format_get_space (format);
   gimp_savable_space_save (space, output, n_indent + 2, space_references, 0);
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</format>\n", n_indent, ' ');
+  gimp_savable_print_element_end (output, n_indent, "format");
 
   g_free (encoding);
 }
@@ -358,7 +327,7 @@ gimp_savable_space_save (const Babl    *space,
        * space on a CMYK or other models won't necessarily be sRGB.
        * Or maybe set name='default'?
        */
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<space name='sRGB'/>\n", n_indent, ' ');
+      gimp_savable_print_element (output, n_indent, "space", NULL, NULL, "name", "%s", "sRGB", NULL);
     }
   else if (references == NULL)
     {
@@ -405,9 +374,9 @@ gimp_savable_space_save (const Babl    *space,
           gchar      *icc_b64;
 
           icc_b64 = g_base64_encode ((const guchar*) icc, icc_length);
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<space>\n", n_indent, ' ');
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<icc>%s</icc>\n", n_indent + 2, ' ', icc_b64);
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c</space>\n", n_indent, ' ');
+          gimp_savable_print_element_start (output, n_indent, "space", NULL);
+          gimp_savable_print_element (output, n_indent, "icc", "%s", icc_b64, NULL);
+          gimp_savable_print_element_end (output, n_indent, "space");
 
           g_free (icc_b64);
         }
@@ -430,9 +399,9 @@ gimp_savable_color_save  (GeglColor     *color,
   g_return_if_fail (icc_references != NULL);
 
   if (name != NULL)
-    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<color name='%s'>\n", n_indent, ' ', name);
+    gimp_savable_print_element_start (output, n_indent, "color", "name", "%s", name, NULL);
   else
-    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<color>\n", n_indent, ' ');
+    gimp_savable_print_element_start (output, n_indent, "color", NULL);
 
   /* XXX Do we want to make it possible to have a restricted format yet
    * store the colors in their source format (which may be higher
@@ -452,9 +421,9 @@ gimp_savable_color_save  (GeglColor     *color,
   gegl_color_get_pixel (color, format, pixel);
   bpp = babl_format_get_bytes_per_pixel (format);
   pixel_b64 = g_base64_encode ((const guchar*) pixel, bpp);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<pixel>%s</pixel>\n", n_indent + 2, ' ', pixel_b64);
+  gimp_savable_print_element (output, n_indent + 2, "pixel", "%s", pixel_b64, NULL);
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</color>\n", n_indent, ' ');
+  gimp_savable_print_element_end (output, n_indent, "color");
 
   g_free (pixel_b64);
 }
@@ -472,7 +441,7 @@ gimp_savable_save_all_spaces (GimpImage     *image,
   icc_refs = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
 
   /* Save the space of the image itself. */
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<formats>\n", n_indent, ' ');
+  gimp_savable_print_element_start (output, n_indent, "formats", NULL);
   space = gimp_image_get_layer_space (image);
   if (space != NULL && space != babl_space ("sRGB"))
     {
@@ -536,7 +505,7 @@ gimp_savable_save_all_spaces (GimpImage     *image,
             }
         }
     }
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</formats>\n", n_indent, ' ');
+  gimp_savable_print_element_end (output, n_indent, "formats");
 
   return icc_refs;
 }
@@ -550,23 +519,30 @@ gimp_savable_unit_save (GimpUnit      *unit,
     {
       guint32 uid = gimp_unit_get_id (unit);
 
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<unit built-in='%s'/>\n", n_indent, ' ',
-                              gimp_get_enum_value_nick (GIMP_TYPE_UNIT_ID, uid));
+      /* Making sure the GType exists. */
+      (void) GIMP_TYPE_UNIT_ID;
+      gimp_savable_print_element (output, n_indent, "unit", NULL, NULL,
+                                  "built-in", "%[GimpUnitID]", uid, NULL);
     }
   else
     {
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<unit>\n", n_indent, ' ');
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<factor>%f</factor>\n",
-                              n_indent + 2, ' ', gimp_unit_get_factor (unit));
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<digits>%d</digits>\n",
-                              n_indent + 2, ' ', gimp_unit_get_digits (unit));
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<name>%s</name>\n",
-                              n_indent + 2, ' ', gimp_unit_get_name (unit));
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<symbol>%s</symbol>\n",
-                              n_indent + 2, ' ', gimp_unit_get_symbol (unit));
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<abbrev>%s</abbrev>\n",
-                              n_indent + 2, ' ', gimp_unit_get_abbreviation (unit));
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</unit>\n", n_indent, ' ');
+      gimp_savable_print_element_start (output, n_indent, "unit", NULL);
+      gimp_savable_print_element (output, n_indent + 2, "factor",
+                                  "%f", gimp_unit_get_factor (unit),
+                                  NULL);
+      gimp_savable_print_element (output, n_indent + 2, "digits",
+                                  "%d", gimp_unit_get_digits (unit),
+                                  NULL);
+      gimp_savable_print_element (output, n_indent + 2, "name",
+                                  "%s", gimp_unit_get_name (unit),
+                                  NULL);
+      gimp_savable_print_element (output, n_indent + 2, "symbol",
+                                  "%s", gimp_unit_get_symbol (unit),
+                                  NULL);
+      gimp_savable_print_element (output, n_indent + 2, "abbreviation",
+                                  "%s", gimp_unit_get_abbreviation (unit),
+                                  NULL);
+      gimp_savable_print_element_end (output, n_indent, "unit");
     }
 }
 
@@ -581,8 +557,7 @@ gimp_savable_metadata_save (GimpMetadata  *metadata,
   meta_string = gimp_metadata_serialize (metadata);
   escaped     = g_markup_escape_text (meta_string, -1);
   if (meta_string)
-    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<metadata>%s</metadata>\n",
-                            n_indent, ' ', escaped);
+    gimp_savable_print_element (output, n_indent, "metadata", "%s", escaped, NULL);
 
   g_free (meta_string);
   g_free (escaped);
@@ -605,13 +580,16 @@ gimp_savable_parasite_save (GimpParasite  *parasite,
       name    = gimp_parasite_get_name (parasite);
       escaped = g_markup_escape_text (name, -1);
       flags   = gimp_parasite_get_flags (parasite);
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<parasite name='%s' flags='%ld'>",
-                              n_indent, ' ', escaped, flags);
+
+      gimp_savable_print_element_start (output, n_indent, "parasite",
+                                        "name",  "%s",  escaped,
+                                        "flags", "%lu", flags,
+                                        NULL);
 
       data     = gimp_parasite_get_data (parasite, &data_length);
       data_b64 = g_base64_encode ((const guchar*) data, data_length);
 
-      g_output_stream_printf (output, NULL, NULL, NULL, "%s</parasite>\n", data_b64);
+      gimp_savable_print_element_end (output, n_indent, "parasite");
 
       g_free (escaped);
       g_free (data_b64);
@@ -636,10 +614,10 @@ gimp_savable_composite_mode_save (GimpLayerCompositeMode  composite_mode,
       auto_set       = TRUE;
     }
 
-  g_output_stream_printf (output, NULL, NULL, NULL,
-                          "%*c<composite-mode%s>%s</composite-mode>\n",
-                          n_indent, ' ', auto_set ? " auto='true'" : "",
-                          gimp_get_enum_value_nick (GIMP_TYPE_LAYER_COMPOSITE_MODE, composite_mode));
+  gimp_savable_print_element (output, n_indent, "composite-mode",
+                              "%[GimpLayerCompositeMode]", composite_mode,
+                              auto_set ? "auto" : NULL, "%s", "true",
+                              NULL);
 }
 
 void
@@ -660,9 +638,10 @@ gimp_savable_composite_space_save (GimpLayerColorSpace  composite_space,
       auto_set        = TRUE;
     }
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<composite-space%s>%s</composite-space>\n",
-                          n_indent, ' ', auto_set ? " auto='true'" : "",
-                          gimp_get_enum_value_nick (GIMP_TYPE_LAYER_COLOR_SPACE, composite_space));
+  gimp_savable_print_element (output, n_indent, "composite-space",
+                              "%[GimpLayerColorSpace]", composite_space,
+                              auto_set ? "auto" : NULL, "%s", "true",
+                              NULL);
 }
 
 void
@@ -683,9 +662,10 @@ gimp_savable_blend_space_save (GimpLayerColorSpace  blend_space,
       auto_set    = TRUE;
     }
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<blend-space%s>%s</blend-space>\n",
-                          n_indent, ' ', auto_set ? " auto='true'" : "",
-                          gimp_get_enum_value_nick (GIMP_TYPE_LAYER_COLOR_SPACE, blend_space));
+  gimp_savable_print_element (output, n_indent, "blend-space",
+                              "%[GimpLayerColorSpace]", blend_space,
+                              auto_set ? "auto" : NULL, "%s", "true",
+                              NULL);
 }
 
 
@@ -712,30 +692,7 @@ gimp_savable_print_incomplete_element (GOutputStream *output,
       format = va_arg (args, char *);
       g_return_if_fail (format != NULL);
 
-      if (g_strcmp0 ("%s", format) == 0)
-        {
-          const gchar *value = va_arg (args, gchar *);
-          strval = g_strdup_printf (format, value);
-        }
-      else if (g_strcmp0 ("%d", format) == 0)
-        {
-          gint value = va_arg (args, gint);
-          strval = g_strdup_printf (format, value);
-        }
-      else if (g_strcmp0 ("%u", format) == 0)
-        {
-          guint value = va_arg (args, guint);
-          strval = g_strdup_printf (format, value);
-        }
-      else if (g_strcmp0 ("%f", format) == 0)
-        {
-          gdouble value = va_arg (args, gdouble);
-          strval = g_strdup_printf (format, value);
-        }
-      else
-        {
-          g_return_if_reached ();
-        }
+      strval = gimp_savable_printf (format, args);
       g_return_if_fail (strval != NULL);
 
       encoded = g_markup_escape_text (strval, -1);
@@ -746,4 +703,77 @@ gimp_savable_print_incomplete_element (GOutputStream *output,
       g_free (strval);
       g_free (encoded);
     }
+}
+
+static gchar *
+gimp_savable_printf (const gchar *format,
+                     va_list      args)
+{
+  gchar *strval;
+
+  g_return_val_if_fail (format != NULL, NULL);
+
+  if (g_strcmp0 ("%s", format) == 0)
+    {
+      const gchar *value = va_arg (args, gchar *);
+      strval = g_strdup_printf (format, value);
+    }
+  else if (g_strcmp0 ("%d", format) == 0)
+    {
+      gint value = va_arg (args, gint);
+      strval = g_strdup_printf (format, value);
+    }
+  else if (g_strcmp0 ("%lu", format) == 0)
+    {
+      gulong value = va_arg (args, gulong);
+      strval = g_strdup_printf (format, value);
+    }
+  else if (g_strcmp0 ("%ld", format) == 0)
+    {
+      glong value = va_arg (args, glong);
+      strval = g_strdup_printf (format, value);
+    }
+  else if (g_strcmp0 ("%u", format) == 0)
+    {
+      guint value = va_arg (args, guint);
+      strval = g_strdup_printf (format, value);
+    }
+  else if (g_strcmp0 ("%f", format) == 0)
+    {
+      gdouble value = va_arg (args, gdouble);
+      strval = g_strdup_printf (format, value);
+    }
+  else if (g_strcmp0 ("%b", format) == 0)
+    {
+      /* Custom format: boolean type. */
+      gboolean value = va_arg (args, gboolean);
+      strval = g_strdup (value ? "true" : "false");
+    }
+  else
+    {
+      gsize flen = strlen (format);
+
+      if (flen > 3 && format[0] == '%' && format[1] == '[' &&
+          format[flen - 1] == ']')
+        {
+          /* Custom format: enum types. */
+          gchar *type_name;
+          GType  enum_type;
+          gint   value = va_arg (args, gint);
+
+          type_name = g_strdup (format + 2);
+          type_name[strlen (type_name) - 1] = '\0';
+
+          enum_type = g_type_from_name (type_name);
+          g_free (type_name);
+          g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
+          strval = g_strdup (gimp_get_enum_value_nick (enum_type, value));
+        }
+      else
+        {
+          g_return_val_if_reached (NULL);
+        }
+    }
+
+  return strval;
 }

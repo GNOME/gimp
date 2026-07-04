@@ -1711,16 +1711,14 @@ gimp_layer_savable_save (GimpSavable   *savable,
 
   gimp_savable_print_element (output, n_indent + 2, "opacity", "%f",
                               gimp_layer_get_opacity (layer), NULL);
-  gimp_savable_print_element (output, n_indent + 2, "visible", "%s",
-                              gimp_item_get_visible (GIMP_ITEM (layer)) ? "true" : "false", NULL);
-  gimp_savable_print_element (output, n_indent + 2, "color-tag", "%s",
-                              gimp_get_enum_value_nick (GIMP_TYPE_COLOR_TAG,
-                                                        gimp_item_get_color_tag (GIMP_ITEM (layer))),
+  gimp_savable_print_element (output, n_indent + 2, "visible", "%b",
+                              gimp_item_get_visible (GIMP_ITEM (layer)), NULL);
+  gimp_savable_print_element (output, n_indent + 2, "color-tag", "%[GimpColorTag]",
+                              gimp_item_get_color_tag (GIMP_ITEM (layer)),
                               NULL);
 
   mode = gimp_layer_get_mode (layer);
-  gimp_savable_print_element (output, n_indent + 2, "mode", "%s",
-                              gimp_get_enum_value_nick (GIMP_TYPE_LAYER_MODE, mode), NULL);
+  gimp_savable_print_element (output, n_indent + 2, "mode", "%[GimpLayerMode]", mode, NULL);
 
   space = gimp_layer_get_blend_space (layer);
   gimp_savable_blend_space_save (space, mode, output, n_indent + 2);

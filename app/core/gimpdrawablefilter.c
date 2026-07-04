@@ -429,7 +429,7 @@ gimp_drawable_filter_save (GimpSavable   *savable,
                 "custom-name", &has_custom_name,
                 NULL);
 
-  gimp_savable_print_element_start (output, n_indent, "filter", has_custom_name ? "name" : NULL, name, NULL);
+  gimp_savable_print_element_start (output, n_indent, "filter", has_custom_name ? "name" : NULL, "%s", name, NULL);
 
   if (icon && *icon)
     gimp_savable_print_element (output, n_indent + 2, "icon", "%s", icon, NULL);

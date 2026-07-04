@@ -295,7 +295,7 @@ gimp_text_layer_savable_save (GimpSavable   *savable,
   gchar         *layer_name;
 
   layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
-  gimp_savable_print_element_start (output, n_indent, "text-layer", "name", layer_name, NULL);
+  gimp_savable_print_element_start (output, n_indent, "text-layer", "name", "%s", layer_name, NULL);
 
   parent_savable_interface->save (savable, output, n_indent, xcf_file, icc_references);
 
