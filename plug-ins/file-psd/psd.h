@@ -682,30 +682,32 @@ typedef struct
 /* Adjustment Layer information */
 typedef struct
 {
-  gchar    type[4];
-  gint16   version;
+  gchar     type[4];
+  gint16    version;
 
-  gint16   level;               /* Threshold and Posterize */
+  gint16    level;               /* Threshold and Posterize */
 
-  gint16   is_mono;             /* Channel/Mono Mixer */
-  gint16   red[5];
-  gint16   green[5];
-  gint16   blue[5];
-  gint16   total[5];
+  gint16    is_mono;             /* Channel/Mono Mixer */
+  gint16    red[5];
+  gint16    green[5];
+  gint16    blue[5];
+  gint16    total[5];
 
-  guchar   brightness;          /* Brightness-Contrast */
-  guchar   contrast;
+  guchar    brightness;          /* Brightness-Contrast */
+  guchar    contrast;
 
-  gchar    shadows[3];          /* Color Balance */
-  gchar    midtones[3];
-  gchar    highlights[3];
-  gboolean preserve_luminosity;
+  gchar     shadows[3];          /* Color Balance */
+  gchar     midtones[3];
+  gchar     highlights[3];
+  gboolean  preserve_luminosity;
 
-  gdouble  in_out_gamma[4][5];  /* Levels */
+  gdouble   in_out_gamma[4][5];  /* Levels */
 
-  gboolean is_colorize;         /* Hue-Saturation/Colorize */
-  gfloat   colorization[3];
-  gfloat   hsl[7][3];
+  gboolean  is_colorize;         /* Hue-Saturation/Colorize */
+  gfloat    colorization[3];
+  gfloat    hsl[7][3];
+
+  JsonNode *descriptor;
 
 } PSDAdjustmentLayer;
 

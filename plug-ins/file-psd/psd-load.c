@@ -109,6 +109,13 @@ static gint             add_merged_image           (GimpImage      *image,
                                                     GInputStream   *input,
                                                     GError        **error);
 
+/*  Local descriptor function prototypes */
+static const gchar *   get_json_string             (JsonReader     *reader,
+                                                    gchar          *key,
+                                                    const gchar    *default_value);
+static GeglColor *     get_json_color              (JsonReader     *reader,
+                                                    const Babl     *space);
+
 /*  Local utility function prototypes  */
 static void       check_duplicate_clipping_group   (PSDlayer      **lyr_a,
                                                     gint16          num_layers,
@@ -3335,6 +3342,57 @@ add_adjustment_layer (GimpLayer *layer,
                                                 "low",     ladj->level / 255.0f,
                                                 "channel", GIMP_HISTOGRAM_LUMINANCE,
                                                 NULL);
+    }
+  /* Fill layers */
+  else if (memcmp (ladj->type, PSD_LFIL_SOLID, 4) == 0)
+    {
+      const Babl *format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+      const Babl *space  = babl_format_get_space (format);
+      GeglColor  *color  = NULL;
+
+      if (ladj->descriptor)
+        {
+          JsonReader *root_reader = NULL;
+
+          root_reader = json_reader_new (ladj->descriptor);
+
+          if (json_reader_read_member (root_reader, "descriptor"))
+            {
+              gint cnt = json_reader_count_elements (root_reader);
+
+              IFDBG(3) g_debug ("Descriptor has %d elements.", cnt);
+              for (gint i = cnt - 1; i >= 0; i--)
+                {
+                  if (json_reader_read_element (root_reader, i))
+                    {
+                      JsonNode   *node   = json_reader_get_current_node (root_reader);
+                      JsonReader *reader = json_reader_new (node);
+
+                      if (! color)
+                        color = get_json_color (reader, space);
+
+                      g_object_unref (reader);
+                    }
+                }
+            }
+          json_reader_end_member (root_reader);
+          g_object_unref (root_reader);
+        }
+
+      if (color == NULL)
+        {
+          color = gegl_color_new ("none");
+          IFDBG(3) g_debug ("WARNING: Color not initialized!");
+        }
+
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gegl:color-overlay",
+                                                NULL,
+                                                GIMP_LAYER_MODE_REPLACE,
+                                                1.0,
+                                                "value", color,
+                                                NULL);
+      g_object_unref (color);
     }
 
   if (filter)

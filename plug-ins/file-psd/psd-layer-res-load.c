@@ -38,8 +38,8 @@
   PSD_LADJ_INVERT         "nvrt"    Empty Layer  * Adjustment layer - invert (PS4) *
   PSD_LADJ_THRESHOLD      "thrs"    Empty Layer  * Adjustment layer - threshold (PS4) *
   PSD_LADJ_POSTERIZE      "post"    Empty Layer  * Adjustment layer - posterize (PS4) *
-  PSD_LADJ_VIBRANCE       "vibA"        -       * Adjustment layer - vibrance (PS10) *
-  PSD_LADJ_COLOR_LOOKUP   "clrL"        -       * Adjustment layer - color lookup (PS13) *
+  PSD_LADJ_VIBRANCE       "vibA"        -        * Adjustment layer - vibrance (PS10) *
+  PSD_LADJ_COLOR_LOOKUP   "clrL"        -        * Adjustment layer - color lookup (PS13) *
 
   * Fill Layer IDs *
   PSD_LFIL_SOLID          "SoCo"        -       * Solid color sheet setting (PS6) *
@@ -68,6 +68,7 @@
 
   * Vector mask *
   PSD_LMSK_VMASK          "vmsk"        -       * Vector mask setting (PS6) *
+  PSD_LMSK_VSHAPE         "vsms"        -       * Vector shape setting (CS6) *
 
   * Parasites *
   PSD_LPAR_ANNOTATE       "Anno"        -       * Annotation (PS6) *
@@ -467,11 +468,12 @@ load_layer_resource (PSDlayerres   *res_a,
       load_resource_ladj (res_a, lyr_a, input, error);
     }
 
-  else if (memcmp (res_a->key, PSD_LFIL_SOLID, 4) == 0
-           || memcmp (res_a->key, PSD_LFIL_PATTERN, 4) == 0
-           || memcmp (res_a->key, PSD_LFIL_GRADIENT, 4) == 0)
+  else if (memcmp (res_a->key, PSD_LFIL_SOLID, 4) == 0   ||
+           memcmp (res_a->key, PSD_LFIL_PATTERN, 4) == 0 ||
+           memcmp (res_a->key, PSD_LFIL_GRADIENT, 4) == 0)
     {
-      if (lyr_a)
+      /* TODO: Remove when we support patterns and gradients */
+      if (lyr_a && memcmp (res_a->key, PSD_LFIL_SOLID, 4) != 0)
         {
           lyr_a->unsupported_features->fill_layer = TRUE;
           lyr_a->unsupported_features->show_gui   = TRUE;
@@ -1359,9 +1361,32 @@ load_resource_lfil (const PSDlayerres  *res_a,
                     GInputStream       *input,
                     GError            **error)
 {
-  /* Load fill layer */
+  guint32 desc_version = 0;
 
-  IFDBG(2) g_debug ("Process layer resource block %.4s: Fill layer", res_a->key);
+  /* Load fill layer information */
+  IFDBG(2) g_debug ("Process layer resource block %.4s: Fill layer",
+                    res_a->key);
+
+  if (! psd_read_uint32 (input, &desc_version, res_a->ibm_pc_format, error))
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  if (parse_descriptor (input, res_a->ibm_pc_format,
+                        &lyr_a->adjustment_layer->descriptor, error) == 0)
+    {
+      memcpy (lyr_a->adjustment_layer->type, res_a->key, 4);
+
+      IFDBG(4)
+        if (lyr_a->adjustment_layer->descriptor)
+          g_debug ("Fill layer descriptor for layer %u:\n%s", lyr_a->id,
+                   json_to_string (lyr_a->adjustment_layer->descriptor, TRUE));
+    }
+  else
+    {
+      return -1;
+    }
 
   return 0;
 }
