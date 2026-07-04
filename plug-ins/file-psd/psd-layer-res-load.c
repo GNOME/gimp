@@ -1870,6 +1870,15 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                       return -1;
                     }
                 }
+              else if (ls_a->iglw.size == 33)
+                {
+                  /* version 1 (Photoshop 5.0, not mentioned in specs) */
+                  if (psd_read (input, &ls_a->iglw.invert, 1, error) < 1)
+                    {
+                      psd_set_error (error);
+                      return -1;
+                    }
+                }
             }
           else if (memcmp (effectname, "bevl", 4) == 0)
             {
