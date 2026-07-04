@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-30 19:50+0000\n"
-"PO-Revision-Date: 2026-07-01 05:52+0200\n"
+"POT-Creation-Date: 2026-07-03 18:26+0000\n"
+"PO-Revision-Date: 2026-07-04 07:45+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -1213,7 +1213,7 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:2197 plug-ins/common/curve-bend.c:755
 #: plug-ins/common/file-dicom.c:1582 plug-ins/common/file-farbfeld.c:372
-#: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
+#: plug-ins/common/file-mng.c:1280 plug-ins/common/file-mng.c:1630
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1948 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
@@ -1222,8 +1222,8 @@ msgstr ""
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
-#: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2532
-#: plug-ins/file-psd/psd-export.c:2700
+#: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2534
+#: plug-ins/file-psd/psd-export.c:2702
 #: plug-ins/file-tiff/file-tiff-export.c:1101
 #: plug-ins/file-tiff/file-tiff-export.c:1221 plug-ins/flame/flame.c:586
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396
@@ -1941,14 +1941,14 @@ msgstr ""
 #: plug-ins/common/file-drhalo.c:201 plug-ins/common/file-farbfeld.c:273
 #: plug-ins/common/file-gif-load.c:481 plug-ins/common/file-iff.c:277
 #: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:198
-#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:191
-#: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
-#: plug-ins/common/file-png.c:801 plug-ins/common/file-png.c:1372
-#: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3756
-#: plug-ins/common/file-psp.c:2844 plug-ins/common/file-psp.c:2894
-#: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
-#: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:810
-#: plug-ins/common/file-raw-data.c:1861
+#: plug-ins/common/file-mng.c:1067 plug-ins/common/file-mng.c:1814
+#: plug-ins/common/file-paa.c:191 plug-ins/common/file-pcx.c:490
+#: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:801
+#: plug-ins/common/file-png.c:1372 plug-ins/common/file-ps.c:1158
+#: plug-ins/common/file-ps.c:3756 plug-ins/common/file-psp.c:2844
+#: plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:256
+#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
+#: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861
 #: plug-ins/common/file-seattle-filmworks.c:232
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:772
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
@@ -1963,7 +1963,7 @@ msgstr ""
 #: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711
-#: plug-ins/file-psd/psd-export.c:2538 plug-ins/file-psd/psd-export.c:2706
+#: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
 #: plug-ins/file-psd/psd-load.c:207 plug-ins/file-psd/psd-load.c:212
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:540
@@ -2419,8 +2419,9 @@ msgid "White level"
 msgstr "თეთრის დონე"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
-#: plug-ins/common/file-pcx.c:719 plug-ins/file-bmp/bmp-load.c:800
-#: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
+#: plug-ins/common/file-mng.c:1121 plug-ins/common/file-pcx.c:719
+#: plug-ins/file-bmp/bmp-load.c:800 plug-ins/file-cin/cineon-lib.c:114
+#: plug-ins/file-cin/dpx-lib.c:185
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr ""
@@ -2552,20 +2553,20 @@ msgstr ""
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
 #: plug-ins/common/file-heif.c:1051 plug-ins/common/file-jp2.c:1379
-#: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
-#: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
-#: plug-ins/common/file-png.c:793 plug-ins/common/file-pnm.c:688
-#: plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:801
-#: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:427
-#: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
-#: plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618
-#: plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:646
-#: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
-#: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
-#: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
-#: plug-ins/file-icns/file-icns-load.c:623 plug-ins/file-ico/ico-load.c:703
-#: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:101
-#: plug-ins/file-psd/psd-load.c:220
+#: plug-ins/common/file-mng.c:1059 plug-ins/common/file-pcx.c:482
+#: plug-ins/common/file-pcx.c:525 plug-ins/common/file-pdf-load.c:776
+#: plug-ins/common/file-pix.c:368 plug-ins/common/file-png.c:793
+#: plug-ins/common/file-pnm.c:688 plug-ins/common/file-ps.c:1148
+#: plug-ins/common/file-raw-data.c:801 plug-ins/common/file-raw-data.c:1853
+#: plug-ins/common/file-sunras.c:427 plug-ins/common/file-tga.c:419
+#: plug-ins/common/file-wbmp.c:242 plug-ins/common/file-wbmp.c:321
+#: plug-ins/common/file-wmf.c:618 plug-ins/common/file-xbm.c:721
+#: plug-ins/common/file-xmc.c:646 plug-ins/common/file-xpm.c:360
+#: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
+#: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247
+#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:623
+#: plug-ins/file-ico/ico-load.c:703 plug-ins/file-ico/ico-load.c:848
+#: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:220
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
@@ -2645,7 +2646,7 @@ msgstr ""
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:775
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
-#: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2470
+#: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2472
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1091
 #, c-format
 msgid "Exporting '%s'"
@@ -3064,7 +3065,7 @@ msgid ""
 "from the 'gimp-comment' parasite."
 msgstr ""
 
-#: plug-ins/common/file-gif-export.c:192 plug-ins/common/file-mng.c:285
+#: plug-ins/common/file-gif-export.c:192 plug-ins/common/file-mng.c:392
 msgid "_Interlace"
 msgstr "_ინტერფეისი"
 
@@ -3203,7 +3204,7 @@ msgid ""
 "Your image will be converted on export, which may change the pixel values."
 msgstr ""
 
-#: plug-ins/common/file-gif-export.c:1351 plug-ins/common/file-mng.c:1645
+#: plug-ins/common/file-gif-export.c:1351 plug-ins/common/file-mng.c:2051
 msgid "milliseconds"
 msgstr "მილიწამი"
 
@@ -3350,8 +3351,8 @@ msgstr "'%s'-ის გახსნა (კადრი %d)"
 msgid "Frame %d"
 msgstr "კადრი %d"
 
-#: plug-ins/common/file-gif-load.c:1289 plug-ins/common/file-png.c:3018
-#: plug-ins/file-webp/file-webp-load.c:227
+#: plug-ins/common/file-gif-load.c:1289 plug-ins/common/file-mng.c:1140
+#: plug-ins/common/file-png.c:3018 plug-ins/file-webp/file-webp-load.c:227
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "კადრი %d (%d%s)"
@@ -4074,19 +4075,19 @@ msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr ""
 
 #: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:940
-#: plug-ins/file-psd/psd-export.c:2970
+#: plug-ins/file-psd/psd-export.c:3022
 #: plug-ins/file-tiff/file-tiff-export.c:1390
 msgid "No soft-proofing profile"
 msgstr ""
 
 #: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:2978
+#: plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:3030
 #: plug-ins/file-tiff/file-tiff-export.c:1399
 msgid "Name of the color profile used for CMYK export."
 msgstr ""
 
 #: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:2989
+#: plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:3041
 #: plug-ins/file-tiff/file-tiff-export.c:1421
 #, c-format
 msgid "Profile: %s"
@@ -4280,157 +4281,165 @@ msgstr "MacPaint-ის გამოსახულება"
 msgid "Load MacPaint image format"
 msgstr "MacPaint გამოსახულების ფორმატის ჩატვირთვა"
 
-#: plug-ins/common/file-mng.c:254
+#: plug-ins/common/file-mng.c:317 plug-ins/common/file-mng.c:361
 msgid "MNG animation"
 msgstr "MNG ანიმაცია"
 
-#: plug-ins/common/file-mng.c:256
+#: plug-ins/common/file-mng.c:320
+msgid "Loads files in MNG file format"
+msgstr "MNG ფორმატის ფაილის ჩატვირთვა"
+
+#: plug-ins/common/file-mng.c:321
+msgid "This plug-in loads Multiple-image Network Graphics (MNG) files."
+msgstr ""
+
+#: plug-ins/common/file-mng.c:363
 msgid "MNG"
 msgstr "MNG"
 
-#: plug-ins/common/file-mng.c:259
+#: plug-ins/common/file-mng.c:366
 msgid "Exports images in the MNG file format"
 msgstr "გაიტანს გამოსახულებებს ფაილის ფორმატში MNG"
 
-#: plug-ins/common/file-mng.c:260
+#: plug-ins/common/file-mng.c:367
 msgid ""
 "This plug-in exports images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
 msgstr ""
 
-#: plug-ins/common/file-mng.c:286
+#: plug-ins/common/file-mng.c:393
 msgid "Use interlacing"
 msgstr ""
 
-#: plug-ins/common/file-mng.c:291
+#: plug-ins/common/file-mng.c:398
 msgid "_PNG compression level"
 msgstr "_PNG შეკუმშვის დონე"
 
-#: plug-ins/common/file-mng.c:292
+#: plug-ins/common/file-mng.c:399
 msgid ""
 "PNG compression level, choose a high compression level for small file size"
 msgstr ""
 
-#: plug-ins/common/file-mng.c:298
+#: plug-ins/common/file-mng.c:405
 msgid "JPEG compression _quality"
 msgstr "JPEG შეკუმშვის _ხარისხი"
 
-#: plug-ins/common/file-mng.c:299
+#: plug-ins/common/file-mng.c:406
 msgid "JPEG quality factor"
 msgstr "JPEG-ის ხარისხის ფაქტორი"
 
-#: plug-ins/common/file-mng.c:304
+#: plug-ins/common/file-mng.c:411
 msgid "_JPEG smoothing factor"
 msgstr "_JPEG-ის მოგლუვების ფაქტორი"
 
-#: plug-ins/common/file-mng.c:305
+#: plug-ins/common/file-mng.c:412
 msgid "JPEG smoothing factor"
 msgstr "JPEG-ის მოგლუვების ფაქტორი"
 
-#: plug-ins/common/file-mng.c:310
+#: plug-ins/common/file-mng.c:417
 msgid "L_oop"
 msgstr "მარყ_უჟი"
 
-#: plug-ins/common/file-mng.c:311
+#: plug-ins/common/file-mng.c:418
 msgid "(ANIMATED MNG) Loop infinitely"
 msgstr ""
 
-#: plug-ins/common/file-mng.c:316
+#: plug-ins/common/file-mng.c:423
 msgid "Default fra_me delay"
 msgstr "ნაგულისხმები _კადრის დაყოვნება"
 
-#: plug-ins/common/file-mng.c:317
+#: plug-ins/common/file-mng.c:424
 msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
 msgstr ""
 
-#: plug-ins/common/file-mng.c:323
+#: plug-ins/common/file-mng.c:430
 msgid "Default chunks t_ype"
 msgstr ""
 
-#: plug-ins/common/file-mng.c:324
+#: plug-ins/common/file-mng.c:431
 msgid "(ANIMATED MNG) Default chunks type"
 msgstr ""
 
-#: plug-ins/common/file-mng.c:325
+#: plug-ins/common/file-mng.c:432
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:326
+#: plug-ins/common/file-mng.c:433
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:327
+#: plug-ins/common/file-mng.c:434
 msgid "All PNG"
 msgstr "ყველა PNG"
 
-#: plug-ins/common/file-mng.c:328
+#: plug-ins/common/file-mng.c:435
 msgid "All JNG"
 msgstr "ყველა JNG"
 
-#: plug-ins/common/file-mng.c:334
+#: plug-ins/common/file-mng.c:441
 msgid "De_fault frame disposal"
 msgstr "_ნაგულისხმები კადრის წაშლა"
 
-#: plug-ins/common/file-mng.c:335
+#: plug-ins/common/file-mng.c:442
 msgid "(ANIMATED MNG) Default dispose type"
 msgstr ""
 
-#: plug-ins/common/file-mng.c:336
+#: plug-ins/common/file-mng.c:443
 msgid "Combine"
 msgstr "კომბინირება"
 
-#: plug-ins/common/file-mng.c:337
+#: plug-ins/common/file-mng.c:444
 msgid "Replace"
 msgstr "ჩანაცვლება"
 
-#: plug-ins/common/file-mng.c:343 plug-ins/common/file-png.c:358
+#: plug-ins/common/file-mng.c:450 plug-ins/common/file-png.c:358
 msgid "Save _background color"
 msgstr "_ფონის ფერის შენახვა"
 
-#: plug-ins/common/file-mng.c:344
+#: plug-ins/common/file-mng.c:451
 msgid "Write bKGd (background color) chunk"
 msgstr "ფონის ფერის (bKGd) ბლოკის ჩაწერა"
 
-#: plug-ins/common/file-mng.c:349
+#: plug-ins/common/file-mng.c:456
 msgid "Save _gamma"
 msgstr "_გამის შენახვა"
 
-#: plug-ins/common/file-mng.c:350
+#: plug-ins/common/file-mng.c:457
 msgid "Write gAMA (gamma) chunk"
 msgstr ""
 
-#: plug-ins/common/file-mng.c:355
+#: plug-ins/common/file-mng.c:462
 msgid "Sa_ve resolution"
 msgstr "გარჩევადობის _შენახვა"
 
-#: plug-ins/common/file-mng.c:356
+#: plug-ins/common/file-mng.c:463
 msgid "Write pHYs (image resolution) chunk"
 msgstr ""
 
-#: plug-ins/common/file-mng.c:361 plug-ins/common/file-png.c:376
+#: plug-ins/common/file-mng.c:468 plug-ins/common/file-png.c:376
 msgid "Save creation _time"
 msgstr "შექმნის _დროის შენახვა"
 
-#: plug-ins/common/file-mng.c:362
+#: plug-ins/common/file-mng.c:469
 msgid "Write tIME (creation time) chunk"
 msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:723 plug-ins/common/file-png.c:2807
+#: plug-ins/common/file-mng.c:994 plug-ins/common/file-png.c:2807
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 
-#: plug-ins/common/file-mng.c:1598
+#: plug-ins/common/file-mng.c:2003
 msgid "MNG Options"
 msgstr "MNG პარამეტრები"
 
-#: plug-ins/common/file-mng.c:1658
+#: plug-ins/common/file-mng.c:2064
 msgid "Animated MNG Options"
 msgstr ""
 
-#: plug-ins/common/file-mng.c:1668
+#: plug-ins/common/file-mng.c:2074
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -10384,65 +10393,65 @@ msgid ""
 "(Photoshop)"
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:585
+#: plug-ins/file-psd/psd-export.c:586
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:2457 plug-ins/file-psd/psd-export.c:2627
+#: plug-ins/file-psd/psd-export.c:2459 plug-ins/file-psd/psd-export.c:2629
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:2463 plug-ins/file-psd/psd-export.c:2633
+#: plug-ins/file-psd/psd-export.c:2465 plug-ins/file-psd/psd-export.c:2635
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
 "more than 300,000 pixels wide or tall."
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:2505 plug-ins/file-psd/psd-export.c:2673
+#: plug-ins/file-psd/psd-export.c:2507 plug-ins/file-psd/psd-export.c:2675
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:2511 plug-ins/file-psd/psd-export.c:2679
+#: plug-ins/file-psd/psd-export.c:2513 plug-ins/file-psd/psd-export.c:2681
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
 "layers that are more than 300,000 pixels wide or tall."
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:3013
+#: plug-ins/file-psd/psd-export.c:3065
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:3082
+#: plug-ins/file-psd/psd-export.c:3134
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:3192
+#: plug-ins/file-psd/psd-export.c:3244
 msgid "Indexed Image Warning"
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:3193
+#: plug-ins/file-psd/psd-export.c:3245
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5174
+#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5174
 msgid "Compatibility Notice"
 msgstr "თავსებადობის შენიშვნა"
 
-#: plug-ins/file-psd/psd-export.c:3215
+#: plug-ins/file-psd/psd-export.c:3267
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
