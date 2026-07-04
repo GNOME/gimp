@@ -429,9 +429,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
           if (gegl_node_has_pad (filter_tool->operation, "aux")         ||
               (g_strcmp0 (operation_name, "gegl:gegl") == 0 &&
                g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") == NULL) ||
-              gimp_item_is_vector_layer (GIMP_ITEM (drawable))          ||
-              gimp_item_is_text_layer (GIMP_ITEM (drawable))            ||
-              gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+              (gimp_item_is_rasterizable (GIMP_ITEM (drawable)) &&
+               ! gimp_item_is_rasterized (GIMP_ITEM (drawable))))
             {
               GParamSpec  *param_spec;
               GObject     *obj = G_OBJECT (tool_info->tool_options);
@@ -445,9 +444,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
               toggle =
                 gtk_check_button_new_with_mnemonic (g_param_spec_get_nick (param_spec));
 
-              show_merge = (! gimp_item_is_vector_layer (GIMP_ITEM (drawable)) &&
-                            ! gimp_item_is_text_layer (GIMP_ITEM (drawable))   &&
-                            ! gimp_item_is_link_layer (GIMP_ITEM (drawable)));
+              show_merge = gimp_item_is_rasterized (GIMP_ITEM (drawable));
               gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), show_merge);
               gtk_widget_set_sensitive (toggle, FALSE);
 
@@ -601,12 +598,11 @@ gimp_filter_tool_control (GimpTool       *tool,
               g_free (operation_name);
             }
 
-          /* Ensure that filters applied to group, vector or link layers are
+          /* Ensure that filters applied to group or unrasterized layers are
            * non-destructive */
-          if (GIMP_IS_GROUP_LAYER (drawable)                   ||
-              gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
-              gimp_item_is_text_layer (GIMP_ITEM (drawable))   ||
-              gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+          if (GIMP_IS_GROUP_LAYER (drawable)                    ||
+              (gimp_item_is_rasterizable (GIMP_ITEM (drawable)) &&
+               ! gimp_item_is_rasterized (GIMP_ITEM (drawable))))
             non_destructive = TRUE;
         }
       gimp_filter_tool_commit (filter_tool, non_destructive);
@@ -1572,9 +1568,8 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
   merge_filter = options->merge_filter;
   if (gegl_node_has_pad (filter_tool->operation, "aux"))
     merge_filter = TRUE;
-  else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)) ||
-           gimp_item_is_text_layer (GIMP_ITEM (drawable))   ||
-           gimp_item_is_link_layer (GIMP_ITEM (drawable)))
+  else if (gimp_item_is_rasterizable (GIMP_ITEM (drawable)) &&
+           ! gimp_item_is_rasterized (GIMP_ITEM (drawable)))
     merge_filter = FALSE;
 
   g_object_set (filter_tool->filter,
