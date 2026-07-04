@@ -32,7 +32,7 @@ iso-codes|homebrew:iso-codes \
 json-glib|homebrew:json-glib \
 lcms2|homebrew:lcms2 \
 libarchive|homebrew:libarchive \
-libheif|homebrew:libheif #libheif-plugins is bloated with ffmpeg etc \
+libheif|homebrew:libheif #homebrew libheif-plugins is bloated with ffmpeg etc \
 libjpeg-turbo|homebrew:libjpeg-turbo \
 libjxl|homebrew:jpeg-xl \
 libmng|homebrew:libmng \
@@ -52,7 +52,7 @@ poppler-data \
 |homebrew:python \ py-certifi|homebrew:certifi
 py-gobject3|homebrew:pygobject3 \
 qoi #homebrew rejected qoi https://github.com/Homebrew/homebrew-core/pull/276182 but we install with 1_build-deps-macports.sh \
-SuiteSparse_UMFPACK +accelerate -openblas #homebrew requires non-native GCC/Gfortran for suite-sparse
+SuiteSparse_UMFPACK +accelerate -openblas #homebrew forces non-native GCC/Gfortran for suite-sparse (AMD module)
 #xpm depends on x11
 xz|homebrew:xz
 zlib #homebrew uses libz from macOS
