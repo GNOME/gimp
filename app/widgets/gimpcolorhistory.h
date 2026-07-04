@@ -54,7 +54,7 @@ struct _GimpColorHistoryClass
 };
 
 
-GType       gimp_color_history_get_type (void) G_GNUC_CONST;
+GType       gimp_color_history_get_type (void);
 
 GtkWidget * gimp_color_history_new      (GimpContext     *context,
                                          gint             history_size);

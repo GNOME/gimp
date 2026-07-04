@@ -80,7 +80,7 @@ struct _GimpToolTransformGridClass
 };
 
 
-GType                 gimp_tool_transform_grid_get_type   (void) G_GNUC_CONST;
+GType                 gimp_tool_transform_grid_get_type   (void);
 
 GimpToolWidget      * gimp_tool_transform_grid_new        (GimpDisplayShell      *shell,
                                                            const GimpMatrix3     *transform,

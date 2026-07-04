@@ -35,7 +35,7 @@
 
 #define GIMP_TYPE_BRUSH_APPLICATION_MODE (gimp_brush_application_mode_get_type ())
 
-GType gimp_brush_application_mode_get_type (void) G_GNUC_CONST;
+GType gimp_brush_application_mode_get_type (void);
 
 typedef enum
 {
@@ -47,7 +47,7 @@ typedef enum
 
 #define GIMP_TYPE_PERSPECTIVE_CLONE_MODE (gimp_perspective_clone_mode_get_type ())
 
-GType gimp_perspective_clone_mode_get_type (void) G_GNUC_CONST;
+GType gimp_perspective_clone_mode_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -58,7 +58,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_SOURCE_ALIGN_MODE (gimp_source_align_mode_get_type ())
 
-GType gimp_source_align_mode_get_type (void) G_GNUC_CONST;
+GType gimp_source_align_mode_get_type (void);
 
 typedef enum /*< pdb-skip >*/
 {

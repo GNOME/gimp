@@ -80,7 +80,7 @@ struct _TiffClass
 #define TIFF_TYPE  (tiff_get_type ())
 #define TIFF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TIFF_TYPE, Tiff))
 
-GType                           tiff_get_type         (void) G_GNUC_CONST;
+GType                           tiff_get_type         (void);
 
 static GList                  * tiff_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure          * tiff_create_procedure (GimpPlugIn            *plug_in,

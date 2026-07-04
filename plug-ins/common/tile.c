@@ -50,7 +50,7 @@ struct _TileClass
 #define TILE_TYPE  (tile_get_type ())
 #define TILE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TILE_TYPE, Tile))
 
-GType                   tile_get_type         (void) G_GNUC_CONST;
+GType                   tile_get_type         (void);
 
 static GList          * tile_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * tile_create_procedure (GimpPlugIn           *plug_in,

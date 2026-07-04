@@ -46,7 +46,7 @@ struct _GimpFgBgViewClass
 };
 
 
-GType       gimp_fg_bg_view_get_type    (void) G_GNUC_CONST;
+GType       gimp_fg_bg_view_get_type    (void);
 
 GtkWidget * gimp_fg_bg_view_new         (GimpContext  *context);
 

@@ -56,7 +56,7 @@ struct _GimpGuideToolClass
 };
 
 
-GType   gimp_guide_tool_get_type        (void) G_GNUC_CONST;
+GType   gimp_guide_tool_get_type        (void);
 
 void    gimp_guide_tool_start_new       (GimpTool            *parent_tool,
                                          GimpDisplay         *display,

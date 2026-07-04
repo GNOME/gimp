@@ -53,7 +53,7 @@ struct _GimpGeglProcedureClass
 };
 
 
-GType           gimp_gegl_procedure_get_type (void) G_GNUC_CONST;
+GType           gimp_gegl_procedure_get_type (void);
 
 GimpProcedure * gimp_gegl_procedure_new               (Gimp               *gimp,
                                                        GimpDrawableFilter *filter_to_edit,

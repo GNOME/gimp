@@ -48,7 +48,7 @@ struct _GimpToolRotateGridClass
 };
 
 
-GType            gimp_tool_rotate_grid_get_type (void) G_GNUC_CONST;
+GType            gimp_tool_rotate_grid_get_type (void);
 
 GimpToolWidget * gimp_tool_rotate_grid_new      (GimpDisplayShell  *shell,
                                                  gdouble            x1,

@@ -45,4 +45,4 @@ struct _GimpLayerMaskUndoClass
 };
 
 
-GType   gimp_layer_mask_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_layer_mask_undo_get_type (void);

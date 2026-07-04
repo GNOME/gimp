@@ -26,7 +26,7 @@
 #define GIMP_VALUE_HOLDS_DASH_PATTERN(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_DASH_PATTERN))
 
 
-GType            gimp_dash_pattern_get_type          (void) G_GNUC_CONST;
+GType            gimp_dash_pattern_get_type          (void);
 
 GArray         * gimp_dash_pattern_new_from_preset   (GimpDashPreset  preset);
 GArray         * gimp_dash_pattern_new_from_segments (const gboolean *segments,

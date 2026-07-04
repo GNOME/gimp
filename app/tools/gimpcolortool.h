@@ -74,7 +74,7 @@ struct _GimpColorToolClass
 };
 
 
-GType      gimp_color_tool_get_type   (void) G_GNUC_CONST;
+GType      gimp_color_tool_get_type   (void);
 
 void       gimp_color_tool_enable     (GimpColorTool    *color_tool,
                                        GimpColorOptions *options);

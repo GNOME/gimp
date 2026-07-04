@@ -48,7 +48,7 @@ struct _GimpToolHandleGridClass
 };
 
 
-GType            gimp_tool_handle_grid_get_type (void) G_GNUC_CONST;
+GType            gimp_tool_handle_grid_get_type (void);
 
 GimpToolWidget * gimp_tool_handle_grid_new      (GimpDisplayShell  *shell,
                                                  gdouble            x1,

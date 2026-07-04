@@ -60,7 +60,7 @@ struct _GimpPaletteViewClass
 };
 
 
-GType   gimp_palette_view_get_type     (void) G_GNUC_CONST;
+GType   gimp_palette_view_get_type     (void);
 
 void    gimp_palette_view_select_entry (GimpPaletteView  *view,
                                         GimpPaletteEntry *entry);

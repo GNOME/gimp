@@ -47,7 +47,7 @@ struct _GimpSamplePointClass
 };
 
 
-GType             gimp_sample_point_get_type      (void) G_GNUC_CONST;
+GType             gimp_sample_point_get_type      (void);
 
 GimpSamplePoint * gimp_sample_point_new           (guint32            sample_point_ID);
 

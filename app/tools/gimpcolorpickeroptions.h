@@ -44,7 +44,7 @@ struct _GimpColorPickerOptions
 };
 
 
-GType       gimp_color_picker_options_get_type (void) G_GNUC_CONST;
+GType       gimp_color_picker_options_get_type (void);
 
 GtkWidget * gimp_color_picker_options_gui      (GimpToolOptions *tool_options);
 

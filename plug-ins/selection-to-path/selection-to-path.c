@@ -70,7 +70,7 @@ struct _Sel2pathClass
 #define SEL2PATH_TYPE  (sel2path_get_type ())
 #define SEL2PATH (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SEL2PATH_TYPE, Sel2path))
 
-GType                   sel2path_get_type         (void) G_GNUC_CONST;
+GType                   sel2path_get_type         (void);
 
 static GList          * sel2path_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * sel2path_create_procedure (GimpPlugIn           *plug_in,

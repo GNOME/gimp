@@ -51,5 +51,5 @@ struct _GimpInkClass
 void    gimp_ink_register (Gimp                      *gimp,
                            GimpPaintRegisterCallback  callback);
 
-GType   gimp_ink_get_type (void) G_GNUC_CONST;
+GType   gimp_ink_get_type (void);
 

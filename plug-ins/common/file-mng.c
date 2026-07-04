@@ -169,7 +169,7 @@ struct _MngClass
 #define MNG_TYPE  (mng_get_type ())
 #define MNG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), MNG_TYPE, Mng))
 
-GType                   mng_get_type                 (void) G_GNUC_CONST;
+GType                   mng_get_type                 (void);
 
 static GList          * mng_query_procedures         (GimpPlugIn            *plug_in);
 static GimpProcedure  * mng_create_procedure         (GimpPlugIn            *plug_in,

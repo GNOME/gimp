@@ -90,7 +90,7 @@ gdouble       gimp_units_to_points                   (gdouble      value,
 #define GIMP_IS_PARAM_SPEC_UNIT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_UNIT))
 
 
-GType        gimp_param_unit_get_type             (void) G_GNUC_CONST;
+GType        gimp_param_unit_get_type             (void);
 
 GParamSpec * gimp_param_spec_unit                 (const gchar *name,
                                                    const gchar *nick,

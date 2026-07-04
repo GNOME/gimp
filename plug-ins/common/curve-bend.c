@@ -229,7 +229,7 @@ struct _BenderClass
 #define BENDER_TYPE  (bender_get_type ())
 #define BENDER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BENDER_TYPE, Bender))
 
-GType                   bender_get_type         (void) G_GNUC_CONST;
+GType                   bender_get_type         (void);
 
 static GList          * bender_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * bender_create_procedure (GimpPlugIn           *plug_in,

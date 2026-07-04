@@ -72,7 +72,7 @@ struct _GimpTextOptions
 };
 
 
-GType       gimp_text_options_get_type     (void) G_GNUC_CONST;
+GType       gimp_text_options_get_type     (void);
 
 void        gimp_text_options_connect_text (GimpTextOptions *options,
                                             GimpText        *text);

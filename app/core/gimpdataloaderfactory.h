@@ -53,7 +53,7 @@ struct _GimpDataLoaderFactoryClass
 };
 
 
-GType             gimp_data_loader_factory_get_type     (void) G_GNUC_CONST;
+GType             gimp_data_loader_factory_get_type     (void);
 
 GimpDataFactory * gimp_data_loader_factory_new          (Gimp                    *gimp,
                                                          GType                    data_type,

@@ -20,7 +20,7 @@
 
 #define GIMP_TYPE_PLUG_IN_IMAGE_TYPE (gimp_plug_in_image_type_get_type ())
 
-GType gimp_plug_in_image_type_get_type (void) G_GNUC_CONST;
+GType gimp_plug_in_image_type_get_type (void);
 
 typedef enum
 {
@@ -35,7 +35,7 @@ typedef enum
 
 #define GIMP_TYPE_PLUG_CALL_MODE (gimp_plug_in_call_mode_get_type ())
 
-GType gimp_plug_in_call_mode_get_type (void) G_GNUC_CONST;
+GType gimp_plug_in_call_mode_get_type (void);
 
 typedef enum
 {
@@ -48,7 +48,7 @@ typedef enum
 
 #define GIMP_TYPE_FILE_PROCEDURE_GROUP (gimp_file_procedure_group_get_type ())
 
-GType gimp_file_procedure_group_get_type (void) G_GNUC_CONST;
+GType gimp_file_procedure_group_get_type (void);
 
 typedef enum
 {

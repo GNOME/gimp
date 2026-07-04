@@ -72,7 +72,7 @@ struct _GimpTileHandlerValidateClass
 };
 
 
-GType                     gimp_tile_handler_validate_get_type          (void) G_GNUC_CONST;
+GType                     gimp_tile_handler_validate_get_type          (void);
 
 GeglTileHandler         * gimp_tile_handler_validate_new               (GeglNode                *graph);
 

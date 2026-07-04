@@ -48,4 +48,4 @@ struct _GimpOperationScalarMultiplyClass
 };
 
 
-GType   gimp_operation_scalar_multiply_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_scalar_multiply_get_type (void);

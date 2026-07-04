@@ -50,4 +50,4 @@ struct _GimpLinkLayerUndoClass
 };
 
 
-GType   gimp_link_layer_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_link_layer_undo_get_type (void);

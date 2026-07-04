@@ -55,7 +55,7 @@ struct _GimpEarlyRcClass
 };
 
 
-GType          gimp_early_rc_get_type     (void) G_GNUC_CONST;
+GType          gimp_early_rc_get_type     (void);
 
 GimpEarlyRc  * gimp_early_rc_new          (GFile      *system_gimprc,
                                            GFile      *user_gimprc,

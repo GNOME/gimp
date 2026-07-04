@@ -53,7 +53,7 @@ struct _GimpDeviceInfoClass
 };
 
 
-GType             gimp_device_info_get_type             (void) G_GNUC_CONST;
+GType             gimp_device_info_get_type             (void);
 
 GimpDeviceInfo  * gimp_device_info_new                  (Gimp            *gimp,
                                                          GdkDevice       *device,

@@ -48,7 +48,7 @@ struct _GimpSamplePointToolClass
 };
 
 
-GType   gimp_sample_point_tool_get_type   (void) G_GNUC_CONST;
+GType   gimp_sample_point_tool_get_type   (void);
 
 void    gimp_sample_point_tool_start_new  (GimpTool        *parent_tool,
                                            GimpDisplay     *display);

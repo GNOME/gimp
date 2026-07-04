@@ -47,4 +47,4 @@ struct _GimpOperationPosterizeClass
 };
 
 
-GType   gimp_operation_posterize_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_posterize_get_type (void);

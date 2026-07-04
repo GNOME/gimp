@@ -53,4 +53,4 @@ struct _GimpSizeBoxClass
 };
 
 
-GType   gimp_size_box_get_type (void) G_GNUC_CONST;
+GType   gimp_size_box_get_type (void);

@@ -52,7 +52,7 @@ struct _GimpOperationMaskComponentsClass
 };
 
 
-GType        gimp_operation_mask_components_get_type   (void) G_GNUC_CONST;
+GType        gimp_operation_mask_components_get_type   (void);
 
 const Babl * gimp_operation_mask_components_get_format (const Babl        *input_format);
 

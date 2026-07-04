@@ -46,7 +46,7 @@ struct _GimpProcedureActionClass
 };
 
 
-GType                 gimp_procedure_action_get_type (void) G_GNUC_CONST;
+GType                 gimp_procedure_action_get_type (void);
 
 GimpProcedureAction * gimp_procedure_action_new      (const gchar   *name,
                                                       const gchar   *label,

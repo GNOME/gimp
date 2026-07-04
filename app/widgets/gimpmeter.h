@@ -45,7 +45,7 @@ struct _GimpMeterClass
 };
 
 
-GType                   gimp_meter_get_type                  (void) G_GNUC_CONST;
+GType                   gimp_meter_get_type                  (void);
 
 GtkWidget             * gimp_meter_new                       (Gimp                  *gimp,
                                                               gint                   n_values);

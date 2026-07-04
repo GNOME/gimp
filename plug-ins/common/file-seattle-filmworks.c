@@ -83,7 +83,7 @@ guchar huffman_table [420] = {
 #define SEATTLE_FILMWORKS_TYPE  (seattle_filmworks_get_type ())
 #define SEATTLE_FILMWORKS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SEATTLE_FILMWORKS_TYPE, Seattle_FilmWorks))
 
-GType                   seattle_filmworks_get_type         (void) G_GNUC_CONST;
+GType                   seattle_filmworks_get_type         (void);
 
 
 static GList          * seattle_filmworks_query_procedures (GimpPlugIn            *plug_in);

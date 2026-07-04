@@ -51,7 +51,7 @@ struct _GimpToolPolygonClass
 };
 
 
-GType            gimp_tool_polygon_get_type   (void) G_GNUC_CONST;
+GType            gimp_tool_polygon_get_type   (void);
 
 GimpToolWidget * gimp_tool_polygon_new        (GimpDisplayShell   *shell);
 

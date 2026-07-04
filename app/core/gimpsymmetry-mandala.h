@@ -53,4 +53,4 @@ struct _GimpMandalaClass
 };
 
 
-GType   gimp_mandala_get_type (void) G_GNUC_CONST;
+GType   gimp_mandala_get_type (void);

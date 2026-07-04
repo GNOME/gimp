@@ -34,7 +34,7 @@
 
 typedef struct _GimpFontClass GimpFontClass;
 
-GType         gimp_font_get_type               (void) G_GNUC_CONST;
+GType         gimp_font_get_type               (void);
 
 GimpData    * gimp_font_get_standard           (void);
 const gchar * gimp_font_get_lookup_name        (GimpFont        *font);

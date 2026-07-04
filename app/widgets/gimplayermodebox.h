@@ -45,7 +45,7 @@ struct _GimpLayerModeBoxClass
 };
 
 
-GType                  gimp_layer_mode_box_get_type      (void) G_GNUC_CONST;
+GType                  gimp_layer_mode_box_get_type      (void);
 
 GtkWidget            * gimp_layer_mode_box_new           (GimpLayerModeContext  context);
 

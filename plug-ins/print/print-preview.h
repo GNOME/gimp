@@ -32,7 +32,7 @@ typedef struct _PrintPreview       PrintPreview;
 typedef struct _PrintPreviewClass  PrintPreviewClass;
 
 
-GType       print_preview_get_type              (void) G_GNUC_CONST;
+GType       print_preview_get_type              (void);
 
 GtkWidget * print_preview_new                   (GtkPageSetup *page,
                                                  GimpDrawable *drawable);

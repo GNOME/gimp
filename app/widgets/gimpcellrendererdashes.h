@@ -44,6 +44,6 @@ struct _GimpCellRendererDashesClass
 };
 
 
-GType             gimp_cell_renderer_dashes_get_type (void) G_GNUC_CONST;
+GType             gimp_cell_renderer_dashes_get_type (void);
 
 GtkCellRenderer * gimp_cell_renderer_dashes_new      (void);

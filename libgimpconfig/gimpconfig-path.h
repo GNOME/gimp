@@ -38,7 +38,7 @@ G_BEGIN_DECLS
 #define GIMP_TYPE_CONFIG_PATH               (gimp_config_path_get_type ())
 #define GIMP_VALUE_HOLDS_CONFIG_PATH(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_CONFIG_PATH))
 
-GType               gimp_config_path_get_type        (void) G_GNUC_CONST;
+GType               gimp_config_path_get_type        (void);
 
 
 
@@ -67,7 +67,7 @@ typedef enum
 #define GIMP_TYPE_PARAM_CONFIG_PATH            (gimp_param_config_path_get_type ())
 #define GIMP_IS_PARAM_SPEC_CONFIG_PATH(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_CONFIG_PATH))
 
-GType               gimp_param_config_path_get_type  (void) G_GNUC_CONST;
+GType               gimp_param_config_path_get_type  (void);
 
 GParamSpec        * gimp_param_spec_config_path      (const gchar  *name,
                                                       const gchar  *nick,

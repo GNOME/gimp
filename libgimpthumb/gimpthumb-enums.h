@@ -48,7 +48,7 @@ G_BEGIN_DECLS
  **/
 #define GIMP_TYPE_THUMB_FILE_TYPE (gimp_thumb_file_type_get_type ())
 
-GType gimp_thumb_file_type_get_type (void) G_GNUC_CONST;
+GType gimp_thumb_file_type_get_type (void);
 
 typedef enum
 {
@@ -71,7 +71,7 @@ typedef enum
  **/
 #define GIMP_TYPE_THUMB_SIZE (gimp_thumb_size_get_type ())
 
-GType gimp_thumb_size_get_type (void) G_GNUC_CONST;
+GType gimp_thumb_size_get_type (void);
 
 typedef enum
 {
@@ -97,7 +97,7 @@ typedef enum
  **/
 #define GIMP_TYPE_THUMB_STATE (gimp_thumb_state_get_type ())
 
-GType gimp_thumb_state_get_type (void) G_GNUC_CONST;
+GType gimp_thumb_state_get_type (void);
 
 typedef enum
 {

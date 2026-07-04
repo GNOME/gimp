@@ -63,7 +63,7 @@ struct _GimpTransformGridOptionsClass
 };
 
 
-GType       gimp_transform_grid_options_get_type     (void) G_GNUC_CONST;
+GType       gimp_transform_grid_options_get_type     (void);
 
 GtkWidget * gimp_transform_grid_options_gui          (GimpToolOptions          *tool_options);
 

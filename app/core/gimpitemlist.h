@@ -45,7 +45,7 @@ struct _GimpItemListClass
 };
 
 
-GType          gimp_item_list_get_type  (void) G_GNUC_CONST;
+GType          gimp_item_list_get_type  (void);
 
 GimpItemList  * gimp_item_list_named_new    (GimpImage        *image,
                                              GType             item_type,

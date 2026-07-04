@@ -48,6 +48,6 @@ struct _GimpToolFocusClass
 };
 
 
-GType            gimp_tool_focus_get_type (void) G_GNUC_CONST;
+GType            gimp_tool_focus_get_type (void);
 
 GimpToolWidget * gimp_tool_focus_new      (GimpDisplayShell *shell);

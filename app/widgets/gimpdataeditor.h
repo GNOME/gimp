@@ -61,7 +61,7 @@ struct _GimpDataEditorClass
 };
 
 
-GType       gimp_data_editor_get_type        (void) G_GNUC_CONST;
+GType       gimp_data_editor_get_type        (void);
 
 void        gimp_data_editor_set_data        (GimpDataEditor *editor,
                                               GimpData       *data);

@@ -52,6 +52,6 @@ struct _GimpColorBalanceConfigClass
 };
 
 
-GType   gimp_color_balance_config_get_type    (void) G_GNUC_CONST;
+GType   gimp_color_balance_config_get_type    (void);
 
 void    gimp_color_balance_config_reset_range (GimpColorBalanceConfig *config);

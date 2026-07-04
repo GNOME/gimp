@@ -46,6 +46,6 @@ struct _GimpImageProfileViewClass
 };
 
 
-GType       gimp_image_profile_view_get_type (void) G_GNUC_CONST;
+GType       gimp_image_profile_view_get_type (void);
 
 GtkWidget * gimp_image_profile_view_new      (GimpImage *image);

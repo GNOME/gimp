@@ -51,7 +51,7 @@ struct _WbmpClass
 #define WBMP_TYPE  (wbmp_get_type ())
 #define WBMP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WBMP_TYPE, Wbmp))
 
-GType                   wbmp_get_type         (void) G_GNUC_CONST;
+GType                   wbmp_get_type         (void);
 
 static GList          * wbmp_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * wbmp_create_procedure (GimpPlugIn            *plug_in,

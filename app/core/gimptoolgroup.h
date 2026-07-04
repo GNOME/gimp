@@ -50,7 +50,7 @@ struct _GimpToolGroupClass
 };
 
 
-GType           gimp_tool_group_get_type             (void) G_GNUC_CONST;
+GType           gimp_tool_group_get_type             (void);
 
 GimpToolGroup * gimp_tool_group_new                  (void);
 

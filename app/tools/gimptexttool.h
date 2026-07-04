@@ -111,7 +111,7 @@ struct _GimpTextToolClass
 void       gimp_text_tool_register               (GimpToolRegisterCallback  callback,
                                                   gpointer                  data);
 
-GType      gimp_text_tool_get_type               (void) G_GNUC_CONST;
+GType      gimp_text_tool_get_type               (void);
 
 gboolean   gimp_text_tool_set_layer              (GimpTextTool  *text_tool,
                                                   GimpLayer     *layer);

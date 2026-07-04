@@ -49,7 +49,7 @@ struct _GimpImageChooserClass
 };
 
 
-GType          gimp_image_chooser_get_type     (void) G_GNUC_CONST;
+GType          gimp_image_chooser_get_type     (void);
 
 GtkWidget    * gimp_image_chooser_new          (GimpContext         *context,
                                                 gint                 view_size,

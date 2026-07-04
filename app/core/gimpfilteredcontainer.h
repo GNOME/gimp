@@ -56,7 +56,7 @@ struct _GimpFilteredContainerClass
 };
 
 
-GType           gimp_filtered_container_get_type (void) G_GNUC_CONST;
+GType           gimp_filtered_container_get_type (void);
 
 GimpContainer * gimp_filtered_container_new      (GimpContainer        *src_container,
                                                   GimpObjectFilterFunc  filter_func,

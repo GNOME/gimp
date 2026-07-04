@@ -36,7 +36,7 @@ struct _GimpParamSpecString
   guint            non_empty      : 1;
 };
 
-GType        gimp_param_string_get_type (void) G_GNUC_CONST;
+GType        gimp_param_string_get_type (void);
 
 GParamSpec * gimp_param_spec_string     (const gchar *name,
                                          const gchar *nick,
@@ -66,7 +66,7 @@ struct _GimpParamSpecEnum
   GSList         *excluded_values;
 };
 
-GType        gimp_param_enum_get_type     (void) G_GNUC_CONST;
+GType        gimp_param_enum_get_type     (void);
 
 GParamSpec * gimp_param_spec_enum         (const gchar       *name,
                                            const gchar       *nick,

@@ -46,4 +46,4 @@ struct _GimpSamplePointUndoClass
 };
 
 
-GType   gimp_sample_point_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_sample_point_undo_get_type (void);

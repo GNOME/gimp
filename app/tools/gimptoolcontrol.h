@@ -110,7 +110,7 @@ struct _GimpToolControlClass
 };
 
 
-GType          gimp_tool_control_get_type           (void) G_GNUC_CONST;
+GType          gimp_tool_control_get_type           (void);
 
 void           gimp_tool_control_activate           (GimpToolControl *control);
 void           gimp_tool_control_halt               (GimpToolControl *control);

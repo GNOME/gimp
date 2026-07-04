@@ -51,6 +51,6 @@ struct _GimpForegroundSelectOptionsClass
 };
 
 
-GType       gimp_foreground_select_options_get_type       (void) G_GNUC_CONST;
+GType       gimp_foreground_select_options_get_type       (void);
 
 GtkWidget * gimp_foreground_select_options_gui            (GimpToolOptions             *tool_options);

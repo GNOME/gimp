@@ -40,7 +40,7 @@ G_BEGIN_DECLS
 #define GIMP_TYPE_PARAM_IMAGE           (gimp_param_image_get_type ())
 #define GIMP_IS_PARAM_SPEC_IMAGE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_IMAGE))
 
-GType        gimp_param_image_get_type          (void) G_GNUC_CONST;
+GType        gimp_param_image_get_type          (void);
 
 GParamSpec * gimp_param_spec_image              (const gchar  *name,
                                                  const gchar  *nick,
@@ -61,7 +61,7 @@ gboolean     gimp_param_spec_image_none_allowed (GParamSpec   *pspec);
 #define GIMP_TYPE_PARAM_ITEM           (gimp_param_item_get_type ())
 #define GIMP_IS_PARAM_SPEC_ITEM(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_ITEM))
 
-GType        gimp_param_item_get_type          (void) G_GNUC_CONST;
+GType        gimp_param_item_get_type          (void);
 
 GParamSpec * gimp_param_spec_item              (const gchar  *name,
                                                 const gchar  *nick,
@@ -82,7 +82,7 @@ gboolean     gimp_param_spec_item_none_allowed (GParamSpec   *pspec);
 #define GIMP_TYPE_PARAM_DRAWABLE           (gimp_param_drawable_get_type ())
 #define GIMP_IS_PARAM_SPEC_DRAWABLE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_DRAWABLE))
 
-GType        gimp_param_drawable_get_type (void) G_GNUC_CONST;
+GType        gimp_param_drawable_get_type (void);
 
 GParamSpec * gimp_param_spec_drawable     (const gchar  *name,
                                            const gchar  *nick,
@@ -101,7 +101,7 @@ GParamSpec * gimp_param_spec_drawable     (const gchar  *name,
 #define GIMP_TYPE_PARAM_LAYER           (gimp_param_layer_get_type ())
 #define GIMP_IS_PARAM_SPEC_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_LAYER))
 
-GType        gimp_param_layer_get_type (void) G_GNUC_CONST;
+GType        gimp_param_layer_get_type (void);
 
 GParamSpec * gimp_param_spec_layer     (const gchar  *name,
                                         const gchar  *nick,
@@ -120,7 +120,7 @@ GParamSpec * gimp_param_spec_layer     (const gchar  *name,
 #define GIMP_TYPE_PARAM_TEXT_LAYER           (gimp_param_text_layer_get_type ())
 #define GIMP_IS_PARAM_SPEC_TEXT_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_TEXT_LAYER))
 
-GType        gimp_param_text_layer_get_type (void) G_GNUC_CONST;
+GType        gimp_param_text_layer_get_type (void);
 
 GParamSpec * gimp_param_spec_text_layer     (const gchar  *name,
                                              const gchar  *nick,
@@ -139,7 +139,7 @@ GParamSpec * gimp_param_spec_text_layer     (const gchar  *name,
 #define GIMP_TYPE_PARAM_VECTOR_LAYER           (gimp_param_vector_layer_get_type ())
 #define GIMP_IS_PARAM_SPEC_VECTOR_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_VECTOR_LAYER))
 
-GType        gimp_param_vector_layer_get_type (void) G_GNUC_CONST;
+GType        gimp_param_vector_layer_get_type (void);
 
 GParamSpec * gimp_param_spec_vector_layer     (const gchar  *name,
                                                const gchar  *nick,
@@ -156,7 +156,7 @@ GParamSpec * gimp_param_spec_vector_layer     (const gchar  *name,
 #define GIMP_TYPE_PARAM_LINK_LAYER           (gimp_param_link_layer_get_type ())
 #define GIMP_IS_PARAM_SPEC_LINK_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_LINK_LAYER))
 
-GType        gimp_param_link_layer_get_type   (void) G_GNUC_CONST;
+GType        gimp_param_link_layer_get_type   (void);
 
 GParamSpec * gimp_param_spec_link_layer       (const gchar  *name,
                                                const gchar  *nick,
@@ -173,7 +173,7 @@ GParamSpec * gimp_param_spec_link_layer       (const gchar  *name,
 #define GIMP_TYPE_PARAM_RASTERIZABLE           (gimp_param_rasterizable_get_type ())
 #define GIMP_IS_PARAM_SPEC_RASTERIZABLE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RASTERIZABLE))
 
-GType        gimp_param_rasterizable_get_type   (void) G_GNUC_CONST;
+GType        gimp_param_rasterizable_get_type   (void);
 
 GParamSpec * gimp_param_spec_rasterizable       (const gchar  *name,
                                                  const gchar  *nick,
@@ -192,7 +192,7 @@ GParamSpec * gimp_param_spec_rasterizable       (const gchar  *name,
 #define GIMP_TYPE_PARAM_GROUP_LAYER           (gimp_param_group_layer_get_type ())
 #define GIMP_IS_PARAM_SPEC_GROUP_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_GROUP_LAYER))
 
-GType        gimp_param_group_layer_get_type (void) G_GNUC_CONST;
+GType        gimp_param_group_layer_get_type (void);
 
 GParamSpec * gimp_param_spec_group_layer     (const gchar  *name,
                                               const gchar  *nick,
@@ -211,7 +211,7 @@ GParamSpec * gimp_param_spec_group_layer     (const gchar  *name,
 #define GIMP_TYPE_PARAM_CHANNEL           (gimp_param_channel_get_type ())
 #define GIMP_IS_PARAM_SPEC_CHANNEL(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_CHANNEL))
 
-GType        gimp_param_channel_get_type (void) G_GNUC_CONST;
+GType        gimp_param_channel_get_type (void);
 
 GParamSpec * gimp_param_spec_channel     (const gchar  *name,
                                           const gchar  *nick,
@@ -230,7 +230,7 @@ GParamSpec * gimp_param_spec_channel     (const gchar  *name,
 #define GIMP_TYPE_PARAM_LAYER_MASK           (gimp_param_layer_mask_get_type ())
 #define GIMP_IS_PARAM_SPEC_LAYER_MASK(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_LAYER_MASK))
 
-GType        gimp_param_layer_mask_get_type (void) G_GNUC_CONST;
+GType        gimp_param_layer_mask_get_type (void);
 
 GParamSpec * gimp_param_spec_layer_mask     (const gchar   *name,
                                              const gchar   *nick,
@@ -249,7 +249,7 @@ GParamSpec * gimp_param_spec_layer_mask     (const gchar   *name,
 #define GIMP_TYPE_PARAM_SELECTION           (gimp_param_selection_get_type ())
 #define GIMP_IS_PARAM_SPEC_SELECTION(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_SELECTION))
 
-GType        gimp_param_selection_get_type (void) G_GNUC_CONST;
+GType        gimp_param_selection_get_type (void);
 
 GParamSpec * gimp_param_spec_selection     (const gchar   *name,
                                             const gchar   *nick,
@@ -268,7 +268,7 @@ GParamSpec * gimp_param_spec_selection     (const gchar   *name,
 #define GIMP_TYPE_PARAM_PATH           (gimp_param_path_get_type ())
 #define GIMP_IS_PARAM_SPEC_PATH(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PATH))
 
-GType        gimp_param_path_get_type (void) G_GNUC_CONST;
+GType        gimp_param_path_get_type (void);
 
 GParamSpec * gimp_param_spec_path     (const gchar  *name,
                                        const gchar  *nick,
@@ -287,7 +287,7 @@ GParamSpec * gimp_param_spec_path     (const gchar  *name,
 #define GIMP_TYPE_PARAM_DRAWABLE_FILTER           (gimp_param_drawable_filter_get_type ())
 #define GIMP_IS_PARAM_SPEC_DRAWABLE_FILTER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_DRAWABLE_FILTER))
 
-GType        gimp_param_drawable_filter_get_type          (void) G_GNUC_CONST;
+GType        gimp_param_drawable_filter_get_type          (void);
 
 GParamSpec * gimp_param_spec_drawable_filter              (const gchar  *name,
                                                            const gchar  *nick,
@@ -308,7 +308,7 @@ gboolean      gimp_param_spec_drawable_filter_none_allowed (GParamSpec *pspec);
 #define GIMP_TYPE_PARAM_DISPLAY           (gimp_param_display_get_type ())
 #define GIMP_IS_PARAM_SPEC_DISPLAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_DISPLAY))
 
-GType        gimp_param_display_get_type         (void) G_GNUC_CONST;
+GType        gimp_param_display_get_type         (void);
 
 GParamSpec * gimp_param_spec_display             (const gchar  *name,
                                                   const gchar  *nick,
@@ -328,7 +328,7 @@ gboolean     gimp_param_spec_display_none_allowed (GParamSpec *pspec);
 #define GIMP_TYPE_PARAM_RESOURCE           (gimp_param_resource_get_type ())
 #define GIMP_IS_PARAM_SPEC_RESOURCE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RESOURCE))
 
-GType        gimp_param_resource_get_type                 (void) G_GNUC_CONST;
+GType        gimp_param_resource_get_type                 (void);
 
 GParamSpec * gimp_param_spec_resource                     (const gchar  *name,
                                                            const gchar  *nick,
@@ -353,7 +353,7 @@ gboolean     gimp_param_spec_resource_defaults_to_context (GParamSpec   *pspec);
 #define GIMP_TYPE_PARAM_BRUSH           (gimp_param_brush_get_type ())
 #define GIMP_IS_PARAM_SPEC_BRUSH(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_BRUSH))
 
-GType        gimp_param_brush_get_type (void) G_GNUC_CONST;
+GType        gimp_param_brush_get_type (void);
 
 GParamSpec * gimp_param_spec_brush (const gchar  *name,
                                     const gchar  *nick,
@@ -374,7 +374,7 @@ GParamSpec * gimp_param_spec_brush (const gchar  *name,
 #define GIMP_TYPE_PARAM_PATTERN           (gimp_param_pattern_get_type ())
 #define GIMP_IS_PARAM_SPEC_PATTERN(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PATTERN))
 
-GType        gimp_param_pattern_get_type (void) G_GNUC_CONST;
+GType        gimp_param_pattern_get_type (void);
 
 GParamSpec * gimp_param_spec_pattern (const gchar  *name,
                                       const gchar  *nick,
@@ -395,7 +395,7 @@ GParamSpec * gimp_param_spec_pattern (const gchar  *name,
 #define GIMP_TYPE_PARAM_GRADIENT           (gimp_param_gradient_get_type ())
 #define GIMP_IS_PARAM_SPEC_GRADIENT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_GRADIENT))
 
-GType        gimp_param_gradient_get_type (void) G_GNUC_CONST;
+GType        gimp_param_gradient_get_type (void);
 
 GParamSpec * gimp_param_spec_gradient (const gchar  *name,
                                        const gchar  *nick,
@@ -416,7 +416,7 @@ GParamSpec * gimp_param_spec_gradient (const gchar  *name,
 #define GIMP_TYPE_PARAM_PALETTE           (gimp_param_palette_get_type ())
 #define GIMP_IS_PARAM_SPEC_PALETTE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PALETTE))
 
-GType        gimp_param_palette_get_type (void) G_GNUC_CONST;
+GType        gimp_param_palette_get_type (void);
 
 GParamSpec * gimp_param_spec_palette (const gchar  *name,
                                       const gchar  *nick,
@@ -437,7 +437,7 @@ GParamSpec * gimp_param_spec_palette (const gchar  *name,
 #define GIMP_TYPE_PARAM_FONT           (gimp_param_font_get_type ())
 #define GIMP_IS_PARAM_SPEC_FONT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_FONT))
 
-GType        gimp_param_font_get_type (void) G_GNUC_CONST;
+GType        gimp_param_font_get_type (void);
 
 GParamSpec * gimp_param_spec_font (const gchar  *name,
                                    const gchar  *nick,
@@ -458,7 +458,7 @@ GParamSpec * gimp_param_spec_font (const gchar  *name,
 #define GIMP_TYPE_PARAM_CURVE           (gimp_param_curve_get_type ())
 #define GIMP_IS_PARAM_SPEC_CURVE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_CURVE))
 
-GType        gimp_param_curve_get_type (void) G_GNUC_CONST;
+GType        gimp_param_curve_get_type (void);
 
 GParamSpec * gimp_param_spec_curve (const gchar  *name,
                                     const gchar  *nick,

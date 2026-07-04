@@ -157,7 +157,7 @@ struct _GimpProcedureActionEntry
 };
 
 
-GType            gimp_action_group_get_type   (void) G_GNUC_CONST;
+GType            gimp_action_group_get_type   (void);
 
 GimpActionGroup *gimp_action_group_new        (Gimp                  *gimp,
                                                const gchar           *name,

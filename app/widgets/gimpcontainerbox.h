@@ -46,7 +46,7 @@ struct _GimpContainerBoxClass
 };
 
 
-GType     gimp_container_box_get_type         (void) G_GNUC_CONST;
+GType     gimp_container_box_get_type         (void);
 
 void      gimp_container_box_set_size_request (GimpContainerBox *box,
                                                gint              width,

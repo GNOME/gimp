@@ -45,7 +45,7 @@ struct _GimpMenuModelClass
 };
 
 
-GType            gimp_menu_model_get_type   (void) G_GNUC_CONST;
+GType            gimp_menu_model_get_type   (void);
 
 GimpMenuModel  * gimp_menu_model_new        (GimpUIManager *manager,
                                              GMenuModel    *model);

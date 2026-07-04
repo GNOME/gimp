@@ -79,7 +79,7 @@ struct _DicomClass
 #define DICOM_TYPE  (dicom_get_type ())
 #define DICOM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DICOM_TYPE, Dicom))
 
-GType                   dicom_get_type         (void) G_GNUC_CONST;
+GType                   dicom_get_type         (void);
 
 static GList          * dicom_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * dicom_create_procedure (GimpPlugIn            *plug_in,

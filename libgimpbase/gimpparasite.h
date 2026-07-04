@@ -38,7 +38,7 @@ G_BEGIN_DECLS
 #define GIMP_TYPE_PARASITE               (gimp_parasite_get_type ())
 #define GIMP_VALUE_HOLDS_PARASITE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_PARASITE))
 
-GType   gimp_parasite_get_type           (void) G_GNUC_CONST;
+GType   gimp_parasite_get_type           (void);
 
 
 /*
@@ -48,7 +48,7 @@ GType   gimp_parasite_get_type           (void) G_GNUC_CONST;
 #define GIMP_TYPE_PARAM_PARASITE           (gimp_param_parasite_get_type ())
 #define GIMP_IS_PARAM_SPEC_PARASITE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PARASITE))
 
-GType        gimp_param_parasite_get_type  (void) G_GNUC_CONST;
+GType        gimp_param_parasite_get_type  (void);
 
 GParamSpec * gimp_param_spec_parasite      (const gchar  *name,
                                             const gchar  *nick,

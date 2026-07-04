@@ -45,7 +45,7 @@ struct _GimpAsyncSetClass
 };
 
 
-GType          gimp_async_set_get_type (void) G_GNUC_CONST;
+GType          gimp_async_set_get_type (void);
 
 GimpAsyncSet * gimp_async_set_new      (void);
 

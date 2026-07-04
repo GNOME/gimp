@@ -112,7 +112,7 @@ struct _PvrClass
 #define PVR_TYPE  (pvr_get_type ())
 #define PVR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PVR_TYPE, Pvr))
 
-GType                   pvr_get_type         (void) G_GNUC_CONST;
+GType                   pvr_get_type         (void);
 
 
 static GList          * pvr_query_procedures  (GimpPlugIn            *plug_in);

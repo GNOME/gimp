@@ -47,4 +47,4 @@ struct _GimpOperationSetAlphaClass
 };
 
 
-GType   gimp_operation_set_alpha_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_set_alpha_get_type (void);

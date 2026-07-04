@@ -71,7 +71,7 @@ struct _GimpSymmetryClass
 };
 
 
-GType          gimp_symmetry_get_type       (void) G_GNUC_CONST;
+GType          gimp_symmetry_get_type       (void);
 
 void           gimp_symmetry_set_stateful   (GimpSymmetry       *symmetry,
                                              gboolean            stateful);

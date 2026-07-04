@@ -192,7 +192,7 @@ struct _JigsawClass
 #define JIGSAW_TYPE  (jigsaw_get_type ())
 #define JIGSAW(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), JIGSAW_TYPE, Jigsaw))
 
-GType                   jigsaw_get_type         (void) G_GNUC_CONST;
+GType                   jigsaw_get_type         (void);
 
 static GList          * jigsaw_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * jigsaw_create_procedure (GimpPlugIn           *plug_in,

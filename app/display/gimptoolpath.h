@@ -55,7 +55,7 @@ struct _GimpToolPathClass
 };
 
 
-GType            gimp_tool_path_get_type        (void) G_GNUC_CONST;
+GType            gimp_tool_path_get_type        (void);
 
 GimpToolWidget * gimp_tool_path_new             (GimpDisplayShell *shell);
 

@@ -45,7 +45,7 @@ struct _GimpOperationHueSaturationClass
 };
 
 
-GType   gimp_operation_hue_saturation_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_hue_saturation_get_type (void);
 
 void    gimp_operation_hue_saturation_map      (GimpHueSaturationConfig *config,
                                                 GeglColor               *color,

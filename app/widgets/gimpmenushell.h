@@ -60,7 +60,7 @@ struct _GimpMenuShellInterface
 };
 
 
-GType           gimp_menu_shell_get_type            (void) G_GNUC_CONST;
+GType           gimp_menu_shell_get_type            (void);
 
 void            gimp_menu_shell_fill                (GimpMenuShell *shell,
                                                      GimpMenuModel *model,

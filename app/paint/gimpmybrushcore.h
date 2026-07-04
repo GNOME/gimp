@@ -49,7 +49,7 @@ struct _GimpMybrushCoreClass
 void    gimp_mybrush_core_register (Gimp                      *gimp,
                                     GimpPaintRegisterCallback  callback);
 
-GType   gimp_mybrush_core_get_type (void) G_GNUC_CONST;
+GType   gimp_mybrush_core_get_type (void);
 
 
 #endif  /*  __GIMP_MYBRUSH_CORE_H__  */

@@ -56,7 +56,7 @@ struct _PcxClass
 #define PCX_TYPE  (pcx_get_type ())
 #define PCX(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PCX_TYPE, Pcx))
 
-GType                   pcx_get_type         (void) G_GNUC_CONST;
+GType                   pcx_get_type         (void);
 
 static GList          * pcx_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * pcx_create_procedure (GimpPlugIn            *plug_in,

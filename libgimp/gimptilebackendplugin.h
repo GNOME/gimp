@@ -50,7 +50,7 @@ struct _GimpTileBackendPluginClass
   GeglTileBackendClass parent_class;
 };
 
-GType             _gimp_tile_backend_plugin_get_type (void) G_GNUC_CONST;
+GType             _gimp_tile_backend_plugin_get_type (void);
 
 GeglTileBackend * _gimp_tile_backend_plugin_new      (GimpDrawable *drawable,
                                                       gint          shadow);

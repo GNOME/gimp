@@ -20,7 +20,7 @@
 
 #define GIMP_TYPE_BUTTON_PRESS_TYPE (gimp_button_press_type_get_type ())
 
-GType gimp_button_press_type_get_type (void) G_GNUC_CONST;
+GType gimp_button_press_type_get_type (void);
 
 typedef enum
 {
@@ -32,7 +32,7 @@ typedef enum
 
 #define GIMP_TYPE_BUTTON_RELEASE_TYPE (gimp_button_release_type_get_type ())
 
-GType gimp_button_release_type_get_type (void) G_GNUC_CONST;
+GType gimp_button_release_type_get_type (void);
 
 typedef enum
 {
@@ -45,7 +45,7 @@ typedef enum
 
 #define GIMP_TYPE_COMPASS_ORIENTATION (gimp_compass_orientation_get_type ())
 
-GType gimp_compass_orientation_get_type (void) G_GNUC_CONST;
+GType gimp_compass_orientation_get_type (void);
 
 typedef enum
 {
@@ -57,7 +57,7 @@ typedef enum
 
 #define GIMP_TYPE_CURSOR_PRECISION (gimp_cursor_precision_get_type ())
 
-GType gimp_cursor_precision_get_type (void) G_GNUC_CONST;
+GType gimp_cursor_precision_get_type (void);
 
 typedef enum
 {
@@ -69,7 +69,7 @@ typedef enum
 
 #define GIMP_TYPE_GUIDES_TYPE (gimp_guides_type_get_type ())
 
-GType gimp_guides_type_get_type (void) G_GNUC_CONST;
+GType gimp_guides_type_get_type (void);
 
 typedef enum
 {
@@ -86,7 +86,7 @@ typedef enum
 
 #define GIMP_TYPE_HANDLE_TYPE (gimp_handle_type_get_type ())
 
-GType gimp_handle_type_get_type (void) G_GNUC_CONST;
+GType gimp_handle_type_get_type (void);
 
 typedef enum
 {
@@ -108,7 +108,7 @@ typedef enum
 
 #define GIMP_TYPE_HANDLE_ANCHOR (gimp_handle_anchor_get_type ())
 
-GType gimp_handle_anchor_get_type (void) G_GNUC_CONST;
+GType gimp_handle_anchor_get_type (void);
 
 typedef enum
 {
@@ -126,7 +126,7 @@ typedef enum
 
 #define GIMP_TYPE_LIMIT_TYPE (gimp_limit_type_get_type ())
 
-GType gimp_limit_type_get_type (void) G_GNUC_CONST;
+GType gimp_limit_type_get_type (void);
 
 typedef enum
 {
@@ -140,7 +140,7 @@ typedef enum
 
 #define GIMP_TYPE_PATH_STYLE (gimp_path_style_get_type ())
 
-GType gimp_path_style_get_type (void) G_GNUC_CONST;
+GType gimp_path_style_get_type (void);
 
 typedef enum
 {
@@ -152,7 +152,7 @@ typedef enum
 
 #define GIMP_TYPE_RECTANGLE_CONSTRAINT (gimp_rectangle_constraint_get_type ())
 
-GType gimp_rectangle_constraint_get_type (void) G_GNUC_CONST;
+GType gimp_rectangle_constraint_get_type (void);
 
 typedef enum
 {
@@ -164,7 +164,7 @@ typedef enum
 
 #define GIMP_TYPE_RECTANGLE_FIXED_RULE (gimp_rectangle_fixed_rule_get_type ())
 
-GType gimp_rectangle_fixed_rule_get_type (void) G_GNUC_CONST;
+GType gimp_rectangle_fixed_rule_get_type (void);
 
 typedef enum
 {
@@ -177,7 +177,7 @@ typedef enum
 
 #define GIMP_TYPE_RECTANGLE_PRECISION (gimp_rectangle_precision_get_type ())
 
-GType gimp_rectangle_precision_get_type (void) G_GNUC_CONST;
+GType gimp_rectangle_precision_get_type (void);
 
 typedef enum
 {
@@ -188,7 +188,7 @@ typedef enum
 
 #define GIMP_TYPE_TRANSFORM_3D_MODE (gimp_transform_3d_mode_get_type ())
 
-GType gimp_transform_3d_mode_get_type (void) G_GNUC_CONST;
+GType gimp_transform_3d_mode_get_type (void);
 
 typedef enum /*< lowercase_name=gimp_transform_3d_mode >*/
 {
@@ -200,7 +200,7 @@ typedef enum /*< lowercase_name=gimp_transform_3d_mode >*/
 
 #define GIMP_TYPE_TRANSFORM_FUNCTION (gimp_transform_function_get_type ())
 
-GType gimp_transform_function_get_type (void) G_GNUC_CONST;
+GType gimp_transform_function_get_type (void);
 
 typedef enum
 {
@@ -215,7 +215,7 @@ typedef enum
 
 #define GIMP_TYPE_TRANSFORM_HANDLE_MODE (gimp_transform_handle_mode_get_type ())
 
-GType gimp_transform_handle_mode_get_type (void) G_GNUC_CONST;
+GType gimp_transform_handle_mode_get_type (void);
 
 typedef enum
 {
@@ -227,7 +227,7 @@ typedef enum
 
 #define GIMP_TYPE_PATH_MODE (gimp_path_mode_get_type ())
 
-GType gimp_path_mode_get_type (void) G_GNUC_CONST;
+GType gimp_path_mode_get_type (void);
 
 typedef enum
 {
@@ -239,7 +239,7 @@ typedef enum
 
 #define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
 
-GType gimp_zoom_focus_get_type (void) G_GNUC_CONST;
+GType gimp_zoom_focus_get_type (void);
 
 typedef enum
 {
@@ -262,7 +262,7 @@ typedef enum
 
 #define GIMP_TYPE_MODIFIER_ACTION (gimp_modifier_action_get_type ())
 
-GType gimp_modifier_action_get_type (void) G_GNUC_CONST;
+GType gimp_modifier_action_get_type (void);
 
 typedef enum
 {

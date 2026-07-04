@@ -144,7 +144,7 @@ struct _TwainClass
 #define TWAIN_TYPE  (twain_get_type ())
 #define TWAIN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TWAIN_TYPE, Twain))
 
-GType                   twain_get_type         (void) G_GNUC_CONST;
+GType                   twain_get_type         (void);
 
 static GList          * twain_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * twain_create_procedure (GimpPlugIn           *plug_in,

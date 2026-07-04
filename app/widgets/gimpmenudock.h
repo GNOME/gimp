@@ -46,6 +46,6 @@ struct _GimpMenuDockClass
 };
 
 
-GType       gimp_menu_dock_get_type (void) G_GNUC_CONST;
+GType       gimp_menu_dock_get_type (void);
 
 GtkWidget * gimp_menu_dock_new      (void);

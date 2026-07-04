@@ -47,7 +47,7 @@ struct _GimpLinkLayerClass
 };
 
 
-GType       gimp_link_layer_get_type             (void) G_GNUC_CONST;
+GType       gimp_link_layer_get_type             (void);
 
 GimpLayer * gimp_link_layer_new                  (GimpImage             *image,
                                                   GimpLink              *link);

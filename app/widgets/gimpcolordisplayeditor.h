@@ -62,7 +62,7 @@ struct _GimpColorDisplayEditorClass
 };
 
 
-GType       gimp_color_display_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_color_display_editor_get_type (void);
 
 GtkWidget * gimp_color_display_editor_new      (Gimp                  *gimp,
                                                 GimpColorDisplayStack *stack,

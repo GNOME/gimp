@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 #define GIMP_TYPE_BRUSH_APPLICATION_MODE (gimp_brush_application_mode_get_type ())
 
-GType gimp_brush_application_mode_get_type (void) G_GNUC_CONST;
+GType gimp_brush_application_mode_get_type (void);
 
 /**
  * GimpBrushApplicationMode:
@@ -44,7 +44,7 @@ typedef enum
 
 #define GIMP_TYPE_CONVERT_DITHER_TYPE (gimp_convert_dither_type_get_type ())
 
-GType gimp_convert_dither_type_get_type (void) G_GNUC_CONST;
+GType gimp_convert_dither_type_get_type (void);
 
 /**
  * GimpConvertDitherType:
@@ -66,7 +66,7 @@ typedef enum
 
 #define GIMP_TYPE_CURVE_POINT_TYPE (gimp_curve_point_type_get_type ())
 
-GType gimp_curve_point_type_get_type (void) G_GNUC_CONST;
+GType gimp_curve_point_type_get_type (void);
 
 /**
  * GimpCurvePointType:
@@ -84,7 +84,7 @@ typedef enum
 
 #define GIMP_TYPE_CURVE_TYPE (gimp_curve_type_get_type ())
 
-GType gimp_curve_type_get_type (void) G_GNUC_CONST;
+GType gimp_curve_type_get_type (void);
 
 /**
  * GimpCurveType:
@@ -102,7 +102,7 @@ typedef enum
 
 #define GIMP_TYPE_HISTOGRAM_CHANNEL (gimp_histogram_channel_get_type ())
 
-GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;
+GType gimp_histogram_channel_get_type (void);
 
 /**
  * GimpHistogramChannel:
@@ -128,7 +128,7 @@ typedef enum
 
 #define GIMP_TYPE_LAYER_COLOR_SPACE (gimp_layer_color_space_get_type ())
 
-GType gimp_layer_color_space_get_type (void) G_GNUC_CONST;
+GType gimp_layer_color_space_get_type (void);
 
 /**
  * GimpLayerColorSpace:
@@ -152,7 +152,7 @@ typedef enum
 
 #define GIMP_TYPE_LAYER_COMPOSITE_MODE (gimp_layer_composite_mode_get_type ())
 
-GType gimp_layer_composite_mode_get_type (void) G_GNUC_CONST;
+GType gimp_layer_composite_mode_get_type (void);
 
 /**
  * GimpLayerCompositeMode:
@@ -176,7 +176,7 @@ typedef enum
 
 #define GIMP_TYPE_LAYER_MODE (gimp_layer_mode_get_type ())
 
-GType gimp_layer_mode_get_type (void) G_GNUC_CONST;
+GType gimp_layer_mode_get_type (void);
 
 /**
  * GimpLayerMode:
@@ -318,7 +318,7 @@ typedef enum
 
 #define GIMP_TYPE_TRC_TYPE (gimp_trc_type_get_type ())
 
-GType gimp_trc_type_get_type (void) G_GNUC_CONST;
+GType gimp_trc_type_get_type (void);
 
 /**
  * GimpTRCType:

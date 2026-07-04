@@ -45,4 +45,4 @@ struct _GimpDodgeBurnOptionsClass
 };
 
 
-GType   gimp_dodge_burn_options_get_type (void) G_GNUC_CONST;
+GType   gimp_dodge_burn_options_get_type (void);

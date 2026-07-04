@@ -49,7 +49,7 @@ struct _GimpHandleBarClass
 };
 
 
-GType       gimp_handle_bar_get_type       (void) G_GNUC_CONST;
+GType       gimp_handle_bar_get_type       (void);
 
 GtkWidget * gimp_handle_bar_new            (GtkOrientation  orientation);
 

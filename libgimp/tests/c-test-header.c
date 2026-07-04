@@ -61,7 +61,7 @@ struct _GimpCTestClass
 #define GIMP_C_TEST_TYPE  (gimp_c_test_get_type ())
 #define GIMP_C_TEST (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_C_TEST_TYPE, GimpCTest))
 
-GType                   gimp_c_test_get_type         (void) G_GNUC_CONST;
+GType                   gimp_c_test_get_type         (void);
 
 static GList          * gimp_c_test_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * gimp_c_test_create_procedure (GimpPlugIn           *plug_in,

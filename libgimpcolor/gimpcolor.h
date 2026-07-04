@@ -75,7 +75,7 @@ gboolean       gimp_color_is_out_of_gamut           (GeglColor      *color,
 #define GIMP_TYPE_PARAM_COLOR           (gimp_param_color_get_type ())
 #define GIMP_IS_PARAM_SPEC_COLOR(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_COLOR))
 
-GType        gimp_param_color_get_type         (void) G_GNUC_CONST;
+GType        gimp_param_color_get_type         (void);
 
 GParamSpec * gimp_param_spec_color             (const gchar *name,
                                                 const gchar *nick,
@@ -118,7 +118,7 @@ typedef const Babl *                        GimpBablFormat;
 #define GIMP_TYPE_BABL_FORMAT               gimp_babl_format_get_type ()
 #define GIMP_VALUE_HOLDS_BABL_FORMAT(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_BABL_FORMAT))
 
-GType   gimp_babl_format_get_type           (void) G_GNUC_CONST;
+GType   gimp_babl_format_get_type           (void);
 
 
 G_END_DECLS

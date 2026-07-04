@@ -183,7 +183,7 @@ struct _GimpStrokeClass
 };
 
 
-GType        gimp_stroke_get_type             (void) G_GNUC_CONST;
+GType        gimp_stroke_get_type             (void);
 
 void         gimp_stroke_set_id               (GimpStroke            *stroke,
                                                gint                   id);

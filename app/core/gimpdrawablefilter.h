@@ -45,7 +45,7 @@ struct _GimpDrawableFilterClass
  *  remove the live filter from the drawable.
  */
 
-GType      gimp_drawable_filter_get_type       (void) G_GNUC_CONST;
+GType      gimp_drawable_filter_get_type       (void);
 
 GimpDrawableFilter *
            gimp_drawable_filter_new            (GimpDrawable            *drawable,

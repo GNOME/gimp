@@ -96,7 +96,7 @@ struct _GimpProcedureClass
 };
 
 
-GType            gimp_procedure_get_type           (void) G_GNUC_CONST;
+GType            gimp_procedure_get_type           (void);
 
 GimpProcedure  * gimp_procedure_new                (GimpMarshalFunc   marshal_func,
                                                     gboolean          is_private);

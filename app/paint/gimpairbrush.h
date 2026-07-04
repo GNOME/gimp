@@ -54,6 +54,6 @@ struct _GimpAirbrushClass
 void    gimp_airbrush_register (Gimp                      *gimp,
                                 GimpPaintRegisterCallback  callback);
 
-GType   gimp_airbrush_get_type (void) G_GNUC_CONST;
+GType   gimp_airbrush_get_type (void);
 
 void    gimp_airbrush_stamp    (GimpAirbrush              *airbrush);

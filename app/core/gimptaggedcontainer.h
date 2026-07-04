@@ -51,7 +51,7 @@ struct _GimpTaggedContainerClass
 };
 
 
-GType           gimp_tagged_container_get_type      (void) G_GNUC_CONST;
+GType           gimp_tagged_container_get_type      (void);
 
 GimpContainer * gimp_tagged_container_new           (GimpContainer       *src_container);
 

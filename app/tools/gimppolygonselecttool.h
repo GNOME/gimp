@@ -51,7 +51,7 @@ struct _GimpPolygonSelectToolClass
 };
 
 
-GType      gimp_polygon_select_tool_get_type   (void) G_GNUC_CONST;
+GType      gimp_polygon_select_tool_get_type   (void);
 
 gboolean   gimp_polygon_select_tool_is_closed  (GimpPolygonSelectTool  *poly_sel);
 void       gimp_polygon_select_tool_get_points (GimpPolygonSelectTool  *poly_sel,

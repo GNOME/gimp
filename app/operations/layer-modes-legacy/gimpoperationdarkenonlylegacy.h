@@ -45,4 +45,4 @@ struct _GimpOperationDarkenOnlyLegacyClass
 };
 
 
-GType   gimp_operation_darken_only_legacy_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_darken_only_legacy_get_type (void);

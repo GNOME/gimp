@@ -60,6 +60,6 @@ struct _GimpDBusServiceClass
 };
 
 
-GType     gimp_dbus_service_get_type (void) G_GNUC_CONST;
+GType     gimp_dbus_service_get_type (void);
 
 GObject * gimp_dbus_service_new      (Gimp *gimp);

@@ -67,6 +67,6 @@ struct _GimpBucketFillOptions
 };
 
 
-GType       gimp_bucket_fill_options_get_type (void) G_GNUC_CONST;
+GType       gimp_bucket_fill_options_get_type (void);
 
 GtkWidget * gimp_bucket_fill_options_gui      (GimpToolOptions *tool_options);

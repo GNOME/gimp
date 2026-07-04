@@ -79,7 +79,7 @@ struct _FilterBrowserClass
 #define FILTER_BROWSER(obj) \
   (g_type_check_instance_cast ((obj), browser_type, FilterBrowser))
 
-GType filter_browser_get_type (void) G_GNUC_CONST;
+GType filter_browser_get_type (void);
 
 G_DEFINE_TYPE (FilterBrowser, filter_browser, GIMP_TYPE_PLUG_IN)
 

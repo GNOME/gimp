@@ -50,4 +50,4 @@ struct _GimpViewRendererBrushClass
 };
 
 
-GType   gimp_view_renderer_brush_get_type (void) G_GNUC_CONST;
+GType   gimp_view_renderer_brush_get_type (void);

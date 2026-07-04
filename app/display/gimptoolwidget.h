@@ -130,7 +130,7 @@ struct _GimpToolWidgetClass
 };
 
 
-GType              gimp_tool_widget_get_type          (void) G_GNUC_CONST;
+GType              gimp_tool_widget_get_type          (void);
 
 GimpDisplayShell * gimp_tool_widget_get_shell         (GimpToolWidget  *widget);
 GimpCanvasItem   * gimp_tool_widget_get_item          (GimpToolWidget  *widget);

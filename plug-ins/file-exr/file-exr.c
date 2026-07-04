@@ -46,7 +46,7 @@ struct _ExrClass
 #define EXR_TYPE  (exr_get_type ())
 #define EXR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EXR_TYPE, Exr))
 
-GType                   exr_get_type         (void) G_GNUC_CONST;
+GType                   exr_get_type         (void);
 
 static GList          * exr_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * exr_create_procedure (GimpPlugIn            *plug_in,

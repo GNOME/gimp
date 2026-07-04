@@ -69,7 +69,7 @@ struct _PaaClass
 #define PAA_TYPE  (paa_get_type ())
 #define PAA(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PAA_TYPE, Paa))
 
-GType                           paa_get_type          (void) G_GNUC_CONST;
+GType                           paa_get_type          (void);
 
 
 static GList          *         paa_query_procedures  (GimpPlugIn            *plug_in);

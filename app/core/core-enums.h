@@ -36,7 +36,7 @@
 
 #define GIMP_TYPE_ALIGN_REFERENCE_TYPE (gimp_align_reference_type_get_type ())
 
-GType gimp_align_reference_type_get_type (void) G_GNUC_CONST;
+GType gimp_align_reference_type_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -48,7 +48,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_ALIGNMENT_TYPE (gimp_alignment_type_get_type ())
 
-GType gimp_alignment_type_get_type (void) G_GNUC_CONST;
+GType gimp_alignment_type_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -75,7 +75,7 @@ typedef enum  /*< pdb-skip >*/
  */
 #define GIMP_TYPE_BUCKET_FILL_MODE (gimp_bucket_fill_mode_get_type ())
 
-GType gimp_bucket_fill_mode_get_type (void) G_GNUC_CONST;
+GType gimp_bucket_fill_mode_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -87,7 +87,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_CHANNEL_BORDER_STYLE (gimp_channel_border_style_get_type ())
 
-GType gimp_channel_border_style_get_type (void) G_GNUC_CONST;
+GType gimp_channel_border_style_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -103,7 +103,7 @@ typedef enum  /*< pdb-skip >*/
  */
 #define GIMP_TYPE_COLOR_PICK_MODE (gimp_color_pick_mode_get_type ())
 
-GType gimp_color_pick_mode_get_type (void) G_GNUC_CONST;
+GType gimp_color_pick_mode_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -124,7 +124,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_COLOR_PROFILE_POLICY (gimp_color_profile_policy_get_type ())
 
-GType gimp_color_profile_policy_get_type (void) G_GNUC_CONST;
+GType gimp_color_profile_policy_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -137,7 +137,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_COMPONENT_MASK (gimp_component_mask_get_type ())
 
-GType gimp_component_mask_get_type (void) G_GNUC_CONST;
+GType gimp_component_mask_get_type (void);
 
 typedef enum /*< pdb-skip >*/
 {
@@ -155,7 +155,7 @@ typedef enum /*< pdb-skip >*/
 
 #define GIMP_TYPE_CONTAINER_POLICY (gimp_container_policy_get_type ())
 
-GType gimp_container_policy_get_type (void) G_GNUC_CONST;
+GType gimp_container_policy_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -166,7 +166,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_CONVERT_DITHER_TYPE (gimp_convert_dither_type_get_type ())
 
-GType gimp_convert_dither_type_get_type (void) G_GNUC_CONST;
+GType gimp_convert_dither_type_get_type (void);
 
 typedef enum
 {
@@ -180,7 +180,7 @@ typedef enum
 
 #define GIMP_TYPE_CONVOLUTION_TYPE (gimp_convolution_type_get_type ())
 
-GType gimp_convolution_type_get_type (void) G_GNUC_CONST;
+GType gimp_convolution_type_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -192,7 +192,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_CURVE_POINT_TYPE (gimp_curve_point_type_get_type ())
 
-GType gimp_curve_point_type_get_type (void) G_GNUC_CONST;
+GType gimp_curve_point_type_get_type (void);
 
 typedef enum
 {
@@ -203,7 +203,7 @@ typedef enum
 
 #define GIMP_TYPE_CURVE_TYPE (gimp_curve_type_get_type ())
 
-GType gimp_curve_type_get_type (void) G_GNUC_CONST;
+GType gimp_curve_type_get_type (void);
 
 typedef enum
 {
@@ -214,7 +214,7 @@ typedef enum
 
 #define GIMP_TYPE_DASH_PRESET (gimp_dash_preset_get_type ())
 
-GType gimp_dash_preset_get_type (void) G_GNUC_CONST;
+GType gimp_dash_preset_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -234,7 +234,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_DEBUG_POLICY (gimp_debug_policy_get_type ())
 
-GType gimp_debug_policy_get_type (void) G_GNUC_CONST;
+GType gimp_debug_policy_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -247,7 +247,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_DIRTY_MASK (gimp_dirty_mask_get_type ())
 
-GType gimp_dirty_mask_get_type (void) G_GNUC_CONST;
+GType gimp_dirty_mask_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -270,7 +270,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_DYNAMICS_OUTPUT_TYPE (gimp_dynamics_output_type_get_type ())
 
-GType gimp_dynamics_output_type_get_type (void) G_GNUC_CONST;
+GType gimp_dynamics_output_type_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -290,7 +290,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_CUSTOM_STYLE (gimp_custom_style_get_type ())
 
-GType gimp_custom_style_get_type (void) G_GNUC_CONST;
+GType gimp_custom_style_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -300,7 +300,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_FILL_STYLE (gimp_fill_style_get_type ())
 
-GType gimp_fill_style_get_type (void) G_GNUC_CONST;
+GType gimp_fill_style_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -312,7 +312,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_FILTER_REGION (gimp_filter_region_get_type ())
 
-GType gimp_filter_region_get_type (void) G_GNUC_CONST;
+GType gimp_filter_region_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -323,7 +323,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_GRADIENT_COLOR (gimp_gradient_color_get_type ())
 
-GType gimp_gradient_color_get_type (void) G_GNUC_CONST;
+GType gimp_gradient_color_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -337,7 +337,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_GRAVITY_TYPE (gimp_gravity_type_get_type ())
 
-GType gimp_gravity_type_get_type (void) G_GNUC_CONST;
+GType gimp_gravity_type_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -356,7 +356,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_GUIDE_STYLE (gimp_guide_style_get_type ())
 
-GType gimp_guide_style_get_type (void) G_GNUC_CONST;
+GType gimp_guide_style_get_type (void);
 
 typedef enum /*< pdb-skip >*/
 {
@@ -370,7 +370,7 @@ typedef enum /*< pdb-skip >*/
 
 #define GIMP_TYPE_HISTOGRAM_CHANNEL (gimp_histogram_channel_get_type ())
 
-GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;
+GType gimp_histogram_channel_get_type (void);
 
 typedef enum
 {
@@ -386,7 +386,7 @@ typedef enum
 
 #define GIMP_TYPE_ITEM_SET (gimp_item_set_get_type ())
 
-GType gimp_item_set_get_type (void) G_GNUC_CONST;
+GType gimp_item_set_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -399,7 +399,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_MATTING_ENGINE (gimp_matting_engine_get_type ())
 
-GType gimp_matting_engine_get_type (void) G_GNUC_CONST;
+GType gimp_matting_engine_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -410,7 +410,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_MESSAGE_SEVERITY (gimp_message_severity_get_type ())
 
-GType gimp_message_severity_get_type (void) G_GNUC_CONST;
+GType gimp_message_severity_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -424,7 +424,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_METADATA_ROTATION_POLICY (gimp_metadata_rotation_policy_get_type ())
 
-GType gimp_metadata_rotation_policy_get_type (void) G_GNUC_CONST;
+GType gimp_metadata_rotation_policy_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -436,7 +436,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_PASTE_TYPE (gimp_paste_type_get_type ())
 
-GType gimp_paste_type_get_type (void) G_GNUC_CONST;
+GType gimp_paste_type_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -455,7 +455,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_WIN32_POINTER_INPUT_API (gimp_win32_pointer_input_api_get_type ())
 
-GType gimp_win32_pointer_input_api_get_type (void) G_GNUC_CONST;
+GType gimp_win32_pointer_input_api_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -466,7 +466,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_THUMBNAIL_SIZE (gimp_thumbnail_size_get_type ())
 
-GType gimp_thumbnail_size_get_type (void) G_GNUC_CONST;
+GType gimp_thumbnail_size_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -478,7 +478,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_TRC_TYPE (gimp_trc_type_get_type ())
 
-GType gimp_trc_type_get_type (void) G_GNUC_CONST;
+GType gimp_trc_type_get_type (void);
 
 typedef enum
 {
@@ -490,7 +490,7 @@ typedef enum
 
 #define GIMP_TYPE_UNDO_EVENT (gimp_undo_event_get_type ())
 
-GType gimp_undo_event_get_type (void) G_GNUC_CONST;
+GType gimp_undo_event_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -507,7 +507,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_UNDO_MODE (gimp_undo_mode_get_type ())
 
-GType gimp_undo_mode_get_type (void) G_GNUC_CONST;
+GType gimp_undo_mode_get_type (void);
 
 typedef enum /*< pdb-skip >*/
 {
@@ -518,7 +518,7 @@ typedef enum /*< pdb-skip >*/
 
 #define GIMP_TYPE_UNDO_TYPE (gimp_undo_type_get_type ())
 
-GType gimp_undo_type_get_type (void) G_GNUC_CONST;
+GType gimp_undo_type_get_type (void);
 
 typedef enum /*< pdb-skip >*/
 {
@@ -650,7 +650,7 @@ typedef enum /*< pdb-skip >*/
 
 #define GIMP_TYPE_VIEW_SIZE (gimp_view_size_get_type ())
 
-GType gimp_view_size_get_type (void) G_GNUC_CONST;
+GType gimp_view_size_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -668,7 +668,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_VIEW_TYPE (gimp_view_type_get_type ())
 
-GType gimp_view_type_get_type (void) G_GNUC_CONST;
+GType gimp_view_type_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -679,7 +679,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_SELECT_METHOD (gimp_select_method_get_type ())
 
-GType gimp_select_method_get_type (void) G_GNUC_CONST;
+GType gimp_select_method_get_type (void);
 
 typedef enum /*< pdb-skip >*/
 {

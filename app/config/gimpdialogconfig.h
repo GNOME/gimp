@@ -118,4 +118,4 @@ struct _GimpDialogConfigClass
 };
 
 
-GType  gimp_dialog_config_get_type (void) G_GNUC_CONST;
+GType  gimp_dialog_config_get_type (void);

@@ -56,7 +56,7 @@ struct _GimpCropToolClass
 void    gimp_crop_tool_register (GimpToolRegisterCallback  callback,
                                  gpointer                  data);
 
-GType   gimp_crop_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_crop_tool_get_type (void);
 
 
 #endif  /*  __GIMP_CROP_TOOL_H__  */

@@ -26,7 +26,7 @@
 #define GIMP_TYPE_ANCHOR               (gimp_anchor_get_type ())
 #define GIMP_VALUE_HOLDS_ANCHOR(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_ANCHOR))
 
-GType   gimp_anchor_get_type           (void) G_GNUC_CONST;
+GType   gimp_anchor_get_type           (void);
 
 
 struct _GimpAnchor

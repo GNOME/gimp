@@ -48,7 +48,7 @@ struct _GimpDocumentViewClass
 };
 
 
-GType       gimp_document_view_get_type (void) G_GNUC_CONST;
+GType       gimp_document_view_get_type (void);
 
 GtkWidget * gimp_document_view_new      (GimpViewType     view_type,
                                          GimpContainer   *container,

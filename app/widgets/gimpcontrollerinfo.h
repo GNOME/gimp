@@ -64,7 +64,7 @@ struct _GimpControllerInfoClass
 };
 
 
-GType    gimp_controller_info_get_type          (void) G_GNUC_CONST;
+GType    gimp_controller_info_get_type          (void);
 
 GimpControllerInfo * gimp_controller_info_new   (GType                       type);
 

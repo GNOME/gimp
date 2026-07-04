@@ -53,7 +53,7 @@ struct _GimpLanguageStore
 };
 
 
-GType          gimp_language_store_get_type (void) G_GNUC_CONST;
+GType          gimp_language_store_get_type (void);
 
 GtkListStore * gimp_language_store_new      (void);
 

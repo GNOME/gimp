@@ -51,7 +51,7 @@ struct _GimpVectorLayerUndoClass
 };
 
 
-GType      gimp_vector_layer_undo_get_type (void) G_GNUC_CONST;
+GType      gimp_vector_layer_undo_get_type (void);
 
 
 #endif /* __GIMP_VECTOR_LAYER_UNDO_H__ */

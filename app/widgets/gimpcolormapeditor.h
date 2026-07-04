@@ -44,7 +44,7 @@ struct _GimpColormapEditorClass
 };
 
 
-GType       gimp_colormap_editor_get_type           (void) G_GNUC_CONST;
+GType       gimp_colormap_editor_get_type           (void);
 
 GtkWidget * gimp_colormap_editor_new                (GimpMenuFactory    *menu_factory);
 

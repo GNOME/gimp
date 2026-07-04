@@ -73,7 +73,7 @@ struct _GimpUndoClass
 };
 
 
-GType         gimp_undo_get_type        (void) G_GNUC_CONST;
+GType         gimp_undo_get_type        (void);
 
 void          gimp_undo_pop             (GimpUndo            *undo,
                                          GimpUndoMode         undo_mode,

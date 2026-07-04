@@ -77,7 +77,7 @@ struct _OptimizeClass
 #define OPTIMIZE_TYPE  (optimize_get_type ())
 #define OPTIMIZE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), OPTIMIZE_TYPE, Optimize))
 
-GType                   optimize_get_type         (void) G_GNUC_CONST;
+GType                   optimize_get_type         (void);
 
 static GList          * optimize_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * optimize_create_procedure (GimpPlugIn           *plug_in,

@@ -52,7 +52,7 @@ struct _DarktableClass
 #define DARKTABLE_TYPE  (darktable_get_type ())
 #define DARKTABLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DARKTABLE_TYPE, Darktable))
 
-GType                   darktable_get_type         (void) G_GNUC_CONST;
+GType                   darktable_get_type         (void);
 
 static GList          * darktable_init_procedures  (GimpPlugIn            *plug_in);
 static GimpProcedure  * darktable_create_procedure (GimpPlugIn            *plug_in,

@@ -32,7 +32,7 @@
  */
 #define GIMP_TYPE_BUCKET_FILL_AREA (gimp_bucket_fill_area_get_type ())
 
-GType gimp_bucket_fill_area_get_type (void) G_GNUC_CONST;
+GType gimp_bucket_fill_area_get_type (void);
 
 typedef enum
 {
@@ -53,7 +53,7 @@ typedef enum
  */
 #define GIMP_TYPE_LINE_ART_SOURCE (gimp_line_art_source_get_type ())
 
-GType gimp_line_art_source_get_type (void) G_GNUC_CONST;
+GType gimp_line_art_source_get_type (void);
 
 typedef enum
 {
@@ -66,7 +66,7 @@ typedef enum
 
 #define GIMP_TYPE_RECT_SELECT_MODE (gimp_rect_select_mode_get_type ())
 
-GType gimp_rect_select_mode_get_type (void) G_GNUC_CONST;
+GType gimp_rect_select_mode_get_type (void);
 
 typedef enum
 {
@@ -78,7 +78,7 @@ typedef enum
 
 #define GIMP_TYPE_TRANSFORM_TYPE (gimp_transform_type_get_type ())
 
-GType gimp_transform_type_get_type (void) G_GNUC_CONST;
+GType gimp_transform_type_get_type (void);
 
 typedef enum
 {
@@ -91,7 +91,7 @@ typedef enum
 
 #define GIMP_TYPE_TOOL_ACTION (gimp_tool_action_get_type ())
 
-GType gimp_tool_action_get_type (void) G_GNUC_CONST;
+GType gimp_tool_action_get_type (void);
 
 typedef enum
 {
@@ -104,7 +104,7 @@ typedef enum
 
 #define GIMP_TYPE_TOOL_ACTIVE_MODIFIERS (gimp_tool_active_modifiers_get_type ())
 
-GType gimp_tool_active_modifiers_get_type (void) G_GNUC_CONST;
+GType gimp_tool_active_modifiers_get_type (void);
 
 typedef enum
 {
@@ -116,7 +116,7 @@ typedef enum
 
 #define GIMP_TYPE_MATTING_DRAW_MODE (gimp_matting_draw_mode_get_type ())
 
-GType gimp_matting_draw_mode_get_type (void) G_GNUC_CONST;
+GType gimp_matting_draw_mode_get_type (void);
 
 typedef enum
 {
@@ -128,7 +128,7 @@ typedef enum
 
 #define GIMP_TYPE_MATTING_PREVIEW_MODE (gimp_matting_preview_mode_get_type ())
 
-GType gimp_matting_preview_mode_get_type (void) G_GNUC_CONST;
+GType gimp_matting_preview_mode_get_type (void);
 
 typedef enum
 {
@@ -139,7 +139,7 @@ typedef enum
 
 #define GIMP_TYPE_TRANSFORM_3D_LENS_MODE (gimp_transform_3d_lens_mode_get_type ())
 
-GType gimp_transform_3d_lens_mode_get_type (void) G_GNUC_CONST;
+GType gimp_transform_3d_lens_mode_get_type (void);
 
 typedef enum /*< lowercase_name=gimp_transform_3d_lens_mode >*/
 {
@@ -151,7 +151,7 @@ typedef enum /*< lowercase_name=gimp_transform_3d_lens_mode >*/
 
 #define GIMP_TYPE_WARP_BEHAVIOR (gimp_warp_behavior_get_type ())
 
-GType gimp_warp_behavior_get_type (void) G_GNUC_CONST;
+GType gimp_warp_behavior_get_type (void);
 
 typedef enum
 {

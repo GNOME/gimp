@@ -47,7 +47,7 @@ struct _GimpBrightnessContrastConfigClass
 };
 
 
-GType   gimp_brightness_contrast_config_get_type (void) G_GNUC_CONST;
+GType   gimp_brightness_contrast_config_get_type (void);
 
 GimpLevelsConfig *
 gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *config);

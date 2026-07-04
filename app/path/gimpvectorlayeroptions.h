@@ -56,7 +56,7 @@ struct _GimpVectorLayerOptionsClass
   GimpObjectClass  parent_class;
 };
 
-GType                    gimp_vector_layer_options_get_type (void) G_GNUC_CONST;
+GType                    gimp_vector_layer_options_get_type (void);
 
 GimpVectorLayerOptions * gimp_vector_layer_options_new      (GimpImage   *image,
                                                              GimpPath    *path,

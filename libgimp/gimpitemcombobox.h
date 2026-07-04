@@ -49,10 +49,10 @@ G_BEGIN_DECLS
 #define GIMP_IS_PATH_COMBO_BOX(obj)  (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATH_COMBO_BOX))
 
 
-GType       gimp_drawable_combo_box_get_type (void) G_GNUC_CONST;
-GType       gimp_channel_combo_box_get_type  (void) G_GNUC_CONST;
-GType       gimp_layer_combo_box_get_type    (void) G_GNUC_CONST;
-GType       gimp_path_combo_box_get_type     (void) G_GNUC_CONST;
+GType       gimp_drawable_combo_box_get_type (void);
+GType       gimp_channel_combo_box_get_type  (void);
+GType       gimp_layer_combo_box_get_type    (void);
+GType       gimp_path_combo_box_get_type     (void);
 
 /**
  * GimpItemConstraintFunc:

@@ -23,7 +23,7 @@
 
 #define          GIMP_TYPE_BEZIER_DESC     (gimp_bezier_desc_get_type ())
 
-GType            gimp_bezier_desc_get_type (void) G_GNUC_CONST;
+GType            gimp_bezier_desc_get_type (void);
 
 
 /* takes ownership of "data" */

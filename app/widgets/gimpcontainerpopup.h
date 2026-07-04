@@ -61,7 +61,7 @@ struct _GimpContainerPopupClass
 };
 
 
-GType       gimp_container_popup_get_type (void) G_GNUC_CONST;
+GType       gimp_container_popup_get_type (void);
 
 GtkWidget * gimp_container_popup_new      (GimpContainer      *container,
                                            GimpContext        *context,

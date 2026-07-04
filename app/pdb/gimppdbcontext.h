@@ -63,7 +63,7 @@ struct _GimpPDBContextClass
 };
 
 
-GType               gimp_pdb_context_get_type           (void) G_GNUC_CONST;
+GType               gimp_pdb_context_get_type           (void);
 
 GimpContext       * gimp_pdb_context_new                (Gimp           *gimp,
                                                          GimpContext    *parent,

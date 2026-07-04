@@ -151,7 +151,7 @@ struct _XmcClass
 #define XMC_TYPE  (xmc_get_type ())
 #define XMC(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XMC_TYPE, Xmc))
 
-GType                   xmc_get_type                 (void) G_GNUC_CONST;
+GType                   xmc_get_type                 (void);
 
 static GList          * xmc_query_procedures         (GimpPlugIn            *plug_in);
 static GimpProcedure  * xmc_create_procedure         (GimpPlugIn            *plug_in,

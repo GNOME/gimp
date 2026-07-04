@@ -68,7 +68,7 @@ struct _GimpPaletteClass
 };
 
 
-GType              gimp_palette_get_type        (void) G_GNUC_CONST;
+GType              gimp_palette_get_type        (void);
 
 GimpData         * gimp_palette_new             (GimpContext      *context,
                                                  const gchar      *name);

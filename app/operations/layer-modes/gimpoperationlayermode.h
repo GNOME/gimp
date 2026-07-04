@@ -82,6 +82,6 @@ struct _GimpOperationLayerModeClass
 };
 
 
-GType                    gimp_operation_layer_mode_get_type            (void) G_GNUC_CONST;
+GType                    gimp_operation_layer_mode_get_type            (void);
 
 GimpLayerCompositeRegion gimp_operation_layer_mode_get_affected_region (GimpOperationLayerMode *layer_mode);

@@ -45,4 +45,4 @@ struct _GimpOperationReplaceClass
 };
 
 
-GType   gimp_operation_replace_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_replace_get_type (void);

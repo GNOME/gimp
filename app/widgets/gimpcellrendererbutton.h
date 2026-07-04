@@ -46,7 +46,7 @@ struct _GimpCellRendererButtonClass
 };
 
 
-GType             gimp_cell_renderer_button_get_type (void) G_GNUC_CONST;
+GType             gimp_cell_renderer_button_get_type (void);
 
 GtkCellRenderer * gimp_cell_renderer_button_new      (void);
 

@@ -48,4 +48,4 @@ struct _GimpGeglConfigClass
 };
 
 
-GType  gimp_gegl_config_get_type (void) G_GNUC_CONST;
+GType  gimp_gegl_config_get_type (void);

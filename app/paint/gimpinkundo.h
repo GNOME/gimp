@@ -44,4 +44,4 @@ struct _GimpInkUndoClass
 };
 
 
-GType   gimp_ink_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_ink_undo_get_type (void);

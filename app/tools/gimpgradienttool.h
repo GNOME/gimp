@@ -101,7 +101,7 @@ struct _GimpGradientToolClass
 void    gimp_gradient_tool_register               (GimpToolRegisterCallback  callback,
                                                    gpointer                  data);
 
-GType   gimp_gradient_tool_get_type               (void) G_GNUC_CONST;
+GType   gimp_gradient_tool_get_type               (void);
 
 void    gimp_gradient_tool_set_existing_filter    (GimpGradientTool         *gradient_tool,
                                                    GimpDisplay              *display,

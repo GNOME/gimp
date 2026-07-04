@@ -61,7 +61,7 @@ struct _GimpActionViewClass
 };
 
 
-GType       gimp_action_view_get_type   (void) G_GNUC_CONST;
+GType       gimp_action_view_get_type   (void);
 
 GtkWidget * gimp_action_view_new        (Gimp           *gimp,
                                          const gchar    *select_action,

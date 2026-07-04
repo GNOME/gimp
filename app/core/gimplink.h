@@ -49,7 +49,7 @@ struct _GimpLinkClass
 };
 
 
-GType                 gimp_link_get_type          (void) G_GNUC_CONST;
+GType                 gimp_link_get_type          (void);
 
 GimpLink            * gimp_link_new               (Gimp           *gimp,
                                                    GFile          *file,

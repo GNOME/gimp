@@ -53,7 +53,7 @@ struct _AnotherRawtherapeeClass
 #define ANOTHERRAWTHERAPEE_TYPE  (anotherrawtherapee_get_type ())
 #define ANOTHERRAWTHERAPEE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ANOTHERRAWTHERAPEE_TYPE, AnotherRawtherapee))
 
-GType                   anotherrawtherapee_get_type         (void) G_GNUC_CONST;
+GType                   anotherrawtherapee_get_type         (void);
 
 static GList          * anotherrawtherapee_init_procedures  (GimpPlugIn            *plug_in);
 static GimpProcedure  * anotherrawtherapee_create_procedure (GimpPlugIn            *plug_in,

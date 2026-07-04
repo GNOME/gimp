@@ -73,7 +73,7 @@ struct _PdfClass
 #define PDF_TYPE  (pdf_get_type ())
 #define PDF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PDF_TYPE, Pdf))
 
-GType                   pdf_get_type         (void) G_GNUC_CONST;
+GType                   pdf_get_type         (void);
 
 static GList          * pdf_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * pdf_create_procedure (GimpPlugIn            *plug_in,

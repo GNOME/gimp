@@ -45,4 +45,4 @@ struct _GimpOperationHslColorLegacyClass
 };
 
 
-GType   gimp_operation_hsl_color_legacy_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_hsl_color_legacy_get_type (void);

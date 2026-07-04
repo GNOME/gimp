@@ -50,7 +50,7 @@ struct _GimpSettingsBoxClass
 };
 
 
-GType       gimp_settings_box_get_type    (void) G_GNUC_CONST;
+GType       gimp_settings_box_get_type    (void);
 
 GtkWidget * gimp_settings_box_new         (Gimp            *gimp,
                                            GObject         *config,

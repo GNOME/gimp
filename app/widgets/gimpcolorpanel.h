@@ -48,7 +48,7 @@ struct _GimpColorPanelClass
 };
 
 
-GType       gimp_color_panel_get_type        (void) G_GNUC_CONST;
+GType       gimp_color_panel_get_type        (void);
 
 GtkWidget * gimp_color_panel_new             (const gchar          *title,
                                               GeglColor            *color,

@@ -52,6 +52,6 @@ struct _GimpHueSaturationConfigClass
 };
 
 
-GType   gimp_hue_saturation_config_get_type    (void) G_GNUC_CONST;
+GType   gimp_hue_saturation_config_get_type    (void);
 
 void    gimp_hue_saturation_config_reset_range (GimpHueSaturationConfig *config);

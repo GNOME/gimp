@@ -46,4 +46,4 @@ struct _GimpOperationPassThroughClass
 };
 
 
-GType   gimp_operation_pass_through_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_pass_through_get_type (void);

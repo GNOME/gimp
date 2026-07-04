@@ -50,4 +50,4 @@ struct _GimpOperationCageTransformClass
 };
 
 
-GType   gimp_operation_cage_transform_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_cage_transform_get_type (void);

@@ -63,7 +63,7 @@ struct _GimpGradientClass
 };
 
 
-GType                 gimp_gradient_get_type       (void) G_GNUC_CONST;
+GType                 gimp_gradient_get_type       (void);
 
 GimpData            * gimp_gradient_new            (GimpContext   *context,
                                                     const gchar   *name);

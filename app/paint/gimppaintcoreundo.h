@@ -45,4 +45,4 @@ struct _GimpPaintCoreUndoClass
 };
 
 
-GType   gimp_paint_core_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_paint_core_undo_get_type (void);

@@ -46,7 +46,7 @@ G_DECLARE_FINAL_TYPE (GimpExportOptions, gimp_export_options, GIMP, EXPORT_OPTIO
 #define GIMP_IS_PARAM_SPEC_EXPORT_OPTIONS(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_EXPORT_OPTIONS))
 
 
-GType        gimp_param_export_options_get_type (void) G_GNUC_CONST;
+GType        gimp_param_export_options_get_type (void);
 
 GParamSpec * gimp_param_spec_export_options     (const gchar  *name,
                                                  const gchar  *nick,

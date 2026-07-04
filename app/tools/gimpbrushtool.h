@@ -50,7 +50,7 @@ struct _GimpBrushToolClass
 };
 
 
-GType            gimp_brush_tool_get_type       (void) G_GNUC_CONST;
+GType            gimp_brush_tool_get_type       (void);
 
 GimpCanvasItem * gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
                                                  GimpDisplay   *display,

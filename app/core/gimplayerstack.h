@@ -43,5 +43,5 @@ struct _GimpLayerStackClass
 };
 
 
-GType           gimp_layer_stack_get_type  (void) G_GNUC_CONST;
+GType           gimp_layer_stack_get_type  (void);
 GimpContainer * gimp_layer_stack_new       (GType layer_type);

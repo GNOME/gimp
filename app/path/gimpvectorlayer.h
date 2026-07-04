@@ -49,7 +49,7 @@ struct _GimpVectorLayerClass
 };
 
 
-GType                     gimp_vector_layer_get_type    (void) G_GNUC_CONST;
+GType                     gimp_vector_layer_get_type    (void);
 
 GimpVectorLayer         * gimp_vector_layer_new         (GimpImage       *image,
                                                          GimpPath        *path,

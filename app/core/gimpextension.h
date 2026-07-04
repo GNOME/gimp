@@ -46,7 +46,7 @@ struct _GimpExtensionClass
 };
 
 
-GType           gimp_extension_get_type (void) G_GNUC_CONST;
+GType           gimp_extension_get_type (void);
 
 GimpExtension * gimp_extension_new                     (const gchar    *dir,
                                                         gboolean        writable);

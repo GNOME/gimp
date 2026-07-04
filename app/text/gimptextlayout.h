@@ -34,7 +34,7 @@ struct _GimpTextLayoutClass
 };
 
 
-GType            gimp_text_layout_get_type             (void) G_GNUC_CONST;
+GType            gimp_text_layout_get_type             (void);
 
 GimpTextLayout * gimp_text_layout_new                  (GimpText       *text,
                                                         GimpImage      *target_image,

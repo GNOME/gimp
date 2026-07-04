@@ -49,7 +49,7 @@ struct _GimpMessageBoxClass
 };
 
 
-GType       gimp_message_box_get_type         (void) G_GNUC_CONST;
+GType       gimp_message_box_get_type         (void);
 
 GtkWidget * gimp_message_box_new              (const gchar    *icon_name);
 void        gimp_message_box_set_primary_text (GimpMessageBox *box,

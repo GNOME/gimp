@@ -76,7 +76,7 @@ foreach (sort keys %enums) {
 	for ($func) { s/Gimp//; s/([A-Z][^A-Z]+|[A-Z]+(?=[A-Z]))/\L$1\E_/g; s/_$// }
 
 	print ENUMFILE "\n#define GIMP_TYPE_$gtype (gimp_$func\_get_type ())\n\n";
-	print ENUMFILE "GType gimp_$func\_get_type (void) G_GNUC_CONST;\n\n";
+	print ENUMFILE "GType gimp_$func\_get_type (void);\n\n";
 
 	print ENUMFILE "/**\n";
 	print ENUMFILE " * $_:\n";

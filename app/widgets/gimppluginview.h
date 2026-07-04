@@ -47,7 +47,7 @@ struct _GimpPlugInViewClass
 };
 
 
-GType       gimp_plug_in_view_get_type    (void) G_GNUC_CONST;
+GType       gimp_plug_in_view_get_type    (void);
 
 GtkWidget * gimp_plug_in_view_new         (GSList         *procedures);
 

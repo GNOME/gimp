@@ -22,7 +22,7 @@
 
 #define GIMP_TYPE_CAGE_MODE (gimp_cage_mode_get_type ())
 
-GType gimp_cage_mode_get_type (void) G_GNUC_CONST;
+GType gimp_cage_mode_get_type (void);
 
 typedef enum
 {

@@ -46,7 +46,7 @@ struct _GimpHistogramClass
 };
 
 
-GType           gimp_histogram_get_type        (void) G_GNUC_CONST;
+GType           gimp_histogram_get_type        (void);
 
 GimpHistogram * gimp_histogram_new             (GimpTRCType           trc);
 

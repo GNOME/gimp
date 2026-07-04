@@ -78,7 +78,7 @@ struct _GimpDockClass
 };
 
 
-GType               gimp_dock_get_type                (void) G_GNUC_CONST;
+GType               gimp_dock_get_type                (void);
 
 gchar             * gimp_dock_get_description         (GimpDock       *dock,
                                                        gboolean        complete);

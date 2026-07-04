@@ -43,4 +43,4 @@ struct _GimpEraserOptionsClass
 };
 
 
-GType   gimp_eraser_options_get_type (void) G_GNUC_CONST;
+GType   gimp_eraser_options_get_type (void);

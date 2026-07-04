@@ -45,4 +45,4 @@ struct _GimpOperationBrightnessContrastClass
 };
 
 
-GType   gimp_operation_brightness_contrast_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_brightness_contrast_get_type (void);

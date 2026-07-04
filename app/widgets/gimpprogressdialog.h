@@ -44,6 +44,6 @@ struct _GimpProgressDialogClass
 };
 
 
-GType       gimp_progress_dialog_get_type (void) G_GNUC_CONST;
+GType       gimp_progress_dialog_get_type (void);
 
 GtkWidget * gimp_progress_dialog_new      (void);

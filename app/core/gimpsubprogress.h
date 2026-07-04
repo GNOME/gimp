@@ -43,7 +43,7 @@ struct _GimpSubProgressClass
 };
 
 
-GType          gimp_sub_progress_get_type (void) G_GNUC_CONST;
+GType          gimp_sub_progress_get_type (void);
 
 GimpProgress * gimp_sub_progress_new       (GimpProgress    *progress);
 void           gimp_sub_progress_set_range (GimpSubProgress *progress,

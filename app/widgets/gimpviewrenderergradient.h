@@ -50,7 +50,7 @@ struct _GimpViewRendererGradientClass
 };
 
 
-GType   gimp_view_renderer_gradient_get_type    (void) G_GNUC_CONST;
+GType   gimp_view_renderer_gradient_get_type    (void);
 
 void    gimp_view_renderer_gradient_set_offsets (GimpViewRendererGradient    *renderer,
                                                  gdouble                      left,

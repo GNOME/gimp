@@ -269,7 +269,7 @@ struct _GimpDisplayShellClass
 };
 
 
-GType             gimp_display_shell_get_type      (void) G_GNUC_CONST;
+GType             gimp_display_shell_get_type      (void);
 
 GtkWidget       * gimp_display_shell_new           (GimpDisplay        *display,
                                                     GimpUnit           *unit,

@@ -57,4 +57,4 @@ struct _GimpOperationProfileTransformClass
 };
 
 
-GType   gimp_operation_profile_transform_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_profile_transform_get_type (void);

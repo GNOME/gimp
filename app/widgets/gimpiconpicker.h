@@ -43,7 +43,7 @@ struct _GimpIconPickerClass
 };
 
 
-GType          gimp_icon_picker_get_type       (void) G_GNUC_CONST;
+GType          gimp_icon_picker_get_type       (void);
 
 GtkWidget   * gimp_icon_picker_new             (Gimp           *gimp);
 

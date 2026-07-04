@@ -63,7 +63,7 @@ struct _IcoClass
 #define ICO_TYPE  (ico_get_type ())
 #define ICO(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ICO_TYPE, Ico))
 
-GType                   ico_get_type         (void) G_GNUC_CONST;
+GType                   ico_get_type         (void);
 
 static GList          * ico_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * ico_create_procedure (GimpPlugIn            *plug_in,

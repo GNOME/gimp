@@ -46,7 +46,7 @@ struct _GimpMybrushClass
 };
 
 
-GType         gimp_mybrush_get_type             (void) G_GNUC_CONST;
+GType         gimp_mybrush_get_type             (void);
 
 GimpData    * gimp_mybrush_new                  (GimpContext *context,
                                                  const gchar *name);

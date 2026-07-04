@@ -76,7 +76,7 @@ struct _GridClass
 #define GRID_TYPE  (grid_get_type ())
 #define GRID(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GRID_TYPE, Grid))
 
-GType                   grid_get_type         (void) G_GNUC_CONST;
+GType                   grid_get_type         (void);
 
 static GList          * grid_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * grid_create_procedure (GimpPlugIn           *plug_in,

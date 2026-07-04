@@ -48,7 +48,7 @@ struct _GimpShortcutButtonClass
 };
 
 
-GType          gimp_shortcut_button_get_type         (void) G_GNUC_CONST;
+GType          gimp_shortcut_button_get_type         (void);
 
 GtkWidget    * gimp_shortcut_button_new              (const gchar        *accelerator);
 
