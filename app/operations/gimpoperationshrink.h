@@ -49,4 +49,4 @@ struct _GimpOperationShrinkClass
 };
 
 
-GType   gimp_operation_shrink_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_shrink_get_type (void);

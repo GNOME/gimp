@@ -47,7 +47,7 @@ struct _GimpIdTableClass
 };
 
 
-GType          gimp_id_table_get_type       (void) G_GNUC_CONST;
+GType          gimp_id_table_get_type       (void);
 GimpIdTable *  gimp_id_table_new            (void);
 gint           gimp_id_table_insert         (GimpIdTable *id_table,
                                              gpointer     data);

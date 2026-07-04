@@ -49,7 +49,7 @@ struct _GimpOperationSettingsClass
 };
 
 
-GType      gimp_operation_settings_get_type              (void) G_GNUC_CONST;
+GType      gimp_operation_settings_get_type              (void);
 
 void       gimp_operation_settings_sync_drawable_filter  (GimpOperationSettings *settings,
                                                           GimpDrawableFilter    *filter);

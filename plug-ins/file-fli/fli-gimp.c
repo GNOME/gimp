@@ -90,7 +90,7 @@ struct _FliClass
 #define FLI_TYPE  (fli_get_type ())
 #define FLI(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FLI_TYPE, Fli))
 
-GType                   fli_get_type         (void) G_GNUC_CONST;
+GType                   fli_get_type         (void);
 
 static GList          * fli_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * fli_create_procedure (GimpPlugIn            *plug_in,

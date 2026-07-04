@@ -58,4 +58,4 @@ struct _GimpCurvesToolClass
 void    gimp_curves_tool_register (GimpToolRegisterCallback  callback,
                                    gpointer                  data);
 
-GType   gimp_curves_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_curves_tool_get_type (void);

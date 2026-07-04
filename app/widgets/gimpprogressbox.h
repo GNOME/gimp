@@ -49,6 +49,6 @@ struct _GimpProgressBoxClass
 };
 
 
-GType       gimp_progress_box_get_type (void) G_GNUC_CONST;
+GType       gimp_progress_box_get_type (void);
 
 GtkWidget * gimp_progress_box_new      (void);

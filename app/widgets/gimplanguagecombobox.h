@@ -37,7 +37,7 @@ struct _GimpLanguageComboBoxClass
 };
 
 
-GType       gimp_language_combo_box_get_type (void) G_GNUC_CONST;
+GType       gimp_language_combo_box_get_type (void);
 
 GtkWidget * gimp_language_combo_box_new      (gboolean              manual_l18n,
                                               const gchar          *empty_label);

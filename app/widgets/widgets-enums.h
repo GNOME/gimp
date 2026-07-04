@@ -24,7 +24,7 @@
 
 #define GIMP_TYPE_ACTIVE_COLOR (gimp_active_color_get_type ())
 
-GType gimp_active_color_get_type (void) G_GNUC_CONST;
+GType gimp_active_color_get_type (void);
 
 typedef enum
 {
@@ -35,7 +35,7 @@ typedef enum
 
 #define GIMP_TYPE_CIRCLE_BACKGROUND (gimp_circle_background_get_type ())
 
-GType gimp_circle_background_get_type (void) G_GNUC_CONST;
+GType gimp_circle_background_get_type (void);
 
 typedef enum
 {
@@ -46,7 +46,7 @@ typedef enum
 
 #define GIMP_TYPE_COLOR_DIALOG_STATE (gimp_color_dialog_state_get_type ())
 
-GType gimp_color_dialog_state_get_type (void) G_GNUC_CONST;
+GType gimp_color_dialog_state_get_type (void);
 
 typedef enum
 {
@@ -58,7 +58,7 @@ typedef enum
 
 #define GIMP_TYPE_COLOR_PICK_TARGET (gimp_color_pick_target_get_type ())
 
-GType gimp_color_pick_target_get_type (void) G_GNUC_CONST;
+GType gimp_color_pick_target_get_type (void);
 
 typedef enum
 {
@@ -71,7 +71,7 @@ typedef enum
 
 #define GIMP_TYPE_COLOR_PICK_STATE (gimp_color_pick_state_get_type ())
 
-GType gimp_color_pick_state_get_type (void) G_GNUC_CONST;
+GType gimp_color_pick_state_get_type (void);
 
 typedef enum
 {
@@ -83,7 +83,7 @@ typedef enum
 
 #define GIMP_TYPE_HISTOGRAM_SCALE (gimp_histogram_scale_get_type ())
 
-GType gimp_histogram_scale_get_type (void) G_GNUC_CONST;
+GType gimp_histogram_scale_get_type (void);
 
 typedef enum
 {
@@ -94,7 +94,7 @@ typedef enum
 
 #define GIMP_TYPE_TAB_STYLE (gimp_tab_style_get_type ())
 
-GType gimp_tab_style_get_type (void) G_GNUC_CONST;
+GType gimp_tab_style_get_type (void);
 
 typedef enum
 {
@@ -111,7 +111,7 @@ typedef enum
 
 #define GIMP_TYPE_TAG_ENTRY_MODE       (gimp_tag_entry_mode_get_type ())
 
-GType gimp_tag_entry_mode_get_type (void) G_GNUC_CONST;
+GType gimp_tag_entry_mode_get_type (void);
 
 typedef enum
 {

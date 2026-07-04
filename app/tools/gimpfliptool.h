@@ -49,4 +49,4 @@ struct _GimpFlipToolClass
 void    gimp_flip_tool_register (GimpToolRegisterCallback  callback,
                                  gpointer                  data);
 
-GType   gimp_flip_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_flip_tool_get_type (void);

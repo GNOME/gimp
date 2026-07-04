@@ -47,4 +47,4 @@ struct _GimpOperationDesaturateClass
 };
 
 
-GType   gimp_operation_desaturate_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_desaturate_get_type (void);

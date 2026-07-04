@@ -79,7 +79,7 @@ struct _FlameClass
 #define FLAME_TYPE  (flame_get_type ())
 #define FLAME(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FLAME_TYPE, Flame))
 
-GType                   flame_get_type         (void) G_GNUC_CONST;
+GType                   flame_get_type         (void);
 
 static GList          * flame_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * flame_create_procedure (GimpPlugIn           *plug_in,

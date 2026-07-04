@@ -101,7 +101,7 @@ struct _QbistClass
 #define QBIST_TYPE  (qbist_get_type ())
 #define QBIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), QBIST_TYPE, Qbist))
 
-GType                   qbist_get_type         (void) G_GNUC_CONST;
+GType                   qbist_get_type         (void);
 
 static GList          * qbist_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * qbist_create_procedure (GimpPlugIn           *plug_in,

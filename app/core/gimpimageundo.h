@@ -61,4 +61,4 @@ struct _GimpImageUndoClass
 };
 
 
-GType   gimp_image_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_image_undo_get_type (void);

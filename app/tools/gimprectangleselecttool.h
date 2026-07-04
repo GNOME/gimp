@@ -59,6 +59,6 @@ struct _GimpRectangleSelectToolClass
 void    gimp_rectangle_select_tool_register (GimpToolRegisterCallback  callback,
                                              gpointer                  data);
 
-GType   gimp_rectangle_select_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_rectangle_select_tool_get_type (void);
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpRectangleSelectTool, g_object_unref);

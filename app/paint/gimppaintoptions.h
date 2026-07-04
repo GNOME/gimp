@@ -131,7 +131,7 @@ struct _GimpPaintOptionsClass
 };
 
 
-GType    gimp_paint_options_get_type (void) G_GNUC_CONST;
+GType    gimp_paint_options_get_type (void);
 
 GimpPaintOptions *
          gimp_paint_options_new                (GimpPaintInfo       *paint_info);

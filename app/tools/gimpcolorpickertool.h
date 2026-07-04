@@ -54,7 +54,7 @@ struct _GimpColorPickerToolClass
 void    gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
                                          gpointer                  data);
 
-GType   gimp_color_picker_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_color_picker_tool_get_type (void);
 
 
 #endif  /*  __GIMP_COLOR_PICKER_TOOL_H__  */

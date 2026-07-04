@@ -271,7 +271,7 @@ gimp_thumb_box_progress_message (GimpProgress        *progress,
 typedef struct _GtkBox      GimpHeader;
 typedef struct _GtkBoxClass GimpHeaderClass;
 
-static GType gimp_header_get_type (void) G_GNUC_CONST;
+static GType gimp_header_get_type (void);
 
 G_DEFINE_TYPE (GimpHeader, gimp_header, GTK_TYPE_BOX)
 

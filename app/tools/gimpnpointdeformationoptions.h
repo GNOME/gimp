@@ -54,7 +54,7 @@ struct _GimpNPointDeformationOptionsClass
 };
 
 
-GType       gimp_n_point_deformation_options_get_type (void) G_GNUC_CONST;
+GType       gimp_n_point_deformation_options_get_type (void);
 
 GtkWidget * gimp_n_point_deformation_options_gui      (GimpToolOptions *tool_options);
 

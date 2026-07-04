@@ -53,7 +53,7 @@ struct _GimpExtensionManagerClass
 };
 
 
-GType                  gimp_extension_manager_get_type              (void) G_GNUC_CONST;
+GType                  gimp_extension_manager_get_type              (void);
 
 GimpExtensionManager * gimp_extension_manager_new                   (Gimp                 *gimp);
 

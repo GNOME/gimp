@@ -44,7 +44,7 @@ struct _GimpActionEditorClass
 };
 
 
-GType       gimp_action_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_action_editor_get_type (void);
 
 GtkWidget * gimp_action_editor_new      (Gimp        *gimp,
                                          const gchar *select_action,

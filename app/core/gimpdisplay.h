@@ -50,7 +50,7 @@ struct _GimpDisplayClass
 };
 
 
-GType         gimp_display_get_type  (void) G_GNUC_CONST;
+GType         gimp_display_get_type  (void);
 
 gint          gimp_display_get_id    (GimpDisplay *display);
 GimpDisplay * gimp_display_get_by_id (Gimp        *gimp,

@@ -52,7 +52,7 @@ struct _GimpThumbBoxClass
 };
 
 
-GType       gimp_thumb_box_get_type  (void) G_GNUC_CONST;
+GType       gimp_thumb_box_get_type  (void);
 
 GtkWidget * gimp_thumb_box_new        (GimpContext  *context);
 

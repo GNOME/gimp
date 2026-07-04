@@ -53,4 +53,4 @@ struct _GimpDrawableFilterUndoClass
 };
 
 
-GType   gimp_drawable_filter_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_drawable_filter_undo_get_type (void);

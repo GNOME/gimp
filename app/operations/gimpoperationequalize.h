@@ -49,4 +49,4 @@ struct _GimpOperationEqualizeClass
 };
 
 
-GType   gimp_operation_equalize_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_equalize_get_type (void);

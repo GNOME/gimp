@@ -48,7 +48,7 @@ struct _GimpPivotSelectorClass
 };
 
 
-GType       gimp_pivot_selector_get_type     (void) G_GNUC_CONST;
+GType       gimp_pivot_selector_get_type     (void);
 
 GtkWidget * gimp_pivot_selector_new          (gdouble            left,
                                               gdouble            top,

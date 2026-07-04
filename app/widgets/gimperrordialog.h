@@ -47,7 +47,7 @@ struct _GimpErrorDialogClass
 };
 
 
-GType       gimp_error_dialog_get_type (void) G_GNUC_CONST;
+GType       gimp_error_dialog_get_type (void);
 
 GtkWidget * gimp_error_dialog_new      (const gchar     *title);
 void        gimp_error_dialog_add      (GimpErrorDialog *dialog,

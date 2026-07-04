@@ -92,7 +92,7 @@ struct _GimpPlugInProcedureClass
 };
 
 
-GType           gimp_plug_in_procedure_get_type            (void) G_GNUC_CONST;
+GType           gimp_plug_in_procedure_get_type            (void);
 
 GimpProcedure * gimp_plug_in_procedure_new                 (GimpPDBProcType      proc_type,
                                                             GFile               *file,

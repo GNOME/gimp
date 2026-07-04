@@ -25,7 +25,7 @@
 
 #define GIMP_TYPE_COLOR_MANAGEMENT_MODE (gimp_color_management_mode_get_type ())
 
-GType gimp_color_management_mode_get_type (void) G_GNUC_CONST;
+GType gimp_color_management_mode_get_type (void);
 
 /**
  * GimpColorManagementMode:
@@ -45,7 +45,7 @@ typedef enum
 
 #define GIMP_TYPE_COLOR_RENDERING_INTENT (gimp_color_rendering_intent_get_type ())
 
-GType gimp_color_rendering_intent_get_type (void) G_GNUC_CONST;
+GType gimp_color_rendering_intent_get_type (void);
 
 /**
  * GimpColorRenderingIntent:

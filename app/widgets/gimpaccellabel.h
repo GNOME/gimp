@@ -45,7 +45,7 @@ struct _GimpAccelLabelClass
 };
 
 
-GType        gimp_accel_label_get_type   (void) G_GNUC_CONST;
+GType        gimp_accel_label_get_type   (void);
 
 GtkWidget  * gimp_accel_label_new        (GimpAction     *action);
 

@@ -38,13 +38,13 @@ G_BEGIN_DECLS
 #define GIMP_TYPE_MATRIX2               (gimp_matrix2_get_type ())
 #define GIMP_VALUE_HOLDS_MATRIX2(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MATRIX2))
 
-GType         gimp_matrix2_get_type        (void) G_GNUC_CONST;
+GType         gimp_matrix2_get_type        (void);
 
 
 #define GIMP_TYPE_PARAM_MATRIX2            (gimp_param_matrix2_get_type ())
 #define GIMP_IS_PARAM_SPEC_MATRIX2(pspec)  (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_MATRIX2))
 
-GType         gimp_param_matrix2_get_type  (void) G_GNUC_CONST;
+GType         gimp_param_matrix2_get_type  (void);
 
 GParamSpec *  gimp_param_spec_matrix2      (const gchar        *name,
                                             const gchar        *nick,
@@ -74,13 +74,13 @@ void          gimp_matrix2_transform_point (const GimpMatrix2 *matrix,
 #define GIMP_TYPE_MATRIX3               (gimp_matrix3_get_type ())
 #define GIMP_VALUE_HOLDS_MATRIX3(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MATRIX3))
 
-GType         gimp_matrix3_get_type        (void) G_GNUC_CONST;
+GType         gimp_matrix3_get_type        (void);
 
 
 #define GIMP_TYPE_PARAM_MATRIX3            (gimp_param_matrix3_get_type ())
 #define GIMP_IS_PARAM_SPEC_MATRIX3(pspec)  (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_MATRIX3))
 
-GType         gimp_param_matrix3_get_type  (void) G_GNUC_CONST;
+GType         gimp_param_matrix3_get_type  (void);
 
 GParamSpec *  gimp_param_spec_matrix3      (const gchar        *name,
                                             const gchar        *nick,

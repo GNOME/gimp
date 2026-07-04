@@ -86,7 +86,7 @@ struct _GimpPlay
 G_DECLARE_FINAL_TYPE (GimpPlay, gimp_play, GIMP, PLAY, GimpPlugIn)
 
 
-GType                   play_get_type         (void) G_GNUC_CONST;
+GType                   play_get_type         (void);
 
 static void             gimp_play_finalize    (GObject              *object);
 

@@ -105,7 +105,7 @@ struct _GimpItemTreeViewClass
 };
 
 
-GType       gimp_item_tree_view_get_type          (void) G_GNUC_CONST;
+GType       gimp_item_tree_view_get_type          (void);
 
 GtkWidget * gimp_item_tree_view_new               (GType             view_type,
                                                    gint              view_size,

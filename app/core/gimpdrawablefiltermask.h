@@ -46,7 +46,7 @@ struct _GimpDrawableFilterMaskClass
 };
 
 
-GType                    gimp_drawable_filter_mask_get_type  (void) G_GNUC_CONST;
+GType                    gimp_drawable_filter_mask_get_type  (void);
 
 GimpDrawableFilterMask * gimp_drawable_filter_mask_new        (GimpImage              *image,
                                                                gint                    width,

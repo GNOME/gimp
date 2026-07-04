@@ -45,7 +45,7 @@ struct _GimpModifiersEditorClass
 };
 
 
-GType       gimp_modifiers_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_modifiers_editor_get_type (void);
 
 GtkWidget * gimp_modifiers_editor_new      (GimpModifiersManager *manager,
                                             Gimp                 *gimp);

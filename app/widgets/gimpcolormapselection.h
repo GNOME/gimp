@@ -61,7 +61,7 @@ struct _GimpColormapSelectionClass
 };
 
 
-GType       gimp_colormap_selection_get_type   (void) G_GNUC_CONST;
+GType       gimp_colormap_selection_get_type   (void);
 
 GtkWidget * gimp_colormap_selection_new        (GimpContext *context);
 

@@ -27,7 +27,7 @@
 #define GIMP_IS_EDIT_SELECTION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EDIT_SELECTION_TOOL))
 
 
-GType      gimp_edit_selection_tool_get_type  (void) G_GNUC_CONST;
+GType      gimp_edit_selection_tool_get_type  (void);
 
 void       gimp_edit_selection_tool_start     (GimpTool          *parent_tool,
                                                GimpDisplay       *display,

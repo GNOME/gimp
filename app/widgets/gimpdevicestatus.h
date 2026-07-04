@@ -55,6 +55,6 @@ struct _GimpDeviceStatusClass
 };
 
 
-GType       gimp_device_status_get_type (void) G_GNUC_CONST;
+GType       gimp_device_status_get_type (void);
 
 GtkWidget * gimp_device_status_new      (Gimp *gimp);

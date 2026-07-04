@@ -153,7 +153,7 @@ struct _XwdClass
 #define XWD_TYPE  (xwd_get_type ())
 #define XWD(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XWD_TYPE, Xwd))
 
-GType                   xwd_get_type         (void) G_GNUC_CONST;
+GType                   xwd_get_type         (void);
 
 static GList          * xwd_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * xwd_create_procedure (GimpPlugIn            *plug_in,

@@ -60,7 +60,7 @@ struct _GimpCurveClass
 };
 
 
-GType                gimp_curve_get_type          (void) G_GNUC_CONST;
+GType                gimp_curve_get_type          (void);
 
 GimpData           * gimp_curve_new               (const gchar        *name);
 GimpData           * gimp_curve_get_standard      (void);

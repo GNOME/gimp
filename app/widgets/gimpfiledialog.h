@@ -77,7 +77,7 @@ struct _GimpFileDialogClass
 };
 
 
-GType   gimp_file_dialog_get_type           (void) G_GNUC_CONST;
+GType   gimp_file_dialog_get_type           (void);
 
 void    gimp_file_dialog_add_extra_widget   (GimpFileDialog      *dialog,
                                              GtkWidget           *widget,

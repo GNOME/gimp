@@ -145,7 +145,7 @@ struct _GimpLayerClass
 
 /*  function declarations  */
 
-GType           gimp_layer_get_type            (void) G_GNUC_CONST;
+GType           gimp_layer_get_type            (void);
 
 void            gimp_layer_fix_format_space    (GimpLayer            *layer,
                                                 gboolean              copy_buffer,

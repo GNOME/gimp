@@ -48,5 +48,5 @@ struct _GimpOperationGrowClass
 };
 
 
-GType   gimp_operation_grow_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_grow_get_type (void);
 

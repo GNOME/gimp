@@ -60,6 +60,6 @@ struct _GimpImagePropViewClass
 };
 
 
-GType       gimp_image_prop_view_get_type (void) G_GNUC_CONST;
+GType       gimp_image_prop_view_get_type (void);
 
 GtkWidget * gimp_image_prop_view_new      (GimpImage *image);

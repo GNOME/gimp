@@ -46,7 +46,7 @@ struct _CropClass
 #define CROP_TYPE  (crop_get_type ())
 #define CROP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CROP_TYPE, Crop))
 
-GType                   crop_get_type         (void) G_GNUC_CONST;
+GType                   crop_get_type         (void);
 
 static GList          * crop_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * crop_create_procedure (GimpPlugIn           *plug_in,

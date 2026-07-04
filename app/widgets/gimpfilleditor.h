@@ -46,7 +46,7 @@ struct _GimpFillEditorClass
 };
 
 
-GType       gimp_fill_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_fill_editor_get_type (void);
 
 GtkWidget * gimp_fill_editor_new      (GimpFillOptions *options,
                                        gboolean         edit_context,

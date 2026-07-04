@@ -51,7 +51,7 @@ struct _PaletteClass
 #define PALETTE_TYPE  (palette_get_type ())
 #define PALETTE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PALETTE_TYPE, Palette))
 
-GType                   palette_get_type         (void) G_GNUC_CONST;
+GType                   palette_get_type         (void);
 
 static GList          * palette_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * palette_create_procedure (GimpPlugIn           *plug_in,

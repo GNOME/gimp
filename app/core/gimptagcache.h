@@ -47,7 +47,7 @@ struct _GimpTagCacheClass
 };
 
 
-GType           gimp_tag_cache_get_type      (void) G_GNUC_CONST;
+GType           gimp_tag_cache_get_type      (void);
 
 GimpTagCache *  gimp_tag_cache_new           (void);
 

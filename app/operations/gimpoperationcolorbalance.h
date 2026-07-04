@@ -45,4 +45,4 @@ struct _GimpOperationColorBalanceClass
 };
 
 
-GType   gimp_operation_color_balance_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_color_balance_get_type (void);

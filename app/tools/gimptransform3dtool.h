@@ -59,5 +59,5 @@ struct _GimpTransform3DToolClass
 void    gimp_transform_3d_tool_register (GimpToolRegisterCallback  callback,
                                          gpointer                  data);
 
-GType   gimp_transform_3d_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_transform_3d_tool_get_type (void);
 

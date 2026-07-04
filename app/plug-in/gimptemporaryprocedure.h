@@ -45,6 +45,6 @@ struct _GimpTemporaryProcedureClass
 };
 
 
-GType           gimp_temporary_procedure_get_type (void) G_GNUC_CONST;
+GType           gimp_temporary_procedure_get_type (void);
 
 GimpProcedure * gimp_temporary_procedure_new      (GimpPlugIn *plug_in);

@@ -59,7 +59,7 @@ struct _CineonClass
 #define CINEON_TYPE  (cineon_get_type ())
 #define CINEON(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), CINEON_TYPE, Cineon))
 
-GType                   cineon_get_type         (void) G_GNUC_CONST;
+GType                   cineon_get_type         (void);
 
 static GList          * cineon_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * cineon_create_procedure (GimpPlugIn            *plug_in,

@@ -45,7 +45,7 @@ struct _GimpToolButtonClass
 };
 
 
-GType          gimp_tool_button_get_type      (void) G_GNUC_CONST;
+GType          gimp_tool_button_get_type      (void);
 
 GtkToolItem  * gimp_tool_button_new           (GimpToolbox    *toolbox,
                                                GimpToolItem   *tool_item);

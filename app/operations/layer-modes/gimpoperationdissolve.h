@@ -45,4 +45,4 @@ struct _GimpOperationDissolve
 };
 
 
-GType   gimp_operation_dissolve_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_dissolve_get_type (void);

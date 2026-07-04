@@ -55,7 +55,7 @@ struct _GimpressionistClass
 #define GIMPRESSIONIST_TYPE  (gimpressionist_get_type ())
 #define GIMPRESSIONIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMPRESSIONIST_TYPE, Gimpressionist))
 
-GType                   gimpressionist_get_type         (void) G_GNUC_CONST;
+GType                   gimpressionist_get_type         (void);
 
 static GList          * gimpressionist_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * gimpressionist_create_procedure (GimpPlugIn           *plug_in,

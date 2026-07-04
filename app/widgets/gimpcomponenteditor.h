@@ -56,7 +56,7 @@ struct _GimpComponentEditorClass
 };
 
 
-GType       gimp_component_editor_get_type      (void) G_GNUC_CONST;
+GType       gimp_component_editor_get_type      (void);
 
 GtkWidget * gimp_component_editor_new           (gint                 view_size,
                                                  GimpMenuFactory     *menu_factory);

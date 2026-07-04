@@ -51,7 +51,7 @@ struct _GimpHistogramBoxClass
 };
 
 
-GType       gimp_histogram_box_get_type    (void) G_GNUC_CONST;
+GType       gimp_histogram_box_get_type    (void);
 
 GtkWidget * gimp_histogram_box_new         (void);
 void        gimp_histogram_box_set_channel (GimpHistogramBox     *box,

@@ -59,7 +59,7 @@ struct _RemapClass
 #define REMAP_TYPE  (remap_get_type ())
 #define REMAP (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), REMAP_TYPE, Remap))
 
-GType                   remap_get_type         (void) G_GNUC_CONST;
+GType                   remap_get_type         (void);
 static GList          * remap_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * remap_create_procedure (GimpPlugIn           *plug_in,
                                                 const gchar          *name);

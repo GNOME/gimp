@@ -53,7 +53,7 @@ struct _RawtherapeeClass
 #define RAWTHERAPEE_TYPE  (rawtherapee_get_type ())
 #define RAWTHERAPEE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RAWTHERAPEE_TYPE, Rawtherapee))
 
-GType                   rawtherapee_get_type         (void) G_GNUC_CONST;
+GType                   rawtherapee_get_type         (void);
 
 static GList          * rawtherapee_init_procedures  (GimpPlugIn            *plug_in);
 static GimpProcedure  * rawtherapee_create_procedure (GimpPlugIn            *plug_in,

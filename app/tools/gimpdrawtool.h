@@ -66,7 +66,7 @@ struct _GimpDrawToolClass
 };
 
 
-GType            gimp_draw_tool_get_type             (void) G_GNUC_CONST;
+GType            gimp_draw_tool_get_type             (void);
 
 void             gimp_draw_tool_start                (GimpDrawTool     *draw_tool,
                                                       GimpDisplay      *display);

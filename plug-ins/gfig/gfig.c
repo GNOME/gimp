@@ -57,7 +57,7 @@
 
 #define GFIG_HEADER      "GFIG Version 0.2\n"
 
-GType                   gfig_get_type         (void) G_GNUC_CONST;
+GType                   gfig_get_type         (void);
 
 static void             gimp_gfig_finalize    (GObject              *object);
 

@@ -63,7 +63,7 @@ struct _GimpCanvasClass
 };
 
 
-GType         gimp_canvas_get_type     (void) G_GNUC_CONST;
+GType         gimp_canvas_get_type     (void);
 
 GtkWidget   * gimp_canvas_new          (GimpDisplayConfig     *config);
 

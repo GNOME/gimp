@@ -46,4 +46,4 @@ struct _GimpChannelUndoClass
 };
 
 
-GType   gimp_channel_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_channel_undo_get_type (void);

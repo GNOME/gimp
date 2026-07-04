@@ -52,7 +52,7 @@ struct _GimpContainerEditorClass
 };
 
 
-GType            gimp_container_editor_get_type           (void) G_GNUC_CONST;
+GType            gimp_container_editor_get_type           (void);
 
 GtkSelectionMode gimp_container_editor_get_selection_mode (GimpContainerEditor *editor);
 void             gimp_container_editor_set_selection_mode (GimpContainerEditor *editor,

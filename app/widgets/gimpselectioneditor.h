@@ -50,6 +50,6 @@ struct _GimpSelectionEditorClass
 };
 
 
-GType       gimp_selection_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_selection_editor_get_type (void);
 
 GtkWidget * gimp_selection_editor_new      (GimpMenuFactory *menu_factory);

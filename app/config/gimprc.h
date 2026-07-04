@@ -49,7 +49,7 @@ struct _GimpRcClass
 };
 
 
-GType     gimp_rc_get_type          (void) G_GNUC_CONST;
+GType     gimp_rc_get_type          (void);
 
 GimpRc  * gimp_rc_new               (GObject     *gimp,
                                      GFile       *system_gimprc,

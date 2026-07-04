@@ -51,7 +51,7 @@ struct _GimpTransformOptionsClass
 };
 
 
-GType       gimp_transform_options_get_type (void) G_GNUC_CONST;
+GType       gimp_transform_options_get_type (void);
 
 GtkWidget * gimp_transform_options_gui      (GimpToolOptions *tool_options,
                                              gboolean         direction,

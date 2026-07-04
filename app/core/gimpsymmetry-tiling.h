@@ -50,4 +50,4 @@ struct _GimpTilingClass
 };
 
 
-GType   gimp_tiling_get_type (void) G_GNUC_CONST;
+GType   gimp_tiling_get_type (void);

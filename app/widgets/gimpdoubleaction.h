@@ -46,7 +46,7 @@ struct _GimpDoubleActionClass
 };
 
 
-GType              gimp_double_action_get_type (void) G_GNUC_CONST;
+GType              gimp_double_action_get_type (void);
 
 GimpDoubleAction * gimp_double_action_new      (const gchar *name,
                                                 const gchar *label,

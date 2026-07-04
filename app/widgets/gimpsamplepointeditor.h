@@ -55,7 +55,7 @@ struct _GimpSamplePointEditorClass
 };
 
 
-GType       gimp_sample_point_editor_get_type          (void) G_GNUC_CONST;
+GType       gimp_sample_point_editor_get_type          (void);
 
 GtkWidget * gimp_sample_point_editor_new               (GimpMenuFactory *menu_factory);
 

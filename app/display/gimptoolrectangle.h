@@ -74,7 +74,7 @@ struct _GimpToolRectangleClass
 };
 
 
-GType    gimp_tool_rectangle_get_type         (void) G_GNUC_CONST;
+GType    gimp_tool_rectangle_get_type         (void);
 
 GimpToolWidget * gimp_tool_rectangle_new      (GimpDisplayShell       *shell);
 

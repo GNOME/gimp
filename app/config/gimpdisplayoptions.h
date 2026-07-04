@@ -70,6 +70,6 @@ struct _GimpDisplayOptionsClass
 };
 
 
-GType  gimp_display_options_get_type            (void) G_GNUC_CONST;
-GType  gimp_display_options_fullscreen_get_type (void) G_GNUC_CONST;
-GType  gimp_display_options_no_image_get_type   (void) G_GNUC_CONST;
+GType  gimp_display_options_get_type            (void);
+GType  gimp_display_options_fullscreen_get_type (void);
+GType  gimp_display_options_no_image_get_type   (void);

@@ -68,7 +68,7 @@ struct _GimpColorWheelClass
 
 void        color_wheel_register_type          (GTypeModule     *module);
 
-GType       gimp_color_wheel_get_type          (void) G_GNUC_CONST;
+GType       gimp_color_wheel_get_type          (void);
 GtkWidget * gimp_color_wheel_new               (void);
 
 void        gimp_color_wheel_set_color         (GimpColorWheel  *wheel,

@@ -54,7 +54,7 @@ struct _DrhaloClass
 #define DRHALO_TYPE  (drhalo_get_type ())
 #define DRHALO(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DRHALO_TYPE, Drhalo))
 
-GType                   drhalo_get_type         (void) G_GNUC_CONST;
+GType                   drhalo_get_type         (void);
 
 
 static GList          * drhalo_query_procedures   (GimpPlugIn            *plug_in);

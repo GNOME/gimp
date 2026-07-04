@@ -46,4 +46,4 @@ struct _GimpDrawableUndoClass
 };
 
 
-GType   gimp_drawable_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_drawable_undo_get_type (void);

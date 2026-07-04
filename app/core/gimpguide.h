@@ -50,7 +50,7 @@ struct _GimpGuideClass
 };
 
 
-GType               gimp_guide_get_type         (void) G_GNUC_CONST;
+GType               gimp_guide_get_type         (void);
 
 GimpGuide *         gimp_guide_new              (GimpOrientationType  orientation,
                                                  guint32              guide_ID);

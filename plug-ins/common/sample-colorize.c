@@ -177,7 +177,7 @@ struct _ColorizeClass
 #define COLORIZE_TYPE  (colorize_get_type ())
 #define COLORIZE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), COLORIZE_TYPE, Colorize))
 
-GType                   colorize_get_type         (void) G_GNUC_CONST;
+GType                   colorize_get_type         (void);
 
 static GList          * colorize_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * colorize_create_procedure (GimpPlugIn           *plug_in,

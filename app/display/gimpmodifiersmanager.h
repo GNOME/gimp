@@ -50,7 +50,7 @@ struct _GimpModifiersManagerClass
 };
 
 
-GType                  gimp_modifiers_manager_get_type      (void) G_GNUC_CONST;
+GType                  gimp_modifiers_manager_get_type      (void);
 
 GimpModifiersManager * gimp_modifiers_manager_new           (void);
 

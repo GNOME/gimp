@@ -54,7 +54,7 @@ struct _GimpBrushGeneratedClass
 };
 
 
-GType       gimp_brush_generated_get_type     (void) G_GNUC_CONST;
+GType       gimp_brush_generated_get_type     (void);
 
 GimpData  * gimp_brush_generated_new          (const gchar             *name,
                                                GimpBrushGeneratedShape  shape,

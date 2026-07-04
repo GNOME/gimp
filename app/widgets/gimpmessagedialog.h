@@ -44,7 +44,7 @@ struct _GimpMessageDialogClass
 };
 
 
-GType       gimp_message_dialog_get_type (void) G_GNUC_CONST;
+GType       gimp_message_dialog_get_type (void);
 
 GtkWidget * gimp_message_dialog_new      (const gchar       *title,
                                           const gchar       *icon_name,

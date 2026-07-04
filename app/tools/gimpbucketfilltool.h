@@ -50,4 +50,4 @@ struct _GimpBucketFillToolClass
 void    gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
                                         gpointer                  data);
 
-GType   gimp_bucket_fill_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_bucket_fill_tool_get_type (void);

@@ -44,4 +44,4 @@ struct _GimpPathModUndoClass
 };
 
 
-GType   gimp_path_mod_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_path_mod_undo_get_type (void);

@@ -58,7 +58,7 @@ struct _GimpViewableButtonClass
 };
 
 
-GType       gimp_viewable_button_get_type (void) G_GNUC_CONST;
+GType       gimp_viewable_button_get_type (void);
 
 GtkWidget * gimp_viewable_button_new      (GimpContainer      *container,
                                            GimpContext        *context,

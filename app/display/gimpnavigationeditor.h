@@ -65,7 +65,7 @@ struct _GimpNavigationEditorClass
 };
 
 
-GType       gimp_navigation_editor_get_type  (void) G_GNUC_CONST;
+GType       gimp_navigation_editor_get_type  (void);
 
 GtkWidget * gimp_navigation_editor_new       (GimpMenuFactory  *menu_factory);
 void        gimp_navigation_editor_popup     (GimpDisplayShell *shell,

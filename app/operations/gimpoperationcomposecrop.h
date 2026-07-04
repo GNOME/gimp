@@ -48,4 +48,4 @@ struct _GimpOperationComposeCropClass
 };
 
 
-GType   gimp_operation_compose_crop_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_compose_crop_get_type (void);

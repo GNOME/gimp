@@ -44,7 +44,7 @@ struct _GimpBezierStrokeClass
 };
 
 
-GType        gimp_bezier_stroke_get_type        (void) G_GNUC_CONST;
+GType        gimp_bezier_stroke_get_type        (void);
 
 GimpStroke * gimp_bezier_stroke_new             (void);
 GimpStroke * gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,

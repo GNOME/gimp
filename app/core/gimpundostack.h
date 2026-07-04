@@ -43,7 +43,7 @@ struct _GimpUndoStackClass
 };
 
 
-GType           gimp_undo_stack_get_type    (void) G_GNUC_CONST;
+GType           gimp_undo_stack_get_type    (void);
 
 GimpUndoStack * gimp_undo_stack_new         (GimpImage           *image);
 

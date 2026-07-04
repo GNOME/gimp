@@ -50,7 +50,7 @@ struct _GimpPaintInfoClass
 };
 
 
-GType           gimp_paint_info_get_type     (void) G_GNUC_CONST;
+GType           gimp_paint_info_get_type     (void);
 
 GimpPaintInfo * gimp_paint_info_new          (Gimp          *gimp,
                                               GType          paint_type,

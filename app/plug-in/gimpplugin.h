@@ -76,7 +76,7 @@ struct _GimpPlugInClass
 };
 
 
-GType         gimp_plug_in_get_type          (void) G_GNUC_CONST;
+GType         gimp_plug_in_get_type          (void);
 
 GimpPlugIn  * gimp_plug_in_new               (GimpPlugInManager      *manager,
                                               GimpContext            *context,

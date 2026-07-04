@@ -47,7 +47,7 @@ struct _GimpToolOptionsEditorClass
 };
 
 
-GType             gimp_tool_options_editor_get_type         (void) G_GNUC_CONST;
+GType             gimp_tool_options_editor_get_type         (void);
 GtkWidget       * gimp_tool_options_editor_new              (Gimp                  *gimp,
                                                              GimpMenuFactory       *menu_factory);
 GimpToolOptions * gimp_tool_options_editor_get_tool_options (GimpToolOptionsEditor *editor);

@@ -60,7 +60,7 @@ struct _IffClass
 #define IFF_TYPE  (iff_get_type ())
 #define IFF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), IFF_TYPE, Iff))
 
-GType                   iff_get_type         (void) G_GNUC_CONST;
+GType                   iff_get_type         (void);
 
 
 static GList          * iff_query_procedures (GimpPlugIn            *plug_in);

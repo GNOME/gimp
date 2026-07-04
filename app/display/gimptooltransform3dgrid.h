@@ -48,7 +48,7 @@ struct _GimpToolTransform3DGridClass
 };
 
 
-GType            gimp_tool_transform_3d_grid_get_type (void) G_GNUC_CONST;
+GType            gimp_tool_transform_3d_grid_get_type (void);
 
 GimpToolWidget * gimp_tool_transform_3d_grid_new      (GimpDisplayShell    *shell,
                                                        gdouble              x1,

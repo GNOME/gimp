@@ -46,7 +46,7 @@ struct _GimpFileProcViewClass
 };
 
 
-GType                 gimp_file_proc_view_get_type    (void) G_GNUC_CONST;
+GType                 gimp_file_proc_view_get_type    (void);
 
 GtkWidget           * gimp_file_proc_view_new         (Gimp                    *gimp,
                                                        GSList                  *procedures,

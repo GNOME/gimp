@@ -45,4 +45,4 @@ struct _GimpImageSelectClass
 };
 
 
-GType  gimp_image_select_get_type (void) G_GNUC_CONST;
+GType  gimp_image_select_get_type (void);

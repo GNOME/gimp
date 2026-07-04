@@ -61,7 +61,7 @@ struct _GbrClass
 #define GBR_TYPE  (gbr_get_type ())
 #define GBR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GBR_TYPE, Gbr))
 
-GType                   gbr_get_type         (void) G_GNUC_CONST;
+GType                   gbr_get_type         (void);
 
 static GList          * gbr_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * gbr_create_procedure (GimpPlugIn           *plug_in,

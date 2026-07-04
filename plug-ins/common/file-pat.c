@@ -48,7 +48,7 @@ struct _PatClass
 #define PAT_TYPE  (pat_get_type ())
 #define PAT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PAT_TYPE, Pat))
 
-GType                   pat_get_type         (void) G_GNUC_CONST;
+GType                   pat_get_type         (void);
 
 static GList          * pat_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * pat_create_procedure (GimpPlugIn           *plug_in,

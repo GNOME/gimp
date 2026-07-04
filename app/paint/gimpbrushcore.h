@@ -93,7 +93,7 @@ struct _GimpBrushCoreClass
 };
 
 
-GType  gimp_brush_core_get_type       (void) G_GNUC_CONST;
+GType  gimp_brush_core_get_type       (void);
 
 void   gimp_brush_core_set_brush      (GimpBrushCore            *core,
                                        GimpBrush                *brush);

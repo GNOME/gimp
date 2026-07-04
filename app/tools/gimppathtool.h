@@ -61,7 +61,7 @@ struct _GimpPathToolClass
 void    gimp_path_tool_register (GimpToolRegisterCallback  callback,
                                  gpointer                  data);
 
-GType   gimp_path_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_path_tool_get_type (void);
 
 void    gimp_path_tool_set_path (GimpPathTool             *path_tool,
                                  GimpVectorLayer          *layer,

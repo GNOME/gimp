@@ -56,7 +56,7 @@ struct _GimpDashboardClass
 };
 
 
-GType                          gimp_dashboard_get_type                   (void) G_GNUC_CONST;
+GType                          gimp_dashboard_get_type                   (void);
 
 GtkWidget                    * gimp_dashboard_new                        (Gimp                          *gimp,
                                                                           GimpMenuFactory               *menu_factory);

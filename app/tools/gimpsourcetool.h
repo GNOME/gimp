@@ -58,6 +58,6 @@ struct _GimpSourceToolClass
 };
 
 
-GType   gimp_source_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_source_tool_get_type (void);
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpSourceTool, g_object_unref);

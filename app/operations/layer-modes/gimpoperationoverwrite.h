@@ -45,4 +45,4 @@ struct _GimpOperationOverwriteClass
 };
 
 
-GType   gimp_operation_overwrite_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_overwrite_get_type (void);

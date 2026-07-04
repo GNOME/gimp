@@ -49,7 +49,7 @@ struct _GimpListClass
 };
 
 
-GType           gimp_list_get_type      (void) G_GNUC_CONST;
+GType           gimp_list_get_type      (void);
 
 GimpContainer * gimp_list_new           (GType         child_type,
                                          gboolean      unique_names);

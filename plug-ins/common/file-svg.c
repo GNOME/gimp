@@ -88,7 +88,7 @@ struct _SvgClass
 #define SVG_TYPE  (svg_get_type ())
 #define SVG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SVG_TYPE, Svg))
 
-GType                   svg_get_type         (void) G_GNUC_CONST;
+GType                   svg_get_type         (void);
 
 static GList          * svg_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * svg_create_procedure (GimpPlugIn            *plug_in,

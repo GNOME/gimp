@@ -109,7 +109,7 @@ struct _GimpDialogFactoryClass
 };
 
 
-GType               gimp_dialog_factory_get_type             (void) G_GNUC_CONST;
+GType               gimp_dialog_factory_get_type             (void);
 GimpDialogFactory * gimp_dialog_factory_new                  (const gchar             *name,
                                                               GimpContext             *context);
 

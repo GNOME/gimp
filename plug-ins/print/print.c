@@ -61,7 +61,7 @@ struct _PrintClass
 #define PRINT_TYPE  (print_get_type ())
 #define PRINT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PRINT_TYPE, Print))
 
-GType                     print_get_type         (void) G_GNUC_CONST;
+GType                     print_get_type         (void);
 
 static GList            * print_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure    * print_create_procedure (GimpPlugIn           *plug_in,

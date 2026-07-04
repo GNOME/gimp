@@ -470,7 +470,7 @@ gimp_chain_button_update_image (GimpChainButton *button)
  * don't need any input events.
  */
 
-static GType     gimp_chain_line_get_type (void) G_GNUC_CONST;
+static GType     gimp_chain_line_get_type (void);
 static gboolean  gimp_chain_line_draw     (GtkWidget *widget,
                                            cairo_t   *cr);
 

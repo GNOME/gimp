@@ -44,6 +44,6 @@ struct _GimpRegionSelectOptions
 };
 
 
-GType       gimp_region_select_options_get_type (void) G_GNUC_CONST;
+GType       gimp_region_select_options_get_type (void);
 
 GtkWidget * gimp_region_select_options_gui      (GimpToolOptions *tool_options);

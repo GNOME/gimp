@@ -45,7 +45,7 @@ struct _GimpBufferSourceBoxClass
 };
 
 
-GType       gimp_buffer_source_box_get_type (void) G_GNUC_CONST;
+GType       gimp_buffer_source_box_get_type (void);
 
 GtkWidget * gimp_buffer_source_box_new        (GimpContext         *context,
                                                GeglNode            *source_node,

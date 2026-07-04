@@ -55,7 +55,7 @@ struct _GimpGridClass
 };
 
 
-GType           gimp_grid_get_type               (void) G_GNUC_CONST;
+GType           gimp_grid_get_type               (void);
 
 GimpGridStyle   gimp_grid_get_style              (GimpGrid           *grid);
 

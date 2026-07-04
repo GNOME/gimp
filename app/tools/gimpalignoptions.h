@@ -50,7 +50,7 @@ struct _GimpAlignOptionsClass
 };
 
 
-GType       gimp_align_options_get_type          (void) G_GNUC_CONST;
+GType       gimp_align_options_get_type          (void);
 
 GtkWidget * gimp_align_options_gui               (GimpToolOptions  *tool_options);
 

@@ -44,7 +44,7 @@ struct _GimpToolPresetEditorClass
 };
 
 
-GType       gimp_tool_preset_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_tool_preset_editor_get_type (void);
 
 GtkWidget * gimp_tool_preset_editor_new      (GimpContext     *context,
                                               GimpMenuFactory *menu_factory);

@@ -47,7 +47,7 @@ struct _GimpCursorViewClass
 };
 
 
-GType       gimp_cursor_view_get_type          (void) G_GNUC_CONST;
+GType       gimp_cursor_view_get_type          (void);
 
 GtkWidget * gimp_cursor_view_new               (Gimp            *gimp,
                                                 GimpMenuFactory *menu_factory);

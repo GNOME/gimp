@@ -43,7 +43,7 @@ struct _GimpPatternClass
 };
 
 
-GType         gimp_pattern_get_type      (void) G_GNUC_CONST;
+GType         gimp_pattern_get_type      (void);
 
 GimpData    * gimp_pattern_new           (GimpContext *context,
                                           const gchar *name);

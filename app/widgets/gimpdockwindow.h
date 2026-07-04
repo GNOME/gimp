@@ -53,7 +53,7 @@ struct _GimpDockWindowClass
 };
 
 
-GType               gimp_dock_window_get_type               (void) G_GNUC_CONST;
+GType               gimp_dock_window_get_type               (void);
 GtkWidget         * gimp_dock_window_new                    (const gchar       *role,
                                                              const gchar       *ui_manager_name,
                                                              gboolean           allow_dockbook_absence,

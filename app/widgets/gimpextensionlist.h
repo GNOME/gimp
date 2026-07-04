@@ -48,7 +48,7 @@ struct _GimpExtensionListClass
 };
 
 
-GType        gimp_extension_list_get_type     (void) G_GNUC_CONST;
+GType        gimp_extension_list_get_type     (void);
 
 GtkWidget  * gimp_extension_list_new          (GimpExtensionManager *manager);
 

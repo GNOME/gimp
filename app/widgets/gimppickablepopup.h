@@ -47,7 +47,7 @@ struct _GimpPickablePopupClass
 };
 
 
-GType          gimp_pickable_popup_get_type     (void) G_GNUC_CONST;
+GType          gimp_pickable_popup_get_type     (void);
 
 GtkWidget    * gimp_pickable_popup_new          (GimpContext       *context,
                                                  gint               view_size,

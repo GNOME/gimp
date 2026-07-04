@@ -65,7 +65,7 @@ struct _GimpTextBufferClass
 };
 
 
-GType            gimp_text_buffer_get_type             (void) G_GNUC_CONST;
+GType            gimp_text_buffer_get_type             (void);
 
 GimpTextBuffer * gimp_text_buffer_new                  (void);
 

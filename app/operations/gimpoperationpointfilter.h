@@ -58,7 +58,7 @@ struct _GimpOperationPointFilterClass
 };
 
 
-GType   gimp_operation_point_filter_get_type     (void) G_GNUC_CONST;
+GType   gimp_operation_point_filter_get_type     (void);
 
 void    gimp_operation_point_filter_get_property (GObject      *object,
                                                   guint         property_id,

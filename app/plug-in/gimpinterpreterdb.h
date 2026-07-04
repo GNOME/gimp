@@ -52,7 +52,7 @@ struct _GimpInterpreterDBClass
 };
 
 
-GType               gimp_interpreter_db_get_type (void) G_GNUC_CONST;
+GType               gimp_interpreter_db_get_type (void);
 GimpInterpreterDB * gimp_interpreter_db_new      (gboolean            verbose);
 
 void                gimp_interpreter_db_load     (GimpInterpreterDB  *db,

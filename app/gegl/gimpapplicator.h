@@ -89,7 +89,7 @@ struct _GimpApplicatorClass
 };
 
 
-GType        gimp_applicator_get_type          (void) G_GNUC_CONST;
+GType        gimp_applicator_get_type          (void);
 
 GimpApplicator * gimp_applicator_new           (GeglNode             *parent);
 

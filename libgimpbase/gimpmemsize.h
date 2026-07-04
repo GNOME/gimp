@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 #define GIMP_TYPE_MEMSIZE               (gimp_memsize_get_type ())
 #define GIMP_VALUE_HOLDS_MEMSIZE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MEMSIZE))
 
-GType      gimp_memsize_get_type         (void) G_GNUC_CONST;
+GType      gimp_memsize_get_type         (void);
 
 gchar    * gimp_memsize_serialize        (guint64      memsize) G_GNUC_MALLOC;
 gboolean   gimp_memsize_deserialize      (const gchar *string,
@@ -49,7 +49,7 @@ gboolean   gimp_memsize_deserialize      (const gchar *string,
 #define GIMP_TYPE_PARAM_MEMSIZE           (gimp_param_memsize_get_type ())
 #define GIMP_IS_PARAM_SPEC_MEMSIZE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_MEMSIZE))
 
-GType        gimp_param_memsize_get_type  (void) G_GNUC_CONST;
+GType        gimp_param_memsize_get_type  (void);
 
 GParamSpec * gimp_param_spec_memsize      (const gchar  *name,
                                            const gchar  *nick,

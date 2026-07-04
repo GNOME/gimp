@@ -49,6 +49,6 @@ struct _GimpTextProxyClass
 };
 
 
-GType       gimp_text_proxy_get_type (void) G_GNUC_CONST;
+GType       gimp_text_proxy_get_type (void);
 
 GtkWidget * gimp_text_proxy_new      (void);

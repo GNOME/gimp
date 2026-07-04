@@ -47,7 +47,7 @@ struct _GimpImageProxyClass
 };
 
 
-GType            gimp_image_proxy_get_type         (void) G_GNUC_CONST;
+GType            gimp_image_proxy_get_type         (void);
 
 GimpImageProxy * gimp_image_proxy_new              (GimpImage      *image);
 

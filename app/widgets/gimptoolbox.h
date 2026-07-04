@@ -44,7 +44,7 @@ struct _GimpToolboxClass
 };
 
 
-GType               gimp_toolbox_get_type           (void) G_GNUC_CONST;
+GType               gimp_toolbox_get_type           (void);
 GtkWidget         * gimp_toolbox_new                (GimpDialogFactory *factory,
                                                      GimpContext       *context,
                                                      GimpUIManager     *ui_manager);

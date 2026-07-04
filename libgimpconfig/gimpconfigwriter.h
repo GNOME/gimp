@@ -38,7 +38,7 @@
 #define GIMP_TYPE_CONFIG_WRITER (gimp_config_writer_get_type ())
 
 
-GType              gimp_config_writer_get_type     (void) G_GNUC_CONST;
+GType              gimp_config_writer_get_type     (void);
 
 GimpConfigWriter * gimp_config_writer_new_from_file     (GFile             *file,
                                                          gboolean           atomic,

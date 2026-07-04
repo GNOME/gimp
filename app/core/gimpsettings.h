@@ -46,7 +46,7 @@ struct _GimpSettingsClass
 };
 
 
-GType   gimp_settings_get_type (void) G_GNUC_CONST;
+GType   gimp_settings_get_type (void);
 
 gint    gimp_settings_compare  (GimpSettings *a,
                                 GimpSettings *b);

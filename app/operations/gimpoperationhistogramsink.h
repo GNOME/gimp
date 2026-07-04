@@ -48,5 +48,5 @@ struct _GimpOperationHistogramSinkClass
 };
 
 
-GType   gimp_operation_histogram_sink_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_histogram_sink_get_type (void);
 

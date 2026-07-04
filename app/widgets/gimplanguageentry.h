@@ -37,7 +37,7 @@ struct _GimpLanguageEntryClass
 };
 
 
-GType         gimp_language_entry_get_type     (void) G_GNUC_CONST;
+GType         gimp_language_entry_get_type     (void);
 
 GtkWidget   * gimp_language_entry_new      (void);
 

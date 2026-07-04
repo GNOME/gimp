@@ -54,7 +54,7 @@ struct _MacpaintClass
 #define MACPAINT_TYPE  (macpaint_get_type ())
 #define MACPAINT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), MACPAINT_TYPE, Macpaint))
 
-GType                   macpaint_get_type         (void) G_GNUC_CONST;
+GType                   macpaint_get_type         (void);
 
 
 static GList          * macpaint_query_procedures (GimpPlugIn            *plug_in);

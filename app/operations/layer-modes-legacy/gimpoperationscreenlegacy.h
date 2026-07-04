@@ -45,4 +45,4 @@ struct _GimpOperationScreenLegacyClass
 };
 
 
-GType   gimp_operation_screen_legacy_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_screen_legacy_get_type (void);

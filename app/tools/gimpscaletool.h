@@ -46,4 +46,4 @@ struct _GimpScaleToolClass
 void    gimp_scale_tool_register (GimpToolRegisterCallback  callback,
                                   gpointer                  data);
 
-GType   gimp_scale_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_scale_tool_get_type (void);

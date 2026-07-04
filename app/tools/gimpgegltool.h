@@ -49,4 +49,4 @@ struct _GimpGeglToolClass
 void    gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
                                  gpointer                  data);
 
-GType   gimp_gegl_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_gegl_tool_get_type (void);

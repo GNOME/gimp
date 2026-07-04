@@ -85,7 +85,7 @@ struct _DespeckleClass
 #define DESPECKLE_TYPE  (despeckle_get_type ())
 #define DESPECKLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DESPECKLE_TYPE, Despeckle))
 
-GType                   despeckle_get_type         (void) G_GNUC_CONST;
+GType                   despeckle_get_type         (void);
 
 static GList          * despeckle_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * despeckle_create_procedure (GimpPlugIn           *plug_in,

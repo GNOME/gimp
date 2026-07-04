@@ -52,7 +52,7 @@ struct _GimpBufferClass
 };
 
 
-GType              gimp_buffer_get_type          (void) G_GNUC_CONST;
+GType              gimp_buffer_get_type          (void);
 
 GimpBuffer       * gimp_buffer_new               (GeglBuffer       *buffer,
                                                   const gchar      *name,

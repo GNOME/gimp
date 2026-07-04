@@ -47,7 +47,7 @@ struct _GimpDisplayImplClass
 };
 
 
-GType              gimp_display_impl_get_type   (void) G_GNUC_CONST;
+GType              gimp_display_impl_get_type   (void);
 
 GimpDisplay      * gimp_display_new             (Gimp              *gimp,
                                                  GimpImage         *image,

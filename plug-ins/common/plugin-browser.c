@@ -102,7 +102,7 @@ struct _BrowserClass
 #define BROWSER_TYPE  (browser_get_type ())
 #define BROWSER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BROWSER_TYPE, Browser))
 
-GType                   browser_get_type         (void) G_GNUC_CONST;
+GType                   browser_get_type         (void);
 
 static GList          * browser_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * browser_create_procedure (GimpPlugIn           *plug_in,

@@ -48,7 +48,7 @@ struct _GimpImageEditorClass
 };
 
 
-GType       gimp_image_editor_get_type  (void) G_GNUC_CONST;
+GType       gimp_image_editor_get_type  (void);
 
 void        gimp_image_editor_set_image (GimpImageEditor *editor,
                                          GimpImage       *image);

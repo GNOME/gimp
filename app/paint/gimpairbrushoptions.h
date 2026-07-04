@@ -45,5 +45,5 @@ struct _GimpAirbrushOptionsClass
 };
 
 
-GType   gimp_airbrush_options_get_type (void) G_GNUC_CONST;
+GType   gimp_airbrush_options_get_type (void);
 

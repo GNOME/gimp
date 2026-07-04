@@ -80,7 +80,7 @@ struct _GimpFgBgEditorClass
 };
 
 
-GType       gimp_fg_bg_editor_get_type    (void) G_GNUC_CONST;
+GType       gimp_fg_bg_editor_get_type    (void);
 
 GtkWidget * gimp_fg_bg_editor_new         (GimpContext     *context);
 

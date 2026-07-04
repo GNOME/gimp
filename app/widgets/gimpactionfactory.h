@@ -61,7 +61,7 @@ struct _GimpActionFactoryClass
 };
 
 
-GType               gimp_action_factory_get_type       (void) G_GNUC_CONST;
+GType               gimp_action_factory_get_type       (void);
 
 GimpActionFactory * gimp_action_factory_new            (Gimp                      *gimp);
 

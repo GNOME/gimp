@@ -327,7 +327,7 @@ struct _ExplorerClass
 #define EXPLORER_TYPE  (explorer_get_type ())
 #define EXPLORER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EXPLORER_TYPE, Explorer))
 
-GType                   explorer_get_type         (void) G_GNUC_CONST;
+GType                   explorer_get_type         (void);
 
 static GList          * explorer_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * explorer_create_procedure (GimpPlugIn           *plug_in,

@@ -90,7 +90,7 @@ struct _GimpSourceCoreClass
 };
 
 
-GType    gimp_source_core_get_type   (void) G_GNUC_CONST;
+GType    gimp_source_core_get_type   (void);
 
 gboolean gimp_source_core_use_source (GimpSourceCore    *source_core,
                                       GimpSourceOptions *options);

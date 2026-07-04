@@ -49,4 +49,4 @@ struct _GimpPluginConfigClass
 };
 
 
-GType  gimp_plugin_config_get_type (void) G_GNUC_CONST;
+GType  gimp_plugin_config_get_type (void);

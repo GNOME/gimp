@@ -55,7 +55,7 @@ struct _LightingClass
 #define LIGHTING_TYPE  (lighting_get_type ())
 #define LIGHTING(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGHTING_TYPE, Lighting))
 
-GType                   lighting_get_type         (void) G_GNUC_CONST;
+GType                   lighting_get_type         (void);
 
 static GList          * lighting_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * lighting_create_procedure (GimpPlugIn           *plug_in,

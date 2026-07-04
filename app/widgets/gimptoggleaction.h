@@ -56,7 +56,7 @@ struct _GimpToggleActionClass
 };
 
 
-GType             gimp_toggle_action_get_type  (void) G_GNUC_CONST;
+GType             gimp_toggle_action_get_type  (void);
 
 GimpAction      * gimp_toggle_action_new       (const gchar *name,
                                                 const gchar *label,

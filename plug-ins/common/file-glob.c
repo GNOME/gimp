@@ -45,7 +45,7 @@ struct _GlobClass
 #define GLOB_TYPE (glob_get_type ())
 #define GLOB(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GLOB_TYPE, Glob))
 
-GType                   glob_get_type         (void) G_GNUC_CONST;
+GType                   glob_get_type         (void);
 
 static GList          * glob_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * glob_create_procedure (GimpPlugIn           *plug_in,

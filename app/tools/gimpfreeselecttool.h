@@ -48,5 +48,5 @@ struct _GimpFreeSelectToolClass
 void    gimp_free_select_tool_register     (GimpToolRegisterCallback  callback,
                                             gpointer                  data);
 
-GType   gimp_free_select_tool_get_type     (void) G_GNUC_CONST;
+GType   gimp_free_select_tool_get_type     (void);
 

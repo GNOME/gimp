@@ -46,7 +46,7 @@ struct _GimpSelectionOptions
 };
 
 
-GType        gimp_selection_options_get_type    (void) G_GNUC_CONST;
+GType        gimp_selection_options_get_type    (void);
 
 GtkWidget  * gimp_selection_options_gui         (GimpToolOptions *tool_options);
 

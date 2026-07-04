@@ -53,7 +53,7 @@ struct _GimpSessionInfoClass
 };
 
 
-GType             gimp_session_info_get_type                (void) G_GNUC_CONST;
+GType             gimp_session_info_get_type                (void);
 
 GimpSessionInfo * gimp_session_info_new                     (void);
 

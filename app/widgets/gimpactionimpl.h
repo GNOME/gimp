@@ -49,7 +49,7 @@ struct _GimpActionImplClass
                          GVariant       *value);
 };
 
-GType        gimp_action_impl_get_type (void) G_GNUC_CONST;
+GType        gimp_action_impl_get_type (void);
 
 GimpAction * gimp_action_impl_new      (const gchar *name,
                                         const gchar *label,

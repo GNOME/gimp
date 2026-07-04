@@ -46,4 +46,4 @@ struct _GimpGradientSelectClass
 };
 
 
-GType  gimp_gradient_select_get_type (void) G_GNUC_CONST;
+GType  gimp_gradient_select_get_type (void);

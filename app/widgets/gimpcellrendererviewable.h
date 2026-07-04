@@ -51,7 +51,7 @@ struct _GimpCellRendererViewableClass
 };
 
 
-GType             gimp_cell_renderer_viewable_get_type    (void) G_GNUC_CONST;
+GType             gimp_cell_renderer_viewable_get_type    (void);
 GtkCellRenderer * gimp_cell_renderer_viewable_new         (void);
 gboolean          gimp_cell_renderer_viewable_pre_clicked (GimpCellRendererViewable *cell,
                                                            const gchar              *path,
