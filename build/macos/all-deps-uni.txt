@@ -51,7 +51,7 @@ poppler +pinentry -pinentry_mac|homebrew:poppler \
 poppler-data \
 |homebrew:python \ py-certifi|homebrew:certifi
 py-gobject3|homebrew:pygobject3 \
-qoi #homebrew rejected qoi https://github.com/Homebrew/homebrew-core/pull/276182 \
+qoi #homebrew rejected qoi https://github.com/Homebrew/homebrew-core/pull/276182 but we install with 1_build-deps-macports.sh \
 SuiteSparse_UMFPACK +accelerate -openblas #homebrew requires non-native GCC/Gfortran for suite-sparse
 #xpm depends on x11
 xz|homebrew:xz
