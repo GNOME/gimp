@@ -42,7 +42,7 @@ struct _GimpTemplateEditorClass
 };
 
 
-GType          gimp_template_editor_get_type      (void) G_GNUC_CONST;
+GType          gimp_template_editor_get_type      (void);
 
 GtkWidget    * gimp_template_editor_new           (GimpTemplate       *template,
                                                    Gimp               *gimp,

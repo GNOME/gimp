@@ -109,7 +109,7 @@ struct _PagecurlClass
 #define PAGECURL_TYPE  (pagecurl_get_type ())
 #define PAGECURL(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PAGECURL_TYPE, Pagecurl))
 
-GType                   pagecurl_get_type         (void) G_GNUC_CONST;
+GType                   pagecurl_get_type         (void);
 
 static GList          * pagecurl_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * pagecurl_create_procedure (GimpPlugIn           *plug_in,

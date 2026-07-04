@@ -54,7 +54,7 @@ struct _GimpBrushFactoryViewClass
 };
 
 
-GType       gimp_brush_factory_view_get_type (void) G_GNUC_CONST;
+GType       gimp_brush_factory_view_get_type (void);
 
 GtkWidget * gimp_brush_factory_view_new      (GimpViewType     view_type,
                                               GimpDataFactory *factory,

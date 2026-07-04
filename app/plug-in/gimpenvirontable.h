@@ -49,7 +49,7 @@ struct _GimpEnvironTableClass
 };
 
 
-GType               gimp_environ_table_get_type  (void) G_GNUC_CONST;
+GType               gimp_environ_table_get_type  (void);
 GimpEnvironTable  * gimp_environ_table_new       (gboolean          verbose);
 
 void                gimp_environ_table_load      (GimpEnvironTable *environ_table,

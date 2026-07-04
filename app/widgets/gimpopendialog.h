@@ -47,7 +47,7 @@ struct _GimpOpenDialogClass
 };
 
 
-GType       gimp_open_dialog_get_type   (void) G_GNUC_CONST;
+GType       gimp_open_dialog_get_type   (void);
 
 GtkWidget * gimp_open_dialog_new        (Gimp           *gimp);
 

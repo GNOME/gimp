@@ -81,7 +81,7 @@ struct _GimpTransformToolClass
 };
 
 
-GType        gimp_transform_tool_get_type            (void) G_GNUC_CONST;
+GType        gimp_transform_tool_get_type            (void);
 
 GList     * gimp_transform_tool_get_selected_objects (GimpTransformTool  *tr_tool,
                                                       GimpDisplay        *display);

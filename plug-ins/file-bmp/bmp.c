@@ -83,7 +83,7 @@ struct _BmpClass
 #define BMP_TYPE  (bmp_get_type ())
 #define BMP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BMP_TYPE, Bmp))
 
-GType                   bmp_get_type         (void) G_GNUC_CONST;
+GType                   bmp_get_type         (void);
 
 static GList          * bmp_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * bmp_create_procedure (GimpPlugIn            *plug_in,

@@ -48,4 +48,4 @@ struct _GimpOperationFillSourceClass
 };
 
 
-GType   gimp_operation_fill_source_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_fill_source_get_type (void);

@@ -47,4 +47,4 @@ struct _GimpOperationSemiFlattenClass
 };
 
 
-GType   gimp_operation_semi_flatten_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_semi_flatten_get_type (void);

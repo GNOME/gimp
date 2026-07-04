@@ -47,6 +47,6 @@ struct _GimpImageCommentEditorClass
 };
 
 
-GType       gimp_image_comment_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_image_comment_editor_get_type (void);
 
 GtkWidget * gimp_image_comment_editor_new      (GimpImage *image);

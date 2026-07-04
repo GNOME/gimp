@@ -51,7 +51,7 @@ struct _GimpPDBClass
 };
 
 
-GType            gimp_pdb_get_type                       (void) G_GNUC_CONST;
+GType            gimp_pdb_get_type                       (void);
 
 GimpPDB        * gimp_pdb_new                            (Gimp           *gimp);
 

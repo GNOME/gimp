@@ -86,4 +86,4 @@ struct _GimpNPointDeformationToolClass
 void    gimp_n_point_deformation_tool_register (GimpToolRegisterCallback  callback,
                                                 gpointer                  data);
 
-GType   gimp_n_point_deformation_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_n_point_deformation_tool_get_type (void);

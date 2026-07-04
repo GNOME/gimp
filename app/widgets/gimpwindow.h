@@ -47,7 +47,7 @@ struct _GimpWindowClass
 };
 
 
-GType       gimp_window_get_type                 (void) G_GNUC_CONST;
+GType       gimp_window_get_type                 (void);
 
 void        gimp_window_set_primary_focus_widget (GimpWindow *window,
                                                   GtkWidget  *primary_focus);

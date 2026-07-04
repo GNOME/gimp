@@ -42,7 +42,7 @@ struct _GimpToolPaletteClass
 };
 
 
-GType       gimp_tool_palette_get_type        (void) G_GNUC_CONST;
+GType       gimp_tool_palette_get_type        (void);
 
 GtkWidget * gimp_tool_palette_new             (void);
 void        gimp_tool_palette_set_toolbox     (GimpToolPalette   *palette,

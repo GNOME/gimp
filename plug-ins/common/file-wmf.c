@@ -74,7 +74,7 @@ typedef struct
 #define WMF_TYPE  (wmf_get_type ())
 #define WMF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WMF_TYPE, Wmf))
 
-GType                   wmf_get_type         (void) G_GNUC_CONST;
+GType                   wmf_get_type         (void);
 
 static GList          * wmf_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * wmf_create_procedure (GimpPlugIn            *plug_in,

@@ -72,7 +72,7 @@ struct _GimpPdbDialogClass
 };
 
 
-GType           gimp_pdb_dialog_get_type        (void) G_GNUC_CONST;
+GType           gimp_pdb_dialog_get_type        (void);
 
 void            gimp_pdb_dialog_run_callback    (GimpPdbDialog     **dialog,
                                                  gboolean            closing);

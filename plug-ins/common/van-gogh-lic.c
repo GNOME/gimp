@@ -79,7 +79,7 @@ struct _LicClass
 #define LIC_TYPE  (lic_get_type ())
 #define LIC(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIC_TYPE, Lic))
 
-GType                   lic_get_type         (void) G_GNUC_CONST;
+GType                   lic_get_type         (void);
 
 static GList          * lic_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * lic_create_procedure (GimpPlugIn           *plug_in,

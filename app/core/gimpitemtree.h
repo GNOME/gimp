@@ -45,7 +45,7 @@ struct _GimpItemTreeClass
 };
 
 
-GType          gimp_item_tree_get_type         (void) G_GNUC_CONST;
+GType          gimp_item_tree_get_type         (void);
 GimpItemTree * gimp_item_tree_new              (GimpImage     *image,
                                                 GType          container_type,
                                                 GType          item_type);

@@ -57,7 +57,7 @@ struct _GimpTextLayerClass
 };
 
 
-GType       gimp_text_layer_get_type    (void) G_GNUC_CONST;
+GType       gimp_text_layer_get_type    (void);
 
 GimpLayer * gimp_text_layer_new         (GimpImage     *image,
                                          GimpText      *text);

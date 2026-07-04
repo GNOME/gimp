@@ -44,4 +44,4 @@ struct _GimpFloatingSelectionUndoClass
 };
 
 
-GType   gimp_floating_selection_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_floating_selection_undo_get_type (void);

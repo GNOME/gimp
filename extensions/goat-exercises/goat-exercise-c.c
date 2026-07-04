@@ -55,7 +55,7 @@ struct _GoatClass
 #define GOAT_TYPE  (goat_get_type ())
 #define GOAT (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GOAT_TYPE, Goat))
 
-GType                   goat_get_type         (void) G_GNUC_CONST;
+GType                   goat_get_type         (void);
 
 static GList          * goat_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * goat_create_procedure (GimpPlugIn           *plug_in,

@@ -113,7 +113,7 @@ struct _Jp2Class
 #define JP2_TYPE  (jp2_get_type ())
 #define JP2 (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), JP2_TYPE, Jp2))
 
-GType                   jp2_get_type         (void) G_GNUC_CONST;
+GType                   jp2_get_type         (void);
 
 static GList          * jp2_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * jp2_create_procedure (GimpPlugIn            *plug_in,

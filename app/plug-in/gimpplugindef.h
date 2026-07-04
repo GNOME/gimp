@@ -50,7 +50,7 @@ struct _GimpPlugInDefClass
 };
 
 
-GType           gimp_plug_in_def_get_type (void) G_GNUC_CONST;
+GType           gimp_plug_in_def_get_type (void);
 
 GimpPlugInDef * gimp_plug_in_def_new      (GFile               *file);
 

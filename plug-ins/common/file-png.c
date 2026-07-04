@@ -111,7 +111,7 @@ struct _PngClass
 #define PNG_TYPE (png_get_type ())
 #define PNG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PNG_TYPE, Png))
 
-GType                   png_get_type         (void) G_GNUC_CONST;
+GType                   png_get_type         (void);
 
 static GList          * png_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * png_create_procedure (GimpPlugIn            *plug_in,

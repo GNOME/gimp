@@ -47,7 +47,7 @@ struct _GimpParasiteListClass
 };
 
 
-GType                gimp_parasite_list_get_type (void) G_GNUC_CONST;
+GType                gimp_parasite_list_get_type (void);
 
 GimpParasiteList   * gimp_parasite_list_new      (void);
 GimpParasiteList   * gimp_parasite_list_copy     (GimpParasiteList       *list);

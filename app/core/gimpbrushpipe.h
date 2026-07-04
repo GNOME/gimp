@@ -69,7 +69,7 @@ struct _GimpBrushPipeClass
 };
 
 
-GType      gimp_brush_pipe_get_type   (void) G_GNUC_CONST;
+GType      gimp_brush_pipe_get_type   (void);
 
 gboolean   gimp_brush_pipe_set_params (GimpBrushPipe *pipe,
                                        const gchar   *paramstring);

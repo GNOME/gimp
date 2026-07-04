@@ -56,7 +56,7 @@ struct _GimpDockColumnsClass
 };
 
 
-GType               gimp_dock_columns_get_type           (void) G_GNUC_CONST;
+GType               gimp_dock_columns_get_type           (void);
 GtkWidget         * gimp_dock_columns_new                (GimpContext       *context,
                                                           GimpDialogFactory *dialog_factory,
                                                           GimpUIManager     *ui_manager);

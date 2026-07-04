@@ -47,7 +47,7 @@ struct _GimpGridEditorClass
 };
 
 
-GType       gimp_grid_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_grid_editor_get_type (void);
 
 GtkWidget * gimp_grid_editor_new      (GimpGrid    *grid,
                                        GimpContext *context,

@@ -371,7 +371,7 @@ struct _GflareClass
 #define GFLARE_TYPE  (gflare_get_type ())
 #define GFLARE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GFLARE_TYPE, Gflare))
 
-GType                   gflare_get_type         (void) G_GNUC_CONST;
+GType                   gflare_get_type         (void);
 
 static GList          * gflare_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * gflare_create_procedure (GimpPlugIn           *plug_in,

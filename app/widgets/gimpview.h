@@ -66,7 +66,7 @@ struct _GimpViewClass
 };
 
 
-GType          gimp_view_get_type          (void) G_GNUC_CONST;
+GType          gimp_view_get_type          (void);
 
 GtkWidget    * gimp_view_new               (GimpContext   *context,
                                             GimpViewable  *viewable,

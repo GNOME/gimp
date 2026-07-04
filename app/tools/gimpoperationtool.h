@@ -55,7 +55,7 @@ struct _GimpOperationToolClass
 void    gimp_operation_tool_register      (GimpToolRegisterCallback  callback,
                                            gpointer                  data);
 
-GType   gimp_operation_tool_get_type      (void) G_GNUC_CONST;
+GType   gimp_operation_tool_get_type      (void);
 
 void    gimp_operation_tool_set_operation (GimpOperationTool        *op_tool,
                                            GimpDrawableFilter       *filter,

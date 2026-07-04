@@ -53,7 +53,7 @@ struct _GimpNavigationViewClass
 };
 
 
-GType   gimp_navigation_view_get_type     (void) G_GNUC_CONST;
+GType   gimp_navigation_view_get_type     (void);
 
 void    gimp_navigation_view_set_marker   (GimpNavigationView *view,
                                            gdouble             center_x,

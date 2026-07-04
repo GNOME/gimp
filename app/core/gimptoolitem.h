@@ -51,7 +51,7 @@ struct _GimpToolItemClass
 };
 
 
-GType      gimp_tool_item_get_type      (void) G_GNUC_CONST;
+GType      gimp_tool_item_get_type      (void);
 
 void       gimp_tool_item_set_visible   (GimpToolItem *tool_item,
                                          gboolean      visible);

@@ -48,7 +48,7 @@ struct _GimpFontFactoryClass
 };
 
 
-GType             gimp_font_factory_get_type (void) G_GNUC_CONST;
+GType             gimp_font_factory_get_type (void);
 
 GimpDataFactory * gimp_font_factory_new                        (Gimp             *gimp,
                                                                 const gchar      *path_property_name);

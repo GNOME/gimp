@@ -57,7 +57,7 @@ struct _GimpErrorConsoleClass
 };
 
 
-GType       gimp_error_console_get_type (void) G_GNUC_CONST;
+GType       gimp_error_console_get_type (void);
 
 GtkWidget * gimp_error_console_new      (Gimp                *gimp,
                                          GimpMenuFactory     *menu_factory);

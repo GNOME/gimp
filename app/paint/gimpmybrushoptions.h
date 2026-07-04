@@ -56,7 +56,7 @@ struct _GimpMybrushOptionsClass
 };
 
 
-GType   gimp_mybrush_options_get_type (void) G_GNUC_CONST;
+GType   gimp_mybrush_options_get_type (void);
 
 
 #endif  /*  __GIMP_MYBRUSH_OPTIONS_H__  */

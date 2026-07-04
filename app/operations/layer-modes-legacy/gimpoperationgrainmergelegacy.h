@@ -45,4 +45,4 @@ struct _GimpOperationGrainMergeLegacyClass
 };
 
 
-GType   gimp_operation_grain_merge_legacy_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_grain_merge_legacy_get_type (void);

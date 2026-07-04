@@ -70,4 +70,4 @@ struct _GimpForegroundSelectToolClass
 void    gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
                                               gpointer                  data);
 
-GType   gimp_foreground_select_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_foreground_select_tool_get_type (void);

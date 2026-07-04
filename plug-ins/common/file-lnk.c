@@ -55,7 +55,7 @@ struct _LnkClass
 #define LNK_TYPE  (lnk_get_type ())
 #define LNK(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), LNK_TYPE, Lnk))
 
-GType                   lnk_get_type         (void) G_GNUC_CONST;
+GType                   lnk_get_type         (void);
 
 
 static GList          * lnk_query_procedures (GimpPlugIn            *plug_in);

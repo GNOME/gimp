@@ -45,5 +45,5 @@ struct _GimpOperationHsvValueLegacyClass
 };
 
 
-GType   gimp_operation_hsv_value_legacy_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_hsv_value_legacy_get_type (void);
 

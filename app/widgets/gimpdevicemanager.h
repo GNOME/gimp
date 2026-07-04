@@ -49,7 +49,7 @@ struct _GimpDeviceManagerClass
 };
 
 
-GType               gimp_device_manager_get_type           (void) G_GNUC_CONST;
+GType               gimp_device_manager_get_type           (void);
 
 GimpDeviceManager * gimp_device_manager_new                (Gimp *gimp);
 

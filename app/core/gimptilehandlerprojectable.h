@@ -54,6 +54,6 @@ struct _GimpTileHandlerProjectableClass
 };
 
 
-GType             gimp_tile_handler_projectable_get_type (void) G_GNUC_CONST;
+GType             gimp_tile_handler_projectable_get_type (void);
 
 GeglTileHandler * gimp_tile_handler_projectable_new      (GimpProjectable *projectable);

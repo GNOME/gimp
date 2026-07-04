@@ -50,7 +50,7 @@ struct _GimpCurvesConfigClass
 };
 
 
-GType      gimp_curves_config_get_type            (void) G_GNUC_CONST;
+GType      gimp_curves_config_get_type            (void);
 
 GObject  * gimp_curves_config_new_spline          (gint32             channel,
                                                    const gdouble     *points,

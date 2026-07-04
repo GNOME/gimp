@@ -52,7 +52,7 @@ struct _GimpToolOptionsClass
 };
 
 
-GType      gimp_tool_options_get_type      (void) G_GNUC_CONST;
+GType      gimp_tool_options_get_type      (void);
 
 void       gimp_tool_options_set_gui_mode  (GimpToolOptions   *tool_options,
                                             gboolean           gui_mode);

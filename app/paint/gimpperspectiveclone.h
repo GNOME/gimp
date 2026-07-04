@@ -59,7 +59,7 @@ struct _GimpPerspectiveCloneClass
 void    gimp_perspective_clone_register      (Gimp                      *gimp,
                                               GimpPaintRegisterCallback  callback);
 
-GType   gimp_perspective_clone_get_type         (void) G_GNUC_CONST;
+GType   gimp_perspective_clone_get_type         (void);
 
 void    gimp_perspective_clone_set_transform    (GimpPerspectiveClone   *clone,
                                                  GimpMatrix3            *transform);

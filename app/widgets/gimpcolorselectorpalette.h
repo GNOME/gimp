@@ -47,4 +47,4 @@ struct _GimpColorSelectorPaletteClass
 };
 
 
-GType   gimp_color_selector_palette_get_type (void) G_GNUC_CONST;
+GType   gimp_color_selector_palette_get_type (void);

@@ -48,7 +48,7 @@ struct _BorderAverageClass
 #define BORDER_AVERAGE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BORDER_AVERAGE_TYPE, BorderAverage))
 
 
-GType                   border_average_get_type               (void) G_GNUC_CONST;
+GType                   border_average_get_type               (void);
 
 static GList          * border_average_query_procedures       (GimpPlugIn           *plug_in);
 static GimpProcedure  * border_average_create_procedure       (GimpPlugIn           *plug_in,

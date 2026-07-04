@@ -45,4 +45,4 @@ struct _GimpOperationSoftlightLegacyClass
 };
 
 
-GType   gimp_operation_softlight_legacy_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_softlight_legacy_get_type (void);

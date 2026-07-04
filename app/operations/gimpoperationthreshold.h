@@ -49,4 +49,4 @@ struct _GimpOperationThresholdClass
 };
 
 
-GType   gimp_operation_threshold_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_threshold_get_type (void);

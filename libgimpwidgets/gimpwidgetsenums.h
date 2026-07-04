@@ -35,7 +35,7 @@ G_BEGIN_DECLS
  **/
 #define GIMP_TYPE_ASPECT_TYPE (gimp_aspect_type_get_type ())
 
-GType gimp_aspect_type_get_type (void) G_GNUC_CONST;
+GType gimp_aspect_type_get_type (void);
 
 typedef enum
 {
@@ -56,7 +56,7 @@ typedef enum
  **/
 #define GIMP_TYPE_CHAIN_POSITION (gimp_chain_position_get_type ())
 
-GType gimp_chain_position_get_type (void) G_GNUC_CONST;
+GType gimp_chain_position_get_type (void);
 
 typedef enum
 {
@@ -77,7 +77,7 @@ typedef enum
  **/
 #define GIMP_TYPE_COLOR_AREA_TYPE (gimp_color_area_type_get_type ())
 
-GType gimp_color_area_type_get_type (void) G_GNUC_CONST;
+GType gimp_color_area_type_get_type (void);
 
 typedef enum
 {
@@ -105,7 +105,7 @@ typedef enum
  **/
 #define GIMP_TYPE_COLOR_SELECTOR_CHANNEL (gimp_color_selector_channel_get_type ())
 
-GType gimp_color_selector_channel_get_type (void) G_GNUC_CONST;
+GType gimp_color_selector_channel_get_type (void);
 
 typedef enum
 {
@@ -135,7 +135,7 @@ typedef enum
  **/
 #define GIMP_TYPE_COLOR_SELECTOR_MODEL (gimp_color_selector_model_get_type ())
 
-GType gimp_color_selector_model_get_type (void) G_GNUC_CONST;
+GType gimp_color_selector_model_get_type (void);
 
 typedef enum
 {
@@ -158,7 +158,7 @@ typedef enum
  **/
 #define GIMP_TYPE_INT_COMBO_BOX_LAYOUT (gimp_int_combo_box_layout_get_type ())
 
-GType gimp_int_combo_box_layout_get_type (void) G_GNUC_CONST;
+GType gimp_int_combo_box_layout_get_type (void);
 
 typedef enum
 {
@@ -177,7 +177,7 @@ typedef enum
  **/
 #define GIMP_TYPE_PAGE_SELECTOR_TARGET (gimp_page_selector_target_get_type ())
 
-GType gimp_page_selector_target_get_type (void) G_GNUC_CONST;
+GType gimp_page_selector_target_get_type (void);
 
 typedef enum
 {
@@ -196,7 +196,7 @@ typedef enum
  **/
 #define GIMP_TYPE_SIZE_ENTRY_UPDATE_POLICY (gimp_size_entry_update_policy_get_type ())
 
-GType gimp_size_entry_update_policy_get_type (void) G_GNUC_CONST;
+GType gimp_size_entry_update_policy_get_type (void);
 
 typedef enum
 {
@@ -222,7 +222,7 @@ typedef enum
  **/
 #define GIMP_TYPE_ZOOM_TYPE (gimp_zoom_type_get_type ())
 
-GType gimp_zoom_type_get_type (void) G_GNUC_CONST;
+GType gimp_zoom_type_get_type (void);
 
 typedef enum
 {

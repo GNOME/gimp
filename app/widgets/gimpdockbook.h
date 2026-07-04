@@ -63,7 +63,7 @@ struct _GimpDockbookClass
 };
 
 
-GType           gimp_dockbook_get_type                (void) G_GNUC_CONST;
+GType           gimp_dockbook_get_type                (void);
 GtkWidget     * gimp_dockbook_new                     (GimpMenuFactory          *menu_factory);
 
 void            gimp_dockbook_set_dock                (GimpDockbook             *dockbook,

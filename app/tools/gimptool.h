@@ -168,7 +168,7 @@ struct _GimpToolClass
 };
 
 
-GType             gimp_tool_get_type            (void) G_GNUC_CONST;
+GType             gimp_tool_get_type            (void);
 
 GimpToolOptions * gimp_tool_get_options         (GimpTool            *tool);
 

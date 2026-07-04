@@ -72,7 +72,7 @@ struct _GimpHeifClass
 #define GIMP_HEIF_TYPE  (gimp_heif_get_type ())
 #define GIMP_HEIF(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_HEIF_TYPE, GimpHeif))
 
-GType                   gimp_heif_get_type    (void) G_GNUC_CONST;
+GType                   gimp_heif_get_type    (void);
 
 static GList          * heif_init_procedures  (GimpPlugIn                   *plug_in);
 static GimpProcedure  * heif_create_procedure (GimpPlugIn                   *plug_in,

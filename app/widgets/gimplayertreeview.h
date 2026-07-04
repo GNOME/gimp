@@ -47,4 +47,4 @@ struct _GimpLayerTreeViewClass
 };
 
 
-GType   gimp_layer_tree_view_get_type (void) G_GNUC_CONST;
+GType   gimp_layer_tree_view_get_type (void);

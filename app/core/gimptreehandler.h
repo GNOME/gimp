@@ -50,7 +50,7 @@ struct _GimpTreeHandlerClass
 };
 
 
-GType             gimp_tree_handler_get_type   (void) G_GNUC_CONST;
+GType             gimp_tree_handler_get_type   (void);
 
 GimpTreeHandler * gimp_tree_handler_connect    (GimpContainer   *container,
                                                 const gchar     *signal_name,

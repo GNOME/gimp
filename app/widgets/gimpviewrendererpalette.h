@@ -52,7 +52,7 @@ struct _GimpViewRendererPaletteClass
 };
 
 
-GType   gimp_view_renderer_palette_get_type    (void) G_GNUC_CONST;
+GType   gimp_view_renderer_palette_get_type    (void);
 
 void    gimp_view_renderer_palette_set_cell_size (GimpViewRendererPalette *renderer,
                                                   gint                     cell_size);

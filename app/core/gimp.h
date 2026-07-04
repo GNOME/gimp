@@ -159,7 +159,7 @@ struct _GimpClass
 };
 
 
-GType          gimp_get_type               (void) G_GNUC_CONST;
+GType          gimp_get_type               (void);
 
 Gimp         * gimp_new                    (const gchar         *name,
                                             const gchar         *session_name,

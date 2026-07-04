@@ -58,4 +58,4 @@ struct _GimpRegionSelectToolClass
 };
 
 
-GType   gimp_region_select_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_region_select_tool_get_type (void);

@@ -100,7 +100,7 @@ struct _GimpStatusbarClass
 };
 
 
-GType       gimp_statusbar_get_type              (void) G_GNUC_CONST;
+GType       gimp_statusbar_get_type              (void);
 GtkWidget * gimp_statusbar_new                   (void);
 
 void        gimp_statusbar_set_shell             (GimpStatusbar       *statusbar,

@@ -47,7 +47,7 @@ struct _GimpBrushClipboardClass
 };
 
 
-GType      gimp_brush_clipboard_get_type (void) G_GNUC_CONST;
+GType      gimp_brush_clipboard_get_type (void);
 
 GimpData * gimp_brush_clipboard_new      (Gimp     *gimp,
                                           gboolean  mask_only);

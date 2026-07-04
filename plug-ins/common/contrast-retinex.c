@@ -77,7 +77,7 @@ struct _RetinexClass
 #define RETINEX_TYPE  (retinex_get_type ())
 #define RETINEX(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RETINEX_TYPE, Retinex))
 
-GType                   retinex_get_type         (void) G_GNUC_CONST;
+GType                   retinex_get_type         (void);
 
 static GList          * retinex_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * retinex_create_procedure (GimpPlugIn           *plug_in,

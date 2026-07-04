@@ -121,7 +121,7 @@ struct _GimpChannelClass
 
 /*  function declarations  */
 
-GType         gimp_channel_get_type           (void) G_GNUC_CONST;
+GType         gimp_channel_get_type           (void);
 
 GimpChannel * gimp_channel_new                (GimpImage         *image,
                                                gint               width,

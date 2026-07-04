@@ -45,4 +45,4 @@ struct _GimpOperationBurnLegacyClass
 };
 
 
-GType   gimp_operation_burn_legacy_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_burn_legacy_get_type (void);

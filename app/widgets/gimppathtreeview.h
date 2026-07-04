@@ -48,4 +48,4 @@ struct _GimpPathTreeViewClass
 };
 
 
-GType   gimp_path_tree_view_get_type (void) G_GNUC_CONST;
+GType   gimp_path_tree_view_get_type (void);

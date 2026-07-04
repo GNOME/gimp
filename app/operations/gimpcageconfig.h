@@ -59,7 +59,7 @@ struct _GimpCageConfigClass
 };
 
 
-GType           gimp_cage_config_get_type               (void) G_GNUC_CONST;
+GType           gimp_cage_config_get_type               (void);
 
 guint           gimp_cage_config_get_n_points           (GimpCageConfig  *gcc);
 void            gimp_cage_config_add_cage_point         (GimpCageConfig  *gcc,

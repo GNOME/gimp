@@ -52,7 +52,7 @@ struct _GimpAsyncClass
 };
 
 
-GType       gimp_async_get_type                (void) G_GNUC_CONST;
+GType       gimp_async_get_type                (void);
 
 GimpAsync * gimp_async_new                     (void);
 

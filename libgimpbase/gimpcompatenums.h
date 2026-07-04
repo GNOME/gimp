@@ -34,7 +34,7 @@ G_BEGIN_DECLS
  */
 #define GIMP_TYPE_ADD_MASK_TYPE_COMPAT (gimp_add_mask_type_compat_get_type ())
 
-GType gimp_add_mask_type_compat_get_type (void) G_GNUC_CONST;
+GType gimp_add_mask_type_compat_get_type (void);
 
 typedef enum /*< skip >*/
 {

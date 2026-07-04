@@ -46,7 +46,7 @@ struct _GimpTagClass
   GObjectClass parent_class;
 };
 
-GType         gimp_tag_get_type            (void) G_GNUC_CONST;
+GType         gimp_tag_get_type            (void);
 
 GimpTag     * gimp_tag_new                 (const gchar *tag_string);
 GimpTag     * gimp_tag_try_new             (const gchar *tag_string);

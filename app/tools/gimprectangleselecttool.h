@@ -61,7 +61,7 @@ struct _GimpRectangleSelectToolClass
 void    gimp_rectangle_select_tool_register (GimpToolRegisterCallback  callback,
                                              gpointer                  data);
 
-GType   gimp_rectangle_select_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_rectangle_select_tool_get_type (void);
 
 
 #endif  /*  __GIMP_RECTANGLE_SELECT_TOOL_H__  */

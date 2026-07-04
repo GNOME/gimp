@@ -52,4 +52,4 @@ struct _GimpInkOptionsClass
 };
 
 
-GType   gimp_ink_options_get_type (void) G_GNUC_CONST;
+GType   gimp_ink_options_get_type (void);

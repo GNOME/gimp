@@ -43,4 +43,4 @@ struct _GimpPerspectiveCloneOptionsClass
 };
 
 
-GType   gimp_perspective_clone_options_get_type (void) G_GNUC_CONST;
+GType   gimp_perspective_clone_options_get_type (void);

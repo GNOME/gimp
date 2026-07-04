@@ -45,4 +45,4 @@ struct _GimpOperationFloodClass
 };
 
 
-GType   gimp_operation_flood_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_flood_get_type (void);

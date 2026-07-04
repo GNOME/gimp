@@ -58,7 +58,7 @@ struct _IcnsClass
 #define ICNS_TYPE (icns_get_type ())
 #define ICNS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ICNS_TYPE, Icns))
 
-GType                   icns_get_type         (void) G_GNUC_CONST;
+GType                   icns_get_type         (void);
 
 static GList          * icns_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * icns_create_procedure (GimpPlugIn            *plug_in,

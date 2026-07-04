@@ -75,7 +75,7 @@ struct _TimClass
 #define TIM_TYPE  (tim_get_type ())
 #define TIM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TIM_TYPE, Tim))
 
-GType                   tim_get_type                  (void) G_GNUC_CONST;
+GType                   tim_get_type                  (void);
 
 
 static GList          *         tim_query_procedures  (GimpPlugIn            *plug_in);

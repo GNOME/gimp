@@ -48,7 +48,7 @@ struct _GimpCanvasGroupClass
 };
 
 
-GType            gimp_canvas_group_get_type           (void) G_GNUC_CONST;
+GType            gimp_canvas_group_get_type           (void);
 
 GimpCanvasItem * gimp_canvas_group_new                (GimpDisplayShell *shell);
 

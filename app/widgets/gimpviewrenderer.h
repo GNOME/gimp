@@ -90,7 +90,7 @@ struct _GimpViewRendererClass
 };
 
 
-GType              gimp_view_renderer_get_type (void) G_GNUC_CONST;
+GType              gimp_view_renderer_get_type (void);
 
 GimpViewRenderer * gimp_view_renderer_new      (GimpContext *context,
                                                 GType        viewable_type,

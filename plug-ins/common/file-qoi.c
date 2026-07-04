@@ -58,7 +58,7 @@ struct _QoiClass
 #define QOI_TYPE  (qoi_get_type ())
 #define QOI(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), QOI_TYPE, Qoi))
 
-GType                   qoi_get_type         (void) G_GNUC_CONST;
+GType                   qoi_get_type         (void);
 
 
 static GList          * qoi_query_procedures (GimpPlugIn            *plug_in);

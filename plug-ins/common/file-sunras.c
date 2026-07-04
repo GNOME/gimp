@@ -104,7 +104,7 @@ struct _SunrasClass
 #define SUNRAS_TYPE  (sunras_get_type ())
 #define SUNRAS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SUNRAS_TYPE, Sunras))
 
-GType                   sunras_get_type         (void) G_GNUC_CONST;
+GType                   sunras_get_type         (void);
 
 static GList          * sunras_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * sunras_create_procedure (GimpPlugIn            *plug_in,

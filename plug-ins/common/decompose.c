@@ -89,7 +89,7 @@ struct _DecomposeClass
 #define DECOMPOSE_TYPE  (decompose_get_type ())
 #define DECOMPOSE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DECOMPOSE_TYPE, Decompose))
 
-GType                   decompose_get_type         (void) G_GNUC_CONST;
+GType                   decompose_get_type         (void);
 
 static GList          * decompose_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * decompose_create_procedure (GimpPlugIn           *plug_in,

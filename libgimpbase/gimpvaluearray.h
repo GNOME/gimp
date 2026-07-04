@@ -39,7 +39,7 @@ G_BEGIN_DECLS
 #define GIMP_VALUE_HOLDS_VALUE_ARRAY(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_VALUE_ARRAY))
 
 
-GType            gimp_value_array_get_type              (void) G_GNUC_CONST;
+GType            gimp_value_array_get_type              (void);
 
 GimpValueArray * gimp_value_array_new                   (gint                   n_prealloced);
 GimpValueArray * gimp_value_array_new_from_types        (gchar                **error_msg,
@@ -87,7 +87,7 @@ void             gimp_value_array_truncate              (GimpValueArray        *
 #define GIMP_IS_PARAM_SPEC_VALUE_ARRAY(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_VALUE_ARRAY))
 
 
-GType        gimp_param_value_array_get_type              (void) G_GNUC_CONST;
+GType        gimp_param_value_array_get_type              (void);
 
 GParamSpec * gimp_param_spec_value_array                  (const gchar    *name,
                                                            const gchar    *nick,

@@ -195,7 +195,7 @@ struct _GimpIfs
 #define GIMP_TYPE_IFS (gimp_ifs_get_type ())
 G_DECLARE_FINAL_TYPE (GimpIfs, gimp_ifs, GIMP, IFS, GimpPlugIn)
 
-GType                   ifs_get_type         (void) G_GNUC_CONST;
+GType                   ifs_get_type         (void);
 
 static void             gimp_ifs_finalize    (GObject              *object);
 

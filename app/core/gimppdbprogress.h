@@ -52,7 +52,7 @@ struct _GimpPdbProgressClass
 };
 
 
-GType             gimp_pdb_progress_get_type        (void) G_GNUC_CONST;
+GType             gimp_pdb_progress_get_type        (void);
 
 GimpPdbProgress * gimp_pdb_progress_get_by_callback (GimpPdbProgressClass *klass,
                                                      const gchar          *callback_name);

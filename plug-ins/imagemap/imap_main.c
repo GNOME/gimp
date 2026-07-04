@@ -63,7 +63,7 @@
 #define GET_REAL_COORD(x) ((x) / _zoom_ratio)
 
 
-GType                   imap_get_type         (void) G_GNUC_CONST;
+GType                   imap_get_type         (void);
 
 static void             gimp_imap_finalize    (GObject              *object);
 

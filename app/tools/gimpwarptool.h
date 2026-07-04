@@ -70,4 +70,4 @@ struct _GimpWarpToolClass
 void    gimp_warp_tool_register (GimpToolRegisterCallback  callback,
                                  gpointer                  data);
 
-GType   gimp_warp_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_warp_tool_get_type (void);

@@ -50,7 +50,7 @@ struct _GimpTemplateViewClass
 };
 
 
-GType       gimp_template_view_get_type (void) G_GNUC_CONST;
+GType       gimp_template_view_get_type (void);
 
 GtkWidget * gimp_template_view_new      (GimpViewType     view_type,
                                          GimpContainer   *container,

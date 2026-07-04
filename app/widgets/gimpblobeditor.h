@@ -50,7 +50,7 @@ struct _GimpBlobEditorClass
 };
 
 
-GType       gimp_blob_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_blob_editor_get_type (void);
 
 GtkWidget * gimp_blob_editor_new      (GimpInkBlobType  type,
                                        gdouble          aspect,

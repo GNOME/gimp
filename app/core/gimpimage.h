@@ -108,7 +108,7 @@ struct _GimpImageClass
 };
 
 
-GType           gimp_image_get_type              (void) G_GNUC_CONST;
+GType           gimp_image_get_type              (void);
 
 GimpImage     * gimp_image_new                   (Gimp               *gimp,
                                                   gint                width,

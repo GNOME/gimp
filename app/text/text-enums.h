@@ -20,7 +20,7 @@
 
 #define GIMP_TYPE_TEXT_BOX_MODE (gimp_text_box_mode_get_type ())
 
-GType gimp_text_box_mode_get_type (void) G_GNUC_CONST;
+GType gimp_text_box_mode_get_type (void);
 
 typedef enum
 {

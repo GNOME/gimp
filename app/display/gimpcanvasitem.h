@@ -65,7 +65,7 @@ struct _GimpCanvasItemClass
 };
 
 
-GType            gimp_canvas_item_get_type         (void) G_GNUC_CONST;
+GType            gimp_canvas_item_get_type         (void);
 
 GimpDisplayShell * gimp_canvas_item_get_shell      (GimpCanvasItem   *item);
 GimpImage      * gimp_canvas_item_get_image        (GimpCanvasItem   *item);

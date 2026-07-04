@@ -72,7 +72,7 @@ struct _Faxg3Class
 #define FAXG3_TYPE  (faxg3_get_type ())
 #define FAXG3 (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FAXG3_TYPE, Faxg3))
 
-GType                   faxg3_get_type         (void) G_GNUC_CONST;
+GType                   faxg3_get_type         (void);
 
 static GList          * faxg3_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * faxg3_create_procedure (GimpPlugIn            *plug_in,

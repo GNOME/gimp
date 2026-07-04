@@ -56,7 +56,7 @@ struct _GimpPaletteEditorClass
 };
 
 
-GType       gimp_palette_editor_get_type   (void) G_GNUC_CONST;
+GType       gimp_palette_editor_get_type   (void);
 
 GtkWidget * gimp_palette_editor_new        (GimpContext        *context,
                                             GimpMenuFactory    *menu_factory);

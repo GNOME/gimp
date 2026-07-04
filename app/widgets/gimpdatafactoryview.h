@@ -47,7 +47,7 @@ struct _GimpDataFactoryViewClass
 };
 
 
-GType             gimp_data_factory_view_get_type                 (void) G_GNUC_CONST;
+GType             gimp_data_factory_view_get_type                 (void);
 
 GtkWidget *       gimp_data_factory_view_new                      (GimpViewType         view_type,
                                                                    GimpDataFactory     *factory,

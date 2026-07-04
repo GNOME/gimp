@@ -54,4 +54,4 @@ struct _GimpOperationCageCoefCalcClass
 };
 
 
-GType   gimp_operation_cage_coef_calc_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_cage_coef_calc_get_type (void);

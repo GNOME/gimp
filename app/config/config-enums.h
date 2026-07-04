@@ -20,7 +20,7 @@
 
 #define GIMP_TYPE_CANVAS_PADDING_MODE (gimp_canvas_padding_mode_get_type ())
 
-GType gimp_canvas_padding_mode_get_type (void) G_GNUC_CONST;
+GType gimp_canvas_padding_mode_get_type (void);
 
 typedef enum
 {
@@ -45,7 +45,7 @@ typedef enum
 
 #define GIMP_TYPE_CURSOR_MODE (gimp_cursor_mode_get_type ())
 
-GType gimp_cursor_mode_get_type (void) G_GNUC_CONST;
+GType gimp_cursor_mode_get_type (void);
 
 typedef enum
 {
@@ -57,7 +57,7 @@ typedef enum
 
 #define GIMP_TYPE_EXPORT_FILE_TYPE (gimp_export_file_type_get_type ())
 
-GType gimp_export_file_type_get_type (void) G_GNUC_CONST;
+GType gimp_export_file_type_get_type (void);
 
 typedef enum
 {
@@ -74,7 +74,7 @@ typedef enum
 
 #define GIMP_TYPE_HANDEDNESS (gimp_handedness_get_type ())
 
-GType gimp_handedness_get_type (void) G_GNUC_CONST;
+GType gimp_handedness_get_type (void);
 
 typedef enum
 {
@@ -96,7 +96,7 @@ typedef enum
 
 #define GIMP_TYPE_ICON_SIZE (gimp_icon_size_get_type ())
 
-GType gimp_icon_size_get_type (void) G_GNUC_CONST;
+GType gimp_icon_size_get_type (void);
 
 typedef enum
 {
@@ -109,7 +109,7 @@ typedef enum
 
 #define GIMP_TYPE_POSITION (gimp_position_get_type ())
 
-GType gimp_position_get_type (void) G_GNUC_CONST;
+GType gimp_position_get_type (void);
 
 typedef enum
 {
@@ -121,7 +121,7 @@ typedef enum
 
 #define GIMP_TYPE_DRAG_ZOOM_MODE (gimp_drag_zoom_mode_get_type ())
 
-GType gimp_drag_zoom_mode_get_type (void) G_GNUC_CONST;
+GType gimp_drag_zoom_mode_get_type (void);
 
 typedef enum
 {
@@ -131,7 +131,7 @@ typedef enum
 
 #define GIMP_TYPE_SPACE_BAR_ACTION (gimp_space_bar_action_get_type ())
 
-GType gimp_space_bar_action_get_type (void) G_GNUC_CONST;
+GType gimp_space_bar_action_get_type (void);
 
 typedef enum
 {
@@ -143,7 +143,7 @@ typedef enum
 
 #define GIMP_TYPE_WINDOW_HINT (gimp_window_hint_get_type ())
 
-GType gimp_window_hint_get_type (void) G_GNUC_CONST;
+GType gimp_window_hint_get_type (void);
 
 typedef enum
 {
@@ -155,7 +155,7 @@ typedef enum
 
 #define GIMP_TYPE_ZOOM_QUALITY (gimp_zoom_quality_get_type ())
 
-GType gimp_zoom_quality_get_type (void) G_GNUC_CONST;
+GType gimp_zoom_quality_get_type (void);
 
 typedef enum
 {
@@ -165,7 +165,7 @@ typedef enum
 
 #define GIMP_TYPE_THEME_SCHEME (gimp_theme_scheme_get_type ())
 
-GType gimp_theme_scheme_get_type (void) G_GNUC_CONST;
+GType gimp_theme_scheme_get_type (void);
 
 typedef enum
 {

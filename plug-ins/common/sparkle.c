@@ -67,7 +67,7 @@ struct _SparkleClass
 #define SPARKLE_TYPE  (sparkle_get_type ())
 #define SPARKLE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SPARKLE_TYPE, Sparkle))
 
-GType                   sparkle_get_type         (void) G_GNUC_CONST;
+GType                   sparkle_get_type         (void);
 
 static GList          * sparkle_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * sparkle_create_procedure (GimpPlugIn           *plug_in,

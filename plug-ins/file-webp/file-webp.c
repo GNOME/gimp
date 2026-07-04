@@ -53,7 +53,7 @@ struct _WebpClass
 #define WEBP_TYPE  (webp_get_type ())
 #define WEBP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WEBP_TYPE, Webp))
 
-GType                           webp_get_type         (void) G_GNUC_CONST;
+GType                           webp_get_type         (void);
 
 static GList                  * webp_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure          * webp_create_procedure (GimpPlugIn            *plug_in,

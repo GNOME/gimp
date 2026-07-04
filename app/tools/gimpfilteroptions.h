@@ -51,7 +51,7 @@ struct _GimpFilterOptionsClass
 };
 
 
-GType   gimp_filter_options_get_type                   (void) G_GNUC_CONST;
+GType   gimp_filter_options_get_type                   (void);
 
 void    gimp_filter_options_switch_preview_side        (GimpFilterOptions *options);
 void    gimp_filter_options_switch_preview_orientation (GimpFilterOptions *options,

@@ -52,7 +52,7 @@ struct _GimpLineArtClass
 };
 
 
-GType                gimp_line_art_get_type         (void) G_GNUC_CONST;
+GType                gimp_line_art_get_type         (void);
 
 GimpLineArt        * gimp_line_art_new              (void);
 

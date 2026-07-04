@@ -78,4 +78,4 @@ struct _GimpSeamlessCloneToolClass
 void    gimp_seamless_clone_tool_register (GimpToolRegisterCallback  callback,
                                            gpointer                  data);
 
-GType   gimp_seamless_clone_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_seamless_clone_tool_get_type (void);

@@ -47,7 +47,7 @@ struct _GimpTreeProxyClass
 };
 
 
-GType           gimp_tree_proxy_get_type (void) G_GNUC_CONST;
+GType           gimp_tree_proxy_get_type (void);
 
 GimpContainer * gimp_tree_proxy_new               (GType          child_type);
 GimpContainer * gimp_tree_proxy_new_for_container (GimpContainer *container);

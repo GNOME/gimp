@@ -57,7 +57,7 @@ struct _WiaClass
 #define WIA_TYPE  (wia_get_type ())
 #define WIA(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), WIA_TYPE, Wia))
 
-GType                   wia_get_type           (void) G_GNUC_CONST;
+GType                   wia_get_type           (void);
 
 static GList          * wia_query_procedures   (GimpPlugIn           *plug_in);
 static GimpProcedure  * wia_create_procedure   (GimpPlugIn           *plug_in,

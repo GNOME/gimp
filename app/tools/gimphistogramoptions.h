@@ -44,4 +44,4 @@ struct _GimpHistogramOptionsClass
 };
 
 
-GType   gimp_histogram_options_get_type (void) G_GNUC_CONST;
+GType   gimp_histogram_options_get_type (void);

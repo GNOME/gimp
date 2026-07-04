@@ -49,7 +49,7 @@ struct _GimpItemChooserClass
 };
 
 
-GType          gimp_item_chooser_get_type     (void) G_GNUC_CONST;
+GType          gimp_item_chooser_get_type     (void);
 
 GtkWidget    * gimp_item_chooser_new          (GimpContext     *context,
                                                GType            item_type,

@@ -45,4 +45,4 @@ struct _GimpOperationHsvHueLegacyClass
 };
 
 
-GType   gimp_operation_hsv_hue_legacy_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_hsv_hue_legacy_get_type (void);

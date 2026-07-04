@@ -55,7 +55,7 @@ typedef void (* GimpPadActionForeach) (GimpPadActions    *pad_actions,
                                        gpointer           data);
 
 
-GType            gimp_pad_actions_get_type      (void) G_GNUC_CONST;
+GType            gimp_pad_actions_get_type      (void);
 
 GimpPadActions * gimp_pad_actions_new           (void);
 

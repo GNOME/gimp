@@ -45,4 +45,4 @@ struct _GimpGuideUndoClass
 };
 
 
-GType   gimp_guide_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_guide_undo_get_type (void);

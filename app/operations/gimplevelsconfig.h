@@ -60,7 +60,7 @@ struct _GimpLevelsConfigClass
 };
 
 
-GType      gimp_levels_config_get_type         (void) G_GNUC_CONST;
+GType      gimp_levels_config_get_type         (void);
 
 void       gimp_levels_config_reset_channel    (GimpLevelsConfig      *config);
 

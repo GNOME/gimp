@@ -22,7 +22,7 @@
 
 #define GIMP_TYPE_LAYER_COLOR_SPACE (gimp_layer_color_space_get_type ())
 
-GType gimp_layer_color_space_get_type (void) G_GNUC_CONST;
+GType gimp_layer_color_space_get_type (void);
 
 typedef enum
 {
@@ -37,7 +37,7 @@ typedef enum
 
 #define GIMP_TYPE_LAYER_COMPOSITE_MODE (gimp_layer_composite_mode_get_type ())
 
-GType gimp_layer_composite_mode_get_type (void) G_GNUC_CONST;
+GType gimp_layer_composite_mode_get_type (void);
 
 typedef enum
 {
@@ -51,7 +51,7 @@ typedef enum
 
 #define GIMP_TYPE_LAYER_MODE (gimp_layer_mode_get_type ())
 
-GType gimp_layer_mode_get_type (void) G_GNUC_CONST;
+GType gimp_layer_mode_get_type (void);
 
 typedef enum
 {
@@ -141,7 +141,7 @@ typedef enum
 
 #define GIMP_TYPE_LAYER_MODE_GROUP (gimp_layer_mode_group_get_type ())
 
-GType gimp_layer_mode_group_get_type (void) G_GNUC_CONST;
+GType gimp_layer_mode_group_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {
@@ -152,7 +152,7 @@ typedef enum  /*< pdb-skip >*/
 
 #define GIMP_TYPE_LAYER_MODE_CONTEXT (gimp_layer_mode_context_get_type ())
 
-GType gimp_layer_mode_context_get_type (void) G_GNUC_CONST;
+GType gimp_layer_mode_context_get_type (void);
 
 typedef enum  /*< pdb-skip >*/
 {

@@ -44,7 +44,7 @@ struct _GimpOverlayBoxClass
 };
 
 
-GType       gimp_overlay_box_get_type            (void) G_GNUC_CONST;
+GType       gimp_overlay_box_get_type            (void);
 
 GtkWidget * gimp_overlay_box_new                 (void);
 

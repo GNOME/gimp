@@ -59,7 +59,7 @@ struct _GimpMenuFactoryClass
 };
 
 
-GType             gimp_menu_factory_get_type             (void) G_GNUC_CONST;
+GType             gimp_menu_factory_get_type             (void);
 GimpMenuFactory * gimp_menu_factory_new                  (Gimp              *gimp,
                                                           GimpActionFactory *action_factory);
 void              gimp_menu_factory_manager_register     (GimpMenuFactory   *factory,

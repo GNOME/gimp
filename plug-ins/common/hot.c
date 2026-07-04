@@ -147,7 +147,7 @@ struct _HotClass
 #define HOT_TYPE  (hot_get_type ())
 #define HOT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), HOT_TYPE, Hot))
 
-GType                   hot_get_type         (void) G_GNUC_CONST;
+GType                   hot_get_type         (void);
 
 static GList          * hot_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * hot_create_procedure (GimpPlugIn           *plug_in,

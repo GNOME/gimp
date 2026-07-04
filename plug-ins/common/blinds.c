@@ -64,7 +64,7 @@ struct _BlindsClass
 #define BLINDS_TYPE  (blinds_get_type ())
 #define BLINDS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BLINDS_TYPE, Blinds))
 
-GType                   blinds_get_type         (void) G_GNUC_CONST;
+GType                   blinds_get_type         (void);
 
 static GList          * blinds_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * blinds_create_procedure (GimpPlugIn           *plug_in,

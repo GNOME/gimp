@@ -107,4 +107,4 @@ struct _GimpGuiConfigClass
 };
 
 
-GType  gimp_gui_config_get_type (void) G_GNUC_CONST;
+GType  gimp_gui_config_get_type (void);

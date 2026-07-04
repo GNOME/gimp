@@ -45,4 +45,4 @@ struct _GimpOperationBufferSourceValidateClass
 };
 
 
-GType   gimp_operation_buffer_source_validate_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_buffer_source_validate_get_type (void);

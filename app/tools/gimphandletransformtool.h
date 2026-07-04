@@ -49,4 +49,4 @@ struct _GimpHandleTransformToolClass
 void    gimp_handle_transform_tool_register (GimpToolRegisterCallback  callback,
                                              gpointer                  data);
 
-GType   gimp_handle_transform_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_handle_transform_tool_get_type (void);

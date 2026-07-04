@@ -68,7 +68,7 @@ struct _GimpTagEntryClass
 };
 
 
-GType          gimp_tag_entry_get_type           (void) G_GNUC_CONST;
+GType          gimp_tag_entry_get_type           (void);
 
 GtkWidget    * gimp_tag_entry_new                (GimpTaggedContainer *container,
                                                   GimpTagEntryMode     mode);

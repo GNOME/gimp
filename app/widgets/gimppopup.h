@@ -45,7 +45,7 @@ struct _GimpPopupClass
 };
 
 
-GType   gimp_popup_get_type (void) G_GNUC_CONST;
+GType   gimp_popup_get_type (void);
 
 void    gimp_popup_show     (GimpPopup *popup,
                              GtkWidget *widget);

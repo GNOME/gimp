@@ -68,7 +68,7 @@ struct _FilmClass
 #define FILM_TYPE  (film_get_type ())
 #define FILM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FILM_TYPE, Film))
 
-GType                   film_get_type         (void) G_GNUC_CONST;
+GType                   film_get_type         (void);
 
 static GList          * film_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * film_create_procedure (GimpPlugIn           *plug_in,

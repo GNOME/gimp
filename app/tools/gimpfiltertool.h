@@ -100,7 +100,7 @@ struct _GimpFilterToolClass
 };
 
 
-GType       gimp_filter_tool_get_type              (void) G_GNUC_CONST;
+GType       gimp_filter_tool_get_type              (void);
 
 void        gimp_filter_tool_get_operation         (GimpFilterTool     *filter_tool,
                                                     GimpDrawableFilter *existing_filter);

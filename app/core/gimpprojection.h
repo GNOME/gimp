@@ -51,7 +51,7 @@ struct _GimpProjectionClass
 };
 
 
-GType            gimp_projection_get_type          (void) G_GNUC_CONST;
+GType            gimp_projection_get_type          (void);
 
 GimpProjection * gimp_projection_new               (GimpProjectable   *projectable);
 

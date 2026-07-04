@@ -47,4 +47,4 @@ struct _GimpViewRendererDrawableClass
 };
 
 
-GType   gimp_view_renderer_drawable_get_type (void) G_GNUC_CONST;
+GType   gimp_view_renderer_drawable_get_type (void);

@@ -55,7 +55,7 @@ struct _GimpCriticalDialogClass
 };
 
 
-GType       gimp_critical_dialog_get_type (void) G_GNUC_CONST;
+GType       gimp_critical_dialog_get_type (void);
 
 GtkWidget * gimp_critical_dialog_new      (const gchar        *title,
                                            const gchar        *last_version,

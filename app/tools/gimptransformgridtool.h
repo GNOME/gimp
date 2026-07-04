@@ -102,7 +102,7 @@ struct _GimpTransformGridToolClass
 };
 
 
-GType      gimp_transform_grid_tool_get_type           (void) G_GNUC_CONST;
+GType      gimp_transform_grid_tool_get_type           (void);
 
 gboolean   gimp_transform_grid_tool_info_to_matrix     (GimpTransformGridTool *tg_tool,
                                                         GimpMatrix3           *transform);

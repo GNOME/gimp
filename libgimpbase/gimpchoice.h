@@ -76,7 +76,7 @@ void            gimp_choice_set_sensitive     (GimpChoice   *choice,
 #define GIMP_IS_PARAM_SPEC_CHOICE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_CHOICE))
 
 
-GType        gimp_param_choice_get_type         (void) G_GNUC_CONST;
+GType        gimp_param_choice_get_type         (void);
 
 GParamSpec * gimp_param_spec_choice             (const gchar  *name,
                                                  const gchar  *nick,

@@ -54,7 +54,7 @@ struct _GimpControllerEditorClass
 };
 
 
-GType       gimp_controller_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_controller_editor_get_type (void);
 
 GtkWidget * gimp_controller_editor_new      (GimpControllerInfo *info,
                                              GimpContext        *context);

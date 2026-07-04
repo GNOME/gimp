@@ -45,5 +45,5 @@ struct _GimpOperationSubtractLegacyClass
 };
 
 
-GType   gimp_operation_subtract_legacy_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_subtract_legacy_get_type (void);
 

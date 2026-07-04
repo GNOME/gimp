@@ -125,7 +125,7 @@ struct _GimpPaintCoreClass
 };
 
 
-GType     gimp_paint_core_get_type                  (void) G_GNUC_CONST;
+GType     gimp_paint_core_get_type                  (void);
 
 void      gimp_paint_core_paint                     (GimpPaintCore    *core,
                                                      GList            *drawables,

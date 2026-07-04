@@ -45,4 +45,4 @@ struct _GimpOperationDifferenceLegacyClass
 };
 
 
-GType   gimp_operation_difference_legacy_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_difference_legacy_get_type (void);

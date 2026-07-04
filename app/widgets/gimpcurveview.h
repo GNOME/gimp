@@ -89,7 +89,7 @@ struct _GimpCurveViewClass
 };
 
 
-GType       gimp_curve_view_get_type          (void) G_GNUC_CONST;
+GType       gimp_curve_view_get_type          (void);
 
 GtkWidget * gimp_curve_view_new               (void);
 

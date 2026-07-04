@@ -45,7 +45,7 @@ struct _GimpObjectQueueClass
 };
 
 
-GType             gimp_object_queue_get_type       (void) G_GNUC_CONST;
+GType             gimp_object_queue_get_type       (void);
 
 GimpObjectQueue * gimp_object_queue_new            (GimpProgress    *progress);
 

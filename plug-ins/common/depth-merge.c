@@ -81,7 +81,7 @@ struct _MergeClass
 #define MERGE_TYPE (merge_get_type ())
 #define MERGE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), MERGE_TYPE, Merge))
 
-GType                   merge_get_type                     (void) G_GNUC_CONST;
+GType                   merge_get_type                     (void);
 
 static void             merge_finalize                     (GObject              *object);
 

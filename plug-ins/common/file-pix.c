@@ -84,7 +84,7 @@ struct _PixClass
 #define PIX_TYPE  (pix_get_type ())
 #define PIX(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PIX_TYPE, Pix))
 
-GType                   pix_get_type         (void) G_GNUC_CONST;
+GType                   pix_get_type         (void);
 
 static GList          * pix_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * pix_create_procedure (GimpPlugIn            *plug_in,

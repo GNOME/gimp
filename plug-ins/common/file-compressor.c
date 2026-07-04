@@ -154,7 +154,7 @@ struct _CompressorClass
 #define COMPRESSOR_TYPE  (compressor_get_type ())
 #define COMPRESSOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), COMPRESSOR_TYPE, Compressor))
 
-GType                   compressor_get_type         (void) G_GNUC_CONST;
+GType                   compressor_get_type         (void);
 
 static GList          * compressor_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * compressor_create_procedure (GimpPlugIn            *plug_in,

@@ -47,5 +47,5 @@ struct _GimpSmudgeClass
 void    gimp_smudge_register (Gimp                      *gimp,
                               GimpPaintRegisterCallback  callback);
 
-GType   gimp_smudge_get_type (void) G_GNUC_CONST;
+GType   gimp_smudge_get_type (void);
 

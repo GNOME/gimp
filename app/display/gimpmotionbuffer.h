@@ -71,7 +71,7 @@ struct _GimpMotionBufferClass
 };
 
 
-GType              gimp_motion_buffer_get_type     (void) G_GNUC_CONST;
+GType              gimp_motion_buffer_get_type     (void);
 
 GimpMotionBuffer * gimp_motion_buffer_new          (void);
 

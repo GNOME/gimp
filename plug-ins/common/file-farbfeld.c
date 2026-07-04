@@ -56,7 +56,7 @@ struct _FarbfeldClass
 #define FARBFELD_TYPE  (farbfeld_get_type ())
 #define FARBFELD(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FARBFELD_TYPE, Farbfeld))
 
-GType                   farbfeld_get_type         (void) G_GNUC_CONST;
+GType                   farbfeld_get_type         (void);
 
 
 static GList          * farbfeld_query_procedures (GimpPlugIn            *plug_in);

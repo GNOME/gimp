@@ -44,7 +44,7 @@ struct _GimpContainerEntryClass
 };
 
 
-GType       gimp_container_entry_get_type (void) G_GNUC_CONST;
+GType       gimp_container_entry_get_type (void);
 
 GtkWidget * gimp_container_entry_new      (GimpContainer *container,
                                            GimpContext   *context,

@@ -48,4 +48,4 @@ struct _GimpTransformGridToolUndoClass
 };
 
 
-GType   gimp_transform_grid_tool_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_transform_grid_tool_undo_get_type (void);

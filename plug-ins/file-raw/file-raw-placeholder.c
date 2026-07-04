@@ -46,7 +46,7 @@ struct _PlaceholderClass
 #define PLACEHOLDER_TYPE  (placeholder_get_type ())
 #define PLACEHOLDER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PLACEHOLDER_TYPE, Placeholder))
 
-GType                   placeholder_get_type         (void) G_GNUC_CONST;
+GType                   placeholder_get_type         (void);
 
 static GList          * placeholder_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * placeholder_create_procedure (GimpPlugIn            *plug_in,

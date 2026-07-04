@@ -46,6 +46,6 @@ struct _GimpPatternClipboardClass
 };
 
 
-GType      gimp_pattern_clipboard_get_type (void) G_GNUC_CONST;
+GType      gimp_pattern_clipboard_get_type (void);
 
 GimpData * gimp_pattern_clipboard_new      (Gimp *gimp);

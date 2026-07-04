@@ -87,7 +87,7 @@ struct _AlignLayersClass
 #define ALIGN_LAYERS_TYPE  (align_layers_get_type ())
 #define ALIGN_LAYERS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), ALIGN_LAYERS_TYPE, AlignLayers))
 
-GType                   align_layers_get_type               (void) G_GNUC_CONST;
+GType                   align_layers_get_type               (void);
 
 static GList          * align_layers_query_procedures       (GimpPlugIn           *plug_in);
 static GimpProcedure  * align_layers_create_procedure       (GimpPlugIn           *plug_in,

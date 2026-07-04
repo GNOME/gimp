@@ -93,7 +93,7 @@ struct _GimpPathClass
 
 /*  path utility functions  */
 
-GType           gimp_path_get_type              (void) G_GNUC_CONST;
+GType           gimp_path_get_type              (void);
 
 GimpPath      * gimp_path_new                   (GimpImage   *image,
                                                  const gchar *name);

@@ -50,4 +50,4 @@ struct _GimpGenericTransformToolClass
 };
 
 
-GType   gimp_generic_transform_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_generic_transform_tool_get_type (void);

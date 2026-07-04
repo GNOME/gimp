@@ -64,7 +64,7 @@ struct _GimpOverlayDialogClass
 };
 
 
-GType       gimp_overlay_dialog_get_type               (void) G_GNUC_CONST;
+GType       gimp_overlay_dialog_get_type               (void);
 
 GtkWidget * gimp_overlay_dialog_new                    (GimpToolInfo      *tool_info,
                                                         const gchar       *desc,

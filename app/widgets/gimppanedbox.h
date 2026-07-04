@@ -52,7 +52,7 @@ struct _GimpPanedBoxClass
 };
 
 
-GType       gimp_paned_box_get_type         (void) G_GNUC_CONST;
+GType       gimp_paned_box_get_type         (void);
 
 GtkWidget * gimp_paned_box_new              (gboolean                 homogeneous,
                                              gint                     spacing,

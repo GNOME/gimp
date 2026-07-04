@@ -107,7 +107,7 @@ struct _GimpDrawableClass
 };
 
 
-GType           gimp_drawable_get_type                (void) G_GNUC_CONST;
+GType           gimp_drawable_get_type                (void);
 
 GimpDrawable  * gimp_drawable_new                     (GType               type,
                                                        GimpImage          *image,

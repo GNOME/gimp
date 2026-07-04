@@ -69,7 +69,7 @@ struct _MetadataClass
 #define METADATA_TYPE  (metadata_get_type ())
 #define METADATA(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), METADATA_TYPE, Metadata))
 
-GType                   metadata_get_type         (void) G_GNUC_CONST;
+GType                   metadata_get_type         (void);
 
 static GList          * metadata_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * metadata_create_procedure (GimpPlugIn           *plug_in,

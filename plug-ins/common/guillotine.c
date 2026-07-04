@@ -48,7 +48,7 @@ struct _GuillotineClass
 #define GUILLOTINE_TYPE  (guillotine_get_type ())
 #define GUILLOTINE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GUILLOTINE_TYPE, Guillotine))
 
-GType                   guillotine_get_type         (void) G_GNUC_CONST;
+GType                   guillotine_get_type         (void);
 
 static GList          * guillotine_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * guillotine_create_procedure (GimpPlugIn           *plug_in,

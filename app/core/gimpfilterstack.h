@@ -45,7 +45,7 @@ struct _GimpFilterStackClass
 };
 
 
-GType           gimp_filter_stack_get_type  (void) G_GNUC_CONST;
+GType           gimp_filter_stack_get_type  (void);
 GimpContainer * gimp_filter_stack_new       (GType            filter_type);
 
 GeglNode *      gimp_filter_stack_get_graph (GimpFilterStack *stack);

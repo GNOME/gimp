@@ -46,4 +46,4 @@ struct _GimpViewRendererImageClass
 };
 
 
-GType   gimp_view_renderer_image_get_type (void) G_GNUC_CONST;
+GType   gimp_view_renderer_image_get_type (void);

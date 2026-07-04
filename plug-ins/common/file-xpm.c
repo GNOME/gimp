@@ -96,7 +96,7 @@ struct _XpmClass
 #define XPM_TYPE  (xpm_get_type ())
 #define XPM(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XPM_TYPE, Xpm))
 
-GType                   xpm_get_type         (void) G_GNUC_CONST;
+GType                   xpm_get_type         (void);
 
 static GList          * xpm_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * xpm_create_procedure (GimpPlugIn            *plug_in,

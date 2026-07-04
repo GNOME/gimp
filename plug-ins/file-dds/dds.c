@@ -60,7 +60,7 @@ struct _DdsClass
 #define DDS_TYPE  (dds_get_type ())
 #define DDS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), DDS_TYPE, Dds))
 
-GType                   dds_get_type         (void) G_GNUC_CONST;
+GType                   dds_get_type         (void);
 
 static GList          * dds_query_procedures (GimpPlugIn            *plug_in);
 static GimpProcedure  * dds_create_procedure (GimpPlugIn            *plug_in,

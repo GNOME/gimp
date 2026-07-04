@@ -88,7 +88,7 @@ struct _GimpVector2
  */
 #define GIMP_TYPE_VECTOR2 (gimp_vector2_get_type ())
 
-GType gimp_vector2_get_type (void) G_GNUC_CONST;
+GType gimp_vector2_get_type (void);
 
 
 /**
@@ -111,7 +111,7 @@ struct _GimpVector3
  */
 #define GIMP_TYPE_VECTOR3 (gimp_vector3_get_type ())
 
-GType gimp_vector3_get_type (void) G_GNUC_CONST;
+GType gimp_vector3_get_type (void);
 
 
 /**

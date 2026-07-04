@@ -162,7 +162,7 @@ struct _RawClass
 #define RAW_TYPE  (raw_get_type ())
 #define RAW(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RAW_TYPE, Raw))
 
-GType                   raw_get_type         (void) G_GNUC_CONST;
+GType                   raw_get_type         (void);
 
 static GList          * raw_query_procedures (GimpPlugIn               *plug_in);
 static GimpProcedure  * raw_create_procedure (GimpPlugIn               *plug_in,

@@ -45,6 +45,6 @@ struct _GimpUncancelableWaitableClass
 };
 
 
-GType          gimp_uncancelable_waitable_get_type (void) G_GNUC_CONST;
+GType          gimp_uncancelable_waitable_get_type (void);
 
 GimpWaitable * gimp_uncancelable_waitable_new      (GimpWaitable *waitable);
