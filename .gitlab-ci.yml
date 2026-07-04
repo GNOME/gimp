@@ -219,7 +219,7 @@ deps-debian-nonreloc:
             libappstream-dev
             libarchive-dev
             libasound2-dev
-            libbacktrace-dev
+            $BACKTRACE
             libbz2-dev
             libcfitsio-dev
             libgexiv2-dev
@@ -374,6 +374,7 @@ gimp-debian-nonreloc:
     DEB_VERSION: "trixie"
     UMFPACK: libumfpack6
     LIBHEIF_PLUGINS: "libheif-plugin-dav1d libheif-plugin-aomenc libheif-plugin-libde265 libheif-plugin-x265 libheif-plugin-j2kdec libheif-plugin-j2kenc"
+    BACKTRACE: libbacktrace-dev
 
 deps-debian:
   extends: .debian
