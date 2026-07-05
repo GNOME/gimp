@@ -87,8 +87,15 @@ syntaxes = [
   'ncsa',
 ]
 
-flex  = find_program('flex',  required: false)
-bison = find_program('bison', required: false)
+#TODO: on meson 1.10+, use 'codegen' module
+if not platform_windows
+  flex  = find_program('flex',  required: false)
+  bison = find_program('bison', required: false)
+else
+  #ensure we use native binaries from winflexbison, not the CYGWIN ones from MSYS2
+  flex  = find_program('win_flex',  required: false)
+  bison = find_program('win_bison', required: false)
+endif
 
 if flex.found() and bison.found()
   lex_gen = generator(
