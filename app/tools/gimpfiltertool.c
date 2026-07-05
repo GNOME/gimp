@@ -56,17 +56,12 @@
 #include "core/gimpimage-pick-color.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
-#include "core/gimplinklayer.h"
 #include "core/gimplist.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
-
-#include "path/gimpvectorlayer.h"
-
-#include "text/gimptextlayer.h"
 
 #include "widgets/gimplayermodebox.h"
 #include "widgets/gimppropwidgets.h"
@@ -435,7 +430,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
               GParamSpec  *param_spec;
               GObject     *obj = G_OBJECT (tool_info->tool_options);
               gchar       *tooltip;
-              const gchar *disabled_reason;
+              gchar       *disabled_reason;
+              const gchar *default_name;
               gboolean     show_merge;
 
               param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (obj),
@@ -445,24 +441,35 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                 gtk_check_button_new_with_mnemonic (g_param_spec_get_nick (param_spec));
 
               show_merge = gimp_item_is_rasterized (GIMP_ITEM (drawable));
-              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), show_merge);
+              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                            show_merge);
               gtk_widget_set_sensitive (toggle, FALSE);
 
-              if (gegl_node_has_pad (filter_tool->operation, "aux"))
-                disabled_reason = _("Disabled because this filter depends on another image.");
-              else if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
-                disabled_reason = _("Disabled because filters cannot be merged on vector layers.");
-              else if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
-                disabled_reason = _("Disabled because filters cannot be merged on link layers.");
-              else if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
-                disabled_reason = _("Disabled because filters cannot be merged on text layers.");
-              else
-                disabled_reason = _("Disabled because GEGL Graph is unsafe.\nFor development purpose, "
-                                    "set environment variable GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT.");
+              default_name =
+                GIMP_VIEWABLE_GET_CLASS (GIMP_VIEWABLE (drawable))->default_name;
 
-              tooltip = g_strdup_printf ("%s\n<i>%s</i>", g_param_spec_get_blurb (param_spec), disabled_reason);
+              if (gegl_node_has_pad (filter_tool->operation, "aux"))
+                disabled_reason = g_strdup (_("Disabled because this filter "
+                                              "depends on another image."));
+              else if (gimp_item_is_rasterizable (GIMP_ITEM (drawable)) &&
+                       ! gimp_item_is_rasterized (GIMP_ITEM (drawable)))
+                /* TRANSLATORS: The %s will be replaced by the name of the
+                 * layer type. */
+                disabled_reason = g_strdup_printf ("Disabled because filters "
+                                                   "cannot be merged on: %s.",
+                                                   default_name);
+              else
+                disabled_reason =
+                  g_strdup (_("Disabled because GEGL Graph is unsafe.\nFor "
+                              "development purpose, set environment variable "
+                              "GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT."));
+
+              tooltip = g_strdup_printf ("%s\n<i>%s</i>",
+                                         g_param_spec_get_blurb (param_spec),
+                                         disabled_reason);
               gimp_help_set_help_data_with_markup (toggle, tooltip, NULL);
               g_free (tooltip);
+              g_free (disabled_reason);
 
               gtk_widget_set_visible (toggle, TRUE);
             }
