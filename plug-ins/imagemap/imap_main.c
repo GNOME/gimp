@@ -1551,8 +1551,10 @@ dialog (GimpImap *imap)
   /* Create toolbar */
   toolbar = gtk_toolbar_new ();
 
+#ifdef HAVE_FLEX_BISON
   add_tool_button (toolbar, "app.open", GIMP_ICON_DOCUMENT_OPEN,
                    _("Open"), _("Open"));
+#endif
   add_tool_button (toolbar, "app.save", GIMP_ICON_DOCUMENT_SAVE,
                    _("Save"), _("Save"));
   add_tool_separator (toolbar, FALSE);

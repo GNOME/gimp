@@ -63,11 +63,6 @@ plugin_sourcecode = [
 ]
 plugin_sources = plugin_sourcecode + imagemap_icon_sources
 
-plugin_sources += gnome.compile_resources(
-  'imagemap-menus',
-  'imagemap-menus.gresource.xml',
-)
-
 if platform_windows
   plugin_sources += windows.compile_resources(
     gimp_plugins_rc,
@@ -97,7 +92,17 @@ else
   bison = find_program('win_bison', required: false)
 endif
 
+menu_config = configuration_data()
+toolbar_compiler_args = []
 if flex.found() and bison.found()
+  #Only show Open menu if imagemap was built with flex and bison (see issue #14145)
+  toolbar_compiler_args += '-DHAVE_FLEX_BISON'
+  multiline_xml = '''<item>
+                      <attribute name="label" translatable="yes">Open</attribute>
+                      <attribute name="action">app.open</attribute>
+                     </item>'''
+  menu_config.set('OPTIONAL_OPEN_MENU', multiline_xml)
+
   lex_gen = generator(
                 flex,
      arguments: [
@@ -151,12 +156,26 @@ else
   endforeach
 endif
 
+menu_ui = configure_file(
+  input: 'imap-menu.ui.in',
+  output: 'imap-menu.ui',
+  configuration: menu_config
+)
+
+plugin_sources += gnome.compile_resources(
+  'imagemap-menus',
+  'imagemap-menus.gresource.xml',
+  dependencies: menu_ui,
+  source_dir: meson.current_build_dir()
+)
+
 plugin_exe = executable(plugin_name,
                         plugin_sources,
                         dependencies: [
                           libgimpui_dep,
                           math,
                         ],
+                        c_args: toolbar_compiler_args,
                         win_subsystem: 'windows',
                         install: true,
                         install_dir: gimpplugindir / 'plug-ins' / plugin_name)
