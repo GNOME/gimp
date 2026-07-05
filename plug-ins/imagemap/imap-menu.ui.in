@@ -4,10 +4,7 @@
     <submenu>
       <attribute name="label" translatable="yes">File</attribute>
       <section>
-        <item>
-          <attribute name="label" translatable="yes">Open</attribute>
-          <attribute name="action">app.open</attribute>
-        </item>
+        @OPTIONAL_OPEN_MENU@
         <item>
           <attribute name="label" translatable="yes">Save</attribute>
           <attribute name="action">app.save</attribute>
