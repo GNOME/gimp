@@ -74,13 +74,12 @@ static void get_button_colors (PreferencesDialog_t *dialog,
                                ColorSelData_t *colors);
 
 static gint
-parse_map_type(void)
+parse_map_type(char **context)
 {
 #ifndef _UCRT
    char *token = strtok(NULL, " )");
 #else
-   gchar *context  = NULL;
-   char  *token = strtok_s(NULL, " )", &context);
+   char *token = strtok_s(NULL, " )", context);
 #endif
    if (!strcmp(token, "ncsa"))
       return NCSA;
@@ -90,46 +89,43 @@ parse_map_type(void)
 }
 
 static gint
-parse_yes_no(void)
+parse_yes_no(char **context)
 {
 #ifndef _UCRT
    char *token = strtok(NULL, " )");
 #else
-   gchar *context  = NULL;
-   char  *token = strtok_s(NULL, " )", &context);
+   char *token = strtok_s(NULL, " )", context);
 #endif
    return (gint) strcmp(token, "no");
 }
 
 static gint
-parse_int(void)
+parse_int(char **context)
 {
 #ifndef _UCRT
    char *token = strtok(NULL, " )");
 #else
-   gchar *context  = NULL;
-   char  *token    = strtok_s(NULL, " )", &context);
+   char *token = strtok_s(NULL, " )", context);
 #endif
    return (gint) atoi(token);
 }
 
 static void
-parse_color(GdkRGBA *color)
+parse_color(GdkRGBA *color, char **context)
 {
-  color->red   = (gdouble) parse_int() / 255.0;
-  color->green = (gdouble) parse_int() / 255.0;
-  color->blue  = (gdouble) parse_int() / 255.0;
+  color->red   = (gdouble) parse_int(context) / 255.0;
+  color->green = (gdouble) parse_int(context) / 255.0;
+  color->blue  = (gdouble) parse_int(context) / 255.0;
   color->alpha = 1.0;
 }
 
 static void
-parse_mru_entry(void)
+parse_mru_entry(char **context)
 {
 #ifndef _UCRT
    char *filename = strtok(NULL, " )");
 #else
-   gchar *context  = NULL;
-   char  *filename = strtok_s(NULL, " )", &context);
+   char *filename = strtok_s(NULL, " )", context);
 #endif
    mru_add(get_mru(), filename);
 }
@@ -139,9 +135,7 @@ parse_line(PreferencesData_t *data, char *line)
 {
    char           *token;
    ColorSelData_t *colors = &data->colors;
-#ifdef _UCRT
    gchar          *context = NULL;
-#endif
 
    line++;                      /* Skip '(' */
 #ifndef _UCRT
@@ -151,41 +145,41 @@ parse_line(PreferencesData_t *data, char *line)
 #endif
 
    if (!strcmp(token, "default-map-type")) {
-      data->default_map_type = parse_map_type();
+      data->default_map_type = parse_map_type(&context);
    }else if (!strcmp(token, "prompt-for-area-info")) {
-      data->prompt_for_area_info = parse_yes_no();
+      data->prompt_for_area_info = parse_yes_no(&context);
    } else if (!strcmp(token, "require-default-url")) {
-      data->require_default_url = parse_yes_no();
+      data->require_default_url = parse_yes_no(&context);
    } else if (!strcmp(token, "show-area-handle")) {
-      data->show_area_handle = parse_yes_no();
+      data->show_area_handle = parse_yes_no(&context);
    } else if (!strcmp(token, "keep-circles-round")) {
-      data->keep_circles_round = parse_yes_no();
+      data->keep_circles_round = parse_yes_no(&context);
    } else if (!strcmp(token, "show-url-tip")) {
-      data->show_url_tip = parse_yes_no();
+      data->show_url_tip = parse_yes_no(&context);
    } else if (!strcmp(token, "use-doublesized")) {
-      data->use_doublesized = parse_yes_no();
+      data->use_doublesized = parse_yes_no(&context);
    } else if (!strcmp(token, "mru-size")) {
-      data->mru_size = parse_int();
+      data->mru_size = parse_int(&context);
       if (data->mru_size < 1)
         data->mru_size = 1;
    } else if (!strcmp(token, "undo-levels")) {
-      data->undo_levels = parse_int();
+      data->undo_levels = parse_int(&context);
       if (data->undo_levels < 1)
         data->undo_levels = 1;
    } else if (!strcmp(token, "normal-fg-color")) {
-      parse_color(&colors->normal_fg);
+      parse_color(&colors->normal_fg, &context);
    } else if (!strcmp(token, "normal-bg-color")) {
-      parse_color(&colors->normal_bg);
+      parse_color(&colors->normal_bg, &context);
    } else if (!strcmp(token, "selected-fg-color")) {
-      parse_color(&colors->selected_fg);
+      parse_color(&colors->selected_fg, &context);
    } else if (!strcmp(token, "selected-bg-color")) {
-      parse_color(&colors->selected_bg);
+      parse_color(&colors->selected_bg, &context);
    } else if (!strcmp(token, "interactive-fg-color")) {
-      parse_color(&colors->interactive_fg);
+      parse_color(&colors->interactive_fg, &context);
    } else if (!strcmp(token, "interactive-bg-color")) {
-      parse_color(&colors->interactive_bg);
+      parse_color(&colors->interactive_bg, &context);
    } else if (!strcmp(token, "mru-entry")) {
-      parse_mru_entry();
+      parse_mru_entry(&context);
    } else {
       /* Unrecognized, just ignore rest of line */
    }
