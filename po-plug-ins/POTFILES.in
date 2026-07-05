@@ -127,6 +127,7 @@ plug-ins/file-raw/file-darktable.c
 plug-ins/file-raw/file-raw-formats.h
 plug-ins/file-raw/file-raw-placeholder.c
 plug-ins/file-raw/file-rawtherapee.c
+plug-ins/file-sgi/sgi-lib.c
 plug-ins/file-sgi/sgi.c
 plug-ins/file-tiff/file-tiff.c
 plug-ins/file-tiff/file-tiff-export.c
