@@ -946,16 +946,16 @@ validate_header (dds_header_t  *hdr,
       if (hdr->pixelfmt.fourcc[0] <= 0 || hdr->pixelfmt.fourcc[1] <= 0 ||
           hdr->pixelfmt.fourcc[2] <= 0 || hdr->pixelfmt.fourcc[3] <= 0)
         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                    _("Unsupported format (FourCC hex: %08x)"),
-                    GETL32 (hdr->pixelfmt.fourcc));
+                     _("Unsupported format (FourCC hex: %08x)"),
+                     GETL32 (hdr->pixelfmt.fourcc));
       else
         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                    _("Unsupported format (FourCC: %c%c%c%c, hex: %08x)"),
-                    hdr->pixelfmt.fourcc[0],
-                    hdr->pixelfmt.fourcc[1],
-                    hdr->pixelfmt.fourcc[2],
-                    hdr->pixelfmt.fourcc[3],
-                    GETL32 (hdr->pixelfmt.fourcc));
+                     _("Unsupported format (FourCC: %c%c%c%c, hex: %08x)"),
+                     hdr->pixelfmt.fourcc[0],
+                     hdr->pixelfmt.fourcc[1],
+                     hdr->pixelfmt.fourcc[2],
+                     hdr->pixelfmt.fourcc[3],
+                     GETL32 (hdr->pixelfmt.fourcc));
       return FALSE;
     }
 
