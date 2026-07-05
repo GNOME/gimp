@@ -342,7 +342,6 @@ fi
 
 count_repo_contributors "../ctx.graphics" dev "[ctx](https://ctx.graphics/) had %d commits since $int_version release by %d contributors: %s"
 count_repo_contributors "../gimp-test-images" main "The \`gimp-test-images\` (unit testing repository) repository had %d commits by %d contributors: %s"
-count_repo_contributors "../gimp-macos-build" master "The \`gimp-macos-build\` (macOS packaging scripts) release had %d commits by %d contributors: %s"
 # TODO:
 # * flatpak often has bot commits. These should be filtered out.
 # * detect a beta vs. stable release and tweak branch accordingly.
