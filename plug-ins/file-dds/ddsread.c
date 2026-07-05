@@ -941,13 +941,21 @@ validate_header (dds_header_t  *hdr,
       fourcc != FOURCC ('D','X','1','0')  &&
       hdr->pixelfmt.fourcc[1] != 0)
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Unsupported format (FourCC: %c%c%c%c, hex: %08x)"),
-                   hdr->pixelfmt.fourcc[0],
-                   hdr->pixelfmt.fourcc[1] != 0 ? hdr->pixelfmt.fourcc[1] : ' ',
-                   hdr->pixelfmt.fourcc[2] != 0 ? hdr->pixelfmt.fourcc[2] : ' ',
-                   hdr->pixelfmt.fourcc[3] != 0 ? hdr->pixelfmt.fourcc[3] : ' ',
-                   GETL32 (hdr->pixelfmt.fourcc));
+      /* Negative values denote invalid UTF-8 character values,
+       * so only show the hex value of FourCC for those. */
+      if (hdr->pixelfmt.fourcc[0] <= 0 || hdr->pixelfmt.fourcc[1] <= 0 ||
+          hdr->pixelfmt.fourcc[2] <= 0 || hdr->pixelfmt.fourcc[3] <= 0)
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                    _("Unsupported format (FourCC hex: %08x)"),
+                    GETL32 (hdr->pixelfmt.fourcc));
+      else
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                    _("Unsupported format (FourCC: %c%c%c%c, hex: %08x)"),
+                    hdr->pixelfmt.fourcc[0],
+                    hdr->pixelfmt.fourcc[1],
+                    hdr->pixelfmt.fourcc[2],
+                    hdr->pixelfmt.fourcc[3],
+                    GETL32 (hdr->pixelfmt.fourcc));
       return FALSE;
     }
 
