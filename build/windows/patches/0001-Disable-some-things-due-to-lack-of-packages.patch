@@ -1,6 +1,6 @@
-From 8f92f0dfdf4e8cec8a555dd9e837ed913b7415dc Mon Sep 17 00:00:00 2001
+From 59a12185b73f9b1e0b0d088f1c7a32eb5a020849 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Mon, 22 Jun 2026 10:17:22 -0300
+Date: Sun, 5 Jul 2026 17:56:35 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 ---
@@ -16,7 +16,8 @@ Subject: [PATCH] Disable some things due to lack of packages
  devel-docs/meson.build                  |  2 +-
  libgimp/meson.build                     |  4 +-
  meson.build                             | 39 ++++---------------
- 12 files changed, 12 insertions(+), 144 deletions(-)
+ plug-ins/meson.build                    |  9 -----
+ 13 files changed, 12 insertions(+), 153 deletions(-)
 
 diff --git a/app/core/gimp.c b/app/core/gimp.c
 index bba1e86608..be367be104 100644
@@ -51,7 +52,7 @@ index bba1e86608..be367be104 100644
  
    gimp_data_factories_save (gimp);
 diff --git a/app/core/meson.build b/app/core/meson.build
-index 656d36a9c2..bcd3c84b2f 100644
+index f96f333fb6..72f1fd5c42 100644
 --- a/app/core/meson.build
 +++ b/app/core/meson.build
 @@ -125,9 +125,6 @@ libappcore_sources = [
@@ -277,10 +278,10 @@ index 06ceea343e..e81e1240be 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index 20b8932a35..c270300366 100644
+index 0c889d6ea3..187bb756cd 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -296,7 +296,7 @@ warning_cflags_common = [
+@@ -292,7 +292,7 @@ warning_cflags_common = [
    '-fno-common',
  
    '-Wformat',
@@ -289,7 +290,7 @@ index 20b8932a35..c270300366 100644
    '-Winit-self',
    '-Wlogical-op',
    '-Wmissing-declarations',
-@@ -706,7 +706,7 @@ endif
+@@ -702,7 +702,7 @@ endif
  # Check for extension support
  
  appstream_minver = '0.16.1'
@@ -298,7 +299,7 @@ index 20b8932a35..c270300366 100644
  
  libarchive = dependency('libarchive')
  
-@@ -1200,7 +1200,7 @@ pygobject_found = ''
+@@ -1193,7 +1193,7 @@ pygobject_found = ''
  pygobject_gexiv2_found = false
  foreach py : py_candidates
    #Check if PyGobject installation have pycairo (#13105)
@@ -307,7 +308,7 @@ index 20b8932a35..c270300366 100644
    if python_tmp.found() and python_tmp.language_version().version_compare(python3_minver)
      python = python_tmp
      #Check if PyGObject installation have minimum version
-@@ -1219,9 +1219,7 @@ foreach py : py_candidates
+@@ -1212,9 +1212,7 @@ foreach py : py_candidates
                                          '''except (ImportError):''',
                                          '''    sys.exit(1)''']),
                                          check: false).returncode() == 0
@@ -318,7 +319,7 @@ index 20b8932a35..c270300366 100644
    endif
  endforeach
  
-@@ -1230,11 +1228,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
+@@ -1223,11 +1221,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
  endif
  message('Found Python @0@'.format(python.language_version()))
  
@@ -330,7 +331,7 @@ index 20b8932a35..c270300366 100644
  ## Javascript
  
  gjs = find_program('gjs', required: false)
-@@ -1988,15 +1981,11 @@ subdir('libgimpwidgets')
+@@ -1981,15 +1974,11 @@ subdir('libgimpwidgets')
  subdir('libgimp')
  
  # Executables, plugins
@@ -346,7 +347,7 @@ index 20b8932a35..c270300366 100644
  ################################################################################
  # Make GIMP runnable without being installed for unit-testing or as a build
  # tool.
-@@ -2014,13 +2003,13 @@ if get_option('debug-self-in-build')
+@@ -2007,13 +1996,13 @@ if get_option('debug-self-in-build')
  endif
  gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
  
@@ -362,7 +363,7 @@ index 20b8932a35..c270300366 100644
    gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
  
    menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
-@@ -2078,18 +2067,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+@@ -2071,18 +2060,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
      gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpthumb.full_path())
      gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpwidgets.full_path())
    endif
@@ -381,7 +382,7 @@ index 20b8932a35..c270300366 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2098,7 +2075,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
+@@ -2091,7 +2068,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
  # Subdirs: part 2
  
  # gimp-data submodule part 2
@@ -390,7 +391,7 @@ index 20b8932a35..c270300366 100644
  
  # Unit testing
  subdir('app/tests')
-@@ -2283,7 +2260,7 @@ final_message = [
+@@ -2276,7 +2253,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
  '''Documentation:''',
@@ -399,6 +400,26 @@ index 20b8932a35..c270300366 100644
  '',
  '''Bug report URL: @0@'''.format(bug_report_url),
  ]
+diff --git a/plug-ins/meson.build b/plug-ins/meson.build
+index 3e28f17306..31762f0dd8 100644
+--- a/plug-ins/meson.build
++++ b/plug-ins/meson.build
+@@ -87,15 +87,6 @@ foreach plugin : complex_plugins_list
+ endforeach
+ 
+ 
+-subdir('python')
+-
+-foreach plugin : python_plugins
+-  if plugin.get('name').startswith('file-')
+-    all_plugins_sources += [ meson.current_source_dir() / 'python' / plugin.get('name') + '.py' ]
+-  endif
+-endforeach
+-
+-
+ #Dynamically created list of supported files with the plugins lists above
+ MIMEtypes_output = run_command(
+   python,
 -- 
 2.50.1 (Apple Git-155)
 
