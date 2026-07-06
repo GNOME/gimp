@@ -513,6 +513,19 @@ arch_accel (void)
 #endif /* ARCH_PPC && USE_ALTIVEC */
 
 
+#ifdef ARCH_ARM64
+
+#define HAVE_ACCEL 1
+
+static guint32
+arch_accel (void)
+{
+  return GIMP_CPU_ACCEL_ARM_NEON;
+}
+
+#endif /* ARCH_ARM64 */
+
+
 static GimpCpuAccelFlags
 cpu_accel (void)
 {

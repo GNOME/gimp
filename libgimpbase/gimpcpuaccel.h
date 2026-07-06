@@ -40,6 +40,7 @@ G_BEGIN_DECLS
  * @GIMP_CPU_ACCEL_X86_SSE4_2:  SSE4_2
  * @GIMP_CPU_ACCEL_X86_AVX:     AVX
  * @GIMP_CPU_ACCEL_PPC_ALTIVEC: Altivec
+ * @GIMP_CPU_ACCEL_ARM_NEON:    NEON
  *
  * Types of detectable CPU accelerations
  **/
@@ -60,7 +61,10 @@ typedef enum
   GIMP_CPU_ACCEL_X86_AVX     = 0x00200000,
 
   /* powerpc accelerations */
-  GIMP_CPU_ACCEL_PPC_ALTIVEC = 0x04000000
+  GIMP_CPU_ACCEL_PPC_ALTIVEC = 0x04000000,
+
+  /* arm accelerations */
+  GIMP_CPU_ACCEL_ARM_NEON    = 0x00100000
 } GimpCpuAccelFlags;
 
 

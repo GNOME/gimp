@@ -12,7 +12,7 @@
 static void
 cpu_accel_print_results (void)
 {
-#if defined(ARCH_X86) || defined(ARCH_PPC)
+#if defined(ARCH_X86) || defined(ARCH_PPC) || defined(ARCH_ARM64)
   GimpCpuAccelFlags  support;
 
   g_printerr ("Testing CPU features...\n");
@@ -37,6 +37,10 @@ cpu_accel_print_results (void)
 #ifdef ARCH_PPC
   g_printerr ("  altivec : %s\n",
               (support & GIMP_CPU_ACCEL_PPC_ALTIVEC) ? "yes" : "no");
+#endif
+#ifdef ARCH_ARM64
+  g_printerr ("  neon    : %s\n",
+              (support & GIMP_CPU_ACCEL_ARM_NEON)    ? "yes" : "no");
 #endif
   g_printerr ("\n");
 }
