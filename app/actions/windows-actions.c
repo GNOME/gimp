@@ -461,7 +461,7 @@ windows_actions_update_display_accels (GimpActionGroup *group)
           if (i < 9)
             accel = gtk_accelerator_name (GDK_KEY_1 + i, GDK_MOD1_MASK);
           else
-            accel = gtk_accelerator_name (GDK_KEY_0 + i, GDK_MOD1_MASK);
+            accel = gtk_accelerator_name (GDK_KEY_0, GDK_MOD1_MASK);
 
           gimp_action_set_accels (action, (const gchar*[]) { accel, NULL });
           g_free (accel);
