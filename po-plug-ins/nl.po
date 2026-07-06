@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-01 04:13+0000\n"
-"PO-Revision-Date: 2026-07-01 10:43+020011\n"
+"POT-Creation-Date: 2026-07-06 08:20+0000\n"
+"PO-Revision-Date: 2026-07-06 13:55+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -145,7 +145,7 @@ msgstr "Plug-in voorbeeld in Javascript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5135 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5193 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -331,8 +331,8 @@ msgstr "_Raster"
 
 #: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:741
 #: plug-ins/gfig/gfig-dialog.c:1331 plug-ins/gfig/gfig-menu.ui:31
-#: plug-ins/imagemap/imap_main.c:1588 plug-ins/imagemap/imap-menu.ui:192
-#: plug-ins/imagemap/imap-menu.ui:284
+#: plug-ins/imagemap/imap_main.c:1590 plug-ins/imagemap/imap-menu.ui.in:189
+#: plug-ins/imagemap/imap-menu.ui.in:281
 msgid "Grid"
 msgstr "Raster"
 
@@ -459,7 +459,7 @@ msgstr "De animatie loskoppelen van het dialoogvenster"
 msgid "Reload the image"
 msgstr "Afbeelding herladen"
 
-#: plug-ins/common/animation-play.c:411 plug-ins/imagemap/imap-menu.ui:26
+#: plug-ins/common/animation-play.c:411 plug-ins/imagemap/imap-menu.ui.in:23
 msgid "Quit"
 msgstr "Afsluiten"
 
@@ -503,7 +503,7 @@ msgstr "Afspeelsnelheid"
 #. Zoom Options
 #: plug-ins/common/animation-play.c:881
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679
-#: plug-ins/imagemap/imap-menu.ui:271
+#: plug-ins/imagemap/imap-menu.ui.in:268
 msgid "Zoom"
 msgstr "Zoomen"
 
@@ -515,7 +515,7 @@ msgstr "Herladen"
 msgid "Detach"
 msgstr "Loskoppelen"
 
-#: plug-ins/common/animation-play.c:893 plug-ins/imagemap/imap-menu.ui:212
+#: plug-ins/common/animation-play.c:893 plug-ins/imagemap/imap-menu.ui.in:209
 msgid "Help"
 msgstr "Hulp"
 
@@ -618,7 +618,7 @@ msgstr "Rolgordijnen"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:259
 #: plug-ins/file-psd/psd-image-res-load.c:1109
-#: plug-ins/file-psd/psd-load.c:4310 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:4368 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1238,7 +1238,7 @@ msgstr "CML-verkennerparameters opslaan"
 
 #: plug-ins/common/cml-explorer.c:2197 plug-ins/common/curve-bend.c:755
 #: plug-ins/common/file-dicom.c:1582 plug-ins/common/file-farbfeld.c:372
-#: plug-ins/common/file-mng.c:1217 plug-ins/common/file-mng.c:1567
+#: plug-ins/common/file-mng.c:1280 plug-ins/common/file-mng.c:1630
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1948 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
@@ -1247,8 +1247,8 @@ msgstr "CML-verkennerparameters opslaan"
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
-#: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2532
-#: plug-ins/file-psd/psd-export.c:2700
+#: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2534
+#: plug-ins/file-psd/psd-export.c:2702
 #: plug-ins/file-tiff/file-tiff-export.c:1101
 #: plug-ins/file-tiff/file-tiff-export.c:1221 plug-ins/flame/flame.c:586
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396
@@ -1980,7 +1980,7 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/common/file-drhalo.c:201 plug-ins/common/file-farbfeld.c:273
 #: plug-ins/common/file-gif-load.c:481 plug-ins/common/file-iff.c:277
 #: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:198
-#: plug-ins/common/file-mng.c:1020 plug-ins/common/file-mng.c:1751
+#: plug-ins/common/file-mng.c:1067 plug-ins/common/file-mng.c:1814
 #: plug-ins/common/file-paa.c:191 plug-ins/common/file-pcx.c:490
 #: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:801
 #: plug-ins/common/file-png.c:1372 plug-ins/common/file-ps.c:1158
@@ -2002,8 +2002,8 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711
-#: plug-ins/file-psd/psd-export.c:2538 plug-ins/file-psd/psd-export.c:2706
-#: plug-ins/file-psd/psd-load.c:207 plug-ins/file-psd/psd-load.c:212
+#: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
+#: plug-ins/file-psd/psd-load.c:214 plug-ins/file-psd/psd-load.c:219
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
@@ -2465,7 +2465,7 @@ msgid "White level"
 msgstr "Witniveau"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
-#: plug-ins/common/file-mng.c:1070 plug-ins/common/file-pcx.c:719
+#: plug-ins/common/file-mng.c:1121 plug-ins/common/file-pcx.c:719
 #: plug-ins/file-bmp/bmp-load.c:800 plug-ins/file-cin/cineon-lib.c:114
 #: plug-ins/file-cin/dpx-lib.c:185
 #, c-format
@@ -2474,7 +2474,7 @@ msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:4689 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:4747 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -2599,20 +2599,20 @@ msgstr "EOF of fout tijdens lezen afbeeldings-header"
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
 #: plug-ins/common/file-heif.c:1051 plug-ins/common/file-jp2.c:1379
-#: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
-#: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
-#: plug-ins/common/file-png.c:793 plug-ins/common/file-pnm.c:688
-#: plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:801
-#: plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:427
-#: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
-#: plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618
-#: plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:646
-#: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
-#: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
-#: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
-#: plug-ins/file-icns/file-icns-load.c:623 plug-ins/file-ico/ico-load.c:703
-#: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:101
-#: plug-ins/file-psd/psd-load.c:220
+#: plug-ins/common/file-mng.c:1059 plug-ins/common/file-pcx.c:482
+#: plug-ins/common/file-pcx.c:525 plug-ins/common/file-pdf-load.c:776
+#: plug-ins/common/file-pix.c:368 plug-ins/common/file-png.c:793
+#: plug-ins/common/file-pnm.c:688 plug-ins/common/file-ps.c:1148
+#: plug-ins/common/file-raw-data.c:801 plug-ins/common/file-raw-data.c:1853
+#: plug-ins/common/file-sunras.c:427 plug-ins/common/file-tga.c:419
+#: plug-ins/common/file-wbmp.c:242 plug-ins/common/file-wbmp.c:321
+#: plug-ins/common/file-wmf.c:618 plug-ins/common/file-xbm.c:721
+#: plug-ins/common/file-xmc.c:646 plug-ins/common/file-xpm.c:360
+#: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
+#: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247
+#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:623
+#: plug-ins/file-ico/ico-load.c:703 plug-ins/file-ico/ico-load.c:848
+#: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:227
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
@@ -2692,7 +2692,7 @@ msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:775
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
-#: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2470
+#: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2472
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1091
 #, c-format
 msgid "Exporting '%s'"
@@ -3120,7 +3120,7 @@ msgid ""
 "from the 'gimp-comment' parasite."
 msgstr "Exporteer een bestand in de indeling GIF, met mogelijke animatie, transparantie en opmerking. Exporteren van een animatie, werk op een bestand met meerdere lagen en stel de parameter 'as-animation' in op TRUE. De plug-in zal <50% alfa interpreteren als transparant. Indien niet-interactief uitgevoerd wordt de waarde voor de opmerking genomen uit de parasiet 'gimp-comment'."
 
-#: plug-ins/common/file-gif-export.c:192 plug-ins/common/file-mng.c:369
+#: plug-ins/common/file-gif-export.c:192 plug-ins/common/file-mng.c:392
 msgid "_Interlace"
 msgstr "_Interlace"
 
@@ -3260,7 +3260,7 @@ msgid ""
 msgstr "De indeling GIF ondersteunt alleen 8bit integer precisie.\n"
 "Uw afbeelding zal worden geconverteerd bij exporteren, wat de pixelwaarden zou kunnen wijzigen."
 
-#: plug-ins/common/file-gif-export.c:1351 plug-ins/common/file-mng.c:1988
+#: plug-ins/common/file-gif-export.c:1351 plug-ins/common/file-mng.c:2051
 msgid "milliseconds"
 msgstr "milliseconden"
 
@@ -3412,7 +3412,7 @@ msgstr "‘%s’ wordt geopend (frame %d)"
 msgid "Frame %d"
 msgstr "Frame %d"
 
-#: plug-ins/common/file-gif-load.c:1289 plug-ins/common/file-mng.c:1089
+#: plug-ins/common/file-gif-load.c:1289 plug-ins/common/file-mng.c:1140
 #: plug-ins/common/file-png.c:3018 plug-ins/file-webp/file-webp-load.c:227
 #, c-format
 msgid "Frame %d (%d%s)"
@@ -4138,19 +4138,19 @@ msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Niet-ondersteunde JPEG 2000%s ‘%s’ met %d componenten."
 
 #: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:940
-#: plug-ins/file-psd/psd-export.c:2970
+#: plug-ins/file-psd/psd-export.c:3022
 #: plug-ins/file-tiff/file-tiff-export.c:1390
 msgid "No soft-proofing profile"
 msgstr "Geen afdrukvoorbeeld-profiel"
 
 #: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035
-#: plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:2978
+#: plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:3030
 #: plug-ins/file-tiff/file-tiff-export.c:1399
 msgid "Name of the color profile used for CMYK export."
 msgstr "Naam van het kleurprofiel om te gebruiken voor CMYK export."
 
 #: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054
-#: plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:2989
+#: plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:3041
 #: plug-ins/file-tiff/file-tiff-export.c:1421
 #, c-format
 msgid "Profile: %s"
@@ -4345,146 +4345,146 @@ msgstr "MacPaint-afbeelding"
 msgid "Load MacPaint image format"
 msgstr "Laad MacPaint afbeeldingsindeling"
 
-#: plug-ins/common/file-mng.c:311 plug-ins/common/file-mng.c:338
+#: plug-ins/common/file-mng.c:317 plug-ins/common/file-mng.c:361
 msgid "MNG animation"
 msgstr "MNG-animatie"
 
-#: plug-ins/common/file-mng.c:314
+#: plug-ins/common/file-mng.c:320
 msgid "Loads files in MNG file format"
 msgstr "Laadt bestanden in bestandsindeling MNG"
 
-#: plug-ins/common/file-mng.c:315
+#: plug-ins/common/file-mng.c:321
 msgid "This plug-in loads Multiple-image Network Graphics (MNG) files."
 msgstr "Deze plug-in laadt bestanden in de bestandsindeling Multiple-image Network Graphics (MNG)."
 
-#: plug-ins/common/file-mng.c:340
+#: plug-ins/common/file-mng.c:363
 msgid "MNG"
 msgstr "MNG"
 
-#: plug-ins/common/file-mng.c:343
+#: plug-ins/common/file-mng.c:366
 msgid "Exports images in the MNG file format"
 msgstr "Exporteert afbeeldingen in de indeling MNG"
 
-#: plug-ins/common/file-mng.c:344
+#: plug-ins/common/file-mng.c:367
 msgid ""
 "This plug-in exports images in the Multiple-image Network Graphics (MNG) "
 "format which can be used as a replacement for animated GIFs, and more."
 msgstr "Deze plug-in exporteert afbeeldingen in de indeling Multiple-image Network Graphics (MNG), die kan worden gebruikt als vervanging voor geanimeerde GIF's, en meer."
 
-#: plug-ins/common/file-mng.c:370
+#: plug-ins/common/file-mng.c:393
 msgid "Use interlacing"
 msgstr "Interlacing gebruiken"
 
-#: plug-ins/common/file-mng.c:375
+#: plug-ins/common/file-mng.c:398
 msgid "_PNG compression level"
 msgstr "_PNG-compressieniveau"
 
-#: plug-ins/common/file-mng.c:376
+#: plug-ins/common/file-mng.c:399
 msgid ""
 "PNG compression level, choose a high compression level for small file size"
 msgstr "PNG compressieniveau, kies een hoog compressieniveau voor een kleiner bestand"
 
-#: plug-ins/common/file-mng.c:382
+#: plug-ins/common/file-mng.c:405
 msgid "JPEG compression _quality"
 msgstr "JPEG-compressiekwaliteit"
 
-#: plug-ins/common/file-mng.c:383
+#: plug-ins/common/file-mng.c:406
 msgid "JPEG quality factor"
 msgstr "JPEG-kwaliteitsfactor"
 
-#: plug-ins/common/file-mng.c:388
+#: plug-ins/common/file-mng.c:411
 msgid "_JPEG smoothing factor"
 msgstr "_JPEG-gladmaakfactor"
 
-#: plug-ins/common/file-mng.c:389
+#: plug-ins/common/file-mng.c:412
 msgid "JPEG smoothing factor"
 msgstr "JPEG-gladmaakfactor"
 
-#: plug-ins/common/file-mng.c:394
+#: plug-ins/common/file-mng.c:417
 msgid "L_oop"
 msgstr "_Herhalen"
 
-#: plug-ins/common/file-mng.c:395
+#: plug-ins/common/file-mng.c:418
 msgid "(ANIMATED MNG) Loop infinitely"
 msgstr "(Bewegende MNG) Eindeloos herhalen"
 
-#: plug-ins/common/file-mng.c:400
+#: plug-ins/common/file-mng.c:423
 msgid "Default fra_me delay"
 msgstr "Standaard _framevertraging"
 
-#: plug-ins/common/file-mng.c:401
+#: plug-ins/common/file-mng.c:424
 msgid "(ANIMATED MNG) Default delay between frames in milliseconds"
 msgstr "(Bewegende MNG) Default vertraging tussen frames in miliseconden"
 
-#: plug-ins/common/file-mng.c:407
+#: plug-ins/common/file-mng.c:430
 msgid "Default chunks t_ype"
 msgstr "Standaard blokt_ype"
 
-#: plug-ins/common/file-mng.c:408
+#: plug-ins/common/file-mng.c:431
 msgid "(ANIMATED MNG) Default chunks type"
 msgstr "(Bewegende MNG) Standaard bloktype"
 
-#: plug-ins/common/file-mng.c:409
+#: plug-ins/common/file-mng.c:432
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:410
+#: plug-ins/common/file-mng.c:433
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: plug-ins/common/file-mng.c:411
+#: plug-ins/common/file-mng.c:434
 msgid "All PNG"
 msgstr "Alle PNG"
 
-#: plug-ins/common/file-mng.c:412
+#: plug-ins/common/file-mng.c:435
 msgid "All JNG"
 msgstr "Alle JNG"
 
-#: plug-ins/common/file-mng.c:418
+#: plug-ins/common/file-mng.c:441
 msgid "De_fault frame disposal"
 msgstr "Standaard_overgang tussen frames"
 
-#: plug-ins/common/file-mng.c:419
+#: plug-ins/common/file-mng.c:442
 msgid "(ANIMATED MNG) Default dispose type"
 msgstr "(Bewegende MNG) standaardmanier van overgang naar volgende frame"
 
-#: plug-ins/common/file-mng.c:420
+#: plug-ins/common/file-mng.c:443
 msgid "Combine"
 msgstr "Combineren"
 
-#: plug-ins/common/file-mng.c:421
+#: plug-ins/common/file-mng.c:444
 msgid "Replace"
 msgstr "Vervangen"
 
-#: plug-ins/common/file-mng.c:427 plug-ins/common/file-png.c:358
+#: plug-ins/common/file-mng.c:450 plug-ins/common/file-png.c:358
 msgid "Save _background color"
 msgstr "_Achtergrondkleur opslaan"
 
-#: plug-ins/common/file-mng.c:428
+#: plug-ins/common/file-mng.c:451
 msgid "Write bKGd (background color) chunk"
 msgstr "De achtergrondkleur (bKGd) opslaan"
 
-#: plug-ins/common/file-mng.c:433
+#: plug-ins/common/file-mng.c:456
 msgid "Save _gamma"
 msgstr "_Gamma opslaan"
 
-#: plug-ins/common/file-mng.c:434
+#: plug-ins/common/file-mng.c:457
 msgid "Write gAMA (gamma) chunk"
 msgstr "Een gAMA (gamma) blok opslaan"
 
-#: plug-ins/common/file-mng.c:439
+#: plug-ins/common/file-mng.c:462
 msgid "Sa_ve resolution"
 msgstr "_Resolutie opslaan"
 
-#: plug-ins/common/file-mng.c:440
+#: plug-ins/common/file-mng.c:463
 msgid "Write pHYs (image resolution) chunk"
 msgstr "Een pHYs (afbeelding resolutie) blok opslaan"
 
-#: plug-ins/common/file-mng.c:445 plug-ins/common/file-png.c:376
+#: plug-ins/common/file-mng.c:468 plug-ins/common/file-png.c:376
 msgid "Save creation _time"
 msgstr "Creatie_tijdstip opslaan"
 
-#: plug-ins/common/file-mng.c:446
+#: plug-ins/common/file-mng.c:469
 msgid "Write tIME (creation time) chunk"
 msgstr "Aanmaakdatum-en-tijd opslaan"
 
@@ -4493,19 +4493,19 @@ msgstr "Aanmaakdatum-en-tijd opslaan"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:951 plug-ins/common/file-png.c:2807
+#: plug-ins/common/file-mng.c:994 plug-ins/common/file-png.c:2807
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Kon de transparantie niet zonder verlies opslaan, in de plaats daarvan wordt de dekking opgeslagen."
 
-#: plug-ins/common/file-mng.c:1940
+#: plug-ins/common/file-mng.c:2003
 msgid "MNG Options"
 msgstr "MNG-opties"
 
-#: plug-ins/common/file-mng.c:2001
+#: plug-ins/common/file-mng.c:2064
 msgid "Animated MNG Options"
 msgstr "Opties voor geanimeerde MNG's"
 
-#: plug-ins/common/file-mng.c:2011
+#: plug-ins/common/file-mng.c:2074
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
@@ -4668,14 +4668,14 @@ msgstr "‘%s’ is geen PCX-bestand"
 
 #: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:669
+#: plug-ins/file-psd/psd-load.c:676
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingsbreedte: %d"
 
 #: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:661
+#: plug-ins/file-psd/psd-load.c:668
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingshoogte: %d"
@@ -5451,13 +5451,13 @@ msgstr "Kleurformaat importeren"
 msgid "B/W"
 msgstr "Z/W"
 
-#: plug-ins/common/file-ps.c:421 plug-ins/imagemap/imap-menu.ui:101
+#: plug-ins/common/file-ps.c:421 plug-ins/imagemap/imap-menu.ui.in:98
 msgid "Gray"
 msgstr "Grijs"
 
 #: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:520
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
-#: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:222
+#: plug-ins/imagemap/imap-menu.ui.in:93 plug-ins/lighting/lighting-main.c:222
 #: plug-ins/lighting/lighting-main.c:345 plug-ins/lighting/lighting-main.c:404
 #: plug-ins/lighting/lighting-main.c:463 plug-ins/lighting/lighting-main.c:522
 #: plug-ins/lighting/lighting-main.c:581 plug-ins/lighting/lighting-ui.c:327
@@ -8571,7 +8571,7 @@ msgid "Type"
 msgstr "Type"
 
 #: plug-ins/common/sphere-designer.c:2819
-#: plug-ins/imagemap/imap_preferences.c:490 plug-ins/pagecurl/pagecurl.c:228
+#: plug-ins/imagemap/imap_preferences.c:484 plug-ins/pagecurl/pagecurl.c:228
 msgid "Colors"
 msgstr "Kleuren"
 
@@ -9793,43 +9793,48 @@ msgstr "In het bestand ontbreken verwachte vlaggen voor pixelindelingen! Afbeeld
 msgid "Invalid pixel format."
 msgstr "Ongeldige pixelindeling."
 
-#: plug-ins/file-dds/ddsread.c:945
+#: plug-ins/file-dds/ddsread.c:949
+#, c-format
+msgid "Unsupported format (FourCC hex: %08x)"
+msgstr "Niet-ondersteunde indeling (FourCC hex: %08x)"
+
+#: plug-ins/file-dds/ddsread.c:953
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
-msgstr "Ongeldige indeling (FourCC: %c%c%c%c, hex: %08x)"
+msgstr "Niet-ondersteunde indeling (FourCC: %c%c%c%c, hex: %08x)"
 
-#: plug-ins/file-dds/ddsread.c:967
+#: plug-ins/file-dds/ddsread.c:975
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Ongeldige bpp waarde voor RGB data: %d"
 
-#: plug-ins/file-dds/ddsread.c:978
+#: plug-ins/file-dds/ddsread.c:986
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Ongeldige bpp waarde voor helderheid data: %d"
 
-#: plug-ins/file-dds/ddsread.c:1000
+#: plug-ins/file-dds/ddsread.c:1008
 #, c-format
 msgid "Invalid DX10 header"
 msgstr "Ongeldige DX10-header"
 
-#: plug-ins/file-dds/ddsread.c:1038
+#: plug-ins/file-dds/ddsread.c:1046
 #, c-format
 msgid "Unsupported DXGI Format: %u"
-msgstr "Niet-ondersteunde DXGI indeling: %u"
+msgstr "Niet-ondersteunde DXGI-indeling: %u"
 
-#: plug-ins/file-dds/ddsread.c:1226 plug-ins/file-dds/ddsread.c:1290
-#: plug-ins/file-dds/ddsread.c:1310
+#: plug-ins/file-dds/ddsread.c:1234 plug-ins/file-dds/ddsread.c:1298
+#: plug-ins/file-dds/ddsread.c:1318
 #, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "Gegevensomvang groter dan de grootte van het bestaand.\n"
 
-#: plug-ins/file-dds/ddsread.c:1234 plug-ins/file-dds/ddsread.c:1316
+#: plug-ins/file-dds/ddsread.c:1242 plug-ins/file-dds/ddsread.c:1324
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Onverwacht bestandseinde.\n"
 
-#: plug-ins/file-dds/ddsread.c:1646
+#: plug-ins/file-dds/ddsread.c:1654
 msgid "Open DDS"
 msgstr "DDS openen"
 
@@ -10560,67 +10565,67 @@ msgid ""
 "(Photoshop)"
 msgstr "Photoshop afbeeldingsbronnen (paden, hulplijnen, …) opslaan in JPEG-tag APP13 (Photoshop)"
 
-#: plug-ins/file-psd/psd-export.c:585
+#: plug-ins/file-psd/psd-export.c:586
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Fout: kan GIMP basisafbeeldingstype niet omzetten naar PSD-modus"
 
-#: plug-ins/file-psd/psd-export.c:2457 plug-ins/file-psd/psd-export.c:2627
+#: plug-ins/file-psd/psd-export.c:2459 plug-ins/file-psd/psd-export.c:2629
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSD ondersteunt geen afbeeldingen die meer dan 30.000 pixels breed of hoog zijn."
 
-#: plug-ins/file-psd/psd-export.c:2463 plug-ins/file-psd/psd-export.c:2633
+#: plug-ins/file-psd/psd-export.c:2465 plug-ins/file-psd/psd-export.c:2635
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images that are "
 "more than 300,000 pixels wide or tall."
 msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSB ondersteunt geen afbeeldingen die meer dan 300.000 pixels breed of hoog zijn."
 
-#: plug-ins/file-psd/psd-export.c:2505 plug-ins/file-psd/psd-export.c:2673
+#: plug-ins/file-psd/psd-export.c:2507 plug-ins/file-psd/psd-export.c:2675
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSD ondersteunt geen afbeeldingen met lagen die meer dan 30.000 pixels breed of hoog zijn."
 
-#: plug-ins/file-psd/psd-export.c:2511 plug-ins/file-psd/psd-export.c:2679
+#: plug-ins/file-psd/psd-export.c:2513 plug-ins/file-psd/psd-export.c:2681
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSB file format does not support images with "
 "layers that are more than 300,000 pixels wide or tall."
 msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling PSB ondersteunt geen afbeeldingen met lagen die meer dan 300.000 pixels breed of hoog zijn."
 
-#: plug-ins/file-psd/psd-export.c:3013
+#: plug-ins/file-psd/psd-export.c:3065
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
 msgstr "Duotoon kleurruimte informatie uit de originele\n"
 "geïmporteerde afbeelding zal worden gebruikt."
 
-#: plug-ins/file-psd/psd-export.c:3082
+#: plug-ins/file-psd/psd-export.c:3134
 msgid ""
 "PSD files can store up to 998 paths. \n"
 "The rest will be discarded."
 msgstr "PSD-bestanden kunnen maximaal 998 paden opslaan. \n"
 "De rest zal worden genegeerd."
 
-#: plug-ins/file-psd/psd-export.c:3192
+#: plug-ins/file-psd/psd-export.c:3244
 msgid "Indexed Image Warning"
 msgstr "Waarschuwing geïndexeerd bestand"
 
-#: plug-ins/file-psd/psd-export.c:3193
+#: plug-ins/file-psd/psd-export.c:3245
 msgid ""
 "Photoshop does not support indexed images that have more than one layer. "
 "Layers will be merged on export."
 msgstr "Photoshop ondersteunt geen geïndexeerde afbeeldingen die meer dan een laag hebben. Lagen zullen bij exporteren worden samengevoegd."
 
-#: plug-ins/file-psd/psd-export.c:3214 plug-ins/file-psd/psd-load.c:5174
+#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5232
 msgid "Compatibility Notice"
 msgstr "Melding compatibiliteit"
 
-#: plug-ins/file-psd/psd-export.c:3215
+#: plug-ins/file-psd/psd-export.c:3267
 msgid ""
 "Legacy layer modes have better compatibility with Photoshop, but do not "
 "support Clip to Backdrop, which is needed for using Photoshop's 'Blend "
@@ -10628,166 +10633,166 @@ msgid ""
 "switching to those layer modes."
 msgstr "Oudere modi voor lagen hebben een betere compatibiliteit met Photoshop, maar ondersteunen niet Clip to Backdrop, wat nodig is voor het gebruiken van Photoshop's 'Uitkniplagen overvloeien als groep'. Als u problemen bij het weergeven tegenkomt, overweeg dan om te wisselen naar die modi voor lagen."
 
-#: plug-ins/file-psd/psd-layer-res-load.c:2104
+#: plug-ins/file-psd/psd-layer-res-load.c:2138
 msgid "Invalid root node!"
 msgstr "Ongeldige bronknoop!"
 
-#: plug-ins/file-psd/psd-layer-res-load.c:2445
+#: plug-ins/file-psd/psd-layer-res-load.c:2479
 #, c-format
 msgid "Error creating json node."
 msgstr "Fout bij maken knoop JSON.in"
 
-#: plug-ins/file-psd/psd-layer-res-load.c:3142
+#: plug-ins/file-psd/psd-layer-res-load.c:3176
 msgid "Could not read enough bytes!"
 msgstr "Kon niet voldoende bytes lezen!"
 
-#: plug-ins/file-psd/psd-load.c:331 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:338 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Fout bij laden PSD-bestand: %s"
 
-#: plug-ins/file-psd/psd-load.c:534
+#: plug-ins/file-psd/psd-load.c:541
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Ongeldige indeling PSD metagegevenslaag"
 
-#: plug-ins/file-psd/psd-load.c:640
+#: plug-ins/file-psd/psd-load.c:647
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Geen geldig Photoshop-bestand"
 
-#: plug-ins/file-psd/psd-load.c:647
+#: plug-ins/file-psd/psd-load.c:654
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Niet-ondersteunde versie van bestandsindeling: %d"
 
-#: plug-ins/file-psd/psd-load.c:654
+#: plug-ins/file-psd/psd-load.c:661
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Te veel kanalen in bestand: %d"
 
-#: plug-ins/file-psd/psd-load.c:678
+#: plug-ins/file-psd/psd-load.c:685
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige beeldgrootte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:693 plug-ins/file-psd/psd-load.c:703
+#: plug-ins/file-psd/psd-load.c:700 plug-ins/file-psd/psd-load.c:710
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Niet-ondersteunde kleurmodus: %s"
 
-#: plug-ins/file-psd/psd-load.c:730
+#: plug-ins/file-psd/psd-load.c:737
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Niet-ondersteunde bitdiepte: %d"
 
-#: plug-ins/file-psd/psd-load.c:764 plug-ins/file-psd/psd-load.c:774
-#: plug-ins/file-psd/psd-load.c:1013 plug-ins/file-psd/psd-load.c:1377
+#: plug-ins/file-psd/psd-load.c:771 plug-ins/file-psd/psd-load.c:781
+#: plug-ins/file-psd/psd-load.c:1020 plug-ins/file-psd/psd-load.c:1384
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Het bestand is beschadigd!"
 
-#: plug-ins/file-psd/psd-load.c:920
+#: plug-ins/file-psd/psd-load.c:927
 #, c-format
 msgid "Invalid value for number of layers: %d."
 msgstr "Ongeldige waarde voor aantal lagen: %d."
 
-#: plug-ins/file-psd/psd-load.c:962
+#: plug-ins/file-psd/psd-load.c:969
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Te veel kanalen in laag: %d"
 
-#: plug-ins/file-psd/psd-load.c:1047
+#: plug-ins/file-psd/psd-load.c:1054
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Niet-ondersteunde of ongeldige laaghoogte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1056
+#: plug-ins/file-psd/psd-load.c:1063
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Niet-ondersteunde of ongeldige laagbreedte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1066
+#: plug-ins/file-psd/psd-load.c:1073
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige laaggrootte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1087
+#: plug-ins/file-psd/psd-load.c:1094
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Niet-ondersteunde of ongeldige maskerinfo-grootte."
 
-#: plug-ins/file-psd/psd-load.c:1247
+#: plug-ins/file-psd/psd-load.c:1254
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Niet-ondersteunde of ongeldige hoogte laagmasker: %d"
 
-#: plug-ins/file-psd/psd-load.c:1256
+#: plug-ins/file-psd/psd-load.c:1263
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Niet-ondersteunde of ongeldige breedte laagmasker: %d"
 
-#: plug-ins/file-psd/psd-load.c:1266
+#: plug-ins/file-psd/psd-load.c:1273
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige grootte laagmasker: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1287 plug-ins/file-psd/psd-load.c:1321
-#: plug-ins/file-psd/psd-load.c:1355 plug-ins/file-psd/psd-load.c:1392
+#: plug-ins/file-psd/psd-load.c:1294 plug-ins/file-psd/psd-load.c:1328
+#: plug-ins/file-psd/psd-load.c:1362 plug-ins/file-psd/psd-load.c:1399
 #, c-format
 msgid "Invalid block size."
 msgstr "Ongeldige blokgrootte"
 
-#: plug-ins/file-psd/psd-load.c:1917 plug-ins/file-psd/psd-load.c:4681
+#: plug-ins/file-psd/psd-load.c:1924 plug-ins/file-psd/psd-load.c:4739
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ongeldige of niet-ondersteunde kanaalgrootte"
 
-#: plug-ins/file-psd/psd-load.c:2303
+#: plug-ins/file-psd/psd-load.c:2310
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Ongeldige dimensies kanaal %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2371 plug-ins/file-psd/psd-load.c:4279
+#: plug-ins/file-psd/psd-load.c:2378 plug-ins/file-psd/psd-load.c:4337
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Niet-ondersteunde compressiemethode: %d"
 
-#: plug-ins/file-psd/psd-load.c:3022 plug-ins/file-psd/psd-load.c:3671
+#: plug-ins/file-psd/psd-load.c:3029 plug-ins/file-psd/psd-load.c:3729
 msgid "Inner Shadow"
 msgstr "Binnenste schaduw"
 
-#: plug-ins/file-psd/psd-load.c:3023 plug-ins/file-psd/psd-load.c:3672
-#: plug-ins/file-psd/psd-load.c:3683 plug-ins/file-psd/psd-load.c:3699
+#: plug-ins/file-psd/psd-load.c:3030 plug-ins/file-psd/psd-load.c:3730
+#: plug-ins/file-psd/psd-load.c:3741 plug-ins/file-psd/psd-load.c:3757
 msgid "imported"
 msgstr "geïmporteerd"
 
-#: plug-ins/file-psd/psd-load.c:3682
+#: plug-ins/file-psd/psd-load.c:3740
 msgid "Outer Glow"
 msgstr "Buitenste gloed"
 
-#: plug-ins/file-psd/psd-load.c:3698
+#: plug-ins/file-psd/psd-load.c:3756
 msgid "Stroke"
 msgstr "Lijn"
 
-#: plug-ins/file-psd/psd-load.c:3702
+#: plug-ins/file-psd/psd-load.c:3760
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "Niet afgehandeld type Streek: verwacht onjuist renderen."
 
-#: plug-ins/file-psd/psd-load.c:4456
+#: plug-ins/file-psd/psd-load.c:4514
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:4758
+#: plug-ins/file-psd/psd-load.c:4816
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Kon gegevens niet decomprimeren"
 
-#: plug-ins/file-psd/psd-load.c:5151
+#: plug-ins/file-psd/psd-load.c:5209
 msgid "Duotone Import"
 msgstr "Duotone Import"
 
-#: plug-ins/file-psd/psd-load.c:5152
+#: plug-ins/file-psd/psd-load.c:5210
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10795,7 +10800,7 @@ msgid ""
 msgstr "Afbeelding zal worden geïmporteerd als Grijswaarden.\n"
 "Duotoon kleurruimte informatie is opgeslagen en kan bij exporteren opnieuw worden gebruikt."
 
-#: plug-ins/file-psd/psd-load.c:5175
+#: plug-ins/file-psd/psd-load.c:5233
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -11052,6 +11057,11 @@ msgstr "Er is geen RAW-lader geïnstalleerd om ‘%s’-bestanden te openen.\n"
 "\n"
 "Installeer er een van om RAW-bestanden te kunnen laden."
 
+#: plug-ins/file-sgi/sgi-lib.c:337 plug-ins/file-sgi/sgi.c:355
+#, c-format
+msgid "Invalid number of channels: %hu"
+msgstr "Ongeldig aantal kanalen: %hu"
+
 #: plug-ins/file-sgi/sgi.c:146 plug-ins/file-sgi/sgi.c:173
 msgid "Silicon Graphics IRIS image"
 msgstr "Silicon Graphics IRIS-afbeelding"
@@ -11106,11 +11116,6 @@ msgstr "Ongeldige breedte: %hu"
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Ongeldige hoogte: %hu"
-
-#: plug-ins/file-sgi/sgi.c:355
-#, c-format
-msgid "Invalid number of channels: %hu"
-msgstr "Ongeldig aantal kanalen: %hu"
 
 #: plug-ins/file-sgi/sgi.c:640
 #, c-format
@@ -12483,8 +12488,8 @@ msgid "Create line"
 msgstr "Lijn maken"
 
 #: plug-ins/gfig/gfig-dialog.c:382 plug-ins/gfig/gfig-dialog.c:1408
-#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1605
-#: plug-ins/imagemap/imap-menu.ui:166 plug-ins/imagemap/imap-menu.ui:254
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1607
+#: plug-ins/imagemap/imap-menu.ui.in:163 plug-ins/imagemap/imap-menu.ui.in:251
 msgid "Rectangle"
 msgstr "Rechthoek"
 
@@ -12494,8 +12499,8 @@ msgstr "Rechthoek maken"
 
 #: plug-ins/gfig/gfig-dialog.c:384 plug-ins/gfig/gfig-menu.ui:54
 #: plug-ins/gradient-flare/gradient-flare.c:4013
-#: plug-ins/imagemap/imap_main.c:1607 plug-ins/imagemap/imap-menu.ui:171
-#: plug-ins/imagemap/imap-menu.ui:259
+#: plug-ins/imagemap/imap_main.c:1609 plug-ins/imagemap/imap-menu.ui.in:168
+#: plug-ins/imagemap/imap-menu.ui.in:256
 msgid "Circle"
 msgstr "Cirkel"
 
@@ -12521,8 +12526,8 @@ msgstr "Boog maken"
 
 #: plug-ins/gfig/gfig-dialog.c:390 plug-ins/gfig/gfig-menu.ui:69
 #: plug-ins/gradient-flare/gradient-flare.c:4030
-#: plug-ins/imagemap/imap_main.c:1609 plug-ins/imagemap/imap-menu.ui:176
-#: plug-ins/imagemap/imap-menu.ui:264
+#: plug-ins/imagemap/imap_main.c:1611 plug-ins/imagemap/imap-menu.ui.in:173
+#: plug-ins/imagemap/imap-menu.ui.in:261
 msgid "Polygon"
 msgstr "Veelhoek"
 
@@ -12569,8 +12574,8 @@ msgstr "Een enkel punt verplaatsen"
 #: plug-ins/gfig/gfig-dialog.c:403 plug-ins/gfig/gfig-dialog.c:1265
 #: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui:47
-#: plug-ins/imagemap/imap-menu.ui:325 plug-ins/imagemap/imap-menu.ui:362
+#: plug-ins/imagemap/imap_main.c:1572 plug-ins/imagemap/imap-menu.ui.in:44
+#: plug-ins/imagemap/imap-menu.ui.in:322 plug-ins/imagemap/imap-menu.ui.in:359
 msgid "Copy"
 msgstr "Kopiëren"
 
@@ -12876,41 +12881,40 @@ msgstr "Fout bij opslaan van figuur als een parasiet: parasiet kan niet aan teke
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "Fout bij openen tijdelijk bestand ‘%s’ om parasieten te laden: %s"
 
-#: plug-ins/gfig/gfig-menu.ui:6 plug-ins/imagemap/imap-menu.ui:5
+#: plug-ins/gfig/gfig-menu.ui:6 plug-ins/imagemap/imap-menu.ui.in:5
 msgid "File"
 msgstr "Bestand"
 
-#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1555
-#: plug-ins/imagemap/imap-menu.ui:8
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1556
 msgid "Open"
 msgstr "Openen"
 
-#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1557
-#: plug-ins/imagemap/imap-menu.ui:12
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1559
+#: plug-ins/imagemap/imap-menu.ui.in:9
 msgid "Save"
 msgstr "Opslaan"
 
-#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/imagemap/imap-menu.ui:22
+#: plug-ins/gfig/gfig-menu.ui:16 plug-ins/imagemap/imap-menu.ui.in:19
 msgid "Close"
 msgstr "Sluiten"
 
-#: plug-ins/gfig/gfig-menu.ui:21 plug-ins/imagemap/imap-menu.ui:32
+#: plug-ins/gfig/gfig-menu.ui:21 plug-ins/imagemap/imap-menu.ui.in:29
 msgid "Edit"
 msgstr "Bewerken"
 
 #: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962
-#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1563
-#: plug-ins/imagemap/imap-menu.ui:35
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1565
+#: plug-ins/imagemap/imap-menu.ui.in:32
 msgid "Undo"
 msgstr "Ongedaan maken"
 
 #: plug-ins/gfig/gfig-menu.ui:27 plug-ins/imagemap/imap_cmd_clear.c:50
-#: plug-ins/imagemap/imap-menu.ui:55
+#: plug-ins/imagemap/imap-menu.ui.in:52
 msgid "Clear"
 msgstr "Leeg maken"
 
-#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1560
-#: plug-ins/imagemap/imap-menu.ui:77
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1562
+#: plug-ins/imagemap/imap-menu.ui.in:74
 msgid "Preferences"
 msgstr "Voorkeuren"
 
@@ -13964,12 +13968,13 @@ msgid "New"
 msgstr "Nieuw"
 
 #: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35
-#: plug-ins/imagemap/imap_main.c:1565 plug-ins/imagemap/imap-menu.ui:39
+#: plug-ins/imagemap/imap_main.c:1567 plug-ins/imagemap/imap-menu.ui.in:36
 msgid "Redo"
 msgstr "Opnieuw uitvoeren"
 
 #: plug-ins/ifs-compose/ifs-compose.c:966 plug-ins/ifs-compose/ifs-menus.ui:39
-#: plug-ins/imagemap/imap_cmd_select_all.c:50 plug-ins/imagemap/imap-menu.ui:61
+#: plug-ins/imagemap/imap_cmd_select_all.c:50
+#: plug-ins/imagemap/imap-menu.ui.in:58
 msgid "Select All"
 msgstr "Alles selecteren"
 
@@ -14090,13 +14095,13 @@ msgstr "Aanmaken"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1568 plug-ins/imagemap/imap-menu.ui:43
-#: plug-ins/imagemap/imap-menu.ui:321 plug-ins/imagemap/imap-menu.ui:358
+#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui.in:40
+#: plug-ins/imagemap/imap-menu.ui.in:318 plug-ins/imagemap/imap-menu.ui.in:355
 msgid "Cut"
 msgstr "Knippen"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: plug-ins/imagemap/imap-menu.ui:338
+#: plug-ins/imagemap/imap-menu.ui.in:335
 msgid "Delete Point"
 msgstr "Punt wissen"
 
@@ -14203,14 +14208,14 @@ msgid "Guides"
 msgstr "Hulplijnen"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:61
-#: plug-ins/imagemap/imap-menu.ui:334
+#: plug-ins/imagemap/imap-menu.ui.in:331
 msgid "Insert Point"
 msgstr "Punt invoegen"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
-#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:233
-#: plug-ins/imagemap/imap-menu.ui:317 plug-ins/imagemap/imap-menu.ui:354
+#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui.in:230
+#: plug-ins/imagemap/imap-menu.ui.in:314 plug-ins/imagemap/imap-menu.ui.in:351
 msgid "Move Down"
 msgstr "Naar beneden"
 
@@ -14229,13 +14234,13 @@ msgstr "Naar voren halen"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:54 plug-ins/imagemap/imap_menu.c:176
-#: plug-ins/imagemap/imap-menu.ui:229 plug-ins/imagemap/imap-menu.ui:313
-#: plug-ins/imagemap/imap-menu.ui:350
+#: plug-ins/imagemap/imap-menu.ui.in:226 plug-ins/imagemap/imap-menu.ui.in:310
+#: plug-ins/imagemap/imap-menu.ui.in:347
 msgid "Move Up"
 msgstr "Naar boven"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1572
-#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:296
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1574
+#: plug-ins/imagemap/imap-menu.ui.in:48 plug-ins/imagemap/imap-menu.ui.in:293
 msgid "Paste"
 msgstr "Plakken"
 
@@ -14454,55 +14459,55 @@ msgstr "Kon bestand niet lezen:"
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_main.c:1575 plug-ins/imagemap/imap-menu.ui:108
-#: plug-ins/imagemap/imap-menu.ui:274
+#: plug-ins/imagemap/imap_main.c:1577 plug-ins/imagemap/imap-menu.ui.in:105
+#: plug-ins/imagemap/imap-menu.ui.in:271
 msgid "Zoom In"
 msgstr "Inzoomen"
 
-#: plug-ins/imagemap/imap_main.c:1577 plug-ins/imagemap/imap-menu.ui:112
-#: plug-ins/imagemap/imap-menu.ui:278
+#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap-menu.ui.in:109
+#: plug-ins/imagemap/imap-menu.ui.in:275
 msgid "Zoom Out"
 msgstr "Uitzoomen"
 
-#: plug-ins/imagemap/imap_main.c:1580
+#: plug-ins/imagemap/imap_main.c:1582
 msgid "Edit Map Info"
 msgstr "Kaartinformatie bewerken"
 
-#: plug-ins/imagemap/imap_main.c:1583
+#: plug-ins/imagemap/imap_main.c:1585
 msgid "Move Area to Front"
 msgstr "Gebied naar voren bewegen"
 
-#: plug-ins/imagemap/imap_main.c:1585
+#: plug-ins/imagemap/imap_main.c:1587
 msgid "Move Area to Bottom"
 msgstr "Gebied naar beneden bewegen"
 
-#: plug-ins/imagemap/imap_main.c:1603 plug-ins/imagemap/imap-menu.ui:161
-#: plug-ins/imagemap/imap-menu.ui:249
+#: plug-ins/imagemap/imap_main.c:1605 plug-ins/imagemap/imap-menu.ui.in:158
+#: plug-ins/imagemap/imap-menu.ui.in:246
 msgid "Arrow"
 msgstr "Pijl"
 
-#: plug-ins/imagemap/imap_main.c:1603
+#: plug-ins/imagemap/imap_main.c:1605
 msgid "Select Existing Area"
 msgstr "Bestaand gebied selecteren"
 
-#: plug-ins/imagemap/imap_main.c:1605
+#: plug-ins/imagemap/imap_main.c:1607
 msgid "Define Rectangle area"
 msgstr "Een rechthoekig gebied definiëren"
 
-#: plug-ins/imagemap/imap_main.c:1607
+#: plug-ins/imagemap/imap_main.c:1609
 msgid "Define Circle/Oval area"
 msgstr "Een rond/ovaal gebied definiëren"
 
-#: plug-ins/imagemap/imap_main.c:1609
+#: plug-ins/imagemap/imap_main.c:1611
 msgid "Define Polygon area"
 msgstr "Een veelhoekig gebied definiëren"
 
-#: plug-ins/imagemap/imap_main.c:1612 plug-ins/imagemap/imap_menu.c:180
-#: plug-ins/imagemap/imap-menu.ui:305 plug-ins/imagemap/imap-menu.ui:342
+#: plug-ins/imagemap/imap_main.c:1614 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap-menu.ui.in:302 plug-ins/imagemap/imap-menu.ui.in:339
 msgid "Edit Area Info..."
 msgstr "Gebiedsinformatie bewerken..."
 
-#: plug-ins/imagemap/imap_main.c:1612 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1614 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Info van geselecteerd gebied bewerken"
 
@@ -14536,83 +14541,83 @@ msgstr "_Invoegen"
 msgid "A_ppend"
 msgstr "Toe_voegen"
 
-#: plug-ins/imagemap/imap_preferences.c:293
+#: plug-ins/imagemap/imap_preferences.c:287
 msgid "Couldn't save resource file:"
 msgstr "Kon hulpbronbestand niet opslaan:"
 
-#: plug-ins/imagemap/imap_preferences.c:417
+#: plug-ins/imagemap/imap_preferences.c:411
 msgid "General"
 msgstr "Algemeen"
 
-#: plug-ins/imagemap/imap_preferences.c:421
+#: plug-ins/imagemap/imap_preferences.c:415
 msgid "Default Map Type"
 msgstr "Standaard maptype"
 
-#: plug-ins/imagemap/imap_preferences.c:440
+#: plug-ins/imagemap/imap_preferences.c:434
 msgid "_Prompt for area info"
 msgstr "_Vraag naar gebiedsinfo"
 
-#: plug-ins/imagemap/imap_preferences.c:442
+#: plug-ins/imagemap/imap_preferences.c:436
 msgid "_Require default URL"
 msgstr "Ve_rplicht standaard-URL"
 
-#: plug-ins/imagemap/imap_preferences.c:444
+#: plug-ins/imagemap/imap_preferences.c:438
 msgid "Show area _handles"
 msgstr "Gebieds_handvatten tonen"
 
-#: plug-ins/imagemap/imap_preferences.c:446
+#: plug-ins/imagemap/imap_preferences.c:440
 msgid "_Keep NCSA circles true"
 msgstr "_Houd NCSA-cirkels echt"
 
-#: plug-ins/imagemap/imap_preferences.c:448
+#: plug-ins/imagemap/imap_preferences.c:442
 msgid "Show area URL _tip"
 msgstr "Gebieds-URL-_tip tonen"
 
-#: plug-ins/imagemap/imap_preferences.c:451
+#: plug-ins/imagemap/imap_preferences.c:445
 msgid "_Use double-sized grab handles"
 msgstr "_Handvatten van dubbele grootte gebruiken"
 
-#: plug-ins/imagemap/imap_preferences.c:458
+#: plug-ins/imagemap/imap_preferences.c:452
 msgid "Menu"
 msgstr "Menu"
 
-#: plug-ins/imagemap/imap_preferences.c:462
+#: plug-ins/imagemap/imap_preferences.c:456
 msgid "Number of _undo levels (1 - 99):"
 msgstr "Aantal niveaus \"_Ongedaan maken\" (1-99):"
 
-#: plug-ins/imagemap/imap_preferences.c:467
+#: plug-ins/imagemap/imap_preferences.c:461
 msgid "Number of M_RU entries (1 - 16):"
 msgstr "Aantal M_RU-ingangen (1 - 16):"
 
-#: plug-ins/imagemap/imap_preferences.c:476
+#: plug-ins/imagemap/imap_preferences.c:470
 msgid "Select Color"
 msgstr "Kleur kiezen"
 
-#: plug-ins/imagemap/imap_preferences.c:492
+#: plug-ins/imagemap/imap_preferences.c:486
 msgid "Normal:"
 msgstr "Normaal:"
 
-#: plug-ins/imagemap/imap_preferences.c:496
+#: plug-ins/imagemap/imap_preferences.c:490
 msgid "Selected:"
 msgstr "Geselecteerd:"
 
-#: plug-ins/imagemap/imap_preferences.c:500
+#: plug-ins/imagemap/imap_preferences.c:494
 msgid "Interaction:"
 msgstr "Interactie:"
 
-#: plug-ins/imagemap/imap_preferences.c:509
+#: plug-ins/imagemap/imap_preferences.c:503
 msgid "Co_ntiguous Region"
 msgstr "Aa_neengesloten gebied"
 
-#: plug-ins/imagemap/imap_preferences.c:513
+#: plug-ins/imagemap/imap_preferences.c:507
 msgid "_Threshold:"
 msgstr "_Drempelwaarde:"
 
-#: plug-ins/imagemap/imap_preferences.c:515
+#: plug-ins/imagemap/imap_preferences.c:509
 msgid "_Automatically convert"
 msgstr "_Automatisch omzetten"
 
-#: plug-ins/imagemap/imap_preferences.c:526
+#: plug-ins/imagemap/imap_preferences.c:520
 msgid "General Preferences"
 msgstr "Algemene voorkeuren"
 
@@ -14702,95 +14707,95 @@ msgstr "Coördinaten:"
 msgid "Active Area Size:"
 msgstr "Afmetingen actief gebied:"
 
-#: plug-ins/imagemap/imap-menu.ui:16
+#: plug-ins/imagemap/imap-menu.ui.in:13
 msgid "Save As"
 msgstr "Opslaan als"
 
-#: plug-ins/imagemap/imap-menu.ui:65
+#: plug-ins/imagemap/imap-menu.ui.in:62
 msgid "Deselect All"
 msgstr "Alles deselecteren"
 
-#: plug-ins/imagemap/imap-menu.ui:71
+#: plug-ins/imagemap/imap-menu.ui.in:68
 msgid "Edit Area Info"
 msgstr "Gebiedsinformatie bewerken"
 
-#: plug-ins/imagemap/imap-menu.ui:83
+#: plug-ins/imagemap/imap-menu.ui.in:80
 msgid "View"
 msgstr "Beeld"
 
-#: plug-ins/imagemap/imap-menu.ui:86
+#: plug-ins/imagemap/imap-menu.ui.in:83
 msgid "Area List"
 msgstr "Gebiedenlijst"
 
-#: plug-ins/imagemap/imap-menu.ui:90
+#: plug-ins/imagemap/imap-menu.ui.in:87
 msgid "Source..."
 msgstr "Broncode..."
 
-#: plug-ins/imagemap/imap-menu.ui:116
+#: plug-ins/imagemap/imap-menu.ui.in:113
 msgid "Zoom To"
 msgstr "Zoomen naar"
 
-#: plug-ins/imagemap/imap-menu.ui:119
+#: plug-ins/imagemap/imap-menu.ui.in:116
 msgid "8:1"
 msgstr "8:1"
 
-#: plug-ins/imagemap/imap-menu.ui:124
+#: plug-ins/imagemap/imap-menu.ui.in:121
 msgid "4:1"
 msgstr "4:1"
 
-#: plug-ins/imagemap/imap-menu.ui:129
+#: plug-ins/imagemap/imap-menu.ui.in:126
 msgid "2:1"
 msgstr "2:1"
 
-#: plug-ins/imagemap/imap-menu.ui:134
+#: plug-ins/imagemap/imap-menu.ui.in:131
 msgid "1:1"
 msgstr "1:1"
 
-#: plug-ins/imagemap/imap-menu.ui:139
+#: plug-ins/imagemap/imap-menu.ui.in:136
 msgid "1:2"
 msgstr "1:2"
 
-#: plug-ins/imagemap/imap-menu.ui:144
+#: plug-ins/imagemap/imap-menu.ui.in:141
 msgid "1:4"
 msgstr "1:4"
 
-#: plug-ins/imagemap/imap-menu.ui:149
+#: plug-ins/imagemap/imap-menu.ui.in:146
 msgid "1:8"
 msgstr "1:8"
 
-#: plug-ins/imagemap/imap-menu.ui:158
+#: plug-ins/imagemap/imap-menu.ui.in:155
 msgid "Mappings"
 msgstr "Projecties"
 
-#: plug-ins/imagemap/imap-menu.ui:183 plug-ins/imagemap/imap-menu.ui:242
+#: plug-ins/imagemap/imap-menu.ui.in:180 plug-ins/imagemap/imap-menu.ui.in:239
 msgid "Edit Map Info..."
 msgstr "Kaartinformatie bewerken..."
 
-#: plug-ins/imagemap/imap-menu.ui:189 plug-ins/imagemap/imap-menu.ui:246
+#: plug-ins/imagemap/imap-menu.ui.in:186 plug-ins/imagemap/imap-menu.ui.in:243
 msgid "Tools"
 msgstr "Gereedschap"
 
-#: plug-ins/imagemap/imap-menu.ui:196 plug-ins/imagemap/imap-menu.ui:288
+#: plug-ins/imagemap/imap-menu.ui.in:193 plug-ins/imagemap/imap-menu.ui.in:285
 msgid "Grid Settings..."
 msgstr "Rasterinstellingen..."
 
-#: plug-ins/imagemap/imap-menu.ui:202
+#: plug-ins/imagemap/imap-menu.ui.in:199
 msgid "Use GIMP Guides..."
 msgstr "GIMP-hulplijnen gebruiken..."
 
-#: plug-ins/imagemap/imap-menu.ui:206 plug-ins/imagemap/imap-menu.ui:292
+#: plug-ins/imagemap/imap-menu.ui.in:203 plug-ins/imagemap/imap-menu.ui.in:289
 msgid "Create Guides..."
 msgstr "Hulplijnen aanmaken..."
 
-#: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:540
+#: plug-ins/imagemap/imap-menu.ui.in:212 plug-ins/screenshot/screenshot.c:540
 msgid "Contents"
 msgstr "Inhoud"
 
-#: plug-ins/imagemap/imap-menu.ui:219
+#: plug-ins/imagemap/imap-menu.ui.in:216
 msgid "About"
 msgstr "Info"
 
-#: plug-ins/imagemap/imap-menu.ui:309 plug-ins/imagemap/imap-menu.ui:346
+#: plug-ins/imagemap/imap-menu.ui.in:306 plug-ins/imagemap/imap-menu.ui.in:343
 msgid "Delete Area"
 msgstr "Gebied verwijderen"
 
