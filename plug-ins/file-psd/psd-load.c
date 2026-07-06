@@ -1337,12 +1337,10 @@ read_layer_info (PSDimage      *img_a,
                             PSD_TELL(input), (gsize) block_rem);
 
           /* Adjustment layer info */
-          lyr_a[lidx]->adjustment_layer          = g_new (PSDAdjustmentLayer, 1);
-          lyr_a[lidx]->adjustment_layer->type[0] = '\0';
+          lyr_a[lidx]->adjustment_layer = g_new0 (PSDAdjustmentLayer, 1);
 
           /* Layer styles info */
-          lyr_a[lidx]->layer_styles = g_new (PSDLayerStyles, 1);
-          lyr_a[lidx]->layer_styles->count = 0;
+          lyr_a[lidx]->layer_styles = g_new0 (PSDLayerStyles, 1);
 
           while (block_rem > 7)
             {
