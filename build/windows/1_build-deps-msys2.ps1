@@ -170,6 +170,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
     Set-Location _build-$(@($env:VCPKG_DEFAULT_HOST_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)
     ninja; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     ninja install; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+    ninja test; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     Set-Location ../..
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${dep}_build$([char]13)$([char]27)[0K"
   }
@@ -181,7 +182,7 @@ if ($env:VCPKG_ROOT)
     exit 0
   }
 self_build https://gitlab.gnome.org/GNOME/babl
-self_build https://gitlab.gnome.org/GNOME/gegl @('-Ddocs=false')
+#self_build https://gitlab.gnome.org/GNOME/gegl @('-Ddocs=false')
 self_build https://github.com/Exiv2/exiv2 "v0.28.8" @('https://github.com/Exiv2/exiv2/pull/3361.patch') @('-DCMAKE_DLL_NAME_WITH_SOVERSION=ON', '-DEXIV2_BUILD_EXIV2_COMMAND=OFF', '-DEXIV2_ENABLE_VIDEO=OFF')
 
 Set-Location $GIMP_DIR

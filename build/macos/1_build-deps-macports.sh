@@ -114,11 +114,12 @@ self_build()
   cd _build-$(uname -m)
   ninja
   ninja install
+  ninja test
   cd ../..
   printf "\e[0Ksection_end:`date +%s`:${dep}_build\r\e[0K\n"
 }
 
 self_build https://gitlab.gnome.org/GNOME/babl
-self_build https://gitlab.gnome.org/GNOME/gegl
+#self_build https://gitlab.gnome.org/GNOME/gegl
 
 cd $GIMP_DIR
