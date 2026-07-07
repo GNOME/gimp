@@ -10,7 +10,7 @@ project('gimp',
 )
 
 project_url = 'https://gitlab.gnome.org/GNOME/gimp'
-project_url_issues = project_url + '/issues/new'
+project_url_issues = 'https://www.gimp.org/bugs/' #see Infrastructure/gimp-web@d6d0559d
 
 conf = configuration_data()
 
