@@ -2111,7 +2111,7 @@ pnmscanner_gettoken (PNMScanner *s,
   while (! s->eof                   &&
          ! g_ascii_isspace (s->cur) &&
          (s->cur != '#')            &&
-         (ctr < bufsize))
+         (ctr < bufsize - 1))
     {
       buf[ctr++] = s->cur;
       pnmscanner_getchar (s);
