@@ -82,6 +82,7 @@ resource_load (FILE *file)
         {
           gchar   type[5];
           guint32 size;
+          gsize   allocation;
 
 #ifndef _UCRT
           strncpy (type, header.type, 4);
@@ -91,9 +92,11 @@ resource_load (FILE *file)
           type[4] = '\0';
           size = GUINT32_FROM_BE (header.size);
 
-          if (! strncmp (header.type, "icns", 4) && size > sizeof (IcnsResourceHeader))
+          if (! strncmp (header.type, "icns", 4) &&
+              size > sizeof (IcnsResourceHeader) &&
+              g_size_checked_add (&allocation, sizeof (IcnsResource), size))
             {
-              res = (IcnsResource *) g_new (guchar, sizeof (IcnsResource) + size);
+              res = (IcnsResource *) g_new (guchar, allocation);
 #ifndef _UCRT
               strncpy (res->type, header.type, 4);
 #else
@@ -255,8 +258,8 @@ icns_slurp (guchar       *dest,
                 bucket = icns->data[icns->cursor++];
               }
 
-            bit = (bucket & 0x80) ? 0 : 255;
-            bucket = bucket << 1;
+            bit               = (bucket & 0x80) ? 0 : 255;
+            bucket            = bucket << 1;
             dest[out * 4]     = bit;
             dest[out * 4 + 1] = bit;
             dest[out * 4 + 2] = bit;
@@ -277,8 +280,8 @@ icns_slurp (guchar       *dest,
             if (out % 2 == 0)
               bucket = icns->data[icns->cursor++];
 
-            index = 3 * (bucket & 0xf0) >> 4;
-            bucket = bucket << 4;
+            index             = 3 * (bucket & 0xf0) >> 4;
+            bucket            = bucket << 4;
             dest[out * 4]     = icns_colormap_4[index];
             dest[out * 4 + 1] = icns_colormap_4[index + 1];
             dest[out * 4 + 2] = icns_colormap_4[index + 2];
@@ -294,7 +297,7 @@ icns_slurp (guchar       *dest,
                 return;
               }
 
-            index = 3 * icns->data[icns->cursor++];
+            index             = 3 * icns->data[icns->cursor++];
             dest[out * 4]     = icns_colormap_8[index];
             dest[out * 4 + 1] = icns_colormap_8[index + 1];
             dest[out * 4 + 2] = icns_colormap_8[index + 2];
@@ -305,7 +308,7 @@ icns_slurp (guchar       *dest,
       case 32:
         for (out = 0; out < max; out++)
           {
-            if (icns->cursor >= (icns->size + 2))
+            if (icns->size < 4 || icns->cursor > icns->size - 4)
               {
                 g_message ("Invalid or corrupt icns resource file.");
                 return;
@@ -317,14 +320,14 @@ icns_slurp (guchar       *dest,
             /* Throw away alpha, use the mask */
             icns->cursor++;
 
-            if (mask && mask->cursor >= (icns->size))
+            if (mask && mask->cursor >= mask->size)
               {
                 g_message ("Invalid or corrupt icns resource file.");
                 return;
               }
 
             if (mask)
-              dest[out * 4 + 3] = icns->data[mask->cursor++];
+              dest[out * 4 + 3] = mask->data[mask->cursor++];
             else
               dest[out * 4 + 3] = 255;
           }
@@ -349,8 +352,8 @@ icns_slurp (guchar       *dest,
                 bucket = mask->data[mask->cursor++];
               }
 
-            bit = (bucket & 0x80) ? 255 : 0;
-            bucket = bucket << 1;
+            bit               = (bucket & 0x80) ? 255 : 0;
+            bucket            = bucket << 1;
             dest[out * 4 + 3] = bit;
           }
       }
