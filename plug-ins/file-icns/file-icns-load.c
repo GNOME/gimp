@@ -398,7 +398,7 @@ icns_decompress (guchar       *dest,
                 {
                   if (out >= max)
                     {
-                      g_message ("Corrupt icon? compressed run overflows output size.");
+                      g_message ("Corrupt icon: compressed run overflows output size.");
                       return FALSE;
                     }
                   dest[out++ * 4 + channel] = val;
@@ -444,10 +444,19 @@ icns_decompress (guchar       *dest,
   else if (mask)
     {
       gchar typestring[5];
-      fourcc_get_string (mask->type, typestring);
 
+      fourcc_get_string (mask->type, typestring);
       for (out = 0; out < max; out++)
-        dest[out * 4 + 3] = mask->data[mask->cursor++];
+        {
+          if (mask->cursor >= mask->size)
+            {
+              g_message ("Corrupt icon mask: uncompressed run overflows input "
+                         "size.");
+              return FALSE;
+            }
+
+          dest[out * 4 + 3] = mask->data[mask->cursor++];
+        }
     }
   return TRUE;
 }
