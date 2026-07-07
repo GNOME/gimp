@@ -236,7 +236,7 @@ ico_read_info (FILE    *fp,
     {
       info[i].width  = entries[i].width;
       info[i].height = entries[i].height;
-      info[i].planes = entries[i].planes;
+      info[i].planes = GUINT16_FROM_LE (entries[i].planes);
       info[i].bpp    = GUINT16_FROM_LE (entries[i].bpp);
       info[i].size   = GUINT32_FROM_LE (entries[i].size);
       info[i].offset = GUINT32_FROM_LE (entries[i].offset);

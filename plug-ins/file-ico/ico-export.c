@@ -1684,7 +1684,7 @@ shared_save_image (GFile                *file,
           entries[i].width = 0;
           entries[i].height = 0;
         }
-      if (info->depths[i] <= 8 )
+      if (info->depths[i] < 8)
         entries[i].num_colors = 1 << info->depths[i];
       else
         entries[i].num_colors = 0;
