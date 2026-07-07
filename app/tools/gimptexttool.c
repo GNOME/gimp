@@ -88,7 +88,6 @@
 #define TEXT_UNDO_TIMEOUT 3
 #define MIN_DRAG_SIZE     3 /* in screen pixels */
 
-
 /*  local function prototypes  */
 
 static void      gimp_text_tool_constructed     (GObject           *object);
@@ -1208,6 +1207,7 @@ gimp_text_tool_rectangle_change_complete (GimpToolRectangle *rectangle,
       GimpItem *item = GIMP_ITEM (text_tool->layer);
       gdouble   x1, y1;
       gdouble   x2, y2;
+      gboolean  location_changed;
 
       if (! item)
         {
@@ -1227,6 +1227,10 @@ gimp_text_tool_rectangle_change_complete (GimpToolRectangle *rectangle,
                     "x2", &x2,
                     "y2", &y2,
                     NULL);
+
+      /* Indicates if the live preview of the text has been moved */
+      location_changed = ((gint) x1 != text_tool->move_start_x ||
+                          (gint) y1 != text_tool->move_start_y);
 
       if ((x2 - x1) != gimp_item_get_width  (item) ||
           (y2 - y1) != gimp_item_get_height (item))
@@ -1281,35 +1285,20 @@ gimp_text_tool_rectangle_change_complete (GimpToolRectangle *rectangle,
           if (push_undo)
             gimp_image_undo_group_end (text_tool->image);
         }
-      else if (text_tool->moving &&
-               ((gint) x1 != text_tool->move_start_x ||
-                (gint) y1 != text_tool->move_start_y))
-        {
-          gimp_text_tool_block_drawing (text_tool);
-
-          gimp_item_translate (item,
-                               text_tool->move_start_x - gimp_item_get_offset_x (item),
-                               text_tool->move_start_y - gimp_item_get_offset_y (item),
-                               FALSE);
-
-          gimp_text_tool_apply (text_tool, TRUE);
-
-          gimp_item_translate (item,
-                               (gint) x1 - gimp_item_get_offset_x (item),
-                               (gint) y1 - gimp_item_get_offset_y (item),
-                               TRUE);
-
-          gimp_text_tool_unblock_drawing (text_tool);
-
-          gimp_image_flush (text_tool->image);
-        }
-      else if (x1 != gimp_item_get_offset_x (item) ||
-               y1 != gimp_item_get_offset_y (item))
+      else if ((text_tool->moving && location_changed) ||
+               (x1 != gimp_item_get_offset_x (item)    ||
+                y1 != gimp_item_get_offset_y (item)))
         {
           gimp_text_tool_block_drawing (text_tool);
 
           gimp_image_undo_group_start (text_tool->image, GIMP_UNDO_GROUP_TEXT,
                                        _("Move Text Layer"));
+
+          if (location_changed)
+            gimp_item_translate (item,
+                                 text_tool->move_start_x - gimp_item_get_offset_x (item),
+                                 text_tool->move_start_y - gimp_item_get_offset_y (item),
+                                 FALSE);
 
           gimp_text_tool_apply (text_tool, TRUE);
 
