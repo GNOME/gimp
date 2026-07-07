@@ -233,12 +233,12 @@ is_non_conformant_tiff (gushort photomet,
   switch (photomet)
     {
     case PHOTOMETRIC_RGB:
-    case PHOTOMETRIC_YCBCR:
     case PHOTOMETRIC_CIELAB:
+    case PHOTOMETRIC_YCBCR:
     case PHOTOMETRIC_ICCLAB:
     case PHOTOMETRIC_ITULAB:
     case PHOTOMETRIC_LOGLUV:
-      return (spp > 3 || (spp == 2 && photomet != PHOTOMETRIC_RGB));
+      return (spp != 3);
       break;
     case PHOTOMETRIC_SEPARATED:
       return (spp > 4);
@@ -2099,9 +2099,6 @@ load_contiguous (TIFF         *tif,
         bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
     }
 
-  if (bytes_per_pixel > spp)
-    bytes_per_pixel = spp;
-
   g_debug ("bytes_per_pixel: %d, format: %d",
            bytes_per_pixel,
            babl_format_get_bytes_per_pixel (src_format));
@@ -2298,9 +2295,6 @@ load_separate (TIFF         *tif,
       if (channel[i].format)
         bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
     }
-
-  if (bytes_per_pixel > spp)
-    bytes_per_pixel = spp;
 
   g_debug ("bytes_per_pixel: %d, format: %d",
            bytes_per_pixel,
