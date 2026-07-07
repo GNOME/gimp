@@ -271,7 +271,8 @@ ico_read_png (FILE    *fp,
               guchar  *buf,
               gint     maxsize,
               gint    *width,
-              gint    *height)
+              gint    *height,
+              gint    *bpp)
 {
   png_structp   png_ptr;
   png_infop     info;
@@ -349,6 +350,7 @@ ico_read_png (FILE    *fp,
 
   *width = w;
   *height = h;
+  *bpp = 32; /* always expanded to 32bpp RGBA */
   rows = g_new (guint32*, h);
   rows[0] = (guint32*) buf;
   for (i = 1; i < h; i++)
@@ -427,7 +429,8 @@ ico_read_icon (FILE    *fp,
                guchar  *buf,
                gint     maxsize,
                gint    *width,
-               gint    *height)
+               gint    *height,
+               gint    *bpp)
 {
   IcoFileDataHeader   data;
   gsize               data_size;
@@ -627,6 +630,7 @@ ico_read_icon (FILE    *fp,
   g_free (and_map);
   *width = w;
   *height = h;
+  *bpp = data.bpp;
   return TRUE;
 }
 
@@ -651,13 +655,19 @@ ico_load_layer (FILE        *fp,
 
   if (first_bytes == ICO_PNG_MAGIC)
     {
-      if (!ico_read_png (fp, first_bytes, buf, maxsize, &width, &height))
+      if (!ico_read_png (fp, first_bytes, buf, maxsize, &width, &height,
+                         &info->bpp))
         return NULL;
     }
   else if (first_bytes == 40)
     {
-      if (!ico_read_icon (fp, first_bytes, buf, maxsize, &width, &height))
+      gint bpp = 0;
+
+      if (!ico_read_icon (fp, first_bytes, buf, maxsize, &width, &height,
+                          &bpp))
         return NULL;
+
+      info->bpp = bpp; /* directory entry holds yHotspot for CUR, not bpp */
     }
   else
     {
@@ -762,8 +772,13 @@ ico_load_image (GFile        *file,
   for (i = 0; i < icon_count; i++)
     {
       GimpLayer *layer;
-      gchar     *layer_prefix;
+      gchar     *layer_name;
       gchar     *icon_metadata;
+
+      /* Layer name is built after the load so info->bpp is already set. */
+      layer = ico_load_layer (fp, image, i + 1, buf, maxsize,
+                              file_offset ? *file_offset : 0,
+                              NULL, info + i);
 
       if (info[i].bpp)
         icon_metadata = g_strdup_printf ("(%dx%d, %dbpp)", info[i].width,
@@ -774,24 +789,24 @@ ico_load_image (GFile        *file,
 
       if (frame_num > -1)
         {
-          layer_prefix = g_strdup_printf ("Cursor %s Frame #%i", icon_metadata,
-                                          frame_num);
+          layer_name = g_strdup_printf ("Cursor %s Frame #%i", icon_metadata,
+                                        frame_num);
         }
       else
         {
           if (header.resource_type == 1)
-            layer_prefix = g_strdup_printf ("Icon #%i %s ", i + 1,
-                                            icon_metadata);
+            layer_name = g_strdup_printf ("Icon #%i %s ", i + 1,
+                                          icon_metadata);
           else
-            layer_prefix = g_strdup_printf ("Cursor #%i %s ", i + 1,
-                                            icon_metadata);
+            layer_name = g_strdup_printf ("Cursor #%i %s ", i + 1,
+                                          icon_metadata);
         }
 
-      layer = ico_load_layer (fp, image, i + 1, buf, maxsize,
-                              file_offset ? *file_offset : 0,
-                              layer_prefix, info + i);
+      if (layer)
+        gimp_item_set_name (GIMP_ITEM (layer), layer_name);
+
       g_free (icon_metadata);
-      g_free (layer_prefix);
+      g_free (layer_name);
 
       /* Save CUR hot spot information */
       if (header.resource_type == 2)
