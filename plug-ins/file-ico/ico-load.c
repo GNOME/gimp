@@ -441,6 +441,7 @@ ico_read_icon (FILE    *fp,
   guint32            *dest_vec;
   guchar             *row;
   gint                rowstride;
+  gboolean            use_and_mask;
 
   palette = NULL;
 
@@ -529,6 +530,44 @@ ico_read_icon (FILE    *fp,
     }
   D(("  length of and_map: %i\n", length));
 
+  use_and_mask = TRUE;
+
+  /* 32bpp: Windows ignores the AND mask; ARGB uses real alpha,
+   * 0RGB is treated as fully opaque. */
+  if (data.bpp == 32)
+    {
+      gboolean has_alpha = FALSE;
+
+      use_and_mask = FALSE;
+
+      /* Distinguish ARGB (at least one A > 0) from 0RGB (all A == 0). */
+      rowstride = ico_rowstride (w, 32);
+      for (y = 0; y < h && ! has_alpha; y++)
+        {
+          row = xor_map + rowstride * y;
+          for (x = 0; x < w; x++, row += 4)
+            {
+              if (row[3])
+                {
+                  has_alpha = TRUE;
+                  break;
+                }
+            }
+        }
+
+      if (! has_alpha)
+        {
+          /* 0RGB: force A=255 so the editor shows authored pixel values
+           * directly (Windows renders via AND+XOR / SRCINVERT). */
+          for (y = 0; y < h; y++)
+            {
+              row = xor_map + rowstride * y;
+              for (x = 0; x < w; x++, row += 4)
+                row[3] = 255;
+            }
+        }
+    }
+
   dest_vec = (guint32 *) buf;
   switch (data.bpp)
     {
@@ -607,7 +646,7 @@ ico_read_icon (FILE    *fp,
                 G_VAL_GIMP (dest) = row[1];
                 R_VAL_GIMP (dest) = row[2];
 
-                if (data.bpp < 32)
+                if (use_and_mask)
                   {
                     if (ico_get_bit_from_data (and_map, w, y * w + x))
                       A_VAL_GIMP (dest) = 0;
