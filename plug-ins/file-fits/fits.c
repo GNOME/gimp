@@ -351,6 +351,7 @@ load_image (GFile        *file,
   const Babl        *type        = NULL;
   const Babl        *format      = NULL;
   gdouble           *pixels;
+  gsize              allocate;
   gdouble            datamin     = 1.0E30f;
   gdouble            datamax     = -1.0E30f;
   gint               channels    = 1;
@@ -484,24 +485,21 @@ load_image (GFile        *file,
                          "than GIMP can handle."),
                        gimp_file_get_utf8_name (file), width, height);
           fits_close_file (ifp, &status);
-          return NULL;
+          return image;
         }
 
       /* If RGB FITS image, we need to read in the whole image so we can
        * convert the planes format to RGB */
-      if (hdu.naxis == 2)
-        pixels = (gdouble *) g_try_malloc ((gsize) width * sizeof (gdouble) *
-                                           channels);
-      else
-        pixels = (gdouble *) g_try_malloc ((gsize) width * height *
-                                           sizeof (gdouble) * channels);
-
-      if (pixels == NULL)
+      if (! g_size_checked_mul (&allocate, width, sizeof (gdouble))             ||
+          ! g_size_checked_mul (&allocate, allocate, channels)                  ||
+          (hdu.naxis > 2 && ! g_size_checked_mul (&allocate, allocate, height)) ||
+          ! (pixels = (gdouble *) g_try_malloc (allocate)))
         {
-          g_set_error (error, G_FILE_ERROR, 0,
-                       "Memory could not be allocated.");
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("There was not enough memory to complete the "
+                         "operation."));
           fits_close_file (ifp, &status);
-          return NULL;
+          return image;
         }
 
       if (! image)
@@ -572,13 +570,16 @@ load_image (GFile        *file,
           if (! status)
             {
               gdouble *temp;
+              gsize    allocate;
 
-              temp = (gdouble *) malloc (width * height * sizeof (gdouble) * channels);
-
-              if (temp == NULL)
+              if (! g_size_checked_mul (&allocate, width, sizeof (gdouble)) ||
+                  ! g_size_checked_mul (&allocate, allocate, channels)      ||
+                  ! g_size_checked_mul (&allocate, allocate, height)        ||
+                  ! (temp = (gdouble *) g_try_malloc (allocate)))
                 {
-                  g_set_error (error, G_FILE_ERROR, 0,
-                               "Memory could not be allocated.");
+                  g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                               _("There was not enough memory to complete the "
+                                 "operation."));
                   fits_close_file (ifp, &status);
                   g_object_unref (buffer);
                   return image;
@@ -960,7 +961,7 @@ export_fits (GFile        *file,
                 }
 
               src_offset += width * channelnum;
-              offset   += width;
+              offset     += width;
             }
 
           if (export_type == TFLOAT)
