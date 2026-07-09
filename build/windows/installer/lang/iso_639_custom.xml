@@ -216,7 +216,7 @@ To fill data for a new entry:
 		name="Кыргыз тили" />
 	<iso_639_entry
 		dl_code="lt"
-		inno_code="Languages\\Unofficial\\Lithuanian.isl"
+		inno_code="Languages\\Lithuanian.isl"
 		name="Lietuvių kalba" />
 	<iso_639_entry
 		dl_code="lv"
