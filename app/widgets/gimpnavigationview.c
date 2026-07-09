@@ -311,6 +311,9 @@ gimp_navigation_view_button_release (GtkWidget      *widget,
 
       gtk_grab_remove (widget);
       gdk_seat_ungrab (gdk_event_get_seat ((GdkEvent *) bevent));
+
+      /* ensure keyboard focus follows mouse */
+      gtk_widget_grab_focus (widget);
     }
 
   return TRUE;
