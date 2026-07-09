@@ -716,24 +716,28 @@ _gimp_wire_write_gegl_color (GIOChannel  *channel,
 
   for (i = 0; i < count; i++)
     {
-      const guint8 *pixel      = NULL;
-      gsize         bpp        = 0;
-      const guint8 *icc        = NULL;
-      gsize         icc_length = 0;
+      const guint8 *pixel         = NULL;
+      gsize         bpp           = 0;
+      guint32       bpp_32        = 0;
+      const guint8 *icc           = NULL;
+      gsize         icc_length    = 0;
+      guint32       icc_length_32 = 0;
 
       if (pixel_data[i])
         pixel = g_bytes_get_data (pixel_data[i], &bpp);
       if (icc_data[i])
         icc = g_bytes_get_data (icc_data[i], &icc_length);
 
-      if (! _gimp_wire_write_int32 (channel, (const guint32 *) &bpp, 1, user_data))
+      bpp_32 = (guint32) bpp;
+      if (! _gimp_wire_write_int32 (channel, &bpp_32, 1, user_data))
         return FALSE;
 
       if (bpp > 0 && ! _gimp_wire_write_int8 (channel, pixel, bpp, user_data))
         return FALSE;
 
+      icc_length_32 = (guint32) icc_length;
       if (! _gimp_wire_write_string (channel, &(encoding[i]), 1, user_data) ||
-          ! _gimp_wire_write_int32 (channel, (const guint32 *) &icc_length, 1, user_data))
+          ! _gimp_wire_write_int32 (channel, &icc_length_32, 1, user_data))
         return FALSE;
 
       if (icc_length > 0 && ! _gimp_wire_write_int8 (channel, icc, icc_length, user_data))
