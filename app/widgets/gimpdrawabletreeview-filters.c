@@ -606,25 +606,27 @@ gimp_drawable_filters_editor_set_sensitive (GimpDrawableTreeView *view)
           (GIMP_IS_RASTERIZABLE (drawable) &&
           ! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (drawable))))
         {
-          const gchar *disabled_reason;
+          gchar       *disabled_reason;
+          const gchar *default_name;
           gchar       *tooltip;
 
-          if (gimp_item_is_vector_layer (GIMP_ITEM (drawable)))
-            disabled_reason = _("Disabled because filters cannot be merged "
-                                "on vector layers.");
-          else if (gimp_item_is_link_layer (GIMP_ITEM (drawable)))
-            disabled_reason = _("Disabled because filters cannot be merged "
-                                "on link layers.");
-          else if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
-            disabled_reason = _("Disabled because filters cannot be merged "
-                                "on text layers.");
+          default_name =
+            GIMP_VIEWABLE_GET_CLASS (GIMP_VIEWABLE (drawable))->default_name;
+
+          if (is_group)
+            disabled_reason = g_strdup (_("Disabled because filters cannot be "
+                                          "merged on group layers."));
           else
-            disabled_reason = _("Disabled because filters cannot be merged "
-                                "on group layers.");
+            /* TRANSLATORS: The %s will be replaced by the name of the
+             * layer type. */
+            disabled_reason = g_strdup_printf (_("Disabled because filters "
+                                                 "cannot be merged on: %s."),
+                                               default_name);
 
           tooltip = g_strdup_printf ("%s\n<i>%s</i>",
                                      _("Merge all active filters down."),
                                      disabled_reason);
+          g_free (disabled_reason);
 
           gimp_help_set_help_data_with_markup (editor->merge_button, tooltip,
                                                GIMP_HELP_LAYER_EFFECTS);

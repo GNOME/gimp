@@ -455,8 +455,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                        ! gimp_item_is_rasterized (GIMP_ITEM (drawable)))
                 /* TRANSLATORS: The %s will be replaced by the name of the
                  * layer type. */
-                disabled_reason = g_strdup_printf ("Disabled because filters "
-                                                   "cannot be merged on: %s.",
+                disabled_reason = g_strdup_printf (_("Disabled because filters "
+                                                     "cannot be merged on: %s."),
                                                    default_name);
               else
                 disabled_reason =
