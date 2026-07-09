@@ -119,6 +119,6 @@ self_build()
 }
 
 self_build https://gitlab.gnome.org/GNOME/babl
-self_build https://gitlab.gnome.org/GNOME/gegl
+self_build https://gitlab.gnome.org/tal.regev/gegl 'TalR/msys2_def' '-Db_lto=true -Dworkshop=true'
 
 cd $GIMP_DIR

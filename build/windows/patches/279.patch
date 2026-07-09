@@ -1,0 +1,1203 @@
+From 8e67717e1f16b3a90c6db3f6a0e3e9f364e1971c Mon Sep 17 00:00:00 2001
+From: Tal Regev <tal.regev@gmail.com>
+Date: Thu, 9 Jul 2026 21:24:14 +0300
+Subject: [PATCH 1/3] gegl, libs, tools: use def files for all Windows builds
+
+Use the existing Windows .def files for MinGW/MSYS2 as well as MSVC,
+and mark exported data symbols with DATA so Windows linkers handle them
+correctly.
+
+Add GEGL_VAR for exported data declarations, so MSVC consumers import
+those symbols through the generated import library while GEGL_COMPILATION
+avoids importing symbols from the library itself.
+
+Drop private underscore-prefixed helper symbols from the public .def file.
+Keep the OpenCL acceleration state private behind gegl_cl_is_accelerated(),
+and make the float epsilon helpers inline so consumers no longer need
+private exported symbols.
+
+Update defcheck.py to parse .def files explicitly, ignore DATA attributes,
+and validate MinGW cross-build DLL exports.
+---
+ gegl/buffer/gegl-rectangle.c |  15 --
+ gegl/buffer/gegl-rectangle.h |  22 ++-
+ gegl/gegl-debug.h            |  12 +-
+ gegl/gegl-generic.def        | 258 +++++++++++++++++------------------
+ gegl/meson.build             |  30 ++--
+ gegl/opencl/gegl-cl-init.c   |   8 +-
+ gegl/opencl/gegl-cl-init.h   |  14 +-
+ libs/npd/gegl-npd.def        |   8 +-
+ libs/npd/meson.build         |  20 +--
+ tools/defcheck.py            |  43 ++++--
+ 10 files changed, 226 insertions(+), 204 deletions(-)
+
+diff --git a/gegl/buffer/gegl-rectangle.c b/gegl/buffer/gegl-rectangle.c
+index 25e60df49..8b3fbaa45 100644
+--- a/gegl/buffer/gegl-rectangle.c
++++ b/gegl/buffer/gegl-rectangle.c
+@@ -443,18 +443,3 @@ gegl_rectangle_get_type (void)
+                                              (GBoxedFreeFunc) g_free);
+   return our_type;
+ }
+-
+-gint
+-_gegl_float_epsilon_zero (float value)
+-{
+-  return value > -GEGL_FLOAT_EPSILON && value < GEGL_FLOAT_EPSILON;
+-}
+-
+-gint
+-_gegl_float_epsilon_equal (float v1, float v2)
+-{
+-  register float diff = v1 - v2;
+-
+-  return diff > -GEGL_FLOAT_EPSILON && diff < GEGL_FLOAT_EPSILON;
+-}
+-
+diff --git a/gegl/buffer/gegl-rectangle.h b/gegl/buffer/gegl-rectangle.h
+index e10219e2d..d5efcfcaa 100644
+--- a/gegl/buffer/gegl-rectangle.h
++++ b/gegl/buffer/gegl-rectangle.h
+@@ -333,12 +333,24 @@ void     gegl_rectangle_dump              (const GeglRectangle *rectangle);
+ 
+ 
+ #define GEGL_FLOAT_EPSILON            (1e-5)
+-#define GEGL_FLOAT_IS_ZERO(value)     (_gegl_float_epsilon_zero ((value)))
+-#define GEGL_FLOAT_EQUAL(v1, v2)      (_gegl_float_epsilon_equal ((v1), (v2)))
+ 
+-gint        _gegl_float_epsilon_zero  (float     value);
+-gint        _gegl_float_epsilon_equal (float     v1,
+-                                              float     v2);
++static inline gint
++gegl_float_epsilon_zero (float value)
++{
++  return value > -GEGL_FLOAT_EPSILON && value < GEGL_FLOAT_EPSILON;
++}
++
++static inline gint
++gegl_float_epsilon_equal (float v1,
++                          float v2)
++{
++  float diff = v1 - v2;
++
++  return diff > -GEGL_FLOAT_EPSILON && diff < GEGL_FLOAT_EPSILON;
++}
++
++#define GEGL_FLOAT_IS_ZERO(value)     (gegl_float_epsilon_zero ((value)))
++#define GEGL_FLOAT_EQUAL(v1, v2)      (gegl_float_epsilon_equal ((v1), (v2)))
+ 
+ 
+ 
+diff --git a/gegl/gegl-debug.h b/gegl/gegl-debug.h
+index ec0ddb87a..db1de23b4 100644
+--- a/gegl/gegl-debug.h
++++ b/gegl/gegl-debug.h
+@@ -5,7 +5,15 @@
+ 
+ G_BEGIN_DECLS
+ 
+-extern guint gegl_debug_flags;
++#ifndef GEGL_VAR
++#if defined(_MSC_VER) && ! defined(GEGL_COMPILATION)
++#define GEGL_VAR extern __declspec (dllimport)
++#else
++#define GEGL_VAR extern
++#endif
++#endif
++
++GEGL_VAR guint gegl_debug_flags;
+ 
+ typedef enum {
+   GEGL_DEBUG_PROCESS         = 1 << 0,
+@@ -48,7 +56,7 @@ const GDebugKey gegl_debug_keys[] = {
+                      GEGL_DEBUG_LICENSE},
+ };
+ #else
+-extern GDebugKey gegl_debug_keys[];
++GEGL_VAR GDebugKey gegl_debug_keys[];
+ #endif /* __GEGL_INIT_C */
+ 
+ #if (defined(__cplusplus) && defined(GEGL_ISO_CXX_VARIADIC_MACROS)) || __STDC_VERSION__ >= 199901L
+diff --git a/gegl/gegl-generic.def b/gegl/gegl-generic.def
+index ba3c72d78..affa4be48 100644
+--- a/gegl/gegl-generic.def
++++ b/gegl/gegl-generic.def
+@@ -1,7 +1,4 @@
+ EXPORTS
+-  _gegl_cl_is_accelerated
+-  _gegl_float_epsilon_equal
+-  _gegl_float_epsilon_zero
+   gegl_abyss_policy_get_type
+   gegl_access_mode_get_type
+   gegl_apply_op
+@@ -45,8 +42,8 @@ EXPORTS
+   gegl_buffer_create_sub_buffer
+   gegl_buffer_dup
+   gegl_buffer_emit_changed_signal
+-  gegl_buffer_ext_flush
+-  gegl_buffer_ext_invalidate
++  gegl_buffer_ext_flush DATA
++  gegl_buffer_ext_invalidate DATA
+   gegl_buffer_flush
+   gegl_buffer_flush_ext
+   gegl_buffer_freeze_changed
+@@ -114,7 +111,7 @@ EXPORTS
+   gegl_cache_get_type
+   gegl_cache_invalidate
+   gegl_cache_policy_get_type
+-  gegl_cache_signals
++  gegl_cache_signals DATA
+   gegl_callback_visitor_get_type
+   gegl_callback_visitor_new
+   gegl_calloc
+@@ -138,122 +135,123 @@ EXPORTS
+   gegl_cl_has_extension
+   gegl_cl_has_gl_sharing
+   gegl_cl_init
++  gegl_cl_is_accelerated
+   gegl_cl_load_random_data
+   gegl_cl_random_cleanup
+   gegl_cl_random_get_ushort4
+   gegl_cl_set_default_device_type
+   gegl_cl_set_kernel_args
+   gegl_cl_set_profiling
+-  gegl_clBuildProgram
+-  gegl_clCloneKernel
+-  gegl_clCompileProgram
+-  gegl_clCreateBuffer
+-  gegl_clCreateBufferWithProperties
+-  gegl_clCreateCommandQueueWithProperties
+-  gegl_clCreateContext
+-  gegl_clCreateContextFromType
+-  gegl_clCreateFromGLBuffer
+-  gegl_clCreateFromGLRenderbuffer
+-  gegl_clCreateFromGLTexture
+-  gegl_clCreateImage
+-  gegl_clCreateImageWithProperties
+-  gegl_clCreateKernel
+-  gegl_clCreateKernelsInProgram
+-  gegl_clCreatePipe
+-  gegl_clCreateProgramWithBinary
+-  gegl_clCreateProgramWithBuiltInKernels
+-  gegl_clCreateProgramWithIL
+-  gegl_clCreateProgramWithSource
+-  gegl_clCreateSamplerWithProperties
+-  gegl_clCreateSubBuffer
+-  gegl_clCreateSubDevices
+-  gegl_clCreateUserEvent
+-  gegl_clEnqueueAcquireGLObjects
+-  gegl_clEnqueueBarrierWithWaitList
+-  gegl_clEnqueueCopyBuffer
+-  gegl_clEnqueueCopyBufferRect
+-  gegl_clEnqueueCopyBufferToImage
+-  gegl_clEnqueueCopyImage
+-  gegl_clEnqueueCopyImageToBuffer
+-  gegl_clEnqueueFillBuffer
+-  gegl_clEnqueueFillImage
+-  gegl_clEnqueueMapBuffer
+-  gegl_clEnqueueMapImage
+-  gegl_clEnqueueMarkerWithWaitList
+-  gegl_clEnqueueMigrateMemObjects
+-  gegl_clEnqueueNativeKernel
+-  gegl_clEnqueueNDRangeKernel
+-  gegl_clEnqueueReadBuffer
+-  gegl_clEnqueueReadBufferRect
+-  gegl_clEnqueueReadImage
+-  gegl_clEnqueueReleaseGLObjects
+-  gegl_clEnqueueSVMFree
+-  gegl_clEnqueueSVMMap
+-  gegl_clEnqueueSVMMemcpy
+-  gegl_clEnqueueSVMMemFill
+-  gegl_clEnqueueSVMMigrateMem
+-  gegl_clEnqueueSVMUnmap
+-  gegl_clEnqueueUnmapMemObject
+-  gegl_clEnqueueWriteBuffer
+-  gegl_clEnqueueWriteBufferRect
+-  gegl_clEnqueueWriteImage
+-  gegl_clFinish
+-  gegl_clFlush
+-  gegl_clGetCommandQueueInfo
+-  gegl_clGetContextInfo
+-  gegl_clGetDeviceAndHostTimer
+-  gegl_clGetDeviceIDs
+-  gegl_clGetDeviceInfo
+-  gegl_clGetEventInfo
+-  gegl_clGetEventProfilingInfo
+-  gegl_clGetExtensionFunctionAddressForPlatform
+-  gegl_clGetGLContextInfoKHR
+-  gegl_clGetGLObjectInfo
+-  gegl_clGetGLTextureInfo
+-  gegl_clGetHostTimer
+-  gegl_clGetImageInfo
+-  gegl_clGetKernelArgInfo
+-  gegl_clGetKernelInfo
+-  gegl_clGetKernelSubGroupInfo
+-  gegl_clGetKernelWorkGroupInfo
+-  gegl_clGetMemObjectInfo
+-  gegl_clGetPipeInfo
+-  gegl_clGetPlatformIDs
+-  gegl_clGetPlatformInfo
+-  gegl_clGetProgramBuildInfo
+-  gegl_clGetProgramInfo
+-  gegl_clGetSamplerInfo
+-  gegl_clGetSupportedImageFormats
+-  gegl_clLinkProgram
+-  gegl_clReleaseCommandQueue
+-  gegl_clReleaseContext
+-  gegl_clReleaseDevice
+-  gegl_clReleaseEvent
+-  gegl_clReleaseKernel
+-  gegl_clReleaseMemObject
+-  gegl_clReleaseProgram
+-  gegl_clReleaseSampler
+-  gegl_clRetainCommandQueue
+-  gegl_clRetainContext
+-  gegl_clRetainDevice
+-  gegl_clRetainEvent
+-  gegl_clRetainKernel
+-  gegl_clRetainMemObject
+-  gegl_clRetainProgram
+-  gegl_clRetainSampler
+-  gegl_clSetContextDestructorCallback
+-  gegl_clSetDefaultDeviceCommandQueue
+-  gegl_clSetEventCallback
+-  gegl_clSetKernelArg
+-  gegl_clSetKernelArgSVMPointer
+-  gegl_clSetKernelExecInfo
+-  gegl_clSetMemObjectDestructorCallback
+-  gegl_clSetProgramSpecializationConstant
+-  gegl_clSetUserEventStatus
+-  gegl_clSVMAlloc
+-  gegl_clSVMFree
+-  gegl_clUnloadPlatformCompiler
+-  gegl_clWaitForEvents
++  gegl_clBuildProgram DATA
++  gegl_clCloneKernel DATA
++  gegl_clCompileProgram DATA
++  gegl_clCreateBuffer DATA
++  gegl_clCreateBufferWithProperties DATA
++  gegl_clCreateCommandQueueWithProperties DATA
++  gegl_clCreateContext DATA
++  gegl_clCreateContextFromType DATA
++  gegl_clCreateFromGLBuffer DATA
++  gegl_clCreateFromGLRenderbuffer DATA
++  gegl_clCreateFromGLTexture DATA
++  gegl_clCreateImage DATA
++  gegl_clCreateImageWithProperties DATA
++  gegl_clCreateKernel DATA
++  gegl_clCreateKernelsInProgram DATA
++  gegl_clCreatePipe DATA
++  gegl_clCreateProgramWithBinary DATA
++  gegl_clCreateProgramWithBuiltInKernels DATA
++  gegl_clCreateProgramWithIL DATA
++  gegl_clCreateProgramWithSource DATA
++  gegl_clCreateSamplerWithProperties DATA
++  gegl_clCreateSubBuffer DATA
++  gegl_clCreateSubDevices DATA
++  gegl_clCreateUserEvent DATA
++  gegl_clEnqueueAcquireGLObjects DATA
++  gegl_clEnqueueBarrierWithWaitList DATA
++  gegl_clEnqueueCopyBuffer DATA
++  gegl_clEnqueueCopyBufferRect DATA
++  gegl_clEnqueueCopyBufferToImage DATA
++  gegl_clEnqueueCopyImage DATA
++  gegl_clEnqueueCopyImageToBuffer DATA
++  gegl_clEnqueueFillBuffer DATA
++  gegl_clEnqueueFillImage DATA
++  gegl_clEnqueueMapBuffer DATA
++  gegl_clEnqueueMapImage DATA
++  gegl_clEnqueueMarkerWithWaitList DATA
++  gegl_clEnqueueMigrateMemObjects DATA
++  gegl_clEnqueueNativeKernel DATA
++  gegl_clEnqueueNDRangeKernel DATA
++  gegl_clEnqueueReadBuffer DATA
++  gegl_clEnqueueReadBufferRect DATA
++  gegl_clEnqueueReadImage DATA
++  gegl_clEnqueueReleaseGLObjects DATA
++  gegl_clEnqueueSVMFree DATA
++  gegl_clEnqueueSVMMap DATA
++  gegl_clEnqueueSVMMemcpy DATA
++  gegl_clEnqueueSVMMemFill DATA
++  gegl_clEnqueueSVMMigrateMem DATA
++  gegl_clEnqueueSVMUnmap DATA
++  gegl_clEnqueueUnmapMemObject DATA
++  gegl_clEnqueueWriteBuffer DATA
++  gegl_clEnqueueWriteBufferRect DATA
++  gegl_clEnqueueWriteImage DATA
++  gegl_clFinish DATA
++  gegl_clFlush DATA
++  gegl_clGetCommandQueueInfo DATA
++  gegl_clGetContextInfo DATA
++  gegl_clGetDeviceAndHostTimer DATA
++  gegl_clGetDeviceIDs DATA
++  gegl_clGetDeviceInfo DATA
++  gegl_clGetEventInfo DATA
++  gegl_clGetEventProfilingInfo DATA
++  gegl_clGetExtensionFunctionAddressForPlatform DATA
++  gegl_clGetGLContextInfoKHR DATA
++  gegl_clGetGLObjectInfo DATA
++  gegl_clGetGLTextureInfo DATA
++  gegl_clGetHostTimer DATA
++  gegl_clGetImageInfo DATA
++  gegl_clGetKernelArgInfo DATA
++  gegl_clGetKernelInfo DATA
++  gegl_clGetKernelSubGroupInfo DATA
++  gegl_clGetKernelWorkGroupInfo DATA
++  gegl_clGetMemObjectInfo DATA
++  gegl_clGetPipeInfo DATA
++  gegl_clGetPlatformIDs DATA
++  gegl_clGetPlatformInfo DATA
++  gegl_clGetProgramBuildInfo DATA
++  gegl_clGetProgramInfo DATA
++  gegl_clGetSamplerInfo DATA
++  gegl_clGetSupportedImageFormats DATA
++  gegl_clLinkProgram DATA
++  gegl_clReleaseCommandQueue DATA
++  gegl_clReleaseContext DATA
++  gegl_clReleaseDevice DATA
++  gegl_clReleaseEvent DATA
++  gegl_clReleaseKernel DATA
++  gegl_clReleaseMemObject DATA
++  gegl_clReleaseProgram DATA
++  gegl_clReleaseSampler DATA
++  gegl_clRetainCommandQueue DATA
++  gegl_clRetainContext DATA
++  gegl_clRetainDevice DATA
++  gegl_clRetainEvent DATA
++  gegl_clRetainKernel DATA
++  gegl_clRetainMemObject DATA
++  gegl_clRetainProgram DATA
++  gegl_clRetainSampler DATA
++  gegl_clSetContextDestructorCallback DATA
++  gegl_clSetDefaultDeviceCommandQueue DATA
++  gegl_clSetEventCallback DATA
++  gegl_clSetKernelArg DATA
++  gegl_clSetKernelArgSVMPointer DATA
++  gegl_clSetKernelExecInfo DATA
++  gegl_clSetMemObjectDestructorCallback DATA
++  gegl_clSetProgramSpecializationConstant DATA
++  gegl_clSetUserEventStatus DATA
++  gegl_clSVMAlloc DATA
++  gegl_clSVMFree DATA
++  gegl_clUnloadPlatformCompiler DATA
++  gegl_clWaitForEvents DATA
+   gegl_color_cmp
+   gegl_color_duplicate
+   gegl_color_get_bytes
+@@ -315,8 +313,8 @@ EXPORTS
+   gegl_curve_set_point
+   gegl_datafiles_check_extension
+   gegl_datafiles_read_directories
+-  gegl_debug_flags
+-  gegl_debug_keys
++  gegl_debug_flags DATA
++  gegl_debug_keys DATA
+   gegl_distance_metric_get_type
+   gegl_dither_method_get_type
+   gegl_dot_node_to_png
+@@ -326,7 +324,7 @@ EXPORTS
+   gegl_dot_util_add_node_sink_edges
+   gegl_dot_visitor_get_type
+   gegl_dot_visitor_set_string_to_append
+-  gegl_downscale_2x2
++  gegl_downscale_2x2 DATA
+   gegl_downscale_2x2_generic
+   gegl_downscale_2x2_get_fun_generic
+   gegl_downscale_2x2_nearest_generic
+@@ -363,7 +361,7 @@ EXPORTS
+   gegl_has_operation
+   gegl_init
+   gegl_instrument_enable
+-  gegl_instrument_enabled
++  gegl_instrument_enabled DATA
+   gegl_instrument_utf8
+   gegl_is_main_thread
+   gegl_list_operations
+@@ -371,9 +369,9 @@ EXPORTS
+   gegl_lookup_free
+   gegl_lookup_new
+   gegl_lookup_new_full
+-  gegl_lut_u16_to_u8
+-  gegl_lut_u8_to_u16
+-  gegl_lut_u8_to_u16f
++  gegl_lut_u16_to_u8 DATA
++  gegl_lut_u8_to_u16 DATA
++  gegl_lut_u8_to_u16f DATA
+   gegl_malloc
+   gegl_matrix3_copy
+   gegl_matrix3_copy_into
+@@ -712,7 +710,7 @@ EXPORTS
+   gegl_path_remove_node
+   gegl_path_replace_node
+   gegl_path_set_matrix
+-  gegl_path_signals
++  gegl_path_signals DATA
+   gegl_path_thaw
+   gegl_path_to_string
+   gegl_processor_get_buffer
+@@ -732,7 +730,7 @@ EXPORTS
+   gegl_random_int_range
+   gegl_random_new
+   gegl_random_new_with_seed
+-  gegl_random_primes
++  gegl_random_primes DATA
+   gegl_random_set_seed
+   gegl_rectangle_align
+   gegl_rectangle_align_to_buffer
+@@ -775,11 +773,11 @@ EXPORTS
+   gegl_region_xor
+   gegl_render_op
+   gegl_render_op_valist
+-  gegl_resample_bilinear
++  gegl_resample_bilinear DATA
+   gegl_resample_bilinear_generic
+-  gegl_resample_boxfilter
++  gegl_resample_boxfilter DATA
+   gegl_resample_boxfilter_generic
+-  gegl_resample_nearest
++  gegl_resample_nearest DATA
+   gegl_resample_nearest_generic
+   gegl_reset_stats
+   gegl_resolution_unit_get_type
+@@ -857,7 +855,7 @@ EXPORTS
+   gegl_tile_get_rev
+   gegl_tile_handler_cache_connect
+   gegl_tile_handler_cache_disconnect
+-  gegl_tile_handler_cache_ext_flush
++  gegl_tile_handler_cache_ext_flush DATA
+   gegl_tile_handler_cache_get_hits
+   gegl_tile_handler_cache_get_misses
+   gegl_tile_handler_cache_get_tile
+@@ -910,7 +908,7 @@ EXPORTS
+   gegl_tile_storage_get_type
+   gegl_tile_storage_new
+   gegl_tile_storage_remove_handler
+-  gegl_tile_storage_signals
++  gegl_tile_storage_signals DATA
+   gegl_tile_storage_steal_hot_tile
+   gegl_tile_storage_take_hot_tile
+   gegl_tile_storage_try_steal_hot_tile
+diff --git a/gegl/meson.build b/gegl/meson.build
+index 57f9bea0a..e76e67f60 100644
+--- a/gegl/meson.build
++++ b/gegl/meson.build
+@@ -112,10 +112,10 @@ gegl_def = custom_target('gegl.def',
+   build_by_default: true,
+ )
+ 
+-gegl_lib_args = {
+-  'sources': gegl_sources,
+-  'include_directories': [rootInclude, geglInclude],
+-  'dependencies': [
++gegl_lib = library(api_name,
++  gegl_sources,
++  include_directories: [rootInclude, geglInclude],
++  dependencies: [
+     babl,
+     glib,
+     gio,
+@@ -123,20 +123,14 @@ gegl_lib_args = {
+     gmodule,
+     gegl_operations_opencl_dep,
+   ],
+-  'c_args': gegl_cflags,
+-
+-  'link_with': simd_extra,
+-  'link_args': gegl_ldflags,
+-  'install': true,
+-  'version': so_version,
+-  'darwin_versions': darwin_versions,
+-}
+-#FIXME: some symbols are unreliable on Windows GNU compilers. See: #445
+-if cc.get_argument_syntax() == 'msvc'
+-  gegl_lib_args += {'vs_module_defs': gegl_def}
+-endif
+-gegl_lib = library(api_name,
+-  kwargs: gegl_lib_args
++  # GEGL_COMPILATION makes exported data declarations avoid importing from the library itself.
++  c_args: gegl_cflags + ['-DGEGL_COMPILATION'],
++  vs_module_defs: gegl_def,
++  link_with: simd_extra,
++  link_args: gegl_ldflags,
++  install: true,
++  version: so_version,
++  darwin_versions: darwin_versions,
+ )
+ 
+ 
+diff --git a/gegl/opencl/gegl-cl-init.c b/gegl/opencl/gegl-cl-init.c
+index e5338d1bd..13d8e3057 100644
+--- a/gegl/opencl/gegl-cl-init.c
++++ b/gegl/opencl/gegl-cl-init.c
+@@ -125,7 +125,13 @@ const char *gegl_cl_errstring(cl_int err) {
+   return strings[-err];
+ }
+ 
+-gboolean _gegl_cl_is_accelerated;
++static gboolean _gegl_cl_is_accelerated;
++
++gboolean
++gegl_cl_is_accelerated (void)
++{
++  return _gegl_cl_is_accelerated;
++}
+ 
+ typedef struct
+ {
+diff --git a/gegl/opencl/gegl-cl-init.h b/gegl/opencl/gegl-cl-init.h
+index 528cb461e..19dad20b7 100644
+--- a/gegl/opencl/gegl-cl-init.h
++++ b/gegl/opencl/gegl-cl-init.h
+@@ -25,6 +25,14 @@
+ 
+ G_BEGIN_DECLS
+ 
++#ifndef GEGL_VAR
++#if defined(_MSC_VER) && ! defined(GEGL_COMPILATION)
++#define GEGL_VAR extern __declspec (dllimport)
++#else
++#define GEGL_VAR extern
++#endif
++#endif
++
+ const char *      gegl_cl_errstring(cl_int err);
+ 
+ gboolean          gegl_cl_init (void);
+@@ -69,10 +77,6 @@ typedef struct
+ GeglClRunData *   gegl_cl_compile_and_build (const char *program_source,
+                                              const char *kernel_name[]);
+ 
+-extern gboolean _gegl_cl_is_accelerated;
+-
+-#define gegl_cl_is_accelerated()   _gegl_cl_is_accelerated
+-
+ #define GEGL_CL_CHUNK_SIZE 1024 * 1024
+ 
+ #ifdef __GEGL_CL_INIT_MAIN__
+@@ -81,7 +85,7 @@ extern gboolean _gegl_cl_is_accelerated;
+ 
+ #else
+ 
+-#define _GEGL_CL_WRAP_FUNCTION(cl_func) extern cl_func##_fn gegl_##cl_func;
++#define _GEGL_CL_WRAP_FUNCTION(cl_func) GEGL_VAR cl_func##_fn gegl_##cl_func;
+ 
+ #endif
+ 
+diff --git a/libs/npd/gegl-npd.def b/libs/npd/gegl-npd.def
+index cbf61cc90..757342b0d 100644
+--- a/libs/npd/gegl-npd.def
++++ b/libs/npd/gegl-npd.def
+@@ -8,7 +8,7 @@ EXPORTS
+   npd_cut_edges
+   npd_deform_model
+   npd_destroy_model
+-  npd_draw_line
++  npd_draw_line DATA
+   npd_draw_mesh
+   npd_draw_model_into_image
+   npd_equal_floats
+@@ -21,7 +21,7 @@ EXPORTS
+   npd_gegl_set_pixel_color
+   npd_get_control_point_at
+   npd_get_control_point_with_radius_at
+-  npd_get_pixel_color
++  npd_get_pixel_color DATA
+   npd_init_model
+   npd_is_color_transparent
+   npd_print_bone
+@@ -29,7 +29,7 @@ EXPORTS
+   npd_print_model
+   npd_print_overlapping_points
+   npd_print_point
+-  npd_process_pixel
++  npd_process_pixel DATA
+   npd_process_pixel_bilinear
+   npd_remove_all_control_points
+   npd_remove_control_point
+@@ -37,5 +37,5 @@ EXPORTS
+   npd_SED
+   npd_set_control_point_weight
+   npd_set_deformation_type
+-  npd_set_pixel_color
++  npd_set_pixel_color DATA
+   npd_set_point_coordinates
+diff --git a/libs/npd/meson.build b/libs/npd/meson.build
+index 732b1774f..32a33e140 100644
+--- a/libs/npd/meson.build
++++ b/libs/npd/meson.build
+@@ -26,21 +26,13 @@ gegl_npd_def = configure_file(
+   copy: true
+ )
+ 
+-gegl_npd_lib_args = {
+-  'sources': gegl_npd_sources,
+-  'dependencies': [ glib, babl, math ],
+-  'include_directories': geglInclude,
+-  'link_with': [ gegl_lib ],
+-  'install': true,
+-}
+-#FIXME: For some mystical reason, GNU compilers create a libgegl-*npd.dll that
+-#crashes, even it being mostly identical to the one with vs_module_defs (the
+-#only difference is one line of .buildid, so let's use the .def conditionally)
+-if cc.get_argument_syntax() == 'msvc'
+-  gegl_npd_lib_args += {'vs_module_defs': gegl_npd_def}
+-endif
+ gegl_npd_lib = library(meson.project_name() + '-npd-' + api_version,
+-  kwargs: gegl_npd_lib_args
++  gegl_npd_sources,
++  dependencies: [ glib, babl, math ],
++  include_directories: geglInclude,
++  link_with: [ gegl_lib ],
++  vs_module_defs: gegl_npd_def,
++  install: true,
+ )
+ 
+ libnpd = declare_dependency(
+diff --git a/tools/defcheck.py b/tools/defcheck.py
+index 5770f4b2f..bb76de8fb 100644
+--- a/tools/defcheck.py
++++ b/tools/defcheck.py
+@@ -33,13 +33,25 @@ from os import getenv, path
+ 
+ def_files = sys.argv[1:]
+ 
++def read_def_symbols(filename):
++   symbols = []
++
++   with open(filename, encoding="utf-8") as def_file:
++      for line in def_file:
++         line = line.split(";", 1)[0].strip()
++
++         if not line or line == "EXPORTS":
++            continue
++
++         # DATA marks variable exports in .def files and is not part of the symbol name.
++         parts = line.split()
++         symbols.append(parts[0])
++
++   return symbols
++
+ exclude_symbols = [
+-    "_gegl_cl_is_accelerated",
+-    "_gegl_float_epsilon_equal",
+-    "_gegl_float_epsilon_zero",
+     "gegl_glXGetCurrentContext",
+     "gegl_glXGetCurrentDisplay",
+-    "real_gegl_instrument",
+ ]
+ 
+ # Some .def files are concatenated, which can result in an unsorted error.
+@@ -82,18 +94,27 @@ for df in def_files:
+    basename, extension = name.split (".")
+    libname = path.join(os.getcwd(), directory, libprefix + basename + "-*" + libextension)
+    matches = glob.glob(libname)
++   lib_is_win32 = platform_win32
+    if matches:
+      libname = matches[0]
++   elif libextension != ".dll":
++     # Linux-hosted MinGW cross builds still produce Windows DLLs.
++     libname = path.join(os.getcwd(), directory, libprefix + basename + "-*.dll")
++     matches = glob.glob(libname)
++     if matches:
++       libname = matches[0]
++       lib_is_win32 = True
++       objdump = shutil.which("x86_64-w64-mingw32-objdump") or shutil.which("objdump") or "objdump"
++       command = objdump + " -p "
+    #FIXME: This leaks to ninja stdout, which should not happen
+    #print ("platform: " + sys.platform + " - extracting symbols from " + libname)
+ 
+    filename = df
+    try:
+-      defsymbols = open (filename).read ().split ()[1:]
++      defsymbols = read_def_symbols (filename)
+    except IOError as message:
+       print(message)
+       sys.exit (-1)
+-
+    doublesymbols = []
+    for i in range (len (defsymbols)-1, 0, -1):
+       if defsymbols[i] in defsymbols[:i]:
+@@ -116,7 +137,7 @@ for df in def_files:
+       continue
+ 
+    nmsymbols = ""
+-   if platform_linux:
++   if platform_linux and not lib_is_win32:
+       #nmsymbols = nm
+       lines = nm.split(sep='\n')
+       for line in lines:
+@@ -127,12 +148,14 @@ for df in def_files:
+             #If the address is omitted for certain sections
+             nmsymbols += " 0 0 " + parts[1].split('@')[0]
+ 
+-   elif platform_win32 and not shutil.which("dumpbin"): # Windows MSYS2
++   elif lib_is_win32 and not shutil.which("dumpbin"): # Windows MSYS2 or MinGW cross build
+       objnm = nm.split(sep='\n')
+       found = False
+       nmsymbols = ""
+       for s in objnm:
+-         if "Ordinal   Hint Name" in s or " Ordinal      RVA  Name" in s:
++         if ("Ordinal   Hint Name" in s or
++             " Ordinal      RVA  Name" in s or
++             "[Ordinal/Name Pointer] Table" in s):
+             found = True
+          elif found:
+             s = s.strip()
+@@ -140,7 +163,7 @@ for df in def_files:
+                break
+             nmsymbols += " 0 0 " + s.split()[-1] # Keep the [2::3] logic happy
+ 
+-   elif platform_win32: # Windows MSVC
++   elif lib_is_win32: # Windows MSVC
+       dbin = nm.split(sep='\n')
+       found = False
+       nmsymbols = ""
+-- 
+GitLab
+
+
+From c8a610f5a1cd6b8b4bf740baf9b4f62c5624075f Mon Sep 17 00:00:00 2001
+From: Tal Regev <tal.regev@gmail.com>
+Date: Thu, 9 Jul 2026 21:24:45 +0300
+Subject: [PATCH 2/3] gegl, operations: fix Windows runtime issues
+
+Use a boolean value for the --gegl-disable-opencl option instead of a
+boolean pointer, so option parsing writes to valid storage.
+
+Buffer PNM input streams before reading headers and image data. This
+avoids inefficient byte-by-byte reads from Windows file streams and keeps
+ASCII PNM loading usable there.
+---
+ gegl/gegl-init.c               | 12 ++++++------
+ operations/external/ppm-load.c | 34 +++++++++++++++++++++-------------
+ 2 files changed, 27 insertions(+), 19 deletions(-)
+
+diff --git a/gegl/gegl-init.c b/gegl/gegl-init.c
+index 5b00c1d3f..dee61ee4f 100644
+--- a/gegl/gegl-init.c
++++ b/gegl/gegl-init.c
+@@ -417,7 +417,7 @@ static gchar    *cmd_gegl_chunk_size       = NULL;
+ static gchar    *cmd_gegl_quality          = NULL;
+ static gchar    *cmd_gegl_tile_size        = NULL;
+ static gchar    *cmd_gegl_threads          = NULL;
+-static gboolean *cmd_gegl_disable_opencl   = NULL;
++static gboolean  cmd_gegl_disable_opencl   = FALSE;
+ 
+ static const GOptionEntry cmd_entries[]=
+ {
+@@ -480,7 +480,7 @@ gegl_get_option_group (void)
+   return group;
+ }
+ 
+-static void 
++static void
+ gegl_config_parse_env (GeglConfig *config)
+ {
+   if (g_getenv ("GEGL_MIPMAP_RENDERING"))
+@@ -609,13 +609,13 @@ gegl_stats (void)
+   return stats;
+ }
+ 
+-void 
++void
+ gegl_reset_stats (void)
+ {
+   gegl_stats_reset (gegl_stats ());
+ }
+ 
+-void 
++void
+ gegl_temp_buffer_free (void);
+ 
+ void
+@@ -729,12 +729,12 @@ gegl_get_default_module_paths(void)
+     {
+       char  dylib_path[PATH_MAX];
+       char *dylib_dir;
+-  
++
+       /* Get the parent directory containing the .dylib (e.g. <foobar>\Frameworks\,
+          does not matter the parent dir, this is packaging-agnostic) */
+       strlcpy(dylib_path, info.dli_fname, sizeof(dylib_path));
+       dylib_dir = dirname(dylib_path);
+-          
++
+       /* Construct the gegl dir on the parent dir (e.g. <foobar>\Frameworks\{GEGL_LIBRARY}) */
+       module_path = g_build_filename(dylib_dir, GEGL_LIBRARY, NULL);
+     }
+diff --git a/operations/external/ppm-load.c b/operations/external/ppm-load.c
+index 1ee6e4595..50c4c188c 100644
+--- a/operations/external/ppm-load.c
++++ b/operations/external/ppm-load.c
+@@ -249,7 +249,6 @@ static void
+ ppm_load_read_image(GInputStream *stream,
+                     pnm_struct *img)
+ {
+-    GDataInputStream *dstream = g_data_input_stream_new (stream);
+     guint i;
+ 
+     if (img->type == PIXMAP_RAW || img->type == PIXMAP_RAW_GRAY)
+@@ -302,7 +301,6 @@ ppm_load_read_image(GInputStream *stream,
+             g_warning ("%s: Programmer stupidity error", G_STRLOC);
+           }
+       }
+-    g_object_unref (dstream);
+ }
+ 
+ static GeglRectangle
+@@ -311,6 +309,7 @@ get_bounding_box (GeglOperation *operation)
+   GeglProperties   *o = GEGL_PROPERTIES (operation);
+   GeglRectangle result = {0,0,0,0};
+   GInputStream *stream = NULL;
++  GInputStream     *buffered = NULL;
+   GFile *file = NULL;
+   pnm_struct    img;
+ 
+@@ -320,7 +319,9 @@ get_bounding_box (GeglOperation *operation)
+   if (!stream)
+     return result;
+ 
+-  if (!ppm_load_read_header (stream, &img))
++  buffered = g_buffered_input_stream_new_sized (stream, 65536);
++
++  if (! ppm_load_read_header (buffered, &img))
+     goto out;
+ 
+   if (img.bpc == 1)
+@@ -348,11 +349,13 @@ get_bounding_box (GeglOperation *operation)
+   result.height = img.height;
+ 
+  out:
+-  g_object_unref (stream);
+-  if (file)
+-    g_object_unref (file);
++   if (buffered)
++     g_object_unref (buffered);
++   g_object_unref (stream);
++   if (file)
++     g_object_unref (file);
+ 
+-  return result;
++   return result;
+ }
+ 
+ static gboolean
+@@ -366,6 +369,7 @@ process (GeglOperation       *operation,
+   GeglRectangle rect = {0,0,0,0};
+   gboolean      ret = FALSE;
+   GInputStream *stream = NULL;
++  GInputStream     *buffered = NULL;
+   GFile *file = NULL;
+ 
+   img.bpc = 1;
+@@ -374,7 +378,9 @@ process (GeglOperation       *operation,
+   if (!stream)
+     return FALSE;
+ 
+-  if (!ppm_load_read_header (stream, &img))
++  buffered = g_buffered_input_stream_new_sized (stream, 65536);
++
++  if (! ppm_load_read_header (buffered, &img))
+     goto out;
+ 
+   /* Allocating Array Size */
+@@ -416,7 +422,7 @@ process (GeglOperation       *operation,
+   else
+     g_warning ("%s: Programmer stupidity error", G_STRLOC);
+ 
+-  ppm_load_read_image (stream, &img);
++  ppm_load_read_image (buffered, &img);
+ 
+   if (img.bpc == 1)
+     {
+@@ -444,11 +450,13 @@ process (GeglOperation       *operation,
+   ret = TRUE;
+ 
+  out:
+-    g_object_unref (stream);
+-    if (file)
+-        g_object_unref (file);
++   if (buffered)
++     g_object_unref (buffered);
++   g_object_unref (stream);
++   if (file)
++     g_object_unref (file);
+ 
+-  return ret;
++   return ret;
+ }
+ 
+ static GeglRectangle
+-- 
+GitLab
+
+
+From 26a31a9a8e5568958306404d26df252e9429406d Mon Sep 17 00:00:00 2001
+From: Tal Regev <tal.regev@gmail.com>
+Date: Thu, 9 Jul 2026 21:27:19 +0300
+Subject: [PATCH 3/3] tests: fix Windows test builds
+
+Avoid C constructs that MSVC does not support in the affected tests, such
+as variable-length stack arrays.
+
+Only pass -Wno-unused-function when the compiler supports it, so the
+buffer tests can build with MSVC.
+
+Give slower composition tests longer timeouts on Windows-style test
+environments where process startup and OpenCL execution can take longer.
+---
+ tests/buffer/meson.build                    |  8 ++++++--
+ tests/buffer/tests/get_abyss_black.c        |  3 ++-
+ tests/buffer/tests/get_abyss_clamp.c        |  3 ++-
+ tests/buffer/tests/get_abyss_empty_buffer.c |  3 ++-
+ tests/buffer/tests/get_abyss_loop.c         |  3 ++-
+ tests/buffer/tests/get_abyss_none.c         |  3 ++-
+ tests/buffer/tests/get_abyss_white.c        |  3 ++-
+ tests/compositions/meson.build              | 19 ++++++++++++++++++-
+ tests/simple/test-buffer-unaligned-access.c |  9 +++++++--
+ tests/simple/test-path.c                    | 13 ++++++++++---
+ 10 files changed, 53 insertions(+), 14 deletions(-)
+
+diff --git a/tests/buffer/meson.build b/tests/buffer/meson.build
+index 0f244efe5..534a282ec 100644
+--- a/tests/buffer/meson.build
++++ b/tests/buffer/meson.build
+@@ -67,14 +67,18 @@ buffer_tests = [
+ ]
+ 
+ buffer_test = find_program('buffer-test.py')
++buffer_test_c_args = []
++if cc.has_argument('-Wno-unused-function')
++  buffer_test_c_args += '-Wno-unused-function'
++endif
++
+ foreach _test : buffer_tests
+   _test_exe = executable(_test,
+     'buffer-test-wrapper.c',
+     include_directories: gegl_test_includes,
+     link_with: gegl_lib,
+     dependencies: gegl_test_deps,
+-    c_args: [
+-      '-Wno-unused-function',
++    c_args: buffer_test_c_args + [
+       '-DTEST_NAME="@0@"'.format(_test),
+       '-DTEST_INCLUDE="@0@"'.format('tests' / _test + '.c'),
+     ],
+diff --git a/tests/buffer/tests/get_abyss_black.c b/tests/buffer/tests/get_abyss_black.c
+index 3efd028e5..fd343ae5c 100644
+--- a/tests/buffer/tests/get_abyss_black.c
++++ b/tests/buffer/tests/get_abyss_black.c
+@@ -6,7 +6,7 @@ TEST ()
+   const Babl     *format = babl_format ("Y float");
+   GeglRectangle   query_rect = {0, 0, 13, 13};
+   GeglRectangle   buffer_rect = {0, 0, 12, 12};
+-  gfloat          buf[query_rect.width * query_rect.height * sizeof(gfloat)];
++  gfloat         *buf = g_new (gfloat, query_rect.width * query_rect.height);
+ 
+   gint x_offsets[] = {-query_rect.width - 6, -query_rect.width - 0,
+                       -query_rect.width + 1, -query_rect.width + 6,
+@@ -43,6 +43,7 @@ TEST ()
+ 
+   g_object_unref (buffer);
+   g_object_unref (buffer2);
++  g_free (buf);
+ 
+   test_end ();
+ }
+diff --git a/tests/buffer/tests/get_abyss_clamp.c b/tests/buffer/tests/get_abyss_clamp.c
+index 961dfe619..24f8f6604 100644
+--- a/tests/buffer/tests/get_abyss_clamp.c
++++ b/tests/buffer/tests/get_abyss_clamp.c
+@@ -6,7 +6,7 @@ TEST ()
+   const Babl     *format = babl_format ("Y float");
+   GeglRectangle   query_rect = {0, 0, 13, 13};
+   GeglRectangle   buffer_rect = {0, 0, 12, 12};
+-  gfloat          buf[query_rect.width * query_rect.height * sizeof(gfloat)];
++  gfloat         *buf = g_new (gfloat, query_rect.width * query_rect.height);
+ 
+   gint x_offsets[] = {-query_rect.width - 6, -query_rect.width - 0,
+                       -query_rect.width + 1, -query_rect.width + 6,
+@@ -43,6 +43,7 @@ TEST ()
+ 
+   g_object_unref (buffer);
+   g_object_unref (buffer2);
++  g_free (buf);
+ 
+   test_end ();
+ }
+diff --git a/tests/buffer/tests/get_abyss_empty_buffer.c b/tests/buffer/tests/get_abyss_empty_buffer.c
+index 84c10aca5..e95018883 100644
+--- a/tests/buffer/tests/get_abyss_empty_buffer.c
++++ b/tests/buffer/tests/get_abyss_empty_buffer.c
+@@ -15,7 +15,7 @@ TEST ()
+   const Babl     *format = babl_format ("Y float");
+   GeglRectangle   query_rect = {-10, -10, 20, 20};
+   GeglRectangle   buffer_rect = {0, 0, 0, 0};
+-  gfloat          buf[query_rect.width * query_rect.height * sizeof(gfloat)];
++  gfloat          *buf = g_new (gfloat, query_rect.width * query_rect.height);
+ 
+   test_start ();
+   buffer  = gegl_buffer_new (&buffer_rect, format);
+@@ -33,6 +33,7 @@ TEST ()
+ 
+   g_object_unref (buffer);
+   g_object_unref (buffer2);
++  g_free (buf);
+ 
+   test_end ();
+ }
+diff --git a/tests/buffer/tests/get_abyss_loop.c b/tests/buffer/tests/get_abyss_loop.c
+index fb25d7f2d..cd5826e62 100644
+--- a/tests/buffer/tests/get_abyss_loop.c
++++ b/tests/buffer/tests/get_abyss_loop.c
+@@ -6,7 +6,7 @@ TEST ()
+   const Babl     *format = babl_format ("Y float");
+   GeglRectangle   query_rect = {0, 0, 13, 13};
+   GeglRectangle   buffer_rect = {0, 0, 12, 12};
+-  gfloat          buf[query_rect.width * query_rect.height * sizeof(gfloat)];
++  gfloat         *buf = g_new (gfloat, query_rect.width * query_rect.height);
+ 
+   gint x_offsets[] = {-query_rect.width - 6, -query_rect.width - 0,
+                       -query_rect.width + 1, -query_rect.width + 6,
+@@ -43,6 +43,7 @@ TEST ()
+ 
+   g_object_unref (buffer);
+   g_object_unref (buffer2);
++  g_free (buf);
+ 
+   test_end ();
+ }
+diff --git a/tests/buffer/tests/get_abyss_none.c b/tests/buffer/tests/get_abyss_none.c
+index 271601c91..1826fc4aa 100644
+--- a/tests/buffer/tests/get_abyss_none.c
++++ b/tests/buffer/tests/get_abyss_none.c
+@@ -6,7 +6,7 @@ TEST ()
+   const Babl     *format = babl_format ("Y float");
+   GeglRectangle   query_rect = {0, 0, 13, 13};
+   GeglRectangle   buffer_rect = {0, 0, 12, 12};
+-  gfloat          buf[query_rect.width * query_rect.height * sizeof(gfloat)];
++  gfloat         *buf = g_new (gfloat, query_rect.width * query_rect.height);
+ 
+   gint x_offsets[] = {-query_rect.width - 6, -query_rect.width - 0,
+                       -query_rect.width + 1, -query_rect.width + 6,
+@@ -43,6 +43,7 @@ TEST ()
+ 
+   g_object_unref (buffer);
+   g_object_unref (buffer2);
++  g_free (buf);
+ 
+   test_end ();
+ }
+diff --git a/tests/buffer/tests/get_abyss_white.c b/tests/buffer/tests/get_abyss_white.c
+index 23dc40198..eebfd99a3 100644
+--- a/tests/buffer/tests/get_abyss_white.c
++++ b/tests/buffer/tests/get_abyss_white.c
+@@ -6,7 +6,7 @@ TEST ()
+   const Babl     *format = babl_format ("Y float");
+   GeglRectangle   query_rect = {0, 0, 13, 13};
+   GeglRectangle   buffer_rect = {0, 0, 12, 12};
+-  gfloat          buf[query_rect.width * query_rect.height * sizeof(gfloat)];
++  gfloat         *buf = g_new (gfloat, query_rect.width * query_rect.height);
+ 
+   gint x_offsets[] = {-query_rect.width - 6, -query_rect.width - 0,
+                       -query_rect.width + 1, -query_rect.width + 6,
+@@ -43,6 +43,7 @@ TEST ()
+ 
+   g_object_unref (buffer);
+   g_object_unref (buffer2);
++  g_free (buf);
+ 
+   test_end ();
+ }
+diff --git a/tests/compositions/meson.build b/tests/compositions/meson.build
+index da51fe13c..dd24264dd 100644
+--- a/tests/compositions/meson.build
++++ b/tests/compositions/meson.build
+@@ -79,7 +79,24 @@ endif
+ # Timeout for tests that require extra time to run
+ #   test-name : timeout <int>
+ composition_tests_set_timeout = {
+-  'pnm-ascii-load' : 120
++  'affine-with-negative' : 60,
++  'alien-map' : 60,
++  'apply-lens' : 60,
++  'apply-lens3' : 60,
++  'bump-map' : 60,
++  'clones' : 60,
++  'color-to-alpha' : 60,
++  'contrast-curve' : 60,
++  'edge' : 60,
++  'image-compare' : 60,
++  'matting-global' : 60,
++  'noise-simplex' : 60,
++  'posterize' : 60,
++  'pnm-ascii-load' : 120,
++  'red-eye-removal' : 60,
++  'reflect2' : 60,
++  'rotate-on-center' : 60,
++  'saturation' : 60,
+ }
+ 
+ # Tests that are expected to fail - must also appear in the main lists
+diff --git a/tests/simple/test-buffer-unaligned-access.c b/tests/simple/test-buffer-unaligned-access.c
+index 278ff8bf7..d17592b11 100644
+--- a/tests/simple/test-buffer-unaligned-access.c
++++ b/tests/simple/test-buffer-unaligned-access.c
+@@ -106,8 +106,11 @@ test_unaligned_fill (FillFunc fill_func)
+   GeglBuffer         *buffer;
+   GeglBufferIterator *iter;
+   GeglColor          *color;
+-  guchar              pixel1[bpp];
+-  guchar              pixel2[bpp];
++  guchar             *pixel1;
++  guchar             *pixel2;
++
++  pixel1 = g_malloc (bpp);
++  pixel2 = g_malloc (bpp);
+ 
+   buffer = gegl_buffer_new (NULL, format);
+ 
+@@ -163,6 +166,8 @@ test_unaligned_fill (FillFunc fill_func)
+     }
+ 
+   g_object_unref (buffer);
++  g_free (pixel2);
++  g_free (pixel1);
+ 
+   return result;
+ }
+diff --git a/tests/simple/test-path.c b/tests/simple/test-path.c
+index c107a6219..c8481ac34 100644
+--- a/tests/simple/test-path.c
++++ b/tests/simple/test-path.c
+@@ -50,7 +50,9 @@ test_path_calc_values (GeglPath *path, int num_samples,
+                        gdouble *exp_x, gdouble *exp_y)
+ {
+   int i=0;
+-  gdouble x[num_samples], y[num_samples];
++  gdouble *x      = g_new (gdouble, num_samples);
++  gdouble *y      = g_new (gdouble, num_samples);
++  int      result = TRUE;
+   //gdouble length;
+   /* gegl_path_calc_values:
+    * Compute @num_samples for a path into the provided arrays @xs and @ys
+@@ -68,9 +70,14 @@ test_path_calc_values (GeglPath *path, int num_samples,
+       for ( i=0;i<NSMP;i++)
+         printf("Sample %d : x=%f exp_x=%f  y=%f exp_y=%f\n",
+                 i, x[i], exp_x[i], y[i], exp_y[i]);
+-      return FALSE;
++      result = FALSE;
++      break;
+     }
+-  return TRUE;
++
++  g_free (y);
++  g_free (x);
++
++  return result;
+ }
+ 
+ static int 
+-- 
+GitLab
+
