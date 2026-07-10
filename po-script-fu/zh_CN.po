@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-05-27 23:25+0000\n"
-"PO-Revision-Date: 2026-05-29 08:09+0800\n"
+"PO-Revision-Date: 2026-07-10 08:17+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -890,7 +890,7 @@ msgstr "位置(_P)"
 
 #: plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
-msgstr "删除所有参考线(_R)"
+msgstr "移除所有参考线(_R)"
 
 #: plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
