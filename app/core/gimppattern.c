@@ -146,73 +146,52 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
                               gint          height,
                               GeglColor    *fg_color G_GNUC_UNUSED)
 {
-  GimpPattern *pattern     = GIMP_PATTERN (viewable);
+  GimpPattern *pattern = GIMP_PATTERN (viewable);
   GimpTempBuf *temp_buf;
   GeglBuffer  *src_buffer;
   gint         true_width;
   gint         true_height;
-  gint         copy_width;
-  gint         copy_height;
-  gboolean     has_temp_buf = FALSE;
+  gdouble      scale_x;
+  gdouble      scale_y;
+  gdouble      scale;
+
+  if (pattern == NULL || pattern->mask == NULL)
+    return NULL;
+
+  if (width <= 0 || height <= 0)
+    return NULL;
 
   true_width  = gimp_temp_buf_get_width (pattern->mask);
   true_height = gimp_temp_buf_get_height (pattern->mask);
-  copy_width  = MIN (width, true_width);
-  copy_height = MIN (height, true_height);
+
+  if (true_width <= 0 || true_height <= 0)
+    return NULL;
+
+  /* Clamp scale to 1.0 to prevent upscaling and blurring small patterns */
+  scale_x = (gdouble) width  / (gdouble) true_width;
+  scale_y = (gdouble) height / (gdouble) true_height;
+  scale   = MIN (1.0, MIN (scale_x, scale_y));
+
+  temp_buf = gimp_temp_buf_new (width, height,
+                                gimp_temp_buf_get_format (pattern->mask));
+
+  if (temp_buf == NULL)
+    return NULL;
 
   src_buffer = gimp_temp_buf_create_buffer (pattern->mask);
 
-  if (true_width > width || true_height > height)
+  if (src_buffer != NULL)
     {
-      gdouble ratio_x = (gdouble) width / (gdouble) true_width;
-      gdouble ratio_y = (gdouble) height / (gdouble) true_height;
-      gdouble scale   = MIN (ratio_x, ratio_y);
-      gdouble aspect  = (gdouble) true_width / (gdouble) true_height;
+      /* Use GEGL_ABYSS_LOOP to tile the pattern seamlessly if it
+       * doesn't fill the requested preview area.
+       */
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, 0, width, height),
+                       scale, gimp_temp_buf_get_format (temp_buf),
+                       gimp_temp_buf_get_data (temp_buf), GEGL_AUTO_ROWSTRIDE,
+                       GEGL_ABYSS_LOOP);
 
-      /* Adjusting dimensions for non-square patterns */
-      if (true_width > true_height)
-        copy_height = copy_width / aspect;
-      else if (true_width < true_height)
-        copy_width = copy_height * aspect;
-
-      copy_width  = MAX (1, copy_width);
-      copy_height = MAX (1, copy_height);
-
-      temp_buf = gimp_temp_buf_new (copy_width, copy_height,
-                                    gimp_temp_buf_get_format (pattern->mask));
-
-      if (temp_buf)
-        {
-          gegl_buffer_get (src_buffer,
-                           GEGL_RECTANGLE (0, 0, copy_width, copy_height),
-                           scale, gimp_temp_buf_get_format (temp_buf),
-                           gimp_temp_buf_get_data (temp_buf),
-                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
-
-          has_temp_buf = TRUE;
-        }
+      g_object_unref (src_buffer);
     }
-
-  /* If scaled image pattern could not be loaded,
-   * use the default pattern */
-  if (! has_temp_buf)
-    {
-      GeglBuffer *dest_buffer;
-
-      temp_buf = gimp_temp_buf_new (copy_width, copy_height,
-                                    gimp_temp_buf_get_format (pattern->mask));
-
-      dest_buffer = gimp_temp_buf_create_buffer (temp_buf);
-
-      gimp_gegl_buffer_copy (src_buffer,
-                             GEGL_RECTANGLE (0, 0, copy_width, copy_height),
-                             GEGL_ABYSS_NONE, dest_buffer,
-                             GEGL_RECTANGLE (0, 0, 0, 0));
-
-      g_object_unref (dest_buffer);
-    }
-
-  g_object_unref (src_buffer);
 
   return temp_buf;
 }
