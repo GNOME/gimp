@@ -148,70 +148,60 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
                               gint          scale_factor,
                               GeglColor    *fg_color G_GNUC_UNUSED)
 {
-  GimpPattern *pattern  = GIMP_PATTERN (viewable);
-  GimpTempBuf *temp_buf = NULL;
+  GimpPattern *pattern = GIMP_PATTERN (viewable);
+  GimpTempBuf *temp_buf;
   GeglBuffer  *src_buffer;
-  gint         mask_width;
-  gint         mask_height;
-  gint         copy_width;
-  gint         copy_height;
+  gint         true_width;
+  gint         true_height;
+  gint         render_width;
+  gint         render_height;
+  gdouble      scale_x;
+  gdouble      scale_y;
+  gdouble      scale;
 
-  width  *= scale_factor;
-  height *= scale_factor;
+  if (pattern == NULL || pattern->mask == NULL)
+    return NULL;
 
-  mask_width  = gimp_temp_buf_get_width  (pattern->mask);
-  mask_height = gimp_temp_buf_get_height (pattern->mask);
+  if (width <= 0 || height <= 0)
+    return NULL;
 
-  copy_width  = MIN (width,  mask_width);
-  copy_height = MIN (height, mask_height);
+  if (scale_factor < 1)
+    scale_factor = 1;
+
+  render_width  = width * scale_factor;
+  render_height = height * scale_factor;
+
+  true_width  = gimp_temp_buf_get_width (pattern->mask);
+  true_height = gimp_temp_buf_get_height (pattern->mask);
+
+  if (true_width <= 0 || true_height <= 0)
+    return NULL;
+
+  /* Clamp scale to 1.0 to prevent upscaling and blurring small patterns */
+  scale_x = (gdouble) render_width / (gdouble) true_width;
+  scale_y = (gdouble) render_height / (gdouble) true_height;
+  scale   = MIN (1.0, MIN (scale_x, scale_y));
+
+  temp_buf = gimp_temp_buf_new (render_width, render_height,
+                                gimp_temp_buf_get_format (pattern->mask));
+
+  if (temp_buf == NULL)
+    return NULL;
 
   src_buffer = gimp_temp_buf_create_buffer (pattern->mask);
 
-  if (mask_width != width || mask_height != height)
+  if (src_buffer != NULL)
     {
-      gdouble ratio_x = (gdouble) width  / (gdouble) mask_width;
-      gdouble ratio_y = (gdouble) height / (gdouble) mask_height;
-      gdouble scale   = MIN (ratio_x, ratio_y);
-
-      if (mask_width < width && mask_height < height)
-        {
-          scale = MIN (scale_factor, scale);
-        }
-
-      copy_width  = scale * mask_width;
-      copy_height = scale * mask_height;
-
-      temp_buf = gimp_temp_buf_new (copy_width, copy_height,
-                                    gimp_temp_buf_get_format (pattern->mask));
-
-      gegl_buffer_get (src_buffer,
-                       GEGL_RECTANGLE (0, 0, copy_width, copy_height),
+      /* Use GEGL_ABYSS_LOOP to tile the pattern seamlessly if it
+       * doesn't fill the requested render area.
+       */
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, 0, render_width, render_height),
                        scale, gimp_temp_buf_get_format (temp_buf),
-                       gimp_temp_buf_get_data (temp_buf),
-                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
+                       gimp_temp_buf_get_data (temp_buf), GEGL_AUTO_ROWSTRIDE,
+                       GEGL_ABYSS_LOOP);
+
+      g_object_unref (src_buffer);
     }
-
-  /*  If scaled image pattern could not be loaded, use the default
-   *  pattern
-   */
-  if (! temp_buf)
-    {
-      GeglBuffer *dest_buffer;
-
-      temp_buf = gimp_temp_buf_new (copy_width, copy_height,
-                                    gimp_temp_buf_get_format (pattern->mask));
-
-      dest_buffer = gimp_temp_buf_create_buffer (temp_buf);
-
-      gimp_gegl_buffer_copy (src_buffer,
-                             GEGL_RECTANGLE (0, 0, copy_width, copy_height),
-                             GEGL_ABYSS_NONE, dest_buffer,
-                             GEGL_RECTANGLE (0, 0, 0, 0));
-
-      g_object_unref (dest_buffer);
-    }
-
-  g_object_unref (src_buffer);
 
   return temp_buf;
 }
