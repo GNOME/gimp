@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-01-23 20:46+0000\n"
-"PO-Revision-Date: 2026-02-03 09:06+0800\n"
+"POT-Creation-Date: 2026-06-28 01:21+0000\n"
+"PO-Revision-Date: 2026-07-10 08:19+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
@@ -252,7 +252,7 @@ msgstr "导出图像为 %s"
 msgid "Background"
 msgstr "背景"
 
-#: libgimp/gimpimagemetadata-save.c:851 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:867 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -375,19 +375,19 @@ msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d 个过程与您的查询相匹配"
 
-#: libgimp/gimpprocedure.c:2161
+#: libgimp/gimpprocedure.c:2270
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "“%s”过程无返回值"
 
-#: libgimp/gimpprocedure.c:2367
+#: libgimp/gimpprocedure.c:2476
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "“%s”过程返回了错误的值类型用于返回值“%s” (#%d) 。需要 %s，但获得 %s。"
 
-#: libgimp/gimpprocedure.c:2379
+#: libgimp/gimpprocedure.c:2488
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
@@ -395,103 +395,103 @@ msgid ""
 msgstr ""
 "调用“%s”过程使用了错误的值类型用于参数“%s” (#%d) 。需要 %s，但获得 %s。"
 
-#: libgimp/gimpprocedure.c:2414
+#: libgimp/gimpprocedure.c:2523
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "“%s”过程返回了“%s”作为返回值“%s”（#%d，%s 类型）。此值超出范围。"
 
-#: libgimp/gimpprocedure.c:2428
+#: libgimp/gimpprocedure.c:2537
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "“%s”过程使用了“%s”值用于“%s”参数（#%d，%s 类型）。此值超出范围。"
 
-#: libgimp/gimpprocedure.c:2472
+#: libgimp/gimpprocedure.c:2581
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "“%s”过程为参数“%s”返回了一个无效的 UTF-8 字符串。"
 
-#: libgimp/gimpprocedure.c:2482
+#: libgimp/gimpprocedure.c:2591
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr "调用“%s”过程时为参数“%s”使用了无效的 UTF-8 字符串。"
 
-#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
+#: libgimp/gimpproceduredialog.c:344 libgimp/gimpproceduredialog.c:643
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: libgimp/gimpproceduredialog.c:316 libgimp/gimpproceduredialog.c:615
+#: libgimp/gimpproceduredialog.c:346 libgimp/gimpproceduredialog.c:645
 msgid "_Export"
 msgstr "导出(_E)"
 
-#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
+#: libgimp/gimpproceduredialog.c:348 libgimp/gimpproceduredialog.c:647
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
-#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:276
+#: libgimpwidgets/gimpfileentry.c:463 libgimpwidgets/gimpquerybox.c:276
 #: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
 #: libgimpwidgets/gimpquerybox.c:481
 msgid "_OK"
 msgstr "确定(_O)"
 
-#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
+#: libgimp/gimpproceduredialog.c:356 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "重置(_R)"
 
-#: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:374 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: libgimpwidgets/gimpfilechooser.c:714 libgimpwidgets/gimpfileentry.c:465
+#: libgimpwidgets/gimpfilechooser.c:713 libgimpwidgets/gimpfileentry.c:463
 #: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339
 #: libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: libgimp/gimpproceduredialog.c:379
+#: libgimp/gimpproceduredialog.c:409
 msgid "_Load Saved Settings"
 msgstr "加载保存的设置(_L)"
 
-#: libgimp/gimpproceduredialog.c:380
+#: libgimp/gimpproceduredialog.c:410
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "加载用“保存设置”按钮保存的设置"
 
-#: libgimp/gimpproceduredialog.c:392
+#: libgimp/gimpproceduredialog.c:422
 msgid "_Save Settings"
 msgstr "保存设置(_S)"
 
-#: libgimp/gimpproceduredialog.c:393
+#: libgimp/gimpproceduredialog.c:423
 msgid "Store current settings for later reuse"
 msgstr "为之后重用保存当前设置"
 
-#: libgimp/gimpproceduredialog.c:908
+#: libgimp/gimpproceduredialog.c:938
 msgid "Brush Chooser"
 msgstr "笔刷选择器"
 
-#: libgimp/gimpproceduredialog.c:912
+#: libgimp/gimpproceduredialog.c:942
 msgid "Font Chooser"
 msgstr "字体选择器"
 
-#: libgimp/gimpproceduredialog.c:916
+#: libgimp/gimpproceduredialog.c:946
 msgid "Gradient Chooser"
 msgstr "渐变选择器"
 
-#: libgimp/gimpproceduredialog.c:920
+#: libgimp/gimpproceduredialog.c:950
 msgid "Palette Chooser"
 msgstr "色板选择器"
 
-#: libgimp/gimpproceduredialog.c:924
+#: libgimp/gimpproceduredialog.c:954
 msgid "Pattern Chooser"
 msgstr "图案选择器"
 
-#: libgimp/gimpproceduredialog.c:2841
+#: libgimp/gimpproceduredialog.c:2871
 msgid "Reset to _Initial Values"
 msgstr "重置为初始值(_I)"
 
-#: libgimp/gimpproceduredialog.c:2850
+#: libgimp/gimpproceduredialog.c:2880
 msgid "Reset to _Factory Defaults"
 msgstr "重置为出厂默认值(_F)"
 
@@ -1728,32 +1728,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "按比例剪裁"
 
-#: libgimpbase/gimpmetadata.c:1223
+#: libgimpbase/gimpmetadata.c:1222
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "只能从本地文件加载元数据"
 
-#: libgimpbase/gimpmetadata.c:1279
+#: libgimpbase/gimpmetadata.c:1278
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "只能向本地文件保存元数据"
 
-#: libgimpbase/gimpmetadata.c:1328
+#: libgimpbase/gimpmetadata.c:1327
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "无效 EXIF 数据大小。"
 
-#: libgimpbase/gimpmetadata.c:1373
+#: libgimpbase/gimpmetadata.c:1372
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "解析 EXIF 数据失败。"
 
-#: libgimpbase/gimpmetadata.c:1425
+#: libgimpbase/gimpmetadata.c:1424
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "解析 IPTC 数据失败。"
 
-#: libgimpbase/gimpmetadata.c:1473
+#: libgimpbase/gimpmetadata.c:1472
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "解析 XMP 数据失败。"
@@ -2162,19 +2162,19 @@ msgstr "解析 “%s” 第 %d 行时出错：%s"
 msgid "Module '%s' load error: %s"
 msgstr "模块“%s”加载错误：%s"
 
-#: libgimpmodule/gimpmoduledb.c:458
+#: libgimpmodule/gimpmoduledb.c:460
 msgid "Module error"
 msgstr "模块错误"
 
-#: libgimpmodule/gimpmoduledb.c:459
+#: libgimpmodule/gimpmoduledb.c:461
 msgid "Loaded"
 msgstr "已加载"
 
-#: libgimpmodule/gimpmoduledb.c:460
+#: libgimpmodule/gimpmoduledb.c:462
 msgid "Load failed"
 msgstr "加载失败"
 
-#: libgimpmodule/gimpmoduledb.c:461
+#: libgimpmodule/gimpmoduledb.c:463
 msgid "Not loaded"
 msgstr "未加载"
 
@@ -2197,7 +2197,7 @@ msgstr "无法创建缩略图文件夹“%s”。"
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "缩略图没有包含 Thumb::URI 标签"
 
-#: libgimpthumb/gimpthumbnail.c:920
+#: libgimpthumb/gimpthumbnail.c:932
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "无法为 “%s” 创建缩略图：%s"
@@ -2293,7 +2293,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:321 modules/color-selector-cmyk.c:405
+#: modules/color-selector-cmyk.c:326 modules/color-selector-cmyk.c:410
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
@@ -2338,7 +2338,7 @@ msgstr "控制器名称"
 msgid "The controller's state, as human-readable string"
 msgstr "控制器状态，以人类可读字符串形式表示"
 
-#: libgimpwidgets/gimpdialog.c:196
+#: libgimpwidgets/gimpdialog.c:248
 msgid "_Help"
 msgstr "帮助(_H)"
 
@@ -2367,15 +2367,15 @@ msgstr "提示文件是否存在"
 msgid "Can't show file in file manager: %s"
 msgstr "无法在文件管理器中查看文件：%s"
 
-#: libgimpwidgets/gimpfileentry.c:454
+#: libgimpwidgets/gimpfileentry.c:453
 msgid "Select Folder"
 msgstr "选择文件夹"
 
-#: libgimpwidgets/gimpfileentry.c:456
+#: libgimpwidgets/gimpfileentry.c:455
 msgid "Select File"
 msgstr "选择文件"
 
-#: libgimpwidgets/gimphelpui.c:387
+#: libgimpwidgets/gimphelpui.c:388
 msgid "Press F1 for more help"
 msgstr "按 F1 以获得更多帮助"
 
@@ -2415,7 +2415,7 @@ msgid "the target to open to"
 msgstr "要打开的目标"
 
 #. Count label
-#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1014
+#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1028
 msgid "Nothing selected"
 msgstr "未选中"
 
@@ -2437,17 +2437,17 @@ msgstr "全部选中(_A)"
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: libgimpwidgets/gimppageselector.c:1019
+#: libgimpwidgets/gimppageselector.c:1033
 msgid "One page selected"
 msgstr "已选中一页"
 
-#: libgimpwidgets/gimppageselector.c:1026
+#: libgimpwidgets/gimppageselector.c:1040
 #, c-format
 msgid "The page is selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "已选中 %d 页"
 
-#: libgimpwidgets/gimppageselector.c:1030
+#: libgimpwidgets/gimppageselector.c:1044
 #, c-format
 msgid "%d page selected"
 msgid_plural "%d pages selected"
@@ -2467,7 +2467,7 @@ msgstr "下移选中文件夹"
 
 #: libgimpwidgets/gimppatheditor.c:253
 msgid "Remove the selected folder from the list"
-msgstr "从列表中删除选中文件夹"
+msgstr "从列表中移除选中文件夹"
 
 #: libgimpwidgets/gimppatheditor.c:279
 msgid "Writable"
@@ -2691,55 +2691,55 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "缩小"
 
-#: modules/color-selector-cmyk.c:87
+#: modules/color-selector-cmyk.c:89
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK 颜色选择器（使用特性文件）"
 
-#: modules/color-selector-cmyk.c:121
+#: modules/color-selector-cmyk.c:123
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:147
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:149
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:151
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:151
+#: modules/color-selector-cmyk.c:153
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:157
 msgid "Cyan"
 msgstr "青色"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:158
 msgid "Magenta"
 msgstr "品红"
 
-#: modules/color-selector-cmyk.c:157
+#: modules/color-selector-cmyk.c:159
 msgid "Yellow"
 msgstr "黄色"
 
-#: modules/color-selector-cmyk.c:158
+#: modules/color-selector-cmyk.c:160
 msgid "Black"
 msgstr "黑色"
 
-#: modules/color-selector-cmyk.c:265
+#: modules/color-selector-cmyk.c:270
 msgid "Total Ink Coverage"
 msgstr "总油墨覆盖"
 
-#: modules/color-selector-cmyk.c:308 modules/color-selector-cmyk.c:387
+#: modules/color-selector-cmyk.c:313 modules/color-selector-cmyk.c:392
 msgid "Profile: (none)"
 msgstr "特性文件：（无）"
 
@@ -2763,121 +2763,121 @@ msgstr "HSV 色相环"
 msgid "Wheel"
 msgstr "色相环"
 
-#: modules/controller-dx-dinput.c:154
+#: modules/controller-dx-dinput.c:157
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX DirectInput 事件控制器"
 
-#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218
+#: modules/controller-dx-dinput.c:197 modules/controller-linux-input.c:218
 #: modules/controller-midi.c:212
 msgid "Device:"
 msgstr "设备："
 
-#: modules/controller-dx-dinput.c:195
+#: modules/controller-dx-dinput.c:198
 msgid "The device to read DirectInput events from."
 msgstr "要读取 DirectInput 事件的设备。"
 
-#: modules/controller-dx-dinput.c:204
+#: modules/controller-dx-dinput.c:207
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: modules/controller-dx-dinput.c:417
+#: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d"
 msgstr "按钮 %d"
 
-#: modules/controller-dx-dinput.c:420
+#: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Press"
 msgstr "按钮 %d 按下"
 
-#: modules/controller-dx-dinput.c:423
+#: modules/controller-dx-dinput.c:426
 #, c-format
 msgid "Button %d Release"
 msgstr "按钮 %d 释放"
 
-#: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
+#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "X 左移"
 
-#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:91
+#: modules/controller-dx-dinput.c:446 modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "X 右移"
 
-#: modules/controller-dx-dinput.c:449
+#: modules/controller-dx-dinput.c:452
 msgid "Y Move Away"
 msgstr "Y 移开"
 
-#: modules/controller-dx-dinput.c:452
+#: modules/controller-dx-dinput.c:455
 msgid "Y Move Near"
 msgstr "Y 移近"
 
-#: modules/controller-dx-dinput.c:458 modules/controller-linux-input.c:94
+#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Z 上移"
 
-#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:95
+#: modules/controller-dx-dinput.c:464 modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Z 下移"
 
-#: modules/controller-dx-dinput.c:467
+#: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Away"
 msgstr "X 轴推开"
 
-#: modules/controller-dx-dinput.c:470
+#: modules/controller-dx-dinput.c:473
 msgid "X Axis Tilt Near"
 msgstr "X 轴拉近"
 
-#: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
+#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Y 轴向右摇动"
 
-#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:100
+#: modules/controller-dx-dinput.c:482 modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Y 轴向左摇动"
 
-#: modules/controller-dx-dinput.c:485 modules/controller-linux-input.c:101
+#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Z 轴向左转"
 
-#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:102
+#: modules/controller-dx-dinput.c:491 modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Z 轴向右转"
 
-#: modules/controller-dx-dinput.c:499
+#: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Increase"
 msgstr "滑块 %d 增加"
 
-#: modules/controller-dx-dinput.c:502
+#: modules/controller-dx-dinput.c:505
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "滑块 %d 减少"
 
-#: modules/controller-dx-dinput.c:512
+#: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X 视图"
 
-#: modules/controller-dx-dinput.c:515
+#: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y 视图"
 
-#: modules/controller-dx-dinput.c:518
+#: modules/controller-dx-dinput.c:521
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d 返回"
 
-#: modules/controller-dx-dinput.c:1079
+#: modules/controller-dx-dinput.c:1082
 msgid "DirectInput Events"
 msgstr "DirectInput 事件"
 
-#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
+#: modules/controller-dx-dinput.c:1093 modules/controller-linux-input.c:525
 #: modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "未配置设备"
 
-#: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
+#: modules/controller-dx-dinput.c:1118 modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "设备不可用"
 
