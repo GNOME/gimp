@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-27 14:32+0000\n"
-"PO-Revision-Date: 2026-06-28 08:11+0800\n"
+"POT-Creation-Date: 2026-07-07 14:57+0000\n"
+"PO-Revision-Date: 2026-07-10 08:28+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -8033,12 +8033,12 @@ msgstr "选择全部"
 #: app/actions/select-actions.c:50
 msgctxt "select-action"
 msgid "_None"
-msgstr "无"
+msgstr "无(_N)"
 
 #: app/actions/select-actions.c:51
 msgctxt "select-action"
 msgid "Dismiss the selection"
-msgstr "摒弃选区"
+msgstr "取消选区"
 
 #: app/actions/select-actions.c:56
 msgctxt "select-action"
@@ -8123,12 +8123,12 @@ msgstr "用边界替换选区"
 #: app/actions/select-actions.c:105
 msgctxt "select-action"
 msgid "Re_move Holes"
-msgstr "删除孔洞"
+msgstr "移除孔洞(_M)"
 
 #: app/actions/select-actions.c:106
 msgctxt "select-action"
 msgid "Remove holes from the selection"
-msgstr "删除选区内的小孔洞"
+msgstr "移除选区内的小孔洞"
 
 #: app/actions/select-actions.c:111
 msgctxt "select-action"
@@ -9923,7 +9923,7 @@ msgstr "将填充颜色重置为在首选项中的配置"
 #: app/actions/view-actions.c:583
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
-msgstr "在“显示全部”模式保持衬垫"
+msgstr "在“显示全部”模式保持衬垫(_A)"
 
 #: app/actions/view-actions.c:585
 msgctxt "view-padding-color"
@@ -14940,7 +14940,7 @@ msgstr "选区收缩"
 #: app/core/gimpselection.c:200
 msgctxt "undo-type"
 msgid "Remove Holes"
-msgstr "删除孔洞"
+msgstr "移除孔洞"
 
 #: app/core/gimpselection.c:308
 msgid "There is no selection to fill."
@@ -18641,7 +18641,7 @@ msgstr "移动"
 #: app/display/display-enums.c:515
 msgctxt "transform-handle-mode"
 msgid "Remove"
-msgstr "删除"
+msgstr "移除"
 
 #: app/display/display-enums.c:544
 msgctxt "path-mode"
@@ -18883,14 +18883,14 @@ msgstr "文字图层必须栅格化（%s）。"
 #: app/widgets/gimpdrawabletreeview.c:678
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
-msgstr "将图案放置到图层"
+msgstr "将图案拖放到图层"
 
 #: app/display/gimpdisplayshell-dnd.c:529
 #: app/widgets/gimpdrawabletreeview.c:503
 #: app/widgets/gimpdrawabletreeview.c:698
 msgctxt "undo-type"
 msgid "Drop color to layer"
-msgstr "将颜色放置到图层"
+msgstr "将颜色拖放到图层"
 
 #: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1592
 #: app/widgets/gimplayertreeview.c:850
@@ -18901,7 +18901,7 @@ msgstr "拖放图层"
 #: app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:927
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
-msgstr "删除缓冲区"
+msgstr "拖放的缓冲区"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:79
 msgid "Color Display Filters"
