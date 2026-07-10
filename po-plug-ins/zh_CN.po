@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-06 13:08+0000\n"
-"PO-Revision-Date: 2026-07-07 07:52+0800\n"
+"POT-Creation-Date: 2026-07-08 19:29+0000\n"
+"PO-Revision-Date: 2026-07-10 08:23+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -389,7 +389,7 @@ msgstr "移除优化以便更容易地编辑"
 
 #: plug-ins/common/animation-optimize.c:252
 msgid "_Remove Backdrop"
-msgstr "去除背景(_R)"
+msgstr "移除背景(_R)"
 
 #: plug-ins/common/animation-optimize.c:273
 msgid "_Find Backdrop"
@@ -401,7 +401,7 @@ msgstr "反优化动画"
 
 #: plug-ins/common/animation-optimize.c:530
 msgid "Removing animation background"
-msgstr "去除动画背景"
+msgstr "移除动画背景"
 
 #: plug-ins/common/animation-optimize.c:533
 msgid "Finding animation background"
@@ -617,7 +617,7 @@ msgstr "百叶窗"
 #: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:864
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
-#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
+#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:259
 #: plug-ins/file-psd/psd-image-res-load.c:1109
 #: plug-ins/file-psd/psd-load.c:4366 plug-ins/file-sgi/sgi.c:456
@@ -1989,9 +1989,9 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-cin/cineon-lib.c:90 plug-ins/file-cin/dpx-lib.c:131
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
-#: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:631
-#: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
+#: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:440
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:643
+#: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711
 #: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
@@ -2461,6 +2461,7 @@ msgstr "图像尺寸过大：宽 %d x 高 %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
+#: plug-ins/file-fits/fits.c:499 plug-ins/file-fits/fits.c:581
 #: plug-ins/file-psd/psd-load.c:4745 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
@@ -2478,7 +2479,7 @@ msgstr "去除条纹(_T)…"
 
 #: plug-ins/common/destripe.c:129
 msgid "Remove vertical stripe artifacts from the image"
-msgstr "去除图像中的竖直干扰条纹"
+msgstr "移除图像中的竖直干扰条纹"
 
 #: plug-ins/common/destripe.c:131
 msgid "This plug-in tries to remove vertical stripes from an image."
@@ -2597,7 +2598,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/common/file-xmc.c:646 plug-ins/common/file-xpm.c:360
 #: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
 #: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247
-#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:623
+#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:635
 #: plug-ins/file-ico/ico-load.c:703 plug-ins/file-ico/ico-load.c:848
 #: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:227
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
@@ -2676,7 +2677,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:715
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
-#: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:775
+#: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:775
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
 #: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2472
@@ -2933,7 +2934,7 @@ msgstr "在与每像素采样组合中 GIMP 不支持 %s：%d"
 msgid "'%s' has a bpp of %d which GIMP cannot handle."
 msgstr "“%s”为 %d bpp 超出 GIMP 能处理的范围。"
 
-#: plug-ins/common/file-dicom.c:723 plug-ins/file-fits/fits.c:483
+#: plug-ins/common/file-dicom.c:723 plug-ins/file-fits/fits.c:484
 #, c-format
 msgid "'%s' has a larger image size (%d x %d) than GIMP can handle."
 msgstr "“%s”的图像大小（%d x %d）超出 GIMP 能处理的范围。"
@@ -2953,7 +2954,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "无法保存带有透明通道的图像。"
 
 #: plug-ins/common/file-dicom.c:1566 plug-ins/common/file-ps.c:1367
-#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:673
+#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:674
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "无法对未知的图像类型操作。"
@@ -4867,7 +4868,7 @@ msgstr "多页面 PDF 导出"
 
 #: plug-ins/common/file-pdf-export.c:1089
 msgid "Remove the selected pages"
-msgstr "删除选中页面"
+msgstr "移除选中页面"
 
 #: plug-ins/common/file-pdf-export.c:1103
 msgid "Add this image"
@@ -7722,11 +7723,11 @@ msgstr "PAL"
 
 #: plug-ins/common/hot.c:278
 msgid "_Action"
-msgstr "动作(_A)"
+msgstr "操作(_A)"
 
 #: plug-ins/common/hot.c:279
 msgid "Action"
-msgstr "动作"
+msgstr "操作"
 
 #: plug-ins/common/hot.c:280
 msgid "Reduce luminance"
@@ -9967,23 +9968,23 @@ msgid ""
 "FITS exporting handles all image types except those with alpha channels."
 msgstr "FITS 导出无法处理带透明通道的图像类型。"
 
-#: plug-ins/file-fits/fits.c:381
+#: plug-ins/file-fits/fits.c:382
 msgid "Error during opening of FITS file"
 msgstr "打开 FITS 文件时出错"
 
-#: plug-ins/file-fits/fits.c:394 plug-ins/file-fits/fits.c:632
+#: plug-ins/file-fits/fits.c:395 plug-ins/file-fits/fits.c:633
 msgid "FITS file keeps no displayable images"
 msgstr "FITS 文件没有包含可显示图像"
 
-#: plug-ins/file-fits/fits.c:515
+#: plug-ins/file-fits/fits.c:513
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:662
+#: plug-ins/file-fits/fits.c:663
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS 导出无法处理带透明通道的图像"
 
-#: plug-ins/file-fits/fits.c:1030
+#: plug-ins/file-fits/fits.c:1031
 msgid "Open FITS File"
 msgstr "打开 FITS 文件"
 
@@ -10216,13 +10217,13 @@ msgstr ""
 "无效的图层尺寸。有效的图层大小为 16x12、16x16、18x18、24x24、32x32、36x36、"
 "48x48、64x64、128x128、256x256、512x512 或 1024x1024。"
 
-#: plug-ins/file-icns/file-icns-load.c:535
+#: plug-ins/file-icns/file-icns-load.c:547
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "试图打开临时的 %s 文件“%s”用于加载 icns 时出错：%s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:676 plug-ins/file-ico/ico-load.c:1068
+#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-ico/ico-load.c:1068
 #: plug-ins/file-jpeg/jpeg-load.c:697 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:620
@@ -16027,7 +16028,7 @@ msgstr ""
 "有效的值由 1、2 或 3 个数字组成（角度、分钟、秒数），参阅以下示例：\n"
 "10deg 15' 20\"，或 10° 15' 20\"，或 10:15:20.45，或 10 15 20，或 10 15.30，"
 "或 10.45\n"
-"删除所有文字可删除当前值。"
+"删除所有文字可移除当前值。"
 
 #: plug-ins/metadata/metadata-editor.c:2435
 msgid ""
@@ -16042,7 +16043,7 @@ msgstr ""
 "一个有效的值由一个数字构成：\n"
 "比如 100 或 12.24\n"
 "根据选中的度量类型该值应为米（m）或英尺（ft）\n"
-"删除所有文字可删除当前值。"
+"删除所有文字可移除当前值。"
 
 #: plug-ins/metadata/metadata-editor.c:2569
 msgid "Unrated"
@@ -16718,7 +16719,7 @@ msgstr "保留拐点(_K)"
 
 #: plug-ins/selection-to-path/selection-to-path.c:236
 msgid "Says whether or not to remove 'knee' points after finding the outline."
-msgstr "决定找到轮廓线后是否删除拐点。"
+msgstr "决定找到轮廓线后是否移除拐点。"
 
 #: plug-ins/selection-to-path/selection-to-path.c:242
 msgid "_Line Reversion Threshold"
