@@ -33,6 +33,18 @@ from os import getenv, path
 
 def_files = sys.argv[1:]
 
+def read_def_symbols(filename):
+   symbols = []
+   with open(filename, encoding="utf-8") as def_file:
+      for line in def_file:
+         line = line.split(";", 1)[0].strip()
+         if not line or line == "EXPORTS":
+            continue
+         # DATA marks variable exports in .def files and is not part of the symbol name.
+         parts = line.split()
+         symbols.append(parts[0])
+   return symbols
+
 have_errors = 0
 
 libextension   = ".so"
@@ -63,14 +75,24 @@ for df in def_files:
    basename, extension = name.split (".")
    libname = path.join(os.getcwd(), directory, libprefix + basename + "-*" + libextension)
    matches = glob.glob(libname)
+   lib_is_win32 = platform_win32
    if matches:
      libname = matches[0]
+   elif libextension != ".dll":
+     # Linux-hosted MinGW cross builds still produce Windows DLLs.
+     libname = path.join(os.getcwd(), directory, libprefix + basename + "-*.dll")
+     matches = glob.glob(libname)
+     if matches:
+       libname = matches[0]
+       lib_is_win32 = True
+       objdump = shutil.which("x86_64-w64-mingw32-objdump") or shutil.which("objdump") or "objdump"
+       command = objdump + " -p "
    #FIXME: This leaks to ninja stdout, which should not happen
    #print ("platform: " + sys.platform + " - extracting symbols from " + libname)
 
    filename = df
    try:
-      defsymbols = open (filename).read ().split ()[1:]
+      defsymbols = read_def_symbols (filename)
    except IOError as message:
       print(message)
       sys.exit (-1)
@@ -96,7 +118,7 @@ for df in def_files:
       continue
 
    nmsymbols = ""
-   if platform_linux:
+   if platform_linux and not lib_is_win32:
       #nmsymbols = nm
       lines = nm.split(sep='\n')
       for line in lines:
@@ -107,12 +129,14 @@ for df in def_files:
             #If the address is omitted for certain sections
             nmsymbols += " 0 0 " + parts[1].split('@')[0]
 
-   elif platform_win32 and not shutil.which("dumpbin"): # Windows MSYS2
+   elif lib_is_win32 and not shutil.which("dumpbin"): # Windows MSYS2 or MinGW cross build
       objnm = nm.split(sep='\n')
       found = False
       nmsymbols = ""
       for s in objnm:
-         if "Ordinal   Hint Name" in s or " Ordinal      RVA  Name" in s:
+         if ("Ordinal   Hint Name" in s or
+             " Ordinal      RVA  Name" in s or
+             "[Ordinal/Name Pointer] Table" in s):
             found = True
          elif found:
             s = s.strip()
@@ -120,7 +144,7 @@ for df in def_files:
                break
             nmsymbols += " 0 0 " + s.split()[-1] # Keep the [2::3] logic happy
 
-   elif platform_win32: # Windows MSVC
+   elif lib_is_win32: # Windows MSVC
       dbin = nm.split(sep='\n')
       found = False
       nmsymbols = ""
