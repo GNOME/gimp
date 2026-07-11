@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-06-28 01:21+0000\n"
-"PO-Revision-Date: 2026-07-10 08:19+0800\n"
+"PO-Revision-Date: 2026-07-11 15:56+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -900,17 +900,17 @@ msgstr "32 位整数"
 #: libgimpbase/gimpbaseenums.c:354
 msgctxt "component-type"
 msgid "16-bit floating point"
-msgstr "16 位浮点数"
+msgstr "16 位浮点"
 
 #: libgimpbase/gimpbaseenums.c:355
 msgctxt "component-type"
 msgid "32-bit floating point"
-msgstr "32 位浮点数"
+msgstr "32 位浮点"
 
 #: libgimpbase/gimpbaseenums.c:356
 msgctxt "component-type"
 msgid "64-bit floating point"
-msgstr "64 位浮点数"
+msgstr "64 位浮点"
 
 #: libgimpbase/gimpbaseenums.c:387
 msgctxt "convert-palette-type"
@@ -1010,7 +1010,7 @@ msgstr "图案"
 #: libgimpbase/gimpbaseenums.c:582
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
-msgstr "感官 RGB"
+msgstr "感知 RGB"
 
 #: libgimpbase/gimpbaseenums.c:583
 msgctxt "gradient-blend-color-space"
@@ -1396,7 +1396,7 @@ msgstr "8 位非线性整数"
 #: libgimpbase/gimpbaseenums.c:1341
 msgctxt "precision"
 msgid "8-bit perceptual integer"
-msgstr "8 位感官整数"
+msgstr "8 位感知整数"
 
 #: libgimpbase/gimpbaseenums.c:1342
 msgctxt "precision"
@@ -1411,7 +1411,7 @@ msgstr "16 位非线性整数"
 #: libgimpbase/gimpbaseenums.c:1344
 msgctxt "precision"
 msgid "16-bit perceptual integer"
-msgstr "16 位感官整数"
+msgstr "16 位感知整数"
 
 #: libgimpbase/gimpbaseenums.c:1345
 msgctxt "precision"
@@ -1426,52 +1426,52 @@ msgstr "32 位非线性整数"
 #: libgimpbase/gimpbaseenums.c:1347
 msgctxt "precision"
 msgid "32-bit perceptual integer"
-msgstr "32 位感官整数"
+msgstr "32 位感知整数"
 
 #: libgimpbase/gimpbaseenums.c:1348
 msgctxt "precision"
 msgid "16-bit linear floating point"
-msgstr "16 位线性浮点数"
+msgstr "16 位线性浮点"
 
 #: libgimpbase/gimpbaseenums.c:1349
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
-msgstr "16 位非线性浮点数"
+msgstr "16 位非线性浮点"
 
 #: libgimpbase/gimpbaseenums.c:1350
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
-msgstr "16 位感官浮点数"
+msgstr "16 位感知浮点"
 
 #: libgimpbase/gimpbaseenums.c:1351
 msgctxt "precision"
 msgid "32-bit linear floating point"
-msgstr "32 位线性浮点数"
+msgstr "32 位线性浮点"
 
 #: libgimpbase/gimpbaseenums.c:1352
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
-msgstr "32 位非线性浮点数"
+msgstr "32 位非线性浮点"
 
 #: libgimpbase/gimpbaseenums.c:1353
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
-msgstr "32 位感官浮点数"
+msgstr "32 位感知浮点"
 
 #: libgimpbase/gimpbaseenums.c:1354
 msgctxt "precision"
 msgid "64-bit linear floating point"
-msgstr "64 位线性浮点数"
+msgstr "64 位线性浮点"
 
 #: libgimpbase/gimpbaseenums.c:1355
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
-msgstr "64 位非线性浮点数"
+msgstr "64 位非线性浮点"
 
 #: libgimpbase/gimpbaseenums.c:1356
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
-msgstr "64 位感官浮点数"
+msgstr "64 位感知浮点"
 
 #: libgimpbase/gimpbaseenums.c:1461
 msgctxt "repeat-mode"
