@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-07-09 02:31+0000\n"
-"PO-Revision-Date: 2026-07-10 08:10+0800\n"
+"PO-Revision-Date: 2026-07-11 16:31+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -631,12 +631,12 @@ msgstr "创建新笔刷"
 #: app/actions/brushes-actions.c:55
 msgctxt "brushes-action"
 msgid "D_uplicate Brush"
-msgstr "再制笔刷(_U)"
+msgstr "制作笔刷副本(_U)"
 
 #: app/actions/brushes-actions.c:56
 msgctxt "brushes-action"
 msgid "Duplicate this brush"
-msgstr "再制此笔刷"
+msgstr "制作此笔刷的副本"
 
 #: app/actions/brushes-actions.c:61
 msgctxt "brushes-action"
@@ -808,7 +808,7 @@ msgstr "按上次使用的值新建通道"
 #: app/actions/channels-actions.c:63
 msgctxt "channels-action"
 msgid "D_uplicate Channels"
-msgstr "再制通道(_U)"
+msgstr "制作通道副本(_U)"
 
 #: app/actions/channels-actions.c:65
 msgctxt "channels-action"
@@ -1107,7 +1107,7 @@ msgstr "%s 通道副本"
 
 #: app/actions/channels-commands.c:424
 msgid "Duplicate channels"
-msgstr "再制通道"
+msgstr "制作通道副本"
 
 #: app/actions/channels-commands.c:467
 #, c-format
@@ -3586,12 +3586,12 @@ msgstr "创建新动态"
 #: app/actions/dynamics-actions.c:49
 msgctxt "dynamics-action"
 msgid "D_uplicate Dynamics"
-msgstr "再制动态(_U)"
+msgstr "制作动态副本(_U)"
 
 #: app/actions/dynamics-actions.c:50
 msgctxt "dynamics-action"
 msgid "Duplicate this dynamics"
-msgstr "再制此动态"
+msgstr "制作此动态的副本"
 
 #: app/actions/dynamics-actions.c:55
 msgctxt "dynamics-action"
@@ -5487,12 +5487,12 @@ msgstr "创建新的渐变"
 #: app/actions/gradients-actions.c:50
 msgctxt "gradients-action"
 msgid "D_uplicate Gradient"
-msgstr "再制渐变(_U)"
+msgstr "制作渐变副本(_U)"
 
 #: app/actions/gradients-actions.c:51
 msgctxt "gradients-action"
 msgid "Duplicate this gradient"
-msgstr "再制渐变"
+msgstr "制作此渐变的副本"
 
 #: app/actions/gradients-actions.c:56
 msgctxt "gradients-action"
@@ -5632,7 +5632,7 @@ msgstr "创建新的图像"
 #: app/actions/image-actions.c:61
 msgctxt "image-action"
 msgid "_Duplicate"
-msgstr "再制(_D)"
+msgstr "制作副本(_D)"
 
 #: app/actions/image-actions.c:62
 msgctxt "image-action"
@@ -6275,7 +6275,7 @@ msgstr "创建新图层群组并将其添加到图像"
 #: app/actions/layers-actions.c:104
 msgctxt "layers-action"
 msgid "D_uplicate Layers"
-msgstr "再制图层(_U)"
+msgstr "制作图层副本(_U)"
 
 #: app/actions/layers-actions.c:106
 msgctxt "layers-action"
@@ -7068,7 +7068,7 @@ msgstr[0] "图层降至底端"
 
 #: app/actions/layers-commands.c:868
 msgid "Duplicate layers"
-msgstr "再制图层"
+msgstr "制作图层副本"
 
 #: app/actions/layers-commands.c:1024
 msgid "Cannot merge a pass through layer group."
@@ -7239,12 +7239,12 @@ msgstr "创建新 MyPaint 笔刷"
 #: app/actions/mypaint-brushes-actions.c:49
 msgctxt "mypaint-brushes-action"
 msgid "D_uplicate MyPaint Brush"
-msgstr "再制 MyPaint 笔刷(_U)"
+msgstr "制作 MyPaint 笔刷副本(_U)"
 
 #: app/actions/mypaint-brushes-actions.c:50
 msgctxt "mypaint-brushes-action"
 msgid "Duplicate this MyPaint brush"
-msgstr "再制该 MyPaint 笔刷"
+msgstr "制作此 MyPaint 笔刷的副本"
 
 #: app/actions/mypaint-brushes-actions.c:55
 msgctxt "mypaint-brushes-action"
@@ -7376,12 +7376,12 @@ msgstr "导入色板"
 #: app/actions/palettes-actions.c:56
 msgctxt "palettes-action"
 msgid "D_uplicate Palette"
-msgstr "再制色板(_U)"
+msgstr "制作色板副本(_U)"
 
 #: app/actions/palettes-actions.c:57
 msgctxt "palettes-action"
 msgid "Duplicate this palette"
-msgstr "再制色板"
+msgstr "制作此色板的副本"
 
 #: app/actions/palettes-actions.c:62
 msgctxt "palettes-action"
@@ -7498,12 +7498,12 @@ msgstr "按上次使用的值新建路径"
 #: app/actions/paths-actions.c:70
 msgctxt "paths-action"
 msgid "D_uplicate Paths"
-msgstr "再制路径(_U)"
+msgstr "制作路径副本(_U)"
 
 #: app/actions/paths-actions.c:71
 msgctxt "paths-action"
 msgid "Duplicate these paths"
-msgstr "再制这些路径"
+msgstr "制作这些路径的副本"
 
 #: app/actions/paths-actions.c:76
 msgctxt "paths-action"
@@ -7888,7 +7888,7 @@ msgstr[0] "路径移至底端"
 
 #: app/actions/paths-commands.c:445
 msgid "Duplicate Paths"
-msgstr "再制路径"
+msgstr "制作路径副本"
 
 #: app/actions/paths-commands.c:490
 msgid "Cannot delete paths attached to vector layers"
@@ -7937,12 +7937,12 @@ msgstr "创建新的图案"
 #: app/actions/patterns-actions.c:55
 msgctxt "patterns-action"
 msgid "D_uplicate Pattern"
-msgstr "再制图案(_U)"
+msgstr "制作图案副本(_U)"
 
 #: app/actions/patterns-actions.c:56
 msgctxt "patterns-action"
 msgid "Duplicate this pattern"
-msgstr "再制此图案"
+msgstr "制作此图案的副本"
 
 #: app/actions/patterns-actions.c:61
 msgctxt "patterns-action"
@@ -8320,12 +8320,12 @@ msgstr "创建新的模板"
 #: app/actions/templates-actions.c:54
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
-msgstr "再制模板(_U)…"
+msgstr "制作模板副本(_U)…"
 
 #: app/actions/templates-actions.c:55
 msgctxt "templates-action"
 msgid "Duplicate this template"
-msgstr "再制选中的模板"
+msgstr "制作此模板的副本"
 
 #: app/actions/templates-actions.c:60
 msgctxt "templates-action"
@@ -8691,12 +8691,12 @@ msgstr "创建新的工具预设"
 #: app/actions/tool-presets-actions.c:52
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
-msgstr "再制工具预设(_U)"
+msgstr "制作工具预设副本(_U)"
 
 #: app/actions/tool-presets-actions.c:53
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
-msgstr "再制此工具预设"
+msgstr "制作此工具预设的副本"
 
 #: app/actions/tool-presets-actions.c:58
 msgctxt "tool-presets-action"
