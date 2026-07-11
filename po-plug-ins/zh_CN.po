@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-07-08 19:29+0000\n"
-"PO-Revision-Date: 2026-07-10 08:23+0800\n"
+"PO-Revision-Date: 2026-07-11 16:18+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -8555,7 +8555,7 @@ msgstr "新建(_N)"
 
 #: plug-ins/common/sphere-designer.c:2756
 msgid "D_uplicate"
-msgstr "再制(_U)"
+msgstr "制作副本(_U)"
 
 #: plug-ins/common/sphere-designer.c:2762
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
