@@ -103,6 +103,10 @@ if flex.found() and bison.found()
                      </item>'''
   menu_config.set('OPTIONAL_OPEN_MENU', multiline_xml)
 
+  if cc.get_argument_syntax() == 'msvc'
+    toolbar_compiler_args += ['-DYY_NO_UNISTD_H', '-Disatty(x)=0', '-Wno-deprecated-declarations']
+  endif
+
   lex_gen = generator(
                 flex,
      arguments: [
