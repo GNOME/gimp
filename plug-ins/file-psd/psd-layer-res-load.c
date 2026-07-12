@@ -2106,7 +2106,7 @@ parse_tdta (guint32    len,
   else
     {
       root = *tdta_root;
-      obj = json_node_get_object (root);
+      obj  = json_node_get_object (root);
     }
 
   desc_obj = json_object_new ();
@@ -2150,6 +2150,9 @@ parse_text_info (guint32    len,
 
   IFDBG(3) g_debug ("Parsing text info...");
 
+  data.reading_binary = FALSE;
+  data.bufpos         = 0;
+
   parse_text_loop (len, buf, &desc, &data, error);
 
   g_free (data.last_cmd);
@@ -2168,9 +2171,9 @@ parse_text_loop (guint32      len,
                  ParserData  *data,
                  GError     **error)
 {
-  JsonObject *desc_obj  = NULL;
-  JsonArray  *arr       = NULL;
-  JsonNode   *arr_node  = NULL;
+  JsonObject *desc_obj    = NULL;
+  JsonArray  *arr         = NULL;
+  JsonNode   *arr_node    = NULL;
 
   JsonNode   *member_node = NULL;
   JsonObject *member_obj  = NULL;
@@ -2190,8 +2193,8 @@ parse_text_loop (guint32      len,
   while (data->bufpos < len)
     {
       gchar token;
-      gchar command[COMMAND_SIZE+1];
-      gchar simple_value[COMMAND_SIZE+1];
+      gchar command[COMMAND_SIZE + 1];
+      gchar simple_value[COMMAND_SIZE + 1];
 
       token = buf[data->bufpos];
 
@@ -2220,7 +2223,7 @@ parse_text_loop (guint32      len,
       switch (token)
         {
         case '(': /* start of binary value */
-          data->reading_binary = TRUE;
+          data->reading_binary  = TRUE;
           data->value_start_pos = data->bufpos + 1;
           IFDBG(4) g_debug ("Binary value start");
           break;
@@ -2259,12 +2262,73 @@ parse_text_loop (guint32      len,
 
         case '/': /* start of command */
           data->reading_command = TRUE;
-          data->cmdpos = 0;
+          data->cmdpos          = 0;
           break;
 
-        case 'a'...'z':
-        case 'A'...'Z':
-        case '0'...'9':
+        case 'a':
+        case 'b':
+        case 'c':
+        case 'd':
+        case 'e':
+        case 'f':
+        case 'g':
+        case 'h':
+        case 'i':
+        case 'j':
+        case 'k':
+        case 'l':
+        case 'm':
+        case 'n':
+        case 'o':
+        case 'p':
+        case 'q':
+        case 'r':
+        case 's':
+        case 't':
+        case 'u':
+        case 'v':
+        case 'w':
+        case 'x':
+        case 'y':
+        case 'z':
+
+        case 'A':
+        case 'B':
+        case 'C':
+        case 'D':
+        case 'E':
+        case 'F':
+        case 'G':
+        case 'H':
+        case 'I':
+        case 'J':
+        case 'K':
+        case 'L':
+        case 'M':
+        case 'N':
+        case 'O':
+        case 'P':
+        case 'Q':
+        case 'R':
+        case 'S':
+        case 'T':
+        case 'U':
+        case 'V':
+        case 'W':
+        case 'X':
+        case 'Y':
+        case 'Z':
+
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
         case '-':
         case '.':
           if (data->reading_command)
@@ -2276,6 +2340,7 @@ parse_text_loop (guint32      len,
               else if (data->cmdpos < COMMAND_SIZE)
                 {
                   command[data->cmdpos++] = token;
+                  g_print ("%c", token);
                 }
               else
                 {
@@ -2287,11 +2352,12 @@ parse_text_loop (guint32      len,
               if (! data->reading_value)
                 {
                   data->reading_value = TRUE;
-                  data->val_pos = 0;
+                  data->val_pos       = 0;
                 }
               if (data->val_pos < COMMAND_SIZE)
                 {
                   simple_value[data->val_pos++] = token;
+                  g_print ("%c", token);
                 }
               else
                 {
@@ -2306,7 +2372,7 @@ parse_text_loop (guint32      len,
           if (data->reading_command)
             {
               command[data->cmdpos] = '\0';
-              data->cmdpos = 0;
+              data->cmdpos          = 0;
               data->reading_command = FALSE;
               g_free (data->last_cmd);
               data->last_cmd = g_strdup ((const gchar *) &command);
@@ -2345,7 +2411,7 @@ parse_text_loop (guint32      len,
           break;
 
         case '<': /* Increase level */
-          if (data->bufpos + 1 < len && buf[data->bufpos+1] == '<')
+          if (data->bufpos + 1 < len && buf[data->bufpos + 1] == '<')
             {
               JsonNode   *new_node   = NULL;
               JsonObject *new_obj    = NULL;

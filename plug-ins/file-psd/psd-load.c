@@ -100,6 +100,11 @@ static void             add_layer_effects          (GimpLayer      *layer,
                                                     PSDlayer       *lyr_a,
                                                     PSDimage       *img_a);
 
+static GimpLayer      * get_text_layer             (GimpImage      *image,
+                                                    GimpLayer      *parent_group,
+                                                    PSDlayer       *lyr_a,
+                                                    PSDimage       *img_a);
+
 static GimpLayer      * get_linked_layer           (GimpImage      *image,
                                                     PSDlayer       *lyr_a,
                                                     PSDimage       *img_a);
@@ -2630,13 +2635,16 @@ add_layers (GimpImage     *image,
                * embedded images. */
               layer = get_linked_layer (image, lyr_a[lidx], img_a);
             }
+          else if (lyr_a[lidx]->text.textdata)
+            {
+              layer = get_text_layer (image, parent_group, lyr_a[lidx], img_a);
+            }
           no_draw_layer = (layer != NULL);
 
           if (! layer)
             layer = gimp_layer_new (image, lyr_a[lidx]->name,
                                     l_w, l_h, image_type,
                                     100, GIMP_LAYER_MODE_NORMAL);
-
         }
 
       if (layer != NULL)
@@ -2912,9 +2920,10 @@ add_layers (GimpImage     *image,
               add_legacy_layer_effects (layer, lyr_a[lidx], img_a);
 
             /* Insert the layer */
-            if (lyr_a[lidx]->group_type == 0 || /* normal layer */
-                lyr_a[lidx]->group_type == 3 || /* group layer end marker */
-                strlen (lyr_a[lidx]->adjustment_layer->type))
+            if (! GIMP_IS_TEXT_LAYER (layer)  &&
+                (lyr_a[lidx]->group_type == 0 || /* normal layer */
+                 lyr_a[lidx]->group_type == 3 || /* group layer end marker */
+                 strlen (lyr_a[lidx]->adjustment_layer->type)))
               {
                 gimp_image_insert_layer (image, layer, parent_group, 0);
               }
@@ -4000,6 +4009,204 @@ add_layer_effects (GimpLayer *layer,
 }
 
 static GimpLayer *
+get_text_layer (GimpImage *image,
+                GimpLayer *parent_group,
+                PSDlayer  *lyr_a,
+                PSDimage  *img_a)
+{
+  GimpLayer  *layer     = NULL;
+  GimpFont  **fonts     = NULL;
+  gchar      *text      = NULL;
+  gchar      *font_name = NULL;
+  gboolean    antialias = TRUE;
+  gdouble     font_size = 10;
+  GeglColor  *color     = gegl_color_new ("none");;
+
+  if (lyr_a->text.textdata)
+    {
+      JsonReader *reader = NULL;
+
+      /* Create default text layer to fill in afterwards */
+      layer = GIMP_LAYER (gimp_text_layer_new (image, "Text",
+                                               gimp_context_get_font (),
+                                               24, gimp_unit_pixel ()));
+      gimp_image_insert_layer (image, layer, parent_group, 0);
+
+      reader = json_reader_new (lyr_a->text.textdata);
+      if (json_reader_read_member (reader, "descriptor"))
+        {
+          gint cnt = json_reader_count_elements (reader);
+          gint i;
+
+          for (i = 0; i < cnt; i++)
+            {
+              if (json_reader_read_element (reader, i))
+                {
+                  JsonReader  *obj_reader = json_reader_new (json_reader_get_current_node (reader));
+                  const gchar *key        = get_json_string (obj_reader, "key", "");
+
+                  if (json_string_equal (key, "Txt "))
+                    {
+                      text = g_strdup (get_json_string (obj_reader, "value", ""));
+                    }
+                  else if (json_string_equal (key, "AntA"))
+                    {
+                      const gchar *antialias_value =
+                        get_json_string (obj_reader, "value", "");
+
+                      if (g_strcmp0 ("Anno", antialias_value) == 0)
+                        antialias = FALSE;
+                    }
+                  else if (json_string_equal (key, "EngineData"))
+                    {
+                      JsonNode *engine_data = NULL;
+                      gint      inner_cnt   = 0;
+
+                      /* We need to go several levels down for relevant information */
+                      if (! json_reader_read_member (obj_reader, "descriptor") ||
+                          ! json_reader_read_member (obj_reader, "descriptor") ||
+                          ! json_reader_read_member (obj_reader, "descriptor"))
+                        break;
+
+                      /* Keep a reference here so we can come back to load the various
+                       * text components */
+                      engine_data = json_reader_get_current_node (obj_reader);
+
+                      if (! json_reader_read_member (obj_reader, "EngineDict") ||
+                          ! json_reader_read_member (obj_reader, "descriptor") ||
+                          ! json_reader_read_member (obj_reader, "StyleRun")   ||
+                          ! json_reader_read_member (obj_reader, "descriptor") ||
+                          ! json_reader_read_member (obj_reader, "RunArray")   ||
+                          ! json_reader_read_member (obj_reader, "values"))
+                        break;
+
+                      inner_cnt = json_reader_count_elements (obj_reader);
+                      for (gint j = 0; j < inner_cnt; j++)
+                        {
+                          if (json_reader_read_element (obj_reader, j))
+                            {
+                              JsonReader *obj_reader2;
+                              gint        color_cnt    = 0;
+                              gdouble     color_val[3] = { 0 };
+
+                              obj_reader2 =
+                                json_reader_new (json_reader_get_current_node (obj_reader));
+
+                              if (! json_reader_read_member (obj_reader2, "StyleSheet")     ||
+                                  ! json_reader_read_member (obj_reader2, "descriptor")     ||
+                                  ! json_reader_read_member (obj_reader2, "StyleSheetData") ||
+                                  ! json_reader_read_member (obj_reader2, "descriptor")     ||
+                                  ! json_reader_read_member (obj_reader2, "FontSize"))
+                                break;
+
+                              font_size =
+                                g_ascii_strtod (get_json_string (obj_reader2, "value", ""),
+                                                NULL);
+                              g_object_unref (obj_reader2);
+
+                              obj_reader2 =
+                                json_reader_new (json_reader_get_current_node (obj_reader));
+
+                              if (! json_reader_read_member (obj_reader2, "StyleSheet")     ||
+                                  ! json_reader_read_member (obj_reader2, "descriptor")     ||
+                                  ! json_reader_read_member (obj_reader2, "StyleSheetData") ||
+                                  ! json_reader_read_member (obj_reader2, "descriptor")     ||
+                                  ! json_reader_read_member (obj_reader2, "FillColor")      ||
+                                  ! json_reader_read_member (obj_reader2, "descriptor")     ||
+                                  ! json_reader_read_member (obj_reader2, "Values")         ||
+                                  ! json_reader_read_member (obj_reader2, "values"))
+                                break;
+
+                              color_cnt = json_reader_count_elements (obj_reader2);
+                              for (gint k = 1; k < color_cnt; k++)
+                                {
+                                  json_reader_read_element (obj_reader2, k);
+
+                                  color_val[k - 1] =
+                                    g_ascii_strtod (json_reader_get_string_value (obj_reader2),
+                                                    NULL);
+
+                                  json_reader_end_element (obj_reader2);
+                                }
+
+                              gegl_color_set_pixel (color,
+                                                    babl_format ("R'G'B' double"),
+                                                    color_val);
+
+                              json_reader_end_member (obj_reader2);
+                              g_object_unref (obj_reader2);
+
+                              /* TODO: Read in more segments */
+                              break;
+                            }
+                        }
+
+                      /* Get font information in ResourceDict */
+                      g_object_unref (obj_reader);
+                      obj_reader = json_reader_new (engine_data);
+
+                      if (! json_reader_read_member (obj_reader, "ResourceDict") ||
+                          ! json_reader_read_member (obj_reader, "descriptor")   ||
+                          ! json_reader_read_member (obj_reader, "FontSet")      ||
+                          ! json_reader_read_member (obj_reader, "values"))
+                        break;
+
+                      inner_cnt = json_reader_count_elements (obj_reader);
+                      for (gint j = 0; j < inner_cnt; j++)
+                        {
+                          if (json_reader_read_element (obj_reader, j))
+                            {
+                              JsonReader *obj_reader2;
+
+                              obj_reader2 =
+                                json_reader_new (json_reader_get_current_node (obj_reader));
+
+                              if (! json_reader_read_member (obj_reader, "Name"))
+                                break;
+
+                              font_name =
+                                g_strdup (get_json_string (obj_reader, "value", ""));
+
+                              g_object_unref (obj_reader2);
+                            }
+
+                          /* TODO: Read in more segments */
+                          break;
+                        }
+                      g_object_unref (obj_reader);
+                    }
+                }
+              json_reader_end_element (reader);
+            }
+        }
+      g_object_unref (reader);
+    }
+
+  if (layer)
+    {
+      gimp_text_layer_set_text (GIMP_TEXT_LAYER (layer), text);
+      gimp_text_layer_set_antialias (GIMP_TEXT_LAYER (layer), antialias);
+      gimp_text_layer_set_font_size (GIMP_TEXT_LAYER (layer), font_size,
+                                     gimp_unit_pixel ());
+      gimp_text_layer_set_color (GIMP_TEXT_LAYER (layer), color);
+
+      if (font_name)
+        {
+          fonts = gimp_fonts_get_list (font_name);
+
+          if (fonts && fonts[0])
+            gimp_text_layer_set_font (GIMP_TEXT_LAYER (layer), fonts[0]);
+
+          g_free (fonts);
+        }
+    }
+  g_free (text);
+  g_clear_object (&color);
+
+  return layer;
+}
+
+static GimpLayer *
 get_linked_layer (GimpImage *image,
                   PSDlayer  *lyr_a,
                   PSDimage  *img_a)
@@ -4019,8 +4226,8 @@ get_linked_layer (GimpImage *image,
       reader = json_reader_new (lyr_a->smart_object.smart_object_data);
       if (json_reader_read_member (reader, "descriptor"))
         {
-          gint         cnt     = json_reader_count_elements (reader);
-          gint         i;
+          gint cnt = json_reader_count_elements (reader);
+          gint i;
 
           /* Keys we are going to start with:
            * 'Idnt' - unique identifier (TEXT)
