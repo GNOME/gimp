@@ -21,8 +21,8 @@
 #pragma once
 
 
-#if defined (__gnu_linux__) && defined (HAVE_EXECINFO_H)
-# define GIMP_BACKTRACE_BACKEND_LINUX
+#if defined (__gnu_linux__) && defined (HAVE_EXECINFO_H) || defined (__APPLE__)
+# define GIMP_BACKTRACE_BACKEND_UNIX
 #elif defined (G_OS_WIN32)
 # define GIMP_BACKTRACE_BACKEND_WINDOWS
 #else
