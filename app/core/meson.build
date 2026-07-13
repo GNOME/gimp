@@ -53,7 +53,7 @@ libappcore_sources = [
   'gimpasyncset.c',
   'gimpauxitem.c',
   'gimpauxitemundo.c',
-  'gimpbacktrace-linux.c',
+  'gimpbacktrace-unix.c',
   'gimpbacktrace-none.c',
   'gimpbacktrace-windows.c',
   'gimpbezierdesc.c',

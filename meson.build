@@ -710,8 +710,7 @@ libarchive = dependency('libarchive')
 # Check for detailed backtraces support
 
 ## Check for libbacktrace
-
-if get_option('libbacktrace')
+if get_option('libbacktrace') and platform_linux
   libbacktrace = cc.find_library('backtrace', required: false)
 
   if libbacktrace.found()
@@ -750,7 +749,7 @@ conf.set('HAVE_LIBBACKTRACE', libbacktrace.found())
 # In most platforms, unw_*() functions are in the libunwind library.
 # In macOS, it is on libSystem (there we only need the SDK header).
 libunwind = no_dep
-if get_option('libunwind')
+if get_option('libunwind') and not platform_windows
   libunwind = dependency('libunwind', version: '>=1.1.0', required: false)
   libunwind_h = platform_osx ? cc.has_header('libunwind.h', required: false) : false
   have_unwind = libunwind.found() or libunwind_h
@@ -770,7 +769,9 @@ conf.set('HAVE_EXECINFO_H', have_execinfo_h ? 1 : false)
 
 # See app/core/gimpbacktrace-backend.h for supported platforms.
 dashboard_backtrace='no (unsupported platform)'
-if platform_windows
+if platform_osx
+  dashboard_backtrace='yes'
+elif platform_windows
   dashboard_backtrace='yes'
 elif platform_linux
   if not have_execinfo_h
