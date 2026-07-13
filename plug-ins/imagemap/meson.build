@@ -94,6 +94,7 @@ endif
 
 menu_config = configuration_data()
 toolbar_compiler_args = []
+clean_winflexbison = []
 if flex.found() and bison.found()
   #Only show Open menu if imagemap was built with flex and bison (see issue #14145)
   toolbar_compiler_args += '-DHAVE_FLEX_BISON'
@@ -107,6 +108,18 @@ if flex.found() and bison.found()
     toolbar_compiler_args += ['-DYY_NO_UNISTD_H', '-Disatty(x)=0', '-Wno-deprecated-declarations']
   endif
 
+  if platform_windows
+    #avoid win_flex.EXE: error deleting file C:\Users\user\AppData\Local\Temp\~flex_out_main_2
+    clean_winflexbison = custom_target('clean-winflexbison',
+      output: 'winflexbison_clean.stamp',
+      command: [
+        python, '-c',
+        'import os, glob; [os.remove(f) for f in glob.glob(os.path.join(os.environ.get("TMP", ""), "*flex_out*")) if os.path.exists(f)]; open("@OUTPUT@", "w").close()'
+      ],
+      build_by_default: false
+    )
+  endif
+
   lex_gen = generator(
                 flex,
      arguments: [
@@ -115,7 +128,8 @@ if flex.found() and bison.found()
         '--outfile', '@OUTPUT@',
         '@INPUT@',
       ],
-      output  : '@BASENAME@_lex.c'
+      output  : '@BASENAME@_lex.c',
+      depends: clean_winflexbison,
   )
 
   parse_gen = generator(
@@ -131,7 +145,8 @@ if flex.found() and bison.found()
       output  : [
         '@BASENAME@_parse.c',
         '@BASENAME@_parse.h',
-      ]
+      ],
+      depends: clean_winflexbison,
   )
 
   foreach syntax : syntaxes
