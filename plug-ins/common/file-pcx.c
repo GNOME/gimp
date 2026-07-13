@@ -638,6 +638,7 @@ load_image (GimpProcedure  *procedure,
   GimpImage    *image;
   GimpLayer    *layer;
   guchar       *dest, cmap[768];
+  gsize         allocation       = 0;
   guint8        header_buf[128];
   gboolean      override_palette = FALSE;
 
@@ -713,7 +714,8 @@ load_image (GimpProcedure  *procedure,
     }
 
   /* Shield against potential buffer overflows in load_*() functions. */
-  if (G_MAXSIZE / width / height < 3)
+  if (G_MAXSIZE / width / height < 3 ||
+      ! g_size_checked_mul (&allocation, width, height))
     {
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
                    _("Image dimensions too large: width %d x height %d"),
@@ -756,7 +758,8 @@ load_image (GimpProcedure  *procedure,
   if (pcx_header.planes == 1 && pcx_header.bpp == 1)
     {
       const guint8 *colormap = pcx_header.colormap;
-      dest = g_new (guchar, ((gsize) width) * height);
+
+      dest = g_new0 (guchar, allocation);
       load_1 (fd, width, height, dest, bytesperline);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -799,7 +802,7 @@ load_image (GimpProcedure  *procedure,
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 2)
     {
-      dest = g_new (guchar, ((gsize) width) * height);
+      dest = g_new0 (guchar, allocation);
       load_sub_8 (fd, width, height, 1, 2, dest, bytesperline);
       gimp_palette_set_colormap (gimp_image_get_palette (image),
                                  babl_format ("R'G'B' u8"),
@@ -807,7 +810,7 @@ load_image (GimpProcedure  *procedure,
     }
   else if (pcx_header.bpp == 2 && pcx_header.planes == 1)
     {
-      dest = g_new (guchar, ((gsize) width) * height);
+      dest = g_new0 (guchar, allocation);
       load_sub_8 (fd, width, height, 2, 1, dest, bytesperline);
       gimp_palette_set_colormap (gimp_image_get_palette (image),
                                  babl_format ("R'G'B' u8"),
@@ -815,7 +818,7 @@ load_image (GimpProcedure  *procedure,
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 3)
     {
-      dest = g_new (guchar, ((gsize) width) * height);
+      dest = g_new0 (guchar, allocation);
       load_sub_8 (fd, width, height, 1, 3, dest, bytesperline);
       gimp_palette_set_colormap (gimp_image_get_palette (image),
                                  babl_format ("R'G'B' u8"),
@@ -823,7 +826,7 @@ load_image (GimpProcedure  *procedure,
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 4)
     {
-      dest = g_new (guchar, ((gsize) width) * height);
+      dest = g_new0 (guchar, allocation);
       load_4 (fd, width, height, dest, bytesperline);
       gimp_palette_set_colormap (gimp_image_get_palette (image),
                                  babl_format ("R'G'B' u8"),
@@ -831,7 +834,7 @@ load_image (GimpProcedure  *procedure,
     }
   else if (pcx_header.bpp == 4 && pcx_header.planes == 1)
     {
-      dest = g_new (guchar, ((gsize) width) * height);
+      dest = g_new0 (guchar, allocation);
       load_sub_8 (fd, width, height, 4, 1, dest, bytesperline);
       gimp_palette_set_colormap (gimp_image_get_palette (image),
                                  babl_format ("R'G'B' u8"),
@@ -839,7 +842,7 @@ load_image (GimpProcedure  *procedure,
     }
   else if (pcx_header.bpp == 8 && pcx_header.planes == 1)
     {
-      dest = g_new (guchar, ((gsize) width) * height);
+      dest = g_new0 (guchar, allocation);
       load_8 (fd, width, height, dest, bytesperline);
       fseek (fd, -768L, SEEK_END);
       fread (cmap, 768, 1, fd);
@@ -849,14 +852,22 @@ load_image (GimpProcedure  *procedure,
     }
   else if (pcx_header.bpp == 8 && (pcx_header.planes == 3 || pcx_header.planes == 4))
     {
-      dest = g_new (guchar, ((gsize) width) * height * pcx_header.planes);
+      if (! g_size_checked_mul (&allocation, allocation, pcx_header.planes))
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("Image dimensions too large: width %d x height %d"),
+                       width, height);
+          g_object_unref (buffer);
+          return NULL;
+        }
+
+      dest = g_new0 (guchar, allocation);
       load_24 (fd, width, height, dest, bytesperline, pcx_header.planes);
     }
   else
     {
-      /* FIXME: flavour is British English, should be flavor. */
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                   _("Unusual PCX flavour, giving up"));
+                   _("Unusual PCX flavor, giving up"));
       g_object_unref (buffer);
       return NULL;
     }
