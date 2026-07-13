@@ -263,7 +263,7 @@ load_image (GFile        *file,
   y     = 0;
   while (y < header.Height && pixel < max_pixels)
     {
-      guint16 line_size/*, iline, line_bytes_used*/;
+      guint16 line_size;
       gint8   run_count, value;
       gint    i, x;
 
@@ -331,16 +331,22 @@ load_image (GFile        *file,
               if (repeat_val > highest_index)
                 highest_index = repeat_val;
 
+              if (pixel + value >= max_pixels)
+                {
+                  gimp_message (_("Invalid data: image may be corrupt."));
+                  pixel += value;
+                  break;
+                }
               memset (&pixels[pixel], repeat_val, value);
               pixel += value;
               x += value;
             }
           else /* if ((run_count & 0x80) == 0) */
             {
-              if (i + value >= line_size)
+              if (i + value >= line_size || pixel + value >= max_pixels)
                 {
                   gimp_message (_("Invalid data: image may be corrupt."));
-                  x += value;
+                  pixel += value;
                   break;
                 }
               for (gint j = 0; j < value; j ++)
