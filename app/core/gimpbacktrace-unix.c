@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpbacktrace-linux.c
+ * gimpbacktrace-unix.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@
 #include "gimpbacktrace-backend.h"
 
 
-#ifdef GIMP_BACKTRACE_BACKEND_LINUX
+#ifdef GIMP_BACKTRACE_BACKEND_UNIX
 
 
 #include <sys/types.h>
@@ -43,8 +43,12 @@
 #include <dlfcn.h>
 #include <string.h>
 #include <stdio.h>
+#ifdef __APPLE__
+#include <pthread.h>
+#include <mach/mach.h>
+#endif
 
-#ifdef HAVE_LIBBACKTRACE
+#if defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__)
 #include <backtrace.h>
 #endif
 
@@ -71,7 +75,11 @@ typedef struct _GimpBacktraceThread GimpBacktraceThread;
 
 struct _GimpBacktraceThread
 {
-  pid_t    tid;
+#if defined(__gnu_linux__)
+  pid_t     tid;
+#elif defined (__APPLE__)
+  pthread_t tid;
+#endif
   gchar    name[MAX_THREAD_NAME_SIZE];
   gchar    state;
 
@@ -92,6 +100,7 @@ static inline gint   gimp_backtrace_normalize_frame   (GimpBacktrace *backtrace,
                                                        gint           thread,
                                                        gint           frame);
 
+#if defined(__gnu_linux__)
 static gint          gimp_backtrace_enumerate_threads (gboolean       include_current_thread,
                                                        pid_t         *threads,
                                                        gint           size);
@@ -99,6 +108,15 @@ static void          gimp_backtrace_read_thread_name  (pid_t          tid,
                                                        gchar         *name,
                                                        gint           size);
 static gchar         gimp_backtrace_read_thread_state (pid_t          tid);
+#elif defined(__APPLE__)
+static gint          gimp_backtrace_enumerate_threads (gboolean       include_current_thread,
+                                                       pthread_t     *threads,
+                                                       gint           size);
+static void          gimp_backtrace_read_thread_name  (pthread_t      tid,
+                                                       gchar         *name,
+                                                       gint           size);
+static gchar         gimp_backtrace_read_thread_state (pthread_t      tid);
+#endif
 
 static void          gimp_backtrace_signal_handler    (gint           signum);
 
@@ -109,13 +127,17 @@ static GMutex            mutex;
 static gint              n_initializations;
 static gboolean          initialized;
 static struct sigaction  orig_action;
+#if defined(__gnu_linux__)
 static pid_t             blacklisted_threads[MAX_N_THREADS];
+#elif defined(__APPLE__)
+static pthread_t         blacklisted_threads[MAX_N_THREADS];
+#endif
 static gint              n_blacklisted_threads;
 static GimpBacktrace    *handler_backtrace;
 static gint              handler_n_remaining_threads;
 static gint              handler_lock;
 
-#ifdef HAVE_LIBBACKTRACE
+#if defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__)
 static struct backtrace_state *backtrace_state;
 #endif
 
@@ -142,31 +164,68 @@ gimp_backtrace_normalize_frame (GimpBacktrace *backtrace,
 
 static gint
 gimp_backtrace_enumerate_threads (gboolean  include_current_thread,
+#if defined(__gnu_linux__)
                                   pid_t    *threads,
+#elif defined(__APPLE__)
+                                  pthread_t *threads,
+#endif
                                   gint      size)
 {
+#if defined(__gnu_linux__)
   DIR           *dir;
   struct dirent *dirent;
   pid_t          tid;
+#elif defined(__APPLE__)
+  kern_return_t          dir;
+  thread_act_array_t     thread_list;
+  mach_msg_type_number_t thread_count;
+  mach_msg_type_number_t j;
+  pthread_t              tid;
+#endif
   gint           n_threads;
 
+#if defined(__gnu_linux__)
   dir = opendir ("/proc/self/task");
+#elif defined(__APPLE__)
+  dir = task_threads (mach_task_self (), &thread_list, &thread_count);
+#endif
 
+#if defined(__gnu_linux__)
   if (! dir)
+#elif defined(__APPLE__)
+  if (dir != KERN_SUCCESS)
+#endif
     return 0;
 
+#if defined(__gnu_linux__)
   tid = syscall (SYS_gettid);
+#elif defined(__APPLE__)
+  tid = pthread_self ();
+#endif
 
   n_threads = 0;
 
+#if defined(__gnu_linux__)
   while (n_threads < size && (dirent = readdir (dir)))
+#elif defined(__APPLE__)
+  for (j = 0; j < thread_count && n_threads < size; j++)
+#endif
     {
+#if defined(__gnu_linux__)
       pid_t id = g_ascii_strtoull (dirent->d_name, NULL, 10);
+#elif defined(__APPLE__)
+      pthread_t id = pthread_from_mach_thread_np (thread_list[j]);
+#endif
 
       if (id)
         {
+#if defined(__gnu_linux__)
           if (! include_current_thread && id == tid)
             id = 0;
+#elif defined(__APPLE__)
+          if (! include_current_thread && pthread_equal (id, tid))
+            id = NULL;
+#endif
         }
 
       if (id)
@@ -175,9 +234,17 @@ gimp_backtrace_enumerate_threads (gboolean  include_current_thread,
 
           for (i = 0; i < n_blacklisted_threads; i++)
             {
+#if defined(__gnu_linux__)
               if (id == blacklisted_threads[i])
+#elif defined(__APPLE__)
+              if (pthread_equal (id, blacklisted_threads[i]))
+#endif
                 {
+#if defined(__gnu_linux__)
                   id = 0;
+#elif defined(__APPLE__)
+                  id = NULL;
+#endif
 
                   break;
                 }
@@ -188,24 +255,41 @@ gimp_backtrace_enumerate_threads (gboolean  include_current_thread,
         threads[n_threads++] = id;
     }
 
-  closedir (dir);
+#if defined(__gnu_linux__)
+    closedir (dir);
+#elif defined(__APPLE__)
+  for (j = 0; j < thread_count; j++)
+    {
+      mach_port_deallocate (mach_task_self (), thread_list[j]);
+    }
+  vm_deallocate (mach_task_self (), (vm_address_t) thread_list, thread_count * sizeof (thread_t));
+#endif
 
   return n_threads;
 }
 
 static void
+#if defined(__gnu_linux__)
 gimp_backtrace_read_thread_name (pid_t  tid,
                                  gchar *name,
                                  gint   size)
+#elif defined(__APPLE__)
+gimp_backtrace_read_thread_name (pthread_t tid,
+                                 gchar    *name,
+                                 gint      size)
+#endif
 {
+#if defined(__gnu_linux__)
   gchar filename[64];
   gint  fd;
+#endif
 
   if (size <= 0)
     return;
 
   name[0] = '\0';
 
+#if defined(__gnu_linux__)
   g_snprintf (filename, sizeof (filename),
               "/proc/self/task/%llu/comm",
               (unsigned long long) tid);
@@ -221,21 +305,39 @@ gimp_backtrace_read_thread_name (pid_t  tid,
 
       close (fd);
     }
+#elif defined(__APPLE__)
+  pthread_getname_np (tid, name, size);
+#endif
 }
 
 static gchar
+#if defined(__gnu_linux__)
 gimp_backtrace_read_thread_state (pid_t tid)
+#elif defined(__APPLE__)
+gimp_backtrace_read_thread_state (pthread_t tid)
+#endif
 {
+#if defined(__gnu_linux__)
   gchar buffer[64];
   gint  fd;
+#elif defined(__APPLE__)
+  mach_port_t               fd;
+  thread_basic_info_data_t info;
+  mach_msg_type_number_t count = THREAD_BASIC_INFO_COUNT;
+#endif
   gchar state = '\0';
 
+#if defined(__gnu_linux__)
   g_snprintf (buffer, sizeof (buffer),
               "/proc/self/task/%llu/stat",
               (unsigned long long) tid);
 
   fd = open (buffer, O_RDONLY);
+#elif defined(__APPLE__)
+  fd = pthread_mach_thread_np (tid);
+#endif
 
+#if defined(__gnu_linux__)
   if (fd >= 0)
     {
       gint n = read (fd, buffer, sizeof (buffer));
@@ -247,6 +349,28 @@ gimp_backtrace_read_thread_state (pid_t tid)
 
       close (fd);
     }
+#elif defined(__APPLE__)
+  if (thread_info (fd, THREAD_BASIC_INFO,
+                   (thread_info_t) &info, &count) == KERN_SUCCESS)
+    {
+      switch (info.run_state)
+        {
+        case TH_STATE_RUNNING:
+          state = 'R';
+          break;
+        case TH_STATE_STOPPED:
+          state = 'T';
+          break;
+        case TH_STATE_WAITING:
+        case TH_STATE_UNINTERRUPTIBLE:
+          state = 'S';
+          break;
+        default:
+          state = '\0';
+          break;
+        }
+    }
+#endif
 
   return state;
 }
@@ -270,14 +394,22 @@ gimp_backtrace_signal_handler (gint signum)
 
   if (curr_backtrace)
     {
+#if defined(__gnu_linux__)
       pid_t tid = syscall (SYS_gettid);
+#elif defined(__APPLE__)
+      pthread_t tid = pthread_self ();
+#endif
       gint  i;
 
       for (i = 0; i < curr_backtrace->n_threads; i++)
         {
           GimpBacktraceThread *thread = &curr_backtrace->threads[i];
 
+#if defined(__gnu_linux__)
           if (thread->tid == tid)
+#elif defined(__APPLE__)
+          if (pthread_equal (thread->tid, tid))
+#endif
             {
               thread->n_frames = backtrace ((gpointer *) thread->frames,
                                             MAX_N_FRAMES);
@@ -299,7 +431,7 @@ gimp_backtrace_signal_handler (gint signum)
 void
 gimp_backtrace_init (void)
 {
-#ifdef HAVE_LIBBACKTRACE
+#if defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__)
   backtrace_state = backtrace_create_state (NULL, 0, NULL, NULL);
 #endif
 }
@@ -320,13 +452,21 @@ gimp_backtrace_start (void)
 
       if (sigaction (BACKTRACE_SIGNAL, &action, &orig_action) == 0)
         {
+#if defined(__gnu_linux__)
           pid_t *threads;
+#elif defined(__APPLE__)
+          pthread_t *threads;
+#endif
           gint   n_threads;
           gint   i;
 
           n_blacklisted_threads = 0;
 
+#if defined(__gnu_linux__)
           threads = g_new (pid_t, MAX_N_THREADS);
+#elif defined(__APPLE__)
+          threads = g_new (pthread_t, MAX_N_THREADS);
+#endif
 
           n_threads = gimp_backtrace_enumerate_threads (TRUE,
                                                         threads, MAX_N_THREADS);
@@ -385,8 +525,12 @@ GimpBacktrace *
 gimp_backtrace_new (gboolean include_current_thread)
 {
   GimpBacktrace *backtrace;
+#if defined(__gnu_linux__)
   pid_t          pid;
   pid_t         *threads;
+#elif defined(__APPLE__)
+  pthread_t     *threads;
+#endif
   gint           n_threads;
   gint64         start_time;
   gint           i;
@@ -394,9 +538,13 @@ gimp_backtrace_new (gboolean include_current_thread)
   if (! initialized)
     return NULL;
 
+#if defined(__gnu_linux__)
   pid = getpid ();
 
   threads = g_new (pid_t, MAX_N_THREADS);
+#elif defined(__APPLE__)
+  threads = g_new (pthread_t, MAX_N_THREADS);
+#endif
 
   n_threads = gimp_backtrace_enumerate_threads (include_current_thread,
                                                 threads, MAX_N_THREADS);
@@ -434,7 +582,11 @@ gimp_backtrace_new (gboolean include_current_thread)
 
       thread->state = gimp_backtrace_read_thread_state (thread->tid);
 
+#if defined(__gnu_linux__)
       syscall (SYS_tgkill, pid, threads[i], BACKTRACE_SIGNAL);
+#elif defined(__APPLE__)
+      pthread_kill (threads[i], BACKTRACE_SIGNAL);
+#endif
     }
 
   g_free (threads);
@@ -523,7 +675,11 @@ gimp_backtrace_get_thread_id (GimpBacktrace *backtrace,
   g_return_val_if_fail (backtrace != NULL, 0);
   g_return_val_if_fail (thread >= 0 && thread < backtrace->n_threads, 0);
 
+#if defined(__gnu_linux__)
   return backtrace->threads[thread].tid;
+#elif defined(__APPLE__)
+  return (guintptr) backtrace->threads[thread].tid;
+#endif
 }
 
 const gchar *
@@ -554,21 +710,35 @@ gimp_backtrace_find_thread_by_id (GimpBacktrace *backtrace,
                                   guintptr       thread_id,
                                   gint           thread_hint)
 {
+#if defined(__gnu_linux__)
   pid_t tid = thread_id;
+#elif defined(__APPLE__)
+  pthread_t tid = (pthread_t) thread_id;
+#endif
   gint  i;
 
   g_return_val_if_fail (backtrace != NULL, -1);
 
+#if defined(__gnu_linux__)
   if (thread_hint >= 0                    &&
       thread_hint <  backtrace->n_threads &&
       backtrace->threads[thread_hint].tid == tid)
+#elif defined(__APPLE__)
+  if (thread_hint >= 0                    &&
+      thread_hint <  backtrace->n_threads &&
+      pthread_equal (backtrace->threads[thread_hint].tid, tid))
+#endif
     {
       return thread_hint;
     }
 
   for (i = 0; i < backtrace->n_threads; i++)
     {
+#if defined(__gnu_linux__)
       if (backtrace->threads[i].tid == tid)
+#elif defined(__APPLE__)
+      if (pthread_equal (backtrace->threads[i].tid, tid))
+#endif
         return i;
     }
 
@@ -601,7 +771,7 @@ gimp_backtrace_get_frame_address (GimpBacktrace *backtrace,
   return backtrace->threads[thread].frames[frame];
 }
 
-#ifdef HAVE_LIBBACKTRACE
+#if defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__)
 static void
 gimp_backtrace_syminfo_callback (GimpBacktraceAddressInfo *info,
                                  guintptr                  pc,
@@ -632,7 +802,7 @@ gimp_backtrace_pcinfo_callback (GimpBacktraceAddressInfo *info,
 
   return 0;
 }
-#endif /* HAVE_LIBBACKTRACE */
+#endif /* defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__) */
 
 gboolean
 gimp_backtrace_get_address_info (guintptr                  address,
@@ -652,25 +822,25 @@ gimp_backtrace_get_address_info (guintptr                  address,
   info->source_line    = 0;
 
   if (dladdr ((gpointer) address, &dl_info))
-    {
-      if (dl_info.dli_fname)
-        {
-          g_strlcpy (info->object_name, dl_info.dli_fname,
-                     sizeof (info->object_name));
-        }
+  {
+    if (dl_info.dli_fname)
+      {
+        g_strlcpy (info->object_name, dl_info.dli_fname,
+                    sizeof (info->object_name));
+      }
 
-      if (dl_info.dli_sname)
-        {
-          g_strlcpy (info->symbol_name, dl_info.dli_sname,
-                     sizeof (info->symbol_name));
-        }
+    if (dl_info.dli_sname)
+      {
+        g_strlcpy (info->symbol_name, dl_info.dli_sname,
+                   sizeof (info->symbol_name));
+      }
 
-      info->symbol_address = (guintptr) dl_info.dli_saddr;
+    info->symbol_address = (guintptr) dl_info.dli_saddr;
 
-      result = TRUE;
-    }
+    result = TRUE;
+  }
 
-#ifdef HAVE_LIBBACKTRACE
+#if defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__)
   if (backtrace_state)
     {
       backtrace_syminfo (
@@ -687,7 +857,7 @@ gimp_backtrace_get_address_info (guintptr                  address,
 
       result = TRUE;
     }
-#endif /* HAVE_LIBBACKTRACE */
+#endif /* defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__) */
 
 #ifdef HAVE_LIBUNWIND
 /* we use libunwind to get the symbol name, when available, even if dladdr() or
@@ -700,26 +870,26 @@ gimp_backtrace_get_address_info (guintptr                  address,
 #if 0
   if (! info->symbol_name[0])
 #endif
-    {
-      unw_context_t context = {};
-      unw_cursor_t  cursor;
-      unw_word_t    offset;
+  {
+    unw_context_t context = {};
+    unw_cursor_t  cursor;
+    unw_word_t    offset;
 
       if (unw_init_local (&cursor, &context)         == 0 &&
           unw_set_reg (&cursor, UNW_REG_IP, address) == 0 &&
           unw_get_proc_name (&cursor,
                              info->symbol_name, sizeof (info->symbol_name),
                              &offset)                == 0)
-        {
-          info->symbol_address = address - offset;
+          {
+            info->symbol_address = address - offset;
 
-          result = TRUE;
-        }
-    }
+            result = TRUE;
+      }
+  }
 #endif /* HAVE_LIBUNWIND */
 
   return result;
 }
 
 
-#endif /* GIMP_BACKTRACE_BACKEND_LINUX */
+#endif /* GIMP_BACKTRACE_BACKEND_UNIX */
