@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-06 08:20+0000\n"
-"PO-Revision-Date: 2026-07-06 13:55+0200\n"
+"POT-Creation-Date: 2026-07-13 22:04+0000\n"
+"PO-Revision-Date: 2026-07-14 09:41+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -145,7 +145,7 @@ msgstr "Plug-in voorbeeld in Javascript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5193 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5191 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -604,8 +604,8 @@ msgstr "Rolgordijnen"
 #: plug-ins/common/file-drhalo.c:238 plug-ins/common/file-farbfeld.c:307
 #: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1229
 #: plug-ins/common/file-iff.c:431 plug-ins/common/file-jp2.c:1629
-#: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:727
-#: plug-ins/common/file-pcx.c:735 plug-ins/common/file-pcx.c:743
+#: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:729
+#: plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1083
 #: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:834 plug-ins/common/file-raw-data.c:1955
@@ -615,10 +615,10 @@ msgstr "Rolgordijnen"
 #: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:864
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
-#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
+#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:259
 #: plug-ins/file-psd/psd-image-res-load.c:1109
-#: plug-ins/file-psd/psd-load.c:4368 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:4366 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1239,7 +1239,7 @@ msgstr "CML-verkennerparameters opslaan"
 #: plug-ins/common/cml-explorer.c:2197 plug-ins/common/curve-bend.c:755
 #: plug-ins/common/file-dicom.c:1582 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:1280 plug-ins/common/file-mng.c:1630
-#: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
+#: plug-ins/common/file-pcx.c:1229 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1948 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:723
@@ -1997,9 +1997,9 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-cin/cineon-lib.c:90 plug-ins/file-cin/dpx-lib.c:131
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
-#: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:631
-#: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
+#: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:440
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:643
+#: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:711
 #: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711
 #: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
@@ -2465,16 +2465,17 @@ msgid "White level"
 msgstr "Witniveau"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
-#: plug-ins/common/file-mng.c:1121 plug-ins/common/file-pcx.c:719
-#: plug-ins/file-bmp/bmp-load.c:800 plug-ins/file-cin/cineon-lib.c:114
-#: plug-ins/file-cin/dpx-lib.c:185
+#: plug-ins/common/file-mng.c:1121 plug-ins/common/file-pcx.c:721
+#: plug-ins/common/file-pcx.c:858 plug-ins/file-bmp/bmp-load.c:800
+#: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
-#: plug-ins/file-psd/psd-load.c:4747 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-fits/fits.c:499 plug-ins/file-fits/fits.c:581
+#: plug-ins/file-psd/psd-load.c:4745 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -2610,7 +2611,7 @@ msgstr "EOF of fout tijdens lezen afbeeldings-header"
 #: plug-ins/common/file-xmc.c:646 plug-ins/common/file-xpm.c:360
 #: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
 #: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247
-#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:623
+#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:635
 #: plug-ins/file-ico/ico-load.c:703 plug-ins/file-ico/ico-load.c:848
 #: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:227
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
@@ -2682,14 +2683,14 @@ msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:943 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1822 plug-ins/common/file-jpegxl.c:1389
-#: plug-ins/common/file-pcx.c:1101 plug-ins/common/file-pix.c:636
+#: plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1940 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:715
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
-#: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:775
+#: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:775
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
 #: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2472
@@ -2941,7 +2942,7 @@ msgstr "%s wordt niet ondersteund door GIMP in combinatie met %d monsters per pi
 msgid "'%s' has a bpp of %d which GIMP cannot handle."
 msgstr "‘%s’ heeft een bpp van %d dat GIMP niet kan afhandelen."
 
-#: plug-ins/common/file-dicom.c:723 plug-ins/file-fits/fits.c:483
+#: plug-ins/common/file-dicom.c:723 plug-ins/file-fits/fits.c:484
 #, c-format
 msgid "'%s' has a larger image size (%d x %d) than GIMP can handle."
 msgstr "‘%s’ heeft een grotere afbeeldingsgrootte (%d x %d) dan GIMP kan afhandelen."
@@ -2961,7 +2962,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Kan afbeeldingen met alfakanaal niet opslaan."
 
 #: plug-ins/common/file-dicom.c:1566 plug-ins/common/file-ps.c:1367
-#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:673
+#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:674
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Kan niet werken met onbekende afbeeldingstypen."
@@ -2991,7 +2992,8 @@ msgstr "Ongeldige afmetingen: %d x %d"
 msgid "Error reading data. Image may be corrupt."
 msgstr "Fout bij het lezen van gegevens. Afbeelding kan beschadigd zijn."
 
-#: plug-ins/common/file-drhalo.c:320 plug-ins/common/file-drhalo.c:342
+#: plug-ins/common/file-drhalo.c:320 plug-ins/common/file-drhalo.c:336
+#: plug-ins/common/file-drhalo.c:348
 msgid "Invalid data: image may be corrupt."
 msgstr "Ongeldige gegevens: afbeelding zou corrupt kunnen zijn."
 
@@ -4524,7 +4526,7 @@ msgid "Load file in the Bohemia Interactive PAA file format"
 msgstr "Laad bestand in de bestandsindeling Bohemia Interactive PAA"
 
 #: plug-ins/common/file-paa.c:233 plug-ins/common/file-paa.c:270
-#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:647
+#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:648
 #: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
 #: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:363
 #: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
@@ -4661,67 +4663,72 @@ msgstr "Mixed-mode DCX afbeelding niet ingeladen"
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s: Kon niet alle DCX afbeeldingen inladen: %s\n"
 
-#: plug-ins/common/file-pcx.c:657
+#: plug-ins/common/file-pcx.c:658
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "‘%s’ is geen PCX-bestand"
 
-#: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
+#: plug-ins/common/file-pcx.c:674 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
 #: plug-ins/file-psd/psd-load.c:676
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingsbreedte: %d"
 
-#: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
+#: plug-ins/common/file-pcx.c:681 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
 #: plug-ins/file-psd/psd-load.c:668
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingshoogte: %d"
 
-#: plug-ins/common/file-pcx.c:690 plug-ins/common/file-pcx.c:859
+#: plug-ins/common/file-pcx.c:691
 #, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "Ongebruikelijke PCX-soort, ik geef op"
 
-#: plug-ins/common/file-pcx.c:703
+#: plug-ins/common/file-pcx.c:704
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Ongeldig aantal bytes per regel in PCX-kop"
 
-#: plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-pcx.c:711
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Resolutie-overloop in XCX-header, gebruik 72x72"
 
-#: plug-ins/common/file-pcx.c:884
+#: plug-ins/common/file-pcx.c:870
+#, c-format
+msgid "Unusual PCX flavor, giving up"
+msgstr "Ongebruikelijke PCX-soort, ik geef op"
+
+#: plug-ins/common/file-pcx.c:895
 msgid "Import from PCX"
 msgstr "Uit PCX importeren"
 
-#: plug-ins/common/file-pcx.c:1169 plug-ins/common/file-pnm.c:1628
+#: plug-ins/common/file-pcx.c:1180 plug-ins/common/file-pnm.c:1628
 msgid "Cannot export images with alpha channel."
 msgstr "Kan geen afbeeldingen met alfakanaal exporteren."
 
-#: plug-ins/common/file-pcx.c:1189
+#: plug-ins/common/file-pcx.c:1200
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Ongeldige X-verschuiving: %d"
 
-#: plug-ins/common/file-pcx.c:1195
+#: plug-ins/common/file-pcx.c:1206
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Ongeldige Y-verschuiving: %d"
 
-#: plug-ins/common/file-pcx.c:1201
+#: plug-ins/common/file-pcx.c:1212
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Rechterkant valt buiten grens (moet < %d zijn): %d"
 
-#: plug-ins/common/file-pcx.c:1208
+#: plug-ins/common/file-pcx.c:1219
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Onderkant valt buiten grens (moet < %d zijn): %d"
 
-#: plug-ins/common/file-pcx.c:1284 plug-ins/common/file-qoi.c:369
+#: plug-ins/common/file-pcx.c:1295 plug-ins/common/file-qoi.c:369
 #: plug-ins/common/file-svg.c:819 plug-ins/common/file-svg.c:835
 #, c-format
 msgid "Writing to file '%s' failed: %s"
@@ -9967,23 +9974,23 @@ msgid ""
 "FITS exporting handles all image types except those with alpha channels."
 msgstr "FITS export kan alle soorten afbeeldingen exporteren behalve die met alfakanalen."
 
-#: plug-ins/file-fits/fits.c:381
+#: plug-ins/file-fits/fits.c:382
 msgid "Error during opening of FITS file"
 msgstr "Fout bij openen FITS-bestand"
 
-#: plug-ins/file-fits/fits.c:394 plug-ins/file-fits/fits.c:632
+#: plug-ins/file-fits/fits.c:395 plug-ins/file-fits/fits.c:633
 msgid "FITS file keeps no displayable images"
 msgstr "FITS-bestand behoudt geen weer te geven afbeeldingen"
 
-#: plug-ins/file-fits/fits.c:515
+#: plug-ins/file-fits/fits.c:513
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:662
+#: plug-ins/file-fits/fits.c:663
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS kan geen beelden met alfakanalen exporteren"
 
-#: plug-ins/file-fits/fits.c:1030
+#: plug-ins/file-fits/fits.c:1031
 msgid "Open FITS File"
 msgstr "FITS-bestand openen"
 
@@ -10211,13 +10218,13 @@ msgid ""
 msgstr "Ongeldige grootte(n) laag. Geldige grootten voor lagen zijn alleen 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512 of 1024x1024."
 
 #  Do not rely on librsvg setting GError on failure!
-#: plug-ins/file-icns/file-icns-load.c:535
+#: plug-ins/file-icns/file-icns-load.c:547
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "Fout bij openen tijdelijk %s bestand ‘%s’ voor laden icns: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:676 plug-ins/file-ico/ico-load.c:1068
+#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-ico/ico-load.c:1068
 #: plug-ins/file-jpeg/jpeg-load.c:697 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:620
@@ -10621,7 +10628,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop ondersteunt geen geïndexeerde afbeeldingen die meer dan een laag hebben. Lagen zullen bij exporteren worden samengevoegd."
 
-#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5232
+#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5230
 msgid "Compatibility Notice"
 msgstr "Melding compatibiliteit"
 
@@ -10687,7 +10694,7 @@ msgid "Unsupported bit depth: %d"
 msgstr "Niet-ondersteunde bitdiepte: %d"
 
 #: plug-ins/file-psd/psd-load.c:771 plug-ins/file-psd/psd-load.c:781
-#: plug-ins/file-psd/psd-load.c:1020 plug-ins/file-psd/psd-load.c:1384
+#: plug-ins/file-psd/psd-load.c:1020 plug-ins/file-psd/psd-load.c:1382
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Het bestand is beschadigd!"
@@ -10738,61 +10745,61 @@ msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige grootte laagmasker: %dx%d"
 
 #: plug-ins/file-psd/psd-load.c:1294 plug-ins/file-psd/psd-load.c:1328
-#: plug-ins/file-psd/psd-load.c:1362 plug-ins/file-psd/psd-load.c:1399
+#: plug-ins/file-psd/psd-load.c:1360 plug-ins/file-psd/psd-load.c:1397
 #, c-format
 msgid "Invalid block size."
 msgstr "Ongeldige blokgrootte"
 
-#: plug-ins/file-psd/psd-load.c:1924 plug-ins/file-psd/psd-load.c:4739
+#: plug-ins/file-psd/psd-load.c:1922 plug-ins/file-psd/psd-load.c:4737
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ongeldige of niet-ondersteunde kanaalgrootte"
 
-#: plug-ins/file-psd/psd-load.c:2310
+#: plug-ins/file-psd/psd-load.c:2308
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Ongeldige dimensies kanaal %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2378 plug-ins/file-psd/psd-load.c:4337
+#: plug-ins/file-psd/psd-load.c:2376 plug-ins/file-psd/psd-load.c:4335
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Niet-ondersteunde compressiemethode: %d"
 
-#: plug-ins/file-psd/psd-load.c:3029 plug-ins/file-psd/psd-load.c:3729
+#: plug-ins/file-psd/psd-load.c:3027 plug-ins/file-psd/psd-load.c:3727
 msgid "Inner Shadow"
 msgstr "Binnenste schaduw"
 
-#: plug-ins/file-psd/psd-load.c:3030 plug-ins/file-psd/psd-load.c:3730
-#: plug-ins/file-psd/psd-load.c:3741 plug-ins/file-psd/psd-load.c:3757
+#: plug-ins/file-psd/psd-load.c:3028 plug-ins/file-psd/psd-load.c:3728
+#: plug-ins/file-psd/psd-load.c:3739 plug-ins/file-psd/psd-load.c:3755
 msgid "imported"
 msgstr "geïmporteerd"
 
-#: plug-ins/file-psd/psd-load.c:3740
+#: plug-ins/file-psd/psd-load.c:3738
 msgid "Outer Glow"
 msgstr "Buitenste gloed"
 
-#: plug-ins/file-psd/psd-load.c:3756
+#: plug-ins/file-psd/psd-load.c:3754
 msgid "Stroke"
 msgstr "Lijn"
 
-#: plug-ins/file-psd/psd-load.c:3760
+#: plug-ins/file-psd/psd-load.c:3758
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "Niet afgehandeld type Streek: verwacht onjuist renderen."
 
-#: plug-ins/file-psd/psd-load.c:4514
+#: plug-ins/file-psd/psd-load.c:4512
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:4816
+#: plug-ins/file-psd/psd-load.c:4814
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Kon gegevens niet decomprimeren"
 
-#: plug-ins/file-psd/psd-load.c:5209
+#: plug-ins/file-psd/psd-load.c:5207
 msgid "Duotone Import"
 msgstr "Duotone Import"
 
-#: plug-ins/file-psd/psd-load.c:5210
+#: plug-ins/file-psd/psd-load.c:5208
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10800,7 +10807,7 @@ msgid ""
 msgstr "Afbeelding zal worden geïmporteerd als Grijswaarden.\n"
 "Duotoon kleurruimte informatie is opgeslagen en kan bij exporteren opnieuw worden gebruikt."
 
-#: plug-ins/file-psd/psd-load.c:5233
+#: plug-ins/file-psd/psd-load.c:5231
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
