@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-08 19:29+0000\n"
-"PO-Revision-Date: 2026-07-11 16:18+0800\n"
+"POT-Creation-Date: 2026-07-13 22:04+0000\n"
+"PO-Revision-Date: 2026-07-15 07:58+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -606,8 +606,8 @@ msgstr "百叶窗"
 #: plug-ins/common/file-drhalo.c:238 plug-ins/common/file-farbfeld.c:307
 #: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1229
 #: plug-ins/common/file-iff.c:431 plug-ins/common/file-jp2.c:1629
-#: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:727
-#: plug-ins/common/file-pcx.c:735 plug-ins/common/file-pcx.c:743
+#: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:729
+#: plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1083
 #: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:834 plug-ins/common/file-raw-data.c:1955
@@ -1230,7 +1230,7 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/cml-explorer.c:2197 plug-ins/common/curve-bend.c:755
 #: plug-ins/common/file-dicom.c:1582 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:1280 plug-ins/common/file-mng.c:1630
-#: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
+#: plug-ins/common/file-pcx.c:1229 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1948 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:723
@@ -2452,9 +2452,9 @@ msgid "White level"
 msgstr "白色级别"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
-#: plug-ins/common/file-mng.c:1121 plug-ins/common/file-pcx.c:719
-#: plug-ins/file-bmp/bmp-load.c:800 plug-ins/file-cin/cineon-lib.c:114
-#: plug-ins/file-cin/dpx-lib.c:185
+#: plug-ins/common/file-mng.c:1121 plug-ins/common/file-pcx.c:721
+#: plug-ins/common/file-pcx.c:858 plug-ins/file-bmp/bmp-load.c:800
+#: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "图像尺寸过大：宽 %d x 高 %d"
@@ -2670,7 +2670,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:943 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1822 plug-ins/common/file-jpegxl.c:1389
-#: plug-ins/common/file-pcx.c:1101 plug-ins/common/file-pix.c:636
+#: plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:636
 #: plug-ins/common/file-png.c:1940 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
@@ -2983,7 +2983,8 @@ msgstr "无效的尺寸：%d x %d"
 msgid "Error reading data. Image may be corrupt."
 msgstr "读取数据时出错。图像可能已损坏。"
 
-#: plug-ins/common/file-drhalo.c:320 plug-ins/common/file-drhalo.c:342
+#: plug-ins/common/file-drhalo.c:320 plug-ins/common/file-drhalo.c:336
+#: plug-ins/common/file-drhalo.c:348
 msgid "Invalid data: image may be corrupt."
 msgstr "无效的数据：图像可能已损坏。"
 
@@ -4520,7 +4521,7 @@ msgid "Load file in the Bohemia Interactive PAA file format"
 msgstr "加载波希米亚互动 PAA 格式的文件"
 
 #: plug-ins/common/file-paa.c:233 plug-ins/common/file-paa.c:270
-#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:647
+#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:648
 #: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
 #: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:363
 #: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
@@ -4656,67 +4657,72 @@ msgstr "未加载混合模式 DCX 图像"
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s：无法加载所有 DCX 图像：%s\n"
 
-#: plug-ins/common/file-pcx.c:657
+#: plug-ins/common/file-pcx.c:658
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "“%s”不是 PCX 文件"
 
-#: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
+#: plug-ins/common/file-pcx.c:674 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
 #: plug-ins/file-psd/psd-load.c:676
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "不支持或无效的图像宽度：%d"
 
-#: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
+#: plug-ins/common/file-pcx.c:681 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
 #: plug-ins/file-psd/psd-load.c:668
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "不支持或无效的图像高度：%d"
 
-#: plug-ins/common/file-pcx.c:690 plug-ins/common/file-pcx.c:859
+#: plug-ins/common/file-pcx.c:691
 #, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "异常的 PCX 类型，放弃"
 
-#: plug-ins/common/file-pcx.c:703
+#: plug-ins/common/file-pcx.c:704
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "PCX 文件头中的无效的每行字节数"
 
-#: plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-pcx.c:711
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "XCX 文件头中的分辨率超出边界，将使用 72×72"
 
-#: plug-ins/common/file-pcx.c:884
+#: plug-ins/common/file-pcx.c:870
+#, c-format
+msgid "Unusual PCX flavor, giving up"
+msgstr "异常的 PCX 类型，放弃"
+
+#: plug-ins/common/file-pcx.c:895
 msgid "Import from PCX"
 msgstr "从 PCX 导入"
 
-#: plug-ins/common/file-pcx.c:1169 plug-ins/common/file-pnm.c:1628
+#: plug-ins/common/file-pcx.c:1180 plug-ins/common/file-pnm.c:1628
 msgid "Cannot export images with alpha channel."
 msgstr "无法导出带有透明通道的图像。"
 
-#: plug-ins/common/file-pcx.c:1189
+#: plug-ins/common/file-pcx.c:1200
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "无效的 X 偏移：%d"
 
-#: plug-ins/common/file-pcx.c:1195
+#: plug-ins/common/file-pcx.c:1206
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "无效的 Y 偏移：%d"
 
-#: plug-ins/common/file-pcx.c:1201
+#: plug-ins/common/file-pcx.c:1212
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "右边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1208
+#: plug-ins/common/file-pcx.c:1219
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "下边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1284 plug-ins/common/file-qoi.c:369
+#: plug-ins/common/file-pcx.c:1295 plug-ins/common/file-qoi.c:369
 #: plug-ins/common/file-svg.c:819 plug-ins/common/file-svg.c:835
 #, c-format
 msgid "Writing to file '%s' failed: %s"
