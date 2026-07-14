@@ -2180,6 +2180,10 @@ parse_text_loop (guint32      len,
 
   gboolean    in_array    = FALSE;
 
+#define COMMAND_SIZE 128 /* No idea what the real Photoshop maximum is. */
+  gchar       command[COMMAND_SIZE + 1];
+  gchar       simple_value[COMMAND_SIZE + 1];
+
   if (! JSON_NODE_HOLDS_OBJECT (*node))
     {
       g_critical ("Object node expected!");
@@ -2188,13 +2192,9 @@ parse_text_loop (guint32      len,
 
   desc_obj  = json_node_get_object (*node);
 
-#define COMMAND_SIZE 128 /* No idea what the real Photoshop maximum is. */
-
   while (data->bufpos < len)
     {
       gchar token;
-      gchar command[COMMAND_SIZE + 1];
-      gchar simple_value[COMMAND_SIZE + 1];
 
       token = buf[data->bufpos];
 
@@ -2340,7 +2340,6 @@ parse_text_loop (guint32      len,
               else if (data->cmdpos < COMMAND_SIZE)
                 {
                   command[data->cmdpos++] = token;
-                  g_print ("%c", token);
                 }
               else
                 {
@@ -2357,7 +2356,6 @@ parse_text_loop (guint32      len,
               if (data->val_pos < COMMAND_SIZE)
                 {
                   simple_value[data->val_pos++] = token;
-                  g_print ("%c", token);
                 }
               else
                 {

@@ -2107,26 +2107,34 @@ get_font_info_list (JsonNode *node,
           if (! json_reader_read_member (obj_reader2, "FauxBold"))
             return font_info;
 
-          font->bold = get_json_boolean (obj_reader2, "value", FALSE);
-          json_reader_end_member (obj_reader2);
+          if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
+            font->bold = TRUE;
+          g_object_unref (obj_reader2);
+          obj_reader2 = json_reader_new (node);
 
           if (! json_reader_read_member (obj_reader2, "FauxItalic"))
             return font_info;
 
-          font->italics = get_json_boolean (obj_reader2, "value", FALSE);
-          json_reader_end_member (obj_reader2);
+          if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
+            font->italics = TRUE;
+          g_object_unref (obj_reader2);
+          obj_reader2 = json_reader_new (node);
 
           if (! json_reader_read_member (obj_reader2, "Underline"))
             return font_info;
 
-          font->underline = get_json_boolean (obj_reader2, "value", FALSE);
-          json_reader_end_member (obj_reader2);
+          if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
+            font->underline = TRUE;
+          g_object_unref (obj_reader2);
+          obj_reader2 = json_reader_new (node);
 
           if (! json_reader_read_member (obj_reader2, "Strikethrough"))
             return font_info;
 
-          font->strikethrough = get_json_boolean (obj_reader2, "value", FALSE);
-          json_reader_end_member (obj_reader2);
+          if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
+            font->strikethrough = TRUE;
+          g_object_unref (obj_reader2);
+          obj_reader2 = json_reader_new (node);
 
            if (! json_reader_read_member (obj_reader2, "FillColor")  ||
                ! json_reader_read_member (obj_reader2, "descriptor") ||
