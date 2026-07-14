@@ -45,6 +45,17 @@ typedef struct
   gint32  last_index;  /* last layer that will be part of the clipping group */
 } ClippingInfo;
 
+typedef struct
+{
+  gchar    *font_name;
+  gdouble   font_size;
+  gboolean  bold;
+  gboolean  italics;
+  gdouble   fg_color[3];
+  gboolean  underline;
+  gboolean  strikethrough;
+  gdouble   baseline_shift;
+} FontInfo;
 
 /*  Local function prototypes  */
 static gint             read_header_block          (PSDimage       *img_a,
@@ -115,11 +126,29 @@ static gint             add_merged_image           (GimpImage      *image,
                                                     GError        **error);
 
 /*  Local descriptor function prototypes */
+static gboolean        get_json_boolean            (JsonReader     *reader,
+                                                    gchar          *key,
+                                                    gboolean        default_value);
 static const gchar *   get_json_string             (JsonReader     *reader,
                                                     gchar          *key,
                                                     const gchar    *default_value);
 static GeglColor *     get_json_color              (JsonReader     *reader,
                                                     const Babl     *space);
+
+/*  Local text function prototypes */
+static GList *         get_font_name_list          (JsonNode       *node,
+                                                    guint          *font_count);
+static GList *         get_font_info_list          (JsonNode       *node,
+                                                    GList          *font_names,
+                                                    guint          *font_count);
+static gint  *         get_font_sections_list      (JsonNode       *node,
+                                                    guint          *font_count);
+static GimpFont *      match_font                  (const gchar    *font_name);
+static void            create_text_markup          (GimpTextLayer  *layer,
+                                                    const gchar    *full_text,
+                                                    GList          *font_info,
+                                                    gint           *sections,
+                                                    guint           font_count);
 
 /*  Local utility function prototypes  */
 static void       check_duplicate_clipping_group   (PSDlayer      **lyr_a,
@@ -1970,6 +1999,359 @@ free_lyr_chn (PSDchannel **lyr_chn, gint channel_count)
     if (lyr_chn[cidx])
       g_free (lyr_chn[cidx]);
   g_free (lyr_chn);
+}
+
+static GList *
+get_font_name_list (JsonNode *node,
+                    guint    *font_count)
+{
+  GList      *font_names = NULL;
+  JsonReader *obj_reader = NULL;
+
+  obj_reader = json_reader_new (node);
+
+  if (! json_reader_read_member (obj_reader, "ResourceDict") ||
+      ! json_reader_read_member (obj_reader, "descriptor")   ||
+      ! json_reader_read_member (obj_reader, "FontSet")      ||
+      ! json_reader_read_member (obj_reader, "values"))
+    return NULL;
+
+  *font_count = json_reader_count_elements (obj_reader);
+  for (gint j = 0; j < *font_count; j++)
+    {
+      if (json_reader_read_element (obj_reader, j))
+        {
+          JsonReader  *obj_reader2;
+          const gchar *font;
+
+          obj_reader2 =
+            json_reader_new (json_reader_get_current_node (obj_reader));
+
+          if (! json_reader_read_member (obj_reader2, "Name"))
+            break;
+
+          font       = get_json_string (obj_reader2, "value", "");
+          font_names = g_list_append (font_names, g_strdup (font));
+
+          g_object_unref (obj_reader2);
+        }
+      json_reader_end_element (obj_reader);
+    }
+  g_object_unref (obj_reader);
+
+  return font_names;
+}
+
+static GList *
+get_font_info_list (JsonNode *node,
+                    GList    *font_names,
+                    guint    *font_count)
+{
+  GList      *font_info  = NULL;
+  JsonReader *obj_reader = NULL;
+
+  obj_reader = json_reader_new (node);
+
+  if (! json_reader_read_member (obj_reader, "EngineDict") ||
+      ! json_reader_read_member (obj_reader, "descriptor") ||
+      ! json_reader_read_member (obj_reader, "StyleRun")   ||
+      ! json_reader_read_member (obj_reader, "descriptor") ||
+      ! json_reader_read_member (obj_reader, "RunArray")   ||
+      ! json_reader_read_member (obj_reader, "values"))
+    return NULL;
+
+  *font_count = json_reader_count_elements (obj_reader);
+  for (gint i = 0; i < *font_count; i++)
+    {
+      if (json_reader_read_element (obj_reader, i))
+        {
+          JsonReader *obj_reader2;
+          JsonNode   *node;
+          FontInfo   *font;
+          GList      *iter    = NULL;
+          gdouble     font_no = 0;
+          gint        count   = 0;
+          gint        i       = 0;
+
+          font = g_new0 (FontInfo, 1);
+
+          obj_reader2 =
+            json_reader_new (json_reader_get_current_node (obj_reader));
+
+          if (! json_reader_read_member (obj_reader2, "StyleSheet")     ||
+              ! json_reader_read_member (obj_reader2, "descriptor")     ||
+              ! json_reader_read_member (obj_reader2, "StyleSheetData") ||
+              ! json_reader_read_member (obj_reader2, "descriptor"))
+            return font_info;
+
+          node = json_reader_get_current_node (obj_reader2);
+
+          /* Get properties */
+          if (! json_reader_read_member (obj_reader2, "Font"))
+            return font_info;
+
+          font_no = g_ascii_strtod (get_json_string (obj_reader2, "value", ""),
+                                    NULL);
+          g_object_unref (obj_reader2);
+          obj_reader2 = json_reader_new (node);
+
+          if (! json_reader_read_member (obj_reader2, "FontSize"))
+            return font_info;
+
+          font->font_size =
+            g_ascii_strtod (get_json_string (obj_reader2, "value", ""),
+                            NULL);
+          g_object_unref (obj_reader2);
+          obj_reader2 = json_reader_new (node);
+
+          if (! json_reader_read_member (obj_reader2, "FauxBold"))
+            return font_info;
+
+          font->bold = get_json_boolean (obj_reader2, "value", FALSE);
+          json_reader_end_member (obj_reader2);
+
+          if (! json_reader_read_member (obj_reader2, "FauxItalic"))
+            return font_info;
+
+          font->italics = get_json_boolean (obj_reader2, "value", FALSE);
+          json_reader_end_member (obj_reader2);
+
+          if (! json_reader_read_member (obj_reader2, "Underline"))
+            return font_info;
+
+          font->underline = get_json_boolean (obj_reader2, "value", FALSE);
+          json_reader_end_member (obj_reader2);
+
+          if (! json_reader_read_member (obj_reader2, "Strikethrough"))
+            return font_info;
+
+          font->strikethrough = get_json_boolean (obj_reader2, "value", FALSE);
+          json_reader_end_member (obj_reader2);
+
+           if (! json_reader_read_member (obj_reader2, "FillColor")  ||
+               ! json_reader_read_member (obj_reader2, "descriptor") ||
+               ! json_reader_read_member (obj_reader2, "Values")     ||
+               ! json_reader_read_member (obj_reader2, "values"))
+            return font_info;
+
+          count = json_reader_count_elements (obj_reader2);
+          for (gint j = 1; j < count; j++)
+            {
+              json_reader_read_element (obj_reader2, j);
+
+              font->fg_color[j - 1] =
+                g_ascii_strtod (json_reader_get_string_value (obj_reader2),
+                                NULL);
+
+              json_reader_end_element (obj_reader2);
+            }
+          json_reader_end_member (obj_reader2);
+          g_object_unref (obj_reader2);
+
+          /* Update font based on ID */
+          for (iter = font_names; iter; iter = g_list_next (iter))
+            {
+              if (i == (gint) font_no)
+                {
+                  font->font_name = iter->data;
+
+                  break;
+                }
+              i++;
+            }
+
+          font_info = g_list_append (font_info, font);
+        }
+      json_reader_end_element (obj_reader);
+    }
+  g_object_unref (obj_reader);
+
+  return font_info;
+}
+
+static gint *
+get_font_sections_list (JsonNode       *node,
+                        guint          *font_count)
+{
+  gint       *font_sections;
+  JsonReader *obj_reader    = NULL;
+
+  obj_reader = json_reader_new (node);
+
+  if (! json_reader_read_member (obj_reader, "EngineDict")     ||
+      ! json_reader_read_member (obj_reader, "descriptor")     ||
+      ! json_reader_read_member (obj_reader, "StyleRun")       ||
+      ! json_reader_read_member (obj_reader, "descriptor")     ||
+      ! json_reader_read_member (obj_reader, "RunLengthArray") ||
+      ! json_reader_read_member (obj_reader, "values"))
+    return NULL;
+
+  *font_count   = json_reader_count_elements (obj_reader);
+  font_sections = g_new0 (gint, *font_count);
+  for (gint j = 0; j < *font_count; j++)
+    {
+      gdouble index = 0;
+
+      json_reader_read_element (obj_reader, j);
+
+      index = g_ascii_strtod (json_reader_get_string_value (obj_reader),
+                              NULL);
+      font_sections[j] = (gint) index;
+
+      json_reader_end_element (obj_reader);
+    }
+  g_object_unref (obj_reader);
+
+  return font_sections;
+}
+
+static GimpFont *
+match_font (const gchar *font_name)
+{
+  GimpFont  *font  = NULL;
+  GimpFont **fonts;
+  gsize      count = 0;
+
+  if (! font_name)
+    return NULL;
+
+  fonts = gimp_fonts_get_list (font_name);
+  if (fonts)
+    {
+      PangoContext *context;
+      PangoFontMap *fontmap;
+
+      fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
+      context = pango_font_map_create_context (fontmap);
+
+      count = gimp_core_object_array_get_length ((GObject **) fonts);
+      for (gint i = 0; i < count; i++)
+        {
+          PangoFontDescription *font_desc;
+          PangoFontDescription *font_desc2;
+          PangoFont            *pango_font;
+
+          font_desc = gimp_font_get_pango_font_description (fonts[i]);
+
+          pango_font = pango_font_map_load_font (fontmap, context, font_desc);
+          font_desc2 = pango_font_describe (pango_font);
+
+          /* TODO: Make this check more fine-grain */
+          if (g_strcmp0 (font_name,
+                         pango_font_description_get_family (font_desc2)) == 0)
+            {
+              if (pango_font_description_get_weight (font_desc2) == PANGO_WEIGHT_NORMAL &&
+                  pango_font_description_get_style (font_desc2) == PANGO_STYLE_NORMAL)
+                font = fonts[i];
+            }
+          g_object_unref (pango_font);
+          pango_font_description_free (font_desc);
+          pango_font_description_free (font_desc2);
+
+          if (font != NULL)
+            break;
+        }
+      g_object_unref (context);
+      g_object_unref (fontmap);
+    }
+
+  g_free (fonts);
+
+  return font;
+}
+
+static void
+create_text_markup (GimpTextLayer *layer,
+                    const gchar   *full_text,
+                    GList         *font_info,
+                    gint          *sections,
+                    guint          font_count)
+{
+  GString  *markup = g_string_new ("");
+  GList    *list   = font_info;
+  FontInfo *first_font;
+  guint     start  = 0;
+  gdouble   original_font_size;
+  gdouble   original_fg_color[3];
+
+  if (font_info == NULL)
+    return;
+
+  first_font           = font_info->data;
+  original_font_size   = first_font->font_size;
+  original_fg_color[0] = first_font->fg_color[0];
+  original_fg_color[1] = first_font->fg_color[1];
+  original_fg_color[2] = first_font->fg_color[2];
+
+  for (gint i = 0; i < font_count; i++)
+    {
+      gint      end       = sections[i];
+      gchar    *text      = g_utf8_substring (full_text, start, (end  + start));
+      GString  *start_tag = g_string_new ("");
+      GString  *end_tag   = g_string_new ("");
+      FontInfo *font      = list->data;
+
+      if (font)
+        {
+          if (font->bold)
+            {
+              g_string_append (start_tag, "<b>");
+              g_string_prepend (end_tag, "</b>");
+            }
+
+          if (font->italics)
+            {
+              g_string_append (start_tag, "<i>");
+              g_string_prepend (end_tag, "</i>");
+            }
+
+          if (font->underline)
+            {
+              g_string_append (start_tag, "<u>");
+              g_string_prepend (end_tag, "</u>");
+            }
+
+          if (font->strikethrough)
+            {
+              g_string_append (start_tag, "<s>");
+              g_string_prepend (end_tag, "</s>");
+            }
+
+          if (font->font_size != original_font_size)
+            {
+              gint pango_size = ROUND (font->font_size) * 1024;
+
+              g_string_append_printf (start_tag, "<span size='%d'>",
+                                      pango_size);
+              g_string_prepend (end_tag, "</span>");
+            }
+
+          if (font->fg_color[0] != original_fg_color[0] ||
+              font->fg_color[1] != original_fg_color[1] ||
+              font->fg_color[2] != original_fg_color[2])
+            {
+              g_string_append_printf (start_tag,
+                                      "<span foreground='#%.2x%.2x%.2x'>",
+                                      (gint) (font->fg_color[0] * 255),
+                                      (gint) (font->fg_color[1] * 255),
+                                      (gint) (font->fg_color[2] * 255));
+              g_string_prepend (end_tag, "</span>");
+            }
+        }
+
+      g_string_append_printf (markup, "%s%s%s", start_tag->str, text,
+                              end_tag->str);
+      g_free (text);
+      start += end;
+
+      g_string_free (start_tag, TRUE);
+      g_string_free (end_tag, TRUE);
+
+      list = g_list_next (list);
+    }
+
+  gimp_text_layer_set_markup (layer, markup->str);
+  g_string_free (markup, TRUE);
 }
 
 static void
@@ -4014,13 +4396,15 @@ get_text_layer (GimpImage *image,
                 PSDlayer  *lyr_a,
                 PSDimage  *img_a)
 {
-  GimpLayer  *layer     = NULL;
-  GimpFont  **fonts     = NULL;
-  gchar      *text      = NULL;
-  gchar      *font_name = NULL;
-  gboolean    antialias = TRUE;
-  gdouble     font_size = 10;
-  GeglColor  *color     = gegl_color_new ("none");;
+  GimpLayer  *layer              = NULL;
+  GimpFont   *font               = NULL;
+  GList      *font_names         = NULL;
+  GList      *font_info          = NULL;
+  gint       *font_sections      = NULL;
+  guint       font_section_count = 0;
+
+  gchar      *text               = NULL;
+  gboolean    antialias          = TRUE;
 
   if (lyr_a->text.textdata)
     {
@@ -4059,8 +4443,9 @@ get_text_layer (GimpImage *image,
                     }
                   else if (json_string_equal (key, "EngineData"))
                     {
-                      JsonNode *engine_data = NULL;
-                      gint      inner_cnt   = 0;
+                      JsonNode *engine_data     = NULL;
+                      guint     font_count      = 0;
+                      guint     font_info_count = 0;
 
                       /* We need to go several levels down for relevant information */
                       if (! json_reader_read_member (obj_reader, "descriptor") ||
@@ -4072,108 +4457,18 @@ get_text_layer (GimpImage *image,
                        * text components */
                       engine_data = json_reader_get_current_node (obj_reader);
 
-                      if (! json_reader_read_member (obj_reader, "EngineDict") ||
-                          ! json_reader_read_member (obj_reader, "descriptor") ||
-                          ! json_reader_read_member (obj_reader, "StyleRun")   ||
-                          ! json_reader_read_member (obj_reader, "descriptor") ||
-                          ! json_reader_read_member (obj_reader, "RunArray")   ||
-                          ! json_reader_read_member (obj_reader, "values"))
-                        break;
+                      /* Load font names from ResourceDict */
+                      font_names = get_font_name_list (engine_data, &font_count);
 
-                      inner_cnt = json_reader_count_elements (obj_reader);
-                      for (gint j = 0; j < inner_cnt; j++)
-                        {
-                          if (json_reader_read_element (obj_reader, j))
-                            {
-                              JsonReader *obj_reader2;
-                              gint        color_cnt    = 0;
-                              gdouble     color_val[3] = { 0 };
+                      /* Now, load the font info sections */
+                      font_info = get_font_info_list (engine_data, font_names,
+                                                      &font_info_count);
 
-                              obj_reader2 =
-                                json_reader_new (json_reader_get_current_node (obj_reader));
+                      /* Finally, get sections themselves */
+                      font_sections =
+                        get_font_sections_list (engine_data,
+                                                &font_section_count);
 
-                              if (! json_reader_read_member (obj_reader2, "StyleSheet")     ||
-                                  ! json_reader_read_member (obj_reader2, "descriptor")     ||
-                                  ! json_reader_read_member (obj_reader2, "StyleSheetData") ||
-                                  ! json_reader_read_member (obj_reader2, "descriptor")     ||
-                                  ! json_reader_read_member (obj_reader2, "FontSize"))
-                                break;
-
-                              font_size =
-                                g_ascii_strtod (get_json_string (obj_reader2, "value", ""),
-                                                NULL);
-                              g_object_unref (obj_reader2);
-
-                              obj_reader2 =
-                                json_reader_new (json_reader_get_current_node (obj_reader));
-
-                              if (! json_reader_read_member (obj_reader2, "StyleSheet")     ||
-                                  ! json_reader_read_member (obj_reader2, "descriptor")     ||
-                                  ! json_reader_read_member (obj_reader2, "StyleSheetData") ||
-                                  ! json_reader_read_member (obj_reader2, "descriptor")     ||
-                                  ! json_reader_read_member (obj_reader2, "FillColor")      ||
-                                  ! json_reader_read_member (obj_reader2, "descriptor")     ||
-                                  ! json_reader_read_member (obj_reader2, "Values")         ||
-                                  ! json_reader_read_member (obj_reader2, "values"))
-                                break;
-
-                              color_cnt = json_reader_count_elements (obj_reader2);
-                              for (gint k = 1; k < color_cnt; k++)
-                                {
-                                  json_reader_read_element (obj_reader2, k);
-
-                                  color_val[k - 1] =
-                                    g_ascii_strtod (json_reader_get_string_value (obj_reader2),
-                                                    NULL);
-
-                                  json_reader_end_element (obj_reader2);
-                                }
-
-                              gegl_color_set_pixel (color,
-                                                    babl_format ("R'G'B' double"),
-                                                    color_val);
-
-                              json_reader_end_member (obj_reader2);
-                              g_object_unref (obj_reader2);
-
-                              /* TODO: Read in more segments */
-                              break;
-                            }
-                        }
-
-                      /* Get font information in ResourceDict */
-                      g_object_unref (obj_reader);
-                      obj_reader = json_reader_new (engine_data);
-
-                      if (! json_reader_read_member (obj_reader, "ResourceDict") ||
-                          ! json_reader_read_member (obj_reader, "descriptor")   ||
-                          ! json_reader_read_member (obj_reader, "FontSet")      ||
-                          ! json_reader_read_member (obj_reader, "values"))
-                        break;
-
-                      inner_cnt = json_reader_count_elements (obj_reader);
-                      for (gint j = 0; j < inner_cnt; j++)
-                        {
-                          if (json_reader_read_element (obj_reader, j))
-                            {
-                              JsonReader *obj_reader2;
-
-                              obj_reader2 =
-                                json_reader_new (json_reader_get_current_node (obj_reader));
-
-                              if (! json_reader_read_member (obj_reader, "Name"))
-                                break;
-
-                              font_name =
-                                g_strdup (get_json_string (obj_reader, "value", ""));
-
-                              g_object_unref (obj_reader2);
-                            }
-
-                          /* TODO: Read in more segments */
-                          break;
-                        }
-                      g_object_unref (obj_reader);
                     }
                 }
               json_reader_end_element (reader);
@@ -4186,22 +4481,39 @@ get_text_layer (GimpImage *image,
     {
       gimp_text_layer_set_text (GIMP_TEXT_LAYER (layer), text);
       gimp_text_layer_set_antialias (GIMP_TEXT_LAYER (layer), antialias);
-      gimp_text_layer_set_font_size (GIMP_TEXT_LAYER (layer), font_size,
-                                     gimp_unit_pixel ());
-      gimp_text_layer_set_color (GIMP_TEXT_LAYER (layer), color);
 
-      if (font_name)
+      if (font_info && font_info->data)
         {
-          fonts = gimp_fonts_get_list (font_name);
+          FontInfo  *font_props = font_info->data;
+          GeglColor *color      = gegl_color_new ("black");
 
-          if (fonts && fonts[0])
-            gimp_text_layer_set_font (GIMP_TEXT_LAYER (layer), fonts[0]);
+          gimp_text_layer_set_font_size (GIMP_TEXT_LAYER (layer),
+                                         font_props->font_size,
+                                         gimp_unit_pixel ());
 
-          g_free (fonts);
+          font = match_font ((const gchar *) font_props->font_name);
+          if (font)
+            gimp_text_layer_set_font (GIMP_TEXT_LAYER (layer), font);
+
+          gegl_color_set_pixel (color, babl_format ("R'G'B' double"),
+                                font_props->fg_color);
+
+          gimp_text_layer_set_color (GIMP_TEXT_LAYER (layer), color);
+
+          /* Create markup version */
+          create_text_markup (GIMP_TEXT_LAYER (layer),
+                              (const gchar *) text, font_info,
+                              font_sections, font_section_count);
+
+          g_clear_object (&color);
         }
     }
   g_free (text);
-  g_clear_object (&color);
+  if (font_names)
+    g_list_free (font_names);
+  if (font_info)
+    g_list_free (font_info);
+  g_free (font_sections);
 
   return layer;
 }
