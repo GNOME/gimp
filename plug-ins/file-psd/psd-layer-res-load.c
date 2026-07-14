@@ -509,12 +509,6 @@ load_layer_resource (PSDlayerres   *res_a,
   else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
            || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
     {
-      if (lyr_a)
-        {
-          lyr_a->unsupported_features->text_layer = TRUE;
-          lyr_a->unsupported_features->show_gui   = TRUE;
-        }
-
       load_resource_ltyp (res_a, lyr_a, input, error);
     }
 

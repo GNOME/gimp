@@ -2263,6 +2263,11 @@ match_font (const gchar *font_name)
       g_object_unref (fontmap);
     }
 
+  /* Fallback - if there's no direct match, use the first one returned
+   * from the search */
+  if (! font && fonts)
+    font = fonts[0];
+
   g_free (fonts);
 
   return font;
@@ -2347,7 +2352,8 @@ create_text_markup (GimpTextLayer *layer,
             }
         }
 
-      g_string_append_printf (markup, "%s%s%s", start_tag->str, text,
+      g_string_append_printf (markup, "%s%s%s", start_tag->str,
+                              g_markup_escape_text (text, -1),
                               end_tag->str);
       g_free (text);
       start += end;
