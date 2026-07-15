@@ -493,13 +493,13 @@ ico_read_icon (FILE    *fp,
 
   if (data.bpp <= 8)
     {
-      if (data.used_clrs == 0)
+      if (data.used_clrs == 0 || data.used_clrs > (1 << data.bpp))
         data.used_clrs = (1 << data.bpp);
 
       D(("  allocating a %i-slot palette for %i bpp.\n",
          data.used_clrs, data.bpp));
 
-      palette = g_new0 (guint32, data.used_clrs);
+      palette = g_new0 (guint32, (1 << data.bpp));
       if (ico_read_int8 (fp,
                          (guint8 *) palette,
                          data.used_clrs * 4) != (data.used_clrs * 4))
@@ -507,7 +507,6 @@ ico_read_icon (FILE    *fp,
           D(("skipping image: too large\n"));
           return FALSE;
         }
-
     }
 
   xor_map = ico_alloc_map (w, h, data.bpp, &length);
