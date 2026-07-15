@@ -693,12 +693,26 @@ export_image (GFile                *file,
       gimp_image_convert_indexed (image,
                                   GIMP_CONVERT_DITHER_FS,
                                   GIMP_CONVERT_PALETTE_GENERATE,
-                                  256, TRUE, FALSE, "dummy");
+                                  (type == PSX_8BPP) ? 256 : 16,
+                                  TRUE, FALSE, "dummy");
     }
 
   buffer = gimp_drawable_get_buffer (drawable);
   width  = (guint16) gegl_buffer_get_width (buffer);
   height = (guint16) gegl_buffer_get_height (buffer);
+
+  /* Depending on the export option, the width and height must be
+   * a multiple of either 2 or 4. So, we'll cut off excess edges. */
+  if (type == PSX_4BPP)
+    {
+      width  -= (width % 4);
+      height -= (height % 4);
+    }
+  else if (type == PSX_8BPP)
+    {
+      width  -= (width % 2);
+      height -= (height % 2);
+    }
 
   if (gegl_buffer_get_width (buffer) > G_MAXUSHORT ||
       gegl_buffer_get_height (buffer) > G_MAXUSHORT)
@@ -744,7 +758,7 @@ export_image (GFile                *file,
         fputc (0, fp);
 
       if (type == PSX_24BPP)
-        export_width *= 1.5;
+        export_width = ROUND (export_width * 1.5f);
 
       fwrite (&origin_x, 2, 1, fp);
       fwrite (&origin_y, 2, 1, fp);
