@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-13 19:28+0000\n"
-"PO-Revision-Date: 2026-07-13 23:02+0200\n"
+"POT-Creation-Date: 2026-07-15 05:08+0000\n"
+"PO-Revision-Date: 2026-07-15 15:03+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1242,7 +1242,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/file-pcx.c:1229 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1948 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:723
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:737
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
 #: plug-ins/file-icns/file-icns-export.c:442
@@ -2709,7 +2709,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-png.c:1940 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:715
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:729
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:775
@@ -2766,42 +2766,53 @@ msgid "Use GLib types"
 msgstr "Uporabi vrste GLib"
 
 #: plug-ins/common/file-csource.c:177
+msgid "Escape tri_graphs"
+msgstr "Tri_grafi z ubežnico"
+
+#: plug-ins/common/file-csource.c:178
+msgid ""
+"Add '\\' in-between ?? sequences to escape trigraphs for C23 compatible code"
+msgstr ""
+"Med zaporedji ?? v trigrafe vstavi znak '\\' v kodi, združljivi s standardom "
+"C23"
+
+#: plug-ins/common/file-csource.c:185
 msgid "Save alpha channel (RG_BA/RGB)"
 msgstr "Shrani kanal alfa (RG_BA/RGB)"
 
-#: plug-ins/common/file-csource.c:178
+#: plug-ins/common/file-csource.c:186
 msgid "Save the alpha channel"
 msgstr "Shrani kanal alfa"
 
-#: plug-ins/common/file-csource.c:183
+#: plug-ins/common/file-csource.c:191
 msgid "Save as RGB565 (1_6-bit)"
 msgstr "Shrani kot RGB565 (1_6-bitno)"
 
-#: plug-ins/common/file-csource.c:184
+#: plug-ins/common/file-csource.c:192
 msgid "Use RGB565 encoding"
 msgstr "Uporabi kodiranje RGB565"
 
-#: plug-ins/common/file-csource.c:189
+#: plug-ins/common/file-csource.c:197
 msgid "_Use macros instead of struct"
 msgstr "_Uporabi makre namesto struct"
 
-#: plug-ins/common/file-csource.c:190
+#: plug-ins/common/file-csource.c:198
 msgid "Use C macros"
 msgstr "Uporabi makre C"
 
-#: plug-ins/common/file-csource.c:195
+#: plug-ins/common/file-csource.c:203
 msgid "Use _1 bit Run-Length-Encoding"
 msgstr "Uporabi _1-bitno kodiranje tekoče dolžine (RLE)"
 
-#: plug-ins/common/file-csource.c:196
+#: plug-ins/common/file-csource.c:204
 msgid "Use run-length-encoding"
 msgstr "Uporabi kodiranje tekoče dolžine (RLE)"
 
-#: plug-ins/common/file-csource.c:201 plug-ins/pagecurl/pagecurl.c:262
+#: plug-ins/common/file-csource.c:209 plug-ins/pagecurl/pagecurl.c:262
 msgid "Opaci_ty"
 msgstr "Pre_krivnost"
 
-#: plug-ins/common/file-csource.c:202 plug-ins/pagecurl/pagecurl.c:263
+#: plug-ins/common/file-csource.c:210 plug-ins/pagecurl/pagecurl.c:263
 msgid "Opacity"
 msgstr "Prekrivnost"
 
@@ -3023,7 +3034,8 @@ msgstr "Neveljavne mere: %d x %d"
 msgid "Error reading data. Image may be corrupt."
 msgstr "Branje podatkov je spodletelo. Slika je morda okvarjena."
 
-#: plug-ins/common/file-drhalo.c:320 plug-ins/common/file-drhalo.c:342
+#: plug-ins/common/file-drhalo.c:320 plug-ins/common/file-drhalo.c:336
+#: plug-ins/common/file-drhalo.c:348
 msgid "Invalid data: image may be corrupt."
 msgstr "Neveljavni podatki: slika je lahko poškodovana."
 
@@ -6896,7 +6908,7 @@ msgstr "Nepodprta vrsta slike TIM: %d"
 msgid "Could not read palette from '%s'"
 msgstr "Ni bilo mogoče prebrati palete iz »%s«"
 
-#: plug-ins/common/file-tim.c:707
+#: plug-ins/common/file-tim.c:721
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
@@ -6905,11 +6917,11 @@ msgstr ""
 "Shranjevanje »%s« ni uspelo.  Vrsta datotek TIM ne podpira slik, ki so "
 "daljše ali širše od %d slikovnih točk."
 
-#: plug-ins/common/file-tim.c:925
+#: plug-ins/common/file-tim.c:939
 msgid "Image Origin"
 msgstr "Izvor slike"
 
-#: plug-ins/common/file-tim.c:940
+#: plug-ins/common/file-tim.c:954
 msgid "Palette Origin"
 msgstr "Izvor palete"
 
