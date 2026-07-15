@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-13 22:04+0000\n"
-"PO-Revision-Date: 2026-07-14 21:49+0300\n"
+"POT-Creation-Date: 2026-07-15 15:18+0000\n"
+"PO-Revision-Date: 2026-07-15 18:29+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1242,7 +1242,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-pcx.c:1229 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1948 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:723
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:737
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
 #: plug-ins/file-icns/file-icns-export.c:442
@@ -2712,11 +2712,11 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:943 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1822 plug-ins/common/file-jpegxl.c:1389
-#: plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:636
+#: plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:649
 #: plug-ins/common/file-png.c:1940 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:715
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:729
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:775
@@ -2773,42 +2773,53 @@ msgid "Use GLib types"
 msgstr "Використовувати типи GLib"
 
 #: plug-ins/common/file-csource.c:177
+msgid "Escape tri_graphs"
+msgstr "Екранувати три_графи"
+
+#: plug-ins/common/file-csource.c:178
+msgid ""
+"Add '\\' in-between ?? sequences to escape trigraphs for C23 compatible code"
+msgstr ""
+"Додавати «\\» між послідовностями ?? для екранування триграфів для сумісності "
+"з кодом C23"
+
+#: plug-ins/common/file-csource.c:185
 msgid "Save alpha channel (RG_BA/RGB)"
 msgstr "Зберегти а_льфа-канал (RGBA/RGB)"
 
-#: plug-ins/common/file-csource.c:178
+#: plug-ins/common/file-csource.c:186
 msgid "Save the alpha channel"
 msgstr "Зберегти альфа-канал"
 
-#: plug-ins/common/file-csource.c:183
+#: plug-ins/common/file-csource.c:191
 msgid "Save as RGB565 (1_6-bit)"
 msgstr "Зберегти як RGB565 (1_6 біт)"
 
-#: plug-ins/common/file-csource.c:184
+#: plug-ins/common/file-csource.c:192
 msgid "Use RGB565 encoding"
 msgstr "Використовувати кодування RGB565"
 
-#: plug-ins/common/file-csource.c:189
+#: plug-ins/common/file-csource.c:197
 msgid "_Use macros instead of struct"
 msgstr "Ви_користовувати макроси замість структур"
 
-#: plug-ins/common/file-csource.c:190
+#: plug-ins/common/file-csource.c:198
 msgid "Use C macros"
 msgstr "Використати макрос C"
 
-#: plug-ins/common/file-csource.c:195
+#: plug-ins/common/file-csource.c:203
 msgid "Use _1 bit Run-Length-Encoding"
 msgstr "Використовувати _1-бітове RLE"
 
-#: plug-ins/common/file-csource.c:196
+#: plug-ins/common/file-csource.c:204
 msgid "Use run-length-encoding"
 msgstr "Використовувати RLE"
 
-#: plug-ins/common/file-csource.c:201 plug-ins/pagecurl/pagecurl.c:262
+#: plug-ins/common/file-csource.c:209 plug-ins/pagecurl/pagecurl.c:262
 msgid "Opaci_ty"
 msgstr "Неп_розорість"
 
-#: plug-ins/common/file-csource.c:202 plug-ins/pagecurl/pagecurl.c:263
+#: plug-ins/common/file-csource.c:210 plug-ins/pagecurl/pagecurl.c:263
 msgid "Opacity"
 msgstr "Непрозорість"
 
@@ -4434,7 +4445,8 @@ msgstr ""
 #: plug-ins/common/file-seattle-filmworks.c:399
 #: plug-ins/common/file-seattle-filmworks.c:411
 #: plug-ins/common/file-seattle-filmworks.c:422
-#: plug-ins/common/file-seattle-filmworks.c:559
+#: plug-ins/common/file-seattle-filmworks.c:562
+#: plug-ins/common/file-seattle-filmworks.c:570
 #, c-format
 msgid "Invalid file."
 msgstr "Неправильний файл."
@@ -4808,7 +4820,6 @@ msgstr "Роздільність виходить за межі заголовк
 
 #: plug-ins/common/file-pcx.c:870
 #, c-format
-#| msgid "Unusual PCX flavour, giving up"
 msgid "Unusual PCX flavor, giving up"
 msgstr "Незвичний варіант PCX. Вихід"
 
@@ -5126,7 +5137,7 @@ msgstr ""
 "Помилка при відкриванні тимчасового файла JPEG «%s» для завантаження PIX Esm "
 "Software: %s"
 
-#: plug-ins/common/file-pix.c:582
+#: plug-ins/common/file-pix.c:594
 #, c-format
 msgid "Invalid Esm Software PIX file"
 msgstr "Некоректний файл PIX Esm Software"
@@ -6547,7 +6558,7 @@ msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "Підтримки формату SFW94A без стискання ще не передбачено."
 
 #: plug-ins/common/file-seattle-filmworks.c:458
-#: plug-ins/common/file-seattle-filmworks.c:574
+#: plug-ins/common/file-seattle-filmworks.c:586
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "Не вдалося перетворити зображення SFW."
@@ -6965,7 +6976,7 @@ msgstr "Непідтримуваний тип зображення TIM: %d"
 msgid "Could not read palette from '%s'"
 msgstr "Не вдалося прочитати палітру з «%s»"
 
-#: plug-ins/common/file-tim.c:707
+#: plug-ins/common/file-tim.c:721
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
@@ -6974,11 +6985,11 @@ msgstr ""
 "Не вдається експортувати «%s». У файлі формату TIM не передбачено підтримки "
 "зображень шириною чи висотою більше, ніж %d точок."
 
-#: plug-ins/common/file-tim.c:925
+#: plug-ins/common/file-tim.c:939
 msgid "Image Origin"
 msgstr "Центр зображення"
 
-#: plug-ins/common/file-tim.c:940
+#: plug-ins/common/file-tim.c:954
 msgid "Palette Origin"
 msgstr "Центр палітри"
 
