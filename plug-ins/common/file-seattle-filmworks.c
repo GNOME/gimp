@@ -532,16 +532,27 @@ load_sfw93a (FILE    *fp,
   GimpImage      *image       = NULL;
   GFile          *temp_file   = NULL;
   FILE           *temp_fp;
-  guchar          data[file_size - 30];
+  gsize           data_size   = file_size - 30;
+  guchar         *data        = NULL;
 
-  if (fseek (fp, 30, SEEK_SET) < 0 ||
-      fread (&data, file_size - 30, 1, fp) != 1)
+  if (data_size > 0)
+    data = g_try_malloc0 (data_size);
+
+  if (data == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Invalid file."));
       return NULL;
     }
 
+  if (fseek (fp, 30, SEEK_SET) < 0 ||
+      fread (data, data_size, 1, fp) != 1)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Invalid file."));
+      g_free (data);
+      return NULL;
+    }
   fclose (fp);
 
   temp_file = gimp_temp_file ("jpeg");
@@ -551,13 +562,15 @@ load_sfw93a (FILE    *fp,
     {
       g_file_delete (temp_file, NULL, NULL);
       g_object_unref (temp_file);
+      g_free (data);
 
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Unable to convert SFW image."));
       return NULL;
     }
 
-  fwrite (data, sizeof (guchar), file_size - 30, temp_fp);
+  fwrite (data, sizeof (guchar), data_size, temp_fp);
+  g_free (data);
   fclose (temp_fp);
 
   procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-jpeg-load");
