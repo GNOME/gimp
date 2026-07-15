@@ -319,7 +319,7 @@ sgiOpenFile(FILE *file, /* I - File to open */
 
         sgip->comp = getc (sgip->file);
         sgip->bpp  = getc (sgip->file);
-        if (sgip->bpp > 2)
+        if (sgip->bpp > 2 || sgip->bpp < 1)
           {
             free (sgip);
             return (NULL);
@@ -339,33 +339,34 @@ sgiOpenFile(FILE *file, /* I - File to open */
           }
 
         if (sgip->comp)
-        {
-         /*
-          * This file is compressed; read the scanline tables...
-          */
+          {
+           /*
+            * This file is compressed; read the scanline tables...
+            */
 
-          fseek(sgip->file, 512, SEEK_SET);
+            fseek(sgip->file, 512, SEEK_SET);
 
-          sgip->table = calloc (sgip->zsize, sizeof (goffset *));
-          if (sgip->table == NULL)
-            {
-              free(sgip);
-              return (NULL);
-            }
-          sgip->table[0] = g_try_malloc ((gsize) sgip->ysize * sgip->zsize * sizeof (goffset));
-          if (sgip->table[0] == NULL)
-            {
-              free(sgip->table);
-              free(sgip);
-              return (NULL);
-            }
-          for (i = 1; i < sgip->zsize; i ++)
-            sgip->table[i] = sgip->table[0] + i * sgip->ysize;
+            sgip->table = calloc (sgip->zsize, sizeof (goffset *));
+            if (sgip->table == NULL)
+              {
+                free(sgip);
+                return (NULL);
+              }
+            sgip->table[0] = g_try_malloc ((gsize) sgip->ysize * sgip->zsize *
+                                           sizeof (goffset));
+            if (sgip->table[0] == NULL)
+              {
+                free(sgip->table);
+                free(sgip);
+                return (NULL);
+              }
+            for (i = 1; i < sgip->zsize; i ++)
+              sgip->table[i] = sgip->table[0] + i * sgip->ysize;
 
-          for (i = 0; i < sgip->zsize; i ++)
-            for (j = 0; j < sgip->ysize; j ++)
-              sgip->table[i][j] = getint32 (sgip);
-        };
+            for (i = 0; i < sgip->zsize; i ++)
+              for (j = 0; j < sgip->ysize; j ++)
+                sgip->table[i][j] = getint32 (sgip);
+          };
         break;
 
     case SGI_WRITE :
@@ -389,16 +390,16 @@ sgiOpenFile(FILE *file, /* I - File to open */
         putshort(sgip->ysize = ysize, sgip);
         putshort(sgip->zsize = zsize, sgip);
         if (bpp == 1)
-        {
-          putint32 (0, sgip);     /* Minimum pixel */
-          putint32 (255, sgip);   /* Maximum pixel */
-        }
+          {
+            putint32 (0, sgip);      /* Minimum pixel */
+            putint32 (255, sgip);    /* Maximum pixel */
+          }
         else
-        {
-          putint32 (-32768, sgip);        /* Minimum pixel */
-          putint32 (32767, sgip); /* Maximum pixel */
-        };
-        putint32 (0, sgip);               /* Reserved */
+          {
+            putint32 (-32768, sgip); /* Minimum pixel */
+            putint32 (32767, sgip);  /* Maximum pixel */
+          };
+        putint32 (0, sgip);          /* Reserved */
 
         memset(name, 0, sizeof(name));
         fwrite(name, sizeof(name), 1, sgip->file);
