@@ -19,30 +19,30 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* Assistance with additional PVR formats provided by VincentNL and his PyPVR tool,
- * at https://github.com/VincentNLOBJ/PyPVR
+/*   Assistance with additional PVR formats provided by VincentNL and his
+ *   PyPVR tool at https://github.com/VincentNLOBJ/PyPVR
  *
- * MIT License
+ *   MIT License
  *
- * Copyright (c) 2024 VincentNL
+ *   Copyright (c) 2024 VincentNL
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ *   The above copyright notice and this permission notice shall be included in all
+ *   copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *   SOFTWARE.
  */
 
 #include "config.h"
@@ -166,6 +166,7 @@ static gboolean         pvr_decode_compressed (GimpLayer             *layer,
                                                gint                   mipmap_offset,
                                                guchar                *code_data,
                                                guchar                *data,
+                                               guint32                data_size,
                                                GError               **error);
 
 G_DEFINE_TYPE (Pvr, pvr, GIMP_TYPE_PLUG_IN)
@@ -525,11 +526,13 @@ load_image (GFile        *file,
       for (gint i = 0; i < 8; i++)
         {
           guchar *data;
+          guint32 data_size;
           gint    temp_size   = header_file_size;
           gint    mipmap_size = 0x10 << (i * 2);
           gchar  *layer_name  = NULL;
 
-          data = g_try_malloc (header_file_size - mipmap_offset);
+          data_size = header_file_size - mipmap_offset;
+          data      = g_try_malloc (data_size);
           if (data == NULL)
             {
               g_set_error (error, G_FILE_ERROR,
@@ -574,7 +577,8 @@ load_image (GFile        *file,
 
           if (! pvr_decode_compressed (layer, pixel_mode, mipmap_width,
                                        mipmap_height, n_components,
-                                       mipmap_offset, code_data, data, error))
+                                       mipmap_offset, code_data, data,
+                                       data_size, error))
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Unable to decode compressed PVR texture"));
@@ -826,6 +830,7 @@ pvr_decode_compressed (GimpLayer  *layer,
                        gint        mipmap_offset,
                        guchar     *code_data,
                        guchar     *data,
+                       guint32     data_size,
                        GError    **error)
 {
   gint        code_data_size = 256 * 2 * 4;
@@ -868,6 +873,14 @@ pvr_decode_compressed (GimpLayer  *layer,
           gint twiddle_index = (((twiddle[x] << 1) | twiddle[y]));
           gint p;
           gint code_offset;
+
+          if (twiddle_index >= data_size)
+            {
+              g_object_unref (buffer);
+              g_free (pixels);
+
+              return FALSE;
+            }
 
           p = data[twiddle_index];
 
