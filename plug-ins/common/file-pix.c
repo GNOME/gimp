@@ -554,7 +554,7 @@ load_esm_image (GInputStream  *input,
 
   /* Esm Software PIX format is just a JPEG with an extra 21 byte header */
   temp_file = gimp_temp_file ("jpeg");
-  fp = g_fopen (g_file_peek_path (temp_file), "wb");
+  fp        = g_fopen (g_file_peek_path (temp_file), "wb");
 
   if (! fp)
     {
@@ -571,19 +571,32 @@ load_esm_image (GInputStream  *input,
     {
       GimpProcedure  *procedure;
       GimpValueArray *return_vals;
-      guchar          buffer[file_size - 21];
+      guchar         *buffer;
+      
+      buffer = g_try_malloc0 (file_size - 21);
+      if (! buffer)
+        {
+          g_set_error (error, G_FILE_ERROR, 0,
+                       "Memory could not be allocated.");
+          
+          fclose (fp);
+          return NULL;
+        }
 
-      if (! g_input_stream_read_all (input, buffer, sizeof (buffer),
+      if (! g_input_stream_read_all (input, buffer, (file_size - 21),
                                      NULL, NULL, error))
         {
           g_file_delete (temp_file, NULL, NULL);
           g_object_unref (temp_file);
 
+          g_free (buffer);
+          fclose (fp);
           g_printerr (_("Invalid Esm Software PIX file"));
           return NULL;
         }
 
       fwrite (buffer, sizeof (guchar), file_size, fp);
+      g_free (buffer);
       fclose (fp);
 
       procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (), "file-jpeg-load");
