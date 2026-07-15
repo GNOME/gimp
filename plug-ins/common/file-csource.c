@@ -173,6 +173,14 @@ csource_create_procedure (GimpPlugIn  *plug_in,
                                                TRUE,
                                                GIMP_PARAM_READWRITE);
 
+      gimp_procedure_add_boolean_aux_argument (procedure, "escape-trigraphs",
+                                               _("Escape tri_graphs"),
+                                               _("Add '\\' in-between ?? "
+                                                 "sequences to escape trigraphs "
+                                                 "for C23 compatible code"),
+                                               TRUE,
+                                               GIMP_PARAM_READWRITE);
+
       gimp_procedure_add_boolean_aux_argument (procedure, "save-alpha",
                                                _("Save alpha channel (RG_BA/RGB)"),
                                                _("Save the alpha channel"),
@@ -516,6 +524,7 @@ export_image (GFile         *file,
   gchar         *config_comment;
   gboolean       config_save_comment;
   gboolean       config_glib_types;
+  gboolean       config_escape_trigraphs;
   gboolean       config_save_alpha;
   gboolean       config_rgb565;
   gboolean       config_use_macros;
@@ -523,15 +532,16 @@ export_image (GFile         *file,
   gdouble        config_opacity;
 
   g_object_get (config,
-                "prefixed-name",   &config_prefixed_name,
-                "gimp-comment",    &config_comment,
-                "include-comment", &config_save_comment,
-                "glib-types",      &config_glib_types,
-                "save-alpha",      &config_save_alpha,
-                "rgb565",          &config_rgb565,
-                "use-macros",      &config_use_macros,
-                "use-rle",         &config_use_rle,
-                "opacity",         &config_opacity,
+                "prefixed-name",    &config_prefixed_name,
+                "gimp-comment",     &config_comment,
+                "include-comment",  &config_save_comment,
+                "glib-types",       &config_glib_types,
+                "escape-trigraphs", &config_escape_trigraphs,
+                "save-alpha",       &config_save_alpha,
+                "rgb565",           &config_rgb565,
+                "use-macros",       &config_use_macros,
+                "use-rle",          &config_use_rle,
+                "opacity",          &config_opacity,
                 NULL);
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
@@ -890,9 +900,21 @@ export_image (GFile         *file,
     case GIMP_RGBA_IMAGE:
       do
         {
+          guchar prior = *img_buffer;
+
           if (! save_uchar (output, &c, *(img_buffer++), config_use_macros,
                             error))
             goto fail;
+
+          /* If enabled, we add a '\' in-between ?? sequences to escape
+           * any possible trigraphs for C23 compliance. */
+          if (config_escape_trigraphs &&
+              (prior == '?' && *img_buffer == '?'))
+            {
+              if (! print (output, error, "\\"))
+                goto fail;
+              c++;
+            }
         }
       while (img_buffer < img_buffer_end);
       break;
@@ -958,9 +980,9 @@ save_dialog (GimpImage     *image,
                                          "csource-box",
                                          "prefixed-name", "gimp-comment",
                                          "include-comment", "glib-types",
-                                         "use-macros", "use-rle", "save-alpha",
-                                         "rgb565", "opacity",
-                                         NULL);
+                                         "escape-trigraphs", "use-macros",
+                                         "use-rle", "save-alpha", "rgb565",
+                                         "opacity", NULL);
   gtk_box_set_spacing (GTK_BOX (vbox), 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
