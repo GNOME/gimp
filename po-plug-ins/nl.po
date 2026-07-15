@@ -12,10 +12,10 @@
 # value             helderheid ("brightness" is immers een synoniem voor "value": HSV en HSB zijn dezelfde kleurmodellen)
 # luminosity        helderheid
 msgid ""
-msgstr "Project-Id-Version: GIMP 3.0\n"
+msgstr "Project-Id-Version: GIMP .30\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-13 22:04+0000\n"
-"PO-Revision-Date: 2026-07-14 09:41+0200\n"
+"POT-Creation-Date: 2026-07-15 05:08+0000\n"
+"PO-Revision-Date: 2026-07-15 10:03+020011\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -1242,7 +1242,7 @@ msgstr "CML-verkennerparameters opslaan"
 #: plug-ins/common/file-pcx.c:1229 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1948 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:723
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:737
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
 #: plug-ins/file-icns/file-icns-export.c:442
@@ -2687,7 +2687,7 @@ msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
 #: plug-ins/common/file-png.c:1940 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:715
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:729
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:775
@@ -2744,42 +2744,51 @@ msgid "Use GLib types"
 msgstr "GLib-types gebruiken"
 
 #: plug-ins/common/file-csource.c:177
+msgid "Escape tri_graphs"
+msgstr "Tri_graphs escapen"
+
+#: plug-ins/common/file-csource.c:178
+msgid ""
+"Add '\\' in-between ?? sequences to escape trigraphs for C23 compatible code"
+msgstr "‘\\’ invoegen tussen reeksen ?? om trigraphs te escapen voor C23 compatibele code"
+
+#: plug-ins/common/file-csource.c:185
 msgid "Save alpha channel (RG_BA/RGB)"
 msgstr "Al_fakanaal opslaan (RGBA/RGB)"
 
-#: plug-ins/common/file-csource.c:178
+#: plug-ins/common/file-csource.c:186
 msgid "Save the alpha channel"
 msgstr "Het alfakanaal opslaan"
 
-#: plug-ins/common/file-csource.c:183
+#: plug-ins/common/file-csource.c:191
 msgid "Save as RGB565 (1_6-bit)"
 msgstr "Opslaan als RGB565 (16-bit)"
 
-#: plug-ins/common/file-csource.c:184
+#: plug-ins/common/file-csource.c:192
 msgid "Use RGB565 encoding"
 msgstr "RGB565-codering gebruiken"
 
-#: plug-ins/common/file-csource.c:189
+#: plug-ins/common/file-csource.c:197
 msgid "_Use macros instead of struct"
 msgstr "_Macros in plaats van Struct gebruiken"
 
-#: plug-ins/common/file-csource.c:190
+#: plug-ins/common/file-csource.c:198
 msgid "Use C macros"
 msgstr "C-Macro's gebruiken"
 
-#: plug-ins/common/file-csource.c:195
+#: plug-ins/common/file-csource.c:203
 msgid "Use _1 bit Run-Length-Encoding"
 msgstr "_1-byte Run-Length-Encoding gebruiken"
 
-#: plug-ins/common/file-csource.c:196
+#: plug-ins/common/file-csource.c:204
 msgid "Use run-length-encoding"
 msgstr "Run-Length-Encoding gebruiken"
 
-#: plug-ins/common/file-csource.c:201 plug-ins/pagecurl/pagecurl.c:262
+#: plug-ins/common/file-csource.c:209 plug-ins/pagecurl/pagecurl.c:262
 msgid "Opaci_ty"
 msgstr "De_kking"
 
-#: plug-ins/common/file-csource.c:202 plug-ins/pagecurl/pagecurl.c:263
+#: plug-ins/common/file-csource.c:210 plug-ins/pagecurl/pagecurl.c:263
 msgid "Opacity"
 msgstr "Dekking"
 
@@ -6793,18 +6802,18 @@ msgstr "Niet ondersteund type TIM-afbeelding: %d"
 msgid "Could not read palette from '%s'"
 msgstr "Kon palet niet lezen van ‘%s’"
 
-#: plug-ins/common/file-tim.c:707
+#: plug-ins/common/file-tim.c:721
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr "Kan ‘%s’ niet exporteren.  De bestandsindeling TIM ondersteunt geen afbeeldingen die meer dan %d pixels breed of hoog zijn."
 
-#: plug-ins/common/file-tim.c:925
+#: plug-ins/common/file-tim.c:939
 msgid "Image Origin"
 msgstr "Oorsprong afbeelding"
 
-#: plug-ins/common/file-tim.c:940
+#: plug-ins/common/file-tim.c:954
 msgid "Palette Origin"
 msgstr "Oorsprong palet"
 
