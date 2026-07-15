@@ -290,6 +290,9 @@ load_image (GFile        *file,
         {
           count = (~run) + 2;
 
+          if (i >= file_size)
+            break;
+
           while (count > 0)
             {
               val = data[i];
@@ -316,6 +319,9 @@ load_image (GFile        *file,
 
           while (count > 0)
             {
+              if (i >= file_size)
+                break;
+
               val = data[i++];
 
               if (pixel_count >= (576 * 720))
