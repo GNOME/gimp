@@ -55,9 +55,10 @@ static  gboolean  write_image     (FILE          *f,
                                    gint           mask_info_size,
                                    gint           color_space_size);
 
-static  gboolean  save_dialog     (GimpProcedure *procedure,
+static  gboolean  export_dialog   (GimpProcedure *procedure,
                                    GObject       *config,
                                    GimpImage     *image,
+                                   GimpImageType  drawable_type,
                                    gint           channels,
                                    gint           bpp);
 
@@ -83,30 +84,6 @@ write_color_map (FILE *f,
         return FALSE;
     }
   return TRUE;
-}
-
-static gboolean
-warning_dialog (const gchar *primary,
-                const gchar *secondary)
-{
-  GtkWidget *dialog;
-  gboolean   ok;
-
-  dialog = gtk_message_dialog_new (NULL, 0,
-                                   GTK_MESSAGE_WARNING, GTK_BUTTONS_OK_CANCEL,
-                                   "%s", primary);
-
-  gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                            "%s", secondary);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-  gtk_widget_set_visible (dialog, TRUE);
-
-  ok = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dialog);
-
-  return ok;
 }
 
 GimpPDBStatusType
@@ -145,9 +122,9 @@ export_image (GFile         *file,
 
   buffer = gimp_drawable_get_buffer (drawable);
 
-  drawable_type   = gimp_drawable_type   (drawable);
-  drawable_width  = gimp_drawable_get_width  (drawable);
-  drawable_height = gimp_drawable_get_height (drawable);
+  drawable_type   = gimp_drawable_type (drawable);
+  drawable_width  = gimp_drawable_get_width (drawable);
+  drawable_height = gimp_drawable_get_height(drawable);
 
   switch (drawable_type)
     {
@@ -188,14 +165,6 @@ export_image (GFile         *file,
       break;
 
     case GIMP_GRAYA_IMAGE:
-      if (run_mode == GIMP_RUN_INTERACTIVE &&
-          ! warning_dialog (_("Cannot export indexed image with "
-                              "transparency in BMP file format."),
-                            _("Alpha channel will be ignored.")))
-        return GIMP_PDB_CANCEL;
-
-     /* fallthrough */
-
     case GIMP_GRAY_IMAGE:
       colors       = 256;
       BitsPerPixel = 8;
@@ -221,17 +190,11 @@ export_image (GFile         *file,
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      if (run_mode == GIMP_RUN_INTERACTIVE &&
-          ! warning_dialog (_("Cannot export indexed image with "
-                              "transparency in BMP file format."),
-                            _("Alpha channel will be ignored.")))
-        return GIMP_PDB_CANCEL;
-
-     /* fallthrough */
-
     case GIMP_INDEXED_IMAGE:
       format   = gimp_drawable_get_format (drawable);
-      cmap     = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
+      cmap     = gimp_palette_get_colormap (gimp_image_get_palette (image),
+                                            babl_format ("R'G'B' u8"), &colors,
+                                            NULL);
       MapSize  = 4 * colors;
 
       if (drawable_type == GIMP_INDEXEDA_IMAGE)
@@ -270,7 +233,8 @@ export_image (GFile         *file,
        BitsPerPixel == 4 ||
        BitsPerPixel == 1))
     {
-      if (! save_dialog (procedure, config, image, 1, BitsPerPixel))
+      if (! export_dialog (procedure, config, image, drawable_type, 1,
+                           BitsPerPixel))
         return GIMP_PDB_CANCEL;
     }
   else if (BitsPerPixel == 24 ||
@@ -278,7 +242,8 @@ export_image (GFile         *file,
     {
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          if (! save_dialog (procedure, config, image, channels, BitsPerPixel))
+          if (! export_dialog (procedure, config, image, drawable_type,
+                               channels, BitsPerPixel))
             return GIMP_PDB_CANCEL;
         }
 
@@ -1030,11 +995,12 @@ config_notify (GObject          *config,
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
-             GObject       *config,
-             GimpImage     *image,
-             gint           channels,
-             gint           bpp)
+export_dialog (GimpProcedure *procedure,
+               GObject       *config,
+               GimpImage     *image,
+               GimpImageType  drawable_type,
+               gint           channels,
+               gint           bpp)
 {
   GtkWidget *dialog;
   GtkWidget *toggle;
@@ -1048,6 +1014,40 @@ save_dialog (GimpProcedure *procedure,
                                              image);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
+  if (drawable_type == GIMP_GRAYA_IMAGE ||
+      drawable_type == GIMP_INDEXEDA_IMAGE)
+    {
+      GtkWidget   *hint;
+      const gchar *title   = _("Cannot export indexed image with "
+                               "transparency in BMP file format.");
+      const gchar *warning = _("Alpha channel will be ignored.");
+      gchar       *full_warning;
+
+      /* Used to create vbox to store hintbox in */
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "spacer-alpha", " ",
+                                       FALSE, FALSE);
+
+      vbox = gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "alpha-warning-vbox",
+                                             "spacer-alpha", NULL);
+
+      full_warning = g_strdup_printf ("%s\n%s", title, warning);
+
+      hint = g_object_new (GIMP_TYPE_HINT_BOX,
+                           "icon-name", GIMP_ICON_DIALOG_WARNING,
+                           "hint",      full_warning,
+                           NULL);
+      gtk_widget_set_visible (hint, TRUE);
+      g_free (full_warning);
+
+      gtk_box_pack_start (GTK_BOX (vbox), hint, FALSE, FALSE, 0);
+      gtk_box_reorder_child (GTK_BOX (vbox), hint, 0);
+
+      gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "alpha-warning-vbox", NULL);
+    }
 
   /* Run-Length Encoded */
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
