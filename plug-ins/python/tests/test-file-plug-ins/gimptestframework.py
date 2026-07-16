@@ -24,6 +24,7 @@
 
 import os
 import configparser
+import time
 
 import xml
 from xml.etree.ElementTree import ElementTree, Element
@@ -271,9 +272,16 @@ class FileLoadTest(object):
                 skipped_el = Element("skipped")
                 skipped_el.set('message', 'File explicit skip')
                 el.append(skipped_el)
+                # Save as 0 duration for skipped tests
+                el.set('time', '0.000')
                 continue
 
+            # Measure execution duration in junit format
+            start_time = time.perf_counter()
             test_result = self.run_file_load(self.data_root + image_folder + imgfile, expected)
+            duration = time.perf_counter() - start_time
+            el.set('time', f"{duration:.3f}")
+
             if test_result == RESULT_OK:
                 test_ok += 1
             else:
