@@ -7,16 +7,16 @@
 # Fatih Demir <kabalak@gtranslator.org>, 2001.
 # Alper Ersoy <aersoy@tfz.net>, 2001.
 # Muhammet Kara <muhammetk@gmail.com>, 2014.
-# Sabri Ünal <yakushabb@gmail.com>, 2019, 2020, 2022, 2024, 2025.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2019, 2022, 2024, 2025.
+# Sabri Ünal <yakushabb@gmail.com>, 2019, 2020, 2022, 2024, 2025, 2026.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2019, 2022, 2024, 2025, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-16 15:15+0000\n"
-"PO-Revision-Date: 2026-04-16 22:54+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2026-05-27 23:25+0000\n"
+"PO-Revision-Date: 2026-07-16 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -91,7 +91,7 @@ msgid "Script Console"
 msgstr "Betik Uçbirimi"
 
 #: plug-ins/script-fu/console/script-fu-console.c:124
-#: plug-ins/script-fu/console/script-fu-console.c:251
+#: plug-ins/script-fu/console/script-fu-console.c:249
 msgid "_Save"
 msgstr "_Kaydet"
 
@@ -100,7 +100,7 @@ msgid "C_lear"
 msgstr "_Temizle"
 
 #: plug-ins/script-fu/console/script-fu-console.c:126
-#: plug-ins/script-fu/console/script-fu-console.c:324
+#: plug-ins/script-fu/console/script-fu-console.c:313
 msgid "_Close"
 msgstr "_Kapat"
 
@@ -112,22 +112,22 @@ msgstr "_Göz At..."
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu Uçbirimi Çıktısını Kaydet"
 
-#: plug-ins/script-fu/console/script-fu-console.c:250
+#: plug-ins/script-fu/console/script-fu-console.c:249
 #: plug-ins/script-fu/server/script-fu-server.c:968
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "İ_ptal"
 
-#: plug-ins/script-fu/console/script-fu-console.c:293
+#: plug-ins/script-fu/console/script-fu-console.c:282
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Yazma için '%s' açılamadı: %s"
 
-#: plug-ins/script-fu/console/script-fu-console.c:319
+#: plug-ins/script-fu/console/script-fu-console.c:308
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu Yordam Tarayıcı"
 
-#: plug-ins/script-fu/console/script-fu-console.c:323
+#: plug-ins/script-fu/console/script-fu-console.c:312
 msgid "_Apply"
 msgstr "_Uygula"
 
@@ -206,17 +206,17 @@ msgstr "%s:"
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Renk Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:405
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:395
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Dosya Seçimi"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:408
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Dizin Seçimi"
 
 #. Log to stdout.  Later to Gimp.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:817
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:807
 #, c-format
 msgid "Error while executing %s:"
 msgstr "%s yürütülürken hata:"
@@ -261,7 +261,7 @@ msgstr "_Kenarlık Ekle..."
 
 #: plug-ins/script-fu/scripts/addborder.scm:175
 msgid "Add a border around an image"
-msgstr "Görüntü etrafına kenarlık ekle"
+msgstr "Görüntü çevresine kenarlık ekle"
 
 #: plug-ins/script-fu/scripts/addborder.scm:181
 msgid "Border X size"
@@ -760,91 +760,54 @@ msgstr "Kopya üzerinde çalış"
 msgid "Flatten image"
 msgstr "Görüntüyü düzleştir"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:63
+#: plug-ins/script-fu/scripts/gimp-online.scm:59
 msgid "_Using Paths"
 msgstr "Yolları _Kullanmak"
 
 # Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:64
-#: plug-ins/script-fu/scripts/gimp-online.scm:75
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:97
-#: plug-ins/script-fu/scripts/gimp-online.scm:108
-#: plug-ins/script-fu/scripts/gimp-online.scm:119
-#: plug-ins/script-fu/scripts/gimp-online.scm:130
-#: plug-ins/script-fu/scripts/gimp-online.scm:141
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:60
+#: plug-ins/script-fu/scripts/gimp-online.scm:71
+#: plug-ins/script-fu/scripts/gimp-online.scm:82
+#: plug-ins/script-fu/scripts/gimp-online.scm:93
+#: plug-ins/script-fu/scripts/gimp-online.scm:104
+#: plug-ins/script-fu/scripts/gimp-online.scm:115
+#: plug-ins/script-fu/scripts/gimp-online.scm:126
+#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:147
 msgid "Bookmark to the user manual"
 msgstr "Kullanıcı kılavuzunu görüntüle"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:74
+#: plug-ins/script-fu/scripts/gimp-online.scm:70
 msgid "_Preparing your Images for the Web"
 msgstr "Web İçin Kendi Görüntülerinizi _Hazırlamak"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:81
 msgid "_Working with Digital Camera Photos"
 msgstr "Sayısal Kamera Görüntüleri İle _Çalışmak"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:96
+#: plug-ins/script-fu/scripts/gimp-online.scm:92
 msgid "Create, Open and Save _Files"
 msgstr "_Dosyaları Oluşturmak, Açmak ve Kaydetmek"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:107
+#: plug-ins/script-fu/scripts/gimp-online.scm:103
 msgid "_Basic Concepts"
 msgstr "_Temel Kavramlar"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:118
+#: plug-ins/script-fu/scripts/gimp-online.scm:114
 msgid "How to Use _Dialogs"
 msgstr "İletişim _Kutuları Nasıl Kullanılır"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:129
+#: plug-ins/script-fu/scripts/gimp-online.scm:125
 msgid "Drawing _Simple Objects"
 msgstr "_Basit Nesneler Çizmek"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:140
+#: plug-ins/script-fu/scripts/gimp-online.scm:136
 msgid "_Create and Use Selections"
 msgstr "Seçim _Oluşturmak ve Kullanmak"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:146
 msgid "_Table of Contents"
 msgstr "İçi_ndekiler"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:184
-msgid "_Main Web Site"
-msgstr "_Ana Web Sitesi"
-
-# Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:185
-#: plug-ins/script-fu/scripts/gimp-online.scm:196
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "Bookmark to the GIMP web site"
-msgstr "GIMP web sitesini görüntüle"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:195
-msgid "_Developer Web Site"
-msgstr "_Geliştirici Web Sitesi"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:206
-msgid "_Roadmaps"
-msgstr "_Yol Haritası"
-
-# Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:207
-msgid "Bookmark to the roadmaps of GIMP"
-msgstr "GIMP yol haritasını görüntüle"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "_Bug Reports and Feature Requests"
-msgstr "_Hata Raporları ve Özellik İstekleri"
-
-# Bookmark kelimesini kasten görüntüle olarak çevirdim
-#: plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "GIMP hata izleyicisini görüntüle"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:228
-msgid "_User Manual Web Site"
-msgstr "_Kullanıcı Kılavuzu Web Sitesi"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:73
 msgid "Custom _Gradient..."
@@ -874,13 +837,42 @@ msgstr "Yükseklik"
 msgid "Gradient reverse"
 msgstr "Tersten renk geçişi"
 
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:60
+msgid "New Guides from Rule..."
+msgstr "Kuraldan Yeni Kılavuzlar..."
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:61
+msgid "Add guides based on a selected composition rule"
+msgstr "Seçilen kompozisyon kuralına göre kılavuz ekle"
+
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "R_ule"
+msgstr "_Kural"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "Center lines"
+msgstr "Orta çizgiler"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:68
+msgid "Rule of thirds"
+msgstr "Üçler kuralı"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:69
+msgid "Rule of fifths"
+msgstr "Beşler kuralı"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:70
+msgid "Golden sections"
+msgstr "Altın bölümler"
+
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
 msgstr "_Seçimden Yeni Kılavuzlar"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "Geçerli seçimin sınırlayıcı kutusu etrafında dört kılavuz oluştur"
+msgstr "Geçerli seçimin sınırlayıcı kutusu çevresinde dört kılavuz oluştur"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
@@ -1542,3 +1534,30 @@ msgstr "Gölge X konumu"
 #: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Drop shadow Y offset"
 msgstr "Gölge Y konumu"
+
+#~ msgid "_Main Web Site"
+#~ msgstr "_Ana Web Sitesi"
+
+# Bookmark kelimesini kasten görüntüle olarak çevirdim
+#~ msgid "Bookmark to the GIMP web site"
+#~ msgstr "GIMP web sitesini görüntüle"
+
+#~ msgid "_Developer Web Site"
+#~ msgstr "_Geliştirici Web Sitesi"
+
+#~ msgid "_Roadmaps"
+#~ msgstr "_Yol Haritası"
+
+# Bookmark kelimesini kasten görüntüle olarak çevirdim
+#~ msgid "Bookmark to the roadmaps of GIMP"
+#~ msgstr "GIMP yol haritasını görüntüle"
+
+#~ msgid "_Bug Reports and Feature Requests"
+#~ msgstr "_Hata Raporları ve Özellik İstekleri"
+
+# Bookmark kelimesini kasten görüntüle olarak çevirdim
+#~ msgid "Bookmark to the bug tracker of GIMP"
+#~ msgstr "GIMP hata izleyicisini görüntüle"
+
+#~ msgid "_User Manual Web Site"
+#~ msgstr "_Kullanıcı Kılavuzu Web Sitesi"
