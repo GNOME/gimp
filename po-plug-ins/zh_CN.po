@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-13 22:04+0000\n"
-"PO-Revision-Date: 2026-07-15 07:58+0800\n"
+"POT-Creation-Date: 2026-07-16 17:11+0000\n"
+"PO-Revision-Date: 2026-07-17 07:53+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1233,9 +1233,9 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/file-pcx.c:1229 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1948 plug-ins/common/file-raw-data.c:1523
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:723
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:737
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
-#: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
+#: plug-ins/file-bmp/bmp-export.c:301 plug-ins/file-fli/fli-gimp.c:808
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
 #: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2534
@@ -1977,7 +1977,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:801
 #: plug-ins/common/file-png.c:1372 plug-ins/common/file-ps.c:1158
 #: plug-ins/common/file-ps.c:3756 plug-ins/common/file-psp.c:2844
-#: plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:256
+#: plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:257
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
 #: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861
 #: plug-ins/common/file-seattle-filmworks.c:232
@@ -1991,8 +1991,8 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:440
 #: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:643
-#: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:711
-#: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
+#: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:759
+#: plug-ins/file-ico/ico-load.c:909 plug-ins/file-ico/ico-load.c:1129
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711
 #: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
 #: plug-ins/file-psd/psd-load.c:214 plug-ins/file-psd/psd-load.c:219
@@ -2599,7 +2599,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
 #: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247
 #: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:635
-#: plug-ins/file-ico/ico-load.c:703 plug-ins/file-ico/ico-load.c:848
+#: plug-ins/file-ico/ico-load.c:751 plug-ins/file-ico/ico-load.c:901
 #: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:227
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
@@ -2670,13 +2670,13 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:943 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1822 plug-ins/common/file-jpegxl.c:1389
-#: plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:636
+#: plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:649
 #: plug-ins/common/file-png.c:1940 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:715
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:729
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
-#: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
+#: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:293
 #: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:775
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
@@ -2731,42 +2731,51 @@ msgid "Use GLib types"
 msgstr "使用 GLib 类型"
 
 #: plug-ins/common/file-csource.c:177
+msgid "Escape tri_graphs"
+msgstr "转义三字符(_G)"
+
+#: plug-ins/common/file-csource.c:178
+msgid ""
+"Add '\\' in-between ?? sequences to escape trigraphs for C23 compatible code"
+msgstr "在 ?? 序列间添加“\\”来转义三字符以用于 C23 兼容代码"
+
+#: plug-ins/common/file-csource.c:185
 msgid "Save alpha channel (RG_BA/RGB)"
 msgstr "保存透明通道（RGBA/RGB）(_B)"
 
-#: plug-ins/common/file-csource.c:178
+#: plug-ins/common/file-csource.c:186
 msgid "Save the alpha channel"
 msgstr "保存透明通道"
 
-#: plug-ins/common/file-csource.c:183
+#: plug-ins/common/file-csource.c:191
 msgid "Save as RGB565 (1_6-bit)"
 msgstr "另存为 RGB565（16 位）(_6)"
 
-#: plug-ins/common/file-csource.c:184
+#: plug-ins/common/file-csource.c:192
 msgid "Use RGB565 encoding"
 msgstr "使用 RGB565 编码"
 
-#: plug-ins/common/file-csource.c:189
+#: plug-ins/common/file-csource.c:197
 msgid "_Use macros instead of struct"
 msgstr "使用宏命令而不是结构体(_U)"
 
-#: plug-ins/common/file-csource.c:190
+#: plug-ins/common/file-csource.c:198
 msgid "Use C macros"
 msgstr "使用 C 宏命令"
 
-#: plug-ins/common/file-csource.c:195
+#: plug-ins/common/file-csource.c:203
 msgid "Use _1 bit Run-Length-Encoding"
 msgstr "使用 1 位行程长度编码(_1)"
 
-#: plug-ins/common/file-csource.c:196
+#: plug-ins/common/file-csource.c:204
 msgid "Use run-length-encoding"
 msgstr "使用行程长度编码"
 
-#: plug-ins/common/file-csource.c:201 plug-ins/pagecurl/pagecurl.c:262
+#: plug-ins/common/file-csource.c:209 plug-ins/pagecurl/pagecurl.c:262
 msgid "Opaci_ty"
 msgstr "不透明度(_T)"
 
-#: plug-ins/common/file-csource.c:202 plug-ins/pagecurl/pagecurl.c:263
+#: plug-ins/common/file-csource.c:210 plug-ins/pagecurl/pagecurl.c:263
 msgid "Opacity"
 msgstr "不透明度"
 
@@ -4330,7 +4339,8 @@ msgstr "打开 .lnk 文件且如果其指向图像，将会使 GIMP 打开该链
 #: plug-ins/common/file-seattle-filmworks.c:399
 #: plug-ins/common/file-seattle-filmworks.c:411
 #: plug-ins/common/file-seattle-filmworks.c:422
-#: plug-ins/common/file-seattle-filmworks.c:559
+#: plug-ins/common/file-seattle-filmworks.c:562
+#: plug-ins/common/file-seattle-filmworks.c:570
 #, c-format
 msgid "Invalid file."
 msgstr "无效文件。"
@@ -4522,8 +4532,8 @@ msgstr "加载波希米亚互动 PAA 格式的文件"
 
 #: plug-ins/common/file-paa.c:233 plug-ins/common/file-paa.c:270
 #: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:648
-#: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
-#: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:363
+#: plug-ins/common/file-pvr.c:311 plug-ins/common/file-pvr.c:354
+#: plug-ins/common/file-pvr.c:366 plug-ins/common/file-tim.c:363
 #: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
 #: plug-ins/common/file-tim.c:538
 #, c-format
@@ -4995,7 +5005,7 @@ msgid ""
 "%s"
 msgstr "试图打开临时 JPEG 文件“%s”用于加载 Esm 软件的 pix 文件时出错：%s"
 
-#: plug-ins/common/file-pix.c:582
+#: plug-ins/common/file-pix.c:594
 #, c-format
 msgid "Invalid Esm Software PIX file"
 msgstr "无效的 Esm 软件 PIX 文件"
@@ -5949,64 +5959,64 @@ msgstr "无效的图层子数据块 %s，应该为调整扩展"
 msgid "Unsupported adjustment layer type %d"
 msgstr "不支持的调整图层类型 %d"
 
-#: plug-ins/common/file-pvr.c:214
+#: plug-ins/common/file-pvr.c:215
 msgid "PVR Image"
 msgstr "PVR 图像"
 
-#: plug-ins/common/file-pvr.c:217
+#: plug-ins/common/file-pvr.c:218
 msgid "Load file in the PVR file format"
 msgstr "加载 PVR 格式的文件"
 
-#: plug-ins/common/file-pvr.c:218
+#: plug-ins/common/file-pvr.c:219
 msgid "Load file in the PowerVR texture file format"
 msgstr "加载 PowerVR 纹理贴图格式的文件"
 
-#: plug-ins/common/file-pvr.c:324 plug-ins/common/file-pvr.c:334
+#: plug-ins/common/file-pvr.c:325 plug-ins/common/file-pvr.c:335
 #, c-format
 msgid "Could not read GBIX header from '%s'"
 msgstr "无法从“%s”读取 GBIX 文件头"
 
-#: plug-ins/common/file-pvr.c:343
+#: plug-ins/common/file-pvr.c:344
 #, c-format
 msgid "Unsupported PVR format: %s"
 msgstr "不支持的 PVR 格式：%s"
 
-#: plug-ins/common/file-pvr.c:408
+#: plug-ins/common/file-pvr.c:409
 #, c-format
 msgid "Incomplete PVR header data."
 msgstr "不完整的 PVR 文件头数据。"
 
-#: plug-ins/common/file-pvr.c:436 plug-ins/common/file-pvr.c:569
+#: plug-ins/common/file-pvr.c:437 plug-ins/common/file-pvr.c:572
 #, c-format
 msgid "Dimensions exceed maximum twiddled size of %d"
 msgstr "尺寸超出了 %d 的最大交织大小"
 
-#: plug-ins/common/file-pvr.c:454
+#: plug-ins/common/file-pvr.c:455
 #, c-format
 msgid "Unable to decode twiddled PVR texture"
 msgstr "无法解码交织的 PVR 纹理贴图"
 
-#: plug-ins/common/file-pvr.c:479 plug-ins/common/file-pvr.c:537
+#: plug-ins/common/file-pvr.c:480 plug-ins/common/file-pvr.c:540
 #, c-format
 msgid "Unable to decode PVR texture"
 msgstr "无法解码 PVR 纹理贴图"
 
-#: plug-ins/common/file-pvr.c:510
+#: plug-ins/common/file-pvr.c:511
 #, c-format
 msgid "Incomplete PVR codebook data."
 msgstr "不完整的 PVR 代码本数据。"
 
-#: plug-ins/common/file-pvr.c:560
+#: plug-ins/common/file-pvr.c:563
 #, c-format
 msgid "Incomplete PVR data."
 msgstr "不完整的 PVR 数据。"
 
-#: plug-ins/common/file-pvr.c:580
+#: plug-ins/common/file-pvr.c:584
 #, c-format
 msgid "Unable to decode compressed PVR texture"
 msgstr "无法解码压缩的 PVR 纹理贴图"
 
-#: plug-ins/common/file-pvr.c:598
+#: plug-ins/common/file-pvr.c:602
 #, c-format
 msgid "Unsupported PVR texture format: %d"
 msgstr "不支持的 PVR 纹理贴图格式：%d"
@@ -6369,7 +6379,7 @@ msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "尚未支持未压缩的 SFW94A 格式。"
 
 #: plug-ins/common/file-seattle-filmworks.c:458
-#: plug-ins/common/file-seattle-filmworks.c:574
+#: plug-ins/common/file-seattle-filmworks.c:586
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "无法转换 SFW 图像。"
@@ -6778,18 +6788,18 @@ msgstr "不支持的 TIM 图像类型：%d"
 msgid "Could not read palette from '%s'"
 msgstr "无法从“%s”读取调色板"
 
-#: plug-ins/common/file-tim.c:707
+#: plug-ins/common/file-tim.c:721
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr "无法导出“%s”。TIM 文件格式不支持宽度或高度大于 %d 像素的图像。"
 
-#: plug-ins/common/file-tim.c:925
+#: plug-ins/common/file-tim.c:939
 msgid "Image Origin"
 msgstr "图像原点"
 
-#: plug-ins/common/file-tim.c:940
+#: plug-ins/common/file-tim.c:954
 msgid "Palette Origin"
 msgstr "色板原点"
 
@@ -9252,19 +9262,19 @@ msgstr "无法读取扫描的图像。"
 msgid "WIA driver not found, scanning not available"
 msgstr "未发现 WIA 驱动，扫描不可用"
 
-#: plug-ins/file-bmp/bmp-export.c:192 plug-ins/file-bmp/bmp-export.c:225
-msgid "Cannot export indexed image with transparency in BMP file format."
-msgstr "无法以 BMP 文件格式导出带有透明的索引图像。"
-
-#: plug-ins/file-bmp/bmp-export.c:194 plug-ins/file-bmp/bmp-export.c:227
-msgid "Alpha channel will be ignored."
-msgstr "透明通道将被忽略。"
-
-#: plug-ins/file-bmp/bmp-export.c:597 plug-ins/file-fli/fli.c:91
+#: plug-ins/file-bmp/bmp-export.c:562 plug-ins/file-fli/fli.c:91
 #: plug-ins/file-fli/fli.c:110 plug-ins/file-fli/fli.c:131
 #, c-format
 msgid "Error writing to file."
 msgstr "写入到文件时出错。"
+
+#: plug-ins/file-bmp/bmp-export.c:1022
+msgid "Cannot export indexed image with transparency in BMP file format."
+msgstr "无法以 BMP 文件格式导出带有透明的索引图像。"
+
+#: plug-ins/file-bmp/bmp-export.c:1024
+msgid "Alpha channel will be ignored."
+msgstr "透明通道将被忽略。"
 
 #: plug-ins/file-bmp/bmp-export.c:1060
 msgid "Compatibility"
@@ -10229,7 +10239,7 @@ msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "试图打开临时的 %s 文件“%s”用于加载 icns 时出错：%s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-ico/ico-load.c:1068
+#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-ico/ico-load.c:1121
 #: plug-ins/file-jpeg/jpeg-load.c:697 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:620
@@ -10334,8 +10344,8 @@ msgstr "无法读取“%lu”字节"
 msgid "Icon #%d has zero width or height"
 msgstr "图标 #%d 具有零宽度或高度"
 
-#: plug-ins/file-ico/ico-load.c:902 plug-ins/file-ico/ico-load.c:914
-#: plug-ins/file-ico/ico-load.c:942 plug-ins/file-ico/ico-load.c:954
+#: plug-ins/file-ico/ico-load.c:955 plug-ins/file-ico/ico-load.c:967
+#: plug-ins/file-ico/ico-load.c:995 plug-ins/file-ico/ico-load.c:1007
 #, c-format
 msgid "Invalid ANI metadata"
 msgstr "无效的 ANI 元数据"
