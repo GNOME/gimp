@@ -264,7 +264,7 @@ class FileLoadTest(object):
             el = Element("testcase")
             el.set('classname', self.testsuite.get('classname', 'unknown'))
             el.set('name', image_folder + imgfile)
-            el.set('file', imgfile)
+            el.set('file', image_folder + imgfile) #image_folder is needed to not break URL on GitLab UI
             self.testsuite.append(el)
 
             if expected == EXPECTED_SKIP:
