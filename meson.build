@@ -2131,6 +2131,9 @@ subdir('gimp-data/images/')
 subdir('app/tests')
 subdir('libgimp/tests')
 
+# UI testing (real gimp under headless mutter, driven over AT-SPI)
+subdir('app/tests/uitests')
+
 # Docs
 subdir('docs')
 subdir('devel-docs')
@@ -2310,6 +2313,7 @@ final_message = [
 '''Tests:''',
 '''  Use xvfb-run         @0@'''.format(xvfb_run.found()),
 '''  Test appdata         @0@'''.format(appstreamcli.found()),
+'''  UI tests             @0@'''.format(ui_tests_status),
 '',
 '''Documentation:''',
 '''  libgimp API Reference: @0@'''.format(gi_docgen.found() and have_gobject_introspection),

@@ -256,8 +256,15 @@ deps-debian-nonreloc:
             python3
             python3-gi
             python3-gi-cairo
-            xdg-utils" >> Dockerfile
+            xdg-utils \\" >> Dockerfile
+    ## test-only dependencies
+    - echo "gir1.2-atspi-2.0
+            libgl1-mesa-dri
+            mutter
+            python3-pip" >> Dockerfile
     - echo "RUN echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen" >> Dockerfile
+    ## dogtail (hermetic session) for the UI tests
+    - echo "RUN pip3 install --break-system-packages 'dogtail>=2.1.0'" >> Dockerfile
     # Prepare environ
     - export BUILDAH_IMAGE="build-debian-${DEB_VERSION}-${RUNNER}"
     - echo "FROM $CI_REGISTRY_IMAGE:${BUILDAH_IMAGE}" > Dockerfile2;
