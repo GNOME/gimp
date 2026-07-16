@@ -47,6 +47,7 @@ EXPECTED_SKIP = 3
 RESULT_FAIL   = 0
 RESULT_OK     = 1
 RESULT_CRASH  = 2
+RESULT_ERROR  = 3
 
 
 class PluginTestConfig(object):
@@ -140,13 +141,14 @@ class FileLoadTest(object):
         self.total_ok     = 0
         self.total_crash  = 0
         self.total_skip   = 0
+        self.total_errors = 0
 
     def run_file_load(self, image_file, expected):
         if not os.path.exists(image_file):
             msg = "Regression loading " + image_file + ". File does not exist!"
             self.failure_reason = msg
             self.log.error("--> " + msg)
-            return RESULT_FAIL
+            return RESULT_ERROR
 
         pdb_proc   = Gimp.get_pdb().lookup_procedure(self.plugin_name)
         if pdb_proc is None:
@@ -244,19 +246,25 @@ class FileLoadTest(object):
         test_todo  = 0
         test_crash = 0
         test_skip  = 0
+        test_errors = 0
         test_total = 0
         test_images_list = self.load_test_images(test_images)
         if not test_images_list:
-            # Maybe we should create another type of test failure (test_filesystem?)
             test_total += 1
-            test_fail  += 1
-            test_crash += 1
-            test_skip += 1
-            self.total_failed += test_fail
-            self.total_crash  += test_crash
-            self.total_skip  += test_skip
-            msg = f"No images found for '{test_description}'.'"
+            test_errors += 1
+            self.total_errors += test_errors
+
+            msg = f"'{test_images}' not found for '{test_description}'"
             self.log.error(msg)
+            el = Element("testcase")
+            el.set('classname', self.testsuite.get('classname', 'unknown'))
+            el.set('name', f"{test_description}")
+            el.set('time', '0.000')
+            err_el = Element("error")
+            err_el.set('type', 'error')
+            err_el.text = msg
+            el.append(err_el)
+            self.testsuite.append(el)
             return
         test_total = len(test_images_list)
 
@@ -284,6 +292,13 @@ class FileLoadTest(object):
 
             if test_result == RESULT_OK:
                 test_ok += 1
+            elif test_result == RESULT_ERROR:
+                test_errors += 1
+                self.total_errors += 1
+                error_el = Element("error")
+                error_el.set('type', 'error')
+                error_el.text = self.failure_reason
+                el.append(error_el)
             else:
                 if test_result == RESULT_FAIL:
                     test_fail += 1
@@ -359,6 +374,7 @@ class RunTests(object):
     def __init__(self, test, config_path, data_path, log, testsuite):
         self.test_count = 0
         self.regression_count = 0
+        self.error_count = 0
         if os.path.exists(test.tests):
             self.plugin_test = FileLoadTest(test.plugin, test.extension, data_path, log, testsuite)
             cfg = configparser.ConfigParser()
@@ -382,10 +398,21 @@ class RunTests(object):
             self.plugin_test.show_results_total()
             self.test_count = self.plugin_test.total_tests
             self.regression_count = self.plugin_test.total_failed
+            self.error_count = self.plugin_test.total_errors
         else:
             self.plugin_test = None
-            log.error("Test path " + test.tests + " does not exist!")
-            self.regression_count = 1
+            self.error_count = 1
+            msg = "Test path " + test.tests + " does not exist!"
+            log.error(msg)
+            err_case = Element("testcase")
+            err_case.set('classname', test.testsuite_import)
+            err_case.set('name', f"{os.path.basename(test.tests)}")
+            err_case.set('time', '0.000')
+            err_el = Element("error")
+            err_el.set('type', 'error')
+            err_el.text = msg
+            err_case.append(err_el)
+            testsuite.append(err_case)
 
     def get_unexpected_success_regressions(self):
         return self.plugin_test.unexpected_success_images
@@ -414,6 +441,7 @@ class GimpTestRunner(object):
         self.todo_total  = 0
         self.crash_total = 0
         self.skip_total  = 0
+        self.technical_errors_total = 0
 
         self.unexpected_success_images = []
         self.unexpected_failure_images = []
@@ -476,10 +504,11 @@ class GimpTestRunner(object):
                 plugin_tests = RunTests(test, cfg.config_path, self.test_cfg.data_folder, self.log, el)
                 self.tests_total += plugin_tests.test_count
                 self.error_total += plugin_tests.regression_count
+                self.technical_errors_total += plugin_tests.error_count
 
                 el.set('tests', str(plugin_tests.test_count))
                 el.set('failures', str(plugin_tests.regression_count))
-                el.set('errors', '0')
+                el.set('errors', str(plugin_tests.error_count))
                 el.set('skipped', str(plugin_tests.get_skipped_count()))
                 root.append(el)
 
@@ -502,7 +531,7 @@ class GimpTestRunner(object):
 
         root.set('tests', str(self.tests_total))
         root.set('failures', str(self.error_total))
-        root.set('errors', '0')
+        root.set('errors', str(self.technical_errors_total))
         root.set('skipped', str(self.skip_total))
 
         xml.etree.ElementTree.indent(self.xml_tree)
@@ -515,6 +544,8 @@ class GimpTestRunner(object):
             msg += f"\nNumber of test sections skipped due to configuration errors: {cfg.problems}"
         msg += f"\nTotal number of tests executed: {self.tests_total}"
         msg += f"\nTotal number of regressions: {self.error_total}"
+        if self.technical_errors_total > 0:
+            msg += f"\nTotal number of technical errors: {self.technical_errors_total}"
         if self.crash_total > 0:
             msg += f"\nTotal number of crashes: {self.crash_total}"
         if self.todo_total > 0:
