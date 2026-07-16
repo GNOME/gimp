@@ -232,6 +232,10 @@ gimp_main (GType  plug_in_type,
     const gchar *install_dir;
     gchar       *bin_dir;
     LPWSTR       w_bin_dir;
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+    size_t       path_len;
+    gchar       *path;
+#endif
 
     w_bin_dir = NULL;
     install_dir = gimp_installation_directory ();
@@ -243,6 +247,25 @@ gimp_main (GType  plug_in_type,
         SetDllDirectoryW (w_bin_dir);
         g_free (w_bin_dir);
       }
+
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+    /* We also set external PATH variable to plug-in process just in case
+     * (see #16592, similar to #14716).
+     */
+    path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (bin_dir) + 2;
+    path = g_try_malloc (path_len);
+    if (path == NULL)
+      {
+        g_warning ("Failed to allocate memory");
+        exit (EXIT_FAILURE);
+      }
+    if (g_getenv ("PATH"))
+      g_snprintf (path, path_len, "%s;%s", bin_dir, g_getenv ("PATH"));
+    else
+      g_snprintf (path, path_len, "%s", bin_dir);
+    g_setenv ("PATH", path, TRUE);
+    g_free (path);
+#endif
 
     g_free (bin_dir);
   }
