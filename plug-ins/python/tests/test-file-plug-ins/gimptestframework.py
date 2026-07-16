@@ -41,6 +41,7 @@ YEARS   = "2021-2024"
 EXPECTED_FAIL = 0
 EXPECTED_OK   = 1
 EXPECTED_TODO = 2
+EXPECTED_SKIP = 3
 
 RESULT_FAIL   = 0
 RESULT_OK     = 1
@@ -137,6 +138,7 @@ class FileLoadTest(object):
         self.total_todo   = 0
         self.total_ok     = 0
         self.total_crash  = 0
+        self.total_skip   = 0
 
     def run_file_load(self, image_file, expected):
         if not os.path.exists(image_file):
@@ -227,7 +229,7 @@ class FileLoadTest(object):
             elif expected_str == 'EXPECTED_TODO':
                 data[1] = EXPECTED_TODO
             elif expected_str == 'SKIP':
-                continue
+                data[1] = EXPECTED_SKIP
             else:
                 # Assume that anything else is supposed to load OK
                 data[1] = EXPECTED_OK
@@ -240,6 +242,7 @@ class FileLoadTest(object):
         test_ok    = 0
         test_todo  = 0
         test_crash = 0
+        test_skip  = 0
         test_total = 0
         test_images_list = self.load_test_images(test_images)
         if not test_images_list:
@@ -247,20 +250,30 @@ class FileLoadTest(object):
             test_total += 1
             test_fail  += 1
             test_crash += 1
+            test_skip += 1
             self.total_failed += test_fail
             self.total_crash  += test_crash
+            self.total_skip  += test_skip
             msg = f"No images found for '{test_description}'.'"
             self.log.error(msg)
             return
         test_total = len(test_images_list)
 
         for imgfile, expected in test_images_list:
-            test_result = self.run_file_load(self.data_root + image_folder + imgfile, expected)
             el = Element("testcase")
             el.set('classname', self.testsuite.get('classname', 'unknown'))
             el.set('name', image_folder + imgfile)
             el.set('file', imgfile)
             self.testsuite.append(el)
+
+            if expected == EXPECTED_SKIP:
+                test_skip += 1
+                skipped_el = Element("skipped")
+                skipped_el.set('message', 'File explicit skip')
+                el.append(skipped_el)
+                continue
+
+            test_result = self.run_file_load(self.data_root + image_folder + imgfile, expected)
             if test_result == RESULT_OK:
                 test_ok += 1
             else:
@@ -307,6 +320,7 @@ class FileLoadTest(object):
         self.total_failed += test_fail
         self.total_ok     += test_ok
         self.total_crash  += test_crash
+        self.total_skip   += test_skip
 
     def show_results_total(self):
         msg  = "\n----- Test result totals -----"
@@ -317,6 +331,7 @@ class FileLoadTest(object):
         if self.total_crash > 0:
             msg += f" (including crashes)"
         msg += f"\nTests todo: {self.total_todo}"
+        msg += f"\nTests skipped: {self.total_skip}"
         self.log.message(msg)
 
         msg = ""
@@ -376,6 +391,9 @@ class RunTests(object):
     def get_crash_count(self):
         return self.plugin_test.total_crash
 
+    def get_skipped_count(self):
+        return self.plugin_test.total_skip
+
 
 class GimpTestRunner(object):
     def __init__(self, log, test_type, test_cfg):
@@ -387,6 +405,7 @@ class GimpTestRunner(object):
         self.error_total = 0
         self.todo_total  = 0
         self.crash_total = 0
+        self.skip_total  = 0
 
         self.unexpected_success_images = []
         self.unexpected_failure_images = []
@@ -453,12 +472,13 @@ class GimpTestRunner(object):
                 el.set('tests', str(plugin_tests.test_count))
                 el.set('failures', str(plugin_tests.regression_count))
                 el.set('errors', '0')
-                el.set('skipped', '0')
+                el.set('skipped', str(plugin_tests.get_skipped_count()))
                 root.append(el)
 
                 if plugin_tests.plugin_test is not None:
                     self.todo_total  += plugin_tests.get_todo_count()
                     self.crash_total += plugin_tests.get_crash_count()
+                    self.skip_total  += plugin_tests.get_skipped_count()
                     if plugin_tests.regression_count > 0:
                         temp = plugin_tests.get_unexpected_success_regressions()
                         if len(temp) > 0:
@@ -475,6 +495,7 @@ class GimpTestRunner(object):
         root.set('tests', str(self.tests_total))
         root.set('failures', str(self.error_total))
         root.set('errors', '0')
+        root.set('skipped', str(self.skip_total))
 
         xml.etree.ElementTree.indent(self.xml_tree)
         self.xml_tree.write(self.test_cfg.xml_results_file, 'UTF-8')
@@ -490,6 +511,8 @@ class GimpTestRunner(object):
             msg += f"\nTotal number of crashes: {self.crash_total}"
         if self.todo_total > 0:
             msg += f"\nTotal number of todo tests: {self.todo_total}"
+        if self.skip_total > 0:
+            msg += f"\nTotal number of skipped tests: {self.skip_total}"
         if self.error_total > 0:
             msg += "\n" + self.list_regressions()
         self.print_footer(msg)
