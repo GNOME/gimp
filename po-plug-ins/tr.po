@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-04 15:18+0000\n"
+"POT-Creation-Date: 2026-07-16 17:43+0000\n"
 "PO-Revision-Date: 2026-05-04 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -150,7 +150,7 @@ msgstr "JavaScriptʼte Eklenti Örneği (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2659
 #: plug-ins/common/unit-editor.c:260 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4053 plug-ins/flame/flame.c:824
+#: plug-ins/file-psd/psd-load.c:4064 plug-ins/flame/flame.c:824
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -342,8 +342,8 @@ msgstr "_Izgara"
 
 #: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:741
 #: plug-ins/gfig/gfig-dialog.c:1352 plug-ins/gfig/gfig-menu.ui:31
-#: plug-ins/imagemap/imap_main.c:1588 plug-ins/imagemap/imap-menu.ui:192
-#: plug-ins/imagemap/imap-menu.ui:284
+#: plug-ins/imagemap/imap_main.c:1590 plug-ins/imagemap/imap-menu.ui.in:189
+#: plug-ins/imagemap/imap-menu.ui.in:281
 msgid "Grid"
 msgstr "Izgara"
 
@@ -472,7 +472,7 @@ msgstr "Canlandırmayı iletişim penceresinden ayır"
 msgid "Reload the image"
 msgstr "Görüntüyü yeniden yükle"
 
-#: plug-ins/common/animation-play.c:411 plug-ins/imagemap/imap-menu.ui:26
+#: plug-ins/common/animation-play.c:411 plug-ins/imagemap/imap-menu.ui.in:23
 msgid "Quit"
 msgstr "Çık"
 
@@ -516,7 +516,7 @@ msgstr "Oynatma hızı"
 #. Zoom Options
 #: plug-ins/common/animation-play.c:881
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679
-#: plug-ins/imagemap/imap-menu.ui:271
+#: plug-ins/imagemap/imap-menu.ui.in:268
 msgid "Zoom"
 msgstr "Yakınlaştır"
 
@@ -528,7 +528,7 @@ msgstr "Yeniden Yükle"
 msgid "Detach"
 msgstr "Ayır"
 
-#: plug-ins/common/animation-play.c:893 plug-ins/imagemap/imap-menu.ui:212
+#: plug-ins/common/animation-play.c:893 plug-ins/imagemap/imap-menu.ui.in:209
 msgid "Help"
 msgstr "Yardım"
 
@@ -632,7 +632,7 @@ msgstr "Kesitler"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
 #: plug-ins/file-jpeg/jpeg-load.c:252
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3228 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:3239 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1587
 #: plug-ins/file-tiff/file-tiff-load.c:2441
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1256,10 +1256,10 @@ msgstr "CML Gezgini Parametrelerini Kaydet"
 #: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1512
 #: plug-ins/common/file-raw-data.c:1541 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:722
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:736
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
-#: plug-ins/file-icns/file-icns-export.c:444
+#: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
 #: plug-ins/file-tiff/file-tiff-export.c:1087
@@ -2018,12 +2018,12 @@ msgstr "Boş seçimler üzerinde işlenemiyor."
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
 #: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
 #: plug-ins/common/file-iff.c:277 plug-ins/common/file-lnk.c:200
-#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:190
+#: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:191
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3754
 #: plug-ins/common/file-psp.c:2804 plug-ins/common/file-psp.c:2854
-#: plug-ins/common/file-pvr.c:256 plug-ins/common/file-qoi.c:275
+#: plug-ins/common/file-pvr.c:257 plug-ins/common/file-qoi.c:275
 #: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
 #: plug-ins/common/file-raw-data.c:1844
 #: plug-ins/common/file-seattle-filmworks.c:232
@@ -2035,9 +2035,9 @@ msgstr "Boş seçimler üzerinde işlenemiyor."
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:631
-#: plug-ins/file-icns/file-icns-load.c:684 plug-ins/file-ico/ico-load.c:711
-#: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:643
+#: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:759
+#: plug-ins/file-ico/ico-load.c:909 plug-ins/file-ico/ico-load.c:1129
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
 #: plug-ins/file-psd/psd-export.c:2456 plug-ins/file-psd/psd-load.c:190
 #: plug-ins/file-psd/psd-load.c:195 plug-ins/file-psd/psd-thumb-load.c:82
@@ -2508,7 +2508,7 @@ msgid "Image dimensions too large: width %d x height %d"
 msgstr "Görüntü boyutları çok büyük: genişlik %d x yükseklik %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3607
+#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3618
 #: plug-ins/file-tiff/file-tiff-load.c:1944
 #: plug-ins/file-tiff/file-tiff-load.c:2038
 #: plug-ins/file-tiff/file-tiff-load.c:2226
@@ -2649,8 +2649,8 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
-#: plug-ins/file-icns/file-icns-load.c:623 plug-ins/file-ico/ico-load.c:703
-#: plug-ins/file-ico/ico-load.c:848 plug-ins/file-jpeg/jpeg-load.c:97
+#: plug-ins/file-icns/file-icns-load.c:635 plug-ins/file-ico/ico-load.c:751
+#: plug-ins/file-ico/ico-load.c:901 plug-ins/file-jpeg/jpeg-load.c:97
 #: plug-ins/file-psd/psd-load.c:203
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
@@ -2723,15 +2723,15 @@ msgstr "'%s': EOF (dosya sonu) ya da palet verisi okunurken hata"
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:943 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1822 plug-ins/common/file-jpegxl.c:1389
-#: plug-ins/common/file-pcx.c:1101 plug-ins/common/file-pix.c:636
+#: plug-ins/common/file-pcx.c:1101 plug-ins/common/file-pix.c:649
 #: plug-ins/common/file-png.c:1936 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:794
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:714
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:728
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
 #: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
-#: plug-ins/file-icns/file-icns-export.c:824
+#: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2388
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
@@ -4363,7 +4363,8 @@ msgstr ""
 #: plug-ins/common/file-seattle-filmworks.c:381
 #: plug-ins/common/file-seattle-filmworks.c:393
 #: plug-ins/common/file-seattle-filmworks.c:404
-#: plug-ins/common/file-seattle-filmworks.c:541
+#: plug-ins/common/file-seattle-filmworks.c:544
+#: plug-ins/common/file-seattle-filmworks.c:552
 #, c-format
 msgid "Invalid file."
 msgstr "Geçersiz dosya."
@@ -4533,57 +4534,57 @@ msgstr ""
 "seçenekler kullanılabilir. Yalnızca bir katmanlı görüntüyü dışa "
 "aktarıyorsunuz."
 
-#: plug-ins/common/file-paa.c:150
+#: plug-ins/common/file-paa.c:151
 msgid "PAA Image"
 msgstr "PAA Görüntü"
 
-#: plug-ins/common/file-paa.c:153
+#: plug-ins/common/file-paa.c:154
 msgid "Load file in the PAA file format"
 msgstr "Dosyayı PAA dosya biçiminde yükle"
 
-#: plug-ins/common/file-paa.c:154
+#: plug-ins/common/file-paa.c:155
 msgid "Load file in the Bohemia Interactive PAA file format"
 msgstr "Dosyayı Bohemia Interactive PAA dosya biçiminde yükle"
 
-#: plug-ins/common/file-paa.c:232 plug-ins/common/file-paa.c:269
-#: plug-ins/common/file-paa.c:290 plug-ins/common/file-pcx.c:647
-#: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
-#: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:363
+#: plug-ins/common/file-paa.c:233 plug-ins/common/file-paa.c:270
+#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:647
+#: plug-ins/common/file-pvr.c:311 plug-ins/common/file-pvr.c:354
+#: plug-ins/common/file-pvr.c:366 plug-ins/common/file-tim.c:363
 #: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
 #: plug-ins/common/file-tim.c:538
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "'%s' içindeki başlık okunamadı"
 
-#: plug-ins/common/file-paa.c:255
+#: plug-ins/common/file-paa.c:256
 #, c-format
 msgid "Currently unsupported PAA format: '%d'"
 msgstr "Şu anda desteklenen PAA biçimi: '%d'"
 
-#: plug-ins/common/file-paa.c:305
-#, c-format
-msgid "Couldn't read image data from '%s'"
-msgstr "'%s' dosyasından görüntü verisi okunamadı"
-
-#: plug-ins/common/file-paa.c:313
-msgid "Main surface"
-msgstr "Ana yüzey"
-
-#: plug-ins/common/file-paa.c:341 plug-ins/common/file-paa.c:353
-#: plug-ins/common/file-tim.c:421 plug-ins/common/file-tim.c:451
-#: plug-ins/common/file-tim.c:498 plug-ins/common/file-tim.c:573
-#: plug-ins/common/file-tim.c:612
+#: plug-ins/common/file-paa.c:306 plug-ins/common/file-paa.c:348
+#: plug-ins/common/file-paa.c:360 plug-ins/common/file-tim.c:421
+#: plug-ins/common/file-tim.c:451 plug-ins/common/file-tim.c:498
+#: plug-ins/common/file-tim.c:573 plug-ins/common/file-tim.c:612
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "Bellek ayrılamadı."
 
-#: plug-ins/common/file-paa.c:361
+#: plug-ins/common/file-paa.c:313
+#, c-format
+msgid "Couldn't read image data from '%s'"
+msgstr "'%s' dosyasından görüntü verisi okunamadı"
+
+#: plug-ins/common/file-paa.c:320
+msgid "Main surface"
+msgstr "Ana yüzey"
+
+#: plug-ins/common/file-paa.c:369
 #, c-format
 msgid "Couldn't decompress image data from '%s'"
 msgstr "'%s' dosyasından görüntü verilerinin sıkıştırması açılamadı"
 
-#: plug-ins/common/file-paa.c:437 plug-ins/common/file-paa.c:454
-#: plug-ins/common/file-paa.c:465
+#: plug-ins/common/file-paa.c:445 plug-ins/common/file-paa.c:462
+#: plug-ins/common/file-paa.c:473
 #, c-format
 msgid "Could not read tag"
 msgstr "Etiket okunamadı"
@@ -4999,7 +5000,7 @@ msgstr "Hatalı parola! Lütfen doğru parolayı giriniz:"
 msgid "Could not load '%s': %s"
 msgstr "'%s' yüklenemedi: %s"
 
-#: plug-ins/common/file-pdf-load.c:1095
+#: plug-ins/common/file-pdf-load.c:1101
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Verilen PDF dosyasından sayfa sayısı alınırken hata."
 
@@ -5026,7 +5027,7 @@ msgstr ""
 "Esm Software pix yüklemesi için geçici JPEG dosyası '%s' açılmaya "
 "çalışılırken hata: %s"
 
-#: plug-ins/common/file-pix.c:582
+#: plug-ins/common/file-pix.c:594
 #, c-format
 msgid "Invalid Esm Software PIX file"
 msgstr "Geçersiz Esm Software PIX dosyası"
@@ -5485,13 +5486,13 @@ msgstr "Renk biçimini içe aktar"
 msgid "B/W"
 msgstr "S/B"
 
-#: plug-ins/common/file-ps.c:421 plug-ins/imagemap/imap-menu.ui:101
+#: plug-ins/common/file-ps.c:421 plug-ins/imagemap/imap-menu.ui.in:98
 msgid "Gray"
 msgstr "Gri"
 
 #: plug-ins/common/file-ps.c:422 plug-ins/common/file-xpm.c:520
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:179
-#: plug-ins/imagemap/imap-menu.ui:96 plug-ins/lighting/lighting-main.c:222
+#: plug-ins/imagemap/imap-menu.ui.in:93 plug-ins/lighting/lighting-main.c:222
 #: plug-ins/lighting/lighting-main.c:345 plug-ins/lighting/lighting-main.c:404
 #: plug-ins/lighting/lighting-main.c:463 plug-ins/lighting/lighting-main.c:522
 #: plug-ins/lighting/lighting-main.c:581 plug-ins/lighting/lighting-ui.c:327
@@ -5983,64 +5984,64 @@ msgstr "Kayıp Genel Görüntü Öznitelikleri bloğu."
 msgid "Exporting not implemented yet."
 msgstr "Dışa aktarma henüz gerçeklenmedi."
 
-#: plug-ins/common/file-pvr.c:214
+#: plug-ins/common/file-pvr.c:215
 msgid "PVR Image"
 msgstr "PVR Görüntü"
 
-#: plug-ins/common/file-pvr.c:217
+#: plug-ins/common/file-pvr.c:218
 msgid "Load file in the PVR file format"
 msgstr "Dosyayı PVR dosya biçiminde yükle"
 
-#: plug-ins/common/file-pvr.c:218
+#: plug-ins/common/file-pvr.c:219
 msgid "Load file in the PowerVR texture file format"
 msgstr "Dosyayı PowerVR doku dosyası biçiminde yükle"
 
-#: plug-ins/common/file-pvr.c:324 plug-ins/common/file-pvr.c:334
+#: plug-ins/common/file-pvr.c:325 plug-ins/common/file-pvr.c:335
 #, c-format
 msgid "Could not read GBIX header from '%s'"
 msgstr "'%s' dosyasından GBIX başlığı okunamadı"
 
-#: plug-ins/common/file-pvr.c:343
+#: plug-ins/common/file-pvr.c:344
 #, c-format
 msgid "Unsupported PVR format: %s"
 msgstr "Desteklenmeyen PVR biçimi '%s'"
 
-#: plug-ins/common/file-pvr.c:408
+#: plug-ins/common/file-pvr.c:409
 #, c-format
 msgid "Incomplete PVR header data."
 msgstr "Tamamlanmamış PVR başlık verisi."
 
-#: plug-ins/common/file-pvr.c:436 plug-ins/common/file-pvr.c:569
+#: plug-ins/common/file-pvr.c:437 plug-ins/common/file-pvr.c:572
 #, c-format
 msgid "Dimensions exceed maximum twiddled size of %d"
 msgstr "Boyutlar, ayarlanabilir en büyük %d boyutunu aşıyor"
 
-#: plug-ins/common/file-pvr.c:454
+#: plug-ins/common/file-pvr.c:455
 #, c-format
 msgid "Unable to decode twiddled PVR texture"
 msgstr "Twiddled PVR dokusu kodu çözülemedi"
 
-#: plug-ins/common/file-pvr.c:479 plug-ins/common/file-pvr.c:537
+#: plug-ins/common/file-pvr.c:480 plug-ins/common/file-pvr.c:540
 #, c-format
 msgid "Unable to decode PVR texture"
 msgstr "PVR dokusu kodu çözülemedi"
 
-#: plug-ins/common/file-pvr.c:510
+#: plug-ins/common/file-pvr.c:511
 #, c-format
 msgid "Incomplete PVR codebook data."
 msgstr "Tamamlanmamış PVR kod kitabı verisi."
 
-#: plug-ins/common/file-pvr.c:560
+#: plug-ins/common/file-pvr.c:563
 #, c-format
 msgid "Incomplete PVR data."
 msgstr "Tamamlanmamış PVR verisi."
 
-#: plug-ins/common/file-pvr.c:580
+#: plug-ins/common/file-pvr.c:584
 #, c-format
 msgid "Unable to decode compressed PVR texture"
 msgstr "Sıkıştırılmış PVR dokusu kodu çözülemedi"
 
-#: plug-ins/common/file-pvr.c:598
+#: plug-ins/common/file-pvr.c:602
 #, c-format
 msgid "Unsupported PVR texture format: %d"
 msgstr "Desteklenmeyen PVR desen biçimi: %d"
@@ -6406,7 +6407,7 @@ msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "Sıkıştırılmamış SFW94A biçimi henüz desteklenmiyor."
 
 #: plug-ins/common/file-seattle-filmworks.c:440
-#: plug-ins/common/file-seattle-filmworks.c:556
+#: plug-ins/common/file-seattle-filmworks.c:568
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "SFW görüntüsü dönüştürülemedi."
@@ -6813,7 +6814,7 @@ msgstr "Desteklenmeyen TIM görüntü türü: %d"
 msgid "Could not read palette from '%s'"
 msgstr "Palet '%s' dosyasından okunamadı"
 
-#: plug-ins/common/file-tim.c:706
+#: plug-ins/common/file-tim.c:720
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
@@ -6822,11 +6823,11 @@ msgstr ""
 "'%s' dışa aktarılamadı. TIM dosya biçimi %d pikselden daha geniş ya da uzun "
 "görüntüleri desteklemiyor."
 
-#: plug-ins/common/file-tim.c:924
+#: plug-ins/common/file-tim.c:938
 msgid "Image Origin"
 msgstr "Görüntü Kökeni"
 
-#: plug-ins/common/file-tim.c:939
+#: plug-ins/common/file-tim.c:953
 msgid "Palette Origin"
 msgstr "Palet Kökeni"
 
@@ -6935,7 +6936,7 @@ msgid "Write a comment at the beginning of the file."
 msgstr "Dosyanın başına yorum yaz."
 
 #: plug-ins/common/file-xbm.c:225 plug-ins/common/file-xmc.c:448
-#: plug-ins/common/mail.c:233
+#: plug-ins/common/mail.c:254
 msgid "Co_mment"
 msgstr "Yoru_m"
 
@@ -7901,21 +7902,21 @@ msgstr "Döşemelerin Sayısı"
 msgid "Bevel Edges"
 msgstr "Eğim Kenarları"
 
-#: plug-ins/common/mail.c:186
+#: plug-ins/common/mail.c:207
 msgid "Send by E_mail..."
 msgstr "_Posta ile Gönder..."
 
-#: plug-ins/common/mail.c:191
+#: plug-ins/common/mail.c:212
 msgid "Send the image by email"
 msgstr "Görüntüyü e-posta ile gönder"
 
-#: plug-ins/common/mail.c:193
+#: plug-ins/common/mail.c:214
 msgid "Sendmail is used to send emails and must be properly configured."
 msgstr ""
 "Sendmail, e-posta göndermek için kullanılır ve uygun biçimde "
 "yapılandırılmalıdır."
 
-#: plug-ins/common/mail.c:196
+#: plug-ins/common/mail.c:217
 msgid ""
 "The preferred email composer is used to send emails and must be properly "
 "configured."
@@ -7923,55 +7924,55 @@ msgstr ""
 "Yeğlenen e-posta oluşturucu, e-posta göndermek için kullanılır ve uygun "
 "biçimde yapılandırılmalıdır."
 
-#: plug-ins/common/mail.c:209
+#: plug-ins/common/mail.c:230
 msgid "File_name"
 msgstr "Dosya _adı"
 
-#: plug-ins/common/mail.c:210
+#: plug-ins/common/mail.c:231
 msgid "The name of the file to save the image in"
 msgstr "Görüntünün kaydedileceği dosyanın adı"
 
-#: plug-ins/common/mail.c:215
+#: plug-ins/common/mail.c:236
 msgid "_To"
 msgstr "_Alıcı"
 
-#: plug-ins/common/mail.c:216
+#: plug-ins/common/mail.c:237
 msgid "The email address to send to"
 msgstr "Gönderilecek e-posta adresi"
 
-#: plug-ins/common/mail.c:221
+#: plug-ins/common/mail.c:242
 msgid "_From"
 msgstr "_Gönderen"
 
-#: plug-ins/common/mail.c:222
+#: plug-ins/common/mail.c:243
 msgid "The email address for the From: field"
 msgstr "Gönderen: alanı için e-posta adresi"
 
-#: plug-ins/common/mail.c:227
+#: plug-ins/common/mail.c:248
 msgid "Su_bject"
 msgstr "K_onu"
 
-#: plug-ins/common/mail.c:228
+#: plug-ins/common/mail.c:249
 msgid "The subject"
 msgstr "Konu"
 
-#: plug-ins/common/mail.c:234
+#: plug-ins/common/mail.c:255
 msgid "The comment"
 msgstr "Yorum"
 
-#: plug-ins/common/mail.c:535
+#: plug-ins/common/mail.c:681
 msgid "Send by Email"
 msgstr "E-posta ile Gönder"
 
-#: plug-ins/common/mail.c:539
+#: plug-ins/common/mail.c:685
 msgid "Send"
 msgstr "Gönder"
 
-#: plug-ins/common/mail.c:675
+#: plug-ins/common/mail.c:821
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "dosya uzantısı ya da eksiklik nedeniyle bazı hatalar"
 
-#: plug-ins/common/mail.c:860
+#: plug-ins/common/mail.c:1006
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "(%s) posta gönderme başlatılamadı"
@@ -8667,7 +8668,7 @@ msgid "Type"
 msgstr "Tür"
 
 #: plug-ins/common/sphere-designer.c:2834
-#: plug-ins/imagemap/imap_preferences.c:490 plug-ins/pagecurl/pagecurl.c:228
+#: plug-ins/imagemap/imap_preferences.c:484 plug-ins/pagecurl/pagecurl.c:228
 msgid "Colors"
 msgstr "Renkler"
 
@@ -10372,7 +10373,7 @@ msgstr ""
 "İkiz katman boyutu. \n"
 "Dışa aktarılmayacak"
 
-#: plug-ins/file-icns/file-icns-export.c:320
+#: plug-ins/file-icns/file-icns-export.c:319
 msgid ""
 "Valid ICNS icons sizes are:\n"
 " 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
@@ -10385,18 +10386,18 @@ msgstr ""
 "Diğer boyuttaki katmanlar, dışa aktarılırken yok sayılır."
 
 #. Don't show warning by default
-#: plug-ins/file-icns/file-icns-export.c:328
+#: plug-ins/file-icns/file-icns-export.c:327
 msgid "Export Icons"
 msgstr "Simgeleri Dışa Aktar"
 
-#: plug-ins/file-icns/file-icns-export.c:523
-#: plug-ins/file-icns/file-icns-export.c:541
-#: plug-ins/file-icns/file-icns-export.c:634
+#: plug-ins/file-icns/file-icns-export.c:521
+#: plug-ins/file-icns/file-icns-export.c:539
+#: plug-ins/file-icns/file-icns-export.c:632
 #, c-format
 msgid "Error writing icns: %s"
 msgstr "icns yazılırken hata: %s"
 
-#: plug-ins/file-icns/file-icns-export.c:794
+#: plug-ins/file-icns/file-icns-export.c:791
 #, c-format
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -10406,7 +10407,7 @@ msgstr ""
 "16x16, 18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512, "
 "ya da 1024x1024."
 
-#: plug-ins/file-icns/file-icns-export.c:812
+#: plug-ins/file-icns/file-icns-export.c:809
 #, c-format
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
@@ -10420,14 +10421,14 @@ msgstr ""
 # s1: dosya türü
 # s2: dosya adı
 # s3: hata mesajı
-#: plug-ins/file-icns/file-icns-load.c:535
+#: plug-ins/file-icns/file-icns-load.c:547
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr ""
 "icns yüklemesi için geçici %s dosyası '%s' açılmaya çalışılırken hata: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:676 plug-ins/file-ico/ico-load.c:1068
+#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-ico/ico-load.c:1121
 #: plug-ins/file-jpeg/jpeg-load.c:690 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:620
@@ -10537,8 +10538,8 @@ msgstr "'%lu' bayt okunamadı"
 msgid "Icon #%d has zero width or height"
 msgstr "#%d simgesi sıfır genişlik ya da yükseklikte"
 
-#: plug-ins/file-ico/ico-load.c:902 plug-ins/file-ico/ico-load.c:914
-#: plug-ins/file-ico/ico-load.c:942 plug-ins/file-ico/ico-load.c:954
+#: plug-ins/file-ico/ico-load.c:955 plug-ins/file-ico/ico-load.c:967
+#: plug-ins/file-ico/ico-load.c:995 plug-ins/file-ico/ico-load.c:1007
 #, c-format
 msgid "Invalid ANI metadata"
 msgstr "Geçersiz ANI üst verisi"
@@ -10835,7 +10836,7 @@ msgstr ""
 "Photoshop birden çok katmanlı indeksli görüntüleri desteklemez. Katmanlar "
 "dışa aktarma sırasında birleştirilecek."
 
-#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4092
+#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4103
 msgid "Compatibility Notice"
 msgstr "Uyumluluk Uyarısı"
 
@@ -10938,38 +10939,43 @@ msgstr "Desteklenmeyen veya geçersiz katman maskesi genişliği: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Desteklenmeyen ya da geçersiz katman maskesi boyutu: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3599
+#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3610
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Desteklenmeyen veya geçersiz kanal boyutu"
 
-#: plug-ins/file-psd/psd-load.c:2309 plug-ins/file-psd/psd-load.c:3197
+#: plug-ins/file-psd/psd-load.c:2252
+#, c-format
+msgid "Invalid channel dimensions %u x %u"
+msgstr "Geçersiz kanal boyutları %u x %u"
+
+#: plug-ins/file-psd/psd-load.c:2320 plug-ins/file-psd/psd-load.c:3208
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Desteklenmeyen sıkıştırma kipi: %d"
 
-#: plug-ins/file-psd/psd-load.c:2926
+#: plug-ins/file-psd/psd-load.c:2937
 msgid "Inner Shadow"
 msgstr "İç Gölgeyi Göster"
 
-#: plug-ins/file-psd/psd-load.c:2927
+#: plug-ins/file-psd/psd-load.c:2938
 msgid "imported"
 msgstr "içe aktarıldı"
 
-#: plug-ins/file-psd/psd-load.c:3374
+#: plug-ins/file-psd/psd-load.c:3385
 msgid "Extra"
 msgstr "Ek"
 
-#: plug-ins/file-psd/psd-load.c:3676
+#: plug-ins/file-psd/psd-load.c:3687
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Veri açması başarısız"
 
-#: plug-ins/file-psd/psd-load.c:4069
+#: plug-ins/file-psd/psd-load.c:4080
 msgid "Duotone Import"
 msgstr "Çift Ton İçe Aktarma"
 
-#: plug-ins/file-psd/psd-load.c:4070
+#: plug-ins/file-psd/psd-load.c:4081
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10979,7 +10985,7 @@ msgstr ""
 "Çift ton renk uzayı verileri kaydedildi ve\n"
 "dışa aktarmada yeniden uygulanabilir."
 
-#: plug-ins/file-psd/psd-load.c:4093
+#: plug-ins/file-psd/psd-load.c:4104
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -11249,18 +11255,18 @@ msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
 "GIMP currently supports these RAW loaders:\n"
-"- darktable (http://www.darktable.org/), at least 1.7\n"
-"- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
-"- ART (https://art.pixls.us/)\n"
+"- darktable (https://www.darktable.org/), at least 5.6\n"
+"- RawTherapee (https://rawtherapee.com/), at least 5.2\n"
+"- ART (https://artraweditor.github.io/)\n"
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
-"'%s' dosyalarını açmak için kurulu bir RAW yükleyici yok.\n"
+"'%s' dosyalarını açmak için kurulu RAW yükleyici yok.\n"
 "\n"
 "GIMP aşağıdaki RAW yükleyicilerini desteklemektedir:\n"
-"- darktable (http://www.darktable.org/), en düşük sürüm 1.7\n"
+"- darktable (http://www.darktable.org/), en düşük sürüm 5.6\n"
 "- RawTherapee (http://rawtherapee.com/), en düşük sürüm 5.2\n"
-"- ART (https://art.pixls.us/)\r\n"
+"- ART (https://artraweditor.github.io/)\n"
 "\n"
 "RAW dosyalarını yüklemek için lütfen bunlardan birini kurun."
 
@@ -11662,8 +11668,7 @@ msgstr "'%s' dosyasından renk eşlemi okunamadı"
 msgid ""
 "Indexed TIFFs with color maps larger than 256colors are not yet supported"
 msgstr ""
-"256 renkten çok renk eşlemi olan indeksli TIFF dosyaları henüz "
-"desteklenmiyor"
+"256 renkten çok renk eşlemi olan indeksli TIFF dosyaları henüz desteklenmiyor"
 
 #. Validate number of channels to the same maximum as we use for
 #. * Photoshop. A higher number most likely means a corrupt image
@@ -12703,8 +12708,8 @@ msgid "Create line"
 msgstr "Çizgi oluştur"
 
 #: plug-ins/gfig/gfig-dialog.c:382 plug-ins/gfig/gfig-dialog.c:1429
-#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1605
-#: plug-ins/imagemap/imap-menu.ui:166 plug-ins/imagemap/imap-menu.ui:254
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1607
+#: plug-ins/imagemap/imap-menu.ui.in:163 plug-ins/imagemap/imap-menu.ui.in:251
 msgid "Rectangle"
 msgstr "Dörtgen"
 
@@ -12714,8 +12719,8 @@ msgstr "Dörtgen oluştur"
 
 #: plug-ins/gfig/gfig-dialog.c:384 plug-ins/gfig/gfig-menu.ui:54
 #: plug-ins/gradient-flare/gradient-flare.c:4013
-#: plug-ins/imagemap/imap_main.c:1607 plug-ins/imagemap/imap-menu.ui:171
-#: plug-ins/imagemap/imap-menu.ui:259
+#: plug-ins/imagemap/imap_main.c:1609 plug-ins/imagemap/imap-menu.ui.in:168
+#: plug-ins/imagemap/imap-menu.ui.in:256
 msgid "Circle"
 msgstr "Daire"
 
@@ -12741,8 +12746,8 @@ msgstr "Yay oluştur"
 
 #: plug-ins/gfig/gfig-dialog.c:390 plug-ins/gfig/gfig-menu.ui:69
 #: plug-ins/gradient-flare/gradient-flare.c:4030
-#: plug-ins/imagemap/imap_main.c:1609 plug-ins/imagemap/imap-menu.ui:176
-#: plug-ins/imagemap/imap-menu.ui:264
+#: plug-ins/imagemap/imap_main.c:1611 plug-ins/imagemap/imap-menu.ui.in:173
+#: plug-ins/imagemap/imap-menu.ui.in:261
 msgid "Polygon"
 msgstr "Çokgen"
 
@@ -12789,8 +12794,8 @@ msgstr "Tek noktayı taşı"
 #: plug-ins/gfig/gfig-dialog.c:403 plug-ins/gfig/gfig-dialog.c:1286
 #: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui:47
-#: plug-ins/imagemap/imap-menu.ui:325 plug-ins/imagemap/imap-menu.ui:362
+#: plug-ins/imagemap/imap_main.c:1572 plug-ins/imagemap/imap-menu.ui.in:44
+#: plug-ins/imagemap/imap-menu.ui.in:322 plug-ins/imagemap/imap-menu.ui.in:359
 msgid "Copy"
 msgstr "Kopyala"
 
@@ -13101,42 +13106,41 @@ msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
 "Parazit yüklemesi için geçici '%s' dosyası açılmaya çalışılırken hata: %s"
 
-#: plug-ins/gfig/gfig-menu.ui:6 plug-ins/imagemap/imap-menu.ui:5
+#: plug-ins/gfig/gfig-menu.ui:6 plug-ins/imagemap/imap-menu.ui.in:5
 msgid "File"
 msgstr "Dosya"
 
-#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1555
-#: plug-ins/imagemap/imap-menu.ui:8
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1556
 msgid "Open"
 msgstr "Aç"
 
-#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1557
-#: plug-ins/imagemap/imap-menu.ui:12
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1559
+#: plug-ins/imagemap/imap-menu.ui.in:9
 msgid "Save"
 msgstr "Kaydet"
 
 #: plug-ins/gfig/gfig-menu.ui:16 plug-ins/help-browser/help-menu.ui:58
-#: plug-ins/imagemap/imap-menu.ui:22
+#: plug-ins/imagemap/imap-menu.ui.in:19
 msgid "Close"
 msgstr "Kapat"
 
-#: plug-ins/gfig/gfig-menu.ui:21 plug-ins/imagemap/imap-menu.ui:32
+#: plug-ins/gfig/gfig-menu.ui:21 plug-ins/imagemap/imap-menu.ui.in:29
 msgid "Edit"
 msgstr "Düzenle"
 
 #: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:961
-#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1563
-#: plug-ins/imagemap/imap-menu.ui:35
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1565
+#: plug-ins/imagemap/imap-menu.ui.in:32
 msgid "Undo"
 msgstr "Geri Al"
 
 #: plug-ins/gfig/gfig-menu.ui:27 plug-ins/imagemap/imap_cmd_clear.c:50
-#: plug-ins/imagemap/imap-menu.ui:55
+#: plug-ins/imagemap/imap-menu.ui.in:52
 msgid "Clear"
 msgstr "Temizle"
 
-#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1560
-#: plug-ins/imagemap/imap-menu.ui:77
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1562
+#: plug-ins/imagemap/imap-menu.ui.in:74
 msgid "Preferences"
 msgstr "Tercihler"
 
@@ -14285,12 +14289,13 @@ msgid "New"
 msgstr "Yeni"
 
 #: plug-ins/ifs-compose/ifs-compose.c:963 plug-ins/ifs-compose/ifs-menus.ui:35
-#: plug-ins/imagemap/imap_main.c:1565 plug-ins/imagemap/imap-menu.ui:39
+#: plug-ins/imagemap/imap_main.c:1567 plug-ins/imagemap/imap-menu.ui.in:36
 msgid "Redo"
 msgstr "Yinele"
 
 #: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:39
-#: plug-ins/imagemap/imap_cmd_select_all.c:50 plug-ins/imagemap/imap-menu.ui:61
+#: plug-ins/imagemap/imap_cmd_select_all.c:50
+#: plug-ins/imagemap/imap-menu.ui.in:58
 msgid "Select All"
 msgstr "Tümünü Seç"
 
@@ -14413,13 +14418,13 @@ msgstr "Oluştur"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1568 plug-ins/imagemap/imap-menu.ui:43
-#: plug-ins/imagemap/imap-menu.ui:321 plug-ins/imagemap/imap-menu.ui:358
+#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui.in:40
+#: plug-ins/imagemap/imap-menu.ui.in:318 plug-ins/imagemap/imap-menu.ui.in:355
 msgid "Cut"
 msgstr "Kes"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: plug-ins/imagemap/imap-menu.ui:338
+#: plug-ins/imagemap/imap-menu.ui.in:335
 msgid "Delete Point"
 msgstr "Nokta sil"
 
@@ -14531,14 +14536,14 @@ msgid "Guides"
 msgstr "Kılavuzlar"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:61
-#: plug-ins/imagemap/imap-menu.ui:334
+#: plug-ins/imagemap/imap-menu.ui.in:331
 msgid "Insert Point"
 msgstr "Nokta Ekle"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:54
-#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui:233
-#: plug-ins/imagemap/imap-menu.ui:317 plug-ins/imagemap/imap-menu.ui:354
+#: plug-ins/imagemap/imap_menu.c:178 plug-ins/imagemap/imap-menu.ui.in:230
+#: plug-ins/imagemap/imap-menu.ui.in:314 plug-ins/imagemap/imap-menu.ui.in:351
 msgid "Move Down"
 msgstr "Aşağı Taşı"
 
@@ -14556,13 +14561,13 @@ msgstr "Öne Taşı"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:54 plug-ins/imagemap/imap_menu.c:176
-#: plug-ins/imagemap/imap-menu.ui:229 plug-ins/imagemap/imap-menu.ui:313
-#: plug-ins/imagemap/imap-menu.ui:350
+#: plug-ins/imagemap/imap-menu.ui.in:226 plug-ins/imagemap/imap-menu.ui.in:310
+#: plug-ins/imagemap/imap-menu.ui.in:347
 msgid "Move Up"
 msgstr "Yukarı Taşı"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1572
-#: plug-ins/imagemap/imap-menu.ui:51 plug-ins/imagemap/imap-menu.ui:296
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1574
+#: plug-ins/imagemap/imap-menu.ui.in:48 plug-ins/imagemap/imap-menu.ui.in:293
 msgid "Paste"
 msgstr "Yapıştır"
 
@@ -14780,55 +14785,55 @@ msgstr "Dosya okunamadı:"
 msgid "URL: %s"
 msgstr "Adres: %s"
 
-#: plug-ins/imagemap/imap_main.c:1575 plug-ins/imagemap/imap-menu.ui:108
-#: plug-ins/imagemap/imap-menu.ui:274
+#: plug-ins/imagemap/imap_main.c:1577 plug-ins/imagemap/imap-menu.ui.in:105
+#: plug-ins/imagemap/imap-menu.ui.in:271
 msgid "Zoom In"
 msgstr "Yakınlaştır"
 
-#: plug-ins/imagemap/imap_main.c:1577 plug-ins/imagemap/imap-menu.ui:112
-#: plug-ins/imagemap/imap-menu.ui:278
+#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap-menu.ui.in:109
+#: plug-ins/imagemap/imap-menu.ui.in:275
 msgid "Zoom Out"
 msgstr "Uzaklaştır"
 
-#: plug-ins/imagemap/imap_main.c:1580
+#: plug-ins/imagemap/imap_main.c:1582
 msgid "Edit Map Info"
 msgstr "Eşlem Bilgisini Düzenle"
 
-#: plug-ins/imagemap/imap_main.c:1583
+#: plug-ins/imagemap/imap_main.c:1585
 msgid "Move Area to Front"
 msgstr "Ön Bölgeye Taşı"
 
-#: plug-ins/imagemap/imap_main.c:1585
+#: plug-ins/imagemap/imap_main.c:1587
 msgid "Move Area to Bottom"
 msgstr "En Alt Bölgeye Taşı"
 
-#: plug-ins/imagemap/imap_main.c:1603 plug-ins/imagemap/imap-menu.ui:161
-#: plug-ins/imagemap/imap-menu.ui:249
+#: plug-ins/imagemap/imap_main.c:1605 plug-ins/imagemap/imap-menu.ui.in:158
+#: plug-ins/imagemap/imap-menu.ui.in:246
 msgid "Arrow"
 msgstr "Ok"
 
-#: plug-ins/imagemap/imap_main.c:1603
+#: plug-ins/imagemap/imap_main.c:1605
 msgid "Select Existing Area"
 msgstr "Var Olan Alanı Seç"
 
-#: plug-ins/imagemap/imap_main.c:1605
+#: plug-ins/imagemap/imap_main.c:1607
 msgid "Define Rectangle area"
 msgstr "Dikdörtgen alanı tanımla"
 
-#: plug-ins/imagemap/imap_main.c:1607
+#: plug-ins/imagemap/imap_main.c:1609
 msgid "Define Circle/Oval area"
 msgstr "Daire/oval alanı tanımla"
 
-#: plug-ins/imagemap/imap_main.c:1609
+#: plug-ins/imagemap/imap_main.c:1611
 msgid "Define Polygon area"
 msgstr "Çokgen alanı tanımla"
 
-#: plug-ins/imagemap/imap_main.c:1612 plug-ins/imagemap/imap_menu.c:180
-#: plug-ins/imagemap/imap-menu.ui:305 plug-ins/imagemap/imap-menu.ui:342
+#: plug-ins/imagemap/imap_main.c:1614 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap-menu.ui.in:302 plug-ins/imagemap/imap-menu.ui.in:339
 msgid "Edit Area Info..."
 msgstr "Alan Bilgisini Düzenle..."
 
-#: plug-ins/imagemap/imap_main.c:1612 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1614 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Seçili alan bilgisini düzenle"
 
@@ -14862,83 +14867,83 @@ msgstr "_Ekle"
 msgid "A_ppend"
 msgstr "So_na ekle"
 
-#: plug-ins/imagemap/imap_preferences.c:293
+#: plug-ins/imagemap/imap_preferences.c:287
 msgid "Couldn't save resource file:"
 msgstr "Kaynak dosya kaydedilemedi:"
 
-#: plug-ins/imagemap/imap_preferences.c:417
+#: plug-ins/imagemap/imap_preferences.c:411
 msgid "General"
 msgstr "Genel"
 
-#: plug-ins/imagemap/imap_preferences.c:421
+#: plug-ins/imagemap/imap_preferences.c:415
 msgid "Default Map Type"
 msgstr "Öntanımlı Eşlem Türü"
 
-#: plug-ins/imagemap/imap_preferences.c:440
+#: plug-ins/imagemap/imap_preferences.c:434
 msgid "_Prompt for area info"
 msgstr "_Alan bilgisi için bilgi istemi"
 
-#: plug-ins/imagemap/imap_preferences.c:442
+#: plug-ins/imagemap/imap_preferences.c:436
 msgid "_Require default URL"
 msgstr "Öntanımlı URL ge_rekli"
 
-#: plug-ins/imagemap/imap_preferences.c:444
+#: plug-ins/imagemap/imap_preferences.c:438
 msgid "Show area _handles"
 msgstr "Alan _işleçlerini göster"
 
-#: plug-ins/imagemap/imap_preferences.c:446
+#: plug-ins/imagemap/imap_preferences.c:440
 msgid "_Keep NCSA circles true"
 msgstr "NCSA çemberlerini tam olarak _koru"
 
-#: plug-ins/imagemap/imap_preferences.c:448
+#: plug-ins/imagemap/imap_preferences.c:442
 msgid "Show area URL _tip"
 msgstr "URL ö_nerisi alanını göster"
 
-#: plug-ins/imagemap/imap_preferences.c:451
+#: plug-ins/imagemap/imap_preferences.c:445
 msgid "_Use double-sized grab handles"
 msgstr "İki katı boyutlu tutacakları _kullan"
 
-#: plug-ins/imagemap/imap_preferences.c:458
+#: plug-ins/imagemap/imap_preferences.c:452
 msgid "Menu"
 msgstr "Menü"
 
-#: plug-ins/imagemap/imap_preferences.c:462
+#: plug-ins/imagemap/imap_preferences.c:456
 msgid "Number of _undo levels (1 - 99):"
 msgstr "_Geri alma düzeylerinin sayısı (1-99):"
 
-#: plug-ins/imagemap/imap_preferences.c:467
+#: plug-ins/imagemap/imap_preferences.c:461
 msgid "Number of M_RU entries (1 - 16):"
 msgstr "M_RU girişlerinin sayısı (1 - 16):"
 
-#: plug-ins/imagemap/imap_preferences.c:476
+#: plug-ins/imagemap/imap_preferences.c:470
 msgid "Select Color"
 msgstr "Renk Seç"
 
-#: plug-ins/imagemap/imap_preferences.c:492
+#: plug-ins/imagemap/imap_preferences.c:486
 msgid "Normal:"
 msgstr "Normal:"
 
-#: plug-ins/imagemap/imap_preferences.c:496
+#: plug-ins/imagemap/imap_preferences.c:490
 msgid "Selected:"
 msgstr "Seçili:"
 
-#: plug-ins/imagemap/imap_preferences.c:500
+#: plug-ins/imagemap/imap_preferences.c:494
 msgid "Interaction:"
 msgstr "Etkileşim:"
 
-#: plug-ins/imagemap/imap_preferences.c:509
+#: plug-ins/imagemap/imap_preferences.c:503
 msgid "Co_ntiguous Region"
 msgstr "Bi_tişik Bölge"
 
-#: plug-ins/imagemap/imap_preferences.c:513
+#: plug-ins/imagemap/imap_preferences.c:507
 msgid "_Threshold:"
 msgstr "_Eşik:"
 
-#: plug-ins/imagemap/imap_preferences.c:515
+#: plug-ins/imagemap/imap_preferences.c:509
 msgid "_Automatically convert"
 msgstr "_Kendiliğinden dönüştür"
 
-#: plug-ins/imagemap/imap_preferences.c:526
+#: plug-ins/imagemap/imap_preferences.c:520
 msgid "General Preferences"
 msgstr "Genel Tercihler"
 
@@ -15028,95 +15033,95 @@ msgstr "Koordinatlar:"
 msgid "Active Area Size:"
 msgstr "Etkin Alan Boyutu:"
 
-#: plug-ins/imagemap/imap-menu.ui:16
+#: plug-ins/imagemap/imap-menu.ui.in:13
 msgid "Save As"
 msgstr "Farklı Kaydet"
 
-#: plug-ins/imagemap/imap-menu.ui:65
+#: plug-ins/imagemap/imap-menu.ui.in:62
 msgid "Deselect All"
 msgstr "Tüm Seçimi Kaldır"
 
-#: plug-ins/imagemap/imap-menu.ui:71
+#: plug-ins/imagemap/imap-menu.ui.in:68
 msgid "Edit Area Info"
 msgstr "Alan Bilgisini Düzenle"
 
-#: plug-ins/imagemap/imap-menu.ui:83
+#: plug-ins/imagemap/imap-menu.ui.in:80
 msgid "View"
 msgstr "Görünüm"
 
-#: plug-ins/imagemap/imap-menu.ui:86
+#: plug-ins/imagemap/imap-menu.ui.in:83
 msgid "Area List"
 msgstr "Alan Listesi"
 
-#: plug-ins/imagemap/imap-menu.ui:90
+#: plug-ins/imagemap/imap-menu.ui.in:87
 msgid "Source..."
 msgstr "Kaynak..."
 
-#: plug-ins/imagemap/imap-menu.ui:116
+#: plug-ins/imagemap/imap-menu.ui.in:113
 msgid "Zoom To"
 msgstr "Yakınlaştırma Düzeyi"
 
-#: plug-ins/imagemap/imap-menu.ui:119
+#: plug-ins/imagemap/imap-menu.ui.in:116
 msgid "8:1"
 msgstr "8:1"
 
-#: plug-ins/imagemap/imap-menu.ui:124
+#: plug-ins/imagemap/imap-menu.ui.in:121
 msgid "4:1"
 msgstr "4:1"
 
-#: plug-ins/imagemap/imap-menu.ui:129
+#: plug-ins/imagemap/imap-menu.ui.in:126
 msgid "2:1"
 msgstr "2:1"
 
-#: plug-ins/imagemap/imap-menu.ui:134
+#: plug-ins/imagemap/imap-menu.ui.in:131
 msgid "1:1"
 msgstr "1:1"
 
-#: plug-ins/imagemap/imap-menu.ui:139
+#: plug-ins/imagemap/imap-menu.ui.in:136
 msgid "1:2"
 msgstr "1:2"
 
-#: plug-ins/imagemap/imap-menu.ui:144
+#: plug-ins/imagemap/imap-menu.ui.in:141
 msgid "1:4"
 msgstr "1:4"
 
-#: plug-ins/imagemap/imap-menu.ui:149
+#: plug-ins/imagemap/imap-menu.ui.in:146
 msgid "1:8"
 msgstr "1:8"
 
-#: plug-ins/imagemap/imap-menu.ui:158
+#: plug-ins/imagemap/imap-menu.ui.in:155
 msgid "Mappings"
 msgstr "Eşlemeler"
 
-#: plug-ins/imagemap/imap-menu.ui:183 plug-ins/imagemap/imap-menu.ui:242
+#: plug-ins/imagemap/imap-menu.ui.in:180 plug-ins/imagemap/imap-menu.ui.in:239
 msgid "Edit Map Info..."
 msgstr "Eşlem Bilgisini Düzenle..."
 
-#: plug-ins/imagemap/imap-menu.ui:189 plug-ins/imagemap/imap-menu.ui:246
+#: plug-ins/imagemap/imap-menu.ui.in:186 plug-ins/imagemap/imap-menu.ui.in:243
 msgid "Tools"
 msgstr "Araçlar"
 
-#: plug-ins/imagemap/imap-menu.ui:196 plug-ins/imagemap/imap-menu.ui:288
+#: plug-ins/imagemap/imap-menu.ui.in:193 plug-ins/imagemap/imap-menu.ui.in:285
 msgid "Grid Settings..."
 msgstr "Izgara Ayarları..."
 
-#: plug-ins/imagemap/imap-menu.ui:202
+#: plug-ins/imagemap/imap-menu.ui.in:199
 msgid "Use GIMP Guides..."
 msgstr "GIMP Kılavuzlarını Kullan..."
 
-#: plug-ins/imagemap/imap-menu.ui:206 plug-ins/imagemap/imap-menu.ui:292
+#: plug-ins/imagemap/imap-menu.ui.in:203 plug-ins/imagemap/imap-menu.ui.in:289
 msgid "Create Guides..."
 msgstr "Kılavuz Oluştur..."
 
-#: plug-ins/imagemap/imap-menu.ui:215 plug-ins/screenshot/screenshot.c:540
+#: plug-ins/imagemap/imap-menu.ui.in:212 plug-ins/screenshot/screenshot.c:540
 msgid "Contents"
 msgstr "İçerikler"
 
-#: plug-ins/imagemap/imap-menu.ui:219
+#: plug-ins/imagemap/imap-menu.ui.in:216
 msgid "About"
 msgstr "Hakkında"
 
-#: plug-ins/imagemap/imap-menu.ui:309 plug-ins/imagemap/imap-menu.ui:346
+#: plug-ins/imagemap/imap-menu.ui.in:306 plug-ins/imagemap/imap-menu.ui.in:343
 msgid "Delete Area"
 msgstr "Alanı Sil"
 
