@@ -192,10 +192,10 @@ export_image (GFile         *file,
     case GIMP_INDEXEDA_IMAGE:
     case GIMP_INDEXED_IMAGE:
       format   = gimp_drawable_get_format (drawable);
-      MapSize  = 4 * colors;
       cmap     = gimp_palette_get_colormap (gimp_image_get_palette (image),
                                             babl_format ("R'G'B' u8"), &colors,
                                             NULL);
+      MapSize  = 4 * colors;
 
       if (drawable_type == GIMP_INDEXEDA_IMAGE)
         channels = 2;
@@ -1019,9 +1019,9 @@ export_dialog (GimpProcedure *procedure,
       drawable_type == GIMP_INDEXEDA_IMAGE)
     {
       GtkWidget   *hint;
-      const gchar *title   = _("Alpha channel will be ignored.");
-      const gchar *warning = _("Cannot export indexed image with "
+      const gchar *title   = _("Cannot export indexed image with "
                                "transparency in BMP file format.");
+      const gchar *warning = _("Alpha channel will be ignored.");
       gchar       *full_warning;
 
       /* Used to create vbox to store hintbox in */
