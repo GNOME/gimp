@@ -643,8 +643,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.33.tar.gz",
-                            "sha256": "6761af1d9f5d353ab4f0b7497be2643313b36c8f31caec0144bfef198e71e6ab",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.34.tar.gz",
+                            "sha256": "cd7e129868320cc2d033afa920e31202dfe0b8066a5b66661900ccc0f197dfed",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
