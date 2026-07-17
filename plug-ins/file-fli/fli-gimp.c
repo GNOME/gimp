@@ -246,7 +246,7 @@ fli_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_add_int_argument (procedure, "default-delay",
                                        _("_Delay between frames when unspecified"),
-                                       _("(Default delay between frames in "
+                                       _("Default delay between frames in "
                                          "milliseconds"),
                                        1, 10000, 40,
                                        G_PARAM_READWRITE);
