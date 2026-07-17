@@ -51,6 +51,7 @@ ui_tests = [
   { 'name': 'export-image',   'timeout': 300 },
   { 'name': 'color-swap' },
   { 'name': 'layer-add' },
+  { 'name': 'undo-redo' },
 ]
 
 foreach t : ui_tests
