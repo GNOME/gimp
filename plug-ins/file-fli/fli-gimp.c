@@ -126,7 +126,7 @@ static gboolean         export_image         (GFile                 *file,
                                               GimpImage             *image,
                                               GObject               *config,
                                               GError               **error);
-static gboolean         save_dialog          (GimpImage             *image,
+static gboolean         export_dialog        (GimpImage             *image,
                                               GimpProcedure         *procedure,
                                               GObject               *config);
 
@@ -243,6 +243,13 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                                               GIMP_EXPORT_CAN_HANDLE_ALPHA   |
                                               GIMP_EXPORT_CAN_HANDLE_LAYERS,
                                               NULL, NULL, NULL);
+
+      gimp_procedure_add_int_argument (procedure, "default-delay",
+                                       _("_Delay between frames when unspecified"),
+                                       _("(Default delay between frames in "
+                                         "milliseconds"),
+                                       1, 10000, 40,
+                                       G_PARAM_READWRITE);
 
       gimp_procedure_add_int_argument (procedure, "from-frame",
                                        _("_From frame"),
@@ -361,11 +368,11 @@ fli_export (GimpProcedure        *procedure,
     {
       gimp_ui_init (PLUG_IN_BINARY);
 
-      if (! save_dialog (image, procedure, G_OBJECT (config)))
+      if (! export_dialog (image, procedure, G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
     }
 
-  export = gimp_export_options_get_image (options, &image);
+  export    = gimp_export_options_get_image (options, &image);
   drawables = gimp_image_list_layers (image);
 
   if (status == GIMP_PDB_SUCCESS)
@@ -680,11 +687,13 @@ export_image (GFile      *file,
   gint          cnt;
   gint          from_frame;
   gint          to_frame;
+  gint          default_delay;
   gboolean      write_ok = FALSE;
 
   g_object_get (config,
-                "from-frame", &from_frame,
-                "to-frame",   &to_frame,
+                "default-delay", &default_delay,
+                "from-frame",    &from_frame,
+                "to-frame",      &to_frame,
                 NULL);
 
   framelist = gimp_image_list_layers (image);
@@ -721,7 +730,8 @@ export_image (GFile      *file,
     }
 
   background = gimp_context_get_background ();
-  gegl_color_get_pixel (background, babl_format_with_space ("R'G'B' u8", NULL), rgb);
+  gegl_color_get_pixel (background, babl_format_with_space ("R'G'B' u8", NULL),
+                        rgb);
   g_object_unref (background);
 
   switch (gimp_image_get_base_type (image))
@@ -738,7 +748,9 @@ export_image (GFile      *file,
     case GIMP_INDEXED:
       max = MAXDIFF;
       bg = 0;
-      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image), babl_format ("R'G'B' u8"), &colors, NULL);
+      cmap = gimp_palette_get_colormap (gimp_image_get_palette (image),
+                                        babl_format ("R'G'B' u8"), &colors,
+                                        NULL);
       for (i = 0; i < MIN (colors, 256); i++)
         {
           cm[i*3+0] = cmap[i*3+0];
@@ -786,6 +798,9 @@ export_image (GFile      *file,
   if ((fli_header.width == 320) && (fli_header.height == 200))
     {
       fli_header.magic = HEADER_FLI;
+
+      /* Convert default delay to 1/70s for FLI */
+      default_delay *= 70;
     }
   else
     {
@@ -793,7 +808,7 @@ export_image (GFile      *file,
     }
   fli_header.depth    = 8;  /* I've never seen a depth != 8 */
   fli_header.flags    = 3;
-  fli_header.speed    = 1000 / 25;
+  fli_header.speed    = default_delay;
   fli_header.created  = 0;  /* program ID. not necessary... */
   fli_header.updated  = 0;  /* date in MS-DOS format. ignore...*/
   fli_header.aspect_x = 1;  /* aspect ratio. Will be added as soon.. */
@@ -961,9 +976,9 @@ load_dialog (GFile         *file,
 }
 
 static gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
-             GObject       *config)
+export_dialog (GimpImage     *image,
+               GimpProcedure *procedure,
+               GObject       *config)
 {
   GtkWidget  *dialog;
   GimpLayer **layers;
