@@ -43,13 +43,18 @@ Core:
   * Added support of dashboard backtraces on Windows ARM64.
   * Krita KPL palette import support added.
   * Work started on a new project format.
+  * Do not perform the (wrong) optimization replacing pass-through by
+    the Normal layer mode for layers with effects.
+  * Dashboard backtraces now support macOS.
 
 Tools:
 
   * Gradient tool: new option "Editable gradient" to apply the gradient
     non-destructively.
   * Heal tool: healing behaves more as expected near edges.
-  * Text tool: allow selecting with Shift-Click.
+  * Text tool:
+    - Allow selecting with Shift-Click.
+    - Preview text layer content while Alt-dragging.
   * Transform tools: add a tooltip on the chain icon to better explain
     what it does.
   * MyPaint Brush tool: new "Spectral Blending" checkbox and "Pigment"
@@ -87,6 +92,12 @@ Graphical User Interface:
   * Icon picker widget: the file filter name is now titled "Image
     files".
   * Multiple selected layers are now added to a new group.
+  * Navigation dockable: grab back focus on the view, after using the
+    zoom slider.
+  * Patterns which are smaller than the preview area (in 1 or 2
+    dimensions) will now fill the full area by repeating themselves,
+    since they are meant to be tileable anyway. It makes for nicer
+    pattern previews.
 
 Plug-Ins:
 
@@ -107,12 +118,15 @@ Plug-Ins:
       partial support.
     - We now load and parse PSD descriptors, which brought us:
       + Layer effects loading: includes so far support of Drop Shadow,
-        Solid Fill, Inner Shadow, Outer Glow, Partial Stroke layer effects.
+        Solid Fill, Inner Shadow, Inner Glow (versions 0, 1 and 2),
+        Outer Glow, Partial Stroke layer effects.
       + Placed and linked layer resources: support of external link
         layers (embedded files are not supported at this time).
       + TXT2 layer resources
       + Compositor layer resources
     - Added 32-bit precision support for export.
+    - Import solid color ("SoCo") fill layers as pass-through group
+      layers with effects.
   * New import support for MacPaint images.
   * GBR: fix exporting grayscale GBRs with alpha channels.
   * file-raw-data: various code improvements.
@@ -171,6 +185,15 @@ Plug-Ins:
   * NL Filter: alpha restriction added, allowing the plug-in to work on
     all RGB and grayscale images, with or without alpha.
   * MNG: initial import support (we only had export support until now).
+  * file-csource: new GUI option "Escape trigraphs" to escape tri-graphs
+    which have been removed in C23 (but compilers are still checking for
+    this syntax and will warn you when they find trigraphs in code).
+  * BMP: when exporting grayscale or indexed image with alpha, do not
+    popup an extra warning dialog anymore. This was transformed to a
+    simple warning integrated in the main BMP export dialog.
+  * FLC: new "Delay between frames when unspecified" option to specify
+    delay in FLC export. The int argument is available non-interactively
+    too as "default-delay" argument.
 
 API:
 
@@ -234,3 +257,5 @@ Build:
     messages.
   * meson-health, branches-check, file-plug-in-tests and abidiff CI jobs
     are skipped for commits pushed by the GNOME Translation Robot.
+  * Expose duration of each image plug-in test on junit report to make
+    easier to debug these, especially when one gets stuck.
