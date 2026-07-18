@@ -2292,6 +2292,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
       {
         GeglBuffer *src_buffer;
         GeglBuffer *dest_buffer;
+        const Babl *format;
 
         if (! gimp_drawable_is_gray (drawable))
           {
@@ -2316,7 +2317,14 @@ gimp_layer_create_mask (GimpLayer       *layer,
             g_object_ref (src_buffer);
           }
 
+        format = gimp_babl_format (GIMP_GRAY,
+                                   gimp_drawable_get_precision (drawable),
+                                   FALSE,
+                                   gimp_drawable_get_space (drawable));
+
         dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+        /* make sure no gamma conversion happens */
+        gegl_buffer_set_format (dest_buffer, format);
 
         if (gimp_drawable_has_alpha (drawable))
           {
@@ -2333,6 +2341,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
             gimp_gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE,
                                    dest_buffer, NULL);
           }
+        gegl_buffer_set_format (dest_buffer, NULL);
 
         g_object_unref (src_buffer);
       }
