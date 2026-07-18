@@ -70,6 +70,9 @@ gimp_widgets_init (GimpHelpFunc           standard_help_func,
   GList       *icons   = NULL;
   const gchar *cat_dir;
   gchar       *base_dir;
+  const gchar *gimp_data_dir;
+  gchar       *rel_base_dir;
+  gboolean     base_dir_found = FALSE;
   gchar       *path;
   GdkPixbuf   *pixbuf;
   GError      *error = NULL;
@@ -96,10 +99,26 @@ gimp_widgets_init (GimpHelpFunc           standard_help_func,
   else
     {
       cat_dir  = "apps";
+
+      /* First, try to use GIMP3_DATADIR since we don't parse XDG_DATA_DIRS. See: #13412 */
+      gimp_data_dir  = g_getenv ("GIMP3_DATADIR");
+      if (gimp_data_dir)
+        {
+          rel_base_dir = g_build_filename (gimp_data_dir, "..", "..", "icons", "hicolor", NULL);
+          base_dir = g_canonicalize_filename (rel_base_dir, NULL);
+          g_free (rel_base_dir);
+          if (g_file_test (base_dir, G_FILE_TEST_IS_DIR))
+            base_dir_found = TRUE;
+          else
+            g_free (base_dir);
+        }
+
+      /* Fallback if environment variable wasn't set, or the directory didn't exist */
+      if (!base_dir_found)
 #ifdef ENABLE_RELOCATABLE_RESOURCES
-      base_dir = g_build_filename (gimp_installation_directory (), "share", "icons", "hicolor", NULL);
+        base_dir = g_build_filename (gimp_installation_directory (), "share", "icons", "hicolor", NULL);
 #else
-      base_dir = g_build_filename (DATAROOTDIR, "icons", "hicolor", NULL);
+        base_dir = g_build_filename (DATAROOTDIR, "icons", "hicolor", NULL);
 #endif
     }
 
