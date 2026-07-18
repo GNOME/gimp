@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-16 17:11+0000\n"
-"PO-Revision-Date: 2026-07-17 07:53+0800\n"
+"POT-Creation-Date: 2026-07-17 20:44+0000\n"
+"PO-Revision-Date: 2026-07-18 09:31+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1235,7 +1235,7 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:737
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
-#: plug-ins/file-bmp/bmp-export.c:301 plug-ins/file-fli/fli-gimp.c:808
+#: plug-ins/file-bmp/bmp-export.c:301 plug-ins/file-fli/fli-gimp.c:823
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
 #: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2534
@@ -1989,8 +1989,8 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-cin/cineon-lib.c:90 plug-ins/file-cin/dpx-lib.c:131
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
-#: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:643
+#: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:447
+#: plug-ins/file-fli/fli-gimp.c:498 plug-ins/file-icns/file-icns-load.c:643
 #: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:759
 #: plug-ins/file-ico/ico-load.c:909 plug-ins/file-ico/ico-load.c:1129
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711
@@ -2598,7 +2598,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/common/file-xmc.c:646 plug-ins/common/file-xpm.c:360
 #: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
 #: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247
-#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:635
+#: plug-ins/file-fli/fli-gimp.c:490 plug-ins/file-icns/file-icns-load.c:635
 #: plug-ins/file-ico/ico-load.c:751 plug-ins/file-ico/ico-load.c:901
 #: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:227
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
@@ -2677,7 +2677,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:729
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:293
-#: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:775
+#: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:787
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
 #: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2472
@@ -3141,7 +3141,7 @@ msgstr "重复次数(_N)"
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
 msgstr "（GIF 动画）重复的次数（如果“loop”为 TRUE 则忽略该选项）"
 
-#: plug-ins/common/file-gif-export.c:211
+#: plug-ins/common/file-gif-export.c:211 plug-ins/file-fli/fli-gimp.c:248
 msgid "_Delay between frames when unspecified"
 msgstr "未指定时帧之间的延时(_D)"
 
@@ -4550,7 +4550,7 @@ msgstr "当前不支持的 PAA 格式：“%d”"
 #: plug-ins/common/file-tim.c:451 plug-ins/common/file-tim.c:498
 #: plug-ins/common/file-tim.c:574 plug-ins/common/file-tim.c:613
 #: plug-ins/file-cin/cineon-lib.c:169 plug-ins/file-cin/dpx-lib.c:280
-#: plug-ins/file-fli/fli-gimp.c:550 plug-ins/file-fli/fli-gimp.c:819
+#: plug-ins/file-fli/fli-gimp.c:557 plug-ins/file-fli/fli-gimp.c:834
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "无法分配内存。"
@@ -10127,7 +10127,7 @@ msgstr "加载 FLI 影片"
 msgid "This is an experimental plug-in to handle FLI movies"
 msgstr "这是处理 FLI 影片的试验性插件"
 
-#: plug-ins/file-fli/fli-gimp.c:203 plug-ins/file-fli/fli-gimp.c:248
+#: plug-ins/file-fli/fli-gimp.c:203 plug-ins/file-fli/fli-gimp.c:255
 msgid "_From frame"
 msgstr "起始帧(_F)"
 
@@ -10135,7 +10135,7 @@ msgstr "起始帧(_F)"
 msgid "Load beginning from this frame"
 msgstr "从该帧开始加载"
 
-#: plug-ins/file-fli/fli-gimp.c:209 plug-ins/file-fli/fli-gimp.c:254
+#: plug-ins/file-fli/fli-gimp.c:209 plug-ins/file-fli/fli-gimp.c:261
 msgid "_To frame"
 msgstr "结束帧(_T)"
 
@@ -10152,24 +10152,28 @@ msgid "Export FLI-movies"
 msgstr "导出 FLI 影片"
 
 #: plug-ins/file-fli/fli-gimp.c:249
+msgid "Default delay between frames in milliseconds"
+msgstr "以毫秒为单位的默认帧间延时"
+
+#: plug-ins/file-fli/fli-gimp.c:256
 msgid "Export beginning from this frame"
 msgstr "从该帧开始导出"
 
-#: plug-ins/file-fli/fli-gimp.c:255
+#: plug-ins/file-fli/fli-gimp.c:262
 msgid "End exporting with this frame (or -1 for all frames)"
 msgstr "到该帧结束导出（或 -1 导出全部帧）"
 
-#: plug-ins/file-fli/fli-gimp.c:577
+#: plug-ins/file-fli/fli-gimp.c:584
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "第 %d 帧（%ums）"
 
-#: plug-ins/file-fli/fli-gimp.c:604
+#: plug-ins/file-fli/fli-gimp.c:611
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "读取第 %d 帧失败。动画可能已损坏。\n"
 
-#: plug-ins/file-fli/fli-gimp.c:945
+#: plug-ins/file-fli/fli-gimp.c:960
 msgid "Open FLIC Animation"
 msgstr "打开 FLIC 动画"
 
