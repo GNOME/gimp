@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-17 13:44+0000\n"
-"PO-Revision-Date: 2026-07-17 21:13+0200\n"
+"POT-Creation-Date: 2026-07-17 20:44+0000\n"
+"PO-Revision-Date: 2026-07-18 08:21+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -10331,8 +10331,8 @@ msgid "Export FLI-movies"
 msgstr "Izvoz FLI-filme"
 
 #: plug-ins/file-fli/fli-gimp.c:249
-msgid "(Default delay between frames in milliseconds"
-msgstr "(Privzeta zakasnitev med sličicami v ms"
+msgid "Default delay between frames in milliseconds"
+msgstr "Privzeta zakasnitev med sličicami v ms"
 
 #: plug-ins/file-fli/fli-gimp.c:256
 msgid "Export beginning from this frame"
