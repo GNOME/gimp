@@ -12,10 +12,10 @@
 # value             helderheid ("brightness" is immers een synoniem voor "value": HSV en HSB zijn dezelfde kleurmodellen)
 # luminosity        helderheid
 msgid ""
-msgstr "Project-Id-Version: GIMP .30\n"
+msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-15 05:08+0000\n"
-"PO-Revision-Date: 2026-07-15 10:03+020011\n"
+"POT-Creation-Date: 2026-07-17 20:44+0000\n"
+"PO-Revision-Date: 2026-07-18 09:25+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -1244,7 +1244,7 @@ msgstr "CML-verkennerparameters opslaan"
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:737
 #: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
-#: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
+#: plug-ins/file-bmp/bmp-export.c:301 plug-ins/file-fli/fli-gimp.c:823
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1636
 #: plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2534
@@ -1985,7 +1985,7 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:801
 #: plug-ins/common/file-png.c:1372 plug-ins/common/file-ps.c:1158
 #: plug-ins/common/file-ps.c:3756 plug-ins/common/file-psp.c:2844
-#: plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:256
+#: plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:257
 #: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
 #: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861
 #: plug-ins/common/file-seattle-filmworks.c:232
@@ -1997,10 +1997,10 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-cin/cineon-lib.c:90 plug-ins/file-cin/dpx-lib.c:131
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
-#: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:643
-#: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:711
-#: plug-ins/file-ico/ico-load.c:856 plug-ins/file-ico/ico-load.c:1076
+#: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:447
+#: plug-ins/file-fli/fli-gimp.c:498 plug-ins/file-icns/file-icns-load.c:643
+#: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:759
+#: plug-ins/file-ico/ico-load.c:909 plug-ins/file-ico/ico-load.c:1129
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711
 #: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
 #: plug-ins/file-psd/psd-load.c:214 plug-ins/file-psd/psd-load.c:219
@@ -2611,8 +2611,8 @@ msgstr "EOF of fout tijdens lezen afbeeldings-header"
 #: plug-ins/common/file-xmc.c:646 plug-ins/common/file-xpm.c:360
 #: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
 #: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247
-#: plug-ins/file-fli/fli-gimp.c:483 plug-ins/file-icns/file-icns-load.c:635
-#: plug-ins/file-ico/ico-load.c:703 plug-ins/file-ico/ico-load.c:848
+#: plug-ins/file-fli/fli-gimp.c:490 plug-ins/file-icns/file-icns-load.c:635
+#: plug-ins/file-ico/ico-load.c:751 plug-ins/file-ico/ico-load.c:901
 #: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:227
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
@@ -2683,14 +2683,14 @@ msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
 #: plug-ins/common/file-gif-export.c:943 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1822 plug-ins/common/file-jpegxl.c:1389
-#: plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:636
+#: plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:649
 #: plug-ins/common/file-png.c:1940 plug-ins/common/file-pnm.c:1632
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:729
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
-#: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
-#: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:775
+#: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:293
+#: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:787
 #: plug-ins/file-icns/file-icns-export.c:821
 #: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1620
 #: plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2472
@@ -3145,7 +3145,7 @@ msgstr "Eindeloze herhaling"
 
 #: plug-ins/common/file-gif-export.c:199
 msgid "(animated gif) Loop infinitely"
-msgstr "(gif animatie) eindeloos herhalen"
+msgstr "(geanimeerde GIF) Eindeloos herhalen"
 
 #: plug-ins/common/file-gif-export.c:204
 msgid "_Number of repeats"
@@ -3155,13 +3155,13 @@ msgstr "_Aantal herhalingen"
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
 msgstr "(gif animatie) Aantal herhalingen (genegeerd als eindeloos herhalen Aan staat)"
 
-#: plug-ins/common/file-gif-export.c:211
+#: plug-ins/common/file-gif-export.c:211 plug-ins/file-fli/fli-gimp.c:248
 msgid "_Delay between frames when unspecified"
 msgstr "_Vertraging tussen frames, indien niet apart opgegeven"
 
 #: plug-ins/common/file-gif-export.c:212
 msgid "(animated gif) Default delay between frames in milliseconds"
-msgstr "_Default vertraging tussen frames in miliseconden"
+msgstr "(geanimeerde GIF) Standaard vertraging tussen frames in milliseconden"
 
 #: plug-ins/common/file-gif-export.c:218
 msgid "Frame disposal _when unspecified"
@@ -3169,7 +3169,7 @@ msgstr "_Frames wissen indien niet apart opgegeven"
 
 #: plug-ins/common/file-gif-export.c:219
 msgid "(animated gif) Default disposal type"
-msgstr "(gif animatie) default overgangsmethode"
+msgstr "(geanimeerde GIF) default overgangsmethode"
 
 #: plug-ins/common/file-gif-export.c:220
 msgid "I don't care"
@@ -3189,7 +3189,7 @@ msgstr "Bovenstaande _vertraging voor alle frames gebruiken"
 
 #: plug-ins/common/file-gif-export.c:235
 msgid "(animated gif) Use specified delay for all frames"
-msgstr "(gif animatie) Deze vertraging voor alle frames gebruiken"
+msgstr "(geanimeerde GIF) Deze vertraging voor alle frames gebruiken"
 
 #: plug-ins/common/file-gif-export.c:240
 msgid "Use dis_posal entered above for all frames"
@@ -4343,7 +4343,8 @@ msgstr "Opent een bestand .lnk en als dat naar een afbeelding verwijst, vraagt h
 #: plug-ins/common/file-seattle-filmworks.c:399
 #: plug-ins/common/file-seattle-filmworks.c:411
 #: plug-ins/common/file-seattle-filmworks.c:422
-#: plug-ins/common/file-seattle-filmworks.c:559
+#: plug-ins/common/file-seattle-filmworks.c:562
+#: plug-ins/common/file-seattle-filmworks.c:570
 #, c-format
 msgid "Invalid file."
 msgstr "Ongeldig bestand."
@@ -4536,8 +4537,8 @@ msgstr "Laad bestand in de bestandsindeling Bohemia Interactive PAA"
 
 #: plug-ins/common/file-paa.c:233 plug-ins/common/file-paa.c:270
 #: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:648
-#: plug-ins/common/file-pvr.c:310 plug-ins/common/file-pvr.c:353
-#: plug-ins/common/file-pvr.c:365 plug-ins/common/file-tim.c:363
+#: plug-ins/common/file-pvr.c:311 plug-ins/common/file-pvr.c:354
+#: plug-ins/common/file-pvr.c:366 plug-ins/common/file-tim.c:363
 #: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
 #: plug-ins/common/file-tim.c:538
 #, c-format
@@ -4554,7 +4555,7 @@ msgstr "Momenteel niet ondersteunde indeling PAA: ‘%d’"
 #: plug-ins/common/file-tim.c:451 plug-ins/common/file-tim.c:498
 #: plug-ins/common/file-tim.c:574 plug-ins/common/file-tim.c:613
 #: plug-ins/file-cin/cineon-lib.c:169 plug-ins/file-cin/dpx-lib.c:280
-#: plug-ins/file-fli/fli-gimp.c:550 plug-ins/file-fli/fli-gimp.c:819
+#: plug-ins/file-fli/fli-gimp.c:557 plug-ins/file-fli/fli-gimp.c:834
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "Geheugen kon niet worden toegewezen."
@@ -5010,7 +5011,7 @@ msgid ""
 "%s"
 msgstr "Fout bij openen tijdelijk JPEG bestand ‘%s’ om Esm Software pix afbeelding te laden: %s"
 
-#: plug-ins/common/file-pix.c:582
+#: plug-ins/common/file-pix.c:594
 #, c-format
 msgid "Invalid Esm Software PIX file"
 msgstr "Ongeldig Esm Software PIX bestand"
@@ -5983,64 +5984,64 @@ msgstr "Ongeldig subblok laag %s, zou ADJUSTMENT EXTENSION moeten zijn"
 msgid "Unsupported adjustment layer type %d"
 msgstr "Niet-ondersteund laagtype %d voor aanpassingslaag"
 
-#: plug-ins/common/file-pvr.c:214
+#: plug-ins/common/file-pvr.c:215
 msgid "PVR Image"
 msgstr "Afbeelding PVR"
 
-#: plug-ins/common/file-pvr.c:217
+#: plug-ins/common/file-pvr.c:218
 msgid "Load file in the PVR file format"
 msgstr "Laad bestand in bestandsindeling PVR"
 
-#: plug-ins/common/file-pvr.c:218
+#: plug-ins/common/file-pvr.c:219
 msgid "Load file in the PowerVR texture file format"
 msgstr "Laad bestand in de bestandsindeling PowerVR texture"
 
-#: plug-ins/common/file-pvr.c:324 plug-ins/common/file-pvr.c:334
+#: plug-ins/common/file-pvr.c:325 plug-ins/common/file-pvr.c:335
 #, c-format
 msgid "Could not read GBIX header from '%s'"
 msgstr "Kon de GBIX-header van ‘%s’ niet lezen"
 
-#: plug-ins/common/file-pvr.c:343
+#: plug-ins/common/file-pvr.c:344
 #, c-format
 msgid "Unsupported PVR format: %s"
 msgstr "Niet ondersteunde indeling PVR: %s"
 
-#: plug-ins/common/file-pvr.c:408
+#: plug-ins/common/file-pvr.c:409
 #, c-format
 msgid "Incomplete PVR header data."
 msgstr "Onvolledige gegevens voor PVR-header."
 
-#: plug-ins/common/file-pvr.c:436 plug-ins/common/file-pvr.c:569
+#: plug-ins/common/file-pvr.c:437 plug-ins/common/file-pvr.c:572
 #, c-format
 msgid "Dimensions exceed maximum twiddled size of %d"
 msgstr "Dimensies overschrijden de maximale getwiste grootte van %d"
 
-#: plug-ins/common/file-pvr.c:454
+#: plug-ins/common/file-pvr.c:455
 #, c-format
 msgid "Unable to decode twiddled PVR texture"
 msgstr "Kan de getwiste PVR texture niet decoderen"
 
-#: plug-ins/common/file-pvr.c:479 plug-ins/common/file-pvr.c:537
+#: plug-ins/common/file-pvr.c:480 plug-ins/common/file-pvr.c:540
 #, c-format
 msgid "Unable to decode PVR texture"
 msgstr "Kan de PVR texture niet decoderen"
 
-#: plug-ins/common/file-pvr.c:510
+#: plug-ins/common/file-pvr.c:511
 #, c-format
 msgid "Incomplete PVR codebook data."
 msgstr "Ovolldige gegevens PVR codeboek."
 
-#: plug-ins/common/file-pvr.c:560
+#: plug-ins/common/file-pvr.c:563
 #, c-format
 msgid "Incomplete PVR data."
 msgstr "Onvolledige gegevens PVR."
 
-#: plug-ins/common/file-pvr.c:580
+#: plug-ins/common/file-pvr.c:584
 #, c-format
 msgid "Unable to decode compressed PVR texture"
 msgstr "Kan de gecomprimeerde PVR texture niet decoderen"
 
-#: plug-ins/common/file-pvr.c:598
+#: plug-ins/common/file-pvr.c:602
 #, c-format
 msgid "Unsupported PVR texture format: %d"
 msgstr "Niet ondersteunde indeling PVR texture: %d"
@@ -6401,7 +6402,7 @@ msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "Niet gecomprimeerde indeling SFW94A wordt nog niet ondersteund."
 
 #: plug-ins/common/file-seattle-filmworks.c:458
-#: plug-ins/common/file-seattle-filmworks.c:574
+#: plug-ins/common/file-seattle-filmworks.c:586
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "Kan afbeelding SFW niet converteren."
@@ -9255,19 +9256,19 @@ msgstr "Kan gescande afbeeldingen niet lezen."
 msgid "WIA driver not found, scanning not available"
 msgstr "WIA stuurprogramma niet gevonden, scannen niet beschikbaar"
 
-#: plug-ins/file-bmp/bmp-export.c:192 plug-ins/file-bmp/bmp-export.c:225
-msgid "Cannot export indexed image with transparency in BMP file format."
-msgstr "Kan geïndexeerde afbeelding met alfakanaal niet exporteren naar BMP-bestandsindeling."
-
-#: plug-ins/file-bmp/bmp-export.c:194 plug-ins/file-bmp/bmp-export.c:227
-msgid "Alpha channel will be ignored."
-msgstr "Alfakanaal zal worden genegeerd."
-
-#: plug-ins/file-bmp/bmp-export.c:597 plug-ins/file-fli/fli.c:91
+#: plug-ins/file-bmp/bmp-export.c:562 plug-ins/file-fli/fli.c:91
 #: plug-ins/file-fli/fli.c:110 plug-ins/file-fli/fli.c:131
 #, c-format
 msgid "Error writing to file."
 msgstr "Fout bij het schrijven van het uitvoerbestand."
+
+#: plug-ins/file-bmp/bmp-export.c:1022
+msgid "Cannot export indexed image with transparency in BMP file format."
+msgstr "Kan geïndexeerde afbeelding met alfakanaal niet exporteren naar BMP-bestandsindeling."
+
+#: plug-ins/file-bmp/bmp-export.c:1024
+msgid "Alpha channel will be ignored."
+msgstr "Alfakanaal zal worden genegeerd."
 
 #: plug-ins/file-bmp/bmp-export.c:1060
 msgid "Compatibility"
@@ -10127,7 +10128,7 @@ msgid "This is an experimental plug-in to handle FLI movies"
 msgstr "Dit is een experimentele plug-in voor het verwerken van FLI-films"
 
 #  Add extra menu items for Gradient
-#: plug-ins/file-fli/fli-gimp.c:203 plug-ins/file-fli/fli-gimp.c:248
+#: plug-ins/file-fli/fli-gimp.c:203 plug-ins/file-fli/fli-gimp.c:255
 msgid "_From frame"
 msgstr "_Uit frame"
 
@@ -10135,7 +10136,7 @@ msgstr "_Uit frame"
 msgid "Load beginning from this frame"
 msgstr "Begin lezen uit dit frame"
 
-#: plug-ins/file-fli/fli-gimp.c:209 plug-ins/file-fli/fli-gimp.c:254
+#: plug-ins/file-fli/fli-gimp.c:209 plug-ins/file-fli/fli-gimp.c:261
 msgid "_To frame"
 msgstr "_Naar frame"
 
@@ -10152,24 +10153,28 @@ msgid "Export FLI-movies"
 msgstr "FLI-film exporteren"
 
 #: plug-ins/file-fli/fli-gimp.c:249
+msgid "Default delay between frames in milliseconds"
+msgstr "Standaard vertraging tussen frames in milliseconden"
+
+#: plug-ins/file-fli/fli-gimp.c:256
 msgid "Export beginning from this frame"
 msgstr "Begin met exporteren vanaf dit frame"
 
-#: plug-ins/file-fli/fli-gimp.c:255
+#: plug-ins/file-fli/fli-gimp.c:262
 msgid "End exporting with this frame (or -1 for all frames)"
 msgstr "Exporteren beëindigen na dit frame (of -1 om alle beelden te exporteren)"
 
-#: plug-ins/file-fli/fli-gimp.c:577
+#: plug-ins/file-fli/fli-gimp.c:584
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "Frame %d (%ums)"
 
-#: plug-ins/file-fli/fli-gimp.c:604
+#: plug-ins/file-fli/fli-gimp.c:611
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Lezen van frame %d mislukt. Mogelijk corrupte animatie.\n"
 
-#: plug-ins/file-fli/fli-gimp.c:945
+#: plug-ins/file-fli/fli-gimp.c:960
 msgid "Open FLIC Animation"
 msgstr "FLIC-animatie openen"
 
@@ -10233,7 +10238,7 @@ msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "Fout bij openen tijdelijk %s bestand ‘%s’ voor laden icns: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-ico/ico-load.c:1068
+#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-ico/ico-load.c:1121
 #: plug-ins/file-jpeg/jpeg-load.c:697 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:620
@@ -10340,8 +10345,8 @@ msgstr "Kon ‘%lu’ bytes niet lezen"
 msgid "Icon #%d has zero width or height"
 msgstr "Pictogram #%d heeft breedte of hoogte van nul"
 
-#: plug-ins/file-ico/ico-load.c:902 plug-ins/file-ico/ico-load.c:914
-#: plug-ins/file-ico/ico-load.c:942 plug-ins/file-ico/ico-load.c:954
+#: plug-ins/file-ico/ico-load.c:955 plug-ins/file-ico/ico-load.c:967
+#: plug-ins/file-ico/ico-load.c:995 plug-ins/file-ico/ico-load.c:1007
 #, c-format
 msgid "Invalid ANI metadata"
 msgstr "Ongeldige ANI metagegevens"
