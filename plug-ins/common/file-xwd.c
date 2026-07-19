@@ -571,8 +571,8 @@ load_image (GFile   *file,
       goto out;
     }
 
-  if (xwdhdr.l_pixmap_width > GIMP_MAX_IMAGE_SIZE
-      || xwdhdr.l_bytes_per_line > GIMP_MAX_IMAGE_SIZE * 3)
+  if (xwdhdr.l_pixmap_width > GIMP_MAX_IMAGE_SIZE ||
+      xwdhdr.l_bytes_per_line > GIMP_MAX_IMAGE_SIZE * 3)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s':\nImage width is larger than GIMP can handle"),
@@ -1364,10 +1364,12 @@ load_xwd_f2_d1_b1 (GFile           *file,
   register guchar *dest, *src;
   guchar           c1, c2, c3, c4;
   gint             width, height, scan_lines, tile_height;
+  gint             bpp;
   gint             i, j, ncols;
   gchar           *temp;
   guchar           bit2byte[256 * 8];
   guchar          *data, *scanline;
+  gsize            allocation;
   gint             err = 0;
   GimpImage       *image;
   GimpLayer       *layer;
@@ -1379,6 +1381,7 @@ load_xwd_f2_d1_b1 (GFile           *file,
 
   width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
+  bpp    = xwdhdr->l_bits_per_pixel;
 
   image = create_new_image (file, width, height, GIMP_INDEXED,
                             GIMP_INDEXED_IMAGE, &layer, &buffer);
@@ -1386,7 +1389,13 @@ load_xwd_f2_d1_b1 (GFile           *file,
   tile_height = gimp_tile_height ();
   data = g_malloc (tile_height * width);
 
-  scanline = g_new (guchar, xwdhdr->l_bytes_per_line + 8);
+  allocation = xwdhdr->l_bytes_per_line + 8;
+  if (ceil (width * (bpp / 8)) > allocation)
+    {
+      g_warning ("XWD: Mismatch between width and bytes per line");
+      allocation = ceil (width * (bpp / 8));
+    }
+  scanline = g_new0 (guchar, allocation);
 
   ncols = xwdhdr->l_colormap_entries;
   if (xwdhdr->l_ncolors < ncols)
@@ -1434,8 +1443,11 @@ load_xwd_f2_d1_b1 (GFile           *file,
               j = xwdhdr->l_bytes_per_line;
               while (j > 0)
                 {
-                  c1 = src[0]; c2 = src[1];
-                  *(src++) = c2; *(src++) = c1;
+                  c1 = src[0];
+                  c2 = src[1];
+
+                  *(src++) = c2;
+                  *(src++) = c1;
                   j -= 2;
                 }
               break;
@@ -1444,8 +1456,15 @@ load_xwd_f2_d1_b1 (GFile           *file,
               j = xwdhdr->l_bytes_per_line;
               while (j > 0)
                 {
-                  c1 = src[0]; c2 = src[1]; c3 = src[2]; c4 = src[3];
-                  *(src++) = c4; *(src++) = c3; *(src++) = c2; *(src++) = c1;
+                  c1 = src[0];
+                  c2 = src[1];
+                  c3 = src[2];
+                  c4 = src[3];
+
+                  *(src++) = c4;
+                  *(src++) = c3;
+                  *(src++) = c2;
+                  *(src++) = c1;
                   j -= 4;
                 }
               break;
@@ -1456,21 +1475,21 @@ load_xwd_f2_d1_b1 (GFile           *file,
       while (j >= 8)
         {
           pix8 = *(src++);
-          memcpy (dest, bit2byte + pix8*8, 8);
+          memcpy (dest, bit2byte + pix8 * 8, 8);
           dest += 8;
           j -= 8;
         }
       if (j > 0)
         {
           pix8 = *(src++);
-          memcpy (dest, bit2byte + pix8*8, j);
+          memcpy (dest, bit2byte + pix8 * 8, j);
           dest += j;
         }
 
       scan_lines++;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double)(i+1) / (double)height);
+        gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
@@ -2243,6 +2262,7 @@ load_xwd_f1_d24_b1 (GFile            *file,
 {
   register guchar *dest, outmask, inmask, do_reverse;
   gint             width, height, i, j, plane, fromright;
+  gint             bpp;
   gint             tile_height, tile_start, tile_end;
   gint             indexed, bytes_per_pixel;
   gint             maxred, maxgreen, maxblue;
@@ -2255,6 +2275,7 @@ load_xwd_f1_d24_b1 (GFile            *file,
   guchar           redmap[256], greenmap[256], bluemap[256];
   guchar           bit_reverse[256];
   guchar          *xwddata, *xwdin, *data;
+  gsize            allocation;
   L_CARD32         pixelval;
   PIXEL_MAP        pixel_map;
   gint             err = 0;
@@ -2266,14 +2287,21 @@ load_xwd_f1_d24_b1 (GFile            *file,
   g_printf ("load_xwd_f1_d24_b1 (%s)\n", gimp_file_get_utf8_name (file));
 #endif
 
-  xwddata = g_malloc (xwdhdr->l_bytes_per_line);
-  if (xwddata == NULL)
-    return NULL;
-
   width           = xwdhdr->l_pixmap_width;
   height          = xwdhdr->l_pixmap_height;
   indexed         = (xwdhdr->l_pixmap_depth <= 8);
   bytes_per_pixel = (indexed ? 1 : 3);
+  bpp             = xwdhdr->l_bits_per_pixel;
+
+  allocation = xwdhdr->l_bytes_per_line;
+  if (ceil (width * (bpp / 8)) > allocation)
+    {
+      g_warning ("XWD: Mismatch between width and bytes per line");
+      allocation = ceil (width * (bpp / 8));
+    }
+  xwddata = g_try_malloc (xwdhdr->l_bytes_per_line);
+  if (xwddata == NULL)
+    return NULL;
 
   for (j = 0; j < 256; j++)   /* Create an array for reversing bits */
     {
@@ -2298,7 +2326,7 @@ load_xwd_f1_d24_b1 (GFile            *file,
     && (bluemask == 0x0000ff);
   redshift = greenshift = blueshift = 0;
 
-  if (!standard_rgb)   /* Do we need to re-map the pixel-values ? */
+  if (! standard_rgb)   /* Do we need to re-map the pixel-values ? */
     {
       /* How to shift RGB to be right aligned ? */
       /* (We rely on the the mask bits are grouped and not mixed) */
@@ -2415,7 +2443,7 @@ load_xwd_f1_d24_b1 (GFile            *file,
 
           for (i = tile_start; i <= tile_end; i++)
             {
-              if (fread (xwddata,xwdhdr->l_bytes_per_line,1,ifp) != 1)
+              if (fread (xwddata, xwdhdr->l_bytes_per_line, 1, ifp) != 1)
                 {
                   err = 1;
                   break;
@@ -2427,10 +2455,12 @@ load_xwd_f1_d24_b1 (GFile            *file,
                 {
                   if (xwdhdr->l_bitmap_bit_order != xwdhdr->l_byte_order)
                     {
-                      j = xwdhdr->l_bytes_per_line/2;
+                      j = xwdhdr->l_bytes_per_line / 2;
                       while (j--)
                         {
-                          inmask = xwdin[0]; xwdin[0] = xwdin[1]; xwdin[1] = inmask;
+                          inmask   = xwdin[0];
+                          xwdin[0] = xwdin[1];
+                          xwdin[1] = inmask;
                           xwdin += 2;
                         }
                       xwdin = xwddata;
@@ -2443,8 +2473,13 @@ load_xwd_f1_d24_b1 (GFile            *file,
                       j = xwdhdr->l_bytes_per_line/4;
                       while (j--)
                         {
-                          inmask = xwdin[0]; xwdin[0] = xwdin[3]; xwdin[3] = inmask;
-                          inmask = xwdin[1]; xwdin[1] = xwdin[2]; xwdin[2] = inmask;
+                          inmask   = xwdin[0];
+                          xwdin[0] = xwdin[3];
+                          xwdin[3] = inmask;
+
+                          inmask   = xwdin[1];
+                          xwdin[1] = xwdin[2];
+                          xwdin[2] = inmask;
                           xwdin += 4;
                         }
                       xwdin = xwddata;
