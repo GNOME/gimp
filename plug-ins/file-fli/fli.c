@@ -269,6 +269,15 @@ fli_write_header (FILE          *f,
               g_prefix_error (error, _("Error writing header. "));
               return FALSE;
             }
+
+          fseek (f, 38, SEEK_SET);
+          if (! fli_write_short (f, fli_header->aspect_x, error) || /* 38 */
+              ! fli_write_short (f, fli_header->aspect_y, error))   /* 40 */
+            {
+              g_prefix_error (error, _("Error writing header. "));
+              return FALSE;
+            }
+
           fseek (f, 80, SEEK_SET);
           if (! fli_write_uint32 (f, fli_header->oframe1, error) || /* 80 */
               ! fli_write_uint32 (f, fli_header->oframe2, error))   /* 84 */
