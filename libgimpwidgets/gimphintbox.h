@@ -37,6 +37,10 @@ G_DECLARE_FINAL_TYPE (GimpHintBox, gimp_hint_box, GIMP, HINT_BOX, GtkBox)
 
 GtkWidget * gimp_hint_box_new      (const gchar *hint);
 
+void        gimp_hint_box_set_hint (GimpHintBox *box,
+                                    const gchar *hint,
+                                    gboolean     use_markup);
+
 
 G_END_DECLS
 

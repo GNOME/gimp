@@ -216,6 +216,7 @@ EXPORTS
 	gimp_help_set_help_data_with_markup
 	gimp_hint_box_get_type
 	gimp_hint_box_new
+	gimp_hint_box_set_hint
 	gimp_icons_init
 	gimp_icons_set_icon_theme
 	gimp_int_adjustment_update

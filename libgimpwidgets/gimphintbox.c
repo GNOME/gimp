@@ -42,15 +42,18 @@ enum
 {
   PROP_0,
   PROP_ICON_NAME,
-  PROP_HINT
+  PROP_HINT,
+  N_PROPS
 };
 
 struct _GimpHintBox
 {
-  GtkBox parent_instance;
+  GtkBox     parent_instance;
 
-  gchar *icon_name;
-  gchar *hint;
+  GtkWidget *label;
+
+  gchar     *icon_name;
+  gchar     *hint;
 };
 
 
@@ -70,6 +73,8 @@ G_DEFINE_TYPE (GimpHintBox, gimp_hint_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_hint_box_parent_class
 
+static GParamSpec *props[N_PROPS] = { NULL, };
+
 
 static void
 gimp_hint_box_class_init (GimpHintBoxClass *klass)
@@ -81,21 +86,22 @@ gimp_hint_box_class_init (GimpHintBoxClass *klass)
   object_class->set_property  = gimp_hint_box_set_property;
   object_class->get_property  = gimp_hint_box_get_property;
 
-  g_object_class_install_property (object_class, PROP_ICON_NAME,
-                                   g_param_spec_string ("icon-name",
-                                                        "Icon Name",
-                                                        "The icon to show next to the hint",
-                                                        GIMP_ICON_DIALOG_INFORMATION,
-                                                        G_PARAM_CONSTRUCT_ONLY |
-                                                        GIMP_PARAM_READWRITE));
+  props[PROP_ICON_NAME] = g_param_spec_string ("icon-name",
+                                               "Icon Name",
+                                               "The icon to show next to the hint",
+                                               GIMP_ICON_DIALOG_INFORMATION,
+                                               G_PARAM_CONSTRUCT_ONLY |
+                                               GIMP_PARAM_READWRITE);
 
-  g_object_class_install_property (object_class, PROP_HINT,
-                                   g_param_spec_string ("hint",
-                                                        "Hint",
-                                                        "The hint to display",
-                                                        NULL,
-                                                        G_PARAM_CONSTRUCT_ONLY |
-                                                        GIMP_PARAM_READWRITE));
+  props[PROP_HINT] = g_param_spec_string ("hint",
+                                          "Hint",
+                                          "The hint to display",
+                                          NULL,
+                                          G_PARAM_CONSTRUCT       |
+                                          G_PARAM_EXPLICIT_NOTIFY |
+                                          GIMP_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
 static void
@@ -141,6 +147,7 @@ gimp_hint_box_constructed (GObject *object)
                              -1);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
+  box->label = label;
 }
 
 static void
@@ -169,7 +176,7 @@ gimp_hint_box_set_property (GObject      *object,
       break;
 
     case PROP_HINT:
-      box->hint = g_value_dup_string (value);
+      gimp_hint_box_set_hint (box, g_value_get_string (value), FALSE);
       break;
 
     default:
@@ -211,7 +218,7 @@ gimp_hint_box_get_property (GObject    *object,
  *
  * Returns: a new widget
  *
- * Since GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_hint_box_new (const gchar *hint)
@@ -221,4 +228,31 @@ gimp_hint_box_new (const gchar *hint)
   return g_object_new (GIMP_TYPE_HINT_BOX,
                        "hint", hint,
                        NULL);
+}
+
+/**
+ * gimp_hint_box_set_hint:
+ * @box:  hint box to modify.
+ * @hint: text to display as a user hint
+ *
+ * Modifies the text displayed by @box.
+ *
+ * Since: 3.4
+ **/
+void
+gimp_hint_box_set_hint (GimpHintBox *box,
+                        const gchar *hint,
+                        gboolean     use_markup)
+{
+  if (g_strcmp0 (box->hint, hint) == 0)
+    return;
+
+  g_object_set (box->label,
+                "label",      hint,
+                "use-markup", use_markup,
+                NULL);
+
+  g_free (box->hint);
+  box->hint = g_strdup (hint);
+  g_object_notify_by_pspec (G_OBJECT (box), props[PROP_HINT]);
 }

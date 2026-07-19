@@ -61,6 +61,7 @@ typedef struct _GimpProcedureDialogPrivate
   GtkWidget           *ok_button;
   GtkWidget           *reset_popover;
   GtkWidget           *load_settings_button;
+  GtkWidget           *warning_box;
 
   GHashTable          *widgets;
   GHashTable          *mnemonics;
@@ -397,6 +398,12 @@ gimp_procedure_dialog_constructed (GObject *object)
   gtk_container_set_border_width (GTK_CONTAINER (content_area), 12);
   gtk_box_set_spacing (GTK_BOX (content_area), 3);
 
+  priv->warning_box = g_object_new (GIMP_TYPE_HINT_BOX,
+                                    "icon-name", GIMP_ICON_DIALOG_WARNING,
+                                    NULL);
+  gtk_box_pack_start (GTK_BOX (content_area), priv->warning_box, FALSE, FALSE, 6);
+  gtk_widget_set_visible (priv->warning_box, FALSE);
+
   /* Bottom box buttons with small additional padding. */
   hbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_box_set_spacing (GTK_BOX (hbox), 6);
@@ -650,6 +657,38 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
   gtk_button_set_label (GTK_BUTTON (priv->ok_button), ok_label);
   gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog),
                                         priv->ok_button, NULL, "ok");
+}
+
+/**
+ * gimp_procedure_dialog_set_warning:
+ * @dialog:  the associated #GimpProcedureDialog.
+ * @warning: a warning text.
+ *
+ * Set a warning text which will be appropriately displayed in @dialog.
+ * If @warning is %NULL, any previously set warning text will be
+ * removed.
+ *
+ * Since: 3.4
+ */
+void
+gimp_procedure_dialog_set_warning (GimpProcedureDialog *dialog,
+                                   const gchar         *warning,
+                                   gboolean             use_markup)
+{
+  GimpProcedureDialogPrivate *priv;
+
+  priv = gimp_procedure_dialog_get_instance_private (dialog);
+
+  if (warning == NULL)
+    {
+      gtk_widget_set_visible (priv->warning_box, FALSE);
+    }
+  else
+    {
+      gimp_hint_box_set_hint (GIMP_HINT_BOX (priv->warning_box),
+                              warning, use_markup);
+      gtk_widget_set_visible (priv->warning_box, TRUE);
+    }
 }
 
 /**
