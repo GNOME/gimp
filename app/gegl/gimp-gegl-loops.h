@@ -112,3 +112,8 @@ void   gimp_gegl_average_color         (GeglBuffer               *buffer,
                                         GeglAbyssPolicy           abyss_policy,
                                         const Babl               *format,
                                         gpointer                  color);
+
+gboolean gimp_gegl_has_alpha           (GeglBuffer               *buffer,
+                                        const GeglRectangle      *rect,
+                                        gboolean                  clip_to_buffer,
+                                        GeglAbyssPolicy           abyss_policy);

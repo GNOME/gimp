@@ -304,6 +304,17 @@ gimp_projection_estimate_memsize (GimpImageBaseType type,
   return bytes * (gint64) width * (gint64) height * 1.33;
 }
 
+gboolean
+gimp_projection_has_alpha (GimpProjection *proj)
+{
+  GeglBuffer *buffer;
+
+  gimp_projection_pickable_flush (GIMP_PICKABLE (proj));
+  buffer = gimp_projection_get_buffer (GIMP_PICKABLE (proj));
+
+  return gimp_gegl_has_alpha (buffer, NULL, TRUE, GEGL_ABYSS_NONE);
+}
+
 
 static void
 gimp_projection_pickable_flush (GimpPickable *pickable)

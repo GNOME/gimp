@@ -3738,6 +3738,20 @@ gimp_image_has_alpha (GimpImage *image)
           (layer && gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))));
 }
 
+/* While gimp_image_has_alpha() is a simple heuristic just checking
+ * number or layers and the alpha channel of the one layer, this will
+ * actually loop through every pixel of the projection and check if any
+ * has transparency. It will necessarily be slower yet should be used
+ * when we want a more accurate answer.
+ */
+gboolean
+gimp_image_has_transparency (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), TRUE);
+
+  return gimp_projection_has_alpha (gimp_image_get_projection (image));
+}
+
 gboolean
 gimp_image_is_empty (GimpImage *image)
 {

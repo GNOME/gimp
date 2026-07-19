@@ -76,3 +76,5 @@ gint64           gimp_projection_estimate_memsize  (GimpImageBaseType  type,
                                                     GimpComponentType  component_type,
                                                     gint               width,
                                                     gint               height);
+
+gboolean         gimp_projection_has_alpha         (GimpProjection    *proj);

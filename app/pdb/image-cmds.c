@@ -1506,6 +1506,28 @@ image_reorder_item_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+image_has_transparency_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      success = gimp_image_has_transparency (image);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 image_flatten_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -4415,6 +4437,31 @@ register_image_procs (GimpPDB *pdb)
                                                  "The new position of the item",
                                                  G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-has-transparency
+   */
+  procedure = gimp_procedure_new (image_has_transparency_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-has-transparency");
+  gimp_procedure_set_static_help (procedure,
+                                  "Verify image transparency.",
+                                  "This procedure will verify if the rendered final image has any transparent pixel.\n"
+                                  "\n"
+                                  "It is a comprehensive pixel per pixel test of the fully composited final image. The image may therefore be multi-layered, with alpha channels and still return %FALSE if all pixels have a fully opaque value (1.0 if floating point precision).",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2026");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

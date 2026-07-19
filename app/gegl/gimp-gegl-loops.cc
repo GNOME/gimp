@@ -1186,4 +1186,65 @@ gimp_gegl_average_color (GeglBuffer          *buffer,
   babl_process (babl_fish (average_format, format), average.color, color, 1);
 }
 
+gboolean
+gimp_gegl_has_alpha (GeglBuffer          *buffer,
+                     const GeglRectangle *rect,
+                     gboolean             clip_to_buffer,
+                     GeglAbyssPolicy      abyss_policy)
+{
+  const Babl    *format;
+  GeglRectangle  roi;
+  gint           has_alpha = 0;
+
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), FALSE);
+
+  format = gegl_buffer_get_format (buffer);
+  if (! babl_format_has_alpha (gegl_buffer_get_format (buffer)))
+    return FALSE;
+
+  format = babl_format_with_space ("A float", babl_format_get_space (format));
+
+  if (! rect)
+    rect = gegl_buffer_get_extent (buffer);
+
+  if (clip_to_buffer)
+    gegl_rectangle_intersect (&roi, rect, gegl_buffer_get_extent (buffer));
+  else
+    roi = *rect;
+
+  gegl_parallel_distribute_area (
+    &roi, PIXELS_PER_THREAD,
+    [&] (const GeglRectangle *area)
+    {
+      GeglBufferIterator *iter;
+
+      iter = gegl_buffer_iterator_new (buffer, area, 0, format,
+                                       GEGL_BUFFER_READ, abyss_policy, 1);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          const gfloat *p     = (const gfloat *) iter->items[0].data;
+          gboolean      found = FALSE;
+
+          for (gint i = 0; i < iter->length; i++)
+            {
+              if (*(p++) != 1.0)
+                {
+                  g_atomic_int_set (&has_alpha, 1);
+                  found = TRUE;
+                  break;
+                }
+            }
+
+          if (found || g_atomic_int_get (&has_alpha) > 0)
+            {
+              gegl_buffer_iterator_stop (iter);
+              break;
+            }
+        }
+    });
+
+  return (has_alpha == 1);
+}
+
 } /* extern "C" */

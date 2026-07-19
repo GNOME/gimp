@@ -520,6 +520,7 @@ EXPORTS
 	gimp_image_grid_set_offset
 	gimp_image_grid_set_spacing
 	gimp_image_grid_set_style
+	gimp_image_has_transparency
 	gimp_image_id_is_valid
 	gimp_image_import_paths_from_file
 	gimp_image_import_paths_from_string

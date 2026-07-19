@@ -1757,6 +1757,47 @@ gimp_image_reorder_item (GimpImage *image,
 }
 
 /**
+ * gimp_image_has_transparency:
+ * @image: The image.
+ *
+ * Verify image transparency.
+ *
+ * This procedure will verify if the rendered final image has any
+ * transparent pixel.
+ *
+ * It is a comprehensive pixel per pixel test of the fully composited
+ * final image. The image may therefore be multi-layered, with alpha
+ * channels and still return %FALSE if all pixels have a fully opaque
+ * value (1.0 if floating point precision).
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.4.0
+ **/
+gboolean
+gimp_image_has_transparency (GimpImage *image)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-image-has-transparency",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_flatten:
  * @image: The image.
  *

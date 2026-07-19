@@ -211,6 +211,7 @@ gint            gimp_image_get_width             (GimpImage          *image);
 gint            gimp_image_get_height            (GimpImage          *image);
 
 gboolean        gimp_image_has_alpha             (GimpImage          *image);
+gboolean        gimp_image_has_transparency      (GimpImage          *image);
 gboolean        gimp_image_is_empty              (GimpImage          *image);
 
 void           gimp_image_set_floating_selection (GimpImage          *image,

@@ -841,6 +841,35 @@ CODE
     );
 }
 
+sub image_has_transparency {
+    $blurb = "Verify image transparency.";
+
+    &jehan_pdb_misc('2026', '3.4.0');
+
+    $help = <<'HELP';
+This procedure will verify if the rendered final image has any transparent pixel.
+
+
+It is a comprehensive pixel per pixel test of the fully composited final
+image. The image may therefore be multi-layered, with alpha channels and
+still return %FALSE if all pixels have a fully opaque value (1.0 if
+floating point precision).
+HELP
+
+    @inargs = (
+    { name => 'image', type => 'image',
+      desc => 'The image' }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  success = gimp_image_has_transparency (image);
+}
+CODE
+    );
+}
+
 sub image_flatten {
     $blurb = <<'BLURB';
 Flatten all visible layers into a single layer. Discard all invisible layers.
@@ -3353,6 +3382,7 @@ CODE
             image_raise_item image_lower_item
             image_raise_item_to_top image_lower_item_to_bottom
             image_reorder_item
+            image_has_transparency
             image_flatten image_merge_visible_layers image_merge_down
             image_get_palette image_set_palette
             image_get_metadata image_set_metadata

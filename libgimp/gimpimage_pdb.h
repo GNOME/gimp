@@ -119,6 +119,7 @@ gboolean                 gimp_image_reorder_item               (GimpImage       
                                                                 GimpItem             *item,
                                                                 GimpItem             *parent,
                                                                 gint                  position);
+gboolean                 gimp_image_has_transparency           (GimpImage            *image);
 GimpLayer*               gimp_image_flatten                    (GimpImage            *image);
 GimpLayer*               gimp_image_merge_visible_layers       (GimpImage            *image,
                                                                 GimpMergeType         merge_type);
