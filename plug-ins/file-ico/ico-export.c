@@ -1565,6 +1565,33 @@ ani_export_image (GFile                *file,
   return GIMP_PDB_SUCCESS;
 }
 
+typedef struct
+{
+  gint index;
+  gint width;
+  gint height;
+  gint depth;
+} IcoSortKey;
+
+static gint
+ico_sort_key_compare (const void *a,
+                      const void *b)
+{
+  const IcoSortKey *ka = (const IcoSortKey *) a;
+  const IcoSortKey *kb = (const IcoSortKey *) b;
+  gint              diff;
+
+  diff = ka->width - kb->width;
+  if (diff != 0)
+    return diff;
+
+  diff = ka->height - kb->height;
+  if (diff != 0)
+    return diff;
+
+  return ka->depth - kb->depth;
+}
+
 GimpPDBStatusType
 shared_save_image (GFile                *file,
                    FILE                 *fp_ani,
@@ -1583,17 +1610,14 @@ shared_save_image (GFile                *file,
                    GError              **error,
                    IcoSaveInfo          *info)
 {
-  FILE          *fp;
-  GList         *iter;
-  gint           width;
-  gint           height;
-  IcoFileHeader  header;
-  IcoFileEntry  *entries;
-  gboolean       saved;
-  gint           i;
-  gint           num_icons;
-  GimpParasite  *parasite = NULL;
-  gchar         *str;
+  FILE         *fp;
+  GList        *iter;
+  IcoFileHeader header;
+  IcoFileEntry *entries;
+  IcoSortKey   *order;
+  gboolean      saved;
+  gint          i;
+  gint          num_icons;
 
   if (! fp_ani &&
       ! ico_save_init (image, run_mode, info,
@@ -1614,15 +1638,12 @@ shared_save_image (GFile                *file,
         return GIMP_PDB_CANCEL;
     }
 
-  num_icons = (fp_ani) ? 1 : info->num_icons;
+  num_icons = fp_ani ? 1 : info->num_icons;
 
-  if (! fp_ani)
-    gimp_progress_init_printf (_("Exporting '%s'"),
-                               gimp_file_get_utf8_name (file));
-
-  /* If saving an .ani file, we append the next icon frame. */
   if (! fp_ani)
     {
+      gimp_progress_init_printf (_("Exporting '%s'"),
+                                 gimp_file_get_utf8_name (file));
       fp = g_fopen (g_file_peek_path (file), "wb");
     }
   else
@@ -1638,99 +1659,92 @@ shared_save_image (GFile                *file,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  header.reserved = 0;
-  header.resource_type = 1;
-  if (info->is_cursor)
-    header.resource_type = 2;
-  header.icon_count = num_icons;
-  if (! ico_write_int16 (fp, &header.reserved, 1)      ||
-      ! ico_write_int16 (fp, &header.resource_type, 1) ||
-      ! ico_write_int16 (fp, &header.icon_count, 1))
+  header.reserved      = 0;
+  header.resource_type = GUINT16_TO_LE (info->is_cursor ? 2 : 1);
+  header.icon_count    = GUINT16_TO_LE (num_icons);
+  if (fwrite (&header, sizeof (IcoFileHeader), 1, fp) <= 0)
     {
       ico_save_info_free (info);
       fclose (fp);
       return GIMP_PDB_EXECUTION_ERROR;
     }
+
+  /* Sort frames small-to-large (width, height, bpp) before writing.
+   * Pre-Vista shell picked the first matching entry, so order matters. */
+  order = g_new (IcoSortKey, num_icons);
+
+  for (iter = info->layers, i = 0;
+       i < num_icons;
+       iter = g_list_next (iter), i++)
+    {
+      order[i].index  = i;
+      order[i].width  = gimp_drawable_get_width (iter->data);
+      order[i].height = gimp_drawable_get_height (iter->data);
+      order[i].depth  = info->depths[i];
+    }
+
+  if (fp_ani)
+    order[0].index = icon_index;
+
+  qsort (order, num_icons, sizeof (IcoSortKey), ico_sort_key_compare);
 
   entries = g_new0 (IcoFileEntry, num_icons);
   if (fwrite (entries, sizeof (IcoFileEntry), num_icons, fp) <= 0)
     {
       ico_save_info_free (info);
       g_free (entries);
+      g_free (order);
       fclose (fp);
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  for (iter = info->layers, i = 0;
-       iter;
-       iter = g_list_next (iter), i++)
+  for (i = 0; i < num_icons; i++)
     {
+      gint  layer_idx = order[i].index;
+      gsize offset    = ftell (fp) - file_offset;
+
       if (! fp_ani)
-        gimp_progress_update ((gdouble)i / (gdouble)info->num_icons);
+        gimp_progress_update ((gdouble) i / (gdouble) num_icons);
 
-      /* If saving .ani file, jump to the correct frame */
-      if (fp_ani)
-        iter = g_list_nth (info->layers, icon_index);
+      iter = g_list_nth (info->layers, layer_idx);
 
-      width = gimp_drawable_get_width (iter->data);
-      height = gimp_drawable_get_height (iter->data);
-      if (width <= 255 && height <= 255)
-        {
-          entries[i].width = width;
-          entries[i].height = height;
-        }
+      entries[i].width      = (order[i].width <= 255) ? order[i].width : 0;
+      entries[i].height     = (order[i].height <= 255) ? order[i].height : 0;
+      entries[i].num_colors = (info->depths[layer_idx] < 8) ?
+                              (1 << info->depths[layer_idx]) : 0;
+      entries[i].reserved   = 0;
+      /* planes/bpp store hot spot coordinates in CUR, color depth in ICO */
+      entries[i].planes = GUINT16_TO_LE (info->is_cursor ?
+                                         info->hot_spot_x[layer_idx] : 1);
+      entries[i].bpp    = GUINT16_TO_LE (info->is_cursor ?
+                                         info->hot_spot_y[layer_idx] :
+                                         info->depths[layer_idx]);
+
+      if (info->compress[layer_idx])
+        saved = ico_write_png (fp, iter->data, info->depths[layer_idx]);
       else
-        {
-          entries[i].width = 0;
-          entries[i].height = 0;
-        }
-      if (info->depths[i] < 8)
-        entries[i].num_colors = 1 << info->depths[i];
-      else
-        entries[i].num_colors = 0;
-      entries[i].reserved = 0;
-      entries[i].planes = 1;
-      entries[i].bpp = info->depths[i];
-      /* .cur file reuses these fields for cursor offsets */
-      if (info->is_cursor)
-        {
-          gint hot_spot_index = icon_index ? icon_index : i;
+        saved = ico_write_icon (fp, iter->data, info->depths[layer_idx]);
 
-          entries[i].planes = info->hot_spot_x[hot_spot_index];
-          entries[i].bpp = info->hot_spot_y[hot_spot_index];
-        }
-      entries[i].offset = ftell (fp) - file_offset;
-
-      if (info->compress[i])
-        saved = ico_write_png (fp, iter->data, info->depths[i]);
-      else
-        saved = ico_write_icon (fp, iter->data, info->depths[i]);
-
-      if (!saved)
+      if (! saved)
         {
           ico_save_info_free (info);
+          g_free (entries);
+          g_free (order);
           fclose (fp);
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
-      entries[i].size = ftell (fp) - file_offset - entries[i].offset;
-
-      if (fp_ani)
-        break;
+      entries[i].size   = GUINT32_TO_LE (ftell (fp) - file_offset - offset);
+      entries[i].offset = GUINT32_TO_LE (offset);
     }
 
-  for (i = 0; i < num_icons; i++)
-    {
-      entries[i].planes = GUINT16_TO_LE (entries[i].planes);
-      entries[i].bpp    = GUINT16_TO_LE (entries[i].bpp);
-      entries[i].size   = GUINT32_TO_LE (entries[i].size);
-      entries[i].offset = GUINT32_TO_LE (entries[i].offset);
-    }
+  g_free (order);
 
   if (fseek (fp, sizeof (IcoFileHeader) + file_offset, SEEK_SET) < 0 ||
       fwrite (entries, sizeof (IcoFileEntry), num_icons, fp) <= 0)
     {
       ico_save_info_free (info);
+      g_free (entries);
       fclose (fp);
       return GIMP_PDB_EXECUTION_ERROR;
     }
@@ -1745,7 +1759,11 @@ shared_save_image (GFile                *file,
            iter;
            iter = g_list_next (iter), i++)
         {
-          str = g_strdup_printf ("%d %d", info->hot_spot_x[i], info->hot_spot_y[i]);
+          gchar        *str;
+          GimpParasite *parasite;
+
+          str = g_strdup_printf ("%d %d",
+                                 info->hot_spot_x[i], info->hot_spot_y[i]);
           parasite = gimp_parasite_new ("cur-hot-spot",
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (str) + 1, (gpointer) str);
@@ -1773,10 +1791,7 @@ shared_save_image (GFile                *file,
         }
     }
 
-  /* If saving .ani file, don't clear until
-   * all icons are saved in ani_save_image ()
-   */
-  if (! file_offset)
+  if (! fp_ani)
     {
       ico_save_info_free (info);
       fclose (fp);
