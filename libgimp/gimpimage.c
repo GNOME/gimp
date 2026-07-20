@@ -184,7 +184,7 @@ gimp_image_is_valid (GimpImage *image)
 }
 
 /**
- * gimp_list_images: (skip)
+ * gimp_list_images: (skip) (attributes skip-reason=provided_by_gimp_get_images_since_703305d2)
  *
  * Returns the list of images currently open.
  *
@@ -215,7 +215,7 @@ gimp_list_images (void)
 }
 
 /**
- * gimp_image_list_layers: (skip)
+ * gimp_image_list_layers: (skip) (attributes skip-reason=provided_by_gimp_image_get_layers_since_703305d2)
  * @image: The image.
  *
  * Returns the list of layers contained in the specified image.
@@ -248,7 +248,7 @@ gimp_image_list_layers (GimpImage *image)
 }
 
 /**
- * gimp_image_list_selected_layers: (skip)
+ * gimp_image_list_selected_layers: (skip) (attributes skip-reason=provided_by_gimp_image_get_selected_layers_since_703305d2)
  * @image: The image.
  *
  * Returns the list of layers selected in the specified image.
@@ -315,7 +315,7 @@ gimp_image_take_selected_layers (GimpImage *image,
 }
 
 /**
- * gimp_image_list_selected_channels: (skip)
+ * gimp_image_list_selected_channels: (skip) (attributes skip-reason=provided_by_gimp_image_get_selected_channels_since_703305d2)
  * @image: The image.
  *
  * Returns the list of channels selected in the specified image.
@@ -381,7 +381,7 @@ gimp_image_take_selected_channels (GimpImage *image,
 }
 
 /**
- * gimp_image_list_selected_paths: (skip)
+ * gimp_image_list_selected_paths: (skip) (attributes skip-reason=provided_by_gimp_image_get_selected_paths_since_703305d2)
  * @image: The image.
  *
  * Returns the list of paths selected in the specified image.
@@ -446,7 +446,7 @@ gimp_image_take_selected_paths (GimpImage *image,
 }
 
 /**
- * gimp_image_list_channels: (skip)
+ * gimp_image_list_channels: (skip) (attributes skip-reason=provided_by_gimp_image_get_channels_since_703305d2)
  * @image: The image.
  *
  * Returns the list of channels contained in the specified image.
@@ -482,7 +482,7 @@ gimp_image_list_channels (GimpImage *image)
 }
 
 /**
- * gimp_image_list_paths: (skip)
+ * gimp_image_list_paths: (skip) (attributes skip-reason=provided_by_gimp_image_get_paths_since_703305d2)
  * @image: The image.
  *
  * Returns the list of paths contained in the specified image.
@@ -515,7 +515,7 @@ gimp_image_list_paths (GimpImage *image)
 }
 
 /**
- * gimp_image_list_selected_drawables: (skip)
+ * gimp_image_list_selected_drawables: (skip) (attributes skip-reason=provided_by_gimp_image_get_selected_drawables_since_703305d2)
  * @image: The image.
  *
  * Returns the list of drawables selected in the specified image.
