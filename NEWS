@@ -127,6 +127,7 @@ Plug-Ins:
     - Added 32-bit precision support for export.
     - Import solid color ("SoCo") fill layers as pass-through group
       layers with effects.
+    - Initial text layer import support!
   * New import support for MacPaint images.
   * GBR: fix exporting grayscale GBRs with alpha channels.
   * file-raw-data: various code improvements.
@@ -191,9 +192,11 @@ Plug-Ins:
   * BMP: when exporting grayscale or indexed image with alpha, do not
     popup an extra warning dialog anymore. This was transformed to a
     simple warning integrated in the main BMP export dialog.
-  * FLC: new "Delay between frames when unspecified" option to specify
-    delay in FLC export. The int argument is available non-interactively
-    too as "default-delay" argument.
+  * FLC:
+    - New "Delay between frames when unspecified" option to specify
+      delay in FLC export. The int argument is available
+      non-interactively too as "default-delay" argument.
+    - Store aspect ratio in file.
 
 API:
 
@@ -203,6 +206,8 @@ API:
       system to "help-id" and "help-func".
     - GimpIntRadioFrame now organize radio buttons internally as a flow
       box and implements the GtkOrientable interface.
+    - New functions:
+      + gimp_hint_box_set_hint
   * libgimpbase:
     - New functions:
       + gimp_choice_add_deprecated
@@ -216,10 +221,19 @@ API:
       + gimp_procedure_get_help_file
       + gimp_text_layer_is_dynamic
       + gimp_text_layer_get_layout_offsets
+      + gimp_image_has_transparency
   * libgimpui:
     - GimpProcedureDialog will now use the icon set on the associated
       GimpProcedure (likely only visible on platforms showing window
       icons).
+    - GimpExportProcedure will now display a warning for transparency
+      loss when trying to export an image with transparent pixels while
+      capabilities were given and GIMP_EXPORT_CAN_HANDLE_ALPHA was not
+      one of them.
+      In particular, this means that JPEG export dialog will display
+      such a warning when trying to export images with transparency!
+    - New functions:
+      + gimp_procedure_dialog_set_warning
   * Script-Fu:
     - (gimp-online-*) Script-Fu procedures are now moved to deprecated
       internal PDB procedures. Actions are created too (except for
@@ -259,3 +273,4 @@ Build:
     are skipped for commits pushed by the GNOME Translation Robot.
   * Expose duration of each image plug-in test on junit report to make
     easier to debug these, especially when one gets stuck.
+  * Add some GIR file checks, especially for the (skip) annotation.
