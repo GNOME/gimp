@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-defcheck.py -- Consistency check for the .def files.
+defcheck.py -- Consistency check for the .def and .gir files.
 Copyright (C) 2006  Simon Budig <simon@gimp.org>
 
 This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-This is a hack to check the consistency of the .def files compared to
+This is a hack to check the consistency of the .def and .gir files compared to
 the respective libraries.
 
 Invoke in the build directory and pass the name
@@ -30,6 +30,7 @@ Needs the tool "nm", "objdump", "dumpbin" or "dyld_info" to work
 
 import os, sys, subprocess, shutil, glob
 from os import getenv, path
+import xml.etree.ElementTree as ET
 
 def_files = sys.argv[1:]
 
@@ -47,6 +48,8 @@ def read_def_symbols(filename):
 
 have_errors = 0
 
+
+#READ LIBRARY SYMBOLS
 libextension   = ".so"
 #command        = getenv("NM", default="nm") + " --defined-only --extern-only "
 command        = getenv("NM", default="nm") + " -D " #see https://gitlab.gnome.org/GNOME/gimp/-/work_items/16255
@@ -71,6 +74,8 @@ elif sys.platform == 'darwin':
    platform_macos = True
 
 for df in def_files:
+   if df.endswith(".gir") or df.endswith(".typelib"):
+      continue
    directory, name = path.split (df)
    basename, extension = name.split (".")
    libname = path.join(os.getcwd(), directory, libprefix + basename + "-*" + libextension)
@@ -172,7 +177,46 @@ for df in def_files:
    missing_defs = [s for s in nmsymbols  if s not in defsymbols]
    missing_nms  = [s for s in defsymbols if s not in nmsymbols]
 
-   if missing_defs or missing_nms or doublesymbols or not sortok:
+
+   #READ GIR/TYPELIB SYMBOLS
+   girsymbols = {}
+   gir_mode = any(arg.endswith(".gir") for arg in sys.argv[1:])
+   if gir_mode:
+      current_idx = sys.argv.index(df)
+      if current_idx + 1 < len(sys.argv) and sys.argv[current_idx + 1].endswith(".gir"):
+         gir_filename = sys.argv[current_idx + 1]
+      else:
+         continue
+      try:
+         tree = ET.parse(gir_filename)
+         for elem in tree.iter():
+            c_id = None
+            for k, v in elem.attrib.items():
+               if k == 'c:identifier' or k.endswith('}identifier'):
+                  c_id = v
+            if c_id and not elem.tag.endswith('function-macro'):
+               if any(child.tag.endswith('varargs') or child.get('name') == 'va_list' for child in elem.iter()):
+                  continue
+               introspectable = elem.get('introspectable') != '0'
+               has_skip_reason = False
+               for child in elem:
+                  if child.tag == 'attribute' or child.tag.endswith('}attribute'):
+                     if child.get('name') == 'skip-reason':
+                        has_skip_reason = True
+               girsymbols[c_id] = (introspectable, has_skip_reason)
+      except Exception as e:
+         print("trouble reading {} - {}".format(gir_filename, e))
+         have_errors = -1
+         continue
+
+   missing_gir = []
+   #missing_gir = [s for s in nmsymbols if s not in girsymbols and s not in exclude_symbols] if gir_mode else []
+   missing_introspect = []
+   #missing_introspect = [s for s in nmsymbols if s in girsymbols and not girsymbols[s][0] and not girsymbols[s][1]] if gir_mode else []
+   missing_skip = [s for s, (intro, skip) in girsymbols.items() if not intro and not skip and s not in missing_introspect] if gir_mode else []
+
+
+   if missing_defs or missing_nms or doublesymbols or not sortok or missing_gir or missing_introspect or missing_skip:
       print()
       print("Problem found in", filename)
 
@@ -201,6 +245,30 @@ for df in def_files:
          for s in sorterrors:
             if s != "":
                print("     * ", s)
+
+      #if missing_gir:
+      #   print("  the following symbols are in the library,")
+      #   print("  but are not listed in the .gir-file:")
+      #   for s in missing_gir:
+      #      print("     +", s)
+      #   print("  Please add GI annotations on the pertinent headers.")
+      #   print()
+
+      #if missing_introspect:
+      #   print("  the following symbols are in both library and gir,")
+      #   print("  but are implied as non-introspectable in the .gir-file:")
+      #   for s in missing_introspect:
+      #      print("     !", s)
+      #   print("  Please add explicit `(skip)` on the pertinent headers.")
+      #   print()
+
+      if missing_skip:
+         print("  the following symbols are marked as non-introspectable,")
+         print("  but do not have a skip-reason attribute, which is ambiguous:")
+         for s in missing_skip:
+            print("     ?", s)
+         print("  Please add `skip-reason` on the pertinent headers.")
+         print()
 
       have_errors = -1
 
