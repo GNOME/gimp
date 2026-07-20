@@ -900,7 +900,7 @@ save_dialog (GimpProcedure       *procedure,
 
   dialog = gimp_export_procedure_dialog_new (GIMP_EXPORT_PROCEDURE (procedure),
                                              GIMP_PROCEDURE_CONFIG (config),
-                                             gimp_item_get_image (GIMP_ITEM (drawable)));
+                                             image);
 
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "option-title", _("Options"),

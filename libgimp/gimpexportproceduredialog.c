@@ -119,6 +119,7 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
   GimpExportProcedureDialog *export_dialog;
   GimpExportProcedure       *export_procedure;
   GtkWidget                 *content_area;
+  GimpExportCapabilities     capabilities = 0;
 
   GIMP_PROCEDURE_DIALOG_CLASS (parent_class)->fill_end (dialog, procedure, config);
 
@@ -319,6 +320,34 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
       gtk_box_pack_start (GTK_BOX (content_area), frame, TRUE, TRUE, 0);
       gtk_widget_set_visible (frame, TRUE);
     }
+
+  g_object_get (procedure, "capabilities", &capabilities, NULL);
+  if (capabilities != 0                                  &&
+      (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA) == 0 &&
+      gimp_image_has_transparency (export_dialog->image))
+    {
+      const gchar *file_type;
+      gchar       *title;
+      gchar       *details;
+      gchar       *escaped;
+      gchar       *msg;
+
+      title = g_markup_escape_text (_("Transparency will be lost"), -1);
+
+      file_type = gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure));
+      details   = g_strdup_printf (_("This format does not support transparency: %s"),
+                                   file_type);
+      escaped   = g_markup_escape_text (details, -1);
+
+      msg       = g_strdup_printf ("<b>%s</b>\n%s", title, details);
+
+      gimp_procedure_dialog_set_warning (dialog, msg, TRUE);
+
+      g_free (title);
+      g_free (details);
+      g_free (escaped);
+      g_free (msg);
+    }
 }
 
 static void
@@ -430,6 +459,28 @@ gimp_export_procedure_dialog_activate_edit_metadata (GtkLinkButton             *
 /* Public Functions */
 
 
+/**
+ * gimp_export_procedure_dialog_new:
+ * @procedure: the export procedure.
+ * @config:    the @procedure's config object.
+ * @image:     the image which you are planning to export.
+ *
+ * This will create a dialog for an export procedure. You should further
+ * fill it, using the [class@GimpUi.ProcedureDialog] API, with the
+ * arguments of @procedure as GUI settings.
+ *
+ * The @image can either be your source image or the one as created by
+ * [method@Gimp.ExportOptions.get_image]. Note though though if @image is
+ * not the source image, the dialog may not be able to automatically
+ * print some relevant warnings, such as the fact that the transparency
+ * will be lost when @procedure did not register the capability
+ * [flags@Gimp.ExportCapabilities.CAN_HANDLE_ALPHA].
+ *
+ * On the other end, if @image is the source image, then the metadate
+ * "(edit)" link will modify metadata of the source image.
+ *
+ * Returns: (type GimpExportProcedureDialog): the new export dialog.
+ */
 GtkWidget *
 gimp_export_procedure_dialog_new (GimpExportProcedure *procedure,
                                   GimpProcedureConfig *config,
