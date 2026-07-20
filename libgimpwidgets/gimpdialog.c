@@ -846,7 +846,7 @@ gimp_dialog_get_native_handle (GimpDialog *dialog)
 }
 
 /**
- * gimp_dialogs_show_help_button: (skip)
+ * gimp_dialogs_show_help_button: (skip) (attributes skip-reason=internal_only_since_82cfa9c2)
  * @show: whether a help button should be added when creating a GimpDialog
  *
  * This function is for internal use only.

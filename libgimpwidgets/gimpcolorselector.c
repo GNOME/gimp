@@ -199,7 +199,7 @@ gimp_color_selector_dispose (GObject *object)
 /*  public functions  */
 
 /**
- * gimp_color_selector_new: (skip)
+ * gimp_color_selector_new: (skip) (attributes skip-reason=internal_only_since_9ff663cc)
  * @selector_type: The #GType of the selector to create.
  * @color:         The initial color to be edited.
  * @channel:       The selector's initial channel.

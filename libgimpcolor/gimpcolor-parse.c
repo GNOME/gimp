@@ -309,7 +309,7 @@ gimp_color_list_names (GimpColorArray *colors)
 }
 
 /**
- * gimp_color_parse_css_substring: (skip)
+ * gimp_color_parse_css_substring: (skip) (attributes skip-reason=provided_by_gimp_color_parse_css_since_106d1860)
  * @css: (array length=len): a string describing a color in CSS notation
  * @len: the length of @css, in bytes. or -1 if @css is nul-terminated
  *
@@ -347,7 +347,7 @@ gimp_color_parse_css_substring (const gchar *css,
 }
 
 /**
- * gimp_color_parse_hex_substring: (skip)
+ * gimp_color_parse_hex_substring: (skip) (attributes skip-reason=provided_by_gimp_color_parse_hex_since_106d1860)
  * @hex: (array length=len): a string describing a color in hexadecimal notation
  * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
  *
@@ -379,7 +379,7 @@ gimp_color_parse_hex_substring (const gchar *hex,
 }
 
 /**
- * gimp_color_parse_name_substring: (skip)
+ * gimp_color_parse_name_substring: (skip) (attributes skip-reason=provided_by_gimp_color_parse_name_since_106d1860)
  * @name: (array length=len): a color name (in UTF-8 encoding)
  * @len:  the length of @name, in bytes. or -1 if @name is nul-terminated
  *
