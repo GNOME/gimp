@@ -52,6 +52,7 @@ ui_tests = [
   { 'name': 'color-swap' },
   { 'name': 'layer-add' },
   { 'name': 'undo-redo' },
+  { 'name': 'layer-delete' },
 ]
 
 foreach t : ui_tests
