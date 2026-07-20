@@ -2652,6 +2652,8 @@ layers_add_mask_callback (GtkWidget       *dialog,
                                 error->message);
           g_object_unref (mask);
           g_clear_error (&error);
+
+          gimp_image_undo_group_end (image);
           return;
         }
     }
