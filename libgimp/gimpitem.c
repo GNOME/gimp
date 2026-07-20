@@ -392,7 +392,7 @@ gimp_item_is_path (GimpItem *item)
 }
 
 /**
- * gimp_item_list_children: (skip)
+ * gimp_item_list_children: (skip) (attributes skip-reason=provided_by_gimp_item_get_children_since_703305d2)
  * @item: The item.
  *
  * Returns the item's list of children.
