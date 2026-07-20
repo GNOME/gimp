@@ -68,7 +68,8 @@ GtkWidget * gimp_procedure_dialog_new               (GimpProcedure       *proced
 void        gimp_procedure_dialog_set_ok_label      (GimpProcedureDialog *dialog,
                                                      const gchar         *ok_label);
 void        gimp_procedure_dialog_set_warning       (GimpProcedureDialog *dialog,
-                                                     const gchar         *warning,
+                                                     const gchar         *title,
+                                                     const gchar         *msg,
                                                      gboolean             use_markup);
 
 GtkWidget * gimp_procedure_dialog_get_widget        (GimpProcedureDialog *dialog,

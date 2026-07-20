@@ -232,12 +232,13 @@ gimp_hint_box_new (const gchar *hint)
 
 /**
  * gimp_hint_box_set_hint:
- * @box:  hint box to modify.
- * @hint: text to display as a user hint
+ * @box:        hint box to modify.
+ * @hint:       text to display as a user hint
+ * @use_markup: whether @hint is markup text.
  *
  * Modifies the text displayed by @box.
  *
- * Since: 3.4
+ * Since: 3.4.0
  **/
 void
 gimp_hint_box_set_hint (GimpHintBox *box,

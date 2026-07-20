@@ -661,33 +661,79 @@ gimp_procedure_dialog_set_ok_label (GimpProcedureDialog *dialog,
 
 /**
  * gimp_procedure_dialog_set_warning:
- * @dialog:  the associated #GimpProcedureDialog.
- * @warning: a warning text.
+ * @dialog: the associated #GimpProcedureDialog.
+ * @title: (nullable): title text for the warning box.
+ * @msg: (nullable): details text for the warning box.
+ * @use_markup: whether @title and @msg are markup text.
  *
  * Set a warning text which will be appropriately displayed in @dialog.
  * If @warning is %NULL, any previously set warning text will be
  * removed.
  *
- * Since: 3.4
+ * Since: 3.4.0
  */
 void
 gimp_procedure_dialog_set_warning (GimpProcedureDialog *dialog,
-                                   const gchar         *warning,
+                                   const gchar         *title,
+                                   const gchar         *msg,
                                    gboolean             use_markup)
 {
   GimpProcedureDialogPrivate *priv;
 
   priv = gimp_procedure_dialog_get_instance_private (dialog);
 
-  if (warning == NULL)
+  if (title == NULL && msg == NULL)
     {
       gtk_widget_set_visible (priv->warning_box, FALSE);
     }
   else
     {
+      gchar *warning;
+
+      if (title == NULL)
+        {
+          warning = g_strdup (msg);
+        }
+      else if (msg == NULL)
+        {
+          if (use_markup)
+            {
+              warning = g_strdup_printf ("<b>%s</b>", title);
+            }
+          else
+            {
+              gchar *escaped = g_markup_escape_text (title, -1);
+
+              warning = g_strdup_printf ("<b>%s</b>", escaped);
+              use_markup = TRUE;
+
+              g_free (escaped);
+            }
+        }
+      else
+        {
+          if (use_markup)
+            {
+              warning = g_strdup_printf ("<b>%s</b>\n%s", title, msg);
+            }
+          else
+            {
+              gchar *esc1 = g_markup_escape_text (title, -1);
+              gchar *esc2 = g_markup_escape_text (msg, -1);
+
+              warning = g_strdup_printf ("<b>%s</b>\n%s", esc1, esc2);
+              use_markup = TRUE;
+
+              g_free (esc1);
+              g_free (esc2);
+            }
+        }
+
       gimp_hint_box_set_hint (GIMP_HINT_BOX (priv->warning_box),
                               warning, use_markup);
       gtk_widget_set_visible (priv->warning_box, TRUE);
+
+      g_free (warning);
     }
 }
 

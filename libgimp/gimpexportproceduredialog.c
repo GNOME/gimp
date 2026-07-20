@@ -327,26 +327,17 @@ gimp_export_procedure_dialog_fill_end (GimpProcedureDialog *dialog,
       gimp_image_has_transparency (export_dialog->image))
     {
       const gchar *file_type;
-      gchar       *title;
+      const gchar *title = _("Transparency will be lost");
       gchar       *details;
-      gchar       *escaped;
-      gchar       *msg;
 
-      title = g_markup_escape_text (_("Transparency will be lost"), -1);
 
       file_type = gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure));
       details   = g_strdup_printf (_("This format does not support transparency: %s"),
                                    file_type);
-      escaped   = g_markup_escape_text (details, -1);
 
-      msg       = g_strdup_printf ("<b>%s</b>\n%s", title, details);
+      gimp_procedure_dialog_set_warning (dialog, title, details, FALSE);
 
-      gimp_procedure_dialog_set_warning (dialog, msg, TRUE);
-
-      g_free (title);
       g_free (details);
-      g_free (escaped);
-      g_free (msg);
     }
 }
 

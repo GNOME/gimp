@@ -1018,10 +1018,9 @@ export_dialog (GimpProcedure *procedure,
   if (drawable_type == GIMP_GRAYA_IMAGE ||
       drawable_type == GIMP_INDEXEDA_IMAGE)
     {
-      gchar *title   = g_markup_escape_text (_("Cannot export indexed image with "
-                                               "transparency in BMP file format."), -1);
-      gchar *warning = g_markup_escape_text (_("Alpha channel will be ignored."), -1);
-      gchar *full_warning;
+      const gchar *title   = _("Cannot export indexed image with "
+                               "transparency in BMP file format.");
+      const gchar *warning = _("Alpha channel will be ignored.");
 
       /* Used to create vbox to store hintbox in */
       gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
@@ -1032,13 +1031,8 @@ export_dialog (GimpProcedure *procedure,
                                              "alpha-warning-vbox",
                                              "spacer-alpha", NULL);
 
-      full_warning = g_strdup_printf ("<b>%s</b>\n%s", title, warning);
-
       gimp_procedure_dialog_set_warning (GIMP_PROCEDURE_DIALOG (dialog),
-                                         full_warning, TRUE);
-      g_free (title);
-      g_free (warning);
-      g_free (full_warning);
+                                         title, warning, FALSE);
     }
 
   /* Run-Length Encoded */
