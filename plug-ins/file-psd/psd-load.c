@@ -5794,7 +5794,7 @@ load_dialog (const gchar *title,
       if (unsupported_features->stroke)
         ADD_UNSUPPORTED_MESSAGE (message,
                                  "Vector strokes are not yet "
-                                 "supported and will show up as empty layers.");
+                                 "supported and will be discarded.");
       if (unsupported_features->layer_effect)
         ADD_UNSUPPORTED_MESSAGE (message,
                                  "Layer effects are partially "
@@ -5807,7 +5807,7 @@ load_dialog (const gchar *title,
         ADD_UNSUPPORTED_MESSAGE (message,
                                  /* Translators: short for layer compositions */
                                  "Layer comps are not yet "
-                                 "supported and will show up as empty layers.");
+                                 "supported and will be discarded.");
 #undef ADD_UNSUPPORTED_MESSAGE
 
       scrolled_window = gtk_scrolled_window_new (NULL, NULL);

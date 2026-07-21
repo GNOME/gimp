@@ -232,6 +232,12 @@ static gint     load_resource_1058     (const PSDimageres     *res_a,
                                         GInputStream          *input,
                                         GError               **error);
 
+static gint     load_resource_1065     (const PSDimageres     *res_a,
+                                        GimpImage             *image,
+                                        PSDimage              *img_a,
+                                        GInputStream          *input,
+                                        GError               **error);
+
 static gint     load_resource_1069     (const PSDimageres     *res_a,
                                         GimpImage             *image,
                                         PSDimage              *img_a,
@@ -413,6 +419,10 @@ load_image_resource (PSDimageres  *res_a,
             load_resource_1058 (res_a, image, input, error);
             break;
 
+          case PSD_LAYER_COMPS:
+            load_resource_1065 (res_a, image, img_a, input, error);
+            break;
+
           case PSD_LAYER_SELECT_ID:
             if (! img_a->merged_image_only)
               load_resource_1069 (res_a, image, img_a, input, error);
@@ -427,12 +437,6 @@ load_image_resource (PSDimageres  *res_a,
 
           case PSD_CLIPPING_PATH:
             load_resource_2999 (res_a, image, input, error);
-            break;
-
-          case PSD_LAYER_COMPS:
-            img_a->unsupported_features->layer_comp = TRUE;
-            img_a->unsupported_features->show_gui = TRUE;
-            load_resource_unknown (res_a, image, input, error);
             break;
 
           default:
@@ -1409,6 +1413,62 @@ load_resource_1058 (const PSDimageres  *res_a,
   g_free (name);
 
   g_free (res_data);
+  return 0;
+}
+
+static gint
+load_resource_1065 (const PSDimageres  *res_a,
+                    GimpImage          *image,
+                    PSDimage           *img_a,
+                    GInputStream       *input,
+                    GError            **error)
+{
+  guint32   desc_version = 0;
+  JsonNode *root         = NULL;
+
+  if (! psd_read_uint32 (input, &desc_version, FALSE, error))
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  if (parse_descriptor (input, FALSE, &root, error) == 0)
+    {
+      IFDBG(4)
+        if (root)
+          g_debug ("Layer comps descriptor:\n%s",
+                   json_to_string (root, TRUE));
+    }
+  else
+    {
+      return -1;
+    }
+
+  /* TODO: For now, we evaluate if there are actually layer comps
+   * in the data and set the unsupported warning accordingly */
+  if (root)
+    {
+      JsonReader *reader = json_reader_new (root);
+
+      if (json_reader_read_member (reader, "descriptor"))
+        {
+          if (json_reader_read_element (reader, 0) &&
+              json_reader_read_member (reader, "list"))
+            {
+              gint count = json_reader_count_elements (reader);
+
+              if (count > 0)
+                {
+                  img_a->unsupported_features->layer_comp = TRUE;
+                  img_a->unsupported_features->show_gui   = TRUE;
+                }
+            }
+        }
+
+      g_object_unref (reader);
+      json_node_unref (root);
+    }
+
   return 0;
 }
 
