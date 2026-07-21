@@ -249,10 +249,7 @@ static void         gimp_image_get_pixel_average (GimpPickable      *pickable,
                                                   gpointer           pixel);
 
 static void     gimp_image_savable_save          (GimpSavable       *savable,
-                                                  GOutputStream     *output,
-                                                  gint               n_ident,
-                                                  GFile             *xcf_file,
-                                                  GHashTable        *icc_references);
+                                                  GimpSaveState     *state);
 
 static void     gimp_image_projection_buffer_notify
                                                  (GimpProjection    *projection,
@@ -1809,21 +1806,17 @@ gimp_image_get_graph (GimpProjectable *projectable)
 
 static void
 gimp_image_savable_save (GimpSavable   *savable,
-                         GOutputStream *output,
-                         gint           n_indent,
-                         GFile         *xcf_file,
-                         GHashTable    *icc_references)
+                         GimpSaveState *state)
 {
   GimpImage        *image   = GIMP_IMAGE (savable);
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GList            *iter;
-  GHashTable       *icc_refs;
 
   /* Saving all ICC profiles stored in this XCF. */
-  icc_refs = gimp_savable_save_all_spaces (image, output, 2);
+  gimp_savable_save_all_spaces (image, state);
 
   /* Saving the project itself */
-  gimp_savable_print_element_start (output, 2, "project", NULL);
+  gimp_savable_print_element_start (state, "project", NULL);
   /* To avoid having dozens of <project> attributes, I break the various
    * properties down into sub-elements. This will also make these easier
    * to update in further versions, e.g. if we add concept of infinite
@@ -1832,58 +1825,58 @@ gimp_image_savable_save (GimpSavable   *savable,
    * store some data, such as the print dimensions/pixel density
    * arguments, etc.
    */
-  gimp_savable_print_element (output, 4, "dimensions", NULL, NULL,
-                              "width", "%d", private->width,
+  gimp_savable_print_element (state, "dimensions", NULL, NULL,
+                              "width",  "%d", private->width,
                               "height", "%d", private->height,
                               NULL);
-  gimp_savable_format_save (gimp_image_get_layer_format (image, TRUE), output, 4, icc_refs);
+  gimp_savable_format_save (gimp_image_get_layer_format (image, TRUE), state);
 
   /* Image Properties */
   if (gimp_image_get_colormap_palette (image))
     {
       GimpPalette *palette = gimp_image_get_colormap_palette (image);
-      gimp_savable_save (GIMP_SAVABLE (palette), output, 4, xcf_file, icc_refs);
+      gimp_savable_save (GIMP_SAVABLE (palette), state);
     }
   if (gimp_image_get_guides (image))
     {
-      gimp_savable_print_element_start (output, 4, "guides", NULL);
+      gimp_savable_print_element_start (state, "guides", NULL);
       iter = gimp_image_get_guides (image);
       for (; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
-      gimp_savable_print_element_end (output, 4, "guides");
+        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+      gimp_savable_print_element_end (state, "guides");
     }
   if (gimp_image_get_sample_points (image))
     {
-      gimp_savable_print_element_start (output, 4, "sample-points", NULL);
+      gimp_savable_print_element_start (state, "sample-points", NULL);
       iter = gimp_image_get_sample_points (image);
       for (; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
-      gimp_savable_print_element_end (output, 4, "sample-points");
+        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+      gimp_savable_print_element_end (state, "sample-points");
     }
   /* TODO: should we make resolution optional? E.g. for images "made for
    * random screen" instead of "made for printing"?
    */
-  gimp_savable_print_element (output, 4, "print-dimensions", NULL, NULL,
+  gimp_savable_print_element (state, "print-dimensions", NULL, NULL,
                               "xres", "%f", private->xresolution,
                               "yres", "%f", private->yresolution,
                               NULL);
-  gimp_savable_print_element (output, 4, "tattoo",
+  gimp_savable_print_element (state, "tattoo",
                               "%u", (guint) gimp_image_get_tattoo_state (image),
                               NULL);
   /* XXX: maybe we should merge the image unit  with the print
    * dimensions into some element about physical dimensions?
    */
-  gimp_savable_unit_save (gimp_image_get_unit (image), output, 4);
+  gimp_savable_unit_save (gimp_image_get_unit (image), state);
 
   if (gimp_image_get_grid (image))
-    gimp_savable_save (GIMP_SAVABLE (gimp_image_get_grid (image)), output, 4, xcf_file, icc_refs);
+    gimp_savable_save (GIMP_SAVABLE (gimp_image_get_grid (image)), state);
 
   if (gimp_image_get_metadata (image))
-    gimp_savable_metadata_save (gimp_image_get_metadata (image), output, 4);
+    gimp_savable_metadata_save (gimp_image_get_metadata (image), state);
 
   if (g_list_length (gimp_image_symmetry_get (image)))
     {
-      gimp_savable_print_element_start (output, 4, "symmetries", NULL);
+      gimp_savable_print_element_start (state, "symmetries", NULL);
       for (iter = gimp_image_symmetry_get (image); iter; iter = iter->next)
         {
           GimpSymmetry *symmetry;
@@ -1893,45 +1886,45 @@ gimp_image_savable_save (GimpSavable   *savable,
             /* Do not save the identity symmetry. */
             continue;
 
-          gimp_savable_config_save (GIMP_CONFIG (symmetry), "symmetry", output, 6, xcf_file, icc_references);
+          gimp_savable_config_save (GIMP_CONFIG (symmetry), "symmetry", state);
         }
-      gimp_savable_print_element_end (output, 4, "symmetries");
+      gimp_savable_print_element_end (state, "symmetries");
     }
 
   if (gimp_parasite_list_length (private->parasites) > 0 &&
       gimp_parasite_list_persistent_length (private->parasites) > 0)
-    gimp_savable_save (GIMP_SAVABLE (private->parasites), output, 4, xcf_file, icc_refs);
+    gimp_savable_save (GIMP_SAVABLE (private->parasites), state);
 
   if (private->stored_layer_sets)
     {
-      gimp_savable_print_element_start (output, 4, "layer-sets", NULL);
+      gimp_savable_print_element_start (state, "layer-sets", NULL);
       for (iter = private->stored_layer_sets; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
-      gimp_savable_print_element_end (output, 4, "layer-sets");
+        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+      gimp_savable_print_element_end (state, "layer-sets");
     }
   if (private->stored_channel_sets)
     {
-      gimp_savable_print_element_start (output, 4, "channel-sets", NULL);
+      gimp_savable_print_element_start (state, "channel-sets", NULL);
       for (iter = private->stored_channel_sets; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
-      gimp_savable_print_element_end (output, 4, "channel-sets");
+        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+      gimp_savable_print_element_end (state, "channel-sets");
     }
   if (private->stored_path_sets)
     {
-      gimp_savable_print_element_start (output, 4, "path-sets", NULL);
+      gimp_savable_print_element_start (state, "path-sets", NULL);
       for (iter = private->stored_path_sets; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
-      gimp_savable_print_element_end (output, 4, "path-sets");
+        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+      gimp_savable_print_element_end (state, "path-sets");
     }
 
-  gimp_savable_print_element_start (output, 4, "layers", NULL);
+  gimp_savable_print_element_start (state, "layers", NULL);
   iter = gimp_image_get_layer_iter (image);
   for (; iter; iter = iter->next)
-    gimp_savable_save (GIMP_SAVABLE (iter->data), output, 6, xcf_file, icc_refs);
-  gimp_savable_print_element_end (output, 4, "layers");
-  gimp_savable_print_element_end (output, 2, "project");
+    gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+  gimp_savable_print_element_end (state, "layers");
+  gimp_savable_print_element_end (state, "project");
 
-  g_hash_table_unref (icc_refs);
+  g_clear_pointer (&state->icc_references, g_hash_table_unref);
 }
 
 static void
@@ -3115,6 +3108,7 @@ gimp_image_save_to_cache (GimpImage *image,
   GFile            *file;
   GOutputStream    *output;
   GError           *error = NULL;
+  GimpSaveState     state = { 0 };
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
@@ -3142,10 +3136,18 @@ gimp_image_save_to_cache (GimpImage *image,
       return;
     }
 
+  state.output         = output;
+  state.xcf_file       = xcf_file;
+  state.icc_references = NULL;
+  state.elements       = g_queue_new ();
+
   g_output_stream_printf (output, NULL, NULL, NULL, "<?xml version='1.0' encoding='UTF-8'?>\n");
-  gimp_savable_print_element_start (output, 0, "xcf", "version", "%d", WLBR_VERSION, NULL);
-  gimp_image_savable_save (GIMP_SAVABLE (image), output, 0, xcf_file, NULL);
-  gimp_savable_print_element_end (output, 0, "xcf");
+  gimp_savable_print_element_start (&state, "xcf", "version", "%d", WLBR_VERSION, NULL);
+  gimp_image_savable_save (GIMP_SAVABLE (image), &state);
+  gimp_savable_print_element_end (&state, "xcf");
+
+  /* Sanity check: we should be back at root. */
+  g_return_if_fail (g_queue_get_length (state.elements) == 0);
 
   if (! g_output_stream_close (output, NULL, &error))
     {
@@ -3155,7 +3157,9 @@ gimp_image_save_to_cache (GimpImage *image,
                     error->message);
       g_clear_error (&error);
     }
+
   g_object_unref (output);
+  g_queue_free (state.elements);
 }
 
 gint

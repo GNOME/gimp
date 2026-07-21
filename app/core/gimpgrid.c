@@ -69,10 +69,7 @@ static void   gimp_grid_set_property       (GObject              *object,
                                             GParamSpec           *pspec);
 
 static void   gimp_grid_savable_save       (GimpSavable           *savable,
-                                            GOutputStream         *output,
-                                            gint                   n_indent,
-                                            GFile                 *xcf_file,
-                                            GHashTable            *icc_references);
+                                            GimpSaveState         *state);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpGrid, gimp_grid, GIMP_TYPE_OBJECT,
@@ -281,45 +278,42 @@ gimp_grid_set_property (GObject      *object,
 
 static void
 gimp_grid_savable_save (GimpSavable   *savable,
-                        GOutputStream *output,
-                        gint           n_indent,
-                        GFile         *xcf_file,
-                        GHashTable    *icc_references)
+                        GimpSaveState *state)
 {
   GimpGrid *grid = GIMP_GRID (savable);
 
-  gimp_savable_print_element_start (output, n_indent, "grid", NULL);
+  gimp_savable_print_element_start (state, "grid", NULL);
 
-  gimp_savable_print_element (output, n_indent + 2, "style",
+  gimp_savable_print_element (state, "style",
                               "%s", gimp_get_enum_value_nick (GIMP_TYPE_GRID_STYLE, grid->style),
                               NULL);
 
-  gimp_savable_print_element_start (output, n_indent + 2, "foreground", NULL);
-  gimp_savable_color_save (grid->fgcolor, NULL, NULL, output, n_indent + 4, icc_references);
-  gimp_savable_print_element_end (output, n_indent + 2, "foreground");
+  gimp_savable_print_element_start (state, "foreground", NULL);
+  gimp_savable_color_save (grid->fgcolor, NULL, NULL, state);
+  gimp_savable_print_element_end (state, "foreground");
 
-  gimp_savable_print_element_start (output, n_indent + 2, "background", NULL);
-  gimp_savable_color_save (grid->bgcolor, NULL, NULL, output, n_indent + 4, icc_references);
-  gimp_savable_print_element_end (output, n_indent + 2, "background");
+  gimp_savable_print_element_start (state, "background", NULL);
+  gimp_savable_color_save (grid->bgcolor, NULL, NULL, state);
+  gimp_savable_print_element_end (state, "background");
 
-  gimp_savable_print_element (output, n_indent + 2, "spacing", NULL, NULL,
+  gimp_savable_print_element (state, "spacing", NULL, NULL,
                               "x", "%f", grid->xspacing,
                               "y", "%f", grid->yspacing,
                               NULL);
 
-  gimp_savable_print_element_start (output, n_indent + 2, "spacing-unit", NULL);
-  gimp_savable_unit_save (grid->spacing_unit, output, n_indent + 4);
-  gimp_savable_print_element_end (output, n_indent + 2, "spacing-unit");
+  gimp_savable_print_element_start (state, "spacing-unit", NULL);
+  gimp_savable_unit_save (grid->spacing_unit, state);
+  gimp_savable_print_element_end (state, "spacing-unit");
 
-  gimp_savable_print_element (output, n_indent + 2, "offset", NULL, NULL,
+  gimp_savable_print_element (state, "offset", NULL, NULL,
                               "x", "%f", grid->xoffset,
                               "y", "%f", grid->yoffset,
                               NULL);
-  gimp_savable_print_element_start (output, n_indent + 2, "offset-unit", NULL);
-  gimp_savable_unit_save (grid->offset_unit, output, n_indent + 4);
-  gimp_savable_print_element_end (output, n_indent + 2, "offset-unit");
+  gimp_savable_print_element_start (state, "offset-unit", NULL);
+  gimp_savable_unit_save (grid->offset_unit, state);
+  gimp_savable_print_element_end (state, "offset-unit");
 
-  gimp_savable_print_element_end (output, n_indent, "grid");
+  gimp_savable_print_element_end (state, "grid");
 }
 
 

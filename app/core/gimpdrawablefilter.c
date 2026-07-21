@@ -143,10 +143,7 @@ static void       gimp_drawable_filter_dispose               (GObject           
 static void       gimp_drawable_filter_finalize              (GObject              *object);
 
 static void       gimp_drawable_filter_save                  (GimpSavable          *savable,
-                                                              GOutputStream        *output,
-                                                              gint                  n_indent,
-                                                              GFile                *xcf_file,
-                                                              GHashTable           *icc_references);
+                                                              GimpSaveState        *state);
 
 static void       gimp_drawable_filter_sync_active           (GimpDrawableFilter   *filter);
 static void       gimp_drawable_filter_sync_clip             (GimpDrawableFilter   *filter,
@@ -395,10 +392,7 @@ gimp_drawable_filter_finalize (GObject *object)
 
 static void
 gimp_drawable_filter_save (GimpSavable   *savable,
-                           GOutputStream *output,
-                           gint           n_indent,
-                           GFile         *xcf_file,
-                           GHashTable    *icc_references)
+                           GimpSaveState *state)
 {
   GimpDrawableFilter      *filter = GIMP_DRAWABLE_FILTER (savable);
   GimpDrawableFilterMask  *mask;
@@ -429,13 +423,13 @@ gimp_drawable_filter_save (GimpSavable   *savable,
                 "custom-name", &has_custom_name,
                 NULL);
 
-  gimp_savable_print_element_start (output, n_indent, "filter", has_custom_name ? "name" : NULL, "%s", name, NULL);
+  gimp_savable_print_element_start (state, "filter", has_custom_name ? "name" : NULL, "%s", name, NULL);
 
   if (icon && *icon)
-    gimp_savable_print_element (output, n_indent + 2, "icon", "%s", icon, NULL);
+    gimp_savable_print_element (state, "icon", "%s", icon, NULL);
 
   op_version = gegl_operation_get_op_version (operation);
-  gimp_savable_print_element_start (output, n_indent + 2, "operation",
+  gimp_savable_print_element_start (state, "operation",
                                     "name",    "%s", operation,
                                     "version", "%s", op_version,
                                     NULL);
@@ -479,23 +473,23 @@ gimp_drawable_filter_save (GimpSavable   *savable,
               }
             else if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_GRADIENT))
               {
-                gimp_savable_print_element_start (output, n_indent + 4, "argument",
+                gimp_savable_print_element_start (state, "argument",
                                                   "name", "%s", pspec->name,
                                                   "type", "%s", g_type_name (G_VALUE_TYPE (&value)),
                                                   NULL);
-                gimp_savable_save (g_value_get_object (&value), output, n_indent + 6, xcf_file, icc_references);
-                gimp_savable_print_element_end (output, n_indent + 4, "argument");
+                gimp_savable_save (g_value_get_object (&value), state);
+                gimp_savable_print_element_end (state, "argument");
               }
             else if (g_type_is_a (G_VALUE_TYPE (&value), GIMP_TYPE_CONFIG))
               {
-                gimp_savable_print_element_start (output, n_indent + 4, "argument",
+                gimp_savable_print_element_start (state, "argument",
                                                   "name", "%s", pspec->name,
                                                   "type", "%s", g_type_name (G_VALUE_TYPE (&value)),
                                                   NULL);
                 gimp_savable_config_save (g_value_get_object (&value),
                                           g_type_name (G_VALUE_TYPE (&value)),
-                                          output, n_indent + 6, xcf_file, icc_references);
-                gimp_savable_print_element_end (output, n_indent + 4, "argument");
+                                          state);
+                gimp_savable_print_element_end (state, "argument");
               }
             else if (g_type_is_a (G_VALUE_TYPE (&value), G_TYPE_ENUM))
               {
@@ -513,14 +507,12 @@ gimp_drawable_filter_save (GimpSavable   *savable,
               }
             else if (g_type_is_a (G_VALUE_TYPE (&value), GEGL_TYPE_COLOR))
               {
-                gimp_savable_print_element_start (output, n_indent + 4, "argument",
+                gimp_savable_print_element_start (state, "argument",
                                                   "name", "%s", pspec->name,
                                                   "type", "%s", g_type_name (G_VALUE_TYPE (&value)),
                                                   NULL);
-                gimp_savable_color_save (g_value_get_object (&value),
-                                         NULL, NULL, output, n_indent + 6,
-                                         icc_references);
-                gimp_savable_print_element_end (output, n_indent + 4, "argument");
+                gimp_savable_color_save (g_value_get_object (&value), NULL, NULL, state);
+                gimp_savable_print_element_end (state, "argument");
               }
             else
               {
@@ -536,7 +528,7 @@ gimp_drawable_filter_save (GimpSavable   *savable,
             break;
         }
       if (strval)
-        gimp_savable_print_element (output, n_indent + 4, "argument", "%s", strval,
+        gimp_savable_print_element (state, "argument", "%s", strval,
                                     "name", "%s", pspec->name,
                                     "type", "%s", g_type_name (G_VALUE_TYPE (&value)),
                                     NULL);
@@ -544,42 +536,42 @@ gimp_drawable_filter_save (GimpSavable   *savable,
       g_value_unset (&value);
       g_free (strval);
     }
-  gimp_savable_print_element_end (output, n_indent + 2, "operation");
+  gimp_savable_print_element_end (state, "operation");
 
   if ((mask = gimp_drawable_filter_get_mask (filter)))
     {
-      gimp_savable_print_element_start (output, n_indent + 2, "mask", NULL);
-      gimp_savable_save (GIMP_SAVABLE (mask), output, n_indent + 4, xcf_file, icc_references);
-      gimp_savable_print_element_end (output, n_indent + 2, "mask");
+      gimp_savable_print_element_start (state, "mask", NULL);
+      gimp_savable_save (GIMP_SAVABLE (mask), state);
+      gimp_savable_print_element_end (state, "mask");
     }
 
-  gimp_savable_print_element (output, n_indent + 2, "visible", "%b",
+  gimp_savable_print_element (state, "visible", "%b",
                               gimp_filter_get_active (GIMP_FILTER (filter)),
                               NULL);
-  gimp_savable_print_element (output, n_indent + 2, "opacity", "%f",
+  gimp_savable_print_element (state, "opacity", "%f",
                               gimp_drawable_filter_get_opacity (GIMP_DRAWABLE_FILTER (filter)),
                               NULL);
 
   mode = gimp_drawable_filter_get_paint_mode (GIMP_DRAWABLE_FILTER (filter));
-  gimp_savable_print_element (output, n_indent + 2, "mode", "%[GimpLayerMode]", mode, NULL);
+  gimp_savable_print_element (state, "mode", "%[GimpLayerMode]", mode, NULL);
 
   space = gimp_drawable_filter_get_blend_space (GIMP_DRAWABLE_FILTER (filter));
-  gimp_savable_blend_space_save (space, mode, output, n_indent + 2);
+  gimp_savable_blend_space_save (space, mode, state);
 
   space = gimp_drawable_filter_get_composite_space (GIMP_DRAWABLE_FILTER (filter));
-  gimp_savable_composite_space_save (space, mode, output, n_indent + 2);
+  gimp_savable_composite_space_save (space, mode, state);
 
   composite_mode = gimp_drawable_filter_get_composite_mode (filter);
-  gimp_savable_composite_mode_save (composite_mode, mode, output, n_indent + 2);
+  gimp_savable_composite_mode_save (composite_mode, mode, state);
 
-  gimp_savable_print_element (output, n_indent + 2, "clip", "%b",
+  gimp_savable_print_element (state, "clip", "%b",
                               gimp_drawable_filter_get_clip (filter),
                               NULL);
 
   region = gimp_drawable_filter_get_region (filter);
-  gimp_savable_print_element (output, n_indent + 2, "region", "%[GimpFilterRegion]", region, NULL);
+  gimp_savable_print_element (state, "region", "%[GimpFilterRegion]", region, NULL);
 
-  gimp_savable_print_element_end (output, n_indent, "filter");
+  gimp_savable_print_element_end (state, "filter");
 
   g_free (name);
   g_free (icon);

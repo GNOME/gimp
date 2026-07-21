@@ -38,12 +38,6 @@ enum
   LAST_SIGNAL
 };
 
-typedef struct
-{
-  GOutputStream *output;
-  gint           n_indent;
-} GimpParasiteListSavableData;
-
 
 static void     gimp_parasite_list_finalize            (GObject                     *object);
 static gint64   gimp_parasite_list_get_memsize         (GimpObject                  *object,
@@ -63,12 +57,9 @@ static gboolean gimp_parasite_list_deserialize         (GimpConfig              
 
 static void     gimp_parasite_list_save_parasite_func  (gchar                       *key,
                                                         GimpParasite                *parasite,
-                                                        GimpParasiteListSavableData *data);
+                                                        GimpSaveState               *state);
 static void     gimp_parasite_list_savable_save        (GimpSavable                 *savable,
-                                                        GOutputStream               *output,
-                                                        gint                         n_indent,
-                                                        GFile                       *xcf_file,
-                                                        GHashTable                  *icc_references);
+                                                        GimpSaveState               *state);
 
 static void     parasite_serialize                     (const gchar                 *key,
                                                         GimpParasite                *parasite,
@@ -305,29 +296,22 @@ gimp_parasite_list_deserialize (GimpConfig *list,
 }
 
 static void
-gimp_parasite_list_save_parasite_func (gchar                       *key,
-                                       GimpParasite                *parasite,
-                                       GimpParasiteListSavableData *data)
+gimp_parasite_list_save_parasite_func (gchar         *key,
+                                       GimpParasite  *parasite,
+                                       GimpSaveState *state)
 {
-  gimp_savable_parasite_save (parasite, data->output, data->n_indent);
+  gimp_savable_parasite_save (parasite, state);
 }
 
 static void
 gimp_parasite_list_savable_save (GimpSavable   *savable,
-                                 GOutputStream *output,
-                                 gint           n_indent,
-                                 GFile         *xcf_file,
-                                 GHashTable    *icc_references)
+                                 GimpSaveState *state)
 {
-  GimpParasiteList            *list = GIMP_PARASITE_LIST (savable);
-  GimpParasiteListSavableData  data;
+  GimpParasiteList *list = GIMP_PARASITE_LIST (savable);
 
-  data.output   = output;
-  data.n_indent = n_indent + 2;
-
-  gimp_savable_print_element_start (output, n_indent, "parasites", NULL);
-  gimp_parasite_list_foreach (list, (GHFunc) gimp_parasite_list_save_parasite_func, &data);
-  gimp_savable_print_element_end (output, n_indent, "parasites");
+  gimp_savable_print_element_start (state, "parasites", NULL);
+  gimp_parasite_list_foreach (list, (GHFunc) gimp_parasite_list_save_parasite_func, state);
+  gimp_savable_print_element_end (state, "parasites");
 }
 
 GimpParasiteList *

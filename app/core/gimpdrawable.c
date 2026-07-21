@@ -171,10 +171,7 @@ static void       gimp_drawable_get_pixel_average  (GimpPickable      *pickable,
                                                     gpointer           pixel);
 
 static void       gimp_drawable_save               (GimpSavable       *savable,
-                                                    GOutputStream     *output,
-                                                    gint               indent,
-                                                    GFile             *xcf_file,
-                                                    GHashTable        *icc_references);
+                                                    GimpSaveState     *state);
 
 static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               x,
@@ -979,10 +976,7 @@ gimp_drawable_get_pixel_average (GimpPickable        *pickable,
 
 static void
 gimp_drawable_save (GimpSavable   *savable,
-                    GOutputStream *output,
-                    gint           n_indent,
-                    GFile         *xcf_file,
-                    GHashTable    *icc_references)
+                    GimpSaveState *state)
 {
   GimpDrawable  *drawable = GIMP_DRAWABLE (savable);
   GimpContainer *filters;
@@ -997,8 +991,7 @@ gimp_drawable_save (GimpSavable   *savable,
       gimp_drawable_save_buffer (drawable);
 
       filename = g_path_get_basename (gimp_drawable_get_cache_file (drawable));
-      g_output_stream_printf (output, NULL, NULL, NULL,
-                              "%*c<buffer file='%s'/>\n", n_indent, ' ', filename);
+      gimp_savable_print_element (state, "buffer", NULL, NULL, "file", "%s", filename, NULL);
 
       g_free (filename);
     }
@@ -1029,7 +1022,7 @@ gimp_drawable_save (GimpSavable   *savable,
 
   if (num_effects > 0)
     {
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<filters>\n", n_indent, ' ');
+      gimp_savable_print_element_start (state, "filters", NULL, NULL, NULL);
 
       for (iter = GIMP_LIST (filters)->queue->head; iter; iter = iter->next)
         {
@@ -1047,11 +1040,11 @@ gimp_drawable_save (GimpSavable   *savable,
               if (mask    != NULL &&
                   op_node != NULL &&
                   strcmp (gegl_node_get_operation (op_node), "GraphNode") != 0)
-                gimp_savable_save (GIMP_SAVABLE (filter), output, n_indent + 2, xcf_file, icc_references);
+                gimp_savable_save (GIMP_SAVABLE (filter), state);
             }
         }
 
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</filters>\n", n_indent, ' ');
+      gimp_savable_print_element_end (state, "filters");
     }
 }
 

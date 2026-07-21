@@ -93,10 +93,7 @@ static void       gimp_item_list_get_property        (GObject               *obj
                                                       GParamSpec            *pspec);
 
 static void       gimp_item_list_savable_save        (GimpSavable           *savable,
-                                                      GOutputStream         *output,
-                                                      gint                   n_indent,
-                                                      GFile                 *xcf_file,
-                                                      GHashTable            *icc_references);
+                                                      GimpSaveState         *state);
 
 static void       gimp_item_list_item_add            (GimpContainer         *container,
                                                       GimpObject            *object,
@@ -332,10 +329,7 @@ gimp_item_list_get_property (GObject    *object,
 
 static void
 gimp_item_list_savable_save (GimpSavable   *savable,
-                             GOutputStream *output,
-                             gint           n_indent,
-                             GFile         *xcf_file,
-                             GHashTable    *icc_references)
+                             GimpSaveState *state)
 {
   GimpItemList     *list = GIMP_ITEM_LIST (savable);
   const gchar      *name;
@@ -345,11 +339,11 @@ gimp_item_list_savable_save (GimpSavable   *savable,
 
   if (gimp_item_list_is_pattern (list, &pattern_syntax))
     {
-      gimp_savable_print_element_start (output, n_indent, "item-set",
+      gimp_savable_print_element_start (state, "item-set",
                                         "type", "%s",
                                         g_type_name (gimp_item_list_get_item_type (list)),
                                         NULL);
-      gimp_savable_print_element (output, n_indent, "pattern", "%s", name,
+      gimp_savable_print_element (state, "pattern", "%s", name,
                                   "method", "%[GimpSelectMethod]", pattern_syntax,
                                   NULL);
     }
@@ -357,19 +351,19 @@ gimp_item_list_savable_save (GimpSavable   *savable,
     {
       GList *iter;
 
-      gimp_savable_print_element_start (output, n_indent, "item-set",
+      gimp_savable_print_element_start (state, "item-set",
                                         "type", "%s",
                                         g_type_name (gimp_item_list_get_item_type (list)),
                                         "name", "%s", name,
                                         NULL);
       for (iter = list->p->items; iter; iter = iter->next)
-        gimp_savable_print_element (output, n_indent, "item", NULL, NULL,
+        gimp_savable_print_element (state, "item", NULL, NULL,
                                     "tattooref", "%u",
                                     (guint) gimp_item_get_tattoo (GIMP_ITEM (iter->data)),
                                     NULL);
     }
 
-  gimp_savable_print_element_end (output, n_indent, "item-set");
+  gimp_savable_print_element_end (state, "item-set");
 }
 
 

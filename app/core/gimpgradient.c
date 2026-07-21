@@ -78,10 +78,7 @@ static gint          gimp_gradient_compare            (GimpData             *dat
 static gchar       * gimp_gradient_get_checksum       (GimpTagged           *tagged);
 
 static void          gimp_gradient_savable_save       (GimpSavable          *savable,
-                                                       GOutputStream        *output,
-                                                       gint                  n_indent,
-                                                       GFile                *xcf_file,
-                                                       GHashTable           *icc_references);
+                                                       GimpSaveState        *state);
 
 static inline GimpGradientSegment *
               gimp_gradient_get_segment_at_internal   (GimpGradient         *gradient,
@@ -431,10 +428,7 @@ gimp_gradient_get_checksum (GimpTagged *tagged)
 
 void
 gimp_gradient_savable_save (GimpSavable   *savable,
-                            GOutputStream *output,
-                            gint           n_indent,
-                            GFile         *xcf_file,
-                            GHashTable    *icc_references)
+                            GimpSaveState *state)
 {
   const gchar         *name;
   GimpGradient        *gradient = GIMP_GRADIENT (savable);
@@ -450,11 +444,11 @@ gimp_gradient_savable_save (GimpSavable   *savable,
   gradient_segment_type_class  = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_TYPE);
   gradient_segment_color_class = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_COLOR);
 
-  gimp_savable_print_element_start (output, n_indent, "gradient",
+  gimp_savable_print_element_start (state, "gradient",
                                     "name",    "%s", name,
                                     "version", "%d", version,
                                     NULL);
-  gimp_savable_print_element_start (output, n_indent + 2, "segments", NULL);
+  gimp_savable_print_element_start (state, "segments", NULL);
   for (seg = gradient->segments; seg; seg = seg->next)
     {
       GEnumValue               *enum_value;
@@ -469,35 +463,35 @@ gimp_gradient_savable_save (GimpSavable   *savable,
 
       enum_value  = g_enum_get_value (gradient_segment_type_class, type);
       enum_value2 = g_enum_get_value (gradient_segment_color_class, color);
-      gimp_savable_print_element_start (output, n_indent + 4, "segment",
+      gimp_savable_print_element_start (state, "segment",
                                         "blend", "%s", enum_value->value_nick,
                                         "color", "%s", enum_value2->value_nick,
                                         NULL);
 
       enum_value = g_enum_get_value (gradient_color_class, left_color_type);
-      gimp_savable_print_element_start (output, n_indent + 6, "left",
+      gimp_savable_print_element_start (state, "left",
                                         "position", "%f", left,
                                         "type",     "%s", enum_value->value_nick,
                                         NULL);
-      gimp_savable_color_save (seg->left_color, NULL, NULL, output, n_indent + 8, icc_references);
-      gimp_savable_print_element_end (output, n_indent + 6, "left");
+      gimp_savable_color_save (seg->left_color, NULL, NULL, state);
+      gimp_savable_print_element_end (state, "left");
 
-      gimp_savable_print_element (output, n_indent + 6, "middle", NULL, NULL,
+      gimp_savable_print_element (state, "middle", NULL, NULL,
                                   "position", "%f", middle, NULL);
 
       enum_value = g_enum_get_value (gradient_color_class, right_color_type);
-      gimp_savable_print_element_start (output, n_indent + 6, "right",
+      gimp_savable_print_element_start (state, "right",
                                         "position", "%f", right,
                                         "type",     "%s", enum_value->value_nick,
                                         NULL);
-      gimp_savable_color_save (seg->right_color, NULL, NULL, output, n_indent + 8, icc_references);
-      gimp_savable_print_element_end (output, n_indent + 6, "right");
+      gimp_savable_color_save (seg->right_color, NULL, NULL, state);
+      gimp_savable_print_element_end (state, "right");
 
-      gimp_savable_print_element_end (output, n_indent + 4, "segment");
+      gimp_savable_print_element_end (state, "segment");
     }
-  gimp_savable_print_element_end (output, n_indent + 2, "segments");
+  gimp_savable_print_element_end (state, "segments");
 
-  gimp_savable_print_element_end (output, n_indent, "gradient");
+  gimp_savable_print_element_end (state, "gradient");
 
   g_type_class_unref (gradient_color_class);
   g_type_class_unref (gradient_segment_type_class);

@@ -61,10 +61,7 @@ static void   gimp_guide_set_property       (GObject              *object,
                                              GParamSpec           *pspec);
 
 static void   gimp_guide_savable_save       (GimpSavable          *savable,
-                                             GOutputStream        *output,
-                                             gint                  n_indent,
-                                             GFile                *xcf_file,
-                                             GHashTable           *icc_references);
+                                             GimpSaveState        *state);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpGuide, gimp_guide, GIMP_TYPE_AUX_ITEM,
@@ -168,14 +165,11 @@ gimp_guide_set_property (GObject      *object,
 
 static void
 gimp_guide_savable_save (GimpSavable   *savable,
-                         GOutputStream *output,
-                         gint           n_indent,
-                         GFile         *xcf_file,
-                         GHashTable    *icc_references)
+                         GimpSaveState *state)
 {
   GimpGuide *guide = GIMP_GUIDE (savable);
 
-  gimp_savable_print_element (output, n_indent, "guide", NULL, NULL,
+  gimp_savable_print_element (state, "guide", NULL, NULL,
                               "orientation", "%[GimpOrientationType]", guide->priv->orientation,
                               "position",    "%d",                     guide->priv->position,
                               NULL);

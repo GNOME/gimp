@@ -97,10 +97,7 @@ static void       gimp_text_layer_set_rasterized (GimpRasterizable  *rasterizabl
                                                   gboolean           rasterized);
 
 static void       gimp_text_layer_savable_save   (GimpSavable       *savable,
-                                                  GOutputStream     *output,
-                                                  gint               n_indent,
-                                                  GFile             *xcf_file,
-                                                  GHashTable        *icc_references);
+                                                  GimpSaveState     *state);
 
 static gint64     gimp_text_layer_get_memsize    (GimpObject        *object,
                                                   gint64            *gui_size);
@@ -286,28 +283,25 @@ gimp_text_layer_set_rasterized (GimpRasterizable *rasterizable,
 
 static void
 gimp_text_layer_savable_save (GimpSavable   *savable,
-                              GOutputStream *output,
-                              gint           n_indent,
-                              GFile         *xcf_file,
-                              GHashTable    *icc_references)
+                              GimpSaveState *state)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (savable);
   const gchar   *layer_name;
 
   layer_name = gimp_object_get_name (GIMP_OBJECT (layer));
-  gimp_savable_print_element_start (output, n_indent, "text-layer", "name", "%s", layer_name, NULL);
+  gimp_savable_print_element_start (state, "text-layer", "name", "%s", layer_name, NULL);
 
-  parent_savable_interface->save (savable, output, n_indent, xcf_file, icc_references);
+  parent_savable_interface->save (savable, state);
 
-  gimp_savable_config_save (GIMP_CONFIG (layer->text), "text", output, n_indent + 2, xcf_file, icc_references);
+  gimp_savable_config_save (GIMP_CONFIG (layer->text), "text", state);
 
   if (! gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (layer)))
-    gimp_savable_print_element (output, n_indent + 2, "auto-rename", NULL, NULL, "disable", "%b", TRUE, NULL);
+    gimp_savable_print_element (state, "auto-rename", NULL, NULL, "disabled", "%b", TRUE, NULL);
 
   if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
-    gimp_savable_print_element (output, n_indent + 2, "rasterized", NULL, NULL, NULL);
+    gimp_savable_print_element (state, "rasterized", NULL, NULL, NULL);
 
-  gimp_savable_print_element_end (output, n_indent, "text-layer");
+  gimp_savable_print_element_end (state, "text-layer");
 }
 
 static gint64

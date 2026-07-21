@@ -58,10 +58,7 @@ static void   gimp_sample_point_set_property       (GObject              *object
                                                     GParamSpec           *pspec);
 
 static void   gimp_sample_point_savable_save       (GimpSavable          *savable,
-                                                    GOutputStream        *output,
-                                                    gint                  n_indent,
-                                                    GFile                *xcf_file,
-                                                    GHashTable           *icc_references);
+                                                    GimpSaveState        *state);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpSamplePoint, gimp_sample_point, GIMP_TYPE_AUX_ITEM,
@@ -168,10 +165,7 @@ gimp_sample_point_set_property (GObject      *object,
 
 static void
 gimp_sample_point_savable_save (GimpSavable   *savable,
-                                GOutputStream *output,
-                                gint           n_indent,
-                                GFile         *xcf_file,
-                                GHashTable    *icc_references)
+                                GimpSaveState *state)
 {
   GimpSamplePoint   *sample_point = GIMP_SAMPLE_POINT (savable);
   GimpColorPickMode  pick_mode;
@@ -182,7 +176,7 @@ gimp_sample_point_savable_save (GimpSavable   *savable,
    * a random model and space in the future?
    */
   pick_mode  = gimp_sample_point_get_pick_mode (sample_point);
-  gimp_savable_print_element (output, n_indent, "sample-point", NULL, NULL,
+  gimp_savable_print_element (state, "sample-point", NULL, NULL,
                               "pick-mode", "%[GimpColorPickMode]", pick_mode,
                               NULL);
 }

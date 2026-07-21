@@ -150,10 +150,7 @@ static GimpConfig  * gimp_font_deserialize_create (GType                 type,
                                                    gpointer              data);
 
 static void          gimp_font_savable_save       (GimpSavable          *savable,
-                                                   GOutputStream        *output,
-                                                   gint                  n_indent,
-                                                   GFile                *xcf_file,
-                                                   GHashTable           *icc_references);
+                                                   GimpSaveState        *state);
 
 static gint64        gimp_font_get_memsize        (GimpObject           *object,
                                                    gint64               *gui_size);
@@ -550,26 +547,23 @@ gimp_font_deserialize_create (GType     type,
 
 static void
 gimp_font_savable_save (GimpSavable   *savable,
-                        GOutputStream *output,
-                        gint           n_indent,
-                        GFile         *xcf_file,
-                        GHashTable    *icc_references)
+                        GimpSaveState *state)
 {
   GimpFont *font = GIMP_FONT (savable);
 
-  gimp_savable_print_element_start (output, n_indent, "font", NULL);
-  gimp_savable_print_element (output, n_indent + 2, "font-hash", "%s", gimp_font_get_hash (font), NULL);
-  gimp_savable_print_element (output, n_indent + 2, "full-name", "%s", font->fullname, NULL);
-  gimp_savable_print_element (output, n_indent + 2, "family", "%s", font->family, NULL);
-  gimp_savable_print_element (output, n_indent + 2, "style", "%s", font->style, NULL);
-  gimp_savable_print_element (output, n_indent + 2, "psname", "%s", font->psname, NULL);
+  gimp_savable_print_element_start (state, "font", NULL);
+  gimp_savable_print_element (state, "font-hash", "%s", gimp_font_get_hash (font), NULL);
+  gimp_savable_print_element (state, "full-name", "%s", font->fullname, NULL);
+  gimp_savable_print_element (state, "family", "%s", font->family, NULL);
+  gimp_savable_print_element (state, "style", "%s", font->style, NULL);
+  gimp_savable_print_element (state, "psname", "%s", font->psname, NULL);
 
-  gimp_savable_print_element (output, n_indent + 2, "index", "%d", font->index, NULL);
-  gimp_savable_print_element (output, n_indent + 2, "weight", "%d", font->weight, NULL);
-  gimp_savable_print_element (output, n_indent + 2, "slant", "%d", font->slant, NULL);
-  gimp_savable_print_element (output, n_indent + 2, "width", "%d", font->width, NULL);
-  gimp_savable_print_element (output, n_indent + 2, "font-version", "%d", font->fontversion, NULL);
-  gimp_savable_print_element_end (output, n_indent, "font");
+  gimp_savable_print_element (state, "index", "%d", font->index, NULL);
+  gimp_savable_print_element (state, "weight", "%d", font->weight, NULL);
+  gimp_savable_print_element (state, "slant", "%d", font->slant, NULL);
+  gimp_savable_print_element (state, "width", "%d", font->width, NULL);
+  gimp_savable_print_element (state, "font-version", "%d", font->fontversion, NULL);
+  gimp_savable_print_element_end (state, "font");
 }
 
 void

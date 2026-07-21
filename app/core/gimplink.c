@@ -93,10 +93,7 @@ static void       gimp_link_set_property       (GObject               *object,
                                                 GParamSpec            *pspec);
 
 static void       gimp_link_savable_save       (GimpSavable           *savable,
-                                                GOutputStream         *output,
-                                                gint                   n_indent,
-                                                GFile                 *xcf_file,
-                                                GHashTable            *icc_references);
+                                                GimpSaveState         *state);
 
 static void       gimp_link_file_changed       (GFileMonitor          *monitor,
                                                 GFile                 *file,
@@ -250,30 +247,26 @@ gimp_link_set_property (GObject      *object,
 
 static void
 gimp_link_savable_save (GimpSavable   *savable,
-                        GOutputStream *output,
-                        gint           n_indent,
-                        GFile         *xcf_file,
-                        GHashTable    *icc_references)
+                        GimpSaveState *state)
 {
   GimpLink *link = GIMP_LINK (savable);
   gchar    *path = NULL;
-  gchar    *encoded;
 
   if (link->p->is_vector)
-    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<link width='%u' height='%u'>",
-                            n_indent, ' ', link->p->width, link->p->height);
+    gimp_savable_print_element_start (state, "link",
+                                      "width",  "%u", link->p->width,
+                                      "height", "%u", link->p->height,
+                                      NULL);
   else
-    g_output_stream_printf (output, NULL, NULL, NULL, "%*c<link>\n", n_indent, ' ');
-  gimp_link_get_file (link, xcf_file, &path);
-  encoded = g_markup_escape_text (path, -1);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<path absolute='%s'>%s</path>\n",
-                          n_indent + 2, ' ',
-                          link->p->absolute_path ? "true" : "false",
-                          encoded);
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</link>\n", n_indent, ' ');
+    gimp_savable_print_element_start (state, "link", NULL);
+
+  gimp_link_get_file (link, state->xcf_file, &path);
+  gimp_savable_print_element (state, "path", "%s", path,
+                              "absolute", "%b", link->p->absolute_path,
+                              NULL);
+  gimp_savable_print_element_end (state, "link");
 
   g_free (path);
-  g_free (encoded);
 }
 
 static void

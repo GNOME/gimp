@@ -94,10 +94,7 @@ static gint64        gimp_palette_entry_get_memsize   (GimpPaletteEntry     *ent
 static gchar       * gimp_palette_get_checksum        (GimpTagged           *tagged);
 
 static void          gimp_palette_savable_save        (GimpSavable          *savable,
-                                                       GOutputStream        *output,
-                                                       gint                  indent,
-                                                       GFile                *xcf_file,
-                                                       GHashTable           *icc_references);
+                                                       GimpSaveState        *state);
 
 static void          gimp_palette_image_space_updated (GimpImage            *image,
                                                        GimpPalette          *palette);
@@ -450,33 +447,31 @@ gimp_palette_get_checksum (GimpTagged *tagged)
 
 static void
 gimp_palette_savable_save (GimpSavable   *savable,
-                           GOutputStream *output,
-                           gint           n_indent,
-                           GFile         *xcf_file,
-                           GHashTable    *icc_references)
+                           GimpSaveState *state)
 {
   GimpPalette *palette = GIMP_PALETTE (savable);
   GList       *iter;
   const Babl  *format;
 
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c<palette name='%s'>\n", n_indent, ' ',
-                          gimp_object_get_name (palette));
+  gimp_savable_print_element_start (state, "palette",
+                                    "name", "%s", gimp_object_get_name (palette),
+                                    NULL);
 
   format = gimp_palette_get_restriction (palette);
   if (format != NULL)
     {
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<restriction>\n", n_indent + 2, ' ');
-      gimp_savable_format_save (format, output, n_indent + 4, icc_references);
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</restriction>\n", n_indent + 2, ' ');
+      gimp_savable_print_element_start (state, "restriction", NULL);
+      gimp_savable_format_save (format, state);
+      gimp_savable_print_element_end (state, "restriction");
     }
 
   for (iter = palette->colors; iter; iter = iter->next)
     {
       GimpPaletteEntry *entry = iter->data;
-      gimp_savable_color_save  (entry->color, entry->name, format,
-                                output, n_indent + 2, icc_references);
+      gimp_savable_color_save (entry->color, entry->name, format, state);
     }
-  g_output_stream_printf (output, NULL, NULL, NULL, "%*c</palette>\n", n_indent, ' ');
+
+  gimp_savable_print_element_end (state, "palette");
 }
 
 static void
