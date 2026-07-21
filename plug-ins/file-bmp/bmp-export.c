@@ -1015,8 +1015,9 @@ export_dialog (GimpProcedure *procedure,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  if (drawable_type == GIMP_GRAYA_IMAGE ||
-      drawable_type == GIMP_INDEXEDA_IMAGE)
+  if ((drawable_type == GIMP_GRAYA_IMAGE ||
+       drawable_type == GIMP_INDEXEDA_IMAGE) &&
+      gimp_image_has_transparency (image))
     {
       const gchar *title   = _("Cannot export indexed image with "
                                "transparency in BMP file format.");
