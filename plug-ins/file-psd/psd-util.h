@@ -138,6 +138,23 @@ gchar                 * encode_packbits             (const gchar         *src,
                                                      guint32              unpacked_len,
                                                      guint16             *packed_len);
 
+/*
+ *  Loads descriptor information and stores as JSON
+ */
+gint                    parse_descriptor            (GInputStream        *input,
+                                                     gboolean             ibm_pc_format,
+                                                     JsonNode           **root_node,
+                                                     GError             **error);
+
+gint                    load_descriptor             (GInputStream        *input,
+                                                     gboolean             ibm_pc_format,
+                                                     JsonNode           **base_node,
+                                                     GError             **error);
+gint                    parse_tdta                  (guint32              len,
+                                                     gchar               *buf,
+                                                     JsonNode           **tdta_root,
+                                                     GError             **error);
+
 void                    psd_to_gimp_blend_mode      (PSDlayer             *psd_layer,
                                                      LayerModeInfo        *mode_info);
 
