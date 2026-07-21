@@ -338,9 +338,9 @@ gimp_savable_space_save (const Babl    *space,
       gchar      *icc_b64;
 
       icc_b64 = g_base64_encode ((const guchar*) icc, icc_length);
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<space id='space-%d'>\n", n_indent, ' ', new_space_id);
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c<icc>%s</icc>\n", n_indent + 2, ' ', icc_b64);
-      g_output_stream_printf (output, NULL, NULL, NULL, "%*c</space>\n", n_indent, ' ');
+      gimp_savable_print_element_start (output, n_indent, "space", "id", "space-%d", new_space_id, NULL);
+      gimp_savable_print_element (output, n_indent + 2, "icc", "%s", icc_b64, NULL);
+      gimp_savable_print_element_end (output, n_indent, "space");
 
       g_free (icc_b64);
     }
@@ -351,8 +351,9 @@ gimp_savable_space_save (const Babl    *space,
 
       if (g_hash_table_lookup_extended (references, babl_get_name (space), &key, &space_id))
         {
-          g_output_stream_printf (output, NULL, NULL, NULL, "%*c<space idref='space-%d'>\n", n_indent, ' ',
-                                  GPOINTER_TO_UINT (space_id));
+          gimp_savable_print_element (output, n_indent, "space", NULL, NULL,
+                                      "idref", "space-%d", GPOINTER_TO_UINT (space_id),
+                                      NULL);
         }
       else
         {
@@ -705,32 +706,32 @@ gimp_savable_printf (const gchar *format,
 
   g_return_val_if_fail (format != NULL, NULL);
 
-  if (g_strcmp0 ("%s", format) == 0)
+  if (strstr (format, "%s"))
     {
       const gchar *value = va_arg (args, gchar *);
       strval = g_strdup_printf (format, value);
     }
-  else if (g_strcmp0 ("%d", format) == 0)
+  else if (strstr (format, "%d"))
     {
       gint value = va_arg (args, gint);
       strval = g_strdup_printf (format, value);
     }
-  else if (g_strcmp0 ("%lu", format) == 0)
+  else if (strstr (format, "%lu"))
     {
       gulong value = va_arg (args, gulong);
       strval = g_strdup_printf (format, value);
     }
-  else if (g_strcmp0 ("%ld", format) == 0)
+  else if (strstr (format, "%ld"))
     {
       glong value = va_arg (args, glong);
       strval = g_strdup_printf (format, value);
     }
-  else if (g_strcmp0 ("%u", format) == 0)
+  else if (strstr (format, "%u"))
     {
       guint value = va_arg (args, guint);
       strval = g_strdup_printf (format, value);
     }
-  else if (g_strcmp0 ("%f", format) == 0)
+  else if (strstr (format, "%f"))
     {
       gdouble value = va_arg (args, gdouble);
       strval = g_strdup_printf (format, value);
