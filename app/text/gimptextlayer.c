@@ -292,9 +292,9 @@ gimp_text_layer_savable_save (GimpSavable   *savable,
                               GHashTable    *icc_references)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (savable);
-  gchar         *layer_name;
+  const gchar   *layer_name;
 
-  layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
+  layer_name = gimp_object_get_name (GIMP_OBJECT (layer));
   gimp_savable_print_element_start (output, n_indent, "text-layer", "name", "%s", layer_name, NULL);
 
   parent_savable_interface->save (savable, output, n_indent, xcf_file, icc_references);
@@ -302,14 +302,12 @@ gimp_text_layer_savable_save (GimpSavable   *savable,
   gimp_savable_config_save (GIMP_CONFIG (layer->text), "text", output, n_indent + 2, xcf_file, icc_references);
 
   if (! gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (layer)))
-    gimp_savable_print_element (output, n_indent + 2, "auto-rename", NULL, NULL, "disable", "true", NULL);
+    gimp_savable_print_element (output, n_indent + 2, "auto-rename", NULL, NULL, "disable", "%b", TRUE, NULL);
 
   if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
     gimp_savable_print_element (output, n_indent + 2, "rasterized", NULL, NULL, NULL);
 
   gimp_savable_print_element_end (output, n_indent, "text-layer");
-
-  g_free (layer_name);
 }
 
 static gint64

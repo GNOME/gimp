@@ -183,8 +183,7 @@ gimp_sample_point_savable_save (GimpSavable   *savable,
    */
   pick_mode  = gimp_sample_point_get_pick_mode (sample_point);
   gimp_savable_print_element (output, n_indent, "sample-point", NULL, NULL,
-                              "pick-mode", "%s",
-                              gimp_get_enum_value_nick (GIMP_TYPE_COLOR_PICK_MODE, pick_mode),
+                              "pick-mode", "%[GimpColorPickMode]", pick_mode,
                               NULL);
 }
 

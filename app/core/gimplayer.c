@@ -1673,17 +1673,10 @@ gimp_layer_savable_save (GimpSavable   *savable,
                G_TYPE_FROM_INSTANCE (layer) == GIMP_TYPE_TEXT_LAYER);
 
   if (! drop_root)
-    {
-      gchar *layer_name;
-
-      layer_name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (layer)), -1);
-      gimp_savable_print_element_start (output, n_indent, "layer",
-                                        "name", "%s", layer_name,
-                                        "type", "%s", g_type_name (G_TYPE_FROM_INSTANCE (layer)),
-                                        NULL);
-
-      g_free (layer_name);
-    }
+    gimp_savable_print_element_start (output, n_indent, "layer",
+                                      "name", "%s", gimp_object_get_name (GIMP_OBJECT (layer)),
+                                      "type", "%s", g_type_name (G_TYPE_FROM_INSTANCE (layer)),
+                                      NULL);
 
   if (gimp_image_get_floating_selection (image) == layer)
     gimp_savable_print_element (output, n_indent + 2, "floating", NULL, NULL, NULL);
@@ -1752,12 +1745,9 @@ gimp_layer_savable_save (GimpSavable   *savable,
   if (gimp_layer_get_mask (layer))
     {
       gimp_savable_print_element_start (output, n_indent + 2, "mask",
-                                        "apply", "%s",
-                                        gimp_layer_get_apply_mask (layer) ? "true" : "false",
-                                        "edit", "%s",
-                                        gimp_layer_get_edit_mask (layer) ? "true" : "false",
-                                        "show", "%s",
-                                        gimp_layer_get_show_mask (layer) ? "true" : "false",
+                                        "apply", "%b", gimp_layer_get_apply_mask (layer),
+                                        "edit",  "%b", gimp_layer_get_edit_mask (layer),
+                                        "show",  "%b", gimp_layer_get_show_mask (layer),
                                         NULL);
       gimp_savable_save (GIMP_SAVABLE (gimp_layer_get_mask (layer)),
                          output, n_indent + 4, xcf_file, icc_references);

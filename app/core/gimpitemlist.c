@@ -338,10 +338,10 @@ gimp_item_list_savable_save (GimpSavable   *savable,
                              GHashTable    *icc_references)
 {
   GimpItemList     *list = GIMP_ITEM_LIST (savable);
-  gchar            *encoded;
+  const gchar      *name;
   GimpSelectMethod  pattern_syntax;
 
-  encoded = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (list)), -1);
+  name = gimp_object_get_name (GIMP_OBJECT (list));
 
   if (gimp_item_list_is_pattern (list, &pattern_syntax))
     {
@@ -349,9 +349,8 @@ gimp_item_list_savable_save (GimpSavable   *savable,
                                         "type", "%s",
                                         g_type_name (gimp_item_list_get_item_type (list)),
                                         NULL);
-      gimp_savable_print_element (output, n_indent, "pattern", "%s", encoded,
-                                  "method", "%s",
-                                  gimp_get_enum_value_nick (GIMP_TYPE_SELECT_METHOD, pattern_syntax),
+      gimp_savable_print_element (output, n_indent, "pattern", "%s", name,
+                                  "method", "%[GimpSelectMethod]", pattern_syntax,
                                   NULL);
     }
   else
@@ -361,7 +360,7 @@ gimp_item_list_savable_save (GimpSavable   *savable,
       gimp_savable_print_element_start (output, n_indent, "item-set",
                                         "type", "%s",
                                         g_type_name (gimp_item_list_get_item_type (list)),
-                                        "name", "%s", encoded,
+                                        "name", "%s", name,
                                         NULL);
       for (iter = list->p->items; iter; iter = iter->next)
         gimp_savable_print_element (output, n_indent, "item", NULL, NULL,
@@ -371,8 +370,6 @@ gimp_item_list_savable_save (GimpSavable   *savable,
     }
 
   gimp_savable_print_element_end (output, n_indent, "item-set");
-
-  g_free (encoded);
 }
 
 

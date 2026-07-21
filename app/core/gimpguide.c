@@ -176,9 +176,8 @@ gimp_guide_savable_save (GimpSavable   *savable,
   GimpGuide *guide = GIMP_GUIDE (savable);
 
   gimp_savable_print_element (output, n_indent, "guide", NULL, NULL,
-                              "orientation", "%s",
-                              guide->priv->orientation == GIMP_ORIENTATION_HORIZONTAL ? "horizontal" : "vertical",
-                              "position", "%d", guide->priv->position,
+                              "orientation", "%[GimpOrientationType]", guide->priv->orientation,
+                              "position",    "%d",                     guide->priv->position,
                               NULL);
 }
 

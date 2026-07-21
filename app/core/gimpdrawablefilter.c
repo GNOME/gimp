@@ -404,7 +404,7 @@ gimp_drawable_filter_save (GimpSavable   *savable,
   GimpDrawableFilterMask  *mask;
   GeglNode                *node;
   gchar                   *operation;
-  gchar                   *op_version;
+  const gchar             *op_version;
   GParamSpec             **pspecs;
   guint                    n_pspecs;
   gchar                   *name;
@@ -434,7 +434,7 @@ gimp_drawable_filter_save (GimpSavable   *savable,
   if (icon && *icon)
     gimp_savable_print_element (output, n_indent + 2, "icon", "%s", icon, NULL);
 
-  op_version = g_markup_escape_text (gegl_operation_get_op_version (operation), -1);
+  op_version = gegl_operation_get_op_version (operation);
   gimp_savable_print_element_start (output, n_indent + 2, "operation",
                                     "name",    "%s", operation,
                                     "version", "%s", op_version,
@@ -553,17 +553,15 @@ gimp_drawable_filter_save (GimpSavable   *savable,
       gimp_savable_print_element_end (output, n_indent + 2, "mask");
     }
 
-  gimp_savable_print_element (output, n_indent + 2, "visible", "%s",
-                              gimp_filter_get_active (GIMP_FILTER (filter)) ? "true" : "false",
+  gimp_savable_print_element (output, n_indent + 2, "visible", "%b",
+                              gimp_filter_get_active (GIMP_FILTER (filter)),
                               NULL);
   gimp_savable_print_element (output, n_indent + 2, "opacity", "%f",
                               gimp_drawable_filter_get_opacity (GIMP_DRAWABLE_FILTER (filter)),
                               NULL);
 
   mode = gimp_drawable_filter_get_paint_mode (GIMP_DRAWABLE_FILTER (filter));
-  gimp_savable_print_element (output, n_indent + 2, "mode", "%s",
-                              gimp_get_enum_value_nick (GIMP_TYPE_LAYER_MODE, mode),
-                              NULL);
+  gimp_savable_print_element (output, n_indent + 2, "mode", "%[GimpLayerMode]", mode, NULL);
 
   space = gimp_drawable_filter_get_blend_space (GIMP_DRAWABLE_FILTER (filter));
   gimp_savable_blend_space_save (space, mode, output, n_indent + 2);
@@ -574,21 +572,18 @@ gimp_drawable_filter_save (GimpSavable   *savable,
   composite_mode = gimp_drawable_filter_get_composite_mode (filter);
   gimp_savable_composite_mode_save (composite_mode, mode, output, n_indent + 2);
 
-  gimp_savable_print_element (output, n_indent + 2, "clip", "%s",
-                              gimp_drawable_filter_get_clip (filter) ?  "true" : "false",
+  gimp_savable_print_element (output, n_indent + 2, "clip", "%b",
+                              gimp_drawable_filter_get_clip (filter),
                               NULL);
 
   region = gimp_drawable_filter_get_region (filter);
-  gimp_savable_print_element (output, n_indent + 2, "region", "%s",
-                              gimp_get_enum_value_nick (GIMP_TYPE_FILTER_REGION, region),
-                              NULL);
+  gimp_savable_print_element (output, n_indent + 2, "region", "%[GimpFilterRegion]", region, NULL);
 
   gimp_savable_print_element_end (output, n_indent, "filter");
 
   g_free (name);
   g_free (icon);
   g_free (operation);
-  g_free (op_version);
   g_free (pspecs);
 }
 

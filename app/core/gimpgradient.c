@@ -436,15 +436,15 @@ gimp_gradient_savable_save (GimpSavable   *savable,
                             GFile         *xcf_file,
                             GHashTable    *icc_references)
 {
+  const gchar         *name;
   GimpGradient        *gradient = GIMP_GRADIENT (savable);
   GEnumClass          *gradient_color_class;
   GEnumClass          *gradient_segment_type_class;
   GEnumClass          *gradient_segment_color_class;
   GimpGradientSegment *seg;
-  gchar               *name;
   guint32              version  = 1;
 
-  name = g_markup_escape_text (gimp_object_get_name (GIMP_OBJECT (gradient)), -1);
+  name = gimp_object_get_name (GIMP_OBJECT (gradient));
 
   gradient_color_class         = g_type_class_ref (GIMP_TYPE_GRADIENT_COLOR);
   gradient_segment_type_class  = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_TYPE);
@@ -502,7 +502,6 @@ gimp_gradient_savable_save (GimpSavable   *savable,
   g_type_class_unref (gradient_color_class);
   g_type_class_unref (gradient_segment_type_class);
   g_type_class_unref (gradient_segment_color_class);
-  g_free (name);
 }
 
 

@@ -296,20 +296,18 @@ gimp_savable_format_save (const Babl    *format,
                           gint           n_indent,
                           GHashTable    *space_references)
 {
-  const Babl *space;
-  gchar      *encoding;
+  const Babl  *space;
+  const gchar *encoding;
 
   g_return_if_fail (space_references != NULL);
 
-  encoding = g_markup_escape_text (babl_format_get_encoding (format), -1);
+  encoding = babl_format_get_encoding (format);
   gimp_savable_print_element_start (output, n_indent, "format", "encoding", "%s", encoding, NULL);
 
   space = babl_format_get_space (format);
   gimp_savable_space_save (space, output, n_indent + 2, space_references, 0);
 
   gimp_savable_print_element_end (output, n_indent, "format");
-
-  g_free (encoding);
 }
 
 void
@@ -552,15 +550,12 @@ gimp_savable_metadata_save (GimpMetadata  *metadata,
                             gint           n_indent)
 {
   gchar *meta_string;
-  gchar *escaped;
 
   meta_string = gimp_metadata_serialize (metadata);
-  escaped     = g_markup_escape_text (meta_string, -1);
   if (meta_string)
-    gimp_savable_print_element (output, n_indent, "metadata", "%s", escaped, NULL);
+    gimp_savable_print_element (output, n_indent, "metadata", "%s", meta_string, NULL);
 
   g_free (meta_string);
-  g_free (escaped);
 }
 
 void
@@ -571,18 +566,16 @@ gimp_savable_parasite_save (GimpParasite  *parasite,
   if (gimp_parasite_is_persistent (parasite))
     {
       const gchar   *name;
-      gchar         *escaped;
       gulong         flags;
       gconstpointer  data;
       guint32        data_length;
       gchar         *data_b64;
 
-      name    = gimp_parasite_get_name (parasite);
-      escaped = g_markup_escape_text (name, -1);
-      flags   = gimp_parasite_get_flags (parasite);
+      name  = gimp_parasite_get_name (parasite);
+      flags = gimp_parasite_get_flags (parasite);
 
       gimp_savable_print_element_start (output, n_indent, "parasite",
-                                        "name",  "%s",  escaped,
+                                        "name",  "%s",  name,
                                         "flags", "%lu", flags,
                                         NULL);
 
@@ -591,7 +584,6 @@ gimp_savable_parasite_save (GimpParasite  *parasite,
 
       gimp_savable_print_element_end (output, n_indent, "parasite");
 
-      g_free (escaped);
       g_free (data_b64);
     }
 }
@@ -683,7 +675,7 @@ gimp_savable_print_incomplete_element (GOutputStream *output,
   g_output_stream_printf (output, NULL, NULL, NULL, "%*c<%s",
                           n_indent, ' ', element_name);
 
-  attr  = va_arg (args, char *);
+  attr = va_arg (args, char *);
   while (attr)
     {
       gchar *strval;
@@ -698,7 +690,7 @@ gimp_savable_print_incomplete_element (GOutputStream *output,
       encoded = g_markup_escape_text (strval, -1);
       g_output_stream_printf (output, NULL, NULL, NULL, " %s='%s'", attr, encoded);
 
-      attr  = va_arg (args, char *);
+      attr = va_arg (args, char *);
 
       g_free (strval);
       g_free (encoded);
