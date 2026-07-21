@@ -57,6 +57,7 @@ hello_world_run (GimpProcedure        *procedure,
                  GimpProcedureConfig  *config,
                  gpointer              run_data)
 {
+  gegl_init (NULL, NULL);
   gimp_message ("Hello World!");
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }

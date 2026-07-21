@@ -102,6 +102,8 @@ hello_world_run (GimpProcedure        *procedure,
   gint           size;
   GimpUnit      *unit;
 
+  gegl_init (NULL, NULL);
+
   n_drawables = gimp_core_object_array_get_length ((GObject **) drawables);
 
   if (n_drawables > 1)
