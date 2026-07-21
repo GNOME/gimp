@@ -271,6 +271,9 @@ gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
  * drawable when the buffer gets destroyed, or when gegl_buffer_flush()
  * is called.
  *
+ * Make sure you called [func@Gegl.init] before calling any function using
+ * `GEGL`.
+ *
  * Returns: (transfer full): The #GeglBuffer.
  *
  * See Also: gimp_drawable_get_shadow_buffer()
