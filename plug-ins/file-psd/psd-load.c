@@ -5688,7 +5688,6 @@ initialize_unsupported (PSDSupport *unsupported_features)
 
   unsupported_features->adjustment_layer = FALSE;
   unsupported_features->fill_layer       = FALSE;
-  unsupported_features->text_layer       = FALSE;
   unsupported_features->linked_layer     = FALSE;
   unsupported_features->vector_mask      = FALSE;
   unsupported_features->smart_object     = FALSE;
@@ -5781,11 +5780,6 @@ load_dialog (const gchar *title,
       if (unsupported_features->fill_layer)
         ADD_UNSUPPORTED_MESSAGE (message,
                                  "Fill layers are partially "
-                                 "supported and will be converted "
-                                 "to raster layers.");
-      if (unsupported_features->text_layer)
-        ADD_UNSUPPORTED_MESSAGE (message,
-                                 "Text layers are partially "
                                  "supported and will be converted "
                                  "to raster layers.");
       if (unsupported_features->linked_layer)

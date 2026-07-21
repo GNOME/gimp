@@ -752,7 +752,6 @@ typedef struct
 
   gboolean adjustment_layer;
   gboolean fill_layer;
-  gboolean text_layer;
   gboolean linked_layer;
   gboolean vector_mask;
   gboolean smart_object;
