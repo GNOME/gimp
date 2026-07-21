@@ -95,8 +95,9 @@ void         gimp_savable_unit_save            (GimpUnit               *unit,
                                                 GimpSaveState          *state);
 void         gimp_savable_metadata_save        (GimpMetadata           *metadata,
                                                 GimpSaveState          *state);
-
 void         gimp_savable_parasite_save        (GimpParasite           *parasite,
+                                                GimpSaveState          *state);
+void         gimp_savable_matrix2_save         (GimpMatrix2            *matrix,
                                                 GimpSaveState          *state);
 
 void         gimp_savable_composite_mode_save  (GimpLayerCompositeMode  composite_mode,

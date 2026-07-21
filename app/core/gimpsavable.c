@@ -26,6 +26,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -279,6 +280,14 @@ gimp_savable_config_save (GimpConfig    *config,
                                             "type", "%s", g_type_name (G_TYPE_FROM_INSTANCE (object)),
                                             NULL);
           gimp_savable_save (GIMP_SAVABLE (object), state);
+          gimp_savable_print_element_end (state, prop_spec->name);
+        }
+      else if (GIMP_VALUE_HOLDS_MATRIX2 (&value))
+        {
+          GimpMatrix2 *matrix = g_value_get_boxed (&value);
+
+          gimp_savable_print_element_start (state, prop_spec->name, NULL);
+          gimp_savable_matrix2_save (matrix, state);
           gimp_savable_print_element_end (state, prop_spec->name);
         }
       else
@@ -580,6 +589,21 @@ gimp_savable_parasite_save (GimpParasite  *parasite,
 
       g_free (data_b64);
     }
+}
+
+void
+gimp_savable_matrix2_save (GimpMatrix2   *matrix,
+                           GimpSaveState *state)
+{
+  gimp_savable_print_element_start (state, "matrix",
+                                    "dim0", "%d", 2,
+                                    "dim1", "%d", 2,
+                                    NULL);
+  gimp_savable_print_element (state, "coeff", "%f", matrix->coeff[0][0], NULL);
+  gimp_savable_print_element (state, "coeff", "%f", matrix->coeff[0][1], NULL);
+  gimp_savable_print_element (state, "coeff", "%f", matrix->coeff[1][0], NULL);
+  gimp_savable_print_element (state, "coeff", "%f", matrix->coeff[1][1], NULL);
+  gimp_savable_print_element_end (state, "matrix");
 }
 
 void
