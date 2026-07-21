@@ -730,7 +730,7 @@ typedef enum
 
 /**
  * GimpMessageHandlerType:
- * @GIMP_MESSAGE_BOX:   A popup dialog
+ * @GIMP_MESSAGE_BOX:   A status bar message (if opened) or popup dialog (if not)
  * @GIMP_CONSOLE:       The terminal
  * @GIMP_ERROR_CONSOLE: The error console dockable
  *
