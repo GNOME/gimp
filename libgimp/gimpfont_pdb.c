@@ -114,3 +114,45 @@ gimp_font_get_by_name (const gchar *name)
 
   return font;
 }
+
+/**
+ * gimp_font_get_by_postscript_name:
+ * @psname: The PostScript name of the font.
+ *
+ * Returns a font with the given PostScript name.
+ *
+ * If several fonts are named identically, the one which is returned by
+ * this function should be considered random. This can be used when you
+ * know you won't have multiple fonts of this name or that you don't
+ * want to choose (non-interactive scripts, etc.).
+ * If you need more control, you should use [func@fonts_get_list]
+ * instead.
+ * Returns %NULL when no font exists of that name.
+ *
+ * Returns: (nullable) (transfer none): The font.
+ *
+ * Since: 3.4
+ **/
+GimpFont *
+gimp_font_get_by_postscript_name (const gchar *psname)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpFont *font = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, psname,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-font-get-by-postscript-name",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    font = GIMP_VALUES_GET_FONT (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return font;
+}

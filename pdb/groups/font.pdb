@@ -57,6 +57,50 @@ CODE
     );
 }
 
+sub font_get_by_postscript_name {
+    $blurb = "Returns a font with the given PostScript name.";
+    $help = <<'HELP';
+If several fonts are named identically, the one which is returned by this
+function should be considered random. This can be used when you know you won't
+have multiple fonts of this name or that you don't want to choose
+(non-interactive scripts, etc.).
+
+If you need more control, you should use [func@fonts_get_list] instead.
+
+Returns %NULL when no font exists of that name.
+HELP
+
+    &alxsa_pdb_misc('2026', '3.4');
+
+    @inargs = (
+      { name => 'psname', type => 'string', non_empty => 1,
+        desc => 'The PostScript name of the font' }
+    );
+
+    @outargs = (
+      { name => 'font',
+        type => 'font',
+        desc => 'The font',
+        none_ok => 1 }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+    GimpContainer *fonts_container;
+
+    fonts_container = gimp_data_factory_get_container (gimp->font_factory);
+
+    font = GIMP_FONT (gimp_container_search (fonts_container,
+                                             (GimpContainerSearchFunc) gimp_font_match_by_postscript_name,
+                                             (gpointer) psname));
+    /* Ignore "not found" error, just return NULL. */
+    g_clear_error (error);
+}
+CODE
+    );
+}
+
 sub font_get_lookup_name {
     $blurb = 'Retrieve the font lookup name.';
 
@@ -88,10 +132,13 @@ CODE
 }
 
 @headers = qw("core/gimp.h"
+              "core/gimpcontainer.h"
+              "core/gimpdatafactory.h"
               "text/gimpfont.h"
               "gimppdb-utils.h");
 
-@procs = qw(font_get_lookup_name font_get_by_name);
+@procs = qw(font_get_lookup_name font_get_by_name
+            font_get_by_postscript_name);
 
 %exports = (app => [@procs], lib => [@procs]);
 

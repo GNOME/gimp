@@ -621,6 +621,13 @@ gimp_font_match_by_description (GimpFont    *font,
   return !g_strcmp0 (font->desc, desc);
 }
 
+gboolean
+gimp_font_match_by_postscript_name (GimpFont    *font,
+                                    const gchar *psname)
+{
+  return !g_strcmp0 (font->psname, psname);
+}
+
 const gchar*
 gimp_font_get_lookup_name (GimpFont *font)
 {
