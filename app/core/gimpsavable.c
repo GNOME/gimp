@@ -193,7 +193,7 @@ gimp_savable_config_save (GimpConfig    *config,
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
-  guint          n_property_specs;
+  guint          n_property_specs = 0;
   guint          i;
 
   g_return_if_fail (G_IS_OBJECT (config));
@@ -208,9 +208,6 @@ gimp_savable_config_save (GimpConfig    *config,
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
-  if (! property_specs)
-    return;
-
   for (i = 0; i < n_property_specs; i++)
     {
       GParamSpec *prop_spec = property_specs[i];
@@ -221,80 +218,8 @@ gimp_savable_config_save (GimpConfig    *config,
 
       g_value_init (&value, prop_spec->value_type);
       g_object_get_property (G_OBJECT (config), prop_spec->name, &value);
-
-      if (G_VALUE_HOLDS_BOOLEAN (&value))
-        {
-          gimp_savable_print_element (state, prop_spec->name, "%b",
-                                      g_value_get_boolean (&value),
-                                      NULL);
-        }
-      else if (G_VALUE_HOLDS_INT (&value))
-        {
-          gimp_savable_print_element (state, prop_spec->name,
-                                      "%d", g_value_get_int (&value),
-                                      NULL);
-        }
-      else if (G_VALUE_HOLDS_ENUM (&value))
-        {
-          gimp_savable_print_element (state, prop_spec->name, "%s",
-                                      gimp_get_enum_value_nick (prop_spec->value_type,
-                                                                g_value_get_enum (&value)),
-                                      NULL);
-        }
-      else if (G_VALUE_HOLDS_STRING (&value))
-        {
-          const gchar *str = g_value_get_string (&value);
-          gimp_savable_print_element (state, prop_spec->name,
-                                      "%s", str ? str : "", NULL);
-        }
-      else if (G_VALUE_HOLDS_DOUBLE (&value))
-        {
-          gimp_savable_print_element (state, prop_spec->name,
-                                      "%f", g_value_get_double (&value), NULL);
-        }
-      else if (G_VALUE_HOLDS_FLOAT (&value))
-        {
-          gimp_savable_print_element (state, prop_spec->name,
-                                      "%f", g_value_get_float (&value), NULL);
-        }
-      else if (G_VALUE_HOLDS_OBJECT (&value) &&
-               GIMP_IS_UNIT (g_value_get_object (&value)))
-        {
-          gimp_savable_print_element_start (state, prop_spec->name, NULL);
-          gimp_savable_unit_save (GIMP_UNIT (g_value_get_object (&value)), state);
-          gimp_savable_print_element_end (state, prop_spec->name);
-        }
-      else if (G_VALUE_HOLDS_OBJECT (&value) &&
-               GEGL_IS_COLOR (g_value_get_object (&value)))
-        {
-          gimp_savable_print_element_start (state, prop_spec->name, NULL);
-          gimp_savable_color_save (GEGL_COLOR (g_value_get_object (&value)), NULL, NULL, state);
-          gimp_savable_print_element_end (state, prop_spec->name);
-        }
-      else if (G_VALUE_HOLDS_OBJECT (&value) &&
-               GIMP_IS_SAVABLE (g_value_get_object (&value)))
-        {
-          GObject *object = g_value_get_object (&value);
-
-          gimp_savable_print_element_start (state, prop_spec->name,
-                                            "type", "%s", g_type_name (G_TYPE_FROM_INSTANCE (object)),
-                                            NULL);
-          gimp_savable_save (GIMP_SAVABLE (object), state);
-          gimp_savable_print_element_end (state, prop_spec->name);
-        }
-      else if (GIMP_VALUE_HOLDS_MATRIX2 (&value))
-        {
-          GimpMatrix2 *matrix = g_value_get_boxed (&value);
-
-          gimp_savable_print_element_start (state, prop_spec->name, NULL);
-          gimp_savable_matrix2_save (matrix, state);
-          gimp_savable_print_element_end (state, prop_spec->name);
-        }
-      else
-        {
-          g_critical ("%s: value for property '%s' of type '%s' is not supported.",
-                      G_STRFUNC, prop_spec->name, g_type_name (prop_spec->value_type));
-        }
+      gimp_savable_value_save (&value, prop_spec, state);
+      g_value_unset (&value);
     }
 
   g_free (property_specs);
@@ -606,6 +531,143 @@ gimp_savable_matrix2_save (GimpMatrix2   *matrix,
   gimp_savable_print_element_end (state, "matrix");
 }
 
+void
+gimp_savable_value_save (GValue        *value,
+                         GParamSpec    *pspec,
+                         GimpSaveState *state)
+{
+  const gchar *tag_name = pspec ? pspec->name : "value";
+
+  if (G_VALUE_HOLDS_BOOLEAN (value))
+    {
+      gimp_savable_print_element (state, tag_name, "%b",
+                                  g_value_get_boolean (value),
+                                  "type", "%s", "boolean",
+                                  NULL);
+    }
+  else if (G_VALUE_HOLDS_INT (value))
+    {
+      gimp_savable_print_element (state, tag_name,
+                                  "%d", g_value_get_int (value),
+                                  "type", "%s", "int",
+                                  NULL);
+    }
+  else if (G_VALUE_HOLDS_ENUM (value))
+    {
+      gimp_savable_print_element (state, tag_name, "%s",
+                                  gimp_get_enum_value_nick (G_VALUE_TYPE (value),
+                                                            g_value_get_enum (value)),
+                                  "type", "%s", g_type_name (G_VALUE_TYPE (value)),
+                                  NULL);
+    }
+  else if (G_VALUE_HOLDS_STRING (value))
+    {
+      const gchar *str = g_value_get_string (value);
+      gimp_savable_print_element (state, tag_name,
+                                  "%s", str ? str : "",
+                                  "type", "%s", "string",
+                                  NULL);
+    }
+  else if (G_VALUE_HOLDS_DOUBLE (value))
+    {
+      gimp_savable_print_element (state, tag_name,
+                                  "%f", g_value_get_double (value),
+                                  "type", "%s", "double",
+                                  NULL);
+    }
+  else if (G_VALUE_HOLDS_FLOAT (value))
+    {
+      gimp_savable_print_element (state, tag_name,
+                                  "%f", g_value_get_float (value),
+                                  "type", "%s", "float",
+                                  NULL);
+    }
+  else if (G_VALUE_HOLDS_OBJECT (value) &&
+           GIMP_IS_UNIT (g_value_get_object (value)))
+    {
+      GimpUnit *unit = g_value_get_object (value);
+
+      gimp_savable_print_element_start (state, tag_name,
+                                        "type", "%s", "GimpUnit",
+                                        NULL);
+      if (unit)
+        gimp_savable_unit_save (unit, state);
+      gimp_savable_print_element_end (state, tag_name);
+    }
+  else if (G_VALUE_HOLDS_OBJECT (value) &&
+           GEGL_IS_COLOR (g_value_get_object (value)))
+    {
+      GeglColor *color = g_value_get_object (value);
+
+      gimp_savable_print_element_start (state, tag_name,
+                                        "type", "%s", "GeglColor",
+                                        NULL);
+      if (color)
+        gimp_savable_color_save (color, NULL, NULL, state);
+      gimp_savable_print_element_end (state, tag_name);
+    }
+  else if (G_VALUE_HOLDS_OBJECT (value) &&
+           GIMP_IS_SAVABLE (g_value_get_object (value)))
+    {
+      GObject *object = g_value_get_object (value);
+
+      gimp_savable_print_element_start (state, tag_name,
+                                        "type", "%s", g_type_name (G_VALUE_TYPE (value)),
+                                        NULL);
+      if (object)
+        gimp_savable_save (GIMP_SAVABLE (object), state);
+      gimp_savable_print_element_end (state, tag_name);
+    }
+  else if (GIMP_VALUE_HOLDS_MATRIX2 (value))
+    {
+      GimpMatrix2 *matrix = g_value_get_boxed (value);
+
+      gimp_savable_print_element_start (state, tag_name,
+                                        "type", "%s", "GimpMatrix2",
+                                        NULL);
+      if (matrix)
+        gimp_savable_matrix2_save (matrix, state);
+      gimp_savable_print_element_end (state, tag_name);
+    }
+  else if (GIMP_VALUE_HOLDS_VALUE_ARRAY (value))
+    {
+      GimpValueArray *values = g_value_get_boxed (value);
+
+      gimp_savable_print_element_start (state, tag_name,
+                                        "type", "%s", "GimpValueArray",
+                                        NULL);
+      if (values)
+        gimp_savable_value_array_save (values, state);
+      gimp_savable_print_element_end (state, tag_name);
+    }
+  else
+    {
+      if (pspec)
+        g_critical ("%s: value for property '%s' of type '%s' is not supported.",
+                    G_STRFUNC, pspec->name, g_type_name (G_VALUE_TYPE (value)));
+      else
+        g_critical ("%s: value of type '%s' is not supported.",
+                    G_STRFUNC, g_type_name (G_VALUE_TYPE (value)));
+    }
+}
+
+void
+gimp_savable_value_array_save (GimpValueArray *values,
+                               GimpSaveState  *state)
+{
+  gint length = gimp_value_array_length (values);
+
+  gimp_savable_print_element_start (state, "value-array", NULL);
+
+  for (gint i = 0; i < length; i++)
+    {
+      GValue *value = gimp_value_array_index (values, i);
+
+      gimp_savable_value_save (value, NULL, state);
+    }
+
+  gimp_savable_print_element_end (state, "value-array");
+}
 void
 gimp_savable_composite_mode_save (GimpLayerCompositeMode  composite_mode,
                                   GimpLayerMode           mode,

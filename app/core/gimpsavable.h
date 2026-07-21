@@ -99,6 +99,11 @@ void         gimp_savable_parasite_save        (GimpParasite           *parasite
                                                 GimpSaveState          *state);
 void         gimp_savable_matrix2_save         (GimpMatrix2            *matrix,
                                                 GimpSaveState          *state);
+void         gimp_savable_value_save           (GValue                 *value,
+                                                GParamSpec             *pspec,
+                                                GimpSaveState          *state);
+void         gimp_savable_value_array_save     (GimpValueArray         *values,
+                                                GimpSaveState          *state);
 
 void         gimp_savable_composite_mode_save  (GimpLayerCompositeMode  composite_mode,
                                                 GimpLayerMode           mode,
