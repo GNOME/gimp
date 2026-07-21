@@ -450,10 +450,12 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
               gdouble            opacity;
               GimpLayerMode      paint_mode;
               GimpFilterRegion   region;
+              gboolean           clip;
 
               opacity    = gimp_drawable_filter_get_opacity (gegl_procedure->filter);
               paint_mode = gimp_drawable_filter_get_paint_mode (gegl_procedure->filter);
               region     = gimp_drawable_filter_get_region (gegl_procedure->filter);
+              clip       = gimp_drawable_filter_get_clip (gegl_procedure->filter);
 
               settings =
                 g_object_new (gimp_operation_config_get_type (active_tool->tool_info->gimp,
@@ -490,6 +492,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                             "gimp-opacity", opacity,
                             "gimp-mode",    paint_mode,
                             "gimp-region",  region,
+                            "gimp-clip",    clip,
                             NULL);
             }
         }
