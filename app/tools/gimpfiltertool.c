@@ -1252,6 +1252,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
       GeglNode                *node;
       GeglNode                *existing_node;
       gdouble                  opacity;
+      gboolean                 clip;
       GimpLayerMode            paint_mode;
       GimpLayerColorSpace      blend_space;
       GimpLayerColorSpace      composite_space;
@@ -1268,6 +1269,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
       composite_space = gimp_drawable_filter_get_composite_space (filter_tool->filter);
       composite_mode  = gimp_drawable_filter_get_composite_mode (filter_tool->filter);
       region          = gimp_drawable_filter_get_region (filter_tool->filter);
+      clip            = gimp_drawable_filter_get_clip (filter_tool->filter);
 
       node          = gimp_drawable_filter_get_operation (filter_tool->filter);
       existing_node = gimp_drawable_filter_get_operation (filter_tool->existing_filter);
@@ -1327,6 +1329,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool,
                                      paint_mode, blend_space, composite_space,
                                      composite_mode);
       gimp_drawable_filter_set_region (filter_tool->existing_filter, region);
+      gimp_drawable_filter_set_clip (filter_tool->existing_filter, clip);
 
       /* Restore buttons in layer tree view */
       gimp_drawable_filters_changed (gimp_drawable_filter_get_drawable (filter_tool->existing_filter));
