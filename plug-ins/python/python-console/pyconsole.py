@@ -839,8 +839,10 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
                         completions.append(s)
                         i += 1
                     else:
-                        completions.sort()
-                        return completions
+                        break
+                if completions:
+                    completions.sort()
+                    return completions
             except NameError:
                 return None
 
@@ -858,8 +860,8 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
         except: pass
 
         try:
-            exec("import __builtin__", self.locals)
-            strings.extend(eval("dir(__builtin__)", self.locals))
+            exec("import builtins", self.locals)
+            strings.extend(eval("dir(builtins)", self.locals))
         except:
             pass
 
