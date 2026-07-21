@@ -2212,53 +2212,19 @@ match_font (const gchar *font_name)
 {
   GimpFont  *font  = NULL;
   GimpFont **fonts;
-  gsize      count = 0;
 
   if (! font_name)
     return NULL;
 
-  fonts = gimp_fonts_get_list (font_name);
-  if (fonts)
-    {
-      PangoContext *context;
-      PangoFontMap *fontmap;
-
-      fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
-      context = pango_font_map_create_context (fontmap);
-
-      count = gimp_core_object_array_get_length ((GObject **) fonts);
-      for (gint i = 0; i < count; i++)
-        {
-          PangoFontDescription *font_desc;
-          PangoFontDescription *font_desc2;
-          PangoFont            *pango_font;
-
-          font_desc = gimp_font_get_pango_font_description (fonts[i]);
-
-          pango_font = pango_font_map_load_font (fontmap, context, font_desc);
-          font_desc2 = pango_font_describe (pango_font);
-
-          /* TODO: Make this check more fine-grain */
-          if (g_strcmp0 (font_name,
-                         pango_font_description_get_family (font_desc2)) == 0)
-            {
-              if (pango_font_description_get_weight (font_desc2) == PANGO_WEIGHT_NORMAL &&
-                  pango_font_description_get_style (font_desc2) == PANGO_STYLE_NORMAL)
-                font = fonts[i];
-            }
-          g_object_unref (pango_font);
-          pango_font_description_free (font_desc);
-          pango_font_description_free (font_desc2);
-
-          if (font != NULL)
-            break;
-        }
-      g_object_unref (context);
-      g_object_unref (fontmap);
-    }
+  /* PSD stores font names in Postscript format, so we'll first
+   * try to get the font by that value */
+  font = gimp_font_get_by_postscript_name (font_name);
+  if (font)
+    return font;
 
   /* Fallback - if there's no direct match, use the first one returned
    * from the search */
+  fonts = gimp_fonts_get_list (font_name);
   if (! font && fonts)
     font = fonts[0];
 
@@ -2274,17 +2240,19 @@ create_text_markup (GimpTextLayer *layer,
                     gint          *sections,
                     guint          font_count)
 {
-  GString  *markup = g_string_new ("");
-  GList    *list   = font_info;
-  FontInfo *first_font;
-  guint     start  = 0;
-  gdouble   original_font_size;
-  gdouble   original_fg_color[3];
+  GString     *markup = g_string_new ("");
+  GList       *list   = font_info;
+  FontInfo    *first_font;
+  guint        start  = 0;
+  const gchar *original_font_name;
+  gdouble      original_font_size;
+  gdouble      original_fg_color[3];
 
   if (font_info == NULL)
     return;
 
   first_font           = font_info->data;
+  original_font_name   = first_font->font_name;
   original_font_size   = first_font->font_size;
   original_fg_color[0] = first_font->fg_color[0];
   original_fg_color[1] = first_font->fg_color[1];
@@ -2343,6 +2311,32 @@ create_text_markup (GimpTextLayer *layer,
                                       (gint) (font->fg_color[1] * 255),
                                       (gint) (font->fg_color[2] * 255));
               g_string_prepend (end_tag, "</span>");
+            }
+
+          /* Other settings should overwrite this when necessary */
+          if (g_strcmp0 (font->font_name, original_font_name) != 0)
+            {
+              GimpFont *gimp_font = NULL;
+
+              gimp_font = gimp_font_get_by_postscript_name (font->font_name);
+              if (gimp_font)
+                {
+                  PangoFontDescription *desc;
+                  gchar                *face;
+
+                  desc = gimp_font_get_pango_font_description (gimp_font);
+                  face = pango_font_description_to_string (desc);
+
+                  if (face)
+                    {
+                      g_string_append_printf (start_tag, "<span font='%s'>",
+                                              face);
+                      g_string_prepend (end_tag, "</span>");
+                    }
+
+                  pango_font_description_free (desc);
+                  g_free (face);
+                }
             }
         }
 
