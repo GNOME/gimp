@@ -312,6 +312,9 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
+  /* The Gradient Tool is only destructive if "Editable Gradient" is enabled */
+  GIMP_TOOL_GET_CLASS (tool)->is_destructive = ! options->editable_gradient;
+
   return TRUE;
 }
 
@@ -538,8 +541,9 @@ gimp_gradient_tool_options_notify (GimpTool         *tool,
                                    GimpToolOptions  *options,
                                    const GParamSpec *pspec)
 {
-  GimpContext      *context       = GIMP_CONTEXT (options);
-  GimpGradientTool *gradient_tool = GIMP_GRADIENT_TOOL (tool);
+  GimpContext         *context          = GIMP_CONTEXT (options);
+  GimpGradientTool    *gradient_tool    = GIMP_GRADIENT_TOOL (tool);
+  GimpGradientOptions *gradient_options = GIMP_GRADIENT_TOOL_GET_OPTIONS (tool);
 
   if (! strcmp (pspec->name, "gradient"))
     {
@@ -630,24 +634,30 @@ gimp_gradient_tool_options_notify (GimpTool         *tool,
                                      gimp_layer_mode_get_paint_composite_mode (
                                        gimp_context_get_paint_mode (context)));
     }
-  else if (gradient_tool->filter &&
-           ! strcmp (pspec->name, "create-as-live-filter"))
+  else if (! strcmp (pspec->name, "editable-gradient"))
     {
-      GimpContainer *filters = NULL;
-      gint           count;
+      if (gradient_tool->filter)
+        {
+          GimpContainer *filters = NULL;
+          gint           count;
 
-      filters = gimp_drawable_get_filters (tool->drawables->data);
-      count   = gimp_container_get_n_children (filters);
+          filters = gimp_drawable_get_filters (tool->drawables->data);
+          count   = gimp_container_get_n_children (filters);
 
-      if (GIMP_GRADIENT_OPTIONS (options)->editable_gradient)
-        gimp_container_reorder (filters, GIMP_OBJECT (gradient_tool->filter),
-                                0);
-      else
-        gimp_container_reorder (filters, GIMP_OBJECT (gradient_tool->filter),
-                                count - 1);
+          if (GIMP_GRADIENT_OPTIONS (options)->editable_gradient)
+            gimp_container_reorder (filters,
+                                    GIMP_OBJECT (gradient_tool->filter), 0);
+          else
+            gimp_container_reorder (filters,
+                                    GIMP_OBJECT (gradient_tool->filter),
+                                    count - 1);
 
-      gimp_drawable_update (tool->drawables->data, 0, 0, -1, -1);
-      gimp_image_flush (gimp_item_get_image (tool->drawables->data));
+          gimp_drawable_update (tool->drawables->data, 0, 0, -1, -1);
+          gimp_image_flush (gimp_item_get_image (tool->drawables->data));
+        }
+
+      GIMP_TOOL_GET_CLASS (tool)->is_destructive =
+        ! gradient_options->editable_gradient;
     }
 
   gimp_gradient_tool_editor_options_notify (gradient_tool, options, pspec);
