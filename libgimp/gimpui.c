@@ -92,7 +92,7 @@ static gboolean gimp_ui_initialized = FALSE;
  *             executable and _not_ the PDB procedure name.
  *
  * This function initializes GTK with [func@Gtk.init], as well as GEGL and
- * babl.
+ * babl (non-interactive plug-ins should use only [func@Gegl.init] instead).
  *
  * It also sets up various other things so that the plug-in user looks
  * and behaves like the GIMP core. This includes selecting the GTK theme
