@@ -31,6 +31,7 @@
 #include "gimpdata.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
+#include "gimpsavable.h"
 #include "gimptag.h"
 #include "gimptagged.h"
 
@@ -83,45 +84,51 @@ struct _GimpDataPrivate
   ((GimpDataPrivate *) gimp_data_get_instance_private ((GimpData *) (data)))
 
 
-static void       gimp_data_tagged_iface_init (GimpTaggedInterface *iface);
+static void       gimp_data_tagged_iface_init  (GimpTaggedInterface  *iface);
+static void       gimp_data_savable_iface_init (GimpSavableInterface *iface);
 
-static void       gimp_data_constructed       (GObject             *object);
-static void       gimp_data_finalize          (GObject             *object);
-static void       gimp_data_set_property      (GObject             *object,
-                                               guint                property_id,
-                                               const GValue        *value,
-                                               GParamSpec          *pspec);
-static void       gimp_data_get_property      (GObject             *object,
-                                               guint                property_id,
-                                               GValue              *value,
-                                               GParamSpec          *pspec);
+static void       gimp_data_constructed        (GObject              *object);
+static void       gimp_data_finalize           (GObject              *object);
+static void       gimp_data_set_property       (GObject              *object,
+                                                guint                 property_id,
+                                                const GValue         *value,
+                                                GParamSpec           *pspec);
+static void       gimp_data_get_property       (GObject              *object,
+                                                guint                 property_id,
+                                                GValue               *value,
+                                                GParamSpec           *pspec);
 
-static void       gimp_data_name_changed      (GimpObject          *object);
-static gint64     gimp_data_get_memsize       (GimpObject          *object,
-                                               gint64              *gui_size);
+static void       gimp_data_name_changed       (GimpObject           *object);
+static gint64     gimp_data_get_memsize        (GimpObject           *object,
+                                                gint64               *gui_size);
 
-static gboolean   gimp_data_is_name_editable  (GimpViewable        *viewable);
+static gboolean   gimp_data_is_name_editable   (GimpViewable         *viewable);
 
-static void       gimp_data_real_dirty        (GimpData            *data);
-static GimpData * gimp_data_real_duplicate    (GimpData            *data);
-static gint       gimp_data_real_compare      (GimpData            *data1,
-                                               GimpData            *data2);
+static void       gimp_data_real_dirty         (GimpData             *data);
+static GimpData * gimp_data_real_duplicate     (GimpData             *data);
+static gint       gimp_data_real_compare       (GimpData             *data1,
+                                                GimpData             *data2);
 
-static gboolean   gimp_data_add_tag           (GimpTagged          *tagged,
-                                               GimpTag             *tag);
-static gboolean   gimp_data_remove_tag        (GimpTagged          *tagged,
-                                               GimpTag             *tag);
-static GList    * gimp_data_get_tags          (GimpTagged          *tagged);
-static gchar    * gimp_data_get_identifier    (GimpTagged          *tagged);
-static gchar    * gimp_data_get_checksum      (GimpTagged          *tagged);
+static gboolean   gimp_data_add_tag            (GimpTagged           *tagged,
+                                                GimpTag              *tag);
+static gboolean   gimp_data_remove_tag         (GimpTagged           *tagged,
+                                                GimpTag              *tag);
+static GList    * gimp_data_get_tags           (GimpTagged           *tagged);
+static gchar    * gimp_data_get_identifier     (GimpTagged           *tagged);
+static gchar    * gimp_data_get_checksum       (GimpTagged           *tagged);
 
-static gchar    * gimp_data_get_collection    (GimpData            *data);
+static void       gimp_data_savable_save       (GimpSavable          *savable,
+                                                GimpSaveState        *state);
+
+static gchar    * gimp_data_get_collection     (GimpData             *data);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpData, gimp_data, GIMP_TYPE_RESOURCE,
                          G_ADD_PRIVATE (GimpData)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
-                                                gimp_data_tagged_iface_init))
+                                                gimp_data_tagged_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_data_savable_iface_init))
 
 #define parent_class gimp_data_parent_class
 
@@ -208,6 +215,12 @@ gimp_data_tagged_iface_init (GimpTaggedInterface *iface)
   iface->get_tags       = gimp_data_get_tags;
   iface->get_identifier = gimp_data_get_identifier;
   iface->get_checksum   = gimp_data_get_checksum;
+}
+
+static void
+gimp_data_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_data_savable_save;
 }
 
 static void
@@ -506,6 +519,33 @@ static gchar *
 gimp_data_get_checksum (GimpTagged *tagged)
 {
   return NULL;
+}
+
+static void
+gimp_data_savable_save (GimpSavable   *savable,
+                        GimpSaveState *state)
+{
+  GimpData *data = GIMP_DATA (savable);
+  gchar    *name;
+  gchar    *collection_id;
+  gboolean  is_internal;
+
+  /* XXX A future improvement could allow us to embed data files
+   * (patterns, textures, etc.).
+   *
+   * Note that fonts have their own implementation with more information
+   * for comparison and retrieval.
+   */
+  gimp_data_get_identifiers  (data, &name, &collection_id, &is_internal);
+  gimp_savable_print_element (state, "data", NULL, NULL,
+                              "type",          "%s", g_type_name (G_TYPE_FROM_INSTANCE (data)),
+                              "name",          "%s", name,
+                              "collection-id", "%s", collection_id,
+                              "is-internal",   "%b", is_internal,
+                              NULL);
+
+  g_free (name);
+  g_free (collection_id);
 }
 
 /*
