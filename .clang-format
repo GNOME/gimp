@@ -56,9 +56,7 @@ AllowAllArgumentsOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AlwaysBreakAfterReturnType: AllDefinitions
 BinPackArguments: true
-# Uncomment when our CI uses LLVM 20.
-# See: https://github.com/llvm/llvm-project/issues/117830
-# BinPackParameters: AlwaysOnePerLine
+BinPackParameters: AlwaysOnePerLine
 
 # Macros: https://developer.gimp.org/core/coding_style/#macros
 AlignConsecutiveMacros: AcrossComments
