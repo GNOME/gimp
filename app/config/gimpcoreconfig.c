@@ -171,6 +171,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
   gchar        *mypaint_brushes;
+  gchar        *user_mypaint_brushes;
   GeglColor    *red          = gegl_color_new ("red");
   guint64       undo_size;
 
@@ -309,6 +310,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
+  /* See: https://gitlab.gnome.org/GNOME/gimp/-/work_items/4721 */
 #ifdef ENABLE_RELOCATABLE_RESOURCES
   mypaint_brushes = g_build_filename ("${gimp_installation_dir}",
                                       "share", "mypaint-data",
@@ -317,8 +319,11 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   mypaint_brushes = g_strdup (MYPAINT_BRUSHES_DIR);
 #endif
 
+  user_mypaint_brushes = g_build_filename (g_get_home_dir (),
+                                           ".mypaint", "brushes", NULL);
+
   path = g_build_path (G_SEARCHPATH_SEPARATOR_S,
-                       "~/.mypaint/brushes",
+                       user_mypaint_brushes,
                        mypaint_brushes,
                        NULL);
   g_free (mypaint_brushes);
@@ -333,8 +338,9 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   g_free (path);
 
   path = g_build_path (G_SEARCHPATH_SEPARATOR_S,
-                       "~/.mypaint/brushes",
+                       user_mypaint_brushes,
                        NULL);
+  g_free (user_mypaint_brushes);
   GIMP_CONFIG_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH_WRITABLE,
                          "mypaint-brush-path-writable",
                          "Writable MyPaint brush path",
