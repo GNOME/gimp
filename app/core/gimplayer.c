@@ -2159,7 +2159,6 @@ gimp_layer_create_mask (GimpLayer       *layer,
   guint          width;
   guint          height;
   gchar         *mask_name;
-  GeglRectangle  rect;
   GeglColor     *black = gegl_color_new ("black");
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
@@ -2172,9 +2171,18 @@ gimp_layer_create_mask (GimpLayer       *layer,
 
   /* Since empty pass through layer groups are larger than their item
    * width/height, we'll get those from the bounding box instead */
-  rect   = gimp_layer_get_bounding_box (drawable);
-  width  = rect.width;
-  height = rect.height;
+  if (GIMP_IS_GROUP_LAYER (layer))
+    {
+      GeglRectangle rect = gimp_layer_get_bounding_box (drawable);
+
+      width  = rect.width;
+      height = rect.height;
+    }
+  else
+    {
+      width  = gimp_item_get_width (item);
+      height = gimp_item_get_height (item);
+    }
 
   mask_name = g_strdup_printf (_("%s mask"),
                                gimp_object_get_name (layer));
