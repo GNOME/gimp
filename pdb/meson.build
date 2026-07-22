@@ -70,6 +70,7 @@ foreach name : pdb_names
 endforeach
 
 
+#FIXME: https://gitlab.gnome.org/GNOME/gimp/-/work_items/8260
 enum_headers = [
   meson.project_source_root() + '/libgimpbase/gimpbaseenums.h',
   meson.project_source_root() + '/libgimpconfig/gimpconfigenums.h',
