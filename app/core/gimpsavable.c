@@ -583,7 +583,7 @@ gimp_savable_value_save (GValue        *value,
                                   NULL);
     }
   else if (G_VALUE_HOLDS_OBJECT (value) &&
-           GIMP_IS_UNIT (g_value_get_object (value)))
+           g_type_is_a (G_VALUE_TYPE (value), GIMP_TYPE_UNIT))
     {
       GimpUnit *unit = g_value_get_object (value);
 
@@ -595,7 +595,7 @@ gimp_savable_value_save (GValue        *value,
       gimp_savable_print_element_end (state, tag_name);
     }
   else if (G_VALUE_HOLDS_OBJECT (value) &&
-           GEGL_IS_COLOR (g_value_get_object (value)))
+           g_type_is_a (G_VALUE_TYPE (value), GEGL_TYPE_COLOR))
     {
       GeglColor *color = g_value_get_object (value);
 
@@ -607,7 +607,7 @@ gimp_savable_value_save (GValue        *value,
       gimp_savable_print_element_end (state, tag_name);
     }
   else if (G_VALUE_HOLDS_OBJECT (value) &&
-           GIMP_IS_SAVABLE (g_value_get_object (value)))
+           g_type_is_a (G_VALUE_TYPE (value), GIMP_TYPE_SAVABLE))
     {
       GObject *object = g_value_get_object (value);
 
