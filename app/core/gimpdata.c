@@ -538,7 +538,7 @@ gimp_data_savable_save (GimpSavable   *savable,
    */
   gimp_data_get_identifiers  (data, &name, &collection_id, &is_internal);
   gimp_savable_print_element (state, "data", NULL, NULL,
-                              "type",          "%s", g_type_name (G_TYPE_FROM_INSTANCE (data)),
+                              "type",          "%t", data,
                               "name",          "%s", name,
                               "collection-id", "%s", collection_id,
                               "is-internal",   "%b", is_internal,

@@ -1669,7 +1669,7 @@ gimp_layer_savable_save (GimpSavable   *savable,
   if (! drop_root)
     gimp_savable_print_element_start (state, "layer",
                                       "name", "%s", gimp_object_get_name (GIMP_OBJECT (layer)),
-                                      "type", "%s", g_type_name (G_TYPE_FROM_INSTANCE (layer)),
+                                      "type", "%t", layer,
                                       NULL);
 
   if (gimp_image_get_floating_selection (image) == layer)

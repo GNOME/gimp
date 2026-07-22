@@ -139,6 +139,13 @@ gimp_savable_print_element_end (GimpSaveState *state,
  * ```
  *
  * will print: `<plop hello='world' id='10'>0.5</plop>`
+ *
+ * Note that additionally to the common supported specifiers, such as
+ * "%d", "%u", "%f", etc. this function adds the following modifiers:
+ *
+ * - "%b": boolean values (will print "true" or "false");
+ * - "%t": will print the %GType name of an object.
+ * - "%T": will print the name of a %GType.
  */
 void
 gimp_savable_print_element (GimpSaveState *state,
@@ -200,8 +207,7 @@ gimp_savable_config_save (GimpConfig    *config,
   g_return_if_fail (element_name != NULL);
 
   gimp_savable_print_element_start (state, element_name,
-                                    "type", "%s",
-                                    g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                                    "type", "%t", config,
                                     NULL);
 
   klass = G_OBJECT_GET_CLASS (config);
@@ -557,7 +563,7 @@ gimp_savable_value_save (GValue        *value,
       gimp_savable_print_element (state, tag_name, "%s",
                                   gimp_get_enum_value_nick (G_VALUE_TYPE (value),
                                                             g_value_get_enum (value)),
-                                  "type", "%s", g_type_name (G_VALUE_TYPE (value)),
+                                  "type", "%T", G_VALUE_TYPE (value),
                                   NULL);
     }
   else if (G_VALUE_HOLDS_STRING (value))
@@ -612,7 +618,7 @@ gimp_savable_value_save (GValue        *value,
       GObject *object = g_value_get_object (value);
 
       gimp_savable_print_element_start (state, tag_name,
-                                        "type", "%s", g_type_name (G_VALUE_TYPE (value)),
+                                        "type", "%T", G_VALUE_TYPE (value),
                                         NULL);
       if (object)
         gimp_savable_save (GIMP_SAVABLE (object), state);
@@ -821,6 +827,18 @@ gimp_savable_printf (const gchar *format,
       /* Custom format: boolean type. */
       gboolean value = va_arg (args, gboolean);
       strval = g_strdup (value ? "true" : "false");
+    }
+  else if (g_strcmp0 ("%t", format) == 0)
+    {
+      /* Custom format: type name of passed object. */
+      GObject *gobject = va_arg (args, GObject *);
+      strval = g_strdup (g_type_name (G_TYPE_FROM_INSTANCE (gobject)));
+    }
+  else if (g_strcmp0 ("%T", format) == 0)
+    {
+      /* Custom format: type name. */
+      GType gtype = va_arg (args, GType);
+      strval = g_strdup (g_type_name (gtype));
     }
   else
     {
