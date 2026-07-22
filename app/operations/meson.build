@@ -1,3 +1,4 @@
+#FIXME: https://gitlab.gnome.org/GNOME/gimp/-/work_items/8260
 stamp_operations_enums = custom_target('stamp-operations-enums.h',
   input : [
     files(
