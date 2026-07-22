@@ -9,10 +9,10 @@
 # Paul Mathijsse <paul.matthijsse@wanadoo.fr>, 2021.
 # GJR <g.j.roelvink@proton.me>, 2024-2025.
 msgid ""
-msgstr "Project-Id-Version: GIMP 3.0\n"
+msgstr "Project-Id-Version: GIMP 30.\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-23 13:59+0000\n"
-"PO-Revision-Date: 2026-04-23 17:13+0200\n"
+"POT-Creation-Date: 2026-07-20 20:36+0000\n"
+"PO-Revision-Date: 2026-07-22 12:59+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -20,7 +20,7 @@ msgstr "Project-Id-Version: GIMP 3.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: OmegaT 6.1.0\n"
+"X-Generator: OmegaT 6.2.0\n"
 
 # Kan ook 'browsen' zijn
 # of misschien 'Overzicht' (een overzicht van alle beschikbare patronen
@@ -235,20 +235,29 @@ msgstr "Opmerking"
 msgid "Image comment"
 msgstr "Opmerking voor afbeelding"
 
-#: libgimp/gimpexportproceduredialog.c:155
+#: libgimp/gimpexportproceduredialog.c:156
 msgid "Metadata"
 msgstr "Metadata"
 
-#: libgimp/gimpexportproceduredialog.c:164
+#: libgimp/gimpexportproceduredialog.c:165
 msgid "Edit Metadata"
 msgstr "Metadata bewerken"
 
-#: libgimp/gimpexportproceduredialog.c:164
+#: libgimp/gimpexportproceduredialog.c:165
 msgid "(edit)"
 msgstr "(bewerken)"
 
+#: libgimp/gimpexportproceduredialog.c:330
+msgid "Transparency will be lost"
+msgstr "Transparantie zal verloren gaan"
+
+#: libgimp/gimpexportproceduredialog.c:335
+#, c-format
+msgid "This format does not support transparency: %s"
+msgstr "Deze indeling ondersteunt geen transparantie: %s"
+
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexportproceduredialog.c:460
+#: libgimp/gimpexportproceduredialog.c:502
 #, c-format
 msgid "Export Image as %s"
 msgstr "Afbeelding exporteren als %s"
@@ -383,61 +392,61 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedure komt met uw zoekopdracht overeen"
 msgstr[1] "%d procedures komen met uw zoekopdracht overeen"
 
-#: libgimp/gimpprocedure.c:2187
+#: libgimp/gimpprocedure.c:2270
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedure ‘%s’ gaf geen waarden terug"
 
-#: libgimp/gimpprocedure.c:2393
+#: libgimp/gimpprocedure.c:2476
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "Procedure ‘%s’ gaf een verkeerd type waarde terug als teruggegeven waarde ‘%s’ (#%d). Verwachtte %s, kreeg %s."
 
-#: libgimp/gimpprocedure.c:2405
+#: libgimp/gimpprocedure.c:2488
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
 "(#%d). Expected %s, got %s."
 msgstr "Procedure ‘%s’ werd aangeroepen met een verkeerd type waarde voor argument ‘%s’ (#%d). Verwachtte %s, kreeg %s."
 
-#: libgimp/gimpprocedure.c:2440
+#: libgimp/gimpprocedure.c:2523
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "Procedure ‘%s’ gaf  ‘%s’ terug als waarde ‘%s’ (#%d, type %s). Die waarde ligt buiten het bereik."
 
-#: libgimp/gimpprocedure.c:2454
+#: libgimp/gimpprocedure.c:2537
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "Procedure ‘%s’ is aangeroepen met waarde ‘%s’ als argument ‘%s’ (#%d, type %s). Die waarde ligt buiten het bereik."
 
-#: libgimp/gimpprocedure.c:2498
+#: libgimp/gimpprocedure.c:2581
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedure ‘%s’ gaf een ongeldige UTF-8 tekenreeks terug voor argument ‘%s’."
 
-#: libgimp/gimpprocedure.c:2508
+#: libgimp/gimpprocedure.c:2591
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr "Procedure ‘%s’ werd aangeroepen met een ongeldige UTF-8 tekenreeks voor argument ‘%s’."
 
-#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
+#: libgimp/gimpproceduredialog.c:345 libgimp/gimpproceduredialog.c:650
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Openen"
 
-#: libgimp/gimpproceduredialog.c:316 libgimp/gimpproceduredialog.c:615
+#: libgimp/gimpproceduredialog.c:347 libgimp/gimpproceduredialog.c:652
 msgid "_Export"
 msgstr "_Exporteren"
 
-#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
+#: libgimp/gimpproceduredialog.c:349 libgimp/gimpproceduredialog.c:654
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
 #: libgimpwidgets/gimpfileentry.c:463 libgimpwidgets/gimpquerybox.c:276
 #: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
@@ -445,11 +454,11 @@ msgstr "_Exporteren"
 msgid "_OK"
 msgstr "_Oké"
 
-#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
+#: libgimp/gimpproceduredialog.c:357 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "Te_rug naar standaardwaarden"
 
-#: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:375 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: libgimpwidgets/gimpfilechooser.c:713 libgimpwidgets/gimpfileentry.c:463
@@ -458,47 +467,47 @@ msgstr "Te_rug naar standaardwaarden"
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: libgimp/gimpproceduredialog.c:379
+#: libgimp/gimpproceduredialog.c:416
 msgid "_Load Saved Settings"
 msgstr "Opgeslagen instellingen _laden"
 
-#: libgimp/gimpproceduredialog.c:380
+#: libgimp/gimpproceduredialog.c:417
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Laad de instellingen opgeslagen met de knop ‘Instellingen opslaan’"
 
-#: libgimp/gimpproceduredialog.c:392
+#: libgimp/gimpproceduredialog.c:429
 msgid "_Save Settings"
 msgstr "Instellingen op_slaan"
 
-#: libgimp/gimpproceduredialog.c:393
+#: libgimp/gimpproceduredialog.c:430
 msgid "Store current settings for later reuse"
 msgstr "Bewaar de huidige instellingen voor later gebruik"
 
-#: libgimp/gimpproceduredialog.c:908
+#: libgimp/gimpproceduredialog.c:1023
 msgid "Brush Chooser"
 msgstr "Penseelkiezer"
 
-#: libgimp/gimpproceduredialog.c:912
+#: libgimp/gimpproceduredialog.c:1027
 msgid "Font Chooser"
 msgstr "Lettertypekiezer"
 
-#: libgimp/gimpproceduredialog.c:916
+#: libgimp/gimpproceduredialog.c:1031
 msgid "Gradient Chooser"
 msgstr "Verloopkiezer"
 
-#: libgimp/gimpproceduredialog.c:920
+#: libgimp/gimpproceduredialog.c:1035
 msgid "Palette Chooser"
 msgstr "Paletkiezer"
 
-#: libgimp/gimpproceduredialog.c:924
+#: libgimp/gimpproceduredialog.c:1039
 msgid "Pattern Chooser"
 msgstr "Patroonkiezer"
 
-#: libgimp/gimpproceduredialog.c:2841
+#: libgimp/gimpproceduredialog.c:2956
 msgid "Reset to _Initial Values"
 msgstr "Terugzetten op beg_inwaarden"
 
-#: libgimp/gimpproceduredialog.c:2850
+#: libgimp/gimpproceduredialog.c:2965
 msgid "Reset to _Factory Defaults"
 msgstr "Terugzetten naar _fabriekswaarden"
 
@@ -2317,7 +2326,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:321 modules/color-selector-cmyk.c:405
+#: modules/color-selector-cmyk.c:326 modules/color-selector-cmyk.c:410
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
@@ -2365,7 +2374,7 @@ msgstr "De naam van het apparaat"
 msgid "The controller's state, as human-readable string"
 msgstr "De status van het apparaat in leesbare tekst"
 
-#: libgimpwidgets/gimpdialog.c:196
+#: libgimpwidgets/gimpdialog.c:248
 msgid "_Help"
 msgstr "_Hulp"
 
@@ -2402,7 +2411,7 @@ msgstr "Kies map"
 msgid "Select File"
 msgstr "Kies bestand"
 
-#: libgimpwidgets/gimphelpui.c:387
+#: libgimpwidgets/gimphelpui.c:388
 msgid "Press F1 for more help"
 msgstr "Druk op F1 voor meer hulp"
 
@@ -2731,55 +2740,55 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Uitzoomen"
 
-#: modules/color-selector-cmyk.c:87
+#: modules/color-selector-cmyk.c:89
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK-kleurenkiezer (met gebruik van kleurprofiel)"
 
-#: modules/color-selector-cmyk.c:121
+#: modules/color-selector-cmyk.c:123
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:147
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:149
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:151
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:151
+#: modules/color-selector-cmyk.c:153
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:157
 msgid "Cyan"
 msgstr "Cyaan"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:158
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/color-selector-cmyk.c:157
+#: modules/color-selector-cmyk.c:159
 msgid "Yellow"
 msgstr "Geel"
 
-#: modules/color-selector-cmyk.c:158
+#: modules/color-selector-cmyk.c:160
 msgid "Black"
 msgstr "Zwart"
 
-#: modules/color-selector-cmyk.c:265
+#: modules/color-selector-cmyk.c:270
 msgid "Total Ink Coverage"
 msgstr "Totale bedekking met inkt"
 
-#: modules/color-selector-cmyk.c:308 modules/color-selector-cmyk.c:387
+#: modules/color-selector-cmyk.c:313 modules/color-selector-cmyk.c:392
 msgid "Profile: (none)"
 msgstr "Profiel: (geen)"
 
@@ -2806,121 +2815,121 @@ msgstr "HSV-kleurenwiel"
 msgid "Wheel"
 msgstr "Wiel"
 
-#: modules/controller-dx-dinput.c:154
+#: modules/controller-dx-dinput.c:157
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX DirectInput-gebeurtenisbewaker"
 
-#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218
+#: modules/controller-dx-dinput.c:197 modules/controller-linux-input.c:218
 #: modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Apparaat:"
 
-#: modules/controller-dx-dinput.c:195
+#: modules/controller-dx-dinput.c:198
 msgid "The device to read DirectInput events from."
 msgstr "Het apparaat waarvan DirectInput-gebeurtenissen moeten worden gelezen."
 
-#: modules/controller-dx-dinput.c:204
+#: modules/controller-dx-dinput.c:207
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: modules/controller-dx-dinput.c:417
+#: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d"
 msgstr "Knop %d"
 
-#: modules/controller-dx-dinput.c:420
+#: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Press"
 msgstr "Knop %d indrukken"
 
-#: modules/controller-dx-dinput.c:423
+#: modules/controller-dx-dinput.c:426
 #, c-format
 msgid "Button %d Release"
 msgstr "Knop %d loslaten"
 
-#: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
+#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "X naar links"
 
-#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:91
+#: modules/controller-dx-dinput.c:446 modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "X naar rechts"
 
-#: modules/controller-dx-dinput.c:449
+#: modules/controller-dx-dinput.c:452
 msgid "Y Move Away"
 msgstr "Y naar verder"
 
-#: modules/controller-dx-dinput.c:452
+#: modules/controller-dx-dinput.c:455
 msgid "Y Move Near"
 msgstr "Y naar dichterbij"
 
-#: modules/controller-dx-dinput.c:458 modules/controller-linux-input.c:94
+#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Z omhoog"
 
-#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:95
+#: modules/controller-dx-dinput.c:464 modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Z omlaag"
 
-#: modules/controller-dx-dinput.c:467
+#: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Away"
 msgstr "X-as helt verder"
 
-#: modules/controller-dx-dinput.c:470
+#: modules/controller-dx-dinput.c:473
 msgid "X Axis Tilt Near"
 msgstr "X-as helt dichtbij"
 
-#: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
+#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Y-as naar rechts hellen"
 
-#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:100
+#: modules/controller-dx-dinput.c:482 modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Y-as naar links hellen"
 
-#: modules/controller-dx-dinput.c:485 modules/controller-linux-input.c:101
+#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Z-as naar links draaien"
 
-#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:102
+#: modules/controller-dx-dinput.c:491 modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Z-as naar rechts draaien"
 
-#: modules/controller-dx-dinput.c:499
+#: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Schuifregelaar %d toenemen"
 
-#: modules/controller-dx-dinput.c:502
+#: modules/controller-dx-dinput.c:505
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Schuifregelaar %d afnemen"
 
-#: modules/controller-dx-dinput.c:512
+#: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X-zicht"
 
-#: modules/controller-dx-dinput.c:515
+#: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y-zicht"
 
-#: modules/controller-dx-dinput.c:518
+#: modules/controller-dx-dinput.c:521
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d terugkeren"
 
-#: modules/controller-dx-dinput.c:1079
+#: modules/controller-dx-dinput.c:1082
 msgid "DirectInput Events"
 msgstr "DirectInput-gebeurtenis"
 
-#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
+#: modules/controller-dx-dinput.c:1093 modules/controller-linux-input.c:525
 #: modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Geen apparaat geconfigureerd"
 
-#: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
+#: modules/controller-dx-dinput.c:1118 modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Apparaat is niet beschikbaar"
 
