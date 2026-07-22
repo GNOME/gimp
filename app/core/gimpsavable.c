@@ -558,6 +558,13 @@ gimp_savable_value_save (GValue        *value,
                                   "type", "%s", "int",
                                   NULL);
     }
+  else if (G_VALUE_HOLDS_UINT (value))
+    {
+      gimp_savable_print_element (state, tag_name,
+                                  "%u", g_value_get_uint (value),
+                                  "type", "%s", "uint",
+                                  NULL);
+    }
   else if (G_VALUE_HOLDS_ENUM (value))
     {
       gimp_savable_print_element (state, tag_name, "%s",
