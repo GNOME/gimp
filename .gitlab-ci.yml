@@ -752,10 +752,15 @@ clang-format:
   rules:
     - <<: *CI_MERGE
   stage: analysis
+  variables:
+    LLVM_VERSION: 22
   script:
     - apt-get update
-    - apt-get install -y clang-format
+    - apt-get install -y curl lsb-release
+    - bash -c "$(curl -fsSL https://apt.llvm.org/llvm.sh)" _ ${LLVM_VERSION}
+    - apt-get install -y clang-format-${LLVM_VERSION}
                          git
+    - ln -s /usr/bin/clang-format-${LLVM_VERSION} /usr/bin/clang-format; ln -s /usr/bin/clang-format-diff-${LLVM_VERSION} /usr/bin/clang-format-diff
     - sh .gitlab/run_style_check_diff.sh
   allow_failure: true #.clang-format file can be imperfect and produce false positives
   artifacts:
