@@ -10,18 +10,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-11-18 07:54+0000\n"
-"PO-Revision-Date: 2025-11-18 10:42+0100\n"
+"POT-Creation-Date: 2026-07-20 20:36+0000\n"
+"PO-Revision-Date: 2026-07-22 16:31+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.8\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
@@ -231,29 +231,38 @@ msgstr "Komentar"
 msgid "Image comment"
 msgstr "Komentar slike"
 
-#: libgimp/gimpexportproceduredialog.c:155
+#: libgimp/gimpexportproceduredialog.c:156
 msgid "Metadata"
 msgstr "Metapodatki"
 
-#: libgimp/gimpexportproceduredialog.c:164
+#: libgimp/gimpexportproceduredialog.c:165
 msgid "Edit Metadata"
 msgstr "Uredi metapodatke"
 
-#: libgimp/gimpexportproceduredialog.c:164
+#: libgimp/gimpexportproceduredialog.c:165
 msgid "(edit)"
 msgstr "(v urejanju)"
 
+#: libgimp/gimpexportproceduredialog.c:330
+msgid "Transparency will be lost"
+msgstr "Prosojnost bo izgubljena"
+
+#: libgimp/gimpexportproceduredialog.c:335
+#, c-format
+msgid "This format does not support transparency: %s"
+msgstr "Ta zapis ne podpira prosojnosti: %s"
+
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexportproceduredialog.c:460
+#: libgimp/gimpexportproceduredialog.c:502
 #, c-format
 msgid "Export Image as %s"
 msgstr "Izvozi sliko kot %s"
 
-#: libgimp/gimpimagemetadata.c:201
+#: libgimp/gimpimagemetadata.c:203
 msgid "Background"
 msgstr "Ozadje"
 
-#: libgimp/gimpimagemetadata-save.c:796 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:867 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -290,77 +299,77 @@ msgstr "Napaka pri klicu"
 msgid "cancelled"
 msgstr "Preklicano"
 
-#: libgimp/gimpprocbrowserdialog.c:150
+#: libgimp/gimpprocbrowserdialog.c:152
 msgid "by name"
 msgstr "po imenu"
 
-#: libgimp/gimpprocbrowserdialog.c:151
+#: libgimp/gimpprocbrowserdialog.c:153
 msgid "by description"
 msgstr "po opisu"
 
-#: libgimp/gimpprocbrowserdialog.c:152
+#: libgimp/gimpprocbrowserdialog.c:154
 msgid "by help"
 msgstr "po pomoči"
 
-#: libgimp/gimpprocbrowserdialog.c:153
+#: libgimp/gimpprocbrowserdialog.c:155
 msgid "by authors"
 msgstr "po avtorjih"
 
-#: libgimp/gimpprocbrowserdialog.c:154
+#: libgimp/gimpprocbrowserdialog.c:156
 msgid "by copyright"
 msgstr "po avtorskih pravicah"
 
-#: libgimp/gimpprocbrowserdialog.c:155
+#: libgimp/gimpprocbrowserdialog.c:157
 msgid "by date"
 msgstr "po datumu"
 
-#: libgimp/gimpprocbrowserdialog.c:156
+#: libgimp/gimpprocbrowserdialog.c:158
 msgid "by type"
 msgstr "po vrsti"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:351 libgimp/gimpprocbrowserdialog.c:509
-#: libgimpwidgets/gimpbrowser.c:144
+#: libgimp/gimpprocbrowserdialog.c:356 libgimp/gimpprocbrowserdialog.c:514
+#: libgimpwidgets/gimpbrowser.c:165
 msgid "No matches"
 msgstr "Ni zadetkov"
 
-#: libgimp/gimpprocbrowserdialog.c:354
+#: libgimp/gimpprocbrowserdialog.c:359
 msgid "Search term invalid or incomplete"
 msgstr "Iskani pojem ni veljaven ali nepopoln"
 
-#: libgimp/gimpprocbrowserdialog.c:363
+#: libgimp/gimpprocbrowserdialog.c:368
 msgid "Searching"
 msgstr "Iskanje"
 
-#: libgimp/gimpprocbrowserdialog.c:375
+#: libgimp/gimpprocbrowserdialog.c:380
 msgid "Searching by name"
 msgstr "Iskanje po imenu"
 
-#: libgimp/gimpprocbrowserdialog.c:396
+#: libgimp/gimpprocbrowserdialog.c:401
 msgid "Searching by description"
 msgstr "Iskanje po opisu"
 
-#: libgimp/gimpprocbrowserdialog.c:404
+#: libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by help"
 msgstr "Iskanje po pomoči"
 
-#: libgimp/gimpprocbrowserdialog.c:412
+#: libgimp/gimpprocbrowserdialog.c:417
 msgid "Searching by authors"
 msgstr "Iskanje po avtorjih"
 
-#: libgimp/gimpprocbrowserdialog.c:420
+#: libgimp/gimpprocbrowserdialog.c:425
 msgid "Searching by copyright"
 msgstr "Iskanje po copyrightu"
 
-#: libgimp/gimpprocbrowserdialog.c:428
+#: libgimp/gimpprocbrowserdialog.c:433
 msgid "Searching by date"
 msgstr "Iskanje po datumu"
 
-#: libgimp/gimpprocbrowserdialog.c:436
+#: libgimp/gimpprocbrowserdialog.c:441
 msgid "Searching by type"
 msgstr "Iskanje po vrsti"
 
-#: libgimp/gimpprocbrowserdialog.c:449
+#: libgimp/gimpprocbrowserdialog.c:454
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -369,11 +378,11 @@ msgstr[1] "%d procedura"
 msgstr[2] "%d proceduri"
 msgstr[3] "%d procedure"
 
-#: libgimp/gimpprocbrowserdialog.c:458
+#: libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "Vaše povpraševanje ni vrnilo zadetkov"
 
-#: libgimp/gimpprocbrowserdialog.c:462
+#: libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -382,12 +391,12 @@ msgstr[1] "%d procedura se ujema z vašim povpraševanjem"
 msgstr[2] "%d proceduri se ujemata z vašim povpraševanjem"
 msgstr[3] "%d procedure se ujemajo z vašim povpraševanjem"
 
-#: libgimp/gimpprocedure.c:2161
+#: libgimp/gimpprocedure.c:2270
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedura »%s« ni vrnila nobenih vrednosti"
 
-#: libgimp/gimpprocedure.c:2367
+#: libgimp/gimpprocedure.c:2476
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -396,16 +405,16 @@ msgstr ""
 "Procedura »%s« je vrnila napačno vrsto vrnjene vrednosti »%s« (#%d). "
 "Pričakovana vrednost %s, prejeta %s."
 
-#: libgimp/gimpprocedure.c:2379
+#: libgimp/gimpprocedure.c:2488
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
-"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« (#"
-"%d). Pričakovano %s, prejeto %s."
+"Procedura »%s« je bila priklicana z napačno vrsto vrednosti argumenta »%s« "
+"(#%d). Pričakovano %s, prejeto %s."
 
-#: libgimp/gimpprocedure.c:2414
+#: libgimp/gimpprocedure.c:2523
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -414,7 +423,7 @@ msgstr ""
 "Procedura »%s« je vrnila »%s« kot vrnjeno vrednost »%s« (#%d, vrsta %s). Ta "
 "vrednost je izven dovoljenega obsega."
 
-#: libgimp/gimpprocedure.c:2428
+#: libgimp/gimpprocedure.c:2537
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -423,12 +432,12 @@ msgstr ""
 "Klic procedure »%s« ima vrednost »%s« za argument »%s« (#%d, vrsta %s). Ta "
 "vrednost je zunaj dovoljenega obsega."
 
-#: libgimp/gimpprocedure.c:2472
+#: libgimp/gimpprocedure.c:2581
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedura »%s« je vrnila neveljaven niz UTF-8 za argument »%s«."
 
-#: libgimp/gimpprocedure.c:2482
+#: libgimp/gimpprocedure.c:2591
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -436,77 +445,77 @@ msgid ""
 msgstr ""
 "Procedura »%s« je bila klicana z neveljavnim nizom UTF-8 za argument »%s«."
 
-#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
+#: libgimp/gimpproceduredialog.c:345 libgimp/gimpproceduredialog.c:650
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Odpri"
 
-#: libgimp/gimpproceduredialog.c:316 libgimp/gimpproceduredialog.c:615
+#: libgimp/gimpproceduredialog.c:347 libgimp/gimpproceduredialog.c:652
 msgid "_Export"
 msgstr "_Izvozi"
 
-#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
+#: libgimp/gimpproceduredialog.c:349 libgimp/gimpproceduredialog.c:654
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
-#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:276
+#: libgimpwidgets/gimpfileentry.c:463 libgimpwidgets/gimpquerybox.c:276
 #: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
 #: libgimpwidgets/gimpquerybox.c:481
 msgid "_OK"
 msgstr "V _redu"
 
-#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
+#: libgimp/gimpproceduredialog.c:357 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "_Ponastavi"
 
-#: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:375 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: libgimpwidgets/gimpfilechooser.c:714 libgimpwidgets/gimpfileentry.c:465
+#: libgimpwidgets/gimpfilechooser.c:713 libgimpwidgets/gimpfileentry.c:463
 #: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339
 #: libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
-#: libgimp/gimpproceduredialog.c:379
+#: libgimp/gimpproceduredialog.c:416
 msgid "_Load Saved Settings"
 msgstr "_Naloži shranjene nastavitve"
 
-#: libgimp/gimpproceduredialog.c:380
+#: libgimp/gimpproceduredialog.c:417
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Naloži nastavitve, shranjene s funkcijo Shrani nastavitve"
 
-#: libgimp/gimpproceduredialog.c:392
+#: libgimp/gimpproceduredialog.c:429
 msgid "_Save Settings"
 msgstr "_Shrani nastavitve"
 
-#: libgimp/gimpproceduredialog.c:393
+#: libgimp/gimpproceduredialog.c:430
 msgid "Store current settings for later reuse"
 msgstr "Shrani trenutne nastavitve za kasnejšo rabo"
 
-#: libgimp/gimpproceduredialog.c:908
+#: libgimp/gimpproceduredialog.c:1023
 msgid "Brush Chooser"
 msgstr "Izbirnik čopičev"
 
-#: libgimp/gimpproceduredialog.c:912
+#: libgimp/gimpproceduredialog.c:1027
 msgid "Font Chooser"
 msgstr "Izbirnik pisav"
 
-#: libgimp/gimpproceduredialog.c:916
+#: libgimp/gimpproceduredialog.c:1031
 msgid "Gradient Chooser"
 msgstr "Izbirnik prelivov"
 
-#: libgimp/gimpproceduredialog.c:920
+#: libgimp/gimpproceduredialog.c:1035
 msgid "Palette Chooser"
 msgstr "Izbirnik palet"
 
-#: libgimp/gimpproceduredialog.c:924
+#: libgimp/gimpproceduredialog.c:1039
 msgid "Pattern Chooser"
 msgstr "Izbirnik vzorcev"
 
-#: libgimp/gimpproceduredialog.c:2833
+#: libgimp/gimpproceduredialog.c:2956
 msgid "Reset to _Initial Values"
 msgstr "Ponastavi na _začetne vrednosti"
 
-#: libgimp/gimpproceduredialog.c:2842
+#: libgimp/gimpproceduredialog.c:2965
 msgid "Reset to _Factory Defaults"
 msgstr "Ponastavi na _tovarniške vrednosti"
 
@@ -1748,32 +1757,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Obreži v razmerju stranic"
 
-#: libgimpbase/gimpmetadata.c:1223
+#: libgimpbase/gimpmetadata.c:1222
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Metapodatke je mogoče naložiti le s krajevnih datotek"
 
-#: libgimpbase/gimpmetadata.c:1279
+#: libgimpbase/gimpmetadata.c:1278
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Metapodatke je mogoče shraniti le v krajevne datoteke"
 
-#: libgimpbase/gimpmetadata.c:1328
+#: libgimpbase/gimpmetadata.c:1327
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Neveljavna velikost podatkov Exif."
 
-#: libgimpbase/gimpmetadata.c:1373
+#: libgimpbase/gimpmetadata.c:1372
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Razčlenjevanje podatkov Exif je spodletelo."
 
-#: libgimpbase/gimpmetadata.c:1425
+#: libgimpbase/gimpmetadata.c:1424
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Razčlenjevanje podatkov IPTC je spodletelo."
 
-#: libgimpbase/gimpmetadata.c:1473
+#: libgimpbase/gimpmetadata.c:1472
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Razčlenjevanje podatkov XMP je spodletelo."
@@ -1808,32 +1817,32 @@ msgctxt "unit-plural"
 msgid "percent"
 msgstr "odstotkov"
 
-#: libgimpbase/gimputils.c:222 libgimpbase/gimputils.c:227
+#: libgimpbase/gimputils.c:223 libgimpbase/gimputils.c:228
 msgid "(invalid UTF-8 string)"
 msgstr "(neveljaven niz UTF-8)"
 
-#: libgimpbase/gimputils.c:397
+#: libgimpbase/gimputils.c:398
 msgid "File path is NULL"
 msgstr "Pot datoteke je ničelna (NULL)"
 
-#: libgimpbase/gimputils.c:405
+#: libgimpbase/gimputils.c:406
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Napaka pri pretvorbi imena datoteke UTF-8 v široke znake"
 
-#: libgimpbase/gimputils.c:413
+#: libgimpbase/gimputils.c:414
 msgid "ILCreateFromPath() failed"
 msgstr "Ukaz ILCreateFromPath() je spodletel"
 
-#: libgimpbase/gimputils.c:452
+#: libgimpbase/gimputils.c:453
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "»%s« ni mogoče pretvoriti v veljaven NSURL."
 
-#: libgimpbase/gimputils.c:480
+#: libgimpbase/gimputils.c:481
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Povezovanje z org.freedesktop.FileManager1 je spodletelo: "
 
-#: libgimpbase/gimputils.c:504
+#: libgimpbase/gimputils.c:505
 msgid "Calling ShowItems failed: "
 msgstr "Klic ShowItems je spodletel: "
 
@@ -2144,7 +2153,7 @@ msgstr "neveljavna vrednost »%ld« za žeton %s"
 msgid "while parsing token '%s': %s"
 msgstr "pri razčlenjevanju žetona »%s«: %s"
 
-#: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
+#: libgimpconfig/gimpconfig-iface.c:708 libgimpconfig/gimpconfig-iface.c:721
 #: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
 #: libgimpwidgets/gimpcolorprofilestore.c:756
 msgid "fatal parse error"
@@ -2203,19 +2212,19 @@ msgstr "Napaka pri razčlenjevanju »%s« v vrstici %d: %s"
 msgid "Module '%s' load error: %s"
 msgstr "Napaka nalaganja gradnika »%s«: %s"
 
-#: libgimpmodule/gimpmoduledb.c:458
+#: libgimpmodule/gimpmoduledb.c:460
 msgid "Module error"
 msgstr "Napaka gradnika"
 
-#: libgimpmodule/gimpmoduledb.c:459
+#: libgimpmodule/gimpmoduledb.c:461
 msgid "Loaded"
 msgstr "Naloženo"
 
-#: libgimpmodule/gimpmoduledb.c:460
+#: libgimpmodule/gimpmoduledb.c:462
 msgid "Load failed"
 msgstr "Nalaganje ni uspelo"
 
-#: libgimpmodule/gimpmoduledb.c:461
+#: libgimpmodule/gimpmoduledb.c:463
 msgid "Not loaded"
 msgstr "Ni naloženo"
 
@@ -2238,7 +2247,7 @@ msgstr "Mapa sličic za predogled »%s« ni bila ustvarjena."
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Sličica za predogled ne vsebuje oznake Thumb::URI"
 
-#: libgimpthumb/gimpthumbnail.c:920
+#: libgimpthumb/gimpthumbnail.c:932
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Sličice za predogled %s ni bilo mogoče ustvariti: %s"
@@ -2336,7 +2345,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:321 modules/color-selector-cmyk.c:405
+#: modules/color-selector-cmyk.c:326 modules/color-selector-cmyk.c:410
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
@@ -2381,7 +2390,7 @@ msgstr "Ime krmilnika"
 msgid "The controller's state, as human-readable string"
 msgstr "Stanje krmilnika kot niz v človeku berljivi obliki"
 
-#: libgimpwidgets/gimpdialog.c:196
+#: libgimpwidgets/gimpdialog.c:248
 msgid "_Help"
 msgstr "Po_moč"
 
@@ -2410,15 +2419,15 @@ msgstr "Nakazuje, ali datoteka obstaja ali ne"
 msgid "Can't show file in file manager: %s"
 msgstr "Datoteke ni mogoče pokazati v upravljalniku datotek: %s"
 
-#: libgimpwidgets/gimpfileentry.c:454
+#: libgimpwidgets/gimpfileentry.c:453
 msgid "Select Folder"
 msgstr "Izberite mapo"
 
-#: libgimpwidgets/gimpfileentry.c:456
+#: libgimpwidgets/gimpfileentry.c:455
 msgid "Select File"
 msgstr "Izberite datoteko"
 
-#: libgimpwidgets/gimphelpui.c:387
+#: libgimpwidgets/gimphelpui.c:388
 msgid "Press F1 for more help"
 msgstr "Pritisnite F1 za dodatno pomoč"
 
@@ -2458,7 +2467,7 @@ msgid "the target to open to"
 msgstr "cilj, kamor bo odprto"
 
 #. Count label
-#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1014
+#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1028
 msgid "Nothing selected"
 msgstr "Nič ni izbrano"
 
@@ -2480,11 +2489,11 @@ msgstr "Izberi _vse"
 msgid "Page %d"
 msgstr "Stran %d"
 
-#: libgimpwidgets/gimppageselector.c:1019
+#: libgimpwidgets/gimppageselector.c:1033
 msgid "One page selected"
 msgstr "Izbrana je ena stran"
 
-#: libgimpwidgets/gimppageselector.c:1026
+#: libgimpwidgets/gimppageselector.c:1040
 #, c-format
 msgid "The page is selected"
 msgid_plural "All %d pages selected"
@@ -2493,7 +2502,7 @@ msgstr[1] "Izbrana je %d stran"
 msgstr[2] "Izbrani sta %d strani"
 msgstr[3] "Izbrane so %d strani"
 
-#: libgimpwidgets/gimppageselector.c:1030
+#: libgimpwidgets/gimppageselector.c:1044
 #, c-format
 msgid "%d page selected"
 msgid_plural "%d pages selected"
@@ -2535,19 +2544,19 @@ msgstr ""
 msgid "_Preview"
 msgstr "_Predogled"
 
-#: libgimpwidgets/gimppreviewarea.c:154
+#: libgimpwidgets/gimppreviewarea.c:152
 msgid "Check Size"
 msgstr "Preveri velikost"
 
-#: libgimpwidgets/gimppreviewarea.c:162
+#: libgimpwidgets/gimppreviewarea.c:160
 msgid "Check Style"
 msgstr "Preveri slog"
 
-#: libgimpwidgets/gimppreviewarea.c:170
+#: libgimpwidgets/gimppreviewarea.c:168
 msgid "Custom Checks Color 1"
 msgstr "Barva 1 šahovnice po meri"
 
-#: libgimpwidgets/gimppreviewarea.c:177
+#: libgimpwidgets/gimppreviewarea.c:175
 msgid "Custom Checks Color 2"
 msgstr "Barva 2 šahovnice po meri"
 
@@ -2747,55 +2756,55 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Pomanjšaj"
 
-#: modules/color-selector-cmyk.c:87
+#: modules/color-selector-cmyk.c:89
 msgid "CMYK color selector (using color profile)"
 msgstr "Barvni izbirnik CMYK (z uporabo barvnega profila)"
 
-#: modules/color-selector-cmyk.c:121
+#: modules/color-selector-cmyk.c:123
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:147
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:149
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:151
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:151
+#: modules/color-selector-cmyk.c:153
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:157
 msgid "Cyan"
 msgstr "Cianasta"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:158
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/color-selector-cmyk.c:157
+#: modules/color-selector-cmyk.c:159
 msgid "Yellow"
 msgstr "Rumena"
 
-#: modules/color-selector-cmyk.c:158
+#: modules/color-selector-cmyk.c:160
 msgid "Black"
 msgstr "Črna"
 
-#: modules/color-selector-cmyk.c:265
+#: modules/color-selector-cmyk.c:270
 msgid "Total Ink Coverage"
 msgstr "Skupna pokritost s črnilom"
 
-#: modules/color-selector-cmyk.c:308 modules/color-selector-cmyk.c:387
+#: modules/color-selector-cmyk.c:313 modules/color-selector-cmyk.c:392
 msgid "Profile: (none)"
 msgstr "Profil: (brez)"
 
@@ -2819,121 +2828,121 @@ msgstr "Barvni kolešček HSV"
 msgid "Wheel"
 msgstr "Kolešček"
 
-#: modules/controller-dx-dinput.c:154
+#: modules/controller-dx-dinput.c:157
 msgid "DirectX DirectInput event controller"
 msgstr "Nadzornik dogodkov DirectX DirectInput"
 
-#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218
+#: modules/controller-dx-dinput.c:197 modules/controller-linux-input.c:218
 #: modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Naprava:"
 
-#: modules/controller-dx-dinput.c:195
+#: modules/controller-dx-dinput.c:198
 msgid "The device to read DirectInput events from."
 msgstr "Ime naprave za branje vhodnih dogodkov DirectInput."
 
-#: modules/controller-dx-dinput.c:204
+#: modules/controller-dx-dinput.c:207
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: modules/controller-dx-dinput.c:417
+#: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d"
 msgstr "Gumb %d"
 
-#: modules/controller-dx-dinput.c:420
+#: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Press"
 msgstr "Gumb %d pritisnjen"
 
-#: modules/controller-dx-dinput.c:423
+#: modules/controller-dx-dinput.c:426
 #, c-format
 msgid "Button %d Release"
 msgstr "Gumb %d izpuščen"
 
-#: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
+#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "Pomik levo X"
 
-#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:91
+#: modules/controller-dx-dinput.c:446 modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "Pomik desno X"
 
-#: modules/controller-dx-dinput.c:449
+#: modules/controller-dx-dinput.c:452
 msgid "Y Move Away"
 msgstr "Odmik Y"
 
-#: modules/controller-dx-dinput.c:452
+#: modules/controller-dx-dinput.c:455
 msgid "Y Move Near"
 msgstr "Primik Y"
 
-#: modules/controller-dx-dinput.c:458 modules/controller-linux-input.c:94
+#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Pomik navzgor Z"
 
-#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:95
+#: modules/controller-dx-dinput.c:464 modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Pomik navzdol Z"
 
-#: modules/controller-dx-dinput.c:467
+#: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Away"
 msgstr "Nagib vstran od osi X"
 
-#: modules/controller-dx-dinput.c:470
+#: modules/controller-dx-dinput.c:473
 msgid "X Axis Tilt Near"
 msgstr "Nagib proti osi X"
 
-#: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
+#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Nagib na desno osi Y"
 
-#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:100
+#: modules/controller-dx-dinput.c:482 modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Nagib na levo osi Y"
 
-#: modules/controller-dx-dinput.c:485 modules/controller-linux-input.c:101
+#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Nagib na levo osi Z"
 
-#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:102
+#: modules/controller-dx-dinput.c:491 modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Nagib na desno osi Z"
 
-#: modules/controller-dx-dinput.c:499
+#: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Povečanje drnika %d"
 
-#: modules/controller-dx-dinput.c:502
+#: modules/controller-dx-dinput.c:505
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Pomanjšanje drsnika %d"
 
-#: modules/controller-dx-dinput.c:512
+#: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d X View"
 msgstr "Pogled POV %d X"
 
-#: modules/controller-dx-dinput.c:515
+#: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Y View"
 msgstr "Pogled POV %d Y"
 
-#: modules/controller-dx-dinput.c:518
+#: modules/controller-dx-dinput.c:521
 #, c-format
 msgid "POV %d Return"
 msgstr "Povrni POV %d"
 
-#: modules/controller-dx-dinput.c:1079
+#: modules/controller-dx-dinput.c:1082
 msgid "DirectInput Events"
 msgstr "Dogodki DirectInput"
 
-#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
+#: modules/controller-dx-dinput.c:1093 modules/controller-linux-input.c:525
 #: modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Nobena naprava ni nastavljena"
 
-#: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
+#: modules/controller-dx-dinput.c:1118 modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Naprava ni na voljo"
 
