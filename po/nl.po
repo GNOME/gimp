@@ -28,13 +28,13 @@
 # Gerrit Jan Roelvink <g.j.roelvink@protonmail.com>, 2021-2024.
 # Stephan Hoek, 2022.
 # Nathan Follens <nfollens@gnome.org>, 2022, 2024.
-# Dick Groskamp <dikgro@yahoo.co.uk>, 2025.
+# Dick Groskamp <dikgro@yahoo.co.uk>, 2025,2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-27 14:32+0000\n"
-"PO-Revision-Date: 2026-05-11 13:39+0200\n"
+"POT-Creation-Date: 2026-07-21 16:12+0000\n"
+"PO-Revision-Date: 2026-07-22 13:50+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -123,6 +123,14 @@ msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
 msgstr ""
 "Gescande gravering die wordt bewerkt in GIMP. Kunstwerk door Liam (CC0)"
 
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:67 app/about.h:22
+msgid "GIMP"
+msgstr "GIMP"
+
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:68
+msgid "Photoshop"
+msgstr "Photoshop"
+
 #: desktop/gimp.desktop.in.in:5
 msgid "Image Editor"
 msgstr "Afbeeldingsbewerker"
@@ -140,10 +148,6 @@ msgstr "Bewerk foto's en maak afbeeldingen aan"
 #: desktop/gimp.desktop.in.in:13
 msgid "GIMP;graphic;design;illustration;painting;"
 msgstr "GIMP;graphic;design;illustration;painting;grafisch;ontwerpen;illustratie;tekenen;"
-
-#: app/about.h:22
-msgid "GIMP"
-msgstr "GIMP"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: app/about.h:29
@@ -6216,7 +6220,7 @@ msgstr "Afbeelding schalen"
 
 #  Scaling
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2704
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2706
 #: app/dialogs/preferences-dialog.c:1750 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -14221,41 +14225,41 @@ msgstr ""
 msgid "Offset unit"
 msgstr "Eenheid verschuiving"
 
-#: app/core/gimpgrouplayer.c:280
+#: app/core/gimpgrouplayer.c:282
 msgid "Layer Group"
 msgstr "Laaggroep"
 
-#: app/core/gimpgrouplayer.c:295
+#: app/core/gimpgrouplayer.c:297
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Laaggroep hernoemen"
 
-#: app/core/gimpgrouplayer.c:296
+#: app/core/gimpgrouplayer.c:298
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Laaggroep verplaatsen"
 
-#: app/core/gimpgrouplayer.c:297
+#: app/core/gimpgrouplayer.c:299
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Laaggroep schalen"
 
-#: app/core/gimpgrouplayer.c:298
+#: app/core/gimpgrouplayer.c:300
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Grootte laaggroep wijzigen"
 
-#: app/core/gimpgrouplayer.c:299
+#: app/core/gimpgrouplayer.c:301
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Laaggroep spiegelen"
 
-#: app/core/gimpgrouplayer.c:300
+#: app/core/gimpgrouplayer.c:302
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Laaggroep draaien"
 
-#: app/core/gimpgrouplayer.c:301
+#: app/core/gimpgrouplayer.c:303
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Laaggroep transformeren"
@@ -30893,10 +30897,6 @@ msgstr "Menu Geschiedenis"
 #~ msgctxt "undo-type"
 #~ msgid "Paper Tile"
 #~ msgstr "Papieren tegel"
-
-#~ msgctxt "undo-type"
-#~ msgid "Photocopy"
-#~ msgstr "Fotokopie"
 
 #~ msgctxt "undo-type"
 #~ msgid "Pixelize"
