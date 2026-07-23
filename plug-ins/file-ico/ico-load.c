@@ -152,9 +152,9 @@ ico_read_size (FILE        *fp,
   png_structp png_ptr;
   png_infop   info_ptr;
   png_uint_32 w, h;
-  gint32      bpp;
-  gint32      color_type;
   guint32     magic;
+  guint16     planes;
+  guint16     bpp;
 
   if (fseek (fp, info->offset + file_offset, SEEK_SET) < 0)
     return FALSE;
@@ -183,26 +183,31 @@ ico_read_size (FILE        *fp,
       png_init_io (png_ptr, fp);
       png_set_sig_bytes (png_ptr, 4);
       png_read_info (png_ptr, info_ptr);
-      png_get_IHDR (png_ptr, info_ptr, &w, &h, &bpp, &color_type,
-                    NULL, NULL, NULL);
+      png_get_IHDR (png_ptr, info_ptr, &w, &h, NULL, NULL, NULL, NULL, NULL);
       png_destroy_read_struct (&png_ptr, &info_ptr, NULL);
-      info->width = w;
+      info->width  = w;
       info->height = h;
-      D(("ico_read_size: PNG: %ix%i\n", info->width, info->height));
+      info->bpp    = 32;
+      D (("ico_read_size: PNG: %ix%i %ibpp\n", info->width, info->height,
+         info->bpp));
       return TRUE;
     }
   else if (magic == 40)
     {
-      if (ico_read_int32 (fp, &info->width, 1) &&
-          ico_read_int32 (fp, &info->height, 1))
+      if (ico_read_int32 (fp, &info->width,  1) &&
+          ico_read_int32 (fp, &info->height, 1) &&
+          ico_read_int16 (fp, &planes,       1) &&
+          ico_read_int16 (fp, &bpp,          1))
         {
           info->height /= 2;
-          D(("ico_read_size: ICO: %ix%i\n", info->width, info->height));
+          info->bpp = bpp;
+          D (("ico_read_size: DIB: %ix%i %ibpp\n", info->width, info->height,
+             info->bpp));
           return TRUE;
         }
       else
         {
-          info->width = 0;
+          info->width  = 0;
           info->height = 0;
           return FALSE;
         }
@@ -1098,6 +1103,44 @@ ani_load_image (GFile   *file,
   return image;
 }
 
+/* Index of the best-matching entry in an ICO/CUR directory.
+ * Scoring matches LookupIconIdFromDirectoryEx: undersized entries
+ * incur a x2 size penalty, bpp mismatch is weighted x2. */
+static gint
+ico_best_entry (IcoLoadInfo *info,
+                gint         count,
+                gint         target_w,
+                gint         target_h,
+                gint         target_bpp)
+{
+  gint best_idx   = 0;
+  gint best_score = G_MAXINT;
+  gint best_bpp   = 0;
+  gint i;
+
+  for (i = 0; i < count; i++)
+    {
+      gint w     = info[i].width;
+      gint h     = info[i].height;
+      gint bpp   = info[i].bpp;
+      gint score = ABS (w - target_w) * (w < target_w ? 2 : 1) +
+                   ABS (h - target_h) * (h < target_h ? 2 : 1) +
+                   ABS (bpp - target_bpp) * 2;
+
+      if (score == 0)
+        return i;
+
+      if (score < best_score || (score == best_score && bpp > best_bpp))
+        {
+          best_idx   = i;
+          best_score = score;
+          best_bpp   = bpp;
+        }
+    }
+
+  return best_idx;
+}
+
 GimpImage *
 ico_load_thumbnail_image (GFile   *file,
                           gint    *width,
@@ -1111,15 +1154,9 @@ ico_load_thumbnail_image (GFile   *file,
   GimpImage     *image;
   gint           max_width;
   gint           max_height;
-  gint           w     = 0;
-  gint           h     = 0;
-  gint           bpp   = 0;
-  gint           match = 0;
+  gint           match;
   gint           i, icon_count;
   guchar        *buf;
-
-  gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
-                             gimp_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -1152,43 +1189,29 @@ ico_load_thumbnail_image (GFile   *file,
       return NULL;
     }
 
+  /* Read real bpp from each frame's DIB/PNG payload for scoring;
+   * the directory entry bpp field is unreliable (0 for ICO, hotspot
+   * for CUR). */
+  for (i = 0; i < icon_count; i++)
+    ico_read_size (fp, file_offset, info + i);
+
   max_width  = 0;
   max_height = 0;
 
-  /* Do a quick scan of the icons in the file to find the best match */
   for (i = 0; i < icon_count; i++)
     {
-      if (info[i].width > max_width)
+      if ((gint) info[i].width > max_width)
         max_width = info[i].width;
-      if (info[i].height > max_height)
+      if ((gint) info[i].height > max_height)
         max_height = info[i].height;
-
-      if ((info[i].width  > w && w < *width) ||
-          (info[i].height > h && h < *height))
-        {
-          w = info[i].width;
-          h = info[i].height;
-          bpp = info[i].bpp;
-
-          match = i;
-        }
-      else if (w == info[i].width  &&
-               h == info[i].height &&
-               info[i].bpp > bpp)
-        {
-          /* better quality */
-          bpp = info[i].bpp;
-          match = i;
-        }
     }
 
-  if (w <= 0 || h <= 0)
-    return NULL;
+  match = ico_best_entry (info, icon_count, *width, *height, 32);
 
-  image = gimp_image_new (w, h, GIMP_RGB);
-  buf = g_new (guchar, w*h*4);
-  ico_load_layer (fp, image, match, buf, w*h*4, file_offset,
-                  "Thumbnail", info + match);
+  image = gimp_image_new (info[match].width, info[match].height, GIMP_RGB);
+  buf   = g_new (guchar, info[match].width * info[match].height * 4);
+  ico_load_layer (fp, image, match, buf, info[match].width * info[match].height * 4,
+                  file_offset, "Thumbnail", info + match);
   g_free (buf);
 
   *width  = max_width;
