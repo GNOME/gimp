@@ -24,7 +24,7 @@ fi
 
 # Install part of the deps
 if [ -z "$OPT_PREFIX" ]; then
-  export OPT_PREFIX=$(which port | sed 's|/bin/port||' || brew --prefix)
+  export OPT_PREFIX=$( { which port || brew --prefix 2>&1; } | sed 's|/bin/port||')
   if echo "$OPT_PREFIX" | grep -q 'not found'; then
     printf '\033[31m(ERROR)\033[0m: MacPorts installation not found. Please, install it on: https://www.macports.org/install.php\n'
     exit 1
@@ -44,14 +44,14 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
   elif echo "$CI_JOB_NAME" | grep -q 'deps'; then
     export first_cache=true
   fi
-  if [ -z "$GITLAB_CI" ] || { echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] } }; then
+  if [ -z "$GITLAB_CI" ] || { echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ]; }; }; then
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync -Nv
   fi
   if [ "$OPT_PREFIX" != '/opt/local' ] && [ "$OPT_PREFIX" != '/opt/homebrew' ]; then
     opt='configure.cflags-append -Werror=unguarded-availability-new'; file="$OPT_PREFIX/var/macports/sources/rsync.macports.org/macports/release/tarballs/ports/mail/libidn2/Portfile"; grep -q -- "$opt" $file || printf "\n$opt\n" >> "$file"
   fi
   eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port install -N $(grep -v '^#' build/macos/all-deps-uni.txt | sed 's/#.*//' | sed 's/|homebrew:[^ ]*//g' | tr -d '\\' | xargs)
-  if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ] }; then
+  if echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ]; }; then
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port -Nq uninstall inactive || true #let's use 'uninstall' since 'reclaim' remove more than wanted
     eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port -Nq clean --dist installed || true #distfiles/ is too big, only useful on revision bumps
     mkdir -p macports-cached-$(uname -m) && cp -fa $OPT_PREFIX/var/macports/* macports-cached-$(uname -m) || true
