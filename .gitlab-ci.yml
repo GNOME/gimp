@@ -703,8 +703,8 @@ deps-macos:
       paths:
         - macports-cached-$ARCH
   script:
-    # Do not call sh since it is old bash on macOS, not the default zsh
-    - arch -${ARCH} zsh build/macos/1_build-deps-macports.sh
+    # Call sh (even it being old bash on macOS), since default zsh is not 100% POSIX
+    - arch -${ARCH} sh build/macos/1_build-deps-macports.sh
   artifacts:
     paths:
       - _install-*
@@ -729,8 +729,8 @@ gimp-macos:
         - macports-cached-$ARCH
       policy: pull
   script:
-    # Do not call sh since it is old bash on macOS, not the default zsh
-    - arch -${ARCH} zsh build/macos/2_build-gimp-macports.sh
+    # Call sh (even it being old bash on macOS), since default zsh is not 100% POSIX
+    - arch -${ARCH} sh build/macos/2_build-gimp-macports.sh
   artifacts:
     paths:
       - gimp-*.app
@@ -1208,8 +1208,8 @@ dist-mac-weekly:
   tags:
     - macos
   script:
-    # Do not call sh since it is old bash on macOS, not the default zsh
-    - zsh build/macos/dmg/3_dist-gimp-apple.sh
+    # Call sh (even it being old bash on macOS), since default zsh is not 100% POSIX
+    - sh build/macos/dmg/3_dist-gimp-apple.sh
   artifacts:
     expose_as: 'macOS dmg'
     paths:
