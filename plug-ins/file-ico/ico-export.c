@@ -1581,15 +1581,15 @@ ico_sort_key_compare (const void *a,
   const IcoSortKey *kb = (const IcoSortKey *) b;
   gint              diff;
 
-  diff = ka->width - kb->width;
+  diff = ka->depth - kb->depth;
   if (diff != 0)
     return diff;
 
-  diff = ka->height - kb->height;
+  diff = kb->width - ka->width;
   if (diff != 0)
     return diff;
 
-  return ka->depth - kb->depth;
+  return kb->height - ka->height;
 }
 
 GimpPDBStatusType
@@ -1669,8 +1669,8 @@ shared_save_image (GFile                *file,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  /* Sort frames small-to-large (width, height, bpp) before writing.
-   * Pre-Vista shell picked the first matching entry, so order matters. */
+  /* Sort bpp ascending, size descending within each tier.  This matches
+   * the order used by Windows-shipped icons and cursors. */
   order = g_new (IcoSortKey, num_icons);
 
   for (iter = info->layers, i = 0;
