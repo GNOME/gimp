@@ -473,6 +473,76 @@ gimp_context_set_background (GeglColor *background)
 }
 
 /**
+ * gimp_context_get_image:
+ *
+ * Get the current active image.
+ *
+ * Returns the current active image in the GIMP workspace.
+ *
+ * Returns: (transfer none): The active image.
+ *
+ * Since: 3.4
+ **/
+GimpImage *
+gimp_context_get_image (void)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpImage *image = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-context-get-image",
+                                               args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return image;
+}
+
+/**
+ * gimp_context_set_image:
+ * @image: The active image.
+ *
+ * Set the current active image.
+ *
+ * Sets the current active image in the GIMP workspace. After this is
+ * set, operations will work on the new image.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.4
+ **/
+gboolean
+gimp_context_set_image (GimpImage *image)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = _gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                               "gimp-context-set-image",
+                                               args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_set_default_colors:
  *
  * Set the current GIMP foreground and background colors to black and

@@ -43,6 +43,7 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpgradient.h"
+#include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimpmybrush.h"
 #include "core/gimppalette.h"
@@ -321,6 +322,47 @@ context_set_background_invoker (GimpProcedure         *procedure,
     {
       gimp_color_set_alpha (background, 1.0);
       gimp_context_set_background (context, background);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_image_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  GimpValueArray *return_vals;
+  GimpImage *image = NULL;
+
+  image = gimp_context_get_image (context);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_object (gimp_value_array_index (return_vals, 1), image);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_image_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      gimp_context_set_image (context, image);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -3510,6 +3552,52 @@ register_context_procs (GimpPDB *pdb)
                                                       "The background color",
                                                       FALSE,
                                                       NULL,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-image
+   */
+  procedure = gimp_procedure_new (context_get_image_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-image");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the current active image.",
+                                  "Returns the current active image in the GIMP workspace.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2026");
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_image ("image",
+                                                          "image",
+                                                          "The active image",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-image
+   */
+  procedure = gimp_procedure_new (context_set_image_invoker, FALSE);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-image");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the current active image.",
+                                  "Sets the current active image in the GIMP workspace. After this is set, operations will work on the new image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2026");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The active image",
+                                                      FALSE,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

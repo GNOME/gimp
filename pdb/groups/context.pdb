@@ -341,6 +341,53 @@ CODE
     );
 }
 
+sub context_get_image {
+    $blurb = "Get the current active image.";
+
+    $help = <<'HELP';
+Returns the current active image in the GIMP workspace.
+HELP
+
+    &alxsa_pdb_misc('2026', '3.4');
+
+    @outargs = (
+        { name => 'image', type => 'image',
+          desc => 'The active image' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  image = gimp_context_get_image (context);
+}
+CODE
+    );
+}
+
+sub context_set_image {
+    $blurb = "Set the current active image.";
+
+    $help = <<'HELP';
+Sets the current active image in the GIMP workspace. After this is set,
+operations will work on the new image.
+HELP
+
+    &alxsa_pdb_misc('2026', '3.4');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The active image' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_context_set_image (context, image);
+}
+CODE
+    );
+}
+
 sub context_set_default_colors {
     $blurb = <<'BLURB';
 Set the current GIMP foreground and background colors to black and white.
@@ -3634,6 +3681,7 @@ CODE
             context_get_stroke_method context_set_stroke_method
             context_get_foreground context_set_foreground
             context_get_background context_set_background
+            context_get_image context_set_image
             context_set_default_colors
             context_swap_colors
             context_get_opacity context_set_opacity

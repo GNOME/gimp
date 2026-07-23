@@ -81,6 +81,7 @@ EXPORTS
 	gimp_context_get_gradient_blend_color_space
 	gimp_context_get_gradient_repeat_mode
 	gimp_context_get_gradient_reverse
+	gimp_context_get_image
 	gimp_context_get_ink_angle
 	gimp_context_get_ink_blob_angle
 	gimp_context_get_ink_blob_aspect_ratio
@@ -146,6 +147,7 @@ EXPORTS
 	gimp_context_set_gradient_fg_transparent
 	gimp_context_set_gradient_repeat_mode
 	gimp_context_set_gradient_reverse
+	gimp_context_set_image
 	gimp_context_set_ink_angle
 	gimp_context_set_ink_blob_angle
 	gimp_context_set_ink_blob_aspect_ratio

@@ -44,6 +44,8 @@ GeglColor*                    gimp_context_get_foreground                 (void)
 gboolean                      gimp_context_set_foreground                 (GeglColor                     *foreground);
 GeglColor*                    gimp_context_get_background                 (void);
 gboolean                      gimp_context_set_background                 (GeglColor                     *background);
+GimpImage*                    gimp_context_get_image                      (void);
+gboolean                      gimp_context_set_image                      (GimpImage                     *image);
 gboolean                      gimp_context_set_default_colors             (void);
 gboolean                      gimp_context_swap_colors                    (void);
 gdouble                       gimp_context_get_opacity                    (void);
