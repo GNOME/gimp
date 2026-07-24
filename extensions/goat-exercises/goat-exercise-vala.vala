@@ -76,7 +76,8 @@ public class Goat : Gimp.PlugIn {
                           null);
 
       var geometry = Gdk.Geometry();
-      geometry.min_aspect = 0.5;
+      /* Only equal minimum and maximum aspect ratios are supported on Mac OS */
+      geometry.min_aspect = 1.0;
       geometry.max_aspect = 1.0;
       dialog.set_geometry_hints(null, geometry, Gdk.WindowHints.ASPECT);
 
