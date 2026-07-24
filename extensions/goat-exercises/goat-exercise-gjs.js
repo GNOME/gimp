@@ -97,7 +97,8 @@ var Goat = GObject.registerClass({
             dialog.add_button(_("_OK"), Gtk.ResponseType.OK);
 
             let geometry = new Gdk.Geometry();
-            geometry.min_aspect = 0.5;
+            /* Only equal minimum and maximum aspect ratios are supported on Mac OS */
+            geometry.min_aspect = (imports.system.platform !== 'darwin') ? 0.5 : 1.0;
             geometry.max_aspect = 1.0;
             dialog.set_geometry_hints (null, geometry, Gdk.WindowHints.ASPECT);
 

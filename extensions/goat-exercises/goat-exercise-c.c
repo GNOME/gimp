@@ -184,7 +184,12 @@ goat_run (GimpProcedure        *procedure,
                                 _("_Run"),    GTK_RESPONSE_OK,
 
                                 NULL);
+#ifndef __APPLE__
       geometry.min_aspect = 0.5;
+#else
+      /* Only equal minimum and maximum aspect ratios are supported on Mac OS */
+      geometry.min_aspect = 1.0;
+#endif
       geometry.max_aspect = 1.0;
       gtk_window_set_geometry_hints (GTK_WINDOW (dialog), NULL,
                                      &geometry, GDK_HINT_ASPECT);
