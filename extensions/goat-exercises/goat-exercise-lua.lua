@@ -63,10 +63,11 @@ function run(procedure, run_mode, image, drawables, config, run_data)
   -- against Gimp.RunMode.INTERACTIVE.
   if run_mode == "INTERACTIVE" then
     GimpUi.init("goat-exercise-lua");
+    local use_header_bar = Gtk.Settings.get_default().gtk_dialogs_use_header
     local dialog = GimpUi.Dialog {
       title          = _("Plug-In Example in Lua"),
       role           = "goat-exercise-Lua",
-      use_header_bar = 1
+      use_header_bar = use_header_bar
     }
     dialog:add_button(_("_Cancel"), Gtk.ResponseType.CANCEL);
     dialog:add_button(_("_Source"), Gtk.ResponseType.APPLY);
