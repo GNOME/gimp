@@ -84,7 +84,8 @@ class Goat (Gimp.PlugIn):
             geometry.max_aspect = 1.0
             dialog.set_geometry_hints(None, geometry, Gdk.WindowHints.ASPECT)
 
-            box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
+            box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+            box.set_border_width(12)
             dialog.get_content_area().add(box)
             box.show()
 
