@@ -70,7 +70,8 @@ class Goat (Gimp.PlugIn):
 
             GimpUi.init("goat-exercise-py3.py")
 
-            dialog = GimpUi.Dialog(use_header_bar=True,
+            use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
+            dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
                                    title=_("Plug-In Example in Python 3"),
                                    role="goat-exercise-Python3")
 

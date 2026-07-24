@@ -86,10 +86,11 @@ var Goat = GObject.registerClass({
         if (run_mode == Gimp.RunMode.INTERACTIVE) {
             GimpUi.init("goat-exercise-gjs");
             /* TODO: help function and ID. */
+            let use_header_bar = Gtk.Settings.get_default().gtk_dialogs_use_header;
             let dialog = new GimpUi.Dialog({
               title: _("Plug-In Example in JavaScript (GJS)"),
               role: "goat-exercise-JavaScript",
-              use_header_bar: true,
+              use_header_bar: use_header_bar,
             });
             dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL);
             dialog.add_button(_("_Source"), Gtk.ResponseType.APPLY);
