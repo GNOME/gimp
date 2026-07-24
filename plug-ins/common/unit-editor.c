@@ -195,7 +195,7 @@ static void
 on_app_activate (GApplication *gapp, gpointer user_data)
 {
   GimpUnitEditor    *self = GIMP_UNIT_EDITOR (user_data);
-  GtkWidget         *headerbar;
+  GtkWidget         *action_container;
   GtkWidget         *vbox;
   GtkWidget         *button_box;
   GtkWidget         *scrolled_win;
@@ -204,6 +204,11 @@ on_app_activate (GApplication *gapp, gpointer user_data)
   GtkWidget         *col_widget;
   GtkWidget         *button;
   GtkCellRenderer   *rend;
+  gboolean           use_header_bar = FALSE;
+
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
 
   list_store = gtk_list_store_new (NUM_COLUMNS,
                                    G_TYPE_BOOLEAN,   /*  SAVE          */
@@ -237,15 +242,27 @@ on_app_activate (GApplication *gapp, gpointer user_data)
                                          (const char*[]) { "<ctrl>R", NULL });
 
   /* Titlebar */
-  headerbar = gtk_header_bar_new ();
-  gtk_header_bar_set_title (GTK_HEADER_BAR (headerbar), _("Unit Editor"));
-  gtk_header_bar_set_has_subtitle (GTK_HEADER_BAR (headerbar), FALSE);
-  gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (headerbar), TRUE);
+  if (use_header_bar)
+    {
+      action_container = gtk_header_bar_new ();
+      gtk_header_bar_set_title (GTK_HEADER_BAR (action_container), _("Unit Editor"));
+      gtk_header_bar_set_has_subtitle (GTK_HEADER_BAR (action_container), FALSE);
+      gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (action_container), TRUE);
+    }
+  else
+    {
+      action_container = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+      gtk_button_box_set_layout (GTK_BUTTON_BOX (action_container), GTK_BUTTONBOX_END);
+      gtk_box_set_spacing (GTK_BOX (action_container), 6);
+    }
 
   button = gtk_button_new_with_mnemonic (_("_Refresh"));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.refresh");
   gtk_widget_show (button);
-  gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), button);
+  if (use_header_bar)
+    gtk_header_bar_pack_start (GTK_HEADER_BAR (action_container), button);
+  else
+    gtk_container_add (GTK_CONTAINER (action_container), button);
 
   if (gimp_show_help_button ())
     {
@@ -254,7 +271,10 @@ on_app_activate (GApplication *gapp, gpointer user_data)
                                 G_CALLBACK (unit_editor_help_clicked),
                                 self->window);
       gtk_widget_show (button);
-      gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), button);
+      if (use_header_bar)
+        gtk_header_bar_pack_start (GTK_HEADER_BAR (action_container), button);
+      else
+        gtk_container_add (GTK_CONTAINER (action_container), button);
     }
 
   button = gtk_button_new_with_mnemonic (_("_OK"));
@@ -262,10 +282,16 @@ on_app_activate (GApplication *gapp, gpointer user_data)
                             G_CALLBACK (gtk_widget_destroy),
                             self->window);
   gtk_widget_show (button);
-  gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), button);
+  if (use_header_bar)
+    gtk_header_bar_pack_end (GTK_HEADER_BAR (action_container), button);
+  else
+    gtk_container_add (GTK_CONTAINER (action_container), button);
 
-  gtk_window_set_titlebar (self->window, headerbar);
-  gtk_widget_show (headerbar);
+  if (use_header_bar)
+    {
+      gtk_window_set_titlebar (self->window, action_container);
+      gtk_widget_show (action_container);
+    }
 
   /* Content */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
@@ -354,6 +380,12 @@ on_app_activate (GApplication *gapp, gpointer user_data)
     }
 
   unit_list_init (GTK_TREE_VIEW (self->tv));
+
+  if (!use_header_bar)
+    {
+      gtk_container_add (GTK_CONTAINER (vbox), action_container);
+      gtk_widget_show (action_container);
+    }
 
   g_signal_connect (self->window, "key-press-event",
                     G_CALLBACK (unit_editor_key_press_event),
