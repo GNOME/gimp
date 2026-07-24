@@ -111,7 +111,6 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_set_visible (hbox, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_widget_set_visible (vbox, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_set_visible (vbox, TRUE);
 
