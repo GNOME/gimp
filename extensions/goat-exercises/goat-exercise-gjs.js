@@ -103,8 +103,9 @@ var Goat = GObject.registerClass({
 
             let box = new Gtk.Box({
               orientation: Gtk.Orientation.VERTICAL,
-              spacing: 2
+              spacing: 12
             });
+            box.set_border_width(12);
             dialog.get_content_area().add(box);
             box.show();
 
