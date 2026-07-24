@@ -80,8 +80,9 @@ function run(procedure, run_mode, image, drawables, config, run_data)
 
     local box = Gtk.Box {
       orientation = Gtk.Orientation.VERTICAL,
-      spacing     = 2
+      spacing     = 12
     }
+    box:set_border_width(12)
     dialog:get_content_area():add(box)
     box:show()
 
