@@ -497,6 +497,11 @@ class GimpTestRunner(object):
         # Actual tests
         for test in cfg.tests:
             if test.enabled:
+                format_name = test.extension.upper()
+                section_id = f"{test.extension.lower()}_test"
+                # Start of GitLab Collpasible Section
+                print(f"\x1b[0Ksection_start:{int(time.time())}:{section_id}[collapsed=true]\r\x1b[0KTesting format {format_name}", flush=True)
+
                 self.log.consoleinfo(f"\nTesting {test.extension} import using {test.plugin}...\n")
                 el = Element("testsuite")
                 el.set('name', test.testsuite_import)
@@ -526,6 +531,9 @@ class GimpTestRunner(object):
                 else:
                     self.crash_total += 1
                 self.log.consoleinfo(f"\nFinished testing {test.extension}\n")
+
+                #End of GitLab Collpasible Section
+                print(f"\x1b[0Ksection_end:{int(time.time())}:{section_id}\r\x1b[0K", flush=True)
             else:
                 self.log.consoleinfo(f"Testing {test.extension} import using {test.plugin} is disabled.")
 
