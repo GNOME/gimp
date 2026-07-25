@@ -25,6 +25,9 @@
 import os
 import configparser
 import time
+import sys
+import io
+from contextlib import redirect_stdout, redirect_stderr
 
 import xml
 from xml.etree.ElementTree import ElementTree, Element
@@ -286,7 +289,10 @@ class FileLoadTest(object):
 
             # Measure execution duration in junit format
             start_time = time.perf_counter()
-            test_result = self.run_file_load(self.data_root + image_folder + imgfile, expected)
+            # Capture stdout and stderr during test execution to not blow up CI logs
+            output_buffer = io.StringIO()
+            with redirect_stdout(output_buffer), redirect_stderr(output_buffer):
+                test_result = self.run_file_load(self.data_root + image_folder + imgfile, expected)
             duration = time.perf_counter() - start_time
             el.set('time', f"{duration:.3f}")
 
@@ -299,6 +305,8 @@ class FileLoadTest(object):
                 error_el.set('type', 'error')
                 error_el.text = self.failure_reason
                 el.append(error_el)
+                # Print stdout/stderr ONLY if not RESULT_OK
+                print(output_buffer.getvalue(), flush=True)
             else:
                 if test_result == RESULT_FAIL:
                     test_fail += 1
@@ -316,6 +324,8 @@ class FileLoadTest(object):
                 failure.set('type', 'failure')
                 failure.text = self.failure_reason
                 el.append(failure)
+                # Print stdout/stderr ONLY if not RESULT_OK
+                print(output_buffer.getvalue(), flush=True)
 
             if expected == EXPECTED_TODO:
                 test_todo += 1
@@ -497,6 +507,11 @@ class GimpTestRunner(object):
         # Actual tests
         for test in cfg.tests:
             if test.enabled:
+                format_name = test.extension.upper()
+                section_id = f"{test.extension.lower()}_test"
+                # Start of GitLab Collpasible Section
+                print(f"\x1b[0Ksection_start:{int(time.time())}:{section_id}[collapsed=true]\r\x1b[0KTesting format {format_name}", flush=True)
+
                 self.log.consoleinfo(f"\nTesting {test.extension} import using {test.plugin}...\n")
                 el = Element("testsuite")
                 el.set('name', test.testsuite_import)
@@ -526,6 +541,9 @@ class GimpTestRunner(object):
                 else:
                     self.crash_total += 1
                 self.log.consoleinfo(f"\nFinished testing {test.extension}\n")
+
+                #End of GitLab Collpasible Section
+                print(f"\x1b[0Ksection_end:{int(time.time())}:{section_id}\r\x1b[0K", flush=True)
             else:
                 self.log.consoleinfo(f"Testing {test.extension} import using {test.plugin} is disabled.")
 
