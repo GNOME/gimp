@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-28 01:21+0000\n"
-"PO-Revision-Date: 2026-07-11 15:56+0800\n"
+"POT-Creation-Date: 2026-07-20 20:36+0000\n"
+"PO-Revision-Date: 2026-07-23 08:20+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -230,20 +230,29 @@ msgstr "注释"
 msgid "Image comment"
 msgstr "图像注释"
 
-#: libgimp/gimpexportproceduredialog.c:155
+#: libgimp/gimpexportproceduredialog.c:156
 msgid "Metadata"
 msgstr "元数据"
 
-#: libgimp/gimpexportproceduredialog.c:164
+#: libgimp/gimpexportproceduredialog.c:165
 msgid "Edit Metadata"
 msgstr "编辑元数据"
 
-#: libgimp/gimpexportproceduredialog.c:164
+#: libgimp/gimpexportproceduredialog.c:165
 msgid "(edit)"
 msgstr "（编辑）"
 
+#: libgimp/gimpexportproceduredialog.c:330
+msgid "Transparency will be lost"
+msgstr "透明度将会丢失"
+
+#: libgimp/gimpexportproceduredialog.c:335
+#, c-format
+msgid "This format does not support transparency: %s"
+msgstr "此格式不支持透明度：%s"
+
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexportproceduredialog.c:460
+#: libgimp/gimpexportproceduredialog.c:502
 #, c-format
 msgid "Export Image as %s"
 msgstr "导出图像为 %s"
@@ -421,16 +430,16 @@ msgid ""
 "'%s'."
 msgstr "调用“%s”过程时为参数“%s”使用了无效的 UTF-8 字符串。"
 
-#: libgimp/gimpproceduredialog.c:344 libgimp/gimpproceduredialog.c:643
+#: libgimp/gimpproceduredialog.c:345 libgimp/gimpproceduredialog.c:650
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: libgimp/gimpproceduredialog.c:346 libgimp/gimpproceduredialog.c:645
+#: libgimp/gimpproceduredialog.c:347 libgimp/gimpproceduredialog.c:652
 msgid "_Export"
 msgstr "导出(_E)"
 
-#: libgimp/gimpproceduredialog.c:348 libgimp/gimpproceduredialog.c:647
+#: libgimp/gimpproceduredialog.c:349 libgimp/gimpproceduredialog.c:654
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
 #: libgimpwidgets/gimpfileentry.c:463 libgimpwidgets/gimpquerybox.c:276
 #: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
@@ -438,11 +447,11 @@ msgstr "导出(_E)"
 msgid "_OK"
 msgstr "确定(_O)"
 
-#: libgimp/gimpproceduredialog.c:356 libgimpwidgets/gimpcolorbutton.c:551
+#: libgimp/gimpproceduredialog.c:357 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "重置(_R)"
 
-#: libgimp/gimpproceduredialog.c:374 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:375 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: libgimpwidgets/gimpfilechooser.c:713 libgimpwidgets/gimpfileentry.c:463
@@ -451,47 +460,47 @@ msgstr "重置(_R)"
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: libgimp/gimpproceduredialog.c:409
+#: libgimp/gimpproceduredialog.c:416
 msgid "_Load Saved Settings"
 msgstr "加载保存的设置(_L)"
 
-#: libgimp/gimpproceduredialog.c:410
+#: libgimp/gimpproceduredialog.c:417
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "加载用“保存设置”按钮保存的设置"
 
-#: libgimp/gimpproceduredialog.c:422
+#: libgimp/gimpproceduredialog.c:429
 msgid "_Save Settings"
 msgstr "保存设置(_S)"
 
-#: libgimp/gimpproceduredialog.c:423
+#: libgimp/gimpproceduredialog.c:430
 msgid "Store current settings for later reuse"
 msgstr "为之后重用保存当前设置"
 
-#: libgimp/gimpproceduredialog.c:938
+#: libgimp/gimpproceduredialog.c:1023
 msgid "Brush Chooser"
 msgstr "笔刷选择器"
 
-#: libgimp/gimpproceduredialog.c:942
+#: libgimp/gimpproceduredialog.c:1027
 msgid "Font Chooser"
 msgstr "字体选择器"
 
-#: libgimp/gimpproceduredialog.c:946
+#: libgimp/gimpproceduredialog.c:1031
 msgid "Gradient Chooser"
 msgstr "渐变选择器"
 
-#: libgimp/gimpproceduredialog.c:950
+#: libgimp/gimpproceduredialog.c:1035
 msgid "Palette Chooser"
 msgstr "色板选择器"
 
-#: libgimp/gimpproceduredialog.c:954
+#: libgimp/gimpproceduredialog.c:1039
 msgid "Pattern Chooser"
 msgstr "图案选择器"
 
-#: libgimp/gimpproceduredialog.c:2871
+#: libgimp/gimpproceduredialog.c:2956
 msgid "Reset to _Initial Values"
 msgstr "重置为初始值(_I)"
 
-#: libgimp/gimpproceduredialog.c:2880
+#: libgimp/gimpproceduredialog.c:2965
 msgid "Reset to _Factory Defaults"
 msgstr "重置为出厂默认值(_F)"
 
@@ -665,12 +674,12 @@ msgstr "加载 %s 图像"
 #: libgimpbase/gimpbaseenums.c:30
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
-msgstr "白色(全不透明)(_W)"
+msgstr "白色（全不透明）(_W)"
 
 #: libgimpbase/gimpbaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
-msgstr "黑色(全透明)(_B)"
+msgstr "黑色（全透明）(_B)"
 
 #: libgimpbase/gimpbaseenums.c:32
 msgctxt "add-mask-type"
