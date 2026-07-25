@@ -385,9 +385,10 @@ gimp_procedure_dialog_constructed (GObject *object)
   gtk_widget_grab_focus (button);
   gtk_widget_grab_default (button);
 
+  /* Windows and KDE button's order. */
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            GTK_RESPONSE_OK,
                                             RESPONSE_RESET,
+                                            GTK_RESPONSE_OK,
                                             GTK_RESPONSE_CANCEL,
                                             -1);
 
