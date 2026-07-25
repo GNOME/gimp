@@ -992,6 +992,8 @@ xcf_save_path_props (XcfInfo      *info,
                                   gimp_item_get_lock_content (GIMP_ITEM (path))), ;);
   xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_POSITION, error,
                                   gimp_item_get_lock_position (GIMP_ITEM (path))), ;);
+  xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_VISIBILITY, error,
+                                  gimp_item_get_lock_visibility (GIMP_ITEM (path))), ;);
 
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
                                   gimp_item_get_tattoo (GIMP_ITEM (path))), ;);
