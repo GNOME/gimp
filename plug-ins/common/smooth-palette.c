@@ -484,11 +484,6 @@ dialog (GimpProcedure       *procedure,
                                    GIMP_PROCEDURE_CONFIG (config),
                                    _("Smooth Palette"));
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
-
   gimp_window_set_transient (GTK_WINDOW (dlg));
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));

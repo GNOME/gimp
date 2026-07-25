@@ -1156,11 +1156,6 @@ bender_new_dialog (GimpProcedure       *procedure,
                                          GIMP_PROCEDURE_CONFIG (config),
                                          _("Curve Bend"));
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (cd->shell),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
-
   gimp_window_set_transient (GTK_WINDOW (cd->shell));
 
   /*  busy cursor  */
