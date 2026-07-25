@@ -776,12 +776,15 @@ check-commit-log:
     - .fdo.ci-fairy
   rules:
     - <<: *CI_MERGE
+    - <<: *CI_COMMIT
   stage: analysis
   variables:
     GIT_DEPTH: "100"
     JUNIT_REPORT: commit-message-junit-report.xml
   script:
     - touch "$JUNIT_REPORT"
+    #Manual rule for subdirs
+    - sed -i "s/@REGEX_PLACEHOLDER@/^($(find . -mindepth 2 -maxdepth 2 -type d -exec basename {} \; | sort -u | grep -vFx -f <(ls -d */ | tr -d '/') | paste -sd '|' -)):/" .gitlab/commit-rules.yml
     - if ! ci-fairy check-commits --textwidth 80 --rules-file=.gitlab/commit-rules.yml --junit-xml=$JUNIT_REPORT; then
         exit 1;
       else
