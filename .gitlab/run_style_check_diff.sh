@@ -23,7 +23,7 @@ if [ ${exit_status} -ne 0 ] || [ -n "${format_diff}" ]; then
     printf '(INFO): style diff contains gettext macros. Skipping error.\n'
   else
     printf '\033[31m(ERROR)\033[0m: Coding Style check failed. Please make the following changes:\n'
-    cat format-diff.log
+    cat format-diff.log | colordiff
     exit 1
   fi
 else
