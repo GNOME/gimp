@@ -4,22 +4,22 @@
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011, 2012.
 # Andriy Bandura <andriykopanytsia@gmail.com>, 2014.
 # Olexandr Pylypchuk <pilipchukap@rambler.ru>, 2016.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
+# SPDX-FileCopyrightText: 2018, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Yuri Chornoivan <yurchor@ukr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-28 18:03+0000\n"
-"PO-Revision-Date: 2026-06-28 21:40+0300\n"
+"POT-Creation-Date: 2026-07-22 15:31+0000\n"
+"PO-Revision-Date: 2026-07-22 19:00+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.04.3\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>="
+"2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -98,6 +98,16 @@ msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
 msgstr ""
 "Редагування сканованого гравірування у GIMP. Художня робота Liam (CC0)"
 
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:67 app/about.h:22
+msgid "GIMP"
+msgstr "GIMP"
+
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:68
+#| msgctxt "undo-type"
+#| msgid "Photocopy"
+msgid "Photoshop"
+msgstr "Photoshop"
+
 #: desktop/gimp.desktop.in.in:5
 msgid "Image Editor"
 msgstr "Редактор зображень"
@@ -117,10 +127,6 @@ msgid "GIMP;graphic;design;illustration;painting;"
 msgstr ""
 "GIMP;graphic;design;illustration;painting;гімп;ґімп;графіка;дизайн;ілюстрації"
 ";малювання;"
-
-#: app/about.h:22
-msgid "GIMP"
-msgstr "GIMP"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: app/about.h:29
@@ -6125,7 +6131,7 @@ msgid "Scale Image"
 msgstr "Зміна розміру зображення"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2704
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2706
 #: app/dialogs/preferences-dialog.c:1750 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -10597,7 +10603,7 @@ msgstr ""
 "Помилка зчитування файла «%s». Будуть використані типові значення. Резервна "
 "копія конфігурації створена у «%s»."
 
-#: app/config/gimpcoreconfig.c:829 app/dialogs/preferences-dialog.c:1915
+#: app/config/gimpcoreconfig.c:835 app/dialogs/preferences-dialog.c:1915
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Синтаксис взірця для пошуку і позначення записів:"
 
@@ -13886,7 +13892,7 @@ msgid "Cannot rename effect masks."
 msgstr "Не можна перейменовувати маски ефектів."
 
 #: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:732
-#: app/core/gimplayer.c:2032 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2040 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
@@ -14061,41 +14067,41 @@ msgstr "Вертикальний зсув першої лінії сітки. З
 msgid "Offset unit"
 msgstr "Одиниця виміру зсуву"
 
-#: app/core/gimpgrouplayer.c:280
+#: app/core/gimpgrouplayer.c:282
 msgid "Layer Group"
 msgstr "Група шарів"
 
-#: app/core/gimpgrouplayer.c:295
+#: app/core/gimpgrouplayer.c:297
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Перейменування групи шарів"
 
-#: app/core/gimpgrouplayer.c:296
+#: app/core/gimpgrouplayer.c:298
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Перенести групу шарів"
 
-#: app/core/gimpgrouplayer.c:297
+#: app/core/gimpgrouplayer.c:299
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Масштабувати групу шарів"
 
-#: app/core/gimpgrouplayer.c:298
+#: app/core/gimpgrouplayer.c:300
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Змінити розмір групи шарів"
 
-#: app/core/gimpgrouplayer.c:299
+#: app/core/gimpgrouplayer.c:301
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Віддзеркалити групу шарів"
 
-#: app/core/gimpgrouplayer.c:300
+#: app/core/gimpgrouplayer.c:302
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Обернути групу шарів"
 
-#: app/core/gimpgrouplayer.c:301
+#: app/core/gimpgrouplayer.c:303
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Перетворити групу шарів"
@@ -14793,60 +14799,60 @@ msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Додавання масок шарів"
 
-#: app/core/gimplayer.c:2071
+#: app/core/gimplayer.c:2079
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Перетворити альфу в маску"
 
-#: app/core/gimplayer.c:2235
+#: app/core/gimplayer.c:2243
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Застосування масок шарів"
 
-#: app/core/gimplayer.c:2236
+#: app/core/gimplayer.c:2244
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Вилучення масок шарів"
 
-#: app/core/gimplayer.c:2343
+#: app/core/gimplayer.c:2351
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Вмикання масок шарів"
 
-#: app/core/gimplayer.c:2344
+#: app/core/gimplayer.c:2352
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Вимикання масок шарів"
 
-#: app/core/gimplayer.c:2425
+#: app/core/gimplayer.c:2433
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Показ масок шарів"
 
-#: app/core/gimplayer.c:2504
+#: app/core/gimplayer.c:2512
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Додати канал альфи"
 
-#: app/core/gimplayer.c:2534
+#: app/core/gimplayer.c:2542
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Вилучити канал альфи"
 
-#: app/core/gimplayer.c:2555
+#: app/core/gimplayer.c:2563
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Шар до розміру зображення"
 
-#: app/core/gimplayer.c:2738
+#: app/core/gimplayer.c:2746
 msgid "Set layer's blend space"
 msgstr "Встановити режим змішування шару"
 
-#: app/core/gimplayer.c:2785
+#: app/core/gimplayer.c:2793
 msgid "Set layer's composite space"
 msgstr "Встановити простір композиції шару"
 
-#: app/core/gimplayer.c:2832
+#: app/core/gimplayer.c:2840
 msgid "Set layer's composite mode"
 msgstr "Встановити режим композиції шару"
 
@@ -20912,7 +20918,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Перетворити кольори на градації сірого"
 
 #: app/operations/gimpoperationdesaturate.c:92
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1488
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1491
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimptransform3doptions.c:77
 #: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:397
 #: app/widgets/gimplayertreeview.c:286
@@ -20969,7 +20975,7 @@ msgstr "Замінити часткову прозорість кольором"
 msgid "The color"
 msgstr "Колір"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1451
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1454
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -21068,8 +21074,6 @@ msgid "GIMP Startup"
 msgstr "Запуск GIMP"
 
 #: app/gui/splash.c:364
-#| msgctxt "image-action"
-#| msgid "_Encoding"
 msgid "Loading"
 msgstr "Завантаження"
 
@@ -24054,26 +24058,26 @@ msgstr "%s: перемикання оригінал/фільтрування"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: перемикання горизонталь/вертикаль"
 
-#: app/tools/gimpfiltertool.c:1284
+#: app/tools/gimpfiltertool.c:1286
 msgid "Edit filter"
 msgstr "Редагувати фільтр"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1464
+#: app/tools/gimpfiltertool.c:1467
 msgid "Blending Options"
 msgstr "Параметри змішування"
 
-#: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1978 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Імпортувати параметри «%s»"
 
-#: app/tools/gimpfiltertool.c:1977 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1980 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Експортувати параметри «%s»"
 
-#: app/tools/gimpfiltertool.c:2242
+#: app/tools/gimpfiltertool.c:2245
 #, c-format
 msgid "Editing '%s'..."
 msgstr "Редагування «%s»…"
@@ -30388,10 +30392,6 @@ msgstr "Меню журналу скасувань"
 #~ msgctxt "undo-type"
 #~ msgid "Paper Tile"
 #~ msgstr "Паперова плитка"
-
-#~ msgctxt "undo-type"
-#~ msgid "Photocopy"
-#~ msgstr "Фотокопія"
 
 #~ msgctxt "undo-type"
 #~ msgid "Pixelize"
