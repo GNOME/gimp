@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-07-20 20:36+0000\n"
-"PO-Revision-Date: 2026-07-23 08:20+0800\n"
+"PO-Revision-Date: 2026-07-25 08:36+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1700,12 +1700,12 @@ msgstr "阴影"
 #: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transfer-mode"
 msgid "Midtones"
-msgstr "中等深浅"
+msgstr "中间调"
 
 #: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
-msgstr "高亮"
+msgstr "高光"
 
 #: libgimpbase/gimpbaseenums.c:1899
 msgctxt "transform-direction"
