@@ -54,7 +54,6 @@
 #include "gimpimage-colormap.h"
 #include "gimpimage-undo-push.h"
 #include "gimpmarshal.h"
-#include "gimpparasitelist.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
 #include "gimpsavable.h"
@@ -248,6 +247,8 @@ G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
 
 #define parent_class gimp_drawable_parent_class
 
+static GimpSavableInterface *parent_savable_iface = NULL;
+
 static guint gimp_drawable_signals[LAST_SIGNAL] = { 0 };
 
 
@@ -390,6 +391,8 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
 static void
 gimp_savable_iface_init (GimpSavableInterface *iface)
 {
+  parent_savable_iface = g_type_interface_peek_parent (iface);
+
   iface->save = gimp_drawable_save;
 }
 
@@ -979,16 +982,12 @@ static void
 gimp_drawable_save (GimpSavable   *savable,
                     GimpSaveState *state)
 {
-  GimpDrawable     *drawable = GIMP_DRAWABLE (savable);
-  GimpImage        *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpParasiteList *parasites;
-  GimpContainer    *filters;
-  GList            *iter;
-  gint              num_effects = 0;
+  GimpDrawable  *drawable = GIMP_DRAWABLE (savable);
+  GimpContainer *filters;
+  GList         *iter;
+  gint           num_effects = 0;
 
-  gimp_savable_print_element (state,
-                              "name", "%s", gimp_object_get_name (GIMP_OBJECT (drawable)),
-                              NULL);
+  parent_savable_iface->save (savable, state);
 
   gimp_savable_print_element (state, "dimensions", NULL, NULL,
                               "width",  "%d", gimp_item_get_width (GIMP_ITEM (drawable)),
@@ -1007,26 +1006,6 @@ gimp_drawable_save (GimpSavable   *savable,
 
       g_free (filename);
     }
-
-  if (g_list_find (gimp_image_get_selected_items (image,
-                                                  G_TYPE_FROM_INSTANCE (drawable)),
-                   drawable))
-    gimp_savable_print_element (state, "selected", NULL, NULL, NULL);
-
-  gimp_savable_print_element (state, "tattoo", "%u",
-                              (guint) gimp_item_get_tattoo (GIMP_ITEM (drawable)), NULL);
-  gimp_savable_print_element (state, "visible", "%b",
-                              gimp_item_get_visible (GIMP_ITEM (drawable)), NULL);
-  gimp_savable_print_element (state, "color-tag", "%[GimpColorTag]",
-                              gimp_item_get_color_tag (GIMP_ITEM (drawable)),
-                              NULL);
-
-  if (gimp_item_get_lock_content (GIMP_ITEM (drawable)))
-    gimp_savable_print_element (state, "lock-content", NULL, NULL, NULL);
-  if (gimp_item_get_lock_position (GIMP_ITEM (drawable)))
-    gimp_savable_print_element (state, "lock-position", NULL, NULL, NULL);
-  if (gimp_item_get_lock_visibility (GIMP_ITEM (drawable)))
-    gimp_savable_print_element (state, "lock-visibility", NULL, NULL, NULL);
 
   /* Get filter information */
   filters = gimp_drawable_get_filters (drawable);
@@ -1078,10 +1057,6 @@ gimp_drawable_save (GimpSavable   *savable,
 
       gimp_savable_print_element_end (state, "filters");
     }
-
-  parasites = gimp_item_get_parasites (GIMP_ITEM (drawable));
-  if (gimp_parasite_list_length (parasites) > 0)
-    gimp_savable_save (GIMP_SAVABLE (parasites), state);
 }
 
 static void

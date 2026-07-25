@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <gio/gio.h>
 #include <glib-object.h>
 #include <cairo.h>
 
@@ -31,12 +32,20 @@
 #include "core/gimpbezierdesc.h"
 #include "core/gimpcoords.h"
 #include "core/gimpcoords-interpolate.h"
+#include "core/gimpsavable.h"
 
 #include "gimpanchor.h"
 #include "gimpbezierstroke.h"
 
 
 /*  local prototypes  */
+
+static void
+    gimp_bezier_stroke_savable_iface_init  (GimpSavableInterface  *iface);
+
+static void
+    gimp_bezier_stroke_savable_save        (GimpSavable           *savable,
+                                            GimpSaveState         *state);
 
 static gdouble
     gimp_bezier_stroke_nearest_point_get   (GimpStroke            *stroke,
@@ -151,7 +160,9 @@ static GList * gimp_bezier_stroke_get_anchor_listitem
                                            (GList                 *list);
 
 
-G_DEFINE_TYPE (GimpBezierStroke, gimp_bezier_stroke, GIMP_TYPE_STROKE)
+G_DEFINE_TYPE_WITH_CODE (GimpBezierStroke, gimp_bezier_stroke, GIMP_TYPE_STROKE,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_bezier_stroke_savable_iface_init))
 
 #define parent_class gimp_bezier_stroke_parent_class
 
@@ -189,6 +200,12 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
 }
 
 static void
+gimp_bezier_stroke_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_bezier_stroke_savable_save;
+}
+
+static void
 gimp_bezier_stroke_init (GimpBezierStroke *stroke)
 {
 }
@@ -197,6 +214,39 @@ static void
 gimp_bezier_stroke_finalize (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_bezier_stroke_savable_save (GimpSavable   *savable,
+                                 GimpSaveState *state)
+{
+  GimpBezierStroke *stroke = GIMP_BEZIER_STROKE (savable);
+  guint32           closed;
+  GArray           *control_points;
+
+  control_points = gimp_stroke_control_points_get (GIMP_STROKE (stroke),
+                                                   (gint32 *) &closed);
+
+  gimp_savable_print_element_start (state, "bezier-stroke",
+                                    "closed", "%b", closed,
+                                    NULL);
+
+  for (gint i = 0; i < control_points->len; i++)
+    {
+      GimpAnchor *anchor;
+
+      anchor = &(g_array_index (control_points, GimpAnchor, i));
+
+      gimp_savable_print_element (state, "control-point", NULL, NULL,
+                                  "type", "%s", anchor->type == GIMP_ANCHOR_ANCHOR ? "anchor" : "bezier-control-point",
+                                  "x",    "%f", anchor->position.x,
+                                  "y",    "%f", anchor->position.y,
+                                  NULL);
+    }
+
+  gimp_savable_print_element_end (state, "bezier-stroke");
+
+  g_array_free (control_points, TRUE);
 }
 
 

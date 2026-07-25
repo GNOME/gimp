@@ -1929,6 +1929,12 @@ gimp_image_savable_save (GimpSavable   *savable,
     gimp_savable_save (GIMP_SAVABLE (iter->data), state);
   gimp_savable_print_element_end (state, "channels");
 
+  gimp_savable_print_element_start (state, "paths", NULL);
+  iter = gimp_image_get_path_iter (image);
+  for (; iter; iter = iter->next)
+    gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+  gimp_savable_print_element_end (state, "paths");
+
   gimp_savable_print_element_end (state, "project");
 
   g_clear_pointer (&state->icc_references, g_hash_table_unref);

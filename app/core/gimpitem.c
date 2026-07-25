@@ -47,6 +47,7 @@
 #include "gimplist.h"
 #include "gimpparasitelist.h"
 #include "gimpprogress.h"
+#include "gimpsavable.h"
 #include "gimpstrokeoptions.h"
 
 #include "paint/gimppaintoptions.h"
@@ -116,70 +117,78 @@ struct _GimpItemPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_item_constructed             (GObject        *object);
-static void       gimp_item_finalize                (GObject        *object);
-static void       gimp_item_set_property            (GObject        *object,
-                                                     guint           property_id,
-                                                     const GValue   *value,
-                                                     GParamSpec     *pspec);
-static void       gimp_item_get_property            (GObject        *object,
-                                                     guint           property_id,
-                                                     GValue         *value,
-                                                     GParamSpec     *pspec);
+static void       gimp_item_savable_iface_init      (GimpSavableInterface      *iface);
 
-static gint64     gimp_item_get_memsize             (GimpObject     *object,
-                                                     gint64         *gui_size);
+static void       gimp_item_constructed             (GObject                   *object);
+static void       gimp_item_finalize                (GObject                   *object);
+static void       gimp_item_set_property            (GObject                   *object,
+                                                     guint                      property_id,
+                                                     const GValue              *value,
+                                                     GParamSpec                *pspec);
+static void       gimp_item_get_property            (GObject                   *object,
+                                                     guint                      property_id,
+                                                     GValue                    *value,
+                                                     GParamSpec                *pspec);
 
-static gboolean   gimp_item_real_is_content_locked  (GimpItem       *item,
-                                                     GimpItem      **locked_item);
-static gboolean   gimp_item_real_is_position_locked (GimpItem       *item,
-                                                     GimpItem      **locked_item,
-                                                     gboolean        check_children);
-static gboolean gimp_item_real_is_visibility_locked (GimpItem       *item,
-                                                     GimpItem      **locked_item);
-static gboolean   gimp_item_real_bounds             (GimpItem       *item,
-                                                     gdouble        *x,
-                                                     gdouble        *y,
-                                                     gdouble        *width,
-                                                     gdouble        *height);
-static GimpItem * gimp_item_real_duplicate          (GimpItem       *item,
-                                                     GType           new_type);
-static void       gimp_item_real_convert            (GimpItem       *item,
-                                                     GimpImage      *dest_image,
-                                                     GType           old_type);
-static gboolean   gimp_item_real_rename             (GimpItem       *item,
-                                                     const gchar    *new_name,
-                                                     const gchar    *undo_desc,
-                                                     GError        **error);
-static void       gimp_item_real_start_transform    (GimpItem       *item,
-                                                     gboolean        push_undo);
-static void       gimp_item_real_end_transform      (GimpItem       *item,
-                                                     gboolean        push_undo);
-static void       gimp_item_real_translate          (GimpItem       *item,
-                                                     gdouble         offset_x,
-                                                     gdouble         offset_y,
-                                                     gboolean        push_undo);
-static void       gimp_item_real_scale              (GimpItem       *item,
-                                                     gint            new_width,
-                                                     gint            new_height,
-                                                     gint            new_offset_x,
-                                                     gint            new_offset_y,
-                                                     GimpInterpolationType interpolation,
-                                                     GimpProgress   *progress);
-static void       gimp_item_real_resize             (GimpItem       *item,
-                                                     GimpContext    *context,
-                                                     GimpFillType    fill_type,
-                                                     gint            new_width,
-                                                     gint            new_height,
-                                                     gint            offset_x,
-                                                     gint            offset_y);
+static gint64     gimp_item_get_memsize             (GimpObject                *object,
+                                                     gint64                    *gui_size);
+
+static void       gimp_item_savable_save            (GimpSavable               *savable,
+                                                     GimpSaveState             *state);
+
+static gboolean   gimp_item_real_is_content_locked  (GimpItem                  *item,
+                                                     GimpItem                 **locked_item);
+static gboolean   gimp_item_real_is_position_locked (GimpItem                  *item,
+                                                     GimpItem                 **locked_item,
+                                                     gboolean                   check_children);
+static gboolean gimp_item_real_is_visibility_locked (GimpItem                  *item,
+                                                     GimpItem                 **locked_item);
+static gboolean   gimp_item_real_bounds             (GimpItem                  *item,
+                                                     gdouble                   *x,
+                                                     gdouble                   *y,
+                                                     gdouble                   *width,
+                                                     gdouble                   *height);
+static GimpItem * gimp_item_real_duplicate          (GimpItem                  *item,
+                                                     GType                      new_type);
+static void       gimp_item_real_convert            (GimpItem                  *item,
+                                                     GimpImage                 *dest_image,
+                                                     GType                      old_type);
+static gboolean   gimp_item_real_rename             (GimpItem                  *item,
+                                                     const gchar               *new_name,
+                                                     const gchar               *undo_desc,
+                                                     GError                   **error);
+static void       gimp_item_real_start_transform    (GimpItem                  *item,
+                                                     gboolean                   push_undo);
+static void       gimp_item_real_end_transform      (GimpItem                  *item,
+                                                     gboolean                   push_undo);
+static void       gimp_item_real_translate          (GimpItem                  *item,
+                                                     gdouble                    offset_x,
+                                                     gdouble                    offset_y,
+                                                     gboolean                   push_undo);
+static void       gimp_item_real_scale              (GimpItem                  *item,
+                                                     gint                       new_width,
+                                                     gint                       new_height,
+                                                     gint                       new_offset_x,
+                                                     gint                       new_offset_y,
+                                                     GimpInterpolationType      interpolation,
+                                                     GimpProgress              *progress);
+static void       gimp_item_real_resize             (GimpItem                  *item,
+                                                     GimpContext               *context,
+                                                     GimpFillType               fill_type,
+                                                     gint                       new_width,
+                                                     gint                       new_height,
+                                                     gint                       offset_x,
+                                                     gint                       offset_y);
 static GimpTransformResize
-                  gimp_item_real_get_clip           (GimpItem       *item,
-                                                     GimpTransformResize clip_result);
+                  gimp_item_real_get_clip           (GimpItem                  *item,
+                                                     GimpTransformResize        clip_result);
 
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpItem, gimp_item, GIMP_TYPE_FILTER)
+G_DEFINE_TYPE_WITH_CODE (GimpItem, gimp_item, GIMP_TYPE_FILTER,
+                         G_ADD_PRIVATE (GimpItem)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_item_savable_iface_init))
 
 #define parent_class gimp_item_parent_class
 
@@ -349,6 +358,12 @@ gimp_item_class_init (GimpItemClass *klass)
 }
 
 static void
+gimp_item_savable_iface_init (GimpSavableInterface *iface)
+{
+  iface->save = gimp_item_savable_save;
+}
+
+static void
 gimp_item_init (GimpItem *item)
 {
   GimpItemPrivate *private = GET_PRIVATE (item);
@@ -476,6 +491,43 @@ gimp_item_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static void
+gimp_item_savable_save (GimpSavable   *savable,
+                        GimpSaveState *state)
+{
+  GimpItem         *item  = GIMP_ITEM (savable);
+  GimpImage        *image = gimp_item_get_image (item);
+  GimpParasiteList *parasites;
+
+  gimp_savable_print_element (state,
+                              "name", "%s", gimp_object_get_name (GIMP_OBJECT (item)),
+                              NULL);
+
+  if (g_list_find (gimp_image_get_selected_items (image,
+                                                  G_TYPE_FROM_INSTANCE (item)),
+                   item))
+    gimp_savable_print_element (state, "selected", NULL, NULL, NULL);
+
+  gimp_savable_print_element (state, "visible", "%b",
+                              gimp_item_get_visible (item), NULL);
+  gimp_savable_print_element (state, "tattoo", "%u",
+                              (guint) gimp_item_get_tattoo (item), NULL);
+  gimp_savable_print_element (state, "color-tag", "%[GimpColorTag]",
+                              gimp_item_get_color_tag (item),
+                              NULL);
+
+  if (gimp_item_get_lock_content (item))
+    gimp_savable_print_element (state, "lock-content", NULL, NULL, NULL);
+  if (gimp_item_get_lock_position (item))
+    gimp_savable_print_element (state, "lock-position", NULL, NULL, NULL);
+  if (gimp_item_get_lock_visibility (item))
+    gimp_savable_print_element (state, "lock-visibility", NULL, NULL, NULL);
+
+  parasites = gimp_item_get_parasites (item);
+  if (gimp_parasite_list_length (parasites) > 0)
+    gimp_savable_save (GIMP_SAVABLE (parasites), state);
 }
 
 static gboolean

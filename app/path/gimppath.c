@@ -42,6 +42,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitemstack.h"
 #include "core/gimppaintinfo.h"
+#include "core/gimpsavable.h"
 #include "core/gimpstrokeoptions.h"
 
 #include "paint/gimppaintcore-stroke.h"
@@ -65,120 +66,129 @@ enum
 };
 
 
-static void       gimp_path_finalize         (GObject           *object);
+static void       gimp_path_savable_iface_init      (GimpSavableInterface      *iface);
 
-static gint64     gimp_path_get_memsize      (GimpObject        *object,
-                                              gint64            *gui_size);
+static void       gimp_path_finalize                (GObject                   *object);
 
-static gboolean   gimp_path_is_attached      (GimpItem          *item);
-static GimpItemTree * gimp_path_get_tree     (GimpItem          *item);
-static gboolean   gimp_path_bounds           (GimpItem          *item,
-                                              gdouble           *x,
-                                              gdouble           *y,
-                                              gdouble           *width,
-                                              gdouble           *height);
-static GimpItem * gimp_path_duplicate        (GimpItem          *item,
-                                              GType              new_type);
-static void       gimp_path_convert          (GimpItem          *item,
-                                              GimpImage         *dest_image,
-                                              GType              old_type);
-static void       gimp_path_translate        (GimpItem          *item,
-                                              gdouble            offset_x,
-                                              gdouble            offset_y,
-                                              gboolean           push_undo);
-static void       gimp_path_scale            (GimpItem          *item,
-                                              gint               new_width,
-                                              gint               new_height,
-                                              gint               new_offset_x,
-                                              gint               new_offset_y,
-                                              GimpInterpolationType  interp_type,
-                                              GimpProgress      *progress);
-static void       gimp_path_resize           (GimpItem          *item,
-                                              GimpContext       *context,
-                                              GimpFillType       fill_type,
-                                              gint               new_width,
-                                              gint               new_height,
-                                              gint               offset_x,
-                                              gint               offset_y);
-static void       gimp_path_flip             (GimpItem          *item,
-                                              GimpContext       *context,
-                                              GimpOrientationType  flip_type,
-                                              gdouble            axis,
-                                              gboolean           clip_result);
-static void       gimp_path_rotate           (GimpItem          *item,
-                                              GimpContext       *context,
-                                              GimpRotationType   rotate_type,
-                                              gdouble            center_x,
-                                              gdouble            center_y,
-                                              gboolean           clip_result);
-static void       gimp_path_transform        (GimpItem          *item,
-                                              GimpContext       *context,
-                                              const GimpMatrix3 *matrix,
-                                              GimpTransformDirection direction,
-                                              GimpInterpolationType interp_type,
-                                              GimpTransformResize   clip_result,
-                                              GimpProgress      *progress,
-                                              gboolean           push_undo);
+static gint64     gimp_path_get_memsize             (GimpObject                *object,
+                                                     gint64                    *gui_size);
+
+static void       gimp_path_savable_save            (GimpSavable               *savable,
+                                                     GimpSaveState             *state);
+
+static gboolean   gimp_path_is_attached             (GimpItem                  *item);
+static GimpItemTree * gimp_path_get_tree            (GimpItem                  *item);
+static gboolean   gimp_path_bounds                  (GimpItem                  *item,
+                                                     gdouble                   *x,
+                                                     gdouble                   *y,
+                                                     gdouble                   *width,
+                                                     gdouble                   *height);
+static GimpItem * gimp_path_duplicate               (GimpItem                  *item,
+                                                     GType                      new_type);
+static void       gimp_path_convert                 (GimpItem                  *item,
+                                                     GimpImage                 *dest_image,
+                                                     GType                      old_type);
+static void       gimp_path_translate               (GimpItem                  *item,
+                                                     gdouble                    offset_x,
+                                                     gdouble                    offset_y,
+                                                     gboolean                   push_undo);
+static void       gimp_path_scale                   (GimpItem                  *item,
+                                                     gint                       new_width,
+                                                     gint                       new_height,
+                                                     gint                       new_offset_x,
+                                                     gint                       new_offset_y,
+                                                     GimpInterpolationType      interp_type,
+                                                     GimpProgress              *progress);
+static void       gimp_path_resize                  (GimpItem                  *item,
+                                                     GimpContext               *context,
+                                                     GimpFillType               fill_type,
+                                                     gint                       new_width,
+                                                     gint                       new_height,
+                                                     gint                       offset_x,
+                                                     gint                       offset_y);
+static void       gimp_path_flip                    (GimpItem                  *item,
+                                                     GimpContext               *context,
+                                                     GimpOrientationType        flip_type,
+                                                     gdouble                    axis,
+                                                     gboolean                   clip_result);
+static void       gimp_path_rotate                  (GimpItem                  *item,
+                                                     GimpContext               *context,
+                                                     GimpRotationType           rotate_type,
+                                                     gdouble                    center_x,
+                                                     gdouble                    center_y,
+                                                     gboolean                   clip_result);
+static void       gimp_path_transform               (GimpItem                  *item,
+                                                     GimpContext               *context,
+                                                     const GimpMatrix3         *matrix,
+                                                     GimpTransformDirection     direction,
+                                                     GimpInterpolationType      interp_type,
+                                                     GimpTransformResize        clip_result,
+                                                     GimpProgress              *progress,
+                                                     gboolean                   push_undo);
 static GimpTransformResize
-                  gimp_path_get_clip         (GimpItem          *item,
-                                              GimpTransformResize clip_result);
-static gboolean   gimp_path_fill             (GimpItem          *item,
-                                              GimpDrawable      *drawable,
-                                              GimpFillOptions   *fill_options,
-                                              gboolean           push_undo,
-                                              GimpProgress      *progress,
-                                              GError           **error);
-static gboolean   gimp_path_stroke           (GimpItem          *item,
-                                              GimpDrawable      *drawable,
-                                              GimpStrokeOptions *stroke_options,
-                                              gboolean           push_undo,
-                                              GimpProgress      *progress,
-                                              GError           **error);
-static void       gimp_path_to_selection     (GimpItem          *item,
-                                              GimpChannelOps     op,
-                                              gboolean           antialias,
-                                              gboolean           feather,
-                                              gdouble            feather_radius_x,
-                                              gdouble            feather_radius_y);
+                  gimp_path_get_clip                (GimpItem                  *item,
+                                                     GimpTransformResize        clip_result);
+static gboolean   gimp_path_fill                    (GimpItem                  *item,
+                                                     GimpDrawable              *drawable,
+                                                     GimpFillOptions           *fill_options,
+                                                     gboolean                   push_undo,
+                                                     GimpProgress              *progress,
+                                                     GError                   **error);
+static gboolean   gimp_path_stroke                  (GimpItem                  *item,
+                                                     GimpDrawable              *drawable,
+                                                     GimpStrokeOptions         *stroke_options,
+                                                     gboolean                   push_undo,
+                                                     GimpProgress              *progress,
+                                                     GError                   **error);
+static void       gimp_path_to_selection            (GimpItem                  *item,
+                                                     GimpChannelOps             op,
+                                                     gboolean                   antialias,
+                                                     gboolean                   feather,
+                                                     gdouble                    feather_radius_x,
+                                                     gdouble                    feather_radius_y);
 
-static void       gimp_path_real_freeze             (GimpPath          *path);
-static void       gimp_path_real_thaw               (GimpPath          *path);
-static void       gimp_path_real_stroke_add         (GimpPath          *path,
-                                                     GimpStroke        *stroke);
-static void       gimp_path_real_stroke_remove      (GimpPath          *path,
-                                                     GimpStroke        *stroke);
-static GimpStroke * gimp_path_real_stroke_get       (GimpPath          *path,
-                                                     const GimpCoords  *coord);
-static GimpStroke *gimp_path_real_stroke_get_next   (GimpPath          *path,
-                                                     GimpStroke        *prev);
-static gdouble gimp_path_real_stroke_get_length     (GimpPath          *path,
-                                                     GimpStroke        *prev);
-static GimpAnchor * gimp_path_real_anchor_get       (GimpPath          *path,
-                                                     const GimpCoords  *coord,
-                                                     GimpStroke       **ret_stroke);
-static void       gimp_path_real_anchor_delete      (GimpPath          *path,
-                                                     GimpAnchor        *anchor);
-static gdouble    gimp_path_real_get_length         (GimpPath          *path,
-                                                     const GimpAnchor  *start);
-static gdouble    gimp_path_real_get_distance       (GimpPath          *path,
-                                                     const GimpCoords  *coord);
-static gint       gimp_path_real_interpolate        (GimpPath          *path,
-                                                     GimpStroke        *stroke,
-                                                     gdouble            precision,
-                                                     gint               max_points,
-                                                     GimpCoords        *ret_coords);
+static void       gimp_path_real_freeze             (GimpPath                  *path);
+static void       gimp_path_real_thaw               (GimpPath                  *path);
+static void       gimp_path_real_stroke_add         (GimpPath                  *path,
+                                                     GimpStroke                *stroke);
+static void       gimp_path_real_stroke_remove      (GimpPath                  *path,
+                                                     GimpStroke                *stroke);
+static GimpStroke * gimp_path_real_stroke_get       (GimpPath                  *path,
+                                                     const GimpCoords          *coord);
+static GimpStroke *gimp_path_real_stroke_get_next   (GimpPath                  *path,
+                                                     GimpStroke                *prev);
+static gdouble gimp_path_real_stroke_get_length     (GimpPath                  *path,
+                                                     GimpStroke                *prev);
+static GimpAnchor * gimp_path_real_anchor_get       (GimpPath                  *path,
+                                                     const GimpCoords          *coord,
+                                                     GimpStroke               **ret_stroke);
+static void       gimp_path_real_anchor_delete      (GimpPath                  *path,
+                                                     GimpAnchor                *anchor);
+static gdouble    gimp_path_real_get_length         (GimpPath                  *path,
+                                                     const GimpAnchor          *start);
+static gdouble    gimp_path_real_get_distance       (GimpPath                  *path,
+                                                     const GimpCoords          *coord);
+static gint       gimp_path_real_interpolate        (GimpPath                  *path,
+                                                     GimpStroke                *stroke,
+                                                     gdouble                    precision,
+                                                     gint                       max_points,
+                                                     GimpCoords                *ret_coords);
 
 static gboolean   gimp_path_attached_to_vector_layer_rec
-                                                    (GimpPath          *path,
-                                                     GList             *layers);
+                                                    (GimpPath                  *path,
+                                                     GList                     *layers);
 
-static GimpBezierDesc * gimp_path_make_bezier       (GimpPath          *path);
-static GimpBezierDesc * gimp_path_real_make_bezier  (GimpPath          *path);
+static GimpBezierDesc * gimp_path_make_bezier       (GimpPath                  *path);
+static GimpBezierDesc * gimp_path_real_make_bezier  (GimpPath                  *path);
 
 
-G_DEFINE_TYPE (GimpPath, gimp_path, GIMP_TYPE_ITEM)
+G_DEFINE_TYPE_WITH_CODE (GimpPath, gimp_path, GIMP_TYPE_ITEM,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_path_savable_iface_init))
 
 #define parent_class gimp_path_parent_class
+
+static GimpSavableInterface *parent_savable_iface = NULL;
 
 static guint gimp_path_signals[LAST_SIGNAL] = { 0 };
 
@@ -268,6 +278,14 @@ gimp_path_class_init (GimpPathClass *klass)
 }
 
 static void
+gimp_path_savable_iface_init (GimpSavableInterface *iface)
+{
+  parent_savable_iface = g_type_interface_peek_parent (iface);
+
+  iface->save = gimp_path_savable_save;
+}
+
+static void
 gimp_path_init (GimpPath *path)
 {
   gimp_item_set_visible (GIMP_ITEM (path), FALSE, FALSE);
@@ -324,6 +342,29 @@ gimp_path_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static void
+gimp_path_savable_save (GimpSavable   *savable,
+                        GimpSaveState *state)
+{
+  GimpPath *path = GIMP_PATH (savable);
+  GList    *iter;
+
+  gimp_savable_print_element_start (state, "path", NULL);
+
+  parent_savable_iface->save (savable, state);
+
+  gimp_savable_print_element_start (state, "strokes", NULL);
+  for (iter = g_list_first (path->strokes->head); iter; iter = iter->next)
+    {
+      GimpStroke *stroke = iter->data;
+
+      gimp_savable_save (GIMP_SAVABLE (stroke), state);
+    }
+  gimp_savable_print_element_end (state, "strokes");
+
+  gimp_savable_print_element_end (state, "path");
 }
 
 static gboolean
