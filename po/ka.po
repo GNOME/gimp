@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-06-28 18:03+0000\n"
-"PO-Revision-Date: 2026-06-29 06:40+0200\n"
+"POT-Creation-Date: 2026-07-22 15:31+0000\n"
+"PO-Revision-Date: 2026-07-23 08:51+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -94,6 +94,16 @@ msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
 msgstr ""
 "დასკანერებულია გრავიურის ჩასწორება ხდება GIMP-ში. Liam-ის (CC0) ნამუშევარი"
 
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:67 app/about.h:22
+msgid "GIMP"
+msgstr "GIMP"
+
+#: desktop/org.gimp.GIMP.appdata.xml.in.in:68
+#| msgctxt "undo-type"
+#| msgid "Photocopy"
+msgid "Photoshop"
+msgstr "Photoshop"
+
 #: desktop/gimp.desktop.in.in:5
 msgid "Image Editor"
 msgstr "გამოსახულებების რედაქტორი"
@@ -111,10 +121,6 @@ msgstr "შექმენით გამოსახულებები დ�
 #: desktop/gimp.desktop.in.in:13
 msgid "GIMP;graphic;design;illustration;painting;"
 msgstr "GIMP;graphic;design;illustration;painting;"
-
-#: app/about.h:22
-msgid "GIMP"
-msgstr "GIMP"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: app/about.h:29
@@ -6072,7 +6078,7 @@ msgid "Scale Image"
 msgstr "გამოსახულების მასშტაბირება"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2704
+#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2706
 #: app/dialogs/preferences-dialog.c:1750 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -10474,7 +10480,7 @@ msgstr ""
 "'%s' ფაილის დამუშვებისას დაშვებულია შეცდომა. გამოყენებული იქნება "
 "ნაგულისხმევი პარამეტრები. თქვენი კონფიგურაციის '%s'."
 
-#: app/config/gimpcoreconfig.c:829 app/dialogs/preferences-dialog.c:1915
+#: app/config/gimpcoreconfig.c:835 app/dialogs/preferences-dialog.c:1915
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "შაბლონის სინტაქსი ელემენტების ძებნისა და მონიშვნისთვის:"
 
@@ -13605,7 +13611,7 @@ msgid "Cannot rename effect masks."
 msgstr "ეფექტის ნიღბების სახელის გადარქმევა შეუძლებელია."
 
 #: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:732
-#: app/core/gimplayer.c:2032 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2040 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "ნიღაბი %s"
@@ -13783,41 +13789,41 @@ msgstr ""
 msgid "Offset unit"
 msgstr "გადაწევის საზომი ერთეული"
 
-#: app/core/gimpgrouplayer.c:280
+#: app/core/gimpgrouplayer.c:282
 msgid "Layer Group"
 msgstr "ფენების ჯგუფი"
 
-#: app/core/gimpgrouplayer.c:295
+#: app/core/gimpgrouplayer.c:297
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "ფენების ჯგუფისთვის სახელის გადარქმევა"
 
-#: app/core/gimpgrouplayer.c:296
+#: app/core/gimpgrouplayer.c:298
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "ფენების ჯგუფის გადაადგილება"
 
-#: app/core/gimpgrouplayer.c:297
+#: app/core/gimpgrouplayer.c:299
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "ფენების ჯგუფის მასშტაბირება"
 
-#: app/core/gimpgrouplayer.c:298
+#: app/core/gimpgrouplayer.c:300
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "ფენების ჯგუფისთვის ზომის შეცვლა"
 
-#: app/core/gimpgrouplayer.c:299
+#: app/core/gimpgrouplayer.c:301
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "ფენების ჯგუფის გადაბრუნება"
 
-#: app/core/gimpgrouplayer.c:300
+#: app/core/gimpgrouplayer.c:302
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "ფენების ჯგუფის შემობრუნება"
 
-#: app/core/gimpgrouplayer.c:301
+#: app/core/gimpgrouplayer.c:303
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "ფენების ჯგუფის გარდაქმნა"
@@ -14504,60 +14510,60 @@ msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "ფენის ნიღბების დამატება"
 
-#: app/core/gimplayer.c:2071
+#: app/core/gimplayer.c:2079
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "ალფას ნიღაბში გადატანა"
 
-#: app/core/gimplayer.c:2235
+#: app/core/gimplayer.c:2243
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "ფენის ნიღბების დადება"
 
-#: app/core/gimplayer.c:2236
+#: app/core/gimplayer.c:2244
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "ფენის ნიღბების წაშლა"
 
-#: app/core/gimplayer.c:2343
+#: app/core/gimplayer.c:2351
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "ფენის ნიღბების ჩართვა"
 
-#: app/core/gimplayer.c:2344
+#: app/core/gimplayer.c:2352
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "ფენის ნიღბების გამორთვა"
 
-#: app/core/gimplayer.c:2425
+#: app/core/gimplayer.c:2433
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "ფენის ნიღბების ჩვენება"
 
-#: app/core/gimplayer.c:2504
+#: app/core/gimplayer.c:2512
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Alpha-არხის დამატება"
 
-#: app/core/gimplayer.c:2534
+#: app/core/gimplayer.c:2542
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "ალფა არხის მოცილება"
 
-#: app/core/gimplayer.c:2555
+#: app/core/gimplayer.c:2563
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "ფენიდან გამოსახულების ზომამდე"
 
-#: app/core/gimplayer.c:2738
+#: app/core/gimplayer.c:2746
 msgid "Set layer's blend space"
 msgstr "ფენის შერევის სივრცის დაყენება"
 
-#: app/core/gimplayer.c:2785
+#: app/core/gimplayer.c:2793
 msgid "Set layer's composite space"
 msgstr "ფენის კომპოზიტური სივრცის დაყენება"
 
-#: app/core/gimplayer.c:2832
+#: app/core/gimplayer.c:2840
 msgid "Set layer's composite mode"
 msgstr "ფენის კომპოზიტური რეჟიმის დაყენება"
 
@@ -20506,7 +20512,7 @@ msgid "Turn colors into shades of gray"
 msgstr "ფერების გადაყვანა ნაცრისფრის ტონებში"
 
 #: app/operations/gimpoperationdesaturate.c:92
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1488
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1491
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimptransform3doptions.c:77
 #: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:397
 #: app/widgets/gimplayertreeview.c:286
@@ -20563,7 +20569,7 @@ msgstr "ნაწილობრივი გამჭვირვალობ�
 msgid "The color"
 msgstr "ფერი"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1451
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1454
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -23531,26 +23537,26 @@ msgstr "%s წყაროსა და ფილტრირებულს შ
 msgid "%s: switch horizontal and vertical"
 msgstr "%s ჰორიზონტალურსა და ვერტიკალურს შორის გადართვა"
 
-#: app/tools/gimpfiltertool.c:1284
+#: app/tools/gimpfiltertool.c:1286
 msgid "Edit filter"
 msgstr "ფილტრის ჩასწორება"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1464
+#: app/tools/gimpfiltertool.c:1467
 msgid "Blending Options"
 msgstr "შერევის პარამეტრები"
 
-#: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1978 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "%s-ის პარამეტრების შემოტანა"
 
-#: app/tools/gimpfiltertool.c:1977 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1980 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "%s-ის პარამეტრების გატანა"
 
-#: app/tools/gimpfiltertool.c:2242
+#: app/tools/gimpfiltertool.c:2245
 #, c-format
 msgid "Editing '%s'..."
 msgstr "'%s'-ის ჩასწორება..."
@@ -29726,10 +29732,6 @@ msgstr "დაბრუნების ისტორია"
 #~ msgctxt "undo-type"
 #~ msgid "Paper Tile"
 #~ msgstr "ქაღალდის ჭრა"
-
-#~ msgctxt "undo-type"
-#~ msgid "Photocopy"
-#~ msgstr "ფოტოასლი"
 
 #~ msgctxt "undo-type"
 #~ msgid "Pixelize"
