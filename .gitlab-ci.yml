@@ -782,7 +782,11 @@ check-commit-log:
     JUNIT_REPORT: commit-message-junit-report.xml
   script:
     - touch "$JUNIT_REPORT"
-    - ci-fairy check-commits --textwidth 80 --rules-file=.gitlab/commit-rules.yml --junit-xml=$JUNIT_REPORT
+    - if ! ci-fairy check-commits --textwidth 80 --rules-file=.gitlab/commit-rules.yml --junit-xml=$JUNIT_REPORT; then
+        exit 1;
+      else
+        printf '(INFO) commit messages are alright regarding being style-compliant.\n';
+      fi
   artifacts:
     reports:
       junit: $JUNIT_REPORT
