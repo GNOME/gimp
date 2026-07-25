@@ -757,7 +757,7 @@ clang-format:
   script:
     - apt-get update >/dev/null 2>&1
     - apt-get install -y curl lsb-release >/dev/null 2>&1
-    - bash -c "$(curl -fsSL https://apt.llvm.org/llvm.sh)" _ ${LLVM_VERSION}
+    - bash -c "$(curl -fsSL https://apt.llvm.org/llvm.sh)" _ ${LLVM_VERSION} >/dev/null 2>&1
     - apt-get install -y clang-format-${LLVM_VERSION}
                          git colordiff >/dev/null 2>&1
     - ln -s /usr/bin/clang-format-${LLVM_VERSION} /usr/bin/clang-format; ln -s /usr/bin/clang-format-diff-${LLVM_VERSION} /usr/bin/clang-format-diff
