@@ -18,9 +18,14 @@ git diff -U0 --no-color "${newest_common_ancestor_sha}" | clang-format-diff -p1 
 exit_status=$?
 format_diff="$(cat format-diff.log)"
 if [ ${exit_status} -ne 0 ] || [ -n "${format_diff}" ]; then
-  printf '\033[31m(ERROR)\033[0m: Coding Style check failed. Please make the following changes:\n'
-  cat format-diff.log
-  exit 1
+  if echo "${format_diff}" | grep -qE '(_|N_|C_|NC_)\('; then
+    #FIXME: WhitespaceSensitiveMacros is buggy so we discard the false-positive diff
+    printf '(INFO): style diff contains gettext macros. Skipping error.\n'
+  else
+    printf '\033[31m(ERROR)\033[0m: Coding Style check failed. Please make the following changes:\n'
+    cat format-diff.log
+    exit 1
+  fi
 else
   printf '(INFO): code is alright regarding being style-compliant.\n'
 fi
