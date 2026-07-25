@@ -55,6 +55,7 @@ ui_tests = [
   { 'name': 'layer-delete' },
   { 'name': 'zoom' },
   { 'name': 'fg-color' },
+  { 'name': 'tool-selection', 'timeout': 300 },
 ]
 
 foreach t : ui_tests
