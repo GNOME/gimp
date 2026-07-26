@@ -610,6 +610,27 @@ read_header_block (PSDimage      *img_a,
                   _("Too many channels in file: %d"), img_a->channels);
       return -1;
     }
+  else if (img_a->channels == 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                  _("Not enough channels: %d"), img_a->channels);
+      return -1;
+    }
+  else if (img_a->channels < 3 &&
+           (img_a->color_mode == PSD_RGB ||
+            img_a->color_mode == PSD_LAB))
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                  _("Not enough channels: %d"), img_a->channels);
+      return -1;
+    }
+  else if (img_a->channels < 4 &&
+           img_a->color_mode == PSD_CMYK)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                  _("Not enough channels: %d"), img_a->channels);
+      return -1;
+    }
 
   if (img_a->rows < 1 || img_a->rows > GIMP_MAX_IMAGE_SIZE)
     {
@@ -2119,7 +2140,7 @@ add_layers (GimpImage     *image,
   guint16               alpha_chn;
   guint16               user_mask_chn;
   guint16               layer_channels, base_channels;
-  guint16               channel_idx[MAX_CHANNELS];
+  guint16               channel_idx[MAX_CHANNELS + 1]; /* + 1 to handle alpha channel */
   guint16               bps;
   gint32                l_x;                   /* Layer x */
   gint32                l_y;                   /* Layer y */
@@ -3082,25 +3103,49 @@ add_merged_image (GimpImage     *image,
   if (bps == 0)
     bps++;
 
-  if ((img_a->color_mode == PSD_BITMAP ||
-       img_a->color_mode == PSD_MULTICHANNEL ||
-       img_a->color_mode == PSD_GRAYSCALE ||
-       img_a->color_mode == PSD_DUOTONE ||
-       img_a->color_mode == PSD_INDEXED) &&
-       total_channels > 1)
+  if (img_a->color_mode == PSD_BITMAP       ||
+      img_a->color_mode == PSD_MULTICHANNEL ||
+      img_a->color_mode == PSD_GRAYSCALE    ||
+      img_a->color_mode == PSD_DUOTONE      ||
+      img_a->color_mode == PSD_INDEXED)
     {
-      extra_channels = total_channels - 1;
+      if (total_channels > 1)
+        {
+          extra_channels = total_channels - 1;
+        }
+      else if (total_channels == 0)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Not enough channels: %d"), total_channels);
+          return -1;
+        }
     }
-  else if ((img_a->color_mode == PSD_RGB ||
-            img_a->color_mode == PSD_LAB) &&
-            total_channels > 3)
+  else if (img_a->color_mode == PSD_RGB ||
+           img_a->color_mode == PSD_LAB)
     {
-      extra_channels = total_channels - 3;
+      if (total_channels > 3)
+        {
+          extra_channels = total_channels - 3;
+        }
+      else if (total_channels < 3)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Not enough channels: %d"), total_channels);
+          return -1;
+        }
     }
-  else if ((img_a->color_mode == PSD_CMYK) &&
-            total_channels > 4)
+  else if (img_a->color_mode == PSD_CMYK)
     {
-      extra_channels = total_channels - 4;
+      if (total_channels > 4)
+        {
+          extra_channels = total_channels - 4;
+        }
+      else if (total_channels < 4)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Not enough channels: %d"), total_channels);
+          return -1;
+        }
     }
 
   if (extra_channels > 0)
