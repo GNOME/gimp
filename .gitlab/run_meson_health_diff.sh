@@ -144,7 +144,7 @@ for coreutil in $coreutils_list; do
   fi
 done
 if [ "$found_coreutils" ]; then
-  printf "$diff\n"
+  echo "$diff"
   printf '\033[31m(ERROR)\033[0m: Seems that you are trying to add an Unix-specific dependency to be called by Meson.\n'
   printf "         Please, port to Python (which is crossplatform), your use of:${found_coreutils}.\n"
 fi
@@ -163,7 +163,7 @@ for ntutil in $ntutils_list; do
   fi
 done
 if [ "$found_ntutils" ]; then
-  printf "$diff\n"
+  echo "$diff"
   printf '\033[31m(ERROR)\033[0m: Seems that you are trying to add a NT-specific dependency to be called by Meson.\n'
   printf "         Please, port to Python (which is crossplatform), your use of:${found_ntutils}.\n"
 fi
