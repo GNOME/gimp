@@ -178,6 +178,7 @@ printf "\e[0Ksection_end:`date +%s`:nonunix_test\r\e[0K\n"
 # Shell scripts have potential portability issues if:
 # 1) contain bash shebang or are called by bash;
 # 2) contain bashisms.
+# 3) Also check for script having an executable bit.
 printf "\e[0Ksection_start:`date +%s`:unix_test[collapsed=false]\r\e[0KChecking for Unix portability (optional)\n"
 diff=$(git diff -U0 --no-color --submodule=diff "${newest_common_ancestor_sha}" \
   | awk '
@@ -196,10 +197,12 @@ diff=$(git diff -U0 --no-color --submodule=diff "${newest_common_ancestor_sha}" 
 echo "$diff" | grep -E '#!\s*/usr/bin/env\s+bash|#!\s*/(usr/bin|bin)/bash(\s|$)' && found_bashism='extrinsic_bashism'
 echo "$diff" | grep -E "bash\s+.*\.sh" && found_bashism='extrinsic_bashism'
 
-## Check content with shellcheck and checkbashisms (2)
+## Check content with shellcheck and checkbashisms (2) and executable bit (3)
+missing_exec=
 for sh_script in $(find "$CI_PROJECT_DIR" -type d -name .git -prune -o -type f \( ! -name '*.ps1' ! -name '*.c' -exec grep -lE '^#!\s*/usr/bin/env\s+(sh|bash)|^#!\s*/(usr/bin|bin)/(sh|bash)(\s|$)' {} \; -o -name '*.sh' ! -exec grep -q '^#!' {} \; -print \)); do
   shellcheck --severity=warning --shell=sh -x "$sh_script" | grep -v 'set option posix is' | grep -vE '.*http.*SC[0-9]+.*POSIX' | grep --color=always -B 2 -E 'SC[0-9]+.*POSIX' && found_bashism='intrinsic_bashism'
   checkbashisms -f $sh_script || found_bashism='intrinsic_bashism'
+  [ -x $sh_script ] || missing_exec="$missing_exec $sh_script"
 done
 
 if [ "$found_bashism" ]; then
@@ -208,10 +211,19 @@ if [ "$found_bashism" ]; then
 else
   printf '(INFO): Shell .sh files are alright regarding being portable.\n'
 fi
+if [ "$missing_exec" ]; then
+  printf '\033[33m(WARNING)\033[0m: Missing executable bit for these scripts:\n'
+  for sh_script in $missing_exec; do
+	  printf "* $sh_script\n"
+  done
+  printf "Run 'chmod +x $missing_exec'\n"
+else
+  printf '(INFO): Shell .sh files are alright regarding executable bit.\n'
+fi
 printf "\e[0Ksection_end:`date +%s`:unix_test\r\e[0K\n"
 
 
-if [ "$found_coreutils" ] || [ "$found_ntutils" ] || [ "$found_bashism" ]; then
+if [ "$found_coreutils" ] || [ "$found_ntutils" ] || [ "$found_bashism" ] || [ "$missing_exec" ]; then
   exit 1
 fi
 
