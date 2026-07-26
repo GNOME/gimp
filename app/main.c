@@ -322,6 +322,51 @@ static const GOptionEntry main_entries[] =
   { NULL }
 };
 
+#if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(_WIN32)
+static void
+gimp_windows_setenv ()
+{
+  wchar_t  w_exe_path[MAX_PATH];
+  DWORD    exe_path_length;
+  wchar_t *w_exe_last_slash;
+  wchar_t  w_env_path[MAX_PATH];
+
+  /* Avoid Windows Registry interfiring so skipping the bundled Glib schemas.
+     We use Win32 functions to avoid initializing Glib early. See: #13437 */
+  if (GetEnvironmentVariableW (L"GSETTINGS_SCHEMA_DIR", NULL, 0) == 0)
+    {
+      exe_path_length = GetModuleFileNameW (NULL, w_exe_path, MAX_PATH);
+      if (exe_path_length > 0 && exe_path_length < MAX_PATH)
+        {
+          /* find last  then strip executable name */
+          w_exe_last_slash = wcsrchr (w_exe_path, L'\\');
+          if (! w_exe_last_slash)
+            w_exe_last_slash = wcsrchr (w_exe_path, L'/');
+          if (w_exe_last_slash)
+            {
+              *w_exe_last_slash = L'\0';
+
+              /* find new last slash then strip bin dir */
+              w_exe_last_slash = wcsrchr (w_exe_path, L'\\');
+              if (! w_exe_last_slash)
+                w_exe_last_slash = wcsrchr (w_exe_path, L'/');
+              if (w_exe_last_slash)
+                {
+                  *w_exe_last_slash = L'\0';
+
+                  /* finally, set env var */
+                  _snwprintf(w_env_path, sizeof (w_env_path) / sizeof (wchar_t),
+                            L"%ls\\share\\glib-2.0\\schemas",
+                            w_exe_path);
+
+                  SetEnvironmentVariableW (L"GSETTINGS_SCHEMA_DIR", w_env_path);
+                }
+            }
+        }
+    }
+}
+#endif
+
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
 static void
 gimp_macos_setenv (const char * progname)
@@ -572,6 +617,11 @@ main (int    argc,
   gint            i;
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
   gint            newargc;
+#endif
+
+#if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(_WIN32)
+  /* keep this always on top to ensure it is called before Glib initialization */
+  gimp_windows_setenv ();
 #endif
 
 #if defined(GIMP_UNSTABLE) || !defined(GIMP_RELEASE)
