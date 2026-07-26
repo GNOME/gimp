@@ -46,7 +46,8 @@ if [ ! "$(find $GIMP_DIR -maxdepth 1 -iname "AppDir*")" ] || [ "$MODE" = '--bund
     apt-get install -y --no-install-recommends file patchelf >/dev/null 2>&1
   fi
   bundler="$PWD/go-appimagetool.AppImage"
-  wget -c -O $bundler "https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2)" >/dev/null 2>&1
+  appimage=$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-${HOST_ARCH}.AppImage" | head -n 1 | cut -d '"' -f 2)
+  wget -c -O $bundler "https://github.com/$appimage" >/dev/null 2>&1
   bundler_text="go-appimagetool build: $(echo appimagetool-*.AppImage | sed -e 's/appimagetool-//' -e "s/-${HOST_ARCH}.AppImage//")"
   chmod +x "$bundler"
 fi
@@ -465,12 +466,15 @@ bund_usr "$GIMP_PREFIX" "share/metainfo/*.xml"
 mv build/linux/appimage/AppRun $APP_DIR
 mv build/linux/appimage/AppRun.bak build/linux/appimage/AppRun
 rm $APP_DIR/*.desktop
-echo "usr/${LIB_DIR}/${LIB_SUBDIR}gconv
-      usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
-      usr/share/doc
-      usr/share/themes
-      etc
-      .gitignore" > appimageignore-$HOST_ARCH
+#we use cat instead of echo due to shellcheck
+cat > appimageignore-$HOST_ARCH << EOF
+usr/${LIB_DIR}/${LIB_SUBDIR}gconv
+usr/${LIB_DIR}/${LIB_SUBDIR}gdk-pixbuf-*/gdk-pixbuf-query-loaders
+usr/share/doc
+usr/share/themes
+etc
+.gitignore
+EOF
 
 ## Debug symbols (not shipped since ad155fd5)
 #if [ "$GITLAB_CI" ]; then
