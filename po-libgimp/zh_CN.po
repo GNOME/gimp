@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-20 20:36+0000\n"
-"PO-Revision-Date: 2026-07-25 08:36+0800\n"
+"POT-Creation-Date: 2026-07-25 20:40+0000\n"
+"PO-Revision-Date: 2026-07-26 10:50+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -36,7 +36,7 @@ msgstr "浏览…"
 #: libgimp/gimpexportoptions.c:347 libgimp/gimpexportoptions.c:383
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "%s 插件无法处理图层"
+msgstr "“%s”插件无法处理图层"
 
 #: libgimp/gimpexportoptions.c:348 libgimp/gimpexportoptions.c:357
 #: libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:384
@@ -46,12 +46,12 @@ msgstr "合并可见图层"
 #: libgimp/gimpexportoptions.c:356
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "%s 插件无法处理图层位移、大小或不透明度"
+msgstr "“%s”插件无法处理图层偏移、大小或不透明度"
 
 #: libgimp/gimpexportoptions.c:365 libgimp/gimpexportoptions.c:374
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s 插件只能以动画的帧的方式处理图层"
+msgstr "“%s”插件只能以动画的帧的方式处理图层"
 
 #: libgimp/gimpexportoptions.c:366 libgimp/gimpexportoptions.c:375
 msgid "Save as Animation"
@@ -65,12 +65,12 @@ msgstr "平整图像"
 #: libgimp/gimpexportoptions.c:392
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "%s 插件无法处理透明度"
+msgstr "“%s”插件无法处理透明度"
 
 #: libgimp/gimpexportoptions.c:401
 #, c-format
 msgid "%s plug-in can't handle layer effects"
-msgstr "%s 插件无法处理图层效果"
+msgstr "“%s”插件无法处理图层效果"
 
 #: libgimp/gimpexportoptions.c:402
 msgid "Merge Layer Effects"
@@ -79,12 +79,12 @@ msgstr "合并图层效果"
 #: libgimp/gimpexportoptions.c:410
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
-msgstr "%s 插件无法处理透明图层"
+msgstr "“%s”插件无法处理透明图层"
 
 #: libgimp/gimpexportoptions.c:419
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "%s 插件无法处理图层蒙板"
+msgstr "“%s”插件无法处理图层蒙板"
 
 #: libgimp/gimpexportoptions.c:420
 msgid "Apply Layer Masks"
@@ -93,7 +93,7 @@ msgstr "应用图层蒙板"
 #: libgimp/gimpexportoptions.c:428
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "%s 插件只能处理 RGB 图像"
+msgstr "“%s”插件只能处理 RGB 图像"
 
 #: libgimp/gimpexportoptions.c:429 libgimp/gimpexportoptions.c:467
 #: libgimp/gimpexportoptions.c:476
@@ -103,7 +103,7 @@ msgstr "转换到 RGB"
 #: libgimp/gimpexportoptions.c:437
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "%s 插件只能处理灰度图像"
+msgstr "“%s”插件只能处理灰度图像"
 
 #: libgimp/gimpexportoptions.c:438 libgimp/gimpexportoptions.c:467
 #: libgimp/gimpexportoptions.c:488
@@ -113,7 +113,7 @@ msgstr "转换到灰度"
 #: libgimp/gimpexportoptions.c:446
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "%s 插件只能处理带有索引的图像"
+msgstr "“%s”插件只能处理索引图像"
 
 #: libgimp/gimpexportoptions.c:447 libgimp/gimpexportoptions.c:476
 #: libgimp/gimpexportoptions.c:486
@@ -127,7 +127,7 @@ msgstr ""
 #: libgimp/gimpexportoptions.c:456
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "%s 插件只能处理双色索引的图像"
+msgstr "“%s”插件只能处理位图（双色）索引图像"
 
 #: libgimp/gimpexportoptions.c:457
 msgid ""
@@ -140,22 +140,22 @@ msgstr ""
 #: libgimp/gimpexportoptions.c:466
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "%s 插件只能处理 RGB 或灰度图像"
+msgstr "“%s”插件只能处理 RGB 或灰度图像"
 
 #: libgimp/gimpexportoptions.c:475
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
-msgstr "%s 插件只能处理 RGB 或带索引的图像"
+msgstr "“%s”插件只能处理 RGB 或索引图像"
 
 #: libgimp/gimpexportoptions.c:485
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "%s 插件只能处理灰度或带索引的图像"
+msgstr "“%s”插件只能处理灰度或索引图像"
 
 #: libgimp/gimpexportoptions.c:496
 #, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "%s 插件需要一个透明通道"
+msgstr "“%s”插件需要一个透明通道"
 
 #: libgimp/gimpexportoptions.c:497
 msgid "Add Alpha Channel"
@@ -164,7 +164,7 @@ msgstr "添加透明通道"
 #: libgimp/gimpexportoptions.c:505
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
-msgstr "%s 插件需要剪裁图层至图像边界"
+msgstr "“%s”插件需要剪裁图层至图像边界"
 
 #: libgimp/gimpexportoptions.c:506
 msgid "Crop Layers"
@@ -394,7 +394,8 @@ msgstr "“%s”过程无返回值"
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
-msgstr "“%s”过程返回了错误的值类型用于返回值“%s” (#%d) 。需要 %s，但获得 %s。"
+msgstr ""
+"“%s”过程返回了错误的值类型用于返回值“%s”（#%d）。需要“%s”，但获得“%s”。"
 
 #: libgimp/gimpprocedure.c:2488
 #, c-format
@@ -402,21 +403,21 @@ msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
 "(#%d). Expected %s, got %s."
 msgstr ""
-"调用“%s”过程使用了错误的值类型用于参数“%s” (#%d) 。需要 %s，但获得 %s。"
+"调用“%s”过程使用了错误的值类型用于参数“%s”（#%d）。需要“%s”，但获得“%s”。"
 
 #: libgimp/gimpprocedure.c:2523
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
-msgstr "“%s”过程返回了“%s”作为返回值“%s”（#%d，%s 类型）。此值超出范围。"
+msgstr "“%s”过程返回了“%s”作为返回值“%s”（#%d，“%s”类型）。此值超出范围。"
 
 #: libgimp/gimpprocedure.c:2537
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
-msgstr "“%s”过程使用了“%s”值用于“%s”参数（#%d，%s 类型）。此值超出范围。"
+msgstr "“%s”过程使用了“%s”值用于“%s”参数（#%d，“%s”类型）。此值超出范围。"
 
 #: libgimp/gimpprocedure.c:2581
 #, c-format
@@ -430,16 +431,16 @@ msgid ""
 "'%s'."
 msgstr "调用“%s”过程时为参数“%s”使用了无效的 UTF-8 字符串。"
 
-#: libgimp/gimpproceduredialog.c:345 libgimp/gimpproceduredialog.c:650
+#: libgimp/gimpproceduredialog.c:345 libgimp/gimpproceduredialog.c:651
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: libgimp/gimpproceduredialog.c:347 libgimp/gimpproceduredialog.c:652
+#: libgimp/gimpproceduredialog.c:347 libgimp/gimpproceduredialog.c:653
 msgid "_Export"
 msgstr "导出(_E)"
 
-#: libgimp/gimpproceduredialog.c:349 libgimp/gimpproceduredialog.c:654
+#: libgimp/gimpproceduredialog.c:349 libgimp/gimpproceduredialog.c:655
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
 #: libgimpwidgets/gimpfileentry.c:463 libgimpwidgets/gimpquerybox.c:276
 #: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
@@ -460,47 +461,47 @@ msgstr "重置(_R)"
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: libgimp/gimpproceduredialog.c:416
+#: libgimp/gimpproceduredialog.c:417
 msgid "_Load Saved Settings"
 msgstr "加载保存的设置(_L)"
 
-#: libgimp/gimpproceduredialog.c:417
+#: libgimp/gimpproceduredialog.c:418
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "加载用“保存设置”按钮保存的设置"
 
-#: libgimp/gimpproceduredialog.c:429
+#: libgimp/gimpproceduredialog.c:430
 msgid "_Save Settings"
 msgstr "保存设置(_S)"
 
-#: libgimp/gimpproceduredialog.c:430
+#: libgimp/gimpproceduredialog.c:431
 msgid "Store current settings for later reuse"
 msgstr "为之后重用保存当前设置"
 
-#: libgimp/gimpproceduredialog.c:1023
+#: libgimp/gimpproceduredialog.c:1024
 msgid "Brush Chooser"
 msgstr "笔刷选择器"
 
-#: libgimp/gimpproceduredialog.c:1027
+#: libgimp/gimpproceduredialog.c:1028
 msgid "Font Chooser"
 msgstr "字体选择器"
 
-#: libgimp/gimpproceduredialog.c:1031
+#: libgimp/gimpproceduredialog.c:1032
 msgid "Gradient Chooser"
 msgstr "渐变选择器"
 
-#: libgimp/gimpproceduredialog.c:1035
+#: libgimp/gimpproceduredialog.c:1036
 msgid "Palette Chooser"
 msgstr "色板选择器"
 
-#: libgimp/gimpproceduredialog.c:1039
+#: libgimp/gimpproceduredialog.c:1040
 msgid "Pattern Chooser"
 msgstr "图案选择器"
 
-#: libgimp/gimpproceduredialog.c:2956
+#: libgimp/gimpproceduredialog.c:2957
 msgid "Reset to _Initial Values"
 msgstr "重置为初始值(_I)"
 
-#: libgimp/gimpproceduredialog.c:2965
+#: libgimp/gimpproceduredialog.c:2966
 msgid "Reset to _Factory Defaults"
 msgstr "重置为出厂默认值(_F)"
 
@@ -594,11 +595,11 @@ msgstr "像素/%a"
 
 #: libgimp/gimpvectorloadprocedure.c:112
 msgid "_Width (pixels)"
-msgstr "宽度(像素)(_W)"
+msgstr "宽度（像素）(_W)"
 
 #: libgimp/gimpvectorloadprocedure.c:119
 msgid "_Height (pixels)"
-msgstr "高度(像素)(_H)"
+msgstr "高度（像素）(_H)"
 
 #: libgimp/gimpvectorloadprocedure.c:131
 msgid "_Prefer native dimensions"
@@ -1325,7 +1326,7 @@ msgstr "圆形"
 #: libgimpbase/gimpbaseenums.c:1004
 msgctxt "join-style"
 msgid "Bevel"
-msgstr "斜角"
+msgstr "倒角"
 
 #: libgimpbase/gimpbaseenums.c:1065
 msgctxt "merge-type"
@@ -2091,28 +2092,28 @@ msgstr "特性文件“%s”并非用于 CMYK 颜色空间。"
 #: libgimpconfig/gimpconfig-deserialize.c:124
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr "%s 的值不是有效的 UTF-8 字符串"
+msgstr "词元“%s”的值不是有效的 UTF-8 字符串"
 
 #. please don't translate 'yes' and 'no'
 #: libgimpconfig/gimpconfig-deserialize.c:505
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "预期布尔值 %s 为 “yes” 或 “no”，但得到 “%s”"
+msgstr "预期布尔词元“%s”为“yes”或“no”，但得到“%s”"
 
 #: libgimpconfig/gimpconfig-deserialize.c:620
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "%2$s 的值 “%1$s” 无效"
+msgstr "词元“%2$s”的值“%1$s”无效"
 
 #: libgimpconfig/gimpconfig-deserialize.c:635
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "%2$s 的值 “%1$ld” 无效"
+msgstr "词元“%2$s”的值“%1$ld”无效"
 
 #: libgimpconfig/gimpconfig-deserialize.c:704
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "解析 “%s” 时：%s"
+msgstr "解析词元“%s”时：%s"
 
 #: libgimpconfig/gimpconfig-iface.c:708 libgimpconfig/gimpconfig-iface.c:721
 #: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
@@ -2132,7 +2133,7 @@ msgstr "无法扩展 ${%s}"
 #: libgimpconfig/gimpconfigwriter.c:95 libgimpconfig/gimpconfigwriter.c:727
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr "写入 “%s” 时出错：%s"
+msgstr "写入“%s”时出错：%s"
 
 #: libgimpconfig/gimpconfigwriter.c:153
 #, c-format
@@ -2157,12 +2158,12 @@ msgstr "无效的 UTF-8 字符串"
 #: libgimpconfig/gimpscanner.c:651
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
-msgstr "预期布尔值为 “yes” 或 “no”，但得到 “%s”"
+msgstr "预期布尔词元为“yes”或“no”，但得到“%s”"
 
 #: libgimpconfig/gimpscanner.c:991
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "解析 “%s” 第 %d 行时出错：%s"
+msgstr "解析“%s”第 %d 行时出错：%s"
 
 #: libgimpmodule/gimpmodule.c:223 libgimpmodule/gimpmodule.c:241
 #: libgimpmodule/gimpmodule.c:515 libgimpmodule/gimpmodule.c:538
@@ -2209,7 +2210,7 @@ msgstr "缩略图没有包含 Thumb::URI 标签"
 #: libgimpthumb/gimpthumbnail.c:932
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "无法为 “%s” 创建缩略图：%s"
+msgstr "无法为“%s”创建缩略图：%s"
 
 #: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
@@ -2235,11 +2236,11 @@ msgstr "HTML 和 CSS 中所使用的十六进制颜色格式。此处也允许�
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:107
 msgid "All files (*.*)"
-msgstr "所有文件(*.*)"
+msgstr "所有文件（*.*）"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:112
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr "ICC 特性文件(*.icc, *.icm)"
+msgstr "ICC 特性文件（*.icc，*.icm）"
 
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 msgid "_Save"
@@ -2660,7 +2661,7 @@ msgstr "RGB"
 
 #: libgimpwidgets/gimpwidgetsenums.c:169
 msgid "RGB color model"
-msgstr "RGB 颜色模式"
+msgstr "RGB 色彩模型"
 
 #: libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
@@ -2669,7 +2670,7 @@ msgstr "LCH"
 
 #: libgimpwidgets/gimpwidgetsenums.c:170
 msgid "CIE LCh color model"
-msgstr "CIE LCh 颜色模式"
+msgstr "CIE LCh 色彩模型"
 
 #: libgimpwidgets/gimpwidgetsenums.c:171
 msgctxt "color-selector-model"
@@ -2678,7 +2679,7 @@ msgstr "HSV"
 
 #: libgimpwidgets/gimpwidgetsenums.c:171
 msgid "HSV color model"
-msgstr "HSV 颜色模式"
+msgstr "HSV 色彩模型"
 
 #: libgimpwidgets/gimpwidgetsenums.c:232
 msgctxt "page-selector-target"
@@ -2792,17 +2793,17 @@ msgstr "DirectX DirectInput"
 #: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d"
-msgstr "按钮 %d"
+msgstr "按钮“%d”"
 
 #: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Press"
-msgstr "按钮 %d 按下"
+msgstr "按钮“%d”按下"
 
 #: modules/controller-dx-dinput.c:426
 #, c-format
 msgid "Button %d Release"
-msgstr "按钮 %d 释放"
+msgstr "按钮“%d”释放"
 
 #: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:90
 msgid "X Move Left"
@@ -2855,27 +2856,27 @@ msgstr "Z 轴向右转"
 #: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Increase"
-msgstr "滑块 %d 增加"
+msgstr "滑块“%d”增加"
 
 #: modules/controller-dx-dinput.c:505
 #, c-format
 msgid "Slider %d Decrease"
-msgstr "滑块 %d 减少"
+msgstr "滑块“%d”减少"
 
 #: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d X View"
-msgstr "POV %d X 视图"
+msgstr "POV“%d”X 视图"
 
 #: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Y View"
-msgstr "POV %d Y 视图"
+msgstr "POV“%d”Y 视图"
 
 #: modules/controller-dx-dinput.c:521
 #, c-format
 msgid "POV %d Return"
-msgstr "POV %d 返回"
+msgstr "POV“%d”返回"
 
 #: modules/controller-dx-dinput.c:1082
 msgid "DirectInput Events"
@@ -3038,7 +3039,7 @@ msgstr "Linux 输入事件"
 #: modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
-msgstr "从 %s 读取"
+msgstr "从“%s”读取"
 
 #: modules/controller-linux-input.c:569 modules/controller-linux-input.c:623
 #: modules/controller-midi.c:436 modules/controller-midi.c:497
@@ -3061,7 +3062,7 @@ msgstr "要读取的 MIDI 事件的设备名称。"
 
 #: modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "输入 “alsa” 可使用 ALSA 音序器。"
+msgstr "输入“alsa”可使用 ALSA 音序器。"
 
 #: modules/controller-midi.c:221
 msgid "Channel:"
@@ -3080,17 +3081,17 @@ msgstr "MIDI"
 #: modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
-msgstr "音符 %02x 开"
+msgstr "音符“%02x”开"
 
 #: modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
-msgstr "音符 %02x 关"
+msgstr "音符“%02x”关"
 
 #: modules/controller-midi.c:361
 #, c-format
 msgid "Controller %03d"
-msgstr "控制器 %03d"
+msgstr "控制器“%03d”"
 
 #: modules/controller-midi.c:408
 msgid "MIDI Events"
