@@ -21,7 +21,7 @@
 #pragma once
 
 
-/* The GimpSavable interface if for various objects which will be saved
+/* The GimpSavable interface is for various objects which will be saved
  * as part of a GIMP project. Each object type handles its own format
  * to be printed as XML into the output stream passed into to_xml().
  *
@@ -35,6 +35,7 @@
 #define WLBR_VERSION 1
 
 typedef struct _GimpSaveState GimpSaveState;
+typedef struct _GimpLoadState GimpLoadState;
 
 struct _GimpSaveState
 {
@@ -44,6 +45,20 @@ struct _GimpSaveState
   GHashTable    *icc_references;
   GQueue        *elements;
 };
+
+struct _GimpLoadState
+{
+  Gimp          *gimp;
+
+  GimpImage     *image;
+  GFile         *xml_file;
+  GFile         *subdir;
+
+  GimpXmlParser *xml_parser;
+  GQueue        *contexts;
+  gint           level;
+};
+
 
 #define GIMP_TYPE_SAVABLE (gimp_savable_get_type ())
 G_DECLARE_INTERFACE (GimpSavable, gimp_savable, GIMP, SAVABLE, GObject)
@@ -56,6 +71,7 @@ struct _GimpSavableInterface
   /*  virtual functions  */
   void   (* save) (GimpSavable   *savable,
                    GimpSaveState *state);
+  void   (* load) (GimpLoadState *state);
 };
 
 

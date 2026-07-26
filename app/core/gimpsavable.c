@@ -38,6 +38,7 @@
 #include "gimpdrawable.h"
 #include "gimppalette.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 
 
 static void    gimp_savable_print_incomplete_element (GimpSaveState *state,
@@ -376,7 +377,7 @@ gimp_savable_save_all_spaces (GimpImage     *image,
   icc_refs = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
 
   /* Save the space of the image itself. */
-  gimp_savable_print_element_start (state, "formats", NULL);
+  gimp_savable_print_element_start (state, "spaces", NULL);
   space = gimp_image_get_layer_space (image);
   if (space != NULL && space != babl_space ("sRGB"))
     {
@@ -440,7 +441,7 @@ gimp_savable_save_all_spaces (GimpImage     *image,
             }
         }
     }
-  gimp_savable_print_element_end (state, "formats");
+  gimp_savable_print_element_end (state, "spaces");
 
   state->icc_references = icc_refs;
 }

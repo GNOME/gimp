@@ -1,0 +1,516 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * GimpImage-save
+ * Copyright (C) 2026 Jehan
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gegl.h>
+#include <glib/gstdio.h>
+
+#include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
+
+#include "core-types.h"
+
+#include "config/gimpxmlparser.h"
+
+#include "gimp.h"
+#include "gimpimage.h"
+#include "gimpimage-colormap.h"
+#include "gimpimage-grid.h"
+#include "gimpimage-guides.h"
+#include "gimpimage-metadata.h"
+#include "gimpimage-private.h"
+#include "gimpimage-sample-points.h"
+#include "gimpimage-savable.h"
+#include "gimpimage-symmetry.h"
+#include "gimpparasitelist.h"
+#include "gimpsavable.h"
+#include "gimpsavable-load.h"
+#include "gimpsymmetry.h"
+
+#include "gimp-intl.h"
+
+
+static void       gimp_wlbr_load_start_element (GMarkupParseContext  *context,
+                                                const gchar          *element_name,
+                                                const gchar         **attribute_names,
+                                                const gchar         **attribute_values,
+                                                gpointer              user_data,
+                                                GError              **error);
+static void       gimp_wlbr_load_end_element   (GMarkupParseContext  *context,
+                                                const gchar          *element_name,
+                                                gpointer              user_data,
+                                                GError              **error);
+static void       gimp_wlbr_load_text          (GMarkupParseContext  *context,
+                                                const gchar          *text,
+                                                gsize                 text_len,
+                                                gpointer              user_data,
+                                                GError              **error);
+
+static gboolean   gimp_image_enter_xcf         (GimpLoadState        *state,
+                                                const gchar         **attribute_names,
+                                                const gchar         **attribute_values,
+                                                gpointer              user_data,
+                                                GError               **error);
+static gboolean   gimp_image_enter_spaces      (GimpLoadState         *state,
+                                                const gchar          **attribute_names,
+                                                const gchar          **attribute_values,
+                                                gpointer               user_data,
+                                                GError                **error);
+static gboolean   gimp_image_exit_spaces       (GimpLoadState         *state,
+                                                const gchar           *text,
+                                                gsize                  len,
+                                                gpointer               user_data,
+                                                GError               **error);
+static gboolean   gimp_image_enter_project     (GimpLoadState         *state,
+                                                const gchar          **attribute_names,
+                                                const gchar          **attribute_values,
+                                                gpointer               user_data,
+                                                GError                **error);
+static gboolean   gimp_image_exit_project      (GimpLoadState         *state,
+                                                const gchar           *text,
+                                                gsize                  len,
+                                                gpointer               user_data,
+                                                GError               **error);
+
+
+/* Public Functions */
+
+void
+gimp_image_save_to_cache (GimpImage *image,
+                          GFile     *xcf_file)
+{
+  const gchar   *folder;
+  GFile         *file;
+  GOutputStream *output;
+  GError        *error = NULL;
+  GimpSaveState  state = { 0 };
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  folder = gimp_image_get_cache_folder (image);
+  if (g_mkdir_with_parents (folder,
+                            S_IRUSR | S_IWUSR | S_IXUSR) == -1)
+    {
+      g_critical ("%s: failed to create the image cache folder `%s`: %s\n",
+                  G_STRFUNC, folder, g_strerror (errno));
+      return;
+    }
+  file   = gimp_image_get_cache_xml_file (image);
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, &error));
+  if (output == NULL)
+    {
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    _("Error creating '%s': %s"),
+                    gimp_file_get_utf8_name (file),
+                    error->message);
+      g_clear_error (&error);
+      return;
+    }
+
+  state.output         = output;
+  state.image          = image;
+  state.xcf_file       = xcf_file;
+  state.icc_references = NULL;
+  state.elements       = g_queue_new ();
+
+  g_output_stream_printf (output, NULL, NULL, NULL, "<?xml version='1.0' encoding='UTF-8'?>\n");
+  gimp_savable_print_element_start (&state, "xcf", "version", "%d", WLBR_VERSION, NULL);
+  gimp_savable_save (GIMP_SAVABLE (image), &state);
+  gimp_savable_print_element_end (&state, "xcf");
+
+  /* Sanity check: we should be back at root. */
+  g_return_if_fail (g_queue_get_length (state.elements) == 0);
+
+  if (! g_output_stream_close (output, NULL, &error))
+    {
+      gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    _("Error closing '%s': %s"),
+                    gimp_file_get_utf8_name (file),
+                    error->message);
+      g_clear_error (&error);
+    }
+
+  g_object_unref (output);
+  g_queue_free (state.elements);
+}
+
+GimpImage *
+gimp_image_load_from_cache (Gimp  *gimp,
+                            GFile *backup_subdir)
+{
+  GFile         *xml;
+  GError        *error = NULL;
+  GimpLoadState  state = { 0 };
+  GimpXmlParser *xml_parser;
+  GMarkupParser  markup_parser;
+
+  xml = g_file_get_child (backup_subdir, "wlbr-project.xml");
+
+  markup_parser.start_element = gimp_wlbr_load_start_element;
+  markup_parser.end_element   = gimp_wlbr_load_end_element;
+  markup_parser.text          = gimp_wlbr_load_text;
+  markup_parser.passthrough   = NULL;
+  markup_parser.error         = NULL;
+
+  xml_parser = gimp_xml_parser_new (&markup_parser, &state);
+
+  state.gimp        = gimp;
+  state.contexts    = g_queue_new ();
+  state.image       = NULL;
+  state.subdir      = backup_subdir;
+  state.xml_file    = xml;
+  state.xml_parser  = xml_parser;
+  state.level = 0;
+
+  gimp_savable_load (GIMP_TYPE_IMAGE, &state);
+  if (! gimp_xml_parser_parse_gfile (xml_parser, xml, &error))
+    {
+      g_printerr ("Error parsing '%s': %s\n",
+                 gimp_file_get_utf8_name (xml),
+                 error->message);
+
+      g_clear_error (&error);
+      g_object_unref (xml);
+
+      return NULL;
+    }
+
+  g_object_unref (xml);
+
+  return state.image;
+}
+
+
+/* Protected Functions */
+
+void
+gimp_image_savable_save (GimpSavable   *savable,
+                         GimpSaveState *state)
+{
+  GimpImage        *image   = GIMP_IMAGE (savable);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  GList            *iter;
+
+  /* Saving all ICC profiles stored in this XCF. */
+  gimp_savable_save_all_spaces (image, state);
+
+  /* Saving the project itself */
+  gimp_savable_print_element_start (state, "project", NULL);
+  /* To avoid having dozens of <project> attributes, I break the various
+   * properties down into sub-elements. This will also make these easier
+   * to update in further versions, e.g. if we add concept of infinite
+   * canvas, or add multi dimension concept (e.g. multi-page documents
+   * whose pages may be different dimensions), if we reorganize how we
+   * store some data, such as the print dimensions/pixel density
+   * arguments, etc.
+   */
+  gimp_savable_print_element (state, "dimensions", NULL, NULL,
+                              "width",  "%d", private->width,
+                              "height", "%d", private->height,
+                              NULL);
+  gimp_savable_format_save (gimp_image_get_layer_format (image, TRUE), state);
+
+  /* Image Properties */
+  if (gimp_image_get_colormap_palette (image))
+    {
+      GimpPalette *palette = gimp_image_get_colormap_palette (image);
+      gimp_savable_save (GIMP_SAVABLE (palette), state);
+    }
+  if (gimp_image_get_guides (image))
+    {
+      gimp_savable_print_element_start (state, "guides", NULL);
+      iter = gimp_image_get_guides (image);
+      for (; iter; iter = iter->next)
+        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+      gimp_savable_print_element_end (state, "guides");
+    }
+  if (gimp_image_get_sample_points (image))
+    {
+      gimp_savable_print_element_start (state, "sample-points", NULL);
+      iter = gimp_image_get_sample_points (image);
+      for (; iter; iter = iter->next)
+        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+      gimp_savable_print_element_end (state, "sample-points");
+    }
+  /* TODO: should we make resolution optional? E.g. for images "made for
+   * random screen" instead of "made for printing"?
+   */
+  gimp_savable_print_element (state, "print-dimensions", NULL, NULL,
+                              "xres", "%f", private->xresolution,
+                              "yres", "%f", private->yresolution,
+                              NULL);
+  gimp_savable_print_element (state, "tattoo",
+                              "%u", (guint) gimp_image_get_tattoo_state (image),
+                              NULL);
+  /* XXX: maybe we should merge the image unit  with the print
+   * dimensions into some element about physical dimensions?
+   */
+  gimp_savable_unit_save (gimp_image_get_unit (image), state);
+
+  if (gimp_image_get_grid (image))
+    gimp_savable_save (GIMP_SAVABLE (gimp_image_get_grid (image)), state);
+
+  if (gimp_image_get_metadata (image))
+    gimp_savable_metadata_save (gimp_image_get_metadata (image), state);
+
+  if (g_list_length (gimp_image_symmetry_get (image)))
+    {
+      gimp_savable_print_element_start (state, "symmetries", NULL);
+      for (iter = gimp_image_symmetry_get (image); iter; iter = iter->next)
+        {
+          GimpSymmetry *symmetry;
+
+          symmetry = GIMP_SYMMETRY (iter->data);
+          if (G_TYPE_FROM_INSTANCE (symmetry) == GIMP_TYPE_SYMMETRY)
+            /* Do not save the identity symmetry. */
+            continue;
+
+          gimp_savable_config_save (GIMP_CONFIG (symmetry), "symmetry", state);
+        }
+      gimp_savable_print_element_end (state, "symmetries");
+    }
+
+  if (gimp_parasite_list_length (private->parasites) > 0 &&
+      gimp_parasite_list_persistent_length (private->parasites) > 0)
+    gimp_savable_save (GIMP_SAVABLE (private->parasites), state);
+
+  if (private->stored_layer_sets)
+    {
+      gimp_savable_print_element_start (state, "layer-sets", NULL);
+      for (iter = private->stored_layer_sets; iter; iter = iter->next)
+        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+      gimp_savable_print_element_end (state, "layer-sets");
+    }
+  if (private->stored_channel_sets)
+    {
+      gimp_savable_print_element_start (state, "channel-sets", NULL);
+      for (iter = private->stored_channel_sets; iter; iter = iter->next)
+        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+      gimp_savable_print_element_end (state, "channel-sets");
+    }
+  if (private->stored_path_sets)
+    {
+      gimp_savable_print_element_start (state, "path-sets", NULL);
+      for (iter = private->stored_path_sets; iter; iter = iter->next)
+        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+      gimp_savable_print_element_end (state, "path-sets");
+    }
+
+  gimp_savable_print_element_start (state, "layers", NULL);
+  iter = gimp_image_get_layer_iter (image);
+  for (; iter; iter = iter->next)
+    gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+  gimp_savable_print_element_end (state, "layers");
+
+  gimp_savable_print_element_start (state, "channels", NULL);
+  iter = gimp_image_get_channel_iter (image);
+  for (; iter; iter = iter->next)
+    gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+  gimp_savable_print_element_end (state, "channels");
+
+  gimp_savable_print_element_start (state, "paths", NULL);
+  iter = gimp_image_get_path_iter (image);
+  for (; iter; iter = iter->next)
+    gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+  gimp_savable_print_element_end (state, "paths");
+
+  gimp_savable_print_element_end (state, "project");
+
+  g_clear_pointer (&state->icc_references, g_hash_table_unref);
+}
+
+void
+gimp_image_savable_load (GimpLoadState *state)
+{
+  gimp_savable_load_add_handlers (state, "xcf",
+                                  gimp_image_enter_xcf,
+                                  NULL, NULL);
+}
+
+/* Private Functions */
+
+static void
+gimp_wlbr_load_start_element (GMarkupParseContext *context,
+                              const gchar         *element_name,
+                              const gchar        **attribute_names,
+                              const gchar        **attribute_values,
+                              gpointer             user_data,
+                              GError             **error)
+{
+  GimpLoadState *state = user_data;
+
+  state->level++;
+
+  gimp_savable_enter_element (state,
+                              element_name,
+                              attribute_names,
+                              attribute_values,
+                              error);
+}
+
+static void
+gimp_wlbr_load_end_element (GMarkupParseContext *context,
+                            const gchar         *element_name,
+                            gpointer             user_data,
+                            GError             **error)
+{
+  GimpLoadState *state = user_data;
+  const gchar   *text;
+  gsize          text_len;
+
+  text = gimp_savable_load_get_text (state, &text_len);
+  gimp_savable_exit_element (state, element_name, text, text_len, error);
+
+  state->level--;
+}
+
+static void
+gimp_wlbr_load_text (GMarkupParseContext *context,
+                     const gchar         *text,
+                     gsize                text_len,
+                     gpointer             user_data,
+                     GError             **error)
+{
+  GimpLoadState *state = user_data;
+
+  gimp_savable_load_append_text (state, text, text_len);
+}
+
+static gboolean
+gimp_image_enter_xcf (GimpLoadState  *state,
+                      const gchar   **attribute_names,
+                      const gchar   **attribute_values,
+                      gpointer        user_data,
+                      GError         **error)
+{
+  GHashTable *spaces;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "version") == 0)
+        {
+          gint version = -1;
+
+          gimp_savable_load_store_from_string (state,
+                                               "version", "%d", *attribute_values,
+                                               NULL);
+          gimp_savable_load_get_value (state, "version", &version, NULL);
+
+          if (version != 1)
+            {
+              g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                           "%s: unsupported WLBR version %d.",
+                           G_STRFUNC, version);
+              return FALSE;
+            }
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  spaces = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+  gimp_savable_load_add_handlers (state, "spaces",
+                                  gimp_image_enter_spaces,
+                                  gimp_image_exit_spaces,
+                                  spaces);
+  gimp_savable_load_add_handlers (state, "project",
+                                  gimp_image_enter_project,
+                                  gimp_image_exit_project,
+                                  NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_image_enter_spaces (GimpLoadState  *state,
+                         const gchar   **attribute_names,
+                         const gchar   **attribute_values,
+                         gpointer        user_data,
+                         GError         **error)
+{
+  /* <formats> has no attributes. */
+  while (*attribute_names)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: unexpected attribute: '%s'",
+                   G_STRFUNC, *attribute_names);
+      attribute_names++;
+      attribute_values++;
+    }
+
+  gimp_savable_load_add_handlers (state, "space",
+                                  gimp_savable_enter_space,
+                                  gimp_savable_exit_space,
+                                  user_data);
+  return TRUE;
+}
+
+static gboolean
+gimp_image_exit_spaces (GimpLoadState  *state,
+                        const gchar    *text,
+                        gsize           len,
+                        gpointer        user_data,
+                        GError        **error)
+{
+  gimp_savable_load_store_value (state, "spaces", user_data,
+                                 (GDestroyNotify) g_hash_table_unref);
+  gimp_savable_load_bubble_up (state, "spaces");
+
+  return TRUE;
+}
+
+static gboolean
+gimp_image_enter_project (GimpLoadState  *state,
+                          const gchar   **attribute_names,
+                          const gchar   **attribute_values,
+                          gpointer        user_data,
+                          GError         **error)
+{
+  gimp_savable_load_add_handlers (state, "dimensions",
+                                  gimp_savable_enter_dimensions,
+                                  NULL, NULL);
+  gimp_savable_load_add_handlers (state, "format",
+                                  gimp_savable_enter_format,
+                                  gimp_savable_exit_format,
+                                  NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_image_exit_project (GimpLoadState  *state,
+                         const gchar    *text,
+                         gsize           len,
+                         gpointer        user_data,
+                         GError        **error)
+{
+  return TRUE;
+}

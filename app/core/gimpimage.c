@@ -67,6 +67,7 @@
 #include "gimpimage-preview.h"
 #include "gimpimage-private.h"
 #include "gimpimage-quick-mask.h"
+#include "gimpimage-savable.h"
 #include "gimpimage-symmetry.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -85,6 +86,7 @@
 #include "gimpprojection.h"
 #include "gimpsamplepoint.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 #include "gimpselection.h"
 #include "gimpsymmetry.h"
 #include "gimptempbuf.h"
@@ -248,9 +250,6 @@ static void         gimp_image_get_pixel_average (GimpPickable      *pickable,
                                                   const Babl        *format,
                                                   gpointer           pixel);
 
-static void     gimp_image_savable_save          (GimpSavable       *savable,
-                                                  GimpSaveState     *state);
-
 static void     gimp_image_projection_buffer_notify
                                                  (GimpProjection    *projection,
                                                   const GParamSpec  *pspec,
@@ -308,9 +307,6 @@ static void     gimp_image_remove_from_layer_stack (GimpImage       *image,
                                                     GimpLayer       *layer);
 static gint     gimp_image_selected_is_descendant  (GimpViewable    *selected,
                                                     GimpViewable    *viewable);
-
-static const gchar * gimp_image_get_cache_folder   (GimpImage       *image);
-static GFile       * gimp_image_get_cache_xml_file (GimpImage       *image);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
@@ -768,6 +764,7 @@ static void
 gimp_savable_iface_init (GimpSavableInterface *iface)
 {
   iface->save = gimp_image_savable_save;
+  iface->load = gimp_image_savable_load;
 }
 
 static void
@@ -1805,142 +1802,6 @@ gimp_image_get_graph (GimpProjectable *projectable)
 }
 
 static void
-gimp_image_savable_save (GimpSavable   *savable,
-                         GimpSaveState *state)
-{
-  GimpImage        *image   = GIMP_IMAGE (savable);
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-  GList            *iter;
-
-  /* Saving all ICC profiles stored in this XCF. */
-  gimp_savable_save_all_spaces (image, state);
-
-  /* Saving the project itself */
-  gimp_savable_print_element_start (state, "project", NULL);
-  /* To avoid having dozens of <project> attributes, I break the various
-   * properties down into sub-elements. This will also make these easier
-   * to update in further versions, e.g. if we add concept of infinite
-   * canvas, or add multi dimension concept (e.g. multi-page documents
-   * whose pages may be different dimensions), if we reorganize how we
-   * store some data, such as the print dimensions/pixel density
-   * arguments, etc.
-   */
-  gimp_savable_print_element (state, "dimensions", NULL, NULL,
-                              "width",  "%d", private->width,
-                              "height", "%d", private->height,
-                              NULL);
-  gimp_savable_format_save (gimp_image_get_layer_format (image, TRUE), state);
-
-  /* Image Properties */
-  if (gimp_image_get_colormap_palette (image))
-    {
-      GimpPalette *palette = gimp_image_get_colormap_palette (image);
-      gimp_savable_save (GIMP_SAVABLE (palette), state);
-    }
-  if (gimp_image_get_guides (image))
-    {
-      gimp_savable_print_element_start (state, "guides", NULL);
-      iter = gimp_image_get_guides (image);
-      for (; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
-      gimp_savable_print_element_end (state, "guides");
-    }
-  if (gimp_image_get_sample_points (image))
-    {
-      gimp_savable_print_element_start (state, "sample-points", NULL);
-      iter = gimp_image_get_sample_points (image);
-      for (; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
-      gimp_savable_print_element_end (state, "sample-points");
-    }
-  /* TODO: should we make resolution optional? E.g. for images "made for
-   * random screen" instead of "made for printing"?
-   */
-  gimp_savable_print_element (state, "print-dimensions", NULL, NULL,
-                              "xres", "%f", private->xresolution,
-                              "yres", "%f", private->yresolution,
-                              NULL);
-  gimp_savable_print_element (state, "tattoo",
-                              "%u", (guint) gimp_image_get_tattoo_state (image),
-                              NULL);
-  /* XXX: maybe we should merge the image unit  with the print
-   * dimensions into some element about physical dimensions?
-   */
-  gimp_savable_unit_save (gimp_image_get_unit (image), state);
-
-  if (gimp_image_get_grid (image))
-    gimp_savable_save (GIMP_SAVABLE (gimp_image_get_grid (image)), state);
-
-  if (gimp_image_get_metadata (image))
-    gimp_savable_metadata_save (gimp_image_get_metadata (image), state);
-
-  if (g_list_length (gimp_image_symmetry_get (image)))
-    {
-      gimp_savable_print_element_start (state, "symmetries", NULL);
-      for (iter = gimp_image_symmetry_get (image); iter; iter = iter->next)
-        {
-          GimpSymmetry *symmetry;
-
-          symmetry = GIMP_SYMMETRY (iter->data);
-          if (G_TYPE_FROM_INSTANCE (symmetry) == GIMP_TYPE_SYMMETRY)
-            /* Do not save the identity symmetry. */
-            continue;
-
-          gimp_savable_config_save (GIMP_CONFIG (symmetry), "symmetry", state);
-        }
-      gimp_savable_print_element_end (state, "symmetries");
-    }
-
-  if (gimp_parasite_list_length (private->parasites) > 0 &&
-      gimp_parasite_list_persistent_length (private->parasites) > 0)
-    gimp_savable_save (GIMP_SAVABLE (private->parasites), state);
-
-  if (private->stored_layer_sets)
-    {
-      gimp_savable_print_element_start (state, "layer-sets", NULL);
-      for (iter = private->stored_layer_sets; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
-      gimp_savable_print_element_end (state, "layer-sets");
-    }
-  if (private->stored_channel_sets)
-    {
-      gimp_savable_print_element_start (state, "channel-sets", NULL);
-      for (iter = private->stored_channel_sets; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
-      gimp_savable_print_element_end (state, "channel-sets");
-    }
-  if (private->stored_path_sets)
-    {
-      gimp_savable_print_element_start (state, "path-sets", NULL);
-      for (iter = private->stored_path_sets; iter; iter = iter->next)
-        gimp_savable_save (GIMP_SAVABLE (iter->data), state);
-      gimp_savable_print_element_end (state, "path-sets");
-    }
-
-  gimp_savable_print_element_start (state, "layers", NULL);
-  iter = gimp_image_get_layer_iter (image);
-  for (; iter; iter = iter->next)
-    gimp_savable_save (GIMP_SAVABLE (iter->data), state);
-  gimp_savable_print_element_end (state, "layers");
-
-  gimp_savable_print_element_start (state, "channels", NULL);
-  iter = gimp_image_get_channel_iter (image);
-  for (; iter; iter = iter->next)
-    gimp_savable_save (GIMP_SAVABLE (iter->data), state);
-  gimp_savable_print_element_end (state, "channels");
-
-  gimp_savable_print_element_start (state, "paths", NULL);
-  iter = gimp_image_get_path_iter (image);
-  for (; iter; iter = iter->next)
-    gimp_savable_save (GIMP_SAVABLE (iter->data), state);
-  gimp_savable_print_element_end (state, "paths");
-
-  gimp_savable_print_element_end (state, "project");
-
-  g_clear_pointer (&state->icc_references, g_hash_table_unref);
-}
-
-static void
 gimp_image_projection_buffer_notify (GimpProjection   *projection,
                                      const GParamSpec *pspec,
                                      GimpImage        *image)
@@ -2362,51 +2223,6 @@ gimp_image_selected_is_descendant (GimpViewable *selected,
     return 0;
   else
     return 1;
-}
-
-static const gchar *
-gimp_image_get_cache_folder (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  if (private->cache_folder == NULL)
-    {
-      gchar *folder_name = g_strdup_printf ("image-%d", gimp_image_get_id (image));
-      gchar *path        = g_build_filename (gimp_cache_directory (), "images", folder_name, NULL);
-
-      private->cache_folder = path;
-
-      g_free (folder_name);
-    }
-
-  return private->cache_folder;
-}
-
-static GFile *
-gimp_image_get_cache_xml_file (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (gimp_image_get_cache_folder (image) != NULL, NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  if (private->cache_xml == NULL)
-    {
-      gchar *path;
-
-      path = g_build_filename (gimp_image_get_cache_folder (image), "wlbr-project.xml", NULL);
-
-      private->cache_xml = g_file_new_for_path (path);
-      g_free (path);
-    }
-
-  return private->cache_xml;
 }
 
 
@@ -3084,6 +2900,51 @@ gimp_image_get_export_proc (GimpImage *image)
 }
 
 const gchar *
+gimp_image_get_cache_folder (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->cache_folder == NULL)
+    {
+      gchar *folder_name = g_strdup_printf ("image-%d", gimp_image_get_id (image));
+      gchar *path        = g_build_filename (gimp_cache_directory (), "images", folder_name, NULL);
+
+      private->cache_folder = path;
+
+      g_free (folder_name);
+    }
+
+  return private->cache_folder;
+}
+
+GFile *
+gimp_image_get_cache_xml_file (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (gimp_image_get_cache_folder (image) != NULL, NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->cache_xml == NULL)
+    {
+      gchar *path;
+
+      path = g_build_filename (gimp_image_get_cache_folder (image), "wlbr-project.xml", NULL);
+
+      private->cache_xml = g_file_new_for_path (path);
+      g_free (path);
+    }
+
+  return private->cache_xml;
+}
+
+const gchar *
 gimp_image_get_buffers_folder (GimpImage *image)
 {
   GimpImagePrivate *private;
@@ -3110,70 +2971,6 @@ gimp_image_get_buffers_folder (GimpImage *image)
     }
 
   return private->buffers_folder;
-}
-
-void
-gimp_image_save_to_cache (GimpImage *image,
-                          GFile     *xcf_file)
-{
-  GimpImagePrivate *private;
-  const gchar      *folder;
-  GFile            *file;
-  GOutputStream    *output;
-  GError           *error = NULL;
-  GimpSaveState     state = { 0 };
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  folder = gimp_image_get_cache_folder (image);
-  if (g_mkdir_with_parents (folder,
-                            S_IRUSR | S_IWUSR | S_IXUSR) == -1)
-    {
-      g_critical ("%s: failed to create the image cache folder `%s`: %s\n",
-                  G_STRFUNC, private->cache_folder, g_strerror (errno));
-      return;
-    }
-  file   = gimp_image_get_cache_xml_file (image);
-  output = G_OUTPUT_STREAM (g_file_replace (file,
-                                            NULL, FALSE, G_FILE_CREATE_NONE,
-                                            NULL, &error));
-  if (output == NULL)
-    {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    _("Error creating '%s': %s"),
-                    gimp_file_get_utf8_name (file),
-                    error->message);
-      g_clear_error (&error);
-      return;
-    }
-
-  state.output         = output;
-  state.image          = image;
-  state.xcf_file       = xcf_file;
-  state.icc_references = NULL;
-  state.elements       = g_queue_new ();
-
-  g_output_stream_printf (output, NULL, NULL, NULL, "<?xml version='1.0' encoding='UTF-8'?>\n");
-  gimp_savable_print_element_start (&state, "xcf", "version", "%d", WLBR_VERSION, NULL);
-  gimp_image_savable_save (GIMP_SAVABLE (image), &state);
-  gimp_savable_print_element_end (&state, "xcf");
-
-  /* Sanity check: we should be back at root. */
-  g_return_if_fail (g_queue_get_length (state.elements) == 0);
-
-  if (! g_output_stream_close (output, NULL, &error))
-    {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    _("Error closing '%s': %s"),
-                    gimp_file_get_utf8_name (file),
-                    error->message);
-      g_clear_error (&error);
-    }
-
-  g_object_unref (output);
-  g_queue_free (state.elements);
 }
 
 gint
