@@ -971,7 +971,7 @@ tartan-static-analysis:
                          clang-${LLVM_VERSION}
                          clang-tools-${LLVM_VERSION}
                          libclang-${LLVM_VERSION}-dev
-                         libgirepository-2.0-dev
+                         libgirepository-2.0-dev gir1.2-girepository-2.0-dev
     - printf "\e[0Ksection_end:`date +%s`:environ\r\e[0K\n"
 
     # Build Tartan from source
