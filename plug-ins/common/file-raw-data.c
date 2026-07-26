@@ -197,7 +197,7 @@ static gboolean         raw_load_standard    (RawGimpData              *data,
                                               gint                      width,
                                               gint                      height,
                                               gint                      bpp,
-                                              gint                      offset,
+                                              guint                     offset,
                                               RawType                   type,
                                               gboolean                  is_big_endian,
                                               gboolean                  is_signed,
@@ -206,7 +206,7 @@ static gboolean         raw_load_planar      (RawGimpData              *data,
                                               gint                      width,
                                               gint                      height,
                                               gint                      bpp,
-                                              gint                      offset,
+                                              guint                     offset,
                                               RawType                   type,
                                               gboolean                  is_big_endian,
                                               gboolean                  is_signed,
@@ -214,17 +214,17 @@ static gboolean         raw_load_planar      (RawGimpData              *data,
 static gboolean         raw_load_gray        (RawGimpData              *data,
                                               gint                      width,
                                               gint                      height,
-                                              gint                      offset,
+                                              guint                     offset,
                                               gint                      bpp,
                                               gint                      bitspp);
 static gboolean         raw_load_rgb565      (RawGimpData              *data,
                                               gint                      width,
                                               gint                      height,
-                                              gint                      offset,
+                                              guint                     offset,
                                               RawType                   type,
                                               RawEndianness             endianness);
 static gboolean         raw_load_palette     (RawGimpData              *data,
-                                              gint                      palette_offset,
+                                              guint                     palette_offset,
                                               RawPaletteType            palette_type,
                                               GFile                    *palette_file);
 
@@ -261,14 +261,14 @@ static gboolean        detect_sample_spacing (GimpProcedureConfig      *config,
                                               GFile                    *file,
                                               GError                  **error);
 static void           get_load_config_values (GimpProcedureConfig      *config,
-                                              gint32                   *file_offset,
+                                              guint32                  *file_offset,
                                               gint32                   *image_width,
                                               gint32                   *image_height,
                                               RawType                  *image_type,
                                               RawEncoding              *encoding,
                                               RawEndianness            *endianness,
                                               RawPlanarConfiguration   *planar_configuration,
-                                              gint32                   *palette_offset,
+                                              guint32                  *palette_offset,
                                               RawPaletteType           *palette_type,
                                               GFile                   **palette_file);
 
@@ -373,11 +373,11 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                                        _("Image height in number of pixels"),
                                        1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
                                        G_PARAM_READWRITE);
-      gimp_procedure_add_int_argument (procedure, "offset",
-                                       _("O_ffset"),
-                                       _("Offset to beginning of image in raw data"),
-                                       0, GIMP_MAX_IMAGE_SIZE, 0,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_uint_argument (procedure, "offset",
+                                        _("O_ffset"),
+                                        _("Offset to beginning of image in raw data"),
+                                        0, G_MAXUINT, 0,
+                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_choice_argument (procedure, "pixel-format",
                                           _("Pi_xel format"),
@@ -428,11 +428,11 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
       /* Properties for palette data. */
 
-      gimp_procedure_add_int_argument (procedure, "palette-offset",
-                                       _("Palette Offse_t"),
-                                       _("Offset to beginning of data in the palette file"),
-                                       0, GIMP_MAX_IMAGE_SIZE, 0,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_uint_argument (procedure, "palette-offset",
+                                        _("Palette Offse_t"),
+                                        _("Offset to beginning of data in the palette file"),
+                                        0, G_MAXUINT, 0,
+                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_choice_argument (procedure, "palette-type",
                                           _("Palette's la_yout"),
@@ -489,11 +489,11 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
       /* Properties for palette data. */
 
-      gimp_procedure_add_int_argument (procedure, "palette-offset",
-                                       _("Palette Offse_t"),
-                                       _("Offset to beginning of data in the palette file"),
-                                       0, GIMP_MAX_IMAGE_SIZE, 0,
-                                       G_PARAM_READWRITE);
+      gimp_procedure_add_uint_argument (procedure, "palette-offset",
+                                        _("Palette Offse_t"),
+                                        _("Offset to beginning of data in the palette file"),
+                                        0, G_MAXUINT, 0,
+                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_choice_argument (procedure, "palette-type",
                                           _("Palette's la_yout"),
@@ -938,7 +938,7 @@ raw_load_standard (RawGimpData *data,
                    gint         width,
                    gint         height,
                    gint         bpp,
-                   gint         offset,
+                   guint        offset,
                    RawType      type,
                    gboolean     is_big_endian,
                    gboolean     is_signed,
@@ -1086,7 +1086,7 @@ raw_load_planar (RawGimpData *data,
                  gint         width,
                  gint         height,
                  gint         bpp,
-                 gint         offset,
+                 guint        offset,
                  RawType      type,
                  gboolean     is_big_endian,
                  gboolean     is_signed,
@@ -1239,7 +1239,7 @@ static gboolean
 raw_load_gray (RawGimpData *data,
                gint         width,
                gint         height,
-               gint         offset,
+               guint        offset,
                gint         bpp,
                gint         bitspp)
 {
@@ -1320,7 +1320,7 @@ static gboolean
 raw_load_rgb565 (RawGimpData   *data,
                  gint           width,
                  gint           height,
-                 gint           offset,
+                 guint          offset,
                  RawType        type,
                  RawEndianness  endianness)
 {
@@ -1413,7 +1413,7 @@ rgb_565_to_888 (guint16       *in,
 
 static gboolean
 raw_load_palette (RawGimpData    *data,
-                  gint            palette_offset,
+                  guint           palette_offset,
                   RawPaletteType  palette_type,
                   GFile          *palette_file)
 {
@@ -1769,14 +1769,14 @@ detect_sample_spacing (GimpProcedureConfig  *config,
 
 static void
 get_load_config_values (GimpProcedureConfig     *config,
-                        gint32                  *file_offset,
+                        guint32                 *file_offset,
                         gint32                  *image_width,
                         gint32                  *image_height,
                         RawType                 *image_type,
                         RawEncoding             *encoding,
                         RawEndianness           *endianness,
                         RawPlanarConfiguration  *planar_configuration,
-                        gint32                  *palette_offset,
+                        guint32                 *palette_offset,
                         RawPaletteType          *palette_type,
                         GFile                  **palette_file)
 {
@@ -1840,11 +1840,11 @@ load_image (GFile                *file,
   goffset            size;
   gint               width;
   gint               height;
-  gint               offset;
+  guint              offset;
   gint               bpp    = 0;
   gint               bitspp = 8;
 
-  gint               palette_offset;
+  guint              palette_offset;
   RawPaletteType     palette_type;
   GFile             *palette_file;
 
@@ -2099,10 +2099,10 @@ preview_update (GimpPreviewArea *preview,
   RawPlanarConfiguration planar_configuration;
   gint                 width;
   gint                 height;
-  gint                 offset;
+  guint                offset;
 
   GFile               *palette_file;
-  gint                 palette_offset;
+  guint                palette_offset;
   RawPaletteType       palette_type;
 
   gimp_preview_area_get_size (preview, &preview_width, &preview_height);
@@ -2215,7 +2215,7 @@ preview_update (GimpPreviewArea *preview,
           guchar *in;
           guchar *row;
           gint    input_stride;
-          gint    input_offset;
+          guint   input_offset;
 
           input_stride = width * bpp;
 
@@ -2306,7 +2306,7 @@ preview_update (GimpPreviewArea *preview,
           guchar *in;
           guchar *row;
           gint    input_stride;
-          gint    input_offset;
+          guint   input_offset;
 
           input_stride = width * bpc;
 
@@ -2709,7 +2709,7 @@ load_config_notify (GimpProcedureConfig  *config,
       goffset    file_size;
       gint       width, new_width;
       gint       height, new_height;
-      gint       offset, new_offset;
+      guint      offset, new_offset;
       gint       bpp    = 1;
       gint       bitspp = 8;
       goffset    max_pixels, max_pixels_full;
