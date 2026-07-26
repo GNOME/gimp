@@ -1447,6 +1447,7 @@ gimp_data_get_identifiers (GimpData  *data,
   *name        = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
   *is_internal = gimp_data_is_internal (data);
 }
+
 /**
  * gimp_data_error_quark:
  *
