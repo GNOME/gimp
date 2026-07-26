@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-05-27 23:25+0000\n"
-"PO-Revision-Date: 2026-07-10 08:17+0800\n"
+"PO-Revision-Date: 2026-07-26 11:27+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -67,7 +67,7 @@ msgstr "奇异发光(_A)"
 
 #: plug-ins/script-fu/script-fu.c:337
 msgid "_Beveled Pattern"
-msgstr "卷边的图案(_B)"
+msgstr "倒角图案(_B)"
 
 #: plug-ins/script-fu/script-fu.c:339
 msgid "_Classic.Gimp.Org"
@@ -211,12 +211,12 @@ msgstr "Script-Fu 文件夹选择"
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:807
 #, c-format
 msgid "Error while executing %s:"
-msgstr "执行 %s 时出错："
+msgstr "执行“%s”时出错："
 
 #: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:541
 #, c-format
 msgid "Error while loading %s:"
-msgstr "载入 %s 时出错："
+msgstr "载入“%s”时出错："
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:72
 msgid "Bumpmap"
@@ -224,11 +224,11 @@ msgstr "凹凸贴图"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:199
 msgid "Add B_evel..."
-msgstr "添加斜面(_E)…"
+msgstr "添加倒角(_E)…"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:200
 msgid "Add a beveled border to an image"
-msgstr "给图像添加卷边"
+msgstr "给图像添加倒角边框"
 
 #. v3 >>> additional argument
 #: plug-ins/script-fu/scripts/add-bevel.scm:206
@@ -245,7 +245,7 @@ msgstr "保持凹凸图层(_K)"
 
 #: plug-ins/script-fu/scripts/addborder.scm:121
 msgid "Border Layer"
-msgstr "加边图层"
+msgstr "边框图层"
 
 #: plug-ins/script-fu/scripts/addborder.scm:174
 msgid "Add _Border..."
@@ -362,11 +362,11 @@ msgstr "雕刻表面"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:208
 msgid "Bevel Shadow"
-msgstr "斜面阴影"
+msgstr "倒角阴影"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:209
 msgid "Bevel Highlight"
-msgstr "斜面高光"
+msgstr "倒角高光"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:210
 msgid "Cast Shadow"
@@ -434,7 +434,7 @@ msgstr "模板镀铬(_H)…"
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
-msgstr "用指定的（灰阶）模板给选中区域（或透明）添加镀铬效果"
+msgstr "用指定的（灰度）模板给选中区域（或透明）添加镀铬效果"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:327
 msgid "Chrome saturation"
@@ -510,11 +510,11 @@ msgstr "给选中区域（或透明）添加类似布料的纹理"
 
 #: plug-ins/script-fu/scripts/clothify.scm:72
 msgid "Blur X"
-msgstr "模糊 X"
+msgstr "X 模糊"
 
 #: plug-ins/script-fu/scripts/clothify.scm:73
 msgid "Blur Y"
-msgstr "模糊 Y"
+msgstr "Y 模糊"
 
 #: plug-ins/script-fu/scripts/clothify.scm:74
 msgid "Azimuth"
@@ -626,11 +626,11 @@ msgstr "给选中区域（或透明）添加投影"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:177
 msgid "Offset X"
-msgstr "位移 X"
+msgstr "X 偏移"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset Y"
-msgstr "位移 Y"
+msgstr "Y 偏移"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:179
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:206
@@ -660,11 +660,11 @@ msgstr "创建一幅以匹配字体名过滤器的字体预览所填充的图像
 
 #: plug-ins/script-fu/scripts/font-map.scm:169
 msgid "_Text"
-msgstr "文字(_T)"
+msgstr "文本(_T)"
 
 #: plug-ins/script-fu/scripts/font-map.scm:170
 msgid "Use font _name as text"
-msgstr "使用字体名字作为文字(_N)"
+msgstr "使用字体名字作为文本(_N)"
 
 #: plug-ins/script-fu/scripts/font-map.scm:171
 msgid "_Labels"
@@ -753,7 +753,7 @@ msgstr "到用户手册的书签"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:70
 msgid "_Preparing your Images for the Web"
-msgstr "为 Web 准备图像(_P)"
+msgstr "为网络准备图像(_P)"
 
 #: plug-ins/script-fu/scripts/gimp-online.scm:81
 msgid "_Working with Digital Camera Photos"
@@ -830,11 +830,11 @@ msgstr "中心线"
 
 #: plug-ins/script-fu/scripts/guides-from-rule.scm:68
 msgid "Rule of thirds"
-msgstr "三分法"
+msgstr "三分构图法"
 
 #: plug-ins/script-fu/scripts/guides-from-rule.scm:69
 msgid "Rule of fifths"
-msgstr "五分法"
+msgstr "五分构图法"
 
 #: plug-ins/script-fu/scripts/guides-from-rule.scm:70
 msgid "Golden sections"
@@ -874,7 +874,7 @@ msgstr "竖直"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
-msgstr "位置（按 %）(_P)"
+msgstr "位置（%）(_P)"
 
 #: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
@@ -882,7 +882,7 @@ msgstr "新建参考线(_G)…"
 
 #: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "在指定的方向和位置（像素单位）添加参考线"
+msgstr "在指定的方向和位置（像素）添加参考线"
 
 #: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Position"
@@ -949,7 +949,7 @@ msgstr "锐度（度数）(_H)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:126
 msgid "O_ffset radius"
-msgstr "位移半径(_F)"
+msgstr "偏移半径(_F)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:127
 msgid "Ran_domness"
@@ -1073,7 +1073,7 @@ msgstr "PHP 字典(_H)…"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:339
 msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr "导出当前调色板为 PHP 字典 (name => color)"
+msgstr "导出当前调色板为 PHP 字典（name => color）"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:363
 msgid "_Python dictionary..."
@@ -1081,7 +1081,7 @@ msgstr "Python 字典(_P)…"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:364
 msgid "Export the active palette as a Python dictionary (name: color)"
-msgstr "导出当前调色板为 Python 字典 (name: color)"
+msgstr "导出当前调色板为 Python 字典（name: color）"
 
 #: plug-ins/script-fu/scripts/palette-export.scm:385
 msgid "_Text file..."
@@ -1287,7 +1287,7 @@ msgstr "给图像添加类似幻灯片的图像帧、齿孔和标签"
 
 #: plug-ins/script-fu/scripts/slide.scm:266
 msgid "Text"
-msgstr "文字"
+msgstr "文本"
 
 #: plug-ins/script-fu/scripts/slide.scm:267
 msgid "Number"
@@ -1408,7 +1408,7 @@ msgstr "编织(_W)…"
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
-msgstr "创建一个以编织效果填充的新图层以被用于覆盖或凸凹贴图"
+msgstr "创建一个以编织效果填充的新图层以用作叠加或凸凹贴图"
 
 #: plug-ins/script-fu/scripts/weave.scm:432
 msgid "Ribbon width"
