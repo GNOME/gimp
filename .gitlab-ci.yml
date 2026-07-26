@@ -933,8 +933,9 @@ cppcheck:
   script:
     - apt-get update >/dev/null 2>&1
     - apt-get install -y cppcheck >/dev/null 2>&1
-    - cppcheck -q -j8 --enable=all --force --output-file=cppcheck.xml --xml --xml-version=2
-        -i _build -i babl -i gegl -i _install .
+    - mkdir temp
+    - cppcheck -q -j8 --enable=style,performance,portability,information,unusedFunction --force
+        --cppcheck-build-dir=temp --output-file=cppcheck.xml --xml --xml-version=2 .
     - mkdir report
     - cppcheck-htmlreport --source-dir=. --title=gimp --file=cppcheck.xml --report-dir=report
   artifacts:
