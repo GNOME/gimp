@@ -56,6 +56,7 @@ ui_tests = [
   { 'name': 'zoom' },
   { 'name': 'fg-color' },
   { 'name': 'tool-selection', 'timeout': 300 },
+  { 'name': 'menu-action' },
 ]
 
 foreach t : ui_tests
