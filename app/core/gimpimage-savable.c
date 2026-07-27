@@ -35,6 +35,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "gimp.h"
+#include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-grid.h"
@@ -84,11 +85,6 @@ static gboolean   gimp_image_exit_format       (GimpLoadState         *state,
                                                 gpointer               user_data,
                                                 GError               **error);
 static gboolean   gimp_image_enter_guides      (GimpLoadState         *state,
-                                                const gchar          **attribute_names,
-                                                const gchar          **attribute_values,
-                                                gpointer               user_data,
-                                                GError               **error);
-static gboolean   gimp_image_enter_guide       (GimpLoadState         *state,
                                                 const gchar          **attribute_names,
                                                 const gchar          **attribute_values,
                                                 gpointer               user_data,
@@ -530,73 +526,7 @@ gimp_image_enter_guides (GimpLoadState  *state,
       return FALSE;
     }
 
-  gimp_savable_load_add_handlers (state, "guide",
-                                  gimp_image_enter_guide,
-                                  NULL, NULL);
-
-  return TRUE;
-}
-
-gboolean
-gimp_image_enter_guide (GimpLoadState  *state,
-                        const gchar   **attribute_names,
-                        const gchar   **attribute_values,
-                        gpointer        user_data,
-                        GError        **error)
-{
-  const gchar *orientation = NULL;
-  const gchar *position    = NULL;
-
-  while (*attribute_names)
-    {
-      if (g_strcmp0 (*attribute_names, "orientation") == 0)
-        orientation = *attribute_values;
-      else if (g_strcmp0 (*attribute_names, "position") == 0)
-        position = *attribute_values;
-      else
-        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                     "%s: unexpected attribute: '%s'",
-                     G_STRFUNC, *attribute_names);
-
-      attribute_names++;
-      attribute_values++;
-    }
-
-  if ((! orientation || ! position) && *error == NULL)
-    {
-      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                   "%s: missing orientation and/or position attributes.",
-                   G_STRFUNC);
-    }
-  else
-    {
-      GimpOrientationType o = GIMP_ORIENTATION_UNKNOWN;
-      gint                p = -1;
-
-      gimp_savable_load_store_from_string (state,
-                                           "orientation", "%[GimpOrientationType]", orientation,
-                                           "position",    "%d",                     position,
-                                           NULL);
-      gimp_savable_load_get_values (state,
-                                    "orientation", &o,
-                                    "position",    &p,
-                                    NULL);
-          printf ("%s: add guide of orientation '%s' and position %s.\n",
-                       G_STRFUNC, orientation, position);
-      switch (o)
-        {
-        case GIMP_ORIENTATION_HORIZONTAL:
-          gimp_image_add_hguide (state->image, p, FALSE);
-          break;
-        case GIMP_ORIENTATION_VERTICAL:
-          gimp_image_add_vguide (state->image, p, FALSE);
-          break;
-        default:
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
-                       "%s: ignoring guide of orientation '%s' and position %s.\n",
-                       G_STRFUNC, orientation, position);
-        }
-    }
+  gimp_savable_load (GIMP_TYPE_GUIDE, state);
 
   return TRUE;
 }

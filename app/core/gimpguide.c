@@ -27,8 +27,10 @@
 
 #include "core-types.h"
 
+#include "gimpimage-guides.h"
 #include "gimpguide.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 
 
 enum
@@ -49,19 +51,26 @@ struct _GimpGuidePrivate
 };
 
 
-static void   gimp_guide_savable_iface_init (GimpSavableInterface *iface);
+static void       gimp_guide_savable_iface_init (GimpSavableInterface  *iface);
 
-static void   gimp_guide_get_property       (GObject              *object,
-                                             guint                 property_id,
-                                             GValue               *value,
-                                             GParamSpec           *pspec);
-static void   gimp_guide_set_property       (GObject              *object,
-                                             guint                 property_id,
-                                             const GValue         *value,
-                                             GParamSpec           *pspec);
+static void       gimp_guide_get_property       (GObject               *object,
+                                                 guint                  property_id,
+                                                 GValue                *value,
+                                                 GParamSpec            *pspec);
+static void       gimp_guide_set_property       (GObject               *object,
+                                                 guint                  property_id,
+                                                 const GValue          *value,
+                                                 GParamSpec            *pspec);
 
-static void   gimp_guide_savable_save       (GimpSavable          *savable,
-                                             GimpSaveState        *state);
+static void       gimp_guide_savable_save       (GimpSavable           *savable,
+                                                 GimpSaveState         *state);
+static void       gimp_guide_savable_load       (GimpLoadState         *state);
+
+static gboolean   gimp_guide_enter_guide        (GimpLoadState         *state,
+                                                 const gchar          **attribute_names,
+                                                 const gchar          **attribute_values,
+                                                 gpointer               user_data,
+                                                 GError               **error);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpGuide, gimp_guide, GIMP_TYPE_AUX_ITEM,
@@ -105,6 +114,7 @@ static void
 gimp_guide_savable_iface_init (GimpSavableInterface *iface)
 {
   iface->save = gimp_guide_savable_save;
+  iface->load = gimp_guide_savable_load;
 }
 
 static void
@@ -173,6 +183,14 @@ gimp_guide_savable_save (GimpSavable   *savable,
                               "orientation", "%[GimpOrientationType]", guide->priv->orientation,
                               "position",    "%d",                     guide->priv->position,
                               NULL);
+}
+
+static void
+gimp_guide_savable_load (GimpLoadState *state)
+{
+  gimp_savable_load_add_handlers (state, "guide",
+                                  gimp_guide_enter_guide,
+                                  NULL, NULL);
 }
 
 GimpGuide *
@@ -266,4 +284,69 @@ gimp_guide_is_custom (GimpGuide *guide)
   g_return_val_if_fail (GIMP_IS_GUIDE (guide), FALSE);
 
   return guide->priv->style != GIMP_GUIDE_STYLE_NORMAL;
+}
+
+
+/* Private Functions */
+
+gboolean
+gimp_guide_enter_guide (GimpLoadState  *state,
+                        const gchar   **attribute_names,
+                        const gchar   **attribute_values,
+                        gpointer        user_data,
+                        GError        **error)
+{
+  const gchar *orientation = NULL;
+  const gchar *position    = NULL;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "orientation") == 0)
+        orientation = *attribute_values;
+      else if (g_strcmp0 (*attribute_names, "position") == 0)
+        position = *attribute_values;
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  if ((! orientation || ! position) && *error == NULL)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: missing orientation and/or position attributes.",
+                   G_STRFUNC);
+    }
+  else
+    {
+      GimpOrientationType o = GIMP_ORIENTATION_UNKNOWN;
+      gint                p = -1;
+
+      gimp_savable_load_store_from_string (state,
+                                           "orientation", "%[GimpOrientationType]", orientation,
+                                           "position",    "%d",                     position,
+                                           NULL);
+      gimp_savable_load_get_values (state,
+                                    "orientation", &o,
+                                    "position",    &p,
+                                    NULL);
+      switch (o)
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          gimp_image_add_hguide (state->image, p, FALSE);
+          break;
+        case GIMP_ORIENTATION_VERTICAL:
+          gimp_image_add_vguide (state->image, p, FALSE);
+          break;
+        default:
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                       "%s: ignoring guide of orientation '%s' and position %s.\n",
+                       G_STRFUNC, orientation, position);
+        }
+    }
+
+  return TRUE;
 }
