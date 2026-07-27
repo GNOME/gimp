@@ -104,6 +104,11 @@ gboolean     gimp_savable_exit_space             (GimpLoadState            *stat
 
 /* Friend functions used only in gimpimage-savable.c */
 
+gboolean      gimp_savable_load_parse            (GimpLoadState            *state,
+                                                  Gimp                     *gimp,
+                                                  GFile                    *backup_dir,
+                                                  GError                  **error);
+void          gimp_savable_load_free_state       (GimpLoadState            *state);
 void          gimp_savable_load_append_text      (GimpLoadState            *state,
                                                   const gchar              *text,
                                                   gsize                     text_len);

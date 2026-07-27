@@ -29,8 +29,6 @@
 
 #include "core-types.h"
 
-#include "config/gimpxmlparser.h"
-
 #include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
@@ -48,22 +46,6 @@
 
 #include "gimp-intl.h"
 
-
-static void       gimp_wlbr_load_start_element (GMarkupParseContext  *context,
-                                                const gchar          *element_name,
-                                                const gchar         **attribute_names,
-                                                const gchar         **attribute_values,
-                                                gpointer              user_data,
-                                                GError              **error);
-static void       gimp_wlbr_load_end_element   (GMarkupParseContext  *context,
-                                                const gchar          *element_name,
-                                                gpointer              user_data,
-                                                GError              **error);
-static void       gimp_wlbr_load_text          (GMarkupParseContext  *context,
-                                                const gchar          *text,
-                                                gsize                 text_len,
-                                                gpointer              user_data,
-                                                GError              **error);
 
 static gboolean   gimp_image_enter_xcf         (GimpLoadState        *state,
                                                 const gchar         **attribute_names,
@@ -157,46 +139,20 @@ gimp_image_save_to_cache (GimpImage *image,
 
 GimpImage *
 gimp_image_load_from_cache (Gimp  *gimp,
-                            GFile *backup_subdir)
+                            GFile *backup_dir)
 {
-  GFile         *xml;
   GError        *error = NULL;
   GimpLoadState  state = { 0 };
-  GimpXmlParser *xml_parser;
-  GMarkupParser  markup_parser;
 
-  xml = g_file_get_child (backup_subdir, "wlbr-project.xml");
-
-  markup_parser.start_element = gimp_wlbr_load_start_element;
-  markup_parser.end_element   = gimp_wlbr_load_end_element;
-  markup_parser.text          = gimp_wlbr_load_text;
-  markup_parser.passthrough   = NULL;
-  markup_parser.error         = NULL;
-
-  xml_parser = gimp_xml_parser_new (&markup_parser, &state);
-
-  state.gimp        = gimp;
-  state.contexts    = g_queue_new ();
-  state.image       = NULL;
-  state.subdir      = backup_subdir;
-  state.xml_file    = xml;
-  state.xml_parser  = xml_parser;
-  state.level = 0;
-
-  gimp_savable_load (GIMP_TYPE_IMAGE, &state);
-  if (! gimp_xml_parser_parse_gfile (xml_parser, xml, &error))
+  if (! gimp_savable_load_parse (&state, gimp, backup_dir, &error))
     {
-      g_printerr ("Error parsing '%s': %s\n",
-                 gimp_file_get_utf8_name (xml),
-                 error->message);
-
+      g_printerr ("Error loading '%s': %s\n",
+                  gimp_file_get_utf8_name (backup_dir),
+                  error->message);
       g_clear_error (&error);
-      g_object_unref (xml);
-
-      return NULL;
     }
 
-  g_object_unref (xml);
+  gimp_savable_load_free_state (&state);
 
   return state.image;
 }
@@ -349,53 +305,6 @@ gimp_image_savable_load (GimpLoadState *state)
 }
 
 /* Private Functions */
-
-static void
-gimp_wlbr_load_start_element (GMarkupParseContext *context,
-                              const gchar         *element_name,
-                              const gchar        **attribute_names,
-                              const gchar        **attribute_values,
-                              gpointer             user_data,
-                              GError             **error)
-{
-  GimpLoadState *state = user_data;
-
-  state->level++;
-
-  gimp_savable_enter_element (state,
-                              element_name,
-                              attribute_names,
-                              attribute_values,
-                              error);
-}
-
-static void
-gimp_wlbr_load_end_element (GMarkupParseContext *context,
-                            const gchar         *element_name,
-                            gpointer             user_data,
-                            GError             **error)
-{
-  GimpLoadState *state = user_data;
-  const gchar   *text;
-  gsize          text_len;
-
-  text = gimp_savable_load_get_text (state, &text_len);
-  gimp_savable_exit_element (state, element_name, text, text_len, error);
-
-  state->level--;
-}
-
-static void
-gimp_wlbr_load_text (GMarkupParseContext *context,
-                     const gchar         *text,
-                     gsize                text_len,
-                     gpointer             user_data,
-                     GError             **error)
-{
-  GimpLoadState *state = user_data;
-
-  gimp_savable_load_append_text (state, text, text_len);
-}
 
 static gboolean
 gimp_image_enter_xcf (GimpLoadState  *state,

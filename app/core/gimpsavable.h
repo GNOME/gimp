@@ -55,6 +55,7 @@ struct _GimpLoadState
   GFile         *subdir;
 
   GimpXmlParser *xml_parser;
+  GMarkupParser  markup_parser;
   GQueue        *contexts;
   gint           level;
 };

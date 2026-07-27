@@ -26,6 +26,9 @@
 
 #include "core-types.h"
 
+#include "config/gimpxmlparser.h"
+
+#include "gimpimage.h"
 #include "gimpsavable.h"
 #include "gimpsavable-load.h"
 
@@ -55,24 +58,46 @@ struct _GimpLoadValue
 };
 
 
-static gboolean gimp_savable_load_get_all       (GimpLoadState *state,
-                                                 va_list        args);
-static void     gimp_savable_load_store_all     (GimpLoadState *state,
-                                                 va_list        args);
-static void     gimp_savable_load_store_one     (GimpLoadState *state,
-                                                 const gchar   *key,
-                                                 const gchar   *format,
-                                                 va_list        args);
+static void     gimp_savable_load_init_state    (GimpLoadState        *state,
+                                                 Gimp                 *gimp,
+                                                 GFile                *backup_dir);
+static void     gimp_wlbr_load_start_element    (GMarkupParseContext  *context,
+                                                 const gchar          *element_name,
+                                                 const gchar         **attribute_names,
+                                                 const gchar         **attribute_values,
+                                                 gpointer              user_data,
+                                                 GError              **error);
+static void     gimp_wlbr_load_end_element      (GMarkupParseContext  *context,
+                                                 const gchar          *element_name,
+                                                 gpointer              user_data,
+                                                 GError              **error);
+static void     gimp_wlbr_load_text             (GMarkupParseContext  *context,
+                                                 const gchar          *text,
+                                                 gsize                 text_len,
+                                                 gpointer              user_data,
+                                                 GError              **error);
 
-static void     gimp_savable_load_push_context  (GimpLoadState *state);
-static void     gimp_savable_load_pop_context   (GimpLoadState *state);
-static void     gimp_savable_free_context_value (GimpLoadValue *value);
 
-static gboolean gimp_savable_exit_icc           (GimpLoadState  *state,
-                                                 const gchar    *text,
-                                                 gsize           len,
-                                                 gpointer        user_data,
-                                                 GError        **error);
+static gboolean gimp_savable_load_get_all       (GimpLoadState        *state,
+                                                 va_list               args);
+static void     gimp_savable_load_store_all     (GimpLoadState        *state,
+                                                 va_list               args);
+static void     gimp_savable_load_store_one     (GimpLoadState        *state,
+                                                 const gchar          *key,
+                                                 const gchar          *format,
+                                                 va_list               args);
+
+static void     gimp_savable_load_push_context  (GimpLoadState        *state);
+static void     gimp_savable_load_pop_context   (GimpLoadState        *state);
+static void     gimp_savable_free_context_value (GimpLoadValue        *value);
+
+static void     gimp_savable_load_free_context  (GimpLoadContext      *context);
+
+static gboolean gimp_savable_exit_icc           (GimpLoadState        *state,
+                                                 const gchar          *text,
+                                                 gsize                 len,
+                                                 gpointer              user_data,
+                                                 GError              **error);
 
 
 void
@@ -442,6 +467,27 @@ gimp_savable_exit_space (GimpLoadState  *state,
 
 /* Friend Functions for gimpimage-savable */
 
+gboolean
+gimp_savable_load_parse (GimpLoadState  *state,
+                         Gimp           *gimp,
+                         GFile          *backup_dir,
+                         GError        **error)
+{
+  gimp_savable_load_init_state (state, gimp, backup_dir);
+  gimp_savable_load (GIMP_TYPE_IMAGE, state);
+
+  return gimp_xml_parser_parse_gfile (state->xml_parser, state->xml_file, error);
+}
+
+void
+gimp_savable_load_free_state (GimpLoadState *state)
+{
+  g_clear_object (&state->xml_file);
+  g_clear_pointer (&state->xml_parser, gimp_xml_parser_free);
+  g_queue_free_full (state->contexts,
+                     (GDestroyNotify) gimp_savable_load_free_context);
+}
+
 void
 gimp_savable_load_append_text (GimpLoadState *state,
                                const gchar   *text,
@@ -527,6 +573,73 @@ gimp_savable_exit_element (GimpLoadState  *state,
 
 
 /* Private Functions */
+
+static void
+gimp_savable_load_init_state (GimpLoadState *state,
+                              Gimp          *gimp,
+                              GFile         *backup_dir)
+{
+  state->markup_parser.start_element = gimp_wlbr_load_start_element;
+  state->markup_parser.end_element   = gimp_wlbr_load_end_element;
+  state->markup_parser.text          = gimp_wlbr_load_text;
+  state->markup_parser.passthrough   = NULL;
+  state->markup_parser.error         = NULL;
+
+  state->gimp       = gimp;
+  state->image      = NULL;
+  state->xml_file   = g_file_get_child (backup_dir, "wlbr-project.xml");
+  state->subdir     = backup_dir;
+  state->xml_parser = gimp_xml_parser_new (&state->markup_parser, state);
+  state->contexts   = g_queue_new ();
+  state->level      = 0;
+}
+
+static void
+gimp_wlbr_load_start_element (GMarkupParseContext *context,
+                              const gchar         *element_name,
+                              const gchar        **attribute_names,
+                              const gchar        **attribute_values,
+                              gpointer             user_data,
+                              GError             **error)
+{
+  GimpLoadState *state = user_data;
+
+  state->level++;
+
+  gimp_savable_enter_element (state,
+                              element_name,
+                              attribute_names,
+                              attribute_values,
+                              error);
+}
+
+static void
+gimp_wlbr_load_end_element (GMarkupParseContext *context,
+                            const gchar         *element_name,
+                            gpointer             user_data,
+                            GError             **error)
+{
+  GimpLoadState *state = user_data;
+  const gchar   *text;
+  gsize          text_len;
+
+  text = gimp_savable_load_get_text (state, &text_len);
+  gimp_savable_exit_element (state, element_name, text, text_len, error);
+
+  state->level--;
+}
+
+static void
+gimp_wlbr_load_text (GMarkupParseContext *context,
+                     const gchar         *text,
+                     gsize                text_len,
+                     gpointer             user_data,
+                     GError             **error)
+{
+  GimpLoadState *state = user_data;
+
+  gimp_savable_load_append_text (state, text, text_len);
+}
 
 static gboolean
 gimp_savable_load_get_all (GimpLoadState *state,
@@ -775,10 +888,7 @@ gimp_savable_load_pop_context (GimpLoadState *state)
   GimpLoadContext *context;
 
   context = g_queue_pop_head (state->contexts);
-  g_hash_table_destroy (context->handlers);
-  g_hash_table_destroy (context->values);
-  g_string_free (context->text, TRUE);
-  g_free (context);
+  gimp_savable_load_free_context (context);
 }
 
 static void
@@ -792,6 +902,15 @@ gimp_savable_free_context_value (GimpLoadValue *value)
   g_value_unset (value->value);
   g_free (value->value);
   g_free (value);
+}
+
+static void
+gimp_savable_load_free_context (GimpLoadContext *context)
+{
+  g_hash_table_destroy (context->handlers);
+  g_hash_table_destroy (context->values);
+  g_string_free (context->text, TRUE);
+  g_free (context);
 }
 
 
