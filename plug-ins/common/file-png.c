@@ -2673,6 +2673,14 @@ find_unused_ia_color (GeglBuffer *buffer,
   if (trans_used == FALSE)
     return -1;
 
+  /* If there exists a palette index that's fully transparent,
+   * use that as the transparent index */
+  for (i = 0; i < *colors; i++)
+    {
+      if (ix_used[i] == FALSE)
+        return i;
+    }
+
   /* If there is still some room at the end of the palette, increment
    * the number of colors in the image and assign a transparent pixel
    * there.
@@ -2682,12 +2690,6 @@ find_unused_ia_color (GeglBuffer *buffer,
       (*colors)++;
 
       return (*colors) - 1;
-    }
-
-  for (i = 0; i < *colors; i++)
-    {
-      if (ix_used[i] == FALSE)
-        return i;
     }
 
   return -1;
