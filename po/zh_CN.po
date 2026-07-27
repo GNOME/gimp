@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-22 15:31+0000\n"
-"PO-Revision-Date: 2026-07-25 08:39+0800\n"
+"POT-Creation-Date: 2026-07-25 14:26+0000\n"
+"PO-Revision-Date: 2026-07-27 14:56+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -19784,14 +19784,14 @@ msgstr "相乘 (旧)"
 #: app/operations/operations-enums.c:170
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
-msgstr "屏幕（过时）"
+msgstr "滤色（过时）"
 
 #. Translators: this is an abbreviated version of "Screen (legacy)".
 #. Keep it short.
 #: app/operations/operations-enums.c:173
 msgctxt "layer-mode"
 msgid "Screen (l)"
-msgstr "屏幕 (旧)"
+msgstr "滤色 (旧)"
 
 #: app/operations/operations-enums.c:174
 msgctxt "layer-mode"
@@ -20052,7 +20052,7 @@ msgstr "相乘"
 #: app/operations/operations-enums.c:254
 msgctxt "layer-mode"
 msgid "Screen"
-msgstr "屏幕"
+msgstr "滤色"
 
 #: app/operations/operations-enums.c:255
 msgctxt "layer-mode"
