@@ -116,7 +116,7 @@ if flex.found() and bison.found()
         python, '-c',
         'import os, glob; [os.remove(f) for f in glob.glob(os.path.join(os.environ.get("TMP", ""), "*flex_out*")) if os.path.exists(f)]; open("@OUTPUT@", "w").close()'
       ],
-      build_by_default: false
+      build_by_default: true
     )
   endif
 
