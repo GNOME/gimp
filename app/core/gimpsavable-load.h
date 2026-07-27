@@ -55,39 +55,38 @@ void         gimp_savable_load                   (GType                    savab
 
 /* Functions to be used from inside GimpSavable's load() implementation */
 
-void         gimp_savable_load_store_from_string (GimpLoadState            *state,
-                                                  ...);
-void         gimp_savable_load_store_value       (GimpLoadState            *state,
-                                                  const gchar              *key,
-                                                  gpointer                  data,
-                                                  GDestroyNotify            free_data);
+void         gimp_savable_load_store_from_string  (GimpLoadState            *state,
+                                                   ...);
+void         gimp_savable_load_store_value        (GimpLoadState            *state,
+                                                   const gchar              *key,
+                                                   gpointer                  data,
+                                                   GDestroyNotify            free_data);
 
 gboolean     gimp_savable_load_get_values         (GimpLoadState            *state,
-                                                  ...);
+                                                   ...);
 gboolean     gimp_savable_load_get_parent_values  (GimpLoadState            *state,
-                                                  ...);
-void         gimp_savable_load_bubble_up         (GimpLoadState            *state,
-                                                  const gchar              *key);
+                                                   ...);
+void         gimp_savable_load_bubble_up          (GimpLoadState            *state,
+                                                   const gchar              *key);
 
-void         gimp_savable_load_add_handlers      (GimpLoadState            *state,
-                                                  const gchar              *element_name,
-                                                  GimpEnterElementHandler   enter_callback,
-                                                  GimpExitElementhandler    exit_callback,
-                                                  gpointer                  user_data);
+void         gimp_savable_load_add_handlers       (GimpLoadState            *state,
+                                                   const gchar              *element_name,
+                                                   GimpEnterElementHandler   enter_callback,
+                                                   GimpExitElementhandler    exit_callback,
+                                                   gpointer                  user_data);
 
+void         gimp_savable_load_add_simple_handler (GimpLoadState            *state,
+                                                   const gchar              *element_name,
+                                                   const gchar              *text_value_format,
+                                                   ...);
 
 /* Generic element handlers as args to gimp_savable_load_add_handlers(). */
 
-gboolean     gimp_savable_enter_dimensions       (GimpLoadState            *state,
-                                                  const gchar             **attribute_names,
-                                                  const gchar             **attribute_values,
-                                                  gpointer                  user_data,
-                                                  GError                   **error);
 gboolean     gimp_savable_enter_format           (GimpLoadState            *state,
                                                   const gchar             **attribute_names,
                                                   const gchar             **attribute_values,
                                                   gpointer                  user_data,
-                                                  GError                   **error);
+                                                  GError                  **error);
 gboolean     gimp_savable_exit_format            (GimpLoadState            *state,
                                                   const gchar              *text,
                                                   gsize                     len,
@@ -97,7 +96,7 @@ gboolean     gimp_savable_enter_space            (GimpLoadState            *stat
                                                   const gchar             **attribute_names,
                                                   const gchar             **attribute_values,
                                                   gpointer                  user_data,
-                                                  GError                   **error);
+                                                  GError                  **error);
 gboolean     gimp_savable_exit_space             (GimpLoadState            *state,
                                                   const gchar              *text,
                                                   gsize                     len,

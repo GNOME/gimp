@@ -57,6 +57,14 @@ struct _GimpLoadValue
   GDestroyNotify  free_data;
 };
 
+typedef struct _GimpSimpleHandlerData GimpSimpleHandlerData;
+struct _GimpSimpleHandlerData
+{
+  gchar      *value_prefix;
+  gchar      *text_value_format;
+  GHashTable *attributes;
+};
+
 
 static void     gimp_savable_load_init_state    (GimpLoadState        *state,
                                                  Gimp                 *gimp,
@@ -94,6 +102,16 @@ static void     gimp_savable_free_context_value (GimpLoadValue        *value);
 
 static void     gimp_savable_load_free_context  (GimpLoadContext      *context);
 
+static gboolean gimp_savable_load_enter_simple  (GimpLoadState        *state,
+                                                 const gchar         **attribute_names,
+                                                 const gchar         **attribute_values,
+                                                 gpointer              user_data,
+                                                 GError               **error);
+static gboolean gimp_savable_load_exit_simple   (GimpLoadState        *state,
+                                                 const gchar          *text,
+                                                 gsize                 len,
+                                                 gpointer              user_data,
+                                                 GError              **error);
 static gboolean gimp_savable_exit_icc           (GimpLoadState        *state,
                                                  const gchar          *text,
                                                  gsize                 len,
@@ -147,7 +165,7 @@ gimp_savable_load_store_value (GimpLoadState  *state,
   value->value     = gvalue;
   value->free_data = free_data;
 
-  g_hash_table_insert (values, (gpointer) key, value);
+  g_hash_table_insert (values, (gpointer) g_strdup (key), value);
 }
 
 /* Get stored contextual value */
@@ -192,7 +210,7 @@ gimp_savable_load_bubble_up (GimpLoadState *state,
 
   if (g_hash_table_steal_extended (values,
                                    (gconstpointer) key,
-                                   NULL,
+                                   (gpointer *) &key,
                                    &val))
     {
       context = g_queue_peek_nth (state->contexts, 1);
@@ -224,60 +242,86 @@ gimp_savable_load_add_handlers (GimpLoadState           *state,
 }
 
 /**
- * gimp_savable_enter_format:
+ * gimp_savable_load_add_simple_handler:
  * @state:
- * @attribute_names:
- * @attribute_values:
- * @user_data:
- * @error:
+ * @element_name:
+ * @text_value_format:
  *
- * Use this %GimpEnterElementHandler with %NULL %GimpExitElementhandler
- * to parse a <dimensions/> element.
+ * Use this function instead of gimp_savable_load_add_handlers() when
+ * you want to parse a *simple* XML element which only contains
+ * attributes and/or text data, all of which must be decodable by
+ * gimp_savable_load_store_from_string() format.
  *
- * It will create two gint values, bubbling up as "width" and "height".
+ * If @text_value_format is set, then the function will look for text
+ * data, and will decode it according to said format. For instance:
+ *
+ * ```C
+ * gimp_savable_load_add_simple_handler (state, "style", "%[GimpGridStyle]",
+ *                                       NULL);
+ * ```
+ *
+ * will decode `<style>solid</style>` into %GIMP_GRID_SOLID and will
+ * store it, then bubble it up in value "style".
+ *
+ * Any couple of additional arguments must be an attribute name,
+ * followed by a format value. The value name will be the element name
+ * and attribute name, separated by a colon.
+ * The list must end with %NULL.
+ *
+ * For instance:
+ * ```C
+ * gimp_savable_load_add_simple_handler (state, "spacing", NULL,
+ *                                       "x", "%f",
+ *                                       "y", "%f",
+ *                                       NULL);
+ * ```
+ *
+ * will decode `<spacing x='10.000000' y='10.000000'/>` into 2 double
+ * values named respectively "spacing:x" and "spacing:y".
+ *
+ * This function also supports XML elements with both simple attribute
+ * names and text data.
  */
-gboolean
-gimp_savable_enter_dimensions (GimpLoadState  *state,
-                               const gchar   **attribute_names,
-                               const gchar   **attribute_values,
-                               gpointer        user_data,
-                               GError         **error)
+void
+gimp_savable_load_add_simple_handler (GimpLoadState *state,
+                                      const gchar   *element_name,
+                                      const gchar   *text_value_format,
+                                      ...)
 {
-  const gchar *width  = NULL;
-  const gchar *height = NULL;
+  GimpSimpleHandlerData *data;
+  const gchar           *attribute;
+  va_list                args;
 
-  while (*attribute_names)
+  g_return_if_fail (element_name != NULL && *element_name != '\0');
+
+  data = g_new0 (GimpSimpleHandlerData, 1);
+
+  data->value_prefix      = g_strdup (element_name);
+  data->text_value_format = g_strdup (text_value_format);
+  data->attributes        = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                                   g_free, g_free);
+
+  va_start (args, text_value_format);
+  attribute = va_arg (args, gchar *);
+  while (attribute)
     {
-      if (g_strcmp0 (*attribute_names, "width") == 0)
-        width = *attribute_values;
-      else if (g_strcmp0 (*attribute_names, "height") == 0)
-        height = *attribute_values;
-      else
-        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                     "%s: unexpected attribute: '%s'",
-                     G_STRFUNC, *attribute_names);
+      const gchar *attribute_format;
 
-      attribute_names++;
-      attribute_values++;
-    }
+      attribute_format = va_arg (args, gchar *);
+      g_return_if_fail (attribute_format != NULL);
 
-  if (width && height)
-    {
-      gimp_savable_load_store_from_string (state,
-                                           "width",  "%d", width,
-                                           "height", "%d", height,
-                                           NULL);
-      gimp_savable_load_bubble_up (state, "width");
-      gimp_savable_load_bubble_up (state, "height");
-    }
-  else
-    {
-      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                   "%s: width and/or height attributes are missing",
-                   G_STRFUNC);
-    }
+      g_hash_table_insert (data->attributes,
+                           g_strdup (attribute),
+                           g_strdup (attribute_format));
 
-  return (width && height);
+      attribute = va_arg (args, gchar *);
+    }
+  va_end (args);
+
+  gimp_savable_load_add_handlers (state, element_name,
+                                  gimp_savable_load_enter_simple,
+                                  gimp_savable_load_exit_simple,
+                                  data);
 }
 
 /**
@@ -943,7 +987,7 @@ gimp_savable_load_store_one (GimpLoadState *state,
 
   value->value     = gvalue;
   value->free_data = NULL;
-  g_hash_table_insert (values, (gpointer) key, value);
+  g_hash_table_insert (values, (gpointer) g_strdup (key), value);
 }
 
 static void
@@ -955,7 +999,7 @@ gimp_savable_load_push_context (GimpLoadState *state)
 
   context  = g_new0 (GimpLoadContext, 1);
   handlers = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, g_free);
-  values   = g_hash_table_new_full (g_str_hash, g_str_equal, NULL,
+  values   = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
                                    (GDestroyNotify) gimp_savable_free_context_value);
   context->handlers = handlers;
   context->values   = values;
@@ -997,6 +1041,75 @@ gimp_savable_load_free_context (GimpLoadContext *context)
 
 
 /* Handlers */
+
+static gboolean
+gimp_savable_load_enter_simple (GimpLoadState  *state,
+                                const gchar   **attribute_names,
+                                const gchar   **attribute_values,
+                                gpointer        user_data,
+                                GError         **error)
+{
+  GimpSimpleHandlerData *data = user_data;
+
+  while (*attribute_names)
+    {
+      const gchar *attribute_format;
+
+      if (g_hash_table_lookup_extended (data->attributes,
+                                        *attribute_names, NULL,
+                                        (gpointer *) &attribute_format))
+        {
+          gchar *value_name;
+
+          value_name = g_strconcat (data->value_prefix, ":", *attribute_names, NULL);
+          gimp_savable_load_store_from_string (state, value_name, attribute_format,
+                                               *attribute_values, NULL);
+          gimp_savable_load_bubble_up (state, value_name);
+          g_free (value_name);
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_load_exit_simple (GimpLoadState  *state,
+                               const gchar    *text,
+                               gsize           len,
+                               gpointer        user_data,
+                               GError        **error)
+{
+  GimpSimpleHandlerData *data = user_data;
+
+  if (data->text_value_format)
+    {
+      gchar *value;
+
+      value = g_strndup (text, len);
+      gimp_savable_load_store_from_string (state,
+                                           data->value_prefix,
+                                           data->text_value_format,
+                                           value, NULL);
+      gimp_savable_load_bubble_up (state, data->value_prefix);
+      g_free (value);
+    }
+
+  g_free (data->value_prefix);
+  g_free (data->text_value_format);
+  g_hash_table_unref (data->attributes);
+  g_free (data);
+
+  return TRUE;
+}
 
 /**
  * gimp_savable_exit_icc:

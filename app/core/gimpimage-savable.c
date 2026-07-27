@@ -445,9 +445,10 @@ gimp_image_enter_project (GimpLoadState  *state,
                           gpointer        user_data,
                           GError         **error)
 {
-  gimp_savable_load_add_handlers (state, "dimensions",
-                                  gimp_savable_enter_dimensions,
-                                  NULL, NULL);
+  gimp_savable_load_add_simple_handler (state, "dimensions", NULL,
+                                        "width",  "%d",
+                                        "height", "%d",
+                                        NULL);
   gimp_savable_load_add_handlers (state, "format",
                                   gimp_savable_enter_format,
                                   gimp_image_exit_format,
@@ -494,9 +495,9 @@ gimp_image_exit_format (GimpLoadState  *state,
    */
   gimp_savable_exit_format (state, text, len, user_data, error);
   gimp_savable_load_get_parent_values (state,
-                                       "format", &format,
-                                       "width",  &width,
-                                       "height", &height,
+                                       "format",            &format,
+                                       "dimensions:width",  &width,
+                                       "dimensions:height", &height,
                                        NULL);
 
   image_type = gimp_babl_format_get_base_type (format);
