@@ -32,6 +32,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
@@ -42,6 +44,7 @@
 #include "gimpimage-sample-points.h"
 #include "gimpimage-savable.h"
 #include "gimpimage-symmetry.h"
+#include "gimpimage-undo.h"
 #include "gimpparasitelist.h"
 #include "gimpsavable.h"
 #include "gimpsavable-load.h"
@@ -73,6 +76,21 @@ static gboolean   gimp_image_enter_project     (GimpLoadState         *state,
 static gboolean   gimp_image_exit_project      (GimpLoadState         *state,
                                                 const gchar           *text,
                                                 gsize                  len,
+                                                gpointer               user_data,
+                                                GError               **error);
+static gboolean   gimp_image_exit_format       (GimpLoadState         *state,
+                                                const gchar           *text,
+                                                gsize                  len,
+                                                gpointer               user_data,
+                                                GError               **error);
+static gboolean   gimp_image_enter_guides      (GimpLoadState         *state,
+                                                const gchar          **attribute_names,
+                                                const gchar          **attribute_values,
+                                                gpointer               user_data,
+                                                GError               **error);
+static gboolean   gimp_image_enter_guide       (GimpLoadState         *state,
+                                                const gchar          **attribute_names,
+                                                const gchar          **attribute_values,
                                                 gpointer               user_data,
                                                 GError               **error);
 
@@ -153,6 +171,13 @@ gimp_image_load_from_cache (Gimp  *gimp,
                   gimp_file_get_utf8_name (backup_dir),
                   error->message);
       g_clear_error (&error);
+    }
+
+  if (state.image)
+    {
+      gimp_image_undo_enable (state.image);
+      gimp_image_flush (state.image);
+      gimp_create_display (gimp, state.image, gimp_unit_pixel (), 1.0, NULL);
     }
 
   gimp_savable_load_free_state (&state);
@@ -429,7 +454,11 @@ gimp_image_enter_project (GimpLoadState  *state,
                                   NULL, NULL);
   gimp_savable_load_add_handlers (state, "format",
                                   gimp_savable_enter_format,
-                                  gimp_savable_exit_format,
+                                  gimp_image_exit_format,
+                                  NULL);
+  gimp_savable_load_add_handlers (state, "guides",
+                                  gimp_image_enter_guides,
+                                  NULL,
                                   NULL);
 
   return TRUE;
@@ -442,5 +471,132 @@ gimp_image_exit_project (GimpLoadState  *state,
                          gpointer        user_data,
                          GError        **error)
 {
+  return TRUE;
+}
+
+static gboolean
+gimp_image_exit_format (GimpLoadState  *state,
+                        const gchar    *text,
+                        gsize           len,
+                        gpointer        user_data,
+                        GError        **error)
+{
+  GimpImage         *image;
+  const Babl        *format = NULL;
+  gint               width  = 0;
+  gint               height = 0;
+  GimpImageBaseType  image_type;
+  GimpPrecision      precision;
+
+  /* Run the generic exit_format() handler, but additionally (in the
+   * case of GimpImage load code), actually create the image!
+   *
+   * XXX Note that this current logic implies that the <dimensions/> and
+   * <format/> elements were both happening first and in this order. I'm
+   * not sure if we should just enforce element orders with xs:sequence
+   * schema.
+   */
+  gimp_savable_exit_format (state, text, len, user_data, error);
+  gimp_savable_load_get_parent_values (state,
+                                       "format", &format,
+                                       "width",  &width,
+                                       "height", &height,
+                                       NULL);
+
+  image_type = gimp_babl_format_get_base_type (format);
+  precision  = gimp_babl_format_get_precision (format);
+  image      = gimp_create_image (state->gimp, width, height,
+                                  image_type, precision, FALSE);
+  gimp_image_undo_disable (image);
+  state->image = image;
+
+  return TRUE;
+}
+
+static gboolean
+gimp_image_enter_guides (GimpLoadState  *state,
+                         const gchar   **attribute_names,
+                         const gchar   **attribute_values,
+                         gpointer        user_data,
+                         GError        **error)
+{
+  if (state->image == NULL)
+    {
+      /* The image was not created. */
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: basic dimensions and/or format information "
+                   "to create the image were missing.",
+                   G_STRFUNC);
+      return FALSE;
+    }
+
+  gimp_savable_load_add_handlers (state, "guide",
+                                  gimp_image_enter_guide,
+                                  NULL, NULL);
+
+  return TRUE;
+}
+
+gboolean
+gimp_image_enter_guide (GimpLoadState  *state,
+                        const gchar   **attribute_names,
+                        const gchar   **attribute_values,
+                        gpointer        user_data,
+                        GError        **error)
+{
+  const gchar *orientation = NULL;
+  const gchar *position    = NULL;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "orientation") == 0)
+        orientation = *attribute_values;
+      else if (g_strcmp0 (*attribute_names, "position") == 0)
+        position = *attribute_values;
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  if ((! orientation || ! position) && *error == NULL)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: missing orientation and/or position attributes.",
+                   G_STRFUNC);
+    }
+  else
+    {
+      GimpOrientationType o = GIMP_ORIENTATION_UNKNOWN;
+      gint                p = -1;
+
+      gimp_savable_load_store_from_string (state,
+                                           "orientation", "%[GimpOrientationType]", orientation,
+                                           "position",    "%d",                     position,
+                                           NULL);
+      gimp_savable_load_get_values (state,
+                                    "orientation", &o,
+                                    "position",    &p,
+                                    NULL);
+          printf ("%s: add guide of orientation '%s' and position %s.\n",
+                       G_STRFUNC, orientation, position);
+      switch (o)
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          gimp_image_add_hguide (state->image, p, FALSE);
+          break;
+        case GIMP_ORIENTATION_VERTICAL:
+          gimp_image_add_vguide (state->image, p, FALSE);
+          break;
+        default:
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                       "%s: ignoring guide of orientation '%s' and position %s.\n",
+                       G_STRFUNC, orientation, position);
+        }
+    }
+
   return TRUE;
 }
