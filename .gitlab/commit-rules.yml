@@ -3,6 +3,9 @@ patterns:
     - regex: '^(?!Revert ")(?!(([Ii]ssue #[0-9]+)|([A-Za-z0-9][A-Za-z0-9+_/.-]*(,\s*[A-Za-z0-9.][A-Za-z0-9+_/.-]*)*)):\s).+'
       message: "Commit message subject must start with '<section>: ' (comma-separated allowed) or 'Issue #<id>: '. See: https://developer.gimp.org/core/coding_style/#commit-messages"
       where: subject
+    - regex: '^[^:]*:\s[^:]*:\s'
+      message: "Commit message subject sections inside the prefix must be separated by commas. See: https://developer.gimp.org/core/coding_style/#commit-messages"
+      where: subject
     - regex: '^[^:]*,[^:\s]'
       message: "Commit message subject sections inside the prefix must have a space after commas so '<section>, <section>: '. See: https://developer.gimp.org/core/coding_style/#commit-messages"
       where: subject
