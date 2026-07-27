@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-25 10:04+0000\n"
-"PO-Revision-Date: 2026-07-26 14:08+0800\n"
+"POT-Creation-Date: 2026-07-26 20:46+0000\n"
+"PO-Revision-Date: 2026-07-27 14:52+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -500,7 +500,7 @@ msgstr "工具预设编辑器"
 msgid "Help"
 msgstr "帮助"
 
-#: app/actions/actions.c:192 app/core/gimpimage.c:630
+#: app/actions/actions.c:192 app/core/gimpimage.c:626
 msgid "Image"
 msgstr "图像"
 
@@ -2584,7 +2584,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2717
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2533
 #: app/core/gimppalette.c:629 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -12951,7 +12951,8 @@ msgstr "无法执行子进程“%s”（%s）"
 msgid "tags-locale:C"
 msgstr "tags-locale:zh_CN"
 
-#: app/core/gimp-tags.c:156 app/core/gimpimage.c:3169 app/gui/themes.c:731
+#: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:148
+#: app/gui/themes.c:731
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "关闭“%s”时出错：%s"
@@ -13883,200 +13884,195 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "变换图层组"
 
-#: app/core/gimpimage.c:717 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:713 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "对称"
 
-#: app/core/gimpimage.c:2308 app/pdb/drawable-filter-cmds.c:661
+#: app/core/gimpimage.c:2169 app/pdb/drawable-filter-cmds.c:661
 #: app/widgets/gimpdrawabletreeview-filters.c:976
 msgid "Remove filter"
 msgstr "移除滤镜"
 
-#: app/core/gimpimage.c:2962
+#: app/core/gimpimage.c:2778
 msgid " (exported)"
 msgstr "（已导出）"
 
-#: app/core/gimpimage.c:2966
+#: app/core/gimpimage.c:2782
 msgid " (overwritten)"
 msgstr "（已覆盖）"
 
-#: app/core/gimpimage.c:2975
+#: app/core/gimpimage.c:2791
 msgid " (imported)"
 msgstr "（已导入）"
 
-#: app/core/gimpimage.c:3145
-#, c-format
-msgid "Error creating '%s': %s"
-msgstr "创建“%s”时出错：%s"
-
-#: app/core/gimpimage.c:3242 app/core/gimpimage.c:3256
-#: app/core/gimpimage.c:3299
+#: app/core/gimpimage.c:3039 app/core/gimpimage.c:3053
+#: app/core/gimpimage.c:3096
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "图层模式“%s”已添加到 %s"
 
-#: app/core/gimpimage.c:3320
+#: app/core/gimpimage.c:3117
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "图层组已添加到 %s"
 
-#: app/core/gimpimage.c:3327
+#: app/core/gimpimage.c:3124
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "图层组蒙板已添加到 %s"
 
-#: app/core/gimpimage.c:3334
+#: app/core/gimpimage.c:3131
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "图层组位置锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3341
+#: app/core/gimpimage.c:3138
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "图层组透明通道锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3349 app/core/gimpimage.c:3416
+#: app/core/gimpimage.c:3146 app/core/gimpimage.c:3213
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "可见性锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3360
+#: app/core/gimpimage.c:3157
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "文本图层中字体信息的格式已在 %s 中更改"
 
-#: app/core/gimpimage.c:3368
+#: app/core/gimpimage.c:3165
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "图层特效已添加到 %s"
 
-#: app/core/gimpimage.c:3380
+#: app/core/gimpimage.c:3177
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "在 %s 中添加了新的感知混合空间"
 
-#: app/core/gimpimage.c:3394
+#: app/core/gimpimage.c:3191
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "矢量图层已添加到 %s"
 
-#: app/core/gimpimage.c:3402
+#: app/core/gimpimage.c:3199
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "链接图层已添加到 %s"
 
-#: app/core/gimpimage.c:3425
+#: app/core/gimpimage.c:3222
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "多个路径选区已添加到 %s"
 
-#: app/core/gimpimage.c:3437
+#: app/core/gimpimage.c:3234
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "路径中存储的颜色标签已添加到 %s"
 
-#: app/core/gimpimage.c:3444
+#: app/core/gimpimage.c:3241
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "路径中存储的锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3458
+#: app/core/gimpimage.c:3255
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "高位深图像已添加到 %s"
 
-#: app/core/gimpimage.c:3466
+#: app/core/gimpimage.c:3263
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "高位深图像编码已固定到 %s"
 
-#: app/core/gimpimage.c:3474
+#: app/core/gimpimage.c:3271
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "内置 zlib 压缩已添加到 %s"
 
-#: app/core/gimpimage.c:3491
+#: app/core/gimpimage.c:3288
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "对大于 4GB 图像文件的支持已添加到 %s"
 
-#: app/core/gimpimage.c:3498
+#: app/core/gimpimage.c:3295
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "多个图层选区被添加进 %s"
 
-#: app/core/gimpimage.c:3515
+#: app/core/gimpimage.c:3312
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "画布外参考线添加至 %s"
 
-#: app/core/gimpimage.c:3526
+#: app/core/gimpimage.c:3323
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "项目设置和项目名称中的模式搜索已添加进 %s"
 
-#: app/core/gimpimage.c:3532
+#: app/core/gimpimage.c:3329
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "多个通道选择已添加进 %s"
 
-#: app/core/gimpimage.c:3652
+#: app/core/gimpimage.c:3449
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "改变图像分辨率"
 
-#: app/core/gimpimage.c:3704
+#: app/core/gimpimage.c:3501
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "改变图像单位"
 
-#: app/core/gimpimage.c:4743
+#: app/core/gimpimage.c:4540
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "“GIMP 注释”内嵌信息校验失败：注释包含无效的 UTF-8"
 
-#: app/core/gimpimage.c:4805
+#: app/core/gimpimage.c:4602
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "添加内嵌信息到图像"
 
-#: app/core/gimpimage.c:4850
+#: app/core/gimpimage.c:4647
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "从图像移除内嵌信息"
 
-#: app/core/gimpimage.c:5823
+#: app/core/gimpimage.c:5620
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "添加图层"
 
-#: app/core/gimpimage.c:5883 app/core/gimpimage.c:5914
+#: app/core/gimpimage.c:5680 app/core/gimpimage.c:5711
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "移除图层"
 
-#: app/core/gimpimage.c:5908
+#: app/core/gimpimage.c:5705
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "移除浮动选区"
 
-#: app/core/gimpimage.c:6071
+#: app/core/gimpimage.c:5868
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "添加通道"
 
-#: app/core/gimpimage.c:6101 app/core/gimpimage.c:6129
+#: app/core/gimpimage.c:5898 app/core/gimpimage.c:5926
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "移除通道"
 
-#: app/core/gimpimage.c:6191
+#: app/core/gimpimage.c:5988
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "添加路径"
 
-#: app/core/gimpimage.c:6226 app/core/gimpimage.c:6234
+#: app/core/gimpimage.c:6023 app/core/gimpimage.c:6031
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "移除路径"
@@ -14356,6 +14352,11 @@ msgstr "移动采样点"
 msgctxt "undo-type"
 msgid "Set Sample Point Pick Mode"
 msgstr "设置采样点拾取模式"
+
+#: app/core/gimpimage-savable.c:124
+#, c-format
+msgid "Error creating '%s': %s"
+msgstr "创建“%s”时出错：%s"
 
 #: app/core/gimpimage-scale.c:81
 msgctxt "undo-type"
@@ -19864,14 +19865,14 @@ msgstr "相乘 (旧)"
 #: app/operations/operations-enums.c:170
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
-msgstr "屏幕（过时）"
+msgstr "滤色（过时）"
 
 #. Translators: this is an abbreviated version of "Screen (legacy)".
 #. Keep it short.
 #: app/operations/operations-enums.c:173
 msgctxt "layer-mode"
 msgid "Screen (l)"
-msgstr "屏幕 (旧)"
+msgstr "滤色 (旧)"
 
 #: app/operations/operations-enums.c:174
 msgctxt "layer-mode"
@@ -20132,7 +20133,7 @@ msgstr "相乘"
 #: app/operations/operations-enums.c:254
 msgctxt "layer-mode"
 msgid "Screen"
-msgstr "屏幕"
+msgstr "滤色"
 
 #: app/operations/operations-enums.c:255
 msgctxt "layer-mode"
