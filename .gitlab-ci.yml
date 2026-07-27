@@ -776,6 +776,7 @@ check-commit-log:
     - .fdo.ci-fairy
   rules:
     - <<: *CI_MERGE
+    - <<: *CI_COMMIT
   stage: analysis
   variables:
     GIT_DEPTH: "100"
