@@ -255,7 +255,7 @@ gimp_savable_space_save (const Babl    *space,
                          GimpSaveState *state,
                          gint           new_space_id)
 {
-  g_return_if_fail (state->icc_references != NULL || new_space_id >= 0);
+  g_return_if_fail (state->spaces != NULL || new_space_id >= 0);
 
   if (space == babl_space ("sRGB") || space == NULL)
     {
@@ -265,7 +265,7 @@ gimp_savable_space_save (const Babl    *space,
        */
       gimp_savable_print_element (state, "space", NULL, NULL, "name", "%s", "sRGB", NULL);
     }
-  else if (state->icc_references == NULL)
+  else if (state->spaces == NULL)
     {
       /* A NULL references is a special case where we are creating the
        * hash table of all used space in initialization step. This is
@@ -287,7 +287,7 @@ gimp_savable_space_save (const Babl    *space,
       gpointer key;
       gpointer space_id;
 
-      if (g_hash_table_lookup_extended (state->icc_references, babl_get_name (space), &key, &space_id))
+      if (g_hash_table_lookup_extended (state->spaces, babl_get_name (space), &key, &space_id))
         {
           gimp_savable_print_element (state, "space", NULL, NULL,
                                       "idref", "space-%d", GPOINTER_TO_UINT (space_id),
@@ -331,7 +331,7 @@ gimp_savable_color_save  (GeglColor     *color,
   guint8      pixel[40];
   gint        bpp;
 
-  g_return_if_fail (state->icc_references != NULL);
+  g_return_if_fail (state->spaces != NULL);
 
   if (name != NULL)
     gimp_savable_print_element_start (state, "color", "name", "%s", name, NULL);
@@ -367,14 +367,14 @@ void
 gimp_savable_save_all_spaces (GimpImage     *image,
                               GimpSaveState *state)
 {
-  GHashTable *icc_refs;
+  GHashTable *spaces;
   GList      *iter;
   const Babl *space;
   gint        icc_id = 0;
 
-  g_return_if_fail (state->icc_references == NULL);
+  g_return_if_fail (state->spaces == NULL);
 
-  icc_refs = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
+  spaces = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, NULL);
 
   /* Save the space of the image itself. */
   gimp_savable_print_element_start (state, "spaces", NULL);
@@ -382,7 +382,7 @@ gimp_savable_save_all_spaces (GimpImage     *image,
   if (space != NULL && space != babl_space ("sRGB"))
     {
       gimp_savable_space_save (space, state, icc_id);
-      g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GINT_TO_POINTER (icc_id++));
+      g_hash_table_insert (spaces, (gpointer) babl_get_name (space), GINT_TO_POINTER (icc_id++));
     }
 
   /* Save the space of the layers (preparing a future where layers may
@@ -395,10 +395,10 @@ gimp_savable_save_all_spaces (GimpImage     *image,
 
       space = gimp_drawable_get_space (drawable);
       if (space != babl_space ("sRGB") &&
-          ! g_hash_table_lookup_extended (icc_refs, babl_get_name (space), NULL, NULL))
+          ! g_hash_table_lookup_extended (spaces, babl_get_name (space), NULL, NULL))
         {
           gimp_savable_space_save (space, state, icc_id);
-          g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
+          g_hash_table_insert (spaces, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
         }
     }
   g_list_free (iter);
@@ -423,10 +423,10 @@ gimp_savable_save_all_spaces (GimpImage     *image,
               format = gegl_color_get_format (entry->color);
               space = babl_format_get_space (format);
               if (space != babl_space ("sRGB") &&
-                  ! g_hash_table_lookup_extended (icc_refs, babl_get_name (space), NULL, NULL))
+                  ! g_hash_table_lookup_extended (spaces, babl_get_name (space), NULL, NULL))
                 {
                   gimp_savable_space_save (space, state, icc_id);
-                  g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
+                  g_hash_table_insert (spaces, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
                 }
             }
         }
@@ -434,16 +434,16 @@ gimp_savable_save_all_spaces (GimpImage     *image,
         {
           space = babl_format_get_space (format);
           if (space != babl_space ("sRGB") &&
-              ! g_hash_table_lookup_extended (icc_refs, babl_get_name (space), NULL, NULL))
+              ! g_hash_table_lookup_extended (spaces, babl_get_name (space), NULL, NULL))
             {
               gimp_savable_space_save (space, state, icc_id);
-              g_hash_table_insert (icc_refs, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
+              g_hash_table_insert (spaces, (gpointer) babl_get_name (space), GUINT_TO_POINTER (icc_id++));
             }
         }
     }
   gimp_savable_print_element_end (state, "spaces");
 
-  state->icc_references = icc_refs;
+  state->spaces = spaces;
 }
 
 void

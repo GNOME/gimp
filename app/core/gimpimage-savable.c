@@ -110,11 +110,11 @@ gimp_image_save_to_cache (GimpImage *image,
       return;
     }
 
-  state.output         = output;
-  state.image          = image;
-  state.xcf_file       = xcf_file;
-  state.icc_references = NULL;
-  state.elements       = g_queue_new ();
+  state.output   = output;
+  state.image    = image;
+  state.xcf_file = xcf_file;
+  state.spaces   = NULL;
+  state.elements = g_queue_new ();
 
   g_output_stream_printf (output, NULL, NULL, NULL, "<?xml version='1.0' encoding='UTF-8'?>\n");
   gimp_savable_print_element_start (&state, "xcf", "version", "%d", WLBR_VERSION, NULL);
@@ -293,7 +293,7 @@ gimp_image_savable_save (GimpSavable   *savable,
 
   gimp_savable_print_element_end (state, "project");
 
-  g_clear_pointer (&state->icc_references, g_hash_table_unref);
+  g_clear_pointer (&state->spaces, g_hash_table_unref);
 }
 
 void
@@ -389,9 +389,27 @@ gimp_image_exit_spaces (GimpLoadState  *state,
                         gpointer        user_data,
                         GError        **error)
 {
-  gimp_savable_load_store_value (state, "spaces", user_data,
-                                 (GDestroyNotify) g_hash_table_unref);
-  gimp_savable_load_bubble_up (state, "spaces");
+  GHashTable *spaces = (GHashTable *) user_data;
+
+  if (! state->spaces)
+    {
+      /* Spaces are referenced all throughout a project so we don't just
+       * bubble this up and store it in the load state.
+       */
+      state->spaces = spaces;
+    }
+  else
+    {
+      /* Though not standard, this would allow concatenating several
+       * <spaces/> lists.
+       */
+      for (GList *iter = g_hash_table_get_keys (spaces); iter; iter = iter->next)
+        {
+          const Babl *space = g_hash_table_lookup (spaces, iter->data);
+
+          g_hash_table_insert (state->spaces, g_strdup (iter->data), (gpointer) space);
+        }
+    }
 
   return TRUE;
 }

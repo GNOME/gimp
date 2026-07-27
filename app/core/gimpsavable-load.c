@@ -365,19 +365,24 @@ gimp_savable_exit_format (GimpLoadState  *state,
  * Use this %GimpEnterElementHandler with gimp_savable_exit_space() to
  * parse a <space/> element.
  *
- * If no @user_data is set, it will create a space, which it will bubble
- * up to the parent context under the key "space".
+ * These handlers will create or retrieve a Babl space.
  *
  * If @user_data is set, it must be a %GHashTable. Then we expect the
  * attribute "id" to be set, and it will be used as the key with which
  * the space will be added to the table.
+ *
+ * Otherwise the attribute "idref" can be set, then it will look up the
+ * hash table (now in @state) to retrieve the corresponding space.
+ *
+ * Either way, the created or retrieved space object will bubble up to
+ * the parent context under the key "space", once exiting the element.
  */
 gboolean
 gimp_savable_enter_space (GimpLoadState  *state,
                           const gchar   **attribute_names,
                           const gchar   **attribute_values,
                           gpointer        user_data,
-                          GError         **error)
+                          GError        **error)
 {
   const Babl  *space  = NULL;
   const gchar *id     = NULL;
@@ -397,6 +402,21 @@ gimp_savable_enter_space (GimpLoadState  *state,
       else if (g_strcmp0 (*attribute_names, "id") == 0)
         {
           id = *attribute_values;
+        }
+      else if (state->spaces && g_strcmp0 (*attribute_names, "idref") == 0)
+        {
+          /* If spaces hashtable is as user_data, it means we are
+           * constructing it. Otherwise it means we are within the main
+           * file and we can retrieve spaces from it.
+           */
+          gpointer data;
+
+          if (g_hash_table_lookup_extended (state->spaces, *attribute_values, NULL, &data))
+            space = (const Babl *) data;
+          else
+            g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                         "%s: failed to retrieve a space by idref='%s'",
+                         G_STRFUNC, *attribute_names);
         }
       else
         {
@@ -456,10 +476,8 @@ gimp_savable_exit_space (GimpLoadState  *state,
       else
         g_hash_table_insert (spaces, g_strdup (space_id), (gpointer) space);
     }
-  else
-    {
-      gimp_savable_load_bubble_up (state, "space");
-    }
+
+  gimp_savable_load_bubble_up (state, "space");
 
   return TRUE;
 }
@@ -486,6 +504,7 @@ gimp_savable_load_free_state (GimpLoadState *state)
   g_clear_pointer (&state->xml_parser, gimp_xml_parser_free);
   g_queue_free_full (state->contexts,
                      (GDestroyNotify) gimp_savable_load_free_context);
+  g_clear_pointer (&state->spaces, g_hash_table_unref);
 }
 
 void
@@ -592,6 +611,7 @@ gimp_savable_load_init_state (GimpLoadState *state,
   state->xml_parser = gimp_xml_parser_new (&state->markup_parser, state);
   state->contexts   = g_queue_new ();
   state->level      = 0;
+  state->spaces     = NULL;
 }
 
 static void

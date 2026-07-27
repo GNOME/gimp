@@ -42,7 +42,7 @@ struct _GimpSaveState
   GOutputStream *output;
   GimpImage     *image;
   GFile         *xcf_file;
-  GHashTable    *icc_references;
+  GHashTable    *spaces;
   GQueue        *elements;
 };
 
@@ -58,6 +58,8 @@ struct _GimpLoadState
   GMarkupParser  markup_parser;
   GQueue        *contexts;
   gint           level;
+
+  GHashTable    *spaces;
 };
 
 
