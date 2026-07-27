@@ -3206,13 +3206,22 @@ gimp_image_get_xcf_version (GimpImage    *image,
   items = gimp_image_get_channel_list (image);
   for (list = items; list; list = g_list_next (list))
     {
-      GimpChannel *channel = GIMP_CHANNEL (list->data);
+      GimpChannel   *channel = GIMP_CHANNEL (list->data);
+      GimpContainer *filters;
 
       if (gimp_item_get_lock_visibility (GIMP_ITEM (channel)))
         {
           ADD_REASON (g_strdup_printf (_("Visibility locks were added in %s"),
                                        "GIMP 3.0"));
           version = MAX (17, version);
+        }
+
+      filters = gimp_drawable_get_filters (GIMP_DRAWABLE (channel));
+      if (gimp_container_get_n_children (filters) > 0)
+        {
+          ADD_REASON (g_strdup_printf (_("Channel effects were saved in %s"),
+                                         "GIMP 3.2"));
+          version = MAX (26, version);
         }
     }
   g_list_free (items);

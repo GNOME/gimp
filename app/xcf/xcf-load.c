@@ -165,6 +165,8 @@ typedef struct
 static void            xcf_load_add_masks     (GimpImage     *image);
 static void            xcf_load_add_effects   (XcfInfo       *info,
                                                GimpImage     *image);
+static void            xcf_load_create_effect (GimpDrawable  *drawable,
+                                               const gchar   *effect_id);
 static gboolean        xcf_load_image_props   (XcfInfo       *info,
                                                GimpImage     *image);
 static gboolean        xcf_load_layer_props   (XcfInfo       *info,
@@ -200,7 +202,8 @@ static GimpLayer     * xcf_load_layer         (XcfInfo       *info,
                                                GList        **item_path,
                                                gint          *n_broken_effects);
 static GimpChannel   * xcf_load_channel       (XcfInfo       *info,
-                                               GimpImage     *image);
+                                               GimpImage     *image,
+                                               gint          *n_broken_effects);
 static FilterData    * xcf_load_effect        (XcfInfo       *info,
                                                GimpImage     *image,
                                                GimpDrawable  *drawable);
@@ -1179,7 +1182,7 @@ xcf_load_image (Gimp     *gimp,
         goto error;
 
       /* read in the channel */
-      channel = xcf_load_channel (info, image);
+      channel = xcf_load_channel (info, image, &n_broken_effects);
       if (!channel)
         {
           n_broken_channels++;
@@ -1656,66 +1659,82 @@ xcf_load_add_effects (XcfInfo   *info,
                       GimpImage *image)
 {
   GList *layers;
+  GList *channels;
   GList *list;
 
-  layers = gimp_image_get_layer_list (image);
+  layers   = gimp_image_get_layer_list (image);
+  channels = gimp_image_get_channel_list (image);
 
   for (list = layers; list; list = g_list_next (list))
     {
-      GimpLayer *layer = list->data;
-      GList     *effects_nodes;
+      GimpDrawable *drawable = list->data;
 
-      effects_nodes = g_object_get_data (G_OBJECT (layer), "gimp-layer-effects");
-
-      if (effects_nodes)
-        {
-          GList *iter;
-
-          for (iter = effects_nodes; iter; iter = iter->next)
-            {
-              FilterData *data = iter->data;
-
-              if (! data->unsupported_operation)
-                {
-                  GimpDrawableFilter *filter = NULL;
-
-                  if (! data->icon_name)
-                    data->icon_name = g_strdup ("gimp-gegl");
-
-                  filter = gimp_drawable_filter_new (GIMP_DRAWABLE (layer),
-                                                     data->name, data->operation,
-                                                     data->icon_name);
-
-                  gimp_drawable_filter_set_opacity (filter, data->opacity);
-                  gimp_drawable_filter_set_mode (filter, data->paint_mode,
-                                                 data->blend_space,
-                                                 data->composite_space,
-                                                 data->composite_mode);
-                  gimp_drawable_filter_set_clip (filter, data->clip);
-                  gimp_drawable_filter_set_region (filter, data->region);
-
-                  g_object_set (filter,
-                                "mask", data->mask,
-                                NULL);
-
-                  gimp_drawable_filter_apply_with_mask (filter, data->mask,
-                                                        NULL);
-
-                  gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
-
-                  gimp_drawable_filter_layer_mask_freeze (filter);
-
-                  gimp_filter_set_active (GIMP_FILTER (filter), data->is_visible);
-
-                  g_object_unref (filter);
-                }
-            }
-
-          g_object_set_data (G_OBJECT (layer), "gimp-layer-effects", NULL);
-        }
+      xcf_load_create_effect (drawable, "gimp-layer-effects");
     }
-
   g_list_free (layers);
+
+  for (list = channels; list; list = g_list_next (list))
+    {
+      GimpDrawable *drawable = list->data;
+
+      xcf_load_create_effect (drawable, "gimp-channel-effects");
+    }
+  g_list_free (channels);
+}
+
+static void
+xcf_load_create_effect (GimpDrawable *drawable,
+                        const gchar  *effect_id)
+{
+  GList *effects_nodes;
+
+  effects_nodes = g_object_get_data (G_OBJECT (drawable), effect_id);
+
+  if (effects_nodes)
+    {
+      GList *iter;
+
+      for (iter = effects_nodes; iter; iter = iter->next)
+        {
+          FilterData *data = iter->data;
+
+          if (! data->unsupported_operation)
+            {
+              GimpDrawableFilter *filter = NULL;
+
+              if (! data->icon_name)
+                data->icon_name = g_strdup ("gimp-gegl");
+
+              filter = gimp_drawable_filter_new (drawable,
+                                                 data->name, data->operation,
+                                                 data->icon_name);
+
+              gimp_drawable_filter_set_opacity (filter, data->opacity);
+              gimp_drawable_filter_set_mode (filter, data->paint_mode,
+                                             data->blend_space,
+                                             data->composite_space,
+                                             data->composite_mode);
+              gimp_drawable_filter_set_clip (filter, data->clip);
+              gimp_drawable_filter_set_region (filter, data->region);
+
+              g_object_set (filter,
+                            "mask", data->mask,
+                            NULL);
+
+              gimp_drawable_filter_apply_with_mask (filter, data->mask,
+                                                    NULL);
+
+              gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+
+              gimp_drawable_filter_layer_mask_freeze (filter);
+
+              gimp_filter_set_active (GIMP_FILTER (filter), data->is_visible);
+
+              g_object_unref (filter);
+            }
+        }
+      g_object_set_data (G_OBJECT (drawable), effect_id, NULL);
+    }
 }
 
 static gboolean
@@ -4081,10 +4100,14 @@ xcf_load_layer (XcfInfo    *info,
 
 static GimpChannel *
 xcf_load_channel (XcfInfo   *info,
-                  GimpImage *image)
+                  GimpImage *image,
+                  gint      *n_broken_effects)
 {
   GimpChannel *channel;
   goffset      hierarchy_offset;
+  goffset      effects_offset   = 0;
+  GList       *filter_data_list = NULL;
+  gint         filter_count     = 0;
   gint         width;
   gint         height;
   gboolean     is_fs_drawable;
@@ -4125,6 +4148,8 @@ xcf_load_channel (XcfInfo   *info,
   /* read the hierarchy offset */
   cur_offset = info->cp;
   xcf_read_offset (info, &hierarchy_offset, 1);
+  if (info->file_version >= 26)
+    xcf_read_offset (info, &effects_offset,  1);
 
   if (hierarchy_offset < cur_offset)
     {
@@ -4140,7 +4165,55 @@ xcf_load_channel (XcfInfo   *info,
                          gimp_drawable_get_buffer (GIMP_DRAWABLE (channel))))
     goto error;
 
-  xcf_progress_update (info);
+  cur_offset += info->bytes_per_offset;
+
+  /* read in any channel effects and effect masks */
+  while (effects_offset != 0)
+    {
+      FilterData *filter_data;
+
+      if (effects_offset < cur_offset)
+        {
+          GIMP_LOG (XCF, "Invalid effect offset: %" G_GOFFSET_FORMAT
+                    " at offset: %" G_GOFFSET_FORMAT, effects_offset, cur_offset);
+          goto error;
+        }
+
+      /* seek to the effect offset */
+      if (! xcf_seek_pos (info, effects_offset, NULL))
+        goto error;
+
+      filter_data = xcf_load_effect (info, image, GIMP_DRAWABLE (channel));
+      if (! filter_data)
+        {
+          (*n_broken_effects)++;
+        }
+      else
+        {
+          filter_data_list = g_list_prepend (filter_data_list, filter_data);
+          filter_count++;
+        }
+      xcf_progress_update (info);
+
+      /* restore the saved position so we'll be ready to
+       * read the next offset.
+       */
+      cur_offset += info->bytes_per_offset;
+      if (! xcf_seek_pos (info, cur_offset, NULL))
+        goto error;
+
+      /* read in the offset of the next effect */
+      if (xcf_read_offset (info, &effects_offset, 1) < info->bytes_per_offset)
+        {
+          GIMP_LOG (XCF, "Failed to read effects offset"
+                    " at offset: %" G_GOFFSET_FORMAT, info->cp);
+          break;
+        }
+    }
+
+  if (filter_count > 0)
+    g_object_set_data_full (G_OBJECT (channel), "gimp-channel-effects", filter_data_list,
+                            (GDestroyNotify) xcf_load_free_effects);
 
   if (is_fs_drawable)
     info->floating_sel_drawable = GIMP_DRAWABLE (channel);
@@ -4254,10 +4327,12 @@ xcf_load_effect (XcfInfo      *info,
 
   if (mask_offset != 0)
     {
+      gint n_broken_effects = 0;
+
       if (! xcf_seek_pos (info, mask_offset, NULL))
         goto error;
 
-      effect_mask = xcf_load_channel (info, image);
+      effect_mask = xcf_load_channel (info, image, &n_broken_effects);
       if (! effect_mask)
         goto error;
     }
