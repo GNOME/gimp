@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-25 20:40+0000\n"
-"PO-Revision-Date: 2026-07-26 11:43+0800\n"
+"POT-Creation-Date: 2026-07-27 05:17+0000\n"
+"PO-Revision-Date: 2026-07-27 14:47+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -3412,7 +3412,7 @@ msgid "Frame %d"
 msgstr "帧 %d"
 
 #: plug-ins/common/file-gif-load.c:1289 plug-ins/common/file-mng.c:1140
-#: plug-ins/common/file-png.c:3018 plug-ins/file-webp/file-webp-load.c:227
+#: plug-ins/common/file-png.c:3020 plug-ins/file-webp/file-webp-load.c:227
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "帧 %d（%d%s）"
@@ -4500,7 +4500,7 @@ msgstr "写入 tIME（创建时间）数据块"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:994 plug-ins/common/file-png.c:2807
+#: plug-ins/common/file-mng.c:994 plug-ins/common/file-png.c:2809
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "无法无损地保存透明度，以不透明保存。"
 
@@ -13580,7 +13580,7 @@ msgstr "叠加"
 
 #: plug-ins/gradient-flare/gradient-flare.c:743
 msgid "Screen"
-msgstr "屏幕"
+msgstr "滤色"
 
 #: plug-ins/gradient-flare/gradient-flare.c:810
 msgid "_Gradient Flare..."
