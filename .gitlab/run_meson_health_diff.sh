@@ -202,7 +202,7 @@ missing_exec=
 for sh_script in $(find "$CI_PROJECT_DIR" -type d -name .git -prune -o -type f \( ! -name '*.ps1' ! -name '*.c' -exec grep -lE '^#!\s*/usr/bin/env\s+(sh|bash)|^#!\s*/(usr/bin|bin)/(sh|bash)(\s|$)' {} \; -o -name '*.sh' ! -exec grep -q '^#!' {} \; -print \)); do
   shellcheck --severity=warning --shell=sh -x "$sh_script" | grep -v 'set option posix is' | grep -vE '.*http.*SC[0-9]+.*POSIX' | grep --color=always -B 2 -E 'SC[0-9]+.*POSIX' && found_bashism='intrinsic_bashism'
   checkbashisms -f $sh_script || found_bashism='intrinsic_bashism'
-  [ -x $sh_script ] || missing_exec="$missing_exec $sh_script"
+  [ -x $sh_script ] || missing_exec="$(echo "$missing_exec $sh_script" | sed "s|$PWD/||")"
 done
 
 if [ "$found_bashism" ]; then
