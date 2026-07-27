@@ -62,7 +62,9 @@ void         gimp_savable_load_store_value       (GimpLoadState            *stat
                                                   gpointer                  data,
                                                   GDestroyNotify            free_data);
 
-gboolean     gimp_savable_load_get_value         (GimpLoadState            *state,
+gboolean     gimp_savable_load_get_values         (GimpLoadState            *state,
+                                                  ...);
+gboolean     gimp_savable_load_get_parent_values  (GimpLoadState            *state,
                                                   ...);
 void         gimp_savable_load_bubble_up         (GimpLoadState            *state,
                                                   const gchar              *key);

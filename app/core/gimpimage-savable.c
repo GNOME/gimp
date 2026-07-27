@@ -327,7 +327,7 @@ gimp_image_enter_xcf (GimpLoadState  *state,
           gimp_savable_load_store_from_string (state,
                                                "version", "%d", *attribute_values,
                                                NULL);
-          gimp_savable_load_get_value (state, "version", &version, NULL);
+          gimp_savable_load_get_values (state, "version", &version, NULL);
 
           if (version != 1)
             {

@@ -79,6 +79,7 @@ static void     gimp_wlbr_load_text             (GMarkupParseContext  *context,
 
 
 static gboolean gimp_savable_load_get_all       (GimpLoadState        *state,
+                                                 GimpLoadContext      *context,
                                                  va_list               args);
 static void     gimp_savable_load_store_all     (GimpLoadState        *state,
                                                  va_list               args);
@@ -151,14 +152,30 @@ gimp_savable_load_store_value (GimpLoadState  *state,
 
 /* Get stored contextual value */
 gboolean
-gimp_savable_load_get_value (GimpLoadState *state,
-                             ...)
+gimp_savable_load_get_values (GimpLoadState *state,
+                              ...)
 {
-  va_list  args;
-  gboolean success;
+  GimpLoadContext *context = g_queue_peek_head (state->contexts);
+  va_list          args;
+  gboolean         success;
 
   va_start (args, state);
-  success = gimp_savable_load_get_all (state, args);
+  success = gimp_savable_load_get_all (state, context, args);
+  va_end (args);
+
+  return success;
+}
+
+gboolean
+gimp_savable_load_get_parent_values (GimpLoadState *state,
+                                     ...)
+{
+  GimpLoadContext *context = g_queue_peek_nth (state->contexts, 1);
+  va_list          args;
+  gboolean         success;
+
+  va_start (args, state);
+  success = gimp_savable_load_get_all (state, context, args);
   va_end (args);
 
   return success;
@@ -330,8 +347,8 @@ gimp_savable_exit_format (GimpLoadState  *state,
   const Babl  *format   = NULL;
   const Babl  *space    = NULL;
 
-  gimp_savable_load_get_value (state, "space", &space, NULL);
-  gimp_savable_load_get_value (state, "encoding", &encoding, NULL);
+  gimp_savable_load_get_values (state, "space", &space, NULL);
+  gimp_savable_load_get_values (state, "encoding", &encoding, NULL);
 
   /* The enter_format() handler should have already taken care of an
    * absent encoding.
@@ -465,7 +482,7 @@ gimp_savable_exit_space (GimpLoadState  *state,
 
   if (spaces)
     {
-      gimp_savable_load_get_value (state,
+      gimp_savable_load_get_values (state,
                                    "space",    &space,
                                    "space-id", &space_id,
                                    NULL);
@@ -662,13 +679,13 @@ gimp_wlbr_load_text (GMarkupParseContext *context,
 }
 
 static gboolean
-gimp_savable_load_get_all (GimpLoadState *state,
-                           va_list        args)
+gimp_savable_load_get_all (GimpLoadState   *state,
+                           GimpLoadContext *context,
+                           va_list          args)
 {
-  GimpLoadContext *context = g_queue_peek_head (state->contexts);
-  GHashTable      *values  = context->values;
-  const gchar     *key;
-  gboolean         success = TRUE;
+  GHashTable  *values  = context->values;
+  const gchar *key;
+  gboolean     success = TRUE;
 
   key = va_arg (args, gchar *);
   while (key)
@@ -734,6 +751,11 @@ gimp_savable_load_get_all (GimpLoadState *state,
             {
               gpointer *pointer = va_arg (args, gpointer *);
               *pointer = g_value_get_pointer (gvalue);
+            }
+          else if (g_type_is_a (G_VALUE_TYPE (gvalue), G_TYPE_ENUM))
+            {
+              gint *eval = va_arg (args, gint *);
+              *eval = g_value_get_enum (gvalue);
             }
           else
             {
@@ -876,7 +898,47 @@ gimp_savable_load_store_one (GimpLoadState *state,
     }
   else
     {
-      g_return_if_reached ();
+      gsize flen = strlen (format);
+
+      if (flen > 3 && format[0] == '%' && format[1] == '[' &&
+          format[flen - 1] == ']')
+        {
+          /* Custom format: enum types. */
+          GEnumClass *klass;
+          GEnumValue *enum_value;
+          gchar      *type_name;
+          GType       enum_type;
+
+          type_name = g_strdup (format + 2);
+          type_name[strlen (type_name) - 1] = '\0';
+          enum_type = g_type_from_name (type_name);
+          if (enum_type == 0)
+            {
+              g_printerr ("Unknown enum type: %s\n", type_name);
+              g_free (type_name);
+              return;
+            }
+          g_return_if_fail (G_TYPE_IS_ENUM (enum_type));
+          g_value_init (gvalue, enum_type);
+
+          klass = g_type_class_ref (enum_type);
+          enum_value = g_enum_get_value_by_nick (klass, strval);
+          if (enum_value == NULL)
+            {
+              g_printerr ("Unknown enum value of type %s: %s\n", type_name, strval);
+              g_free (type_name);
+              g_type_class_unref (klass);
+              return;
+            }
+          g_value_set_enum (gvalue, enum_value->value);
+
+          g_free (type_name);
+          g_type_class_unref (klass);
+        }
+      else
+        {
+          g_return_if_reached ();
+        }
     }
 
   value->value     = gvalue;
