@@ -78,6 +78,8 @@ void         gimp_savable_load_add_handlers       (GimpLoadState            *sta
 void         gimp_savable_load_add_simple_handler (GimpLoadState            *state,
                                                    const gchar              *element_name,
                                                    const gchar              *text_value_format,
+                                                   gboolean                  all_attributes_needed,
+                                                   gboolean                  fatal_on_missing,
                                                    ...);
 
 /* Generic element handlers as args to gimp_savable_load_add_handlers(). */

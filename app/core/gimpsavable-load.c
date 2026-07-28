@@ -63,6 +63,8 @@ struct _GimpSimpleHandlerData
   gchar      *value_prefix;
   gchar      *text_value_format;
   GHashTable *attributes;
+  gboolean    all_attributes_needed;
+  gboolean    fatal_on_missing;
 };
 
 
@@ -246,6 +248,8 @@ gimp_savable_load_add_handlers (GimpLoadState           *state,
  * @state:
  * @element_name:
  * @text_value_format:
+ * @all_attributes_needed:
+ * @fatal_on_missing:
  *
  * Use this function instead of gimp_savable_load_add_handlers() when
  * you want to parse a *simple* XML element which only contains
@@ -281,11 +285,18 @@ gimp_savable_load_add_handlers (GimpLoadState           *state,
  *
  * This function also supports XML elements with both simple attribute
  * names and text data.
+ *
+ * Note that if @all_attributes_needed is %TRUE, this function will
+ * trigger an error message when not all the attributes were set on
+ * @element_name. Nevertheless the error message will only be fatal is
+ * @fatal_on_missing is also %TRUE.
  */
 void
 gimp_savable_load_add_simple_handler (GimpLoadState *state,
                                       const gchar   *element_name,
                                       const gchar   *text_value_format,
+                                      gboolean       all_attributes_needed,
+                                      gboolean       fatal_on_missing,
                                       ...)
 {
   GimpSimpleHandlerData *data;
@@ -300,8 +311,10 @@ gimp_savable_load_add_simple_handler (GimpLoadState *state,
   data->text_value_format = g_strdup (text_value_format);
   data->attributes        = g_hash_table_new_full (g_str_hash, g_str_equal,
                                                    g_free, g_free);
+  data->all_attributes_needed = all_attributes_needed;
+  data->fatal_on_missing      = fatal_on_missing;
 
-  va_start (args, text_value_format);
+  va_start (args, fatal_on_missing);
   attribute = va_arg (args, gchar *);
   while (attribute)
     {
@@ -601,6 +614,7 @@ gimp_savable_enter_element (GimpLoadState  *state,
   GimpLoadContext  *context  = g_queue_peek_head (state->contexts);
   GHashTable       *handlers = context->handlers;
   GimpLoadHandlers *h;
+  gboolean          success  = TRUE;
 
   h = g_hash_table_lookup (handlers, element_name);
 
@@ -609,12 +623,25 @@ gimp_savable_enter_element (GimpLoadState  *state,
     {
       g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
                    "%s: unexpected element: %s", G_STRFUNC, element_name);
-      return FALSE;
+      success = FALSE;
     }
   else if (h->enter_handler)
     {
-      return h->enter_handler (state, attribute_names, attribute_values,
-                               h->user_data, error);
+      success = h->enter_handler (state, attribute_names, attribute_values,
+                                  h->user_data, error);
+
+      if (success && *error)
+        {
+          /* Success with an error is to be used for non-fatal errors.
+           * For such case, we print the error for informational
+           * purpose, then clear it to prevent the XML parser to stop.
+           *
+           * TODO: rather than printing to stderr, we should probably
+           * send the message to an error dialog.
+           */
+          g_printerr ("WLBR WARNING: %s\n", (*error)->message);
+          g_clear_error (error);
+        }
     }
 
   return TRUE;
@@ -644,6 +671,19 @@ gimp_savable_exit_element (GimpLoadState  *state,
   else if (h->exit_handler)
     {
       success = h->exit_handler (state, text, text_len, h->user_data, error);
+
+      if (success && *error)
+        {
+          /* Success with an error is to be used for non-fatal errors.
+           * For such case, we print the error for informational
+           * purpose, then clear it to prevent the XML parser to stop.
+           *
+           * TODO: rather than printing to stderr, we should probably
+           * send the message to an error dialog.
+           */
+          g_printerr ("WLBR WARNING: %s\n", (*error)->message);
+          g_clear_error (error);
+        }
     }
 
   gimp_savable_load_pop_context (state);
@@ -1049,7 +1089,9 @@ gimp_savable_load_enter_simple (GimpLoadState  *state,
                                 gpointer        user_data,
                                 GError         **error)
 {
-  GimpSimpleHandlerData *data = user_data;
+  GimpSimpleHandlerData *data    = user_data;
+  gboolean               success = TRUE;
+  GList                 *found   = NULL;
 
   while (*attribute_names)
     {
@@ -1062,6 +1104,7 @@ gimp_savable_load_enter_simple (GimpLoadState  *state,
           gchar *value_name;
 
           value_name = g_strconcat (data->value_prefix, ":", *attribute_names, NULL);
+          found = g_list_prepend (found, (gpointer) *attribute_names);
           gimp_savable_load_store_from_string (state, value_name, attribute_format,
                                                *attribute_values, NULL);
           gimp_savable_load_bubble_up (state, value_name);
@@ -1078,7 +1121,31 @@ gimp_savable_load_enter_simple (GimpLoadState  *state,
       attribute_values++;
     }
 
-  return TRUE;
+  if (data->all_attributes_needed)
+    {
+      GList *attributes = g_hash_table_get_keys (data->attributes);
+
+      for (GList *iter = attributes; iter; iter = iter->next)
+        {
+          const gchar *attr = iter->data;
+
+          if (! g_list_find_custom (found, iter->data, (GCompareFunc) g_strcmp0))
+            {
+              g_clear_error (error);
+              g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                           "%s: missing attribute '%s' on element '%s'.",
+                           G_STRFUNC, attr, data->value_prefix);
+              success = (! data->fatal_on_missing);
+              break;
+            }
+        }
+
+      g_list_free (attributes);
+    }
+
+  g_list_free (found);
+
+  return success;
 }
 
 static gboolean

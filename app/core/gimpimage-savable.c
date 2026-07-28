@@ -446,6 +446,7 @@ gimp_image_enter_project (GimpLoadState  *state,
                           GError         **error)
 {
   gimp_savable_load_add_simple_handler (state, "dimensions", NULL,
+                                        TRUE, TRUE,
                                         "width",  "%d",
                                         "height", "%d",
                                         NULL);
