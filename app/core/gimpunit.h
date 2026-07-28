@@ -24,3 +24,12 @@ GimpUnit * _gimp_unit_new (Gimp        *gimp,
                            gint         digits,
                            const gchar *symbol,
                            const gchar *abbreviation);
+
+GimpUnit * _gimp_unit_get (Gimp        *gimp,
+                           const gchar *name,
+                           gdouble      factor,
+                           gint         digits,
+                           const gchar *symbol,
+                           const gchar *abbreviation,
+                           gboolean     before_xcf_21,
+                           const gchar *plural_form);

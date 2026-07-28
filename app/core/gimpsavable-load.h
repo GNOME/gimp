@@ -84,6 +84,16 @@ void         gimp_savable_load_add_simple_handler (GimpLoadState            *sta
 
 /* Generic element handlers as args to gimp_savable_load_add_handlers(). */
 
+gboolean     gimp_savable_enter_unit             (GimpLoadState            *state,
+                                                  const gchar             **attribute_names,
+                                                  const gchar             **attribute_values,
+                                                  gpointer                  user_data,
+                                                  GError                  **error);
+gboolean     gimp_savable_exit_unit              (GimpLoadState            *state,
+                                                  const gchar              *text,
+                                                  gsize                     len,
+                                                  gpointer                  user_data,
+                                                  GError                  **error);
 gboolean     gimp_savable_enter_color            (GimpLoadState            *state,
                                                   const gchar             **attribute_names,
                                                   const gchar             **attribute_values,

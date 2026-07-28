@@ -64,3 +64,48 @@ _gimp_unit_new (Gimp        *gimp,
 
   return unit;
 }
+
+/* Unlike _gimp_unit_new(), this function will first try to find a
+ * matching user unit, and will return it if found. Otherwise it creates
+ * a new unit set with deletion flag.
+ *
+ * Note that @plural_form is only used if @before_xcf_21 is %TRUE.
+ *
+ * The returned unit (whether new or not) belongs to @gimp and should
+ * not be freed.
+ */
+GimpUnit *
+_gimp_unit_get (Gimp        *gimp,
+                const gchar *name,
+                gdouble      factor,
+                gint         digits,
+                const gchar *symbol,
+                const gchar *abbreviation,
+                gboolean     before_xcf_21,
+                const gchar *plural_form)
+{
+  GimpUnit *unit;
+  GList    *iter;
+
+  for (iter = gimp->user_units; iter; iter = iter->next)
+    {
+      unit = iter->data;
+      /* if the factor and the name match some unit in unitrc,
+       * use the unitrc unit
+       */
+      if (ABS (gimp_unit_get_factor (unit) - factor) < 1e-5 &&
+          (strcmp (name, gimp_unit_get_name (unit)) == 0 ||
+           (before_xcf_21 &&
+            g_strcmp0 (plural_form, gimp_unit_get_name (unit)) == 0)))
+        {
+          break;
+        }
+    }
+
+  if (iter == NULL)
+    unit = _gimp_unit_new (gimp,
+                           plural_form && strlen (plural_form) > 0 ? plural_form : name,
+                           factor, digits, symbol, abbreviation);
+
+  return unit;
+}

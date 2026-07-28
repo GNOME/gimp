@@ -5693,31 +5693,13 @@ xcf_load_user_init (XcfInfo   *info,
       GimpUnit *unit;
       GList    *iter;
 
-      for (iter = info->gimp->user_units; iter; iter = iter->next)
-        {
-          unit = iter->data;
-          /* if the factor and the name match some unit in unitrc,
-           * use the unitrc unit
-           */
-          if (ABS (gimp_unit_get_factor (unit) - factor) < 1e-5 &&
-              (strcmp (unit_strings[0], gimp_unit_get_name (unit)) == 0 ||
-               (info->file_version < 21 &&
-                strcmp (unit_strings[4], gimp_unit_get_name (unit)) == 0)))
-            {
-              break;
-            }
-        }
-
-      if (iter == NULL)
-        /* No match. Create a temporary unit set with deletion
-         * flag.
-         */
-        unit = _gimp_unit_new (info->gimp,
-                               unit_strings[4] && strlen (unit_strings[4]) > 0 ? unit_strings[4] : unit_strings[0],
-                               (gdouble) factor,
-                               digits,
-                               unit_strings[1],
-                               unit_strings[2]);
+      unit = _gimp_unit_get (info->gimp,
+                             unit_strings[0],
+                             (gdouble) factor, digits,
+                             unit_strings[1],
+                             unit_strings[2],
+                             info->file_version < 21,
+                             info->file_version < 21 ? unit_strings[4] : NULL);
 
       gimp_image_set_unit (image, unit);
     }

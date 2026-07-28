@@ -24,6 +24,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "config/gimpxmlparser.h"
@@ -31,6 +33,7 @@
 #include "gimpimage.h"
 #include "gimpsavable.h"
 #include "gimpsavable-load.h"
+#include "gimpunit.h"
 
 
 typedef struct _GimpLoadContext GimpLoadContext;
@@ -343,6 +346,117 @@ gimp_savable_load_add_simple_handler (GimpLoadState *state,
                                   gimp_savable_load_enter_simple,
                                   gimp_savable_load_exit_simple,
                                   data);
+}
+
+gboolean
+gimp_savable_enter_unit (GimpLoadState  *state,
+                         const gchar   **attribute_names,
+                         const gchar   **attribute_values,
+                         gpointer        user_data,
+                         GError        **error)
+{
+  GimpUnit *unit = NULL;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "built-in") == 0)
+        {
+          gint id = -1;
+
+          /* Making sure the GType exists. */
+          (void) GIMP_TYPE_UNIT_ID;
+          /* Round-trip to validate the built-in ID. */
+          gimp_savable_load_store_from_string (state,
+                                               "built-in", "%[GimpUnitID]", *attribute_values,
+                                               NULL);
+          gimp_savable_load_get_values (state, "built-in", &id, NULL);
+          if (id == -1)
+            {
+              g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                           "%s: invalid built-in unit: '%s'",
+                           G_STRFUNC, *attribute_values);
+            }
+          else
+            {
+              unit = gimp_unit_get_by_id (id);
+              gimp_savable_load_store_value (state, "unit", unit, NULL);
+            }
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  if (unit == NULL)
+    {
+      gimp_savable_load_add_simple_handler (state, "factor", "%f",
+                                            FALSE, FALSE,
+                                            NULL);
+      gimp_savable_load_add_simple_handler (state, "digits", "%d",
+                                            FALSE, FALSE,
+                                            NULL);
+      gimp_savable_load_add_simple_handler (state, "name", "%s",
+                                            FALSE, FALSE,
+                                            NULL);
+      gimp_savable_load_add_simple_handler (state, "symbol", "%s",
+                                            FALSE, FALSE,
+                                            NULL);
+      gimp_savable_load_add_simple_handler (state, "abbreviation", "%s",
+                                            FALSE, FALSE,
+                                            NULL);
+    }
+
+  return TRUE;
+}
+
+gboolean
+gimp_savable_exit_unit (GimpLoadState  *state,
+                        const gchar    *text,
+                        gsize           len,
+                        gpointer        user_data,
+                        GError        **error)
+{
+  const GimpUnit *unit = NULL;
+
+  if (! gimp_savable_load_get_values (state,
+                                      "unit", &unit,
+                                      NULL))
+    {
+      const gchar *name;
+      const gchar *symbol;
+      const gchar *abbreviation;
+      gdouble      factor;
+      guint32      digits;
+
+      if (! gimp_savable_load_get_values (state,
+                                          "factor",       &factor,
+                                          "digits",       &digits,
+                                          "name",         &name,
+                                          "symbol",       &symbol,
+                                          "abbreviation", &abbreviation,
+                                          NULL))
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: missing one or more attribute for a custom unit.",
+                       G_STRFUNC);
+        }
+      else
+        {
+          unit = _gimp_unit_get (state->gimp, name, factor, digits,
+                                 symbol, abbreviation, FALSE, NULL);
+          gimp_savable_load_store_value (state, "unit", (gpointer) unit, NULL);
+        }
+    }
+
+  gimp_savable_load_bubble_up (state, "unit");
+
+  return TRUE;
 }
 
 gboolean
