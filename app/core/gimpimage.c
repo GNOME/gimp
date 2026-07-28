@@ -3874,6 +3874,14 @@ gimp_image_alpha_changed (GimpImage *image)
 }
 
 void
+gimp_image_active_drawable_changed (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
+}
+
+void
 gimp_image_invalidate (GimpImage *image,
                        gint       x,
                        gint       y,
