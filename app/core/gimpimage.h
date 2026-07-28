@@ -257,6 +257,7 @@ GimpComponentMask gimp_image_get_visible_mask    (GimpImage          *image);
 void            gimp_image_mode_changed          (GimpImage          *image);
 void            gimp_image_precision_changed     (GimpImage          *image);
 void            gimp_image_alpha_changed         (GimpImage          *image);
+void                  gimp_image_active_drawable_changed (GimpImage *image);
 void            gimp_image_invalidate            (GimpImage          *image,
                                                   gint                x,
                                                   gint                y,

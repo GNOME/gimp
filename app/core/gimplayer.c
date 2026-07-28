@@ -2760,6 +2760,9 @@ gimp_layer_set_edit_mask (GimpLayer *layer,
       layer->edit_mask = edit ? TRUE : FALSE;
 
       g_signal_emit (layer, layer_signals[EDIT_MASK_CHANGED], 0);
+
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+        gimp_image_active_drawable_changed (gimp_item_get_image (GIMP_ITEM (layer)));
     }
 }
 
