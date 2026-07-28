@@ -477,6 +477,9 @@ gimp_image_enter_project (GimpLoadState  *state,
 
   gimp_savable_load (GIMP_TYPE_GRID, state);
 
+  gimp_savable_load_add_simple_handler (state, "metadata", "%s",
+                                        FALSE, FALSE,
+                                        NULL);
   return TRUE;
 }
 
@@ -487,11 +490,12 @@ gimp_image_exit_project (GimpLoadState  *state,
                          gpointer        user_data,
                          GError        **error)
 {
-  GimpUnit *unit   = NULL;
-  GimpGrid *grid   = NULL;
-  gdouble   xres   = -1.0;
-  gdouble   yres   = -1.0;
-  guint     tattoo = 0;
+  GimpUnit    *unit        = NULL;
+  GimpGrid    *grid        = NULL;
+  const gchar *meta_string = NULL;
+  gdouble      xres        = -1.0;
+  gdouble      yres        = -1.0;
+  guint        tattoo      = 0;
 
   gimp_savable_load_get_values (state,
                                 "unit", &unit,
@@ -499,6 +503,7 @@ gimp_image_exit_project (GimpLoadState  *state,
                                 "print-dimensions:yres", &yres,
                                 "tattoo",                &tattoo,
                                 "grid",                  &grid,
+                                "metadata",              &meta_string,
                                 NULL);
   if (unit)
     gimp_image_set_unit (state->image, unit);
@@ -524,6 +529,18 @@ gimp_image_exit_project (GimpLoadState  *state,
 
   if (grid)
     gimp_image_set_grid (state->image, grid, FALSE);
+
+  if (meta_string)
+    {
+      GimpMetadata *metadata;
+
+      metadata = gimp_metadata_deserialize (meta_string);
+      if (metadata)
+        {
+          gimp_image_set_metadata (state->image, metadata, FALSE);
+          g_object_unref (metadata);
+        }
+    }
 
   return TRUE;
 }
