@@ -223,7 +223,8 @@ static GimpGradient  * xcf_load_gradient      (XcfInfo       *info,
 static GimpPath      * xcf_load_path          (XcfInfo       *info,
                                                GimpImage     *image);
 static GimpLayerMask * xcf_load_layer_mask    (XcfInfo       *info,
-                                               GimpImage     *image);
+                                               GimpImage     *image,
+                                               gint          *n_broken_effects);
 static gboolean        xcf_load_buffer        (XcfInfo       *info,
                                                GeglBuffer    *buffer);
 static gboolean        xcf_load_level         (XcfInfo       *info,
@@ -1670,6 +1671,14 @@ xcf_load_add_effects (XcfInfo   *info,
       GimpDrawable *drawable = list->data;
 
       xcf_load_create_effect (drawable, "gimp-layer-effects");
+
+      if (gimp_layer_get_mask (list->data))
+        {
+          GimpLayerMask *mask = gimp_layer_get_mask (list->data);
+
+          xcf_load_create_effect (GIMP_DRAWABLE (mask),
+                                  "gimp-channel-effects");
+        }
     }
   g_list_free (layers);
 
@@ -4002,7 +4011,7 @@ xcf_load_layer (XcfInfo    *info,
       if (! xcf_seek_pos (info, layer_mask_offset, NULL))
         goto error;
 
-      layer_mask = xcf_load_layer_mask (info, image);
+      layer_mask = xcf_load_layer_mask (info, image, n_broken_effects);
       if (! layer_mask)
         goto error;
 
@@ -4759,12 +4768,16 @@ error:
 
 static GimpLayerMask *
 xcf_load_layer_mask (XcfInfo   *info,
-                     GimpImage *image)
+                     GimpImage *image,
+                     gint      *n_broken_effects)
 {
   GimpLayerMask *layer_mask;
   GimpChannel   *channel;
   GList         *iter;
   goffset        hierarchy_offset;
+  goffset        effects_offset   = 0;
+  GList         *filter_data_list = NULL;
+  gint           filter_count     = 0;
   gint           width;
   gint           height;
   gboolean       is_fs_drawable;
@@ -4808,6 +4821,8 @@ xcf_load_layer_mask (XcfInfo   *info,
   /* read the hierarchy offset */
   cur_offset = info->cp;
   xcf_read_offset (info, &hierarchy_offset, 1);
+  if (info->file_version >= 26)
+    xcf_read_offset (info, &effects_offset,  1);
 
   if (hierarchy_offset < cur_offset)
     {
@@ -4823,7 +4838,55 @@ xcf_load_layer_mask (XcfInfo   *info,
                          gimp_drawable_get_buffer (GIMP_DRAWABLE (layer_mask))))
     goto error;
 
-  xcf_progress_update (info);
+  cur_offset += info->bytes_per_offset;
+
+  /* read in any channel effects and effect masks */
+  while (effects_offset != 0)
+    {
+      FilterData *filter_data;
+
+      if (effects_offset < cur_offset)
+        {
+          GIMP_LOG (XCF, "Invalid effect offset: %" G_GOFFSET_FORMAT
+                    " at offset: %" G_GOFFSET_FORMAT, effects_offset, cur_offset);
+          goto error;
+        }
+
+      /* seek to the effect offset */
+      if (! xcf_seek_pos (info, effects_offset, NULL))
+        goto error;
+
+      filter_data = xcf_load_effect (info, image, GIMP_DRAWABLE (channel));
+      if (! filter_data)
+        {
+          (*n_broken_effects)++;
+        }
+      else
+        {
+          filter_data_list = g_list_prepend (filter_data_list, filter_data);
+          filter_count++;
+        }
+      xcf_progress_update (info);
+
+      /* restore the saved position so we'll be ready to
+       * read the next offset.
+       */
+      cur_offset += info->bytes_per_offset;
+      if (! xcf_seek_pos (info, cur_offset, NULL))
+        goto error;
+
+      /* read in the offset of the next effect */
+      if (xcf_read_offset (info, &effects_offset, 1) < info->bytes_per_offset)
+        {
+          GIMP_LOG (XCF, "Failed to read effects offset"
+                    " at offset: %" G_GOFFSET_FORMAT, info->cp);
+          break;
+        }
+    }
+
+  if (filter_count > 0)
+    g_object_set_data_full (G_OBJECT (channel), "gimp-channel-effects", filter_data_list,
+                            (GDestroyNotify) xcf_load_free_effects);
 
   /* attach the floating selection... */
   if (is_fs_drawable)
