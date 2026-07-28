@@ -94,6 +94,7 @@ static GimpXcfLoaderFunc * const xcf_loaders[] =
   xcf_load_image,   /* version 23 */
   xcf_load_image,   /* version 24 */
   xcf_load_image,   /* version 25 */
+  xcf_load_image,   /* version 26 */
 };
 
 
