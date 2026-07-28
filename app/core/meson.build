@@ -1,4 +1,3 @@
-#FIXME: https://gitlab.gnome.org/GNOME/gimp/-/work_items/8260
 stamp_core_enums = custom_target('stamp-core-enums.h',
   input : [
     files(
