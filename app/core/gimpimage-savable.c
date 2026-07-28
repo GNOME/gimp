@@ -32,6 +32,8 @@
 
 #include "core-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "gegl/gimp-babl.h"
 
 #include "gimp.h"
@@ -50,6 +52,7 @@
 #include "gimpsavable.h"
 #include "gimpsavable-load.h"
 #include "gimpsymmetry.h"
+#include "gimptemplate.h"
 
 #include "gimp-intl.h"
 
@@ -456,7 +459,19 @@ gimp_image_enter_project (GimpLoadState  *state,
                                   NULL);
   gimp_savable_load_add_handlers (state, "guides",
                                   gimp_image_enter_guides,
-                                  NULL,
+                                  NULL, NULL);
+
+  gimp_savable_load_add_simple_handler (state, "print-dimensions", NULL,
+                                        TRUE, FALSE,
+                                        "xres", "%f",
+                                        "yres", "%f",
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "tattoo", "%u",
+                                        FALSE, FALSE,
+                                        NULL);
+  gimp_savable_load_add_handlers (state, "unit",
+                                  gimp_savable_enter_unit,
+                                  gimp_savable_exit_unit,
                                   NULL);
 
   return TRUE;
@@ -469,6 +484,39 @@ gimp_image_exit_project (GimpLoadState  *state,
                          gpointer        user_data,
                          GError        **error)
 {
+  GimpUnit *unit   = NULL;
+  gdouble   xres   = -1.0;
+  gdouble   yres   = -1.0;
+  guint     tattoo = 0;
+
+  gimp_savable_load_get_values (state,
+                                "unit", &unit,
+                                "print-dimensions:xres", &xres,
+                                "print-dimensions:yres", &yres,
+                                "tattoo",                &tattoo,
+                                NULL);
+  if (unit)
+    gimp_image_set_unit (state->image, unit);
+
+  if (xres > 0.0 && yres > 0.0)
+    {
+      if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
+          yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
+        {
+          GimpTemplate *template = state->gimp->config->default_image;
+
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                       "Warning, resolution out of range in XCF file");
+          xres = gimp_template_get_resolution_x (template);
+          yres = gimp_template_get_resolution_y (template);
+        }
+
+      gimp_image_set_resolution (state->image, xres, yres);
+    }
+
+  if (tattoo > 0)
+    gimp_image_set_tattoo_state (state->image, tattoo);
+
   return TRUE;
 }
 
