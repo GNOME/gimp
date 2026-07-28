@@ -108,18 +108,6 @@ if flex.found() and bison.found()
     toolbar_compiler_args += ['-DYY_NO_UNISTD_H', '-Disatty(x)=0', '-Wno-deprecated-declarations']
   endif
 
-  if platform_windows
-    #avoid win_flex.EXE: error deleting file C:\Users\user\AppData\Local\Temp\~flex_out_main_2
-    clean_winflexbison = custom_target('clean-winflexbison',
-      output: 'winflexbison_clean.stamp',
-      command: [
-        python, '-c',
-        'import os, glob; [os.remove(f) for f in glob.glob(os.path.join(os.environ.get("TMP", ""), "*flex_out*")) if os.path.exists(f)]; open("@OUTPUT@", "w").close()'
-      ],
-      build_by_default: true
-    )
-  endif
-
   lex_gen = generator(
                 flex,
      arguments: [
@@ -146,17 +134,36 @@ if flex.found() and bison.found()
         '@BASENAME@_parse.c',
         '@BASENAME@_parse.h',
       ],
-      depends: clean_winflexbison,
   )
 
+  previous_syntax = []
   foreach syntax : syntaxes
+    clean_winflexbison = syntax + 'clean'
     syntax_prefix =  syntax + '_'
     imapname = 'imap_' + syntax
 
-    plugin_sources += lex_gen.process(
+    if platform_windows and meson.version().version_compare('>=1.12')
+      #avoid win_flex.EXE: error deleting file %TMP%\~flex_out_main_2
+      clean_winflexbison = custom_target(syntax + 'clean',
+        output: syntax + 'clean' + '.stamp',
+        command: [
+          python, '-c',
+          'import os, glob; [os.remove(f) for f in glob.glob(os.path.join(os.environ.get("FLEX_TMP_DIR", os.environ.get("TMP", ".")), "*flex_out*")) if os.path.exists(f)]; open("@OUTPUT@", "w").close()'
+        ],
+        build_by_default: true
+      )
+      plugin_sources += lex_gen.process(
                   imapname + '.l',
-      extra_args: ['--prefix', syntax_prefix]
-    )
+      extra_args: ['--prefix', syntax_prefix],
+      depends: previous_syntax,
+      )
+      previous_syntax = [syntax]
+    else
+      plugin_sources += lex_gen.process(
+                  imapname + '.l',
+      extra_args: ['--prefix', syntax_prefix],
+      )
+    endif
     plugin_sources += parse_gen.process(
                   imapname + '.y',
       extra_args: ['--name-prefix', syntax_prefix]
