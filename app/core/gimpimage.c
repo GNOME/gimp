@@ -3121,9 +3121,19 @@ gimp_image_get_xcf_version (GimpImage    *image,
           /* need version 13 for group layers with masks */
           if (gimp_layer_get_mask (layer))
             {
+              GimpLayerMask *mask = gimp_layer_get_mask (layer);
+
               ADD_REASON (g_strdup_printf (_("Masks on layer groups were "
                                              "added in %s"), "GIMP 2.10"));
               version = MAX (13, version);
+
+              filters = gimp_drawable_get_filters (GIMP_DRAWABLE (mask));
+              if (gimp_container_get_n_children (filters) > 0)
+                {
+                  ADD_REASON (g_strdup_printf (_("Channel effects were saved "
+                                                 "in %s"), "GIMP 3.2.6"));
+                  version = MAX (26, version);
+                }
             }
 
           if (gimp_item_get_lock_position (GIMP_ITEM (layer)))
@@ -3220,7 +3230,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
       if (gimp_container_get_n_children (filters) > 0)
         {
           ADD_REASON (g_strdup_printf (_("Channel effects were saved in %s"),
-                                         "GIMP 3.2"));
+                                         "GIMP 3.2.6"));
           version = MAX (26, version);
         }
     }
