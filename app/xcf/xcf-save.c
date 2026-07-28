@@ -2169,14 +2169,18 @@ xcf_save_channel (XcfInfo      *info,
                   GimpChannel  *channel,
                   GError      **error)
 {
-  goffset      saved_pos;
-  goffset      offset;
-  guint32      value;
-  const gchar *string;
-  GError      *tmp_error = NULL;
+  goffset        saved_pos;
+  goffset        offset;
+  guint32        value;
+  const gchar   *string;
+  GimpContainer *filters;
+  GList         *filter_list;
+  guint32        num_effects = 0;
+  GList         *list;
+  GError        *tmp_error   = NULL;
 
   /* check and see if this is the drawable that the floating
-   *  selection is attached to.
+   * selection is attached to.
    */
   if (GIMP_DRAWABLE (channel) == info->floating_sel_drawable)
     {
@@ -2184,6 +2188,31 @@ xcf_save_channel (XcfInfo      *info,
       xcf_check_error (xcf_seek_pos (info, info->floating_sel_offset, error), ;);
       xcf_write_offset_check_error (info, &saved_pos, 1, ;);
       xcf_check_error (xcf_seek_pos (info, saved_pos, error), ;);
+    }
+
+  /* Get filter information */
+  filters = gimp_drawable_get_filters (GIMP_DRAWABLE (channel));
+  /* Since floating selections are also stored in the filter stack,
+   * we need to verify what's in there to get the correct count */
+  for (filter_list = GIMP_LIST (filters)->queue->tail; filter_list;
+       filter_list = g_list_previous (filter_list))
+    {
+      if (GIMP_IS_DRAWABLE_FILTER (filter_list->data) &&
+          ! gimp_drawable_filter_get_temporary (filter_list->data))
+        {
+          GimpDrawableFilter     *filter  = filter_list->data;
+          GimpDrawableFilterMask *mask    = NULL;
+          GeglNode               *op_node = NULL;
+
+          mask    = gimp_drawable_filter_get_mask (filter);
+          op_node = gimp_drawable_filter_get_operation (filter);
+
+          /* For now, prevent tool-based filters from being saved */
+          if (mask    != NULL &&
+              op_node != NULL &&
+              strcmp (gegl_node_get_operation (op_node), "GraphNode") != 0)
+            num_effects++;
+        }
     }
 
   /* write out the width and height information for the channel */
@@ -2201,12 +2230,57 @@ xcf_save_channel (XcfInfo      *info,
   xcf_save_channel_props (info, image, channel, error);
 
   /* write out the channel tile hierarchy */
-  offset = info->cp + info->bytes_per_offset;
+  offset = info->cp + (1 + num_effects + 1) * info->bytes_per_offset;
   xcf_write_offset_check_error (info, &offset, 1, ;);
+
+  saved_pos = info->cp;
+
+  /* write out zero effect and effect mask offset(s) */
+  for (gint i = 0; i < num_effects + 1; i++)
+    xcf_write_zero_offset_check_error (info, 1, ;);
 
   xcf_check_error (xcf_save_buffer (info, image,
                                     gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                                     error), ;);
+
+  offset = info->cp;
+
+  /* write out any channel effects and effect masks */
+  if (num_effects > 0)
+    {
+      for (list = GIMP_LIST (filters)->queue->head; list;
+           list = g_list_next (list))
+        {
+          if (GIMP_IS_DRAWABLE_FILTER (list->data) &&
+              ! gimp_drawable_filter_get_temporary (list->data))
+            {
+              GimpDrawableFilter     *filter  = list->data;
+              GimpDrawableFilterMask *mask    = NULL;
+              GeglNode               *op_node = NULL;
+
+              mask    = gimp_drawable_filter_get_mask (filter);
+              op_node = gimp_drawable_filter_get_operation (filter);
+
+               /* For now, prevent tool-based filters from being saved */
+              if (mask    != NULL &&
+                  op_node != NULL &&
+                  strcmp (gegl_node_get_operation (op_node), "GraphNode") != 0)
+                {
+                  offset = info->cp;
+
+                  xcf_check_error (xcf_seek_pos (info, saved_pos, error), ;);
+                  xcf_write_offset_check_error (info, &offset, 1, ;);
+
+                  saved_pos = info->cp;
+
+                  xcf_check_error (xcf_seek_pos (info, offset, error), ;);
+                  xcf_check_error (xcf_save_effect (info, image,
+                                                    GIMP_FILTER (filter),
+                                                    error), ;);
+                }
+            }
+        }
+    }
 
   return TRUE;
 }
