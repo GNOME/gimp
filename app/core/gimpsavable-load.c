@@ -103,6 +103,9 @@ static void     gimp_savable_load_pop_context   (GimpLoadState        *state);
 static void     gimp_savable_free_context_value (GimpLoadValue        *value);
 
 static void     gimp_savable_load_free_context  (GimpLoadContext      *context);
+static gchar  * gimp_savable_validate_base64    (const gchar          *text,
+                                                 gsize                 len,
+                                                 GError              **error);
 
 static gboolean gimp_savable_load_enter_simple  (GimpLoadState        *state,
                                                  const gchar         **attribute_names,
@@ -115,6 +118,11 @@ static gboolean gimp_savable_load_exit_simple   (GimpLoadState        *state,
                                                  gpointer              user_data,
                                                  GError              **error);
 static gboolean gimp_savable_exit_icc           (GimpLoadState        *state,
+                                                 const gchar          *text,
+                                                 gsize                 len,
+                                                 gpointer              user_data,
+                                                 GError              **error);
+static gboolean gimp_savable_exit_pixel         (GimpLoadState        *state,
                                                  const gchar          *text,
                                                  gsize                 len,
                                                  gpointer              user_data,
@@ -335,6 +343,83 @@ gimp_savable_load_add_simple_handler (GimpLoadState *state,
                                   gimp_savable_load_enter_simple,
                                   gimp_savable_load_exit_simple,
                                   data);
+}
+
+gboolean
+gimp_savable_enter_color (GimpLoadState  *state,
+                          const gchar   **attribute_names,
+                          const gchar   **attribute_values,
+                          gpointer        user_data,
+                          GError        **error)
+{
+  gimp_savable_load_add_handlers (state, "format",
+                                  gimp_savable_enter_format,
+                                  gimp_savable_exit_format,
+                                  user_data);
+  gimp_savable_load_add_handlers (state, "pixel",
+                                  NULL,
+                                  gimp_savable_exit_pixel,
+                                  user_data);
+
+  return TRUE;
+}
+
+gboolean
+gimp_savable_exit_color (GimpLoadState  *state,
+                         const gchar    *text,
+                         gsize           len,
+                         gpointer        user_data,
+                         GError        **error)
+{
+  const Babl  *format = NULL;
+  const gchar *b64    = NULL;
+
+  gimp_savable_load_get_values (state,
+                                "format", &format,
+                                "pixel",  &b64,
+                                NULL);
+
+  if (format && b64)
+    {
+      guchar *decoded;
+      gsize   decoded_len;
+
+      decoded = g_base64_decode (b64, &decoded_len);
+
+      if (decoded == NULL)
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                       "%s: invalid Base64 data: %s",
+                       G_STRFUNC, b64);
+        }
+      else if (decoded_len != babl_format_get_bytes_per_pixel (format))
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                       "%s: decoded Base64 data has size %" G_GSIZE_FORMAT
+                       ". Expected size is %d for format '%s'.",
+                       G_STRFUNC, decoded_len,
+                       babl_format_get_bytes_per_pixel (format),
+                       babl_get_name (format));
+        }
+      else
+        {
+          GeglColor *color = gegl_color_new (NULL);
+
+          gegl_color_set_pixel (color, format, decoded);
+          gimp_savable_load_store_value (state, "color", (gpointer) color, g_object_unref);
+          gimp_savable_load_bubble_up (state, "color");
+        }
+
+      g_free (decoded);
+    }
+  else
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                   "%s: missing format and/or pixel data.",
+                   G_STRFUNC);
+    }
+
+  return TRUE;
 }
 
 /**
@@ -1079,6 +1164,43 @@ gimp_savable_load_free_context (GimpLoadContext *context)
   g_free (context);
 }
 
+/* g_base64_decode() does not properly validate the text is valid
+ * Base64. Since this is external data, let's make basic validation.
+ * Also ensure the text is NUL-terminated by returning a new version (to
+ * be freed).
+ */
+static gchar *
+gimp_savable_validate_base64 (const gchar  *text,
+                              gsize         len,
+                              GError      **error)
+{
+  gchar *b64;
+
+  if (len == 0)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: invalid empty Base64 encoding.",
+                   G_STRFUNC);
+      return NULL;
+    }
+
+  b64 = g_strndup (text, len);
+  for (gint i = 0; i < len; i++)
+    if (b64[i] != '/' && b64[i] != '+' && b64[i] != '=' &&
+        (b64[i] < '0' || b64[i] > '9') &&
+        (b64[i] < 'A' || b64[i] > 'Z') &&
+        (b64[i] < 'a' || b64[i] > 'z'))
+      {
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: invalid Base64 encoding: '%s'",
+                     G_STRFUNC, b64);
+        g_free (b64);
+        return NULL;
+      }
+
+  return b64;
+}
+
 
 /* Handlers */
 
@@ -1205,21 +1327,10 @@ gimp_savable_exit_icc (GimpLoadState  *state,
   gsize       icc_len;
   const char *babl_error = NULL;
 
-  /* This is external data. Let's make sure this is valid base64 and
-   * that it is NUL-terminated.
-   */
-  b64 = g_strndup (text, len);
-  for (gint i = 0; i < len; i++)
-    if (b64[i] != '/' && b64[i] != '+' && b64[i] != '=' &&
-        (b64[i] < '0' || b64[i] > '9') &&
-        (b64[i] < 'A' || b64[i] > 'Z') &&
-        (b64[i] < 'a' || b64[i] > 'z'))
-      {
-        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                     "%s: invalid Base64 encoding: '%s'",
-                     G_STRFUNC, b64);
-        return FALSE;
-      }
+  b64 = gimp_savable_validate_base64 (text, len, error);
+  if (b64 == NULL)
+    return FALSE;
+
   icc   = g_base64_decode (b64, &icc_len);
   space = babl_space_from_icc ((const char *) icc, icc_len,
                                BABL_ICC_INTENT_RELATIVE_COLORIMETRIC,
@@ -1237,6 +1348,27 @@ gimp_savable_exit_icc (GimpLoadState  *state,
     }
 
   g_free (icc);
+  g_free (b64);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_exit_pixel (GimpLoadState  *state,
+                         const gchar    *text,
+                         gsize           len,
+                         gpointer        user_data,
+                         GError        **error)
+{
+  gchar *b64;
+
+  b64 = gimp_savable_validate_base64 (text, len, error);
+  if (b64 == NULL)
+    return FALSE;
+
+  gimp_savable_load_store_value (state, "pixel", (gpointer) b64, g_free);
+  gimp_savable_load_bubble_up (state, "pixel");
+
   return TRUE;
 }
 
