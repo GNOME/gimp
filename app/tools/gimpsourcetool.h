@@ -50,6 +50,7 @@ struct _GimpSourceTool
   const gchar         *status_paint;
   const gchar         *status_set_source;
   const gchar         *status_set_source_ctrl;
+  const gchar         *status_set_source_ctrl_click;
 };
 
 struct _GimpSourceToolClass

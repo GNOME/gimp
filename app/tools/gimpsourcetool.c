@@ -359,9 +359,9 @@ gimp_source_tool_oper_update (GimpTool         *tool,
             }
           else
             {
-              gimp_tool_replace_status (tool, display, "%s-%s",
-                                        gimp_get_mod_string (toggle_mask),
-                                        source_tool->status_set_source);
+              gimp_tool_replace_status (tool, display,
+                                        source_tool->status_set_source_ctrl_click,
+                                        gimp_get_mod_string (toggle_mask));
             }
         }
       else
