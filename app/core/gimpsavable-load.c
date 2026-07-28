@@ -51,6 +51,7 @@ struct _GimpLoadHandlers
   GimpEnterElementHandler  enter_handler;
   GimpExitElementhandler   exit_handler;
   gpointer                 user_data;
+  GDestroyNotify           free_data;
 };
 
 typedef struct _GimpLoadValue GimpLoadValue;
@@ -104,6 +105,8 @@ static void     gimp_savable_load_store_one     (GimpLoadState        *state,
 static void     gimp_savable_load_push_context  (GimpLoadState        *state);
 static void     gimp_savable_load_pop_context   (GimpLoadState        *state);
 static void     gimp_savable_free_context_value (GimpLoadValue        *value);
+static void     gimp_savable_free_handlers      (GimpLoadHandlers     *handlers);
+static void     gimp_savable_free_simple_data   (GimpSimpleHandlerData *data);
 
 static void     gimp_savable_load_free_context  (GimpLoadContext      *context);
 static gchar  * gimp_savable_validate_base64    (const gchar          *text,
@@ -236,7 +239,8 @@ gimp_savable_load_add_handlers (GimpLoadState           *state,
                                 const gchar             *element_name,
                                 GimpEnterElementHandler  enter_callback,
                                 GimpExitElementhandler   exit_callback,
-                                gpointer                 user_data)
+                                gpointer                 user_data,
+                                GDestroyNotify           free_data)
 {
   GimpLoadContext  *context = g_queue_peek_head (state->contexts);
   GimpLoadHandlers *h       = g_new0 (GimpLoadHandlers, 1);
@@ -251,6 +255,7 @@ gimp_savable_load_add_handlers (GimpLoadState           *state,
   h->enter_handler = enter_callback;
   h->exit_handler  = exit_callback;
   h->user_data     = user_data;
+  h->free_data     = free_data;
   g_hash_table_insert (context->handlers, (gpointer) element_name, h);
 }
 
@@ -345,7 +350,8 @@ gimp_savable_load_add_simple_handler (GimpLoadState *state,
   gimp_savable_load_add_handlers (state, element_name,
                                   gimp_savable_load_enter_simple,
                                   gimp_savable_load_exit_simple,
-                                  data);
+                                  data,
+                                  (GDestroyNotify) gimp_savable_free_simple_data);
 }
 
 gboolean
@@ -469,11 +475,11 @@ gimp_savable_enter_color (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "format",
                                   gimp_savable_enter_format,
                                   gimp_savable_exit_format,
-                                  user_data);
+                                  user_data, NULL);
   gimp_savable_load_add_handlers (state, "pixel",
                                   NULL,
                                   gimp_savable_exit_pixel,
-                                  user_data);
+                                  user_data, NULL);
 
   return TRUE;
 }
@@ -580,7 +586,7 @@ gimp_savable_enter_format (GimpLoadState  *state,
       gimp_savable_load_add_handlers (state, "space",
                                       gimp_savable_enter_space,
                                       gimp_savable_exit_space,
-                                      user_data);
+                                      user_data, NULL);
     }
   else
     {
@@ -708,7 +714,7 @@ gimp_savable_enter_space (GimpLoadState  *state,
     gimp_savable_load_add_handlers (state, "icc",
                                     NULL,
                                     gimp_savable_exit_icc,
-                                    NULL);
+                                    NULL, NULL);
 
   if (id)
     {
@@ -1237,7 +1243,8 @@ gimp_savable_load_push_context (GimpLoadState *state)
   GHashTable      *values;
 
   context  = g_new0 (GimpLoadContext, 1);
-  handlers = g_hash_table_new_full (g_str_hash, g_str_equal, NULL, g_free);
+  handlers = g_hash_table_new_full (g_str_hash, g_str_equal, NULL,
+                                    (GDestroyNotify) gimp_savable_free_handlers);
   values   = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
                                    (GDestroyNotify) gimp_savable_free_context_value);
   context->handlers = handlers;
@@ -1267,6 +1274,24 @@ gimp_savable_free_context_value (GimpLoadValue *value)
   g_value_unset (value->value);
   g_free (value->value);
   g_free (value);
+}
+
+static void
+gimp_savable_free_handlers (GimpLoadHandlers *handlers)
+{
+  if (handlers->free_data)
+    handlers->free_data (handlers->user_data);
+
+  g_free (handlers);
+}
+
+static void
+gimp_savable_free_simple_data (GimpSimpleHandlerData *data)
+{
+  g_free (data->value_prefix);
+  g_free (data->text_value_format);
+  g_hash_table_unref (data->attributes);
+  g_free (data);
 }
 
 static void
@@ -1405,11 +1430,6 @@ gimp_savable_load_exit_simple (GimpLoadState  *state,
       gimp_savable_load_bubble_up (state, data->value_prefix);
       g_free (value);
     }
-
-  g_free (data->value_prefix);
-  g_free (data->text_value_format);
-  g_hash_table_unref (data->attributes);
-  g_free (data);
 
   return TRUE;
 }

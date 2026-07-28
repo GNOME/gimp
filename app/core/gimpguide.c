@@ -190,7 +190,7 @@ gimp_guide_savable_load (GimpLoadState *state)
 {
   gimp_savable_load_add_handlers (state, "guide",
                                   gimp_guide_enter_guide,
-                                  NULL, NULL);
+                                  NULL, NULL, NULL);
 }
 
 GimpGuide *

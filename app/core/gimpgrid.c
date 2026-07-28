@@ -356,7 +356,7 @@ gimp_grid_savable_load (GimpLoadState *state)
   gimp_savable_load_add_handlers (state, "grid",
                                   gimp_grid_enter_grid,
                                   gimp_grid_exit_grid,
-                                  NULL);
+                                  NULL, NULL);
 }
 
 
@@ -470,11 +470,11 @@ gimp_grid_enter_grid (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "foreground",
                                   gimp_grid_enter_fg_bg,
                                   gimp_grid_exit_fg_bg,
-                                  "foreground");
+                                  "foreground", NULL);
   gimp_savable_load_add_handlers (state, "background",
                                   gimp_grid_enter_fg_bg,
                                   gimp_grid_exit_fg_bg,
-                                  "background");
+                                  "background", NULL);
   gimp_savable_load_add_simple_handler (state, "spacing", NULL,
                                         TRUE, FALSE,
                                         "x", "%f",
@@ -483,7 +483,7 @@ gimp_grid_enter_grid (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "spacing-unit",
                                   gimp_grid_enter_unit,
                                   gimp_grid_exit_unit,
-                                  "spacing-unit");
+                                  "spacing-unit", NULL);
   gimp_savable_load_add_simple_handler (state, "offset", NULL,
                                         TRUE, FALSE,
                                         "x", "%f",
@@ -492,7 +492,7 @@ gimp_grid_enter_grid (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "offset-unit",
                                   gimp_grid_enter_unit,
                                   gimp_grid_exit_unit,
-                                  "offset-unit");
+                                  "offset-unit", NULL);
 
   return TRUE;
 }
@@ -557,7 +557,7 @@ gimp_grid_enter_fg_bg (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "color",
                                   gimp_savable_enter_color,
                                   gimp_savable_exit_color,
-                                  NULL);
+                                  NULL, NULL);
   return TRUE;
 }
 
@@ -590,7 +590,7 @@ gimp_grid_enter_unit (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "unit",
                                   gimp_savable_enter_unit,
                                   gimp_savable_exit_unit,
-                                  NULL);
+                                  NULL, NULL);
   return TRUE;
 }
 

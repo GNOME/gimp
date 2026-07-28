@@ -73,7 +73,8 @@ void         gimp_savable_load_add_handlers       (GimpLoadState            *sta
                                                    const gchar              *element_name,
                                                    GimpEnterElementHandler   enter_callback,
                                                    GimpExitElementhandler    exit_callback,
-                                                   gpointer                  user_data);
+                                                   gpointer                  user_data,
+                                                   GDestroyNotify            free_data);
 
 void         gimp_savable_load_add_simple_handler (GimpLoadState            *state,
                                                    const gchar              *element_name,

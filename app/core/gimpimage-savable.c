@@ -329,7 +329,7 @@ gimp_image_savable_load (GimpLoadState *state)
 {
   gimp_savable_load_add_handlers (state, "xcf",
                                   gimp_image_enter_xcf,
-                                  NULL, NULL);
+                                  NULL, NULL, NULL);
 }
 
 /* Private Functions */
@@ -377,11 +377,11 @@ gimp_image_enter_xcf (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "spaces",
                                   gimp_image_enter_spaces,
                                   gimp_image_exit_spaces,
-                                  spaces);
+                                  spaces, NULL);
   gimp_savable_load_add_handlers (state, "project",
                                   gimp_image_enter_project,
                                   gimp_image_exit_project,
-                                  NULL);
+                                  NULL, NULL);
 
   return TRUE;
 }
@@ -406,7 +406,7 @@ gimp_image_enter_spaces (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "space",
                                   gimp_savable_enter_space,
                                   gimp_savable_exit_space,
-                                  user_data);
+                                  user_data, NULL);
   return TRUE;
 }
 
@@ -457,10 +457,10 @@ gimp_image_enter_project (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "format",
                                   gimp_savable_enter_format,
                                   gimp_image_exit_format,
-                                  NULL);
+                                  NULL, NULL);
   gimp_savable_load_add_handlers (state, "guides",
                                   gimp_image_enter_guides,
-                                  NULL, NULL);
+                                  NULL, NULL, NULL);
 
   gimp_savable_load_add_simple_handler (state, "print-dimensions", NULL,
                                         TRUE, FALSE,
@@ -473,7 +473,7 @@ gimp_image_enter_project (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "unit",
                                   gimp_savable_enter_unit,
                                   gimp_savable_exit_unit,
-                                  NULL);
+                                  NULL, NULL);
 
   gimp_savable_load (GIMP_TYPE_GRID, state);
 
