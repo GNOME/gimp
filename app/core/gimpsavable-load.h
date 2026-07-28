@@ -52,6 +52,10 @@ typedef gboolean (* GimpExitElementhandler)  (GimpLoadState  *state,
 
 void         gimp_savable_load                   (GType                    savable_type,
                                                   GimpLoadState           *state);
+void         gimp_savable_config_load            (GType                    config_type,
+                                                  const gchar             *element_name,
+                                                  GimpLoadState           *state,
+                                                  ...);
 
 /* Functions to be used from inside GimpSavable's load() implementation */
 

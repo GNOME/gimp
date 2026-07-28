@@ -25,6 +25,7 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
@@ -71,6 +72,18 @@ struct _GimpSimpleHandlerData
   gboolean    fatal_on_missing;
 };
 
+typedef struct _GimpConfigHandlerData GimpConfigHandlerData;
+struct _GimpConfigHandlerData
+{
+  gchar   *element_name;
+  GType    parent_type;
+  GType    config_type;
+
+  gchar  **prop_names;
+  GValue  *prop_values;
+  gint     n_props;
+};
+
 
 static void     gimp_savable_load_init_state    (GimpLoadState        *state,
                                                  Gimp                 *gimp,
@@ -92,6 +105,9 @@ static void     gimp_wlbr_load_text             (GMarkupParseContext  *context,
                                                  GError              **error);
 
 
+static GValue * gimp_savable_load_get_gvalue    (GimpLoadState        *state,
+                                                 GimpLoadContext      *context,
+                                                 const gchar          *element_name);
 static gboolean gimp_savable_load_get_all       (GimpLoadState        *state,
                                                  GimpLoadContext      *context,
                                                  va_list               args);
@@ -107,6 +123,7 @@ static void     gimp_savable_load_pop_context   (GimpLoadState        *state);
 static void     gimp_savable_free_context_value (GimpLoadValue        *value);
 static void     gimp_savable_free_handlers      (GimpLoadHandlers     *handlers);
 static void     gimp_savable_free_simple_data   (GimpSimpleHandlerData *data);
+static void     gimp_savable_free_config_data   (GimpConfigHandlerData *data);
 
 static void     gimp_savable_load_free_context  (GimpLoadContext      *context);
 static gchar  * gimp_savable_validate_base64    (const gchar          *text,
@@ -119,6 +136,16 @@ static gboolean gimp_savable_load_enter_simple  (GimpLoadState        *state,
                                                  gpointer              user_data,
                                                  GError               **error);
 static gboolean gimp_savable_load_exit_simple   (GimpLoadState        *state,
+                                                 const gchar          *text,
+                                                 gsize                 len,
+                                                 gpointer              user_data,
+                                                 GError              **error);
+static gboolean gimp_savable_load_enter_config  (GimpLoadState        *state,
+                                                 const gchar         **attribute_names,
+                                                 const gchar         **attribute_values,
+                                                 gpointer              user_data,
+                                                 GError              **error);
+static gboolean gimp_savable_load_exit_config   (GimpLoadState        *state,
                                                  const gchar          *text,
                                                  gsize                 len,
                                                  gpointer              user_data,
@@ -149,6 +176,160 @@ gimp_savable_load (GType          savable_type,
     iface->load (state);
 
   g_type_class_unref (klass);
+}
+
+/**
+ * gimp_savable_config_load:
+ * @parent_type:
+ * @element_name:
+ * @state:
+ *
+ * This will load a GimpConfig object which has been saved with
+ * gimp_savable_config_save(). The stored object must be a subtype of
+ * @parent_type.
+ *
+ * You may add more values which will be used as properties when
+ * creating the object. This is necessary for some objects when e.g. the
+ * associated GimpImage or Gimp object must be set at creation (and even
+ * more if it's a %G_PARAM_CONSTRUCT_ONLY property).
+ * Additional values are triplets: the property name, followed by its
+ * GType, and finally the data.
+ */
+void
+gimp_savable_config_load (GType          parent_type,
+                          const gchar   *element_name,
+                          GimpLoadState *state,
+                          ...)
+{
+  GimpConfigHandlerData  *data;
+  va_list                 args;
+  const gchar            *prop_name;
+  gchar                 **names   = NULL;
+  GValue                 *values  = NULL;
+  GList                  *lnames  = NULL;
+  GList                  *lvalues = NULL;
+  gint                    n_props = 0;
+
+  va_start (args, state);
+  prop_name = va_arg (args, gchar *);
+  while (prop_name)
+    {
+      /*const gchar *format = va_arg (args, gchar *);*/
+      GValue *value;
+      GType   gtype = va_arg (args, GType);
+
+      value = g_new0 (GValue, 1);
+      g_value_init (value, gtype);
+      if (gtype == G_TYPE_STRING)
+        {
+          gchar *strval = va_arg (args, gchar *);
+          g_value_set_string (value, strval);
+        }
+      else if (gtype == G_TYPE_INT)
+        {
+          gint ival = va_arg (args, gint);
+          g_value_set_int (value, ival);
+        }
+      else if (gtype == G_TYPE_LONG)
+        {
+          glong ival = va_arg (args, glong);
+          g_value_set_long (value, ival);
+        }
+      else if (gtype == G_TYPE_UINT)
+        {
+          guint ival = va_arg (args, guint);
+          g_value_set_uint (value, ival);
+        }
+      else if (gtype == G_TYPE_ULONG)
+        {
+          gulong ival = va_arg (args, gulong);
+          g_value_set_ulong (value, ival);
+        }
+      else if (gtype == G_TYPE_DOUBLE)
+        {
+          gdouble fval = va_arg (args, gdouble);
+          g_value_set_double (value, fval);
+        }
+      else if (gtype == G_TYPE_BOOLEAN)
+        {
+          gboolean bval = va_arg (args, gboolean);
+          g_value_set_boolean (value, bval);
+        }
+      else if (gtype == G_TYPE_GTYPE)
+        {
+          GType val = va_arg (args, GType);
+          g_value_set_gtype (value, val);
+        }
+      else if (gtype == G_TYPE_POINTER)
+        {
+          gpointer val = va_arg (args, gpointer);
+          g_value_set_pointer (value, val);
+        }
+      else if (g_type_is_a (gtype, G_TYPE_OBJECT))
+        {
+          GObject *val = va_arg (args, GObject *);
+          g_value_set_object (value, val);
+        }
+      else if (g_type_is_a (gtype, G_TYPE_ENUM))
+        {
+          gint val = va_arg (args, gint);
+          g_value_set_enum (value, val);
+        }
+      else
+        {
+          g_return_if_reached ();
+        }
+
+      lnames  = g_list_prepend (lnames, g_strdup (prop_name));
+      lvalues = g_list_prepend (lvalues, value);
+      n_props++;
+
+      prop_name = va_arg (args, gchar *);
+    }
+  va_end (args);
+
+  if (n_props > 0)
+    {
+      GList *iter_name  = lnames;
+      GList *iter_value = lvalues;
+      gint   i          = 0;
+
+      names  = g_new0 (gchar *, n_props);;
+      values = g_new0 (GValue, n_props);
+
+      for (; iter_name; iter_name = iter_name->next)
+        {
+          GValue *value = iter_value->data;
+
+          names[i] = iter_name->data;
+
+          g_value_init (&values[i], G_VALUE_TYPE (value));
+          g_value_copy (value, &values[i]);
+
+          g_value_unset (value);
+
+          iter_value = iter_value->next;
+          i++;
+        }
+
+      g_list_free (lnames);
+      g_list_free_full (lvalues, g_free);
+    }
+
+  data = g_new0 (GimpConfigHandlerData, 1);
+
+  data->element_name = g_strdup (element_name);
+  data->parent_type  = parent_type;
+  data->config_type  = G_TYPE_NONE;
+  data->prop_names   = names;
+  data->prop_values  = values;
+  data->n_props      = n_props;
+
+  gimp_savable_load_add_handlers (state, element_name,
+                                  gimp_savable_load_enter_config,
+                                  gimp_savable_load_exit_config,
+                                  data,
+                                  (GDestroyNotify) gimp_savable_free_config_data);
 }
 
 /* Load values from their string representations. */
@@ -967,24 +1148,39 @@ gimp_wlbr_load_text (GMarkupParseContext *context,
   gimp_savable_load_append_text (state, text, text_len);
 }
 
+static GValue *
+gimp_savable_load_get_gvalue (GimpLoadState   *state,
+                              GimpLoadContext *context,
+                              const gchar     *element_name)
+{
+  GHashTable    *values = context->values;
+  GValue        *gvalue = NULL;
+  GimpLoadValue *value;
+
+  if (g_hash_table_lookup_extended (values,
+                                    (gconstpointer) element_name,
+                                    NULL,
+                                    (gpointer *) &value))
+    gvalue = value->value;
+
+  return gvalue;
+}
+
 static gboolean
 gimp_savable_load_get_all (GimpLoadState   *state,
                            GimpLoadContext *context,
                            va_list          args)
 {
-  GHashTable  *values  = context->values;
-  const gchar *key;
   gboolean     success = TRUE;
+  const gchar *key;
 
   key = va_arg (args, gchar *);
   while (key)
     {
-      gpointer val;
+      GValue *gvalue;
 
-      if (! g_hash_table_lookup_extended (values,
-                                          (gconstpointer) key,
-                                          NULL,
-                                          &val))
+      gvalue = gimp_savable_load_get_gvalue (state, context, key);
+      if (! gvalue)
         {
           /* Any failed value lookup triggers a failure, even if we may
            * have successfully set other values.
@@ -994,8 +1190,6 @@ gimp_savable_load_get_all (GimpLoadState   *state,
         }
       else
         {
-          GimpLoadValue *value  = (GimpLoadValue *) val;
-          GValue        *gvalue = value->value;
           if (G_VALUE_TYPE (gvalue) == G_TYPE_STRING)
             {
               gchar **strval = va_arg (args, gchar **);
@@ -1295,6 +1489,20 @@ gimp_savable_free_simple_data (GimpSimpleHandlerData *data)
 }
 
 static void
+gimp_savable_free_config_data (GimpConfigHandlerData *data)
+{
+  g_free (data->element_name);
+  for (gint i = 0; i < data->n_props; i++)
+    {
+      g_free (data->prop_names[i]);
+      g_value_unset (&data->prop_values[i]);
+    }
+  g_free (data->prop_names);
+  g_free (data->prop_values);
+  g_free (data);
+}
+
+static void
 gimp_savable_load_free_context (GimpLoadContext *context)
 {
   g_hash_table_destroy (context->handlers);
@@ -1429,6 +1637,213 @@ gimp_savable_load_exit_simple (GimpLoadState  *state,
                                            value, NULL);
       gimp_savable_load_bubble_up (state, data->value_prefix);
       g_free (value);
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_load_enter_config (GimpLoadState  *state,
+                                const gchar   **attribute_names,
+                                const gchar   **attribute_values,
+                                gpointer        user_data,
+                                GError        **error)
+{
+  GimpConfigHandlerData *data        = user_data;
+  GType                  config_type = G_TYPE_NONE;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "type") == 0)
+        {
+          /* Round-trip to validate the GType. */
+          gimp_savable_load_store_from_string (state,
+                                               "config-type", "%t", *attribute_values,
+                                               NULL);
+          gimp_savable_load_get_values (state, "config-type", &config_type, NULL);
+          if (config_type == G_TYPE_NONE ||
+              ! g_type_is_a (config_type, GIMP_TYPE_CONFIG))
+            {
+              g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                           "%s: invalid config type %s.",
+                           G_STRFUNC, *attribute_values);
+              config_type = G_TYPE_NONE;
+            }
+          else if (data->parent_type != G_TYPE_NONE &&
+                   ! g_type_is_a (config_type, data->parent_type))
+            {
+              g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                           "%s: invalid config type %s (a child class of %s is expected)",
+                           G_STRFUNC, *attribute_values,
+                           g_type_name (data->parent_type));
+              config_type = G_TYPE_NONE;
+            }
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  if (config_type != G_TYPE_NONE)
+    {
+      GObjectClass  *klass;
+      GParamSpec   **pspecs;
+      guint          n_pspecs = 0;
+
+      klass  = g_type_class_ref (config_type);
+      pspecs = g_object_class_list_properties (klass, &n_pspecs);
+
+      for (gint i = 0; i < n_pspecs; i++)
+        {
+          GParamSpec *pspec  = pspecs[i];
+          gchar      *format = NULL;
+
+          if (! (pspec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
+            continue;
+
+          if (pspec->value_type == G_TYPE_STRING)
+            {
+              format = g_strdup ("%s");
+            }
+          else if (pspec->value_type == G_TYPE_INT)
+            {
+              format = g_strdup ("%d");
+            }
+          else if (pspec->value_type == G_TYPE_LONG)
+            {
+              format = g_strdup ("%ld");
+            }
+          else if (pspec->value_type == G_TYPE_UINT)
+            {
+              format = g_strdup ("%u");
+            }
+          else if (pspec->value_type == G_TYPE_ULONG)
+            {
+              format = g_strdup ("%lu");
+            }
+          else if (pspec->value_type == G_TYPE_DOUBLE)
+            {
+              format = g_strdup ("%f");
+            }
+          else if (pspec->value_type == G_TYPE_BOOLEAN)
+            {
+              format = g_strdup ("%b");
+            }
+          else if (pspec->value_type == G_TYPE_GTYPE)
+            {
+              format = g_strdup ("%t");
+            }
+          else if (g_type_is_a (pspec->value_type, G_TYPE_ENUM))
+            {
+              format = g_strdup_printf ("%%[%s]", g_type_name (pspec->value_type));
+            }
+          else
+            {
+              g_warning ("%s: unsupported GValue type: %s", G_STRFUNC,
+                         g_type_name (pspec->value_type));
+            }
+
+          if (format)
+            /* XXX No type validation with the "type" attribute so far. */
+            gimp_savable_load_add_simple_handler (state, pspec->name, format,
+                                                  FALSE, FALSE,
+                                                  "type", "%s",
+                                                  NULL);
+
+          g_free (format);
+        }
+
+      g_type_class_unref (klass);
+      g_free (pspecs);
+
+      data->config_type = config_type;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_load_exit_config (GimpLoadState  *state,
+                               const gchar    *text,
+                               gsize           len,
+                               gpointer        user_data,
+                               GError        **error)
+{
+  GimpConfigHandlerData *data = user_data;
+
+  if (data->config_type != G_TYPE_NONE)
+    {
+      GObject          *config;
+      GObjectClass     *klass;
+      GParamSpec      **pspecs;
+      guint             n_pspecs = 0;
+      GimpLoadContext  *context  = g_queue_peek_head (state->contexts);
+
+      klass  = g_type_class_ref (data->config_type);
+      pspecs = g_object_class_list_properties (klass, &n_pspecs);
+
+      if (n_pspecs > 0)
+        {
+          const char **names;
+          GValue      *values;
+          gint         index = 0;
+
+          names  = g_new0 (const char *, n_pspecs);
+          values = g_new0 (GValue, n_pspecs);
+
+          for (gint i = 0; i < n_pspecs; i++)
+            {
+              GParamSpec *pspec = pspecs[i];
+              GValue     *gvalue;
+
+              if (! (pspec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
+                continue;
+
+              gvalue = gimp_savable_load_get_gvalue (state, context, pspec->name);
+              if (gvalue)
+                {
+                  names[index] = pspec->name;
+                  g_value_init (&values[index], G_VALUE_TYPE (gvalue));
+                  g_value_copy (gvalue, &values[index++]);
+                }
+            }
+
+          /* Adding the hard-coded properties! */
+          for (gint i = 0; i < data->n_props; i++)
+            {
+              GValue gvalue = data->prop_values[i];
+
+              names[index] = data->prop_names[i];
+              g_value_init (&values[index], G_VALUE_TYPE (&gvalue));
+              g_value_copy (&gvalue, &values[index++]);
+            }
+
+          config = g_object_new_with_properties (data->config_type,
+                                                 index,
+                                                 (const char **) names,
+                                                 (const GValue *) values);
+
+          for (gint i = 0; i < index; i++)
+            g_value_unset (&values[i]);
+          g_free (names);
+          g_free (values);
+        }
+      else
+        {
+          config = g_object_new (data->config_type, NULL);
+        }
+
+      gimp_savable_load_store_value (state, data->element_name, config, g_object_unref);
+      gimp_savable_load_bubble_up (state, data->element_name);
+
+      g_type_class_unref (klass);
+      g_free (pspecs);
     }
 
   return TRUE;
