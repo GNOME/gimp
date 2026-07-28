@@ -37,6 +37,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "gimp.h"
+#include "gimpgrid.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
@@ -474,6 +475,8 @@ gimp_image_enter_project (GimpLoadState  *state,
                                   gimp_savable_exit_unit,
                                   NULL);
 
+  gimp_savable_load (GIMP_TYPE_GRID, state);
+
   return TRUE;
 }
 
@@ -485,6 +488,7 @@ gimp_image_exit_project (GimpLoadState  *state,
                          GError        **error)
 {
   GimpUnit *unit   = NULL;
+  GimpGrid *grid   = NULL;
   gdouble   xres   = -1.0;
   gdouble   yres   = -1.0;
   guint     tattoo = 0;
@@ -494,6 +498,7 @@ gimp_image_exit_project (GimpLoadState  *state,
                                 "print-dimensions:xres", &xres,
                                 "print-dimensions:yres", &yres,
                                 "tattoo",                &tattoo,
+                                "grid",                  &grid,
                                 NULL);
   if (unit)
     gimp_image_set_unit (state->image, unit);
@@ -516,6 +521,9 @@ gimp_image_exit_project (GimpLoadState  *state,
 
   if (tattoo > 0)
     gimp_image_set_tattoo_state (state->image, tattoo);
+
+  if (grid)
+    gimp_image_set_grid (state->image, grid, FALSE);
 
   return TRUE;
 }
