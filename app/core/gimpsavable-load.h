@@ -56,21 +56,21 @@ void         gimp_savable_config_load            (GType                    confi
                                                   const gchar             *element_name,
                                                   GimpLoadState           *state,
                                                   GimpExitElementhandler   secondary_exit_handler,
-                                                  ...);
+                                                  ...) G_GNUC_NULL_TERMINATED;
 
 /* Functions to be used from inside GimpSavable's load() implementation */
 
 void         gimp_savable_load_store_from_string  (GimpLoadState            *state,
-                                                   ...);
+                                                   ...) G_GNUC_NULL_TERMINATED;
 void         gimp_savable_load_store_value        (GimpLoadState            *state,
                                                    const gchar              *key,
                                                    gpointer                  data,
                                                    GDestroyNotify            free_data);
 
 gboolean     gimp_savable_load_get_values         (GimpLoadState            *state,
-                                                   ...);
+                                                   ...) G_GNUC_NULL_TERMINATED;
 gboolean     gimp_savable_load_get_parent_values  (GimpLoadState            *state,
-                                                   ...);
+                                                   ...) G_GNUC_NULL_TERMINATED;
 void         gimp_savable_load_bubble_up          (GimpLoadState            *state,
                                                    const gchar              *key);
 
@@ -86,7 +86,8 @@ void         gimp_savable_load_add_simple_handler (GimpLoadState            *sta
                                                    const gchar              *text_value_format,
                                                    gboolean                  all_attributes_needed,
                                                    gboolean                  fatal_on_missing,
-                                                   ...);
+                                                   ...) G_GNUC_NULL_TERMINATED;
+
 
 /* Generic element handlers as args to gimp_savable_load_add_handlers(). */
 
