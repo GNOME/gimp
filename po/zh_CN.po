@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-26 20:46+0000\n"
-"PO-Revision-Date: 2026-07-27 14:52+0800\n"
+"POT-Creation-Date: 2026-07-28 20:39+0000\n"
+"PO-Revision-Date: 2026-07-29 08:50+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -12951,7 +12951,7 @@ msgstr "无法执行子进程“%s”（%s）"
 msgid "tags-locale:C"
 msgstr "tags-locale:zh_CN"
 
-#: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:148
+#: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:151
 #: app/gui/themes.c:731
 #, c-format
 msgid "Error closing '%s': %s"
@@ -13405,7 +13405,7 @@ msgstr "选区蒙板"
 msgid "Foreground"
 msgstr "前景"
 
-#: app/core/gimpcontext.c:669 app/core/gimpgrid.c:104
+#: app/core/gimpcontext.c:669 app/core/gimpgrid.c:137
 msgid "Foreground color"
 msgstr "前景色"
 
@@ -13413,7 +13413,7 @@ msgstr "前景色"
 msgid "Background"
 msgstr "背景"
 
-#: app/core/gimpcontext.c:676 app/core/gimpgrid.c:111
+#: app/core/gimpcontext.c:676 app/core/gimpgrid.c:144
 msgid "Background color"
 msgstr "背景色"
 
@@ -13540,7 +13540,7 @@ msgstr "载入“%s”时出错"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:361 app/file-data/file-data-gex.c:511
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:404
+#: app/xcf/xcf.c:405
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "无法打开“%s”以读取："
@@ -13787,61 +13787,61 @@ msgstr "未找到线性渐变。"
 msgid "Writing POV file '%s' failed: %s"
 msgstr "写入 POV 文件“%s”失败：%s"
 
-#: app/core/gimpgrid.c:96
+#: app/core/gimpgrid.c:129
 msgid "Line style"
 msgstr "线条样式"
 
-#: app/core/gimpgrid.c:97
+#: app/core/gimpgrid.c:130
 msgid "Line style used for the grid."
 msgstr "网格使用的线型。"
 
-#: app/core/gimpgrid.c:105
+#: app/core/gimpgrid.c:138
 msgid "The foreground color of the grid."
 msgstr "网格的前景色。"
 
-#: app/core/gimpgrid.c:112
+#: app/core/gimpgrid.c:145
 msgid ""
 "The background color of the grid; only used in double dashed line style."
 msgstr "网格的背景色；只用于双划线线型。"
 
-#: app/core/gimpgrid.c:119
+#: app/core/gimpgrid.c:152
 msgid "Spacing X"
 msgstr "X 间距"
 
-#: app/core/gimpgrid.c:120
+#: app/core/gimpgrid.c:153
 msgid "Horizontal spacing of grid lines."
 msgstr "网格线的水平间距。"
 
-#: app/core/gimpgrid.c:126
+#: app/core/gimpgrid.c:159
 msgid "Spacing Y"
 msgstr "Y 间距"
 
-#: app/core/gimpgrid.c:127
+#: app/core/gimpgrid.c:160
 msgid "Vertical spacing of grid lines."
 msgstr "网格线的竖直间距。"
 
-#: app/core/gimpgrid.c:133
+#: app/core/gimpgrid.c:166
 msgid "Spacing unit"
 msgstr "间距单位"
 
-#: app/core/gimpgrid.c:140
+#: app/core/gimpgrid.c:173
 msgid "Offset X"
 msgstr "X 偏移"
 
-#: app/core/gimpgrid.c:141
+#: app/core/gimpgrid.c:174
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
 msgstr "第一条网格线的水平偏移；可以是负数。"
 
-#: app/core/gimpgrid.c:149
+#: app/core/gimpgrid.c:182
 msgid "Offset Y"
 msgstr "Y 偏移"
 
-#: app/core/gimpgrid.c:150
+#: app/core/gimpgrid.c:183
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "第一条网格线的竖直偏移；可以是负数。"
 
-#: app/core/gimpgrid.c:158
+#: app/core/gimpgrid.c:191
 msgid "Offset unit"
 msgstr "偏移单位"
 
@@ -13911,168 +13911,173 @@ msgstr "（已导入）"
 msgid "Layer mode '%s' was added in %s"
 msgstr "图层模式“%s”已添加到 %s"
 
-#: app/core/gimpimage.c:3117
+#: app/core/gimpimage.c:3121 app/core/gimpimage.c:3235
+#, c-format
+msgid "Channel effects were saved in %s"
+msgstr "通道特效已保存到 %s"
+
+#: app/core/gimpimage.c:3130
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "图层组已添加到 %s"
 
-#: app/core/gimpimage.c:3124
+#: app/core/gimpimage.c:3137
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "图层组蒙板已添加到 %s"
 
-#: app/core/gimpimage.c:3131
+#: app/core/gimpimage.c:3144
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "图层组位置锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3138
+#: app/core/gimpimage.c:3151
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "图层组透明通道锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3146 app/core/gimpimage.c:3213
+#: app/core/gimpimage.c:3159 app/core/gimpimage.c:3227
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "可见性锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3157
+#: app/core/gimpimage.c:3170
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "文本图层中字体信息的格式已在 %s 中更改"
 
-#: app/core/gimpimage.c:3165
+#: app/core/gimpimage.c:3178
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "图层特效已添加到 %s"
 
-#: app/core/gimpimage.c:3177
+#: app/core/gimpimage.c:3190
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "在 %s 中添加了新的感知混合空间"
 
-#: app/core/gimpimage.c:3191
+#: app/core/gimpimage.c:3204
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "矢量图层已添加到 %s"
 
-#: app/core/gimpimage.c:3199
+#: app/core/gimpimage.c:3212
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "链接图层已添加到 %s"
 
-#: app/core/gimpimage.c:3222
+#: app/core/gimpimage.c:3244
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "多个路径选区已添加到 %s"
 
-#: app/core/gimpimage.c:3234
+#: app/core/gimpimage.c:3256
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "路径中存储的颜色标签已添加到 %s"
 
-#: app/core/gimpimage.c:3241
+#: app/core/gimpimage.c:3263
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "路径中存储的锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3255
+#: app/core/gimpimage.c:3277
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "高位深图像已添加到 %s"
 
-#: app/core/gimpimage.c:3263
+#: app/core/gimpimage.c:3285
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "高位深图像编码已固定到 %s"
 
-#: app/core/gimpimage.c:3271
+#: app/core/gimpimage.c:3293
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "内置 zlib 压缩已添加到 %s"
 
-#: app/core/gimpimage.c:3288
+#: app/core/gimpimage.c:3310
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "对大于 4GB 图像文件的支持已添加到 %s"
 
-#: app/core/gimpimage.c:3295
+#: app/core/gimpimage.c:3317
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "多个图层选区被添加进 %s"
 
-#: app/core/gimpimage.c:3312
+#: app/core/gimpimage.c:3334
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "画布外参考线添加至 %s"
 
-#: app/core/gimpimage.c:3323
+#: app/core/gimpimage.c:3345
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "项目设置和项目名称中的模式搜索已添加进 %s"
 
-#: app/core/gimpimage.c:3329
+#: app/core/gimpimage.c:3351
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "多个通道选择已添加进 %s"
 
-#: app/core/gimpimage.c:3449
+#: app/core/gimpimage.c:3471
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "改变图像分辨率"
 
-#: app/core/gimpimage.c:3501
+#: app/core/gimpimage.c:3523
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "改变图像单位"
 
-#: app/core/gimpimage.c:4540
+#: app/core/gimpimage.c:4562
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "“GIMP 注释”内嵌信息校验失败：注释包含无效的 UTF-8"
 
-#: app/core/gimpimage.c:4602
+#: app/core/gimpimage.c:4624
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "添加内嵌信息到图像"
 
-#: app/core/gimpimage.c:4647
+#: app/core/gimpimage.c:4669
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "从图像移除内嵌信息"
 
-#: app/core/gimpimage.c:5620
+#: app/core/gimpimage.c:5642
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "添加图层"
 
-#: app/core/gimpimage.c:5680 app/core/gimpimage.c:5711
+#: app/core/gimpimage.c:5702 app/core/gimpimage.c:5733
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "移除图层"
 
-#: app/core/gimpimage.c:5705
+#: app/core/gimpimage.c:5727
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "移除浮动选区"
 
-#: app/core/gimpimage.c:5868
+#: app/core/gimpimage.c:5890
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "添加通道"
 
-#: app/core/gimpimage.c:5898 app/core/gimpimage.c:5926
+#: app/core/gimpimage.c:5920 app/core/gimpimage.c:5948
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "移除通道"
 
-#: app/core/gimpimage.c:5988
+#: app/core/gimpimage.c:6010
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "添加路径"
 
-#: app/core/gimpimage.c:6023 app/core/gimpimage.c:6031
+#: app/core/gimpimage.c:6045 app/core/gimpimage.c:6053
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "移除路径"
@@ -14353,7 +14358,7 @@ msgctxt "undo-type"
 msgid "Set Sample Point Pick Mode"
 msgstr "设置采样点拾取模式"
 
-#: app/core/gimpimage-savable.c:124
+#: app/core/gimpimage-savable.c:127
 #, c-format
 msgid "Error creating '%s': %s"
 msgstr "创建“%s”时出错：%s"
@@ -28700,49 +28705,49 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "状态和描述"
 
-#: app/xcf/xcf.c:126 app/xcf/xcf.c:181
+#: app/xcf/xcf.c:127 app/xcf/xcf.c:182
 msgid "GIMP XCF image"
 msgstr "GIMP XCF 图像"
 
-#: app/xcf/xcf.c:257 app/xcf/xcf.c:315
+#: app/xcf/xcf.c:258 app/xcf/xcf.c:316
 msgid "Memory Stream"
 msgstr "内存流"
 
-#: app/xcf/xcf.c:260
+#: app/xcf/xcf.c:261
 #, c-format
 msgid "Opening '%s'"
 msgstr "正在打开“%s”"
 
-#: app/xcf/xcf.c:279
+#: app/xcf/xcf.c:280
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF 错误：不支持的 XCF 文件版本 %d"
 
-#: app/xcf/xcf.c:338
+#: app/xcf/xcf.c:339
 #, c-format
 msgid "Saving '%s'"
 msgstr "正在保存“%s”"
 
-#: app/xcf/xcf.c:346
+#: app/xcf/xcf.c:347
 #, c-format
 msgid "Closing '%s'"
 msgstr "正在关闭“%s”"
 
-#: app/xcf/xcf.c:364
+#: app/xcf/xcf.c:365
 #, c-format
 msgid "Error writing '%s': "
 msgstr "写入“%s”时出错："
 
-#: app/xcf/xcf.c:452
+#: app/xcf/xcf.c:453
 #, c-format
 msgid "Error creating '%s': "
 msgstr "创建“%s”时出错："
 
-#: app/xcf/xcf-load.c:457
+#: app/xcf/xcf-load.c:461
 msgid "Invalid image mode and precision combination."
 msgstr "无效的图像模式和精度组合。"
 
-#: app/xcf/xcf-load.c:896
+#: app/xcf/xcf-load.c:900
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28751,7 +28756,7 @@ msgstr ""
 "发现内嵌“exif-数据”已损坏。\n"
 "Exif 数据无法被迁移：%s"
 
-#: app/xcf/xcf-load.c:935
+#: app/xcf/xcf-load.c:939
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28759,7 +28764,7 @@ msgstr ""
 "发现内嵌“gimp-元数据”已损坏。\n"
 "XMP 数据无法被迁移。"
 
-#: app/xcf/xcf-load.c:959
+#: app/xcf/xcf-load.c:963
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28770,31 +28775,31 @@ msgstr ""
 "通过旧版本 GIMP 保存的损坏 XMP 元数据无法转换且会被忽略。\n"
 "如果您不知道 XMP 是什么，很可能您并不需要它。报告的错误：%s。"
 
-#: app/xcf/xcf-load.c:1456
+#: app/xcf/xcf-load.c:1460
 msgid "Linked Layers"
 msgstr "链接的图层"
 
-#: app/xcf/xcf-load.c:1466
+#: app/xcf/xcf-load.c:1470
 msgid "Linked Channels"
 msgstr "链接的通道"
 
-#: app/xcf/xcf-load.c:1491
+#: app/xcf/xcf-load.c:1495
 msgid "Linked Paths"
 msgstr "链接的路径"
 
-#: app/xcf/xcf-load.c:1539
+#: app/xcf/xcf-load.c:1543
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "此 XCF 文件已损坏！已尽可能抢救图像数据，但抢救得到的部分不完整。"
 
-#: app/xcf/xcf-load.c:1566
+#: app/xcf/xcf-load.c:1570
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "此 XCF 文件已损坏！未能抢救任何图像数据。"
 
-#: app/xcf/xcf-load.c:1760
+#: app/xcf/xcf-load.c:1788
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28804,14 +28809,14 @@ msgstr ""
 "未能正确地保存索引颜色表。\n"
 "将使用灰度颜色表取代原颜色表。"
 
-#: app/xcf/xcf-load.c:2591
+#: app/xcf/xcf-load.c:2619
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
 "to a raster layer."
 msgstr "XCF 警告：XCF 文件中有无效链接。链接图层“%s”已降级为栅格化图层。"
 
-#: app/xcf/xcf-load.c:2611
+#: app/xcf/xcf-load.c:2639
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
@@ -28819,7 +28824,7 @@ msgid ""
 msgstr ""
 "XCF 警告：检测到 XCF 文件中有循环引用。链接图层“%s”已降级为栅格化图层。"
 
-#: app/xcf/xcf-load.c:3344
+#: app/xcf/xcf-load.c:3372
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28831,7 +28836,7 @@ msgstr ""
 "染。\n"
 "这种情况不应发生。您应将该问题报告给滤镜的开发者。"
 
-#: app/xcf/xcf-load.c:4232
+#: app/xcf/xcf-load.c:4314
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
