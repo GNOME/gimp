@@ -62,8 +62,6 @@ static gboolean             use_debug_handler  = FALSE;
 static GimpStackTraceMode   stack_trace_mode   = GIMP_STACK_TRACE_QUERY;
 static gchar               *full_prog_name     = NULL;
 static gchar               *backtrace_file     = NULL;
-static gchar               *backup_path        = NULL;
-static GFile               *backup_file        = NULL;
 static GimpLogHandler       log_domain_handler = 0;
 static guint                global_handler_id  = 0;
 
@@ -107,20 +105,12 @@ errors_init (Gimp               *gimp,
   stack_trace_mode  = _stack_trace_mode;
   full_prog_name    = g_strdup (_full_prog_name);
 
-  /* Create parent directories for both the crash and backup files. */
+  /* Create parent directories for the crash files. */
   backtrace_file    = g_path_get_dirname (_backtrace_file);
-  backup_path       = g_build_filename (gimp_directory (), "backups", NULL);
 
   g_mkdir_with_parents (backtrace_file, S_IRUSR | S_IWUSR | S_IXUSR);
   g_free (backtrace_file);
   backtrace_file = g_strdup (_backtrace_file);
-
-  g_mkdir_with_parents (backup_path, S_IRUSR | S_IWUSR | S_IXUSR);
-  g_free (backup_path);
-  backup_path = g_build_filename (gimp_directory (), "backups",
-                                  "backup-XXX.xcf", NULL);
-
-  backup_file = g_file_new_for_path (backup_path);
 
   log_domain_handler = gimp_log_set_handler (FALSE,
                                              G_LOG_LEVEL_WARNING |
@@ -156,10 +146,6 @@ errors_exit (void)
     g_free (backtrace_file);
   if (full_prog_name)
     g_free (full_prog_name);
-  if (backup_path)
-    g_free (backup_path);
-  if (backup_file)
-    g_object_unref (backup_file);
 }
 
 GList *
@@ -300,9 +286,6 @@ gimp_eek (const gchar *reason,
   gboolean         eek_handled   = FALSE;
 #endif
   GimpDebugPolicy  debug_policy;
-  GList           *iter;
-  gint             num_idx;
-  gint             i = 0;
 
   /* GIMP has 2 ways to handle termination signals and fatal errors: one
    * is the stack trace mode which is set at start as command line
@@ -446,58 +429,6 @@ gimp_eek (const gchar *reason,
       g_free (utf8);
     }
 #endif
-
-  /* Let's try to back-up all unsaved images!
-   * It is not 100%: when I tested with various bugs created on purpose,
-   * I had cases where saving failed. I am not sure if this is because
-   * of some memory management along the way to XCF saving or some other
-   * messed up state of GIMP, but this is normal not to expect too much
-   * during a crash.
-   * Nevertheless in various test cases, I had successful backups XCF of
-   * the work in progress. Yeah!
-   */
-  if (backup_path)
-    {
-      /* increase the busy counter, so XCF saving calling
-       * gimp_set_busy() and gimp_unset_busy() won't call the GUI
-       * layer and do whatever windowing system calls to set cursors.
-       */
-      the_errors_gimp->busy++;
-
-      /* The index of 'XXX' in backup_path string. */
-      num_idx = strlen (backup_path) - 7;
-
-      iter = gimp_get_image_iter (the_errors_gimp);
-      for (; iter && i < 1000; iter = iter->next)
-        {
-          GimpImage *image = iter->data;
-
-          if (! gimp_image_is_dirty (image))
-            continue;
-
-          /* This is a trick because we want to avoid any memory
-           * allocation when the process is abnormally terminated.
-           * We just assume that you'll never have more than 1000 images
-           * open (which is already far fetched).
-           */
-          backup_path[num_idx + 2] = '0' + (i % 10);
-          backup_path[num_idx + 1] = '0' + ((i/10) % 10);
-          backup_path[num_idx]     = '0' + ((i/100) % 10);
-
-          /* Saving. */
-          gimp_pdb_execute_procedure_by_name (the_errors_gimp->pdb,
-                                              gimp_get_user_context (the_errors_gimp),
-                                              NULL, NULL,
-                                              "gimp-xcf-save",
-                                              GIMP_TYPE_RUN_MODE,          GIMP_RUN_NONINTERACTIVE,
-                                              GIMP_TYPE_IMAGE,             image,
-                                              GIMP_TYPE_CORE_OBJECT_ARRAY, NULL,
-                                              G_TYPE_FILE,                 backup_file,
-                                              G_TYPE_NONE);
-          g_rename (g_file_peek_path (backup_file), backup_path);
-          i++;
-        }
-    }
 
   exit (EXIT_FAILURE);
 }
