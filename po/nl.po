@@ -33,8 +33,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-21 16:12+0000\n"
-"PO-Revision-Date: 2026-07-22 13:50+0200\n"
+"POT-Creation-Date: 2026-07-28 16:27+0000\n"
+"PO-Revision-Date: 2026-07-29 12:19+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -42,7 +42,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: OmegaT 6.1.0\n"
+"X-Generator: OmegaT 6.2.0\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -10731,7 +10731,7 @@ msgstr ""
 "Er trad een fout op bij het parsen van uw bestand ‘%s’. Standaard waarden "
 "zullen worden gebruikt. Een back-up van uw configuratie is gemaakt op ‘%s’."
 
-#: app/config/gimpcoreconfig.c:829 app/dialogs/preferences-dialog.c:1915
+#: app/config/gimpcoreconfig.c:835 app/dialogs/preferences-dialog.c:1915
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Patroonsyntaxis voor het zoeken en selecteren van items:"
 
@@ -13906,7 +13906,7 @@ msgstr "Fout bij het laden van ‘%s’"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:361 app/file-data/file-data-gex.c:511
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:406
+#: app/xcf/xcf.c:407
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Kon ‘%s’ niet openen om te lezen: "
@@ -14044,7 +14044,7 @@ msgid "Cannot rename effect masks."
 msgstr "Kan effectmaskers niet hernoemen."
 
 #: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:732
-#: app/core/gimplayer.c:2032 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2040 app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "%s masker"
@@ -14291,123 +14291,127 @@ msgstr " (geïmporteerd)"
 msgid "Layer mode '%s' was added in %s"
 msgstr "Laagmodus ‘%s’ is toegevoegd in %s"
 
-#: app/core/gimpimage.c:2965
+#: app/core/gimpimage.c:2969 app/core/gimpimage.c:3083
+msgid "Channel effects were saved in %s"
+msgstr "Kanaaleffecten toegevoegd in %s"
+
+#: app/core/gimpimage.c:2978
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Laaggroepen toegevoegd in %s"
 
-#: app/core/gimpimage.c:2972
+#: app/core/gimpimage.c:2985
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maskers op laaggroepen zijn toegevoegd in %s"
 
-#: app/core/gimpimage.c:2979
+#: app/core/gimpimage.c:2992
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Positie vergrendelen op laaggroepen werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:2986
+#: app/core/gimpimage.c:2999
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Alfakanaal vergrendelen op laaggroepen werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:2994 app/core/gimpimage.c:3061
+#: app/core/gimpimage.c:3007 app/core/gimpimage.c:3075
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Vergrendelen van zichtbaarheid is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3005
+#: app/core/gimpimage.c:3018
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Weergave van de tekst in de tekstlaag is veranderd in %s"
 
-#: app/core/gimpimage.c:3013
+#: app/core/gimpimage.c:3026
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Laageffecten toegevoegd in %s"
 
-#: app/core/gimpimage.c:3025
+#: app/core/gimpimage.c:3038
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Een nieuwe perceptuele mengruimte werd toegevoegd %s"
 
-#: app/core/gimpimage.c:3039
+#: app/core/gimpimage.c:3052
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "Vectorlagen werden toegevoegd %s"
 
-#: app/core/gimpimage.c:3047
+#: app/core/gimpimage.c:3060
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "Koppelingslagen werden toegevoegd in %s"
 
-#: app/core/gimpimage.c:3070
+#: app/core/gimpimage.c:3092
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Selectie van meerdere paden is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3082
+#: app/core/gimpimage.c:3104
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Ondersteuning van kleurlabels in een pad toegevoegd in %s"
 
-#: app/core/gimpimage.c:3089
+#: app/core/gimpimage.c:3111
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Positie vergrendelen op paden werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:3103
+#: app/core/gimpimage.c:3125
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Ondersteuning van grotere bitdiepte in %s"
 
-#: app/core/gimpimage.c:3111
+#: app/core/gimpimage.c:3133
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr ""
 "Fout tijdens coderen van afbeeldingen met grote bitdiepte hersteld in %s"
 
-#: app/core/gimpimage.c:3119
+#: app/core/gimpimage.c:3141
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Interne zlib-compressie toegevoegd in %s"
 
-#: app/core/gimpimage.c:3136
+#: app/core/gimpimage.c:3158
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Ondersteuning van afbeeldingen groter dan 4 GB toegevoegd in %s"
 
-#: app/core/gimpimage.c:3143
+#: app/core/gimpimage.c:3165
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Selectie van meerdere lagen is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3160
+#: app/core/gimpimage.c:3182
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Hulplijnen buiten het canvas toegevoegd in %s"
 
-#: app/core/gimpimage.c:3171
+#: app/core/gimpimage.c:3193
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Item instellen en patroon zoeken in itemnaam zijn toegevoegd in %s"
 
-#: app/core/gimpimage.c:3177
+#: app/core/gimpimage.c:3199
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Selectie van meerdere kanalen is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3297
+#: app/core/gimpimage.c:3319
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Afbeeldingsresolutie wijzigen"
 
-#: app/core/gimpimage.c:3349
+#: app/core/gimpimage.c:3371
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Afbeeldingseenheid wijzigen"
 
-#: app/core/gimpimage.c:4374
+#: app/core/gimpimage.c:4396
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14415,47 +14419,47 @@ msgstr ""
 "'gimp-commentaar' parasietvalidatie faalde: commentaar bevat ongeldige UTF-8 "
 "tekens"
 
-#: app/core/gimpimage.c:4436
+#: app/core/gimpimage.c:4458
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Parasiet aan afbeelding koppelen"
 
-#: app/core/gimpimage.c:4481
+#: app/core/gimpimage.c:4503
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Parasiet uit afbeelding verwijderen"
 
-#: app/core/gimpimage.c:5454
+#: app/core/gimpimage.c:5476
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Laag toevoegen"
 
-#: app/core/gimpimage.c:5514 app/core/gimpimage.c:5545
+#: app/core/gimpimage.c:5536 app/core/gimpimage.c:5567
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Laag verwijderen"
 
-#: app/core/gimpimage.c:5539
+#: app/core/gimpimage.c:5561
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Zwevende selectie verwijderen"
 
-#: app/core/gimpimage.c:5695
+#: app/core/gimpimage.c:5717
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanaal toevoegen"
 
-#: app/core/gimpimage.c:5725 app/core/gimpimage.c:5750
+#: app/core/gimpimage.c:5747 app/core/gimpimage.c:5772
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanaal verwijderen"
 
-#: app/core/gimpimage.c:5810
+#: app/core/gimpimage.c:5832
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Pad toevoegen"
 
-#: app/core/gimpimage.c:5845 app/core/gimpimage.c:5853
+#: app/core/gimpimage.c:5867 app/core/gimpimage.c:5875
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Pad verwijderen"
@@ -14956,60 +14960,60 @@ msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Laagmaskers toevoegen"
 
-#: app/core/gimplayer.c:2071
+#: app/core/gimplayer.c:2079
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Alfa naar masker verplaatsen"
 
-#: app/core/gimplayer.c:2235
+#: app/core/gimplayer.c:2243
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Laagmaskers toepassen"
 
-#: app/core/gimplayer.c:2236
+#: app/core/gimplayer.c:2244
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Laagmaskers verwijderen"
 
-#: app/core/gimplayer.c:2343
+#: app/core/gimplayer.c:2351
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Laagmaskers inschakelen"
 
-#: app/core/gimplayer.c:2344
+#: app/core/gimplayer.c:2352
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Laagmaskers uitschakelen"
 
-#: app/core/gimplayer.c:2425
+#: app/core/gimplayer.c:2433
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Laagmaskers tonen"
 
-#: app/core/gimplayer.c:2504
+#: app/core/gimplayer.c:2512
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Alfakanaal toevoegen"
 
-#: app/core/gimplayer.c:2534
+#: app/core/gimplayer.c:2542
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Alfakanaal verwijderen"
 
-#: app/core/gimplayer.c:2555
+#: app/core/gimplayer.c:2563
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Laag naar afbeeldingsgrootte"
 
-#: app/core/gimplayer.c:2738
+#: app/core/gimplayer.c:2746
 msgid "Set layer's blend space"
 msgstr "De overvloeiruimte van de laag instellen"
 
-#: app/core/gimplayer.c:2785
+#: app/core/gimplayer.c:2793
 msgid "Set layer's composite space"
 msgstr "De composietruimte van de laag instellen"
 
-#: app/core/gimplayer.c:2832
+#: app/core/gimplayer.c:2840
 msgid "Set layer's composite mode"
 msgstr "Laagcompositiemodus instellen"
 
@@ -21187,7 +21191,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Kleuren omzetten naar grijstinten"
 
 #: app/operations/gimpoperationdesaturate.c:92
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1488
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1491
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimptransform3doptions.c:77
 #: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:397
 #: app/widgets/gimplayertreeview.c:286
@@ -21244,7 +21248,7 @@ msgstr "Transparante delen vervangen door een kleur"
 msgid "The color"
 msgstr "De kleur"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1451
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1454
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -24370,26 +24374,26 @@ msgstr "%s: wisselen origineel en gefilterde"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: wisselen horizontaal en verticaal"
 
-#: app/tools/gimpfiltertool.c:1284
+#: app/tools/gimpfiltertool.c:1286
 msgid "Edit filter"
 msgstr "Filter bewerken"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1464
+#: app/tools/gimpfiltertool.c:1467
 msgid "Blending Options"
 msgstr "Mengopties"
 
-#: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1978 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importeren ‘%s’-instellingen"
 
-#: app/tools/gimpfiltertool.c:1977 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1980 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exporteren ‘%s’-instellingen"
 
-#: app/tools/gimpfiltertool.c:2242
+#: app/tools/gimpfiltertool.c:2245
 #, c-format
 msgid "Editing '%s'..."
 msgstr "Bewerken ‘%s’…"
@@ -29633,49 +29637,49 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Status & omschrijving"
 
-#: app/xcf/xcf.c:127 app/xcf/xcf.c:183
+#: app/xcf/xcf.c:128 app/xcf/xcf.c:184
 msgid "GIMP XCF image"
 msgstr "GIMP XCF-afbeelding"
 
-#: app/xcf/xcf.c:259 app/xcf/xcf.c:317
+#: app/xcf/xcf.c:260 app/xcf/xcf.c:318
 msgid "Memory Stream"
 msgstr "Geheugenstroom"
 
-#: app/xcf/xcf.c:262
+#: app/xcf/xcf.c:263
 #, c-format
 msgid "Opening '%s'"
 msgstr "Openen van ‘%s’"
 
-#: app/xcf/xcf.c:281
+#: app/xcf/xcf.c:282
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-fout: niet ondersteunde XCF-bestandsversie %d tegengekomen"
 
-#: app/xcf/xcf.c:340
+#: app/xcf/xcf.c:341
 #, c-format
 msgid "Saving '%s'"
 msgstr "Opslaan van ‘%s’"
 
-#: app/xcf/xcf.c:348
+#: app/xcf/xcf.c:349
 #, c-format
 msgid "Closing '%s'"
 msgstr "Sluiten ‘%s’"
 
-#: app/xcf/xcf.c:366
+#: app/xcf/xcf.c:367
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Fout bij schrijven naar ‘%s’: "
 
-#: app/xcf/xcf.c:454
+#: app/xcf/xcf.c:455
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Fout tijdens aanmaken ‘%s’: "
 
-#: app/xcf/xcf-load.c:452
+#: app/xcf/xcf-load.c:456
 msgid "Invalid image mode and precision combination."
 msgstr "Ongeldige combinatie afbeeldingsmodus en bitdiepte."
 
-#: app/xcf/xcf-load.c:891
+#: app/xcf/xcf-load.c:895
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -29684,7 +29688,7 @@ msgstr ""
 "Corrupt eparasiet ‘exif-data’ ontdekt.\n"
 "Exif-gegevens konden niet worden gemigreerd: %s"
 
-#: app/xcf/xcf-load.c:930
+#: app/xcf/xcf-load.c:934
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -29692,7 +29696,7 @@ msgstr ""
 "Corrupt eparasiet ‘gimp-metadata’ ontdekt.\n"
 "XMP-gegevens konden niet worden gemigreerd."
 
-#: app/xcf/xcf-load.c:954
+#: app/xcf/xcf-load.c:958
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -29705,19 +29709,19 @@ msgstr ""
 "Als u niet weet wat XMP is, heeft u het heel waarschijnlijk niet nodig. "
 "Gerapporteerde fout: %s."
 
-#: app/xcf/xcf-load.c:1451
+#: app/xcf/xcf-load.c:1455
 msgid "Linked Layers"
 msgstr "Gekoppelde lagen"
 
-#: app/xcf/xcf-load.c:1461
+#: app/xcf/xcf-load.c:1465
 msgid "Linked Channels"
 msgstr "Gekoppelde kanalen"
 
-#: app/xcf/xcf-load.c:1486
+#: app/xcf/xcf-load.c:1490
 msgid "Linked Paths"
 msgstr "Gekoppelde paden"
 
-#: app/xcf/xcf-load.c:1534
+#: app/xcf/xcf-load.c:1538
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -29725,7 +29729,7 @@ msgstr ""
 "Dit XCF-bestand is corrupt!  Ik heb er zoveel mogelijk van geladen, maar het "
 "is niet compleet."
 
-#: app/xcf/xcf-load.c:1561
+#: app/xcf/xcf-load.c:1565
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -29733,7 +29737,7 @@ msgstr ""
 "Dit XCF-bestand is corrupt!  Ik kon er zelfs geen gedeeltelijke "
 "afbeeldingsgegevens van redden."
 
-#: app/xcf/xcf-load.c:1755
+#: app/xcf/xcf-load.c:1783
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -29743,7 +29747,7 @@ msgstr ""
 "sloeg geïndexeerde kleurkaarten niet correct op.\n"
 "Vervangen van de kaart met grijswaarden."
 
-#: app/xcf/xcf-load.c:2586
+#: app/xcf/xcf-load.c:2614
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
@@ -29752,7 +29756,7 @@ msgstr ""
 "XCF waarschuwing: ongeldige link in XCF-bestand. De gekoppelde laag ‘%s’ is "
 "gedowngraded naar een rasterlaag."
 
-#: app/xcf/xcf-load.c:2606
+#: app/xcf/xcf-load.c:2634
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
@@ -29761,7 +29765,7 @@ msgstr ""
 "XCF waarschuwing: cirkelverwijzing gedetecteerd in XCF-bestand. De "
 "gekoppelde laag ‘%s’ is gedowngraded naar een rasterlaag."
 
-#: app/xcf/xcf-load.c:3339
+#: app/xcf/xcf-load.c:3367
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29774,7 +29778,7 @@ msgstr ""
 "Dit zou niet voor moeten komen. U zou het probleem moeten rapporteren bij de "
 "ontwikkelaars van het filter."
 
-#: app/xcf/xcf-load.c:4186
+#: app/xcf/xcf-load.c:4268
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
