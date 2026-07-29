@@ -37,6 +37,7 @@ struct _GimpPathOptions
 
   GimpPathMode       edit_mode;
   gboolean           polygonal;
+  gboolean           auto_connect;
 
   /* vector layer */
   gboolean           enable_fill;

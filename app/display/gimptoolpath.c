@@ -90,7 +90,8 @@ enum
   PROP_0,
   PROP_PATH,
   PROP_EDIT_MODE,
-  PROP_POLYGONAL
+  PROP_POLYGONAL,
+  PROP_AUTO_CONNECT
 };
 
 enum
@@ -107,6 +108,7 @@ struct _GimpToolPathPrivate
   GimpPath             *path;           /* the current Path data           */
   GimpPathMode          edit_mode;
   gboolean              polygonal;
+  gboolean              auto_connect;
 
   GimpPathFunction      function;       /* function we're performing         */
   GimpAnchorFeatureType restriction;    /* movement restriction              */
@@ -292,6 +294,15 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_AUTO_CONNECT,
+                                   g_param_spec_boolean ("auto-connect",
+                                                         _("Auto-Connect on Click"),
+                                                         _("If checked, clicking on the end node in "
+                                                           "Design mode will complete the path"),
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -344,6 +355,9 @@ gimp_tool_path_set_property (GObject      *object,
     case PROP_POLYGONAL:
       private->polygonal = g_value_get_boolean (value);
       break;
+    case PROP_AUTO_CONNECT:
+      private->auto_connect = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -370,6 +384,9 @@ gimp_tool_path_get_property (GObject    *object,
       break;
     case PROP_POLYGONAL:
       g_value_set_boolean (value, private->polygonal);
+      break;
+    case PROP_AUTO_CONNECT:
+      g_value_set_boolean (value, private->auto_connect);
       break;
 
     default:
@@ -1402,6 +1419,7 @@ gimp_tool_path_get_function (GimpToolPath     *tool_path,
           if (anchor->type == GIMP_ANCHOR_ANCHOR)
             {
               if (! (state & TOGGLE_MASK)                         &&
+                  private->auto_connect                           &&
                   private->sel_anchor                             &&
                   private->sel_anchor != anchor                   &&
                   gimp_stroke_is_extendable (private->sel_stroke,
