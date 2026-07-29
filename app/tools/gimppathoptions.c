@@ -53,6 +53,7 @@ enum
   PROP_0,
   PROP_PATH_EDIT_MODE,
   PROP_PATH_POLYGONAL,
+  PROP_PATH_AUTO_CONNECT,
   PROP_ENABLE_FILL,
   PROP_ENABLE_STROKE,
   PROP_FILL_STYLE,
@@ -130,6 +131,14 @@ gimp_path_options_class_init (GimpPathOptionsClass *klass)
                             _("Polygonal"),
                             _("Restrict editing to polygons"),
                             FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PATH_POLYGONAL,
+                            "path-auto-connect",
+                            _("Auto-Connect on Click"),
+                            _("If checked, clicking on the end node in "
+                              "Design mode will complete the path"),
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   /* Vector layer specific properties */
@@ -283,6 +292,9 @@ gimp_path_options_set_property (GObject      *object,
     case PROP_PATH_POLYGONAL:
       options->polygonal = g_value_get_boolean (value);
       break;
+    case PROP_PATH_AUTO_CONNECT:
+      options->auto_connect = g_value_get_boolean (value);
+      break;
 
     case PROP_ENABLE_FILL:
       options->enable_fill = g_value_get_boolean (value);
@@ -357,6 +369,9 @@ gimp_path_options_get_property (GObject    *object,
       break;
     case PROP_PATH_POLYGONAL:
       g_value_set_boolean (value, options->polygonal);
+      break;
+    case PROP_PATH_AUTO_CONNECT:
+      g_value_set_boolean (value, options->auto_connect);
       break;
 
     case PROP_ENABLE_FILL:
@@ -534,6 +549,9 @@ gimp_path_options_gui (GimpToolOptions *tool_options)
     }
 
   button = gimp_prop_check_button_new (config, "path-polygonal", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+
+  button = gimp_prop_check_button_new (config, "path-auto-connect", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   str = g_strdup_printf (_("Path to Selection\n"

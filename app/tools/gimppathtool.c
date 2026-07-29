@@ -452,6 +452,10 @@ gimp_path_tool_start (GimpPathTool *path_tool,
                           G_OBJECT (widget),  "polygonal",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_BIDIRECTIONAL);
+  g_object_bind_property (G_OBJECT (options), "path-auto-connect",
+                          G_OBJECT (widget),  "auto-connect",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_BIDIRECTIONAL);
 
   gimp_tool_path_set_path (GIMP_TOOL_PATH (widget),
                            path_tool->path);
