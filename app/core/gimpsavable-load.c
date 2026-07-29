@@ -75,13 +75,15 @@ struct _GimpSimpleHandlerData
 typedef struct _GimpConfigHandlerData GimpConfigHandlerData;
 struct _GimpConfigHandlerData
 {
-  gchar   *element_name;
-  GType    parent_type;
-  GType    config_type;
+  gchar                   *element_name;
+  GType                    parent_type;
+  GType                    config_type;
 
-  gchar  **prop_names;
-  GValue  *prop_values;
-  gint     n_props;
+  gchar                  **prop_names;
+  GValue                  *prop_values;
+  gint                     n_props;
+
+  GimpExitElementhandler   secondary_exit_handler;
 };
 
 
@@ -183,6 +185,7 @@ gimp_savable_load (GType          savable_type,
  * @parent_type:
  * @element_name:
  * @state:
+ * @secondary_exit_handler:
  *
  * This will load a GimpConfig object which has been saved with
  * gimp_savable_config_save(). The stored object must be a subtype of
@@ -194,11 +197,20 @@ gimp_savable_load (GType          savable_type,
  * more if it's a %G_PARAM_CONSTRUCT_ONLY property).
  * Additional values are triplets: the property name, followed by its
  * GType, and finally the data.
+ *
+ * In the end, the config object will be stored under the name
+ * @element_name, and bubbled-up to parent element.
+ *
+ * If @secondary_exit_handler is set, it will be run after the automatic
+ * handler creating the config object and the bubbling-up of the value
+ * won't happen. This can be useful when repeatedly parsing similar
+ * elements under the same level.
  */
 void
-gimp_savable_config_load (GType          parent_type,
-                          const gchar   *element_name,
-                          GimpLoadState *state,
+gimp_savable_config_load (GType                   parent_type,
+                          const gchar            *element_name,
+                          GimpLoadState          *state,
+                          GimpExitElementhandler  secondary_exit_handler,
                           ...)
 {
   GimpConfigHandlerData  *data;
@@ -210,11 +222,10 @@ gimp_savable_config_load (GType          parent_type,
   GList                  *lvalues = NULL;
   gint                    n_props = 0;
 
-  va_start (args, state);
+  va_start (args, secondary_exit_handler);
   prop_name = va_arg (args, gchar *);
   while (prop_name)
     {
-      /*const gchar *format = va_arg (args, gchar *);*/
       GValue *value;
       GType   gtype = va_arg (args, GType);
 
@@ -318,12 +329,13 @@ gimp_savable_config_load (GType          parent_type,
 
   data = g_new0 (GimpConfigHandlerData, 1);
 
-  data->element_name = g_strdup (element_name);
-  data->parent_type  = parent_type;
-  data->config_type  = G_TYPE_NONE;
-  data->prop_names   = names;
-  data->prop_values  = values;
-  data->n_props      = n_props;
+  data->element_name           = g_strdup (element_name);
+  data->parent_type            = parent_type;
+  data->config_type            = G_TYPE_NONE;
+  data->prop_names             = names;
+  data->prop_values            = values;
+  data->n_props                = n_props;
+  data->secondary_exit_handler = secondary_exit_handler;
 
   gimp_savable_load_add_handlers (state, element_name,
                                   gimp_savable_load_enter_config,
@@ -1840,7 +1852,15 @@ gimp_savable_load_exit_config (GimpLoadState  *state,
         }
 
       gimp_savable_load_store_value (state, data->element_name, config, g_object_unref);
-      gimp_savable_load_bubble_up (state, data->element_name);
+
+      if (data->secondary_exit_handler)
+        {
+          data->secondary_exit_handler (state, text, len, user_data, error);
+        }
+      else
+        {
+          gimp_savable_load_bubble_up (state, data->element_name);
+        }
 
       g_type_class_unref (klass);
       g_free (pspecs);

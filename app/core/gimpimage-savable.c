@@ -53,6 +53,9 @@
 #include "gimpsavable.h"
 #include "gimpsavable-load.h"
 #include "gimpsymmetry.h"
+#include "gimpsymmetry-mandala.h"
+#include "gimpsymmetry-mirror.h"
+#include "gimpsymmetry-tiling.h"
 #include "gimptemplate.h"
 
 #include "gimp-intl.h"
@@ -91,6 +94,16 @@ static gboolean   gimp_image_exit_format       (GimpLoadState         *state,
 static gboolean   gimp_image_enter_guides      (GimpLoadState         *state,
                                                 const gchar          **attribute_names,
                                                 const gchar          **attribute_values,
+                                                gpointer               user_data,
+                                                GError               **error);
+static gboolean   gimp_image_enter_symmetries  (GimpLoadState         *state,
+                                                const gchar          **attribute_names,
+                                                const gchar          **attribute_values,
+                                                gpointer               user_data,
+                                                GError               **error);
+static gboolean   gimp_image_exit_symmetry     (GimpLoadState         *state,
+                                                const gchar           *text,
+                                                gsize                  len,
                                                 gpointer               user_data,
                                                 GError               **error);
 
@@ -480,6 +493,9 @@ gimp_image_enter_project (GimpLoadState  *state,
   gimp_savable_load_add_simple_handler (state, "metadata", "%s",
                                         FALSE, FALSE,
                                         NULL);
+  gimp_savable_load_add_handlers (state, "symmetries",
+                                  gimp_image_enter_symmetries,
+                                  NULL, NULL, NULL);
   return TRUE;
 }
 
@@ -602,6 +618,50 @@ gimp_image_enter_guides (GimpLoadState  *state,
     }
 
   gimp_savable_load (GIMP_TYPE_GUIDE, state);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_image_enter_symmetries (GimpLoadState  *state,
+                             const gchar   **attribute_names,
+                             const gchar   **attribute_values,
+                             gpointer        user_data,
+                             GError        **error)
+{
+  /* Making sure the types are registered and known. */
+  (void) GIMP_TYPE_MANDALA;
+  (void) GIMP_TYPE_MIRROR;
+  (void) GIMP_TYPE_TILING;
+
+  gimp_savable_config_load (GIMP_TYPE_SYMMETRY, "symmetry", state,
+                            gimp_image_exit_symmetry,
+                            "image", GIMP_TYPE_IMAGE, state->image,
+                            NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_image_exit_symmetry (GimpLoadState  *state,
+                          const gchar    *text,
+                          gsize           len,
+                          gpointer        user_data,
+                          GError        **error)
+{
+  GimpSymmetry *symmetry = NULL;
+
+  gimp_savable_load_get_values (state, "symmetry", &symmetry, NULL);
+
+  if (symmetry)
+    {
+      gimp_image_symmetry_add (state->image, symmetry);
+
+      g_signal_emit_by_name (symmetry, "active-changed", NULL);
+      if (symmetry->active)
+        gimp_image_set_active_symmetry (state->image,
+                                        G_TYPE_FROM_INSTANCE (symmetry));
+    }
 
   return TRUE;
 }

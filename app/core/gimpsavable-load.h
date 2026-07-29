@@ -55,6 +55,7 @@ void         gimp_savable_load                   (GType                    savab
 void         gimp_savable_config_load            (GType                    config_type,
                                                   const gchar             *element_name,
                                                   GimpLoadState           *state,
+                                                  GimpExitElementhandler   secondary_exit_handler,
                                                   ...);
 
 /* Functions to be used from inside GimpSavable's load() implementation */
