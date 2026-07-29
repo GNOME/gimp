@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-27 05:17+0000\n"
-"PO-Revision-Date: 2026-07-27 14:47+0800\n"
+"POT-Creation-Date: 2026-07-28 20:39+0000\n"
+"PO-Revision-Date: 2026-07-29 08:47+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -88,10 +88,10 @@ msgstr "C 语言插件示例"
 #: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
-#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1189
-#: plug-ins/metadata/metadata-editor.c:1691
-#: plug-ins/metadata/metadata-editor.c:5583
-#: plug-ins/metadata/metadata-editor.c:5618 plug-ins/print/print.c:458
+#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1193
+#: plug-ins/metadata/metadata-editor.c:1695
+#: plug-ins/metadata/metadata-editor.c:5587
+#: plug-ins/metadata/metadata-editor.c:5622 plug-ins/print/print.c:458
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -144,7 +144,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:280 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5711 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5756 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -621,7 +621,7 @@ msgstr "百叶窗"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:259
 #: plug-ins/file-psd/psd-image-res-load.c:1113
-#: plug-ins/file-psd/psd-load.c:4887 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:4932 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1216,7 +1216,7 @@ msgstr "当前设置的图表"
 #: plug-ins/filter-browser/filter-browser.c:745 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
 #: plug-ins/ifs-compose/ifs-compose.c:1214
-#: plug-ins/metadata/metadata-viewer.c:223
+#: plug-ins/metadata/metadata-viewer.c:227
 msgid "_Close"
 msgstr "关闭(_C)"
 
@@ -2463,7 +2463,7 @@ msgstr "图像尺寸过大：宽 %d x 高 %d"
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
 #: plug-ins/file-fits/fits.c:499 plug-ins/file-fits/fits.c:581
-#: plug-ins/file-psd/psd-load.c:5266 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:5311 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -4675,14 +4675,14 @@ msgstr "“%s”不是 PCX 文件"
 
 #: plug-ins/common/file-pcx.c:674 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:710
+#: plug-ins/file-psd/psd-load.c:731
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "不支持或无效的图像宽度：%d"
 
 #: plug-ins/common/file-pcx.c:681 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:702
+#: plug-ins/file-psd/psd-load.c:723
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "不支持或无效的图像高度：%d"
@@ -4867,7 +4867,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "导出图像为多页面 PDF"
 
 #: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5618
+#: plug-ins/metadata/metadata-editor.c:5622
 msgid "_Export"
 msgstr "导出(_E)"
 
@@ -10653,7 +10653,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop 不支持多于一个图层的索引图像。图层将在导出时合并。"
 
-#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5750
+#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5795
 msgid "Compatibility Notice"
 msgstr "兼容性注意"
 
@@ -10693,128 +10693,135 @@ msgstr "不支持的文件格式版本：%d"
 msgid "Too many channels in file: %d"
 msgstr "文件中的通道数太多：%d"
 
-#: plug-ins/file-psd/psd-load.c:719
+#: plug-ins/file-psd/psd-load.c:701 plug-ins/file-psd/psd-load.c:709
+#: plug-ins/file-psd/psd-load.c:716 plug-ins/file-psd/psd-load.c:4761
+#: plug-ins/file-psd/psd-load.c:4775 plug-ins/file-psd/psd-load.c:4788
+#, c-format
+msgid "Not enough channels: %d"
+msgstr "通道数量不足：%d"
+
+#: plug-ins/file-psd/psd-load.c:740
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "不支持或无效的图像尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:734 plug-ins/file-psd/psd-load.c:744
+#: plug-ins/file-psd/psd-load.c:755 plug-ins/file-psd/psd-load.c:765
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "不支持的色彩模式：%s"
 
-#: plug-ins/file-psd/psd-load.c:771
+#: plug-ins/file-psd/psd-load.c:792
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "不支持的位深度：%d"
 
-#: plug-ins/file-psd/psd-load.c:805 plug-ins/file-psd/psd-load.c:815
-#: plug-ins/file-psd/psd-load.c:1054 plug-ins/file-psd/psd-load.c:1416
+#: plug-ins/file-psd/psd-load.c:826 plug-ins/file-psd/psd-load.c:836
+#: plug-ins/file-psd/psd-load.c:1075 plug-ins/file-psd/psd-load.c:1437
 #, c-format
 msgid "The file is corrupt!"
 msgstr "文件损坏！"
 
-#: plug-ins/file-psd/psd-load.c:961
+#: plug-ins/file-psd/psd-load.c:982
 #, c-format
 msgid "Invalid value for number of layers: %d."
 msgstr "无效的图层数量：%d。"
 
-#: plug-ins/file-psd/psd-load.c:1003
+#: plug-ins/file-psd/psd-load.c:1024
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "图层中的通道数太多：%d"
 
-#: plug-ins/file-psd/psd-load.c:1088
+#: plug-ins/file-psd/psd-load.c:1109
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "不支持的或无效的图层高度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1097
+#: plug-ins/file-psd/psd-load.c:1118
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "不支持的或无效的图层宽度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1107
+#: plug-ins/file-psd/psd-load.c:1128
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "不支持的或无效的图层尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1128
+#: plug-ins/file-psd/psd-load.c:1149
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "不支持或无效的蒙板信息大小。"
 
-#: plug-ins/file-psd/psd-load.c:1288
+#: plug-ins/file-psd/psd-load.c:1309
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "不支持的或无效的图层蒙板高度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1297
+#: plug-ins/file-psd/psd-load.c:1318
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "不支持的或无效的图层蒙板宽度：%d"
 
-#: plug-ins/file-psd/psd-load.c:1307
+#: plug-ins/file-psd/psd-load.c:1328
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "不支持的或无效的图层蒙板尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1328 plug-ins/file-psd/psd-load.c:1362
-#: plug-ins/file-psd/psd-load.c:1394 plug-ins/file-psd/psd-load.c:1431
+#: plug-ins/file-psd/psd-load.c:1349 plug-ins/file-psd/psd-load.c:1383
+#: plug-ins/file-psd/psd-load.c:1415 plug-ins/file-psd/psd-load.c:1452
 #, c-format
 msgid "Invalid block size."
 msgstr "无效的数据块大小。"
 
-#: plug-ins/file-psd/psd-load.c:1956 plug-ins/file-psd/psd-load.c:5258
+#: plug-ins/file-psd/psd-load.c:1977 plug-ins/file-psd/psd-load.c:5303
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "不支持或无效的通道尺寸"
 
-#: plug-ins/file-psd/psd-load.c:2697
+#: plug-ins/file-psd/psd-load.c:2718
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "无效通道尺寸 %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2765 plug-ins/file-psd/psd-load.c:4856
+#: plug-ins/file-psd/psd-load.c:2786 plug-ins/file-psd/psd-load.c:4901
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "不支持的压缩模式：%d"
 
-#: plug-ins/file-psd/psd-load.c:3420 plug-ins/file-psd/psd-load.c:4120
+#: plug-ins/file-psd/psd-load.c:3441 plug-ins/file-psd/psd-load.c:4141
 msgid "Inner Shadow"
 msgstr "内阴影"
 
-#: plug-ins/file-psd/psd-load.c:3421 plug-ins/file-psd/psd-load.c:4121
-#: plug-ins/file-psd/psd-load.c:4132 plug-ins/file-psd/psd-load.c:4148
+#: plug-ins/file-psd/psd-load.c:3442 plug-ins/file-psd/psd-load.c:4142
+#: plug-ins/file-psd/psd-load.c:4153 plug-ins/file-psd/psd-load.c:4169
 msgid "imported"
 msgstr "已导入"
 
-#: plug-ins/file-psd/psd-load.c:4131
+#: plug-ins/file-psd/psd-load.c:4152
 msgid "Outer Glow"
 msgstr "外发光"
 
-#: plug-ins/file-psd/psd-load.c:4147
+#: plug-ins/file-psd/psd-load.c:4168
 msgid "Stroke"
 msgstr "描边"
 
-#: plug-ins/file-psd/psd-load.c:4151
+#: plug-ins/file-psd/psd-load.c:4172
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "未处理的描边类型：预期为错误的渲染。"
 
-#: plug-ins/file-psd/psd-load.c:5033
+#: plug-ins/file-psd/psd-load.c:5078
 msgid "Extra"
 msgstr "附加的"
 
-#: plug-ins/file-psd/psd-load.c:5335
+#: plug-ins/file-psd/psd-load.c:5380
 #, c-format
 msgid "Failed to decompress data"
 msgstr "解压缩数据失败"
 
-#: plug-ins/file-psd/psd-load.c:5727
+#: plug-ins/file-psd/psd-load.c:5772
 msgid "Duotone Import"
 msgstr "双色导入"
 
-#: plug-ins/file-psd/psd-load.c:5728
+#: plug-ins/file-psd/psd-load.c:5773
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10824,7 +10831,7 @@ msgstr ""
 "双色调颜色空间数据已保存\n"
 "且可在导出时重新应用。"
 
-#: plug-ins/file-psd/psd-load.c:5751
+#: plug-ins/file-psd/psd-load.c:5796
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -15591,7 +15598,7 @@ msgstr "作者头衔"
 
 #. Description tab
 #: plug-ins/metadata/metadata-editor.c:494
-#: plug-ins/metadata/metadata-editor.c:1226
+#: plug-ins/metadata/metadata-editor.c:1230
 msgid "Description"
 msgstr "描述"
 
@@ -15969,75 +15976,75 @@ msgstr "设备机构"
 msgid "Equipment Manufacturer"
 msgstr "设备制造商"
 
-#: plug-ins/metadata/metadata-editor.c:759
+#: plug-ins/metadata/metadata-editor.c:763
 msgid "_Edit Metadata"
 msgstr "编辑元数据(_E)"
 
-#: plug-ins/metadata/metadata-editor.c:763
+#: plug-ins/metadata/metadata-editor.c:767
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "编辑元数据（IPTC，EXIF，XMP）"
 
-#: plug-ins/metadata/metadata-editor.c:776
+#: plug-ins/metadata/metadata-editor.c:780
 msgid "Parent's window handle"
 msgstr "上级窗口处理"
 
-#: plug-ins/metadata/metadata-editor.c:777
+#: plug-ins/metadata/metadata-editor.c:781
 msgid ""
 "The opaque handle of the window to set this plug-in's dialog transient to"
 msgstr "设定该插件对话框短暂停留窗口的不透明处理"
 
-#: plug-ins/metadata/metadata-editor.c:1182
+#: plug-ins/metadata/metadata-editor.c:1186
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "元数据编辑器：%s"
 
-#: plug-ins/metadata/metadata-editor.c:1190
+#: plug-ins/metadata/metadata-editor.c:1194
 msgid "_Write Metadata"
 msgstr "写入元数据(_W)"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1232
-#: plug-ins/metadata/metadata-viewer.c:304
+#: plug-ins/metadata/metadata-editor.c:1236
+#: plug-ins/metadata/metadata-viewer.c:308
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1238
+#: plug-ins/metadata/metadata-editor.c:1242
 msgid "IPTC Extension"
 msgstr "IPTC 扩展"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1344
+#: plug-ins/metadata/metadata-editor.c:1348
 msgid "Categories"
 msgstr "类别"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1350
+#: plug-ins/metadata/metadata-editor.c:1354
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1361
+#: plug-ins/metadata/metadata-editor.c:1365
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1375
+#: plug-ins/metadata/metadata-editor.c:1379
 msgid "Import Metadata..."
 msgstr "导入元数据…"
 
-#: plug-ins/metadata/metadata-editor.c:1381
+#: plug-ins/metadata/metadata-editor.c:1385
 msgid "Export Metadata..."
 msgstr "导出元数据…"
 
-#: plug-ins/metadata/metadata-editor.c:1687
+#: plug-ins/metadata/metadata-editor.c:1691
 msgid "Choose Date"
 msgstr "选择日期"
 
-#: plug-ins/metadata/metadata-editor.c:1692
+#: plug-ins/metadata/metadata-editor.c:1696
 msgid "Set Date"
 msgstr "设置日期"
 
-#: plug-ins/metadata/metadata-editor.c:2429
+#: plug-ins/metadata/metadata-editor.c:2433
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16052,7 +16059,7 @@ msgstr ""
 "或 10.45\n"
 "删除所有文本可移除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2435
+#: plug-ins/metadata/metadata-editor.c:2439
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16067,24 +16074,24 @@ msgstr ""
 "根据选中的度量类型该值应为米（m）或英尺（ft）\n"
 "删除所有文本可移除当前值。"
 
-#: plug-ins/metadata/metadata-editor.c:2569
+#: plug-ins/metadata/metadata-editor.c:2573
 msgid "Unrated"
 msgstr "未评级"
 
-#: plug-ins/metadata/metadata-editor.c:4679
+#: plug-ins/metadata/metadata-editor.c:4683
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "设置元数据标签“%s”失败：%s"
 
-#: plug-ins/metadata/metadata-editor.c:5580
+#: plug-ins/metadata/metadata-editor.c:5584
 msgid "Import Metadata File"
 msgstr "导入元数据文件"
 
-#: plug-ins/metadata/metadata-editor.c:5583
+#: plug-ins/metadata/metadata-editor.c:5587
 msgid "_Import"
 msgstr "导入(_I)"
 
-#: plug-ins/metadata/metadata-editor.c:5615
+#: plug-ins/metadata/metadata-editor.c:5619
 msgid "Export Metadata File"
 msgstr "导出元数据文件"
 
@@ -16299,41 +16306,41 @@ msgstr "东"
 msgid "West"
 msgstr "西"
 
-#: plug-ins/metadata/metadata-viewer.c:143
+#: plug-ins/metadata/metadata-viewer.c:147
 msgid "_View Metadata"
 msgstr "查看元数据(_V)"
 
-#: plug-ins/metadata/metadata-viewer.c:147
+#: plug-ins/metadata/metadata-viewer.c:151
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "查看元数据（Exif，IPTC，XMP）"
 
-#: plug-ins/metadata/metadata-viewer.c:216
+#: plug-ins/metadata/metadata-viewer.c:220
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "元数据查看器：%s"
 
-#: plug-ins/metadata/metadata-viewer.c:260
+#: plug-ins/metadata/metadata-viewer.c:264
 msgid "Exif"
 msgstr "Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:282
+#: plug-ins/metadata/metadata-viewer.c:286
 msgid "XMP"
 msgstr "XBM"
 
-#: plug-ins/metadata/metadata-viewer.c:425
+#: plug-ins/metadata/metadata-viewer.c:429
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "（%lu 个更多字符）"
 
-#: plug-ins/metadata/metadata-viewer.c:644
+#: plug-ins/metadata/metadata-viewer.c:648
 msgid " meter"
 msgstr " 米"
 
-#: plug-ins/metadata/metadata-viewer.c:645
+#: plug-ins/metadata/metadata-viewer.c:649
 msgid " feet"
 msgstr " 英尺"
 
-#: plug-ins/metadata/metadata-viewer.c:805
+#: plug-ins/metadata/metadata-viewer.c:809
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "（%llu 个更多字节）"
