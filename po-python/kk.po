@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-02-21 11:22+0000\n"
-"PO-Revision-Date: 2026-03-03 21:47+0500\n"
+"POT-Creation-Date: 2026-05-25 17:59+0000\n"
+"PO-Revision-Date: 2026-07-29 14:11+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -16,19 +16,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: plug-ins/python/colorxhtml.py:77
-msgid "Save as colored HTML text..."
-msgstr "Түрлі-түсті HTML мәтіні ретінде сақтау..."
+msgid "Export as colored HTML text..."
+msgstr "Түрлі-түсті HTML мәтіні ретінде экспорттау..."
 
 #: plug-ins/python/colorxhtml.py:136
 msgid "Saving as colored XHTML"
 msgstr "Түрлі-түсті XHTML ретінде сақталуда"
 
 #: plug-ins/python/colorxhtml.py:210
-msgid "Save as colored HTML text"
-msgstr "Түрлі-түсті HTML мәтіні ретінде сақтау"
+msgid "Exports as colored HTML text"
+msgstr "Түрлі-түсті HTML мәтіні ретінде экспорттайды"
+
+#: plug-ins/python/colorxhtml.py:211
+msgid "Exports the image as colored XHTML text"
+msgstr "Суретті түрлі-түсті XHTML мәтіні ретінде экспорттайды"
 
 #: plug-ins/python/colorxhtml.py:213
 msgid "Colored HTML text"
@@ -71,23 +75,23 @@ msgstr "Бөлек CSS файлын жазу"
 msgid "Choose File"
 msgstr "Файлды таңдау"
 
-#: plug-ins/python/file-openraster.py:504
-#: plug-ins/python/file-openraster.py:505
+#: plug-ins/python/file-openraster.py:507
+#: plug-ins/python/file-openraster.py:508
 msgid "export an OpenRaster (.ora) file"
 msgstr "OpenRaster (.ora) файлын экспорттау"
 
-#: plug-ins/python/file-openraster.py:507
-#: plug-ins/python/file-openraster.py:513
+#: plug-ins/python/file-openraster.py:510
+#: plug-ins/python/file-openraster.py:516
 msgid "OpenRaster"
 msgstr "OpenRaster"
 
-#: plug-ins/python/file-openraster.py:514
-#: plug-ins/python/file-openraster.py:515
+#: plug-ins/python/file-openraster.py:517
+#: plug-ins/python/file-openraster.py:518
 msgid "load an OpenRaster (.ora) file"
 msgstr "OpenRaster (.ora) файлын жүктеу"
 
-#: plug-ins/python/file-openraster.py:524
-#: plug-ins/python/file-openraster.py:525
+#: plug-ins/python/file-openraster.py:527
+#: plug-ins/python/file-openraster.py:528
 msgid "loads a thumbnail from an OpenRaster (.ora) file"
 msgstr "OpenRaster (.ora) файлынан нобайды жүктейді"
 
