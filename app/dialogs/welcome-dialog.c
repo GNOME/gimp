@@ -207,7 +207,8 @@ welcome_dialog_new (Gimp       *gimp,
                             _("_Close"), GTK_RESPONSE_CLOSE,
                             NULL);
   g_list_free (windows);
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER_ON_PARENT);
+  gtk_window_set_position (GTK_WINDOW (dialog), windows ? GTK_WIN_POS_CENTER_ON_PARENT :
+                                                          GTK_WIN_POS_CENTER);
   g_free (title);
 
   gtk_widget_set_margin_start (GTK_WIDGET (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), 0);
