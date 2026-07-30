@@ -201,6 +201,7 @@ libappwidgets_sources = [
   'gimprowdrawablefilter.c',
   'gimprowfilter.c',
   'gimprowimage.c',
+  'gimprowimagecomponent.c',
   'gimprowimagesave.c',
   'gimprowseparator.c',
   'gimprowsettings.c',
