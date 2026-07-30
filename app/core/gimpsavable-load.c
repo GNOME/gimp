@@ -65,11 +65,15 @@ struct _GimpLoadValue
 typedef struct _GimpSimpleHandlerData GimpSimpleHandlerData;
 struct _GimpSimpleHandlerData
 {
-  gchar      *value_prefix;
-  gchar      *text_value_format;
-  GHashTable *attributes;
-  gboolean    all_attributes_needed;
-  gboolean    fatal_on_missing;
+  gchar                  *value_prefix;
+  gchar                  *text_value_format;
+  GHashTable             *attributes;
+  gboolean                all_attributes_needed;
+  gboolean                fatal_on_missing;
+  GimpExitElementhandler  secondary_exit_handler;
+
+  gpointer                user_data;
+  GDestroyNotify          free_data;
 };
 
 typedef struct _GimpConfigHandlerData GimpConfigHandlerData;
@@ -457,6 +461,9 @@ gimp_savable_load_add_handlers (GimpLoadState           *state,
  * @state:
  * @element_name:
  * @text_value_format:
+ * @secondary_exit_handler:
+ * @user_data:
+ * @free_data:
  * @all_attributes_needed:
  * @fatal_on_missing:
  *
@@ -484,6 +491,7 @@ gimp_savable_load_add_handlers (GimpLoadState           *state,
  * For instance:
  * ```C
  * gimp_savable_load_add_simple_handler (state, "spacing", NULL,
+ *                                       NULL, NULL, NULL,
  *                                       "x", "%f",
  *                                       "y", "%f",
  *                                       NULL);
@@ -491,6 +499,11 @@ gimp_savable_load_add_handlers (GimpLoadState           *state,
  *
  * will decode `<spacing x='10.000000' y='10.000000'/>` into 2 double
  * values named respectively "spacing:x" and "spacing:y".
+ *
+ * If @secondary_exit_handler is set, it will be run with @user_data,
+ * after all values have been saved, instead of bubbling them up. This
+ * can be useful when repeatedly parsing similar elements under the same
+ * level.
  *
  * This function also supports XML elements with both simple attribute
  * names and text data.
@@ -501,11 +514,14 @@ gimp_savable_load_add_handlers (GimpLoadState           *state,
  * @fatal_on_missing is also %TRUE.
  */
 void
-gimp_savable_load_add_simple_handler (GimpLoadState *state,
-                                      const gchar   *element_name,
-                                      const gchar   *text_value_format,
-                                      gboolean       all_attributes_needed,
-                                      gboolean       fatal_on_missing,
+gimp_savable_load_add_simple_handler (GimpLoadState          *state,
+                                      const gchar            *element_name,
+                                      const gchar            *text_value_format,
+                                      GimpExitElementhandler  secondary_exit_handler,
+                                      gpointer                user_data,
+                                      GDestroyNotify          free_data,
+                                      gboolean                all_attributes_needed,
+                                      gboolean                fatal_on_missing,
                                       ...)
 {
   GimpSimpleHandlerData *data;
@@ -516,12 +532,15 @@ gimp_savable_load_add_simple_handler (GimpLoadState *state,
 
   data = g_new0 (GimpSimpleHandlerData, 1);
 
-  data->value_prefix      = g_strdup (element_name);
-  data->text_value_format = g_strdup (text_value_format);
-  data->attributes        = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                   g_free, g_free);
-  data->all_attributes_needed = all_attributes_needed;
-  data->fatal_on_missing      = fatal_on_missing;
+  data->value_prefix           = g_strdup (element_name);
+  data->text_value_format      = g_strdup (text_value_format);
+  data->attributes             = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                                        g_free, g_free);
+  data->all_attributes_needed  = all_attributes_needed;
+  data->fatal_on_missing       = fatal_on_missing;
+  data->secondary_exit_handler = secondary_exit_handler;
+  data->user_data              = user_data;
+  data->free_data              = free_data;
 
   va_start (args, fatal_on_missing);
   attribute = va_arg (args, gchar *);
@@ -595,18 +614,23 @@ gimp_savable_enter_unit (GimpLoadState  *state,
   if (unit == NULL)
     {
       gimp_savable_load_add_simple_handler (state, "factor", "%f",
+                                            NULL, NULL, NULL,
                                             FALSE, FALSE,
                                             NULL);
       gimp_savable_load_add_simple_handler (state, "digits", "%d",
+                                            NULL, NULL, NULL,
                                             FALSE, FALSE,
                                             NULL);
       gimp_savable_load_add_simple_handler (state, "name", "%s",
+                                            NULL, NULL, NULL,
                                             FALSE, FALSE,
                                             NULL);
       gimp_savable_load_add_simple_handler (state, "symbol", "%s",
+                                            NULL, NULL, NULL,
                                             FALSE, FALSE,
                                             NULL);
       gimp_savable_load_add_simple_handler (state, "abbreviation", "%s",
+                                            NULL, NULL, NULL,
                                             FALSE, FALSE,
                                             NULL);
     }
@@ -1497,6 +1521,8 @@ gimp_savable_free_simple_data (GimpSimpleHandlerData *data)
   g_free (data->value_prefix);
   g_free (data->text_value_format);
   g_hash_table_unref (data->attributes);
+  if (data->free_data)
+    data->free_data (data->user_data);
   g_free (data);
 }
 
@@ -1588,7 +1614,6 @@ gimp_savable_load_enter_simple (GimpLoadState  *state,
           found = g_list_prepend (found, (gpointer) *attribute_names);
           gimp_savable_load_store_from_string (state, value_name, attribute_format,
                                                *attribute_values, NULL);
-          gimp_savable_load_bubble_up (state, value_name);
           g_free (value_name);
         }
       else
@@ -1647,8 +1672,29 @@ gimp_savable_load_exit_simple (GimpLoadState  *state,
                                            data->value_prefix,
                                            data->text_value_format,
                                            value, NULL);
-      gimp_savable_load_bubble_up (state, data->value_prefix);
       g_free (value);
+    }
+
+  if (data->secondary_exit_handler)
+    {
+      data->secondary_exit_handler (state, text, len, data->user_data, error);
+    }
+  else
+    {
+      GList *attributes = g_hash_table_get_keys (data->attributes);
+
+      gimp_savable_load_bubble_up (state, data->value_prefix);
+
+      for (GList *iter = attributes; iter; iter = iter->next)
+        {
+          const gchar *attr = iter->data;
+          gchar       *value_name;
+
+          value_name = g_strconcat (data->value_prefix, ":", attr, NULL);
+          gimp_savable_load_bubble_up (state, value_name);
+          g_free (value_name);
+        }
+      g_list_free (attributes);
     }
 
   return TRUE;
@@ -1764,6 +1810,7 @@ gimp_savable_load_enter_config (GimpLoadState  *state,
           if (format)
             /* XXX No type validation with the "type" attribute so far. */
             gimp_savable_load_add_simple_handler (state, pspec->name, format,
+                                                  NULL, NULL, NULL,
                                                   FALSE, FALSE,
                                                   "type", "%s",
                                                   NULL);

@@ -84,6 +84,9 @@ void         gimp_savable_load_add_handlers       (GimpLoadState            *sta
 void         gimp_savable_load_add_simple_handler (GimpLoadState            *state,
                                                    const gchar              *element_name,
                                                    const gchar              *text_value_format,
+                                                   GimpExitElementhandler    secondary_exit_handler,
+                                                   gpointer                  user_data,
+                                                   GDestroyNotify            free_data,
                                                    gboolean                  all_attributes_needed,
                                                    gboolean                  fatal_on_missing,
                                                    ...) G_GNUC_NULL_TERMINATED;

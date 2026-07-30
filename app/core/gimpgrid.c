@@ -466,7 +466,8 @@ gimp_grid_enter_grid (GimpLoadState  *state,
                       gpointer        user_data,
                       GError        **error)
 {
-  gimp_savable_load_add_simple_handler (state, "style", "%[GimpGridStyle]", FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "style", "%[GimpGridStyle]",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
   gimp_savable_load_add_handlers (state, "foreground",
                                   gimp_grid_enter_fg_bg,
                                   gimp_grid_exit_fg_bg,
@@ -476,6 +477,7 @@ gimp_grid_enter_grid (GimpLoadState  *state,
                                   gimp_grid_exit_fg_bg,
                                   "background", NULL);
   gimp_savable_load_add_simple_handler (state, "spacing", NULL,
+                                        NULL, NULL, NULL,
                                         TRUE, FALSE,
                                         "x", "%f",
                                         "y", "%f",
@@ -485,6 +487,7 @@ gimp_grid_enter_grid (GimpLoadState  *state,
                                   gimp_grid_exit_unit,
                                   "spacing-unit", NULL);
   gimp_savable_load_add_simple_handler (state, "offset", NULL,
+                                        NULL, NULL, NULL,
                                         TRUE, FALSE,
                                         "x", "%f",
                                         "y", "%f",

@@ -463,6 +463,7 @@ gimp_image_enter_project (GimpLoadState  *state,
                           GError         **error)
 {
   gimp_savable_load_add_simple_handler (state, "dimensions", NULL,
+                                        NULL, NULL, NULL,
                                         TRUE, TRUE,
                                         "width",  "%d",
                                         "height", "%d",
@@ -476,11 +477,13 @@ gimp_image_enter_project (GimpLoadState  *state,
                                   NULL, NULL, NULL);
 
   gimp_savable_load_add_simple_handler (state, "print-dimensions", NULL,
+                                        NULL, NULL, NULL,
                                         TRUE, FALSE,
                                         "xres", "%f",
                                         "yres", "%f",
                                         NULL);
   gimp_savable_load_add_simple_handler (state, "tattoo", "%u",
+                                        NULL, NULL, NULL,
                                         FALSE, FALSE,
                                         NULL);
   gimp_savable_load_add_handlers (state, "unit",
@@ -491,6 +494,7 @@ gimp_image_enter_project (GimpLoadState  *state,
   gimp_savable_load (GIMP_TYPE_GRID, state);
 
   gimp_savable_load_add_simple_handler (state, "metadata", "%s",
+                                        NULL, NULL, NULL,
                                         FALSE, FALSE,
                                         NULL);
   gimp_savable_load_add_handlers (state, "symmetries",
