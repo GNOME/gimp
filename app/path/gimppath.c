@@ -43,12 +43,14 @@
 #include "core/gimpitemstack.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpsavable.h"
+#include "core/gimpsavable-load.h"
 #include "core/gimpstrokeoptions.h"
 
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
 
 #include "gimpanchor.h"
+#include "gimpbezierstroke.h"
 #include "gimppath.h"
 #include "gimppath-preview.h"
 #include "gimpstroke.h"
@@ -75,6 +77,7 @@ static gint64     gimp_path_get_memsize             (GimpObject                *
 
 static void       gimp_path_savable_save            (GimpSavable               *savable,
                                                      GimpSaveState             *state);
+static void       gimp_path_savable_load            (GimpLoadState             *state);
 
 static gboolean   gimp_path_is_attached             (GimpItem                  *item);
 static GimpItemTree * gimp_path_get_tree            (GimpItem                  *item);
@@ -181,6 +184,22 @@ static gboolean   gimp_path_attached_to_vector_layer_rec
 static GimpBezierDesc * gimp_path_make_bezier       (GimpPath                  *path);
 static GimpBezierDesc * gimp_path_real_make_bezier  (GimpPath                  *path);
 
+static gboolean         gimp_path_enter             (GimpLoadState             *state,
+                                                     const gchar              **attribute_names,
+                                                     const gchar              **attribute_values,
+                                                     gpointer                   user_data,
+                                                     GError                   **error);
+static gboolean         gimp_path_exit              (GimpLoadState             *state,
+                                                     const gchar               *text,
+                                                     gsize                      len,
+                                                     gpointer                   user_data,
+                                                     GError                   **error);
+static gboolean         gimp_path_enter_strokes     (GimpLoadState             *state,
+                                                     const gchar              **attribute_names,
+                                                     const gchar              **attribute_values,
+                                                     gpointer                   user_data,
+                                                     GError                   **error);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpPath, gimp_path, GIMP_TYPE_ITEM,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
@@ -283,6 +302,7 @@ gimp_path_savable_iface_init (GimpSavableInterface *iface)
   parent_savable_iface = g_type_interface_peek_parent (iface);
 
   iface->save = gimp_path_savable_save;
+  iface->load = gimp_path_savable_load;
 }
 
 static void
@@ -365,6 +385,15 @@ gimp_path_savable_save (GimpSavable   *savable,
   gimp_savable_print_element_end (state, "strokes");
 
   gimp_savable_print_element_end (state, "path");
+}
+
+static void
+gimp_path_savable_load (GimpLoadState *state)
+{
+  gimp_savable_load_add_handlers (state, "path",
+                                  gimp_path_enter,
+                                  gimp_path_exit,
+                                  NULL, NULL);
 }
 
 static gboolean
@@ -1378,4 +1407,96 @@ gimp_path_real_make_bezier (GimpPath *path)
   g_array_free (cmd_array, FALSE);
 
   return ret_bezdesc;
+}
+
+static gboolean
+gimp_path_enter (GimpLoadState  *state,
+                 const gchar   **attribute_names,
+                 const gchar   **attribute_values,
+                 gpointer        user_data,
+                 GError        **error)
+{
+  parent_savable_iface->load (state);
+
+  gimp_savable_load_add_handlers (state, "strokes",
+                                  gimp_path_enter_strokes,
+                                  NULL, NULL, NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_path_exit (GimpLoadState  *state,
+                const gchar    *text,
+                gsize           len,
+                gpointer        user_data,
+                GError        **error)
+{
+  GimpPath     *path            = NULL;
+  gboolean      selected        = FALSE;
+  gboolean      visible         = FALSE;
+  guint         tattoo          = 0;
+  GimpColorTag  tag             = GIMP_COLOR_TAG_NONE;
+  gboolean      lock_content    = FALSE;
+  gboolean      lock_position   = FALSE;
+  gboolean      lock_visibility = FALSE;
+
+  if (GIMP_IS_PATH (state->item))
+    {
+      path = GIMP_PATH (state->item);
+      gimp_image_add_path (state->image, path, NULL,
+                           gimp_container_get_n_children (gimp_image_get_paths (state->image)),
+                           FALSE);
+
+      gimp_savable_load_get_values (state,
+                                    "selected",        &selected,
+                                    "visible",         &visible,
+                                    "tattoo",          &tattoo,
+                                    "tag",             &tag,
+                                    "lock-content",    &lock_content,
+                                    "lock-position",   &lock_position,
+                                    "lock-visibility", &lock_visibility,
+                                    NULL);
+
+      /* TODO: implement selected paths. */
+
+      gimp_item_set_visible (GIMP_ITEM (path), visible, FALSE);
+      if (tattoo > 0)
+        gimp_item_set_tattoo (GIMP_ITEM (path), tattoo);
+      gimp_item_set_color_tag (GIMP_ITEM (path), tag, FALSE);
+      gimp_item_set_lock_content (GIMP_ITEM (path), lock_content, FALSE);
+      gimp_item_set_lock_position (GIMP_ITEM (path), lock_position, FALSE);
+      gimp_item_set_lock_visibility (GIMP_ITEM (path), lock_visibility, FALSE);
+    }
+
+  state->item = NULL;
+
+  return TRUE;
+}
+
+static gboolean
+gimp_path_enter_strokes (GimpLoadState  *state,
+                         const gchar   **attribute_names,
+                         const gchar   **attribute_values,
+                         gpointer        user_data,
+                         GError        **error)
+{
+  const gchar *name = NULL;
+
+  if (gimp_savable_load_get_parent_values (state, "name", &name, NULL))
+    {
+      GimpPath *path = NULL;
+
+      path = gimp_path_new (state->image, name);
+      state->item = GIMP_ITEM (path);
+      gimp_savable_load (GIMP_TYPE_BEZIER_STROKE, state);
+    }
+  else
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                   "%s: element <name> must happen before <strokes> in <path>.",
+                   G_STRFUNC);
+    }
+
+  return TRUE;
 }

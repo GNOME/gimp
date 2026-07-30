@@ -48,6 +48,7 @@
 #include "gimpparasitelist.h"
 #include "gimpprogress.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 #include "gimpstrokeoptions.h"
 
 #include "paint/gimppaintoptions.h"
@@ -135,6 +136,7 @@ static gint64     gimp_item_get_memsize             (GimpObject                *
 
 static void       gimp_item_savable_save            (GimpSavable               *savable,
                                                      GimpSaveState             *state);
+static void       gimp_item_savable_load            (GimpLoadState             *state);
 
 static gboolean   gimp_item_real_is_content_locked  (GimpItem                  *item,
                                                      GimpItem                 **locked_item);
@@ -361,6 +363,7 @@ static void
 gimp_item_savable_iface_init (GimpSavableInterface *iface)
 {
   iface->save = gimp_item_savable_save;
+  iface->load = gimp_item_savable_load;
 }
 
 static void
@@ -528,6 +531,31 @@ gimp_item_savable_save (GimpSavable   *savable,
   parasites = gimp_item_get_parasites (item);
   if (gimp_parasite_list_length (parasites) > 0)
     gimp_savable_save (GIMP_SAVABLE (parasites), state);
+}
+
+static void
+gimp_item_savable_load (GimpLoadState *state)
+{
+  state->item = NULL;
+
+  gimp_savable_load_add_simple_handler (state, "name", "%s",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "selected", NULL,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "visible", "%b",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "tattoo", "%u",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "color-tag", "%[GimpColorTag]",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "lock-content", NULL,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "lock-position", NULL,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "lock-visibility", NULL,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+
+  /* TODO: add parasite loading. */
 }
 
 static gboolean

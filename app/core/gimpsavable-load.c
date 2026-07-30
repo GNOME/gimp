@@ -503,6 +503,9 @@ gimp_savable_load_add_handlers (GimpLoadState           *state,
  * will decode `<style>solid</style>` into %GIMP_GRID_SOLID and will
  * store it, then bubble it up in value "style".
  *
+ * If @text_value_format is %NULL, then the @element_name value would
+ * just be set as a %TRUE boolean value.
+ *
  * Any couple of additional arguments must be an attribute name,
  * followed by a format value. The value name will be the element name
  * and attribute name, separated by a colon.
@@ -1149,6 +1152,7 @@ gimp_savable_load_init_state (GimpLoadState *state,
 
   state->gimp       = gimp;
   state->image      = NULL;
+  state->item       = NULL;
   state->xml_file   = g_file_get_child (backup_dir, "wlbr-project.xml");
   state->subdir     = backup_dir;
   state->xml_parser = gimp_xml_parser_new (&state->markup_parser, state);
@@ -1693,6 +1697,11 @@ gimp_savable_load_exit_simple (GimpLoadState  *state,
                                            data->text_value_format,
                                            value, NULL);
       g_free (value);
+    }
+  else
+    {
+      gimp_savable_load_store_from_string (state, data->value_prefix,
+                                           "%b", "true", NULL);
     }
 
   if (data->secondary_exit_handler)

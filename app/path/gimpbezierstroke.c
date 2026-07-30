@@ -23,7 +23,9 @@
 #include <gio/gio.h>
 #include <glib-object.h>
 #include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "path-types.h"
@@ -33,9 +35,11 @@
 #include "core/gimpcoords.h"
 #include "core/gimpcoords-interpolate.h"
 #include "core/gimpsavable.h"
+#include "core/gimpsavable-load.h"
 
 #include "gimpanchor.h"
 #include "gimpbezierstroke.h"
+#include "gimppath.h"
 
 
 /*  local prototypes  */
@@ -46,6 +50,8 @@ static void
 static void
     gimp_bezier_stroke_savable_save        (GimpSavable           *savable,
                                             GimpSaveState         *state);
+static void
+    gimp_bezier_stroke_savable_load        (GimpLoadState         *state);
 
 static gdouble
     gimp_bezier_stroke_nearest_point_get   (GimpStroke            *stroke,
@@ -159,6 +165,22 @@ static void gimp_bezier_stroke_finalize    (GObject               *object);
 static GList * gimp_bezier_stroke_get_anchor_listitem
                                            (GList                 *list);
 
+static gboolean gimp_bezier_stroke_enter   (GimpLoadState         *state,
+                                            const gchar          **attribute_names,
+                                            const gchar          **attribute_values,
+                                            gpointer               user_data,
+                                            GError               **error);
+static gboolean gimp_bezier_stroke_exit    (GimpLoadState         *state,
+                                            const gchar           *text,
+                                            gsize                  len,
+                                            gpointer               user_data,
+                                            GError               **error);
+static gboolean gimp_bezier_stroke_exit_cp (GimpLoadState         *state,
+                                            const gchar           *text,
+                                            gsize                  len,
+                                            gpointer               user_data,
+                                            GError               **error);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpBezierStroke, gimp_bezier_stroke, GIMP_TYPE_STROKE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
@@ -203,6 +225,7 @@ static void
 gimp_bezier_stroke_savable_iface_init (GimpSavableInterface *iface)
 {
   iface->save = gimp_bezier_stroke_savable_save;
+  iface->load = gimp_bezier_stroke_savable_load;
 }
 
 static void
@@ -249,6 +272,16 @@ gimp_bezier_stroke_savable_save (GimpSavable   *savable,
   g_array_free (control_points, TRUE);
 }
 
+static void
+gimp_bezier_stroke_savable_load (GimpLoadState *state)
+{
+  g_return_if_fail (GIMP_IS_PATH (state->item));
+
+  gimp_savable_load_add_handlers (state, "bezier-stroke",
+                                  gimp_bezier_stroke_enter,
+                                  gimp_bezier_stroke_exit,
+                                  state->item, NULL);
+}
 
 /* Bezier specific functions */
 
@@ -2480,4 +2513,115 @@ gimp_bezier_stroke_get_anchor_listitem (GList *list)
   g_return_val_if_fail (/* bezier stroke inconsistent! */ FALSE, NULL);
 
   return NULL;
+}
+
+static gboolean
+gimp_bezier_stroke_enter (GimpLoadState  *state,
+                          const gchar   **attribute_names,
+                          const gchar   **attribute_values,
+                          gpointer        user_data,
+                          GError        **error)
+{
+  GimpValueArray *control_points;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "closed") == 0)
+        {
+          gimp_savable_load_store_from_string (state, "closed", "%b", "true", NULL);
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  control_points = gimp_value_array_new (6);
+  gimp_savable_load_store_value (state, "control-points", control_points, NULL);
+  gimp_savable_load_add_simple_handler (state, "control-point", NULL,
+                                        (GimpExitElementhandler) gimp_bezier_stroke_exit_cp,
+                                        control_points, NULL,
+                                        TRUE, FALSE,
+                                        "type", "%s",
+                                        "x",    "%f",
+                                        "y",    "%f",
+                                        NULL);
+  return TRUE;
+}
+
+static gboolean
+gimp_bezier_stroke_exit (GimpLoadState  *state,
+                         const gchar    *text,
+                         gsize           len,
+                         gpointer        user_data,
+                         GError        **error)
+{
+  GimpBezierStroke *stroke;
+  GimpPath         *path           = GIMP_PATH (user_data);
+  GimpValueArray   *control_points = NULL;
+  gboolean          closed         = FALSE;
+
+  /* We know that "control-points" exists. As for "closed", it may not
+   * exist, which will mean it's FALSE.
+   */
+  gimp_savable_load_get_values (state,
+                                "control-points", &control_points,
+                                "closed",         &closed,
+                                NULL);
+  stroke = g_object_new (GIMP_TYPE_BEZIER_STROKE,
+                         "closed",         closed,
+                         "control-points", control_points,
+                         NULL);
+  gimp_path_stroke_add (path, GIMP_STROKE (stroke));
+
+  gimp_value_array_unref (control_points);
+  g_object_unref (stroke);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_bezier_stroke_exit_cp (GimpLoadState  *state,
+                            const gchar    *text,
+                            gsize           len,
+                            gpointer        user_data,
+                            GError        **error)
+{
+  GimpValueArray *control_points;
+  const gchar    *type;
+  gdouble         x;
+  gdouble         y;
+
+  gimp_savable_load_get_parent_values (state,
+                                       "control-points", &control_points,
+                                       NULL);
+
+  if (gimp_savable_load_get_values (state,
+                                    "control-point:type", &type,
+                                    "control-point:x",    &x,
+                                    "control-point:y",    &y,
+                                    NULL))
+    {
+      GimpAnchor     anchor = { { 0, } };
+      GimpAnchorType anchor_type;
+      GValue         value  = G_VALUE_INIT;
+
+      anchor_type = (g_strcmp0 (type, "anchor") == 0) ? GIMP_ANCHOR_ANCHOR : GIMP_ANCHOR_CONTROL;
+      anchor.selected   = FALSE;
+      anchor.type       = anchor_type;
+      anchor.position.x = x;
+      anchor.position.y = y;
+
+      g_value_init (&value, GIMP_TYPE_ANCHOR);
+      g_value_set_boxed (&value, &anchor);
+      gimp_value_array_append (control_points, &value);
+      g_value_unset (&value);
+    }
+
+  return TRUE;
 }
