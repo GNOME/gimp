@@ -32,6 +32,8 @@
 #include "config/gimpxmlparser.h"
 
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
+#include "gimpitem.h"
 #include "gimpsavable.h"
 #include "gimpsavable-load.h"
 #include "gimpunit.h"
@@ -152,6 +154,11 @@ static gboolean gimp_savable_load_enter_config  (GimpLoadState        *state,
                                                  gpointer              user_data,
                                                  GError              **error);
 static gboolean gimp_savable_load_exit_config   (GimpLoadState        *state,
+                                                 const gchar          *text,
+                                                 gsize                 len,
+                                                 gpointer              user_data,
+                                                 GError              **error);
+static gboolean gimp_savable_load_exit_parasite (GimpLoadState        *state,
                                                  const gchar          *text,
                                                  gsize                 len,
                                                  gpointer              user_data,
@@ -346,6 +353,19 @@ gimp_savable_config_load (GType                   parent_type,
                                   gimp_savable_load_exit_config,
                                   data,
                                   (GDestroyNotify) gimp_savable_free_config_data);
+}
+
+void
+gimp_savable_parasite_load (GimpLoadState *state,
+                            GObject       *image_or_item)
+{
+  gimp_savable_load_add_simple_handler (state, "parasite", "%s",
+                                        (GimpExitElementhandler) gimp_savable_load_exit_parasite,
+                                        image_or_item, NULL,
+                                        TRUE, FALSE,
+                                        "name",  "%s",
+                                        "flags", "%lu",
+                                        NULL);
 }
 
 /* Load values from their string representations. */
@@ -1911,6 +1931,58 @@ gimp_savable_load_exit_config (GimpLoadState  *state,
 
       g_type_class_unref (klass);
       g_free (pspecs);
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_load_exit_parasite (GimpLoadState  *state,
+                                 const gchar    *text,
+                                 gsize           len,
+                                 gpointer        user_data,
+                                 GError        **error)
+{
+  const gchar *b64  = NULL;
+  const gchar *name = NULL;
+  gulong       flags;
+
+  if (gimp_savable_load_get_values (state,
+                                    "parasite",       &b64,
+                                    "parasite:name",  &name,
+                                    "parasite:flags", &flags,
+                                    NULL))
+    {
+      if (g_strcmp0 (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0 ||
+          g_strcmp0 (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
+        {
+          /* These 2 parasites are outdated ways to set color profiles
+           * to the image, so setting these would trigger unwanted
+           * processing. We need to avoid this.
+           */
+          g_printerr ("%s: ignore outdated parasite '%s'.\n",
+                      G_STRFUNC, name);
+        }
+      else
+        {
+          GimpParasite *parasite;
+          guchar       *decoded;
+          gsize         decoded_len;
+
+          decoded = g_base64_decode (b64, &decoded_len);
+
+          parasite = gimp_parasite_new (name, (guint32) flags,
+                                        (guint32) decoded_len,
+                                        (gconstpointer) decoded);
+
+          if (GIMP_IS_IMAGE (user_data))
+            gimp_image_parasite_attach (GIMP_IMAGE (user_data), parasite, FALSE);
+          else if (GIMP_IS_ITEM (user_data))
+            gimp_item_parasite_attach (GIMP_ITEM (user_data), parasite, FALSE);
+
+          gimp_parasite_free (parasite);
+          g_free (decoded);
+        }
     }
 
   return TRUE;

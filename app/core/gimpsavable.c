@@ -34,6 +34,7 @@
 
 #include "gimp-utils.h"
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
 #include "gimpdrawable.h"
 #include "gimppalette.h"
@@ -498,15 +499,19 @@ void
 gimp_savable_parasite_save (GimpParasite  *parasite,
                             GimpSaveState *state)
 {
-  if (gimp_parasite_is_persistent (parasite))
+  const gchar *name;
+
+  name  = gimp_parasite_get_name (parasite);
+
+  if (gimp_parasite_is_persistent (parasite)                &&
+      g_strcmp0 (name, GIMP_ICC_PROFILE_PARASITE_NAME) != 0 &&
+      g_strcmp0 (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) != 0)
     {
-      const gchar   *name;
       gulong         flags;
       gconstpointer  data;
       guint32        data_length;
       gchar         *data_b64;
 
-      name  = gimp_parasite_get_name (parasite);
       flags = gimp_parasite_get_flags (parasite);
 
       gimp_savable_print_element_start (state, "parasite",

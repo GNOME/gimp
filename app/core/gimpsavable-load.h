@@ -57,6 +57,8 @@ void         gimp_savable_config_load            (GType                    confi
                                                   GimpLoadState           *state,
                                                   GimpExitElementhandler   secondary_exit_handler,
                                                   ...) G_GNUC_NULL_TERMINATED;
+void         gimp_savable_parasite_load          (GimpLoadState           *state,
+                                                  GObject                 *image_or_item);
 
 /* Functions to be used from inside GimpSavable's load() implementation */
 

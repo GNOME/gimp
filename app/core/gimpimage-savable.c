@@ -106,6 +106,11 @@ static gboolean   gimp_image_exit_symmetry     (GimpLoadState         *state,
                                                 gsize                  len,
                                                 gpointer               user_data,
                                                 GError               **error);
+static gboolean   gimp_image_enter_parasites   (GimpLoadState         *state,
+                                                const gchar          **attribute_names,
+                                                const gchar          **attribute_values,
+                                                gpointer               user_data,
+                                                GError               **error);
 
 
 /* Public Functions */
@@ -500,6 +505,9 @@ gimp_image_enter_project (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "symmetries",
                                   gimp_image_enter_symmetries,
                                   NULL, NULL, NULL);
+  gimp_savable_load_add_handlers (state, "parasites",
+                                  gimp_image_enter_parasites,
+                                  NULL, NULL, NULL);
   return TRUE;
 }
 
@@ -666,6 +674,18 @@ gimp_image_exit_symmetry (GimpLoadState  *state,
         gimp_image_set_active_symmetry (state->image,
                                         G_TYPE_FROM_INSTANCE (symmetry));
     }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_image_enter_parasites (GimpLoadState  *state,
+                            const gchar   **attribute_names,
+                            const gchar   **attribute_values,
+                            gpointer        user_data,
+                            GError        **error)
+{
+  gimp_savable_parasite_load (state, G_OBJECT (state->image));
 
   return TRUE;
 }
