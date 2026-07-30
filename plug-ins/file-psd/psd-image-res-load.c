@@ -1426,13 +1426,13 @@ load_resource_1065 (const PSDimageres  *res_a,
   guint32   desc_version = 0;
   JsonNode *root         = NULL;
 
-  if (! psd_read_uint32 (input, &desc_version, FALSE, error))
+  if (! psd_read_uint32 (input, &desc_version, img_a->ibm_pc_format, error))
     {
       psd_set_error (error);
       return -1;
     }
 
-  if (parse_descriptor (input, FALSE, &root, error) == 0)
+  if (parse_descriptor (input, img_a->ibm_pc_format, &root, error) == 0)
     {
       IFDBG(4)
         if (root)

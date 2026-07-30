@@ -120,6 +120,10 @@ static GimpLayer      * get_linked_layer           (GimpImage      *image,
                                                     PSDlayer       *lyr_a,
                                                     PSDimage       *img_a);
 
+static GimpPath       * get_layer_path             (GimpImage      *image,
+                                                    PSDlayer       *lyr_a,
+                                                    PSDimage       *img_a);
+
 static gint             add_merged_image           (GimpImage      *image,
                                                     PSDimage       *img_a,
                                                     GInputStream   *input,
@@ -3030,6 +3034,12 @@ add_layers (GimpImage     *image,
                 }
             }
 
+          if (lyr_a[lidx]->vector.path_len > 0)
+            {
+              /* TODO: Use path for either vector mask or shape */
+              get_layer_path (image, lyr_a[lidx], img_a);
+            }
+
           image_type = get_gimp_image_type (img_a->base_type, alpha);
           IFDBG(3) g_debug ("Layer type %d", image_type);
 
@@ -4708,6 +4718,164 @@ get_linked_layer (GimpImage *image,
         }
     }
   return layer;
+}
+
+/* Based on load_resource_2000 (), except using an array rather than
+ * GOutputStream */
+static GimpPath *
+get_layer_path (GimpImage *image,
+                PSDlayer  *lyr_a,
+                PSDimage  *img_a)
+{
+  GimpPath *path = NULL;
+
+  if (lyr_a->vector.path_data)
+    {
+      gdouble   *controlpoints;
+      gint32     xy[6];
+      gint16     type = 0;
+      guint16    num_rec;
+      guint16    path_rec;
+      gint       cntr;
+      gint       image_width;
+      gint       image_height;
+      GList     *paths;
+      guint      n_paths;
+      gint       i;
+      gboolean   closed;
+
+      if (lyr_a->vector.path_len < 26)
+        return NULL;
+
+      path_rec = lyr_a->vector.path_len / 26;
+      if (path_rec < 2)
+        return NULL;
+
+      type = ((gshort) lyr_a->vector.path_data[1] << 8) |
+             lyr_a->vector.path_data[0];
+      if (img_a->ibm_pc_format)
+        type = GUINT16_FROM_LE (type);
+      else
+        type = GUINT16_FROM_BE (type);
+
+      if (type != PSD_PATH_FILL_RULE)
+        return NULL;
+
+      path_rec--;
+
+      path = gimp_path_new (image, lyr_a->name);
+
+      image_width  = gimp_image_get_width (image);
+      image_height = gimp_image_get_height (image);
+      paths        = gimp_image_list_paths (image);
+      n_paths      = g_list_length (paths);
+
+      gimp_image_insert_path (image, path, NULL, n_paths);
+      g_list_free (paths);
+
+      i = 26;
+      while (path_rec > 0)
+        {
+          if (lyr_a->vector.path_len < (i + 26))
+            break;
+
+          type = ((gushort) lyr_a->vector.path_data[i + 1] << 8) |
+                 lyr_a->vector.path_data[i];
+          if (img_a->ibm_pc_format)
+            type = GUINT16_FROM_LE (type);
+          else
+            type = GUINT16_FROM_BE (type);
+          i += 2;
+
+          if (type == PSD_PATH_FILL_RULE ||
+              type == PSD_PATH_FILL_INIT)
+            {
+              i += 24;
+            }
+          else if (type == PSD_PATH_CL_LEN ||
+                   type == PSD_PATH_OP_LEN)
+            {
+              num_rec = ((gushort) lyr_a->vector.path_data[i + 1] << 8) |
+                          lyr_a->vector.path_data[i];
+              if (img_a->ibm_pc_format)
+                num_rec = GUINT16_FROM_LE (num_rec);
+              else
+                num_rec = GUINT16_FROM_BE (num_rec);
+              i += 24;
+
+              if (num_rec > path_rec)
+                break;
+
+              closed = (type == PSD_PATH_CL_LEN) ? TRUE : FALSE;
+              cntr   = 0;
+
+              controlpoints = g_malloc0 (sizeof (gdouble) * num_rec * 6);
+
+              while (num_rec > 0)
+                {
+                  if (lyr_a->vector.path_len < (i + 26))
+                    break;
+
+                  type = ((gshort) lyr_a->vector.path_data[i + 1] << 8) |
+                         lyr_a->vector.path_data[i];
+                  if (img_a->ibm_pc_format)
+                    type = GUINT16_FROM_LE (type);
+                  else
+                    type = GUINT16_FROM_BE (type);
+                  i += 2;
+
+                  if (type == PSD_PATH_CL_LNK   ||
+                      type == PSD_PATH_CL_UNLNK ||
+                      type == PSD_PATH_OP_LNK   ||
+                      type == PSD_PATH_OP_UNLNK)
+                    {
+                      gint j = 0;
+
+                      for (j = 0; j < 6; j++)
+                        {
+                          xy[j] = ((gint) lyr_a->vector.path_data[i + 3]) << 24 |
+                                  ((gint) lyr_a->vector.path_data[i + 2]) << 16 |
+                                  ((gint) lyr_a->vector.path_data[i + 1]) << 8  |
+                                  lyr_a->vector.path_data[i];
+                          if (img_a->ibm_pc_format)
+                            xy[j] = GINT32_FROM_LE (xy[j]);
+                          else
+                            xy[j] = GINT32_FROM_BE (xy[j]);
+                          i += 4;
+                        }
+
+                      for (j = 0; j < 6; j += 2)
+                        {
+                          controlpoints[cntr] = xy[j + 1] / 16777216.0 * image_width;
+                          cntr++;
+
+                          controlpoints[cntr] = xy[j] / 16777216.0 * image_height;
+                          cntr++;
+                        }
+                    }
+                  else
+                    {
+                      i += 24;
+                    }
+
+                  path_rec--;
+                  num_rec--;
+                }
+              gimp_path_stroke_new_from_points (path,
+                                                GIMP_PATH_STROKE_TYPE_BEZIER,
+                                                cntr, controlpoints, closed);
+              g_free (controlpoints);
+            }
+          else
+            {
+              i += 24;
+            }
+
+          path_rec--;
+        }
+    }
+
+  return path;
 }
 
 static gint

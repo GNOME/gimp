@@ -108,6 +108,7 @@
 
 /* Vector mask */
 #define PSD_LMSK_VMASK          "vmsk"          /* Vector mask setting (PS6) */
+#define PSD_LMSK_VSHAPE         "vsms"          /* Vector shape setting (CS6) */
 
 /* Parasites */
 #define PSD_LPAR_ANNOTATE       "Anno"          /* Annotation (PS6) */
@@ -589,6 +590,15 @@ typedef struct
   JsonNode             *warpdata;
 } PSDText;
 
+/* PSD vector properties */
+typedef struct
+{
+  guchar *path_data; /* Either vmsk or vsms data */
+  guint32 path_len;
+  gint32  path_flags;
+
+} PSDVector;
+
 typedef struct
 {
   guint32    size;
@@ -784,6 +794,7 @@ typedef struct
   LayerMaskExtra        layer_mask_extra;       /* Layer mask extra data */
   LayerFlags            layer_flags;            /* Layer flags */
   PSDText               text;                   /* PSD text */
+  PSDVector             vector;                 /* PSD vector data */
   guint32               id;                     /* Layer ID (Tattoo) */
   guchar                group_type;             /* 0 -> not a group; 1 -> open folder; 2 -> closed folder; 3 -> end of group */
   guint16               color_tag[4];           /* 4 * 16 bit color components */

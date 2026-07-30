@@ -205,6 +205,11 @@ static gint       load_resource_lnsr    (const PSDlayerres     *res_a,
                                          GInputStream          *input,
                                          GError               **error);
 
+static gint       load_resource_lvmk    (const PSDlayerres     *res_a,
+                                         PSDlayer              *lyr_a,
+                                         GInputStream          *input,
+                                         GError               **error);
+
 static gint       load_resource_cinf    (const PSDlayerres     *res_a,
                                          PSDlayer              *lyr_a,
                                          GInputStream          *input,
@@ -461,7 +466,8 @@ load_layer_resource (PSDlayerres   *res_a,
       load_resource_unknown (res_a, lyr_a, input, error);
     }
 
-  else if (memcmp (res_a->key, PSD_LMSK_VMASK, 4) == 0)
+  else if (memcmp (res_a->key, PSD_LMSK_VMASK, 4) == 0 ||
+           memcmp (res_a->key, PSD_LMSK_VSHAPE, 4) == 0)
     {
       if (lyr_a)
         {
@@ -469,7 +475,7 @@ load_layer_resource (PSDlayerres   *res_a,
           lyr_a->unsupported_features->show_gui    = TRUE;
         }
 
-      load_resource_unknown (res_a, lyr_a, input, error);
+      load_resource_lvmk (res_a, lyr_a, input, error);
     }
 
   else if (memcmp (res_a->key, PSD_SMART_OBJECT_LAYER, 4) == 0
@@ -524,9 +530,9 @@ load_resource (PSDlayerres   *res_a,
     load_resource_ltxt (res_a, img_a, input, error);
 
   else if (memcmp (res_a->key, PSD_LLL_LINKED_LAYER, 4) == 0   ||
-      memcmp (res_a->key, PSD_LLL_LINKED_LAYER_2, 4) == 0 ||
-      memcmp (res_a->key, PSD_LLL_LINKED_LAYER_3, 4) == 0 ||
-      memcmp (res_a->key, PSD_LLL_LINKED_LAYER_EXT, 4) == 0)
+           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_2, 4) == 0 ||
+           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_3, 4) == 0 ||
+           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_EXT, 4) == 0)
     {
       load_resource_llnk (res_a, img_a, input, error);
     }
@@ -1954,6 +1960,39 @@ load_resource_lnsr (const PSDlayerres  *res_a,
    * moreover lnsr info is encoded in MacRoman, see
    * https://bugzilla.gnome.org/show_bug.cgi?id=753986#c4
    */
+
+  return 0;
+}
+
+static gint
+load_resource_lvmk (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    GInputStream       *input,
+                    GError            **error)
+{
+  gint32 version = 0;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: vector data",
+                    res_a->key);
+
+  if (! psd_read_int32 (input, &version, res_a->ibm_pc_format, error) ||
+      ! psd_read_int32 (input, &lyr_a->vector.path_flags, res_a->ibm_pc_format,
+                        error))
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  lyr_a->vector.path_len = res_a->data_len - 8;
+
+  /* We need to defer processing the path information until we have an image */
+  lyr_a->vector.path_data = g_malloc0 (lyr_a->vector.path_len);
+  if (psd_read (input, lyr_a->vector.path_data, lyr_a->vector.path_len,
+                error) < lyr_a->vector.path_len)
+    {
+      psd_set_error (error);
+      return -1;
+    }
 
   return 0;
 }
