@@ -57,6 +57,7 @@
 #include "gimppickable.h"
 #include "gimpprogress.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 
 #include "gimp-log.h"
 
@@ -172,6 +173,7 @@ static void       gimp_drawable_get_pixel_average  (GimpPickable      *pickable,
 
 static void       gimp_drawable_save               (GimpSavable       *savable,
                                                     GimpSaveState     *state);
+static void       gimp_drawable_load               (GimpLoadState     *state);
 
 static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               x,
@@ -234,6 +236,12 @@ static void       gimp_drawable_alpha_changed      (GimpDrawable      *drawable)
 
 static const gchar * gimp_drawable_get_cache_file     (GimpDrawable    *drawable);
 static void          gimp_drawable_cache_thread       (GimpDrawable    *drawable);
+
+static gboolean      gimp_drawable_enter_filters      (GimpLoadState   *state,
+                                                       const gchar    **attribute_names,
+                                                       const gchar    **attribute_values,
+                                                       gpointer         user_data,
+                                                       GError         **error);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
@@ -394,6 +402,7 @@ gimp_savable_iface_init (GimpSavableInterface *iface)
   parent_savable_iface = g_type_interface_peek_parent (iface);
 
   iface->save = gimp_drawable_save;
+  iface->load = gimp_drawable_load;
 }
 
 static void
@@ -1060,6 +1069,28 @@ gimp_drawable_save (GimpSavable   *savable,
 }
 
 static void
+gimp_drawable_load (GimpLoadState *state)
+{
+  parent_savable_iface->load (state);
+
+  gimp_savable_load_add_simple_handler (state, "dimensions", NULL,
+                                        NULL, NULL, NULL,
+                                        TRUE, FALSE,
+                                        "width",  "%d",
+                                        "height", "%d",
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "buffer", NULL,
+                                        NULL, NULL, NULL,
+                                        TRUE, FALSE,
+                                        "file", "%s",
+                                        NULL);
+
+  gimp_savable_load_add_handlers (state, "filters",
+                                  gimp_drawable_enter_filters,
+                                  NULL, NULL, NULL);
+}
+
+static void
 gimp_drawable_real_update (GimpDrawable *drawable,
                            gint          x,
                            gint          y,
@@ -1414,6 +1445,18 @@ gimp_drawable_cache_thread (GimpDrawable *drawable)
   g_object_unref (drawable);
 }
 
+static gboolean
+gimp_drawable_enter_filters (GimpLoadState  *state,
+                             const gchar   **attribute_names,
+                             const gchar   **attribute_values,
+                             gpointer        user_data,
+                             GError        **error)
+{
+  /* TODO */
+  /*gimp_savable_load (GIMP_TYPE_DRAWABLE_FILTER, state);*/
+
+  return TRUE;
+}
 
 /*  public functions  */
 

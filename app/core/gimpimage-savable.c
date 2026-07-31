@@ -39,6 +39,7 @@
 #include "path/gimppath.h"
 
 #include "gimp.h"
+#include "gimpchannel.h"
 #include "gimpgrid.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
@@ -114,6 +115,11 @@ static gboolean   gimp_image_enter_parasites   (GimpLoadState         *state,
                                                 gpointer               user_data,
                                                 GError               **error);
 static gboolean   gimp_image_enter_paths       (GimpLoadState         *state,
+                                                const gchar          **attribute_names,
+                                                const gchar          **attribute_values,
+                                                gpointer               user_data,
+                                                GError               **error);
+static gboolean   gimp_image_enter_channels    (GimpLoadState         *state,
                                                 const gchar          **attribute_names,
                                                 const gchar          **attribute_values,
                                                 gpointer               user_data,
@@ -332,17 +338,17 @@ gimp_image_savable_save (GimpSavable   *savable,
     gimp_savable_save (GIMP_SAVABLE (iter->data), state);
   gimp_savable_print_element_end (state, "paths");
 
-  gimp_savable_print_element_start (state, "layers", NULL);
-  iter = gimp_image_get_layer_iter (image);
-  for (; iter; iter = iter->next)
-    gimp_savable_save (GIMP_SAVABLE (iter->data), state);
-  gimp_savable_print_element_end (state, "layers");
-
   gimp_savable_print_element_start (state, "channels", NULL);
   iter = gimp_image_get_channel_iter (image);
   for (; iter; iter = iter->next)
     gimp_savable_save (GIMP_SAVABLE (iter->data), state);
   gimp_savable_print_element_end (state, "channels");
+
+  gimp_savable_print_element_start (state, "layers", NULL);
+  iter = gimp_image_get_layer_iter (image);
+  for (; iter; iter = iter->next)
+    gimp_savable_save (GIMP_SAVABLE (iter->data), state);
+  gimp_savable_print_element_end (state, "layers");
 
   gimp_savable_print_element_end (state, "project");
 
@@ -517,6 +523,9 @@ gimp_image_enter_project (GimpLoadState  *state,
                                   NULL, NULL, NULL);
   gimp_savable_load_add_handlers (state, "paths",
                                   gimp_image_enter_paths,
+                                  NULL, NULL, NULL);
+  gimp_savable_load_add_handlers (state, "channels",
+                                  gimp_image_enter_channels,
                                   NULL, NULL, NULL);
   return TRUE;
 }
@@ -707,7 +716,21 @@ gimp_image_enter_paths (GimpLoadState  *state,
                         gpointer        user_data,
                         GError        **error)
 {
+  state->item = NULL;
   gimp_savable_load (GIMP_TYPE_PATH, state);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_image_enter_channels (GimpLoadState  *state,
+                           const gchar   **attribute_names,
+                           const gchar   **attribute_values,
+                           gpointer        user_data,
+                           GError        **error)
+{
+  state->item = NULL;
+  gimp_savable_load (GIMP_TYPE_CHANNEL, state);
 
   return TRUE;
 }
