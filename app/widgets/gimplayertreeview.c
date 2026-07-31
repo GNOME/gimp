@@ -780,8 +780,13 @@ gimp_layer_tree_view_drop_color (GimpContainerTreeView   *view,
                                  GtkTreeViewDropPosition  drop_pos)
 {
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
+  GimpLayerMask    *mask      = gimp_layer_get_mask (GIMP_LAYER (dest_viewable));
 
-  if (gimp_item_is_text_layer (GIMP_ITEM (dest_viewable)))
+  if (mask && gimp_layer_get_edit_mask (GIMP_LAYER (dest_viewable)))
+    {
+      dest_viewable = GIMP_VIEWABLE (mask);
+    }
+  else if (gimp_item_is_text_layer (GIMP_ITEM (dest_viewable)))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (dest_viewable), NULL,
                            "color", color,
