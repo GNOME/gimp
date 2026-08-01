@@ -17,6 +17,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
+import shlex
 
 # In some case, this script may not be run concurrently, in particular
 # on macOS where we need to set rpath and install_name_tool doesn't like
@@ -141,14 +142,16 @@ try:
       os.environ["PATH"] = tmp_path + os.pathsep + os.environ.get("PATH", "")
 
   # Finally, run gimp!
-  gimp_self = os.environ.get("GIMP_SELF_IN_BUILD")
-  if "GIMP_DEBUG_SELF_WRAPPER" in os.environ and shutil.which("gdb"):
-    gimp_debug_self = os.environ.get("GIMP_DEBUG_SELF_WRAPPER")
-    sys.stderr.write(f"RUNNING: {os.path.relpath(gimp_debug_self)} --batch -x {os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py --args {os.path.relpath(gimp_self)} {' '.join(sys.argv[1:])}\n")
-    subprocess.run([gimp_debug_self,"--return-child-result","--batch","-x",f"{os.environ['GIMP_GLOBAL_SOURCE_ROOT']}/tools/debug-in-build-gimp.py","--args", gimp_self] + sys.argv[1:], stdin=sys.stdin, check=True)
+  gimp_self = os.path.relpath(os.environ.get("GIMP_SELF_IN_BUILD"))
+  gimp_debug_self = os.environ.get("GIMP_DEBUG_SELF_WRAPPER")
+  if gimp_debug_self and "gdb" in gimp_debug_self and shutil.which("gdb"):
+    cmd = [gimp_debug_self,"--return-child-result","--batch","-x",f"{os.path.relpath(os.environ['GIMP_GLOBAL_SOURCE_ROOT'])}/tools/debug-in-build-gimp.py","--args", gimp_self] + sys.argv[1:]
+  elif gimp_debug_self and "lldb" in gimp_debug_self and shutil.which("lldb"):
+    cmd = [gimp_debug_self, "--batch", "-o", f"target create {gimp_self}", "-o", f"settings set -- target.run-args {' '.join(sys.argv[1:])}", "-o", f"script import importlib.util; spec = importlib.util.spec_from_file_location('debug_in_build_gimp', '{os.path.relpath(Path(os.environ['GIMP_GLOBAL_SOURCE_ROOT']))}/tools/debug-in-build-gimp.py'); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)"]
   else:
-    sys.stderr.write(f"RUNNING: {os.path.relpath(gimp_self)} {' '.join(sys.argv[1:])}\n")
-    subprocess.run([gimp_self] + sys.argv[1:],stdin=sys.stdin, check=True)
+    cmd = [gimp_self] + sys.argv[1:]
+  sys.stderr.write(f"RUNNING: {shlex.join(cmd)}\n")
+  subprocess.run(cmd, stdin=sys.stdin, check=True)
 
   # Undo GIMP_PYTHON_WITH_GI trick
   if sys.platform not in ['win32', 'cygwin'] and different_python:
