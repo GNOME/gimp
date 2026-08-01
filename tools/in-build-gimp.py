@@ -209,6 +209,7 @@ try:
 except subprocess.CalledProcessError as e:
   cleanup(lock)
   sys.stderr.write(f"Command failed with exit code {e.returncode}: {e.cmd}\n")
+  sys.stderr.write("\033[33mIf GIMP crashed, please set -Ddebug-self-in-build=true to get a stacktrace\033[0m\n")
   sys.exit(e.returncode)
 except Exception as e:
   cleanup(lock)
