@@ -2013,12 +2013,27 @@ gimp_run_env=environment()
 gimp_run_env.set('GIMP_GLOBAL_BUILD_ROOT',  meson.global_build_root())
 gimp_run_env.set('GIMP_GLOBAL_SOURCE_ROOT', meson.global_source_root())
 if get_option('debug-self-in-build')
-  gdb = find_program('gdb', required: true)
-  if not platform_windows or platform_windows and debugging_format == 'DWARF'
-    gimp_run_env.set('GIMP_DEBUG_SELF_WRAPPER', gdb.full_path())
-  else
-    error('GDB does not support native CodeView symbols. Please set -Dwin-debugging=dwarf')
+  if not platform_windows and not platform_osx
+    db = find_program(['gdb', 'lldb'], required: true)
+  elif platform_windows
+    #GDB does not support native CodeView symbols
+    if debugging_format == 'native'
+      db = find_program('lldb', required: false)
+      if not db.found()
+        error('GDB does not support native CodeView symbols on Windows. Please install LLDB or set -Dwin-debugging=dwarf')
+      endif
+    elif debugging_format == 'DWARF'
+      db = find_program(['lldb', 'gdb'], required: true)
+    endif
+  elif platform_osx
+    #GDB does not support native Mach-O binaries without codesigning; and,
+    #even if signed, it is flaky: https://sourceware.org/bugzilla/show_bug.cgi?id=32235
+    db = find_program('lldb', required: false)
+    if not db.found()
+      error('GDB does not support newer DWARF symbols on macOS. Please install LLDB')
+    endif
   endif
+  gimp_run_env.set('GIMP_DEBUG_SELF_WRAPPER', db.full_path())
 endif
 gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
 
