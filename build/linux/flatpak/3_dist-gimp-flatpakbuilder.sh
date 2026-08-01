@@ -73,7 +73,7 @@ if [ -z "$GITLAB_CI" ]; then
   flatpak build-bundle repo temp_${APP_ID}-$(uname -m).flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo ${APP_ID} ${BRANCH}
 fi
 mv temp_${FLATPAK} ${FLATPAK}
-printf "(INFO): Suceeded. To test this build, install it from the artifact with: flatpak install --user ${FLATPAK} -y\n"
+printf "(INFO): Suceeded. To test this build, install it from the artifact with: \033[32mflatpak install --user ${FLATPAK} -y\033[0m\n"
 printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_making\r\e[0K\n"
 
 
