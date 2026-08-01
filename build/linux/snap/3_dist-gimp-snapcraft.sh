@@ -55,7 +55,9 @@ if [ -z "$GITLAB_CI" ]; then
   sudo snapcraft pack --destructive-mode --output temp_${NAME}_$(dpkg --print-architecture).snap
 fi
 mv temp_${SNAP} ${SNAP}
-printf "(INFO): Suceeded. To test this build, install it from the artifact with: sudo snap install --dangerous ${SNAP}\n"
+if [ "$NAME" != 'gimp' ]; then
+  printf "(INFO): Suceeded. To test this build, install it from the artifact with: \033[32msudo snap install --dangerous ${SNAP} && sudo snap connect ${NAME}:gimp-config\033[0m\n"
+fi
 printf "\e[0Ksection_end:`date +%s`:${SNAP}_making\r\e[0K\n"
 
 
@@ -72,6 +74,9 @@ if [ "$GITLAB_CI" ]; then
   output_dir='build/linux/snap/_Output'
   mkdir -p $output_dir
   mv ${SNAP} $output_dir
+  if [ "$NAME" != 'gimp' ]; then
+    echo "Since this snap is not provided by Snap Store, install it with: sudo snap install --dangerous ${SNAP} && sudo snap connect ${NAME}:gimp-config" > $output_dir/IMPORTANT.txt
+  fi
 fi
 
 
