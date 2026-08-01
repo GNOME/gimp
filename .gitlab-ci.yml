@@ -321,9 +321,11 @@ gimp-debian-nonreloc:
   script:
     - *ENVIRON
     # Check building
+    - apt-get update -qq >/dev/null 2>&1
+    - apt-get install -qq -y --no-install-recommends gdb >/dev/null 2>&1
     - printf "\e[0Ksection_start:`date +%s`:gimp_build[collapsed=true]\r\e[0KBuilding GIMP\n"
     - meson setup _build-${RUNNER} -Dprefix="${GIMP_PREFIX}"
-                                   -Dfile-plug-ins-test=true
+                                   -Dfile-plug-ins-test=true -Ddebug-self-in-build=true
                                    $MESON_OPTIONS $WARN_AS_ERROR_ON_CI
     - cd _build-${RUNNER}
     - ninja

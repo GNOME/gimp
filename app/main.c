@@ -617,6 +617,9 @@ main (int    argc,
   gint            newargc;
 #endif
 
+  abort();
+  return 1;
+
 #if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(_WIN32)
   /* keep this always on top to ensure it is called before Glib initialization */
   gimp_windows_setenv ();
