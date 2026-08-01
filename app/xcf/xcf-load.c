@@ -5829,7 +5829,6 @@ xcf_load_user_init (XcfInfo   *info,
   if (image != NULL)
     {
       GimpUnit *unit;
-      GList    *iter;
 
       unit = _gimp_unit_get (info->gimp,
                              unit_strings[0],
