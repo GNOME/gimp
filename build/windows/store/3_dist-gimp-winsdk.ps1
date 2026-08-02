@@ -469,6 +469,8 @@ if ($GITLAB_CI)
     if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
       {
         Move-Item pseudo-gimp*.pfx $OUTPUT_DIR
+        New-Item $OUTPUT_DIR/IMPORTANT.txt | Out-Null
+        Set-Content $OUTPUT_DIR/IMPORTANT.txt "See the instructions on how install at the 'Automatic Development Builds' section of https://www.gimp.org/downloads/devel/"
       }
     if ($sha256_pfx -or $expired_secret)
       {
