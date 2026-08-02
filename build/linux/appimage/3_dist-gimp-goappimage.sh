@@ -660,6 +660,7 @@ file "./$APPIMAGETOOL_APP_NAME"
 if [ -f "${APPIMAGETOOL_APP_NAME}.zsync" ]; then
   mv ${APPIMAGETOOL_APP_NAME}.zsync GIMP-${CHANNEL}-${ARCH}.AppImage.zsync
 fi
+printf "(INFO): Suceeded. To test this build, make it executable from the artifact with: \033[32mchmod +x ${APPIMAGETOOL_APP_NAME}\033[0m\n"
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K\n"
 
 
