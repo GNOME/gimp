@@ -55,17 +55,15 @@ if [ -z "$GITLAB_CI" ]; then
   sudo snapcraft pack --destructive-mode --output temp_${NAME}_$(dpkg --print-architecture).snap
 fi
 mv temp_${SNAP} ${SNAP}
-if [ "$NAME" != 'gimp' ]; then
-  printf "(INFO): Suceeded. To test this build, install it from the artifact with: \033[32msudo snap install --dangerous ${SNAP} && sudo snap connect ${NAME}:gimp-config\033[0m\n"
-fi
 printf "\e[0Ksection_end:`date +%s`:${SNAP}_making\r\e[0K\n"
 
 
 # Generate shasums for .snap
 if [ "$NAME" != 'gimp' ]; then
-  printf "\e[0Ksection_start:`date +%s`:${SNAP}_trust[collapsed=true]\r\e[0KChecksumming ${SNAP}\n"
+  printf "\e[0Ksection_start:`date +%s`:${SNAP}_trust[collapsed=false]\r\e[0KChecksumming ${SNAP}\n"
   printf "(INFO): ${SNAP} SHA-256: $(sha256sum ${SNAP} | cut -d ' ' -f 1)\n"
   printf "(INFO): ${SNAP} SHA-512: $(sha512sum ${SNAP} | cut -d ' ' -f 1)\n"
+  printf "(INFO): Suceeded. To test this build, install it from the artifact with: \033[32msudo snap install --dangerous ${SNAP} && sudo snap connect ${NAME}:gimp-config\033[0m\n"
   printf "\e[0Ksection_end:`date +%s`:${SNAP}_trust\r\e[0K\n"
 fi
 

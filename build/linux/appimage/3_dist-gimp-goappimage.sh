@@ -659,12 +659,11 @@ file "./$APPIMAGETOOL_APP_NAME"
 if [ -f "${APPIMAGETOOL_APP_NAME}.zsync" ]; then
   mv ${APPIMAGETOOL_APP_NAME}.zsync GIMP-${CHANNEL}-${ARCH}.AppImage.zsync
 fi
-printf "(INFO): Suceeded. To test this build, make it executable from the artifact with: \033[32mchmod +x ${APPIMAGETOOL_APP_NAME}\033[0m\n"
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K\n"
 
 
 # 6. GENERATE SHASUMS
-printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KChecksumming $APPIMAGETOOL_APP_NAME\n"
+printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=false]\r\e[0KChecksumming $APPIMAGETOOL_APP_NAME\n"
 sha256=$(sha256sum $APPIMAGETOOL_APP_NAME)
 printf "(INFO): $APPIMAGETOOL_APP_NAME SHA-256: $(echo $sha256 | cut -d ' ' -f 1)\n"
 if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
@@ -675,6 +674,7 @@ printf "(INFO): $APPIMAGETOOL_APP_NAME SHA-512: $(echo $sha512 | cut -d ' ' -f 1
 if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   echo $sha512 > $APPIMAGETOOL_APP_NAME.SHA512SUMS
 fi
+printf "(INFO): Suceeded. To test this build, make it executable from the artifact with: \033[32mchmod +x ${APPIMAGETOOL_APP_NAME}\033[0m\n"
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
 
 

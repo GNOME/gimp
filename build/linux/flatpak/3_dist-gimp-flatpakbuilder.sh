@@ -73,15 +73,17 @@ if [ -z "$GITLAB_CI" ]; then
   flatpak build-bundle repo temp_${APP_ID}-$(uname -m).flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo ${APP_ID} ${BRANCH}
 fi
 mv temp_${FLATPAK} ${FLATPAK}
-printf "(INFO): Suceeded. To test this build, install it from the artifact with: \033[32mflatpak install --user ${FLATPAK} -y\033[0m\n"
 printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_making\r\e[0K\n"
 
 
 # GENERATE SHASUMS FOR .FLATPAK
-printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_trust[collapsed=true]\r\e[0KChecksumming ${FLATPAK}\n"
-printf "(INFO): ${FLATPAK} SHA-256: $(sha256sum ${FLATPAK} | cut -d ' ' -f 1)\n"
-printf "(INFO): ${FLATPAK} SHA-512: $(sha512sum ${FLATPAK} | cut -d ' ' -f 1)\n"
-printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_trust\r\e[0K\n"
+if [ -z "$GITLAB_CI" ] || [ "$CI_COMMIT_BRANCH" != "$CI_DEFAULT_BRANCH" ]; then
+  printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_trust[collapsed=false]\r\e[0KChecksumming ${FLATPAK}\n"
+  printf "(INFO): ${FLATPAK} SHA-256: $(sha256sum ${FLATPAK} | cut -d ' ' -f 1)\n"
+  printf "(INFO): ${FLATPAK} SHA-512: $(sha512sum ${FLATPAK} | cut -d ' ' -f 1)\n"
+  printf "(INFO): Suceeded. To test this build, install it from the artifact with: \033[32mflatpak install --user ${FLATPAK} -y\033[0m\n"
+  printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_trust\r\e[0K\n"
+fi
 
 
 if [ "$GITLAB_CI" ]; then
