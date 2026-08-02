@@ -73,7 +73,7 @@ if [ "$GITLAB_CI" ]; then
   mkdir -p $output_dir
   mv ${SNAP} $output_dir
   if [ "$NAME" != 'gimp' ]; then
-    echo "Since this snap is not provided by Snap Store, install it with: sudo snap install --dangerous ${SNAP} && sudo snap connect ${NAME}:gimp-config" > $output_dir/IMPORTANT.txt
+    echo "See the instructions on how install at the 'Automatic Development Builds' section of https://www.gimp.org/downloads/devel/" > $output_dir/IMPORTANT.txt
   fi
 fi
 
