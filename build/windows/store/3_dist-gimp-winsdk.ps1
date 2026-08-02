@@ -420,12 +420,12 @@ if (-not $GITLAB_CI -and $wack -eq 'WACK')
 # (Partner Center does the same thing, for free, before publishing)
 if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
   {
-    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}[collapsed=true]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
+    Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):msix_trust${msix_arch}[collapsed=false]$([char]13)$([char]27)[0KSelf-signing $MSIX_ARTIFACT (for testing purposes)"
     ## Check if certificate for nightly builds is fine
     $sign_output = & signtool sign /debug /fd sha256 /a /f $(Resolve-Path build\windows\store\pseudo-gimp*.pfx) /p eek $MSIX_ARTIFACT
-    Write-Output $sign_output
     if ($sign_output -like "*After expiry filter, 0 certs were left*")
       {
+        Write-Output $sign_output
         $pseudo_gimp = "pseudo-gimp_$(Get-Date -UFormat %s -Millisecond 0)"
         New-SelfSignedCertificate -Type Custom -Subject "$(([xml](Get-Content build\windows\store\AppxManifest.xml)).Package.Identity.Publisher)" -KeyUsage DigitalSignature -FriendlyName "$pseudo_gimp" -CertStoreLocation "Cert:\CurrentUser\My" -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}") | Out-Null
         Export-PfxCertificate -Cert "Cert:\CurrentUser\My\$(Get-ChildItem Cert:\CurrentUser\My | Where-Object FriendlyName -EQ "$pseudo_gimp" | Select-Object -ExpandProperty Thumbprint)" -FilePath "${pseudo_gimp}.pfx" -Password (ConvertTo-SecureString -String eek -Force -AsPlainText) | Out-Null
@@ -443,6 +443,7 @@ if (-not $GIMP_RELEASE -or $GIMP_IS_RC_GIT)
         Write-Output "(INFO): $MSIX_ARTIFACT SHA-256: $sha256"
         $sha512 = (Get-FileHash $MSIX_ARTIFACT -Algorithm SHA512 | Select-Object -ExpandProperty Hash).ToLower()
         Write-Output "(INFO): $MSIX_ARTIFACT SHA-512: $sha512"
+        Write-Host "(INFO): Suceeded. To test this build, install it from the artifact with: Import-PfxCertificate -FilePath pseudo-gimp.pfx -CertStoreLocation Cert:\LocalMachine\Root -Password (ConvertTo-SecureString eek -AsPlainText -Force); Add-AppxPackage -Path $MSIX_ARTIFACT" -ForegroundColor green
       }
 
     ## Check in advance if the CLIENT_SECRET we will use in the future tagged pipeline is fine
