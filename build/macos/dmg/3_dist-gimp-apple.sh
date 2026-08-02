@@ -396,7 +396,7 @@ if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   echo $sha512 > ${DMG_ARTIFACT}.SHA512SUMS
 fi
 if [ -z "$GITLAB_CI" ] || [ "$CI_COMMIT_BRANCH" != "$CI_DEFAULT_BRANCH" ]; then
-  printf "(INFO): Suceeded. To test this build, whitelist it from the artifact with: \033[32mxattr -r -d com.apple.quarantine ${DMG_ARTIFACT}\033[0m\n"
+  printf "(INFO): Suceeded. To test this build, whitelist it from the artifact with: \033[32mxattr -r -d com.apple.quarantine ./${BUNDLE_NAME}\033[0m\n"
 fi
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
 
