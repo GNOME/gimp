@@ -15,7 +15,7 @@ msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-07-28 20:39+0000\n"
-"PO-Revision-Date: 2026-07-29 11:07+0200\n"
+"PO-Revision-Date: 2026-08-02 15:59+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -730,11 +730,11 @@ msgstr "Stoppen…"
 # vakjes/schaakbord
 #: plug-ins/common/checkerboard.c:122
 msgid "_Checkerboard (legacy)..."
-msgstr "S_chaakbord (oud)…"
+msgstr "_Dambord (oud)…"
 
 #: plug-ins/common/checkerboard.c:127
 msgid "Create a checkerboard pattern"
-msgstr "Een schaakbordpatroon aanmaken"
+msgstr "Een dambordpatroon aanmaken"
 
 #: plug-ins/common/checkerboard.c:136
 msgid "_Psychobilly"
@@ -742,7 +742,7 @@ msgstr "_Psychobilly"
 
 #: plug-ins/common/checkerboard.c:137
 msgid "Render a psychobilly checkerboard"
-msgstr "Een psychobilly schaakbord genereren"
+msgstr "Een psychobilly dambord genereren"
 
 #: plug-ins/common/checkerboard.c:142 plug-ins/gimpressionist/size.c:94
 msgid "_Size"
@@ -758,7 +758,7 @@ msgstr "Maateenheid van de basis"
 
 #: plug-ins/common/checkerboard.c:355 plug-ins/common/checkerboard.c:485
 msgid "Checkerboard"
-msgstr "Schaakbord"
+msgstr "Dambord"
 
 #: plug-ins/common/cml-explorer.c:130
 msgid "Keep image's values"
