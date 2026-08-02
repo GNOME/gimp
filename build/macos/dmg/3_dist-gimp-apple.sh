@@ -383,7 +383,7 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ]; then
 else
 
 # 6.B GENERATE SHASUMS FOR .DMG
-printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KChecksumming ${DMG_ARTIFACT}\n"
+printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=false]\r\e[0KChecksumming ${DMG_ARTIFACT}\n"
 fi
 sha256=$(shasum -a 256 ${DMG_ARTIFACT})
 printf "(INFO): ${DMG_ARTIFACT} SHA-256: $(echo $sha256 | cut -d ' ' -f 1)\n"
@@ -394,6 +394,9 @@ sha512=$(shasum -a 512 ${DMG_ARTIFACT})
 printf "(INFO): ${DMG_ARTIFACT} SHA-512: $(echo $sha512 | cut -d ' ' -f 1)\n"
 if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   echo $sha512 > ${DMG_ARTIFACT}.SHA512SUMS
+fi
+if [ -z "$GITLAB_CI" ] || [ "$CI_COMMIT_BRANCH" != "$CI_DEFAULT_BRANCH" ]; then
+  printf "(INFO): Suceeded. To test this build, whitelist it from the artifact with: \033[32mxattr -r -d com.apple.quarantine ${DMG_ARTIFACT}\033[0m\n"
 fi
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
 
