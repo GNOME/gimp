@@ -4,9 +4,10 @@
 # Nathan Follens <nfollens@gnome.org>, 2019-2022, 2024.
 # Marcia van den Hout <mvdh1176@gmail.com>, 2021.
 msgid ""
-msgstr "Project-Id-Version: GIMP 2.0\n"
+msgstr ""
+"Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-17 12:56+0000\n"
+"POT-Creation-Date: 2026-08-02 17:50+0000\n"
 "PO-Revision-Date: 2026-05-11 13:41+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
@@ -28,7 +29,9 @@ msgstr "Installatie gebouwd door GIMP-team, gimp.org"
 msgid ""
 "You are trying to directly downgrade from GIMP %1 to %2.%n%nPlease remove "
 "GIMP yourself before installing this version."
-msgstr "U probeert direct te downgraden van GIMP %1 naar %2.%n%nVerwijder eerst zelf GIMP voordat u deze versie installeert."
+msgstr ""
+"U probeert direct te downgraden van GIMP %1 naar %2.%n%nVerwijder eerst zelf "
+"GIMP voordat u deze versie installeert."
 
 #: build/windows/installer/lang/setup.isl.xml.in:22
 msgid "Development version"
@@ -41,9 +44,15 @@ msgid ""
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
-"installation anyway?"
-msgstr "Dit is een ontwikkelingsversie van GIMP, waarin sommige functies mogelijk nog niet afgewerkt of onstabiel zijn.%nDeze versie van GIMP is niet bedoeld voor dagelijks gebruik aangezien het onstabiel is en u uw werk zou kunnen verliezen.%nAls u problemen ondervindt, controleer dan eerst of deze niet reeds opgelost zijn in GIT vooraleer u contact opneemt met de ontwikkelaars of de fout meldt op de Gitlab-website van GIMP:%n:https://gitlab.gnome.org/GNOME/gimp/issues%n%nWilt u toch verdergaan met de installatie?"
+"www.gimp.org/bugs%n%nDo you wish to continue with installation anyway?"
+msgstr ""
+"Dit is een ontwikkelingsversie van GIMP, waarin sommige functies mogelijk "
+"nog niet afgewerkt of onstabiel zijn.%nDeze versie van GIMP is niet bedoeld "
+"voor dagelijks gebruik aangezien het onstabiel is en u uw werk zou kunnen "
+"verliezen.%nAls u problemen ondervindt, controleer dan eerst of deze niet "
+"reeds opgelost zijn in GIT vooraleer u contact opneemt met de ontwikkelaars "
+"of de fout meldt op de Gitlab-website van GIMP:%n_https://"
+"www.gimp.org/bugs%n%nWilt u toch verdergaan met de installatie?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
 #: build/windows/installer/lang/setup.isl.xml.in:43
@@ -64,7 +73,11 @@ msgid ""
 "display mode. This has been known to cause stability problems with GIMP, so "
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
-msgstr "De installatie heeft gedetecteerd dat uw Windows niet wordt uitgevoerd in de 32 bits-per-pixel weergavemodus. Het is bekend dat dit kan leiden tot stabiliteitsproblemen met GIMP, dus wordt aanbevolen om de kleurdiepte voor de weergave te wijzigen naar 32BPP, voordat u doorgaat."
+msgstr ""
+"De installatie heeft gedetecteerd dat uw Windows niet wordt uitgevoerd in de "
+"32 bits-per-pixel weergavemodus. Het is bekend dat dit kan leiden tot "
+"stabiliteitsproblemen met GIMP, dus wordt aanbevolen om de kleurdiepte voor "
+"de weergave te wijzigen naar 32BPP, voordat u doorgaat."
 
 #: build/windows/installer/lang/setup.isl.xml.in:46
 msgid "E&xit"
@@ -120,7 +133,8 @@ msgstr "Runtimebibliotheken"
 
 #: build/windows/installer/lang/setup.isl.xml.in:96
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
-msgstr "Runtimebibliotheken gebruikt door GIMP, inclusief GTK Runtime Environment"
+msgstr ""
+"Runtimebibliotheken gebruikt door GIMP, inclusief GTK Runtime Environment"
 
 #: build/windows/installer/lang/setup.isl.xml.in:100
 msgid "Debug symbols"
@@ -138,7 +152,9 @@ msgstr "Bronbestanden ontwikkeling"
 msgid ""
 "Include some files to help with building GEGL filters and GIMP plug-ins in "
 "MSYS2"
-msgstr "Bevat enkele bestanden om te helpen bij het bouwen van filters voor GEGL en plug-ins voor GIMP in MSYS2"
+msgstr ""
+"Bevat enkele bestanden om te helpen bij het bouwen van filters voor GEGL en "
+"plug-ins voor GIMP in MSYS2"
 
 #: build/windows/installer/lang/setup.isl.xml.in:116
 #: build/windows/installer/lang/setup.isl.xml.in:120
@@ -189,7 +205,10 @@ msgstr "Snelkoppeling op het &bureaublad aanmaken"
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
-msgstr "Er was een probleem met het bijwerken van de omgeving van GIMP in %1. Als u fouten krijgt bij het laden van de plug-ins, probeer dan eens om GIMP te de-installeren en opnieuw te installeren."
+msgstr ""
+"Er was een probleem met het bijwerken van de omgeving van GIMP in %1. Als u "
+"fouten krijgt bij het laden van de plug-ins, probeer dan eens om GIMP te de-"
+"installeren en opnieuw te installeren."
 
 #: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Error extracting temporary data."
@@ -235,7 +254,10 @@ msgstr "Verwijderen van add-on"
 msgid ""
 "Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
 "custom brushes)?%n%nA copy will be made on Desktop."
-msgstr "Wilt u uw persoonlijke bestanden voor GIMP verwijderen (bijv. instellingen, voorkeuren voor gereedschappen, aangepaste penselen)?%n%nEr zal een kopie van op het bureaublad worden gemaakt."
+msgstr ""
+"Wilt u uw persoonlijke bestanden voor GIMP verwijderen (bijv. instellingen, "
+"voorkeuren voor gereedschappen, aangepaste penselen)?%n%nEr zal een kopie "
+"van op het bureaublad worden gemaakt."
 
 #: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Internal error (%1)."
