@@ -208,7 +208,7 @@ Remove-Item "$INNO_PATH\Languages\Unofficial" -Recurse -Force
 
 
 # 6. GENERATE CHECKSUMS IN GNU FORMAT
-Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_trust[collapsed=true]$([char]13)$([char]27)[0KChecksumming $INSTALLER"
+Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):installer_trust[collapsed=false]$([char]13)$([char]27)[0KChecksumming $INSTALLER"
 ## (We use .NET directly because 'sha*sum' does NOT support BOM from pre-PS6 'Set-Content')
 $Utf8NoBomEncoding = New-Object -TypeName System.Text.UTF8Encoding -ArgumentList $False
 $sha256 = (Get-FileHash $INSTALLER -Algorithm SHA256 | Select-Object -ExpandProperty Hash).ToLower()
