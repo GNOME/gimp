@@ -344,6 +344,12 @@ load_image (GFile        *file,
       aspect_x   = bitMapHeader->xAspect;
       aspect_y   = bitMapHeader->yAspect;
 
+      if (nPlanes <= 0)
+        {
+          g_message (_("Invalid ILBM header value."));
+          return image;
+        }
+
       /* Check for ILBM variants in CMAG chunk */
       if (camg)
         {
@@ -533,7 +539,14 @@ deleave_ham_row (const guchar *gimp_cmap,
   const gint  row_length       = ((width + 15) / 16) * 2;
   gint        prior_rgb[3]     = {0, 0, 0};
   gint        current_index    = 0;
-  guchar     *pixel_row        = g_malloc0 (row_length * nPlanes * 4);
+  gsize       allocation       = 0;
+  guchar     *pixel_row;
+
+  if (! g_size_checked_mul (&allocation, width, 3)            ||
+      ! g_size_checked_mul (&allocation, allocation, nPlanes) ||
+      ! g_size_checked_mul (&allocation, allocation, 4)       ||
+      ! (pixel_row = g_try_malloc0 (allocation)))
+    return NULL;
 
   /* Deleave rows */
   for (gint i = 0; i < row_length; i++)
