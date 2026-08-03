@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-28 20:39+0000\n"
-"PO-Revision-Date: 2026-07-29 08:50+0800\n"
+"POT-Creation-Date: 2026-08-01 00:11+0000\n"
+"PO-Revision-Date: 2026-08-03 11:05+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -333,11 +333,11 @@ msgstr "显示带有实验性特性的首选项页面"
 msgid "Show an image submenu with debug actions"
 msgstr "显示带有调试操作的图像子菜单"
 
-#: app/main.c:772
+#: app/main.c:820
 msgid "[FILE|URI...]"
 msgstr "[文件|URI…]"
 
-#: app/main.c:802
+#: app/main.c:850
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -345,11 +345,11 @@ msgstr ""
 "GIMP 无法初始化图形用户界面。\n"
 "请确定您已正确安装和配置显示环境。"
 
-#: app/main.c:871
+#: app/main.c:919
 msgid "Another GIMP instance is already running."
 msgstr "另一个 GIMP 实例已在运行。"
 
-#: app/main.c:954
+#: app/main.c:1002
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "（键入任意字符关闭本窗口）\n"
@@ -1104,7 +1104,7 @@ msgstr[0] "通道移至底端"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
 #: app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260
-#: app/widgets/gimplayertreeview.c:901
+#: app/widgets/gimplayertreeview.c:906
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s 通道副本"
@@ -2571,7 +2571,7 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/dialogs/welcome-dialog.c:1255 app/display/gimpdisplayshell-dnd.c:707
-#: app/display/gimpimagewindow.c:2266 app/widgets/gimplayertreeview.c:859
+#: app/display/gimpimagewindow.c:2266 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -6341,7 +6341,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "固定浮动图层或蒙板(_A)"
 
-#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1313
+#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1318
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "固定浮动图层或蒙板"
@@ -7206,7 +7206,7 @@ msgid "Empty Selection"
 msgstr "空选区"
 
 #: app/actions/layers-commands.c:2022 app/actions/layers-commands.c:2066
-#: app/widgets/gimplayertreeview.c:1154
+#: app/widgets/gimplayertreeview.c:1159
 msgid "Set layers opacity"
 msgstr "设置图层不透明度"
 
@@ -9380,7 +9380,7 @@ msgstr "恢复到上一次的缩放级别"
 #: app/actions/view-actions.c:113
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr "其它旋转角度(_R)…"
+msgstr "其他旋转角度(_R)…"
 
 #: app/actions/view-actions.c:114
 msgctxt "view-action"
@@ -9877,7 +9877,7 @@ msgstr "设置自定义缩放系数"
 #: app/actions/view-actions.c:446
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr "其它缩放系数(_R)…"
+msgstr "其他缩放系数(_R)…"
 
 #: app/actions/view-actions.c:456
 msgctxt "view-action"
@@ -10268,7 +10268,7 @@ msgstr "隐藏停靠(_H)"
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
-msgstr "当启用时仅显示图像窗口，隐藏所有停靠和其它对话框。"
+msgstr "当启用时仅显示图像窗口，隐藏所有停靠和其他对话框。"
 
 #: app/actions/windows-actions.c:128
 msgctxt "windows-action"
@@ -10896,7 +10896,7 @@ msgstr "按百分比调整拖拽鼠标缩放画布的速率。"
 #: app/config/gimprc-blurbs.h:294
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
-msgstr "设置用于缩放和其它变换操作的插值计算的等级。"
+msgstr "设置用于缩放和其他变换操作的插值计算的等级。"
 
 #: app/config/gimprc-blurbs.h:301
 msgid "Specifies the language to use for the user interface."
@@ -11157,7 +11157,7 @@ msgstr "以单窗口模式使用 GIMP。"
 
 #: app/config/gimprc-blurbs.h:502
 msgid "Hide docks and other windows, leaving only image windows."
-msgstr "隐藏停靠和其它窗口，仅留下图像窗口。"
+msgstr "隐藏停靠和其他窗口，仅留下图像窗口。"
 
 #: app/config/gimprc-blurbs.h:505
 msgid "Show the image tabs bar in single window mode."
@@ -12951,7 +12951,7 @@ msgstr "无法执行子进程“%s”（%s）"
 msgid "tags-locale:C"
 msgstr "tags-locale:zh_CN"
 
-#: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:151
+#: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:164
 #: app/gui/themes.c:731
 #, c-format
 msgid "Error closing '%s': %s"
@@ -14358,7 +14358,7 @@ msgctxt "undo-type"
 msgid "Set Sample Point Pick Mode"
 msgstr "设置采样点拾取模式"
 
-#: app/core/gimpimage-savable.c:127
+#: app/core/gimpimage-savable.c:140
 #, c-format
 msgid "Error creating '%s': %s"
 msgstr "创建“%s”时出错：%s"
@@ -15949,7 +15949,7 @@ msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
-"您可以用此对话框保存到 GIMP XCF 格式。使用文件→导出以导出到其它文件格式。"
+"您可以用此对话框保存到 GIMP XCF 格式。使用文件→导出以导出到其他文件格式。"
 
 #: app/dialogs/file-save-dialog.c:673
 msgid "Take me to the Export dialog"
@@ -18636,7 +18636,7 @@ msgstr "通过 Liberapay 捐助"
 
 #: app/dialogs/welcome-dialog.c:911
 msgid "Other donation options"
-msgstr "其它捐助选项"
+msgstr "其他捐助选项"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:945
@@ -18983,12 +18983,12 @@ msgid "Drop color to layer"
 msgstr "将颜色拖放到图层"
 
 #: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1592
-#: app/widgets/gimplayertreeview.c:850
+#: app/widgets/gimplayertreeview.c:855
 msgid "Drop layers"
 msgstr "拖放图层"
 
 #: app/display/gimpdisplayshell-dnd.c:800
-#: app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:927
+#: app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:932
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "拖放的缓冲区"
@@ -19059,7 +19059,7 @@ msgstr "缩放："
 #: app/display/gimpdisplayshell-scale-dialog.c:246
 #, c-format
 msgid "Othe_r (%s)..."
-msgstr "其它（%s）(_R)…"
+msgstr "其他（%s）(_R)…"
 
 #: app/display/gimpdisplayshell-scale-dialog.c:250
 #, c-format
@@ -22276,7 +22276,7 @@ msgstr "锐化边缘"
 
 #: app/propgui/gimppropgui-diffraction-patterns.c:98
 msgid "Other Options"
-msgstr "其它选项"
+msgstr "其他选项"
 
 #: app/propgui/gimppropgui-focus-blur.c:199
 msgid "Geometry Options"
@@ -22768,7 +22768,7 @@ msgstr "对齐和分布"
 
 #: app/tools/gimpaligntool.c:133
 msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr "对齐工具：对齐或整理图层和其它对象"
+msgstr "对齐工具：对齐或整理图层和其他对象"
 
 #: app/tools/gimpaligntool.c:134
 msgid "_Align and Distribute"
@@ -22799,7 +22799,7 @@ msgid ""
 "Click on a guide to add it to objects to align, click anywhere else to "
 "unselect all guides"
 msgstr ""
-"在参考线上单击将其添加到要对齐的对象中，在其它任意地方单击可取消选择所有参考"
+"在参考线上单击将其添加到要对齐的对象中，在其他任意地方单击可取消选择所有参考"
 "线"
 
 #: app/tools/gimpaligntool.c:584
@@ -24422,7 +24422,7 @@ msgstr "移动"
 
 #: app/tools/gimpmovetool.c:117
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr "移动工具：移动图层，选区，和其它对象"
+msgstr "移动工具：移动图层，选区，和其他对象"
 
 #: app/tools/gimpmovetool.c:118
 msgid "_Move"
@@ -27090,7 +27090,7 @@ msgstr "杂项"
 
 #: app/widgets/gimpdashboard.c:957
 msgid "Miscellaneous information"
-msgstr "其它杂项信息"
+msgstr "其他杂项信息"
 
 #: app/widgets/gimpdashboard.c:1150
 msgid "Select fields"
@@ -27377,7 +27377,7 @@ msgstr "锁定位置和大小"
 msgid "Cannot select items while a floating selection is active."
 msgstr "当浮动选区激活时无法选择项目。"
 
-#: app/widgets/gimpdrawabletreeview.c:677 app/widgets/gimplayertreeview.c:978
+#: app/widgets/gimpdrawabletreeview.c:677 app/widgets/gimplayertreeview.c:983
 msgctxt "singular"
 msgid "New Layer"
 msgstr "新建图层"
@@ -27638,7 +27638,7 @@ msgstr "可用手册…"
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
-msgstr "您可以选择其它语言的手册或阅读在线版本。"
+msgstr "您可以选择其他语言的手册或阅读在线版本。"
 
 #: app/widgets/gimphelp.c:635
 msgid ""
@@ -27889,23 +27889,23 @@ msgstr "解锁透明通道"
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "设置项目唯一透明通道锁定"
 
-#: app/widgets/gimplayertreeview.c:1097
+#: app/widgets/gimplayertreeview.c:1102
 msgid "Set layers mode"
 msgstr "设置图层模式"
 
-#: app/widgets/gimplayertreeview.c:1305
+#: app/widgets/gimplayertreeview.c:1310
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "固定浮动蒙板"
 
-#: app/widgets/gimplayertreeview.c:1308
+#: app/widgets/gimplayertreeview.c:1313
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "固定浮动图层"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1581
+#: app/widgets/gimplayertreeview.c:1586
 msgid "No channels to create a layer mask from."
 msgstr "没有可用于创建图层蒙板的通道。"
 
