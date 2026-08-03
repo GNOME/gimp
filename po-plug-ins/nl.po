@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-28 20:39+0000\n"
-"PO-Revision-Date: 2026-08-02 15:59+0200\n"
+"POT-Creation-Date: 2026-08-03 05:55+0000\n"
+"PO-Revision-Date: 2026-08-03 10:32+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -146,7 +146,7 @@ msgstr "Plug-in voorbeeld in Javascript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:280 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5756 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5924 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -604,7 +604,7 @@ msgstr "Rolgordijnen"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
 #: plug-ins/common/file-drhalo.c:238 plug-ins/common/file-farbfeld.c:307
 #: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1229
-#: plug-ins/common/file-iff.c:431 plug-ins/common/file-jp2.c:1629
+#: plug-ins/common/file-iff.c:437 plug-ins/common/file-jp2.c:1629
 #: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:729
 #: plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1083
@@ -619,7 +619,7 @@ msgstr "Rolgordijnen"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:259
 #: plug-ins/file-psd/psd-image-res-load.c:1113
-#: plug-ins/file-psd/psd-load.c:4932 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:5100 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -2004,7 +2004,7 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/file-ico/ico-load.c:909 plug-ins/file-ico/ico-load.c:1129
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711
 #: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
-#: plug-ins/file-psd/psd-load.c:248 plug-ins/file-psd/psd-load.c:253
+#: plug-ins/file-psd/psd-load.c:252 plug-ins/file-psd/psd-load.c:257
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
@@ -2476,7 +2476,7 @@ msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
 #: plug-ins/file-fits/fits.c:499 plug-ins/file-fits/fits.c:581
-#: plug-ins/file-psd/psd-load.c:5311 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:5479 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -2614,7 +2614,7 @@ msgstr "EOF of fout tijdens lezen afbeeldings-header"
 #: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247
 #: plug-ins/file-fli/fli-gimp.c:490 plug-ins/file-icns/file-icns-load.c:635
 #: plug-ins/file-ico/ico-load.c:751 plug-ins/file-ico/ico-load.c:901
-#: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:261
+#: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:265
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
@@ -3337,7 +3337,7 @@ msgstr "frame info"
 msgid "local colormap"
 msgstr "lokale kleurenkaart"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:448
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:454
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr "Niet-vierkante pixels. Afbeelding lijkt platgeslagen als modus Dot for Dot is ingeschakeld."
@@ -3984,7 +3984,11 @@ msgstr "Ongeldige of ontbrekende ILBM afbeelding"
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM bevat geen afbeeldingsgegevens - waarschijnlijk een paletbestand"
 
-#: plug-ins/common/file-iff.c:365 plug-ins/common/file-iff.c:384
+#: plug-ins/common/file-iff.c:349
+msgid "Invalid ILBM header value."
+msgstr "Ongeldige ILBM-headerwaarde."
+
+#: plug-ins/common/file-iff.c:371 plug-ins/common/file-iff.c:390
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "Ongeldige grootte ILBM-kleurenkaart"
@@ -4681,14 +4685,14 @@ msgstr "‘%s’ is geen PCX-bestand"
 
 #: plug-ins/common/file-pcx.c:674 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:731
+#: plug-ins/file-psd/psd-load.c:735
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingsbreedte: %d"
 
 #: plug-ins/common/file-pcx.c:681 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:723
+#: plug-ins/file-psd/psd-load.c:727
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingshoogte: %d"
@@ -10644,7 +10648,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop ondersteunt geen geïndexeerde afbeeldingen die meer dan een laag hebben. Lagen zullen bij exporteren worden samengevoegd."
 
-#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5795
+#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5963
 msgid "Compatibility Notice"
 msgstr "Melding compatibiliteit"
 
@@ -10656,160 +10660,160 @@ msgid ""
 "switching to those layer modes."
 msgstr "Oudere modi voor lagen hebben een betere compatibiliteit met Photoshop, maar ondersteunen niet Clip to Backdrop, wat nodig is voor het gebruiken van Photoshop's 'Uitkniplagen overvloeien als groep'. Als u problemen bij het weergeven tegenkomt, overweeg dan om te wisselen naar die modi voor lagen."
 
-#: plug-ins/file-psd/psd-load.c:372 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:376 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Fout bij laden PSD-bestand: %s"
 
-#: plug-ins/file-psd/psd-load.c:575
+#: plug-ins/file-psd/psd-load.c:579
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Ongeldige indeling PSD metagegevenslaag"
 
-#: plug-ins/file-psd/psd-load.c:681
+#: plug-ins/file-psd/psd-load.c:685
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Geen geldig Photoshop-bestand"
 
-#: plug-ins/file-psd/psd-load.c:688
+#: plug-ins/file-psd/psd-load.c:692
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Niet-ondersteunde versie van bestandsindeling: %d"
 
-#: plug-ins/file-psd/psd-load.c:695
+#: plug-ins/file-psd/psd-load.c:699
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Te veel kanalen in bestand: %d"
 
-#: plug-ins/file-psd/psd-load.c:701 plug-ins/file-psd/psd-load.c:709
-#: plug-ins/file-psd/psd-load.c:716 plug-ins/file-psd/psd-load.c:4761
-#: plug-ins/file-psd/psd-load.c:4775 plug-ins/file-psd/psd-load.c:4788
+#: plug-ins/file-psd/psd-load.c:705 plug-ins/file-psd/psd-load.c:713
+#: plug-ins/file-psd/psd-load.c:720 plug-ins/file-psd/psd-load.c:4929
+#: plug-ins/file-psd/psd-load.c:4943 plug-ins/file-psd/psd-load.c:4956
 #, c-format
 msgid "Not enough channels: %d"
 msgstr "Niet voldoende kanalen: %d"
 
-#: plug-ins/file-psd/psd-load.c:740
+#: plug-ins/file-psd/psd-load.c:744
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige beeldgrootte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:755 plug-ins/file-psd/psd-load.c:765
+#: plug-ins/file-psd/psd-load.c:759 plug-ins/file-psd/psd-load.c:769
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Niet-ondersteunde kleurmodus: %s"
 
-#: plug-ins/file-psd/psd-load.c:792
+#: plug-ins/file-psd/psd-load.c:796
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Niet-ondersteunde bitdiepte: %d"
 
-#: plug-ins/file-psd/psd-load.c:826 plug-ins/file-psd/psd-load.c:836
-#: plug-ins/file-psd/psd-load.c:1075 plug-ins/file-psd/psd-load.c:1437
+#: plug-ins/file-psd/psd-load.c:830 plug-ins/file-psd/psd-load.c:840
+#: plug-ins/file-psd/psd-load.c:1079 plug-ins/file-psd/psd-load.c:1441
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Het bestand is beschadigd!"
 
-#: plug-ins/file-psd/psd-load.c:982
+#: plug-ins/file-psd/psd-load.c:986
 #, c-format
 msgid "Invalid value for number of layers: %d."
 msgstr "Ongeldige waarde voor aantal lagen: %d."
 
-#: plug-ins/file-psd/psd-load.c:1024
+#: plug-ins/file-psd/psd-load.c:1028
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Te veel kanalen in laag: %d"
 
-#: plug-ins/file-psd/psd-load.c:1109
+#: plug-ins/file-psd/psd-load.c:1113
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Niet-ondersteunde of ongeldige laaghoogte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1118
+#: plug-ins/file-psd/psd-load.c:1122
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Niet-ondersteunde of ongeldige laagbreedte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1128
+#: plug-ins/file-psd/psd-load.c:1132
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige laaggrootte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1149
+#: plug-ins/file-psd/psd-load.c:1153
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Niet-ondersteunde of ongeldige maskerinfo-grootte."
 
-#: plug-ins/file-psd/psd-load.c:1309
+#: plug-ins/file-psd/psd-load.c:1313
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Niet-ondersteunde of ongeldige hoogte laagmasker: %d"
 
-#: plug-ins/file-psd/psd-load.c:1318
+#: plug-ins/file-psd/psd-load.c:1322
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Niet-ondersteunde of ongeldige breedte laagmasker: %d"
 
-#: plug-ins/file-psd/psd-load.c:1328
+#: plug-ins/file-psd/psd-load.c:1332
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Niet-ondersteunde of ongeldige grootte laagmasker: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1349 plug-ins/file-psd/psd-load.c:1383
-#: plug-ins/file-psd/psd-load.c:1415 plug-ins/file-psd/psd-load.c:1452
+#: plug-ins/file-psd/psd-load.c:1353 plug-ins/file-psd/psd-load.c:1387
+#: plug-ins/file-psd/psd-load.c:1419 plug-ins/file-psd/psd-load.c:1456
 #, c-format
 msgid "Invalid block size."
 msgstr "Ongeldige blokgrootte"
 
-#: plug-ins/file-psd/psd-load.c:1977 plug-ins/file-psd/psd-load.c:5303
+#: plug-ins/file-psd/psd-load.c:1981 plug-ins/file-psd/psd-load.c:5471
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ongeldige of niet-ondersteunde kanaalgrootte"
 
-#: plug-ins/file-psd/psd-load.c:2718
+#: plug-ins/file-psd/psd-load.c:2722
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Ongeldige dimensies kanaal %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2786 plug-ins/file-psd/psd-load.c:4901
+#: plug-ins/file-psd/psd-load.c:2790 plug-ins/file-psd/psd-load.c:5069
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Niet-ondersteunde compressiemethode: %d"
 
-#: plug-ins/file-psd/psd-load.c:3441 plug-ins/file-psd/psd-load.c:4141
+#: plug-ins/file-psd/psd-load.c:3451 plug-ins/file-psd/psd-load.c:4151
 msgid "Inner Shadow"
 msgstr "Binnenste schaduw"
 
-#: plug-ins/file-psd/psd-load.c:3442 plug-ins/file-psd/psd-load.c:4142
-#: plug-ins/file-psd/psd-load.c:4153 plug-ins/file-psd/psd-load.c:4169
+#: plug-ins/file-psd/psd-load.c:3452 plug-ins/file-psd/psd-load.c:4152
+#: plug-ins/file-psd/psd-load.c:4163 plug-ins/file-psd/psd-load.c:4179
 msgid "imported"
 msgstr "geïmporteerd"
 
-#: plug-ins/file-psd/psd-load.c:4152
+#: plug-ins/file-psd/psd-load.c:4162
 msgid "Outer Glow"
 msgstr "Buitenste gloed"
 
-#: plug-ins/file-psd/psd-load.c:4168
+#: plug-ins/file-psd/psd-load.c:4178
 msgid "Stroke"
 msgstr "Lijn"
 
-#: plug-ins/file-psd/psd-load.c:4172
+#: plug-ins/file-psd/psd-load.c:4182
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "Niet afgehandeld type Streek: verwacht onjuist renderen."
 
-#: plug-ins/file-psd/psd-load.c:5078
+#: plug-ins/file-psd/psd-load.c:5246
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:5380
+#: plug-ins/file-psd/psd-load.c:5548
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Kon gegevens niet decomprimeren"
 
-#: plug-ins/file-psd/psd-load.c:5772
+#: plug-ins/file-psd/psd-load.c:5940
 msgid "Duotone Import"
 msgstr "Duotone Import"
 
-#: plug-ins/file-psd/psd-load.c:5773
+#: plug-ins/file-psd/psd-load.c:5941
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10817,7 +10821,7 @@ msgid ""
 msgstr "Afbeelding zal worden geïmporteerd als Grijswaarden.\n"
 "Duotoon kleurruimte informatie is opgeslagen en kan bij exporteren opnieuw worden gebruikt."
 
-#: plug-ins/file-psd/psd-load.c:5796
+#: plug-ins/file-psd/psd-load.c:5964
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
