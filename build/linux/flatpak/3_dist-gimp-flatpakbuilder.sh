@@ -81,7 +81,6 @@ if [ -z "$GITLAB_CI" ] || [ "$CI_COMMIT_BRANCH" != "$CI_DEFAULT_BRANCH" ]; then
   printf "\e[0Ksection_start:`date +%s`:${FLATPAK}_trust[collapsed=false]\r\e[0KChecksumming ${FLATPAK}\n"
   printf "(INFO): ${FLATPAK} SHA-256: $(sha256sum ${FLATPAK} | cut -d ' ' -f 1)\n"
   printf "(INFO): ${FLATPAK} SHA-512: $(sha512sum ${FLATPAK} | cut -d ' ' -f 1)\n"
-  printf "(INFO): Suceeded. To test this build, install it from the artifact with: \033[32mflatpak install --user ${FLATPAK} -y\033[0m\n"
   printf "\e[0Ksection_end:`date +%s`:${FLATPAK}_trust\r\e[0K\n"
 fi
 
