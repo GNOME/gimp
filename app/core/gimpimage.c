@@ -3254,6 +3254,17 @@ gimp_image_get_xcf_version (GimpImage    *image,
       if (gimp_version)   *gimp_version   = 320;
       if (version_string) *version_string = "GIMP 3.2";
       break;
+    case 26:
+      if (gimp_version)   *gimp_version   = 326;
+      if (version_string) *version_string = "GIMP 3.2.6";
+      break;
+    default:
+      /* We should have as many cases as there are function elements in
+       * array xcf_loaders in app/xcf/xcf.c
+       * Don't forget to add new cases. This is a reminder CRITICAL in
+       * case we forgot.
+       */
+      g_return_val_if_reached (version);
     }
 
   if (version_reason && reasons)
