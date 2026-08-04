@@ -970,7 +970,7 @@ tartan-static-analysis:
                          clang-${LLVM_VERSION}
                          clang-tools-${LLVM_VERSION}
                          libclang-${LLVM_VERSION}-dev
-                         libgirepository-2.0-dev
+                         libgirepository-2.0-dev gir1.2-girepository-3.0-dev gir1.2-girepository-2.0-dev
     - git clone https://gitlab.freedesktop.org/tartan/tartan.git tartan
     - pushd tartan
     # Tartan seems to need to be installed into the same prefix as the version
