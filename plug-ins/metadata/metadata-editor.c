@@ -1537,7 +1537,7 @@ count_tags (GExiv2Metadata  *metadata,
             gint             items)
 {
   int   tagcount;
-  gchar tag[256];
+  gchar tag[512];
   int   row, col;
 
   tagcount = 0;
@@ -1545,9 +1545,7 @@ count_tags (GExiv2Metadata  *metadata,
     {
       for (col = 0; col < items; col++)
         {
-          g_snprintf ((gchar *) &tag, 256, "%s[%d]", header, row);
-          g_snprintf ((gchar *) &tag, 256, "%s%s",
-                      (gchar *) &tag, (gchar *) tags[col]);
+          g_snprintf ((gchar *) &tag, 512, "%s[%d]%s", header, row, (gchar *) tags[col]);
           if (gexiv2_metadata_try_has_tag (metadata, (gchar *) &tag, NULL))
             {
               tagcount++;
@@ -1567,7 +1565,7 @@ get_tags (GExiv2Metadata  *metadata,
 {
   gchar **tagdata;
   gchar **_datarow;
-  gchar   tag[256];
+  gchar   tag[512];
   int     row, col;
 
   g_return_val_if_fail (header != NULL && tags != NULL, NULL);
@@ -1587,9 +1585,7 @@ get_tags (GExiv2Metadata  *metadata,
         {
           gchar *value;
 
-          g_snprintf ((gchar *) &tag, 256, "%s[%d]", header, row);
-          g_snprintf ((gchar *) &tag, 256, "%s%s",
-                      (gchar *) &tag, (gchar *) tags[col]);
+          g_snprintf ((gchar *) &tag, 512, "%s[%d]%s", header, row, (gchar *) tags[col]);
 
           value = gexiv2_metadata_try_get_tag_string (metadata, (gchar *) &tag, NULL);
 
