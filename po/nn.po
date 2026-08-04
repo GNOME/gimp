@@ -4465,7 +4465,7 @@ msgstr "L_upeeffekt …"
 #: app/actions/filters-actions.c:149
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
-msgstr "_Bayer Matrix..."
+msgstr "_Bayermatrise..."
 
 #: app/actions/filters-actions.c:154
 msgctxt "filters-action"
