@@ -130,6 +130,8 @@ Plug-Ins:
     - Initial text layer import support! The warning that text layer
       will be rasterized on import has been removed too.
     - Be more robust by ignoring an empty layer comps list.
+    - Load vector layer paths ('vmsk' and 'vsms' blocks, used for vector
+      masks and vector shapes).
   * New import support for MacPaint images.
   * GBR: fix exporting grayscale GBRs with alpha channels.
   * file-raw-data: various code improvements.
@@ -199,7 +201,15 @@ Plug-Ins:
       delay in FLC export. The int argument is available
       non-interactively too as "default-delay" argument.
     - Store aspect ratio in file.
-  * ICO/CUR: Icons are now ordered large to small for better compliance.
+  * ICO/CUR: use Win32 scoring for ICO/CUR/ANI thumbnail selection.
+    Replace the ad-hoc "largest frame not exceeding the requested size"
+    heuristic in ico_load_thumbnail_image() with the same weighted scoring
+    used by LookupIconIdFromDirectoryEx: size delta penalized x2 when the
+    entry is smaller than requested, bpp mismatch weighted x2. On a tie,
+    prefer the higher color depth. This fixes thumbnails for multi-size
+    ICO/CUR files where the old heuristic could pick the wrong frame (e.g.
+    a small frame instead of the closest match to the requested size).
+  * PNG: better heuristic for a transparency index.
 
 API:
 
@@ -280,3 +290,6 @@ Build:
   * Expose duration of each image plug-in test on junit report to make
     easier to debug these, especially when one gets stuck.
   * Add some GIR file checks, especially for the (skip) annotation.
+  * Add LLDB support to '-Ddebug-self-in-build' build option and display
+    a proper discovery message when in-build GIMP crashes to encourage
+    bug reporters to make stacktraces of that happening.
