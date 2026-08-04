@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-12-28 11:26+0000\n"
-"PO-Revision-Date: 2026-03-09 13:57+0100\n"
+"POT-Creation-Date: 2026-08-02 17:50+0000\n"
+"PO-Revision-Date: 2026-08-04 15:04+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -45,16 +45,15 @@ msgid ""
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
-"installation anyway?"
+"www.gimp.org/bugs%n%nDo you wish to continue with installation anyway?"
 msgstr ""
 "Dette er ein utviklingsversjon av GIMP der nokre funksjonar kanskje ikkje er "
-"ferdige, eller dei kan vera ustabile.%n Denne versjonen av GIMP er ikkje "
+"ferdige, eller dei kan vera ustabile.%nDenne versjonen av GIMP er ikkje "
 "meint for det daglege arbeidet, sidan han kan vera ustabil og du kan mista "
-"arbeidet ditt.%n Viss du møter problem, må du først kontrollera at dei ikkje "
+"arbeidet ditt.%nViss du møter problem, må du først kontrollera at dei ikkje "
 "alt er løyste i GIT før du tek kontakt med utviklarane eller rapporterar det "
-"i GIMP gitlab:% n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nVil du "
-"likevel halda fram med installasjonen?"
+"i GIMP gitlab:% n_https://www.gimp.org/bugs%n%nVil du likevel halda fram med "
+"installasjonen?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
 #: build/windows/installer/lang/setup.isl.xml.in:43
@@ -199,27 +198,15 @@ msgstr "Støtte for PostScript"
 msgid "Allow GIMP to load PostScript files"
 msgstr "Gjer at GIMP kan lasta inn PostScript-filer"
 
-#: build/windows/installer/lang/setup.isl.xml.in:156
-msgid "Support for 32-bit plug-ins"
-msgstr "Støtte for 32-bitars programtillegg"
-
-#: build/windows/installer/lang/setup.isl.xml.in:160
-msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
-"support."
-msgstr ""
-"Tek med filer som er nødvendige for å bruka 32-bitars programtillegg."
-"%nTrengs for TWAIN-støtte."
-
-#: build/windows/installer/lang/setup.isl.xml.in:165
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid "Additional icons:"
 msgstr "Tilleggsikon:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:169
+#: build/windows/installer/lang/setup.isl.xml.in:161
 msgid "Create a &desktop icon"
 msgstr "Lagar eit &skrivebordsikon"
 
-#: build/windows/installer/lang/setup.isl.xml.in:174
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -228,47 +215,47 @@ msgstr ""
 "feil ved lasting av programtillegga, prøv å avinstallera GIMP og installera "
 "GIMP på nytt."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Error extracting temporary data."
 msgstr "Feil ved uttrekking av mellombels data."
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Error updating Python interpreter info."
 msgstr "Feil ved oppdateringa av Python-tolkaren."
 
-#: build/windows/installer/lang/setup.isl.xml.in:186
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Trying to create Restore Point..."
 msgstr "Prøver å laga eit gjenopprettingspunkt …"
 
-#: build/windows/installer/lang/setup.isl.xml.in:190
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Cleaning up old files..."
 msgstr "Ryddar i gamle filer …"
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Hugs at GIMP er gratis.%n%nBesøk"
 
-#: build/windows/installer/lang/setup.isl.xml.in:199
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "for free updates."
 msgstr "for gratis oppdateringar."
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Set opp omgivnadar for GIMP Pythonutvidingar …"
 
-#: build/windows/installer/lang/setup.isl.xml.in:206
+#: build/windows/installer/lang/setup.isl.xml.in:198
 msgid "Setting up GIMP environment..."
 msgstr "Set opp GIMP-omgivnadar …"
 
-#: build/windows/installer/lang/setup.isl.xml.in:211
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Launch GIMP"
 msgstr "Start GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:216
+#: build/windows/installer/lang/setup.isl.xml.in:208
 msgid "Removing add-on"
 msgstr "Fjernar tilleggsprogram"
 
-#: build/windows/installer/lang/setup.isl.xml.in:221
+#: build/windows/installer/lang/setup.isl.xml.in:213
 msgid ""
 "Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
 "custom brushes)?%n%nA copy will be made on Desktop."
@@ -276,9 +263,19 @@ msgstr ""
 "Ønskjer du å sletta dei personlege filene dine (som innstillingar, "
 "verktøyforval, tilpassa penslar)?%n%nDet vert laga ein kopi på arbeidsbordet."
 
-#: build/windows/installer/lang/setup.isl.xml.in:225
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Internal error (%1)."
 msgstr "Intern feil (%1)."
+
+#~ msgid "Support for 32-bit plug-ins"
+#~ msgstr "Støtte for 32-bitars programtillegg"
+
+#~ msgid ""
+#~ "Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
+#~ "support."
+#~ msgstr ""
+#~ "Tek med filer som er nødvendige for å bruka 32-bitars programtillegg."
+#~ "%nTrengs for TWAIN-støtte."
 
 #~ msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
 #~ msgstr "Oppsettet er bygd av Jernej Simonèiè, jernej-gimp@ena.si"
