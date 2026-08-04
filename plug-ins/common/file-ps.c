@@ -620,22 +620,25 @@ ps_extract (GimpProcedure        *procedure,
   has_bbox = ps_read_header (file, NULL, &is_pdf, &is_epsf,
                              &bbox_x0, &bbox_y0, &bbox_x1, &bbox_y1);
 
+  extracted_dimensions->width_unit    = gimp_unit_point ();
+  extracted_dimensions->height_unit   = gimp_unit_point ();
+
   if (has_bbox)
     {
       extracted_dimensions->width         = (gdouble) bbox_x1 - bbox_x0;
       extracted_dimensions->height        = (gdouble) bbox_y1 - bbox_y0;
-      extracted_dimensions->width_unit    = gimp_unit_point ();
-      extracted_dimensions->height_unit   = gimp_unit_point ();
       extracted_dimensions->exact_width   = TRUE;
       extracted_dimensions->exact_height  = TRUE;
       extracted_dimensions->correct_ratio = TRUE;
-
-      return TRUE;
     }
   else
     {
-      return FALSE;
+      /* Assume default size for PS with unknown dimensions is A4 paper */
+      extracted_dimensions->width  = 595;
+      extracted_dimensions->height = 842;
     }
+
+  return TRUE;
 }
 
 static GimpValueArray *
