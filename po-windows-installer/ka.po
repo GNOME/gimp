@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-12-28 11:26+0000\n"
-"PO-Revision-Date: 2026-03-11 06:21+0100\n"
+"POT-Creation-Date: 2026-08-02 17:50+0000\n"
+"PO-Revision-Date: 2026-08-05 05:29+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -44,11 +44,10 @@ msgid ""
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
-"installation anyway?"
+"www.gimp.org/bugs%n%nDo you wish to continue with installation anyway?"
 msgstr ""
-"ეს არის GIMP-ის სატესტო ვერსია, სადაც ზოგიერთი ფუნქცია შეიძლება დაუსრულებელი "
-"ან არასტაბილური იყოს. GIMP-ის ეს ვერსია არ არის განკუთვნილი ყოველდღიური "
+"ეს GIMP-ის სატესტო ვერსიაა, სადაც ზოგიერთი ფუნქცია შეიძლება დაუსრულებელი ან "
+"არასტაბილური იყოს.%nGIMP-ის ეს ვერსია არ არის განკუთვნილი ყოველდღიური "
 "მუშაობისთვის, რადგან ის შეიძლება იყოს არასტაბილური და შეიძლება დაკარგოთ "
 "სამუშაო.%n თუ რაიმე პრობლემა შეგექმნათ, ჯერ გადაამოწმეთ, რომ ისინი ჯერ არ "
 "გამოსწორებულა GIT-ში, სანამ დაუკავშირდებით დეველოპერებს ან შეატყობინეთ ამის "
@@ -195,26 +194,15 @@ msgstr "PostScript-ის მხარდაჭერა"
 msgid "Allow GIMP to load PostScript files"
 msgstr "GIMP-ში PostScript-ის ფაილების ჩატვირთვის მხარდაჭერა"
 
-#: build/windows/installer/lang/setup.isl.xml.in:156
-msgid "Support for 32-bit plug-ins"
-msgstr "32-ბიტიანი დამატებების მხარდაჭერა"
-
-#: build/windows/installer/lang/setup.isl.xml.in:160
-msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
-"support."
-msgstr ""
-"32-ბიტიანი დამატებების მხარდაჭერის ჩართვა.%nსაჭიროა TWAIN-ის მხარდაჭერისთვის."
-
-#: build/windows/installer/lang/setup.isl.xml.in:165
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid "Additional icons:"
 msgstr "დამატებითი ხატულები:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:169
+#: build/windows/installer/lang/setup.isl.xml.in:161
 msgid "Create a &desktop icon"
 msgstr "სამუშაო &დაფაზე ხატულის შექმნა"
 
-#: build/windows/installer/lang/setup.isl.xml.in:174
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -222,47 +210,47 @@ msgstr ""
 "პრობლემა %1-ში GIMP-ის გარემოს განახლებისას. თუ დაინახავთ დამატებების "
 "ჩატვირთვის შეცდომას, სცადეთ GIMP-ი თავიდან დააყენოთ."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Error extracting temporary data."
 msgstr "დროებითი მონაცემების გაშლის შეცდომა."
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Error updating Python interpreter info."
 msgstr "Python-ის ინტერპრეტატორის ინფორმაციის განახლების შეცდომა."
 
-#: build/windows/installer/lang/setup.isl.xml.in:186
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Trying to create Restore Point..."
 msgstr "აღდგენის წერტილის შექმნის მცდელობა..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:190
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Cleaning up old files..."
 msgstr "ძველი ფაილების გასუფთავება..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "დაიმახსოვრეთ; GIMP-ი უფასო პროგრამაა. %n%ეწვიეთ"
 
-#: build/windows/installer/lang/setup.isl.xml.in:199
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "for free updates."
 msgstr "უფასო განახლებებისათვის."
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "GIMP Python-ის გაფართოების გარემოს მორგება..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:206
+#: build/windows/installer/lang/setup.isl.xml.in:198
 msgid "Setting up GIMP environment..."
 msgstr "GIMP-ის გარემოს მორგება..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:211
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Launch GIMP"
 msgstr "GIMP-ის გაშვება"
 
-#: build/windows/installer/lang/setup.isl.xml.in:216
+#: build/windows/installer/lang/setup.isl.xml.in:208
 msgid "Removing add-on"
 msgstr "დამატების წაშლა"
 
-#: build/windows/installer/lang/setup.isl.xml.in:221
+#: build/windows/installer/lang/setup.isl.xml.in:213
 msgid ""
 "Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
 "custom brushes)?%n%nA copy will be made on Desktop."
@@ -270,9 +258,19 @@ msgstr ""
 "გნებავთ წაშალოთ თქვენი პირადი GIMP-ის ფაილები (ანუ: პარამეტრები, პრესეტები, "
 "მორგებული ფუნჯები)?%n%nასლი სამუშაო მაგიდაზე შეიქმნება."
 
-#: build/windows/installer/lang/setup.isl.xml.in:225
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Internal error (%1)."
 msgstr "შიდა შეცდომა (%1)"
+
+#~ msgid "Support for 32-bit plug-ins"
+#~ msgstr "32-ბიტიანი დამატებების მხარდაჭერა"
+
+#~ msgid ""
+#~ "Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
+#~ "support."
+#~ msgstr ""
+#~ "32-ბიტიანი დამატებების მხარდაჭერის ჩართვა.%nსაჭიროა TWAIN-ის "
+#~ "მხარდაჭერისთვის."
 
 #~ msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
 #~ msgstr "დასაყენებელი პროგრამის ავტორი: Jernej Simonèiè, jernej-gimp@ena.si"
