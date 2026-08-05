@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-28 20:39+0000\n"
-"PO-Revision-Date: 2026-07-29 07:15+0200\n"
+"POT-Creation-Date: 2026-08-04 17:42+0000\n"
+"PO-Revision-Date: 2026-08-05 05:31+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -85,9 +85,9 @@ msgstr "დამატების მაგალითი C-ში"
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1193
-#: plug-ins/metadata/metadata-editor.c:1695
-#: plug-ins/metadata/metadata-editor.c:5587
-#: plug-ins/metadata/metadata-editor.c:5622 plug-ins/print/print.c:458
+#: plug-ins/metadata/metadata-editor.c:1691
+#: plug-ins/metadata/metadata-editor.c:5583
+#: plug-ins/metadata/metadata-editor.c:5618 plug-ins/print/print.c:458
 msgid "_Cancel"
 msgstr "_შეწყვეტა"
 
@@ -138,7 +138,7 @@ msgstr "დამატების მაგალითი JavaScript-ში (
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:280 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5756 plug-ins/flame/flame.c:810
+#: plug-ins/file-psd/psd-load.c:5924 plug-ins/flame/flame.c:810
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
@@ -596,7 +596,7 @@ msgstr "ჟალუზები"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
 #: plug-ins/common/file-drhalo.c:238 plug-ins/common/file-farbfeld.c:307
 #: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1229
-#: plug-ins/common/file-iff.c:431 plug-ins/common/file-jp2.c:1629
+#: plug-ins/common/file-iff.c:437 plug-ins/common/file-jp2.c:1629
 #: plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:729
 #: plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1083
@@ -611,7 +611,7 @@ msgstr "ჟალუზები"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:259
 #: plug-ins/file-psd/psd-image-res-load.c:1113
-#: plug-ins/file-psd/psd-load.c:4932 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:5100 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1666
 #: plug-ins/file-tiff/file-tiff-load.c:2503
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1961,11 +1961,11 @@ msgstr ""
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:447
 #: plug-ins/file-fli/fli-gimp.c:498 plug-ins/file-icns/file-icns-load.c:643
-#: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:759
-#: plug-ins/file-ico/ico-load.c:909 plug-ins/file-ico/ico-load.c:1129
+#: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:764
+#: plug-ins/file-ico/ico-load.c:914 plug-ins/file-ico/ico-load.c:1166
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711
 #: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
-#: plug-ins/file-psd/psd-load.c:248 plug-ins/file-psd/psd-load.c:253
+#: plug-ins/file-psd/psd-load.c:252 plug-ins/file-psd/psd-load.c:257
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:540
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
@@ -2430,7 +2430,7 @@ msgstr ""
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254
 #: plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260
 #: plug-ins/file-fits/fits.c:499 plug-ins/file-fits/fits.c:581
-#: plug-ins/file-psd/psd-load.c:5311 plug-ins/file-tiff/file-tiff-load.c:1984
+#: plug-ins/file-psd/psd-load.c:5479 plug-ins/file-tiff/file-tiff-load.c:1984
 #: plug-ins/file-tiff/file-tiff-load.c:2081
 #: plug-ins/file-tiff/file-tiff-load.c:2278
 #, c-format
@@ -2567,8 +2567,8 @@ msgstr ""
 #: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
 #: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247
 #: plug-ins/file-fli/fli-gimp.c:490 plug-ins/file-icns/file-icns-load.c:635
-#: plug-ins/file-ico/ico-load.c:751 plug-ins/file-ico/ico-load.c:901
-#: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:261
+#: plug-ins/file-ico/ico-load.c:756 plug-ins/file-ico/ico-load.c:906
+#: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:265
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
 #: plug-ins/file-raw/file-darktable.c:467
 #: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
@@ -3280,7 +3280,7 @@ msgstr "კადრის ინფორმაცია"
 msgid "local colormap"
 msgstr "ლოკალური ფერების რუკა"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:448
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:454
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -3921,7 +3921,11 @@ msgstr "არასწორი, ან ნაკლული ILBM გამო
 msgid "ILBM contains no image data - likely a palette file"
 msgstr ""
 
-#: plug-ins/common/file-iff.c:365 plug-ins/common/file-iff.c:384
+#: plug-ins/common/file-iff.c:349
+msgid "Invalid ILBM header value."
+msgstr "არასწორი ILBM თავსართის მნიშვნელობა."
+
+#: plug-ins/common/file-iff.c:371 plug-ins/common/file-iff.c:390
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "არასწორი ILBM ფერების რუკის ზომა"
@@ -4614,14 +4618,14 @@ msgstr "'%s' PCX ფაილი არაა"
 
 #: plug-ins/common/file-pcx.c:674 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:731
+#: plug-ins/file-psd/psd-load.c:735
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr ""
 
 #: plug-ins/common/file-pcx.c:681 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:723
+#: plug-ins/file-psd/psd-load.c:727
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr ""
@@ -4798,7 +4802,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr ""
 
 #: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5622
+#: plug-ins/metadata/metadata-editor.c:5618
 msgid "_Export"
 msgstr "გატანა"
 
@@ -10076,8 +10080,8 @@ msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr ""
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-ico/ico-load.c:1121
-#: plug-ins/file-jpeg/jpeg-load.c:697 plug-ins/file-psd/psd-thumb-load.c:72
+#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-jpeg/jpeg-load.c:697
+#: plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:620
 #: plug-ins/file-raw/file-rawtherapee.c:466
@@ -10171,18 +10175,18 @@ msgid ""
 "%d icons."
 msgstr ""
 
-#: plug-ins/file-ico/ico-load.c:228
+#: plug-ins/file-ico/ico-load.c:233
 #, c-format
 msgid "Could not read '%lu' bytes"
 msgstr ""
 
-#: plug-ins/file-ico/ico-load.c:256
+#: plug-ins/file-ico/ico-load.c:261
 #, c-format
 msgid "Icon #%d has zero width or height"
 msgstr ""
 
-#: plug-ins/file-ico/ico-load.c:955 plug-ins/file-ico/ico-load.c:967
-#: plug-ins/file-ico/ico-load.c:995 plug-ins/file-ico/ico-load.c:1007
+#: plug-ins/file-ico/ico-load.c:960 plug-ins/file-ico/ico-load.c:972
+#: plug-ins/file-ico/ico-load.c:1000 plug-ins/file-ico/ico-load.c:1012
 #, c-format
 msgid "Invalid ANI metadata"
 msgstr "არასწორი ANI მეტამონაცემები"
@@ -10475,7 +10479,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr ""
 
-#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5795
+#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5963
 msgid "Compatibility Notice"
 msgstr "თავსებადობის შენიშვნა"
 
@@ -10487,167 +10491,167 @@ msgid ""
 "switching to those layer modes."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:372 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:376 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:575
+#: plug-ins/file-psd/psd-load.c:579
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:681
+#: plug-ins/file-psd/psd-load.c:685
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:688
+#: plug-ins/file-psd/psd-load.c:692
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:695
+#: plug-ins/file-psd/psd-load.c:699
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:701 plug-ins/file-psd/psd-load.c:709
-#: plug-ins/file-psd/psd-load.c:716 plug-ins/file-psd/psd-load.c:4761
-#: plug-ins/file-psd/psd-load.c:4775 plug-ins/file-psd/psd-load.c:4788
+#: plug-ins/file-psd/psd-load.c:705 plug-ins/file-psd/psd-load.c:713
+#: plug-ins/file-psd/psd-load.c:720 plug-ins/file-psd/psd-load.c:4929
+#: plug-ins/file-psd/psd-load.c:4943 plug-ins/file-psd/psd-load.c:4956
 #, c-format
 msgid "Not enough channels: %d"
 msgstr "არასაკმარისი არხები: %d"
 
-#: plug-ins/file-psd/psd-load.c:740
+#: plug-ins/file-psd/psd-load.c:744
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:755 plug-ins/file-psd/psd-load.c:765
+#: plug-ins/file-psd/psd-load.c:759 plug-ins/file-psd/psd-load.c:769
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:792
+#: plug-ins/file-psd/psd-load.c:796
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:826 plug-ins/file-psd/psd-load.c:836
-#: plug-ins/file-psd/psd-load.c:1075 plug-ins/file-psd/psd-load.c:1437
+#: plug-ins/file-psd/psd-load.c:830 plug-ins/file-psd/psd-load.c:840
+#: plug-ins/file-psd/psd-load.c:1079 plug-ins/file-psd/psd-load.c:1441
 #, c-format
 msgid "The file is corrupt!"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:982
+#: plug-ins/file-psd/psd-load.c:986
 #, c-format
 msgid "Invalid value for number of layers: %d."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1024
+#: plug-ins/file-psd/psd-load.c:1028
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1109
+#: plug-ins/file-psd/psd-load.c:1113
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1118
+#: plug-ins/file-psd/psd-load.c:1122
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1128
+#: plug-ins/file-psd/psd-load.c:1132
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1149
+#: plug-ins/file-psd/psd-load.c:1153
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1309
+#: plug-ins/file-psd/psd-load.c:1313
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1318
+#: plug-ins/file-psd/psd-load.c:1322
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1328
+#: plug-ins/file-psd/psd-load.c:1332
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1349 plug-ins/file-psd/psd-load.c:1383
-#: plug-ins/file-psd/psd-load.c:1415 plug-ins/file-psd/psd-load.c:1452
+#: plug-ins/file-psd/psd-load.c:1353 plug-ins/file-psd/psd-load.c:1387
+#: plug-ins/file-psd/psd-load.c:1419 plug-ins/file-psd/psd-load.c:1456
 #, c-format
 msgid "Invalid block size."
 msgstr "ბლოკის არასწორი ზომა."
 
-#: plug-ins/file-psd/psd-load.c:1977 plug-ins/file-psd/psd-load.c:5303
+#: plug-ins/file-psd/psd-load.c:1981 plug-ins/file-psd/psd-load.c:5471
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2718
+#: plug-ins/file-psd/psd-load.c:2722
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "არასწორი არხის ზომები %u x %u"
 
-#: plug-ins/file-psd/psd-load.c:2786 plug-ins/file-psd/psd-load.c:4901
+#: plug-ins/file-psd/psd-load.c:2790 plug-ins/file-psd/psd-load.c:5069
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:3441 plug-ins/file-psd/psd-load.c:4141
+#: plug-ins/file-psd/psd-load.c:3451 plug-ins/file-psd/psd-load.c:4151
 msgid "Inner Shadow"
 msgstr "შიდა ჩრდილი"
 
-#: plug-ins/file-psd/psd-load.c:3442 plug-ins/file-psd/psd-load.c:4142
-#: plug-ins/file-psd/psd-load.c:4153 plug-ins/file-psd/psd-load.c:4169
+#: plug-ins/file-psd/psd-load.c:3452 plug-ins/file-psd/psd-load.c:4152
+#: plug-ins/file-psd/psd-load.c:4163 plug-ins/file-psd/psd-load.c:4179
 msgid "imported"
 msgstr "შემოტანილია"
 
-#: plug-ins/file-psd/psd-load.c:4152
+#: plug-ins/file-psd/psd-load.c:4162
 msgid "Outer Glow"
 msgstr "გარე ნათება"
 
-#: plug-ins/file-psd/psd-load.c:4168
+#: plug-ins/file-psd/psd-load.c:4178
 msgid "Stroke"
 msgstr "გამოძრავება"
 
-#: plug-ins/file-psd/psd-load.c:4172
+#: plug-ins/file-psd/psd-load.c:4182
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:5078
+#: plug-ins/file-psd/psd-load.c:5246
 msgid "Extra"
 msgstr "დამატებით"
 
-#: plug-ins/file-psd/psd-load.c:5380
+#: plug-ins/file-psd/psd-load.c:5548
 #, c-format
 msgid "Failed to decompress data"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:5772
+#: plug-ins/file-psd/psd-load.c:5940
 msgid "Duotone Import"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:5773
+#: plug-ins/file-psd/psd-load.c:5941
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
 "and can be reapplied on export."
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:5796
+#: plug-ins/file-psd/psd-load.c:5964
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -15804,15 +15808,15 @@ msgstr "მეტამონაცემების შემოტანა..
 msgid "Export Metadata..."
 msgstr "მეტამონაცემების გატანა..."
 
-#: plug-ins/metadata/metadata-editor.c:1691
+#: plug-ins/metadata/metadata-editor.c:1687
 msgid "Choose Date"
 msgstr "აირჩიეთ თარიღი"
 
-#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:1692
 msgid "Set Date"
 msgstr "თარიღის დაყენება"
 
-#: plug-ins/metadata/metadata-editor.c:2433
+#: plug-ins/metadata/metadata-editor.c:2429
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -15822,7 +15826,7 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:2439
+#: plug-ins/metadata/metadata-editor.c:2435
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -15832,24 +15836,24 @@ msgid ""
 "Delete all text to remove the current value."
 msgstr ""
 
-#: plug-ins/metadata/metadata-editor.c:2573
+#: plug-ins/metadata/metadata-editor.c:2569
 msgid "Unrated"
 msgstr "რეიტინგის გარეშე"
 
-#: plug-ins/metadata/metadata-editor.c:4683
+#: plug-ins/metadata/metadata-editor.c:4679
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "მეტამონაცემების ჭდის %s დაყენების შეცდომა: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5584
+#: plug-ins/metadata/metadata-editor.c:5580
 msgid "Import Metadata File"
 msgstr "მეტამონაცემების ფაილის შემოტანა"
 
-#: plug-ins/metadata/metadata-editor.c:5587
+#: plug-ins/metadata/metadata-editor.c:5583
 msgid "_Import"
 msgstr "_შემოტანა"
 
-#: plug-ins/metadata/metadata-editor.c:5619
+#: plug-ins/metadata/metadata-editor.c:5615
 msgid "Export Metadata File"
 msgstr "მეტამონაცემების ფაილის გატანა"
 
