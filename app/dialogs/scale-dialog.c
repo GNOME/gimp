@@ -78,16 +78,17 @@ scale_dialog_new (GimpViewable          *viewable,
                   GimpScaleCallback      callback,
                   gpointer               user_data)
 {
-  GtkWidget   *dialog;
-  GtkWidget   *vbox;
-  GtkWidget   *hbox;
-  GtkWidget   *frame;
-  GtkWidget   *label;
-  ScaleDialog *private;
-  GimpImage   *image = NULL;
-  const gchar *text  = NULL;
-  gint         width, height;
-  gdouble      xres, yres;
+  GtkWidget      *dialog;
+  GtkWidget      *vbox;
+  GtkWidget      *hbox;
+  GtkWidget      *frame;
+  GtkWidget      *label;
+  GimpSizeEntry  *entry;
+  ScaleDialog    *private;
+  GimpImage      *image = NULL;
+  const gchar    *text  = NULL;
+  gint            width, height;
+  gdouble         xres, yres;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -140,10 +141,10 @@ scale_dialog_new (GimpViewable          *viewable,
                                      NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           RESPONSE_RESET,
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            RESPONSE_RESET,
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -203,6 +204,11 @@ scale_dialog_new (GimpViewable          *viewable,
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->combo),
                                  private->interpolation);
+
+  /* Set focus to size entry for immediate editing */
+  entry = gimp_size_box_get_size_entry (GIMP_SIZE_BOX (private->box));
+  gimp_size_entry_set_activates_default (entry, TRUE);
+  gimp_size_entry_grab_focus (entry);
 
   return dialog;
 }
