@@ -218,7 +218,8 @@ tiff_get_page_name (TIFF *tif)
 
 /* is_non_conformant_tiff assumes TIFFTAG_EXTRASAMPLES was not set */
 static gboolean
-is_non_conformant_tiff (gushort photomet, gushort spp)
+is_non_conformant_tiff (gushort photomet,
+                        gushort spp)
 {
   switch (photomet)
     {
@@ -2011,12 +2012,42 @@ load_contiguous (TIFF         *tif,
 
   tile_width = image_width;
 
+  one_row = (gdouble) tile_height / (gdouble) image_height;
+
+  src_format = babl_format_n (type, spp);
+
+  /* consistency check */
+  bytes_per_pixel = 0;
+  for (i = 0; i <= extra; i++)
+    {
+      if (channel[i].format)
+        bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
+    }
+
+  g_debug ("bytes_per_pixel: %d, format: %d",
+           bytes_per_pixel,
+           babl_format_get_bytes_per_pixel (src_format));
+
   if (TIFFIsTiled (tif))
     {
+      gsize allocation;
+      gint  n_components = babl_format_get_n_components (src_format);
+      gint  format_bpc   = babl_format_get_bytes_per_pixel (src_format);
+
       TIFFGetField (tif, TIFFTAG_TILEWIDTH,  &tile_width);
       TIFFGetField (tif, TIFFTAG_TILELENGTH, &tile_height);
 
-      buffer = g_malloc (TIFFTileSize (tif));
+      /* Manually allocate tile size instead of using TIFFTileSize (), since
+       * the file might not match the format set in GIMP */
+      if (! g_size_checked_mul (&allocation, tile_width, tile_height)  ||
+          ! g_size_checked_mul (&allocation, allocation, n_components) ||
+          ! g_size_checked_mul (&allocation, allocation, format_bpc)   ||
+          ! (buffer = g_try_malloc0 (allocation)))
+        {
+          g_message (_("There was not enough memory to complete the "
+                       "operation."));
+          return;
+        }
     }
   else
     {
@@ -2042,19 +2073,6 @@ load_contiguous (TIFF         *tif,
           return;
         }
     }
-
-  one_row = (gdouble) tile_height / (gdouble) image_height;
-
-  src_format = babl_format_n (type, spp);
-
-  /* consistency check */
-  bytes_per_pixel = 0;
-  for (i = 0; i <= extra; i++)
-    bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
-
-  g_debug ("bytes_per_pixel: %d, format: %d",
-           bytes_per_pixel,
-           babl_format_get_bytes_per_pixel (src_format));
 
   for (y = 0; y < image_height; y += tile_height)
     {
