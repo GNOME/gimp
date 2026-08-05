@@ -233,12 +233,12 @@ is_non_conformant_tiff (gushort photomet,
   switch (photomet)
     {
     case PHOTOMETRIC_RGB:
-    case PHOTOMETRIC_CIELAB:
     case PHOTOMETRIC_YCBCR:
+    case PHOTOMETRIC_CIELAB:
     case PHOTOMETRIC_ICCLAB:
     case PHOTOMETRIC_ITULAB:
     case PHOTOMETRIC_LOGLUV:
-      return (spp != 3);
+      return (spp > 3 || (spp == 2 && photomet != PHOTOMETRIC_RGB));
       break;
     case PHOTOMETRIC_SEPARATED:
       return (spp > 4);
@@ -2055,12 +2055,37 @@ load_contiguous (TIFF         *tif,
 
   tile_width = image_width;
 
+  one_row = (gdouble) tile_height / (gdouble) image_height;
+
+  src_format = babl_format_n (type, spp);
+
+  /* consistency check */
+  bytes_per_pixel = 0;
+  for (i = 0; i <= extra; i++)
+    {
+      if (channel[i].format)
+        bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
+    }
+
+  g_debug ("bytes_per_pixel: %d, format: %d",
+           bytes_per_pixel,
+           babl_format_get_bytes_per_pixel (src_format));
+
   if (TIFFIsTiled (tif))
     {
+      gsize allocation;
+
       TIFFGetField (tif, TIFFTAG_TILEWIDTH,  &tile_width);
       TIFFGetField (tif, TIFFTAG_TILELENGTH, &tile_height);
 
-      buffer = g_malloc (TIFFTileSize (tif));
+      allocation = TIFFTileSize (tif);
+      if (! g_size_checked_mul (&allocation, allocation, bytes_per_pixel) ||
+          ! (buffer = g_try_malloc0 (allocation)))
+        {
+          g_message (_("There was not enough memory to complete the "
+                       "operation."));
+          return;
+        }
     }
   else
     {
@@ -2086,22 +2111,6 @@ load_contiguous (TIFF         *tif,
           return;
         }
     }
-
-  one_row = (gdouble) tile_height / (gdouble) image_height;
-
-  src_format = babl_format_n (type, spp);
-
-  /* consistency check */
-  bytes_per_pixel = 0;
-  for (i = 0; i <= extra; i++)
-    {
-      if (channel[i].format)
-        bytes_per_pixel += babl_format_get_bytes_per_pixel (channel[i].format);
-    }
-
-  g_debug ("bytes_per_pixel: %d, format: %d",
-           bytes_per_pixel,
-           babl_format_get_bytes_per_pixel (src_format));
 
   for (y = 0; y < image_height; y += tile_height)
     {
