@@ -469,3 +469,15 @@ gimp_size_box_chain_toggled (GimpChainButton *button,
                 "keep-aspect", gimp_chain_button_get_active (button),
                 NULL);
 }
+
+GimpSizeEntry *
+gimp_size_box_get_size_entry (GimpSizeBox *size_box)
+{
+  GimpSizeBoxPrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_SIZE_BOX (size_box), NULL);
+
+  priv = GIMP_SIZE_BOX_GET_PRIVATE (size_box);
+
+  return priv->size_entry;
+}

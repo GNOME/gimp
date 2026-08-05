@@ -53,4 +53,6 @@ struct _GimpSizeBoxClass
 };
 
 
-GType   gimp_size_box_get_type (void);
+GType           gimp_size_box_get_type       (void);
+
+GimpSizeEntry * gimp_size_box_get_size_entry (GimpSizeBox *size_box);
