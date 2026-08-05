@@ -71,6 +71,8 @@ void         gimp_savable_load_store_value        (GimpLoadState            *sta
 
 gboolean     gimp_savable_load_get_values         (GimpLoadState            *state,
                                                    ...) G_GNUC_NULL_TERMINATED;
+GValue     * gimp_savable_load_get_gvalue         (GimpLoadState            *state,
+                                                   const gchar              *value_name);
 gboolean     gimp_savable_load_get_parent_values  (GimpLoadState            *state,
                                                    ...) G_GNUC_NULL_TERMINATED;
 void         gimp_savable_load_bubble_up          (GimpLoadState            *state,

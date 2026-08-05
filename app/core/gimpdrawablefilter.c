@@ -60,6 +60,7 @@
 #include "gimplist.h"
 #include "gimpprogress.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 
 #include "gimp-intl.h"
 
@@ -144,6 +145,7 @@ static void       gimp_drawable_filter_finalize              (GObject           
 
 static void       gimp_drawable_filter_save                  (GimpSavable          *savable,
                                                               GimpSaveState        *state);
+static void       gimp_drawable_filter_load                  (GimpLoadState        *state);
 
 static void       gimp_drawable_filter_sync_active           (GimpDrawableFilter   *filter);
 static void       gimp_drawable_filter_sync_clip             (GimpDrawableFilter   *filter,
@@ -189,6 +191,42 @@ static void       gimp_drawable_filter_reorder               (GimpFilterStack   
                                                               gint                  old_index,
                                                               gint                  new_index,
                                                               GimpDrawableFilter   *filter);
+
+static gboolean   gimp_drawable_filter_enter                 (GimpLoadState        *state,
+                                                              const gchar         **attribute_names,
+                                                              const gchar         **attribute_values,
+                                                              gpointer              user_data,
+                                                              GError              **error);
+static gboolean   gimp_drawable_filter_exit                  (GimpLoadState        *state,
+                                                              const gchar          *text,
+                                                              gsize                 len,
+                                                              gpointer              user_data,
+                                                              GError              **error);
+static gboolean   gimp_drawable_filter_enter_operation       (GimpLoadState        *state,
+                                                              const gchar         **attribute_names,
+                                                              const gchar         **attribute_values,
+                                                              gpointer              user_data,
+                                                              GError              **error);
+static gboolean   gimp_drawable_filter_exit_operation        (GimpLoadState        *state,
+                                                              const gchar          *text,
+                                                              gsize                 len,
+                                                              gpointer              user_data,
+                                                              GError              **error);
+static gboolean   gimp_drawable_filter_enter_mask            (GimpLoadState        *state,
+                                                              const gchar         **attribute_names,
+                                                              const gchar         **attribute_values,
+                                                              gpointer              user_data,
+                                                              GError              **error);
+static gboolean   gimp_drawable_filter_enter_argument        (GimpLoadState        *state,
+                                                              const gchar         **attribute_names,
+                                                              const gchar         **attribute_values,
+                                                              gpointer              user_data,
+                                                              GError              **error);
+static gboolean   gimp_drawable_filter_exit_argument         (GimpLoadState        *state,
+                                                              const gchar          *text,
+                                                              gsize                 len,
+                                                              gpointer              user_data,
+                                                              GError              **error);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawableFilter, gimp_drawable_filter, GIMP_TYPE_FILTER,
@@ -258,6 +296,7 @@ static void
 gimp_savable_iface_init (GimpSavableInterface *iface)
 {
   iface->save = gimp_drawable_filter_save;
+  iface->load = gimp_drawable_filter_load;
 }
 
 static void
@@ -577,6 +616,15 @@ gimp_drawable_filter_save (GimpSavable   *savable,
   g_free (icon);
   g_free (operation);
   g_free (pspecs);
+}
+
+static void
+gimp_drawable_filter_load (GimpLoadState *state)
+{
+  gimp_savable_load_add_handlers (state, "filter",
+                                  gimp_drawable_filter_enter,
+                                  gimp_drawable_filter_exit,
+                                  NULL, NULL);
 }
 
 GimpDrawableFilter *
@@ -2250,4 +2298,344 @@ gimp_drawable_filter_reorder (GimpFilterStack    *stack,
           gimp_drawable_filter_sync_format (GIMP_LIST (stack)->queue->head->data);
         }
     }
+}
+
+static gboolean
+gimp_drawable_filter_enter (GimpLoadState  *state,
+                            const gchar   **attribute_names,
+                            const gchar   **attribute_values,
+                            gpointer        user_data,
+                            GError        **error)
+{
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "name") == 0)
+        {
+          gimp_savable_load_store_from_string (state,
+                                               "name", "%s", *attribute_values,
+                                               NULL);
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  gimp_savable_load_add_simple_handler (state, "icon", "%s",
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE, NULL);
+  gimp_savable_load_add_handlers (state, "operation",
+                                  gimp_drawable_filter_enter_operation,
+                                  gimp_drawable_filter_exit_operation,
+                                  NULL, NULL);
+  gimp_savable_load_add_handlers (state, "mask",
+                                  gimp_drawable_filter_enter_mask,
+                                  NULL, NULL, NULL);
+  gimp_savable_load_add_simple_handler (state, "visible", "%b",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "opacity", "%f",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "mode", "%[GimpLayerMode]",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "blend-space", "%[GimpLayerColorSpace]",
+                                        NULL, NULL, NULL, FALSE, FALSE,
+                                        "auto", "%b", NULL);
+  gimp_savable_load_add_simple_handler (state, "composite-space", "%[GimpLayerColorSpace]",
+                                        NULL, NULL, NULL, FALSE, FALSE,
+                                        "auto", "%b", NULL);
+  gimp_savable_load_add_simple_handler (state, "composite-mode", "%[GimpLayerCompositeMode]",
+                                        NULL, NULL, NULL, FALSE, FALSE,
+                                        "auto", "%b", NULL);
+  gimp_savable_load_add_simple_handler (state, "clip", "%b",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "region", "%[GimpFilterRegion]",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_drawable_filter_exit (GimpLoadState  *state,
+                           const gchar    *text,
+                           gsize           len,
+                           gpointer        user_data,
+                           GError        **error)
+{
+  GimpDrawableFilter     *filter;
+  GeglNode               *operation = NULL;
+  const gchar            *name      = NULL;
+  const gchar            *icon      = NULL;
+  GimpChannel            *mask      = NULL;
+  GimpLayerMode           mode;
+  GimpLayerColorSpace     blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
+  GimpLayerColorSpace     composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+  GimpLayerCompositeMode  composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
+  gdouble                 opacity = 1.0;
+  gboolean                visible = TRUE;
+  gboolean                clip    = TRUE;
+  GimpFilterRegion        region  = GIMP_FILTER_REGION_SELECTION;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (state->item), FALSE);
+
+  if (! gimp_savable_load_get_values (state,
+                                      "operation", &operation,
+                                      NULL))
+    return TRUE;
+
+  GIMP_TYPE_FILTER_REGION;
+  gimp_savable_load_get_values (state,
+                                "name",    &name,
+                                "icon",    &icon,
+                                "visible", &visible,
+                                "opacity", &opacity,
+                                "clip",    &clip,
+                                "region",  &region,
+                                "mask",    &mask,
+                                NULL);
+  filter = gimp_drawable_filter_new (GIMP_DRAWABLE (state->item),
+                                     NULL, operation, icon);
+
+  gimp_drawable_filter_set_opacity (filter, opacity);
+  gimp_filter_set_active (GIMP_FILTER (filter), visible);
+  gimp_drawable_filter_set_clip (filter, clip);
+  gimp_drawable_filter_set_region (filter, region);
+
+  if (gimp_savable_load_get_values (state,
+                                    "mode",            &mode,
+                                    "blend-space",     &blend_space,
+                                    "composite-space", &composite_space,
+                                    "composite-mode",  &composite_mode,
+                                    NULL))
+    gimp_drawable_filter_set_mode (filter, mode, blend_space,
+                                   composite_space, composite_mode);
+  else
+    g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                 "%s: blend and composite information missing.",
+                 G_STRFUNC);
+
+  g_object_set (filter, "mask", mask, NULL);
+  gimp_drawable_filter_apply_with_mask (filter, mask, NULL);
+  gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+  gimp_drawable_filter_layer_mask_freeze (filter);
+
+  g_object_unref (filter);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_drawable_filter_enter_operation (GimpLoadState  *state,
+                                      const gchar   **attribute_names,
+                                      const gchar   **attribute_values,
+                                      gpointer        user_data,
+                                      GError        **error)
+{
+  GeglNode    *operation;
+  const gchar *name    = NULL;
+  const gchar *version = NULL;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "name") == 0)
+        {
+          name = *attribute_values;
+        }
+      else if (g_strcmp0 (*attribute_names, "version") == 0)
+        {
+          version = *attribute_values;
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  if (name == NULL)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: GEGL operation name is missing.",
+                   G_STRFUNC);
+    }
+  else if (! gimp_gegl_op_nde_allowed (name, error))
+    {
+      g_prefix_error (error,
+                      "%s: a filter was discarded: ",
+                      G_STRFUNC);
+    }
+  else if (version &&
+           g_strcmp0 (gegl_operation_get_op_version (name), version) != 0)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: version '%s' of filter '%s' is unsupported. "
+                   "The filter was discarded.\n"
+                   "It either means that you are using an old version of the filter or "
+                   "that it was updated without proper version management. "
+                   "In the latter case, you should report the issue to the filter's developers.",
+                    G_STRFUNC, version, name);
+    }
+  else
+    {
+      operation = gegl_node_new ();
+      gegl_node_set (operation, "operation", name, NULL);
+      gimp_savable_load_store_value (state, "operation", operation, g_object_unref);
+
+      gimp_savable_load_add_handlers (state, "argument",
+                                      gimp_drawable_filter_enter_argument,
+                                      gimp_drawable_filter_exit_argument,
+                                      NULL, NULL);
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_drawable_filter_exit_operation (GimpLoadState  *state,
+                                     const gchar    *text,
+                                     gsize           len,
+                                     gpointer        user_data,
+                                     GError        **error)
+{
+  gimp_savable_load_bubble_up (state, "operation");
+
+  return TRUE;
+}
+
+static gboolean
+gimp_drawable_filter_enter_mask (GimpLoadState  *state,
+                                 const gchar   **attribute_names,
+                                 const gchar   **attribute_values,
+                                 gpointer        user_data,
+                                 GError        **error)
+{
+  /* TODO: set state->item to filter (so probably rename to state->object).
+   * Or rather make it a list/queue to pop/push?
+   */
+  gimp_savable_load (GIMP_TYPE_CHANNEL, state);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_drawable_filter_enter_argument (GimpLoadState  *state,
+                                     const gchar   **attribute_names,
+                                     const gchar   **attribute_values,
+                                     gpointer        user_data,
+                                     GError        **error)
+{
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "name") == 0)
+        gimp_savable_load_store_from_string (state,
+                                             "name", "%s", *attribute_values,
+                                             NULL);
+      else if (g_strcmp0 (*attribute_names, "type") == 0)
+        gimp_savable_load_store_from_string (state,
+                                             "type", "%t", *attribute_values,
+                                             NULL);
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_drawable_filter_exit_argument (GimpLoadState  *state,
+                                    const gchar    *text,
+                                    gsize           len,
+                                    gpointer        user_data,
+                                    GError        **error)
+{
+  const gchar *name     = NULL;
+  GType        arg_type = G_TYPE_NONE;
+  GParamSpec  *pspec;
+  GeglNode    *operation;
+  const gchar *op_name;
+
+  gimp_savable_load_get_parent_values (state, "operation", &operation, NULL);
+  g_return_val_if_fail (GEGL_IS_NODE (operation), FALSE);
+
+  op_name = gegl_node_get_operation (operation);
+
+  gimp_savable_load_get_values (state,
+                                "name", &name,
+                                "type", &arg_type,
+                                NULL);
+
+  if (name == NULL)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                   "%s: skipping unnamed argument.",
+                   G_STRFUNC);
+    }
+  else if (! (pspec = gegl_node_find_property (operation, name)))
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                   "%s: version %s of filter \"%s\" does not "
+                   "have the %s property. The property was ignored and "
+                   "the filter may not render properly.\n"
+                   "This should not happen. "
+                   "You should report the issue to the filter's developers.",
+                   G_STRFUNC, gegl_operation_get_op_version (op_name),
+                   op_name, name);
+    }
+  else if (arg_type == G_TYPE_NONE ||
+           ! g_type_is_a (arg_type, pspec->value_type))
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                   "%s: skipping argument \"%s\" of filter \"%s\" with invalid type.",
+                   G_STRFUNC, name, op_name);
+    }
+  else
+    {
+      GValue *value  = NULL;
+      gchar  *format = NULL;
+
+      if (arg_type == G_TYPE_STRING)
+        format = g_strdup ("%s");
+      else if (arg_type == G_TYPE_INT)
+        format = g_strdup ("%d");
+      else if (arg_type == G_TYPE_LONG)
+        format = g_strdup ("%ld");
+      else if (arg_type == G_TYPE_UINT)
+        format = g_strdup ("%u");
+      else if (arg_type == G_TYPE_ULONG)
+        format = g_strdup ("%lu");
+      else if (arg_type == G_TYPE_DOUBLE)
+        format = g_strdup ("%f");
+      else if (arg_type == G_TYPE_BOOLEAN)
+        format = g_strdup ("%b");
+      else if (arg_type == G_TYPE_GTYPE)
+        format = g_strdup ("%t");
+      else if (g_type_is_a (arg_type, G_TYPE_ENUM))
+        format = g_strdup_printf ("%%[%s]", g_type_name (arg_type));
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                     "%s: unsupported GValue type: %s", G_STRFUNC,
+                     g_type_name (pspec->value_type));
+
+      if (format)
+        {
+          gimp_savable_load_store_from_string (state, "arg", format, text, NULL);
+          value = gimp_savable_load_get_gvalue (state, "arg");
+          gegl_node_set_property (operation, name, value);
+        }
+    }
+
+  return TRUE;
 }

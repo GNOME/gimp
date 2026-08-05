@@ -113,7 +113,7 @@ static void     gimp_wlbr_load_text             (GMarkupParseContext  *context,
                                                  GError              **error);
 
 
-static GValue * gimp_savable_load_get_gvalue    (GimpLoadState        *state,
+static GValue * gimp_savable_load_get_gvalue_in (GimpLoadState        *state,
                                                  GimpLoadContext      *context,
                                                  const gchar          *element_name);
 static gboolean gimp_savable_load_get_all       (GimpLoadState        *state,
@@ -415,6 +415,15 @@ gimp_savable_load_get_values (GimpLoadState *state,
   va_end (args);
 
   return success;
+}
+
+GValue *
+gimp_savable_load_get_gvalue (GimpLoadState *state,
+                              const gchar   *value_name)
+{
+  GimpLoadContext *context = g_queue_peek_head (state->contexts);
+
+  return gimp_savable_load_get_gvalue_in (state, context, value_name);
 }
 
 gboolean
@@ -1209,9 +1218,9 @@ gimp_wlbr_load_text (GMarkupParseContext *context,
 }
 
 static GValue *
-gimp_savable_load_get_gvalue (GimpLoadState   *state,
-                              GimpLoadContext *context,
-                              const gchar     *element_name)
+gimp_savable_load_get_gvalue_in (GimpLoadState   *state,
+                                 GimpLoadContext *context,
+                                 const gchar     *element_name)
 {
   GHashTable    *values = context->values;
   GValue        *gvalue = NULL;
@@ -1239,7 +1248,7 @@ gimp_savable_load_get_all (GimpLoadState   *state,
     {
       GValue *gvalue;
 
-      gvalue = gimp_savable_load_get_gvalue (state, context, key);
+      gvalue = gimp_savable_load_get_gvalue_in (state, context, key);
       if (! gvalue)
         {
           /* Any failed value lookup triggers a failure, even if we may
@@ -1893,7 +1902,7 @@ gimp_savable_load_exit_config (GimpLoadState  *state,
               if (! (pspec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
                 continue;
 
-              gvalue = gimp_savable_load_get_gvalue (state, context, pspec->name);
+              gvalue = gimp_savable_load_get_gvalue_in (state, context, pspec->name);
               if (gvalue)
                 {
                   names[index] = pspec->name;

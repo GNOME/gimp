@@ -1452,8 +1452,7 @@ gimp_drawable_enter_filters (GimpLoadState  *state,
                              gpointer        user_data,
                              GError        **error)
 {
-  /* TODO */
-  /*gimp_savable_load (GIMP_TYPE_DRAWABLE_FILTER, state);*/
+  gimp_savable_load (GIMP_TYPE_DRAWABLE_FILTER, state);
 
   return TRUE;
 }
