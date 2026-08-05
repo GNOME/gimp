@@ -2074,12 +2074,17 @@ load_contiguous (TIFF         *tif,
   if (TIFFIsTiled (tif))
     {
       gsize allocation;
+      gint  n_components = babl_format_get_n_components (src_format);
+      gint  format_bpc   = babl_format_get_bytes_per_pixel (src_format);
 
       TIFFGetField (tif, TIFFTAG_TILEWIDTH,  &tile_width);
       TIFFGetField (tif, TIFFTAG_TILELENGTH, &tile_height);
 
-      allocation = TIFFTileSize (tif);
-      if (! g_size_checked_mul (&allocation, allocation, bytes_per_pixel) ||
+      /* Manually allocate tile size instead of using TIFFTileSize (), since
+       * the file might not match the format set in GIMP */
+      if (! g_size_checked_mul (&allocation, tile_width, tile_height)  ||
+          ! g_size_checked_mul (&allocation, allocation, n_components) ||
+          ! g_size_checked_mul (&allocation, allocation, format_bpc)   ||
           ! (buffer = g_try_malloc0 (allocation)))
         {
           g_message (_("There was not enough memory to complete the "
