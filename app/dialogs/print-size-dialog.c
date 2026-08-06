@@ -276,6 +276,10 @@ print_size_dialog_new (GimpImage              *image,
 
   private->chain = GIMP_CHAIN_BUTTON (chain);
 
+  /* Set focus to size entry for immediate editing */
+  gimp_size_entry_set_activates_default (private->size_entry, TRUE);
+  gimp_size_entry_grab_focus (private->size_entry);
+
   g_signal_connect (private->size_entry, "value-changed",
                     G_CALLBACK (print_size_dialog_size_changed),
                     private);
