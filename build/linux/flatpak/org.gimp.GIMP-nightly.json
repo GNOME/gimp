@@ -85,8 +85,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.6.tar.xz",
-                    "sha256": "606c28aaae7b1f3ef5c8eabe5e7dffd7c5a1c866d25b7671fb847fe287a72b8b",
+                    "url": "https://download.gnome.org/sources/gexiv2/0.14/gexiv2-0.14.7.tar.xz",
+                    "sha256": "373b67b24f1a7b5c0606aaf0ea00b352f9511751e21deba0bac650bd5159c93d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1626,
