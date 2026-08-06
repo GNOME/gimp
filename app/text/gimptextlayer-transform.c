@@ -86,9 +86,14 @@ gimp_text_layer_scale (GimpItem               *item,
       /*  the glyphs are rendered through the matrix, so the layer lands at
        *  the requested origin even if its bounding box rounds differently
        *  from the requested size.
+       *
+       *  This must be undoable: the stored matrix and the item offset are
+       *  restored by separate undo steps, and gimp_item_scale() has already
+       *  opened a group to hold both.
        */
       gimp_item_get_offset (item, &ox, &oy);
-      gimp_item_translate (item, new_offset_x - ox, new_offset_y - oy, FALSE);
+      gimp_item_translate (item, new_offset_x - ox, new_offset_y - oy,
+                           gimp_item_is_attached (item));
 
       if (mask)
         gimp_item_scale (GIMP_ITEM (mask), new_width, new_height,
