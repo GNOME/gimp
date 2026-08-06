@@ -147,6 +147,9 @@ static void       gimp_drawable_filter_save                  (GimpSavable       
                                                               GimpSaveState        *state);
 static void       gimp_drawable_filter_load                  (GimpLoadState        *state);
 
+static void       gimp_drawable_filter_set_operation         (GimpDrawableFilter   *filter,
+                                                              GeglNode             *operation);
+
 static void       gimp_drawable_filter_sync_active           (GimpDrawableFilter   *filter);
 static void       gimp_drawable_filter_sync_clip             (GimpDrawableFilter   *filter,
                                                               gboolean              sync_region);
@@ -634,90 +637,19 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
                           const gchar  *icon_name)
 {
   GimpDrawableFilter *filter;
-  GimpImage          *image;
-  GeglNode           *node;
-  GeglOperation      *op          = NULL;
-  GeglOperationClass *opclass     = NULL;
-  gboolean            custom_name = TRUE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GEGL_IS_NODE (operation), NULL);
   g_return_val_if_fail (gegl_node_has_pad (operation, "output"), NULL);
 
-  op = gegl_node_get_gegl_operation (operation);
-  if (op != NULL)
-    opclass = GEGL_OPERATION_GET_CLASS (op);
-
-  if (undo_desc == NULL || strlen (undo_desc) == 0)
-    {
-      undo_desc   = gegl_operation_class_get_key (opclass, "title");
-      custom_name = FALSE;
-    }
-
-  if (opclass &&
-      ! g_strcmp0 (undo_desc, gegl_operation_class_get_key (opclass, "title")))
-    custom_name = FALSE;
-
   filter = g_object_new (GIMP_TYPE_DRAWABLE_FILTER,
                          "name",        undo_desc,
                          "icon-name",   icon_name,
-                         "custom-name", custom_name,
                          "drawable",    drawable,
                          "mask",        NULL,
                          NULL);
 
-  filter->operation = g_object_ref (operation);
-
-  image      = gimp_item_get_image (GIMP_ITEM (drawable));
-  filter->ID = gimp_id_table_insert (image->gimp->drawable_filter_table, filter);
-  g_object_notify_by_pspec (G_OBJECT (filter), drawable_filter_props[PROP_ID]);
-
-  node = gimp_filter_get_node (GIMP_FILTER (filter));
-
-  if (! gegl_node_get_parent (operation))
-    {
-      gegl_node_add_child (node, operation);
-      gimp_gegl_node_set_underlying_operation (node, operation);
-    }
-
-  filter->applicator = gimp_applicator_new (node);
-
-  gimp_filter_set_applicator (GIMP_FILTER (filter), filter->applicator);
-
-  gimp_applicator_set_cache (filter->applicator, TRUE);
-
-  filter->has_input = gegl_node_has_pad (filter->operation, "input");
-
-  if (filter->has_input)
-    {
-      GeglNode *input;
-
-      input = gegl_node_get_input_proxy (node, "input");
-
-      filter->translate = gegl_node_new_child (node,
-                                               "operation", "gegl:translate",
-                                               NULL);
-
-      filter->crop_before = gegl_node_new_child (node,
-                                                 "operation", "gegl:crop",
-                                                 NULL);
-
-      gegl_node_link_many (input,
-                           filter->translate,
-                           filter->crop_before,
-                           filter->operation,
-                           NULL);
-    }
-
-  filter->crop_after = gegl_node_new_child (node,
-                                            "operation", "gegl:crop",
-                                            NULL);
-
-  gegl_node_link_many (filter->operation,
-                       filter->crop_after,
-                       NULL);
-
-  gegl_node_connect (filter->crop_after, "output", node, "aux");
+  gimp_drawable_filter_set_operation (filter, operation);
 
   return filter;
 }
@@ -1640,6 +1572,108 @@ gimp_drawable_filter_refresh_crop (GimpDrawableFilter *filter,
 
 /*  private functions  */
 
+/* All generic code should use gimp_drawable_filter_new() only.
+ * This separate function exists solely for the purpose of WLBR file
+ * loading as we are creating a filter in pieces.
+ */
+static void
+gimp_drawable_filter_set_operation (GimpDrawableFilter *filter,
+                                    GeglNode           *operation)
+{
+  GimpImage     *image;
+  GimpDrawable  *drawable;
+  GeglNode      *node;
+  GeglOperation *op;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+  g_return_if_fail (filter->operation == NULL);
+  g_return_if_fail (GEGL_IS_NODE (operation));
+  g_return_if_fail (gegl_node_has_pad (operation, "output"));
+
+  op = gegl_node_get_gegl_operation (operation);
+  if (op != NULL)
+    {
+      GeglOperationClass *opclass;
+      const gchar        *opname;
+      gchar              *name = NULL;
+
+      opclass = GEGL_OPERATION_GET_CLASS (op);
+      opname  = gegl_operation_class_get_key (opclass, "title");
+
+      g_object_get (filter, "name", &name, NULL);
+      if (name == NULL || strlen (name) == 0)
+        g_object_set (filter,
+                      "name",        opname,
+                      "custom-name", FALSE,
+                      NULL);
+      else if (g_strcmp0 (name, opname) == 0)
+        g_object_set (filter,
+                      "custom-name", FALSE,
+                      NULL);
+      else
+        g_object_set (filter,
+                      "custom-name", TRUE,
+                      NULL);
+
+      g_free (name);
+    }
+
+  filter->operation = g_object_ref (operation);
+
+  drawable   = gimp_drawable_filter_get_drawable (filter);
+  image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  filter->ID = gimp_id_table_insert (image->gimp->drawable_filter_table, filter);
+  g_object_notify_by_pspec (G_OBJECT (filter), drawable_filter_props[PROP_ID]);
+
+  node = gimp_filter_get_node (GIMP_FILTER (filter));
+
+  if (! gegl_node_get_parent (operation))
+    {
+      gegl_node_add_child (node, operation);
+      gimp_gegl_node_set_underlying_operation (node, operation);
+    }
+
+  if (! filter->applicator)
+    filter->applicator = gimp_applicator_new (node);
+
+  gimp_filter_set_applicator (GIMP_FILTER (filter), filter->applicator);
+
+  gimp_applicator_set_cache (filter->applicator, TRUE);
+
+  filter->has_input = gegl_node_has_pad (filter->operation, "input");
+
+  if (filter->has_input)
+    {
+      GeglNode *input;
+
+      input = gegl_node_get_input_proxy (node, "input");
+
+      filter->translate = gegl_node_new_child (node,
+                                               "operation", "gegl:translate",
+                                               NULL);
+
+      filter->crop_before = gegl_node_new_child (node,
+                                                 "operation", "gegl:crop",
+                                                 NULL);
+
+      gegl_node_link_many (input,
+                           filter->translate,
+                           filter->crop_before,
+                           filter->operation,
+                           NULL);
+    }
+
+  filter->crop_after = gegl_node_new_child (node,
+                                            "operation", "gegl:crop",
+                                            NULL);
+
+  gegl_node_link_many (filter->operation,
+                       filter->crop_after,
+                       NULL);
+
+  gegl_node_connect (filter->crop_after, "output", node, "aux");
+}
+
 static void
 gimp_drawable_filter_sync_active (GimpDrawableFilter *filter)
 {
@@ -2307,24 +2341,33 @@ gimp_drawable_filter_enter (GimpLoadState  *state,
                             gpointer        user_data,
                             GError        **error)
 {
+  GimpDrawableFilter *filter;
+  GimpDrawable       *drawable;
+  const gchar        *name = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (gimp_savable_load_peek_active_object (state)), FALSE);
+
   while (*attribute_names)
     {
       if (g_strcmp0 (*attribute_names, "name") == 0)
-        {
-          gimp_savable_load_store_from_string (state,
-                                               "name", "%s", *attribute_values,
-                                               NULL);
-        }
+        name = *attribute_values;
       else
-        {
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                       "%s: unexpected attribute: '%s'",
-                       G_STRFUNC, *attribute_names);
-        }
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
 
       attribute_names++;
       attribute_values++;
     }
+
+  drawable = GIMP_DRAWABLE (gimp_savable_load_peek_active_object (state));
+  filter   = g_object_new (GIMP_TYPE_DRAWABLE_FILTER,
+                           "name",     name,
+                           "drawable", drawable,
+                           "mask",     NULL,
+                           NULL);
+  filter->applicator = gimp_applicator_new (gimp_filter_get_node (GIMP_FILTER (filter)));
+  gimp_savable_load_push_active_object (state, G_OBJECT (filter));
 
   gimp_savable_load_add_simple_handler (state, "icon", "%s",
                                         NULL, NULL, NULL,
@@ -2353,6 +2396,7 @@ gimp_drawable_filter_enter (GimpLoadState  *state,
                                         "auto", "%b", NULL);
   gimp_savable_load_add_simple_handler (state, "clip", "%b",
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
+  GIMP_TYPE_FILTER_REGION;
   gimp_savable_load_add_simple_handler (state, "region", "%[GimpFilterRegion]",
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
 
@@ -2367,39 +2411,41 @@ gimp_drawable_filter_exit (GimpLoadState  *state,
                            GError        **error)
 {
   GimpDrawableFilter     *filter;
-  GeglNode               *operation = NULL;
-  const gchar            *name      = NULL;
-  const gchar            *icon      = NULL;
-  GimpChannel            *mask      = NULL;
+  GeglNode               *operation       = NULL;
+  const gchar            *icon            = NULL;
   GimpLayerMode           mode;
   GimpLayerColorSpace     blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
   GimpLayerColorSpace     composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
   GimpLayerCompositeMode  composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
-  gdouble                 opacity = 1.0;
-  gboolean                visible = TRUE;
-  gboolean                clip    = TRUE;
-  GimpFilterRegion        region  = GIMP_FILTER_REGION_SELECTION;
+  gdouble                 opacity         = 1.0;
+  gboolean                visible         = TRUE;
+  gboolean                clip            = TRUE;
+  GimpFilterRegion        region          = GIMP_FILTER_REGION_SELECTION;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (state->item), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  filter = GIMP_DRAWABLE_FILTER (gimp_savable_load_pop_active_object (state));
 
   if (! gimp_savable_load_get_values (state,
                                       "operation", &operation,
                                       NULL))
-    return TRUE;
+    {
+      g_object_unref (filter);
+      return TRUE;
+    }
+
+  gimp_drawable_filter_set_operation (filter, operation);
 
   GIMP_TYPE_FILTER_REGION;
   gimp_savable_load_get_values (state,
-                                "name",    &name,
                                 "icon",    &icon,
                                 "visible", &visible,
                                 "opacity", &opacity,
                                 "clip",    &clip,
                                 "region",  &region,
-                                "mask",    &mask,
                                 NULL);
-  filter = gimp_drawable_filter_new (GIMP_DRAWABLE (state->item),
-                                     NULL, operation, icon);
 
+  gimp_viewable_set_icon_name (GIMP_VIEWABLE (filter), icon);
   gimp_drawable_filter_set_opacity (filter, opacity);
   gimp_filter_set_active (GIMP_FILTER (filter), visible);
   gimp_drawable_filter_set_clip (filter, clip);
@@ -2418,8 +2464,7 @@ gimp_drawable_filter_exit (GimpLoadState  *state,
                  "%s: blend and composite information missing.",
                  G_STRFUNC);
 
-  g_object_set (filter, "mask", mask, NULL);
-  gimp_drawable_filter_apply_with_mask (filter, mask, NULL);
+  gimp_drawable_filter_apply_with_mask (filter, GIMP_CHANNEL (filter->mask), NULL);
   gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
   gimp_drawable_filter_layer_mask_freeze (filter);
 

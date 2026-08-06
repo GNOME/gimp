@@ -536,8 +536,6 @@ gimp_item_savable_save (GimpSavable   *savable,
 static void
 gimp_item_savable_load (GimpLoadState *state)
 {
-  state->item = NULL;
-
   gimp_savable_load_add_simple_handler (state, "name", "%s",
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
   gimp_savable_load_add_simple_handler (state, "selected", NULL,

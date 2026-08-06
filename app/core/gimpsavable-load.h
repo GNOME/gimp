@@ -60,7 +60,13 @@ void         gimp_savable_config_load            (GType                    confi
 void         gimp_savable_parasite_load          (GimpLoadState           *state,
                                                   GObject                 *image_or_item);
 
+
 /* Functions to be used from inside GimpSavable's load() implementation */
+
+void         gimp_savable_load_push_active_object (GimpLoadState            *state,
+                                                   GObject                  *object);
+GObject    * gimp_savable_load_pop_active_object  (GimpLoadState            *state);
+GObject    * gimp_savable_load_peek_active_object (GimpLoadState            *state);
 
 void         gimp_savable_load_store_from_string  (GimpLoadState            *state,
                                                    ...) G_GNUC_NULL_TERMINATED;

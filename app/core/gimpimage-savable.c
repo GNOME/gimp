@@ -716,7 +716,7 @@ gimp_image_enter_paths (GimpLoadState  *state,
                         gpointer        user_data,
                         GError        **error)
 {
-  state->item = NULL;
+  g_return_val_if_fail (gimp_savable_load_peek_active_object (state) == NULL, FALSE);
   gimp_savable_load (GIMP_TYPE_PATH, state);
 
   return TRUE;
@@ -729,7 +729,7 @@ gimp_image_enter_channels (GimpLoadState  *state,
                            gpointer        user_data,
                            GError        **error)
 {
-  state->item = NULL;
+  g_return_val_if_fail (gimp_savable_load_peek_active_object (state) == NULL, FALSE);
   gimp_savable_load (GIMP_TYPE_CHANNEL, state);
 
   return TRUE;

@@ -368,6 +368,25 @@ gimp_savable_parasite_load (GimpLoadState *state,
                                         NULL);
 }
 
+void
+gimp_savable_load_push_active_object (GimpLoadState *state,
+                                      GObject       *object)
+{
+  g_queue_push_head (state->objects, object);
+}
+
+GObject *
+gimp_savable_load_pop_active_object (GimpLoadState *state)
+{
+  return g_queue_pop_head (state->objects);
+}
+
+GObject *
+gimp_savable_load_peek_active_object (GimpLoadState *state)
+{
+  return g_queue_peek_head (state->objects);
+}
+
 /* Load values from their string representations. */
 void
 gimp_savable_load_store_from_string (GimpLoadState *state,
@@ -1032,6 +1051,7 @@ gimp_savable_load_free_state (GimpLoadState *state)
   g_clear_pointer (&state->xml_parser, gimp_xml_parser_free);
   g_queue_free_full (state->contexts,
                      (GDestroyNotify) gimp_savable_load_free_context);
+  g_queue_free (state->objects);
   g_clear_pointer (&state->spaces, g_hash_table_unref);
 }
 
@@ -1161,7 +1181,7 @@ gimp_savable_load_init_state (GimpLoadState *state,
 
   state->gimp       = gimp;
   state->image      = NULL;
-  state->item       = NULL;
+  state->objects    = g_queue_new ();
   state->xml_file   = g_file_get_child (backup_dir, "wlbr-project.xml");
   state->subdir     = backup_dir;
   state->xml_parser = gimp_xml_parser_new (&state->markup_parser, state);

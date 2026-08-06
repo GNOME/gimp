@@ -275,12 +275,13 @@ gimp_bezier_stroke_savable_save (GimpSavable   *savable,
 static void
 gimp_bezier_stroke_savable_load (GimpLoadState *state)
 {
-  g_return_if_fail (GIMP_IS_PATH (state->item));
+  g_return_if_fail (GIMP_IS_PATH (gimp_savable_load_peek_active_object (state)));
 
   gimp_savable_load_add_handlers (state, "bezier-stroke",
                                   gimp_bezier_stroke_enter,
                                   gimp_bezier_stroke_exit,
-                                  state->item, NULL);
+                                  gimp_savable_load_peek_active_object (state),
+                                  NULL);
 }
 
 /* Bezier specific functions */

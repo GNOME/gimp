@@ -1441,9 +1441,9 @@ gimp_path_exit (GimpLoadState  *state,
   gboolean      lock_position   = FALSE;
   gboolean      lock_visibility = FALSE;
 
-  if (GIMP_IS_PATH (state->item))
+  if (GIMP_IS_PATH (gimp_savable_load_peek_active_object (state)))
     {
-      path = GIMP_PATH (state->item);
+      path = GIMP_PATH (gimp_savable_load_pop_active_object (state));
       gimp_image_add_path (state->image, path, NULL,
                            gimp_container_get_n_children (gimp_image_get_paths (state->image)),
                            FALSE);
@@ -1469,8 +1469,6 @@ gimp_path_exit (GimpLoadState  *state,
       gimp_item_set_lock_visibility (GIMP_ITEM (path), lock_visibility, FALSE);
     }
 
-  state->item = NULL;
-
   return TRUE;
 }
 
@@ -1488,7 +1486,7 @@ gimp_path_enter_strokes (GimpLoadState  *state,
       GimpPath *path = NULL;
 
       path = gimp_path_new (state->image, name);
-      state->item = GIMP_ITEM (path);
+      gimp_savable_load_push_active_object (state, G_OBJECT (path));
       gimp_savable_load (GIMP_TYPE_BEZIER_STROKE, state);
     }
   else
