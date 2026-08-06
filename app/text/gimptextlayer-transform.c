@@ -53,7 +53,55 @@ gimp_text_layer_scale (GimpItem               *item,
                        GimpInterpolationType   interpolation_type,
                        GimpProgress           *progress)
 {
-  /*  TODO  */
+  GimpTextLayer *layer  = GIMP_TEXT_LAYER (item);
+  GimpLayerMask *mask   = gimp_layer_get_mask (GIMP_LAYER (layer));
+  GimpMatrix3    current;
+  GimpMatrix3    scale;
+  gint           width  = gimp_item_get_width  (item);
+  gint           height = gimp_item_get_height (item);
+  gint           ox;
+  gint           oy;
+
+  if ((width <= 0     || height <= 0)     ||
+      (new_width <= 0 || new_height <= 0) ||
+      ! gimp_text_layer_get_transformation (layer, &current))
+    goto destructive;
+
+  gimp_matrix3_identity (&scale);
+  gimp_matrix3_scale (&scale,
+                      (gdouble) new_width  / (gdouble) width,
+                      (gdouble) new_height / (gdouble) height);
+
+  /*  current := scale * current  */
+  gimp_matrix3_mult (&scale, &current);
+
+  if (! gimp_matrix3_is_affine (&current))
+    goto destructive;
+
+  current.coeff[0][2] = 0.0;
+  current.coeff[1][2] = 0.0;
+
+  if (gimp_text_layer_set_transformation (layer, &current))
+    {
+      /*  the glyphs are rendered through the matrix, so the layer lands at
+       *  the requested origin even if its bounding box rounds differently
+       *  from the requested size.
+       */
+      gimp_item_get_offset (item, &ox, &oy);
+      gimp_item_translate (item, new_offset_x - ox, new_offset_y - oy, FALSE);
+
+      if (mask)
+        gimp_item_scale (GIMP_ITEM (mask), new_width, new_height,
+                         new_offset_x, new_offset_y,
+                         interpolation_type, progress);
+      return;
+    }
+
+ destructive:
+  gimp_text_layer_parent_class ()->scale (item,
+                                          new_width, new_height,
+                                          new_offset_x, new_offset_y,
+                                          interpolation_type, progress);
 }
 
 static gboolean
@@ -79,11 +127,10 @@ gimp_text_layer_flip (GimpItem            *item,
                       gboolean             clip_result)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (item);
+  GimpLayerMask *mask  = gimp_layer_get_mask (GIMP_LAYER (layer));
 
   if (gimp_text_layer_transform_flip (layer, flip_type, axis))
     {
-      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
-
       if (mask)
         gimp_item_flip (GIMP_ITEM (mask), context,
                         flip_type, axis, clip_result);
@@ -120,12 +167,11 @@ gimp_text_layer_rotate (GimpItem         *item,
                         gboolean          clip_result)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (item);
+  GimpLayerMask *mask  = gimp_layer_get_mask (GIMP_LAYER (layer));
 
-  if (! gimp_text_layer_transform_rotate (layer,
-                                          rotate_type, center_x, center_y))
+  if (gimp_text_layer_transform_rotate (layer,
+                                        rotate_type, center_x, center_y))
     {
-      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
-
       if (mask)
         gimp_item_rotate (GIMP_ITEM (mask), context,
                           rotate_type, center_x, center_y, clip_result);
@@ -144,11 +190,83 @@ gimp_text_layer_transform (GimpItem               *item,
                            const GimpMatrix3      *matrix,
                            GimpTransformDirection  direction,
                            GimpInterpolationType   interpolation_type,
-                           gboolean                supersample,
                            GimpTransformResize     clip_result,
-                           GimpProgress           *progress)
+                           GimpProgress           *progress,
+                           gboolean                push_undo)
 {
-  /*  TODO  */
+  GimpTextLayer *layer = GIMP_TEXT_LAYER (item);
+  GimpLayerMask *mask  = gimp_layer_get_mask (GIMP_LAYER (layer));
+  GimpMatrix3    local;
+  GimpMatrix3    current;
+  gdouble        cx;
+  gdouble        cy;
+  gint           ox;
+  gint           oy;
+
+  if (gimp_matrix3_is_identity (matrix))
+    return;
+
+  /*  Clipping depends on the intermediate result of each step, which a
+   *  single composed matrix cannot reproduce, so only "adjust" transforms
+   *  can be stored non-destructively.  Same reasoning as
+   *  gimp_link_layer_transform().
+   */
+  if (clip_result != GIMP_TRANSFORM_RESIZE_ADJUST ||
+      ! gimp_text_layer_get_transformation (layer, &current))
+    goto destructive;
+
+  local = *matrix;
+
+  if (direction == GIMP_TRANSFORM_BACKWARD)
+    gimp_matrix3_invert (&local);
+
+  /*  Where the centre of the layer ends up in image space.  This has to be
+   *  sampled before the matrix is stored, because storing it re-renders and
+   *  resizes the layer.
+   */
+  gimp_item_get_offset (item, &ox, &oy);
+  cx = ox + gimp_item_get_width  (item) / 2.0;
+  cy = oy + gimp_item_get_height (item) / 2.0;
+  gimp_matrix3_transform_point (&local, cx, cy, &cx, &cy);
+
+  /*  compose: current := local * current  */
+  gimp_matrix3_mult (&local, &current);
+
+  if (! gimp_matrix3_is_affine (&current))
+    goto destructive;
+
+  /*  The translation column never reaches the renderer --
+   *  gimp_text_layout_get_transform() hardcodes x0/y0 to zero -- so keep it
+   *  out of the stored matrix and honour it by moving the item instead.
+   */
+  current.coeff[0][2] = 0.0;
+  current.coeff[1][2] = 0.0;
+
+  if (gimp_text_layer_set_transformation (layer, &current))
+    {
+      /*  set_transformation() re-rendered synchronously, so the item is
+       *  already at its new size; re-centre it on the transformed centre.
+       */
+      /*  SIGNED_ROUND, not ROUND: a transformed layer routinely lands at a
+       *  negative offset, and ROUND() truncates towards zero there.
+       */
+      gimp_item_get_offset (item, &ox, &oy);
+      gimp_item_translate (item,
+                           SIGNED_ROUND (cx - gimp_item_get_width  (item) / 2.0) - ox,
+                           SIGNED_ROUND (cy - gimp_item_get_height (item) / 2.0) - oy,
+                           push_undo);
+
+      if (mask)
+        gimp_item_transform (GIMP_ITEM (mask), context, matrix, direction,
+                             interpolation_type, clip_result, progress);
+      return;
+    }
+
+ destructive:
+  gimp_text_layer_parent_class ()->transform (item, context,
+                                              matrix, direction,
+                                              interpolation_type, clip_result,
+                                              progress, push_undo);
 }
 
 static GimpItemClass *

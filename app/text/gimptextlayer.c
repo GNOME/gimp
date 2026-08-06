@@ -55,6 +55,7 @@
 
 #include "gimptext.h"
 #include "gimptextlayer.h"
+#include "gimptextlayer-transform.h"
 #include "gimptextlayout.h"
 #include "gimptextlayout-render.h"
 
@@ -179,12 +180,10 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   item_class->duplicate             = gimp_text_layer_duplicate;
   item_class->rename                = gimp_rasterizable_rename;
 
-#if 0
   item_class->scale                 = gimp_text_layer_scale;
   item_class->flip                  = gimp_text_layer_flip;
   item_class->rotate                = gimp_text_layer_rotate;
   item_class->transform             = gimp_text_layer_transform;
-#endif
 
   item_class->rename_desc           = _("Rename Text Layer");
   item_class->translate_desc        = _("Move Text Layer");

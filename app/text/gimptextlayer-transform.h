@@ -44,6 +44,6 @@ void  gimp_text_layer_transform (GimpItem               *item,
                                  const GimpMatrix3      *matrix,
                                  GimpTransformDirection  direction,
                                  GimpInterpolationType   interpolation_type,
-                                 gboolean                supersample,
                                  GimpTransformResize     clip_result,
-                                 GimpProgress           *progress);
+                                 GimpProgress           *progress,
+                                 gboolean                push_undo);
