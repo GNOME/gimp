@@ -41,6 +41,7 @@
 #include "core/gimplist.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimprasterizable.h"
 
 #include "path/gimppath-import.h"
 #include "path/gimpvectorlayer.h"
@@ -556,8 +557,10 @@ edit_clear_cmd_callback (GimpAction *action,
                                _("Clear"));
 
   for (iter = drawables; iter; iter = iter->next)
-    if (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)) &&
-        ! gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
+    if (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data))    &&
+        ! gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL) &&
+        ! (GIMP_IS_RASTERIZABLE (iter->data) &&
+          ! gimp_rasterizable_is_rasterized (iter->data)))
       gimp_drawable_edit_clear (iter->data, action_data_get_context (data));
 
   gimp_image_undo_group_end (image);
