@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -1426,6 +1427,32 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
                                       text->unit);
 
           gimp_config_sync (G_OBJECT (text), G_OBJECT (text_tool->proxy), 0);
+
+          /*  The proxy carries style -- font, size, colour, justification --
+           *  forward from one text layer to the next, and
+           *  gimp_text_tool_create_layer() builds a new layer by duplicating
+           *  it.  The transformation is not style, it is per-layer geometry,
+           *  and gimp_config_sync() above has just copied this layer's matrix
+           *  into the proxy along with everything else.  Left there, every new
+           *  text layer created afterwards would be born carrying the matrix
+           *  of whichever layer was last edited.
+           *
+           *  This is safe here specifically because text_tool->text is still
+           *  NULL at this point -- it is assigned below -- so
+           *  gimp_text_tool_proxy_notify() early-returns and these resets are
+           *  not queued up and written back to the layer being connected.
+           */
+          {
+            GimpMatrix2 identity;
+
+            gimp_matrix2_identity (&identity);
+
+            g_object_set (text_tool->proxy,
+                          "transformation", &identity,
+                          "offset-x",       0.0,
+                          "offset-y",       0.0,
+                          NULL);
+          }
 
           if (text->markup)
             gimp_text_buffer_set_markup (text_tool->buffer, text->markup);
