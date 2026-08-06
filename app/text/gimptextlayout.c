@@ -63,6 +63,8 @@ struct _GimpTextLayout
 static void           gimp_text_layout_finalize   (GObject        *object);
 
 static void           gimp_text_layout_position   (GimpTextLayout *layout);
+static void           gimp_text_layout_transform_extents
+                                                  (GimpTextLayout *layout);
 static void           gimp_text_layout_set_markup (GimpTextLayout *layout,
                                                    GError        **error);
 
@@ -246,6 +248,8 @@ gimp_text_layout_new (GimpText     *text,
 #endif
       break;
     }
+
+  gimp_text_layout_transform_extents (layout);
 
   g_object_unref (context);
 
@@ -836,6 +840,84 @@ gimp_text_layout_position (GimpTextLayout *layout)
 
 #ifdef VERBOSE
   g_printerr ("layout extents: %d x %d @ %d, %d\n",
+              layout->extents.width, layout->extents.height,
+              layout->extents.x, layout->extents.y);
+#endif
+}
+
+#define EXTENTS_EPSILON 1e-6
+
+/*  Grow the extents to the axis-aligned bounding box of the transformed
+ *  layout, and shift the offsets so the transformed content still starts
+ *  at (0, 0) of the layer.
+ *
+ *  This must run after gimp_text_layout_position() and after the
+ *  GIMP_TEXT_BOX_FIXED override, i.e. on the final untransformed box.
+ *
+ *  Note that the matrix used here is text->transformation *without* the
+ *  xres/yres normalization that gimp_text_layout_get_transform() folds in.
+ *  gimp_text_layout_position() already scaled the widths by that factor,
+ *  so the extents are in the space the pure matrix acts on; applying the
+ *  normalization a second time here would squash the box.
+ */
+static void
+gimp_text_layout_transform_extents (GimpTextLayout *layout)
+{
+  cairo_matrix_t matrix;
+  gdouble        cx[4], cy[4];
+  gdouble        x1, y1, x2, y2;
+  gint           i;
+
+  cairo_matrix_init (&matrix,
+                     layout->text->transformation.coeff[0][0],
+                     layout->text->transformation.coeff[1][0],
+                     layout->text->transformation.coeff[0][1],
+                     layout->text->transformation.coeff[1][1],
+                     0.0, 0.0);
+
+  /*  the layout box in the space the matrix acts on: the render path
+   *  translates by extents.x/y before applying the matrix, so the box
+   *  starts at the negated offsets.
+   */
+  cx[0] = - layout->extents.x;
+  cy[0] = - layout->extents.y;
+  cx[1] = cx[0] + layout->extents.width;
+  cy[1] = cy[0];
+  cx[2] = cx[1];
+  cy[2] = cy[0] + layout->extents.height;
+  cx[3] = cx[0];
+  cy[3] = cy[2];
+
+  for (i = 0; i < 4; i++)
+    cairo_matrix_transform_point (&matrix, &cx[i], &cy[i]);
+
+  x1 = x2 = cx[0];
+  y1 = y2 = cy[0];
+
+  for (i = 1; i < 4; i++)
+    {
+      x1 = MIN (x1, cx[i]);
+      x2 = MAX (x2, cx[i]);
+      y1 = MIN (y1, cy[i]);
+      y2 = MAX (y2, cy[i]);
+    }
+
+  /*  Snap before rounding outwards.  A right-angle rotation matrix carries
+   *  a ~1e-17 residue in the cosine, which turns an exact edge at 0 into a
+   *  hair over it and would make ceil() add a stray pixel per axis.
+   */
+  x1 = floor (x1 + EXTENTS_EPSILON);
+  y1 = floor (y1 + EXTENTS_EPSILON);
+  x2 = ceil  (x2 - EXTENTS_EPSILON);
+  y2 = ceil  (y2 - EXTENTS_EPSILON);
+
+  layout->extents.x      = - x1;
+  layout->extents.y      = - y1;
+  layout->extents.width  = MAX (1, x2 - x1);
+  layout->extents.height = MAX (1, y2 - y1);
+
+#ifdef VERBOSE
+  g_printerr ("transformed extents: %d x %d @ %d, %d\n",
               layout->extents.width, layout->extents.height,
               layout->extents.x, layout->extents.y);
 #endif
