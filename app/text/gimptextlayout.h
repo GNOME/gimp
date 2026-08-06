@@ -63,6 +63,11 @@ PangoLayout    * gimp_text_layout_get_pango_layout     (GimpTextLayout *layout);
 void             gimp_text_layout_get_transform        (GimpTextLayout *layout,
                                                         cairo_matrix_t *matrix);
 
+gboolean         gimp_text_layout_is_transformed       (GimpTextLayout *layout);
+void             gimp_text_layout_transform_quad       (GimpTextLayout *layout,
+                                                        const PangoRectangle
+                                                                       *rect,
+                                                        GimpVector2    *corners);
 void             gimp_text_layout_transform_rect       (GimpTextLayout *layout,
                                                         PangoRectangle *rect);
 void             gimp_text_layout_transform_point      (GimpTextLayout *layout,

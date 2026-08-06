@@ -965,13 +965,31 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       GimpCanvasItem   *item;
       PangoRectangle    cursor_rect;
+      GimpVector2       corners[4];
       gint              off_x, off_y;
       gboolean          overwrite;
       GimpTextDirection direction;
 
-      gimp_text_tool_editor_get_cursor_rect (text_tool,
-                                             text_tool->overwrite_mode,
-                                             &cursor_rect);
+      if (gimp_text_tool_editor_get_cursor_rect (text_tool,
+                                                 text_tool->overwrite_mode,
+                                                 &cursor_rect, corners))
+        {
+          gint c;
+
+          gimp_item_get_offset (GIMP_ITEM (text_tool->layer), &off_x, &off_y);
+
+          for (c = 0; c < 4; c++)
+            {
+              corners[c].x += off_x;
+              corners[c].y += off_y;
+            }
+
+          item = gimp_draw_tool_add_lines (draw_tool, corners, 4, NULL, FALSE);
+          gimp_canvas_item_set_highlight (item, TRUE);
+
+          gimp_text_tool_editor_update_im_cursor (text_tool);
+          return;
+        }
 
       gimp_item_get_offset (GIMP_ITEM (text_tool->layer), &off_x, &off_y);
       cursor_rect.x += off_x;
@@ -1050,6 +1068,32 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
           rect.height = ybottom - ytop;
 
           pango_extents_to_pixels (&rect, NULL);
+
+          /*  A rotated or sheared glyph extent is a quad, not an axis-aligned
+           *  rectangle, so draw the four mapped corners directly.  Only the
+           *  horizontal directions are handled this way; the vertical ones do
+           *  their own coordinate juggling below and combining that with an
+           *  arbitrary matrix is a separate problem.
+           */
+          if (gimp_text_layout_is_transformed (text_tool->layout) &&
+              (direction == GIMP_TEXT_DIRECTION_LTR ||
+               direction == GIMP_TEXT_DIRECTION_RTL))
+            {
+              GimpVector2 corners[4];
+              gint        c;
+
+              gimp_text_layout_transform_quad (text_tool->layout, &rect,
+                                               corners);
+
+              for (c = 0; c < 4; c++)
+                {
+                  corners[c].x += offset_x;
+                  corners[c].y += offset_y;
+                }
+
+              gimp_draw_tool_add_lines (draw_tool, corners, 4, NULL, FALSE);
+              continue;
+            }
 
           gimp_text_layout_transform_rect (text_tool->layout, &rect);
 

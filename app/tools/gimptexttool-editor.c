@@ -675,10 +675,15 @@ gimp_text_tool_abort_im_context (GimpTextTool *text_tool)
                     text_tool);
 }
 
-void
+/*  Returns TRUE if @corners (4 entries, may be NULL) was filled with the
+ *  transformed caret quad, in which case @cursor_rect is not meaningful.
+ *  Returns FALSE if the caret is upright and @cursor_rect should be used.
+ */
+gboolean
 gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
                                        gboolean        overwrite,
-                                       PangoRectangle *cursor_rect)
+                                       PangoRectangle *cursor_rect,
+                                       GimpVector2    *corners)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   PangoLayout   *layout;
@@ -688,8 +693,8 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
   GtkTextIter    cursor;
   gint           cursor_index;
 
-  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
-  g_return_if_fail (cursor_rect != NULL);
+  g_return_val_if_fail (GIMP_IS_TEXT_TOOL (text_tool), FALSE);
+  g_return_val_if_fail (cursor_rect != NULL, FALSE);
 
   gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                     gtk_text_buffer_get_insert (buffer));
@@ -717,6 +722,39 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
     }
  else
     pango_layout_get_cursor_pos (layout, cursor_index, cursor_rect, NULL);
+
+  /*  Under a rotation or shear the caret is a quad rather than an upright
+   *  rectangle.  Map its corners instead, in pixels, and let the caller stroke
+   *  them.  As in gimp_text_tool_draw_selection() this covers the horizontal
+   *  directions only.
+   */
+  if (corners &&
+      gimp_text_layout_is_transformed (text_tool->layout) &&
+      (gimp_text_tool_get_direction (text_tool) == GIMP_TEXT_DIRECTION_LTR ||
+       gimp_text_tool_get_direction (text_tool) == GIMP_TEXT_DIRECTION_RTL))
+    {
+      PangoRectangle pixels;
+      gint           i;
+
+      pixels.x      = PANGO_PIXELS (cursor_rect->x);
+      pixels.y      = PANGO_PIXELS (cursor_rect->y);
+      pixels.width  = PANGO_PIXELS (cursor_rect->width);
+      pixels.height = PANGO_PIXELS (cursor_rect->height);
+
+      /*  a zero-width caret would collapse to a degenerate quad  */
+      if (pixels.width < 1)
+        pixels.width = 1;
+
+      gimp_text_layout_transform_quad (text_tool->layout, &pixels, corners);
+
+      for (i = 0; i < 4; i++)
+        {
+          corners[i].x += offset_x;
+          corners[i].y += offset_y;
+        }
+
+      return TRUE;
+    }
 
   gimp_text_layout_transform_rect (text_tool->layout, cursor_rect);
 
@@ -762,6 +800,8 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
       }
       break;
    }
+
+  return FALSE;
 }
 
 void
@@ -778,7 +818,7 @@ gimp_text_tool_editor_update_im_cursor (GimpTextTool *text_tool)
   if (text_tool->text)
     gimp_text_tool_editor_get_cursor_rect (text_tool,
                                            text_tool->overwrite_mode,
-                                           &rect);
+                                           &rect, NULL);
 
   g_object_get (text_tool->widget,
                 "x1", &off_x,
@@ -1576,11 +1616,20 @@ gimp_text_tool_xy_to_iter (GimpTextTool *text_tool,
 
   gimp_text_tool_ensure_layout (text_tool);
 
-  gimp_text_layout_untransform_point (text_tool->layout, &x, &y);
-
+  /*  The forward mapping the renderer uses is
+   *
+   *    layer = offsets + matrix * layout
+   *
+   *  (see gimp_text_layout_render()), so the inverse has to subtract the
+   *  offsets *before* applying the inverse matrix.  Doing it the other way
+   *  round only agrees for the identity matrix, and put the caret in the
+   *  wrong place on any rotated or sheared layer.
+   */
   gimp_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
   x -= offset_x;
   y -= offset_y;
+
+  gimp_text_layout_untransform_point (text_tool->layout, &x, &y);
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 

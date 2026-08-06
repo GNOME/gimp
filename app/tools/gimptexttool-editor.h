@@ -46,7 +46,8 @@ gboolean   gimp_text_tool_editor_key_release      (GimpTextTool        *text_too
 void       gimp_text_tool_reset_im_context        (GimpTextTool        *text_tool);
 void       gimp_text_tool_abort_im_context        (GimpTextTool        *text_tool);
 
-void       gimp_text_tool_editor_get_cursor_rect  (GimpTextTool        *text_tool,
+gboolean   gimp_text_tool_editor_get_cursor_rect  (GimpTextTool        *text_tool,
                                                    gboolean             overwrite,
-                                                   PangoRectangle      *cursor_rect);
+                                                   PangoRectangle      *cursor_rect,
+                                                   GimpVector2         *corners);
 void       gimp_text_tool_editor_update_im_cursor (GimpTextTool        *text_tool);

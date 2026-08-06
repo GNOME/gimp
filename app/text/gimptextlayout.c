@@ -408,6 +408,71 @@ gimp_text_layout_get_transform (GimpTextLayout *layout,
   matrix->y0 = 0;
 }
 
+/**
+ * gimp_text_layout_is_transformed:
+ * @layout: a #GimpTextLayout
+ *
+ * Returns: %TRUE if the layout carries anything other than the identity
+ *          transformation, i.e. if layout-space rectangles do not map to
+ *          axis-aligned rectangles in layer space.
+ *
+ * Callers use this to keep the untransformed case on its original code path
+ * rather than paying for, and risking a behaviour change in, the general one.
+ */
+gboolean
+gimp_text_layout_is_transformed (GimpTextLayout *layout)
+{
+  GimpMatrix2 *t;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_LAYOUT (layout), FALSE);
+
+  t = &layout->text->transformation;
+
+  return (t->coeff[0][0] != 1.0 || t->coeff[0][1] != 0.0 ||
+          t->coeff[1][0] != 0.0 || t->coeff[1][1] != 1.0);
+}
+
+/**
+ * gimp_text_layout_transform_quad:
+ * @layout:  a #GimpTextLayout
+ * @rect:    a rectangle in layout space, in pixels
+ * @corners: (out caller-allocates) (array fixed-size=4): the transformed corners
+ *
+ * Maps the four corners of @rect through the layout's transformation, in
+ * clockwise order starting at the top-left of the untransformed rectangle.
+ *
+ * Unlike gimp_text_layout_transform_rect(), this does not collapse the result
+ * to an axis-aligned rectangle, so it stays correct under rotation and shear.
+ * As with that function the layout's offsets are *not* applied; callers add
+ * them, because they also have to add the layer's own item offset.
+ */
+void
+gimp_text_layout_transform_quad (GimpTextLayout       *layout,
+                                 const PangoRectangle *rect,
+                                 GimpVector2          *corners)
+{
+  cairo_matrix_t matrix;
+  gint           i;
+
+  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (rect != NULL);
+  g_return_if_fail (corners != NULL);
+
+  corners[0].x = rect->x;
+  corners[0].y = rect->y;
+  corners[1].x = rect->x + rect->width;
+  corners[1].y = rect->y;
+  corners[2].x = rect->x + rect->width;
+  corners[2].y = rect->y + rect->height;
+  corners[3].x = rect->x;
+  corners[3].y = rect->y + rect->height;
+
+  gimp_text_layout_get_transform (layout, &matrix);
+
+  for (i = 0; i < 4; i++)
+    cairo_matrix_transform_point (&matrix, &corners[i].x, &corners[i].y);
+}
+
 void
 gimp_text_layout_transform_rect (GimpTextLayout *layout,
                                  PangoRectangle *rect)
