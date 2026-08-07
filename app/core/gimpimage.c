@@ -93,6 +93,7 @@
 #include "gimptemplate.h"
 #include "gimpundostack.h"
 
+#include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
 #include "path/gimppath.h"
@@ -3250,6 +3251,32 @@ gimp_image_get_xcf_version (GimpImage    *image,
                                        "GIMP 3.2"));
           version = MAX (25, version);
         }
+
+      /* Need version 27 for text layers carrying a transformation.  The
+       * properties themselves are as old as GimpText, so an older GIMP
+       * deserializes the parasite happily and then renders the layer
+       * untransformed -- the file would open looking wrong rather than
+       * failing.  Only bump when a matrix is actually stored, so plain text
+       * layers keep saving as before.
+       */
+      if (GIMP_IS_TEXT_LAYER (layer))
+        {
+          GimpText *text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
+
+          if (text)
+            {
+              GimpMatrix3 matrix;
+
+              gimp_text_get_transformation (text, &matrix);
+
+              if (! gimp_matrix3_is_identity (&matrix))
+                {
+                  ADD_REASON (g_strdup_printf (_("Transformed text layers were "
+                                                 "added in %s"), "GIMP 3.4"));
+                  version = MAX (27, version);
+                }
+            }
+        }
     }
   g_list_free (items);
 
@@ -3446,6 +3473,10 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 26:
       if (gimp_version)   *gimp_version   = 326;
       if (version_string) *version_string = "GIMP 3.2.6";
+      break;
+    case 27:
+      if (gimp_version)   *gimp_version   = 340;
+      if (version_string) *version_string = "GIMP 3.4";
       break;
     default:
       /* We should have as many cases as there are function elements in
