@@ -177,6 +177,9 @@ static gchar       * svg_get_def_string      (GimpVectorLayer       *layer,
                                               GimpProcedureConfig   *config,
                                               GList                **exported_res,
                                               GError               **error);
+static void          svg_export_inkscape     (GimpImage             *image,
+                                              GString               *str,
+                                              GError               **error);
 static void          svg_export_layers       (GimpItem             **layers,
                                               GimpGroupLayer        *group,
                                               gint                  *layer_ids,
@@ -1289,6 +1292,10 @@ svg_export_file (GimpImage            *image,
   svg_export_defs ((GimpItem **) layers, NULL, str, config, &exported_res, error);
   g_list_free (exported_res);
   g_string_append (str, "  </defs>\n");
+
+  if (inkscape_svg)
+    svg_export_inkscape (image, str, error);
+
   svg_export_layers ((GimpItem **) layers, NULL, layer_ids, str, config, "", error);
   g_free (layers);
 
@@ -1512,6 +1519,64 @@ svg_get_def_string (GimpVectorLayer      *layer,
     }
 
   return NULL;
+}
+
+static void
+svg_export_inkscape (GimpImage  *image,
+                     GString    *str,
+                     GError    **error)
+{
+  gboolean has_guides = FALSE;
+
+  has_guides = gimp_image_find_next_guide (image, 0);
+
+  /* TODO: Add more features to Inkscape SVG export */
+  g_string_append_printf (str,
+                          "  <sodipodi:namedview\n"
+                          "     showguides=\"%s\">\n",
+                          has_guides ? "true" : "false");
+
+  if (has_guides)
+    {
+      gint guide = 0;
+
+      while ((guide = gimp_image_find_next_guide (image, guide)))
+        {
+          gchar  orientation;
+          gint32 position;
+
+          orientation = gimp_image_get_guide_orientation (image, guide);
+          position    = gimp_image_get_guide_position (image, guide);
+
+          if (orientation > GIMP_ORIENTATION_VERTICAL)
+            continue;
+
+          g_string_append_printf (str, "    <sodipodi:guide\n");
+
+          if (orientation == GIMP_ORIENTATION_HORIZONTAL)
+            {
+              /* 0, 0 starts from the bottom left in Inkscape */
+              g_string_append_printf (str,
+                                      "       position=\"0.0,%d\"\n"
+                                      "       orientation=\"0,1\"\n",
+                                      gimp_image_get_height (image) - position);
+            }
+          else if (orientation == GIMP_ORIENTATION_VERTICAL)
+            {
+              g_string_append_printf (str,
+                                      "       position=\"%d,0.0\"\n"
+                                      "       orientation=\"1,0\"\n",
+                                      position);
+            }
+
+          g_string_append_printf (str, "       id=\"guide%d\"\n"
+                                       "       inkscape:locked=\"false\" />\n",
+                                  guide);
+        }
+    }
+
+  g_string_append_printf (str,
+                          "  </sodipodi:namedview>\n");
 }
 
 static void
