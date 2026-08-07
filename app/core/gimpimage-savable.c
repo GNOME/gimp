@@ -41,6 +41,7 @@
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpgrid.h"
+#include "gimpgrouplayer.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
@@ -754,10 +755,10 @@ gimp_image_enter_layers (GimpLoadState  *state,
   g_return_val_if_fail (gimp_savable_load_peek_active_object (state) == NULL, FALSE);
 
   gimp_savable_load (GIMP_TYPE_LAYER, state);
+  gimp_savable_load (GIMP_TYPE_GROUP_LAYER, state);
   /*gimp_savable_load (GIMP_TYPE_LINK_LAYER, state);*/
   /*gimp_savable_load (GIMP_TYPE_TEXT_LAYER, state);*/
   /*gimp_savable_load (GIMP_TYPE_VECTOR_LAYER, state);*/
-  /*gimp_savable_load (GIMP_TYPE_GROUP_LAYER, state);*/
 
   return TRUE;
 }

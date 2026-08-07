@@ -55,6 +55,7 @@
 #include "gimplayer-floating-selection.h"
 #include "gimplayer.h"
 #include "gimplayer-new.h"
+#include "gimplayer-savable.h"
 #include "gimplayermask.h"
 #include "gimpobjectqueue.h"
 #include "gimppickable.h"
@@ -1679,12 +1680,10 @@ gimp_layer_savable_save (GimpSavable   *savable,
   gint                    offset_y;
   gboolean                drop_root;
 
-  drop_root = GIMP_IS_RASTERIZABLE (layer);
+  drop_root = (G_TYPE_FROM_INSTANCE (layer) != GIMP_TYPE_LAYER);
 
   if (! drop_root)
-    gimp_savable_print_element_start (state, "layer",
-                                      "type", "%t", layer,
-                                      NULL);
+    gimp_savable_print_element_start (state, "raster-layer", NULL);
 
   if (gimp_image_get_floating_selection (image) == layer)
     {
@@ -1737,28 +1736,14 @@ gimp_layer_savable_save (GimpSavable   *savable,
       gimp_savable_print_element_end (state, "mask");
     }
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) != NULL)
-    {
-      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
-      GList         *child;
-
-      gimp_savable_print_element_start (state, "layers", NULL);
-
-      child = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (stack));
-      for (; child; child = child->next)
-        gimp_savable_save (GIMP_SAVABLE (child->data), state);
-
-      gimp_savable_print_element_end (state, "layers");
-    }
-
   if (! drop_root)
-    gimp_savable_print_element_end (state, "layer");
+    gimp_savable_print_element_end (state, "raster-layer");
 }
 
 static void
 gimp_layer_savable_load (GimpLoadState *state)
 {
-  gimp_savable_load_add_handlers (state, "layer",
+  gimp_savable_load_add_handlers (state, "raster-layer",
                                   gimp_layer_enter,
                                   gimp_layer_exit,
                                   NULL, NULL);
@@ -1996,6 +1981,61 @@ gimp_layer_layer_mask_update (GimpDrawable *drawable,
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             x, y, width, height);
     }
+}
+
+static gboolean
+gimp_layer_enter (GimpLoadState  *state,
+                  const gchar   **attribute_names,
+                  const gchar   **attribute_values,
+                  gpointer        user_data,
+                  GError        **error)
+{
+  GimpLayer *layer;
+
+  while (*attribute_names)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: unexpected attribute: '%s'",
+                   G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  gimp_subclass_layer_enter (state, attribute_names, attribute_values,
+                             user_data, error);
+
+  layer = gimp_layer_new (state->image, 1, 1,
+                          gimp_image_get_layer_format (state->image, FALSE),
+                          NULL,
+                          GIMP_OPACITY_OPAQUE, GIMP_LAYER_MODE_NORMAL);
+  gimp_savable_load_push_active_object (state, G_OBJECT (layer));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_layer_exit (GimpLoadState  *state,
+                 const gchar    *text,
+                 gsize           len,
+                 gpointer        user_data,
+                 GError        **error)
+{
+  /* TODO: handle floating layers too. */
+
+  return gimp_subclass_layer_exit (state, text, len, user_data, error);
+}
+
+static gboolean
+gimp_layer_enter_mask (GimpLoadState  *state,
+                       const gchar   **attribute_names,
+                       const gchar   **attribute_values,
+                       gpointer        user_data,
+                       GError        **error)
+{
+  gimp_savable_load (GIMP_TYPE_CHANNEL, state);
+
+  return TRUE;
 }
 
 
@@ -3172,34 +3212,13 @@ gimp_layer_update_excludes_backdrop (GimpLayer *layer)
     }
 }
 
-static gboolean
-gimp_layer_enter (GimpLoadState  *state,
-                  const gchar   **attribute_names,
-                  const gchar   **attribute_values,
-                  gpointer        user_data,
-                  GError        **error)
+void
+gimp_subclass_layer_enter (GimpLoadState  *state,
+                           const gchar   **attribute_names,
+                           const gchar   **attribute_values,
+                           gpointer        user_data,
+                           GError        **error)
 {
-  GimpLayer *layer;
-
-  while (*attribute_names)
-    {
-      if (g_strcmp0 (*attribute_names, "type") == 0)
-        {
-          gimp_savable_load_store_from_string (state,
-                                               "type", "%t", *attribute_values,
-                                               NULL);
-        }
-      else
-        {
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                       "%s: unexpected attribute: '%s'",
-                       G_STRFUNC, *attribute_names);
-        }
-
-      attribute_names++;
-      attribute_values++;
-    }
-
   parent_savable_iface->load (state);
 
   gimp_savable_load_add_simple_handler (state, "floating", NULL,
@@ -3239,22 +3258,14 @@ gimp_layer_enter (GimpLoadState  *state,
                                   gimp_savable_enter_format,
                                   gimp_savable_exit_format,
                                   NULL, NULL);
-
-  layer = gimp_layer_new (state->image, 1, 1,
-                          gimp_image_get_layer_format (state->image, FALSE),
-                          NULL,
-                          GIMP_OPACITY_OPAQUE, GIMP_LAYER_MODE_NORMAL);
-  gimp_savable_load_push_active_object (state, G_OBJECT (layer));
-
-  return TRUE;
 }
 
-static gboolean
-gimp_layer_exit (GimpLoadState  *state,
-                 const gchar    *text,
-                 gsize           len,
-                 gpointer        user_data,
-                 GError        **error)
+gboolean
+gimp_subclass_layer_exit (GimpLoadState  *state,
+                          const gchar    *text,
+                          gsize           len,
+                          gpointer        user_data,
+                          GError        **error)
 {
   GimpLayer              *layer;
   const gchar            *name             = NULL;
@@ -3275,9 +3286,6 @@ gimp_layer_exit (GimpLoadState  *state,
   gboolean                lock_visibility  = FALSE;
   gboolean                lock_alpha       = FALSE;
   const gchar             *buffer_filename = NULL;
-  GFile                   *buffers_dir;
-  GeglBuffer              *buffer;
-  GFile                   *buffer_file;
 
   g_return_val_if_fail (GIMP_IS_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
   layer = GIMP_LAYER (gimp_savable_load_pop_active_object (state));
@@ -3289,7 +3297,6 @@ gimp_layer_exit (GimpLoadState  *state,
                                       "blend-space",       &blend_space,
                                       "composite-space",   &composite_space,
                                       "composite-mode",    &composite_mode,
-                                      "buffer:file",       &buffer_filename,
                                       "dimensions:width",  &width,
                                       "dimensions:height", &height,
                                       NULL))
@@ -3317,41 +3324,54 @@ gimp_layer_exit (GimpLoadState  *state,
   gimp_layer_set_composite_space (layer, composite_space, FALSE);
   gimp_layer_set_composite_mode (layer, composite_mode, FALSE);
 
-  buffers_dir = g_file_get_child (state->subdir, "buffers");
-  buffer_file = g_file_get_child (buffers_dir, buffer_filename);
-
-  /* Prevent malicious files trying to exit the allowed directory to
-   * read external files on the FS.
-   */
-  if (! gimp_file_is_ancestor (buffers_dir, buffer_file))
+  if (gimp_savable_load_get_values (state,
+                                    "buffer:file", &buffer_filename,
+                                    NULL))
     {
-      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                   "%s: unauthorized buffer file for layer '%s': %s",
-                   G_STRFUNC, name, buffer_filename);
+      GFile      *buffers_dir;
+      GeglBuffer *buffer;
+      GFile      *buffer_file;
 
-      g_object_unref (layer);
+      buffers_dir = g_file_get_child (state->subdir, "buffers");
+      buffer_file = g_file_get_child (buffers_dir, buffer_filename);
+
+      /* Prevent malicious files trying to exit the allowed directory to
+       * read external files on the FS.
+       */
+      if (! gimp_file_is_ancestor (buffers_dir, buffer_file))
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unauthorized buffer file for layer '%s': %s",
+                       G_STRFUNC, name, buffer_filename);
+
+          g_object_unref (layer);
+          g_object_unref (buffers_dir);
+          g_object_unref (buffer_file);
+
+          return TRUE;
+        }
+
+      buffer = gegl_buffer_load (g_file_peek_path (buffer_file));
+
+      if (buffer == NULL)
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: invalid buffer file content for layer '%s': %s",
+                       G_STRFUNC, name, buffer_filename);
+
+          g_object_unref (layer);
+          g_object_unref (buffers_dir);
+          g_object_unref (buffer_file);
+
+          return TRUE;
+        }
+
+      gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), FALSE, NULL, buffer);
+
       g_object_unref (buffers_dir);
       g_object_unref (buffer_file);
-
-      return TRUE;
+      g_object_unref (buffer);
     }
-
-  buffer = gegl_buffer_load (g_file_peek_path (buffer_file));
-
-  if (buffer == NULL)
-    {
-      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                   "%s: invalid buffer file content for layer '%s': %s",
-                   G_STRFUNC, name, buffer_filename);
-
-      g_object_unref (layer);
-      g_object_unref (buffers_dir);
-      g_object_unref (buffer_file);
-
-      return TRUE;
-    }
-
-  gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), FALSE, NULL, buffer);
 
   gimp_savable_load_get_values (state,
                                 "format",          &format,
@@ -3366,12 +3386,12 @@ gimp_layer_exit (GimpLoadState  *state,
 
                                 NULL);
 
-  if (format && format != gegl_buffer_get_format (buffer))
+  if (format && format != gimp_drawable_get_format (GIMP_DRAWABLE (layer)))
     {
       g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
                    "%s: format \"%s\" of layer \"%s\" inconsistent with buffer format \"%s\"",
-                   G_STRFUNC, name, babl_get_name (format),
-                   babl_get_name (gegl_buffer_get_format (buffer)));
+                   G_STRFUNC, babl_get_name (format), name,
+                   babl_get_name (gimp_drawable_get_format (GIMP_DRAWABLE (layer))));
       gimp_drawable_set_format (GIMP_DRAWABLE (layer), format, TRUE, FALSE);
     }
 
@@ -3384,27 +3404,25 @@ gimp_layer_exit (GimpLoadState  *state,
   gimp_item_set_lock_visibility (GIMP_ITEM (layer), lock_visibility, FALSE);
   gimp_layer_set_lock_alpha (layer, lock_alpha, FALSE);
 
-  /* TODO: this doesn't support imbricated (group) layers yet, nor does
-   * it handle a floating layer yet.
-   */
-  gimp_image_add_layer (state->image, layer, NULL,
-                        gimp_container_get_n_children (gimp_image_get_layers (state->image)),
-                        FALSE);
+  if (! gimp_item_is_attached (GIMP_ITEM (layer)))
+    {
+      GimpLayer     *parent = NULL;
+      GimpContainer *container;
 
-  g_object_unref (buffers_dir);
-  g_object_unref (buffer_file);
+      if (GIMP_IS_GROUP_LAYER (gimp_savable_load_peek_active_object (state)))
+        {
+          parent    = GIMP_LAYER (gimp_savable_load_peek_active_object (state));
+          container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+        }
+      else
+        {
+          container = gimp_image_get_layers (state->image);
+        }
 
-  return TRUE;
-}
-
-static gboolean
-gimp_layer_enter_mask (GimpLoadState  *state,
-                       const gchar   **attribute_names,
-                       const gchar   **attribute_values,
-                       gpointer        user_data,
-                       GError        **error)
-{
-  gimp_savable_load (GIMP_TYPE_CHANNEL, state);
+      gimp_image_add_layer (state->image, layer, parent,
+                            gimp_container_get_n_children (container),
+                            FALSE);
+    }
 
   return TRUE;
 }

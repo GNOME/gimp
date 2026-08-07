@@ -39,12 +39,15 @@
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
+#include "gimplayer-savable.h"
 #include "gimplayerstack.h"
 #include "gimpobjectqueue.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
 #include "gimpprojectable.h"
 #include "gimpprojection.h"
+#include "gimpsavable.h"
+#include "gimpsavable-load.h"
 
 #include "gimp-intl.h"
 
@@ -80,6 +83,7 @@ struct _GimpGroupLayerPrivate
 
 static void            gimp_projectable_iface_init   (GimpProjectableInterface  *iface);
 static void            gimp_pickable_iface_init      (GimpPickableInterface     *iface);
+static void            gimp_savable_iface_init       (GimpSavableInterface      *iface);
 
 static void            gimp_group_layer_finalize     (GObject         *object);
 static void            gimp_group_layer_set_property (GObject         *object,
@@ -200,6 +204,10 @@ static gdouble       gimp_group_layer_get_opacity_at (GimpPickable    *pickable,
                                                       gint             x,
                                                       gint             y);
 
+static void          gimp_group_layer_savable_save   (GimpSavable        *savable,
+                                                      GimpSaveState      *state);
+static void          gimp_group_layer_savable_load   (GimpLoadState      *state);
+
 
 static void            gimp_group_layer_child_add    (GimpContainer   *container,
                                                       GimpLayer       *child,
@@ -244,16 +252,31 @@ static void            gimp_group_layer_proj_update  (GimpProjection    *proj,
                                                       gint               height,
                                                       GimpGroupLayer    *group);
 
+static gboolean        gimp_group_layer_enter        (GimpLoadState      *state,
+                                                      const gchar       **attribute_names,
+                                                      const gchar       **attribute_values,
+                                                      gpointer            user_data,
+                                                      GError            **error);
+static gboolean        gimp_group_layer_enter_layers (GimpLoadState      *state,
+                                                      const gchar       **attribute_names,
+                                                      const gchar       **attribute_values,
+                                                      gpointer            user_data,
+                                                      GError            **error);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpGroupLayer, gimp_group_layer, GIMP_TYPE_LAYER,
                          G_ADD_PRIVATE (GimpGroupLayer)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROJECTABLE,
                                                 gimp_projectable_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_pickable_iface_init))
+                                                gimp_pickable_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SAVABLE,
+                                                gimp_savable_iface_init))
 
 
 #define parent_class gimp_group_layer_parent_class
+
+static GimpSavableInterface *parent_savable_iface = NULL;
 
 
 /* disable pass-through groups strength-reduction to normal groups.
@@ -342,6 +365,15 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
 {
   iface->flush          = gimp_group_layer_pickable_flush;
   iface->get_opacity_at = gimp_group_layer_get_opacity_at;
+}
+
+static void
+gimp_savable_iface_init (GimpSavableInterface *iface)
+{
+  parent_savable_iface = g_type_interface_peek_parent (iface);
+
+  iface->save = gimp_group_layer_savable_save;
+  iface->load = gimp_group_layer_savable_load;
 }
 
 static void
@@ -1552,6 +1584,44 @@ gimp_group_layer_get_opacity_at (GimpPickable *pickable,
   return GIMP_OPACITY_TRANSPARENT;
 }
 
+static void
+gimp_group_layer_savable_save (GimpSavable   *savable,
+                               GimpSaveState *state)
+{
+  GimpGroupLayer *layer = GIMP_GROUP_LAYER (savable);
+
+  gimp_savable_print_element_start (state, "group-layer",
+                                    "name", "%s", gimp_object_get_name (GIMP_OBJECT (layer)),
+                                    NULL);
+
+  parent_savable_iface->save (savable, state);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) != NULL)
+    {
+      GimpContainer *stack = gimp_viewable_get_children (GIMP_VIEWABLE (layer));
+      GList         *child;
+
+      gimp_savable_print_element_start (state, "layers", NULL);
+
+      child = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (stack));
+      for (; child; child = child->next)
+        gimp_savable_save (GIMP_SAVABLE (child->data), state);
+
+      gimp_savable_print_element_end (state, "layers");
+    }
+
+  gimp_savable_print_element_end (state, "group-layer");
+}
+
+static void
+gimp_group_layer_savable_load (GimpLoadState *state)
+{
+  gimp_savable_load_add_handlers (state, "group-layer",
+                                  gimp_group_layer_enter,
+                                  gimp_subclass_layer_exit,
+                                  NULL, NULL);
+}
+
 
 /*  public functions  */
 
@@ -2378,4 +2448,85 @@ gimp_group_layer_proj_update (GimpProjection *proj,
                             y - gimp_item_get_offset_y (GIMP_ITEM (group)),
                             width, height);
     }
+}
+
+static gboolean
+gimp_group_layer_enter (GimpLoadState  *state,
+                        const gchar   **attribute_names,
+                        const gchar   **attribute_values,
+                        gpointer        user_data,
+                        GError        **error)
+{
+  GimpLayer     *layer;
+  const gchar   *name   = NULL;
+  GimpLayer     *parent = NULL;
+  GimpContainer *container;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "name") == 0)
+        name = *attribute_values;
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  gimp_subclass_layer_enter (state, attribute_names, attribute_values,
+                             user_data, error);
+
+  gimp_savable_load_add_handlers (state, "layers",
+                                  gimp_group_layer_enter_layers,
+                                  NULL, NULL, NULL);
+  layer = gimp_group_layer_new (state->image);
+
+  if (name == NULL)
+    g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                 "%s: missing layer group name.",
+                 G_STRFUNC);
+  else
+    gimp_object_set_name (GIMP_OBJECT (layer), name);
+
+  /* Insert the group layer immediately on purpose, unlike other types
+   * of layers, so that we can add children to it before the element
+   * closes.
+   */
+  if (GIMP_IS_GROUP_LAYER (gimp_savable_load_peek_active_object (state)))
+    {
+      parent    = GIMP_LAYER (gimp_savable_load_peek_active_object (state));
+      container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+    }
+  else
+    {
+      container = gimp_image_get_layers (state->image);
+    }
+
+  gimp_image_add_layer (state->image, layer, parent,
+                        gimp_container_get_n_children (container),
+                        FALSE);
+
+  gimp_savable_load_push_active_object (state, G_OBJECT (layer));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_group_layer_enter_layers (GimpLoadState  *state,
+                               const gchar   **attribute_names,
+                               const gchar   **attribute_values,
+                               gpointer        user_data,
+                               GError        **error)
+{
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  gimp_savable_load (GIMP_TYPE_LAYER, state);
+  gimp_savable_load (GIMP_TYPE_GROUP_LAYER, state);
+  /*gimp_savable_load (GIMP_TYPE_LINK_LAYER, state);*/
+  /*gimp_savable_load (GIMP_TYPE_TEXT_LAYER, state);*/
+  /*gimp_savable_load (GIMP_TYPE_VECTOR_LAYER, state);*/
+
+  return TRUE;
 }
