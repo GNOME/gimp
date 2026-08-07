@@ -1451,7 +1451,7 @@ gimp_savable_load_store_one (GimpLoadState *state,
   else if (g_strcmp0 ("%b", format) == 0)
     {
       /* Custom format: boolean type. */
-      gboolean bval = g_strcmp0 (strval, "true") ? TRUE : FALSE;
+      gboolean bval = (g_strcmp0 (strval, "true") == 0) ? TRUE : FALSE;
       g_value_init (gvalue, G_TYPE_BOOLEAN);
       g_value_set_boolean (gvalue, bval);
     }
