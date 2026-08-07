@@ -52,6 +52,7 @@
 #include "gimpimage-savable.h"
 #include "gimpimage-symmetry.h"
 #include "gimpimage-undo.h"
+#include "gimplayer.h"
 #include "gimpparasitelist.h"
 #include "gimpsavable.h"
 #include "gimpsavable-load.h"
@@ -120,6 +121,11 @@ static gboolean   gimp_image_enter_paths       (GimpLoadState         *state,
                                                 gpointer               user_data,
                                                 GError               **error);
 static gboolean   gimp_image_enter_channels    (GimpLoadState         *state,
+                                                const gchar          **attribute_names,
+                                                const gchar          **attribute_values,
+                                                gpointer               user_data,
+                                                GError               **error);
+static gboolean   gimp_image_enter_layers      (GimpLoadState         *state,
                                                 const gchar          **attribute_names,
                                                 const gchar          **attribute_values,
                                                 gpointer               user_data,
@@ -527,6 +533,9 @@ gimp_image_enter_project (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "channels",
                                   gimp_image_enter_channels,
                                   NULL, NULL, NULL);
+  gimp_savable_load_add_handlers (state, "layers",
+                                  gimp_image_enter_layers,
+                                  NULL, NULL, NULL);
   return TRUE;
 }
 
@@ -731,6 +740,24 @@ gimp_image_enter_channels (GimpLoadState  *state,
 {
   g_return_val_if_fail (gimp_savable_load_peek_active_object (state) == NULL, FALSE);
   gimp_savable_load (GIMP_TYPE_CHANNEL, state);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_image_enter_layers (GimpLoadState  *state,
+                         const gchar   **attribute_names,
+                         const gchar   **attribute_values,
+                         gpointer        user_data,
+                         GError        **error)
+{
+  g_return_val_if_fail (gimp_savable_load_peek_active_object (state) == NULL, FALSE);
+
+  gimp_savable_load (GIMP_TYPE_LAYER, state);
+  /*gimp_savable_load (GIMP_TYPE_LINK_LAYER, state);*/
+  /*gimp_savable_load (GIMP_TYPE_TEXT_LAYER, state);*/
+  /*gimp_savable_load (GIMP_TYPE_VECTOR_LAYER, state);*/
+  /*gimp_savable_load (GIMP_TYPE_GROUP_LAYER, state);*/
 
   return TRUE;
 }

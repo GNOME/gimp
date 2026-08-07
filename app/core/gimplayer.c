@@ -54,12 +54,14 @@
 #include "gimpitemstack.h"
 #include "gimplayer-floating-selection.h"
 #include "gimplayer.h"
+#include "gimplayer-new.h"
 #include "gimplayermask.h"
 #include "gimpobjectqueue.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
 #include "gimprasterizable.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 
 #include "gimp-intl.h"
 
@@ -220,6 +222,7 @@ static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
 
 static void    gimp_layer_savable_save          (GimpSavable        *savable,
                                                  GimpSaveState      *state);
+static void    gimp_layer_savable_load          (GimpLoadState      *state);
 
 static gboolean gimp_layer_real_is_alpha_locked (GimpLayer          *layer,
                                                  GimpLayer         **locked_layer);
@@ -285,6 +288,22 @@ static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
                                                  gint                height,
                                                  GimpLayer          *layer);
 
+static gboolean   gimp_layer_enter              (GimpLoadState      *state,
+                                                 const gchar       **attribute_names,
+                                                 const gchar       **attribute_values,
+                                                 gpointer            user_data,
+                                                 GError            **error);
+static gboolean   gimp_layer_exit               (GimpLoadState      *state,
+                                                 const gchar        *text,
+                                                 gsize               len,
+                                                 gpointer            user_data,
+                                                 GError            **error);
+static gboolean   gimp_layer_enter_mask         (GimpLoadState      *state,
+                                                 const gchar       **attribute_names,
+                                                 const gchar       **attribute_values,
+                                                 gpointer            user_data,
+                                                 GError            **error);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
@@ -296,7 +315,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE,
 
 #define parent_class gimp_layer_parent_class
 
-static GimpSavableInterface *parent_savable_interface = NULL;
+static GimpSavableInterface *parent_savable_iface = NULL;
 
 static guint layer_signals[LAST_SIGNAL] = { 0 };
 
@@ -588,9 +607,10 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
 static void
 gimp_savable_iface_init (GimpSavableInterface *iface)
 {
-  parent_savable_interface = g_type_interface_peek_parent (iface);
+  parent_savable_iface = g_type_interface_peek_parent (iface);
 
   iface->save = gimp_layer_savable_save;
+  iface->load = gimp_layer_savable_load;
 }
 
 static void
@@ -1680,7 +1700,7 @@ gimp_layer_savable_save (GimpSavable   *savable,
   if (image_format != format)
     gimp_savable_format_save (format, state);
 
-  parent_savable_interface->save (savable, state);
+  parent_savable_iface->save (savable, state);
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
   gimp_savable_print_element (state, "offsets", NULL, NULL,
@@ -1733,6 +1753,15 @@ gimp_layer_savable_save (GimpSavable   *savable,
 
   if (! drop_root)
     gimp_savable_print_element_end (state, "layer");
+}
+
+static void
+gimp_layer_savable_load (GimpLoadState *state)
+{
+  gimp_savable_load_add_handlers (state, "layer",
+                                  gimp_layer_enter,
+                                  gimp_layer_exit,
+                                  NULL, NULL);
 }
 
 static gboolean
@@ -3141,4 +3170,241 @@ gimp_layer_update_excludes_backdrop (GimpLayer *layer)
       g_signal_emit (layer, layer_signals[EXCLUDES_BACKDROP_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "excludes-backdrop");
     }
+}
+
+static gboolean
+gimp_layer_enter (GimpLoadState  *state,
+                  const gchar   **attribute_names,
+                  const gchar   **attribute_values,
+                  gpointer        user_data,
+                  GError        **error)
+{
+  GimpLayer *layer;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "type") == 0)
+        {
+          gimp_savable_load_store_from_string (state,
+                                               "type", "%t", *attribute_values,
+                                               NULL);
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  parent_savable_iface->load (state);
+
+  gimp_savable_load_add_simple_handler (state, "floating", NULL,
+                                        NULL, NULL, NULL,
+                                        TRUE, FALSE,
+                                        "attached-to", "%u",
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "offsets", NULL,
+                                        NULL, NULL, NULL,
+                                        TRUE, FALSE,
+                                        "x", "%d",
+                                        "y", "%d",
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "opacity", "%f",
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "mode", "%[GimpLayerMode]",
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "blend-space", "%[GimpLayerColorSpace]",
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "composite-space", "%[GimpLayerColorSpace]",
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "composite-mode", "%[GimpLayerCompositeMode]",
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "lock-alpha", NULL,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE, NULL);
+
+  gimp_savable_load_add_handlers (state, "mask",
+                                  gimp_layer_enter_mask,
+                                  NULL, NULL, NULL);
+  gimp_savable_load_add_handlers (state, "format",
+                                  gimp_savable_enter_format,
+                                  gimp_savable_exit_format,
+                                  NULL, NULL);
+
+  layer = gimp_layer_new (state->image, 1, 1,
+                          gimp_image_get_layer_format (state->image, FALSE),
+                          NULL,
+                          GIMP_OPACITY_OPAQUE, GIMP_LAYER_MODE_NORMAL);
+  gimp_savable_load_push_active_object (state, G_OBJECT (layer));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_layer_exit (GimpLoadState  *state,
+                 const gchar    *text,
+                 gsize           len,
+                 gpointer        user_data,
+                 GError        **error)
+{
+  GimpLayer              *layer;
+  const gchar            *name             = NULL;
+  const Babl             *format           = NULL;
+  gint                    width            = 0;
+  gint                    height           = 0;
+  gboolean                selected         = FALSE;
+  gboolean                visible          = FALSE;
+  guint                   tattoo           = 0;
+  gdouble                 opacity          = -1.0;
+  GimpLayerMode           mode             = GIMP_LAYER_MODE_NORMAL;
+  GimpLayerColorSpace     blend_space      = GIMP_LAYER_COLOR_SPACE_AUTO;
+  GimpLayerColorSpace     composite_space  = GIMP_LAYER_COLOR_SPACE_AUTO;
+  GimpLayerCompositeMode  composite_mode   = GIMP_LAYER_COMPOSITE_AUTO;
+  GimpColorTag            tag              = GIMP_COLOR_TAG_NONE;
+  gboolean                lock_content     = FALSE;
+  gboolean                lock_position    = FALSE;
+  gboolean                lock_visibility  = FALSE;
+  gboolean                lock_alpha       = FALSE;
+  const gchar             *buffer_filename = NULL;
+  GFile                   *buffers_dir;
+  GeglBuffer              *buffer;
+  GFile                   *buffer_file;
+
+  g_return_val_if_fail (GIMP_IS_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
+  layer = GIMP_LAYER (gimp_savable_load_pop_active_object (state));
+
+  if (! gimp_savable_load_get_values (state,
+                                      "name",              &name,
+                                      "opacity",           &opacity,
+                                      "mode",              &mode,
+                                      "blend-space",       &blend_space,
+                                      "composite-space",   &composite_space,
+                                      "composite-mode",    &composite_mode,
+                                      "buffer:file",       &buffer_filename,
+                                      "dimensions:width",  &width,
+                                      "dimensions:height", &height,
+                                      NULL))
+    {
+      if (name)
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: failed to load layer '%s' because of missing elements.",
+                     G_STRFUNC, name);
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: failed to load a layer because of missing elements.",
+                     G_STRFUNC);
+
+      g_object_unref (layer);
+      return TRUE;
+    }
+
+  gimp_object_set_name (GIMP_OBJECT (layer), name);
+  gimp_item_set_size (GIMP_ITEM (layer), width, height);
+
+  if (opacity >= GIMP_OPACITY_TRANSPARENT && opacity <= GIMP_OPACITY_OPAQUE)
+    gimp_layer_set_opacity (layer, opacity, FALSE);
+  gimp_layer_set_mode (layer, mode, FALSE);
+  gimp_layer_set_blend_space (layer, blend_space, FALSE);
+  gimp_layer_set_composite_space (layer, composite_space, FALSE);
+  gimp_layer_set_composite_mode (layer, composite_mode, FALSE);
+
+  buffers_dir = g_file_get_child (state->subdir, "buffers");
+  buffer_file = g_file_get_child (buffers_dir, buffer_filename);
+
+  /* Prevent malicious files trying to exit the allowed directory to
+   * read external files on the FS.
+   */
+  if (! gimp_file_is_ancestor (buffers_dir, buffer_file))
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: unauthorized buffer file for layer '%s': %s",
+                   G_STRFUNC, name, buffer_filename);
+
+      g_object_unref (layer);
+      g_object_unref (buffers_dir);
+      g_object_unref (buffer_file);
+
+      return TRUE;
+    }
+
+  buffer = gegl_buffer_load (g_file_peek_path (buffer_file));
+
+  if (buffer == NULL)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: invalid buffer file content for layer '%s': %s",
+                   G_STRFUNC, name, buffer_filename);
+
+      g_object_unref (layer);
+      g_object_unref (buffers_dir);
+      g_object_unref (buffer_file);
+
+      return TRUE;
+    }
+
+  gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), FALSE, NULL, buffer);
+
+  gimp_savable_load_get_values (state,
+                                "format",          &format,
+                                "selected",        &selected,
+                                "visible",         &visible,
+                                "tattoo",          &tattoo,
+                                "tag",             &tag,
+                                "lock-content",    &lock_content,
+                                "lock-position",   &lock_position,
+                                "lock-visibility", &lock_visibility,
+                                "lock-alpha",      &lock_alpha,
+
+                                NULL);
+
+  if (format && format != gegl_buffer_get_format (buffer))
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: format \"%s\" of layer \"%s\" inconsistent with buffer format \"%s\"",
+                   G_STRFUNC, name, babl_get_name (format),
+                   babl_get_name (gegl_buffer_get_format (buffer)));
+      gimp_drawable_set_format (GIMP_DRAWABLE (layer), format, TRUE, FALSE);
+    }
+
+  gimp_item_set_visible (GIMP_ITEM (layer), visible, FALSE);
+  if (tattoo > 0)
+    gimp_item_set_tattoo (GIMP_ITEM (layer), tattoo);
+  gimp_item_set_color_tag (GIMP_ITEM (layer), tag, FALSE);
+  gimp_item_set_lock_content (GIMP_ITEM (layer), lock_content, FALSE);
+  gimp_item_set_lock_position (GIMP_ITEM (layer), lock_position, FALSE);
+  gimp_item_set_lock_visibility (GIMP_ITEM (layer), lock_visibility, FALSE);
+  gimp_layer_set_lock_alpha (layer, lock_alpha, FALSE);
+
+  /* TODO: this doesn't support imbricated (group) layers yet, nor does
+   * it handle a floating layer yet.
+   */
+  gimp_image_add_layer (state->image, layer, NULL,
+                        gimp_container_get_n_children (gimp_image_get_layers (state->image)),
+                        FALSE);
+
+  g_object_unref (buffers_dir);
+  g_object_unref (buffer_file);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_layer_enter_mask (GimpLoadState  *state,
+                       const gchar   **attribute_names,
+                       const gchar   **attribute_values,
+                       gpointer        user_data,
+                       GError        **error)
+{
+  gimp_savable_load (GIMP_TYPE_CHANNEL, state);
+
+  return TRUE;
 }
