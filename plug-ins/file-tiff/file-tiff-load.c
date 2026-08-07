@@ -2012,8 +2012,6 @@ load_contiguous (TIFF         *tif,
 
   tile_width = image_width;
 
-  one_row = (gdouble) tile_height / (gdouble) image_height;
-
   src_format = babl_format_n (type, spp);
 
   /* consistency check */
@@ -2074,6 +2072,7 @@ load_contiguous (TIFF         *tif,
         }
     }
 
+  one_row = (gdouble) tile_height / (gdouble) image_height;
   for (y = 0; y < image_height; y += tile_height)
     {
       guint32 x;
