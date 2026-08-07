@@ -283,16 +283,16 @@ gimp_color_is_out_of_gamut (GeglColor  *color,
         {
           gdouble rgb[3];
 
-          /* Grayscale colors can be out of gamut if the color is out of the [0;
-           * 1] range in the target space and also if they can be converted to
-           * RGB with non-equal components.
+          /* A color can be out of gamut in a grayscale space if it is
+           * out of the [0; 1] range in this target space and also if
+           * it can be converted to RGB with non-equal components.
            */
           gegl_color_get_pixel (color,
                                 babl_format_with_space ("R'G'B' double", space),
                                 rgb);
-          is_out_of_gamut = (ABS (rgb[0] - rgb[0]) > CHANNEL_EPSILON ||
-                             ABS (rgb[1] - rgb[1]) > CHANNEL_EPSILON ||
-                             ABS (rgb[2] - rgb[2]) > CHANNEL_EPSILON);
+          is_out_of_gamut = (ABS (rgb[0] - rgb[1]) > CHANNEL_EPSILON ||
+                             ABS (rgb[1] - rgb[2]) > CHANNEL_EPSILON ||
+                             ABS (rgb[0] - rgb[2]) > CHANNEL_EPSILON);
         }
     }
   else if (babl_space_is_cmyk (space))
