@@ -39,7 +39,6 @@
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
-#include "gimplayer-savable.h"
 #include "gimplayerstack.h"
 #include "gimpobjectqueue.h"
 #include "gimppickable.h"
@@ -204,9 +203,13 @@ static gdouble       gimp_group_layer_get_opacity_at (GimpPickable    *pickable,
                                                       gint             x,
                                                       gint             y);
 
-static void          gimp_group_layer_savable_save   (GimpSavable        *savable,
-                                                      GimpSaveState      *state);
-static void          gimp_group_layer_savable_load   (GimpLoadState      *state);
+static void          gimp_group_layer_save           (GimpSavable     *savable,
+                                                      GimpSaveState   *state);
+static gboolean      gimp_group_layer_load_enter     (GimpLoadState   *state,
+                                                      const gchar    **attribute_names,
+                                                      const gchar    **attribute_values,
+                                                      gpointer         user_data,
+                                                      GError         **error);
 
 
 static void            gimp_group_layer_child_add    (GimpContainer   *container,
@@ -252,11 +255,6 @@ static void            gimp_group_layer_proj_update  (GimpProjection    *proj,
                                                       gint               height,
                                                       GimpGroupLayer    *group);
 
-static gboolean        gimp_group_layer_enter        (GimpLoadState      *state,
-                                                      const gchar       **attribute_names,
-                                                      const gchar       **attribute_values,
-                                                      gpointer            user_data,
-                                                      GError            **error);
 static gboolean        gimp_group_layer_enter_layers (GimpLoadState      *state,
                                                       const gchar       **attribute_names,
                                                       const gchar       **attribute_values,
@@ -372,8 +370,9 @@ gimp_savable_iface_init (GimpSavableInterface *iface)
 {
   parent_savable_iface = g_type_interface_peek_parent (iface);
 
-  iface->save = gimp_group_layer_savable_save;
-  iface->load = gimp_group_layer_savable_load;
+  iface->tag        = "group-layer";
+  iface->save       = gimp_group_layer_save;
+  iface->load_enter = gimp_group_layer_load_enter;
 }
 
 static void
@@ -1585,8 +1584,8 @@ gimp_group_layer_get_opacity_at (GimpPickable *pickable,
 }
 
 static void
-gimp_group_layer_savable_save (GimpSavable   *savable,
-                               GimpSaveState *state)
+gimp_group_layer_save (GimpSavable   *savable,
+                       GimpSaveState *state)
 {
   GimpGroupLayer *layer = GIMP_GROUP_LAYER (savable);
 
@@ -1613,13 +1612,71 @@ gimp_group_layer_savable_save (GimpSavable   *savable,
   gimp_savable_print_element_end (state, "group-layer");
 }
 
-static void
-gimp_group_layer_savable_load (GimpLoadState *state)
+static gboolean
+gimp_group_layer_load_enter (GimpLoadState  *state,
+                             const gchar   **attribute_names,
+                             const gchar   **attribute_values,
+                             gpointer        user_data,
+                             GError        **error)
 {
-  gimp_savable_load_add_handlers (state, "group-layer",
-                                  gimp_group_layer_enter,
-                                  gimp_subclass_layer_exit,
-                                  NULL, NULL);
+  GimpLayer     *layer;
+  const gchar   *name   = NULL;
+  GimpLayer     *parent = NULL;
+  GimpContainer *container;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "name") == 0)
+        name = *attribute_values;
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
+#define GIMPTYPE_TO_POINTER(t) ((gpointer) (guintptr) (t))
+  parent_savable_iface->load_enter (state, attribute_names, attribute_values,
+                                    GIMPTYPE_TO_POINTER (GIMP_TYPE_GROUP_LAYER),
+                                    error);
+#undef GIMPTYPE_TO_POINTER
+
+  gimp_savable_load_add_handlers (state, "layers",
+                                  gimp_group_layer_enter_layers,
+                                  NULL, NULL, NULL);
+  layer = gimp_group_layer_new (state->image);
+
+  if (name == NULL)
+    g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                 "%s: missing layer group name.",
+                 G_STRFUNC);
+  else
+    gimp_object_set_name (GIMP_OBJECT (layer), name);
+
+  /* Insert the group layer immediately on purpose, unlike other types
+   * of layers, so that we can add children to it before the element
+   * closes.
+   */
+  if (GIMP_IS_GROUP_LAYER (gimp_savable_load_peek_active_object (state)))
+    {
+      parent    = GIMP_LAYER (gimp_savable_load_peek_active_object (state));
+      container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+    }
+  else
+    {
+      container = gimp_image_get_layers (state->image);
+    }
+
+  gimp_image_add_layer (state->image, layer, parent,
+                        gimp_container_get_n_children (container),
+                        FALSE);
+
+  gimp_savable_load_push_active_object (state, G_OBJECT (layer));
+
+  return TRUE;
 }
 
 
@@ -2448,69 +2505,6 @@ gimp_group_layer_proj_update (GimpProjection *proj,
                             y - gimp_item_get_offset_y (GIMP_ITEM (group)),
                             width, height);
     }
-}
-
-static gboolean
-gimp_group_layer_enter (GimpLoadState  *state,
-                        const gchar   **attribute_names,
-                        const gchar   **attribute_values,
-                        gpointer        user_data,
-                        GError        **error)
-{
-  GimpLayer     *layer;
-  const gchar   *name   = NULL;
-  GimpLayer     *parent = NULL;
-  GimpContainer *container;
-
-  while (*attribute_names)
-    {
-      if (g_strcmp0 (*attribute_names, "name") == 0)
-        name = *attribute_values;
-      else
-        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                     "%s: unexpected attribute: '%s'",
-                     G_STRFUNC, *attribute_names);
-
-      attribute_names++;
-      attribute_values++;
-    }
-
-  gimp_subclass_layer_enter (state, attribute_names, attribute_values,
-                             user_data, error);
-
-  gimp_savable_load_add_handlers (state, "layers",
-                                  gimp_group_layer_enter_layers,
-                                  NULL, NULL, NULL);
-  layer = gimp_group_layer_new (state->image);
-
-  if (name == NULL)
-    g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                 "%s: missing layer group name.",
-                 G_STRFUNC);
-  else
-    gimp_object_set_name (GIMP_OBJECT (layer), name);
-
-  /* Insert the group layer immediately on purpose, unlike other types
-   * of layers, so that we can add children to it before the element
-   * closes.
-   */
-  if (GIMP_IS_GROUP_LAYER (gimp_savable_load_peek_active_object (state)))
-    {
-      parent    = GIMP_LAYER (gimp_savable_load_peek_active_object (state));
-      container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
-    }
-  else
-    {
-      container = gimp_image_get_layers (state->image);
-    }
-
-  gimp_image_add_layer (state->image, layer, parent,
-                        gimp_container_get_n_children (container),
-                        FALSE);
-
-  gimp_savable_load_push_active_object (state, G_OBJECT (layer));
-
-  return TRUE;
 }
 
 static gboolean

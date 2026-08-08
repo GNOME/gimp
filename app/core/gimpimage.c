@@ -763,8 +763,10 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
 static void
 gimp_savable_iface_init (GimpSavableInterface *iface)
 {
-  iface->save = gimp_image_savable_save;
-  iface->load = gimp_image_savable_load;
+  iface->tag        = "xcf";
+  iface->save       = gimp_image_savable_save;
+  iface->load_enter = gimp_image_load_enter;
+  iface->load_exit  = NULL;
 }
 
 static void

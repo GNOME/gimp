@@ -23,15 +23,19 @@
 #include "gimpsavable.h"
 
 
-void         gimp_image_save_to_cache   (GimpImage     *image,
-                                         GFile         *xcf_file);
+void         gimp_image_save_to_cache   (GimpImage      *image,
+                                         GFile          *xcf_file);
 
-GimpImage  * gimp_image_load_from_cache (Gimp          *gimp,
-                                         GFile         *backup_subdir);
+GimpImage  * gimp_image_load_from_cache (Gimp           *gimp,
+                                         GFile          *backup_subdir);
 
 
 /* Protected functions (use only in GimpImage implementation). */
 
-void         gimp_image_savable_save    (GimpSavable   *savable,
-                                         GimpSaveState *state);
-void         gimp_image_savable_load    (GimpLoadState *state);
+void         gimp_image_savable_save    (GimpSavable    *savable,
+                                         GimpSaveState  *state);
+gboolean     gimp_image_load_enter      (GimpLoadState  *state,
+                                         const gchar   **attribute_names,
+                                         const gchar   **attribute_values,
+                                         gpointer        user_data,
+                                         GError        **error);

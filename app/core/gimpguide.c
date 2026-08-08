@@ -62,11 +62,9 @@ static void       gimp_guide_set_property       (GObject               *object,
                                                  const GValue          *value,
                                                  GParamSpec            *pspec);
 
-static void       gimp_guide_savable_save       (GimpSavable           *savable,
+static void       gimp_guide_save               (GimpSavable           *savable,
                                                  GimpSaveState         *state);
-static void       gimp_guide_savable_load       (GimpLoadState         *state);
-
-static gboolean   gimp_guide_enter_guide        (GimpLoadState         *state,
+static gboolean   gimp_guide_load_enter         (GimpLoadState         *state,
                                                  const gchar          **attribute_names,
                                                  const gchar          **attribute_values,
                                                  gpointer               user_data,
@@ -113,8 +111,10 @@ gimp_guide_class_init (GimpGuideClass *klass)
 static void
 gimp_guide_savable_iface_init (GimpSavableInterface *iface)
 {
-  iface->save = gimp_guide_savable_save;
-  iface->load = gimp_guide_savable_load;
+  iface->tag        = "guide";
+  iface->save       = gimp_guide_save;
+  iface->load_enter = gimp_guide_load_enter;
+  iface->load_exit  = NULL;
 }
 
 static void
@@ -174,8 +174,8 @@ gimp_guide_set_property (GObject      *object,
 }
 
 static void
-gimp_guide_savable_save (GimpSavable   *savable,
-                         GimpSaveState *state)
+gimp_guide_save (GimpSavable   *savable,
+                 GimpSaveState *state)
 {
   GimpGuide *guide = GIMP_GUIDE (savable);
 
@@ -185,12 +185,66 @@ gimp_guide_savable_save (GimpSavable   *savable,
                               NULL);
 }
 
-static void
-gimp_guide_savable_load (GimpLoadState *state)
+static gboolean
+gimp_guide_load_enter (GimpLoadState  *state,
+                       const gchar   **attribute_names,
+                       const gchar   **attribute_values,
+                       gpointer        user_data,
+                       GError        **error)
 {
-  gimp_savable_load_add_handlers (state, "guide",
-                                  gimp_guide_enter_guide,
-                                  NULL, NULL, NULL);
+  const gchar *orientation = NULL;
+  const gchar *position    = NULL;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "orientation") == 0)
+        orientation = *attribute_values;
+      else if (g_strcmp0 (*attribute_names, "position") == 0)
+        position = *attribute_values;
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  if ((! orientation || ! position) && *error == NULL)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: missing orientation and/or position attributes.",
+                   G_STRFUNC);
+    }
+  else
+    {
+      GimpOrientationType o = GIMP_ORIENTATION_UNKNOWN;
+      gint                p = -1;
+
+      gimp_savable_load_store_from_string (state,
+                                           "orientation", "%[GimpOrientationType]", orientation,
+                                           "position",    "%d",                     position,
+                                           NULL);
+      gimp_savable_load_get_values (state,
+                                    "orientation", &o,
+                                    "position",    &p,
+                                    NULL);
+      switch (o)
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          gimp_image_add_hguide (state->image, p, FALSE);
+          break;
+        case GIMP_ORIENTATION_VERTICAL:
+          gimp_image_add_vguide (state->image, p, FALSE);
+          break;
+        default:
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                       "%s: ignoring guide of orientation '%s' and position %s.\n",
+                       G_STRFUNC, orientation, position);
+        }
+    }
+
+  return TRUE;
 }
 
 GimpGuide *
@@ -284,69 +338,4 @@ gimp_guide_is_custom (GimpGuide *guide)
   g_return_val_if_fail (GIMP_IS_GUIDE (guide), FALSE);
 
   return guide->priv->style != GIMP_GUIDE_STYLE_NORMAL;
-}
-
-
-/* Private Functions */
-
-gboolean
-gimp_guide_enter_guide (GimpLoadState  *state,
-                        const gchar   **attribute_names,
-                        const gchar   **attribute_values,
-                        gpointer        user_data,
-                        GError        **error)
-{
-  const gchar *orientation = NULL;
-  const gchar *position    = NULL;
-
-  while (*attribute_names)
-    {
-      if (g_strcmp0 (*attribute_names, "orientation") == 0)
-        orientation = *attribute_values;
-      else if (g_strcmp0 (*attribute_names, "position") == 0)
-        position = *attribute_values;
-      else
-        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                     "%s: unexpected attribute: '%s'",
-                     G_STRFUNC, *attribute_names);
-
-      attribute_names++;
-      attribute_values++;
-    }
-
-  if ((! orientation || ! position) && *error == NULL)
-    {
-      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                   "%s: missing orientation and/or position attributes.",
-                   G_STRFUNC);
-    }
-  else
-    {
-      GimpOrientationType o = GIMP_ORIENTATION_UNKNOWN;
-      gint                p = -1;
-
-      gimp_savable_load_store_from_string (state,
-                                           "orientation", "%[GimpOrientationType]", orientation,
-                                           "position",    "%d",                     position,
-                                           NULL);
-      gimp_savable_load_get_values (state,
-                                    "orientation", &o,
-                                    "position",    &p,
-                                    NULL);
-      switch (o)
-        {
-        case GIMP_ORIENTATION_HORIZONTAL:
-          gimp_image_add_hguide (state->image, p, FALSE);
-          break;
-        case GIMP_ORIENTATION_VERTICAL:
-          gimp_image_add_vguide (state->image, p, FALSE);
-          break;
-        default:
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
-                       "%s: ignoring guide of orientation '%s' and position %s.\n",
-                       G_STRFUNC, orientation, position);
-        }
-    }
-
-  return TRUE;
 }

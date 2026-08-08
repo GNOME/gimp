@@ -173,7 +173,11 @@ static void       gimp_drawable_get_pixel_average  (GimpPickable      *pickable,
 
 static void       gimp_drawable_save               (GimpSavable       *savable,
                                                     GimpSaveState     *state);
-static void       gimp_drawable_load               (GimpLoadState     *state);
+static gboolean   gimp_drawable_load_enter         (GimpLoadState     *state,
+                                                    const gchar      **attribute_names,
+                                                    const gchar      **attribute_values,
+                                                    gpointer           user_data,
+                                                    GError           **error);
 
 static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               x,
@@ -401,8 +405,9 @@ gimp_savable_iface_init (GimpSavableInterface *iface)
 {
   parent_savable_iface = g_type_interface_peek_parent (iface);
 
-  iface->save = gimp_drawable_save;
-  iface->load = gimp_drawable_load;
+  iface->tag        = NULL;
+  iface->save       = gimp_drawable_save;
+  iface->load_enter = gimp_drawable_load_enter;
 }
 
 static void
@@ -1068,10 +1073,14 @@ gimp_drawable_save (GimpSavable   *savable,
     }
 }
 
-static void
-gimp_drawable_load (GimpLoadState *state)
+static gboolean
+gimp_drawable_load_enter (GimpLoadState  *state,
+                          const gchar   **attribute_names,
+                          const gchar   **attribute_values,
+                          gpointer        user_data,
+                          GError        **error)
 {
-  parent_savable_iface->load (state);
+  parent_savable_iface->load_enter (state, attribute_names, attribute_values, user_data, error);
 
   gimp_savable_load_add_simple_handler (state, "dimensions", NULL,
                                         NULL, NULL, NULL,
@@ -1088,6 +1097,8 @@ gimp_drawable_load (GimpLoadState *state)
   gimp_savable_load_add_handlers (state, "filters",
                                   gimp_drawable_enter_filters,
                                   NULL, NULL, NULL);
+
+  return TRUE;
 }
 
 static void

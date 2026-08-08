@@ -66,11 +66,6 @@
 #include "gimp-intl.h"
 
 
-static gboolean   gimp_image_enter_xcf         (GimpLoadState        *state,
-                                                const gchar         **attribute_names,
-                                                const gchar         **attribute_values,
-                                                gpointer              user_data,
-                                                GError               **error);
 static gboolean   gimp_image_enter_spaces      (GimpLoadState         *state,
                                                 const gchar          **attribute_names,
                                                 const gchar          **attribute_values,
@@ -362,22 +357,12 @@ gimp_image_savable_save (GimpSavable   *savable,
   g_clear_pointer (&state->spaces, g_hash_table_unref);
 }
 
-void
-gimp_image_savable_load (GimpLoadState *state)
-{
-  gimp_savable_load_add_handlers (state, "xcf",
-                                  gimp_image_enter_xcf,
-                                  NULL, NULL, NULL);
-}
-
-/* Private Functions */
-
-static gboolean
-gimp_image_enter_xcf (GimpLoadState  *state,
-                      const gchar   **attribute_names,
-                      const gchar   **attribute_values,
-                      gpointer        user_data,
-                      GError         **error)
+gboolean
+gimp_image_load_enter (GimpLoadState  *state,
+                       const gchar   **attribute_names,
+                       const gchar   **attribute_values,
+                       gpointer        user_data,
+                       GError         **error)
 {
   GHashTable *spaces;
 
@@ -423,6 +408,9 @@ gimp_image_enter_xcf (GimpLoadState  *state,
 
   return TRUE;
 }
+
+
+/* Private Functions */
 
 static gboolean
 gimp_image_enter_spaces (GimpLoadState  *state,

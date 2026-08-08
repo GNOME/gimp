@@ -145,7 +145,16 @@ static void       gimp_drawable_filter_finalize              (GObject           
 
 static void       gimp_drawable_filter_save                  (GimpSavable          *savable,
                                                               GimpSaveState        *state);
-static void       gimp_drawable_filter_load                  (GimpLoadState        *state);
+static gboolean   gimp_drawable_filter_load_enter            (GimpLoadState        *state,
+                                                              const gchar         **attribute_names,
+                                                              const gchar         **attribute_values,
+                                                              gpointer              user_data,
+                                                              GError              **error);
+static gboolean   gimp_drawable_filter_load_exit             (GimpLoadState        *state,
+                                                              const gchar          *text,
+                                                              gsize                 len,
+                                                              gpointer              user_data,
+                                                              GError              **error);
 
 static void       gimp_drawable_filter_set_operation         (GimpDrawableFilter   *filter,
                                                               GeglNode             *operation);
@@ -195,16 +204,6 @@ static void       gimp_drawable_filter_reorder               (GimpFilterStack   
                                                               gint                  new_index,
                                                               GimpDrawableFilter   *filter);
 
-static gboolean   gimp_drawable_filter_enter                 (GimpLoadState        *state,
-                                                              const gchar         **attribute_names,
-                                                              const gchar         **attribute_values,
-                                                              gpointer              user_data,
-                                                              GError              **error);
-static gboolean   gimp_drawable_filter_exit                  (GimpLoadState        *state,
-                                                              const gchar          *text,
-                                                              gsize                 len,
-                                                              gpointer              user_data,
-                                                              GError              **error);
 static gboolean   gimp_drawable_filter_enter_operation       (GimpLoadState        *state,
                                                               const gchar         **attribute_names,
                                                               const gchar         **attribute_values,
@@ -298,8 +297,10 @@ gimp_drawable_filter_class_init (GimpDrawableFilterClass *klass)
 static void
 gimp_savable_iface_init (GimpSavableInterface *iface)
 {
-  iface->save = gimp_drawable_filter_save;
-  iface->load = gimp_drawable_filter_load;
+  iface->tag        = "filter";
+  iface->save       = gimp_drawable_filter_save;
+  iface->load_enter = gimp_drawable_filter_load_enter;
+  iface->load_exit  = gimp_drawable_filter_load_exit;
 }
 
 static void
@@ -621,13 +622,143 @@ gimp_drawable_filter_save (GimpSavable   *savable,
   g_free (pspecs);
 }
 
-static void
-gimp_drawable_filter_load (GimpLoadState *state)
+static gboolean
+gimp_drawable_filter_load_enter (GimpLoadState  *state,
+                                 const gchar   **attribute_names,
+                                 const gchar   **attribute_values,
+                                 gpointer        user_data,
+                                 GError        **error)
 {
-  gimp_savable_load_add_handlers (state, "filter",
-                                  gimp_drawable_filter_enter,
-                                  gimp_drawable_filter_exit,
+  GimpDrawableFilter *filter;
+  GimpDrawable       *drawable;
+  const gchar        *name = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "name") == 0)
+        name = *attribute_values;
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  drawable = GIMP_DRAWABLE (gimp_savable_load_peek_active_object (state));
+  filter   = g_object_new (GIMP_TYPE_DRAWABLE_FILTER,
+                           "name",     name,
+                           "drawable", drawable,
+                           "mask",     NULL,
+                           NULL);
+  filter->applicator = gimp_applicator_new (gimp_filter_get_node (GIMP_FILTER (filter)));
+  gimp_savable_load_push_active_object (state, G_OBJECT (filter));
+
+  gimp_savable_load_add_simple_handler (state, "icon", "%s",
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE, NULL);
+  gimp_savable_load_add_handlers (state, "operation",
+                                  gimp_drawable_filter_enter_operation,
+                                  gimp_drawable_filter_exit_operation,
                                   NULL, NULL);
+  gimp_savable_load_add_handlers (state, "mask",
+                                  gimp_drawable_filter_enter_mask,
+                                  NULL, NULL, NULL);
+  gimp_savable_load_add_simple_handler (state, "visible", "%b",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "opacity", "%f",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "mode", "%[GimpLayerMode]",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "blend-space", "%[GimpLayerColorSpace]",
+                                        NULL, NULL, NULL, FALSE, FALSE,
+                                        "auto", "%b", NULL);
+  gimp_savable_load_add_simple_handler (state, "composite-space", "%[GimpLayerColorSpace]",
+                                        NULL, NULL, NULL, FALSE, FALSE,
+                                        "auto", "%b", NULL);
+  gimp_savable_load_add_simple_handler (state, "composite-mode", "%[GimpLayerCompositeMode]",
+                                        NULL, NULL, NULL, FALSE, FALSE,
+                                        "auto", "%b", NULL);
+  gimp_savable_load_add_simple_handler (state, "clip", "%b",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  GIMP_TYPE_FILTER_REGION;
+  gimp_savable_load_add_simple_handler (state, "region", "%[GimpFilterRegion]",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_drawable_filter_load_exit (GimpLoadState  *state,
+                                const gchar    *text,
+                                gsize           len,
+                                gpointer        user_data,
+                                GError        **error)
+{
+  GimpDrawableFilter     *filter;
+  GeglNode               *operation       = NULL;
+  const gchar            *icon            = NULL;
+  GimpLayerMode           mode;
+  GimpLayerColorSpace     blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
+  GimpLayerColorSpace     composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+  GimpLayerCompositeMode  composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
+  gdouble                 opacity         = 1.0;
+  gboolean                visible         = TRUE;
+  gboolean                clip            = TRUE;
+  GimpFilterRegion        region          = GIMP_FILTER_REGION_SELECTION;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  filter = GIMP_DRAWABLE_FILTER (gimp_savable_load_pop_active_object (state));
+
+  if (! gimp_savable_load_get_values (state,
+                                      "operation", &operation,
+                                      NULL))
+    {
+      g_object_unref (filter);
+      return TRUE;
+    }
+
+  gimp_drawable_filter_set_operation (filter, operation);
+
+  GIMP_TYPE_FILTER_REGION;
+  gimp_savable_load_get_values (state,
+                                "icon",    &icon,
+                                "visible", &visible,
+                                "opacity", &opacity,
+                                "clip",    &clip,
+                                "region",  &region,
+                                NULL);
+
+  gimp_viewable_set_icon_name (GIMP_VIEWABLE (filter), icon);
+  gimp_drawable_filter_set_opacity (filter, opacity);
+  gimp_filter_set_active (GIMP_FILTER (filter), visible);
+  gimp_drawable_filter_set_clip (filter, clip);
+  gimp_drawable_filter_set_region (filter, region);
+
+  if (gimp_savable_load_get_values (state,
+                                    "mode",            &mode,
+                                    "blend-space",     &blend_space,
+                                    "composite-space", &composite_space,
+                                    "composite-mode",  &composite_mode,
+                                    NULL))
+    gimp_drawable_filter_set_mode (filter, mode, blend_space,
+                                   composite_space, composite_mode);
+  else
+    g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
+                 "%s: blend and composite information missing.",
+                 G_STRFUNC);
+
+  gimp_drawable_filter_apply_with_mask (filter, GIMP_CHANNEL (filter->mask), NULL);
+  gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
+  gimp_drawable_filter_layer_mask_freeze (filter);
+
+  g_object_unref (filter);
+
+  return TRUE;
 }
 
 GimpDrawableFilter *
@@ -2332,145 +2463,6 @@ gimp_drawable_filter_reorder (GimpFilterStack    *stack,
           gimp_drawable_filter_sync_format (GIMP_LIST (stack)->queue->head->data);
         }
     }
-}
-
-static gboolean
-gimp_drawable_filter_enter (GimpLoadState  *state,
-                            const gchar   **attribute_names,
-                            const gchar   **attribute_values,
-                            gpointer        user_data,
-                            GError        **error)
-{
-  GimpDrawableFilter *filter;
-  GimpDrawable       *drawable;
-  const gchar        *name = NULL;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (gimp_savable_load_peek_active_object (state)), FALSE);
-
-  while (*attribute_names)
-    {
-      if (g_strcmp0 (*attribute_names, "name") == 0)
-        name = *attribute_values;
-      else
-        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                     "%s: unexpected attribute: '%s'",
-                     G_STRFUNC, *attribute_names);
-
-      attribute_names++;
-      attribute_values++;
-    }
-
-  drawable = GIMP_DRAWABLE (gimp_savable_load_peek_active_object (state));
-  filter   = g_object_new (GIMP_TYPE_DRAWABLE_FILTER,
-                           "name",     name,
-                           "drawable", drawable,
-                           "mask",     NULL,
-                           NULL);
-  filter->applicator = gimp_applicator_new (gimp_filter_get_node (GIMP_FILTER (filter)));
-  gimp_savable_load_push_active_object (state, G_OBJECT (filter));
-
-  gimp_savable_load_add_simple_handler (state, "icon", "%s",
-                                        NULL, NULL, NULL,
-                                        FALSE, FALSE, NULL);
-  gimp_savable_load_add_handlers (state, "operation",
-                                  gimp_drawable_filter_enter_operation,
-                                  gimp_drawable_filter_exit_operation,
-                                  NULL, NULL);
-  gimp_savable_load_add_handlers (state, "mask",
-                                  gimp_drawable_filter_enter_mask,
-                                  NULL, NULL, NULL);
-  gimp_savable_load_add_simple_handler (state, "visible", "%b",
-                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "opacity", "%f",
-                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "mode", "%[GimpLayerMode]",
-                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "blend-space", "%[GimpLayerColorSpace]",
-                                        NULL, NULL, NULL, FALSE, FALSE,
-                                        "auto", "%b", NULL);
-  gimp_savable_load_add_simple_handler (state, "composite-space", "%[GimpLayerColorSpace]",
-                                        NULL, NULL, NULL, FALSE, FALSE,
-                                        "auto", "%b", NULL);
-  gimp_savable_load_add_simple_handler (state, "composite-mode", "%[GimpLayerCompositeMode]",
-                                        NULL, NULL, NULL, FALSE, FALSE,
-                                        "auto", "%b", NULL);
-  gimp_savable_load_add_simple_handler (state, "clip", "%b",
-                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
-  GIMP_TYPE_FILTER_REGION;
-  gimp_savable_load_add_simple_handler (state, "region", "%[GimpFilterRegion]",
-                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
-
-  return TRUE;
-}
-
-static gboolean
-gimp_drawable_filter_exit (GimpLoadState  *state,
-                           const gchar    *text,
-                           gsize           len,
-                           gpointer        user_data,
-                           GError        **error)
-{
-  GimpDrawableFilter     *filter;
-  GeglNode               *operation       = NULL;
-  const gchar            *icon            = NULL;
-  GimpLayerMode           mode;
-  GimpLayerColorSpace     blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
-  GimpLayerColorSpace     composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
-  GimpLayerCompositeMode  composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
-  gdouble                 opacity         = 1.0;
-  gboolean                visible         = TRUE;
-  gboolean                clip            = TRUE;
-  GimpFilterRegion        region          = GIMP_FILTER_REGION_SELECTION;
-
-  g_return_val_if_fail (GIMP_IS_DRAWABLE_FILTER (gimp_savable_load_peek_active_object (state)), FALSE);
-
-  filter = GIMP_DRAWABLE_FILTER (gimp_savable_load_pop_active_object (state));
-
-  if (! gimp_savable_load_get_values (state,
-                                      "operation", &operation,
-                                      NULL))
-    {
-      g_object_unref (filter);
-      return TRUE;
-    }
-
-  gimp_drawable_filter_set_operation (filter, operation);
-
-  GIMP_TYPE_FILTER_REGION;
-  gimp_savable_load_get_values (state,
-                                "icon",    &icon,
-                                "visible", &visible,
-                                "opacity", &opacity,
-                                "clip",    &clip,
-                                "region",  &region,
-                                NULL);
-
-  gimp_viewable_set_icon_name (GIMP_VIEWABLE (filter), icon);
-  gimp_drawable_filter_set_opacity (filter, opacity);
-  gimp_filter_set_active (GIMP_FILTER (filter), visible);
-  gimp_drawable_filter_set_clip (filter, clip);
-  gimp_drawable_filter_set_region (filter, region);
-
-  if (gimp_savable_load_get_values (state,
-                                    "mode",            &mode,
-                                    "blend-space",     &blend_space,
-                                    "composite-space", &composite_space,
-                                    "composite-mode",  &composite_mode,
-                                    NULL))
-    gimp_drawable_filter_set_mode (filter, mode, blend_space,
-                                   composite_space, composite_mode);
-  else
-    g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
-                 "%s: blend and composite information missing.",
-                 G_STRFUNC);
-
-  gimp_drawable_filter_apply_with_mask (filter, GIMP_CHANNEL (filter->mask), NULL);
-  gimp_drawable_filter_commit (filter, TRUE, NULL, FALSE);
-  gimp_drawable_filter_layer_mask_freeze (filter);
-
-  g_object_unref (filter);
-
-  return TRUE;
 }
 
 static gboolean

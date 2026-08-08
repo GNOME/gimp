@@ -64,6 +64,22 @@ struct _GimpLoadState
 };
 
 
+/* Return with %FALSE and @error set if the error is fatale.
+ * Return with %TRUE and @error to display a non-fatal error.
+ * Return with %TRUE and a %NULL @error for normal handling.
+ */
+typedef gboolean (* GimpEnterElementHandler) (GimpLoadState  *state,
+                                              const gchar   **attribute_names,
+                                              const gchar   **attribute_values,
+                                              gpointer        user_data,
+                                              GError         **error);
+typedef gboolean (* GimpExitElementhandler)  (GimpLoadState  *state,
+                                              const gchar     *text,
+                                              gsize            len,
+                                              gpointer         user_data,
+                                              GError         **error);
+
+
 #define GIMP_TYPE_SAVABLE (gimp_savable_get_type ())
 G_DECLARE_INTERFACE (GimpSavable, gimp_savable, GIMP, SAVABLE, GObject)
 
@@ -72,10 +88,14 @@ struct _GimpSavableInterface
 {
   GTypeInterface base_iface;
 
+  const gchar *tag;
+
   /*  virtual functions  */
   void   (* save) (GimpSavable   *savable,
                    GimpSaveState *state);
-  void   (* load) (GimpLoadState *state);
+
+  GimpEnterElementHandler load_enter;
+  GimpExitElementhandler  load_exit;
 };
 
 

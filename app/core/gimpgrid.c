@@ -69,16 +69,14 @@ static void     gimp_grid_set_property       (GObject              *object,
                                               const GValue         *value,
                                               GParamSpec           *pspec);
 
-static void     gimp_grid_savable_save       (GimpSavable           *savable,
+static void     gimp_grid_save               (GimpSavable           *savable,
                                               GimpSaveState         *state);
-static void     gimp_grid_savable_load       (GimpLoadState         *state);
-
-static gboolean gimp_grid_enter_grid         (GimpLoadState         *state,
+static gboolean gimp_grid_load_enter         (GimpLoadState         *state,
                                               const gchar          **attribute_names,
                                               const gchar          **attribute_values,
                                               gpointer               user_data,
                                               GError               **error);
-static gboolean gimp_grid_exit_grid          (GimpLoadState         *state,
+static gboolean gimp_grid_load_exit          (GimpLoadState         *state,
                                               const gchar           *text,
                                               gsize                  len,
                                               gpointer               user_data,
@@ -200,8 +198,10 @@ gimp_grid_class_init (GimpGridClass *klass)
 static void
 gimp_grid_savable_iface_init (GimpSavableInterface *iface)
 {
-  iface->save = gimp_grid_savable_save;
-  iface->load = gimp_grid_savable_load;
+  iface->tag        = "grid";
+  iface->save       = gimp_grid_save;
+  iface->load_enter = gimp_grid_load_enter;
+  iface->load_exit  = gimp_grid_load_exit;
 }
 
 static void
@@ -311,8 +311,8 @@ gimp_grid_set_property (GObject      *object,
 }
 
 static void
-gimp_grid_savable_save (GimpSavable   *savable,
-                        GimpSaveState *state)
+gimp_grid_save (GimpSavable   *savable,
+                GimpSaveState *state)
 {
   GimpGrid *grid = GIMP_GRID (savable);
 
@@ -350,13 +350,95 @@ gimp_grid_savable_save (GimpSavable   *savable,
   gimp_savable_print_element_end (state, "grid");
 }
 
-static void
-gimp_grid_savable_load (GimpLoadState *state)
+static gboolean
+gimp_grid_load_enter (GimpLoadState  *state,
+                      const gchar   **attribute_names,
+                      const gchar   **attribute_values,
+                      gpointer        user_data,
+                      GError        **error)
 {
-  gimp_savable_load_add_handlers (state, "grid",
-                                  gimp_grid_enter_grid,
-                                  gimp_grid_exit_grid,
-                                  NULL, NULL);
+  gimp_savable_load_add_simple_handler (state, "style", "%[GimpGridStyle]",
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_handlers (state, "foreground",
+                                  gimp_grid_enter_fg_bg,
+                                  gimp_grid_exit_fg_bg,
+                                  "foreground", NULL);
+  gimp_savable_load_add_handlers (state, "background",
+                                  gimp_grid_enter_fg_bg,
+                                  gimp_grid_exit_fg_bg,
+                                  "background", NULL);
+  gimp_savable_load_add_simple_handler (state, "spacing", NULL,
+                                        NULL, NULL, NULL,
+                                        TRUE, FALSE,
+                                        "x", "%f",
+                                        "y", "%f",
+                                        NULL);
+  gimp_savable_load_add_handlers (state, "spacing-unit",
+                                  gimp_grid_enter_unit,
+                                  gimp_grid_exit_unit,
+                                  "spacing-unit", NULL);
+  gimp_savable_load_add_simple_handler (state, "offset", NULL,
+                                        NULL, NULL, NULL,
+                                        TRUE, FALSE,
+                                        "x", "%f",
+                                        "y", "%f",
+                                        NULL);
+  gimp_savable_load_add_handlers (state, "offset-unit",
+                                  gimp_grid_enter_unit,
+                                  gimp_grid_exit_unit,
+                                  "offset-unit", NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_grid_load_exit (GimpLoadState  *state,
+                     const gchar    *text,
+                     gsize           len,
+                     gpointer        user_data,
+                     GError        **error)
+{
+  GeglColor     *fg;
+  GeglColor     *bg;
+  GimpGridStyle  style;
+  GimpUnit      *spacing_unit;
+  GimpUnit      *offset_unit;
+  gdouble        x_spacing;
+  gdouble        y_spacing;
+  gdouble        x_offset;
+  gdouble        y_offset;
+
+  if (gimp_savable_load_get_values (state,
+                                "style",        &style,
+                                "foreground",   &fg,
+                                "background",   &bg,
+                                "spacing:x",    &x_spacing,
+                                "spacing:y",    &y_spacing,
+                                "offset:x",     &x_offset,
+                                "offset:y",     &y_offset,
+                                "spacing-unit", &spacing_unit,
+                                "offset-unit",  &offset_unit,
+                                NULL))
+    {
+      GimpGrid *grid;
+
+      grid = g_object_new (GIMP_TYPE_GRID,
+                           "style",        style,
+                           "fgcolor",      fg,
+                           "bgcolor",      bg,
+                           "xspacing",     x_spacing,
+                           "yspacing",     y_spacing,
+                           "spacing-unit", spacing_unit,
+                           "xoffset",      x_offset,
+                           "yoffset",      y_offset,
+                           "offset-unit",  offset_unit,
+                           NULL);
+
+      gimp_savable_load_store_value (state, "grid", grid, g_object_unref);
+      gimp_savable_load_bubble_up (state, "grid");
+    }
+
+  return TRUE;
 }
 
 
@@ -458,97 +540,6 @@ gimp_grid_from_parasite (const GimpParasite *parasite)
 
 
 /* Private Functions */
-
-static gboolean
-gimp_grid_enter_grid (GimpLoadState  *state,
-                      const gchar   **attribute_names,
-                      const gchar   **attribute_values,
-                      gpointer        user_data,
-                      GError        **error)
-{
-  gimp_savable_load_add_simple_handler (state, "style", "%[GimpGridStyle]",
-                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_handlers (state, "foreground",
-                                  gimp_grid_enter_fg_bg,
-                                  gimp_grid_exit_fg_bg,
-                                  "foreground", NULL);
-  gimp_savable_load_add_handlers (state, "background",
-                                  gimp_grid_enter_fg_bg,
-                                  gimp_grid_exit_fg_bg,
-                                  "background", NULL);
-  gimp_savable_load_add_simple_handler (state, "spacing", NULL,
-                                        NULL, NULL, NULL,
-                                        TRUE, FALSE,
-                                        "x", "%f",
-                                        "y", "%f",
-                                        NULL);
-  gimp_savable_load_add_handlers (state, "spacing-unit",
-                                  gimp_grid_enter_unit,
-                                  gimp_grid_exit_unit,
-                                  "spacing-unit", NULL);
-  gimp_savable_load_add_simple_handler (state, "offset", NULL,
-                                        NULL, NULL, NULL,
-                                        TRUE, FALSE,
-                                        "x", "%f",
-                                        "y", "%f",
-                                        NULL);
-  gimp_savable_load_add_handlers (state, "offset-unit",
-                                  gimp_grid_enter_unit,
-                                  gimp_grid_exit_unit,
-                                  "offset-unit", NULL);
-
-  return TRUE;
-}
-
-static gboolean
-gimp_grid_exit_grid (GimpLoadState  *state,
-                     const gchar    *text,
-                     gsize           len,
-                     gpointer        user_data,
-                     GError        **error)
-{
-  GeglColor     *fg;
-  GeglColor     *bg;
-  GimpGridStyle  style;
-  GimpUnit      *spacing_unit;
-  GimpUnit      *offset_unit;
-  gdouble        x_spacing;
-  gdouble        y_spacing;
-  gdouble        x_offset;
-  gdouble        y_offset;
-
-  if (gimp_savable_load_get_values (state,
-                                "style",        &style,
-                                "foreground",   &fg,
-                                "background",   &bg,
-                                "spacing:x",    &x_spacing,
-                                "spacing:y",    &y_spacing,
-                                "offset:x",     &x_offset,
-                                "offset:y",     &y_offset,
-                                "spacing-unit", &spacing_unit,
-                                "offset-unit",  &offset_unit,
-                                NULL))
-    {
-      GimpGrid *grid;
-
-      grid = g_object_new (GIMP_TYPE_GRID,
-                           "style",        style,
-                           "fgcolor",      fg,
-                           "bgcolor",      bg,
-                           "xspacing",     x_spacing,
-                           "yspacing",     y_spacing,
-                           "spacing-unit", spacing_unit,
-                           "xoffset",      x_offset,
-                           "yoffset",      y_offset,
-                           "offset-unit",  offset_unit,
-                           NULL);
-
-      gimp_savable_load_store_value (state, "grid", grid, g_object_unref);
-      gimp_savable_load_bubble_up (state, "grid");
-    }
-
-  return TRUE;
-}
 
 static gboolean
 gimp_grid_enter_fg_bg (GimpLoadState  *state,

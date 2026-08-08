@@ -134,9 +134,13 @@ static void       gimp_item_get_property            (GObject                   *
 static gint64     gimp_item_get_memsize             (GimpObject                *object,
                                                      gint64                    *gui_size);
 
-static void       gimp_item_savable_save            (GimpSavable               *savable,
+static void       gimp_item_save                    (GimpSavable               *savable,
                                                      GimpSaveState             *state);
-static void       gimp_item_savable_load            (GimpLoadState             *state);
+static gboolean   gimp_item_load_enter              (GimpLoadState             *state,
+                                                     const gchar              **attribute_names,
+                                                     const gchar              **attribute_values,
+                                                     gpointer                   user_data,
+                                                     GError                   **error);
 
 static gboolean   gimp_item_real_is_content_locked  (GimpItem                  *item,
                                                      GimpItem                 **locked_item);
@@ -362,8 +366,10 @@ gimp_item_class_init (GimpItemClass *klass)
 static void
 gimp_item_savable_iface_init (GimpSavableInterface *iface)
 {
-  iface->save = gimp_item_savable_save;
-  iface->load = gimp_item_savable_load;
+  iface->tag        = NULL;
+  iface->save       = gimp_item_save;
+  iface->load_enter = gimp_item_load_enter;
+  iface->load_exit  = NULL;
 }
 
 static void
@@ -497,8 +503,8 @@ gimp_item_get_memsize (GimpObject *object,
 }
 
 static void
-gimp_item_savable_save (GimpSavable   *savable,
-                        GimpSaveState *state)
+gimp_item_save (GimpSavable   *savable,
+                GimpSaveState *state)
 {
   GimpItem         *item  = GIMP_ITEM (savable);
   GimpImage        *image = gimp_item_get_image (item);
@@ -533,8 +539,12 @@ gimp_item_savable_save (GimpSavable   *savable,
     gimp_savable_save (GIMP_SAVABLE (parasites), state);
 }
 
-static void
-gimp_item_savable_load (GimpLoadState *state)
+static gboolean
+gimp_item_load_enter (GimpLoadState  *state,
+                      const gchar   **attribute_names,
+                      const gchar   **attribute_values,
+                      gpointer        user_data,
+                      GError        **error)
 {
   gimp_savable_load_add_simple_handler (state, "name", "%s",
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
@@ -554,6 +564,8 @@ gimp_item_savable_load (GimpLoadState *state)
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
 
   /* TODO: add parasite loading. */
+
+  return TRUE;
 }
 
 static gboolean

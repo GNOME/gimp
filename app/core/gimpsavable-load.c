@@ -185,8 +185,11 @@ gimp_savable_load (GType          savable_type,
   klass = g_type_class_ref (savable_type);
   iface = g_type_interface_peek (klass, GIMP_TYPE_SAVABLE);
 
-  if (iface->load)
-    iface->load (state);
+  if (iface->tag)
+    gimp_savable_load_add_handlers (state, iface->tag,
+                                    iface->load_enter,
+                                    iface->load_exit,
+                                    NULL, NULL);
 
   g_type_class_unref (klass);
 }

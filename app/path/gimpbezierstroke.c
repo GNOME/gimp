@@ -48,10 +48,20 @@ static void
     gimp_bezier_stroke_savable_iface_init  (GimpSavableInterface  *iface);
 
 static void
-    gimp_bezier_stroke_savable_save        (GimpSavable           *savable,
+    gimp_bezier_stroke_save                (GimpSavable           *savable,
                                             GimpSaveState         *state);
-static void
-    gimp_bezier_stroke_savable_load        (GimpLoadState         *state);
+static gboolean
+    gimp_bezier_stroke_load_enter          (GimpLoadState         *state,
+                                            const gchar          **attribute_names,
+                                            const gchar          **attribute_values,
+                                            gpointer               user_data,
+                                            GError               **error);
+static gboolean
+    gimp_bezier_stroke_load_exit           (GimpLoadState         *state,
+                                            const gchar           *text,
+                                            gsize                  len,
+                                            gpointer               user_data,
+                                            GError               **error);
 
 static gdouble
     gimp_bezier_stroke_nearest_point_get   (GimpStroke            *stroke,
@@ -165,16 +175,6 @@ static void gimp_bezier_stroke_finalize    (GObject               *object);
 static GList * gimp_bezier_stroke_get_anchor_listitem
                                            (GList                 *list);
 
-static gboolean gimp_bezier_stroke_enter   (GimpLoadState         *state,
-                                            const gchar          **attribute_names,
-                                            const gchar          **attribute_values,
-                                            gpointer               user_data,
-                                            GError               **error);
-static gboolean gimp_bezier_stroke_exit    (GimpLoadState         *state,
-                                            const gchar           *text,
-                                            gsize                  len,
-                                            gpointer               user_data,
-                                            GError               **error);
 static gboolean gimp_bezier_stroke_exit_cp (GimpLoadState         *state,
                                             const gchar           *text,
                                             gsize                  len,
@@ -224,8 +224,10 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
 static void
 gimp_bezier_stroke_savable_iface_init (GimpSavableInterface *iface)
 {
-  iface->save = gimp_bezier_stroke_savable_save;
-  iface->load = gimp_bezier_stroke_savable_load;
+  iface->tag        = "bezier-stroke";
+  iface->save       = gimp_bezier_stroke_save;
+  iface->load_enter = gimp_bezier_stroke_load_enter;
+  iface->load_exit  = gimp_bezier_stroke_load_exit;
 }
 
 static void
@@ -240,8 +242,8 @@ gimp_bezier_stroke_finalize (GObject *object)
 }
 
 static void
-gimp_bezier_stroke_savable_save (GimpSavable   *savable,
-                                 GimpSaveState *state)
+gimp_bezier_stroke_save (GimpSavable   *savable,
+                         GimpSaveState *state)
 {
   GimpBezierStroke *stroke = GIMP_BEZIER_STROKE (savable);
   guint32           closed;
@@ -272,17 +274,80 @@ gimp_bezier_stroke_savable_save (GimpSavable   *savable,
   g_array_free (control_points, TRUE);
 }
 
-static void
-gimp_bezier_stroke_savable_load (GimpLoadState *state)
+static gboolean
+gimp_bezier_stroke_load_enter (GimpLoadState  *state,
+                               const gchar   **attribute_names,
+                               const gchar   **attribute_values,
+                               gpointer        user_data,
+                               GError        **error)
 {
-  g_return_if_fail (GIMP_IS_PATH (gimp_savable_load_peek_active_object (state)));
+  GimpValueArray *control_points;
 
-  gimp_savable_load_add_handlers (state, "bezier-stroke",
-                                  gimp_bezier_stroke_enter,
-                                  gimp_bezier_stroke_exit,
-                                  gimp_savable_load_peek_active_object (state),
-                                  NULL);
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "closed") == 0)
+        {
+          gimp_savable_load_store_from_string (state, "closed", "%b", "true", NULL);
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  control_points = gimp_value_array_new (6);
+  gimp_savable_load_store_value (state, "control-points", control_points, NULL);
+  gimp_savable_load_add_simple_handler (state, "control-point", NULL,
+                                        (GimpExitElementhandler) gimp_bezier_stroke_exit_cp,
+                                        control_points, NULL,
+                                        TRUE, FALSE,
+                                        "type", "%s",
+                                        "x",    "%f",
+                                        "y",    "%f",
+                                        NULL);
+  return TRUE;
 }
+
+static gboolean
+gimp_bezier_stroke_load_exit (GimpLoadState  *state,
+                              const gchar    *text,
+                              gsize           len,
+                              gpointer        user_data,
+                              GError        **error)
+{
+  GimpBezierStroke *stroke;
+  GimpPath         *path;
+  GimpValueArray   *control_points = NULL;
+  gboolean          closed         = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_PATH (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  path = GIMP_PATH (gimp_savable_load_peek_active_object (state));
+
+  /* We know that "control-points" exists. As for "closed", it may not
+   * exist, which will mean it's FALSE.
+   */
+  gimp_savable_load_get_values (state,
+                                "control-points", &control_points,
+                                "closed",         &closed,
+                                NULL);
+  stroke = g_object_new (GIMP_TYPE_BEZIER_STROKE,
+                         "closed",         closed,
+                         "control-points", control_points,
+                         NULL);
+  gimp_path_stroke_add (path, GIMP_STROKE (stroke));
+
+  gimp_value_array_unref (control_points);
+  g_object_unref (stroke);
+
+  return TRUE;
+}
+
 
 /* Bezier specific functions */
 
@@ -2514,76 +2579,6 @@ gimp_bezier_stroke_get_anchor_listitem (GList *list)
   g_return_val_if_fail (/* bezier stroke inconsistent! */ FALSE, NULL);
 
   return NULL;
-}
-
-static gboolean
-gimp_bezier_stroke_enter (GimpLoadState  *state,
-                          const gchar   **attribute_names,
-                          const gchar   **attribute_values,
-                          gpointer        user_data,
-                          GError        **error)
-{
-  GimpValueArray *control_points;
-
-  while (*attribute_names)
-    {
-      if (g_strcmp0 (*attribute_names, "closed") == 0)
-        {
-          gimp_savable_load_store_from_string (state, "closed", "%b", "true", NULL);
-        }
-      else
-        {
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                       "%s: unexpected attribute: '%s'",
-                       G_STRFUNC, *attribute_names);
-        }
-
-      attribute_names++;
-      attribute_values++;
-    }
-
-  control_points = gimp_value_array_new (6);
-  gimp_savable_load_store_value (state, "control-points", control_points, NULL);
-  gimp_savable_load_add_simple_handler (state, "control-point", NULL,
-                                        (GimpExitElementhandler) gimp_bezier_stroke_exit_cp,
-                                        control_points, NULL,
-                                        TRUE, FALSE,
-                                        "type", "%s",
-                                        "x",    "%f",
-                                        "y",    "%f",
-                                        NULL);
-  return TRUE;
-}
-
-static gboolean
-gimp_bezier_stroke_exit (GimpLoadState  *state,
-                         const gchar    *text,
-                         gsize           len,
-                         gpointer        user_data,
-                         GError        **error)
-{
-  GimpBezierStroke *stroke;
-  GimpPath         *path           = GIMP_PATH (user_data);
-  GimpValueArray   *control_points = NULL;
-  gboolean          closed         = FALSE;
-
-  /* We know that "control-points" exists. As for "closed", it may not
-   * exist, which will mean it's FALSE.
-   */
-  gimp_savable_load_get_values (state,
-                                "control-points", &control_points,
-                                "closed",         &closed,
-                                NULL);
-  stroke = g_object_new (GIMP_TYPE_BEZIER_STROKE,
-                         "closed",         closed,
-                         "control-points", control_points,
-                         NULL);
-  gimp_path_stroke_add (path, GIMP_STROKE (stroke));
-
-  gimp_value_array_unref (control_points);
-  g_object_unref (stroke);
-
-  return TRUE;
 }
 
 static gboolean

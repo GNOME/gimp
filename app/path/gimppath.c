@@ -75,9 +75,18 @@ static void       gimp_path_finalize                (GObject                   *
 static gint64     gimp_path_get_memsize             (GimpObject                *object,
                                                      gint64                    *gui_size);
 
-static void       gimp_path_savable_save            (GimpSavable               *savable,
+static void       gimp_path_save                    (GimpSavable               *savable,
                                                      GimpSaveState             *state);
-static void       gimp_path_savable_load            (GimpLoadState             *state);
+static gboolean   gimp_path_load_enter              (GimpLoadState             *state,
+                                                     const gchar              **attribute_names,
+                                                     const gchar              **attribute_values,
+                                                     gpointer                   user_data,
+                                                     GError                   **error);
+static gboolean   gimp_path_load_exit               (GimpLoadState             *state,
+                                                     const gchar               *text,
+                                                     gsize                      len,
+                                                     gpointer                   user_data,
+                                                     GError                   **error);
 
 static gboolean   gimp_path_is_attached             (GimpItem                  *item);
 static GimpItemTree * gimp_path_get_tree            (GimpItem                  *item);
@@ -184,16 +193,6 @@ static gboolean   gimp_path_attached_to_vector_layer_rec
 static GimpBezierDesc * gimp_path_make_bezier       (GimpPath                  *path);
 static GimpBezierDesc * gimp_path_real_make_bezier  (GimpPath                  *path);
 
-static gboolean         gimp_path_enter             (GimpLoadState             *state,
-                                                     const gchar              **attribute_names,
-                                                     const gchar              **attribute_values,
-                                                     gpointer                   user_data,
-                                                     GError                   **error);
-static gboolean         gimp_path_exit              (GimpLoadState             *state,
-                                                     const gchar               *text,
-                                                     gsize                      len,
-                                                     gpointer                   user_data,
-                                                     GError                   **error);
 static gboolean         gimp_path_enter_strokes     (GimpLoadState             *state,
                                                      const gchar              **attribute_names,
                                                      const gchar              **attribute_values,
@@ -301,8 +300,10 @@ gimp_path_savable_iface_init (GimpSavableInterface *iface)
 {
   parent_savable_iface = g_type_interface_peek_parent (iface);
 
-  iface->save = gimp_path_savable_save;
-  iface->load = gimp_path_savable_load;
+  iface->tag        = "path";
+  iface->save       = gimp_path_save;
+  iface->load_enter = gimp_path_load_enter;
+  iface->load_exit  = gimp_path_load_exit;
 }
 
 static void
@@ -365,8 +366,8 @@ gimp_path_get_memsize (GimpObject *object,
 }
 
 static void
-gimp_path_savable_save (GimpSavable   *savable,
-                        GimpSaveState *state)
+gimp_path_save (GimpSavable   *savable,
+                GimpSaveState *state)
 {
   GimpPath *path = GIMP_PATH (savable);
   GList    *iter;
@@ -387,13 +388,67 @@ gimp_path_savable_save (GimpSavable   *savable,
   gimp_savable_print_element_end (state, "path");
 }
 
-static void
-gimp_path_savable_load (GimpLoadState *state)
+static gboolean
+gimp_path_load_enter (GimpLoadState  *state,
+                      const gchar   **attribute_names,
+                      const gchar   **attribute_values,
+                      gpointer        user_data,
+                      GError        **error)
 {
-  gimp_savable_load_add_handlers (state, "path",
-                                  gimp_path_enter,
-                                  gimp_path_exit,
-                                  NULL, NULL);
+  gimp_savable_load_add_handlers (state, "strokes",
+                                  gimp_path_enter_strokes,
+                                  NULL, NULL, NULL);
+
+  return parent_savable_iface->load_enter (state,
+                                           attribute_names, attribute_values,
+                                           user_data, error);
+}
+
+static gboolean
+gimp_path_load_exit (GimpLoadState  *state,
+                     const gchar    *text,
+                     gsize           len,
+                     gpointer        user_data,
+                     GError        **error)
+{
+  GimpPath     *path            = NULL;
+  gboolean      selected        = FALSE;
+  gboolean      visible         = FALSE;
+  guint         tattoo          = 0;
+  GimpColorTag  tag             = GIMP_COLOR_TAG_NONE;
+  gboolean      lock_content    = FALSE;
+  gboolean      lock_position   = FALSE;
+  gboolean      lock_visibility = FALSE;
+
+  if (GIMP_IS_PATH (gimp_savable_load_peek_active_object (state)))
+    {
+      path = GIMP_PATH (gimp_savable_load_pop_active_object (state));
+      gimp_image_add_path (state->image, path, NULL,
+                           gimp_container_get_n_children (gimp_image_get_paths (state->image)),
+                           FALSE);
+
+      gimp_savable_load_get_values (state,
+                                    "selected",        &selected,
+                                    "visible",         &visible,
+                                    "tattoo",          &tattoo,
+                                    "tag",             &tag,
+                                    "lock-content",    &lock_content,
+                                    "lock-position",   &lock_position,
+                                    "lock-visibility", &lock_visibility,
+                                    NULL);
+
+      /* TODO: implement selected paths. */
+
+      gimp_item_set_visible (GIMP_ITEM (path), visible, FALSE);
+      if (tattoo > 0)
+        gimp_item_set_tattoo (GIMP_ITEM (path), tattoo);
+      gimp_item_set_color_tag (GIMP_ITEM (path), tag, FALSE);
+      gimp_item_set_lock_content (GIMP_ITEM (path), lock_content, FALSE);
+      gimp_item_set_lock_position (GIMP_ITEM (path), lock_position, FALSE);
+      gimp_item_set_lock_visibility (GIMP_ITEM (path), lock_visibility, FALSE);
+    }
+
+  return TRUE;
 }
 
 static gboolean
@@ -1407,69 +1462,6 @@ gimp_path_real_make_bezier (GimpPath *path)
   g_array_free (cmd_array, FALSE);
 
   return ret_bezdesc;
-}
-
-static gboolean
-gimp_path_enter (GimpLoadState  *state,
-                 const gchar   **attribute_names,
-                 const gchar   **attribute_values,
-                 gpointer        user_data,
-                 GError        **error)
-{
-  parent_savable_iface->load (state);
-
-  gimp_savable_load_add_handlers (state, "strokes",
-                                  gimp_path_enter_strokes,
-                                  NULL, NULL, NULL);
-
-  return TRUE;
-}
-
-static gboolean
-gimp_path_exit (GimpLoadState  *state,
-                const gchar    *text,
-                gsize           len,
-                gpointer        user_data,
-                GError        **error)
-{
-  GimpPath     *path            = NULL;
-  gboolean      selected        = FALSE;
-  gboolean      visible         = FALSE;
-  guint         tattoo          = 0;
-  GimpColorTag  tag             = GIMP_COLOR_TAG_NONE;
-  gboolean      lock_content    = FALSE;
-  gboolean      lock_position   = FALSE;
-  gboolean      lock_visibility = FALSE;
-
-  if (GIMP_IS_PATH (gimp_savable_load_peek_active_object (state)))
-    {
-      path = GIMP_PATH (gimp_savable_load_pop_active_object (state));
-      gimp_image_add_path (state->image, path, NULL,
-                           gimp_container_get_n_children (gimp_image_get_paths (state->image)),
-                           FALSE);
-
-      gimp_savable_load_get_values (state,
-                                    "selected",        &selected,
-                                    "visible",         &visible,
-                                    "tattoo",          &tattoo,
-                                    "tag",             &tag,
-                                    "lock-content",    &lock_content,
-                                    "lock-position",   &lock_position,
-                                    "lock-visibility", &lock_visibility,
-                                    NULL);
-
-      /* TODO: implement selected paths. */
-
-      gimp_item_set_visible (GIMP_ITEM (path), visible, FALSE);
-      if (tattoo > 0)
-        gimp_item_set_tattoo (GIMP_ITEM (path), tattoo);
-      gimp_item_set_color_tag (GIMP_ITEM (path), tag, FALSE);
-      gimp_item_set_lock_content (GIMP_ITEM (path), lock_content, FALSE);
-      gimp_item_set_lock_position (GIMP_ITEM (path), lock_position, FALSE);
-      gimp_item_set_lock_visibility (GIMP_ITEM (path), lock_visibility, FALSE);
-    }
-
-  return TRUE;
 }
 
 static gboolean

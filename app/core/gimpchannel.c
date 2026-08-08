@@ -160,9 +160,19 @@ static gdouble   gimp_channel_get_opacity_at (GimpPickable        *pickable,
                                               gint                 y);
 
 
-static void       gimp_channel_savable_save  (GimpSavable         *savable,
+static void       gimp_channel_save          (GimpSavable         *savable,
                                               GimpSaveState       *state);
-static void       gimp_channel_savable_load  (GimpLoadState       *state);
+static gboolean   gimp_channel_load_enter    (GimpLoadState       *state,
+                                              const gchar        **attribute_names,
+                                              const gchar        **attribute_values,
+                                              gpointer             user_data,
+                                              GError             **error);
+static gboolean   gimp_channel_load_exit     (GimpLoadState       *state,
+                                              const gchar         *text,
+                                              gsize                len,
+                                              gpointer             user_data,
+                                              GError             **error);
+
 
 static gboolean   gimp_channel_real_boundary (GimpChannel         *channel,
                                               const GimpBoundSeg **segs_in,
@@ -212,17 +222,6 @@ static void       gimp_channel_real_flood    (GimpChannel         *channel,
 static void      gimp_channel_buffer_changed (GeglBuffer          *buffer,
                                               const GeglRectangle *rect,
                                               GimpChannel         *channel);
-
-static gboolean  gimp_channel_enter          (GimpLoadState       *state,
-                                              const gchar        **attribute_names,
-                                              const gchar        **attribute_values,
-                                              gpointer             user_data,
-                                              GError             **error);
-static gboolean  gimp_channel_exit           (GimpLoadState       *state,
-                                              const gchar         *text,
-                                              gsize                len,
-                                              gpointer             user_data,
-                                              GError             **error);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpChannel, gimp_channel, GIMP_TYPE_DRAWABLE,
@@ -357,8 +356,10 @@ gimp_channel_savable_iface_init (GimpSavableInterface *iface)
 {
   parent_savable_iface = g_type_interface_peek_parent (iface);
 
-  iface->save = gimp_channel_savable_save;
-  iface->load = gimp_channel_savable_load;
+  iface->tag        = "channel";
+  iface->save       = gimp_channel_save;
+  iface->load_enter = gimp_channel_load_enter;
+  iface->load_exit  = gimp_channel_load_exit;
 }
 
 static void
@@ -1042,8 +1043,8 @@ gimp_channel_get_opacity_at (GimpPickable *pickable,
 }
 
 static void
-gimp_channel_savable_save (GimpSavable   *savable,
-                           GimpSaveState *state)
+gimp_channel_save (GimpSavable   *savable,
+                   GimpSaveState *state)
 {
   GimpChannel *channel = GIMP_CHANNEL (savable);
 
@@ -1060,13 +1061,227 @@ gimp_channel_savable_save (GimpSavable   *savable,
   gimp_savable_print_element_end (state, "channel");
 }
 
-static void
-gimp_channel_savable_load (GimpLoadState *state)
+static gboolean
+gimp_channel_load_enter (GimpLoadState  *state,
+                         const gchar   **attribute_names,
+                         const gchar   **attribute_values,
+                         gpointer        user_data,
+                         GError        **error)
 {
-  gimp_savable_load_add_handlers (state, "channel",
-                                  gimp_channel_enter,
-                                  gimp_channel_exit,
+  GimpChannel *channel;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "show-masked") == 0 ||
+          g_strcmp0 (*attribute_names, "apply") == 0       ||
+          g_strcmp0 (*attribute_names, "edit") == 0        ||
+          g_strcmp0 (*attribute_names, "show") == 0)
+        {
+          gimp_savable_load_store_from_string (state,
+                                               *attribute_names, "%b", *attribute_values,
+                                               NULL);
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  parent_savable_iface->load_enter (state, attribute_names, attribute_values,
+                                    user_data, error);
+
+  gimp_savable_load_add_handlers (state, "color",
+                                  gimp_savable_enter_color,
+                                  gimp_savable_exit_color,
                                   NULL, NULL);
+  gimp_savable_load_add_simple_handler (state, "opacity", "%f",
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE, NULL);
+
+  /* Default channel size is bogus. */
+  if (! gimp_savable_load_peek_active_object (state) ||
+      GIMP_IS_DRAWABLE_FILTER (gimp_savable_load_peek_active_object (state)))
+    {
+      channel = gimp_channel_new (state->image, 1, 1, NULL, NULL);
+    }
+  else if (GIMP_IS_LAYER (gimp_savable_load_peek_active_object (state)))
+    {
+      GeglColor *black = gegl_color_new ("black");
+      channel = GIMP_CHANNEL (gimp_layer_mask_new (state->image, 1, 1, NULL, black));
+      g_object_unref (black);
+    }
+  else
+    {
+      g_return_val_if_reached (FALSE);
+    }
+  gimp_savable_load_push_active_object (state, G_OBJECT (channel));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_channel_load_exit (GimpLoadState  *state,
+                        const gchar    *text,
+                        gsize           len,
+                        gpointer        user_data,
+                        GError        **error)
+{
+  GimpChannel  *channel;
+  const gchar  *name            = NULL;
+  gboolean      selected        = FALSE;
+  gboolean      visible         = FALSE;
+  guint         tattoo          = 0;
+  GimpColorTag  tag             = GIMP_COLOR_TAG_NONE;
+  gboolean      lock_content    = FALSE;
+  gboolean      lock_position   = FALSE;
+  gboolean      lock_visibility = FALSE;
+
+  gint          width           = 0;
+  gint          height          = 0;
+  gboolean      show_masked     = TRUE;
+  GeglColor    *color           = NULL;
+  gdouble       opacity         = -1.0;
+
+  gboolean      apply           = TRUE;
+  gboolean      edit            = FALSE;
+  gboolean      show            = FALSE;
+
+  const gchar  *buffer_filename = NULL;
+  GFile        *buffers_dir;
+  GeglBuffer   *buffer;
+  GFile        *buffer_file;
+
+  g_return_val_if_fail (GIMP_IS_CHANNEL (gimp_savable_load_peek_active_object (state)), FALSE);
+  channel = GIMP_CHANNEL (gimp_savable_load_pop_active_object (state));
+
+  if (! gimp_savable_load_get_values (state,
+                                      "name",              &name,
+                                      "buffer:file",       &buffer_filename,
+                                      "dimensions:width",  &width,
+                                      "dimensions:height", &height,
+                                      NULL))
+    {
+      if (name)
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: failed to load channel '%s' because of missing elements.",
+                     G_STRFUNC, name);
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: failed to load a channel because of missing elements.",
+                     G_STRFUNC);
+
+      g_object_unref (channel);
+      return TRUE;
+    }
+
+  gimp_object_set_name (GIMP_OBJECT (channel), name);
+  gimp_item_set_size (GIMP_ITEM (channel), width, height);
+
+  buffers_dir = g_file_get_child (state->subdir, "buffers");
+  buffer_file = g_file_get_child (buffers_dir, buffer_filename);
+
+  /* Prevent malicious files trying to exit the allowed directory to
+   * read external files on the FS.
+   */
+  if (! gimp_file_is_ancestor (buffers_dir, buffer_file))
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: unauthorized buffer file for channel '%s': %s",
+                   G_STRFUNC, name, buffer_filename);
+
+      g_object_unref (channel);
+      g_object_unref (buffers_dir);
+      g_object_unref (buffer_file);
+
+      return TRUE;
+    }
+
+  buffer = gegl_buffer_load (g_file_peek_path (buffer_file));
+
+  if (buffer == NULL)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: invalid buffer file content for channel '%s': %s",
+                   G_STRFUNC, name, buffer_filename);
+
+      g_object_unref (channel);
+      g_object_unref (buffers_dir);
+      g_object_unref (buffer_file);
+
+      return TRUE;
+    }
+
+  gimp_drawable_set_buffer (GIMP_DRAWABLE (channel), FALSE, NULL, buffer);
+
+  gimp_savable_load_get_values (state,
+                                "selected",        &selected,
+                                "visible",         &visible,
+                                "tattoo",          &tattoo,
+                                "tag",             &tag,
+                                "lock-content",    &lock_content,
+                                "lock-position",   &lock_position,
+                                "lock-visibility", &lock_visibility,
+
+                                "show-masked",     &show_masked,
+                                "color",           &color,
+                                "opacity",         &opacity,
+
+                                "apply",           &apply,
+                                "edit",            &edit,
+                                "show",            &show,
+                                NULL);
+
+  /* TODO: implement selected channels. */
+
+  gimp_item_set_visible (GIMP_ITEM (channel), visible, FALSE);
+  if (tattoo > 0)
+    gimp_item_set_tattoo (GIMP_ITEM (channel), tattoo);
+  gimp_item_set_color_tag (GIMP_ITEM (channel), tag, FALSE);
+  gimp_item_set_lock_content (GIMP_ITEM (channel), lock_content, FALSE);
+  gimp_item_set_lock_position (GIMP_ITEM (channel), lock_position, FALSE);
+  gimp_item_set_lock_visibility (GIMP_ITEM (channel), lock_visibility, FALSE);
+
+  if (! gimp_savable_load_peek_active_object (state))
+    {
+      /* Specific GimpChannel attributes. */
+      gimp_channel_set_show_masked (channel, show_masked);
+      if (color != NULL)
+        gimp_channel_set_color (channel, color, FALSE);
+      if (opacity >= GIMP_OPACITY_TRANSPARENT && opacity <= GIMP_OPACITY_OPAQUE)
+        gimp_channel_set_opacity (channel, opacity, FALSE);
+
+      gimp_image_add_channel (state->image, channel, NULL,
+                              gimp_container_get_n_children (gimp_image_get_channels (state->image)),
+                              FALSE);
+    }
+  else if (GIMP_IS_DRAWABLE_FILTER (gimp_savable_load_peek_active_object (state)))
+    {
+      GimpDrawableFilter *filter = GIMP_DRAWABLE_FILTER (gimp_savable_load_peek_active_object (state));
+
+      g_object_set (filter, "mask", channel, NULL);
+    }
+  else if (GIMP_IS_LAYER (gimp_savable_load_peek_active_object (state)))
+    {
+      GimpLayer *layer = GIMP_LAYER (gimp_savable_load_peek_active_object (state));
+
+      gimp_layer_add_mask (layer, GIMP_LAYER_MASK (channel), edit, FALSE, NULL);
+      gimp_layer_set_apply_mask (layer, apply, FALSE);
+      gimp_layer_set_show_mask  (layer, show, FALSE);
+    }
+  else
+    {
+      g_return_val_if_reached (FALSE);
+    }
+
+  g_object_unref (buffers_dir);
+  g_object_unref (buffer_file);
+
+  return TRUE;
 }
 
 static gboolean
@@ -1571,228 +1786,6 @@ gimp_channel_buffer_changed (GeglBuffer          *buffer,
                              GimpChannel         *channel)
 {
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
-}
-
-static gboolean
-gimp_channel_enter (GimpLoadState  *state,
-                    const gchar   **attribute_names,
-                    const gchar   **attribute_values,
-                    gpointer        user_data,
-                    GError        **error)
-{
-  GimpChannel *channel;
-
-  while (*attribute_names)
-    {
-      if (g_strcmp0 (*attribute_names, "show-masked") == 0 ||
-          g_strcmp0 (*attribute_names, "apply") == 0       ||
-          g_strcmp0 (*attribute_names, "edit") == 0        ||
-          g_strcmp0 (*attribute_names, "show") == 0)
-        {
-          gimp_savable_load_store_from_string (state,
-                                               *attribute_names, "%b", *attribute_values,
-                                               NULL);
-        }
-      else
-        {
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                       "%s: unexpected attribute: '%s'",
-                       G_STRFUNC, *attribute_names);
-        }
-
-      attribute_names++;
-      attribute_values++;
-    }
-
-  parent_savable_iface->load (state);
-
-  gimp_savable_load_add_handlers (state, "color",
-                                  gimp_savable_enter_color,
-                                  gimp_savable_exit_color,
-                                  NULL, NULL);
-  gimp_savable_load_add_simple_handler (state, "opacity", "%f",
-                                        NULL, NULL, NULL,
-                                        FALSE, FALSE, NULL);
-
-  /* Default channel size is bogus. */
-  if (! gimp_savable_load_peek_active_object (state) ||
-      GIMP_IS_DRAWABLE_FILTER (gimp_savable_load_peek_active_object (state)))
-    {
-      channel = gimp_channel_new (state->image, 1, 1, NULL, NULL);
-    }
-  else if (GIMP_IS_LAYER (gimp_savable_load_peek_active_object (state)))
-    {
-      GeglColor *black = gegl_color_new ("black");
-      channel = GIMP_CHANNEL (gimp_layer_mask_new (state->image, 1, 1, NULL, black));
-      g_object_unref (black);
-    }
-  else
-    {
-      g_return_val_if_reached (FALSE);
-    }
-  gimp_savable_load_push_active_object (state, G_OBJECT (channel));
-
-  return TRUE;
-}
-
-static gboolean
-gimp_channel_exit (GimpLoadState  *state,
-                   const gchar    *text,
-                   gsize           len,
-                   gpointer        user_data,
-                   GError        **error)
-{
-  GimpChannel  *channel;
-  const gchar  *name            = NULL;
-  gboolean      selected        = FALSE;
-  gboolean      visible         = FALSE;
-  guint         tattoo          = 0;
-  GimpColorTag  tag             = GIMP_COLOR_TAG_NONE;
-  gboolean      lock_content    = FALSE;
-  gboolean      lock_position   = FALSE;
-  gboolean      lock_visibility = FALSE;
-
-  gint          width           = 0;
-  gint          height          = 0;
-  gboolean      show_masked     = TRUE;
-  GeglColor    *color           = NULL;
-  gdouble       opacity         = -1.0;
-
-  gboolean      apply           = TRUE;
-  gboolean      edit            = FALSE;
-  gboolean      show            = FALSE;
-
-  const gchar  *buffer_filename = NULL;
-  GFile        *buffers_dir;
-  GeglBuffer   *buffer;
-  GFile        *buffer_file;
-
-  g_return_val_if_fail (GIMP_IS_CHANNEL (gimp_savable_load_peek_active_object (state)), FALSE);
-  channel = GIMP_CHANNEL (gimp_savable_load_pop_active_object (state));
-
-  if (! gimp_savable_load_get_values (state,
-                                      "name",              &name,
-                                      "buffer:file",       &buffer_filename,
-                                      "dimensions:width",  &width,
-                                      "dimensions:height", &height,
-                                      NULL))
-    {
-      if (name)
-        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                     "%s: failed to load channel '%s' because of missing elements.",
-                     G_STRFUNC, name);
-      else
-        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                     "%s: failed to load a channel because of missing elements.",
-                     G_STRFUNC);
-
-      g_object_unref (channel);
-      return TRUE;
-    }
-
-  gimp_object_set_name (GIMP_OBJECT (channel), name);
-  gimp_item_set_size (GIMP_ITEM (channel), width, height);
-
-  buffers_dir = g_file_get_child (state->subdir, "buffers");
-  buffer_file = g_file_get_child (buffers_dir, buffer_filename);
-
-  /* Prevent malicious files trying to exit the allowed directory to
-   * read external files on the FS.
-   */
-  if (! gimp_file_is_ancestor (buffers_dir, buffer_file))
-    {
-      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                   "%s: unauthorized buffer file for channel '%s': %s",
-                   G_STRFUNC, name, buffer_filename);
-
-      g_object_unref (channel);
-      g_object_unref (buffers_dir);
-      g_object_unref (buffer_file);
-
-      return TRUE;
-    }
-
-  buffer = gegl_buffer_load (g_file_peek_path (buffer_file));
-
-  if (buffer == NULL)
-    {
-      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                   "%s: invalid buffer file content for channel '%s': %s",
-                   G_STRFUNC, name, buffer_filename);
-
-      g_object_unref (channel);
-      g_object_unref (buffers_dir);
-      g_object_unref (buffer_file);
-
-      return TRUE;
-    }
-
-  gimp_drawable_set_buffer (GIMP_DRAWABLE (channel), FALSE, NULL, buffer);
-
-  gimp_savable_load_get_values (state,
-                                "selected",        &selected,
-                                "visible",         &visible,
-                                "tattoo",          &tattoo,
-                                "tag",             &tag,
-                                "lock-content",    &lock_content,
-                                "lock-position",   &lock_position,
-                                "lock-visibility", &lock_visibility,
-
-                                "show-masked",     &show_masked,
-                                "color",           &color,
-                                "opacity",         &opacity,
-
-                                "apply",           &apply,
-                                "edit",            &edit,
-                                "show",            &show,
-                                NULL);
-
-  /* TODO: implement selected channels. */
-
-  gimp_item_set_visible (GIMP_ITEM (channel), visible, FALSE);
-  if (tattoo > 0)
-    gimp_item_set_tattoo (GIMP_ITEM (channel), tattoo);
-  gimp_item_set_color_tag (GIMP_ITEM (channel), tag, FALSE);
-  gimp_item_set_lock_content (GIMP_ITEM (channel), lock_content, FALSE);
-  gimp_item_set_lock_position (GIMP_ITEM (channel), lock_position, FALSE);
-  gimp_item_set_lock_visibility (GIMP_ITEM (channel), lock_visibility, FALSE);
-
-  if (! gimp_savable_load_peek_active_object (state))
-    {
-      /* Specific GimpChannel attributes. */
-      gimp_channel_set_show_masked (channel, show_masked);
-      if (color != NULL)
-        gimp_channel_set_color (channel, color, FALSE);
-      if (opacity >= GIMP_OPACITY_TRANSPARENT && opacity <= GIMP_OPACITY_OPAQUE)
-        gimp_channel_set_opacity (channel, opacity, FALSE);
-
-      gimp_image_add_channel (state->image, channel, NULL,
-                              gimp_container_get_n_children (gimp_image_get_channels (state->image)),
-                              FALSE);
-    }
-  else if (GIMP_IS_DRAWABLE_FILTER (gimp_savable_load_peek_active_object (state)))
-    {
-      GimpDrawableFilter *filter = GIMP_DRAWABLE_FILTER (gimp_savable_load_peek_active_object (state));
-
-      g_object_set (filter, "mask", channel, NULL);
-    }
-  else if (GIMP_IS_LAYER (gimp_savable_load_peek_active_object (state)))
-    {
-      GimpLayer *layer = GIMP_LAYER (gimp_savable_load_peek_active_object (state));
-
-      gimp_layer_add_mask (layer, GIMP_LAYER_MASK (channel), edit, FALSE, NULL);
-      gimp_layer_set_apply_mask (layer, apply, FALSE);
-      gimp_layer_set_show_mask  (layer, show, FALSE);
-    }
-  else
-    {
-      g_return_val_if_reached (FALSE);
-    }
-
-  g_object_unref (buffers_dir);
-  g_object_unref (buffer_file);
-
-  return TRUE;
 }
 
 
