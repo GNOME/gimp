@@ -128,14 +128,6 @@ gimp_ui_init (const gchar *prog_name)
 #endif
     }
 
-#ifdef GDK_WINDOWING_QUARTZ
-  /* Sets activation policy to prevent plugins from appearing as separate apps
-   * in Dock.
-   * Makes plugins behave as helper processes of GIMP on macOS.
-   */
-  [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
-#endif
-
   if (gimp_user_time ())
     {
       /* Construct a fake startup ID as we only want to pass the
@@ -148,6 +140,16 @@ gimp_ui_init (const gchar *prog_name)
     }
 
   gtk_init (NULL, NULL);
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /* THIS CODE SHOULD BE POSITIONED ALWAYS AFTER gtk_init() !!!
+   *
+   * Sets activation policy to prevent plugins from appearing as separate apps
+   * in Dock. See: #12150
+   * Makes plugins behave as helper processes of GIMP on macOS.
+   */
+  [NSApp setActivationPolicy:NSApplicationActivationPolicyAccessory];
+#endif
 
   css_provider = gtk_css_provider_new ();
   gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
