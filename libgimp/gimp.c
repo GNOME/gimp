@@ -80,7 +80,7 @@
 #  undef RGB
 #endif
 
-#ifdef GDK_WINDOWING_QUARTZ
+#ifdef __APPLE__
 #include <Cocoa/Cocoa.h>
 #endif
 
@@ -411,8 +411,10 @@ gimp_main (GType  plug_in_type,
 
 #endif /* G_OS_WIN32 */
 
-#ifdef GDK_WINDOWING_QUARTZ
-  /* Sets activation policy to prevent plugins from appearing as separate apps
+#ifdef __APPLE__
+  /* This is the codepath for plug-ins on non-interactive mode. See also gimpui.c
+   *
+   * Sets activation policy to prevent plugins from appearing as separate apps
    * in Dock.
    * Makes plugins behave as helper processes of GIMP on macOS.
    */
