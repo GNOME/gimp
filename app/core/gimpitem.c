@@ -141,6 +141,11 @@ static gboolean   gimp_item_load_enter              (GimpLoadState             *
                                                      const gchar              **attribute_values,
                                                      gpointer                   user_data,
                                                      GError                   **error);
+static gboolean   gimp_item_load_exit               (GimpLoadState             *state,
+                                                     const gchar               *text,
+                                                     gsize                      len,
+                                                     gpointer                   user_data,
+                                                     GError                   **error);
 
 static gboolean   gimp_item_real_is_content_locked  (GimpItem                  *item,
                                                      GimpItem                 **locked_item);
@@ -369,7 +374,7 @@ gimp_item_savable_iface_init (GimpSavableInterface *iface)
   iface->tag        = NULL;
   iface->save       = gimp_item_save;
   iface->load_enter = gimp_item_load_enter;
-  iface->load_exit  = NULL;
+  iface->load_exit  = gimp_item_load_exit;
 }
 
 static void
@@ -564,6 +569,63 @@ gimp_item_load_enter (GimpLoadState  *state,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
 
   /* TODO: add parasite loading. */
+
+  return TRUE;
+}
+
+static gboolean
+gimp_item_load_exit (GimpLoadState  *state,
+                     const gchar    *text,
+                     gsize           len,
+                     gpointer        user_data,
+                     GError        **error)
+{
+  GimpItem     *item;
+  const gchar  *name            = NULL;
+  gboolean      selected        = FALSE;
+  gboolean      visible         = FALSE;
+  guint         tattoo          = 0;
+  GimpColorTag  tag             = GIMP_COLOR_TAG_NONE;
+  gboolean      lock_content    = FALSE;
+  gboolean      lock_position   = FALSE;
+  gboolean      lock_visibility = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (gimp_savable_load_peek_active_object (state)), FALSE);
+  item = GIMP_ITEM (gimp_savable_load_peek_active_object (state));
+
+  if (! gimp_savable_load_get_values (state,
+                                      "name", &name,
+                                      NULL))
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: failed to load a layer because of missing name.",
+                   G_STRFUNC);
+
+      g_object_unref (item);
+      return TRUE;
+    }
+
+  gimp_object_set_name (GIMP_OBJECT (item), name);
+
+  gimp_savable_load_get_values (state,
+                                "selected",        &selected,
+                                "visible",         &visible,
+                                "tattoo",          &tattoo,
+                                "color-tag",       &tag,
+                                "lock-content",    &lock_content,
+                                "lock-position",   &lock_position,
+                                "lock-visibility", &lock_visibility,
+                                NULL);
+
+  /* TODO: handle "selected". */
+
+  gimp_item_set_visible (item, visible, FALSE);
+  if (tattoo > 0)
+    gimp_item_set_tattoo (item, tattoo);
+  gimp_item_set_color_tag (item, tag, FALSE);
+  gimp_item_set_lock_content (item, lock_content, FALSE);
+  gimp_item_set_lock_position (item, lock_position, FALSE);
+  gimp_item_set_lock_visibility (item, lock_visibility, FALSE);
 
   return TRUE;
 }

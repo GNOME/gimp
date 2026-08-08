@@ -1830,35 +1830,26 @@ gimp_layer_load_exit (GimpLoadState  *state,
   GimpLayer              *layer;
   const gchar            *name             = NULL;
   const Babl             *format           = NULL;
-  gint                    width            = 0;
-  gint                    height           = 0;
-  gboolean                selected         = FALSE;
-  gboolean                visible          = FALSE;
-  guint                   tattoo           = 0;
   gdouble                 opacity          = -1.0;
   GimpLayerMode           mode             = GIMP_LAYER_MODE_NORMAL;
   GimpLayerColorSpace     blend_space      = GIMP_LAYER_COLOR_SPACE_AUTO;
   GimpLayerColorSpace     composite_space  = GIMP_LAYER_COLOR_SPACE_AUTO;
   GimpLayerCompositeMode  composite_mode   = GIMP_LAYER_COMPOSITE_AUTO;
-  GimpColorTag            tag              = GIMP_COLOR_TAG_NONE;
-  gboolean                lock_content     = FALSE;
-  gboolean                lock_position    = FALSE;
-  gboolean                lock_visibility  = FALSE;
   gboolean                lock_alpha       = FALSE;
-  const gchar             *buffer_filename = NULL;
 
   g_return_val_if_fail (GIMP_IS_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  parent_savable_iface->load_exit (state, text, len, user_data, error);
+
   layer = GIMP_LAYER (gimp_savable_load_pop_active_object (state));
 
   if (! gimp_savable_load_get_values (state,
-                                      "name",              &name,
-                                      "opacity",           &opacity,
-                                      "mode",              &mode,
-                                      "blend-space",       &blend_space,
-                                      "composite-space",   &composite_space,
-                                      "composite-mode",    &composite_mode,
-                                      "dimensions:width",  &width,
-                                      "dimensions:height", &height,
+                                      "name",            &name,
+                                      "opacity",         &opacity,
+                                      "mode",            &mode,
+                                      "blend-space",     &blend_space,
+                                      "composite-space", &composite_space,
+                                      "composite-mode",  &composite_mode,
                                       NULL))
     {
       if (name)
@@ -1874,9 +1865,6 @@ gimp_layer_load_exit (GimpLoadState  *state,
       return TRUE;
     }
 
-  gimp_object_set_name (GIMP_OBJECT (layer), name);
-  gimp_item_set_size (GIMP_ITEM (layer), width, height);
-
   if (opacity >= GIMP_OPACITY_TRANSPARENT && opacity <= GIMP_OPACITY_OPAQUE)
     gimp_layer_set_opacity (layer, opacity, FALSE);
   gimp_layer_set_mode (layer, mode, FALSE);
@@ -1884,66 +1872,9 @@ gimp_layer_load_exit (GimpLoadState  *state,
   gimp_layer_set_composite_space (layer, composite_space, FALSE);
   gimp_layer_set_composite_mode (layer, composite_mode, FALSE);
 
-  if (gimp_savable_load_get_values (state,
-                                    "buffer:file", &buffer_filename,
-                                    NULL))
-    {
-      GFile      *buffers_dir;
-      GeglBuffer *buffer;
-      GFile      *buffer_file;
-
-      buffers_dir = g_file_get_child (state->subdir, "buffers");
-      buffer_file = g_file_get_child (buffers_dir, buffer_filename);
-
-      /* Prevent malicious files trying to exit the allowed directory to
-       * read external files on the FS.
-       */
-      if (! gimp_file_is_ancestor (buffers_dir, buffer_file))
-        {
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                       "%s: unauthorized buffer file for layer '%s': %s",
-                       G_STRFUNC, name, buffer_filename);
-
-          g_object_unref (layer);
-          g_object_unref (buffers_dir);
-          g_object_unref (buffer_file);
-
-          return TRUE;
-        }
-
-      buffer = gegl_buffer_load (g_file_peek_path (buffer_file));
-
-      if (buffer == NULL)
-        {
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                       "%s: invalid buffer file content for layer '%s': %s",
-                       G_STRFUNC, name, buffer_filename);
-
-          g_object_unref (layer);
-          g_object_unref (buffers_dir);
-          g_object_unref (buffer_file);
-
-          return TRUE;
-        }
-
-      gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), FALSE, NULL, buffer);
-
-      g_object_unref (buffers_dir);
-      g_object_unref (buffer_file);
-      g_object_unref (buffer);
-    }
-
   gimp_savable_load_get_values (state,
-                                "format",          &format,
-                                "selected",        &selected,
-                                "visible",         &visible,
-                                "tattoo",          &tattoo,
-                                "tag",             &tag,
-                                "lock-content",    &lock_content,
-                                "lock-position",   &lock_position,
-                                "lock-visibility", &lock_visibility,
-                                "lock-alpha",      &lock_alpha,
-
+                                "format",     &format,
+                                "lock-alpha", &lock_alpha,
                                 NULL);
 
   if (format && format != gimp_drawable_get_format (GIMP_DRAWABLE (layer)))
@@ -1955,13 +1886,6 @@ gimp_layer_load_exit (GimpLoadState  *state,
       gimp_drawable_set_format (GIMP_DRAWABLE (layer), format, TRUE, FALSE);
     }
 
-  gimp_item_set_visible (GIMP_ITEM (layer), visible, FALSE);
-  if (tattoo > 0)
-    gimp_item_set_tattoo (GIMP_ITEM (layer), tattoo);
-  gimp_item_set_color_tag (GIMP_ITEM (layer), tag, FALSE);
-  gimp_item_set_lock_content (GIMP_ITEM (layer), lock_content, FALSE);
-  gimp_item_set_lock_position (GIMP_ITEM (layer), lock_position, FALSE);
-  gimp_item_set_lock_visibility (GIMP_ITEM (layer), lock_visibility, FALSE);
   gimp_layer_set_lock_alpha (layer, lock_alpha, FALSE);
 
   /* TODO: handle floating layers too. */

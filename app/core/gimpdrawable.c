@@ -178,6 +178,11 @@ static gboolean   gimp_drawable_load_enter         (GimpLoadState     *state,
                                                     const gchar      **attribute_values,
                                                     gpointer           user_data,
                                                     GError           **error);
+static gboolean   gimp_drawable_load_exit          (GimpLoadState     *state,
+                                                    const gchar       *text,
+                                                    gsize              len,
+                                                    gpointer           user_data,
+                                                    GError           **error);
 
 static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               x,
@@ -408,6 +413,7 @@ gimp_savable_iface_init (GimpSavableInterface *iface)
   iface->tag        = NULL;
   iface->save       = gimp_drawable_save;
   iface->load_enter = gimp_drawable_load_enter;
+  iface->load_exit  = gimp_drawable_load_exit;
 }
 
 static void
@@ -1097,6 +1103,89 @@ gimp_drawable_load_enter (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "filters",
                                   gimp_drawable_enter_filters,
                                   NULL, NULL, NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_drawable_load_exit (GimpLoadState  *state,
+                         const gchar    *text,
+                         gsize           len,
+                         gpointer        user_data,
+                         GError        **error)
+{
+  GimpDrawable *drawable;
+  gint          width           = 0;
+  gint          height          = 0;
+  const gchar  *buffer_filename = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (gimp_savable_load_peek_active_object (state)), FALSE);
+  drawable = GIMP_DRAWABLE (gimp_savable_load_peek_active_object (state));
+
+  parent_savable_iface->load_exit (state, text, len, user_data, error);
+
+  if (gimp_savable_load_get_values (state,
+                                    "dimensions:width",  &width,
+                                    "dimensions:height", &height,
+                                    NULL))
+    /* Do we actually need to store the dimensions? Isn't the buffer
+     * enough for raster drawables, or dimensions may be given through
+     * other data (text, paths, etc.).
+     */
+    gimp_item_set_size (GIMP_ITEM (drawable), width, height);
+
+  if (gimp_savable_load_get_values (state,
+                                    "buffer:file", &buffer_filename,
+                                    NULL))
+    {
+      GFile      *buffers_dir;
+      GeglBuffer *buffer;
+      GFile      *buffer_file;
+
+      buffers_dir = g_file_get_child (state->subdir, "buffers");
+      buffer_file = g_file_get_child (buffers_dir, buffer_filename);
+
+      /* Prevent malicious files trying to exit the allowed directory to
+       * read external files on the FS.
+       */
+      if (! gimp_file_is_ancestor (buffers_dir, buffer_file))
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unauthorized buffer file '%s': %s",
+                       G_STRFUNC,
+                       gimp_object_get_name (GIMP_OBJECT (drawable)),
+                       buffer_filename);
+
+          g_object_unref (drawable);
+          g_object_unref (buffers_dir);
+          g_object_unref (buffer_file);
+
+          return TRUE;
+        }
+
+      buffer = gegl_buffer_load (g_file_peek_path (buffer_file));
+
+      if (buffer == NULL)
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: invalid buffer file content for drawable '%s': %s",
+                       G_STRFUNC,
+                       gimp_object_get_name (GIMP_OBJECT (drawable)),
+                       buffer_filename);
+
+          g_object_unref (drawable);
+          g_object_unref (buffers_dir);
+          g_object_unref (buffer_file);
+
+          return TRUE;
+        }
+
+      gimp_drawable_set_buffer (GIMP_DRAWABLE (drawable), FALSE, NULL, buffer);
+
+      g_object_unref (buffers_dir);
+      g_object_unref (buffer_file);
+      g_object_unref (buffer);
+    }
 
   return TRUE;
 }
