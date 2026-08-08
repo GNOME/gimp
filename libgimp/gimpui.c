@@ -29,7 +29,9 @@
 #endif
 
 #ifdef GDK_WINDOWING_QUARTZ
+#include <unistd.h>
 #include <Cocoa/Cocoa.h>
+#include <ApplicationServices/ApplicationServices.h>
 #endif
 
 #ifdef GDK_WINDOWING_WAYLAND
@@ -70,6 +72,19 @@ static void        gimp_ensure_modules             (void);
 
 #ifdef GDK_WINDOWING_QUARTZ
 static gboolean    gimp_osx_focus_window           (gpointer);
+
+static void        gimp_osx_display_callback       (AXObserverRef      observer,
+                                                    AXUIElementRef     element,
+                                                    CFStringRef        notification,
+                                                    void              *refcon)
+{
+  NSWindow *win = (__bridge NSWindow *)refcon;
+
+  if (CFStringCompare (notification, kAXWindowMiniaturizedNotification, 0) == kCFCompareEqualTo)
+    [win orderOut:nil];
+  else if (CFStringCompare (notification, kAXWindowDeminiaturizedNotification, 0) == kCFCompareEqualTo)
+    [win orderFront:nil];
+}
 #endif
 
 #if !defined(GDK_WINDOWING_WIN32) && !defined(GDK_WINDOWING_QUARTZ)
@@ -431,6 +446,19 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
                                  GBytes      *handle)
 {
   gboolean transient_set = FALSE;
+#ifdef GDK_WINDOWING_QUARTZ
+  NSArray        *plugin_win        = [NSApp windows];
+  pid_t           plugin_pid        = getpid();
+  pid_t           gimp_pid          = getppid();
+  NSDictionary   *gimp_app_permissions;
+  BOOL            gimp_app_istrusted;
+  AXUIElementRef  gimp_app;
+  AXObserverRef   gimp_app_observer = NULL;
+  AXError         gimp_app_observer_err;
+  AXError         gimp_app_min;
+  AXError         gimp_app_res;
+  static gboolean not_gimp_observer_added;
+#endif
 
   if (handle == NULL)
     return FALSE;
@@ -500,6 +528,67 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
       gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
 
 #ifdef GDK_WINDOWING_QUARTZ
+      /*  macOS does not support cross-process trasiency so we use Accessibility API */
+      gimp_app_permissions = @{(__bridge id)kAXTrustedCheckOptionPrompt: @YES};
+      gimp_app_istrusted = AXIsProcessTrustedWithOptions ((__bridge CFDictionaryRef)gimp_app_permissions);
+      if (! gimp_app_istrusted)
+        g_message ("Could not minimize/maximize plug-in window via Accessibility API. It may stay always on top");
+
+      for (NSWindow *win in plugin_win)
+        {
+          /* first, set all plug-in windows as always visible */
+          [win setLevel:NSFloatingWindowLevel];
+
+          /* if gimp app is minimzed or restored, do the same on the plug-in windows
+             otherwise the windows would stay always visible over other apps */
+          gimp_app = AXUIElementCreateApplication (gimp_pid);
+          if (!gimp_app)
+            continue;
+          gimp_app_observer_err = AXObserverCreate (gimp_pid, gimp_osx_display_callback, &gimp_app_observer);
+          if (gimp_app_observer_err == kAXErrorSuccess)
+            {
+              gimp_app_min = AXObserverAddNotification (gimp_app_observer, gimp_app, kAXWindowMiniaturizedNotification, (__bridge void *)win);
+              gimp_app_res = AXObserverAddNotification (gimp_app_observer, gimp_app, kAXWindowDeminiaturizedNotification, (__bridge void *)win);
+              if (gimp_app_min == kAXErrorSuccess && gimp_app_res == kAXErrorSuccess)
+                {
+                  CFRunLoopAddSource (CFRunLoopGetCurrent(),
+                                      AXObserverGetRunLoopSource (gimp_app_observer),
+                                      kCFRunLoopDefaultMode);
+                }
+              else
+                {
+                  g_message ("Could not minimize/maximize plug-in window via Accessibility API. It may stay always on top");
+                }
+            }
+          CFRelease (gimp_app);
+        }
+
+      /* if gimp app is hidden or show, do the same on the plug-in windows
+         (this is NOT the same as minimization/restoration of gimp app) */
+      not_gimp_observer_added = FALSE;
+      if (! not_gimp_observer_added)
+        {
+          [[[NSWorkspace sharedWorkspace] notificationCenter] addObserverForName:NSWorkspaceDidActivateApplicationNotification
+                                                              object:nil
+                                                              queue:[NSOperationQueue mainQueue]
+                                                              usingBlock:^(NSNotification *note) {
+
+            NSRunningApplication *not_gimp_app = [[note userInfo] objectForKey:NSWorkspaceApplicationKey];
+            pid_t not_gimp_pid = 0;
+            if (!not_gimp_app)
+              return;
+            not_gimp_pid = [not_gimp_app processIdentifier];
+            for (NSWindow *win in plugin_win)
+              {
+                if (not_gimp_pid != gimp_pid && not_gimp_pid != plugin_pid)
+                  [win orderOut:nil];
+                else
+                  [win orderFront:nil];
+              }
+          }];
+          not_gimp_observer_added = TRUE;
+        }
+
       g_signal_connect (window, "show",
                         G_CALLBACK (gimp_window_transient_show),
                         NULL);
