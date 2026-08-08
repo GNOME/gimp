@@ -43,6 +43,10 @@
 #endif
 #endif
 
+#ifdef PLATFORM_OSX
+#import <AppKit/AppKit.h>
+#endif
+
 /**
  * SECTION: gimpdialog
  * @title: GimpDialog
