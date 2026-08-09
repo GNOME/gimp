@@ -104,6 +104,8 @@ void            gimp_export_procedure_set_capabilities      (GimpExportProcedure
                                                              GDestroyNotify                 get_capabilities_data_destroy);
 
 
+void            gimp_export_procedure_set_export_metadata   (GimpExportProcedure           *procedure,
+                                                             gboolean                       export_metadata);
 void            gimp_export_procedure_set_support_exif      (GimpExportProcedure           *procedure,
                                                              gboolean                       supports);
 void            gimp_export_procedure_set_support_iptc      (GimpExportProcedure           *procedure,
@@ -117,6 +119,7 @@ void            gimp_export_procedure_set_support_thumbnail (GimpExportProcedure
 void            gimp_export_procedure_set_support_comment   (GimpExportProcedure           *procedure,
                                                              gboolean                       supports);
 
+gboolean        gimp_export_procedure_get_export_metadata   (GimpExportProcedure           *procedure);
 gboolean        gimp_export_procedure_get_support_exif      (GimpExportProcedure           *procedure);
 gboolean        gimp_export_procedure_get_support_iptc      (GimpExportProcedure           *procedure);
 gboolean        gimp_export_procedure_get_support_xmp       (GimpExportProcedure           *procedure);

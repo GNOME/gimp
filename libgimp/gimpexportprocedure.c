@@ -756,6 +756,26 @@ gimp_export_procedure_set_capabilities (GimpExportProcedure           *procedure
 }
 
 /**
+ * gimp_export_procedure_set_export_metadata:
+ * @procedure:        a #GimpProcedure.
+ * @export_metadata:  whether metadata will be exported
+ *
+ * Determine whether @procedure will export metadata. This can be used if
+ * an image export procedure has multiple variants where we need to determine
+ * metadata export status based on user options.
+ *
+ * Since: 3.4
+ **/
+void
+gimp_export_procedure_set_export_metadata (GimpExportProcedure *procedure,
+                                           gboolean             export_metadata)
+{
+  g_return_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure));
+
+  procedure->export_metadata = export_metadata;
+}
+
+/**
  * gimp_export_procedure_set_support_exif:
  * @procedure: a #GimpProcedure.
  * @supports:  whether Exif metadata are supported.
@@ -981,6 +1001,22 @@ gimp_export_procedure_set_support_comment (GimpExportProcedure *procedure,
   g_object_set (procedure,
                 "supports-comment", supports,
                 NULL);
+}
+
+/**
+ * gimp_export_procedure_get_export_metadata:
+ * @procedure: a #GimpProcedure.
+ *
+ * Returns: %TRUE if @procedure is set to export metadata.
+ *
+ * Since: 3.4
+ **/
+gboolean
+gimp_export_procedure_get_export_metadata (GimpExportProcedure *procedure)
+{
+  g_return_val_if_fail (GIMP_IS_EXPORT_PROCEDURE (procedure), FALSE);
+
+  return procedure->export_metadata;
 }
 
 /**

@@ -1199,6 +1199,8 @@ _gimp_procedure_config_end_export (GimpProcedureConfig *config,
                                    GFile               *file,
                                    GimpPDBStatusType    status)
 {
+  GimpProcedure              *procedure;
+  GimpExportProcedure        *export_proc;
   GimpProcedureConfigPrivate *priv;
 
   g_return_if_fail (GIMP_IS_PROCEDURE_CONFIG (config));
@@ -1207,7 +1209,11 @@ _gimp_procedure_config_end_export (GimpProcedureConfig *config,
 
   priv = GET_PRIVATE (config);
 
-  if (status == GIMP_PDB_SUCCESS)
+  procedure   = gimp_procedure_config_get_procedure (config);
+  export_proc = GIMP_EXPORT_PROCEDURE (procedure);
+
+  if (status == GIMP_PDB_SUCCESS &&
+      gimp_export_procedure_get_export_metadata (export_proc))
     {
       gimp_procedure_config_save_metadata (config, exported_image, file);
     }
