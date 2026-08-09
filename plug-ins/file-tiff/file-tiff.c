@@ -474,6 +474,11 @@ tiff_export_rec (GimpProcedure        *procedure,
   format = gimp_procedure_config_get_choice_id (GIMP_PROCEDURE_CONFIG (config),
                                                 "format");
 
+  /* TODO: Remove when gexiv2 supports BigTIFF metadata export */
+  if (bigtiff)
+    gimp_export_procedure_set_export_metadata (GIMP_EXPORT_PROCEDURE (procedure),
+                                               FALSE);
+
   /* Prepare tif_image */
   if (format == GIMP_TIFF_FORMAT_STANDARD_TIFF)
     {

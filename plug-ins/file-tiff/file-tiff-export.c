@@ -1205,7 +1205,8 @@ export_image (GFile         *file,
   TIFFFlushData (tif);
   TIFFClose (tif);
   tif = NULL;
-  if (metadata)
+  /* TODO: Remove when gexiv2 supports BigTIFF metadata export */
+  if (metadata && ! bigtiff)
     save_metadata (file, config, image, metadata, saved_bpp, config_cmyk);
 
   /* write the remaining layers */
