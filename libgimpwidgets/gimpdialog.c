@@ -894,6 +894,16 @@ gimp_dialog_auto_transient (GtkWidget *dialog)
   if (parent_window && dialog_window)
     {
       [parent_window addChildWindow:dialog_window ordered:NSWindowAbove];
+
+      {
+        /* On the first opening, center the dialog like Linux and Windows. See: #871 */
+        NSRect  parent_frame      = [parent_window frame];
+        NSRect  dialog_frame      = [dialog_window frame];
+        CGFloat dialog_position_x = parent_frame.origin.x + (parent_frame.size.width - dialog_frame.size.width) / 2.0;
+        CGFloat dialog_position_y = parent_frame.origin.y + (parent_frame.size.height - dialog_frame.size.height) / 2.0;
+
+        [dialog_window setFrameOrigin:NSMakePoint(dialog_position_x, dialog_position_y)];
+      }
     }
 }
 #endif
