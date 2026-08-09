@@ -111,6 +111,7 @@ static void       gimp_dialog_set_title_bar_theme (GtkWidget    *dialog);
 
 #ifdef PLATFORM_OSX
 static void       gimp_dialog_drop_title_bar_min  (GtkWidget    *dialog);
+static void       gimp_dialog_auto_transient      (GtkWidget    *dialog);
 #endif
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
@@ -238,6 +239,12 @@ gimp_dialog_init (GimpDialog *dialog)
      find in the dock, so we drop minimize like Linux and Windows. */
   g_signal_connect (GTK_WIDGET (dialog), "realize",
                     G_CALLBACK (gimp_dialog_drop_title_bar_min),
+                    NULL);
+
+  /* Make dialogs transient to the main window, like on Linux and Windows, but
+     independently of GTK parenting since it is unreliable on macOS. See: #12257 */
+  g_signal_connect (GTK_WIDGET (dialog), "map",
+                    G_CALLBACK (gimp_dialog_auto_transient),
                     NULL);
 #endif
 }
@@ -937,6 +944,42 @@ gimp_dialog_drop_title_bar_min (GtkWidget *dialog)
                                 GDK_FUNC_MOVE   |
                                 GDK_FUNC_CLOSE  |
                                 GDK_FUNC_MAXIMIZE);
+    }
+}
+
+static void
+gimp_dialog_auto_transient (GtkWidget *dialog)
+{
+  NSWindow    *parent_window            = nil;
+  NSWindow    *dialog_window            = nil;
+  const gchar *dialog_window_gtk_title  = gtk_window_get_title (GTK_WINDOW (dialog));
+  NSString    *dialog_window_ns_title   = dialog_window_gtk_title ? [NSString stringWithUTF8String:dialog_window_gtk_title] : nil;
+
+  for (NSWindow *win in [NSApp windows])
+    {
+      if (! [win isVisible])
+        continue;
+
+      /* child dialog window */
+      if (! dialog_window && [win canBecomeKeyWindow] && [win parentWindow] == nil)
+        {
+          if (dialog_window_ns_title && [[win title] isEqualToString:dialog_window_ns_title])
+            dialog_window = win;
+        }
+
+      /* gimp main window */
+      if (! parent_window && [win canBecomeMainWindow] && [win parentWindow] == nil && ! [win isSheet])
+        {
+          if ((! dialog_window_ns_title || ![[win title] isEqualToString:dialog_window_ns_title]) && win != dialog_window)
+            parent_window = win;
+        }
+
+      if (dialog_window && parent_window)
+        break;
+    }
+  if (parent_window && dialog_window)
+    {
+      [parent_window addChildWindow:dialog_window ordered:NSWindowAbove];
     }
 }
 #endif
