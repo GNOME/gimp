@@ -1093,35 +1093,36 @@ gimp_savable_enter_element (GimpLoadState  *state,
   GimpLoadHandlers *h;
   gboolean          success  = TRUE;
 
-  h = g_hash_table_lookup (handlers, element_name);
-
-  gimp_savable_load_push_context (state);
-  if (h == NULL)
+  if (state->unexpected > -1)
     {
-      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                   "%s: unexpected element: %s", G_STRFUNC, element_name);
-      success = FALSE;
+      /* We are in the sublevel of an already unexpected element. Don't
+       * stack new context, and just ignore everything.
+       */
     }
-  else if (h->enter_handler)
+  else
     {
-      success = h->enter_handler (state, attribute_names, attribute_values,
-                                  h->user_data, error);
-
-      if (success && *error)
+      h = g_hash_table_lookup (handlers, element_name);
+      if (h == NULL)
         {
-          /* Success with an error is to be used for non-fatal errors.
-           * For such case, we print the error for informational
-           * purpose, then clear it to prevent the XML parser to stop.
-           *
-           * TODO: rather than printing to stderr, we should probably
-           * send the message to an error dialog.
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected element: %s", G_STRFUNC, element_name);
+          /* We enter an unexpected element. Set an error, but don't
+           * fail loading so that we will be able to salvage as much
+           * data as possible once we get out of this element.
+           * Until then we ignore everything from now on.
            */
-          g_printerr ("WLBR WARNING: %s\n", (*error)->message);
-          g_clear_error (error);
+          state->unexpected = state->level;
+        }
+      else
+        {
+          gimp_savable_load_push_context (state);
+          if (h->enter_handler)
+            success = h->enter_handler (state, attribute_names, attribute_values,
+                                        h->user_data, error);
         }
     }
 
-  return TRUE;
+  return success;
 }
 
 gboolean
@@ -1139,31 +1140,28 @@ gimp_savable_exit_element (GimpLoadState  *state,
 
   h = g_hash_table_lookup (handlers, element_name);
 
-  if (h == NULL)
+  if (state->unexpected > -1 && state->level > state->unexpected)
     {
-      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                   "%s: unexpected element: %s", G_STRFUNC, element_name);
-      success = FALSE;
+      /* No-op: ignore everything inside an unknown tag. */
     }
-  else if (h->exit_handler)
+  else if (state->unexpected == state->level)
     {
-      success = h->exit_handler (state, text, text_len, h->user_data, error);
-
-      if (success && *error)
-        {
-          /* Success with an error is to be used for non-fatal errors.
-           * For such case, we print the error for informational
-           * purpose, then clear it to prevent the XML parser to stop.
-           *
-           * TODO: rather than printing to stderr, we should probably
-           * send the message to an error dialog.
-           */
-          g_printerr ("WLBR WARNING: %s\n", (*error)->message);
-          g_clear_error (error);
-        }
+      /* Ending the unexpected branching. */
+      state->unexpected = -1;
     }
-
-  gimp_savable_load_pop_context (state);
+  else if (h == NULL)
+    {
+      /* This should never happen since GMarkup API already handles
+       * cases when the closing tag doesn't match the opening tag.
+       */
+      g_return_val_if_reached (FALSE);
+    }
+  else
+    {
+      if (h->exit_handler)
+        success = h->exit_handler (state, text, text_len, h->user_data, error);
+      gimp_savable_load_pop_context (state);
+    }
 
   return success;
 }
@@ -1190,6 +1188,7 @@ gimp_savable_load_init_state (GimpLoadState *state,
   state->xml_parser = gimp_xml_parser_new (&state->markup_parser, state);
   state->contexts   = g_queue_new ();
   state->level      = 0;
+  state->unexpected = -1;
   state->spaces     = NULL;
 }
 
@@ -1205,11 +1204,35 @@ gimp_wlbr_load_start_element (GMarkupParseContext *context,
 
   state->level++;
 
-  gimp_savable_enter_element (state,
-                              element_name,
-                              attribute_names,
-                              attribute_values,
-                              error);
+  /* GMarkup API will stop at any error but we have a more subtle
+   * approach (allowing non-fatal error messages, while trying to load
+   * as much as possible).
+   */
+  if (gimp_savable_enter_element (state,
+                                  element_name,
+                                  attribute_names,
+                                  attribute_values,
+                                  error))
+    {
+      if (*error)
+        /* Success with an error is to be used for non-fatal errors.
+         * For such case, we print the error for informational
+         * purpose, then clear it to prevent the XML parser to stop.
+         *
+         * TODO: rather than printing to stderr, we should probably
+         * send the message to an error dialog.
+         */
+        g_printerr ("WLBR WARNING: %s\n", (*error)->message);
+
+      g_clear_error (error);
+    }
+  else
+    {
+      if (*error == NULL)
+        /* This should only happen when asserting with g_return*(). */
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_INTERNAL,
+                     "%s: an internal error happened.", G_STRFUNC);
+    }
 }
 
 static void
@@ -1223,7 +1246,19 @@ gimp_wlbr_load_end_element (GMarkupParseContext *context,
   gsize          text_len;
 
   text = gimp_savable_load_get_text (state, &text_len);
-  gimp_savable_exit_element (state, element_name, text, text_len, error);
+  if (gimp_savable_exit_element (state, element_name, text, text_len, error))
+    {
+      if (*error)
+        g_printerr ("WLBR WARNING: %s\n", (*error)->message);
+
+      g_clear_error (error);
+    }
+  else
+    {
+      if (*error == NULL)
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_INTERNAL,
+                     "%s: an internal error happened.", G_STRFUNC);
+    }
 
   state->level--;
 }

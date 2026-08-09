@@ -59,6 +59,7 @@ struct _GimpLoadState
   GMarkupParser  markup_parser;
   GQueue        *contexts;
   gint           level;
+  gint           unexpected;
 
   GHashTable    *spaces;
 };

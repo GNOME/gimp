@@ -25,12 +25,13 @@
 
 typedef enum
 {
-  GIMP_WLBR_ERROR_OPEN,   /*  Opening file failed   */
-  GIMP_WLBR_ERROR_READ,   /*  Reading file failed   */
-  GIMP_WLBR_ERROR_WRITE,  /*  Writing file failed   */
-  GIMP_WLBR_ERROR_DELETE, /*  Deleting file failed  */
-  GIMP_WLBR_ERROR_FORMAT, /*  Invalid format        */
-  GIMP_WLBR_ERROR_DATA,   /*  Invalid data          */
+  GIMP_WLBR_ERROR_OPEN,     /*  Opening file failed   */
+  GIMP_WLBR_ERROR_READ,     /*  Reading file failed   */
+  GIMP_WLBR_ERROR_WRITE,    /*  Writing file failed   */
+  GIMP_WLBR_ERROR_DELETE,   /*  Deleting file failed  */
+  GIMP_WLBR_ERROR_FORMAT,   /*  Invalid format        */
+  GIMP_WLBR_ERROR_DATA,     /*  Invalid data          */
+  GIMP_WLBR_ERROR_INTERNAL, /*  Internal code error   */
 } GimpWlbrError;
 
 
