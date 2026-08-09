@@ -139,7 +139,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                       "2008");
 
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
-                                          "image/dds");
+                                          "image/vnd.ms-dds,image/x-dds,image/dds");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "dds");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
@@ -170,7 +170,6 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("DDS image"));
       gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
                                            _("DDS"));
-
 
       gimp_procedure_set_documentation (procedure,
                                         _("Exports files in DDS image format"),
