@@ -1088,16 +1088,16 @@ gimp_drawable_load_enter (GimpLoadState  *state,
 {
   parent_savable_iface->load_enter (state, attribute_names, attribute_values, user_data, error);
 
-  gimp_savable_load_add_simple_handler (state, "dimensions", NULL,
+  gimp_savable_load_add_simple_handler (state, "dimensions", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         TRUE, FALSE,
-                                        "width",  "%d",
-                                        "height", "%d",
+                                        "width",  G_TYPE_INT,
+                                        "height", G_TYPE_INT,
                                         NULL);
-  gimp_savable_load_add_simple_handler (state, "buffer", NULL,
+  gimp_savable_load_add_simple_handler (state, "buffer", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         TRUE, FALSE,
-                                        "file", "%s",
+                                        "file", G_TYPE_STRING,
                                         NULL);
 
   gimp_savable_load_add_handlers (state, "filters",

@@ -357,7 +357,7 @@ gimp_grid_load_enter (GimpLoadState  *state,
                       gpointer        user_data,
                       GError        **error)
 {
-  gimp_savable_load_add_simple_handler (state, "style", "%[GimpGridStyle]",
+  gimp_savable_load_add_simple_handler (state, "style", GIMP_TYPE_GRID_STYLE,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
   gimp_savable_load_add_handlers (state, "foreground",
                                   gimp_grid_enter_fg_bg,
@@ -367,21 +367,21 @@ gimp_grid_load_enter (GimpLoadState  *state,
                                   gimp_grid_enter_fg_bg,
                                   gimp_grid_exit_fg_bg,
                                   "background", NULL);
-  gimp_savable_load_add_simple_handler (state, "spacing", NULL,
+  gimp_savable_load_add_simple_handler (state, "spacing", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         TRUE, FALSE,
-                                        "x", "%f",
-                                        "y", "%f",
+                                        "x", G_TYPE_DOUBLE,
+                                        "y", G_TYPE_DOUBLE,
                                         NULL);
   gimp_savable_load_add_handlers (state, "spacing-unit",
                                   gimp_grid_enter_unit,
                                   gimp_grid_exit_unit,
                                   "spacing-unit", NULL);
-  gimp_savable_load_add_simple_handler (state, "offset", NULL,
+  gimp_savable_load_add_simple_handler (state, "offset", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         TRUE, FALSE,
-                                        "x", "%f",
-                                        "y", "%f",
+                                        "x", G_TYPE_DOUBLE,
+                                        "y", G_TYPE_DOUBLE,
                                         NULL);
   gimp_savable_load_add_handlers (state, "offset-unit",
                                   gimp_grid_enter_unit,

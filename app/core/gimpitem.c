@@ -551,21 +551,21 @@ gimp_item_load_enter (GimpLoadState  *state,
                       gpointer        user_data,
                       GError        **error)
 {
-  gimp_savable_load_add_simple_handler (state, "name", "%s",
+  gimp_savable_load_add_simple_handler (state, "name", G_TYPE_STRING,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "selected", NULL,
+  gimp_savable_load_add_simple_handler (state, "selected", G_TYPE_NONE,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "visible", "%b",
+  gimp_savable_load_add_simple_handler (state, "visible", G_TYPE_BOOLEAN,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "tattoo", "%u",
+  gimp_savable_load_add_simple_handler (state, "tattoo", G_TYPE_UINT,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "color-tag", "%[GimpColorTag]",
+  gimp_savable_load_add_simple_handler (state, "color-tag", GIMP_TYPE_COLOR_TAG,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "lock-content", NULL,
+  gimp_savable_load_add_simple_handler (state, "lock-content", G_TYPE_NONE,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "lock-position", NULL,
+  gimp_savable_load_add_simple_handler (state, "lock-position", G_TYPE_NONE,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "lock-visibility", NULL,
+  gimp_savable_load_add_simple_handler (state, "lock-visibility", G_TYPE_NONE,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
 
   /* TODO: add parasite loading. */

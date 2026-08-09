@@ -1770,33 +1770,33 @@ gimp_layer_load_enter (GimpLoadState  *state,
 
   parent_savable_iface->load_enter (state, attribute_names, attribute_values, user_data, error);
 
-  gimp_savable_load_add_simple_handler (state, "floating", NULL,
+  gimp_savable_load_add_simple_handler (state, "floating", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         TRUE, FALSE,
-                                        "attached-to", "%u",
+                                        "attached-to", G_TYPE_UINT,
                                         NULL);
-  gimp_savable_load_add_simple_handler (state, "offsets", NULL,
+  gimp_savable_load_add_simple_handler (state, "offsets", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         TRUE, FALSE,
-                                        "x", "%d",
-                                        "y", "%d",
+                                        "x", G_TYPE_INT,
+                                        "y", G_TYPE_INT,
                                         NULL);
-  gimp_savable_load_add_simple_handler (state, "opacity", "%f",
+  gimp_savable_load_add_simple_handler (state, "opacity", G_TYPE_DOUBLE,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "mode", "%[GimpLayerMode]",
+  gimp_savable_load_add_simple_handler (state, "mode", GIMP_TYPE_LAYER_MODE,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "blend-space", "%[GimpLayerColorSpace]",
+  gimp_savable_load_add_simple_handler (state, "blend-space", GIMP_TYPE_LAYER_COLOR_SPACE,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "composite-space", "%[GimpLayerColorSpace]",
+  gimp_savable_load_add_simple_handler (state, "composite-space", GIMP_TYPE_LAYER_COLOR_SPACE,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "composite-mode", "%[GimpLayerCompositeMode]",
+  gimp_savable_load_add_simple_handler (state, "composite-mode", GIMP_TYPE_LAYER_COMPOSITE_MODE,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "lock-alpha", NULL,
+  gimp_savable_load_add_simple_handler (state, "lock-alpha", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE, NULL);
 

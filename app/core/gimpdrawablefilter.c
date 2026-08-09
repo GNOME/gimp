@@ -657,7 +657,7 @@ gimp_drawable_filter_load_enter (GimpLoadState  *state,
   filter->applicator = gimp_applicator_new (gimp_filter_get_node (GIMP_FILTER (filter)));
   gimp_savable_load_push_active_object (state, G_OBJECT (filter));
 
-  gimp_savable_load_add_simple_handler (state, "icon", "%s",
+  gimp_savable_load_add_simple_handler (state, "icon", G_TYPE_STRING,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE, NULL);
   gimp_savable_load_add_handlers (state, "operation",
@@ -667,25 +667,25 @@ gimp_drawable_filter_load_enter (GimpLoadState  *state,
   gimp_savable_load_add_handlers (state, "mask",
                                   gimp_drawable_filter_enter_mask,
                                   NULL, NULL, NULL);
-  gimp_savable_load_add_simple_handler (state, "visible", "%b",
+  gimp_savable_load_add_simple_handler (state, "visible", G_TYPE_BOOLEAN,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "opacity", "%f",
+  gimp_savable_load_add_simple_handler (state, "opacity", G_TYPE_DOUBLE,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "mode", "%[GimpLayerMode]",
+  gimp_savable_load_add_simple_handler (state, "mode", GIMP_TYPE_LAYER_MODE,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
-  gimp_savable_load_add_simple_handler (state, "blend-space", "%[GimpLayerColorSpace]",
+  gimp_savable_load_add_simple_handler (state, "blend-space", GIMP_TYPE_LAYER_COLOR_SPACE,
                                         NULL, NULL, NULL, FALSE, FALSE,
-                                        "auto", "%b", NULL);
-  gimp_savable_load_add_simple_handler (state, "composite-space", "%[GimpLayerColorSpace]",
+                                        "auto", G_TYPE_BOOLEAN, NULL);
+  gimp_savable_load_add_simple_handler (state, "composite-space", GIMP_TYPE_LAYER_COLOR_SPACE,
                                         NULL, NULL, NULL, FALSE, FALSE,
-                                        "auto", "%b", NULL);
-  gimp_savable_load_add_simple_handler (state, "composite-mode", "%[GimpLayerCompositeMode]",
+                                        "auto", G_TYPE_BOOLEAN, NULL);
+  gimp_savable_load_add_simple_handler (state, "composite-mode", GIMP_TYPE_LAYER_COMPOSITE_MODE,
                                         NULL, NULL, NULL, FALSE, FALSE,
-                                        "auto", "%b", NULL);
-  gimp_savable_load_add_simple_handler (state, "clip", "%b",
+                                        "auto", G_TYPE_BOOLEAN, NULL);
+  gimp_savable_load_add_simple_handler (state, "clip", G_TYPE_BOOLEAN,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
   GIMP_TYPE_FILTER_REGION;
-  gimp_savable_load_add_simple_handler (state, "region", "%[GimpFilterRegion]",
+  gimp_savable_load_add_simple_handler (state, "region", GIMP_TYPE_FILTER_REGION,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
 
   return TRUE;
@@ -2572,12 +2572,12 @@ gimp_drawable_filter_enter_argument (GimpLoadState  *state,
   while (*attribute_names)
     {
       if (g_strcmp0 (*attribute_names, "name") == 0)
-        gimp_savable_load_store_from_string (state,
-                                             "name", "%s", *attribute_values,
+        gimp_savable_load_store_from_string (state, error,
+                                             "name", G_TYPE_STRING, *attribute_values,
                                              NULL);
       else if (g_strcmp0 (*attribute_names, "type") == 0)
-        gimp_savable_load_store_from_string (state,
-                                             "type", "%t", *attribute_values,
+        gimp_savable_load_store_from_string (state, error,
+                                             "type", G_TYPE_GTYPE, *attribute_values,
                                              NULL);
       else
         g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
@@ -2640,36 +2640,10 @@ gimp_drawable_filter_exit_argument (GimpLoadState  *state,
     }
   else
     {
-      GValue *value  = NULL;
-      gchar  *format = NULL;
-
-      if (arg_type == G_TYPE_STRING)
-        format = g_strdup ("%s");
-      else if (arg_type == G_TYPE_INT)
-        format = g_strdup ("%d");
-      else if (arg_type == G_TYPE_LONG)
-        format = g_strdup ("%ld");
-      else if (arg_type == G_TYPE_UINT)
-        format = g_strdup ("%u");
-      else if (arg_type == G_TYPE_ULONG)
-        format = g_strdup ("%lu");
-      else if (arg_type == G_TYPE_DOUBLE)
-        format = g_strdup ("%f");
-      else if (arg_type == G_TYPE_BOOLEAN)
-        format = g_strdup ("%b");
-      else if (arg_type == G_TYPE_GTYPE)
-        format = g_strdup ("%t");
-      else if (g_type_is_a (arg_type, G_TYPE_ENUM))
-        format = g_strdup_printf ("%%[%s]", g_type_name (arg_type));
-      else
-        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_DATA,
-                     "%s: unsupported GValue type: %s", G_STRFUNC,
-                     g_type_name (pspec->value_type));
-
-      if (format)
+      gimp_savable_load_store_from_string (state, error, "arg", arg_type, text, NULL);
+      if (*error == NULL)
         {
-          gimp_savable_load_store_from_string (state, "arg", format, text, NULL);
-          value = gimp_savable_load_get_gvalue (state, "arg");
+          GValue *value = gimp_savable_load_get_gvalue (state, "arg");
           gegl_node_set_property (operation, name, value);
         }
     }

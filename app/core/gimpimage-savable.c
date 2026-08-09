@@ -372,8 +372,8 @@ gimp_image_load_enter (GimpLoadState  *state,
         {
           gint version = -1;
 
-          gimp_savable_load_store_from_string (state,
-                                               "version", "%d", *attribute_values,
+          gimp_savable_load_store_from_string (state, error,
+                                               "version", G_TYPE_INT, *attribute_values,
                                                NULL);
           gimp_savable_load_get_values (state, "version", &version, NULL);
 
@@ -475,11 +475,11 @@ gimp_image_enter_project (GimpLoadState  *state,
                           gpointer        user_data,
                           GError         **error)
 {
-  gimp_savable_load_add_simple_handler (state, "dimensions", NULL,
+  gimp_savable_load_add_simple_handler (state, "dimensions", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         TRUE, TRUE,
-                                        "width",  "%d",
-                                        "height", "%d",
+                                        "width",  G_TYPE_INT,
+                                        "height", G_TYPE_INT,
                                         NULL);
   gimp_savable_load_add_handlers (state, "format",
                                   gimp_savable_enter_format,
@@ -489,13 +489,13 @@ gimp_image_enter_project (GimpLoadState  *state,
                                   gimp_image_enter_guides,
                                   NULL, NULL, NULL);
 
-  gimp_savable_load_add_simple_handler (state, "print-dimensions", NULL,
+  gimp_savable_load_add_simple_handler (state, "print-dimensions", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         TRUE, FALSE,
-                                        "xres", "%f",
-                                        "yres", "%f",
+                                        "xres", G_TYPE_DOUBLE,
+                                        "yres", G_TYPE_DOUBLE,
                                         NULL);
-  gimp_savable_load_add_simple_handler (state, "tattoo", "%u",
+  gimp_savable_load_add_simple_handler (state, "tattoo", G_TYPE_UINT,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE,
                                         NULL);
@@ -506,7 +506,7 @@ gimp_image_enter_project (GimpLoadState  *state,
 
   gimp_savable_load (GIMP_TYPE_GRID, state);
 
-  gimp_savable_load_add_simple_handler (state, "metadata", "%s",
+  gimp_savable_load_add_simple_handler (state, "metadata", G_TYPE_STRING,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE,
                                         NULL);

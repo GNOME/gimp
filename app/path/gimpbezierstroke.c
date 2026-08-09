@@ -287,7 +287,7 @@ gimp_bezier_stroke_load_enter (GimpLoadState  *state,
     {
       if (g_strcmp0 (*attribute_names, "closed") == 0)
         {
-          gimp_savable_load_store_from_string (state, "closed", "%b", "true", NULL);
+          gimp_savable_load_store_from_string (state, error, "closed", G_TYPE_BOOLEAN, "true", NULL);
         }
       else
         {
@@ -302,13 +302,13 @@ gimp_bezier_stroke_load_enter (GimpLoadState  *state,
 
   control_points = gimp_value_array_new (6);
   gimp_savable_load_store_value (state, "control-points", control_points, NULL);
-  gimp_savable_load_add_simple_handler (state, "control-point", NULL,
+  gimp_savable_load_add_simple_handler (state, "control-point", G_TYPE_NONE,
                                         (GimpExitElementhandler) gimp_bezier_stroke_exit_cp,
                                         control_points, NULL,
                                         TRUE, FALSE,
-                                        "type", "%s",
-                                        "x",    "%f",
-                                        "y",    "%f",
+                                        "type", G_TYPE_STRING,
+                                        "x",    G_TYPE_DOUBLE,
+                                        "y",    G_TYPE_DOUBLE,
                                         NULL);
   return TRUE;
 }

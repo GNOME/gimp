@@ -53,7 +53,8 @@ void         gimp_savable_load_push_active_object (GimpLoadState            *sta
 GObject    * gimp_savable_load_pop_active_object  (GimpLoadState            *state);
 GObject    * gimp_savable_load_peek_active_object (GimpLoadState            *state);
 
-void         gimp_savable_load_store_from_string  (GimpLoadState            *state,
+void         gimp_savable_load_store_from_string (GimpLoadState            *state,
+                                                  GError                  **error,
                                                    ...) G_GNUC_NULL_TERMINATED;
 void         gimp_savable_load_store_value        (GimpLoadState            *state,
                                                    const gchar              *key,
@@ -78,7 +79,7 @@ void         gimp_savable_load_add_handlers       (GimpLoadState            *sta
 
 void         gimp_savable_load_add_simple_handler (GimpLoadState            *state,
                                                    const gchar              *element_name,
-                                                   const gchar              *text_value_format,
+                                                   GType                     text_value_type,
                                                    GimpExitElementhandler    secondary_exit_handler,
                                                    gpointer                  user_data,
                                                    GDestroyNotify            free_data,

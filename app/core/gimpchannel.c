@@ -1077,8 +1077,8 @@ gimp_channel_load_enter (GimpLoadState  *state,
           g_strcmp0 (*attribute_names, "edit") == 0        ||
           g_strcmp0 (*attribute_names, "show") == 0)
         {
-          gimp_savable_load_store_from_string (state,
-                                               *attribute_names, "%b", *attribute_values,
+          gimp_savable_load_store_from_string (state, error,
+                                               *attribute_names, G_TYPE_BOOLEAN, *attribute_values,
                                                NULL);
         }
       else
@@ -1099,7 +1099,7 @@ gimp_channel_load_enter (GimpLoadState  *state,
                                   gimp_savable_enter_color,
                                   gimp_savable_exit_color,
                                   NULL, NULL);
-  gimp_savable_load_add_simple_handler (state, "opacity", "%f",
+  gimp_savable_load_add_simple_handler (state, "opacity", G_TYPE_DOUBLE,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE, NULL);
 

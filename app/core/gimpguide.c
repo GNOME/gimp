@@ -221,9 +221,9 @@ gimp_guide_load_enter (GimpLoadState  *state,
       GimpOrientationType o = GIMP_ORIENTATION_UNKNOWN;
       gint                p = -1;
 
-      gimp_savable_load_store_from_string (state,
-                                           "orientation", "%[GimpOrientationType]", orientation,
-                                           "position",    "%d",                     position,
+      gimp_savable_load_store_from_string (state, error,
+                                           "orientation", GIMP_TYPE_ORIENTATION_TYPE, orientation,
+                                           "position",    G_TYPE_INT,                 position,
                                            NULL);
       gimp_savable_load_get_values (state,
                                     "orientation", &o,
