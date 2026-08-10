@@ -893,7 +893,84 @@ gimp_dialog_auto_transient (GtkWidget *dialog)
     }
   if (parent_window && dialog_window)
     {
-      [parent_window addChildWindow:dialog_window ordered:NSWindowAbove];
+      /* Ideally we should use addChildWindow but it breaks animations
+      [parent_window addChildWindow:dialog_window ordered:NSWindowAbove]; */
+      __block NSWindow     *focus_saved         = nil;
+      __block id            activate_observer   = nil;
+      __block id            deactivate_observer = nil;
+      __block id            focus_save_observer = nil;
+      __block id            focus_set_observer  = nil;
+      __block id            close_observer      = nil;
+      NSNotificationCenter *center              = [NSNotificationCenter defaultCenter];
+
+      /* gimp main window is active, show dialog on top always */
+      [dialog_window setLevel:NSFloatingWindowLevel];
+      [dialog_window setHidesOnDeactivate:YES];
+      activate_observer = [center
+                           addObserverForName:NSWindowDidBecomeKeyNotification
+                           object:parent_window
+                           queue:[NSOperationQueue mainQueue]
+                           usingBlock:^(NSNotification * _Nonnull note) {
+        if (! [dialog_window isVisible])
+          [dialog_window orderFrontRegardless];
+      }];
+
+      /* gimp main window is not active, hide dialog */
+      deactivate_observer = [center
+                             addObserverForName:NSWindowDidResignKeyNotification
+                             object:parent_window
+                             queue:[NSOperationQueue mainQueue]
+                             usingBlock:^(NSNotification * _Nonnull note) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          NSWindow *key_window = [NSApp keyWindow];
+          if ([NSApp isActive] && key_window != parent_window && key_window != dialog_window)
+            [dialog_window orderOut:nil];
+        });
+      }];
+
+      /* gimp main window is not active, save last focused window/dialog */
+      focus_save_observer = [center
+                             addObserverForName:NSApplicationWillResignActiveNotification
+                             object:nil
+                             queue:[NSOperationQueue mainQueue]
+                             usingBlock:^(NSNotification * _Nonnull note) {
+        focus_saved = [NSApp keyWindow];
+      }];
+
+      /* gimp main window is active, show dialog focused or not */
+      focus_set_observer = [center
+                            addObserverForName:NSApplicationDidBecomeActiveNotification
+                            object:nil
+                            queue:[NSOperationQueue mainQueue]
+                            usingBlock:^(NSNotification * _Nonnull note) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          if ([parent_window isMiniaturized])
+            [parent_window deminiaturize:nil];
+          [parent_window orderFront:nil];
+          if ([dialog_window isVisible])
+            [dialog_window orderWindow:NSWindowAbove relativeTo:[parent_window windowNumber]];
+
+          if (focus_saved == parent_window)
+            [parent_window makeKeyWindow];
+          else
+            [dialog_window makeKeyAndOrderFront:nil];
+        });
+      }];
+
+      /* gimp main window is active but dialog is gone, show main window focused */
+      close_observer = [center
+                        addObserverForName:NSWindowWillCloseNotification
+                        object:dialog_window
+                        queue:[NSOperationQueue mainQueue]
+                        usingBlock:^(NSNotification * _Nonnull note) {
+        [parent_window makeKeyWindow];
+
+        if (activate_observer)   [center removeObserver:activate_observer];
+        if (deactivate_observer) [center removeObserver:deactivate_observer];
+        if (focus_save_observer) [center removeObserver:focus_save_observer];
+        if (focus_set_observer)  [center removeObserver:focus_set_observer];
+        if (close_observer)      [center removeObserver:close_observer];
+      }];
 
       {
         /* On the first opening, center the dialog like Linux and Windows. See: #871 */
