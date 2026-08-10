@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-08-01 00:11+0000\n"
-"PO-Revision-Date: 2026-08-04 14:57+0200\n"
+"PO-Revision-Date: 2026-08-10 13:45+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -1679,37 +1679,37 @@ msgstr "Forgrunn kulør: Auk med 10 %"
 #: app/actions/context-actions.c:479
 msgctxt "context-action"
 msgid "Foreground Saturation: Set"
-msgstr "Forgrunn metning: Sett"
+msgstr "Forgrunn metting: Sett"
 
 #: app/actions/context-actions.c:483
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Minimum"
-msgstr "Forgrunn metning: Sett til minimum"
+msgstr "Forgrunn metting: Sett til minimum"
 
 #: app/actions/context-actions.c:487
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Maximum"
-msgstr "Forgrunn metning: Sett til maksimum"
+msgstr "Forgrunn metting: Sett til maksimum"
 
 #: app/actions/context-actions.c:491
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 1%"
-msgstr "Forgrunn metning: Minsk med 1 %"
+msgstr "Forgrunn metting: Minsk med 1 %"
 
 #: app/actions/context-actions.c:495
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 1%"
-msgstr "Forgrunn metning: Auk med 1 %"
+msgstr "Forgrunn metting: Auk med 1 %"
 
 #: app/actions/context-actions.c:499
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 10%"
-msgstr "Forgrunn metning: Minsk med 10 %"
+msgstr "Forgrunn metting: Minsk med 10 %"
 
 #: app/actions/context-actions.c:503
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 10%"
-msgstr "Forgrunn metning: Auk med 10 %"
+msgstr "Forgrunn metting: Auk med 10 %"
 
 #: app/actions/context-actions.c:511
 msgctxt "context-action"
@@ -1784,37 +1784,37 @@ msgstr "Bakgrunn kulør: Auk med 10 %"
 #: app/actions/context-actions.c:575
 msgctxt "context-action"
 msgid "Background Saturation: Set"
-msgstr "Bakgrunn metning: Sett"
+msgstr "Bakgrunn metting: Sett"
 
 #: app/actions/context-actions.c:579
 msgctxt "context-action"
 msgid "Background Saturation: Set to Minimum"
-msgstr "Bakgrunn metning: Set til minimum"
+msgstr "Bakgrunn metting: Set til minimum"
 
 #: app/actions/context-actions.c:583
 msgctxt "context-action"
 msgid "Background Saturation: Set to Maximum"
-msgstr "Bakgrunn metning: Set til maksimum"
+msgstr "Bakgrunn metting: Set til maksimum"
 
 #: app/actions/context-actions.c:587
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 1%"
-msgstr "Bakgrunn metning: Minsk med 1 %"
+msgstr "Bakgrunn metting: Minsk med 1 %"
 
 #: app/actions/context-actions.c:591
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 1%"
-msgstr "Bakgrunn metning: Auk med 1 %"
+msgstr "Bakgrunn metting: Auk med 1 %"
 
 #: app/actions/context-actions.c:595
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 10%"
-msgstr "Bakgrunn metning: Minsk med 10 %"
+msgstr "Bakgrunn metting: Minsk med 10 %"
 
 #: app/actions/context-actions.c:599
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 10%"
-msgstr "Bakgrunn metning: Auk med 10 %"
+msgstr "Bakgrunn metting: Auk med 10 %"
 
 #: app/actions/context-actions.c:607
 msgctxt "context-action"
@@ -4565,7 +4565,7 @@ msgstr "_Teikna annakvar linje …"
 #: app/actions/filters-actions.c:249
 msgctxt "filters-action"
 msgid "_Desaturate..."
-msgstr "_Mindre metning …"
+msgstr "_Mindre metting …"
 
 #: app/actions/filters-actions.c:254
 msgctxt "filters-action"
@@ -4665,7 +4665,7 @@ msgstr "_Rutenett …"
 #: app/actions/filters-actions.c:349
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr "_High Pass..."
+msgstr "_Høgpass ..."
 
 #: app/actions/filters-actions.c:354
 msgctxt "filters-action"
@@ -4675,7 +4675,7 @@ msgstr "Kulør-_kroma …"
 #: app/actions/filters-actions.c:359
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "Kulør-_metning …"
+msgstr "Kulør-_metting …"
 
 #: app/actions/filters-actions.c:364
 msgctxt "filters-action"
@@ -6053,7 +6053,7 @@ msgstr "_Metning"
 #: app/actions/image-actions.c:312
 msgctxt "image-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "Fargetilpassinga for utskriftssimuleringa er metning"
+msgstr "Fargetilpassinga for utskriftssimuleringa er metting"
 
 #: app/actions/image-actions.c:317
 msgctxt "image-action"
@@ -10051,7 +10051,7 @@ msgstr "_Metning"
 #: app/actions/view-actions.c:535
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
-msgstr "Fargetilpassinga for skjermen er metning"
+msgstr "Fargetilpassinga for skjermen er metting"
 
 #: app/actions/view-actions.c:540
 msgctxt "view-action"
@@ -20267,14 +20267,14 @@ msgstr "HSV kulør (l)"
 #: app/operations/operations-enums.c:202
 msgctxt "layer-mode"
 msgid "HSV Saturation (legacy)"
-msgstr "HSV-metning (tradisjonell)"
+msgstr "HSV-metting (tradisjonell)"
 
 #. Translators: this is an abbreviated version of "HSV Saturation (legacy)".
 #. Keep it short.
 #: app/operations/operations-enums.c:205
 msgctxt "layer-mode"
 msgid "HSV Saturation (l)"
-msgstr "HSV-metning (I)"
+msgstr "HSV-metting (I)"
 
 #: app/operations/operations-enums.c:206
 msgctxt "layer-mode"
@@ -20474,7 +20474,7 @@ msgstr "HSV kulør"
 #: app/operations/operations-enums.c:261
 msgctxt "layer-mode"
 msgid "HSV Saturation"
-msgstr "HSV-metning"
+msgstr "HSV-metting"
 
 #: app/operations/operations-enums.c:262
 msgctxt "layer-mode"
@@ -20845,7 +20845,7 @@ msgstr "Juster fargekurvene"
 
 #: app/operations/gimpoperationdesaturate.c:85
 msgid "Desaturate"
-msgstr "Mindre metning"
+msgstr "Mindre metting"
 
 #: app/operations/gimpoperationdesaturate.c:87
 msgid "Turn colors into shades of gray"
@@ -20869,7 +20869,7 @@ msgstr "Kulør/Metning"
 
 #: app/operations/gimpoperationhuesaturation.c:67
 msgid "Adjust hue, saturation, and lightness"
-msgstr "Juster kulør, metning og lysmengde"
+msgstr "Juster kulør, metting og lysmengde"
 
 #: app/operations/gimpoperationlevels.c:65 app/tools/gimplevelstool.c:142
 msgid "Adjust color levels"
@@ -21709,7 +21709,7 @@ msgstr "Trekk ut komponent"
 #: app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
 msgid "Desaturate"
-msgstr "Mindre metning"
+msgstr "Mindre metting"
 
 #: app/pdb/drawable-color-cmds.c:546
 msgctxt "undo-type"
@@ -29584,7 +29584,7 @@ msgstr "K_omponentar"
 #: menus/image-menu.ui.in.in:566
 msgctxt "image-action"
 msgid "D_esaturate"
-msgstr "_Mindre metning"
+msgstr "_Mindre metting"
 
 #: menus/image-menu.ui.in.in:573
 msgctxt "image-action"
