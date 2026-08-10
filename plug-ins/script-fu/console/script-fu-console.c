@@ -135,6 +135,8 @@ script_fu_console_run (GimpProcedure       *procedure,
                                            RESPONSE_SAVE,
                                            -1);
 
+  gimp_window_set_transient (GTK_WINDOW (console.dialog));
+
   g_object_add_weak_pointer (G_OBJECT (console.dialog),
                              (gpointer) &console.dialog);
 
