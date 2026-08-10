@@ -37,6 +37,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "path/gimppath.h"
+#include "path/gimpvectorlayer.h"
 
 #include "gimp.h"
 #include "gimpchannel.h"
@@ -744,9 +745,9 @@ gimp_image_enter_layers (GimpLoadState  *state,
 
   gimp_savable_load (GIMP_TYPE_LAYER, state);
   gimp_savable_load (GIMP_TYPE_GROUP_LAYER, state);
+  gimp_savable_load (GIMP_TYPE_VECTOR_LAYER, state);
   /*gimp_savable_load (GIMP_TYPE_LINK_LAYER, state);*/
   /*gimp_savable_load (GIMP_TYPE_TEXT_LAYER, state);*/
-  /*gimp_savable_load (GIMP_TYPE_VECTOR_LAYER, state);*/
 
   return TRUE;
 }

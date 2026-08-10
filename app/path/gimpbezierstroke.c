@@ -286,15 +286,13 @@ gimp_bezier_stroke_load_enter (GimpLoadState  *state,
   while (*attribute_names)
     {
       if (g_strcmp0 (*attribute_names, "closed") == 0)
-        {
-          gimp_savable_load_store_from_string (state, error, "closed", G_TYPE_BOOLEAN, "true", NULL);
-        }
+        gimp_savable_load_store_from_string (state, error,
+                                             "closed", G_TYPE_BOOLEAN, *attribute_values,
+                                             NULL);
       else
-        {
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                       "%s: unexpected attribute: '%s'",
-                       G_STRFUNC, *attribute_names);
-        }
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
 
       attribute_names++;
       attribute_values++;

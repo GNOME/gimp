@@ -44,6 +44,7 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimprasterizable.h"
 #include "core/gimpsavable.h"
+#include "core/gimpsavable-load.h"
 
 #include "gimpvectorlayer.h"
 #include "gimpvectorlayeroptions.h"
@@ -80,6 +81,16 @@ static void       gimp_vector_layer_set_rasterized          (GimpRasterizable   
 
 static void       gimp_vector_layer_savable_save            (GimpSavable               *savable,
                                                              GimpSaveState             *state);
+static gboolean   gimp_vector_layer_load_enter              (GimpLoadState             *state,
+                                                             const gchar              **attribute_names,
+                                                             const gchar              **attribute_values,
+                                                             gpointer                   user_data,
+                                                             GError                   **error);
+static gboolean   gimp_vector_layer_load_exit               (GimpLoadState             *state,
+                                                             const gchar               *text,
+                                                             gsize                      len,
+                                                             gpointer                   user_data,
+                                                             GError                   **error);
 
 static void       gimp_vector_layer_set_vector_options      (GimpVectorLayer           *layer,
                                                              GimpVectorLayerOptions    *options);
@@ -228,7 +239,10 @@ gimp_vector_layer_savable_iface_init (GimpSavableInterface *iface)
 {
   parent_savable_iface = g_type_interface_peek_parent (iface);
 
-  iface->save = gimp_vector_layer_savable_save;
+  iface->tag        = "vector-layer";
+  iface->save       = gimp_vector_layer_savable_save;
+  iface->load_enter = gimp_vector_layer_load_enter;
+  iface->load_exit  = gimp_vector_layer_load_exit;
 }
 
 static void
@@ -318,6 +332,133 @@ gimp_vector_layer_savable_save (GimpSavable   *savable,
     gimp_savable_print_element (state, "rasterized", NULL, NULL, NULL);
 
   gimp_savable_print_element_end (state, "vector-layer");
+}
+
+static gboolean
+gimp_vector_layer_load_enter (GimpLoadState  *state,
+                              const gchar   **attribute_names,
+                              const gchar   **attribute_values,
+                              gpointer        user_data,
+                              GError        **error)
+{
+  GimpVectorLayer *layer;
+  const gchar     *name        = NULL;
+  GimpPath        *path        = NULL;
+  guint            path_tattoo = 0;
+  gboolean         fill        = FALSE;
+  gboolean         stroke      = FALSE;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "name") == 0)
+        {
+          name = *attribute_values;
+        }
+      else if (g_strcmp0 (*attribute_names, "path-tattoo") == 0)
+        {
+          gimp_savable_load_store_from_string (state, error,
+                                               "path-tattoo", G_TYPE_UINT, *attribute_values,
+                                               NULL);
+          gimp_savable_load_get_values (state, "path-tattoo", &path_tattoo, NULL);
+        }
+      else if (g_strcmp0 (*attribute_names, "fill") == 0)
+        {
+          gimp_savable_load_store_from_string (state, error,
+                                               "fill", G_TYPE_BOOLEAN, *attribute_values,
+                                               NULL);
+          gimp_savable_load_get_values (state, "fill", &fill, NULL);
+        }
+      else if (g_strcmp0 (*attribute_names, "stroke") == 0)
+        {
+          gimp_savable_load_store_from_string (state, error,
+                                               "stroke", G_TYPE_BOOLEAN, *attribute_values,
+                                               NULL);
+          gimp_savable_load_get_values (state, "stroke", &stroke, NULL);
+        }
+      else
+        {
+          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                       "%s: unexpected attribute: '%s'",
+                       G_STRFUNC, *attribute_names);
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  parent_savable_iface->load_enter (state, attribute_names, attribute_values,
+                                    user_data, error);
+
+  if (path_tattoo > 0)
+    path = gimp_image_get_path_by_tattoo (state->image, (GimpTattoo) path_tattoo);
+
+  if (path == NULL)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: failed to load path associated with vector layer \"%s\".",
+                   G_STRFUNC, name);
+      return TRUE;
+    }
+
+  layer = gimp_vector_layer_new (state->image, path,
+                                 gimp_get_user_context (state->gimp));
+
+  if (name == NULL)
+    g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                 "%s: missing layer group name.",
+                 G_STRFUNC);
+  else
+    gimp_object_set_name (GIMP_OBJECT (layer), name);
+
+  g_object_set (layer->options,
+                "enable-fill",   fill,
+                "enable-stroke", stroke,
+                NULL);
+
+  /* We rasterize as a trick so that any settings update won't override
+   * the buffer contents. We will actually set to proper state in
+   * load_exit().
+   */
+  gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer), FALSE);
+
+  if (fill)
+    gimp_savable_load (GIMP_TYPE_FILL_OPTIONS, state);
+  if (stroke)
+    gimp_savable_load (GIMP_TYPE_STROKE_OPTIONS, state);
+
+  gimp_savable_load_add_simple_handler (state, "rasterized", G_TYPE_NONE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        NULL);
+
+  gimp_savable_load_push_active_object (state, G_OBJECT (layer));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_vector_layer_load_exit (GimpLoadState  *state,
+                             const gchar    *text,
+                             gsize           len,
+                             gpointer        user_data,
+                             GError        **error)
+{
+  GimpVectorLayer *layer;
+  gboolean         rasterized = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  /* Order matters because parent's load_exit() will pop the layer. */
+  layer = GIMP_VECTOR_LAYER (gimp_savable_load_peek_active_object (state));
+  parent_savable_iface->load_exit (state, text, len, user_data, error);
+
+  gimp_savable_load_get_values (state, "rasterized", &rasterized, NULL);
+  if (rasterized && ! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+    gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer), FALSE);
+  else if (! rasterized && gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
+    gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
+
+  return TRUE;
 }
 
 static void
