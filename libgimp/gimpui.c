@@ -249,6 +249,11 @@ gimp_window_set_transient_for (GtkWindow *window,
   g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (handle != NULL);
 
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Use GTK instead of [win center] to avoid top-left render glitch on plug-ins */
+  gtk_window_set_position (window, GTK_WIN_POS_CENTER);
+#endif
+
   g_signal_handlers_disconnect_matched (window, G_SIGNAL_MATCH_FUNC,
                                         0, 0, NULL,
                                         gimp_window_transient_on_mapped,
@@ -288,6 +293,11 @@ gimp_window_set_transient_for_display (GtkWindow   *window,
   g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Use GTK instead of [win center] to avoid top-left render glitch on plug-ins */
+  gtk_window_set_position (window, GTK_WIN_POS_CENTER);
+#endif
+
   g_signal_handlers_disconnect_matched (window, G_SIGNAL_MATCH_FUNC,
                                         0, 0, NULL,
                                         gimp_window_transient_on_mapped,
@@ -321,6 +331,11 @@ gimp_window_set_transient (GtkWindow *window)
 
   g_return_if_fail (gimp_ui_initialized);
   g_return_if_fail (GTK_IS_WINDOW (window));
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Use GTK instead of [win center] to avoid top-left render glitch on plug-ins */
+  gtk_window_set_position (window, GTK_WIN_POS_CENTER);
+#endif
 
   g_signal_handlers_disconnect_matched (window, G_SIGNAL_MATCH_FUNC,
                                         0, 0, NULL,
@@ -538,8 +553,6 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
         {
           /* first, set all plug-in windows as always visible */
           [win setLevel:NSFloatingWindowLevel];
-          /* put on the center of the screen as courtesy */
-          [win center];
 
           /* if gimp app is minimzed or restored, do the same on the plug-in windows
              otherwise the windows would stay always visible over other apps */
