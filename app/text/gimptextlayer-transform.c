@@ -77,18 +77,30 @@ gimp_text_layer_compose (GimpTextLayer     *layer,
                          gdouble           *center_y)
 {
   GimpItem *item = GIMP_ITEM (layer);
+  gdouble   rx;
+  gdouble   ry;
   gint      ox;
   gint      oy;
 
   if (! gimp_text_layer_get_transformation (layer, composed))
     return FALSE;
 
+  /*  The translation column holds the sub-pixel remainder left over by the
+   *  last re-centring -- see gimp_text_layer_commit().  It has no rendering
+   *  effect, so this is the only place it means anything: added back here,
+   *  the operation pivots about where the layer really is instead of where
+   *  it was last rounded to, and the error stays bounded at half a pixel
+   *  rather than compounding over a sequence of transforms.
+   */
+  rx = composed->coeff[0][2];
+  ry = composed->coeff[1][2];
+
   /*  where the centre of the layer ends up in image space.  Sampled before
    *  anything is stored, because storing re-renders and resizes the layer.
    */
   gimp_item_get_offset (item, &ox, &oy);
-  *center_x = ox + gimp_item_get_width  (item) / 2.0;
-  *center_y = oy + gimp_item_get_height (item) / 2.0;
+  *center_x = ox + rx + gimp_item_get_width  (item) / 2.0;
+  *center_y = oy + ry + gimp_item_get_height (item) / 2.0;
   gimp_matrix3_transform_point (incremental,
                                 *center_x, *center_y, center_x, center_y);
 
@@ -116,8 +128,12 @@ gimp_text_layer_commit (GimpTextLayer *layer,
                         gboolean       push_undo)
 {
   GimpItem *item = GIMP_ITEM (layer);
+  gdouble   want_x;
+  gdouble   want_y;
   gint      ox;
   gint      oy;
+  gint      nx;
+  gint      ny;
 
   gimp_text_layer_set_transformation (layer, composed);
 
@@ -128,10 +144,26 @@ gimp_text_layer_commit (GimpTextLayer *layer,
    *  negative offset, and ROUND() truncates towards zero there.
    */
   gimp_item_get_offset (item, &ox, &oy);
-  gimp_item_translate (item,
-                       SIGNED_ROUND (center_x - gimp_item_get_width  (item) / 2.0) - ox,
-                       SIGNED_ROUND (center_y - gimp_item_get_height (item) / 2.0) - oy,
-                       push_undo);
+  want_x = center_x - gimp_item_get_width  (item) / 2.0;
+  want_y = center_y - gimp_item_get_height (item) / 2.0;
+  nx     = SIGNED_ROUND (want_x);
+  ny     = SIGNED_ROUND (want_y);
+
+  gimp_item_translate (item, nx - ox, ny - oy, push_undo);
+
+  /*  Keep what the rounding threw away.  Item offsets are integers, so a
+   *  layer can only ever sit on a whole pixel; without this the remainder is
+   *  lost at every step and a sequence of transforms walks the layer across
+   *  the canvas.  gimp_text_layer_compose() adds it back next time.
+   *
+   *  This is a second property set, and so a second render, but only on the
+   *  committed transform rather than on each motion event.
+   */
+  if (want_x != nx || want_y != ny)
+    gimp_text_layer_set (layer, NULL,
+                         "offset-x", want_x - nx,
+                         "offset-y", want_y - ny,
+                         NULL);
 }
 
 
