@@ -2554,9 +2554,6 @@ gimp_drawable_filter_enter_mask (GimpLoadState  *state,
                                  gpointer        user_data,
                                  GError        **error)
 {
-  /* TODO: set state->item to filter (so probably rename to state->object).
-   * Or rather make it a list/queue to pop/push?
-   */
   gimp_savable_load (GIMP_TYPE_CHANNEL, state);
 
   return TRUE;
