@@ -31,15 +31,19 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "paint/gimppaintoptions.h"
+
+#include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayeroptions.h"
+
 #include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpdashpattern.h"
 #include "gimppaintinfo.h"
 #include "gimpparamspecs.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 #include "gimpstrokeoptions.h"
-
-#include "paint/gimppaintoptions.h"
 
 #include "gimp-intl.h"
 
@@ -99,24 +103,45 @@ struct _GimpStrokeOptionsPrivate
         ((GimpStrokeOptionsPrivate *) gimp_stroke_options_get_instance_private ((GimpStrokeOptions *) (options)))
 
 
-static void   gimp_stroke_options_config_iface_init  (gpointer              iface,
-                                                      gpointer              iface_data);
-static void   gimp_stroke_options_savable_iface_init (GimpSavableInterface *iface);
+static void         gimp_stroke_options_config_iface_init  (gpointer              iface,
+                                                            gpointer              iface_data);
+static void         gimp_stroke_options_savable_iface_init (GimpSavableInterface *iface);
 
-static void   gimp_stroke_options_finalize           (GObject              *object);
-static void   gimp_stroke_options_set_property       (GObject              *object,
-                                                      guint                 property_id,
-                                                      const GValue         *value,
-                                                      GParamSpec           *pspec);
-static void   gimp_stroke_options_get_property       (GObject              *object,
-                                                      guint                 property_id,
-                                                      GValue               *value,
-                                                      GParamSpec           *pspec);
+static void         gimp_stroke_options_finalize           (GObject              *object);
+static void         gimp_stroke_options_set_property       (GObject              *object,
+                                                            guint                 property_id,
+                                                            const GValue         *value,
+                                                            GParamSpec           *pspec);
+static void         gimp_stroke_options_get_property       (GObject              *object,
+                                                            guint                 property_id,
+                                                            GValue               *value,
+                                                            GParamSpec           *pspec);
 
-static GimpConfig * gimp_stroke_options_duplicate    (GimpConfig           *config);
+static GimpConfig * gimp_stroke_options_duplicate          (GimpConfig           *config);
 
-static void         gimp_stroke_options_savable_save (GimpSavable          *savable,
-                                                      GimpSaveState        *state);
+static void         gimp_stroke_options_save               (GimpSavable          *savable,
+                                                            GimpSaveState        *state);
+
+static gboolean     gimp_stroke_options_load_enter         (GimpLoadState        *state,
+                                                            const gchar         **attribute_names,
+                                                            const gchar         **attribute_values,
+                                                            gpointer              user_data,
+                                                            GError              **error);
+static gboolean     gimp_stroke_options_load_exit          (GimpLoadState        *state,
+                                                            const gchar          *text,
+                                                            gsize                 len,
+                                                            gpointer              user_data,
+                                                            GError              **error);
+static gboolean     gimp_stroke_options_enter_dash_pattern (GimpLoadState        *state,
+                                                            const gchar         **attribute_names,
+                                                            const gchar         **attribute_values,
+                                                            gpointer              user_data,
+                                                            GError              **error);
+static gboolean     gimp_stroke_options_exit_dash_pattern  (GimpLoadState        *state,
+                                                            const gchar          *text,
+                                                            gsize                 len,
+                                                            gpointer              user_data,
+                                                            GError              **error);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpStrokeOptions, gimp_stroke_options,
@@ -251,7 +276,10 @@ gimp_stroke_options_savable_iface_init (GimpSavableInterface *iface)
 {
   parent_savable_iface = g_type_interface_peek_parent (iface);
 
-  iface->save = gimp_stroke_options_savable_save;
+  iface->tag        = "stroke-options";
+  iface->save       = gimp_stroke_options_save;
+  iface->load_enter = gimp_stroke_options_load_enter;
+  iface->load_exit  = gimp_stroke_options_load_exit;
 }
 
 static void
@@ -408,8 +436,8 @@ gimp_stroke_options_duplicate (GimpConfig *config)
 }
 
 static void
-gimp_stroke_options_savable_save (GimpSavable   *savable,
-                                  GimpSaveState *state)
+gimp_stroke_options_save (GimpSavable   *savable,
+                          GimpSaveState *state)
 {
   GimpStrokeOptions        *options = GIMP_STROKE_OPTIONS (savable);
   GimpStrokeOptionsPrivate *private = GET_PRIVATE (options);
@@ -425,16 +453,133 @@ gimp_stroke_options_savable_save (GimpSavable   *savable,
   gimp_savable_print_element (state, "join-style", "%[GimpJoinStyle]", private->join_style, NULL);
   gimp_savable_print_element (state, "miter-limit", "%f", private->miter_limit, NULL);
 
-  gimp_savable_print_element_start (state, "dash-pattern", NULL, NULL, NULL);
   dash_info        = gimp_stroke_options_get_dash_info (options);
   dash_value_array = gimp_dash_pattern_to_value_array (dash_info);
   if (dash_value_array)
-    gimp_savable_value_array_save (dash_value_array, state);
-  gimp_savable_print_element_end (state, "dash-pattern");
+    {
+      gimp_savable_print_element_start (state, "dash-pattern", NULL, NULL, NULL);
+      gimp_savable_value_array_save (dash_value_array, state);
+      gimp_savable_print_element_end (state, "dash-pattern");
+    }
 
   gimp_savable_print_element_end (state, "stroke-options");
 
   g_clear_pointer (&dash_value_array, gimp_value_array_unref);
+}
+
+static gboolean
+gimp_stroke_options_load_enter (GimpLoadState  *state,
+                                const gchar   **attribute_names,
+                                const gchar   **attribute_values,
+                                gpointer        user_data,
+                                GError        **error)
+{
+  while (*attribute_names)
+    {
+      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_FORMAT, ;,
+                               "%s: unexpected attribute: '%s'",
+                               G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  parent_savable_iface->load_enter (state, attribute_names, attribute_values,
+                                    user_data, error);
+
+  gimp_savable_load_add_simple_handler (state, "line-width", G_TYPE_DOUBLE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "cap-style", GIMP_TYPE_CAP_STYLE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "join-style", GIMP_TYPE_JOIN_STYLE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "miter-limit", G_TYPE_DOUBLE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        NULL);
+  gimp_savable_load_add_handlers (state, "dash-pattern",
+                                  gimp_stroke_options_enter_dash_pattern,
+                                  gimp_stroke_options_exit_dash_pattern,
+                                  NULL, NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_stroke_options_load_exit (GimpLoadState  *state,
+                               const gchar    *text,
+                               gsize           len,
+                               gpointer        user_data,
+                               GError        **error)
+{
+  GimpVectorLayer          *layer;
+  GimpStrokeOptions        *options;
+  GimpStrokeOptionsPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  parent_savable_iface->load_exit (state, text, len, user_data, error);
+
+  layer   = GIMP_VECTOR_LAYER (gimp_savable_load_peek_active_object (state));
+  options = layer->options->stroke_options;
+  private = GET_PRIVATE (options);
+
+  gimp_savable_load_get_values (state,
+                                "line-width",  &private->width,
+                                "cap-style",   &private->cap_style,
+                                "join-style",  &private->join_style,
+                                "miter-limit", &private->miter_limit,
+                                NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_stroke_options_enter_dash_pattern (GimpLoadState  *state,
+                                        const gchar   **attribute_names,
+                                        const gchar   **attribute_values,
+                                        gpointer        user_data,
+                                        GError        **error)
+{
+  gimp_savable_load_add_handlers (state, "value-array",
+                                  gimp_savable_enter_value_array,
+                                  gimp_savable_exit_value_array,
+                                  NULL, NULL);
+  return TRUE;
+}
+
+static gboolean
+gimp_stroke_options_exit_dash_pattern (GimpLoadState  *state,
+                                       const gchar    *text,
+                                       gsize           len,
+                                       gpointer        user_data,
+                                       GError        **error)
+{
+  GimpValueArray    *array;
+  GimpVectorLayer   *layer;
+  GimpStrokeOptions *options;
+
+  g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  if (gimp_savable_load_get_values (state, "value-array", &array, NULL))
+    {
+      GArray *pattern;
+
+      gimp_value_array_ref (array);
+
+      layer   = GIMP_VECTOR_LAYER (gimp_savable_load_peek_active_object (state));
+      options = layer->options->stroke_options;
+
+      pattern = gimp_dash_pattern_from_value_array (array);
+      gimp_stroke_options_take_dash_pattern (options, GIMP_DASH_CUSTOM, pattern);
+    }
+  return TRUE;
 }
 
 

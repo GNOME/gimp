@@ -27,11 +27,14 @@
 
 #include "core-types.h"
 
+#include "gimp.h"
 #include "gimp-memsize.h"
 #include "gimpdata.h"
+#include "gimpdatafactory.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 #include "gimptag.h"
 #include "gimptagged.h"
 
@@ -119,6 +122,11 @@ static gchar    * gimp_data_get_checksum       (GimpTagged           *tagged);
 
 static void       gimp_data_savable_save       (GimpSavable          *savable,
                                                 GimpSaveState        *state);
+static gboolean   gimp_data_load_enter         (GimpLoadState        *state,
+                                                const gchar         **attribute_names,
+                                                const gchar         **attribute_values,
+                                                gpointer              user_data,
+                                                GError              **error);
 
 static gchar    * gimp_data_get_collection     (GimpData             *data);
 
@@ -220,7 +228,10 @@ gimp_data_tagged_iface_init (GimpTaggedInterface *iface)
 static void
 gimp_data_savable_iface_init (GimpSavableInterface *iface)
 {
-  iface->save = gimp_data_savable_save;
+  /* All savable resources should set the tag. */
+  iface->tag        = NULL;
+  iface->save       = gimp_data_savable_save;
+  iface->load_enter = gimp_data_load_enter;
 }
 
 static void
@@ -525,10 +536,17 @@ static void
 gimp_data_savable_save (GimpSavable   *savable,
                         GimpSaveState *state)
 {
-  GimpData *data = GIMP_DATA (savable);
-  gchar    *name;
-  gchar    *collection_id;
-  gboolean  is_internal;
+  GimpData             *data = GIMP_DATA (savable);
+  GObjectClass         *klass;
+  GimpSavableInterface *iface;
+  gchar                *name;
+  gchar                *collection_id;
+  gboolean              is_internal;
+
+  klass = g_type_class_ref (G_TYPE_FROM_INSTANCE (savable));
+  iface = g_type_interface_peek (klass, GIMP_TYPE_SAVABLE);
+
+  g_return_if_fail (iface->tag != NULL);
 
   /* XXX A future improvement could allow us to embed data files
    * (patterns, textures, etc.).
@@ -537,8 +555,7 @@ gimp_data_savable_save (GimpSavable   *savable,
    * for comparison and retrieval.
    */
   gimp_data_get_identifiers  (data, &name, &collection_id, &is_internal);
-  gimp_savable_print_element (state, "data", NULL, NULL,
-                              "type",          "%t", data,
+  gimp_savable_print_element (state, iface->tag, NULL, NULL,
                               "name",          "%s", name,
                               "collection-id", "%s", collection_id,
                               "is-internal",   "%b", is_internal,
@@ -546,6 +563,70 @@ gimp_data_savable_save (GimpSavable   *savable,
 
   g_free (name);
   g_free (collection_id);
+}
+
+static gboolean
+gimp_data_load_enter (GimpLoadState  *state,
+                      const gchar   **attribute_names,
+                      const gchar   **attribute_values,
+                      gpointer        user_data,
+                      GError        **error)
+{
+  const gchar *name        = NULL;
+  const gchar *collection  = NULL;
+  gboolean     is_internal = FALSE;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "name") == 0)
+        name = *attribute_values;
+      else if (g_strcmp0 (*attribute_names, "collection-id") == 0)
+        collection = *attribute_values;
+      else if (g_strcmp0 (*attribute_names, "is-internal") == 0)
+        gimp_savable_load_store_from_string (state, error,
+                                             "is-internal", G_TYPE_BOOLEAN, *attribute_values,
+                                             NULL);
+      else
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_FORMAT, ;,
+                                 "%s: unexpected attribute: '%s'",
+                                 G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  if (name && collection &&
+      gimp_savable_load_get_values (state, "is-internal", &is_internal, NULL))
+    {
+      GimpDataFactory      *factory;
+      GimpData             *data;
+      GType                 real_type;
+      GObjectClass         *klass;
+      GimpSavableInterface *iface;
+
+      /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
+#define GIMPPOINTER_TO_TYPE(p) ((GType) (guintptr) (p))
+      real_type = user_data ? GIMPPOINTER_TO_TYPE (user_data) : GIMP_TYPE_DATA;
+#undef GIMPPOINTER_TO_TYPE
+      g_return_val_if_fail (real_type != GIMP_TYPE_DATA &&
+                            g_type_is_a (real_type, GIMP_TYPE_DATA), FALSE);
+      klass     = g_type_class_ref (real_type);
+      iface     = g_type_interface_peek (klass, GIMP_TYPE_SAVABLE);
+      g_return_val_if_fail (iface->tag != NULL, FALSE);
+      factory   = gimp_get_data_factory (state->gimp, real_type);
+      data      = gimp_data_factory_get_data (factory, name, collection, is_internal);
+
+      if (data)
+        gimp_savable_load_store_value (state, iface->tag, data, NULL);
+      else
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                                 "%s: unknown %s: '%s'",
+                                 G_STRFUNC, iface->tag, name);
+
+      gimp_savable_load_bubble_up (state, iface->tag);
+    }
+
+  return TRUE;
 }
 
 /*

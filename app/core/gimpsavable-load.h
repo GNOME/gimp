@@ -35,6 +35,30 @@ typedef enum
 } GimpWlbrError;
 
 
+/* Macro to set @error.
+ * If @error is already set, just ignore further errors in the same call.
+ * When error is NULL, we are in a case where we control the input data
+ * in a way that we are not supposed to ever reach this point. So we
+ * trigger a CRITICAL and return FALSE because it's a bug.
+ */
+#define GIMP_SAVABLE_LOAD_ERROR(error, error_code, cleanup, message, ...) \
+  G_STMT_START {                                                          \
+      if (error)                                                          \
+        {                                                                 \
+          if (*error == NULL)                                             \
+            g_set_error (error, GIMP_WLBR_ERROR, error_code,              \
+                         message, __VA_ARGS__);                           \
+        }                                                                 \
+      else                                                                \
+        {                                                                 \
+          g_critical ("%s (%s - line %d): internal error.\n",             \
+                      G_STRFUNC, __FILE__, __LINE__);                     \
+          cleanup;                                                        \
+          return FALSE;                                                   \
+        }                                                                 \
+  } G_STMT_END
+
+
 void         gimp_savable_load                   (GType                    savable_type,
                                                   GimpLoadState           *state);
 void         gimp_savable_config_load            (GType                    config_type,
@@ -130,6 +154,17 @@ gboolean     gimp_savable_exit_space             (GimpLoadState            *stat
                                                   gsize                     len,
                                                   gpointer                  user_data,
                                                   GError                  **error);
+gboolean     gimp_savable_enter_value_array      (GimpLoadState            *state,
+                                                  const gchar             **attribute_names,
+                                                  const gchar             **attribute_values,
+                                                  gpointer                  user_data,
+                                                  GError                  **error);
+gboolean     gimp_savable_exit_value_array       (GimpLoadState            *state,
+                                                  const gchar              *text,
+                                                  gsize                     len,
+                                                  gpointer                  user_data,
+                                                  GError                  **error);
+
 
 /* Friend functions used only in gimpimage-savable.c */
 

@@ -92,29 +92,6 @@ struct _GimpConfigHandlerData
   GimpExitElementhandler   secondary_exit_handler;
 };
 
-/* Macro to set @error.
- * If @error is already set, just ignore further errors in the same call.
- * When error is NULL, we are in a case where we control the input data
- * in a way that we are not supposed to ever reach this point. So we
- * trigger a CRITICAL and return FALSE because it's a bug.
- */
-#define GIMP_SAVABLE_LOAD_ERROR(error, error_code, cleanup, message, ...) \
-  G_STMT_START {                                                          \
-      if (error)                                                          \
-        {                                                                 \
-          if (*error == NULL)                                             \
-            g_set_error (error, GIMP_WLBR_ERROR, error_code,              \
-                         message, __VA_ARGS__);                           \
-        }                                                                 \
-      else                                                                \
-        {                                                                 \
-          g_critical ("%s (%s - line %d): internal error.\n",             \
-                      G_STRFUNC, __FILE__, __LINE__);                     \
-          cleanup;                                                        \
-          return FALSE;                                                   \
-        }                                                                 \
-  } G_STMT_END
-
 
 static void     gimp_savable_load_init_state    (GimpLoadState        *state,
                                                  Gimp                 *gimp,
@@ -198,6 +175,16 @@ static gboolean gimp_savable_exit_pixel         (GimpLoadState        *state,
                                                  gsize                 len,
                                                  gpointer              user_data,
                                                  GError              **error);
+static gboolean gimp_savable_enter_value        (GimpLoadState        *state,
+                                                 const gchar         **attribute_names,
+                                                 const gchar         **attribute_values,
+                                                 gpointer              user_data,
+                                                 GError              **error);
+static gboolean gimp_savable_exit_value         (GimpLoadState        *state,
+                                                 const gchar          *text,
+                                                 gsize                 len,
+                                                 gpointer              user_data,
+                                                 GError              **error);
 
 
 void
@@ -210,11 +197,16 @@ gimp_savable_load (GType          savable_type,
   klass = g_type_class_ref (savable_type);
   iface = g_type_interface_peek (klass, GIMP_TYPE_SAVABLE);
 
+  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
+#define GIMPTYPE_TO_POINTER(t) ((gpointer) (guintptr) (t))
   if (iface->tag)
+    /* For all class handlers, use the leaf type as user data. */
     gimp_savable_load_add_handlers (state, iface->tag,
                                     iface->load_enter,
                                     iface->load_exit,
-                                    NULL, NULL);
+                                    GIMPTYPE_TO_POINTER (savable_type),
+                                    NULL);
+#undef GIMPTYPE_TO_POINTER
 
   g_type_class_unref (klass);
 }
@@ -1057,6 +1049,36 @@ gimp_savable_exit_space (GimpLoadState  *state,
 
   gimp_savable_load_bubble_up (state, "space");
 
+  return TRUE;
+}
+
+gboolean
+gimp_savable_enter_value_array (GimpLoadState  *state,
+                                const gchar   **attribute_names,
+                                const gchar   **attribute_values,
+                                gpointer        user_data,
+                                GError        **error)
+{
+  GimpValueArray *array = gimp_value_array_new (2);
+
+  gimp_savable_load_store_value (state, "value-array", array,
+                                 (GDestroyNotify) gimp_value_array_unref);
+  gimp_savable_load_add_handlers (state, "value",
+                                  gimp_savable_enter_value,
+                                  gimp_savable_exit_value,
+                                  NULL, NULL);
+
+  return TRUE;
+}
+
+gboolean
+gimp_savable_exit_value_array (GimpLoadState  *state,
+                               const gchar    *text,
+                               gsize           len,
+                               gpointer        user_data,
+                               GError        **error)
+{
+  gimp_savable_load_bubble_up (state, "value-array");
   return TRUE;
 }
 
@@ -2100,6 +2122,65 @@ gimp_savable_exit_pixel (GimpLoadState  *state,
 
   gimp_savable_load_store_value (state, "pixel", (gpointer) b64, g_free);
   gimp_savable_load_bubble_up (state, "pixel");
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_enter_value (GimpLoadState  *state,
+                          const gchar   **attribute_names,
+                          const gchar   **attribute_values,
+                          gpointer        user_data,
+                          GError        **error)
+{
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "type") == 0)
+        gimp_savable_load_store_from_string (state, error,
+                                             "type", G_TYPE_GTYPE, *attribute_values,
+                                             NULL);
+      else
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_FORMAT, ;,
+                                 "%s: unexpected attribute: '%s'",
+                                 G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_exit_value (GimpLoadState  *state,
+                         const gchar    *text,
+                         gsize           len,
+                         gpointer        user_data,
+                         GError        **error)
+{
+  GimpValueArray *array = NULL;
+  GValue         *value = NULL;
+  GType           vtype = G_TYPE_NONE;
+
+  if (! gimp_savable_load_get_values (state, "type", &vtype, NULL))
+    {
+      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_FORMAT, ;,
+                               "%s: missing or invalid value type.",
+                               G_STRFUNC);
+    }
+  else
+    {
+      gimp_savable_load_store_from_string (state, error,
+                                           "value", vtype, text,
+                                           NULL);
+      value = gimp_savable_load_get_gvalue (state, "value");
+    }
+
+  if (value &&
+      gimp_savable_load_get_parent_values (state, "value-array", &array, NULL))
+    gimp_value_array_append (array, value);
+  else
+    gimp_savable_load_bubble_up (state, "value");
 
   return TRUE;
 }

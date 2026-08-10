@@ -554,21 +554,21 @@ gimp_savable_value_save (GValue        *value,
     {
       gimp_savable_print_element (state, tag_name, "%b",
                                   g_value_get_boolean (value),
-                                  "type", "%s", "boolean",
+                                  "type", "%T", G_TYPE_BOOLEAN,
                                   NULL);
     }
   else if (G_VALUE_HOLDS_INT (value))
     {
       gimp_savable_print_element (state, tag_name,
                                   "%d", g_value_get_int (value),
-                                  "type", "%s", "int",
+                                  "type", "%T", G_TYPE_INT,
                                   NULL);
     }
   else if (G_VALUE_HOLDS_UINT (value))
     {
       gimp_savable_print_element (state, tag_name,
                                   "%u", g_value_get_uint (value),
-                                  "type", "%s", "uint",
+                                  "type", "%T", G_TYPE_UINT,
                                   NULL);
     }
   else if (G_VALUE_HOLDS_ENUM (value))
@@ -584,21 +584,21 @@ gimp_savable_value_save (GValue        *value,
       const gchar *str = g_value_get_string (value);
       gimp_savable_print_element (state, tag_name,
                                   "%s", str ? str : "",
-                                  "type", "%s", "string",
+                                  "type", "%T", G_TYPE_STRING,
                                   NULL);
     }
   else if (G_VALUE_HOLDS_DOUBLE (value))
     {
       gimp_savable_print_element (state, tag_name,
                                   "%f", g_value_get_double (value),
-                                  "type", "%s", "double",
+                                  "type", "%T", G_TYPE_DOUBLE,
                                   NULL);
     }
   else if (G_VALUE_HOLDS_FLOAT (value))
     {
       gimp_savable_print_element (state, tag_name,
                                   "%f", g_value_get_float (value),
-                                  "type", "%s", "float",
+                                  "type", "%T", G_TYPE_FLOAT,
                                   NULL);
     }
   else if (G_VALUE_HOLDS_OBJECT (value) &&
@@ -607,7 +607,7 @@ gimp_savable_value_save (GValue        *value,
       GimpUnit *unit = g_value_get_object (value);
 
       gimp_savable_print_element_start (state, tag_name,
-                                        "type", "%s", "GimpUnit",
+                                        "type", "%T", GIMP_TYPE_UNIT,
                                         NULL);
       if (unit)
         gimp_savable_unit_save (unit, state);
@@ -619,7 +619,7 @@ gimp_savable_value_save (GValue        *value,
       GeglColor *color = g_value_get_object (value);
 
       gimp_savable_print_element_start (state, tag_name,
-                                        "type", "%s", "GeglColor",
+                                        "type", "%T", GEGL_TYPE_COLOR,
                                         NULL);
       if (color)
         gimp_savable_color_save (color, NULL, NULL, state);
@@ -659,7 +659,7 @@ gimp_savable_value_save (GValue        *value,
       GimpMatrix2 *matrix = g_value_get_boxed (value);
 
       gimp_savable_print_element_start (state, tag_name,
-                                        "type", "%s", "GimpMatrix2",
+                                        "type", "%T", GIMP_TYPE_MATRIX2,
                                         NULL);
       if (matrix)
         gimp_savable_matrix2_save (matrix, state);
@@ -670,7 +670,7 @@ gimp_savable_value_save (GValue        *value,
       GimpValueArray *values = g_value_get_boxed (value);
 
       gimp_savable_print_element_start (state, tag_name,
-                                        "type", "%s", "GimpValueArray",
+                                        "type", "%T", GIMP_TYPE_VALUE_ARRAY,
                                         NULL);
       if (values)
         gimp_savable_value_array_save (values, state);

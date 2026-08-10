@@ -1637,12 +1637,8 @@ gimp_group_layer_load_enter (GimpLoadState  *state,
       attribute_values++;
     }
 
-  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
-#define GIMPTYPE_TO_POINTER(t) ((gpointer) (guintptr) (t))
   parent_savable_iface->load_enter (state, attribute_names, attribute_values,
-                                    GIMPTYPE_TO_POINTER (GIMP_TYPE_GROUP_LAYER),
-                                    error);
-#undef GIMPTYPE_TO_POINTER
+                                    user_data, error);
 
   gimp_savable_load_add_handlers (state, "layers",
                                   gimp_group_layer_enter_layers,

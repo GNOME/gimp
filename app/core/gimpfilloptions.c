@@ -32,6 +32,9 @@
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
+#include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayeroptions.h"
+
 #include "gimp.h"
 #include "gimp-palettes.h"
 #include "gimpdrawable.h"
@@ -41,6 +44,7 @@
 #include "gimpimage.h"
 #include "gimppattern.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 
 #include "gimp-intl.h"
 
@@ -99,6 +103,17 @@ static gboolean gimp_fill_options_serialize          (GimpConfig           *conf
 
 static void     gimp_fill_options_savable_save       (GimpSavable          *savable,
                                                       GimpSaveState        *state);
+
+static gboolean gimp_fill_options_load_enter         (GimpLoadState  *state,
+                                                      const gchar   **attribute_names,
+                                                      const gchar   **attribute_values,
+                                                      gpointer        user_data,
+                                                      GError        **error);
+static gboolean gimp_fill_options_load_exit          (GimpLoadState  *state,
+                                                      const gchar    *text,
+                                                      gsize           len,
+                                                      gpointer        user_data,
+                                                      GError        **error);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpFillOptions, gimp_fill_options, GIMP_TYPE_CONTEXT,
@@ -189,7 +204,10 @@ gimp_fill_options_config_init (GimpConfigInterface *iface)
 static void
 gimp_fill_options_savable_iface_init (GimpSavableInterface *iface)
 {
-  iface->save = gimp_fill_options_savable_save;
+  iface->tag        = "fill-options";
+  iface->save       = gimp_fill_options_savable_save;
+  iface->load_enter = gimp_fill_options_load_enter;
+  iface->load_exit  = gimp_fill_options_load_exit;
 }
 
 static void
@@ -310,19 +328,94 @@ gimp_fill_options_savable_save (GimpSavable   *savable,
   gimp_savable_print_element (state, "antialias", "%b", private->antialias, NULL);
 
   color = gimp_context_get_foreground (GIMP_CONTEXT (options));
-  gimp_savable_print_element_start (state, "color", NULL);
   if (color)
     gimp_savable_color_save (color, NULL, NULL, state);
-  gimp_savable_print_element_end (state, "color");
 
   pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
-  gimp_savable_print_element_start (state, "pattern", NULL);
   if (pattern)
     gimp_savable_save (GIMP_SAVABLE (pattern), state);
-  gimp_savable_print_element_end (state, "pattern");
 
   if (G_TYPE_FROM_INSTANCE (savable) == GIMP_TYPE_FILL_OPTIONS)
     gimp_savable_print_element_end (state, "fill-options");
+}
+
+static gboolean
+gimp_fill_options_load_enter (GimpLoadState  *state,
+                              const gchar   **attribute_names,
+                              const gchar   **attribute_values,
+                              gpointer        user_data,
+                              GError        **error)
+{
+  while (*attribute_names)
+    {
+      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_FORMAT, ;,
+                               "%s: unexpected attribute: '%s'",
+                               G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  gimp_savable_load_add_simple_handler (state, "style", GIMP_TYPE_CUSTOM_STYLE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "antialias", G_TYPE_BOOLEAN,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        NULL);
+  gimp_savable_load_add_handlers (state, "color",
+                                  gimp_savable_enter_color,
+                                  gimp_savable_exit_color,
+                                  NULL, NULL);
+
+  gimp_savable_load (GIMP_TYPE_PATTERN, state);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_fill_options_load_exit (GimpLoadState  *state,
+                             const gchar    *text,
+                             gsize           len,
+                             gpointer        user_data,
+                             GError        **error)
+{
+  GimpVectorLayer *layer;
+  GimpFillOptions *options;
+  GeglColor       *color;
+  GimpPattern     *pattern;
+  GimpCustomStyle  style;
+  gboolean         antialias;
+  GType            real_type;
+
+  g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  layer = GIMP_VECTOR_LAYER (gimp_savable_load_peek_active_object (state));
+
+  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
+#define GIMPPOINTER_TO_TYPE(p) ((GType) (guintptr) (p))
+  real_type = user_data ? GIMPPOINTER_TO_TYPE (user_data) : GIMP_TYPE_FILL_OPTIONS;
+#undef GIMPPOINTER_TO_TYPE
+
+  if (real_type == GIMP_TYPE_FILL_OPTIONS)
+    options = layer->options->fill_options;
+  else
+    options = GIMP_FILL_OPTIONS (layer->options->stroke_options);
+
+  if (gimp_savable_load_get_values (state, "style", &style, NULL))
+    gimp_fill_options_set_custom_style (options, style);
+
+  if (gimp_savable_load_get_values (state, "antialias", &antialias, NULL))
+    gimp_fill_options_set_antialias (options, antialias);
+
+  if (gimp_savable_load_get_values (state, "color", &color, NULL))
+    gimp_context_set_foreground (GIMP_CONTEXT (options), color);
+
+  if (gimp_savable_load_get_values (state, "pattern", &pattern, NULL))
+    gimp_context_set_pattern (GIMP_CONTEXT (options), pattern);
+
+  return TRUE;
 }
 
 
