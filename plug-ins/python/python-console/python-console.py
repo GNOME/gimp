@@ -78,6 +78,7 @@ def run(procedure, config, data):
             self.set_property("help-id", PROC_NAME)
             Gtk.Window.set_title(self, _("Python Console"))
             Gtk.Window.set_role(self, PROC_NAME)
+            GimpUi.window_set_transient(self)
             Gtk.Dialog.add_button(self, _("_Save"), Gtk.ResponseType.OK)
             Gtk.Dialog.add_button(self, _("Cl_ear"), RESPONSE_CLEAR)
             Gtk.Dialog.add_button(self, _("_Browse..."), RESPONSE_BROWSE)
@@ -223,6 +224,7 @@ def run(procedure, config, data):
                 dlg = GimpUi.ProcBrowserDialog(use_header_bar=use_header_bar)
                 Gtk.Window.set_title(dlg, _("Python Procedure Browser"))
                 Gtk.Window.set_role(dlg, PROC_NAME)
+                Gtk.Window.set_transient_for(dlg, self)
                 Gtk.Dialog.add_button(dlg, _("_Apply"), Gtk.ResponseType.APPLY)
                 Gtk.Dialog.add_button(dlg, _("_Close"), Gtk.ResponseType.CLOSE)
 
