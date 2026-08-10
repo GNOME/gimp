@@ -538,6 +538,8 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
         {
           /* first, set all plug-in windows as always visible */
           [win setLevel:NSFloatingWindowLevel];
+          /* put on the center of the screen as courtesy */
+          [win center];
 
           /* if gimp app is minimzed or restored, do the same on the plug-in windows
              otherwise the windows would stay always visible over other apps */
