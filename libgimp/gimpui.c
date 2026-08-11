@@ -320,7 +320,7 @@ gimp_window_set_transient_for_display (GtkWindow   *window,
  *
  * Indicates to the window manager that @window is a transient dialog
  * associated with the GIMP window that the plug-in has been
- * started from. See also gimp_window_set_transient_for_display().
+ * started from. See also [func@GimpUi.window_set_transient_for_display].
  *
  * Since: 2.4
  */
