@@ -320,7 +320,7 @@ print_image (GimpImage *image,
       /* create top level window and make it transient to use correct monitor */
       printwindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       gimp_window_set_transient (GTK_WINDOW (printwindow));
-      gtk_widget_show (printwindow);
+      gtk_widget_set_visible (printwindow, TRUE);
 #endif
 
       g_signal_connect_swapped (operation, "end-print",
