@@ -69,6 +69,7 @@ function run(procedure, run_mode, image, drawables, config, run_data)
       role           = "goat-exercise-Lua",
       use_header_bar = use_header_bar
     }
+    GimpUi.window_set_transient(dialog);
     dialog:add_button(_("_Cancel"), Gtk.ResponseType.CANCEL);
     dialog:add_button(_("_Source"), Gtk.ResponseType.APPLY);
     dialog:add_button(_("_OK"), Gtk.ResponseType.OK);

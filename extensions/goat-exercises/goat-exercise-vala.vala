@@ -74,6 +74,7 @@ public class Goat : Gimp.PlugIn {
                           _("_Source"), Gtk.ResponseType.APPLY,
                           _("_Run"), Gtk.ResponseType.OK,
                           null);
+      GimpUi.window_set_transient(dialog);
 
       var geometry = Gdk.Geometry();
       /* Only equal minimum and maximum aspect ratios are supported on Mac OS */
