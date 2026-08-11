@@ -223,6 +223,8 @@ metadata_viewer_dialog (GimpImage     *image,
                             _("_Close"), GTK_RESPONSE_CLOSE,
                             NULL);
 
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
   gtk_widget_set_size_request(dialog, 650, 500);
 
   g_free (title);
