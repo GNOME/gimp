@@ -144,6 +144,7 @@ tips_dialog_create (Gimp *gimp)
                                         GTK_ICON_SIZE_BUTTON);
   gtk_button_set_image (GTK_BUTTON (button), image);
   gtk_widget_set_visible (image, TRUE);
+  gtk_dialog_set_default_response (GTK_DIALOG (tips_dialog), RESPONSE_NEXT);
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (tips_dialog),
                                      RESPONSE_NEXT, tips_count > 1);
