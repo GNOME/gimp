@@ -82,6 +82,9 @@ static void          dialog_destroy_callback    (GtkWidget        *widget,
 static void          dialog_select_callback     (GtkListBox       *listbox,
                                                  GtkListBoxRow    *row,
                                                  ModuleDialog     *private);
+static gboolean      dialog_activate_callback   (GtkWidget        *widget,
+                                                 GdkEventKey      *event,
+                                                 ModuleDialog     *private);
 static void          dialog_enabled_toggled     (GtkToggleButton  *checkbox,
                                                  ModuleDialog     *private);
 static void          dialog_info_init            (ModuleDialog     *private,
@@ -157,6 +160,9 @@ module_dialog_new (Gimp *gimp)
   g_signal_connect (private->listbox, "row-selected",
                     G_CALLBACK (dialog_select_callback),
                     private);
+  g_signal_connect (private->listbox, "key-press-event",
+                    G_CALLBACK (dialog_activate_callback),
+                    private);
 
   gtk_container_add (GTK_CONTAINER (sw), private->listbox);
   gtk_widget_show (private->listbox);
@@ -216,6 +222,7 @@ create_widget_for_module (gpointer item,
   gtk_widget_show (grid);
 
   checkbox = gtk_check_button_new ();
+  gtk_widget_set_can_focus (checkbox, FALSE);
   g_object_bind_property (module, "auto-load", checkbox, "active",
                           G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
   g_signal_connect (checkbox, "toggled",
@@ -305,6 +312,35 @@ dialog_select_callback (GtkListBox    *listbox,
   gtk_label_set_text (GTK_LABEL (private->error_label),
                       show_error ? gimp_module_get_last_error (module) : NULL);
   gtk_widget_set_visible (private->error_box, show_error);
+}
+
+static gboolean
+dialog_activate_callback (GtkWidget    *widget,
+                          GdkEventKey  *event,
+                          ModuleDialog *private)
+{
+  if (event->keyval == GDK_KEY_space ||
+      event->keyval == GDK_KEY_Return ||
+      event->keyval == GDK_KEY_KP_Enter)
+    {
+      GtkListBoxRow *row = gtk_list_box_get_selected_row (GTK_LIST_BOX (widget));
+
+      if (row)
+        {
+          GimpModule *module = g_object_get_data (G_OBJECT (row), "module");
+
+          if (module)
+            {
+              gboolean auto_load;
+
+              g_object_get (module, "auto-load", &auto_load, NULL);
+              g_object_set (module, "auto-load", !auto_load, NULL);
+              return TRUE;
+            }
+        }
+    }
+
+  return FALSE;
 }
 
 static void
