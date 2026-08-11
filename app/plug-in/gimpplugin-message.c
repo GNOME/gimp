@@ -506,6 +506,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
   GimpProcedure       *procedure;
   GimpValueArray      *args        = NULL;
   GimpValueArray      *return_vals = NULL;
+  GimpRunMode          run_mode    = GIMP_RUN_INTERACTIVE;
   GError              *error       = NULL;
 
   g_return_if_fail (proc_run != NULL);
@@ -576,6 +577,15 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
                                          proc_run->n_params,
                                          FALSE);
 
+  for (gint i = 0; i < proc_run->n_params; i++)
+    {
+      if (G_VALUE_TYPE (gimp_value_array_index (args, i)) == GIMP_TYPE_RUN_MODE)
+        {
+          run_mode = g_value_get_enum (gimp_value_array_index (args, i));
+          break;
+        }
+    }
+
   /*  Execute the procedure even if gimp_pdb_lookup_procedure()
    *  returned NULL, gimp_pdb_execute_procedure_by_name_args() will
    *  return appropriate error return_vals.
@@ -595,8 +605,9 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
 
   if (error)
     {
-      gimp_plug_in_handle_proc_error (plug_in, proc_frame,
-                                      canonical, error);
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_plug_in_handle_proc_error (plug_in, proc_frame, canonical, error);
+
       g_error_free (error);
     }
 
