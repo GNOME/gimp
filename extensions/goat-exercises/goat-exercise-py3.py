@@ -74,6 +74,7 @@ class Goat (Gimp.PlugIn):
             dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
                                    title=_("Plug-In Example in Python 3"),
                                    role="goat-exercise-Python3")
+            GimpUi.window_set_transient(dialog)
 
             dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
             dialog.add_button(_("_Source"), Gtk.ResponseType.APPLY)

@@ -184,6 +184,7 @@ goat_run (GimpProcedure        *procedure,
                                 _("_Run"),    GTK_RESPONSE_OK,
 
                                 NULL);
+      gimp_window_set_transient (GTK_WINDOW (dialog));
 #ifndef __APPLE__
       geometry.min_aspect = 0.5;
 #else
