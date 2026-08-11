@@ -161,6 +161,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_set_visible (spin, TRUE);
+  gtk_widget_grab_focus (spin);
 
   label = gtk_label_new (_("degrees"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
