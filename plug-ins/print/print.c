@@ -262,6 +262,7 @@ print_image (GimpImage *image,
   GtkPrintOperationResult  result;
   GimpLayer               *layer;
   PrintData                data;
+  GtkWidget               *printwindow;
 #ifndef EMBED_PAGE_SETUP
   gchar                   *temp_proc;
 #endif
@@ -314,6 +315,13 @@ print_image (GimpImage *image,
   if (interactive)
     {
       gimp_ui_init (PLUG_IN_BINARY);
+      printwindow = NULL;
+#ifdef GDK_WINDOWING_QUARTZ
+      /* create top level window and make it transient to use correct monitor */
+      printwindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+      gimp_window_set_transient (GTK_WINDOW (printwindow));
+      gtk_widget_show (printwindow);
+#endif
 
       g_signal_connect_swapped (operation, "end-print",
                                 G_CALLBACK (print_settings_save),
@@ -331,7 +339,10 @@ print_image (GimpImage *image,
 
       result = gtk_print_operation_run (operation,
                                         GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
-                                        NULL, error);
+                                        GTK_WINDOW (printwindow), error);
+
+      if (printwindow)
+        gtk_widget_destroy (printwindow);
 
       if (result == GTK_PRINT_OPERATION_RESULT_APPLY ||
           result == GTK_PRINT_OPERATION_RESULT_IN_PROGRESS)
