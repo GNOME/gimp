@@ -385,7 +385,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
   if (!use_header_bar)
     {
       gtk_container_add (GTK_CONTAINER (vbox), action_container);
-      gtk_widget_show (action_container);
+      gtk_widget_set_visible (action_container, TRUE);
     }
 
   g_signal_connect (self->window, "key-press-event",
