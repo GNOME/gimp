@@ -26,7 +26,7 @@
         "--device=all",
         "--filesystem=host",
         "--filesystem=xdg-config/GIMP:create",
-        "--filesystem=xdg-config/gtk-3.0",
+        "--filesystem=xdg-config/gtk-3.0:ro",
         "--filesystem=/tmp",
         "--filesystem=xdg-run/gvfs",
         "--filesystem=xdg-run/gvfsd",
