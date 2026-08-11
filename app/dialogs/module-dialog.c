@@ -146,7 +146,7 @@ module_dialog_new (Gimp *gimp)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (sw, 320, 220);
+  gtk_widget_set_size_request (sw, 220, 180);
   gtk_widget_show (sw);
 
   private->listbox = gtk_list_box_new ();
