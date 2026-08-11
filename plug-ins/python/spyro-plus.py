@@ -1776,6 +1776,7 @@ class SpyroWindow():
             use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
             self.dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
                                       title=_("Spyrogimp"))
+            GimpUi.window_set_transient(self.dialog)
             #self.set_default_size(350, -1)
             #self.set_border_width(10)
 
