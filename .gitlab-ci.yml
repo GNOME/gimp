@@ -799,7 +799,7 @@ file-plug-in-tests:
   #        the latest deps. It might be a good idea to test that too, maybe weekly?
   extends: .debian-nonreloc
   rules:
-    - if: '$CI_COMMIT_MESSAGE =~ /^Update.*translation$/ || $CI_COMMIT_MESSAGE =~ /^.*:\s*Update.*translation$/'
+    - if: '$CI_COMMIT_MESSAGE =~ /^Update.*translation.*/ || $CI_COMMIT_MESSAGE =~ /^.*:\s*Update.*translation.*/'
       #commits pushed by GNOME Translation Robot do not need this job
       when: never
     - <<: *CI_MERGE
@@ -844,7 +844,7 @@ file-plug-in-tests:
 abidiff:
   extends: .debian-nonreloc
   rules:
-    - if: '$CI_COMMIT_MESSAGE =~ /^Update.*translation$/ || $CI_COMMIT_MESSAGE =~ /^.*:\s*Update.*translation$/'
+    - if: '$CI_COMMIT_MESSAGE =~ /^Update.*translation.*/ || $CI_COMMIT_MESSAGE =~ /^.*:\s*Update.*translation.*/'
       #commits pushed by GNOME Translation Robot do not need this job
       when: never
     - <<: *CI_MERGE
@@ -884,7 +884,7 @@ abidiff:
 meson-health:
   extends: .default
   rules:
-    - if: '$CI_COMMIT_MESSAGE =~ /^Update.*translation$/ || $CI_COMMIT_MESSAGE =~ /^.*:\s*Update.*translation$/'
+    - if: '$CI_COMMIT_MESSAGE =~ /^Update.*translation.*/ || $CI_COMMIT_MESSAGE =~ /^.*:\s*Update.*translation.*/'
       #commits pushed by GNOME Translation Robot do not need this job
       when: never
     - <<: *CI_MERGE
@@ -911,14 +911,14 @@ meson-health:
 branches-check:
   extends: .default
   rules:
-    - if: '$CI_COMMIT_MESSAGE =~ /^Update.*translation$/ || $CI_COMMIT_MESSAGE =~ /^.*:\s*Update.*translation$/'
+    - if: '$CI_COMMIT_MESSAGE =~ /^Update.*translation.*/ || $CI_COMMIT_MESSAGE =~ /^.*:\s*Update.*translation.*/'
       #commits pushed by GNOME Translation Robot do not need this job
       when: never
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_OPEN_MERGE_REQUESTS == null && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
       interruptible: true
   stage: analysis
   variables:
-    GIT_DEPTH: "0"
+    GIT_DEPTH: "10"
   script:
     - apt-get update -qq >/dev/null 2>&1
     - apt-get install -qq -y --no-install-recommends git >/dev/null 2>&1
