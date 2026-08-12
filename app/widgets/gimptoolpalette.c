@@ -193,8 +193,8 @@ gimp_tool_palette_get_n_tools (GimpToolPalette *palette,
   monitor = gimp_widget_get_monitor (GTK_WIDGET (palette));
   gdk_monitor_get_workarea (monitor, &workarea);
 
-  max_columns = (workarea.width  * 0.9) / *button_width;
-  max_rows    = (workarea.height * 0.7) / *button_height;
+  max_columns = MAX (1, (workarea.width  * 0.9) / *button_width);
+  max_rows    = MAX (1, (workarea.height * 0.7) / *button_height);
 
   *min_columns = MAX (1, n_tools / max_rows);
   *min_rows    = MAX (1, n_tools / max_columns);
