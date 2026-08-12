@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-27 23:25+0000\n"
-"PO-Revision-Date: 2026-06-03 18:14+0200\n"
+"POT-Creation-Date: 2026-08-10 18:13+0000\n"
+"PO-Revision-Date: 2026-08-12 22:39+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -83,7 +83,7 @@ msgid "Script Console"
 msgstr "Skript-konsoll"
 
 #: plug-ins/script-fu/console/script-fu-console.c:124
-#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/console/script-fu-console.c:251
 msgid "_Save"
 msgstr "_Lagra"
 
@@ -92,34 +92,34 @@ msgid "C_lear"
 msgstr "_Tøm"
 
 #: plug-ins/script-fu/console/script-fu-console.c:126
-#: plug-ins/script-fu/console/script-fu-console.c:313
+#: plug-ins/script-fu/console/script-fu-console.c:315
 msgid "_Close"
 msgstr "_Lukk"
 
-#: plug-ins/script-fu/console/script-fu-console.c:187
+#: plug-ins/script-fu/console/script-fu-console.c:189
 msgid "_Browse..."
 msgstr "_Bla gjennom …"
 
-#: plug-ins/script-fu/console/script-fu-console.c:246
+#: plug-ins/script-fu/console/script-fu-console.c:248
 msgid "Save Script-Fu Console Output"
 msgstr "Lagra utdataa frå Script-Fu konsollen"
 
-#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/console/script-fu-console.c:251
 #: plug-ins/script-fu/server/script-fu-server.c:968
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: plug-ins/script-fu/console/script-fu-console.c:282
+#: plug-ins/script-fu/console/script-fu-console.c:284
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kan ikkje opna «%s» for skriving: %s"
 
-#: plug-ins/script-fu/console/script-fu-console.c:308
+#: plug-ins/script-fu/console/script-fu-console.c:310
 msgid "Script-Fu Procedure Browser"
 msgstr "Prosedyrelesaren for Script-Fu"
 
-#: plug-ins/script-fu/console/script-fu-console.c:312
+#: plug-ins/script-fu/console/script-fu-console.c:314
 msgid "_Apply"
 msgstr "_Bruk"
 
@@ -444,7 +444,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:327
 msgid "Chrome saturation"
-msgstr "Krom metning"
+msgstr "Krom metting"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:328
 msgid "Chrome lightness"
