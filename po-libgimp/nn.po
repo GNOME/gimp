@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-25 20:40+0000\n"
-"PO-Revision-Date: 2026-08-05 17:06+0200\n"
+"POT-Creation-Date: 2026-08-10 17:09+0000\n"
+"PO-Revision-Date: 2026-08-12 22:26+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -1559,7 +1559,7 @@ msgstr "HSV kulør"
 #: libgimpbase/gimpbaseenums.c:1571
 msgctxt "select-criterion"
 msgid "HSV Saturation"
-msgstr "HSV metning"
+msgstr "HSV metting"
 
 #: libgimpbase/gimpbaseenums.c:1572
 msgctxt "select-criterion"
@@ -2384,7 +2384,7 @@ msgstr "Namnet på kontrollelementet"
 msgid "The controller's state, as human-readable string"
 msgstr "Status for kontrollelementet som ein leseleg streng"
 
-#: libgimpwidgets/gimpdialog.c:248
+#: libgimpwidgets/gimpdialog.c:273
 msgid "_Help"
 msgstr "_Hjelp"
 
@@ -2624,7 +2624,7 @@ msgstr "_M"
 
 #: libgimpwidgets/gimpwidgetsenums.c:131
 msgid "HSV Saturation"
-msgstr "HSV-metning"
+msgstr "HSV-metting"
 
 #: libgimpwidgets/gimpwidgetsenums.c:132
 msgctxt "color-selector-channel"
