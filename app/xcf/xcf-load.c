@@ -1213,12 +1213,6 @@ xcf_load_image (Gimp     *gimp,
         goto error;
     }
 
-  if (n_broken_layers == 0 && n_broken_channels == 0)
-    {
-      xcf_load_add_masks (image);
-      xcf_load_add_effects (info, image);
-    }
-
   if (info->floating_sel && info->floating_sel_drawable)
     {
       /* we didn't fix the loaded floating selection's format before
@@ -1313,15 +1307,19 @@ xcf_load_image (Gimp     *gimp,
       if (vdata != NULL)
         {
           GimpLayer              *vlayer;
-          GimpLayer              *parent = NULL;
           GimpVectorLayerOptions *options;
           GimpPath               *path;
+          GimpLayerMask          *mask;
+          gboolean                apply_mask       = FALSE;
+          gboolean                edit_mask        = FALSE;
+          gboolean                show_mask        = FALSE;
+          GeglBuffer             *raster_buffer    = NULL;
+          GList                  *filter_data_list = NULL;
           GArray                 *dash_pattern;
           GList                  *selected;
           GList                  *linked;
           gboolean                floating;
           gchar                  *name;
-          gint                    position = 0;
           gboolean                modified;
 
           selected = g_list_find (info->selected_layers, layer);
@@ -1364,12 +1362,30 @@ xcf_load_image (Gimp     *gimp,
                         "miter-limit", vdata->stroke_miter_limit,
                         NULL);
 
-          /* Store current layer position so we can add it after the fact */
-          parent   = gimp_layer_get_parent (layer);
-          position = gimp_item_get_index (GIMP_ITEM (layer));
-          modified = vdata->modified;
+          /* Store original layer data for processing after conversion */
+          modified         = vdata->modified;
+          filter_data_list = g_object_steal_data (G_OBJECT (layer),
+                                                  "gimp-layer-effects");
 
-          vlayer = gimp_layer_from_layer (layer, FALSE, GIMP_TYPE_VECTOR_LAYER,
+          mask       = g_object_steal_data (G_OBJECT (layer),
+                                            "gimp-layer-mask");
+          apply_mask =
+            GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
+                                                "gimp-layer-mask-apply"));
+          edit_mask  =
+            GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
+                                                "gimp-layer-mask-edit"));
+          show_mask  =
+            GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
+                                                "gimp-layer-mask-show"));
+
+
+          /* Duplicate GEGL buffer so we retain any raster edits */
+          if (modified)
+            raster_buffer =
+              gimp_gegl_buffer_dup (gimp_drawable_get_buffer (iter->data));
+
+          vlayer = gimp_layer_from_layer (layer, GIMP_TYPE_VECTOR_LAYER,
                                           "image",                image,
                                           "vector-layer-options", options,
                                           NULL);
@@ -1377,10 +1393,33 @@ xcf_load_image (Gimp     *gimp,
 
           if (modified)
             gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer), FALSE);
-          gimp_image_add_layer (image, vlayer, parent, position, FALSE);
+
+          if (raster_buffer)
+            {
+              gimp_drawable_set_buffer (GIMP_DRAWABLE (vlayer), FALSE, NULL,
+                                        raster_buffer);
+              g_object_unref (raster_buffer);
+            }
 
           gimp_object_set_name (GIMP_OBJECT (vlayer), name);
           g_free (name);
+
+          if (mask)
+            {
+              g_object_set_data_full (G_OBJECT (vlayer), "gimp-layer-mask",
+                                      mask, (GDestroyNotify) g_object_unref);
+
+              g_object_set_data (G_OBJECT (vlayer), "gimp-layer-mask-apply",
+                                 GINT_TO_POINTER (apply_mask));
+              g_object_set_data (G_OBJECT (vlayer), "gimp-layer-mask-edit",
+                                 GINT_TO_POINTER (edit_mask));
+              g_object_set_data (G_OBJECT (vlayer), "gimp-layer-mask-show",
+                                 GINT_TO_POINTER (show_mask));
+            }
+          if (filter_data_list)
+            g_object_set_data_full (G_OBJECT (vlayer), "gimp-layer-effects",
+                                    filter_data_list,
+                                    (GDestroyNotify) xcf_load_free_effects);
 
           if (selected)
             {
@@ -1436,6 +1475,12 @@ xcf_load_image (Gimp     *gimp,
         }
     }
   g_list_free (layers);
+
+  if (n_broken_layers == 0 && n_broken_channels == 0)
+    {
+      xcf_load_add_masks (image);
+      xcf_load_add_effects (info, image);
+    }
 
   if (info->selected_layers)
     {
@@ -2663,8 +2708,7 @@ xcf_load_layer_props (XcfInfo    *info,
                       link   = gimp_link_new (info->gimp, link_file,
                                               (gint) dimensions[0], (gint) dimensions[1],
                                               FALSE, NULL, NULL);
-                      *layer = gimp_layer_from_layer (*layer, TRUE,
-                                                      GIMP_TYPE_LINK_LAYER,
+                      *layer = gimp_layer_from_layer (*layer, GIMP_TYPE_LINK_LAYER,
                                                       "image", image,
                                                       NULL);
 
