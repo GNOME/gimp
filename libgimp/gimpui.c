@@ -583,6 +583,24 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
       not_gimp_observer_added = FALSE;
       if (! not_gimp_observer_added)
         {
+          /* gimp main window is not active, save last focused window/dialog */
+          static BOOL focus_saved = NO;
+          [[[NSWorkspace sharedWorkspace] notificationCenter] addObserverForName:NSWorkspaceDidDeactivateApplicationNotification
+                                                              object:nil
+                                                              queue:[NSOperationQueue mainQueue]
+                                                              usingBlock:^(NSNotification *note) {
+            NSRunningApplication *deactivated_app = [[note userInfo] objectForKey:NSWorkspaceApplicationKey];
+            pid_t deactivated_pid = 0;
+            if (!deactivated_app)
+              return;
+            deactivated_pid = [deactivated_app processIdentifier];
+            if (deactivated_pid == plugin_pid)
+              focus_saved = YES;
+            else if (deactivated_pid == gimp_pid)
+              focus_saved = NO;
+          }];
+
+          /* gimp main window is active, show dialog focused or not */
           [[[NSWorkspace sharedWorkspace] notificationCenter] addObserverForName:NSWorkspaceDidActivateApplicationNotification
                                                               object:nil
                                                               queue:[NSOperationQueue mainQueue]
@@ -596,9 +614,26 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
             for (NSWindow *win in plugin_win)
               {
                 if (not_gimp_pid != gimp_pid && not_gimp_pid != plugin_pid)
-                  [win orderOut:nil];
+                  {
+                    /* gimp main window is not active, hide dialog */
+                    [win orderOut:nil];
+                  }
                 else
-                  [win orderFront:nil];
+                  {
+                    /* gimp main window is active, show dialog on top always */
+                    if (!focus_saved)
+                      {
+                        [win orderFront:nil];
+                      }
+                    else
+                      {
+                        /* we use 0.1 NSEC_PER_SEC to avoid interleaving windows from other apps */
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                          [NSApp activateIgnoringOtherApps:YES];
+                          [win makeKeyAndOrderFront:nil];
+                        });
+                      }
+                  }
               }
           }];
           not_gimp_observer_added = TRUE;
