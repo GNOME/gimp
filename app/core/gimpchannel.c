@@ -1178,11 +1178,23 @@ gimp_channel_load_exit (GimpLoadState  *state,
     }
   else if (GIMP_IS_LAYER (gimp_savable_load_peek_active_object (state)))
     {
-      GimpLayer *layer = GIMP_LAYER (gimp_savable_load_peek_active_object (state));
-
-      gimp_layer_add_mask (layer, GIMP_LAYER_MASK (channel), edit, FALSE, NULL);
-      gimp_layer_set_apply_mask (layer, apply, FALSE);
-      gimp_layer_set_show_mask  (layer, show, FALSE);
+      /* We cannot add the mask directly because if the layer dimensions
+       * may change while loading it (e.g. group layers if <mask/>
+       * appears before children list), then the mask will be truncated.
+       * If in the future, layer's and mask's dimensions get
+       * disconnected, then we could reorder (or not) the action to add
+       * a mask.
+       */
+      gimp_savable_load_store_value (state, "layer-mask", channel, g_object_unref);
+      gimp_savable_load_store_from_string (state, NULL,
+                                           "layer-mask:apply", G_TYPE_BOOLEAN, apply ? "true" : "false",
+                                           "layer-mask:edit",  G_TYPE_BOOLEAN, edit ? "true" : "false",
+                                           "layer-mask:show",  G_TYPE_BOOLEAN, show ? "true" : "false",
+                                           NULL);
+      gimp_savable_load_bubble_up (state, "layer-mask");
+      gimp_savable_load_bubble_up (state, "layer-mask:apply");
+      gimp_savable_load_bubble_up (state, "layer-mask:edit");
+      gimp_savable_load_bubble_up (state, "layer-mask:show");
     }
   else
     {

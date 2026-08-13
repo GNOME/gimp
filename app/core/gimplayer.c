@@ -302,6 +302,11 @@ static gboolean   gimp_layer_enter_mask         (GimpLoadState      *state,
                                                  const gchar       **attribute_values,
                                                  gpointer            user_data,
                                                  GError            **error);
+static gboolean   gimp_layer_exit_mask          (GimpLoadState      *state,
+                                                 const gchar        *text,
+                                                 gsize               len,
+                                                 gpointer            user_data,
+                                                 GError            **error);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE,
@@ -1802,7 +1807,8 @@ gimp_layer_load_enter (GimpLoadState  *state,
 
   gimp_savable_load_add_handlers (state, "mask",
                                   gimp_layer_enter_mask,
-                                  NULL, NULL, NULL);
+                                  gimp_layer_exit_mask,
+                                  NULL, NULL);
   gimp_savable_load_add_handlers (state, "format",
                                   gimp_savable_enter_format,
                                   gimp_savable_exit_format,
@@ -1828,6 +1834,7 @@ gimp_layer_load_exit (GimpLoadState  *state,
                       GError        **error)
 {
   GimpLayer              *layer;
+  GimpLayerMask          *mask             = NULL;
   const gchar            *name             = NULL;
   const Babl             *format           = NULL;
   gdouble                 opacity          = -1.0;
@@ -1907,6 +1914,22 @@ gimp_layer_load_exit (GimpLoadState  *state,
       gimp_image_add_layer (state->image, layer, parent,
                             gimp_container_get_n_children (container),
                             FALSE);
+    }
+
+  if (gimp_savable_load_get_values (state, "layer-mask", &mask, NULL))
+    {
+      gboolean apply = TRUE;
+      gboolean edit  = FALSE;
+      gboolean show  = FALSE;
+
+      gimp_savable_load_get_values (state,
+                                    "layer-mask:edit",  &edit,
+                                    "layer-mask:apply", &apply,
+                                    "layer-mask:show",  &show,
+                                    NULL);
+      gimp_layer_add_mask (layer, g_object_ref (mask), edit, FALSE, NULL);
+      gimp_layer_set_apply_mask (layer, apply, FALSE);
+      gimp_layer_set_show_mask  (layer, show, FALSE);
     }
 
   return TRUE;
@@ -2154,6 +2177,21 @@ gimp_layer_enter_mask (GimpLoadState  *state,
                        GError        **error)
 {
   gimp_savable_load (GIMP_TYPE_CHANNEL, state);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_layer_exit_mask (GimpLoadState  *state,
+                      const gchar    *text,
+                      gsize           len,
+                      gpointer        user_data,
+                      GError        **error)
+{
+  gimp_savable_load_bubble_up (state, "layer-mask");
+  gimp_savable_load_bubble_up (state, "layer-mask:apply");
+  gimp_savable_load_bubble_up (state, "layer-mask:edit");
+  gimp_savable_load_bubble_up (state, "layer-mask:show");
 
   return TRUE;
 }
