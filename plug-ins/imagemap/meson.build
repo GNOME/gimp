@@ -157,7 +157,7 @@ if flex.found() and bison.found()
       extra_args: ['--prefix', syntax_prefix],
       depends: previous_syntax,
       )
-      previous_syntax = [syntax]
+      previous_syntax = [clean_winflexbison]
     else
       plugin_sources += lex_gen.process(
                   imapname + '.l',
