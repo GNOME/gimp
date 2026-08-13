@@ -731,6 +731,8 @@ refresh_dialog (gchar *imagename)
                                         workarea.height - 60));
 
       gtk_widget_set_visible (window, TRUE);
+
+      gimp_window_set_transient (GTK_WINDOW (window));
     }
 }
 
