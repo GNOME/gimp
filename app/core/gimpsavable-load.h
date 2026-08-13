@@ -45,7 +45,7 @@ typedef enum
   G_STMT_START {                                                          \
       if (error)                                                          \
         {                                                                 \
-          if (*error == NULL)                                             \
+          if (*((GError**) error) == NULL)                                \
             g_set_error (error, GIMP_WLBR_ERROR, error_code,              \
                          message, __VA_ARGS__);                           \
         }                                                                 \
@@ -160,6 +160,16 @@ gboolean     gimp_savable_enter_value_array      (GimpLoadState            *stat
                                                   gpointer                  user_data,
                                                   GError                  **error);
 gboolean     gimp_savable_exit_value_array       (GimpLoadState            *state,
+                                                  const gchar              *text,
+                                                  gsize                     len,
+                                                  gpointer                  user_data,
+                                                  GError                  **error);
+gboolean     gimp_savable_enter_matrix           (GimpLoadState            *state,
+                                                  const gchar             **attribute_names,
+                                                  const gchar             **attribute_values,
+                                                  gpointer                  user_data,
+                                                  GError                  **error);
+gboolean     gimp_savable_exit_matrix            (GimpLoadState            *state,
                                                   const gchar              *text,
                                                   gsize                     len,
                                                   gpointer                  user_data,

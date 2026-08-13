@@ -185,6 +185,11 @@ static gboolean gimp_savable_exit_value         (GimpLoadState        *state,
                                                  gsize                 len,
                                                  gpointer              user_data,
                                                  GError              **error);
+static gboolean gimp_savable_exit_matrix_coeff  (GimpLoadState        *state,
+                                                 const gchar          *text,
+                                                 gsize                 len,
+                                                 gpointer              user_data,
+                                                 GError              **error);
 
 
 void
@@ -1079,6 +1084,75 @@ gimp_savable_exit_value_array (GimpLoadState  *state,
                                GError        **error)
 {
   gimp_savable_load_bubble_up (state, "value-array");
+  return TRUE;
+}
+
+gboolean
+gimp_savable_enter_matrix (GimpLoadState  *state,
+                           const gchar   **attribute_names,
+                           const gchar   **attribute_values,
+                           gpointer        user_data,
+                           GError        **error)
+{
+  guint dim0 = 0;
+  guint dim1 = 0;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "dim0") == 0 ||
+          g_strcmp0 (*attribute_names, "dim1") == 0)
+          gimp_savable_load_store_from_string (state, error,
+                                               *attribute_names, G_TYPE_UINT, *attribute_values,
+                                               NULL);
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  if (! gimp_savable_load_get_values (state,
+                                      "dim0", &dim0,
+                                      "dim1", &dim1,
+                                      NULL))
+    g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                 "%s: both attributes 'dim0' and 'dim1' must be present on <matrix> tag.",
+                 G_STRFUNC);
+  else if (dim0 != dim1 || dim0 < 2 || dim1 > 3)
+    g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                 "%s: 'dim0' and 'dim1' on <matrix> tag must be equal and either 2 or 3.",
+                 G_STRFUNC);
+  else if (dim0 == 2)
+    gimp_savable_load_store_value (state, "matrix2", g_new0 (GimpMatrix2, 1), g_free);
+  else if (dim0 == 3)
+    gimp_savable_load_store_value (state, "matrix3", g_new0 (GimpMatrix3, 1), g_free);
+
+  if (dim0 == dim1 && (dim0 == 2 || dim1 == 3))
+    {
+      GimpVector2 *coords = g_new0 (GimpVector2, 1);
+
+      coords->x = 0.0;
+      coords->y = 0.0;
+      gimp_savable_load_add_simple_handler (state, "coeff", G_TYPE_DOUBLE,
+                                            gimp_savable_exit_matrix_coeff, coords, g_free,
+                                            FALSE, FALSE,
+                                            "type", G_TYPE_STRING,
+                                            NULL);
+    }
+  return TRUE;
+}
+
+gboolean
+gimp_savable_exit_matrix (GimpLoadState  *state,
+                          const gchar    *text,
+                          gsize           len,
+                          gpointer        user_data,
+                          GError        **error)
+{
+  gimp_savable_load_bubble_up (state, "matrix2");
+  gimp_savable_load_bubble_up (state, "matrix3");
   return TRUE;
 }
 
@@ -2181,6 +2255,55 @@ gimp_savable_exit_value (GimpLoadState  *state,
     gimp_value_array_append (array, value);
   else
     gimp_savable_load_bubble_up (state, "value");
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_exit_matrix_coeff (GimpLoadState  *state,
+                                const gchar    *text,
+                                gsize           len,
+                                gpointer        user_data,
+                                GError        **error)
+{
+  GimpMatrix2 *matrix2 = NULL;
+  GimpMatrix3 *matrix3 = NULL;
+  GimpVector2 *coords  = (GimpVector2 *) user_data;
+  gdouble      coeff   = 0.0;
+  gint         dim     = 0;
+
+  gimp_savable_load_store_from_string (state, error,
+                                       "coeff", G_TYPE_DOUBLE, text,
+                                       NULL);
+  gimp_savable_load_get_values (state, "coeff", &coeff, NULL);
+  if (gimp_savable_load_get_parent_values (state, "matrix2", &matrix2, NULL))
+    dim = 2;
+  else if (gimp_savable_load_get_parent_values (state, "matrix3", &matrix3, NULL))
+    dim = 3;
+  else
+    GIMP_SAVABLE_LOAD_ERROR (NULL, GIMP_WLBR_ERROR_DATA, ;,
+                             "%s: unknown matrix dimensions.",
+                             G_STRFUNC);
+
+  if ((gint) coords->x >= dim)
+    {
+      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                               "%s: too many cooefficients for a %d by %d matrix.",
+                               G_STRFUNC, dim, dim);
+      return TRUE;
+    }
+
+  if (dim == 2)
+    matrix2->coeff[(gint) coords->x][(gint) coords->y] = coeff;
+  else
+    matrix3->coeff[(gint) coords->x][(gint) coords->y] = coeff;
+
+  coords->y += 1.0;
+  if ((gint) coords->y >= dim)
+    {
+      coords->x += 1.0;
+      coords->y = 0.0;
+    }
 
   return TRUE;
 }
