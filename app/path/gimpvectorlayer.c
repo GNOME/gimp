@@ -989,8 +989,6 @@ gimp_vector_layer_render (GimpVectorLayer *layer)
   GeglBuffer   *buffer   = NULL;
   GimpItem     *item     = GIMP_ITEM (layer);
   GimpImage    *image    = gimp_item_get_image (item);
-  gint          layer_x  = 0;
-  gint          layer_y  = 0;
   gint          x        = 0;
   gint          y        = 0;
   gint          width    = gimp_image_get_width (image);
@@ -1005,7 +1003,6 @@ gimp_vector_layer_render (GimpVectorLayer *layer)
     stroke = gimp_stroke_options_get_width (layer->options->stroke_options);
 
   /* Resize layer according to path size */
-  gimp_item_get_offset (GIMP_ITEM (layer), &layer_x, &layer_y);
   gimp_item_bounds (GIMP_ITEM (layer->options->path), &x, &y, &width, &height);
 
   buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
