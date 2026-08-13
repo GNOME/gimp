@@ -34,6 +34,19 @@
 
 #include <string.h>
 
+#ifdef _WIN32
+#include <dwmapi.h>
+#include <gdk/gdkwin32.h>
+
+#ifndef DWMWA_USE_IMMERSIVE_DARK_MODE
+#define DWMWA_USE_IMMERSIVE_DARK_MODE 20
+#endif
+#endif
+
+#ifdef PLATFORM_OSX
+#import <AppKit/AppKit.h>
+#endif
+
 #include <libgimp/gimp.h>
 #undef GDK_DISABLE_DEPRECATED
 #include <libgimp/gimpui.h>
@@ -280,6 +293,51 @@ static AnimationSettings settings =
 
 static GimpImage *frames_image = NULL;
 
+
+/* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c since gtk_application_window_new
+ * is a bare GTK function that naturally have no connection with gimp automatization.
+ */
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+static void
+gimp_window_set_title_bar_theme (GtkWidget *dialog)
+{
+#ifdef G_OS_WIN32
+  HWND           hwnd;
+#endif
+  GdkWindow     *window        = NULL;
+  gboolean       use_dark_mode = FALSE;
+
+  window = gtk_widget_get_window (GTK_WIDGET (dialog));
+  if (window)
+    {
+      GtkStyleContext *style;
+      GdkRGBA         *color = NULL;
+
+      style = gtk_widget_get_style_context (dialog);
+      gtk_style_context_get (style, gtk_style_context_get_state (style),
+                             GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
+                             NULL);
+      if (color)
+        {
+          if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
+            use_dark_mode = TRUE;
+
+          gdk_rgba_free (color);
+        }
+
+#ifdef G_OS_WIN32
+        hwnd = (HWND) gdk_win32_window_get_handle (window);
+        DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
+                               &use_dark_mode, sizeof (use_dark_mode));
+#elif defined(PLATFORM_OSX)
+        if (use_dark_mode)
+          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
+        else
+          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+#endif
+    }
+}
+#endif
 
 static void
 gimp_play_class_init (GimpPlayClass *klass)
@@ -733,6 +791,11 @@ refresh_dialog (gchar *imagename)
       gtk_widget_set_visible (window, TRUE);
 
       gimp_window_set_transient (GTK_WINDOW (window));
+
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+      /* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_application_window_new */
+      gimp_window_set_title_bar_theme (window);
+#endif
     }
 }
 
