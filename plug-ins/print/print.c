@@ -19,6 +19,10 @@
 
 #include <string.h>
 
+#ifdef PLATFORM_OSX
+#import <AppKit/AppKit.h>
+#endif
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -115,6 +119,44 @@ G_DEFINE_TYPE (Print, print, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (PRINT_TYPE)
 DEFINE_STD_SET_I18N
 
+
+/* We reuse code from app/widgets/gimpwidgets-utils.c since gtk_print_operation_new
+ * is a special GTK function that have no connection with gimp automatization.
+ * It is only needed on macOS where the plug-in is fully rendered.
+ * Skipped on Linux due to portals and on Windows due to native/uncontroled dialogs.
+ */
+#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
+static void
+gimp_window_set_title_bar_theme (GtkWidget *dialog)
+{
+  GdkWindow     *window        = NULL;
+  gboolean       use_dark_mode = FALSE;
+
+  window = gtk_widget_get_window (GTK_WIDGET (dialog));
+  if (window)
+    {
+      GtkStyleContext *style;
+      GdkRGBA         *color = NULL;
+
+      style = gtk_widget_get_style_context (dialog);
+      gtk_style_context_get (style, gtk_style_context_get_state (style),
+                             GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
+                             NULL);
+      if (color)
+        {
+          if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
+            use_dark_mode = TRUE;
+
+          gdk_rgba_free (color);
+        }
+
+        if (use_dark_mode)
+          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
+        else
+          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+    }
+}
+#endif
 
 static void
 print_class_init (PrintClass *klass)
@@ -316,11 +358,16 @@ print_image (GimpImage *image,
     {
       gimp_ui_init (PLUG_IN_BINARY);
       printwindow = NULL;
-#ifdef GDK_WINDOWING_QUARTZ
-      /* create top level window and make it transient to use correct monitor */
+#if defined(PLATFORM_OSX)
+      /* create top level window and make it transient to use correct monitor.
+         Only works properly on macOS where the plug-in is fully rendered. */
       printwindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       gimp_window_set_transient (GTK_WINDOW (printwindow));
       gtk_widget_set_visible (printwindow, TRUE);
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
+      /* We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_print_operation_new */
+      gimp_window_set_title_bar_theme (printwindow);
+#endif
 #endif
 
       g_signal_connect_swapped (operation, "end-print",
@@ -470,6 +517,12 @@ begin_print (GtkPrintOperation *operation,
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           layout_gui, TRUE, TRUE, 0);
       gtk_widget_show_all (dialog);
+
+#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
+      /* We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_print_operation_new */
+      gimp_window_set_title_bar_theme (dialog);
+#endif
+
       if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)
         {
           gtk_print_operation_cancel (operation);
