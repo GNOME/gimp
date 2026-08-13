@@ -141,6 +141,8 @@ void         gimp_savable_parasite_save        (GimpParasite           *parasite
                                                 GimpSaveState          *state);
 void         gimp_savable_matrix2_save         (GimpMatrix2            *matrix,
                                                 GimpSaveState          *state);
+void         gimp_savable_matrix3_save         (GimpMatrix3            *matrix,
+                                                GimpSaveState          *state);
 void         gimp_savable_value_save           (GValue                 *value,
                                                 GParamSpec             *pspec,
                                                 GimpSaveState          *state);

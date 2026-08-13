@@ -55,6 +55,7 @@
 #include "gimpimage-symmetry.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
+#include "gimplinklayer.h"
 #include "gimpparasitelist.h"
 #include "gimpsavable.h"
 #include "gimpsavable-load.h"
@@ -230,6 +231,11 @@ gimp_image_savable_save (GimpSavable   *savable,
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GList            *iter;
 
+  if (gimp_image_get_file (image))
+    gimp_savable_print_element (state, "file-path", "%s",
+                                g_file_peek_path (gimp_image_get_file (image)),
+                                NULL);
+
   /* Saving all ICC profiles stored in this XCF. */
   gimp_savable_save_all_spaces (image, state);
 
@@ -397,6 +403,10 @@ gimp_image_load_enter (GimpLoadState  *state,
       attribute_values++;
     }
 
+  gimp_savable_load_add_simple_handler (state, "file-path", G_TYPE_STRING,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE, NULL);
+
   spaces = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
   gimp_savable_load_add_handlers (state, "spaces",
                                   gimp_image_enter_spaces,
@@ -476,6 +486,11 @@ gimp_image_enter_project (GimpLoadState  *state,
                           gpointer        user_data,
                           GError         **error)
 {
+  const gchar *path = NULL;
+
+  if (gimp_savable_load_get_parent_values (state, "file-path", &path, NULL))
+    gimp_savable_load_store_from_string (state, NULL, "xcf-path", G_TYPE_STRING, path, NULL);
+
   gimp_savable_load_add_simple_handler (state, "dimensions", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         TRUE, TRUE,
@@ -600,6 +615,7 @@ gimp_image_exit_format (GimpLoadState  *state,
 {
   GimpImage         *image;
   const Babl        *format = NULL;
+  const gchar       *path   = NULL;
   gint               width  = 0;
   gint               height = 0;
   GimpImageBaseType  image_type;
@@ -626,6 +642,23 @@ gimp_image_exit_format (GimpLoadState  *state,
                                   image_type, precision, FALSE);
   gimp_image_undo_disable (image);
   state->image = image;
+
+  if (gimp_savable_load_get_parent_values (state, "xcf-path", &path, NULL))
+    {
+      GFile *file = NULL;
+
+      if (! g_path_is_absolute (path))
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                                 "%s: image path is not absolute: %s",
+                                 G_STRFUNC, path);
+      else
+        file = g_file_new_for_path (path);
+
+      if (file)
+        gimp_image_set_file (state->image, file);
+
+      g_clear_object (&file);
+    }
 
   return TRUE;
 }
@@ -746,7 +779,7 @@ gimp_image_enter_layers (GimpLoadState  *state,
   gimp_savable_load (GIMP_TYPE_LAYER, state);
   gimp_savable_load (GIMP_TYPE_GROUP_LAYER, state);
   gimp_savable_load (GIMP_TYPE_VECTOR_LAYER, state);
-  /*gimp_savable_load (GIMP_TYPE_LINK_LAYER, state);*/
+  gimp_savable_load (GIMP_TYPE_LINK_LAYER, state);
   /*gimp_savable_load (GIMP_TYPE_TEXT_LAYER, state);*/
 
   return TRUE;

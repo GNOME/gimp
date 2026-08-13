@@ -532,14 +532,33 @@ void
 gimp_savable_matrix2_save (GimpMatrix2   *matrix,
                            GimpSaveState *state)
 {
+  guint dim = 2;
+
   gimp_savable_print_element_start (state, "matrix",
-                                    "dim0", "%d", 2,
-                                    "dim1", "%d", 2,
+                                    "dim0", "%u", dim,
+                                    "dim1", "%u", dim,
                                     NULL);
-  gimp_savable_print_element (state, "coeff", "%f", matrix->coeff[0][0], NULL);
-  gimp_savable_print_element (state, "coeff", "%f", matrix->coeff[0][1], NULL);
-  gimp_savable_print_element (state, "coeff", "%f", matrix->coeff[1][0], NULL);
-  gimp_savable_print_element (state, "coeff", "%f", matrix->coeff[1][1], NULL);
+  for (guint i = 0; i < dim; i++)
+    for (guint j = 0; j < dim; j++)
+      gimp_savable_print_element (state, "coeff", "%f", matrix->coeff[i][j], NULL);
+
+  gimp_savable_print_element_end (state, "matrix");
+}
+
+void
+gimp_savable_matrix3_save (GimpMatrix3   *matrix,
+                           GimpSaveState *state)
+{
+  guint dim = 3;
+
+  gimp_savable_print_element_start (state, "matrix",
+                                    "dim0", "%u", dim,
+                                    "dim1", "%u", dim,
+                                    NULL);
+  for (guint i = 0; i < dim; i++)
+    for (guint j = 0; j < dim; j++)
+      gimp_savable_print_element (state, "coeff", "%f", matrix->coeff[i][j], NULL);
+
   gimp_savable_print_element_end (state, "matrix");
 }
 

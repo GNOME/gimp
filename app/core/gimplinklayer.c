@@ -48,6 +48,7 @@
 #include "gimpprogress.h"
 #include "gimprasterizable.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 #include "gimp-transform-utils.h"
 
 #include "gimp-intl.h"
@@ -148,8 +149,18 @@ static void       gimp_link_layer_push_undo      (GimpDrawable      *drawable,
 static void       gimp_link_layer_set_rasterized (GimpRasterizable  *rasterizable,
                                                   gboolean           rasterized);
 
-static void       gimp_link_layer_savable_save   (GimpSavable       *savable,
+static void       gimp_link_layer_save           (GimpSavable       *savable,
                                                   GimpSaveState     *state);
+static gboolean   gimp_link_layer_load_enter     (GimpLoadState     *state,
+                                                  const gchar      **attribute_names,
+                                                  const gchar      **attribute_values,
+                                                  gpointer           user_data,
+                                                  GError           **error);
+static gboolean   gimp_link_layer_load_exit      (GimpLoadState     *state,
+                                                  const gchar       *text,
+                                                  gsize              len,
+                                                  gpointer           user_data,
+                                                  GError           **error);
 
 static void       gimp_link_layer_convert_type   (GimpLayer         *layer,
                                                   GimpImage         *dest_image,
@@ -182,7 +193,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpLinkLayer, gimp_link_layer, GIMP_TYPE_LAYER,
 
 #define parent_class gimp_link_layer_parent_class
 
-static GimpSavableInterface *parent_savable_interface = NULL;
+static GimpSavableInterface *parent_savable_iface = NULL;
 
 static GParamSpec *link_layer_props[N_PROPS] = { NULL, };
 
@@ -266,9 +277,12 @@ gimp_link_layer_rasterizable_iface_init (GimpRasterizableInterface *iface)
 static void
 gimp_link_layer_savable_iface_init (GimpSavableInterface *iface)
 {
-  parent_savable_interface = g_type_interface_peek_parent (iface);
+  parent_savable_iface = g_type_interface_peek_parent (iface);
 
-  iface->save = gimp_link_layer_savable_save;
+  iface->tag        = "link-layer";
+  iface->save       = gimp_link_layer_save;
+  iface->load_enter = gimp_link_layer_load_enter;
+  iface->load_exit  = gimp_link_layer_load_exit;
 }
 
 static void
@@ -726,8 +740,8 @@ gimp_link_layer_set_rasterized (GimpRasterizable *rasterizable,
 }
 
 static void
-gimp_link_layer_savable_save (GimpSavable   *savable,
-                              GimpSaveState *state)
+gimp_link_layer_save (GimpSavable   *savable,
+                      GimpSaveState *state)
 {
   GimpLinkLayer *layer = GIMP_LINK_LAYER (savable);
 
@@ -735,7 +749,7 @@ gimp_link_layer_savable_save (GimpSavable   *savable,
                                     "name", "%s", gimp_object_get_name (GIMP_OBJECT (layer)),
                                     NULL);
 
-  parent_savable_interface->save (savable, state);
+  parent_savable_iface->save (savable, state);
 
   gimp_savable_save (GIMP_SAVABLE (layer->p->link), state);
 
@@ -745,7 +759,137 @@ gimp_link_layer_savable_save (GimpSavable   *savable,
   if (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
     gimp_savable_print_element (state, "rasterized", NULL, NULL, NULL);
 
+  if (! gimp_matrix3_is_identity (&layer->p->matrix))
+    {
+      gimp_savable_matrix3_save (&layer->p->matrix, state);
+      gimp_savable_print_element (state, "transform-offsets", NULL, NULL,
+                                  "x", "%d", layer->p->offset_x,
+                                  "y", "%d", layer->p->offset_y,
+                                  NULL);
+      gimp_savable_print_element (state, "interpolation",
+                                  "%[GimpInterpolationType]", layer->p->interpolation,
+                                  NULL);
+    }
+
   gimp_savable_print_element_end (state, "link-layer");
+}
+
+static gboolean
+gimp_link_layer_load_enter (GimpLoadState  *state,
+                            const gchar   **attribute_names,
+                            const gchar   **attribute_values,
+                            gpointer        user_data,
+                            GError        **error)
+{
+  GimpLinkLayer *layer;
+  const gchar   *name = NULL;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "name") == 0)
+        name = *attribute_values;
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  parent_savable_iface->load_enter (state, attribute_names, attribute_values,
+                                    user_data, error);
+
+  layer = GIMP_LINK_LAYER (gimp_drawable_new (GIMP_TYPE_LINK_LAYER,
+                                              state->image, NULL,
+                                              0, 0, 1, 1,
+                                              gimp_image_get_layer_format (state->image,
+                                                                           TRUE)));
+
+  gimp_object_set_name (GIMP_OBJECT (layer), name);
+
+  gimp_savable_load (GIMP_TYPE_LINK, state);
+  gimp_savable_load_add_simple_handler (state, "auto-rename", G_TYPE_NONE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        "disabled", G_TYPE_BOOLEAN,
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "rasterized", G_TYPE_NONE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        NULL);
+
+  gimp_savable_load_add_handlers (state, "matrix",
+                                  gimp_savable_enter_matrix,
+                                  gimp_savable_exit_matrix,
+                                  NULL, NULL);
+  gimp_savable_load_add_simple_handler (state, "interpolation", GIMP_TYPE_INTERPOLATION_TYPE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "transform-offsets", G_TYPE_NONE,
+                                        NULL, NULL, NULL,
+                                        TRUE, FALSE,
+                                        "x", G_TYPE_INT,
+                                        "y", G_TYPE_INT,
+                                        NULL);
+  gimp_savable_load_push_active_object (state, G_OBJECT (layer));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_link_layer_load_exit (GimpLoadState  *state,
+                           const gchar    *text,
+                           gsize           len,
+                           gpointer        user_data,
+                           GError        **error)
+{
+  GimpLinkLayer         *layer;
+  GimpLink              *link           = NULL;
+  GimpMatrix3           *matrix         = NULL;
+  GimpInterpolationType  interpolation  = GIMP_INTERPOLATION_NONE;
+  gboolean               rasterized     = FALSE;
+  gboolean               disable_rename = FALSE;
+  gint                   offset_x       = 0;
+  gint                   offset_y       = 0;
+
+  g_return_val_if_fail (GIMP_IS_LINK_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  /* Order matters because parent's load_exit() will pop the layer. */
+  layer = GIMP_LINK_LAYER (gimp_savable_load_peek_active_object (state));
+  parent_savable_iface->load_exit (state, text, len, user_data, error);
+
+  if (! gimp_savable_load_get_values (state, "link", &link, NULL))
+    {
+      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                               "%s: missing or invalid <link/> element.",
+                               G_STRFUNC);
+      return TRUE;
+    }
+
+  gimp_savable_load_get_values (state,
+                                "rasterized",           &rasterized,
+                                "auto-rename:disabled", &disable_rename,
+                                "matrix3",              &matrix,
+                                "interpolation",        &interpolation,
+                                "transform-offsets:x",  &offset_x,
+                                "transform-offsets:y",  &offset_y,
+                                NULL);
+
+  gimp_rasterizable_set_auto_rename (GIMP_RASTERIZABLE (layer), ! disable_rename);
+
+  if (rasterized && gimp_link_is_monitored (link))
+    gimp_link_freeze (link);
+  else if (! rasterized && ! gimp_link_is_monitored (link))
+    gimp_link_thaw (link);
+
+  if (matrix)
+    gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
+  gimp_link_layer_set_link_with_matrix (layer, link, matrix, interpolation,
+                                        offset_x, offset_y, FALSE);
+
+  return TRUE;
 }
 
 static void

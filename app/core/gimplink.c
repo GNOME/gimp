@@ -37,6 +37,7 @@
 #include "gimppickable.h"
 #include "gimpprojection.h"
 #include "gimpsavable.h"
+#include "gimpsavable-load.h"
 
 #include "file/file-open.h"
 
@@ -92,8 +93,18 @@ static void       gimp_link_set_property       (GObject               *object,
                                                 const GValue          *value,
                                                 GParamSpec            *pspec);
 
-static void       gimp_link_savable_save       (GimpSavable           *savable,
+static void       gimp_link_save               (GimpSavable           *savable,
                                                 GimpSaveState         *state);
+static gboolean   gimp_link_load_enter         (GimpLoadState         *state,
+                                                const gchar          **attribute_names,
+                                                const gchar          **attribute_values,
+                                                gpointer               user_data,
+                                                GError               **error);
+static gboolean   gimp_link_load_exit          (GimpLoadState         *state,
+                                                const gchar           *text,
+                                                gsize                  len,
+                                                gpointer               user_data,
+                                                GError               **error);
 
 static void       gimp_link_file_changed       (GFileMonitor          *monitor,
                                                 GFile                 *file,
@@ -158,7 +169,10 @@ gimp_link_class_init (GimpLinkClass *klass)
 static void
 gimp_link_savable_iface_init (GimpSavableInterface *iface)
 {
-  iface->save = gimp_link_savable_save;
+  iface->tag        = "link";
+  iface->save       = gimp_link_save;
+  iface->load_enter = gimp_link_load_enter;
+  iface->load_exit  = gimp_link_load_exit;
 }
 
 static void
@@ -246,8 +260,8 @@ gimp_link_set_property (GObject      *object,
 }
 
 static void
-gimp_link_savable_save (GimpSavable   *savable,
-                        GimpSaveState *state)
+gimp_link_save (GimpSavable   *savable,
+                GimpSaveState *state)
 {
   GimpLink *link = GIMP_LINK (savable);
   gchar    *path = NULL;
@@ -261,12 +275,114 @@ gimp_link_savable_save (GimpSavable   *savable,
     gimp_savable_print_element_start (state, "link", NULL);
 
   gimp_link_get_file (link, state->xcf_file, &path);
-  gimp_savable_print_element (state, "path", "%s", path,
+  gimp_savable_print_element (state, "file-path", "%s", path,
                               "absolute", "%b", link->p->absolute_path,
                               NULL);
   gimp_savable_print_element_end (state, "link");
 
   g_free (path);
+}
+
+static gboolean
+gimp_link_load_enter (GimpLoadState  *state,
+                      const gchar   **attribute_names,
+                      const gchar   **attribute_values,
+                      gpointer        user_data,
+                      GError        **error)
+{
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "width") == 0 ||
+          g_strcmp0 (*attribute_names, "height") == 0)
+        gimp_savable_load_store_from_string (state, error,
+                                             *attribute_names, G_TYPE_UINT, *attribute_values,
+                                             NULL);
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  gimp_savable_load_add_simple_handler (state, "file-path", G_TYPE_STRING,
+                                        NULL, NULL, NULL,
+                                        TRUE, FALSE,
+                                        "absolute", G_TYPE_BOOLEAN,
+                                        NULL);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_link_load_exit (GimpLoadState  *state,
+                     const gchar    *text,
+                     gsize           len,
+                     gpointer        user_data,
+                     GError        **error)
+{
+  const gchar *path = NULL;
+
+  if (gimp_savable_load_get_values (state,
+                                    "file-path", &path,
+                                    NULL))
+    {
+      GimpLink *link;
+      GFile    *file       = NULL;
+      guint     width      = 0;
+      guint     height     = 0;
+      gboolean  absolute   = FALSE;
+      gboolean  keep_ratio = FALSE;
+
+      /* TODO: this initial version does not handle circular links yet. */
+
+      gimp_savable_load_get_values (state,
+                                    "width",         &width,
+                                    "height",        &height,
+                                    "path:absolute", &absolute,
+                                    NULL);
+      if (absolute && ! g_path_is_absolute (path))
+        {
+          /* When a path is marked as absolute, it must be actually
+           * absolute. It's only relative paths which are allowed to be
+           * absolute because it's not always possible to create a
+           * relative path (e.g. on Windows with different partitions).
+           */
+          GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                                   "%s: link path is not absolute, yet should be: %s",
+                                   G_STRFUNC, path);
+          return TRUE;
+        }
+      else if (! absolute)
+        {
+          GFile *xcf_file;
+
+          xcf_file = gimp_image_get_file (state->image);
+          if (xcf_file)
+            {
+              GFile *folder = g_file_get_parent (xcf_file);
+              file = g_file_resolve_relative_path (folder, path);
+              g_object_unref (folder);
+            }
+          else
+            {
+              GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                                       "%s: link relative path cannot be computed without source file: %s",
+                                       G_STRFUNC, path);
+              return TRUE;
+            }
+        }
+
+      if (! file)
+        file = g_file_new_for_path (path);
+
+      link = gimp_link_new (state->gimp, file, width, height, keep_ratio, NULL, error);
+      gimp_savable_load_store_value (state, "link", link, g_object_unref);
+      gimp_savable_load_bubble_up (state, "link");
+    }
+
+  return TRUE;
 }
 
 static void
@@ -608,7 +724,7 @@ gimp_link_get_file (GimpLink  *link,
 
   if (path != NULL)
     {
-      if (link->p->absolute_path)
+      if (link->p->absolute_path || xcf_file == NULL)
         *path = g_file_get_path (link->p->file);
       else
         *path = gimp_link_get_relative_path (link,
