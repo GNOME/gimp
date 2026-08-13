@@ -1707,10 +1707,11 @@ gimp_layer_save (GimpSavable   *savable,
   parent_savable_iface->save (savable, state);
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
-  gimp_savable_print_element (state, "offsets", NULL, NULL,
-                              "x", "%d", offset_x,
-                              "y", "%d", offset_y,
-                              NULL);
+  if (! GIMP_IS_GROUP_LAYER (layer))
+    gimp_savable_print_element (state, "offsets", NULL, NULL,
+                                "x", "%d", offset_x,
+                                "y", "%d", offset_y,
+                                NULL);
 
   gimp_savable_print_element (state, "opacity", "%f",
                               gimp_layer_get_opacity (layer), NULL);
@@ -1843,6 +1844,8 @@ gimp_layer_load_exit (GimpLoadState  *state,
   GimpLayerColorSpace     composite_space  = GIMP_LAYER_COLOR_SPACE_AUTO;
   GimpLayerCompositeMode  composite_mode   = GIMP_LAYER_COMPOSITE_AUTO;
   gboolean                lock_alpha       = FALSE;
+  gint                    offset_x         = -1;
+  gint                    offset_y         = -1;
 
   g_return_val_if_fail (GIMP_IS_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
 
@@ -1894,6 +1897,12 @@ gimp_layer_load_exit (GimpLoadState  *state,
     }
 
   gimp_layer_set_lock_alpha (layer, lock_alpha, FALSE);
+  if (! GIMP_IS_GROUP_LAYER (layer) &&
+      gimp_savable_load_get_values (state,
+                                    "offsets:x", &offset_x,
+                                    "offsets:y", &offset_y,
+                                    NULL))
+    gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 
   /* TODO: handle floating layers too. */
   if (! gimp_item_is_attached (GIMP_ITEM (layer)))
