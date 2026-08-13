@@ -575,6 +575,8 @@ browser_dialog_new (void)
   gtk_window_set_default_size (GTK_WINDOW (browser->dialog),
                                DBL_WIDTH, DBL_HEIGHT);
 
+  gimp_window_set_transient (browser->dialog);
+
   g_signal_connect_swapped (browser->dialog, "response",
                             G_CALLBACK (browser_dialog_quit),
                             browser);

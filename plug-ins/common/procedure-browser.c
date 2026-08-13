@@ -170,6 +170,8 @@ browser_run (GimpProcedure        *procedure,
 
                                         NULL);
 
+          gimp_window_set_transient (dialog);
+
         gtk_dialog_run (GTK_DIALOG (dialog));
         gtk_widget_destroy (dialog);
       }

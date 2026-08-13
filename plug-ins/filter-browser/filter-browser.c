@@ -742,6 +742,7 @@ filter_browser_run (GimpProcedure       *procedure,
                                      NULL);
   gtk_window_set_default_size (GTK_WINDOW (browser->dialog),
                                FILTER_BROWSER_WIDTH, FILTER_BROWSER_HEIGHT);
+  gimp_window_set_transient (browser->dialog);
 
   g_signal_connect_swapped (browser->dialog, "response",
                             G_CALLBACK (browser_dialog_quit), browser);
