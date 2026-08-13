@@ -552,10 +552,7 @@ gimp_text_tool_button_press (GimpTool            *tool,
           GimpLayer *layer = gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable));
 
           if (GIMP_IS_TEXT_LAYER (layer))
-            {
-              drawable = GIMP_DRAWABLE (layer);
-              gimp_layer_set_edit_mask (layer, FALSE); /* optional here? */
-            }
+            drawable = GIMP_DRAWABLE (layer);
         }
 
       /*  did the user click on a text layer?  */
