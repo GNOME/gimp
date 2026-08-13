@@ -66,7 +66,7 @@ $assemble_matrix
       if (GIMP_IS_DRAWABLE (item)                             &&
           item != GIMP_ITEM (mask)                            &&
           ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-          ! gimp_channel_is_empty (mask))
+          gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
         {
           GimpDrawable *drawable;
 
@@ -214,7 +214,7 @@ HELP
       if (GIMP_IS_DRAWABLE (item)                             &&
           item != GIMP_ITEM (mask)                            &&
           ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-          ! gimp_channel_is_empty (mask))
+          gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
         {
           GimpDrawable *drawable;
 
@@ -452,7 +452,7 @@ HELP
       if (GIMP_IS_DRAWABLE (item)                             &&
           item != GIMP_ITEM (mask)                            &&
           ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-          ! gimp_channel_is_empty (mask))
+          gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
         {
           GimpDrawable *drawable;
 

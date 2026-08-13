@@ -882,15 +882,30 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
-        {
-          orig_buffer = gimp_drawable_transform_cut (
-            selected_objects,
-            GIMP_CONTEXT (options),
-            &orig_offset_x,
-            &orig_offset_y,
-            &new_layer);
-        }
+      {
+        GimpChannel *mask      = gimp_image_get_mask (image);
+        gboolean     needs_cut = FALSE;
+        GList       *iter;
+
+        /*  cut if any one of them needs it, so that a mixed selection
+         *  keeps behaving as it did
+         */
+        for (iter = selected_objects; iter; iter = iter->next)
+          {
+            if (gimp_drawable_transform_needs_cut (iter->data, mask))
+              needs_cut = TRUE;
+          }
+
+        if (needs_cut)
+          {
+            orig_buffer = gimp_drawable_transform_cut (
+              selected_objects,
+              GIMP_CONTEXT (options),
+              &orig_offset_x,
+              &orig_offset_y,
+              &new_layer);
+          }
+      }
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:

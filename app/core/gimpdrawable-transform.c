@@ -46,6 +46,7 @@
 #include "gimplayer-new.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
+#include "gimprasterizable.h"
 #include "gimpselection.h"
 
 #include "gimp-intl.h"
@@ -943,6 +944,39 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   gimp_image_undo_group_end (image);
 
   return result;
+}
+
+/*  Returns TRUE if transforming DRAWABLE has to cut the selected region
+ *  out into a floating selection, rather than handing the transform to
+ *  the item itself.
+ *
+ *  A non-empty selection means "transform this region", which a single
+ *  item-wide matrix cannot express, so the region has to be cut out. A
+ *  *full* selection is the exception: it covers the item completely, so
+ *  it asks for nothing the item cannot do to itself. Layer types that
+ *  carry a transform without rasterizing are therefore let through, and
+ *  keep their contents editable.
+ *
+ *  gimp_channel_is_full() only answers TRUE when the channel's bounds are
+ *  known to be full, so an unrecognized full selection falls through to
+ *  the cut. That is the safe direction: it is the behavior we already had.
+ */
+gboolean
+gimp_drawable_transform_needs_cut (GimpDrawable *drawable,
+                                   GimpChannel  *mask)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
+
+  if (gimp_channel_is_empty (mask))
+    return FALSE;
+
+  if (gimp_channel_is_full (mask)                                &&
+      GIMP_IS_RASTERIZABLE (drawable)                            &&
+      ! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (drawable)))
+    return FALSE;
+
+  return TRUE;
 }
 
 GeglBuffer *

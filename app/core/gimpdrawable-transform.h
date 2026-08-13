@@ -77,6 +77,8 @@ GimpDrawable         * gimp_drawable_transform_rotate            (GimpDrawable  
                                                                   gdouble                  center_y,
                                                                   gboolean                 clip_result);
 
+gboolean               gimp_drawable_transform_needs_cut         (GimpDrawable            *drawable,
+                                                                  GimpChannel             *mask);
 GeglBuffer           * gimp_drawable_transform_cut               (GList                   *drawables,
                                                                   GimpContext             *context,
                                                                   gint                    *offset_x,

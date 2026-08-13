@@ -131,7 +131,7 @@ item_transform_flip_simple_invoker (GimpProcedure         *procedure,
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+              gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
             {
               GimpDrawable *drawable;
 
@@ -216,7 +216,7 @@ item_transform_flip_invoker (GimpProcedure         *procedure,
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+              gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
             {
               GimpDrawable *drawable;
 
@@ -320,7 +320,7 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+              gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
             {
               GimpDrawable *drawable;
 
@@ -408,7 +408,7 @@ item_transform_rotate_simple_invoker (GimpProcedure         *procedure,
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+              gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
             {
               GimpDrawable *drawable;
 
@@ -501,7 +501,7 @@ item_transform_rotate_invoker (GimpProcedure         *procedure,
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+              gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
             {
               GimpDrawable *drawable;
 
@@ -597,7 +597,7 @@ item_transform_scale_invoker (GimpProcedure         *procedure,
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+              gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
             {
               GimpDrawable *drawable;
 
@@ -688,7 +688,7 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+              gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
             {
               GimpDrawable *drawable;
 
@@ -790,7 +790,7 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+              gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
             {
               GimpDrawable *drawable;
 
@@ -900,7 +900,7 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
           if (GIMP_IS_DRAWABLE (item)                             &&
               item != GIMP_ITEM (mask)                            &&
               ! gimp_viewable_get_children (GIMP_VIEWABLE (item)) &&
-              ! gimp_channel_is_empty (mask))
+              gimp_drawable_transform_needs_cut (GIMP_DRAWABLE (item), mask))
             {
               GimpDrawable *drawable;
 
