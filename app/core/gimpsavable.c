@@ -742,7 +742,7 @@ gimp_savable_composite_mode_save (GimpLayerCompositeMode  composite_mode,
 
   gimp_savable_print_element (state, "composite-mode",
                               "%[GimpLayerCompositeMode]", composite_mode,
-                              auto_set ? "auto" : NULL, "%s", "true",
+                              auto_set ? "auto" : NULL, "%b", TRUE,
                               NULL);
 }
 
@@ -765,7 +765,7 @@ gimp_savable_composite_space_save (GimpLayerColorSpace  composite_space,
 
   gimp_savable_print_element (state, "composite-space",
                               "%[GimpLayerColorSpace]", composite_space,
-                              auto_set ? "auto" : NULL, "%s", "true",
+                              auto_set ? "auto" : NULL, "%b", TRUE,
                               NULL);
 }
 
@@ -788,7 +788,7 @@ gimp_savable_blend_space_save (GimpLayerColorSpace  blend_space,
 
   gimp_savable_print_element (state, "blend-space",
                               "%[GimpLayerColorSpace]", blend_space,
-                              auto_set ? "auto" : NULL, "%s", "true",
+                              auto_set ? "auto" : NULL, "%b", TRUE,
                               NULL);
 }
 

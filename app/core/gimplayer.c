@@ -1795,13 +1795,19 @@ gimp_layer_load_enter (GimpLoadState  *state,
                                         FALSE, FALSE, NULL);
   gimp_savable_load_add_simple_handler (state, "blend-space", GIMP_TYPE_LAYER_COLOR_SPACE,
                                         NULL, NULL, NULL,
-                                        FALSE, FALSE, NULL);
+                                        FALSE, FALSE,
+                                        "auto", G_TYPE_BOOLEAN,
+                                        NULL);
   gimp_savable_load_add_simple_handler (state, "composite-space", GIMP_TYPE_LAYER_COLOR_SPACE,
                                         NULL, NULL, NULL,
-                                        FALSE, FALSE, NULL);
+                                        FALSE, FALSE,
+                                        "auto", G_TYPE_BOOLEAN,
+                                        NULL);
   gimp_savable_load_add_simple_handler (state, "composite-mode", GIMP_TYPE_LAYER_COMPOSITE_MODE,
                                         NULL, NULL, NULL,
-                                        FALSE, FALSE, NULL);
+                                        FALSE, FALSE,
+                                        "auto", G_TYPE_BOOLEAN,
+                                        NULL);
   gimp_savable_load_add_simple_handler (state, "lock-alpha", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         FALSE, FALSE, NULL);
@@ -1843,6 +1849,9 @@ gimp_layer_load_exit (GimpLoadState  *state,
   GimpLayerColorSpace     blend_space      = GIMP_LAYER_COLOR_SPACE_AUTO;
   GimpLayerColorSpace     composite_space  = GIMP_LAYER_COLOR_SPACE_AUTO;
   GimpLayerCompositeMode  composite_mode   = GIMP_LAYER_COMPOSITE_AUTO;
+  gboolean                blend_space_auto = FALSE;
+  gboolean                compo_space_auto = FALSE;
+  gboolean                compo_mode_auto  = FALSE;
   gboolean                lock_alpha       = FALSE;
   gint                    offset_x         = -1;
   gint                    offset_y         = -1;
@@ -1878,6 +1887,27 @@ gimp_layer_load_exit (GimpLoadState  *state,
   if (opacity >= GIMP_OPACITY_TRANSPARENT && opacity <= GIMP_OPACITY_OPAQUE)
     gimp_layer_set_opacity (layer, opacity, FALSE);
   gimp_layer_set_mode (layer, mode, FALSE);
+
+  gimp_savable_load_get_values (state,
+                                "blend-space:auto",     &blend_space_auto,
+                                "composite-space:auto", &compo_space_auto,
+                                "composite-mode:auto",  &compo_mode_auto,
+                                NULL);
+  /* If "Auto" space/mode was set, we re-apply it, unless the actual
+   * space/mode changes. This allows us to change the default
+   * composite/blend spaces or mode for any layer mode in the future
+   * without breaking renders of existing files.
+   */
+  if (blend_space_auto &&
+      blend_space == gimp_layer_mode_get_blend_space (mode))
+    blend_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+  if (compo_space_auto &&
+      composite_space == gimp_layer_mode_get_composite_space (mode))
+    composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+  if (compo_mode_auto &&
+      composite_mode == gimp_layer_mode_get_composite_mode (mode))
+    composite_mode = GIMP_LAYER_COMPOSITE_AUTO;
+
   gimp_layer_set_blend_space (layer, blend_space, FALSE);
   gimp_layer_set_composite_space (layer, composite_space, FALSE);
   gimp_layer_set_composite_mode (layer, composite_mode, FALSE);
