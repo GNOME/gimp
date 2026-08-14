@@ -46,6 +46,9 @@ Core:
   * Do not perform the (wrong) optimization replacing pass-through by
     the Normal layer mode for layers with effects.
   * Dashboard backtraces now support macOS.
+  * Clear does not affect non-raster layers, unless rasterized.
+  * New project format for GIMP (meant to replace XCF) is under
+    development.
 
 Tools:
 
@@ -55,6 +58,9 @@ Tools:
   * Text tool:
     - Allow selecting with Shift-Click.
     - Preview text layer content while Alt-dragging.
+    - Ignore selected layer mask of a text layer when selecting it with
+      the tool to edit the text contents. The layer mask still stays the
+      selected item in such a case.
   * Transform tools: add a tooltip on the chain icon to better explain
     what it does.
   * MyPaint Brush tool: new "Spectral Blending" checkbox and "Pigment"
@@ -98,12 +104,18 @@ Graphical User Interface:
     dimensions) will now fill the full area by repeating themselves,
     since they are meant to be tileable anyway. It makes for nicer
     pattern previews.
+  * Size entry in Scale and Print Size dialogs receive the focus by
+    default as a UX enhancement.
+  * Spin of Arbitrary Zoom dialog receives the default focus.
+  * Next tip is the default focus for the Tips dialog.
+  * Space and Enter activate/deactivate modules.
 
 Plug-Ins:
 
   * Vulnerabilities fixed: ZDI-CAN-29403, ZDI-CAN-29399, ZDI-CAN-29405,
     ZDI-CAN-29406, ZDI-CAN-29398 (TIFF), ZDI-CAN-29395 (PSD), ZDI-CAN-29396 (SGI),
-    ZDI-CAN-29400, ZDI-CAN-29401 (PNG), PSP, PAA, PVR, ILBM.
+    ZDI-CAN-29400, ZDI-CAN-29401 (PNG), PSP, PAA, PVR, ILBM,
+    ZDI-CAN-29404.
   * PSD:
     - Better apply embedded profile on pixel data for import and export.
     - New "file-psd-export-metadata" procedure to export PSD image resources or
@@ -135,7 +147,9 @@ Plug-Ins:
   * New import support for MacPaint images.
   * GBR: fix exporting grayscale GBRs with alpha channels.
   * file-raw-data: various code improvements.
-  * SVG: new option to export Inkscape SVG.
+  * SVG:
+    - New option to export Inkscape SVG.
+    - Guides are exported in Inkscape SVG.
   * Cineon/DPX: initial import support.
   * PSP: we now have import support for the following adjustment layers
     as passthrough groups with filters applied:
@@ -173,6 +187,8 @@ Plug-Ins:
     - Support "Inverse Alpha Mask" layer mode from Sketchbook on loading
       (equivalent to our Erase blend mode).
     - Differentiate correctly pass-through group layers.
+    - Metadata are explicitly not exported for BigTIFF (Exiv2 does not
+      have support).
   * PDF: on export of multi-page documents, the image size is now made
     so that all pages/layers are contained within the image.
   * JPEG:
@@ -210,6 +226,10 @@ Plug-Ins:
     ICO/CUR files where the old heuristic could pick the wrong frame (e.g.
     a small frame instead of the closest match to the requested size).
   * PNG: better heuristic for a transparency index.
+  * PS: we default to A4 for unknown images. Though arbitrary, since
+    Postscript traditionally represents printed pages, it is more likely
+    than other form factors.
+  * Various plug-ins are made transient to the calling core GIMP window.
 
 API:
 
@@ -221,6 +241,7 @@ API:
       box and implements the GtkOrientable interface.
     - New functions:
       + gimp_hint_box_set_hint
+    - Plug-ins' title bar will now follow dark mode on macOS.
   * libgimpbase:
     - New functions:
       + gimp_choice_add_deprecated
@@ -238,6 +259,8 @@ API:
       + gimp_font_get_by_postscript_name
       + gimp_context_get_image
       + gimp_context_set_image
+      + gimp_export_procedure_get_export_metadata
+      + gimp_export_procedure_set_export_metadata
   * libgimpui:
     - GimpProcedureDialog will now use the icon set on the associated
       GimpProcedure (likely only visible on platforms showing window
@@ -250,6 +273,9 @@ API:
       such a warning when trying to export images with transparency!
     - New functions:
       + gimp_procedure_dialog_set_warning
+    - Cross-process transiency is now emulated on macOS (which doesn't
+      have the exact API match) for the gimp_window_set_transient*()
+      functions.
   * Script-Fu:
     - (gimp-online-*) Script-Fu procedures are now moved to deprecated
       internal PDB procedures. Actions are created too (except for
@@ -262,6 +288,11 @@ API:
       guides by common composition rules, such as "Rule of thirds" or
       "Golden sections". It is available in menus as `Image > Guides >
       New Guides from Rule`.
+   * PDB: failing PDB calls only alert through gimp_message() when run
+     interactively. Non-interactive (including from last run) calls
+     don't print (or pop-up) errors anymore and the caller is expected
+     to check return values and process or display errors themselves if
+     relevant.
 
 Utilities:
 
@@ -293,3 +324,5 @@ Build:
   * Add LLDB support to '-Ddebug-self-in-build' build option and display
     a proper discovery message when in-build GIMP crashes to encourage
     bug reporters to make stacktraces of that happening.
+  * Damned Lies (translation) commits now follow our "<module>:" prefix
+    rule in the commit message.
