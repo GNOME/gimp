@@ -358,7 +358,31 @@ static void
 gimp_ui_help_func (const gchar *help_id,
                    gpointer     help_data)
 {
+#ifdef GDK_WINDOWING_QUARTZ
+  NSRunningApplication *gimp_app;
+#endif
+
   gimp_help (NULL, help_id);
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /* activate the parent GIMP process so the app/widgets/gimphelp.c dialog appears on top */
+  gimp_app = [NSRunningApplication runningApplicationWithProcessIdentifier:getppid()];
+  if (gimp_app)
+    {
+      if (@available(macOS 14.0, *))
+        {
+          [[NSApplication sharedApplication] yieldActivationToApplication:gimp_app];
+          [gimp_app activateFromApplication:[NSRunningApplication currentApplication] options:0];
+        }
+      else
+        {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+          [gimp_app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+#pragma clang diagnostic pop
+        }
+    }
+#endif
 }
 
 static void
