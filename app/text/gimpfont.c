@@ -46,6 +46,7 @@
 #include "core/gimp-memsize.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpsavable.h"
+#include "core/gimpsavable-load.h"
 
 #include "gimpfont.h"
 #include "gimpfontfactory.h"
@@ -149,8 +150,18 @@ static GimpConfig  * gimp_font_deserialize_create (GType                 type,
                                                    gint                  nest_level,
                                                    gpointer              data);
 
-static void          gimp_font_savable_save       (GimpSavable          *savable,
+static void          gimp_font_save               (GimpSavable          *savable,
                                                    GimpSaveState        *state);
+static gboolean      gimp_font_load_enter         (GimpLoadState        *state,
+                                                   const gchar         **attribute_names,
+                                                   const gchar         **attribute_values,
+                                                   gpointer              user_data,
+                                                   GError              **error);
+static gboolean      gimp_font_load_exit          (GimpLoadState        *state,
+                                                   const gchar          *text,
+                                                   gsize                 len,
+                                                   gpointer              user_data,
+                                                   GError              **error);
 
 static gint64        gimp_font_get_memsize        (GimpObject           *object,
                                                    gint64               *gui_size);
@@ -162,6 +173,16 @@ static const gchar * gimp_font_get_sample_string  (PangoContext         *context
                                                    PangoFontDescription *font_desc);
 
 static const gchar * gimp_font_get_hash           (GimpFont             *font);
+static GimpFont    * gimp_font_find_font          (const gchar          *hash,
+                                                   const gchar          *fullname,
+                                                   const gchar          *family,
+                                                   const gchar          *style,
+                                                   const gchar          *psname,
+                                                   gint                  index,
+                                                   gint                  weight,
+                                                   gint                  slant,
+                                                   gint                  width,
+                                                   gint                  version);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpFont, gimp_font, GIMP_TYPE_DATA,
@@ -183,7 +204,10 @@ gimp_font_config_iface_init (GimpConfigInterface *iface)
 static void
 gimp_font_savable_iface_init (GimpSavableInterface *iface)
 {
-  iface->save = gimp_font_savable_save;
+  iface->tag        = "font";
+  iface->save       = gimp_font_save;
+  iface->load_enter = gimp_font_load_enter;
+  iface->load_exit  = gimp_font_load_exit;
 }
 
 static gboolean
@@ -251,11 +275,7 @@ gimp_font_deserialize_create (GType     type,
 {
   GimpFont      *font                    = NULL;
   GimpContainer *fonts_container;
-  gint           most_similar_font_index = -1;
   gint           font_count;
-  gint           largest_similarity      = 0;
-  GList         *similar_fonts           = NULL;
-  GList         *iter;
   gint           i;
   gchar         *fonthash                = NULL;
   gchar         *fullname                = NULL;
@@ -458,84 +478,11 @@ gimp_font_deserialize_create (GType     type,
   g_scanner_scope_remove_symbol (scanner, scope_id, "fontversion");
   g_scanner_set_scope (scanner, old_scope_id);
 
-  for (i = 0; i < font_count; i++)
-    {
-      gint current_font_similarity = 0;
-
-      font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, i));
-
-      /* Some attrs are more identifying than others,
-       * hence their higher importance in measuring similarity.
-       */
-
-      if (fullname != NULL && !g_strcmp0 (font->fullname, fullname))
-        current_font_similarity += 5;
-
-      if (family != NULL && !g_strcmp0 (font->family, family))
-        current_font_similarity += 5;
-
-      if (psname != NULL && font->psname != NULL && !g_strcmp0 (font->psname, psname))
-        current_font_similarity += 5;
-
-      if (current_font_similarity < 5)
-        continue;
-
-      if (style != NULL && font->style != NULL && !g_strcmp0 (font->style, style))
-        current_font_similarity++;
-
-      if (font->weight != -1 && font->weight == weight)
-        current_font_similarity++;
-
-      if (font->width != -1 && font->width == width)
-        current_font_similarity++;
-
-      if (font->slant != -1 && font->slant == slant)
-        current_font_similarity++;
-
-      if (font->index != -1 && font->index == index)
-        current_font_similarity++;
-
-      if (font->fontversion != -1 && font->fontversion == fontversion)
-        current_font_similarity++;
-
-      if (current_font_similarity > largest_similarity)
-        {
-          largest_similarity      = current_font_similarity;
-          most_similar_font_index = i;
-          g_clear_pointer (&similar_fonts, g_list_free);
-          similar_fonts = g_list_prepend (similar_fonts, GINT_TO_POINTER (i));
-        }
-      else if (current_font_similarity == largest_similarity)
-        {
-          similar_fonts = g_list_prepend (similar_fonts, GINT_TO_POINTER (i));
-        }
-    }
-
-  /* In case there are multiple font with identical info,
-   * the font file hash should be used for comparison.
-   */
-  if (g_list_length (similar_fonts) == 1)
-    g_clear_pointer (&similar_fonts, g_list_free);
-  for (iter = similar_fonts; iter; iter = iter->next)
-    {
-      i    = GPOINTER_TO_INT (iter->data);
-      font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, i));
-
-      if (g_strcmp0 (gimp_font_get_hash (font), fonthash) == 0)
-        {
-          most_similar_font_index = i;
-          break;
-        }
-    }
-
-  if (most_similar_font_index > -1)
-    font = GIMP_FONT (gimp_container_get_child_by_index (fonts_container, most_similar_font_index));
-  else
-    font = GIMP_FONT (gimp_font_get_standard ());
+  font = gimp_font_find_font (fonthash, fullname, family, style, psname,
+                              index, weight, slant, width, fontversion);
 
   g_object_ref (font);
 
-  g_list_free (similar_fonts);
   g_free (fonthash);
   g_free (fullname);
   g_free (family);
@@ -546,13 +493,13 @@ gimp_font_deserialize_create (GType     type,
 }
 
 static void
-gimp_font_savable_save (GimpSavable   *savable,
-                        GimpSaveState *state)
+gimp_font_save (GimpSavable   *savable,
+                GimpSaveState *state)
 {
   GimpFont *font = GIMP_FONT (savable);
 
   gimp_savable_print_element_start (state, "font", NULL);
-  gimp_savable_print_element (state, "font-hash", "%s", gimp_font_get_hash (font), NULL);
+  gimp_savable_print_element (state, "hash", "%s", gimp_font_get_hash (font), NULL);
   gimp_savable_print_element (state, "full-name", "%s", font->fullname, NULL);
   gimp_savable_print_element (state, "family", "%s", font->family, NULL);
   gimp_savable_print_element (state, "style", "%s", font->style, NULL);
@@ -562,8 +509,92 @@ gimp_font_savable_save (GimpSavable   *savable,
   gimp_savable_print_element (state, "weight", "%d", font->weight, NULL);
   gimp_savable_print_element (state, "slant", "%d", font->slant, NULL);
   gimp_savable_print_element (state, "width", "%d", font->width, NULL);
-  gimp_savable_print_element (state, "font-version", "%d", font->fontversion, NULL);
+  gimp_savable_print_element (state, "version", "%d", font->fontversion, NULL);
   gimp_savable_print_element_end (state, "font");
+}
+
+static gboolean
+gimp_font_load_enter (GimpLoadState  *state,
+                      const gchar   **attribute_names,
+                      const gchar   **attribute_values,
+                      gpointer        user_data,
+                      GError        **error)
+{
+  while (*attribute_names)
+    {
+      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                   "%s: unexpected attribute: '%s'",
+                   G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  /* We do not call the parent loader on purpose. Fonts are more complex
+   * to retrieve than other data.
+   */
+
+  gimp_savable_load_add_simple_handler (state, "hash", G_TYPE_STRING,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "full-name", G_TYPE_STRING,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "family", G_TYPE_STRING,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "style", G_TYPE_STRING,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "psname", G_TYPE_STRING,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "index", G_TYPE_INT,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "weight", G_TYPE_INT,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "slant", G_TYPE_INT,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "width", G_TYPE_INT,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  gimp_savable_load_add_simple_handler (state, "version", G_TYPE_INT,
+                                        NULL, NULL, NULL, FALSE, FALSE, NULL);
+  return TRUE;
+}
+
+static gboolean
+gimp_font_load_exit (GimpLoadState  *state,
+                     const gchar    *text,
+                     gsize           len,
+                     gpointer        user_data,
+                     GError        **error)
+{
+  GimpFont    *font;
+  const gchar *hash     = NULL;
+  const gchar *fullname = NULL;
+  const gchar *family   = NULL;
+  const gchar *style    = NULL;
+  const gchar *psname   = NULL;
+  gint         index    = -1;
+  gint         weight   = -1;
+  gint         slant    = -1;
+  gint         width    = -1;
+  gint         version  = -1;
+
+  gimp_savable_load_get_values (state,
+                                "hash",      &hash,
+                                "full-name", &fullname,
+                                "family",    &family,
+                                "style",     &style,
+                                "psname",    &psname,
+                                "index",     &index,
+                                "weight",    &weight,
+                                "slant",     &slant,
+                                "width",     &width,
+                                "version",   &version,
+                                NULL);
+  font = gimp_font_find_font (hash, fullname, family, style, psname,
+                              index, weight, slant, width, version);
+
+  gimp_savable_load_store_value (state, "font", g_object_ref (font), g_object_unref);
+  gimp_savable_load_bubble_up (state, "font");
+
+  return TRUE;
 }
 
 void
@@ -1444,4 +1475,107 @@ gimp_font_get_hash (GimpFont *font)
     }
 
   return font->hash;
+}
+
+static GimpFont *
+gimp_font_find_font (const gchar *hash,
+                     const gchar *fullname,
+                     const gchar *family,
+                     const gchar *style,
+                     const gchar *psname,
+                     gint         index,
+                     gint         weight,
+                     gint         slant,
+                     gint         width,
+                     gint         version)
+{
+  GimpFont      *font;
+  GimpContainer *container;
+  gint           font_count;
+  gint           most_similar_index = -1;
+  gint           largest_similarity = 0;
+  GList         *similar_fonts      = NULL;
+
+  container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (GIMP_FONT_CLASS (g_type_class_peek (GIMP_TYPE_FONT))->font_factory));
+  font_count = gimp_container_get_n_children (container);
+
+  for (gint i = 0; i < font_count; i++)
+    {
+      gint current_font_similarity = 0;
+
+      font = GIMP_FONT (gimp_container_get_child_by_index (container, i));
+
+      /* Some attrs are more identifying than others,
+       * hence their higher importance in measuring similarity.
+       */
+
+      if (fullname != NULL && g_strcmp0 (font->fullname, fullname) == 0)
+        current_font_similarity += 5;
+
+      if (family != NULL && g_strcmp0 (font->family, family) == 0)
+        current_font_similarity += 5;
+
+      if (psname != NULL && font->psname != NULL && g_strcmp0 (font->psname, psname) == 0)
+        current_font_similarity += 5;
+
+      if (current_font_similarity < 5)
+        continue;
+
+      if (style != NULL && font->style != NULL && g_strcmp0 (font->style, style) == 0)
+        current_font_similarity++;
+
+      if (font->weight != -1 && font->weight == weight)
+        current_font_similarity++;
+
+      if (font->width != -1 && font->width == width)
+        current_font_similarity++;
+
+      if (font->slant != -1 && font->slant == slant)
+        current_font_similarity++;
+
+      if (font->index != -1 && font->index == index)
+        current_font_similarity++;
+
+      if (font->fontversion != -1 && font->fontversion == version)
+        current_font_similarity++;
+
+      if (current_font_similarity > largest_similarity)
+        {
+          largest_similarity = current_font_similarity;
+          most_similar_index = i;
+          g_clear_pointer (&similar_fonts, g_list_free);
+          similar_fonts = g_list_prepend (similar_fonts, GINT_TO_POINTER (i));
+        }
+      else if (current_font_similarity == largest_similarity)
+        {
+          similar_fonts = g_list_prepend (similar_fonts, GINT_TO_POINTER (i));
+        }
+    }
+
+  /* In case there are multiple font with identical info,
+   * the font file hash should be used for comparison.
+   */
+  if (g_list_length (similar_fonts) == 1)
+    g_clear_pointer (&similar_fonts, g_list_free);
+  for (GList *iter = similar_fonts; iter; iter = iter->next)
+    {
+      gint i = GPOINTER_TO_INT (iter->data);
+
+      font = GIMP_FONT (gimp_container_get_child_by_index (container, i));
+
+      if (g_strcmp0 (gimp_font_get_hash (font), hash) == 0)
+        {
+          most_similar_index = i;
+          break;
+        }
+    }
+
+  if (most_similar_index > -1)
+    font = GIMP_FONT (gimp_container_get_child_by_index (container, most_similar_index));
+  else
+    font = GIMP_FONT (gimp_font_get_standard ());
+
+  g_list_free (similar_fonts);
+
+  return font;
 }

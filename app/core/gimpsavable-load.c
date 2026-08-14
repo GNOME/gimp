@@ -190,6 +190,26 @@ static gboolean gimp_savable_exit_matrix_coeff  (GimpLoadState        *state,
                                                  gsize                 len,
                                                  gpointer              user_data,
                                                  GError              **error);
+static gboolean gimp_savable_enter_savable      (GimpLoadState        *state,
+                                                 const gchar         **attribute_names,
+                                                 const gchar         **attribute_values,
+                                                 gpointer              user_data,
+                                                 GError              **error);
+static gboolean gimp_savable_exit_savable       (GimpLoadState        *state,
+                                                 const gchar          *text,
+                                                 gsize                 len,
+                                                 gpointer              user_data,
+                                                 GError              **error);
+static gboolean gimp_savable_enter_object       (GimpLoadState        *state,
+                                                 const gchar         **attribute_names,
+                                                 const gchar         **attribute_values,
+                                                 gpointer              user_data,
+                                                 GError              **error);
+static gboolean gimp_savable_exit_object        (GimpLoadState        *state,
+                                                 const gchar          *text,
+                                                 gsize                 len,
+                                                 gpointer              user_data,
+                                                 GError              **error);
 
 
 void
@@ -1555,8 +1575,7 @@ gimp_savable_load_store_one (GimpLoadState  *state,
 
       if ((intval == G_MAXINT64 || intval == G_MININT64) &&
           errno == ERANGE)
-        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA,
-                                 g_value_unset (gvalue); g_free (gvalue);,
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
                                  "Integer 64 overflows: %s\n", strval);
 
       if (gtype == G_TYPE_INT)
@@ -1564,8 +1583,7 @@ gimp_savable_load_store_one (GimpLoadState  *state,
           gint val = (gint) intval;
 
           if ((gint64) val != intval)
-            GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA,
-                                     g_value_unset (gvalue); g_free (gvalue);,
+            GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
                                      "Integer overflows: %s\n", strval);
 
           g_value_set_int (gvalue, val);
@@ -1575,8 +1593,7 @@ gimp_savable_load_store_one (GimpLoadState  *state,
           glong val = (glong) intval;
 
           if ((gint64) val != intval)
-            GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA,
-                                     g_value_unset (gvalue); g_free (gvalue);,
+            GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
                                      "Long overflows: %s\n", strval);
 
           g_value_set_long (gvalue, val);
@@ -1587,8 +1604,7 @@ gimp_savable_load_store_one (GimpLoadState  *state,
       guint64 intval = g_ascii_strtoull (strval, NULL, 10);
 
       if (intval == G_MAXUINT64 && errno == ERANGE)
-        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA,
-                                 g_value_unset (gvalue); g_free (gvalue);,
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
                                  "Unsigned integer 64 overflows: %s\n", strval);
 
       if (gtype == G_TYPE_UINT)
@@ -1596,8 +1612,7 @@ gimp_savable_load_store_one (GimpLoadState  *state,
           guint val = (guint) intval;
 
           if ((guint64) val != intval)
-            GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA,
-                                     g_value_unset (gvalue); g_free (gvalue);,
+            GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
                                      "Unsigned integer overflows: %s\n", strval);
 
           g_value_set_uint (gvalue, val);
@@ -1607,8 +1622,7 @@ gimp_savable_load_store_one (GimpLoadState  *state,
           gulong val = (gulong) intval;
 
           if ((guint64) val != intval)
-            GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA,
-                                     g_value_unset (gvalue); g_free (gvalue);,
+            GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
                                      "Unsigned long overflows: %s\n", strval);
 
           g_value_set_ulong (gvalue, val);
@@ -1629,11 +1643,10 @@ gimp_savable_load_store_one (GimpLoadState  *state,
       GType tval = g_type_from_name (strval);
 
       if (tval == 0)
-        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA,
-                                 g_value_unset (gvalue); g_free (gvalue);,
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
                                  "Unknown GType: %s\n", strval);
-
-      g_value_set_gtype (gvalue, tval);
+      else
+        g_value_set_gtype (gvalue, tval);
     }
   else if (G_TYPE_IS_ENUM (gtype))
     {
@@ -1643,25 +1656,33 @@ gimp_savable_load_store_one (GimpLoadState  *state,
       klass      = g_type_class_ref (gtype);
       enum_value = g_enum_get_value_by_nick (klass, strval);
       if (enum_value == NULL)
-        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA,
-                                 g_value_unset (gvalue); g_free (gvalue); g_type_class_unref (klass);,
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
                                  "Unknown enum value of type %s: %s\n",
                                  g_type_name (gtype), strval);
-      g_value_set_enum (gvalue, enum_value->value);
+      else
+        g_value_set_enum (gvalue, enum_value->value);
 
       g_type_class_unref (klass);
     }
   else
     {
-      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA,
-                               g_value_unset (gvalue); g_free (gvalue);,
+      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
                                "%s: unsupported type: %s",
                                G_STRFUNC, g_type_name (gtype));
     }
 
-  value->value     = gvalue;
-  value->free_data = NULL;
-  g_hash_table_insert (values, (gpointer) g_strdup (key), value);
+  if (error && *error)
+    {
+      g_free (value);
+      g_value_unset (gvalue);
+      g_free (gvalue);
+    }
+  else
+    {
+      value->value     = gvalue;
+      value->free_data = NULL;
+      g_hash_table_insert (values, (gpointer) g_strdup (key), value);
+    }
 
   return TRUE;
 }
@@ -1966,16 +1987,30 @@ gimp_savable_load_enter_config (GimpLoadState  *state,
 
       for (gint i = 0; i < n_pspecs; i++)
         {
-          GParamSpec *pspec  = pspecs[i];
+          GParamSpec *pspec = pspecs[i];
 
           if (! (pspec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
             continue;
 
-          gimp_savable_load_add_simple_handler (state, pspec->name, pspec->value_type,
-                                                NULL, NULL, NULL,
-                                                FALSE, FALSE,
-                                                "type", G_TYPE_STRING,
-                                                NULL);
+          if (g_type_is_a (pspec->value_type, GIMP_TYPE_SAVABLE))
+            gimp_savable_load_add_handlers (state, pspec->name,
+                                            gimp_savable_enter_savable,
+                                            gimp_savable_exit_savable,
+                                            g_param_spec_ref (pspec),
+                                            (GDestroyNotify) g_param_spec_unref);
+          else if (g_type_is_a (pspec->value_type, G_TYPE_OBJECT))
+            gimp_savable_load_add_handlers (state, pspec->name,
+                                            gimp_savable_enter_object,
+                                            gimp_savable_exit_object,
+                                            g_param_spec_ref (pspec),
+                                            (GDestroyNotify) g_param_spec_unref);
+          else
+            gimp_savable_load_add_simple_handler (state, pspec->name, pspec->value_type,
+                                                  NULL, NULL, NULL,
+                                                  FALSE, FALSE,
+                                                  "type", G_TYPE_GTYPE,
+                                                  "null", G_TYPE_BOOLEAN,
+                                                  NULL);
         }
 
       g_type_class_unref (klass);
@@ -2028,8 +2063,38 @@ gimp_savable_load_exit_config (GimpLoadState  *state,
               if (gvalue)
                 {
                   names[index] = pspec->name;
-                  g_value_init (&values[index], G_VALUE_TYPE (gvalue));
-                  g_value_copy (gvalue, &values[index++]);
+                  g_value_init (&values[index], pspec->value_type);
+                  if (G_VALUE_HOLDS_OBJECT (&values[index]) &&
+                      G_VALUE_HOLDS_POINTER (gvalue))
+                    {
+                      gpointer pointer = g_value_get_pointer (gvalue);
+
+                      if (pointer && G_IS_OBJECT (pointer) &&
+                          g_type_is_a (G_TYPE_FROM_INSTANCE (pointer),
+                                       pspec->value_type))
+                        g_value_set_object (&values[index++], G_OBJECT (pointer));
+                      else
+                        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                                                 "%s: ignoring invalid data for property \"%s\".",
+                                                 G_STRFUNC, pspec->name);
+                    }
+                  else if (pspec->value_type == G_TYPE_STRING &&
+                           (g_value_get_string (gvalue) == NULL ||
+                            strlen (g_value_get_string (gvalue)) == 0))
+                    {
+                      gchar    *null_name = g_strdup_printf ("%s:null", pspec->name);
+                      gboolean  is_null   = FALSE;
+
+                      gimp_savable_load_get_values (state, null_name, &is_null, NULL);
+                      g_value_set_string (&values[index++],
+                                          is_null ? NULL : g_value_get_string (gvalue));
+
+                      g_free (null_name);
+                    }
+                  else
+                    {
+                      g_value_copy (gvalue, &values[index++]);
+                    }
                 }
             }
 
@@ -2303,6 +2368,170 @@ gimp_savable_exit_matrix_coeff (GimpLoadState  *state,
     {
       coords->x += 1.0;
       coords->y = 0.0;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_enter_savable (GimpLoadState  *state,
+                            const gchar   **attribute_names,
+                            const gchar   **attribute_values,
+                            gpointer        user_data,
+                            GError        **error)
+{
+  GParamSpec *pspec = G_PARAM_SPEC (user_data);
+  GType       gtype = G_TYPE_NONE;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "type") == 0)
+        gimp_savable_load_store_from_string (state, error,
+                                             "type", G_TYPE_GTYPE, *attribute_values,
+                                             NULL);
+      else
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_FORMAT, ;,
+                                 "%s: unexpected attribute: '%s'",
+                                 G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  if (! gimp_savable_load_get_values (state, "type", &gtype, NULL))
+    GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                             "%s: no type for serialized property \"%s\" of type %s.",
+                             G_STRFUNC, pspec->name,
+                             g_type_name (pspec->value_type));
+  else if (g_type_is_a (gtype, pspec->value_type))
+    gimp_savable_load (gtype, state);
+  else
+    GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                             "%s: property \"%s\" is a %s but stored valus is %s.",
+                             G_STRFUNC, pspec->name,
+                             g_type_name (pspec->value_type),
+                             g_type_name (gtype));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_exit_savable (GimpLoadState  *state,
+                           const gchar    *text,
+                           gsize           len,
+                           gpointer        user_data,
+                           GError        **error)
+{
+  GParamSpec           *pspec = G_PARAM_SPEC (user_data);
+  GObjectClass         *klass;
+  GimpSavableInterface *iface;
+
+  klass = g_type_class_ref (pspec->value_type);
+  iface = g_type_interface_peek (klass, GIMP_TYPE_SAVABLE);
+
+  if (iface->tag)
+    {
+      GObject *object = NULL;
+
+      gimp_savable_load_get_values (state, iface->tag, &object, NULL);
+      if (object)
+        {
+          gimp_savable_load_store_value (state, pspec->name,
+                                         g_object_ref (object), g_object_unref);
+          gimp_savable_load_bubble_up (state, pspec->name);
+        }
+    }
+
+  g_type_class_unref (klass);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_enter_object (GimpLoadState  *state,
+                           const gchar   **attribute_names,
+                           const gchar   **attribute_values,
+                           gpointer        user_data,
+                           GError        **error)
+{
+  GParamSpec *pspec = G_PARAM_SPEC (user_data);
+  GType       gtype = G_TYPE_NONE;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "type") == 0)
+        gimp_savable_load_store_from_string (state, error,
+                                             "type", G_TYPE_GTYPE, *attribute_values,
+                                             NULL);
+      else
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_FORMAT, ;,
+                                 "%s: unexpected attribute: '%s'",
+                                 G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  if (! gimp_savable_load_get_values (state, "type", &gtype, NULL))
+    {
+      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                               "%s: no type for serialized property \"%s\" of type %s.",
+                               G_STRFUNC, pspec->name,
+                               g_type_name (pspec->value_type));
+    }
+  else if (g_type_is_a (gtype, pspec->value_type))
+    {
+      if (pspec->value_type == GIMP_TYPE_UNIT)
+        gimp_savable_load_add_handlers (state, "unit",
+                                        gimp_savable_enter_unit,
+                                        gimp_savable_exit_unit,
+                                        NULL, NULL);
+      else if (pspec->value_type == GEGL_TYPE_COLOR)
+        gimp_savable_load_add_handlers (state, "color",
+                                        gimp_savable_enter_color,
+                                        gimp_savable_exit_color,
+                                        NULL, NULL);
+      else
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                                 "%s: unsupported object property \"%s\" of type %s.",
+                                 G_STRFUNC, pspec->name,
+                                 g_type_name (pspec->value_type));
+    }
+  else
+    {
+      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                               "%s: property \"%s\" is a %s but stored valus is %s.",
+                               G_STRFUNC, pspec->name,
+                               g_type_name (pspec->value_type),
+                               g_type_name (gtype));
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_savable_exit_object (GimpLoadState  *state,
+                          const gchar    *text,
+                          gsize           len,
+                          gpointer        user_data,
+                          GError        **error)
+{
+  GParamSpec  *pspec      = G_PARAM_SPEC (user_data);
+  GObject     *object     = NULL;
+  const gchar *value_name = NULL;
+
+  if (pspec->value_type == GIMP_TYPE_UNIT)
+    value_name = "unit";
+  else if (pspec->value_type == GEGL_TYPE_COLOR)
+    value_name = "color";
+
+  if (value_name)
+    gimp_savable_load_get_values (state, value_name, &object, NULL);
+  if (object)
+    {
+      gimp_savable_load_store_value (state, pspec->name,
+                                     g_object_ref (object), g_object_unref);
+      gimp_savable_load_bubble_up (state, pspec->name);
     }
 
   return TRUE;

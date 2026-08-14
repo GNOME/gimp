@@ -35,6 +35,8 @@
 
 #include "path/gimpvectorlayer.h"
 
+#include "text/gimptextlayer.h"
+
 #include "gimpdrawable-filters.h"
 #include "gimpgrouplayer.h"
 #include "gimpgrouplayerundo.h"
@@ -2519,7 +2521,7 @@ gimp_group_layer_enter_layers (GimpLoadState  *state,
   gimp_savable_load (GIMP_TYPE_GROUP_LAYER, state);
   gimp_savable_load (GIMP_TYPE_VECTOR_LAYER, state);
   gimp_savable_load (GIMP_TYPE_LINK_LAYER, state);
-  /*gimp_savable_load (GIMP_TYPE_TEXT_LAYER, state);*/
+  gimp_savable_load (GIMP_TYPE_TEXT_LAYER, state);
 
   return TRUE;
 }

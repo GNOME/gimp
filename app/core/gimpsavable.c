@@ -32,6 +32,8 @@
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
+#include "text/gimptext-parasite.c"
+
 #include "gimp-utils.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
@@ -503,9 +505,10 @@ gimp_savable_parasite_save (GimpParasite  *parasite,
 
   name  = gimp_parasite_get_name (parasite);
 
-  if (gimp_parasite_is_persistent (parasite)                &&
-      g_strcmp0 (name, GIMP_ICC_PROFILE_PARASITE_NAME) != 0 &&
-      g_strcmp0 (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) != 0)
+  if (gimp_parasite_is_persistent (parasite)                           &&
+      g_strcmp0 (name, GIMP_ICC_PROFILE_PARASITE_NAME) != 0            &&
+      g_strcmp0 (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) != 0 &&
+      g_strcmp0 (name, gimp_text_parasite_name ()) != 0)
     {
       gulong         flags;
       gconstpointer  data;
@@ -601,10 +604,16 @@ gimp_savable_value_save (GValue        *value,
   else if (G_VALUE_HOLDS_STRING (value))
     {
       const gchar *str = g_value_get_string (value);
-      gimp_savable_print_element (state, tag_name,
-                                  "%s", str ? str : "",
-                                  "type", "%T", G_TYPE_STRING,
-                                  NULL);
+      if (str)
+        gimp_savable_print_element (state, tag_name,
+                                    "%s", str,
+                                    "type", "%T", G_TYPE_STRING,
+                                    NULL);
+      else
+        gimp_savable_print_element (state, tag_name, NULL, NULL,
+                                    "type", "%T", G_TYPE_STRING,
+                                    "null", "%b", TRUE,
+                                    NULL);
     }
   else if (G_VALUE_HOLDS_DOUBLE (value))
     {

@@ -50,6 +50,7 @@
 #include "core/gimppattern.h"
 #include "core/gimprasterizable.h"
 #include "core/gimpsavable.h"
+#include "core/gimpsavable-load.h"
 #include "core/gimptempbuf.h"
 
 #include "gimptext.h"
@@ -96,8 +97,18 @@ static void       gimp_text_layer_set_property   (GObject           *object,
 static void       gimp_text_layer_set_rasterized (GimpRasterizable  *rasterizable,
                                                   gboolean           rasterized);
 
-static void       gimp_text_layer_savable_save   (GimpSavable       *savable,
+static void       gimp_text_layer_save           (GimpSavable       *savable,
                                                   GimpSaveState     *state);
+static gboolean   gimp_text_layer_load_enter     (GimpLoadState     *state,
+                                                  const gchar      **attribute_names,
+                                                  const gchar      **attribute_values,
+                                                  gpointer           user_data,
+                                                  GError           **error);
+static gboolean   gimp_text_layer_load_exit      (GimpLoadState     *state,
+                                                  const gchar       *text,
+                                                  gsize              len,
+                                                  gpointer           user_data,
+                                                  GError           **error);
 
 static gint64     gimp_text_layer_get_memsize    (GimpObject        *object,
                                                   gint64            *gui_size);
@@ -143,7 +154,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER,
 
 #define parent_class gimp_text_layer_parent_class
 
-static GimpSavableInterface *parent_savable_interface = NULL;
+static GimpSavableInterface *parent_savable_iface = NULL;
 
 
 static void
@@ -213,9 +224,12 @@ gimp_text_layer_rasterizable_iface_init (GimpRasterizableInterface *iface)
 static void
 gimp_text_layer_savable_iface_init (GimpSavableInterface *iface)
 {
-  parent_savable_interface = g_type_interface_peek_parent (iface);
+  parent_savable_iface = g_type_interface_peek_parent (iface);
 
-  iface->save = gimp_text_layer_savable_save;
+  iface->tag        = "text-layer";
+  iface->save       = gimp_text_layer_save;
+  iface->load_enter = gimp_text_layer_load_enter;
+  iface->load_exit  = gimp_text_layer_load_exit;
 }
 
 static void
@@ -282,8 +296,8 @@ gimp_text_layer_set_rasterized (GimpRasterizable *rasterizable,
 }
 
 static void
-gimp_text_layer_savable_save (GimpSavable   *savable,
-                              GimpSaveState *state)
+gimp_text_layer_save (GimpSavable   *savable,
+                      GimpSaveState *state)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (savable);
   const gchar   *layer_name;
@@ -291,7 +305,7 @@ gimp_text_layer_savable_save (GimpSavable   *savable,
   layer_name = gimp_object_get_name (GIMP_OBJECT (layer));
   gimp_savable_print_element_start (state, "text-layer", "name", "%s", layer_name, NULL);
 
-  parent_savable_interface->save (savable, state);
+  parent_savable_iface->save (savable, state);
 
   gimp_savable_config_save (GIMP_CONFIG (layer->text), "text", state);
 
@@ -302,6 +316,109 @@ gimp_text_layer_savable_save (GimpSavable   *savable,
     gimp_savable_print_element (state, "rasterized", NULL, NULL, NULL);
 
   gimp_savable_print_element_end (state, "text-layer");
+}
+
+static gboolean
+gimp_text_layer_load_enter (GimpLoadState  *state,
+                            const gchar   **attribute_names,
+                            const gchar   **attribute_values,
+                            gpointer        user_data,
+                            GError        **error)
+{
+  GimpTextLayer *layer;
+  const gchar   *name = NULL;
+
+  while (*attribute_names)
+    {
+      if (g_strcmp0 (*attribute_names, "name") == 0)
+        name = *attribute_values;
+      else
+        g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
+                     "%s: unexpected attribute: '%s'",
+                     G_STRFUNC, *attribute_names);
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  parent_savable_iface->load_enter (state, attribute_names, attribute_values,
+                                    user_data, error);
+
+  layer = GIMP_TEXT_LAYER (gimp_drawable_new (GIMP_TYPE_TEXT_LAYER,
+                                              state->image, NULL,
+                                              0, 0, 1, 1,
+                                              gimp_image_get_layer_format (state->image,
+                                                                           TRUE)));
+  gimp_object_set_name (GIMP_OBJECT (layer), name);
+  /* We rasterize as a trick so that any settings update won't override
+   * the buffer contents. We will actually set to proper state in
+   * load_exit().
+   */
+  gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer), FALSE);
+
+  gimp_savable_config_load (GIMP_TYPE_TEXT, "text", state, NULL,
+                            "gimp", GIMP_TYPE_GIMP, state->gimp,
+                            NULL);
+  gimp_savable_load_add_simple_handler (state, "auto-rename", G_TYPE_NONE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        "disabled", G_TYPE_BOOLEAN,
+                                        NULL);
+  gimp_savable_load_add_simple_handler (state, "rasterized", G_TYPE_NONE,
+                                        NULL, NULL, NULL,
+                                        FALSE, FALSE,
+                                        NULL);
+
+  gimp_savable_load_push_active_object (state, G_OBJECT (layer));
+
+  return TRUE;
+}
+
+static gboolean
+gimp_text_layer_load_exit (GimpLoadState  *state,
+                           const gchar    *text,
+                           gsize           len,
+                           gpointer        user_data,
+                           GError        **error)
+{
+  GimpTextLayer *layer          = NULL;
+  GimpText      *gtext          = NULL;
+  gboolean       rasterized     = FALSE;
+  gboolean       disable_rename = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
+
+  /* Order matters because parent's load_exit() will pop the layer. */
+  layer = GIMP_TEXT_LAYER (gimp_savable_load_peek_active_object (state));
+  parent_savable_iface->load_exit (state, text, len, user_data, error);
+
+  gimp_savable_load_get_values (state,
+                                "rasterized",           &rasterized,
+                                "auto-rename:disabled", &disable_rename,
+                                "text",                 &gtext,
+                                NULL);
+
+  gimp_rasterizable_set_auto_rename (GIMP_RASTERIZABLE (layer), ! disable_rename);
+  if (gtext)
+    {
+      gimp_text_layer_set_text (layer, gtext);
+
+      g_return_val_if_fail (gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)), FALSE);
+
+      if (! rasterized)
+        gimp_rasterizable_restore (GIMP_RASTERIZABLE (layer));
+    }
+  else
+    {
+      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                               "%s: this text layer failed to render: %s",
+                               G_STRFUNC, gimp_object_get_name (GIMP_OBJECT (layer)));
+      gimp_image_remove_layer (state->image,
+                               GIMP_LAYER (layer),
+                               FALSE, NULL);
+    }
+
+  return TRUE;
 }
 
 static gint64
