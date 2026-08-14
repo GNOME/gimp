@@ -733,8 +733,6 @@ send_dialog (GimpProcedure *procedure,
   gtk_entry_set_max_length (GTK_ENTRY (real_entry),
                             BUFFER_SIZE - 1);
 
-  gtk_widget_grab_focus (real_entry);
-
   /* From entry */
   entry = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dlg),
                                             "from-address",
@@ -783,6 +781,8 @@ send_dialog (GimpProcedure *procedure,
 #endif
 
   gtk_widget_set_visible (dlg, TRUE);
+
+  gtk_widget_grab_focus (real_entry);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dlg));
 
