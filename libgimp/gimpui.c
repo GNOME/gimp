@@ -609,7 +609,9 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
             if (!not_gimp_app)
               return;
             not_gimp_pid = [not_gimp_app processIdentifier];
-            for (NSWindow *win in plugin_win)
+            /* we fetch win again rather than using stale 'plugin_win' due to
+             * extension/persistent plug-in (e.g. old-style script-fu) */
+            for (NSWindow *win in [NSApp windows])
               {
                 if (not_gimp_pid != gimp_pid && not_gimp_pid != plugin_pid)
                   {
