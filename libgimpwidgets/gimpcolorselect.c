@@ -954,6 +954,7 @@ gimp_color_select_update_pos (GimpColorSelect *select)
   gdouble            rgb[3];
   gfloat             lch[3];
   gfloat             hsv[3];
+  gfloat             new_pos[3] = { 0, 0, 0 };
 
   gegl_color_get_pixel (color, babl_format_with_space ("R'G'B' double", select->format), rgb);
   gegl_color_get_pixel (color, babl_format_with_space ("HSV float", select->format), hsv);
@@ -963,56 +964,66 @@ gimp_color_select_update_pos (GimpColorSelect *select)
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      select->pos[0] = CLAMP (rgb[1], 0.0, 1.0);
-      select->pos[1] = CLAMP (rgb[2], 0.0, 1.0);
-      select->pos[2] = CLAMP (rgb[0], 0.0, 1.0);
+      new_pos[0] = CLAMP (rgb[1], 0.0, 1.0);
+      new_pos[1] = CLAMP (rgb[2], 0.0, 1.0);
+      new_pos[2] = CLAMP (rgb[0], 0.0, 1.0);
       break;
     case COLOR_SELECT_GREEN:
-      select->pos[0] = CLAMP (rgb[0], 0.0, 1.0);
-      select->pos[1] = CLAMP (rgb[2], 0.0, 1.0);
-      select->pos[2] = CLAMP (rgb[1], 0.0, 1.0);
+      new_pos[0] = CLAMP (rgb[0], 0.0, 1.0);
+      new_pos[1] = CLAMP (rgb[2], 0.0, 1.0);
+      new_pos[2] = CLAMP (rgb[1], 0.0, 1.0);
       break;
     case COLOR_SELECT_BLUE:
-      select->pos[0] = CLAMP (rgb[0], 0.0, 1.0);
-      select->pos[1] = CLAMP (rgb[1], 0.0, 1.0);
-      select->pos[2] = CLAMP (rgb[2], 0.0, 1.0);
+      new_pos[0] = CLAMP (rgb[0], 0.0, 1.0);
+      new_pos[1] = CLAMP (rgb[1], 0.0, 1.0);
+      new_pos[2] = CLAMP (rgb[2], 0.0, 1.0);
       break;
 
     case COLOR_SELECT_HUE:
-      select->pos[0] = CLAMP (hsv[1], 0.0, 1.0);
-      select->pos[1] = CLAMP (hsv[2], 0.0, 1.0);
-      select->pos[2] = CLAMP (hsv[0], 0.0, 1.0);
+      new_pos[0] = CLAMP (hsv[1], 0.0, 1.0);
+      new_pos[1] = CLAMP (hsv[2], 0.0, 1.0);
+      new_pos[2] = CLAMP (hsv[0], 0.0, 1.0);
       break;
     case COLOR_SELECT_SATURATION:
-      select->pos[0] = CLAMP (hsv[0], 0.0, 1.0);
-      select->pos[1] = CLAMP (hsv[2], 0.0, 1.0);
-      select->pos[2] = CLAMP (hsv[1], 0.0, 1.0);
+      new_pos[0] = CLAMP (hsv[0], 0.0, 1.0);
+      new_pos[1] = CLAMP (hsv[2], 0.0, 1.0);
+      new_pos[2] = CLAMP (hsv[1], 0.0, 1.0);
       break;
     case COLOR_SELECT_VALUE:
-      select->pos[0] = CLAMP (hsv[0], 0.0, 1.0);
-      select->pos[1] = CLAMP (hsv[1], 0.0, 1.0);
-      select->pos[2] = CLAMP (hsv[2], 0.0, 1.0);
+      new_pos[0] = CLAMP (hsv[0], 0.0, 1.0);
+      new_pos[1] = CLAMP (hsv[1], 0.0, 1.0);
+      new_pos[2] = CLAMP (hsv[2], 0.0, 1.0);
       break;
 
     case COLOR_SELECT_LCH_LIGHTNESS:
-      select->pos[0] = CLAMP (lch[2] / 360, 0.0, 1.0);
-      select->pos[1] = CLAMP (lch[1] / 200, 0.0, 1.0);
-      select->pos[2] = CLAMP (lch[0] / 100, 0.0, 1.0);
+      new_pos[0] = CLAMP (lch[2] / 360, 0.0, 1.0);
+      new_pos[1] = CLAMP (lch[1] / 200, 0.0, 1.0);
+      new_pos[2] = CLAMP (lch[0] / 100, 0.0, 1.0);
       break;
     case COLOR_SELECT_LCH_CHROMA:
-      select->pos[0] = CLAMP (lch[2] / 360, 0.0, 1.0);
-      select->pos[1] = CLAMP (lch[0] / 100, 0.0, 1.0);
-      select->pos[2] = CLAMP (lch[1] / 200, 0.0, 1.0);
+      new_pos[0] = CLAMP (lch[2] / 360, 0.0, 1.0);
+      new_pos[1] = CLAMP (lch[0] / 100, 0.0, 1.0);
+      new_pos[2] = CLAMP (lch[1] / 200, 0.0, 1.0);
       break;
     case COLOR_SELECT_LCH_HUE:
-      select->pos[0] = CLAMP (lch[1] / 200, 0.0, 1.0);
-      select->pos[1] = CLAMP (lch[0] / 100, 0.0, 1.0);
-      select->pos[2] = CLAMP (lch[2] / 360, 0.0, 1.0);
+      new_pos[0] = CLAMP (lch[1] / 200, 0.0, 1.0);
+      new_pos[1] = CLAMP (lch[0] / 100, 0.0, 1.0);
+      new_pos[2] = CLAMP (lch[2] / 360, 0.0, 1.0);
       break;
 
     default:
       break;
     }
+
+  if (new_pos[0] != select->pos[0] || new_pos[1] != select->pos[1])
+    {
+      /* If the (x, y) position has changed, redraw the xy_color pane. */
+      gtk_widget_queue_draw (select->xy_color);
+    }
+
+  select->pos[0] = new_pos[0];
+  select->pos[1] = new_pos[1];
+  select->pos[2] = new_pos[2];
 }
 
 #if 0
