@@ -642,14 +642,14 @@ menus_quartz_app_menu (Gimp *gimp)
   [item setAction:@selector (gimpShowPreferences:)];
 
   /* Input Devices */
-  item = [[NSMenuItem alloc] initWithTitle:@"Input Devices"
+  item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Input Devices")]
                                     action:@selector (gimpShowInputDevices:)
                              keyEquivalent:@""];
   [item setTarget:[GimpappMenuHandler class]];
   [app_menu insertItem:item atIndex:4];
 
   /* Keyboard Shortcuts */
-  item = [[NSMenuItem alloc] initWithTitle:@"Keyboard Shortcuts"
+  item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Keyboard Shortcuts")]
                                     action:@selector (gimpShowKeyboardShortcuts:)
                              keyEquivalent:@""];
   [item setTarget:[GimpappMenuHandler class]];
