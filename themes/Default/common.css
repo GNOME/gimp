@@ -152,6 +152,13 @@ combobox box, combobox box.linked {
   background-color: transparent;
 }
 
+/* focus outlines for Tab navigation (see: #16303) */
+combobox:focus, combobox button:focus {
+  outline-style: dotted;
+  outline-width: 1px;
+  outline-offset: 1px;
+}
+
 combobox button {
   background-color: @widget-bg-color;
 }
@@ -658,6 +665,12 @@ checkbutton check:disabled {
 
 checkbutton:checked label, radiobutton:checked label {
   font-weight: bold;
+}
+
+/* focus outlines for Tab navigation (see: #16303) */
+checkbutton:focus, checkbutton:focus check,
+radiobutton:focus, radiobutton:focus radio {
+  outline-style: dotted;
 }
 
 check {
