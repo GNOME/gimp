@@ -132,6 +132,7 @@ resize_dialog_new (GimpViewable       *viewable,
                    GimpResizeCallback  callback,
                    gpointer            user_data)
 {
+  GimpSizeEntry *focused_entry;
   ResizeDialog  *private;
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -541,6 +542,11 @@ resize_dialog_new (GimpViewable       *viewable,
 
       check_fill_sensitivity (NULL, private);
     }
+
+  /* Set focus to size entry for immediate editing */
+  focused_entry = gimp_size_box_get_size_entry (GIMP_SIZE_BOX (private->box));
+  gimp_size_entry_set_activates_default (focused_entry, TRUE);
+  gimp_size_entry_grab_focus (focused_entry);
 
   return dialog;
 }
