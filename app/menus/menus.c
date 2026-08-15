@@ -660,5 +660,18 @@ menus_quartz_app_menu (Gimp *gimp)
   item       = [app_menu itemAtIndex:last_index];
   [item setTarget:[GimpappMenuHandler class]];
   [item setAction:@selector (gimpQuit:)];
+
+  /* Help */
+  for (NSMenuItem *menu_item in [main_menu itemArray])
+    {
+      /* fix native search bar not appearing on non-Enligsh locales */
+      if (([menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Help")]]) ||
+          [[menu_item title] isEqualToString:@"Help"])
+        {
+          if ([menu_item hasSubmenu])
+            [NSApp setHelpMenu:[menu_item submenu]];
+          break;
+        }
+    }
 }
 #endif
