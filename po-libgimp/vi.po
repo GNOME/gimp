@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-15 17:45+0000\n"
-"PO-Revision-Date: 2026-08-16 08:37+0700\n"
+"POT-Creation-Date: 2026-08-15 16:30+0000\n"
+"PO-Revision-Date: 2026-08-16 08:47+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -228,20 +228,29 @@ msgstr "Chú thích"
 msgid "Image comment"
 msgstr "Ghi chú ảnh"
 
-#: libgimp/gimpexportproceduredialog.c:155
+#: libgimp/gimpexportproceduredialog.c:156
 msgid "Metadata"
 msgstr "Siêu dữ liệu"
 
-#: libgimp/gimpexportproceduredialog.c:164
+#: libgimp/gimpexportproceduredialog.c:165
 msgid "Edit Metadata"
 msgstr "Sửa siêu dữ liệu"
 
-#: libgimp/gimpexportproceduredialog.c:164
+#: libgimp/gimpexportproceduredialog.c:165
 msgid "(edit)"
 msgstr "(sửa)"
 
+#: libgimp/gimpexportproceduredialog.c:330
+msgid "Transparency will be lost"
+msgstr "Phần trong suốt sẽ bị mất"
+
+#: libgimp/gimpexportproceduredialog.c:335
+#, c-format
+msgid "This format does not support transparency: %s"
+msgstr "Định dạng này không hỗ trợ phần trong suốt: %s"
+
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexportproceduredialog.c:460
+#: libgimp/gimpexportproceduredialog.c:502
 #, c-format
 msgid "Export Image as %s"
 msgstr "Xuất ảnh thành %s"
@@ -373,12 +382,12 @@ msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d thủ tục khớp với truy vấn của bạn"
 
-#: libgimp/gimpprocedure.c:2187
+#: libgimp/gimpprocedure.c:2270
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Thủ tục “%s” không trả về giá trị"
 
-#: libgimp/gimpprocedure.c:2393
+#: libgimp/gimpprocedure.c:2476
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -387,7 +396,7 @@ msgstr ""
 "Thủ tục “%s” trả về sai kiểu giá trị cho giá trị trả về “%s” (#%d). Cần %s "
 "nhưng nhận được %s."
 
-#: libgimp/gimpprocedure.c:2405
+#: libgimp/gimpprocedure.c:2488
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
@@ -396,7 +405,7 @@ msgstr ""
 "Thủ tục “%s” được gọi sai kiểu giá trị cho tham số “%s” (#%d). Lẽ ra phải là "
 "%s nhưng nhận được %s."
 
-#: libgimp/gimpprocedure.c:2440
+#: libgimp/gimpprocedure.c:2523
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -405,7 +414,7 @@ msgstr ""
 "Thủ tục “%s” trả về “%s” cho giá trị trả về “%s” (#%d, kiểu %s). Giá trị này "
 "nằm ngoài khoảng cho phép."
 
-#: libgimp/gimpprocedure.c:2454
+#: libgimp/gimpprocedure.c:2537
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -414,12 +423,12 @@ msgstr ""
 "Thủ tục “%s” được gọi với giá trị “%s” cho tham số “%s” (#%d, kiểu %s). Giá "
 "trị này nằm ngoài khoảng cho phép."
 
-#: libgimp/gimpprocedure.c:2498
+#: libgimp/gimpprocedure.c:2581
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Thủ tục “%s” trả về chuỗi UTF-8 không hợp lệ cho tham số “%s”."
 
-#: libgimp/gimpprocedure.c:2508
+#: libgimp/gimpprocedure.c:2591
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -427,77 +436,77 @@ msgid ""
 msgstr ""
 "Thủ tục “%s” được gọi với trị chuỗi UTF-8 không hợp lệ cho tham số “%s”."
 
-#: libgimp/gimpproceduredialog.c:343 libgimp/gimpproceduredialog.c:643
+#: libgimp/gimpproceduredialog.c:345 libgimp/gimpproceduredialog.c:651
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Mở"
 
-#: libgimp/gimpproceduredialog.c:345 libgimp/gimpproceduredialog.c:645
+#: libgimp/gimpproceduredialog.c:347 libgimp/gimpproceduredialog.c:653
 msgid "_Export"
 msgstr "_Xuất"
 
-#: libgimp/gimpproceduredialog.c:347 libgimp/gimpproceduredialog.c:647
+#: libgimp/gimpproceduredialog.c:349 libgimp/gimpproceduredialog.c:655
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
-#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:276
+#: libgimpwidgets/gimpfileentry.c:463 libgimpwidgets/gimpquerybox.c:276
 #: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
 #: libgimpwidgets/gimpquerybox.c:481
 msgid "_OK"
 msgstr "_OK"
 
-#: libgimp/gimpproceduredialog.c:355 libgimpwidgets/gimpcolorbutton.c:551
+#: libgimp/gimpproceduredialog.c:357 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "Đặt _lại"
 
-#: libgimp/gimpproceduredialog.c:373 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:375 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: libgimpwidgets/gimpfilechooser.c:714 libgimpwidgets/gimpfileentry.c:465
+#: libgimpwidgets/gimpfilechooser.c:713 libgimpwidgets/gimpfileentry.c:463
 #: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339
 #: libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
 msgid "_Cancel"
 msgstr "_Thôi"
 
-#: libgimp/gimpproceduredialog.c:409
+#: libgimp/gimpproceduredialog.c:417
 msgid "_Load Saved Settings"
 msgstr "_Tải các cài đặt đã lưu"
 
-#: libgimp/gimpproceduredialog.c:410
+#: libgimp/gimpproceduredialog.c:418
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Cài đặt tải được lưu bằng nút “Lưu cài đặt”"
 
-#: libgimp/gimpproceduredialog.c:422
+#: libgimp/gimpproceduredialog.c:430
 msgid "_Save Settings"
 msgstr "_Lưu các cài đặt"
 
-#: libgimp/gimpproceduredialog.c:423
+#: libgimp/gimpproceduredialog.c:431
 msgid "Store current settings for later reuse"
 msgstr "Lưu trữ thiết đặt hiện tại để tái sử dụng sau này"
 
-#: libgimp/gimpproceduredialog.c:938
+#: libgimp/gimpproceduredialog.c:1024
 msgid "Brush Chooser"
 msgstr "Bộ chọn chổi vẽ"
 
-#: libgimp/gimpproceduredialog.c:942
+#: libgimp/gimpproceduredialog.c:1028
 msgid "Font Chooser"
 msgstr "Bộ chọn phông chữ"
 
-#: libgimp/gimpproceduredialog.c:946
+#: libgimp/gimpproceduredialog.c:1032
 msgid "Gradient Chooser"
 msgstr "Bộ chọn dốc màu"
 
-#: libgimp/gimpproceduredialog.c:950
+#: libgimp/gimpproceduredialog.c:1036
 msgid "Palette Chooser"
 msgstr "Bộ chọn bảng màu"
 
-#: libgimp/gimpproceduredialog.c:954
+#: libgimp/gimpproceduredialog.c:1040
 msgid "Pattern Chooser"
 msgstr "Bộ chọn mẫu"
 
-#: libgimp/gimpproceduredialog.c:2871
+#: libgimp/gimpproceduredialog.c:2957
 msgid "Reset to _Initial Values"
 msgstr "Đặt về giá trị _khởi đầu"
 
-#: libgimp/gimpproceduredialog.c:2880
+#: libgimp/gimpproceduredialog.c:2966
 msgid "Reset to _Factory Defaults"
 msgstr "Đặt lại cài đặt thành mặc định _ban đầu"
 
@@ -2188,19 +2197,19 @@ msgstr "Gặp lỗi khi phân tách “%s” trên dòng %d: %s"
 msgid "Module '%s' load error: %s"
 msgstr "Lỗi tải mô-đun “%s”: %s"
 
-#: libgimpmodule/gimpmoduledb.c:458
+#: libgimpmodule/gimpmoduledb.c:460
 msgid "Module error"
 msgstr "Lỗi mô-đun"
 
-#: libgimpmodule/gimpmoduledb.c:459
+#: libgimpmodule/gimpmoduledb.c:461
 msgid "Loaded"
 msgstr "Đã tải"
 
-#: libgimpmodule/gimpmoduledb.c:460
+#: libgimpmodule/gimpmoduledb.c:462
 msgid "Load failed"
 msgstr "Gặp lỗi khi tải"
 
-#: libgimpmodule/gimpmoduledb.c:461
+#: libgimpmodule/gimpmoduledb.c:463
 msgid "Not loaded"
 msgstr "Chưa được tải"
 
@@ -2321,7 +2330,7 @@ msgid "HSV"
 msgstr "HSV"
 
 #: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2124
-#: modules/color-selector-cmyk.c:321 modules/color-selector-cmyk.c:405
+#: modules/color-selector-cmyk.c:326 modules/color-selector-cmyk.c:410
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
@@ -2367,7 +2376,7 @@ msgid "The controller's state, as human-readable string"
 msgstr ""
 "Trạng thái của bộ điều khiển, ở dạng chuỗi văn bản mà con người đọc được"
 
-#: libgimpwidgets/gimpdialog.c:221
+#: libgimpwidgets/gimpdialog.c:273
 msgid "_Help"
 msgstr "Trợ g_iúp"
 
@@ -2396,11 +2405,11 @@ msgstr "Cho biết tệp có tồn tại hay không"
 msgid "Can't show file in file manager: %s"
 msgstr "Không thể hiển thị tập tin trong bộ quản lý tập tin: %s"
 
-#: libgimpwidgets/gimpfileentry.c:454
+#: libgimpwidgets/gimpfileentry.c:453
 msgid "Select Folder"
 msgstr "Chọn thư mục"
 
-#: libgimpwidgets/gimpfileentry.c:456
+#: libgimpwidgets/gimpfileentry.c:455
 msgid "Select File"
 msgstr "Chọn tập tin"
 
@@ -2725,56 +2734,56 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Thu nhỏ"
 
-#: modules/color-selector-cmyk.c:87
+#: modules/color-selector-cmyk.c:89
 msgid "CMYK color selector (using color profile)"
 msgstr "Chọn màu CMYK (sử dụng hồ sơ màu)"
 
 # Name: don't translate / Tên: đừng dịch
-#: modules/color-selector-cmyk.c:121
+#: modules/color-selector-cmyk.c:123
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:147
 msgid "_C"
 msgstr "_X"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:149
 msgid "_M"
 msgstr "_T"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:151
 msgid "_Y"
 msgstr "_V"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:151
+#: modules/color-selector-cmyk.c:153
 msgid "_K"
 msgstr "_MĐ"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:157
 msgid "Cyan"
 msgstr "Xanh lông mòng"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:158
 msgid "Magenta"
 msgstr "Đỏ tươi"
 
-#: modules/color-selector-cmyk.c:157
+#: modules/color-selector-cmyk.c:159
 msgid "Yellow"
 msgstr "Vàng"
 
-#: modules/color-selector-cmyk.c:158
+#: modules/color-selector-cmyk.c:160
 msgid "Black"
 msgstr "Đen"
 
-#: modules/color-selector-cmyk.c:265
+#: modules/color-selector-cmyk.c:270
 msgid "Total Ink Coverage"
 msgstr "Tổng số màu mực"
 
-#: modules/color-selector-cmyk.c:308 modules/color-selector-cmyk.c:387
+#: modules/color-selector-cmyk.c:313 modules/color-selector-cmyk.c:392
 msgid "Profile: (none)"
 msgstr "Hồ sơ: (không có)"
 
