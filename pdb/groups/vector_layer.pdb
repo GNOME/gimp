@@ -196,7 +196,7 @@ HELP
   if (success)
     {
       g_object_set (options,
-                    "enable-stroke", &enable_stroke,
+                    "enable-stroke", enable_stroke,
                     NULL);
     }
 }
