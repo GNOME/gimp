@@ -953,6 +953,14 @@ headerbar:backdrop * {
   color: @disabled-fg-color;
 }
 
+/* needed to dim title bar buttons on Fedora */
+headerbar:backdrop button.titlebutton,
+.titlebar:backdrop button.titlebutton,
+headerbar:backdrop button.titlebutton image,
+.titlebar:backdrop button.titlebutton image {
+  color: @disabled-fg-color;
+}
+
 headerbar:backdrop menuitem {
   background-color: transparent;
 }
