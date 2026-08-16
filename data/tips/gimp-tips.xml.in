@@ -87,7 +87,7 @@
   </tip>
   <tip level="intermediate">
     <thetip>
-      You can use the middle mouse button to pan around the image 
+      You can use the middle mouse button to pan around the image
       (or optionally hold <tt>Spacebar</tt> while you move the mouse).
     </thetip>
   </tip>
@@ -102,14 +102,6 @@
     <thetip>
       You can drag a layer from the Layers dialog and drop it onto the
       toolbox.  This will create a new image containing only that layer.
-    </thetip>
-  </tip>
-  <tip level="intermediate">
-    <thetip>
-      A floating selection must be anchored to a new layer or to the last
-      active layer before doing other operations on the image.  Click on the
-      &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the
-      Layers dialog, or use the menus to do the same.
     </thetip>
   </tip>
   <tip level="intermediate">
@@ -173,8 +165,8 @@
 
   <tip level="advanced">
     <thetip>
-      If your screen is too cluttered, you can press <tt>Tab</tt> 
-      in an image window to toggle the visibility of the toolbox 
+      If your screen is too cluttered, you can press <tt>Tab</tt>
+      in an image window to toggle the visibility of the toolbox
       and other dialogs.
     </thetip>
   </tip>
@@ -187,7 +179,7 @@
   <tip level="advanced">
     <thetip>
       <tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog
-      toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer 
+      toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer
       mask's preview in the Layers dialog toggles viewing the mask directly.
     </thetip>
   </tip>
@@ -201,7 +193,7 @@
     <thetip>
       <tt>Ctrl</tt>-click with the Bucket Fill tool to have it use
       the background color instead of the foreground color.
-      Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool 
+      Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool
       sets the background color instead of the foreground color.
     </thetip>
   </tip>
