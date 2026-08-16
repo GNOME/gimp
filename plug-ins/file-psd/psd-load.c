@@ -124,6 +124,11 @@ static GimpPath       * get_layer_path             (GimpImage      *image,
                                                     PSDlayer       *lyr_a,
                                                     PSDimage       *img_a);
 
+static GimpLayer      * get_vector_layer           (GimpImage      *image,
+                                                    GimpPath       *path,
+                                                    PSDlayer       *lyr_a,
+                                                    PSDimage       *img_a);
+
 static gint             add_merged_image           (GimpImage      *image,
                                                     PSDimage       *img_a,
                                                     GInputStream   *input,
@@ -3036,8 +3041,16 @@ add_layers (GimpImage     *image,
 
           if (lyr_a[lidx]->vector.path_len > 0)
             {
-              /* TODO: Use path for either vector mask or shape */
-              get_layer_path (image, lyr_a[lidx], img_a);
+              GimpPath *path;
+
+              path = get_layer_path (image, lyr_a[lidx], img_a);
+
+              /* If we don't yet support a vector type, this returns NULL
+               * so we'll still create a raster layer as a fallback */
+              if (path                      &&
+                  (lyr_a[lidx]->vector.vscg ||
+                   lyr_a[lidx]->vector.vstk))
+                layer = get_vector_layer (image, path, lyr_a[lidx], img_a);
             }
 
           image_type = get_gimp_image_type (img_a->base_type, alpha);
@@ -4876,6 +4889,322 @@ get_layer_path (GimpImage *image,
     }
 
   return path;
+}
+
+static GimpLayer *
+get_vector_layer (GimpImage *image,
+                  GimpPath  *path,
+                  PSDlayer  *lyr_a,
+                  PSDimage  *img_a)
+{
+  GimpVectorLayer *layer         = NULL;
+  const Babl      *format;
+  const Babl      *space;
+  GeglColor       *fill_color          = NULL;
+  GeglColor       *stroke_color        = NULL;
+  gboolean         enable_fill         = TRUE;
+  gboolean         enable_stroke       = TRUE;
+  gdouble          stroke_width        = 0;
+  gdouble          stroke_miter        = 0;
+  gdouble          stroke_dash_offset  = 0;
+  GimpCapStyle     stroke_cap          = GIMP_CAP_BUTT;
+  GimpJoinStyle    stroke_join         = GIMP_JOIN_MITER;
+  gdouble         *stroke_dash_pattern = NULL;
+  gsize            dash_count          = 0;
+  /* TODO: Remove when we support all vector formats */
+  gboolean         unsupported         = FALSE;
+
+  /* TODO: For now, we only load solid color vector layers.
+   * Pattern and Gradient vector layers will still be rasterized */
+  if (lyr_a->vector.vscg &&
+      memcmp (lyr_a->vector.vscg_key, "SoCo", 4) != 0)
+    {
+      if (lyr_a->vector.vstk)
+        json_node_free (lyr_a->vector.vstk);
+
+      return NULL;
+    }
+
+  layer  = gimp_vector_layer_new (image, path);
+  format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  space  = babl_format_get_space (format);
+
+  if (lyr_a->vector.vstk)
+    {
+      JsonReader *root_reader = NULL;
+
+      root_reader = json_reader_new (lyr_a->vector.vstk);
+
+      if (json_reader_read_member (root_reader, "descriptor"))
+        {
+          gint count = json_reader_count_elements (root_reader);
+          gint i;
+
+          IFDBG(3) g_debug ("Descriptor has %d elements.", count);
+
+          for (i = count - 1; i >= 0; i--)
+            {
+              if (json_reader_read_element (root_reader, i))
+                {
+                  JsonReader *reader =
+                    json_reader_new (json_reader_get_current_node (root_reader));
+
+                  if (json_reader_read_member (reader, "key"))
+                    {
+                      const gchar *str = json_reader_get_string_value (reader);
+
+                      json_reader_end_member (reader);
+
+                      if (json_string_equal (str, "strokeEnabled"))
+                        {
+                          if (json_reader_read_member (reader, "value"))
+                            enable_stroke = json_reader_get_boolean_value (reader);
+
+                          json_reader_end_member (reader);
+                        }
+                      else if (json_string_equal (str, "fillEnabled"))
+                        {
+                          if (json_reader_read_member (reader, "value"))
+                            enable_fill = json_reader_get_boolean_value (reader);
+
+                          json_reader_end_member (reader);
+                        }
+                      else if (json_string_equal (str, "strokeStyleLineWidth"))
+                        {
+                          /* TODO: Get stroke width units */
+                          if (json_reader_read_member (reader, "value"))
+                            stroke_width = json_reader_get_double_value (reader);
+
+                          json_reader_end_member (reader);
+                        }
+                      else if (json_string_equal (str, "strokeStyleLineDashOffset"))
+                        {
+                          /* TODO: Get stroke dash offset units */
+                          if (json_reader_read_member (reader, "value"))
+                            stroke_dash_offset = json_reader_get_double_value (reader);
+
+                          json_reader_end_member (reader);
+                        }
+                      else if (json_string_equal (str, "strokeStyleMiterLimit"))
+                        {
+                          if (json_reader_read_member (reader, "value"))
+                            stroke_miter = json_reader_get_double_value (reader);
+
+                          json_reader_end_member (reader);
+                        }
+                      else if (json_string_equal (str, "strokeStyleLineJoinType"))
+                        {
+                          if (json_reader_read_member (reader, "value"))
+                            {
+                              const gchar *join =
+                                json_reader_get_string_value (reader);
+
+                              if (json_string_equal (join,
+                                                     "strokeStyleBevelJoin"))
+                                stroke_join = GIMP_JOIN_BEVEL;
+                              else if (json_string_equal (join,
+                                                          "strokeStyleRoundJoin"))
+                                stroke_join = GIMP_JOIN_ROUND;
+                            }
+
+                          json_reader_end_member (reader);
+                        }
+                      else if (json_string_equal (str, "strokeStyleLineCapType"))
+                        {
+                          if (json_reader_read_member (reader, "value"))
+                            {
+                              const gchar *cap = json_reader_get_string_value (reader);
+
+                              if (json_string_equal (cap, "strokeStyleRoundCap"))
+                                stroke_cap = GIMP_CAP_ROUND;
+                              else if (json_string_equal (cap, "strokeStyleSquareCap"))
+                                stroke_cap = GIMP_CAP_SQUARE;
+                            }
+
+                          json_reader_end_member (reader);
+                        }
+                      else if (json_string_equal (str, "strokeStyleContent"))
+                        {
+                          if (json_reader_read_member (reader, "classID"))
+                            {
+                              const gchar *class_id =
+                                json_reader_get_string_value (reader);
+
+                              if (json_string_equal (class_id,
+                                                     "solidColorLayer"))
+                                {
+                                  JsonReader *stroke_reader = NULL;
+
+                                  json_reader_end_member (reader);
+
+                                  stroke_reader =
+                                    json_reader_new (json_reader_get_current_node (reader));
+
+                                  if (json_reader_read_member (stroke_reader,
+                                                               "descriptor"))
+                                    {
+                                      gint count_stroke =
+                                        json_reader_count_elements (stroke_reader);
+
+                                      IFDBG(3)
+                                        g_debug ("Descriptor has %d elements.",
+                                                 count_stroke);
+                                      for (gint j = count_stroke - 1; j >= 0; j--)
+                                        {
+                                          if (json_reader_read_element (stroke_reader, j))
+                                            {
+                                              JsonNode   *node;
+                                              JsonReader *color_reader;
+
+                                              node =
+                                                json_reader_get_current_node (stroke_reader);
+
+                                              color_reader = json_reader_new (node);
+
+                                              if (! stroke_color)
+                                                stroke_color =
+                                                  get_json_color (color_reader, space);
+
+                                              g_object_unref (color_reader);
+                                            }
+                                        }
+                                    }
+                                  json_reader_end_member (stroke_reader);
+                                  g_object_unref (stroke_reader);
+
+                                  if (stroke_color == NULL)
+                                    {
+                                      stroke_color = gegl_color_new ("none");
+                                      IFDBG(3)
+                                        g_debug ("WARNING: Color not initialized!");
+                                    }
+                                }
+                              else
+                                {
+                                  unsupported = TRUE;
+
+                                  json_reader_end_member (reader);
+                                }
+                            }
+                        }
+                      else if (json_string_equal (str, "strokeStyleLineDashSet"))
+                        {
+                          if (json_reader_read_member (reader, "list"))
+                            {
+                              dash_count =
+                                json_reader_count_elements (reader);
+
+                              if (dash_count > 0)
+                                stroke_dash_pattern =
+                                  g_try_malloc (dash_count * sizeof (gdouble));
+
+                              for (gint j = 0; j < dash_count; j++)
+                                {
+                                  if (json_reader_read_element (reader, j))
+                                    {
+                                      JsonNode   *node;
+                                      JsonReader *dash_reader;
+
+                                      node =
+                                        json_reader_get_current_node (reader);
+
+                                      dash_reader = json_reader_new (node);
+
+                                      if (json_reader_read_member (dash_reader,
+                                                                   "value"))
+                                        {
+                                          stroke_dash_pattern[j] =
+                                            json_reader_get_double_value (dash_reader);
+                                        }
+
+                                      g_object_unref (dash_reader);
+                                    }
+                                  json_reader_end_element (reader);
+                                }
+                            }
+                          json_reader_end_member (reader);
+                        }
+                    }
+                }
+              json_reader_end_element (root_reader);
+            }
+        }
+      json_reader_end_member (root_reader);
+      g_object_unref (root_reader);
+      json_node_free (lyr_a->vector.vstk);
+    }
+
+  /* Fill setting */
+  if (lyr_a->vector.vscg)
+    {
+      if (memcmp (lyr_a->vector.vscg_key, "SoCo", 4) == 0)
+        {
+          JsonReader *root_reader = NULL;
+
+          root_reader = json_reader_new (lyr_a->vector.vscg);
+
+          if (json_reader_read_member (root_reader, "descriptor"))
+            {
+              gint cnt = json_reader_count_elements (root_reader);
+
+              IFDBG(3) g_debug ("Descriptor has %d elements.", cnt);
+              for (gint i = cnt - 1; i >= 0; i--)
+                {
+                  if (json_reader_read_element (root_reader, i))
+                    {
+                      JsonNode   *node   = json_reader_get_current_node (root_reader);
+                      JsonReader *reader = json_reader_new (node);
+
+                      if (! fill_color)
+                        fill_color = get_json_color (reader, space);
+
+                      g_object_unref (reader);
+                    }
+                }
+            }
+          json_reader_end_member (root_reader);
+          g_object_unref (root_reader);
+
+          if (fill_color == NULL)
+            {
+              fill_color = gegl_color_new ("none");
+              IFDBG(3) g_debug ("WARNING: Color not initialized!");
+            }
+        }
+      json_node_free (lyr_a->vector.vscg);
+    }
+
+  gimp_vector_layer_set_enable_fill (layer, enable_fill);
+  gimp_vector_layer_set_enable_stroke (layer, enable_stroke);
+  gimp_vector_layer_set_stroke_width (layer, stroke_width);
+  gimp_vector_layer_set_stroke_miter_limit (layer, stroke_miter);
+  gimp_vector_layer_set_stroke_dash_offset (layer, stroke_dash_offset);
+  gimp_vector_layer_set_stroke_join_style (layer, stroke_join);
+  gimp_vector_layer_set_stroke_cap_style (layer, stroke_cap);
+
+  if (stroke_dash_pattern)
+    {
+      gimp_vector_layer_set_stroke_dash_pattern (layer, dash_count,
+                                                 stroke_dash_pattern);
+      g_free (stroke_dash_pattern);
+    }
+
+  if (fill_color)
+    gimp_vector_layer_set_fill_color (layer, fill_color);
+  if (stroke_color)
+    gimp_vector_layer_set_stroke_color (layer, stroke_color);
+
+  g_clear_object (&fill_color);
+  g_clear_object (&stroke_color);
+
+  /* TODO: Remove when we support all vector formats */
+  if (unsupported)
+    {
+      gimp_item_delete (GIMP_ITEM (layer));
+      layer = NULL;
+    }
+
+  return GIMP_LAYER (layer);
 }
 
 static gint

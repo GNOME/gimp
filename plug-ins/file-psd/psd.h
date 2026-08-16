@@ -130,7 +130,8 @@
 #define PSD_LOTH_PATH_NAME      "pths"          /* Unicode path name (PS13) */
 #define PSD_LOTH_ANIMATION_FX   "anFX"          /* Animation effects (PS13) */
 #define PSD_LOTH_FILTER_MASK    "FMsk"          /* Filter mask (PS10) */
-#define PSD_LOTH_VECTOR_STROKE  "vscg"          /* Vector stroke data (PS13) */
+#define PSD_LOTH_VECTOR_STROKE  "vstk"          /* Vector stroke data (PS13) */
+#define PSD_LOTH_VECTOR_CONTENT "vscg"          /* Vector stroke content data (PS13) */
 #define PSD_LOTH_ALIGN_RENDER   "sn2P"          /* Aligned rendering flag (?) */
 #define PSD_LOTH_USER_MASK      "LMsk"          /* User mask (?) */
 #define PSD_LOTH_COMPOSITOR     "cinf"          /* Compositor Used (Photoshop 2020) */
@@ -593,10 +594,13 @@ typedef struct
 /* PSD vector properties */
 typedef struct
 {
-  guchar *path_data; /* Either vmsk or vsms data */
-  guint32 path_len;
-  gint32  path_flags;
+  guchar   *path_data; /* Either vmsk or vsms data */
+  guint32   path_len;
+  gint32    path_flags;
 
+  gchar     vscg_key[4];
+  JsonNode *vscg;      /* Fill only information */
+  JsonNode *vstk;      /* Stroke/Fill settings  */
 } PSDVector;
 
 typedef struct
