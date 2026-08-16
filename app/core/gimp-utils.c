@@ -38,6 +38,10 @@
 #define getpid _getpid
 #endif
 
+#ifdef PLATFORM_OSX
+#include <mach/mach.h>
+#endif
+
 #include <cairo.h>
 #include <gegl.h>
 #include <gobject/gvaluecollector.h>
@@ -143,6 +147,62 @@ gimp_get_physical_memory_size (void)
   if (GlobalMemoryStatusEx (&memory_status))
     return memory_status.ullTotalPhys;
 # endif
+#endif
+
+  return 0;
+}
+
+guint64
+gimp_get_available_memory_size (void)
+{
+#ifdef G_OS_WIN32
+  MEMORYSTATUSEX memory_status;
+
+  memory_status.dwLength = sizeof (memory_status);
+
+  if (GlobalMemoryStatusEx (&memory_status))
+    return memory_status.ullAvailPhys;
+#elif defined(PLATFORM_OSX)
+  vm_statistics_data_t   info;
+  mach_msg_type_number_t count = HOST_VM_INFO_COUNT;
+
+  if (host_statistics (mach_host_self (), HOST_VM_INFO,
+                       (host_info_t) &info, &count) == KERN_SUCCESS)
+    return (guint64) info.free_count * PAGE_SIZE;
+#else
+  gchar *meminfo;
+
+  /* /proc/meminfo's "MemAvailable" already accounts for reclaimable
+   * caches, unlike the raw "MemFree" field
+   */
+  if (g_file_get_contents ("/proc/meminfo", &meminfo, NULL, NULL))
+    {
+      gchar *str = strstr (meminfo, "MemAvailable:");
+
+      if (str)
+        {
+          guint64 available = strtoull (str + strlen ("MemAvailable:"), &str, 0);
+
+          for (; str && *str && *str != '\n'; str++)
+            {
+              if (*str == 'k')
+                {
+                  available <<= 10;
+                  break;
+                }
+              else if (*str == 'M')
+                {
+                  available <<= 20;
+                  break;
+                }
+            }
+
+          g_free (meminfo);
+          return available;
+        }
+
+      g_free (meminfo);
+    }
 #endif
 
   return 0;

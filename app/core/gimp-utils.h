@@ -38,6 +38,7 @@
 
 gint          gimp_get_pid                          (void);
 guint64       gimp_get_physical_memory_size         (void);
+guint64       gimp_get_available_memory_size        (void);
 gchar       * gimp_get_default_language             (const gchar       *category);
 GimpUnit    * gimp_get_default_unit                 (void);
 
