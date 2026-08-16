@@ -415,6 +415,7 @@ gimp_palette_real_entry_changed (GimpPalette *palette,
 static gchar *
 gimp_palette_get_checksum (GimpTagged *tagged)
 {
+  const Babl  *srgb            = babl_space ("sRGB");
   GimpPalette *palette         = GIMP_PALETTE (tagged);
   gchar       *checksum_string = NULL;
 
@@ -428,14 +429,25 @@ gimp_palette_get_checksum (GimpTagged *tagged)
 
       while (color_iterator)
         {
-          GimpPaletteEntry *entry = (GimpPaletteEntry *) color_iterator->data;
-          gdouble           rgba[4];
+          GimpPaletteEntry *entry    = (GimpPaletteEntry *) color_iterator->data;
+          const Babl       *format   = gegl_color_get_format (entry->color);
+          const Babl       *space    = babl_format_get_space (format);
+          const char       *encoding = babl_format_get_encoding (format);
+          gint              bpp      = babl_format_get_bytes_per_pixel (format);
+          guint8            pixel[48];
 
-          /* make sure we send actual color values here (bug #16375)
-           * TODO: try to reproduce the exact checksums as GIMP 2.10
-           */
-          gegl_color_get_pixel (entry->color, babl_format ("R'G'B'A double"), rgba);
-          g_checksum_update (checksum, (const guchar *) rgba, sizeof (rgba));
+          g_checksum_update (checksum, (const guchar *) encoding, strlen (encoding));
+          if (space != srgb)
+            {
+              const char *icc;
+              int         icc_length;
+
+              icc = babl_space_get_icc (space, &icc_length);
+              if (icc)
+                g_checksum_update (checksum, (const guchar *) icc, icc_length);
+            }
+          gegl_color_get_pixel (entry->color, format, pixel);
+          g_checksum_update (checksum, (const guchar *) pixel, bpp);
 
           if (entry->name)
             g_checksum_update (checksum, (const guchar *) entry->name, strlen (entry->name));
