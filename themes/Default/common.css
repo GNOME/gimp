@@ -406,6 +406,8 @@ scrollbar trough {
 scrollbar slider {
   background: @scrollbar-slider-color;
   border: 2px solid @border-color;
+  /* very important for KDE sliders. See: #8937 */
+  margin: -1px;
 }
 
 scrolledwindow {
