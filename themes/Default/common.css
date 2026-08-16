@@ -930,7 +930,7 @@ popover list row:selected {
 
 switch {
   background-color: @bg-color;
-  border: 1px solid @stronger-border-color;
+  border: 1px solid @edge-border-color;
   border-radius: 14px;
 }
 
@@ -939,6 +939,17 @@ switch {
  */
 switch:checked {
   background-color: @fg-color;
+}
+
+switch slider {
+  /* fix switcher color on Yaru theme and others. See: #12839 */
+  background-image: image(@selected-color);
+  box-shadow: none;
+  border-color: @edge-border-color;
+}
+
+switch:hover slider {
+  background-image: image(@hover-color);
 }
 
 /* This prevents the 1/0 labels from appearing inside the switch slider */
