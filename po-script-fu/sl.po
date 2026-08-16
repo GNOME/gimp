@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-27 23:25+0000\n"
-"PO-Revision-Date: 2026-05-28 09:16+0200\n"
+"POT-Creation-Date: 2026-08-15 19:47+0000\n"
+"PO-Revision-Date: 2026-08-16 09:16+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -87,7 +87,7 @@ msgid "Script Console"
 msgstr "Skriptna konzola"
 
 #: plug-ins/script-fu/console/script-fu-console.c:124
-#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/console/script-fu-console.c:251
 msgid "_Save"
 msgstr "_Shrani"
 
@@ -96,34 +96,34 @@ msgid "C_lear"
 msgstr "Po_čisti"
 
 #: plug-ins/script-fu/console/script-fu-console.c:126
-#: plug-ins/script-fu/console/script-fu-console.c:313
+#: plug-ins/script-fu/console/script-fu-console.c:315
 msgid "_Close"
 msgstr "Z_apri"
 
-#: plug-ins/script-fu/console/script-fu-console.c:187
+#: plug-ins/script-fu/console/script-fu-console.c:189
 msgid "_Browse..."
 msgstr "_Prebrskaj ..."
 
-#: plug-ins/script-fu/console/script-fu-console.c:246
+#: plug-ins/script-fu/console/script-fu-console.c:248
 msgid "Save Script-Fu Console Output"
 msgstr "Shrani izpis konzole Script-Fu"
 
-#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/console/script-fu-console.c:251
 #: plug-ins/script-fu/server/script-fu-server.c:968
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
-#: plug-ins/script-fu/console/script-fu-console.c:282
+#: plug-ins/script-fu/console/script-fu-console.c:284
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s' ni mogoče odpreti za pisanje: %s"
 
-#: plug-ins/script-fu/console/script-fu-console.c:308
+#: plug-ins/script-fu/console/script-fu-console.c:310
 msgid "Script-Fu Procedure Browser"
 msgstr "Brskalnik procedur Script-Fu"
 
-#: plug-ins/script-fu/console/script-fu-console.c:312
+#: plug-ins/script-fu/console/script-fu-console.c:314
 msgid "_Apply"
 msgstr "_Uporabi"
 
@@ -853,11 +853,19 @@ msgstr "Pravilo petin"
 msgid "Golden sections"
 msgstr "Zlati rezi"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:27
+msgid ""
+"No selection to base guides on.\n"
+"Make a selection first!"
+msgstr ""
+"Ni izbire, na kateri bi temeljila vodila.\n"
+"Najprej izberite!"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "New Guides from _Selection"
 msgstr "Nova vodila iz _izbora"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:34
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "Ustvari štiri vodila okoli uokvirjenega trenutnega izbora"
 
