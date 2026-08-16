@@ -1,14 +1,14 @@
 # Vietnamese translation for gimp-windows-installer.
 # Copyright (C) 2021 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
-# Trần Ngọc Quân <vnwildman@gmail.com>, 2021-2024.
+# Trần Ngọc Quân <vnwildman@gmail.com>, 2021-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-04-12 10:29+0000\n"
-"PO-Revision-Date: 2024-04-14 10:07+0700\n"
+"POT-Creation-Date: 2026-08-02 17:50+0000\n"
+"PO-Revision-Date: 2026-08-16 09:05+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -16,65 +16,59 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 42.0\n"
+"X-Generator: Gtranslator 48.0\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
 msgstr "Thỏa thuận giấy phép"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
-msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Bản cài đặt được xây dựng bởi Jernej Simonèiè, jernej-gimp@ena.si"
+msgid "Setup built by GIMP team, gimp.org"
+msgstr "Bộ cài đặt xây dựng bởi nhóm GIMP team, gimp.org"
 
-#: build/windows/installer/lang/setup.isl.xml.in:13
-#: build/windows/installer/lang/setup.isl.xml.in:16
+#: build/windows/installer/lang/setup.isl.xml.in:17
 msgid ""
-"This version of GIMP requires Windows 10, or a newer version of Windows."
+"You are trying to directly downgrade from GIMP %1 to %2.%n%nPlease remove "
+"GIMP yourself before installing this version."
 msgstr ""
-"Phiên bản này của GIMP yêu cầu Windows 10 hoặc phiên bản Windows mới hơn."
+"Bạn đang cố gắng hạ cấp trực tiếp từ GIMP %1 xuống %2.%n%n. Vui lòng tự gỡ "
+"cài đặt GIMP trước khi cài đặt phiên bản này."
 
-#: build/windows/installer/lang/setup.isl.xml.in:23
+#: build/windows/installer/lang/setup.isl.xml.in:22
 msgid "Development version"
 msgstr "Phiên bản phát triển"
 
-#: build/windows/installer/lang/setup.isl.xml.in:28
+#: build/windows/installer/lang/setup.isl.xml.in:27
 msgid ""
 "This is a development version of GIMP where some features may not be "
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
-"installation anyway?"
+"www.gimp.org/bugs%n%nDo you wish to continue with installation anyway?"
 msgstr ""
 "Đây là phiên bản phát triển của GIMP trong đó một số tính năng có thể không "
 "được hoàn thiện hoặc nó có thể không ổn định.%nPhiên bản GIMP này không dành "
 "cho công việc hàng ngày vì nó có thể không ổn định và bạn có thể làm hỏng "
 "việc.%nNếu bạn gặp bất kỳ vấn đề nào, trước tiên hãy xác minh rằng chúng "
 "chưa được khắc phục trong GIT trước khi bạn liên hệ với các nhà phát triển "
-"hoặc báo cáo nó trong GIMP gitlab:%n_https://gitlab.gnome.org/GNOME/gimp/"
-"issues%n%nBạn có muốn tiếp tục cài đặt không?"
+"hoặc báo cáo nó trong GIMP gitlab:%n_https://www.gimp.org/bugs%n%nBạn có "
+"muốn tiếp tục cài đặt không?"
 
-#: build/windows/installer/lang/setup.isl.xml.in:31
-#: build/windows/installer/lang/setup.isl.xml.in:54
+#: build/windows/installer/lang/setup.isl.xml.in:30
+#: build/windows/installer/lang/setup.isl.xml.in:43
 msgid "&Continue"
 msgstr "Tiếp tụ&c"
 
-#: build/windows/installer/lang/setup.isl.xml.in:34
+#: build/windows/installer/lang/setup.isl.xml.in:33
 msgid "Exit"
 msgstr "Thoát"
 
-#: build/windows/installer/lang/setup.isl.xml.in:44
-msgid ""
-"This version of GIMP requires a processor that supports SSE instructions."
-msgstr ""
-"Phiên bản này của GIMP yêu cầu máy tính có bộ vi xử lý hỗ trợ tập lệnh SSE."
-
-#: build/windows/installer/lang/setup.isl.xml.in:48
+#: build/windows/installer/lang/setup.isl.xml.in:37
 msgid "Display settings problem"
-msgstr "Hiển thị các trục trặc về cài đặt"
+msgstr "Hiển thị các sự cố khi cài đặt"
 
-#: build/windows/installer/lang/setup.isl.xml.in:51
+#: build/windows/installer/lang/setup.isl.xml.in:40
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
 "display mode. This has been known to cause stability problems with GIMP, so "
@@ -86,138 +80,132 @@ msgstr ""
 "với GIMP, do đó khuyên bạn nên thay đổi độ sâu màu hiển thị thành 32BPP "
 "trước khi tiếp tục."
 
-#: build/windows/installer/lang/setup.isl.xml.in:57
+#: build/windows/installer/lang/setup.isl.xml.in:46
 msgid "E&xit"
 msgstr "Th&oát"
 
-#: build/windows/installer/lang/setup.isl.xml.in:61
-msgid ""
-"GIMP is now ready to be installed. Click the Install now button to install "
-"using the default settings, or click the Customize button if you'd like to "
-"have more control over what gets installed."
-msgstr ""
-"GIMP hiện đã sẵn sàng để được cài đặt. Bấm nút Cài đặt ngay để cài đặt bằng "
-"cách dùng các cài đặt mặc định hoặc bấm nút Tùy chỉnh nếu bạn muốn có thêm "
-"quyền kiểm soát đối với những gì sẽ được cài đặt."
+#: build/windows/installer/lang/setup.isl.xml.in:50
+msgid "&Repair"
+msgstr "&Sửa chữa"
 
-#: build/windows/installer/lang/setup.isl.xml.in:64
+#: build/windows/installer/lang/setup.isl.xml.in:53
 msgid "&Install"
 msgstr "Cà&i đặt"
 
-#: build/windows/installer/lang/setup.isl.xml.in:67
-msgid "&Customize"
-msgstr "Tùy &chỉnh"
+#: build/windows/installer/lang/setup.isl.xml.in:56
+msgid "&Reinstall"
+msgstr "Cài đặt &lại"
 
-#: build/windows/installer/lang/setup.isl.xml.in:72
+#: build/windows/installer/lang/setup.isl.xml.in:59
+msgid "&Update"
+msgstr "&Cập nhật"
+
+#: build/windows/installer/lang/setup.isl.xml.in:62
+msgid "&Customize"
+msgstr "Tù&y chỉnh"
+
+#: build/windows/installer/lang/setup.isl.xml.in:67
 msgid "Compact installation"
 msgstr "Cài đặt tối giản"
 
-#: build/windows/installer/lang/setup.isl.xml.in:76
+#: build/windows/installer/lang/setup.isl.xml.in:71
 msgid "Custom installation"
-msgstr "Tùy chỉnh cài đặt"
+msgstr "Cài đặt tùy chỉnh"
 
-#: build/windows/installer/lang/setup.isl.xml.in:80
+#: build/windows/installer/lang/setup.isl.xml.in:75
 msgid "Full installation"
 msgstr "Cài đặt đầy đủ"
 
-#: build/windows/installer/lang/setup.isl.xml.in:85
+#: build/windows/installer/lang/setup.isl.xml.in:80
 msgid "Description"
 msgstr "Mô tả"
 
-#: build/windows/installer/lang/setup.isl.xml.in:89
+#: build/windows/installer/lang/setup.isl.xml.in:84
 msgid "GIMP"
 msgstr "GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:93
+#: build/windows/installer/lang/setup.isl.xml.in:88
 msgid "GIMP and all default plug-ins"
 msgstr "GIMP và tất cả các phần mở rộng mặc định"
 
-#: build/windows/installer/lang/setup.isl.xml.in:97
+#: build/windows/installer/lang/setup.isl.xml.in:92
 msgid "Run-time libraries"
 msgstr "Các thư viện thực thi"
 
-#: build/windows/installer/lang/setup.isl.xml.in:101
+#: build/windows/installer/lang/setup.isl.xml.in:96
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr "Thư viện thực thi được GIMP sử dụng, bao gồm GTK Run-time Environment"
 
-#: build/windows/installer/lang/setup.isl.xml.in:105
+#: build/windows/installer/lang/setup.isl.xml.in:100
 msgid "Debug symbols"
 msgstr "Các ký hiệu gỡ lỗi"
 
-#: build/windows/installer/lang/setup.isl.xml.in:109
+#: build/windows/installer/lang/setup.isl.xml.in:104
 msgid "Include information to help with debugging GIMP"
 msgstr "Bao gồm thông tin để giúp gỡ lỗi GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:113
-#: build/windows/installer/lang/setup.isl.xml.in:117
+#: build/windows/installer/lang/setup.isl.xml.in:108
+msgid "Resource development files"
+msgstr "Các tệp liên quan đến phát triển tài nguyên"
+
+#: build/windows/installer/lang/setup.isl.xml.in:112
+msgid ""
+"Include some files to help with building GEGL filters and GIMP plug-ins in "
+"MSYS2"
+msgstr ""
+"Thêm một số tệp để hỗ trợ việc biên dịch các bộ lọc GEGL và các tiện ích mở "
+"rộng GIMP trong MSYS2"
+
+#: build/windows/installer/lang/setup.isl.xml.in:116
+#: build/windows/installer/lang/setup.isl.xml.in:120
 msgid "Translations"
 msgstr "Các bản dịch"
 
-#: build/windows/installer/lang/setup.isl.xml.in:121
+#: build/windows/installer/lang/setup.isl.xml.in:124
 msgid "Python scripting"
 msgstr "Văn lệnh Python"
 
-#: build/windows/installer/lang/setup.isl.xml.in:125
+#: build/windows/installer/lang/setup.isl.xml.in:128
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr ""
 "Cho phép bạn sử dụng các phần bổ sung GIMP được viết bằng ngôn ngữ kịch bản "
 "Python."
 
-#: build/windows/installer/lang/setup.isl.xml.in:129
+#: build/windows/installer/lang/setup.isl.xml.in:132
 msgid "Lua scripting"
 msgstr "Văn lệnh Lua"
 
-#: build/windows/installer/lang/setup.isl.xml.in:133
+#: build/windows/installer/lang/setup.isl.xml.in:136
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr ""
 "Cho phép bạn sử dụng các phần bổ sung GIMP được viết bằng ngôn ngữ kịch bản "
 "Lua."
 
-#: build/windows/installer/lang/setup.isl.xml.in:137
+#: build/windows/installer/lang/setup.isl.xml.in:140
 msgid "MyPaint brushes"
 msgstr "Cọ vẽ MyPaint"
 
-#: build/windows/installer/lang/setup.isl.xml.in:141
+#: build/windows/installer/lang/setup.isl.xml.in:144
 msgid "Install the default set of MyPaint brushes"
 msgstr "Cài đặt bộ cọ vẽ MyPaint mặc định"
 
-#: build/windows/installer/lang/setup.isl.xml.in:145
+#: build/windows/installer/lang/setup.isl.xml.in:148
 msgid "PostScript support"
 msgstr "Hỗ trợ PostScript"
 
-#: build/windows/installer/lang/setup.isl.xml.in:149
+#: build/windows/installer/lang/setup.isl.xml.in:152
 msgid "Allow GIMP to load PostScript files"
 msgstr "Cho phép GIMP tải các tập tin PostScript"
 
-#: build/windows/installer/lang/setup.isl.xml.in:153
-msgid "Support for 32-bit plug-ins"
-msgstr "Hỗ trợ phần bổ sung 32-bít"
-
 #: build/windows/installer/lang/setup.isl.xml.in:157
-msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
-"support."
-msgstr ""
-"Bao gồm các tập tin cần thiết để sử dụng trình cắm 32 bit.%nRequired để hỗ "
-"trợ TWAIN."
-
-#: build/windows/installer/lang/setup.isl.xml.in:162
 msgid "Additional icons:"
 msgstr "Các biểu tượng bổ sung:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:166
+#: build/windows/installer/lang/setup.isl.xml.in:161
 msgid "Create a &desktop icon"
 msgstr "Tạo lối tắt ở &màn hình nền"
 
-#: build/windows/installer/lang/setup.isl.xml.in:170
-msgid "Create a &Quick Launch icon"
-msgstr "Tạo biểu tượng truy &cập nhanh"
-
-#: build/windows/installer/lang/setup.isl.xml.in:174
-msgid "Remove previous GIMP version"
-msgstr "Gỡ bỏ phiên bản trước đây của GIMP"
-
-#: build/windows/installer/lang/setup.isl.xml.in:179
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -225,163 +213,194 @@ msgstr ""
 "Đã xảy ra sự cố khi cập nhật môi trường của GIMP trong %1. Nếu bạn gặp bất "
 "kỳ lỗi nào khi tải phần bổ trợ, hãy thử gỡ cài đặt và cài đặt lại GIMP."
 
-#: build/windows/installer/lang/setup.isl.xml.in:183
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Error extracting temporary data."
 msgstr "Gặp lỗi khi trích xuất dữ liệu tạm."
 
-#: build/windows/installer/lang/setup.isl.xml.in:187
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Error updating Python interpreter info."
 msgstr "Gặp lỗi khi cập nhật thông tin bộ thông dịch Python."
 
-#: build/windows/installer/lang/setup.isl.xml.in:191
-msgid "Error updating MyPaint brushes info."
-msgstr "Gặp lỗi khi cập nhật thông tin cọ vẽ MyPhaint."
+#: build/windows/installer/lang/setup.isl.xml.in:178
+msgid "Trying to create Restore Point..."
+msgstr "Đang cố gắng tạo Điểm khôi phục..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
-msgid "There was an error updating %1."
-msgstr "Gặp lỗi khi cập nhật %1."
-
-#: build/windows/installer/lang/setup.isl.xml.in:199
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Đã có lỗi khi cập nhật tập tin cấu hình của GIMP %1."
-
-#: build/windows/installer/lang/setup.isl.xml.in:204
-msgid "Edit with GIMP"
-msgstr "Sửa bằng GIMP"
-
-#: build/windows/installer/lang/setup.isl.xml.in:209
-msgid "Select file associations"
-msgstr "Chọn tập tin tích hợp"
-
-#: build/windows/installer/lang/setup.isl.xml.in:213
-msgid "Extensions:"
-msgstr "Phần mở rộng:"
-
-#: build/windows/installer/lang/setup.isl.xml.in:217
-msgid "Select the file types you wish to associate with GIMP"
-msgstr "Chọn các kiểu tập tin mà bạn chúng được mở bằng GIMP"
-
-#: build/windows/installer/lang/setup.isl.xml.in:221
-msgid ""
-"This will make selected files open in GIMP when you double-click them in "
-"Explorer."
-msgstr ""
-"Việc này sẽ làm cho các tập tin đã chọn sẽ được mở bằng GIMP khi bạn bấm đúp "
-"vào chúng trong Explorer."
-
-#: build/windows/installer/lang/setup.isl.xml.in:225
-msgid "Select &All"
-msgstr "Chọn &tất cả"
-
-#: build/windows/installer/lang/setup.isl.xml.in:229
-msgid "Unselect &All"
-msgstr "&Bỏ chọn tất cả"
-
-#: build/windows/installer/lang/setup.isl.xml.in:233
-msgid "Select &Unused"
-msgstr "Chọn chưa &dùng"
-
-#: build/windows/installer/lang/setup.isl.xml.in:238
-msgid "File types to associate with GIMP:"
-msgstr "Kiểu tập tin sẽ được mở bằng GIMP:"
-
-#: build/windows/installer/lang/setup.isl.xml.in:242
-msgid "Removing previous version of GIMP:"
-msgstr "Gỡ bỏ phiên bản trước của GIMP:"
-
-#: build/windows/installer/lang/setup.isl.xml.in:246
-msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"the automatic uninstall of old version has failed.%n%nPlease remove the "
-"previous version of GIMP yourself before installing this version in %2, or "
-"choose a Custom install, and select a different installation folder.%n%nThe "
-"Setup will now exit."
-msgstr ""
-"GIMP %1 không thể cài đặt đè lên phiên bản GIMP hiện được cài đặt của bạn và "
-"việc gỡ tự động phiên bản cũ đã gặp lỗi. %n%nVui lòng tự gỡ bỏ phiên bản "
-"GIMP trước khi cài đặt phiên bản này trong %2 hoặc chọn cài đặt Tùy chỉnh và "
-"chọn một thư mục khác để cài đặt. %n%nChương trình cài đặt phần mềm sẽ thoát "
-"ra."
-
-#: build/windows/installer/lang/setup.isl.xml.in:250
-msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically."
-"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
-"before installing this version in %2, or choose a Custom install, and select "
-"a different installation folder.%n%nThe Setup will now exit."
-msgstr ""
-"GIMP %1 không thể được cài đặt đè lên phiên bản GIMP hiện được cài đặt của "
-"bạn và Bộ cài đặt không thể xác định cách tự động xóa bỏ phiên bản cũ."
-"%n%nVui lòng gỡ bỏ phiên bản GIMP trước đó và mọi phần bổ trợ nào trước khi "
-"cài đặt phiên bản này trong %2 hoặc chọn cài đặt Tùy chỉnh và chọn một thư "
-"mục cài đặt khác.%n%nBộ cài đặt sẽ thoát ra."
-
-#: build/windows/installer/lang/setup.isl.xml.in:254
-msgid ""
-"Previous GIMP version was removed successfully, but Windows has to be "
-"restarted before the Setup can continue.%n%nAfter restarting your computer, "
-"Setup will continue next time an administrator logs in."
-msgstr ""
-"Phiên bản GIMP trước đã được gỡ bỏ thành công, nhưng Windows phải được khởi "
-"động lại trước khi việc Cài đặt có thể tiếp tục.%n%n Sau khi khởi động lại "
-"máy tính của bạn, Bộ cài đặt sẽ tiếp tục vào lần tới khi quản trị viên đăng "
-"nhập."
-
-#: build/windows/installer/lang/setup.isl.xml.in:259
-msgid "There was an error restarting the Setup. (%1)"
-msgstr "Đã có lỗi khi khởi động lại việc cài đặt. (%1)"
-
-#: build/windows/installer/lang/setup.isl.xml.in:263
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Cleaning up old files..."
 msgstr "Đang dọn các tập tin cũ..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:268
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Hãy nhớ: GIMP là phần mềm tự do.%n%nVui lòng viếng thăm"
 
-#: build/windows/installer/lang/setup.isl.xml.in:272
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "for free updates."
 msgstr "để cập nhật miễn phí."
 
-#: build/windows/installer/lang/setup.isl.xml.in:276
-msgid "Setting up file associations..."
-msgstr "Cấu hình tập tin liên kết..."
-
-#: build/windows/installer/lang/setup.isl.xml.in:279
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Đang cài đặt môi trường cho phần mở rộng GIMP dùng Python…"
 
-#: build/windows/installer/lang/setup.isl.xml.in:282
-msgid "Setting up MyPaint brushes..."
-msgstr "Đang cài đặt cọ vẽ MyPaint..."
-
-#: build/windows/installer/lang/setup.isl.xml.in:285
+#: build/windows/installer/lang/setup.isl.xml.in:198
 msgid "Setting up GIMP environment..."
 msgstr "Đang cài đặt môi trường GIMP..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:288
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "Cài đặt cấu hình GIMP để hỗ trợ phần bổ sung 32 bit..."
-
-#: build/windows/installer/lang/setup.isl.xml.in:293
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Launch GIMP"
 msgstr "Chạy GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:298
+#: build/windows/installer/lang/setup.isl.xml.in:208
 msgid "Removing add-on"
 msgstr "Đang xóa các phần bổ sung"
 
-#: build/windows/installer/lang/setup.isl.xml.in:302
+#: build/windows/installer/lang/setup.isl.xml.in:213
+msgid ""
+"Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
+"custom brushes)?%n%nA copy will be made on Desktop."
+msgstr ""
+"Bạn có muốn xóa các tệp GIMP cá nhân của mình (ví dụ: cài đặt, cài đặt sẵn "
+"công cụ, bút vẽ tùy chỉnh) không?%n%nMột bản sao sẽ được tạo trên Màn hình "
+"nền."
+
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Internal error (%1)."
 msgstr "Lỗi nội bộ (%1)."
 
-#: build/windows/installer/lang/setup.isl.xml.in:307
-msgid ""
-"GIMP does not appear to be installed in the selected directory. Continue "
-"anyway?"
-msgstr ""
-"Có vẻ như GIMP chưa được cài đặt trong thư mục đã chọn. Có tiếp tục không?"
+#~ msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
+#~ msgstr "Bản cài đặt được xây dựng bởi Jernej Simonèiè, jernej-gimp@ena.si"
+
+#~ msgid ""
+#~ "This version of GIMP requires Windows 10, or a newer version of Windows."
+#~ msgstr ""
+#~ "Phiên bản này của GIMP yêu cầu Windows 10 hoặc phiên bản Windows mới hơn."
+
+#~ msgid ""
+#~ "This version of GIMP requires a processor that supports SSE instructions."
+#~ msgstr ""
+#~ "Phiên bản này của GIMP yêu cầu máy tính có bộ vi xử lý hỗ trợ tập lệnh "
+#~ "SSE."
+
+#~ msgid ""
+#~ "GIMP is now ready to be installed. Click the Install now button to "
+#~ "install using the default settings, or click the Customize button if "
+#~ "you'd like to have more control over what gets installed."
+#~ msgstr ""
+#~ "GIMP hiện đã sẵn sàng để được cài đặt. Bấm nút Cài đặt ngay để cài đặt "
+#~ "bằng cách dùng các cài đặt mặc định hoặc bấm nút Tùy chỉnh nếu bạn muốn "
+#~ "có thêm quyền kiểm soát đối với những gì sẽ được cài đặt."
+
+#~ msgid "Support for 32-bit plug-ins"
+#~ msgstr "Hỗ trợ phần bổ sung 32-bít"
+
+#~ msgid ""
+#~ "Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
+#~ "support."
+#~ msgstr ""
+#~ "Bao gồm các tập tin cần thiết để sử dụng trình cắm 32 bit.%nRequired để "
+#~ "hỗ trợ TWAIN."
+
+#~ msgid "Create a &Quick Launch icon"
+#~ msgstr "Tạo biểu tượng truy &cập nhanh"
+
+#~ msgid "Remove previous GIMP version"
+#~ msgstr "Gỡ bỏ phiên bản trước đây của GIMP"
+
+#~ msgid "Error updating MyPaint brushes info."
+#~ msgstr "Gặp lỗi khi cập nhật thông tin cọ vẽ MyPhaint."
+
+#~ msgid "There was an error updating %1."
+#~ msgstr "Gặp lỗi khi cập nhật %1."
+
+#~ msgid "There was an error updating GIMP's configuration file %1."
+#~ msgstr "Đã có lỗi khi cập nhật tập tin cấu hình của GIMP %1."
+
+#~ msgid "Edit with GIMP"
+#~ msgstr "Sửa bằng GIMP"
+
+#~ msgid "Select file associations"
+#~ msgstr "Chọn tập tin tích hợp"
+
+#~ msgid "Extensions:"
+#~ msgstr "Phần mở rộng:"
+
+#~ msgid "Select the file types you wish to associate with GIMP"
+#~ msgstr "Chọn các kiểu tập tin mà bạn chúng được mở bằng GIMP"
+
+#~ msgid ""
+#~ "This will make selected files open in GIMP when you double-click them in "
+#~ "Explorer."
+#~ msgstr ""
+#~ "Việc này sẽ làm cho các tập tin đã chọn sẽ được mở bằng GIMP khi bạn bấm "
+#~ "đúp vào chúng trong Explorer."
+
+#~ msgid "Select &All"
+#~ msgstr "Chọn &tất cả"
+
+#~ msgid "Unselect &All"
+#~ msgstr "&Bỏ chọn tất cả"
+
+#~ msgid "Select &Unused"
+#~ msgstr "Chọn chưa &dùng"
+
+#~ msgid "File types to associate with GIMP:"
+#~ msgstr "Kiểu tập tin sẽ được mở bằng GIMP:"
+
+#~ msgid "Removing previous version of GIMP:"
+#~ msgstr "Gỡ bỏ phiên bản trước của GIMP:"
+
+#~ msgid ""
+#~ "GIMP %1 cannot be installed over your currently installed GIMP version, "
+#~ "and the automatic uninstall of old version has failed.%n%nPlease remove "
+#~ "the previous version of GIMP yourself before installing this version in "
+#~ "%2, or choose a Custom install, and select a different installation "
+#~ "folder.%n%nThe Setup will now exit."
+#~ msgstr ""
+#~ "GIMP %1 không thể cài đặt đè lên phiên bản GIMP hiện được cài đặt của bạn "
+#~ "và việc gỡ tự động phiên bản cũ đã gặp lỗi. %n%nVui lòng tự gỡ bỏ phiên "
+#~ "bản GIMP trước khi cài đặt phiên bản này trong %2 hoặc chọn cài đặt Tùy "
+#~ "chỉnh và chọn một thư mục khác để cài đặt. %n%nChương trình cài đặt phần "
+#~ "mềm sẽ thoát ra."
+
+#~ msgid ""
+#~ "GIMP %1 cannot be installed over your currently installed GIMP version, "
+#~ "and Setup couldn't determine how to remove the old version automatically."
+#~ "%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+#~ "before installing this version in %2, or choose a Custom install, and "
+#~ "select a different installation folder.%n%nThe Setup will now exit."
+#~ msgstr ""
+#~ "GIMP %1 không thể được cài đặt đè lên phiên bản GIMP hiện được cài đặt "
+#~ "của bạn và Bộ cài đặt không thể xác định cách tự động xóa bỏ phiên bản cũ."
+#~ "%n%nVui lòng gỡ bỏ phiên bản GIMP trước đó và mọi phần bổ trợ nào trước "
+#~ "khi cài đặt phiên bản này trong %2 hoặc chọn cài đặt Tùy chỉnh và chọn "
+#~ "một thư mục cài đặt khác.%n%nBộ cài đặt sẽ thoát ra."
+
+#~ msgid ""
+#~ "Previous GIMP version was removed successfully, but Windows has to be "
+#~ "restarted before the Setup can continue.%n%nAfter restarting your "
+#~ "computer, Setup will continue next time an administrator logs in."
+#~ msgstr ""
+#~ "Phiên bản GIMP trước đã được gỡ bỏ thành công, nhưng Windows phải được "
+#~ "khởi động lại trước khi việc Cài đặt có thể tiếp tục.%n%n Sau khi khởi "
+#~ "động lại máy tính của bạn, Bộ cài đặt sẽ tiếp tục vào lần tới khi quản "
+#~ "trị viên đăng nhập."
+
+#~ msgid "There was an error restarting the Setup. (%1)"
+#~ msgstr "Đã có lỗi khi khởi động lại việc cài đặt. (%1)"
+
+#~ msgid "Setting up file associations..."
+#~ msgstr "Cấu hình tập tin liên kết..."
+
+#~ msgid "Setting up MyPaint brushes..."
+#~ msgstr "Đang cài đặt cọ vẽ MyPaint..."
+
+#~ msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+#~ msgstr "Cài đặt cấu hình GIMP để hỗ trợ phần bổ sung 32 bit..."
+
+#~ msgid ""
+#~ "GIMP does not appear to be installed in the selected directory. Continue "
+#~ "anyway?"
+#~ msgstr ""
+#~ "Có vẻ như GIMP chưa được cài đặt trong thư mục đã chọn. Có tiếp tục không?"
 
 #~ msgid "MS-Windows engine for GTK"
 #~ msgstr "Bộ máy MS-Windows cho GTK"
