@@ -211,7 +211,7 @@ html_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_add_boolean_aux_argument (procedure, "full-document",
                                                _("_Generate full HTML document"),
-                                               _("If enabled GTM will output a full HTML "
+                                               _("If enabled GIMP Table Magic will output a full HTML "
                                                  "document with <HTML>, <BODY>, etc. tags "
                                                  "instead of just the table html."),
                                                TRUE,
@@ -225,7 +225,7 @@ html_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_add_boolean_aux_argument (procedure, "span-tags",
                                                _("_Use cellspan"),
-                                               _("If enabled GTM will replace any "
+                                               _("If enabled GIMP Table Magic will replace any "
                                                  "rectangular sections of identically "
                                                  "colored blocks with one large cell with "
                                                  "ROWSPAN and COLSPAN values."),
@@ -234,7 +234,7 @@ html_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_add_boolean_aux_argument (procedure, "compress-td-tags",
                                                _("Co_mpress TD tags"),
-                                               _("Enabling this will cause GTM to "
+                                               _("Enabling this will cause GIMP Table Magic to "
                                                  "leave no whitespace between the TD "
                                                  "tags and the cell content. This is only "
                                                  "necessary for pixel level positioning "
