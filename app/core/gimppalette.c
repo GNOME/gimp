@@ -429,8 +429,14 @@ gimp_palette_get_checksum (GimpTagged *tagged)
       while (color_iterator)
         {
           GimpPaletteEntry *entry = (GimpPaletteEntry *) color_iterator->data;
+          gdouble           rgba[4];
 
-          g_checksum_update (checksum, (const guchar *) &entry->color, sizeof (entry->color));
+          /* make sure we send actual color values here (bug #16375)
+           * TODO: try to reproduce the exact checksums as GIMP 2.10
+           */
+          gegl_color_get_pixel (entry->color, babl_format ("R'G'B'A double"), rgba);
+          g_checksum_update (checksum, (const guchar *) rgba, sizeof (rgba));
+
           if (entry->name)
             g_checksum_update (checksum, (const guchar *) entry->name, strlen (entry->name));
 
