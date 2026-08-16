@@ -728,7 +728,7 @@ vector_layer_set_enable_stroke_invoker (GimpProcedure         *procedure,
       if (success)
         {
           g_object_set (options,
-                        "enable-stroke", &enable_stroke,
+                        "enable-stroke", enable_stroke,
                         NULL);
         }
     }
