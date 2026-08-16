@@ -406,7 +406,7 @@ if [ "$GITLAB_CI" ]; then
   mkdir -p $output_dir
   mv -f ${DMG_ARTIFACT}* $output_dir
   if [ "$CI_COMMIT_BRANCH" != "$CI_DEFAULT_BRANCH" ]; then
-    echo "See the instructions on how install at the 'Automatic Development Builds' section of https://www.gimp.org/downloads/devel/" > $output_dir/IMPORTANT.txt
+    echo "See the instructions on how install at the 'Automatic Development Builds' section of https://www.gimp.org/downloads/devel/#automatic-builds" > $output_dir/IMPORTANT.txt
   fi
 fi
 done
