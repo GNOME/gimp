@@ -16,7 +16,7 @@ foreach plugin_name : file_raw_exes
 
   if platform_windows
     plugin_rc = configure_file(
-      input : gimp_plugins_rc.full_path(),
+      input : gimp_plugins_rc,
       output: plugin_name + '.rc',
       copy: true,
     )

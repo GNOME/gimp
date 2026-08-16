@@ -11,7 +11,7 @@ plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_rc = configure_file(
-    input : gimp_plugins_rc.full_path(),
+    input : gimp_plugins_rc,
     output: plugin_name + '.rc',
     copy: true,
   )
@@ -58,7 +58,7 @@ plugin_sources = plugin_sourcecode
 
 if platform_windows
   plugin_rc = configure_file(
-    input : gimp_plugins_rc.full_path(),
+    input : gimp_plugins_rc,
     output: plugin_name + '.rc',
     copy: true,
   )
