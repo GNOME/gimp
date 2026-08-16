@@ -683,6 +683,6 @@ if [ "$GITLAB_CI" ]; then
   output_dir='build/linux/appimage/_Output'
   mkdir -p $output_dir
   mv GIMP*.AppImage* $output_dir
-  echo "See the instructions on how install at the 'Automatic Development Builds' section of https://www.gimp.org/downloads/devel/" > $output_dir/IMPORTANT.txt
+  echo "See the instructions on how install at the 'Automatic Development Builds' section of https://www.gimp.org/downloads/devel/#automatic-builds" > $output_dir/IMPORTANT.txt
 fi
 done
