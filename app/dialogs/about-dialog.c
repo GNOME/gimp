@@ -39,6 +39,8 @@
 #include "config/gimpcoreconfig.h"
 #include "config/gimpguiconfig.h"
 
+#include "core/gimp-utils.h"
+
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -105,6 +107,11 @@ static gboolean    about_dialog_anim_draw     (GtkWidget       *widget,
                                                GimpAboutDialog *dialog);
 static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
+
+static gchar     * about_dialog_debug_text      (void);
+static void        about_dialog_add_debug_info  (GtkBox        *vbox);
+static void        about_dialog_copy_debug_info (GtkButton     *button,
+                                                 gpointer       data);
 
 #ifndef GIMP_RELEASE
 static void        about_dialog_add_unstable_message
@@ -305,6 +312,7 @@ about_dialog_create (Gimp           *gimp,
           if (gimp_version_check_update ())
             about_dialog_add_update (&dialog, config);
 #endif
+          about_dialog_add_debug_info (GTK_BOX (children->data));
         }
       else
         g_warning ("%s: ooops, no box in this container?", G_STRLOC);
@@ -934,6 +942,321 @@ about_dialog_add_unstable_message (GtkWidget *vbox)
 }
 
 #endif /* ! GIMP_RELEASE */
+
+/* the version block shown in the about dialog and dropped on the clipboard by
+ * the Copy button - a few lines a bug report actually needs, not the full
+ * dump. caller frees.
+ */
+static gchar *
+about_dialog_debug_text (void)
+{
+  GString     *text;
+  GdkDisplay  *display;
+  gchar       *os_name;
+  gchar       *package;
+  const gchar *display_sys;
+  const gchar *type_name;
+  gchar       *mem_size;
+  gchar       *swap_dir;
+  guint64      phys_mem;
+  guint64      avail_mem;
+  gint         babl_major, babl_minor, babl_micro;
+  gint         gegl_major, gegl_minor, gegl_micro;
+
+  os_name = g_get_os_info (G_OS_INFO_KEY_PRETTY_NAME);
+  babl_get_version (&babl_major, &babl_minor, &babl_micro);
+  gegl_get_version (&gegl_major, &gegl_minor, &gegl_micro);
+
+  /* map the GdkDisplay class to a friendly windowing-system name without
+   * dragging in the per-backend headers (gdkx.h/gdkwayland.h)
+   */
+  display   = gdk_display_get_default ();
+  type_name = display ? G_OBJECT_TYPE_NAME (display) : "";
+  if (strstr (type_name, "Wayland"))
+    display_sys = "Wayland";
+  else if (strstr (type_name, "X11"))
+    display_sys = "X11";
+  else if (strstr (type_name, "Win32"))
+    display_sys = "Windows (GDI)";
+  else if (strstr (type_name, "Quartz"))
+    display_sys = "Quartz";
+  else if (strstr (type_name, "Broadway"))
+    display_sys = "Broadway";
+  else
+    display_sys = type_name;
+
+  /* GIMP_BUILD_ID is "unknown" on a plain source build. So put
+   * "Built from source" instead of "unknown" into the report.
+   */
+  if (g_strcmp0 (GIMP_BUILD_ID, "unknown") == 0)
+    package = g_strdup (_("built from source"));
+  else if (gimp_version_get_revision () > 0)
+    package = g_strdup_printf ("%s revision %d",
+                               GIMP_BUILD_ID, gimp_version_get_revision ());
+  else
+    package = g_strdup (GIMP_BUILD_ID);
+
+  text = g_string_new (NULL);
+
+  g_string_append_printf (text, "%s %s (%s)\n",
+                          _("Version:"), GIMP_VERSION, package);
+  g_string_append_printf (text, "%s %s (%s)\n",
+                          _("OS:"), os_name ? os_name : "unknown",
+                          display_sys);
+
+  /* total physical RAM - gimp_get_physical_memory_size returns 0 where the
+   * platform can't tell us
+   */
+  phys_mem  = gimp_get_physical_memory_size ();
+  avail_mem = gimp_get_available_memory_size ();
+  if (phys_mem > 0)
+    {
+      mem_size = g_format_size (phys_mem);
+
+      if (avail_mem > 0)
+        {
+          gchar *free_size = g_format_size (avail_mem);
+
+          g_string_append_printf (text, "%s %s (%s %s)\n",
+                                  _("Memory:"), mem_size, free_size, _("free"));
+          g_free (free_size);
+        }
+      else
+        {
+          g_string_append_printf (text, "%s %s\n", _("Memory:"), mem_size);
+        }
+
+      g_free (mem_size);
+    }
+  else
+    {
+      g_string_append_printf (text, "%s %s\n", _("Memory:"), "unknown");
+    }
+
+  /* how much room is left on the partition GEGL swaps to - the dir itself
+   * isn't much use in a report, so only the free space goes in. same source
+   * the dashboard reads
+   */
+  g_object_get (gegl_config (), "swap", &swap_dir, NULL);
+  if (swap_dir)
+    {
+      GFile     *file = g_file_new_for_path (swap_dir);
+      GFileInfo *info = g_file_query_filesystem_info (
+                          file, G_FILE_ATTRIBUTE_FILESYSTEM_FREE, NULL, NULL);
+
+      if (info)
+        {
+          guint64 free_space =
+            g_file_info_get_attribute_uint64 (info,
+                                              G_FILE_ATTRIBUTE_FILESYSTEM_FREE);
+          gchar *free_str = g_format_size (free_space);
+
+          g_string_append_printf (text, "%s %s free on partition\n",
+                                  _("Swap:"), free_str);
+          g_free (free_str);
+          g_object_unref (info);
+        }
+
+      g_object_unref (file);
+      g_free (swap_dir);
+    }
+
+  g_string_append_printf (text,
+                          "%s GEGL %d.%d.%d, babl %d.%d.%d, GTK %d.%d.%d",
+                          _("Library Versions:"),
+                          gegl_major, gegl_minor, gegl_micro,
+                          babl_major, babl_minor, babl_micro,
+                          gtk_get_major_version (),
+                          gtk_get_minor_version (),
+                          gtk_get_micro_version ());
+
+  g_free (os_name);
+  g_free (package);
+
+  return g_string_free (text, FALSE);
+}
+
+/* lay the "key: value" lines out in a two-column grid so all the values line
+ * up. the key's colon always comes before any colon in the value (e.g. a
+ * windows "C:\" path), so a split on the first colon is safe.
+ */
+static GtkWidget *
+about_dialog_info_grid (gchar **lines)
+{
+  GtkWidget *grid;
+  gint       i;
+  gint       row = 0;
+
+  grid = gtk_grid_new ();
+  gtk_widget_set_halign (grid, GTK_ALIGN_CENTER);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+
+  for (i = 0; lines[i]; i++)
+    {
+      GtkWidget   *key;
+      GtkWidget   *value;
+      gchar       *sep = strchr (lines[i], ':');
+      gchar       *k;
+      const gchar *v;
+
+      if (sep)
+        {
+          k = g_strndup (lines[i], sep - lines[i] + 1);
+          v = sep + 1;
+          while (*v == ' ')
+            v++;
+        }
+      else
+        {
+          k = g_strdup (lines[i]);
+          v = "";
+        }
+
+      key = gtk_label_new (k);
+      gtk_label_set_xalign (GTK_LABEL (key), 0.0);
+
+      value = gtk_label_new (v);
+      gtk_label_set_xalign (GTK_LABEL (value), 0.0);
+      gtk_label_set_selectable (GTK_LABEL (value), TRUE);
+      gtk_label_set_ellipsize (GTK_LABEL (value), PANGO_ELLIPSIZE_MIDDLE);
+      gtk_label_set_max_width_chars (GTK_LABEL (value), 50);
+
+      gtk_grid_attach (GTK_GRID (grid), key,   0, row, 1, 1);
+      gtk_grid_attach (GTK_GRID (grid), value, 1, row, 1, 1);
+
+      g_free (k);
+      row++;
+    }
+
+  return grid;
+}
+
+/* once the pointer leaves the Copy button, put its tooltip back to the
+ * "Copy ..." wording so a fresh hover doesn't still read "Copied ..."
+ */
+static gboolean
+about_dialog_copy_button_left (GtkWidget *button,
+                               GdkEvent  *event,
+                               gpointer   data)
+{
+  gtk_widget_set_tooltip_text (button, _("Copy Version Information"));
+
+  return FALSE;
+}
+
+/* the version/website/copyright labels ride the "main" page of a GtkStack
+ * that sits in the dialog's vbox. GtkAboutDialog hands us no accessor, so
+ * pick the stack out of the vbox's children.
+ */
+static void
+about_dialog_add_debug_info (GtkBox *dialog_vbox)
+{
+  GtkWidget  *stack = NULL;
+  GtkWidget  *page;
+  GtkWidget  *vbox;
+  GtkWidget  *header;
+  GtkWidget  *heading;
+  GtkWidget  *button;
+  GList      *children;
+  GList      *iter;
+  gchar      *text;
+  gchar     **lines;
+  gint        pos = -1;
+  gint        i;
+
+  children = gtk_container_get_children (GTK_CONTAINER (dialog_vbox));
+  for (iter = children; iter; iter = iter->next)
+    if (GTK_IS_STACK (iter->data))
+      {
+        stack = iter->data;
+        break;
+      }
+  g_list_free (children);
+
+  if (! stack)
+    return;
+
+  page = gtk_stack_get_child_by_name (GTK_STACK (stack), "main");
+  if (! GTK_IS_BOX (page))
+    return;
+
+  text  = about_dialog_debug_text ();
+  lines = g_strsplit (text, "\n", -1);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_widget_set_halign (vbox, GTK_ALIGN_CENTER);
+  gtk_widget_set_margin_top (vbox, 4);
+  gtk_widget_set_margin_bottom (vbox, 4);
+
+  /* header row - "Version Information:" with the Copy button sat right next
+   * to it. a word on the button, not an icon, so it still shows where the
+   * icon theme isn't installed
+   */
+  header  = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_widget_set_halign (header, GTK_ALIGN_CENTER);
+  heading = gtk_label_new (_("Version Information"));
+
+  button = gtk_button_new_with_mnemonic (_("_Copy"));
+  gtk_widget_set_tooltip_text (button, _("Copy Version Information"));
+  /* stash the copy blob on the button - it outlives the grid's own copy */
+  g_object_set_data_full (G_OBJECT (button), "debug-text", text, g_free);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (about_dialog_copy_debug_info), NULL);
+  g_signal_connect (button, "leave-notify-event",
+                    G_CALLBACK (about_dialog_copy_button_left), NULL);
+
+  gtk_box_pack_start (GTK_BOX (header), heading, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (header), button, FALSE, FALSE, 0);
+
+  gtk_box_pack_start (GTK_BOX (vbox), header, FALSE, FALSE, 0);
+
+  /* every line shows in the dialog and rides the clipboard copy alike */
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      about_dialog_info_grid (lines), FALSE, FALSE, 0);
+
+  g_strfreev (lines);
+
+  /* drop it right before the copyright line, so it sits between the website
+   * link and the copyright
+   */
+  children = gtk_container_get_children (GTK_CONTAINER (page));
+  for (iter = children, i = 0; iter; iter = iter->next, i++)
+    if (g_strcmp0 (gtk_buildable_get_name (GTK_BUILDABLE (iter->data)),
+                   "copyright_label") == 0)
+      {
+        pos = i;
+        break;
+      }
+  g_list_free (children);
+
+  gtk_box_pack_start (GTK_BOX (page), vbox, FALSE, FALSE, 0);
+  if (pos >= 0)
+    gtk_box_reorder_child (GTK_BOX (page), vbox, pos);
+  gtk_widget_show_all (vbox);
+}
+
+static void
+about_dialog_copy_debug_info (GtkButton *button,
+                              gpointer   data)
+{
+  GtkClipboard *clipboard;
+  const gchar  *text;
+
+  text = g_object_get_data (G_OBJECT (button), "debug-text");
+
+  clipboard = gtk_widget_get_clipboard (GTK_WIDGET (button),
+                                        GDK_SELECTION_CLIPBOARD);
+  gtk_clipboard_set_text (clipboard, text, -1);
+
+  /* flip the tooltip to "Copied ..." right away - trigger_tooltip_query
+   * repaints the popup that's already up under the pointer. it goes back to
+   * "Copy ..." once the pointer leaves (see the leave-notify handler)
+   */
+  gtk_widget_set_tooltip_text (GTK_WIDGET (button),
+                               _("Copied Version Information"));
+  gtk_widget_trigger_tooltip_query (GTK_WIDGET (button));
+}
 
 static void
 about_dialog_last_release_changed (GimpCoreConfig   *config,
