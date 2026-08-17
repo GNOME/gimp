@@ -67,8 +67,8 @@
   PSD_LPRP_VERSION        "lyvr"     Loaded     * Layer version (PS7) *
 
   * Vector mask *
-  PSD_LMSK_VMASK          "vmsk"        -       * Vector mask setting (PS6) *
-  PSD_LMSK_VSHAPE         "vsms"        -       * Vector shape setting (CS6) *
+  PSD_LMSK_VMASK          "vmsk"     Loaded     * Vector mask setting (PS6) *
+  PSD_LMSK_VSHAPE         "vsms"     Loaded     * Vector shape setting (CS6) *
 
   * Parasites *
   PSD_LPAR_ANNOTATE       "Anno"        -       * Annotation (PS6) *
@@ -88,7 +88,8 @@
   PSD_LOTH_PATH_NAME      "pths"        -       * Unicode path name (PS13) *
   PSD_LOTH_ANIMATION_FX   "anFX"        -       * Animation effects (PS13) *
   PSD_LOTH_FILTER_MASK    "FMsk"        -       * Filter mask (PS10) *
-  PSD_LOTH_VECTOR_STROKE  "vscg"        -       * Vector stroke data (PS13) *
+  PSD_LOTH_VECTOR_STROKE  "vstk"        -       * Vector stroke data (PS13) *
+  PSD_LOTH_VECTOR_CONTENT "vscg"        -       * Vector stroke content data (PS13) *
   PSD_LOTH_ALIGN_RENDER   "sn2P"        -       * Aligned rendering flag (?) *
   PSD_LOTH_USER_MASK      "LMsk"        -       * User mask (?) *
 
@@ -206,6 +207,11 @@ static gint       load_resource_lnsr    (const PSDlayerres     *res_a,
                                          GError               **error);
 
 static gint       load_resource_lvmk    (const PSDlayerres     *res_a,
+                                         PSDlayer              *lyr_a,
+                                         GInputStream          *input,
+                                         GError               **error);
+
+static gint       load_resource_lvsk    (const PSDlayerres     *res_a,
                                          PSDlayer              *lyr_a,
                                          GInputStream          *input,
                                          GError               **error);
@@ -455,7 +461,8 @@ load_layer_resource (PSDlayerres   *res_a,
       load_resource_lnsr (res_a, lyr_a, input, error);
     }
 
-  else if (memcmp (res_a->key, PSD_LOTH_VECTOR_STROKE, 4) == 0)
+  else if (memcmp (res_a->key, PSD_LOTH_VECTOR_STROKE, 4) == 0 ||
+           memcmp (res_a->key, PSD_LOTH_VECTOR_CONTENT, 4) == 0)
     {
       if (lyr_a)
         {
@@ -463,7 +470,7 @@ load_layer_resource (PSDlayerres   *res_a,
           lyr_a->unsupported_features->show_gui = TRUE;
         }
 
-      load_resource_unknown (res_a, lyr_a, input, error);
+      load_resource_lvsk (res_a, lyr_a, input, error);
     }
 
   else if (memcmp (res_a->key, PSD_LMSK_VMASK, 4) == 0 ||
@@ -478,9 +485,9 @@ load_layer_resource (PSDlayerres   *res_a,
       load_resource_lvmk (res_a, lyr_a, input, error);
     }
 
-  else if (memcmp (res_a->key, PSD_SMART_OBJECT_LAYER, 4) == 0
-           || memcmp (res_a->key, PSD_LPL_PLACE_LAYER, 4) == 0
-           || memcmp (res_a->key, PSD_LPL_PLACE_LAYER_NEW, 4) == 0)
+  else if (memcmp (res_a->key, PSD_SMART_OBJECT_LAYER, 4) == 0 ||
+           memcmp (res_a->key, PSD_LPL_PLACE_LAYER, 4) == 0    ||
+           memcmp (res_a->key, PSD_LPL_PLACE_LAYER_NEW, 4) == 0)
     {
       if (lyr_a)
         {
@@ -1991,6 +1998,56 @@ load_resource_lvmk (const PSDlayerres  *res_a,
                 error) < lyr_a->vector.path_len)
     {
       psd_set_error (error);
+      return -1;
+    }
+
+  return 0;
+}
+
+static gint
+load_resource_lvsk (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    GInputStream       *input,
+                    GError            **error)
+{
+  guint32   version = 0;
+  JsonNode *root;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: vector stroke data",
+                    res_a->key);
+
+  /* vscg block starts with a key that indicates the fill type */
+  if (memcmp (res_a->key, PSD_LOTH_VECTOR_CONTENT, 4) == 0 &&
+      ! psd_read_chars (input, lyr_a->vector.vscg_key, 4, res_a->ibm_pc_format,
+                        error))
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  if (! psd_read_uint32 (input, &version, res_a->ibm_pc_format, error))
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  if (parse_descriptor (input, res_a->ibm_pc_format, &root, error) == 0)
+    {
+      if (root)
+        {
+          if (memcmp (res_a->key, PSD_LOTH_VECTOR_CONTENT, 4) == 0)
+            lyr_a->vector.vscg = root;
+          else if (memcmp (res_a->key, PSD_LOTH_VECTOR_STROKE, 4) == 0)
+            lyr_a->vector.vstk = root;
+        }
+
+      IFDBG(4)
+        if (root)
+          g_print ("Vector stroke descriptor for layer %u:\n%s", lyr_a->id,
+                   json_to_string (root, TRUE));
+    }
+  else
+    {
       return -1;
     }
 
