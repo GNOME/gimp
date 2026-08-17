@@ -2132,32 +2132,48 @@ get_font_info_list (JsonNode *node,
                             NULL);
           json_reader_set_root (obj_reader2, node);
 
-          if (! json_reader_read_member (obj_reader2, "FauxBold"))
-            return font_info;
-
-          if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
-            font->bold = TRUE;
+          if (json_reader_read_member (obj_reader2, "FauxBold"))
+            {
+              if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
+                font->bold = TRUE;
+            }
+          else
+            {
+              json_reader_end_member (obj_reader2);
+            }
           json_reader_set_root (obj_reader2, node);
 
-          if (! json_reader_read_member (obj_reader2, "FauxItalic"))
-            return font_info;
-
-          if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
-            font->italics = TRUE;
+          if (json_reader_read_member (obj_reader2, "FauxItalic"))
+            {
+              if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
+                font->italics = TRUE;
+            }
+          else
+            {
+              json_reader_end_member (obj_reader2);
+            }
           json_reader_set_root (obj_reader2, node);
 
-          if (! json_reader_read_member (obj_reader2, "Underline"))
-            return font_info;
-
-          if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
-            font->underline = TRUE;
+          if (json_reader_read_member (obj_reader2, "Underline"))
+            {
+              if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
+                font->underline = TRUE;
+            }
+          else
+            {
+              json_reader_end_member (obj_reader2);
+            }
           json_reader_set_root (obj_reader2, node);
 
-          if (! json_reader_read_member (obj_reader2, "Strikethrough"))
-            return font_info;
-
-          if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
-            font->strikethrough = TRUE;
+          if (json_reader_read_member (obj_reader2, "Strikethrough"))
+            {
+              if (! g_strcmp0 ("true", get_json_string (obj_reader2, "value", "")))
+                font->strikethrough = TRUE;
+            }
+          else
+            {
+              json_reader_end_member (obj_reader2);
+            }
           json_reader_set_root (obj_reader2, node);
 
           if (! json_reader_read_member (obj_reader2, "FillColor")  ||
@@ -2202,8 +2218,8 @@ get_font_info_list (JsonNode *node,
 }
 
 static gint *
-get_font_sections_list (JsonNode       *node,
-                        guint          *font_count)
+get_font_sections_list (JsonNode *node,
+                        guint    *font_count)
 {
   gint       *font_sections;
   JsonReader *obj_reader    = NULL;
