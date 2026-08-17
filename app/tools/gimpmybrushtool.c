@@ -112,21 +112,27 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
                                        GIMP_COLOR_PICK_TARGET_FOREGROUND);
 }
 
-static void gimp_mybrush_tool_cursor_update (GimpTool         *tool,
-                                             const GimpCoords *coords,
-                                             GdkModifierType   state,
-                                             GimpDisplay      *display)
+static void
+gimp_mybrush_tool_cursor_update (GimpTool         *tool,
+                                 const GimpCoords *coords,
+                                 GdkModifierType   state,
+                                 GimpDisplay      *display)
 {
-  GimpDisplayShell   *shell;
   GimpMybrushOptions *options = GIMP_MYBRUSH_TOOL_GET_OPTIONS (tool);
 
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  if (display && GIMP_IS_DISPLAY (display))
+    {
+      GimpDisplayShell *shell = gimp_display_get_shell (display);
 
-  shell = gimp_display_get_shell (display);
-
-  options->view_zoom     = (gimp_zoom_model_get_factor (shell->zoom) > 0.0f) ?
-                            gimp_zoom_model_get_factor (shell->zoom) : 1.0f;
-  options->view_rotation = shell->rotate_angle;
+      options->view_zoom     = (gimp_zoom_model_get_factor (shell->zoom) > 0.0f) ?
+                                gimp_zoom_model_get_factor (shell->zoom) : 1.0f;
+      options->view_rotation = shell->rotate_angle;
+    }
+  else
+    {
+      options->view_zoom     = 1.0f;
+      options->view_rotation = 0.0f;
+    }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

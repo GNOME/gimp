@@ -279,9 +279,7 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
    * the type of symmetry. When that happens, reset the brushes.
    */
   if (g_list_length (mybrush->private->brushes) != n_strokes)
-    {
-      gimp_mybrush_core_create_brushes (mybrush, drawable, paint_options, sym);
-    }
+    gimp_mybrush_core_create_brushes (mybrush, drawable, paint_options, sym);
 
   mypaint_surface_begin_atomic ((MyPaintSurface *) mybrush->private->surface);
 
@@ -299,7 +297,7 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
                                      (MyPaintSurface2 *) mybrush->private->surface,
                                      coords.x,
                                      coords.y,
-                                     0.0f,
+                                     (coords.pressure > 0.0) ? coords.pressure : 0.0,
                                      coords.xtilt,
                                      coords.ytilt,
                                      1.0f, /* Pretend the cursor hasn't moved in a while */
@@ -382,7 +380,7 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
   mybrush->private->last_time = time;
 
   mypaint_surface2_end_atomic ((MyPaintSurface2 *) mybrush->private->surface,
-                              &rects);
+                               &rects);
 
   if (rects.rectangles[0].width > 0 && rects.rectangles[0].height > 0)
     {
