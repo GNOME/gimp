@@ -931,7 +931,7 @@ load_preset_response (GtkFileChooser *chooser,
                       gpointer        data)
 {
   FILE          *fp;
-  gint           num_lights;
+  gint           num_lights = 0;
   gint           k;
   LightSettings *source;
   gchar          buffer1[G_ASCII_DTOSTR_BUF_SIZE];
@@ -959,6 +959,9 @@ load_preset_response (GtkFileChooser *chooser,
 #else
           fscanf_s (fp, "Number of lights: %d", &num_lights);
 #endif
+
+          /* clamp to what the array can hold, don't trust the file */
+          num_lights = CLAMP (num_lights, 0, NUM_LIGHTS);
 
           /* initialize lights to off */
           for (k = 0; k < NUM_LIGHTS; k++)
