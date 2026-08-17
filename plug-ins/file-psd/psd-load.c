@@ -4897,9 +4897,7 @@ get_vector_layer (GimpImage *image,
                   PSDlayer  *lyr_a,
                   PSDimage  *img_a)
 {
-  GimpVectorLayer *layer         = NULL;
-  const Babl      *format;
-  const Babl      *space;
+  GimpVectorLayer *layer               = NULL;
   GeglColor       *fill_color          = NULL;
   GeglColor       *stroke_color        = NULL;
   gboolean         enable_fill         = TRUE;
@@ -4911,6 +4909,8 @@ get_vector_layer (GimpImage *image,
   GimpJoinStyle    stroke_join         = GIMP_JOIN_MITER;
   gdouble         *stroke_dash_pattern = NULL;
   gsize            dash_count          = 0;
+  const Babl      *format;
+  const Babl      *space;
   /* TODO: Remove when we support all vector formats */
   gboolean         unsupported         = FALSE;
 
