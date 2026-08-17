@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-12-28 11:26+0000\n"
-"PO-Revision-Date: 2026-03-01 21:58+0100\n"
+"POT-Creation-Date: 2026-08-02 17:50+0000\n"
+"PO-Revision-Date: 2026-08-02 21:14+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -47,16 +47,15 @@ msgid ""
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
-"installation anyway?"
+"www.gimp.org/bugs%n%nDo you wish to continue with installation anyway?"
 msgstr ""
 "Detta är en utvecklingsversion av GIMP där vissa funktioner kanske inte är "
 "färdiga, eller så kan den vara instabil.%nDenna version av GIMP är inte "
 "avsedd för vardagligt bruk då den kan vara instabil, så du skulle kunna "
 "förlora vad du skapat.%nOm du påträffar några problem bör du först bekräfta "
 "att de inte redan fixats i GIT innan du kontaktar utvecklarna eller "
-"rapporterar problemen i GIMPs gitlab-instans:%n_https://gitlab.gnome.org/"
-"GNOME/gimp/issues%n%nVill du fortsätta med installationen ändå?"
+"rapporterar problemen i GIMPs gitlab-instans:%n_https://www.gimp.org/"
+"bugs%n%nVill du fortsätta med installationen ändå?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
 #: build/windows/installer/lang/setup.isl.xml.in:43
@@ -197,27 +196,15 @@ msgstr "Postscript-stöd"
 msgid "Allow GIMP to load PostScript files"
 msgstr "Tillåt GIMP att läsa in Postscript-filer"
 
-#: build/windows/installer/lang/setup.isl.xml.in:156
-msgid "Support for 32-bit plug-ins"
-msgstr "Stöd för 32-bitars insticksmoduler"
-
-#: build/windows/installer/lang/setup.isl.xml.in:160
-msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
-"support."
-msgstr ""
-"Inkludera filer som behövs för att använda 32-bitars insticksmoduler.%nKrävs "
-"för TWAIN-stöd."
-
-#: build/windows/installer/lang/setup.isl.xml.in:165
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid "Additional icons:"
 msgstr "Ytterligare ikoner:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:169
+#: build/windows/installer/lang/setup.isl.xml.in:161
 msgid "Create a &desktop icon"
 msgstr "Skapa en &skrivbordsikon"
 
-#: build/windows/installer/lang/setup.isl.xml.in:174
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -225,47 +212,47 @@ msgstr ""
 "Ett fel uppstod vid uppdatering av GIMPs miljö i %1. Om du får fel vid "
 "inläsning av insticksmodulerna, prova att avinstallera och ominstallera GIMP."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Error extracting temporary data."
 msgstr "Ett fel uppstod vid extrahering av temporära data."
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Error updating Python interpreter info."
 msgstr "Ett fel uppstod vid uppdatering av information för Python-tolk."
 
-#: build/windows/installer/lang/setup.isl.xml.in:186
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Trying to create Restore Point..."
 msgstr "Försöker skapa återställningspunkt…"
 
-#: build/windows/installer/lang/setup.isl.xml.in:190
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Cleaning up old files..."
 msgstr "Rensar gamla filer…"
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Kom ihåg: GIMP är fri programvara.%n%nBesök"
 
-#: build/windows/installer/lang/setup.isl.xml.in:199
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "for free updates."
 msgstr "för fria uppdateringar."
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Ställer in miljö för GIMPs Python-tillägg…"
 
-#: build/windows/installer/lang/setup.isl.xml.in:206
+#: build/windows/installer/lang/setup.isl.xml.in:198
 msgid "Setting up GIMP environment..."
 msgstr "Ställer in GIMP-miljön…"
 
-#: build/windows/installer/lang/setup.isl.xml.in:211
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Launch GIMP"
 msgstr "Starta GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:216
+#: build/windows/installer/lang/setup.isl.xml.in:208
 msgid "Removing add-on"
 msgstr "Tar bort tillägg"
 
-#: build/windows/installer/lang/setup.isl.xml.in:221
+#: build/windows/installer/lang/setup.isl.xml.in:213
 msgid ""
 "Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
 "custom brushes)?%n%nA copy will be made on Desktop."
@@ -274,9 +261,19 @@ msgstr ""
 "verktygsförinställningar, anpassade penslar)?%n%nEn kopia kommer göras på "
 "skrivbordet."
 
-#: build/windows/installer/lang/setup.isl.xml.in:225
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Internal error (%1)."
 msgstr "Internt fel (%1)."
+
+#~ msgid "Support for 32-bit plug-ins"
+#~ msgstr "Stöd för 32-bitars insticksmoduler"
+
+#~ msgid ""
+#~ "Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
+#~ "support."
+#~ msgstr ""
+#~ "Inkludera filer som behövs för att använda 32-bitars insticksmoduler."
+#~ "%nKrävs för TWAIN-stöd."
 
 #~ msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
 #~ msgstr "Installation byggd av Jernej Simonèiè, jernej-gimp@ena.si"
