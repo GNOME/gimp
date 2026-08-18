@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-27 23:25+0000\n"
-"PO-Revision-Date: 2026-07-26 11:27+0800\n"
+"POT-Creation-Date: 2026-08-15 19:47+0000\n"
+"PO-Revision-Date: 2026-08-17 08:46+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -86,7 +86,7 @@ msgid "Script Console"
 msgstr "脚本控制台"
 
 #: plug-ins/script-fu/console/script-fu-console.c:124
-#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/console/script-fu-console.c:251
 msgid "_Save"
 msgstr "保存(_S)"
 
@@ -95,34 +95,34 @@ msgid "C_lear"
 msgstr "清除(_L)"
 
 #: plug-ins/script-fu/console/script-fu-console.c:126
-#: plug-ins/script-fu/console/script-fu-console.c:313
+#: plug-ins/script-fu/console/script-fu-console.c:315
 msgid "_Close"
 msgstr "关闭(_C)"
 
-#: plug-ins/script-fu/console/script-fu-console.c:187
+#: plug-ins/script-fu/console/script-fu-console.c:189
 msgid "_Browse..."
 msgstr "浏览(_B)…"
 
-#: plug-ins/script-fu/console/script-fu-console.c:246
+#: plug-ins/script-fu/console/script-fu-console.c:248
 msgid "Save Script-Fu Console Output"
 msgstr "保存 Script-Fu 控制台输出"
 
-#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/console/script-fu-console.c:251
 #: plug-ins/script-fu/server/script-fu-server.c:968
 #: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: plug-ins/script-fu/console/script-fu-console.c:282
+#: plug-ins/script-fu/console/script-fu-console.c:284
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "无法为写入打开“%s”：%s"
 
-#: plug-ins/script-fu/console/script-fu-console.c:308
+#: plug-ins/script-fu/console/script-fu-console.c:310
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu 过程浏览器"
 
-#: plug-ins/script-fu/console/script-fu-console.c:312
+#: plug-ins/script-fu/console/script-fu-console.c:314
 msgid "_Apply"
 msgstr "应用(_A)"
 
@@ -840,11 +840,19 @@ msgstr "五分构图法"
 msgid "Golden sections"
 msgstr "黄金分割"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:27
+msgid ""
+"No selection to base guides on.\n"
+"Make a selection first!"
+msgstr ""
+"没有选区供参考线创建其上。\n"
+"请先创建选区！"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "New Guides from _Selection"
 msgstr "从选区新建参考线(_S)"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:34
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "沿目前选区的边界框生成四根参考线"
 
