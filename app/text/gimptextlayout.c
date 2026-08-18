@@ -193,11 +193,17 @@ gimp_text_layout_new (GimpText     *text,
       break;
     case GIMP_TEXT_BOX_FIXED:
       if (! PANGO_GRAVITY_IS_VERTICAL (pango_context_get_base_gravity (context)))
+        /*  gimp_text_layout_render() scales the horizontal axis by
+         *  xres / yres, so a line laid out to the box width would be
+         *  drawn that much wider than the box and clipped (issue #1028).
+         *  Wrap to the pre-scaling width so it lands on the box.
+         */
         pango_layout_set_width (layout->layout,
                                 pango_units_from_double
                                 (gimp_units_to_pixels (text->box_width,
                                                        text->box_unit,
-                                                       xres)));
+                                                       xres) *
+                                 yres / xres));
       else
         pango_layout_set_width (layout->layout,
                                 pango_units_from_double
