@@ -15,10 +15,11 @@ foreach plugin_name : file_raw_exes
   plugin_sources = plugin_sourcecode
 
   if platform_windows
-    plugin_rc = configure_file(
-      input : gimp_plugins_rc.full_path(),
+    plugin_rc = custom_target(
+      plugin_name + '-rc',
+      input: gimp_plugins_rc,
       output: plugin_name + '.rc',
-      copy: true,
+      command: [python, '-c', 'import shutil, sys; shutil.copy(sys.argv[1], sys.argv[2])', '@INPUT@', '@OUTPUT@']
     )
     plugin_sources += windows.compile_resources(
       plugin_rc,

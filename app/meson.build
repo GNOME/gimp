@@ -157,13 +157,8 @@ gui_libapps = [
 
 if platform_windows
   console_rc_name = 'gimp-console-'+ gimp_app_version
-  gimp_app_console_rc = configure_file(
-    input : gimp_plugins_rc.full_path(),
-    output: console_rc_name + '.rc',
-    copy: true,
-  )
   console_rc_file = windows.compile_resources(
-    gimp_app_console_rc,
+    gimp_plugins_rc,
     args: [
       rc_define_flag, rc_define_fmt.format('ORIGINALFILENAME_STR', console_rc_name+'.exe'),
       rc_define_flag, rc_define_fmt.format('INTERNALNAME_STR', console_rc_name),
@@ -174,11 +169,6 @@ if platform_windows
   )
 
   gui_rc_name = 'gimp-'+ gimp_app_version
-  gimp_app_gui_rc = configure_file(
-    input : gimp_plugins_rc.full_path(),
-    output: gui_rc_name + '.rc',
-    copy: true,
-  )
   gui_rc_file = windows.compile_resources(
     gimp_app_rc,
     args: [
