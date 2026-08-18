@@ -59,8 +59,9 @@ struct _ItemOptionsDialog
   GtkWidget               *left_grid;
   gint                     grid_row;
   GtkWidget               *name_entry;
-  GtkWidget               *right_frame;
   GtkWidget               *right_vbox;
+  GtkWidget               *right_frame;
+  GtkWidget               *frame_vbox;
   GtkWidget               *lock_position_toggle;
 };
 
@@ -257,18 +258,23 @@ item_options_dialog_new (GimpImage               *image,
 
   /*  The switches frame & vbox  */
 
+  private->right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_box_pack_start (GTK_BOX (main_hbox), private->right_vbox,
+                      FALSE, FALSE, 0);
+  gtk_widget_set_visible (private->right_vbox, TRUE);
+
   private->right_frame = gimp_frame_new (_("Switches"));
-  gtk_box_pack_start (GTK_BOX (main_hbox), private->right_frame,
+  gtk_box_pack_start (GTK_BOX (private->right_vbox), private->right_frame,
                       FALSE, FALSE, 0);
   gtk_widget_set_visible (private->right_frame, TRUE);
 
-  private->right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (private->right_frame), private->right_vbox);
-  gtk_widget_set_visible (private->right_vbox, TRUE);
+  private->frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (private->right_frame), private->frame_vbox);
+  gtk_widget_set_visible (private->frame_vbox, TRUE);
 
   button = check_button_with_icon_new (_("_Visible"),
                                        GIMP_ICON_VISIBLE,
-                                       GTK_BOX (private->right_vbox));
+                                       GTK_BOX (private->frame_vbox));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->visible);
   g_signal_connect (button, "toggled",
@@ -277,7 +283,7 @@ item_options_dialog_new (GimpImage               *image,
 
   button = check_button_with_icon_new (lock_content_label,
                                        lock_content_icon_name,
-                                       GTK_BOX (private->right_vbox));
+                                       GTK_BOX (private->frame_vbox));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->lock_content);
   g_signal_connect (button, "toggled",
@@ -286,7 +292,7 @@ item_options_dialog_new (GimpImage               *image,
 
   button = check_button_with_icon_new (lock_position_label,
                                        GIMP_ICON_LOCK_POSITION,
-                                       GTK_BOX (private->right_vbox));
+                                       GTK_BOX (private->frame_vbox));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->lock_position);
   g_signal_connect (button, "toggled",
@@ -297,7 +303,7 @@ item_options_dialog_new (GimpImage               *image,
 
   button = check_button_with_icon_new (lock_visibility_label,
                                        GIMP_ICON_LOCK_VISIBILITY,
-                                       GTK_BOX (private->right_vbox));
+                                       GTK_BOX (private->frame_vbox));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->lock_visibility);
   g_signal_connect (button, "toggled",
@@ -424,7 +430,7 @@ item_options_dialog_add_switch (GtkWidget   *dialog,
   g_return_val_if_fail (private != NULL, NULL);
 
   return check_button_with_icon_new (label, icon_name,
-                                     GTK_BOX (private->right_vbox));
+                                     GTK_BOX (private->frame_vbox));
 }
 
 void
