@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-17 02:04+0000\n"
-"PO-Revision-Date: 2026-08-18 14:10+0200\n"
+"POT-Creation-Date: 2026-08-18 12:58+0000\n"
+"PO-Revision-Date: 2026-08-18 16:59+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -15817,14 +15817,14 @@ msgstr "Različica:"
 msgid "OS:"
 msgstr "Operacijski sistem:"
 
-#: app/dialogs/about-dialog.c:1021 app/dialogs/about-dialog.c:1026
-#: app/dialogs/about-dialog.c:1033
+#: app/dialogs/about-dialog.c:1020
+#, c-format
+msgid "Memory: %s (%s free)\n"
+msgstr "Pomnilnik: %s (prosto %s)\n"
+
+#: app/dialogs/about-dialog.c:1026 app/dialogs/about-dialog.c:1033
 msgid "Memory:"
 msgstr "Pomnilnik:"
-
-#: app/dialogs/about-dialog.c:1021
-msgid "free"
-msgstr "prosto"
 
 #: app/dialogs/about-dialog.c:1055
 msgid "Swap:"
