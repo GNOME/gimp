@@ -1017,8 +1017,8 @@ about_dialog_debug_text (void)
         {
           gchar *free_size = g_format_size (avail_mem);
 
-          g_string_append_printf (text, "%s %s (%s %s)\n",
-                                  _("Memory:"), mem_size, free_size, _("free"));
+          g_string_append_printf (text, _("Memory: %s (%s free)\n"),
+                                  mem_size, free_size);
           g_free (free_size);
         }
       else
