@@ -92,7 +92,7 @@ static NSWindow *previous_key_window = nil;
 static void        about_dialog_response      (GtkDialog       *dialog,
                                                gint             response_id,
                                                gpointer         user_data);
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
 static void        about_dialog_realize       (GtkWidget       *widget,
                                                GimpAboutDialog *dialog);
 #endif
@@ -285,7 +285,7 @@ about_dialog_create (Gimp           *gimp,
       g_signal_connect (widget, "response",
                         G_CALLBACK (about_dialog_response),
                         NULL);
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
       g_signal_connect (widget, "realize",
                         G_CALLBACK (about_dialog_realize),
                         &dialog);
@@ -346,12 +346,28 @@ about_dialog_response (GtkDialog *dialog,
     gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
 static void
 about_dialog_realize (GtkWidget *widget,
                       GimpAboutDialog *dialog)
 {
+#ifdef G_OS_WIN32
   gimp_window_set_title_bar_theme (dialog->gimp, widget);
+#endif
+
+#ifdef PLATFORM_OSX
+  /* since `widget` is not created with gimp_dialog_new, drop minimize manually */
+  GdkWindow *window = gtk_widget_get_window (widget);
+
+  if (window)
+    {
+      gdk_window_set_functions (window,
+                                GDK_FUNC_RESIZE |
+                                GDK_FUNC_MOVE   |
+                                GDK_FUNC_CLOSE  |
+                                GDK_FUNC_MAXIMIZE);
+    }
+#endif
 }
 #endif
 
