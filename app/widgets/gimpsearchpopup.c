@@ -94,7 +94,7 @@ static void       gimp_search_popup_get_property        (GObject            *obj
 
 static void       gimp_search_popup_size_allocate        (GtkWidget         *widget,
                                                           GtkAllocation     *allocation);
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
 static void       gimp_search_popup_realize              (GimpSearchPopup   *search_popup,
                                                           gpointer           data);
 #endif
@@ -196,7 +196,7 @@ gimp_search_popup_init (GimpSearchPopup *search_popup)
 {
   search_popup->priv = gimp_search_popup_get_instance_private (search_popup);
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
   g_signal_connect (search_popup, "realize",
                     G_CALLBACK (gimp_search_popup_realize),
                     NULL);
@@ -225,6 +225,7 @@ gimp_search_popup_new (Gimp                    *gimp,
   GtkWidget *widget;
 
 #ifdef PLATFORM_OSX
+  /* since `widget` is not created with gimp_dialog_new, there is no auto focus */
   gimp_search_popup_osx_save_focus ();
 #endif
 
@@ -243,6 +244,7 @@ gimp_search_popup_new (Gimp                    *gimp,
   gtk_window_set_modal (GTK_WINDOW (widget), FALSE);
 
 #ifdef PLATFORM_OSX
+  /* restore the focus manually due to the reason stated above */
   g_signal_connect (widget, "unmap",
                     G_CALLBACK (gimp_search_popup_osx_restore_focus),
                     NULL);
@@ -551,11 +553,12 @@ gimp_search_popup_size_allocate (GtkWidget     *widget,
     }
 }
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
 static void
 gimp_search_popup_realize (GimpSearchPopup *search_popup,
                            gpointer         data)
 {
+#ifdef G_OS_WIN32
   /* Since this popup is initially modal to the main window,
    * toggling the visibility of the GdkWindow causes odd
    * behavior. Instead, we change the opacity on launch to
@@ -565,6 +568,21 @@ gimp_search_popup_realize (GimpSearchPopup *search_popup,
 
   gtk_widget_set_opacity (GTK_WIDGET (search_popup), 0);
   gtk_widget_set_opacity (GTK_WIDGET (search_popup), 1);
+#endif
+
+#ifdef PLATFORM_OSX
+  /* since `search_popup` is not created with gimp_dialog_new, drop minimize manually */
+  GdkWindow *window = gtk_widget_get_window (GTK_WIDGET (search_popup));
+
+  if (window)
+    {
+      gdk_window_set_functions (window,
+                                GDK_FUNC_RESIZE |
+                                GDK_FUNC_MOVE   |
+                                GDK_FUNC_CLOSE  |
+                                GDK_FUNC_MAXIMIZE);
+    }
+#endif
 }
 #endif
 
