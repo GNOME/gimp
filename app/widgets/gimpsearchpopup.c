@@ -25,6 +25,10 @@
 
 #include <gdk/gdkkeysyms.h>
 
+#ifdef PLATFORM_OSX
+#import <AppKit/AppKit.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -90,6 +94,13 @@ static void       gimp_search_popup_size_allocate        (GtkWidget         *wid
 static void       gimp_search_popup_realize              (GimpSearchPopup   *search_popup,
                                                           gpointer           data);
 #endif
+
+#ifdef PLATFORM_OSX
+static void       gimp_search_popup_osx_save_focus       (void);
+static void       gimp_search_popup_osx_restore_focus    (GtkWidget *widget,
+                                                          gpointer   user_data);
+#endif
+
 static void       gimp_search_popup_confirm              (GimpPopup *popup);
 
 /* Signal handlers on the search entry */
@@ -124,7 +135,10 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpSearchPopup, gimp_search_popup, GIMP_TYPE_POPUP)
 
 #define parent_class gimp_search_popup_parent_class
 
-static gint window_height = 0;
+static gint      window_height = 0;
+#ifdef PLATFORM_OSX
+static NSWindow *previous_key_window = nil;
+#endif
 
 
 static void
@@ -206,6 +220,10 @@ gimp_search_popup_new (Gimp                    *gimp,
 {
   GtkWidget *widget;
 
+#ifdef PLATFORM_OSX
+  gimp_search_popup_osx_save_focus ();
+#endif
+
   widget = g_object_new (GIMP_TYPE_SEARCH_POPUP,
                          "type",          GTK_WINDOW_TOPLEVEL,
                          "type-hint",     GDK_WINDOW_TYPE_HINT_DIALOG,
@@ -219,6 +237,12 @@ gimp_search_popup_new (Gimp                    *gimp,
                          "callback-data", callback_data,
                          NULL);
   gtk_window_set_modal (GTK_WINDOW (widget), FALSE);
+
+#ifdef PLATFORM_OSX
+  g_signal_connect (widget, "unmap",
+                    G_CALLBACK (gimp_search_popup_osx_restore_focus),
+                    NULL);
+#endif
 
   return widget;
 }
@@ -555,6 +579,25 @@ gimp_search_popup_realize (GimpSearchPopup *search_popup,
 
   gtk_widget_set_opacity (GTK_WIDGET (search_popup), 0);
   gtk_widget_set_opacity (GTK_WIDGET (search_popup), 1);
+}
+#endif
+
+#ifdef PLATFORM_OSX
+static void
+gimp_search_popup_osx_save_focus (void)
+{
+  previous_key_window = [NSApp keyWindow];
+}
+
+static void
+gimp_search_popup_osx_restore_focus (GtkWidget *widget,
+                                     gpointer   user_data)
+{
+  if (previous_key_window && [previous_key_window canBecomeKeyWindow])
+    {
+      [previous_key_window makeKeyAndOrderFront:nil];
+      previous_key_window = nil;
+    }
 }
 #endif
 
