@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #ifdef PLATFORM_OSX
+#import <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
 #endif /* PLATFORM_OSX */
 #ifdef G_OS_WIN32
@@ -85,6 +86,10 @@ typedef struct
   gint            state;
   gboolean        visible;
 } GimpAboutDialog;
+
+#ifdef PLATFORM_OSX
+static NSWindow *previous_key_window = nil;
+#endif
 
 static void        about_dialog_response      (GtkDialog       *dialog,
                                                gint             response_id,
@@ -253,6 +258,11 @@ about_dialog_create (Gimp           *gimp,
       else
         version = g_strdup (GIMP_VERSION);
 
+#ifdef PLATFORM_OSX
+      /* since `widget` is not created with gimp_dialog_new, there is no auto focus */
+      previous_key_window = [NSApp keyWindow];
+#endif
+
       widget = g_object_new (GTK_TYPE_ABOUT_DIALOG,
                              "role",               "gimp-about",
                              "window-position",    GTK_WIN_POS_CENTER,
@@ -384,6 +394,15 @@ about_dialog_unmap (GtkWidget       *widget,
       g_source_remove (dialog->timer);
       dialog->timer = 0;
     }
+
+#ifdef PLATFORM_OSX
+  /* restore the focus manually due to the reason stated on about_dialog_create */
+  if (previous_key_window && [previous_key_window canBecomeKeyWindow])
+    {
+      [previous_key_window makeKeyAndOrderFront:nil];
+      previous_key_window = nil;
+    }
+#endif
 }
 
 static GdkPixbuf *
