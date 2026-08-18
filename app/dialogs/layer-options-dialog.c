@@ -142,6 +142,7 @@ layer_options_dialog_new (GimpImage                *image,
 {
   LayerOptionsDialog   *private;
   GtkWidget            *dialog;
+  GtkWidget            *vbox;
   GtkWidget            *grid;
   GtkListStore         *space_model;
   GtkWidget            *combo;
@@ -151,7 +152,12 @@ layer_options_dialog_new (GimpImage                *image,
   GtkAdjustment        *adjustment;
   GtkWidget            *spinbutton;
   GtkWidget            *button;
+  GtkWidget            *tags;
+  GtkWidget            *area;
   GimpLayerModeContext  mode_context;
+  GdkPixbuf            *pixbuf;
+  gint                  width;
+  gint                  height;
   gdouble               xres;
   gdouble               yres;
   gint                  row = 0;
@@ -216,6 +222,15 @@ layer_options_dialog_new (GimpImage                *image,
                     G_CALLBACK (layer_options_dialog_mode_notify),
                     private);
 
+  adjustment = gtk_adjustment_new (private->opacity, 0.0, 100.0,
+                                   1.0, 10.0, 0.0);
+  scale = gimp_spin_scale_new (adjustment, NULL, 1);
+  item_options_dialog_add_widget (dialog, _("_Opacity:"), scale);
+
+  g_signal_connect (adjustment, "value-changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &private->opacity);
+
   space_model =
     gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_COLOR_SPACE,
                                      4,
@@ -258,15 +273,6 @@ layer_options_dialog_new (GimpImage                *image,
 
   /*  set the sensitivity of above 3 menus  */
   layer_options_dialog_update_mode_sensitivity (private);
-
-  adjustment = gtk_adjustment_new (private->opacity, 0.0, 100.0,
-                                   1.0, 10.0, 0.0);
-  scale = gimp_spin_scale_new (adjustment, NULL, 1);
-  item_options_dialog_add_widget (dialog, _("_Opacity:"), scale);
-
-  g_signal_connect (adjustment, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &private->opacity);
 
   grid = item_options_dialog_get_grid (dialog, &row);
 
@@ -330,6 +336,20 @@ layer_options_dialog_new (GimpImage                *image,
 
       row += 2;
     }
+
+  /* Move color tags from items_options_dialog default location */
+  label = gtk_grid_get_child_at (GTK_GRID (grid), 0, 1);
+  tags  = gtk_grid_get_child_at (GTK_GRID (grid), 1, 1);
+
+  g_object_ref (label);
+  g_object_ref (tags);
+  gtk_container_remove (GTK_CONTAINER (grid), label);
+  gtk_container_remove (GTK_CONTAINER (grid), tags);
+
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            gtk_label_get_text (GTK_LABEL (label)), 0.0, 0.5,
+                            tags, 2);
+  gtk_widget_destroy (label);
 
   if (! layer || ! gimp_item_is_vector_layer (GIMP_ITEM (layer)))
     {
@@ -521,6 +541,26 @@ layer_options_dialog_new (GimpImage                *image,
                         G_CALLBACK (layer_options_dialog_rename_toggled),
                         private);
     }
+
+  /* Add larger image preview */
+  vbox = item_options_dialog_get_right_vbox (dialog);
+
+  width  = gimp_item_get_width  (GIMP_ITEM (layer));
+  height = gimp_item_get_height (GIMP_ITEM (layer));
+
+  area = gimp_offset_area_new (width, height);
+  gtk_box_pack_start (GTK_BOX (vbox), area, TRUE, TRUE, 0);
+  gtk_widget_set_visible (area, TRUE);
+
+  gimp_viewable_get_preview_size (GIMP_VIEWABLE (layer), 200, TRUE, TRUE,
+                                  &width, &height);
+  pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (layer), context,
+                                     width, height, 1, NULL);
+
+  if (pixbuf)
+    gimp_offset_area_set_pixbuf (GIMP_OFFSET_AREA (area), pixbuf);
+
+  gtk_box_reorder_child (GTK_BOX (vbox), area, 0);
 
   return dialog;
 }
