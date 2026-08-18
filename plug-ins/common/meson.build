@@ -199,10 +199,11 @@ foreach plugin : common_plugins_list
   plugin_cflags = plugin.get('cflags', [])
 
   if platform_windows
-    plugin_rc = configure_file(
-      input : gimp_plugins_rc.full_path(),
+    plugin_rc = custom_target(
+      plugin_name + '-rc',
+      input: gimp_plugins_rc,
       output: plugin_name + '.rc',
-      copy: true,
+      command: [python, '-c', 'import shutil, sys; shutil.copy(sys.argv[1], sys.argv[2])', '@INPUT@', '@OUTPUT@']
     )
 
     # See https://gitlab.gnome.org/GNOME/gimp/-/issues/8537
