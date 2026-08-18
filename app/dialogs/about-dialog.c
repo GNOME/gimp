@@ -999,6 +999,19 @@ about_dialog_debug_text (void)
   gint         gegl_major, gegl_minor, gegl_micro;
 
   os_name = g_get_os_info (G_OS_INFO_KEY_PRETTY_NAME);
+  if (! os_name)
+    {
+      gchar *name    = g_get_os_info (G_OS_INFO_KEY_NAME);
+      gchar *version = g_get_os_info (G_OS_INFO_KEY_VERSION_ID);
+
+      if (name && version)
+        os_name = g_strdup_printf ("%s %s", name, version);
+      else if (name)
+        os_name = g_strdup (name);
+
+      g_free (name);
+      g_free (version);
+    }
   babl_get_version (&babl_major, &babl_minor, &babl_micro);
   gegl_get_version (&gegl_major, &gegl_minor, &gegl_micro);
 
