@@ -1,19 +1,20 @@
 # This is the Japanese locale definition for the GIMP tips.
 # Copyright (C) 1999, 2002-2004, 2008-2011, 2020 Free Software Foundation, Inc.
+# This file is distributed under the same license as the GIMP package.
 # SHIRASAKI Yasuhiro <yasuhiro@gnome.gr.jp>, 1999
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2002
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2004
 # Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2011.
 # sicklylife <translation@sicklylife.jp>, 2020.
-# YOSHIDA Shigeto <shigep640509@gmail.com>, 2025.
+# YOSHIDA Shigeto <shigep640509@gmail.com>, 2025-2026.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
+"Project-Id-Version: gimp-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2024-06-11 18:57+0000\n"
-"PO-Revision-Date: 2026-02-12 09:00+0900\n"
+"POT-Creation-Date: 2026-08-16 00:59+0000\n"
+"PO-Revision-Date: 2026-08-17 07:00+0900\n"
 "Last-Translator: YOSHIDA Shigeto <shigep640509@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.gnome.org/teams/ja/>\n"
 "Language: ja\n"
@@ -21,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data/tips/gimp-tips.xml.in:18
 msgid ""
@@ -169,7 +170,7 @@ msgstr ""
 "ある時には <tt>.bz2</tt> の方がいいかな) を付けるだけで、自動的に圧縮されるよ"
 "うになってるんだ。もちろん、読み込む時にも自動で展開されるよ。"
 
-#: data/tips/gimp-tips.xml.in:124
+#: data/tips/gimp-tips.xml.in:116
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -180,7 +181,7 @@ msgstr ""
 "囲を付け加えることになるんだ。<tt>Ctrl</tt>を押しながら始めれば範囲をさっ引く"
 "ことになるしね。"
 
-#: data/tips/gimp-tips.xml.in:132
+#: data/tips/gimp-tips.xml.in:124
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -191,7 +192,7 @@ msgstr ""
 "な図形を描きたい時にはパスツールや [フィルター] → [下塗り] → [シェイプ"
 "(Gfig)] だね。"
 
-#: data/tips/gimp-tips.xml.in:139
+#: data/tips/gimp-tips.xml.in:131
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -202,7 +203,7 @@ msgstr ""
 "ターンを使ってスタンプで描画したり… 消しゴムツールやにじみツールを使うこと"
 "だってできるんだ。"
 
-#: data/tips/gimp-tips.xml.in:146
+#: data/tips/gimp-tips.xml.in:138
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -211,7 +212,7 @@ msgstr ""
 "パスツールを使って複雑な選択範囲を作れるよ。パスダイアログでは複数のパスで作"
 "業したり選択範囲に変換したりできるんだ。"
 
-#: data/tips/gimp-tips.xml.in:153
+#: data/tips/gimp-tips.xml.in:145
 msgid ""
 "You can use the paint tools to change the selection. Click on the \"Quick "
 "Mask\" button at the bottom left of an image window. Change your selection "
@@ -223,7 +224,7 @@ msgstr ""
 "後にもう一度 [クイックマスク] ボタンをクリックすると… いつもの選択範囲表示に"
 "戻るよ。"
 
-#: data/tips/gimp-tips.xml.in:161
+#: data/tips/gimp-tips.xml.in:153
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -235,7 +236,7 @@ msgstr ""
 "ないでね。) チャンネルダイアログのボタンで、チャンネルの 表示/非表示 を切り替"
 "えたりチャンネルから選択範囲を作成したりできるよ。"
 
-#: data/tips/gimp-tips.xml.in:175
+#: data/tips/gimp-tips.xml.in:167
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -243,7 +244,7 @@ msgstr ""
 "画面がきゅうくつな時は、画像ウィンドウで <tt>Tab</tt> を押すとツールボックス"
 "やダイアログの 表示/非表示 を切り替えることができるんだ。"
 
-#: data/tips/gimp-tips.xml.in:182
+#: data/tips/gimp-tips.xml.in:174
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -252,7 +253,7 @@ msgstr ""
 "ると、それ以外のレイヤー全部を隠すことができるんだ。もう一回同じ事をすれば全"
 "部のレイヤーが表示されるようになるよ。"
 
-#: data/tips/gimp-tips.xml.in:188
+#: data/tips/gimp-tips.xml.in:180
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -262,7 +263,7 @@ msgstr ""
 "リックすると、レイヤーマスクの 有効/無効 を切替えられるんだ。<tt>Alt</tt> を"
 "押しながらクリックすると、レイヤーマスクの 表示/非表示 を切り替えられるよ。"
 
-#: data/tips/gimp-tips.xml.in:195
+#: data/tips/gimp-tips.xml.in:187
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -271,7 +272,7 @@ msgstr ""
 "に切替えられるんだ。(ウィンドウマネージャーがこのキー割当を横取りしてなければ"
 "ね…)"
 
-#: data/tips/gimp-tips.xml.in:201
+#: data/tips/gimp-tips.xml.in:193
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -282,14 +283,14 @@ msgstr ""
 "すことができるよ。スポイトツールでは <tt>Ctrl</tt> を押しながらクリックすると"
 "背景色にその色をセットできるんだ。"
 
-#: data/tips/gimp-tips.xml.in:209
+#: data/tips/gimp-tips.xml.in:201
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr ""
 "回転ツールで <tt>Ctrl</tt> を押しながらドラッグすると15度毎に回転するよ。"
 
-#: data/tips/gimp-tips.xml.in:215
+#: data/tips/gimp-tips.xml.in:207
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the \"Auto\" button in the Levels tool "
