@@ -94,7 +94,6 @@ endif
 
 menu_config = configuration_data()
 toolbar_compiler_args = []
-clean_winflexbison = []
 if flex.found() and bison.found()
   #Only show Open menu if imagemap was built with flex and bison (see issue #14145)
   toolbar_compiler_args += '-DHAVE_FLEX_BISON'
@@ -117,7 +116,6 @@ if flex.found() and bison.found()
         '@INPUT@',
       ],
       output  : '@BASENAME@_lex.c',
-      depends: clean_winflexbison,
   )
 
   parse_gen = generator(
@@ -138,26 +136,18 @@ if flex.found() and bison.found()
 
   previous_syntax = []
   foreach syntax : syntaxes
-    clean_winflexbison = syntax + 'clean'
     syntax_prefix =  syntax + '_'
     imapname = 'imap_' + syntax
 
     if platform_windows and meson.version().version_compare('>=1.12')
       #avoid win_flex.EXE: error deleting file %TMP%\~flex_out_main_2
-      clean_winflexbison = custom_target(syntax + 'clean',
-        output: syntax + 'clean' + '.stamp',
-        command: [
-          python, '-c',
-          'import os, glob; [os.remove(f) for f in glob.glob(os.path.join(os.environ.get("FLEX_TMP_DIR", os.environ.get("TMP", ".")), "*flex_out*")) if os.path.exists(f)]; open("@OUTPUT@", "w").close()'
-        ],
-        build_by_default: true
-      )
-      plugin_sources += lex_gen.process(
+      lex_out = lex_gen.process(
                   imapname + '.l',
       extra_args: ['--prefix', syntax_prefix],
       depends: previous_syntax,
       )
-      previous_syntax = [clean_winflexbison]
+      previous_syntax = [lex_out]
+      plugin_sources += lex_out
     else
       plugin_sources += lex_gen.process(
                   imapname + '.l',
