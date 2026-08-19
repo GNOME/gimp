@@ -1175,6 +1175,7 @@ gimp_channel_load_exit (GimpLoadState  *state,
       GimpDrawableFilter *filter = GIMP_DRAWABLE_FILTER (gimp_savable_load_peek_active_object (state));
 
       g_object_set (filter, "mask", channel, NULL);
+      g_object_unref (channel);
     }
   else if (GIMP_IS_LAYER (gimp_savable_load_peek_active_object (state)))
     {
