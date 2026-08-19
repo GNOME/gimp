@@ -1,14 +1,14 @@
 # Japanese translation for GIMP.
 # Copyright (C) 2025 GIMP's COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
-# YOSHIDA Shigeto <shigep640509@gmail.com>, 2025.
+# YOSHIDA Shigeto <shigep640509@gmail.com>, 2025-2026.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
+"Project-Id-Version: gimp-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-06-25 08:25+0000\n"
-"PO-Revision-Date: 2026-02-07 09:00+0900\n"
+"PO-Revision-Date: 2026-08-17 07:00+0900\n"
 "Last-Translator: YOSHIDA Shigeto <shigep640509@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.gnome.org/teams/ja/>\n"
 "Language: ja\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data/tags/gimp-tags-default.xml.in:11 data/tags/gimp-tags-default.xml.in:19
 msgid "round"
