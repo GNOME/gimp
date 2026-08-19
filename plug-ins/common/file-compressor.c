@@ -474,6 +474,7 @@ export_image (const CompressorEntry  *compressor,
 {
   const gchar *ext;
   GFile       *tmp_file;
+  GFile       *xcf_file = NULL;
 
   ext = find_extension (compressor, g_file_peek_path (file));
 
@@ -493,6 +494,8 @@ export_image (const CompressorEntry  *compressor,
       return gimp_pdb_get_last_status (gimp_get_pdb ());
     }
 
+  xcf_file = gimp_image_get_xcf_file (image);
+
   if (! (gimp_file_save (run_mode, image, tmp_file, options) &&
          valid_file (tmp_file)))
     {
@@ -504,6 +507,10 @@ export_image (const CompressorEntry  *compressor,
 
       return gimp_pdb_get_last_status (gimp_get_pdb ());
     }
+
+  /* Restore XCF name if exporting an XCF copy */
+  if (xcf_file)
+    gimp_image_set_file (image, xcf_file);
 
   gimp_progress_init_printf (_("Compressing '%s'"),
                              gimp_file_get_utf8_name  (file));
