@@ -2,14 +2,14 @@
 # Copyright (C) 2018 the gimp authors
 # This file is distributed under the same license as the GIMP package.
 # Kiyotaka Nishibori (as nishbone2016) <ml.nishibori.kiyotaka@gmail.com>, 2018-2019.
-# YOSHIDA Shigeto <shigep640509@gmail.com>, 2025.
+# YOSHIDA Shigeto <shigep640509@gmail.com>, 2025-2026.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
+"Project-Id-Version: gimp-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-12-28 11:26+0000\n"
-"PO-Revision-Date: 2026-03-03 09:00+0900\n"
+"POT-Creation-Date: 2026-08-02 17:50+0000\n"
+"PO-Revision-Date: 2026-08-17 07:00+0900\n"
 "Last-Translator: YOSHIDA Shigeto <shigep640509@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.gnome.org/teams/ja/>\n"
 "Language: ja\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
 
 #  InfoBefore page is used instead of license page because the GPL only
 #  concerns distribution, not use, and as such doesn't have to be accepted
@@ -49,15 +50,13 @@ msgid ""
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
-"installation anyway?"
+"www.gimp.org/bugs%n%nDo you wish to continue with installation anyway?"
 msgstr ""
 "今回インストールする GIMP は開発版で、未完成の機能が含まれ動作も安定していま"
 "せん。このため日常の作業には適しませんし、作業中のデータが失われる可能性もあ"
 "ります。%nもし問題に直面したときは、GIT においても未修正であることを確認のう"
 "え、開発陣へ連絡するか GIMP gitlab へ報告してください。%nGIMP gitlab の URL "
-"は次のとおりです。%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nインストー"
-"ルを続行しますか?"
+"は次のとおりです。%n_https://www.gimp.org/bugs%n%nインストールを続行しますか?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
 #: build/windows/installer/lang/setup.isl.xml.in:43
@@ -145,7 +144,7 @@ msgstr "デバッグシンボル"
 
 #: build/windows/installer/lang/setup.isl.xml.in:104
 msgid "Include information to help with debugging GIMP"
-msgstr "デバッグやバグ報告に役立つ情報"
+msgstr "デバッグやバグ報告に役立つ情報が含まれます"
 
 #: build/windows/installer/lang/setup.isl.xml.in:108
 msgid "Resource development files"
@@ -156,8 +155,8 @@ msgid ""
 "Include some files to help with building GEGL filters and GIMP plug-ins in "
 "MSYS2"
 msgstr ""
-"MSYS2 で GEGL フィルターや GIMP プラグインの構築に役立つファイルをいくつか含"
-"めてください"
+"MSYS2 で GEGL フィルターや GIMP プラグインをビルドするための補助ファイルがい"
+"くつか含まれます"
 
 #: build/windows/installer/lang/setup.isl.xml.in:116
 #: build/windows/installer/lang/setup.isl.xml.in:120
@@ -194,29 +193,17 @@ msgstr "PostScript のサポート"
 
 #: build/windows/installer/lang/setup.isl.xml.in:152
 msgid "Allow GIMP to load PostScript files"
-msgstr "PostScript ファイルを読み込み可能にするコンポーネント"
+msgstr "PostScript ファイルを読み込み可能にするコンポーネントです"
 
-#: build/windows/installer/lang/setup.isl.xml.in:156
-msgid "Support for 32-bit plug-ins"
-msgstr "32 ビットプラグインサポート"
-
-#: build/windows/installer/lang/setup.isl.xml.in:160
-msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
-"support."
-msgstr ""
-"32 ビットプラグイン使用のために必要なファイルです。%nTWAIN のサポートに必須で"
-"す。"
-
-#: build/windows/installer/lang/setup.isl.xml.in:165
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid "Additional icons:"
 msgstr "アイコンの追加:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:169
+#: build/windows/installer/lang/setup.isl.xml.in:161
 msgid "Create a &desktop icon"
 msgstr "デスクトップにアイコンを追加(&D)"
 
-#: build/windows/installer/lang/setup.isl.xml.in:174
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -225,19 +212,19 @@ msgstr ""
 "ラーが発生するようなら、一旦 GIMP をアンインストールし、再度インストールして"
 "ください。"
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Error extracting temporary data."
 msgstr "一時データ展開時にエラーが発生しました。"
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Error updating Python interpreter info."
 msgstr "Python インタプリター情報の更新中にエラーが発生しました。"
 
-#: build/windows/installer/lang/setup.isl.xml.in:186
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Trying to create Restore Point..."
 msgstr "復元ポイントを作成しようとしています..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:190
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Cleaning up old files..."
 msgstr "古いファイルを整理しています..."
 
@@ -247,31 +234,31 @@ msgstr "古いファイルを整理しています..."
 #      https://www.gimp.org/
 #       for free updates.
 #
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "GIMP は自由ソフトウェアです。%n%nアップデートはこちらから"
 
-#: build/windows/installer/lang/setup.isl.xml.in:199
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "for free updates."
 msgstr "もちろん何の制限もありません。"
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "GIMP Python 拡張の環境をセットアップしています..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:206
+#: build/windows/installer/lang/setup.isl.xml.in:198
 msgid "Setting up GIMP environment..."
 msgstr "GIMP 本体の環境をセットアップしています..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:211
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Launch GIMP"
 msgstr "GIMP を起動する"
 
-#: build/windows/installer/lang/setup.isl.xml.in:216
+#: build/windows/installer/lang/setup.isl.xml.in:208
 msgid "Removing add-on"
 msgstr "アドオンを削除しています"
 
-#: build/windows/installer/lang/setup.isl.xml.in:221
+#: build/windows/installer/lang/setup.isl.xml.in:213
 msgid ""
 "Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
 "custom brushes)?%n%nA copy will be made on Desktop."
@@ -279,9 +266,19 @@ msgstr ""
 "個人の GIMP ファイル (例: 設定、ツールプリセット、カスタムブラシ) を削除して"
 "もよろしいですか?%n%nデスクトップ上にコピーが作成されます。"
 
-#: build/windows/installer/lang/setup.isl.xml.in:225
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Internal error (%1)."
 msgstr "内部エラーが発生しました (%1)。"
+
+#~ msgid "Support for 32-bit plug-ins"
+#~ msgstr "32 ビットプラグインサポート"
+
+#~ msgid ""
+#~ "Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
+#~ "support."
+#~ msgstr ""
+#~ "32 ビットプラグイン使用のために必要なファイルです。%nTWAIN のサポートに必"
+#~ "須です。"
 
 #, fuzzy
 #~ msgid "MS-Windows engine for GTK"
