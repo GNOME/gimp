@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-17 02:04+0000\n"
-"PO-Revision-Date: 2026-08-18 13:17+0200\n"
+"POT-Creation-Date: 2026-08-19 02:18+0000\n"
+"PO-Revision-Date: 2026-08-19 10:00+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -15530,16 +15530,16 @@ msgstr "Bestand met voorinstellingen gereedschappen is gecorrumpeerd."
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:251
+#: app/dialogs/about-dialog.c:256
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revisie %d)"
 
-#: app/dialogs/about-dialog.c:259
+#: app/dialogs/about-dialog.c:269
 msgid "About GIMP"
 msgstr "Over GIMP"
 
-#: app/dialogs/about-dialog.c:268
+#: app/dialogs/about-dialog.c:278
 msgid "Visit the GIMP website"
 msgstr "Bezoek de website van GIMP"
 
@@ -15547,7 +15547,7 @@ msgstr "Bezoek de website van GIMP"
 #  we’d prefer just the names, please no email adresses.
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:274
+#: app/dialogs/about-dialog.c:284
 msgid "translator-credits"
 msgstr "vertalers:\n"
 "Wing Tung Leung\n"
@@ -15567,34 +15567,34 @@ msgstr "vertalers:\n"
 "Dick Groskamp\n"
 "Meer info over GNOME-NL https://matrix.to/#/#nl:gnome.org"
 
-#: app/dialogs/about-dialog.c:329 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:339 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "_Hulp"
 
 # types/typen/soorten
-#: app/dialogs/about-dialog.c:506
+#: app/dialogs/about-dialog.c:541
 msgid "Update available!"
 msgstr "Update beschikbaar!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:536
+#: app/dialogs/about-dialog.c:571
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Download GIMP %s versie %d (uitgegeven op %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:546
+#: app/dialogs/about-dialog.c:581
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>opmerkingen bij deze versie</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:551
+#: app/dialogs/about-dialog.c:586
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Download GIMP %s (van %s)\n"
 
-#: app/dialogs/about-dialog.c:576 app/dialogs/about-dialog.c:599
+#: app/dialogs/about-dialog.c:611 app/dialogs/about-dialog.c:634
 msgid "Check for updates"
 msgstr "Controleren op nieuwe versie"
 
@@ -15602,7 +15602,7 @@ msgstr "Controleren op nieuwe versie"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:620
+#: app/dialogs/about-dialog.c:655
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Laatste controle was op %s om %s"
@@ -15611,16 +15611,16 @@ msgstr "Laatste controle was op %s om %s"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:626
+#: app/dialogs/about-dialog.c:661
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "Up-to-date vanaf %s om %s"
 
-#: app/dialogs/about-dialog.c:854
+#: app/dialogs/about-dialog.c:889
 msgid "GIMP is brought to you by"
 msgstr "GIMP is gemaakt door"
 
-#: app/dialogs/about-dialog.c:929
+#: app/dialogs/about-dialog.c:964
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -15628,50 +15628,50 @@ msgid ""
 msgstr "Dit is een ontwikkelversie\n"
 "commit %s"
 
-#: app/dialogs/about-dialog.c:992
+#: app/dialogs/about-dialog.c:1040
 msgid "built from source"
 msgstr "gebouwd uit bron"
 
-#: app/dialogs/about-dialog.c:1002 app/dialogs/module-dialog.c:366
+#: app/dialogs/about-dialog.c:1050 app/dialogs/module-dialog.c:366
 msgid "Version:"
 msgstr "Versie:"
 
-#: app/dialogs/about-dialog.c:1004
+#: app/dialogs/about-dialog.c:1052
 msgid "OS:"
 msgstr "Besturingssysteem:"
 
-#: app/dialogs/about-dialog.c:1021 app/dialogs/about-dialog.c:1026
-#: app/dialogs/about-dialog.c:1033
+#: app/dialogs/about-dialog.c:1068
+#, c-format
+msgid "Memory: %s (%s free)\n"
+msgstr "Geheugen: %s (%s vrij)\n"
+
+#: app/dialogs/about-dialog.c:1074 app/dialogs/about-dialog.c:1081
 msgid "Memory:"
 msgstr "Geheugen:"
 
-#: app/dialogs/about-dialog.c:1021
-msgid "free"
-msgstr "vrij"
-
-#: app/dialogs/about-dialog.c:1055
+#: app/dialogs/about-dialog.c:1103
 msgid "Swap:"
 msgstr "Wisselgeheugen:"
 
-#: app/dialogs/about-dialog.c:1066
+#: app/dialogs/about-dialog.c:1114
 msgid "Library Versions:"
 msgstr "Versies bibliotheek:"
 
-#: app/dialogs/about-dialog.c:1143 app/dialogs/about-dialog.c:1201
+#: app/dialogs/about-dialog.c:1191 app/dialogs/about-dialog.c:1249
 msgid "Copy Version Information"
 msgstr "Versie-informatie kopiëren"
 
 # muisaanwijzer/pointer
-#: app/dialogs/about-dialog.c:1198
+#: app/dialogs/about-dialog.c:1246
 msgid "Version Information"
 msgstr "Versie-informatie"
 
-#: app/dialogs/about-dialog.c:1200
+#: app/dialogs/about-dialog.c:1248
 msgid "_Copy"
 msgstr "_Kopiëren"
 
 # muisaanwijzer/pointer
-#: app/dialogs/about-dialog.c:1257
+#: app/dialogs/about-dialog.c:1305
 msgid "Copied Version Information"
 msgstr "Versie-informatie gekopieerd"
 
@@ -19263,12 +19263,12 @@ msgstr "Afbeelding draaien"
 msgid "Select Rotation Angle"
 msgstr "Kies draaihoek"
 
-#: app/display/gimpdisplayshell-rotate-dialog.c:152
+#: app/display/gimpdisplayshell-rotate-dialog.c:153
 #: app/tools/gimpmeasuretool.c:788
 msgid "Angle:"
 msgstr "Hoek:"
 
-#: app/display/gimpdisplayshell-rotate-dialog.c:166
+#: app/display/gimpdisplayshell-rotate-dialog.c:167
 msgid "degrees"
 msgstr "graden"
 
@@ -28367,12 +28367,12 @@ msgstr "Metadata zijn niet zichtbaar in GIMP-versies ouder dan 2.10."
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:303
+#: app/widgets/gimpsearchpopup.c:329
 msgid "menu"
 msgstr "menu"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:307
+#: app/widgets/gimpsearchpopup.c:333
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -29753,6 +29753,9 @@ msgstr "Menu Gereedschapsvoorinstellingen"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Menu Geschiedenis"
+
+#~ msgid "free"
+#~ msgstr "vrij"
 
 #~ msgid "Disabled because filters cannot be merged on vector layers."
 #~ msgstr ""
