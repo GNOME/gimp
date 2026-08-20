@@ -126,8 +126,8 @@ gimp_progress_bar_start (const gchar *message,
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
 
   if (gtk_widget_is_drawable (GTK_WIDGET (bar)))
-    while (gtk_events_pending ())
-      gtk_main_iteration ();
+    while (g_main_context_pending (NULL))
+      g_main_context_iteration(NULL, TRUE);
 }
 
 static void
@@ -139,8 +139,8 @@ gimp_progress_bar_end (gpointer user_data)
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
 
   if (gtk_widget_is_drawable (GTK_WIDGET (bar)))
-    while (gtk_events_pending ())
-      gtk_main_iteration ();
+    while (g_main_context_pending (NULL))
+      g_main_context_iteration(NULL, TRUE);
 }
 
 static void
@@ -152,8 +152,8 @@ gimp_progress_bar_set_text (const gchar *message,
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (bar), message ? message : " ");
 
   if (gtk_widget_is_drawable (GTK_WIDGET (bar)))
-    while (gtk_events_pending ())
-      gtk_main_iteration ();
+    while (g_main_context_pending (NULL))
+      g_main_context_iteration(NULL, TRUE);
 }
 
 static void
@@ -168,8 +168,8 @@ gimp_progress_bar_set_value (gdouble  percentage,
     gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
 
   if (gtk_widget_is_drawable (GTK_WIDGET (bar)))
-    while (gtk_events_pending ())
-      gtk_main_iteration ();
+    while (g_main_context_pending (NULL))
+      g_main_context_iteration(NULL, TRUE);
 }
 
 static void
@@ -180,8 +180,8 @@ gimp_progress_bar_pulse (gpointer user_data)
   gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
 
   if (gtk_widget_is_drawable (GTK_WIDGET (bar)))
-    while (gtk_events_pending ())
-      gtk_main_iteration ();
+    while (g_main_context_pending (NULL))
+      g_main_context_iteration(NULL, TRUE);
 }
 
 static GBytes *

@@ -857,8 +857,8 @@ repaint (ppm_t *p, ppm_t *a)
                           "%.1f %%", 100 * (1.0 - ((double)i / max_progress)));
               preview_set_button_label (tmps);
 
-              while(gtk_events_pending())
-                gtk_main_iteration();
+              while (g_main_context_pending (NULL))
+                g_main_context_iteration(NULL, TRUE);
             }
         }
 

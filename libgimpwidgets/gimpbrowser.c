@@ -399,8 +399,8 @@ gimp_browser_show_message (GimpBrowser *browser,
       gimp_browser_set_widget (browser, label);
     }
 
-  while (gtk_events_pending ())
-    gtk_main_iteration ();
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration(NULL, TRUE);
 }
 
 

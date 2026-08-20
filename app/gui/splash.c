@@ -403,8 +403,8 @@ splash_update (const gchar *text1,
   if (splash->timer)
     splash_timer_elapsed ();
 
-  if (gtk_events_pending ())
-    gtk_main_iteration ();
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration(NULL, TRUE);
 }
 
 
