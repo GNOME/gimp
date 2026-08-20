@@ -82,13 +82,9 @@ gimp_prop_kelvin_presets_new (GObject     *config,
     { 9300, N_("9,300 K") }
   };
 
-  button = gtk_button_new ();
-  gtk_widget_set_can_focus (button, FALSE);
+  button = gtk_button_new_from_icon_name (GIMP_ICON_MENU_LEFT,
+                                          GTK_ICON_SIZE_MENU);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-
-  gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
-                                                      GTK_ICON_SIZE_MENU));
 
   menu = gtk_menu_new ();
   gtk_menu_attach_to_widget (GTK_MENU (menu), button, NULL);
