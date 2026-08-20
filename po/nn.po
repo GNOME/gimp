@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-12 18:24+0000\n"
-"PO-Revision-Date: 2026-08-12 22:22+0200\n"
+"POT-Creation-Date: 2026-08-20 17:27+0000\n"
+"PO-Revision-Date: 2026-08-20 21:10+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -488,7 +488,8 @@ msgstr "Verktøyforval"
 msgid "Tool Preset Editor"
 msgstr "Rediger verktøyforvala"
 
-#: app/actions/actions.c:189
+#. fix native search bar not appearing on non-Enligsh locales
+#: app/actions/actions.c:189 app/menus/menus.c:668
 msgid "Help"
 msgstr "Hjelp"
 
@@ -503,7 +504,7 @@ msgid "Images"
 msgstr "Bilete"
 
 #: app/actions/actions.c:198 app/dialogs/dialogs.c:376
-#: app/dialogs/resize-dialog.c:173 app/widgets/gimpitemchooser.c:269
+#: app/dialogs/resize-dialog.c:174 app/widgets/gimpitemchooser.c:269
 #: app/widgets/gimppickablechooser.c:264
 msgid "Layers"
 msgstr "Lag"
@@ -2487,7 +2488,7 @@ msgstr "240 sekund"
 #: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:222
 #: app/dialogs/preferences-dialog.c:607 app/dialogs/preferences-dialog.c:1168
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:151
-#: app/dialogs/resize-dialog.c:227 app/dialogs/resolution-calibrate-dialog.c:73
+#: app/dialogs/resize-dialog.c:228 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:138 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/path-export-dialog.c:83 app/dialogs/path-import-dialog.c:93
@@ -2496,7 +2497,7 @@ msgstr "240 sekund"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1858
+#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1870
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -2564,8 +2565,8 @@ msgstr "Skriv inn ei beskriving av markøren"
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:418
 #: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:254
 #: app/dialogs/file-open-dialog.c:300
-#: app/dialogs/file-open-location-dialog.c:217
-#: app/dialogs/file-open-location-dialog.c:233
+#: app/dialogs/file-open-location-dialog.c:219
+#: app/dialogs/file-open-location-dialog.c:235
 #: app/dialogs/welcome-dialog.c:1255 app/display/gimpdisplayshell-dnd.c:707
 #: app/display/gimpimagewindow.c:2266 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
@@ -2581,7 +2582,7 @@ msgstr ""
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
 #: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2535
-#: app/core/gimppalette.c:629 app/core/gimppalette-import.c:223
+#: app/core/gimppalette.c:647 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Utan namn"
@@ -7224,7 +7225,7 @@ msgid "Remove Alpha Channel"
 msgstr "Fjern alfakanal"
 
 #: app/actions/layers-commands.c:1967 app/core/gimpchannel-select.c:433
-#: app/core/gimplayer.c:467
+#: app/core/gimplayer.c:472
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa til utval"
@@ -10627,7 +10628,7 @@ msgstr "Feil ved tolkinga av '%%s': linje lenger enn %s teikn."
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:719 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:716 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Feil ved skriving til «%s»: %s"
@@ -10651,7 +10652,7 @@ msgstr ""
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Mønstersyntaks for å søkja og merkja element:"
 
-#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:438
+#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:443
 msgid "Layer"
 msgstr "Lag"
 
@@ -13129,12 +13130,12 @@ msgid "Please wait: %s\n"
 msgstr "Vent litt: %s\n"
 
 #: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299
-#: app/core/gimpdata.c:690 app/core/gimpdata.c:703
+#: app/core/gimpdata.c:771 app/core/gimpdata.c:784
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Feil ved lagring av «%s»: "
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:709
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:790
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Feil ved lagring av «%s»"
@@ -13159,8 +13160,8 @@ msgstr "Klarte ikkje køyra underordna prosess «%s» (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:nn"
 
-#: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:184
-#: app/gui/themes.c:731
+#: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:188
+#: app/gui/themes.c:728
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Feil ved lukking av «%s»: %s"
@@ -13202,11 +13203,11 @@ msgstr "Oppretter mappa «%s» …"
 msgid "Cannot create folder '%s': %s"
 msgstr "Kan ikkje oppretta mappa «%s»: %s"
 
-#: app/core/gimp-utils.c:593 app/core/gimpfilloptions.c:495
+#: app/core/gimp-utils.c:653 app/core/gimpfilloptions.c:588
 msgid "No patterns available for this operation."
 msgstr "Ingen mønsterelement tilgjengelege for denne operasjonen."
 
-#: app/core/gimp-utils.c:1170
+#: app/core/gimp-utils.c:1230
 #, c-format
 msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
@@ -13214,17 +13215,17 @@ msgstr ""
 "Fatal tolkingsfeil i Photoshop si resursfil: Data for RLE-komprimeringa er "
 "øydelagde."
 
-#: app/core/gimp-utils.c:1846
+#: app/core/gimp-utils.c:1906
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Denne tolkaren støttar ikkje overlappa lister."
 
-#: app/core/gimp-utils.c:1869
+#: app/core/gimp-utils.c:1929
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> må vera inni<ol>- eller <ul>-taggar."
 
-#: app/core/gimp-utils.c:1874
+#: app/core/gimp-utils.c:1934
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Ukjend tagg <%s>."
@@ -13601,17 +13602,17 @@ msgstr "Kan ikkje fylla ein tom kanal."
 msgid "Cannot stroke empty channel."
 msgstr "Kan ikkje teikna på ein tom kanal."
 
-#: app/core/gimpchannel.c:1850
+#: app/core/gimpchannel.c:1862
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Set kanalfarge"
 
-#: app/core/gimpchannel.c:1904
+#: app/core/gimpchannel.c:1916
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Set dekkevne for kanalen"
 
-#: app/core/gimpchannel.c:1989 app/core/gimpselection.c:162
+#: app/core/gimpchannel.c:2001 app/core/gimpselection.c:162
 msgid "Selection Mask"
 msgstr "Utvalsmaske"
 
@@ -13651,7 +13652,7 @@ msgid "MyPaint Brush"
 msgstr "MyPaint-pensel"
 
 #: app/core/gimpcontext.c:720 app/core/gimpcontext.c:721
-#: app/core/gimppattern.c:85
+#: app/core/gimppattern.c:89
 msgid "Pattern"
 msgstr "Mønsterelement"
 
@@ -13668,7 +13669,7 @@ msgid "Palette"
 msgstr "Palett"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/text/gimpfont.c:646 app/tools/gimptextoptions.c:812
+#: app/text/gimpfont.c:677 app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "Skrifttype"
 
@@ -13793,7 +13794,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Jamn ut"
 
-#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:815
+#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:820
 msgid "Floating Selection"
 msgstr "Flytande utval"
 
@@ -13852,7 +13853,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Roter"
 
-#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:466
+#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:471
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Transformeringslag"
@@ -13892,8 +13893,8 @@ msgstr ""
 msgid "Cannot rename effect masks."
 msgstr "Kan ikkje gje effektmaskene nytt namn."
 
-#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:775
-#: app/core/gimplayer.c:2342 app/core/gimplayermask.c:304
+#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:780
+#: app/core/gimplayer.c:2419 app/core/gimplayermask.c:304
 #, c-format
 msgid "%s mask"
 msgstr "%s maske"
@@ -13902,67 +13903,67 @@ msgstr "%s maske"
 msgid "Output type"
 msgstr "Utdatatype"
 
-#: app/core/gimpfilloptions.c:122
+#: app/core/gimpfilloptions.c:137
 msgid "Style"
 msgstr "Stil"
 
-#: app/core/gimpfilloptions.c:130
+#: app/core/gimpfilloptions.c:145
 msgid "Custom style"
 msgstr "Sjølvvald stil"
 
-#: app/core/gimpfilloptions.c:138 app/pdb/gimppdbcontext.c:101
+#: app/core/gimpfilloptions.c:153 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:183 app/tools/gimpselectionoptions.c:91
 #: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "Kantutjamning"
 
-#: app/core/gimpfilloptions.c:145 app/tools/gimpbucketfilloptions.c:193
+#: app/core/gimpfilloptions.c:160 app/tools/gimpbucketfilloptions.c:193
 #: app/tools/gimpselectionoptions.c:98
 msgid "Feather edges"
 msgstr "Mjuke kantar"
 
-#: app/core/gimpfilloptions.c:146 app/tools/gimpbucketfilloptions.c:194
+#: app/core/gimpfilloptions.c:161 app/tools/gimpbucketfilloptions.c:194
 msgid "Enable feathering of fill edges"
 msgstr "Slå på utglatting av fyllkantane"
 
-#: app/core/gimpfilloptions.c:152 app/paint/gimpmybrushoptions.c:108
+#: app/core/gimpfilloptions.c:167 app/paint/gimpmybrushoptions.c:108
 #: app/tools/gimpbucketfilloptions.c:200 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:105 app/widgets/gimpbrusheditor.c:160
 msgid "Radius"
 msgstr "Radius"
 
-#: app/core/gimpfilloptions.c:153 app/tools/gimpbucketfilloptions.c:201
+#: app/core/gimpfilloptions.c:168 app/tools/gimpbucketfilloptions.c:201
 #: app/tools/gimpselectionoptions.c:106
 msgid "Radius of feathering"
 msgstr "Sløringsradius"
 
-#: app/core/gimpfilloptions.c:457 app/core/gimpfilloptions.c:570
+#: app/core/gimpfilloptions.c:550 app/core/gimpfilloptions.c:663
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Fyll med forgrunnsfarge"
 
-#: app/core/gimpfilloptions.c:462 app/core/gimpfilloptions.c:573
+#: app/core/gimpfilloptions.c:555 app/core/gimpfilloptions.c:666
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Fyll med bakgrunnsfarge"
 
-#: app/core/gimpfilloptions.c:472
+#: app/core/gimpfilloptions.c:565
 msgctxt "undo-type"
 msgid "Fill with Middle Gray (CIELAB) Color"
 msgstr "Fyll med mellomgrå (CIELAB) farge"
 
-#: app/core/gimpfilloptions.c:478
+#: app/core/gimpfilloptions.c:571
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Fyll med kvit"
 
-#: app/core/gimpfilloptions.c:485
+#: app/core/gimpfilloptions.c:578
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Fyll med gjennomsikt"
 
-#: app/core/gimpfilloptions.c:501 app/core/gimpfilloptions.c:576
+#: app/core/gimpfilloptions.c:594 app/core/gimpfilloptions.c:669
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Fyll med mønsterelement"
@@ -14071,41 +14072,41 @@ msgstr ""
 msgid "Offset unit"
 msgstr "Forskyvingseining"
 
-#: app/core/gimpgrouplayer.c:303
+#: app/core/gimpgrouplayer.c:308
 msgid "Layer Group"
 msgstr "Laggruppe"
 
-#: app/core/gimpgrouplayer.c:318
+#: app/core/gimpgrouplayer.c:323
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Gi laggruppa nytt namn"
 
-#: app/core/gimpgrouplayer.c:319
+#: app/core/gimpgrouplayer.c:324
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Flytt laggruppa"
 
-#: app/core/gimpgrouplayer.c:320
+#: app/core/gimpgrouplayer.c:325
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Skaler laggruppa"
 
-#: app/core/gimpgrouplayer.c:321
+#: app/core/gimpgrouplayer.c:326
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Endra storleiken på laggruppa"
 
-#: app/core/gimpgrouplayer.c:322
+#: app/core/gimpgrouplayer.c:327
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Spegelvend laggruppa"
 
-#: app/core/gimpgrouplayer.c:323
+#: app/core/gimpgrouplayer.c:328
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Roter laggruppa"
 
-#: app/core/gimpgrouplayer.c:324
+#: app/core/gimpgrouplayer.c:329
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformer laggruppa"
@@ -14386,7 +14387,7 @@ msgstr "Fargeprofilkonvertering"
 msgid "Colormap of Image #%d (%s)"
 msgstr "Fargekart for biletet #%d (%s)"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:950
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:968
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Set fargekart"
@@ -14396,7 +14397,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Set tilbake fargekartet"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:741
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:759
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Endra fargekartinnslag"
@@ -14591,10 +14592,10 @@ msgctxt "undo-type"
 msgid "Set Sample Point Pick Mode"
 msgstr "Set plukkmetode for prøvepunkta"
 
-#: app/core/gimpimage-savable.c:160
+#: app/core/gimpimage-savable.c:164
 #, c-format
 msgid "Error creating '%s': %s"
-msgstr " Feil ved laging av «%s»: %s"
+msgstr "Feil ved laging av «%s»: %s"
 
 #: app/core/gimpimage-scale.c:81
 msgctxt "undo-type"
@@ -14689,7 +14690,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Forankra det flytande utvalet"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1121
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1126
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14702,78 +14703,78 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Flytande utval til lag"
 
-#: app/core/gimplayer.c:460
+#: app/core/gimplayer.c:465
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Gi laget nytt namn"
 
-#: app/core/gimplayer.c:461
+#: app/core/gimplayer.c:466
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Flytt laget"
 
-#: app/core/gimplayer.c:462
+#: app/core/gimplayer.c:467
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Skaler laget"
 
-#: app/core/gimplayer.c:463
+#: app/core/gimplayer.c:468
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Endra storleik på laget"
 
-#: app/core/gimplayer.c:464
+#: app/core/gimplayer.c:469
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Spegelvend laget"
 
-#: app/core/gimplayer.c:465
+#: app/core/gimplayer.c:470
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Roter laget"
 
-#: app/core/gimplayer.c:468
+#: app/core/gimplayer.c:473
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Reorganiser laget"
 
-#: app/core/gimplayer.c:469
+#: app/core/gimplayer.c:474
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Lyft lag"
 
-#: app/core/gimplayer.c:470
+#: app/core/gimplayer.c:475
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Lyft lag til toppen"
 
-#: app/core/gimplayer.c:471
+#: app/core/gimplayer.c:476
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Senk lag"
 
-#: app/core/gimplayer.c:472
+#: app/core/gimplayer.c:477
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Senk lag til botnen"
 
-#: app/core/gimplayer.c:473
+#: app/core/gimplayer.c:478
 msgid "Layer cannot be raised higher."
 msgstr "Laget kan ikkje lyftast høgare."
 
-#: app/core/gimplayer.c:474
+#: app/core/gimplayer.c:479
 msgid "Layer cannot be lowered more."
 msgstr "Laget kan ikkje senkast lågare."
 
-#: app/core/gimplayer.c:819
+#: app/core/gimplayer.c:824
 msgid "Floating Mask"
 msgstr "Flytande maske"
 
-#: app/core/gimplayer.c:821
+#: app/core/gimplayer.c:826
 msgid "Floating Channel"
 msgstr "Flytande kanal"
 
-#: app/core/gimplayer.c:823
+#: app/core/gimplayer.c:828
 msgid "Floating Layer"
 msgstr "Flytande lag"
 
@@ -14781,7 +14782,7 @@ msgstr "Flytande lag"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:828
+#: app/core/gimplayer.c:833
 #, c-format
 msgid ""
 "%s\n"
@@ -14790,75 +14791,75 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:2225
+#: app/core/gimplayer.c:2302
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kan ikkje legga til ei lagmaske fordi laget har ei slik maske frå før."
 
-#: app/core/gimplayer.c:2237
+#: app/core/gimplayer.c:2314
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan ikkje legga til lagmaske med andre dimensjonar enn det som det "
 "spesifiserte laget har."
 
-#: app/core/gimplayer.c:2243
+#: app/core/gimplayer.c:2320
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Legg til lagmasker"
 
-#: app/core/gimplayer.c:2381
+#: app/core/gimplayer.c:2458
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Overfør alfa til maske"
 
-#: app/core/gimplayer.c:2545
+#: app/core/gimplayer.c:2622
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Bruk lagmasker"
 
-#: app/core/gimplayer.c:2546
+#: app/core/gimplayer.c:2623
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Slett lagmasker"
 
-#: app/core/gimplayer.c:2656
+#: app/core/gimplayer.c:2733
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Slå på lagmaskene"
 
-#: app/core/gimplayer.c:2657
+#: app/core/gimplayer.c:2734
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Slå av lagmaskene"
 
-#: app/core/gimplayer.c:2738
+#: app/core/gimplayer.c:2815
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Vis lagmaskene"
 
-#: app/core/gimplayer.c:2817
+#: app/core/gimplayer.c:2894
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Legg til alfakanal"
 
-#: app/core/gimplayer.c:2847
+#: app/core/gimplayer.c:2924
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Fjern alfakanal"
 
-#: app/core/gimplayer.c:2868
+#: app/core/gimplayer.c:2945
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Laget til biletstorleik"
 
-#: app/core/gimplayer.c:3051
+#: app/core/gimplayer.c:3128
 msgid "Set layer's blend space"
 msgstr "Set blandeområdet for laget"
 
-#: app/core/gimplayer.c:3098
+#: app/core/gimplayer.c:3175
 msgid "Set layer's composite space"
 msgstr "Set den samanslåtte plassen for laget"
 
-#: app/core/gimplayer.c:3145
+#: app/core/gimplayer.c:3222
 msgid "Set layer's composite mode"
 msgstr "Set samansetjingsmodus for laget"
 
@@ -14918,47 +14919,47 @@ msgstr "Maksimal rett lukkelengd"
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Maksimal rett lukkelengd (i pikslar) for å lukka strekteikninga"
 
-#: app/core/gimplink.c:295
+#: app/core/gimplink.c:411
 msgid "The file got deleted"
 msgstr "Fila vart sletta"
 
-#: app/core/gimplink.c:390
+#: app/core/gimplink.c:506
 msgid "No file was set"
 msgstr "Inga fil vart sett"
 
-#: app/core/gimplinklayer.c:208
+#: app/core/gimplinklayer.c:219
 msgid "Link Layer"
 msgstr "Lenkjelag"
 
-#: app/core/gimplinklayer.c:217
+#: app/core/gimplinklayer.c:228
 msgid "Rename Link Layer"
 msgstr "Gje lenkjelaget nytt namn"
 
-#: app/core/gimplinklayer.c:218
+#: app/core/gimplinklayer.c:229
 msgid "Move Link Layer"
 msgstr "Flytt lenkjelaget"
 
-#: app/core/gimplinklayer.c:219
+#: app/core/gimplinklayer.c:230
 msgid "Scale Link Layer"
 msgstr "Skaler lenkjelaget"
 
-#: app/core/gimplinklayer.c:220
+#: app/core/gimplinklayer.c:231
 msgid "Resize Link Layer"
 msgstr "Endra storleik på lenkjelaget"
 
-#: app/core/gimplinklayer.c:221
+#: app/core/gimplinklayer.c:232
 msgid "Flip Link Layer"
 msgstr "Spegelvend lenkjelaget"
 
-#: app/core/gimplinklayer.c:222
+#: app/core/gimplinklayer.c:233
 msgid "Rotate Link Layer"
 msgstr "Roter lenkjelaget"
 
-#: app/core/gimplinklayer.c:223 app/core/gimplinklayer.c:584
+#: app/core/gimplinklayer.c:234 app/core/gimplinklayer.c:598
 msgid "Transform Link Layer"
 msgstr "Transformer lenkjelaget"
 
-#: app/core/gimplinklayer.c:853
+#: app/core/gimplinklayer.c:997
 msgid "Set layer link"
 msgstr "Set laglenkja"
 
@@ -14972,7 +14973,7 @@ msgstr "MyPaint-penselfila er urimeleg stor, hoppar over."
 msgid "Failed to deserialize MyPaint brush."
 msgstr "Klarte ikkje deserialisere MyPaint-penselen."
 
-#: app/core/gimppalette.c:546
+#: app/core/gimppalette.c:564
 msgctxt "undo-type"
 msgid "Change Colormap format restriction"
 msgstr "Endra formatrestriksjonane for fargekartet"
@@ -15354,32 +15355,32 @@ msgstr "Forval"
 msgid "Last used: %s"
 msgstr "Sist brukt: %s"
 
-#: app/core/gimpstrokeoptions.c:161
+#: app/core/gimpstrokeoptions.c:186
 msgid "Method"
 msgstr "Metode"
 
-#: app/core/gimpstrokeoptions.c:169
+#: app/core/gimpstrokeoptions.c:194
 msgid "Line width"
 msgstr "Strekbreidd"
 
-#: app/core/gimpstrokeoptions.c:176 app/core/gimptemplate.c:158
+#: app/core/gimpstrokeoptions.c:201 app/core/gimptemplate.c:158
 #: app/tools/gimptextoptions.c:165 app/tools/gimptextoptions.c:308
 msgid "Unit"
 msgstr "Eining"
 
-#: app/core/gimpstrokeoptions.c:183
+#: app/core/gimpstrokeoptions.c:208
 msgid "Cap style"
 msgstr "Endestil"
 
-#: app/core/gimpstrokeoptions.c:190
+#: app/core/gimpstrokeoptions.c:215
 msgid "Join style"
 msgstr "Koplingsstil"
 
-#: app/core/gimpstrokeoptions.c:197
+#: app/core/gimpstrokeoptions.c:222
 msgid "Miter limit"
 msgstr "Gjæringsgrense"
 
-#: app/core/gimpstrokeoptions.c:198 app/tools/gimptextoptions.c:330
+#: app/core/gimpstrokeoptions.c:223 app/tools/gimptextoptions.c:330
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -15387,11 +15388,11 @@ msgstr ""
 "Omform ein gjæringsskøyt til ein skråskøyt dersom gjæringa vert utvida til "
 "meir enn gjæringsgrensa · linjebreidd frå det aktuelle skøytepunktet."
 
-#: app/core/gimpstrokeoptions.c:207
+#: app/core/gimpstrokeoptions.c:232
 msgid "Dash offset"
 msgstr "Strek-forskyving"
 
-#: app/core/gimpstrokeoptions.c:229
+#: app/core/gimpstrokeoptions.c:254
 msgid "Emulate brush dynamics"
 msgstr "Etterlikner penseldynamikk"
 
@@ -15655,22 +15656,22 @@ msgstr "Fila for verktøyinnstillingane er øydelagt."
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:244
+#: app/dialogs/about-dialog.c:256
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revisjon %d)"
 
-#: app/dialogs/about-dialog.c:252
+#: app/dialogs/about-dialog.c:269
 msgid "About GIMP"
 msgstr "Om GIMP"
 
-#: app/dialogs/about-dialog.c:261
+#: app/dialogs/about-dialog.c:278
 msgid "Visit the GIMP website"
 msgstr "Besøk GIMP si nettside"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:267
+#: app/dialogs/about-dialog.c:284
 msgid "translator-credits"
 msgstr ""
 "Kolbjørn Stuestøl 2025, 2026\n"
@@ -15678,16 +15679,16 @@ msgstr ""
 "Sigurd Gartmann\n"
 "Runar Ingebrigtsen"
 
-#: app/dialogs/about-dialog.c:321 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:339 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "_Hjelp"
 
-#: app/dialogs/about-dialog.c:498
+#: app/dialogs/about-dialog.c:541
 msgid "Update available!"
 msgstr "Oppdatering tilgjengeleg!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:528
+#: app/dialogs/about-dialog.c:571
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr ""
@@ -15696,17 +15697,17 @@ msgstr ""
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:538
+#: app/dialogs/about-dialog.c:581
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Sleppmerknad</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:543
+#: app/dialogs/about-dialog.c:586
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Last ned GIMP %s (sloppe %s)\n"
 
-#: app/dialogs/about-dialog.c:568 app/dialogs/about-dialog.c:591
+#: app/dialogs/about-dialog.c:611 app/dialogs/about-dialog.c:634
 msgid "Check for updates"
 msgstr "Sjå etter oppdateringar"
 
@@ -15714,7 +15715,7 @@ msgstr "Sjå etter oppdateringar"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:612
+#: app/dialogs/about-dialog.c:655
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Sist kontrollert %s kl. %s"
@@ -15723,16 +15724,16 @@ msgstr "Sist kontrollert %s kl. %s"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:618
+#: app/dialogs/about-dialog.c:661
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "Oppdatert frå %s ved %s"
 
-#: app/dialogs/about-dialog.c:846
+#: app/dialogs/about-dialog.c:889
 msgid "GIMP is brought to you by"
 msgstr "GIMP er levert deg av"
 
-#: app/dialogs/about-dialog.c:921
+#: app/dialogs/about-dialog.c:964
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -15740,6 +15741,53 @@ msgid ""
 msgstr ""
 "Dette er ei ustabil utviklingsutgåve\n"
 "utføring %s"
+
+#: app/dialogs/about-dialog.c:1040
+msgid "built from source"
+msgstr "bygd frå kjelde"
+
+#: app/dialogs/about-dialog.c:1050 app/dialogs/module-dialog.c:366
+msgid "Version:"
+msgstr "Versjon:"
+
+#: app/dialogs/about-dialog.c:1052
+#| msgctxt "HSV color space"
+#| msgid "S:"
+msgid "OS:"
+msgstr "OS:"
+
+#: app/dialogs/about-dialog.c:1068
+#, c-format
+msgid "Memory: %s (%s free)\n"
+msgstr "Minne: %s (%s fritt)\n"
+
+#: app/dialogs/about-dialog.c:1074 app/dialogs/about-dialog.c:1081
+msgid "Memory:"
+msgstr "Minne:"
+
+#: app/dialogs/about-dialog.c:1103
+msgid "Swap:"
+msgstr "Byt:"
+
+#: app/dialogs/about-dialog.c:1114
+msgid "Library Versions:"
+msgstr "Bibliotekversjon:"
+
+#: app/dialogs/about-dialog.c:1191 app/dialogs/about-dialog.c:1249
+msgid "Copy Version Information"
+msgstr "Kopier versjonsnformasjonen"
+
+#: app/dialogs/about-dialog.c:1246
+msgid "Version Information"
+msgstr "Versjonsinformasjon"
+
+#: app/dialogs/about-dialog.c:1248
+msgid "_Copy"
+msgstr "_Kopier"
+
+#: app/dialogs/about-dialog.c:1305
+msgid "Copied Version Information"
+msgstr "Versjonsinformasjonen kopiert"
 
 #: app/dialogs/action-search-dialog.c:68
 msgid "Search Actions"
@@ -16141,12 +16189,12 @@ msgstr "i/t"
 msgid "Open Location"
 msgstr "Opna adressa"
 
-#: app/dialogs/file-open-location-dialog.c:112
+#: app/dialogs/file-open-location-dialog.c:114
 msgid "Enter location (URI):"
 msgstr "Skriv inn nettadressa (URI):"
 
 #. error should never be NULL, also issue #3093
-#: app/dialogs/file-open-location-dialog.c:236
+#: app/dialogs/file-open-location-dialog.c:238
 msgid "Invalid URI"
 msgstr "Ugyldig nettadresse"
 
@@ -16280,7 +16328,7 @@ msgid "Create a New Image"
 msgstr "Laga eit nytt bilete"
 
 #: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1807
-#: app/dialogs/resize-dialog.c:258
+#: app/dialogs/resize-dialog.c:259
 msgid "_Template:"
 msgstr "_Malar:"
 
@@ -16512,7 +16560,7 @@ msgstr "_Lagra med absolutt sti"
 msgid "_Associated path:"
 msgstr "_Tilhøyrande bane:"
 
-#: app/dialogs/layer-options-dialog.c:477 app/dialogs/resize-dialog.c:514
+#: app/dialogs/layer-options-dialog.c:477 app/dialogs/resize-dialog.c:515
 #: app/widgets/gimptemplateeditor.c:489
 msgid "_Fill with:"
 msgstr "_Fyll med:"
@@ -16630,10 +16678,6 @@ msgstr "Ikkje lenger tilgjengeleg"
 #: app/dialogs/module-dialog.c:365
 msgid "Author:"
 msgstr "Forfattar:"
-
-#: app/dialogs/module-dialog.c:366
-msgid "Version:"
-msgstr "Versjon:"
 
 #: app/dialogs/module-dialog.c:367
 msgid "Date:"
@@ -17395,7 +17439,7 @@ msgid "Item search"
 msgstr "Elementsøk"
 
 #. Keyboard Shortcuts
-#: app/dialogs/preferences-dialog.c:1911
+#: app/dialogs/preferences-dialog.c:1911 app/menus/menus.c:652
 msgid "Keyboard Shortcuts"
 msgstr "Tastatursnarvegar"
 
@@ -18117,7 +18161,9 @@ msgstr "Tittelformat for biletet"
 msgid "Image Statusbar Format"
 msgstr "Statuslinjeformat for biletet"
 
+#. Input Devices
 #: app/dialogs/preferences-dialog.c:3290 app/dialogs/preferences-dialog.c:3291
+#: app/menus/menus.c:645
 msgid "Input Devices"
 msgstr "Inndataeiningar"
 
@@ -18501,31 +18547,31 @@ msgstr "Trykk %s for å annullera alle endringar og lukka alle bilete."
 msgid "_Discard Changes"
 msgstr "_Avslutt utan lagring"
 
-#: app/dialogs/resize-dialog.c:172
+#: app/dialogs/resize-dialog.c:173
 msgid "Canvas Size"
 msgstr "Storleiken på lerretet"
 
-#: app/dialogs/resize-dialog.c:184 app/dialogs/scale-dialog.c:115
+#: app/dialogs/resize-dialog.c:185 app/dialogs/scale-dialog.c:115
 msgid "Layer Size"
 msgstr "Lagstorleik"
 
-#: app/dialogs/resize-dialog.c:185 app/paint/gimppaintoptions.c:333
+#: app/dialogs/resize-dialog.c:186 app/paint/gimppaintoptions.c:333
 msgid "Fill With"
 msgstr "Fyll med"
 
-#: app/dialogs/resize-dialog.c:226
+#: app/dialogs/resize-dialog.c:227
 msgid "Re_set"
 msgstr "_Tilbakestill"
 
-#: app/dialogs/resize-dialog.c:228
+#: app/dialogs/resize-dialog.c:229
 msgid "_Resize"
 msgstr "Tilbakestill _storleiken"
 
-#: app/dialogs/resize-dialog.c:295
+#: app/dialogs/resize-dialog.c:296
 msgid "Reset the template selection"
 msgstr "Tilbakestill malutvalet"
 
-#: app/dialogs/resize-dialog.c:302
+#: app/dialogs/resize-dialog.c:303
 msgid ""
 "Template and image print resolution don't match.\n"
 "Choose how to scale the canvas:"
@@ -18536,46 +18582,46 @@ msgstr ""
 #. offset frame
 #. The offset frame
 #. offset frame
-#: app/dialogs/resize-dialog.c:379 app/operations/gimpoperationoffset.c:119
+#: app/dialogs/resize-dialog.c:380 app/operations/gimpoperationoffset.c:119
 #: app/tools/gimpgradientoptions.c:90 app/tools/gimpoffsettool.c:130
 #: app/tools/gimpoffsettool.c:472 app/tools/gimptransform3dtool.c:342
 #: app/widgets/gimpgrideditor.c:216
 msgid "Offset"
 msgstr "Forskyving"
 
-#: app/dialogs/resize-dialog.c:402 app/tools/gimpoffsettool.c:496
+#: app/dialogs/resize-dialog.c:403 app/tools/gimpoffsettool.c:496
 #: app/tools/gimptransform3dtool.c:270 app/tools/gimptransform3dtool.c:382
 msgid "_X:"
 msgstr "_X:"
 
-#: app/dialogs/resize-dialog.c:403 app/tools/gimpoffsettool.c:498
+#: app/dialogs/resize-dialog.c:404 app/tools/gimpoffsettool.c:498
 #: app/tools/gimptransform3dtool.c:271 app/tools/gimptransform3dtool.c:387
 msgid "_Y:"
 msgstr "_Y:"
 
 #. Button to center the image on canvas just below the preview.
-#: app/dialogs/resize-dialog.c:448
+#: app/dialogs/resize-dialog.c:449
 msgid "C_enter"
 msgstr "_Senter"
 
-#: app/dialogs/resize-dialog.c:474
+#: app/dialogs/resize-dialog.c:475
 msgid "Resize _layers:"
 msgstr "Tilbakestill lagstorleiken:"
 
-#: app/dialogs/resize-dialog.c:524
+#: app/dialogs/resize-dialog.c:525
 msgid "Resize _text layers"
 msgstr "Endra storleiken på tekstlaga"
 
-#: app/dialogs/resize-dialog.c:537
+#: app/dialogs/resize-dialog.c:538
 msgid "Resizing text layers will make them uneditable"
 msgstr "Endrar du storleik på tekstlag, kan dei ikkje redigerast"
 
-#: app/dialogs/resize-dialog.c:767
+#: app/dialogs/resize-dialog.c:773
 #, c-format
 msgid "Scale template to %.2f ppi"
 msgstr "Skaler malen til %.2f ppi"
 
-#: app/dialogs/resize-dialog.c:772
+#: app/dialogs/resize-dialog.c:778
 #, c-format
 msgid "Set image to %.2f ppi"
 msgstr "Set biletet til %.2f ppi"
@@ -19323,12 +19369,12 @@ msgstr "Roter visinga"
 msgid "Select Rotation Angle"
 msgstr "Vel rotasjonsvinkel"
 
-#: app/display/gimpdisplayshell-rotate-dialog.c:152
+#: app/display/gimpdisplayshell-rotate-dialog.c:153
 #: app/tools/gimpmeasuretool.c:788
 msgid "Angle:"
 msgstr "Vinkel:"
 
-#: app/display/gimpdisplayshell-rotate-dialog.c:166
+#: app/display/gimpdisplayshell-rotate-dialog.c:167
 msgid "degrees"
 msgstr "gradar"
 
@@ -21005,7 +21051,7 @@ msgstr "GIMP oppstart"
 msgid "Loading"
 msgstr "Lastar inn"
 
-#: app/gui/themes.c:518
+#: app/gui/themes.c:515
 #, c-format
 msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
@@ -21614,43 +21660,43 @@ msgstr "Fann ingen banar i bufferen"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Greidde ikkje å importera banar frå «%s»: %s"
 
-#: app/path/gimpvectorlayer.c:187 app/tools/gimppathtool.c:867
+#: app/path/gimpvectorlayer.c:198 app/tools/gimppathtool.c:867
 msgid "Vector Layer"
 msgstr "Vektorlag"
 
-#: app/path/gimpvectorlayer.c:200
+#: app/path/gimpvectorlayer.c:211
 msgid "Rename Vector Layer"
 msgstr "Gje nytt namn til vektorlaget"
 
-#: app/path/gimpvectorlayer.c:201
+#: app/path/gimpvectorlayer.c:212
 msgid "Move Vector Layer"
 msgstr "Flytt vektorlaget"
 
-#: app/path/gimpvectorlayer.c:202
+#: app/path/gimpvectorlayer.c:213
 msgid "Scale Vector Layer"
 msgstr "Skaler vektorlaget"
 
-#: app/path/gimpvectorlayer.c:203
+#: app/path/gimpvectorlayer.c:214
 msgid "Resize Vector Layer"
 msgstr "Endra storleiken på vektorlaget"
 
-#: app/path/gimpvectorlayer.c:204
+#: app/path/gimpvectorlayer.c:215
 msgid "Flip Vector Layer"
 msgstr "Spegelvend vektorlaget"
 
-#: app/path/gimpvectorlayer.c:205
+#: app/path/gimpvectorlayer.c:216
 msgid "Rotate Vector Layer"
 msgstr "Roter vektorlaget"
 
-#: app/path/gimpvectorlayer.c:206
+#: app/path/gimpvectorlayer.c:217
 msgid "Transform Vector Layer"
 msgstr "Transformer vektorlaget"
 
-#: app/path/gimpvectorlayer.c:643
+#: app/path/gimpvectorlayer.c:784
 msgid "Discard Vector Information"
 msgstr "Forkast vektorinformasjonen"
 
-#: app/path/gimpvectorlayer.c:736
+#: app/path/gimpvectorlayer.c:877
 msgid "Change Vector Layer Path"
 msgstr "Endra stien for vektorlaget"
 
@@ -22867,7 +22913,7 @@ msgstr "Denne operasjonen har ingen eigenskapar som kan redigerast"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
-#: app/text/gimpfont.c:58
+#: app/text/gimpfont.c:59
 msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
@@ -22884,7 +22930,7 @@ msgstr ""
 "Klarte ikkje lasta inn alle skrifttypane:\n"
 "%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1730
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1742
 msgid "Add Text Layer"
 msgstr "Legg til tekstlag"
 
@@ -22896,43 +22942,43 @@ msgstr "Ugyldig markeringsformat i tekstparasitt"
 msgid "Empty text parasite"
 msgstr "Tom tekstparasitt"
 
-#: app/text/gimptextlayer.c:166
+#: app/text/gimptextlayer.c:177
 msgid "Text Layer"
 msgstr "Tekstlag"
 
-#: app/text/gimptextlayer.c:178
+#: app/text/gimptextlayer.c:189
 msgid "Rename Text Layer"
 msgstr "Gi nytt namn på tekstlaget"
 
-#: app/text/gimptextlayer.c:179 app/tools/gimptexttool.c:1295
+#: app/text/gimptextlayer.c:190 app/tools/gimptexttool.c:1307
 msgid "Move Text Layer"
 msgstr "Flytt tekstlaget"
 
-#: app/text/gimptextlayer.c:180
+#: app/text/gimptextlayer.c:191
 msgid "Scale Text Layer"
 msgstr "Skaler tekstlaget"
 
-#: app/text/gimptextlayer.c:181
+#: app/text/gimptextlayer.c:192
 msgid "Resize Text Layer"
 msgstr "Endra storleiken på tekstlaget"
 
-#: app/text/gimptextlayer.c:182
+#: app/text/gimptextlayer.c:193
 msgid "Flip Text Layer"
 msgstr "Spegelvender tekstlaget"
 
-#: app/text/gimptextlayer.c:183
+#: app/text/gimptextlayer.c:194
 msgid "Rotate Text Layer"
 msgstr "Roter tekstlaget"
 
-#: app/text/gimptextlayer.c:184
+#: app/text/gimptextlayer.c:195
 msgid "Transform Text Layer"
 msgstr "Transformer tekstlaget"
 
-#: app/text/gimptextlayer.c:716 app/text/gimptextlayer.c:857
+#: app/text/gimptextlayer.c:833 app/text/gimptextlayer.c:974
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Sidan skrifttypane manglar er ikkje tekstfunksjonane tilgjengelege."
 
-#: app/text/gimptextlayer.c:1071
+#: app/text/gimptextlayer.c:1188
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -22955,7 +23001,7 @@ msgstr ""
 "Nokre av teksteigenskapane kan vere feil. Du treng berre bry deg om dette "
 "dersom du ønskjer å redigera tekstlaget."
 
-#: app/text/gimptextlayout.c:701
+#: app/text/gimptextlayout.c:707
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -25114,11 +25160,11 @@ msgstr "Legg til vektorlag"
 msgid "Confirm Path Editing"
 msgstr "Bekreft baneredigering"
 
-#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1857
+#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1869
 msgid "Create _New Layer"
 msgstr "Opprett eit _nytt lag"
 
-#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1859
+#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1871
 msgid "_Edit Anyway"
 msgstr "_Rediger likevel"
 
@@ -25660,35 +25706,35 @@ msgstr "Boks:"
 msgid "Language:"
 msgstr "Språk:"
 
-#: app/tools/gimptexttool.c:222
+#: app/tools/gimptexttool.c:224
 msgid "Text"
 msgstr "Tekst"
 
-#: app/tools/gimptexttool.c:223
+#: app/tools/gimptexttool.c:225
 msgid "Text Tool: Create or edit text layers"
 msgstr "Tekstverktøyet: Oppretter eller redigerer tekstlag"
 
-#: app/tools/gimptexttool.c:224
+#: app/tools/gimptexttool.c:226
 msgid "Te_xt"
 msgstr "_Tekst"
 
-#: app/tools/gimptexttool.c:1097
+#: app/tools/gimptexttool.c:1109
 msgid "Fonts are still loading"
 msgstr "Lastar framleis skrifttypar"
 
-#: app/tools/gimptexttool.c:1108
+#: app/tools/gimptexttool.c:1120
 msgid "Text box: "
 msgstr "Tekstfelt: "
 
-#: app/tools/gimptexttool.c:1265
+#: app/tools/gimptexttool.c:1277
 msgid "Reshape Text Layer"
 msgstr "Endra forma på tekstlaget"
 
-#: app/tools/gimptexttool.c:1850 app/tools/gimptexttool.c:1853
+#: app/tools/gimptexttool.c:1862 app/tools/gimptexttool.c:1865
 msgid "Confirm Text Editing"
 msgstr "Bekreft tekstredigering"
 
-#: app/tools/gimptexttool.c:1881
+#: app/tools/gimptexttool.c:1893
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
@@ -25696,19 +25742,19 @@ msgstr ""
 "Tekstlaget du henta er rastert. Redigering av teksten vil fjerna eventuelle "
 "endringar."
 
-#: app/tools/gimptexttool.c:2501
+#: app/tools/gimptexttool.c:2513
 msgid "Text is required."
 msgstr "Tekst er nødvendig."
 
-#: app/tools/gimptexttool.c:2504
+#: app/tools/gimptexttool.c:2516
 msgid "No image."
 msgstr "Ingen bilete."
 
-#: app/tools/gimptexttool.c:2507
+#: app/tools/gimptexttool.c:2519
 msgid "No layer."
 msgstr "Inge lag."
 
-#: app/tools/gimptexttool.c:2518
+#: app/tools/gimptexttool.c:2530
 msgid "Exactly one path must be selected."
 msgstr "Nøyaktig éin bane må merkjast."
 
@@ -25795,7 +25841,7 @@ msgstr "Storleiken på ei celle i rutenettet for ulike tal på inndelingslinjene
 msgid ""
 "If connected, you can reposition the handles without altering the "
 "transformation."
-msgstr "viss tilkopla, kan du flytta hendlane utan å endra transformeringa."
+msgstr "Viss tilkopla, kan du flytta hendlane utan å endra transformeringa."
 
 #: app/tools/gimptransformgridoptions.c:495
 #, c-format
@@ -28495,12 +28541,12 @@ msgstr "Metadata vil ikkje vere synlege i GIMP-versjonar eldre enn 2.10."
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:303
+#: app/widgets/gimpsearchpopup.c:329
 msgid "menu"
 msgstr "meny"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:307
+#: app/widgets/gimpsearchpopup.c:333
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
