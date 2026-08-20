@@ -789,12 +789,13 @@ gimp_export_procedure_set_export_metadata (GimpExportProcedure *procedure,
  * - Automatically adds a standard argument "include-exif" in the
  *   end of the argument list of @procedure, with relevant blurb and
  *   description.
- * - If used with other gimp_export_procedure_set_support_*() functions,
+ * - If used with other `gimp_export_procedure_set_support_*()` functions,
  *   they will always be ordered the same (the order of the calls don't
  *   matter), keeping all export procedures consistent.
- * - Generated GimpExportProcedureDialog will contain the metadata
- *   options, once again always in the same order and with consistent
- *   GUI style across plug-ins.
+ * - Generated
+ *   [`GimpExportProcedureDialog`](https://developer.gimp.org/api/3.0/libgimpui/class.ExportProcedureDialog.html)
+ *   will contain the metadata options, once again always in the same
+ *   order and with consistent GUI style across plug-ins.
  * - API from [class@ProcedureConfig] will automatically process these
  *   properties to decide whether to export a given metadata or not.
  *
