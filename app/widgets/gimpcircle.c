@@ -384,7 +384,7 @@ gimp_circle_button_press_event (GtkWidget      *widget,
 {
   GimpCirclePrivate *priv = GET_PRIVATE (widget);
 
-  if (bevent->type == GDK_BUTTON_PRESS &&
+  if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS &&
       bevent->button == 1)
     {
       gtk_grab_add (widget);

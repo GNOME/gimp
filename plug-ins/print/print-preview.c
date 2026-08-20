@@ -326,7 +326,7 @@ print_preview_button_press_event (GtkWidget      *widget,
 {
   PrintPreview *preview = PRINT_PREVIEW (widget);
 
-  if (event->type == GDK_BUTTON_PRESS && event->button == 1 && preview->inside)
+  if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_BUTTON_PRESS && event->button == 1 && preview->inside)
     {
       GdkDisplay *display = gtk_widget_get_display (widget);
       GdkSeat    *seat    = gdk_display_get_default_seat (display);

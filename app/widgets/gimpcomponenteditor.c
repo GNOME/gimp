@@ -506,7 +506,7 @@ gimp_component_editor_button_press (GtkWidget           *widget,
         {
           gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (editor), (GdkEvent *) bevent);
         }
-      else if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1 &&
+      else if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS && bevent->button == 1 &&
                column != editor->eye_column)
         {
           GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;

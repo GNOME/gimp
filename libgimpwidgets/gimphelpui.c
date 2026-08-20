@@ -613,7 +613,7 @@ gimp_context_help_button_press (GtkWidget      *widget,
   GdkDevice  *device       = gdk_seat_get_pointer (seat);
   GtkWidget  *event_widget = find_widget_at_pointer (device);
 
-  if (event_widget && bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
+  if (event_widget && bevent->button == 1 && gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS)
     {
       gtk_grab_remove (widget);
       gdk_seat_ungrab (seat);

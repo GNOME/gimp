@@ -684,7 +684,7 @@ gimp_tag_popup_border_event (GtkWidget *widget,
 {
   GimpTagPopup *popup = GIMP_TAG_POPUP (widget);
 
-  if (event->type == GDK_BUTTON_PRESS)
+  if (gdk_event_get_event_type (event) == GDK_BUTTON_PRESS)
     {
       GdkEventButton *button_event = (GdkEventButton *) event;
       GtkAllocation   allocation;
@@ -717,7 +717,7 @@ gimp_tag_popup_border_event (GtkWidget *widget,
           gtk_widget_destroy (widget);
         }
     }
-  else if (event->type == GDK_MOTION_NOTIFY)
+  else if (gdk_event_get_event_type (event) == GDK_MOTION_NOTIFY)
     {
       GdkEventMotion *motion_event = (GdkEventMotion *) event;
       gint            x, y;
@@ -731,7 +731,7 @@ gimp_tag_popup_border_event (GtkWidget *widget,
                                        gtk_widget_get_window (widget),
                                        TRUE);
     }
-  else if (event->type == GDK_BUTTON_RELEASE)
+  else if (gdk_event_get_event_type (event) == GDK_BUTTON_RELEASE)
     {
       GdkEventButton *button_event = (GdkEventButton *) event;
 
@@ -743,19 +743,19 @@ gimp_tag_popup_border_event (GtkWidget *widget,
           return TRUE;
         }
     }
-  else if (event->type == GDK_GRAB_BROKEN)
+  else if (gdk_event_get_event_type (event) == GDK_GRAB_BROKEN)
     {
       gtk_grab_remove (widget);
       gdk_seat_ungrab (gdk_event_get_seat (event));
       gtk_widget_destroy (widget);
     }
-  else if (event->type == GDK_KEY_PRESS)
+  else if (gdk_event_get_event_type (event) == GDK_KEY_PRESS)
     {
       gtk_grab_remove (widget);
       gdk_seat_ungrab (gdk_event_get_seat (event));
       gtk_widget_destroy (widget);
     }
-  else if (event->type == GDK_SCROLL)
+  else if (gdk_event_get_event_type (event) == GDK_SCROLL)
     {
       gimp_tag_popup_scroll_by (popup, 0, event);
       return TRUE;
@@ -868,7 +868,7 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
                            GdkEvent     *event,
                            GimpTagPopup *popup)
 {
-  if (event->type == GDK_BUTTON_PRESS)
+  if (gdk_event_get_event_type (event) == GDK_BUTTON_PRESS)
     {
       GdkEventButton *button_event = (GdkEventButton *) event;
       gint            x;
@@ -892,7 +892,7 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
             }
         }
     }
-  else if (event->type == GDK_MOTION_NOTIFY)
+  else if (gdk_event_get_event_type (event) == GDK_MOTION_NOTIFY)
     {
       GdkEventMotion *motion_event = (GdkEventMotion *) event;
       PopupTagData   *prelight     = NULL;
@@ -925,7 +925,7 @@ gimp_tag_popup_list_event (GtkWidget    *widget,
             gimp_tag_popup_queue_draw_tag (popup, popup->prelight);
         }
     }
-  else if (event->type == GDK_BUTTON_RELEASE &&
+  else if (gdk_event_get_event_type (event) == GDK_BUTTON_RELEASE &&
            ! popup->single_select_disabled)
     {
       GdkEventButton *button_event = (GdkEventButton *) event;
@@ -1539,7 +1539,7 @@ gimp_tag_popup_button_scroll (GimpTagPopup   *popup,
         gimp_tag_popup_handle_scrolling (popup,
                                          event->x_root,
                                          event->y_root,
-                                         event->type == GDK_BUTTON_PRESS,
+                                         gdk_event_get_event_type ((GdkEvent *) event) == GDK_BUTTON_PRESS,
                                          FALSE);
 
       return TRUE;

@@ -301,8 +301,8 @@ gimp_dial_button_press_event (GtkWidget      *widget,
 {
   GimpDialPrivate *priv = GET_PRIVATE (widget);
 
-  if (bevent->type == GDK_BUTTON_PRESS &&
-      bevent->button == 1              &&
+  if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS &&
+      bevent->button == 1                                                &&
       priv->target != DIAL_TARGET_NONE)
     {
       gdouble angle;

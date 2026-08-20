@@ -1313,14 +1313,19 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                  GdkEventButton        *bevent,
                                  GimpContainerTreeView *tree_view)
 {
-  GimpContainerView        *container_view = GIMP_CONTAINER_VIEW (tree_view);
+  GimpContainerView        *container_view  = GIMP_CONTAINER_VIEW (tree_view);
   GtkTreeViewColumn        *column;
   GtkTreePath              *path;
-  gboolean                  handled        = TRUE;
-  GtkCellRenderer          *toggled_cell   = NULL;
-  GimpCellRendererViewable *clicked_cell   = NULL;
+  gboolean                  handled         = TRUE;
+  GtkCellRenderer          *toggled_cell    = NULL;
+  GimpCellRendererViewable *clicked_cell    = NULL;
+  gboolean                  is_button_press;
+  gboolean                  is_button_release;
 
   tree_view->priv->dnd_renderer = NULL;
+
+  is_button_press   = gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS;
+  is_button_release = gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_RELEASE;
 
   if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget),
                                      bevent->x, bevent->y,
@@ -1365,7 +1370,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
        * in this function.
        * See also commit 3e101922, MR !1128 and #10281.
        */
-      if (multisel_mode && bevent->type == GDK_BUTTON_PRESS &&
+      if (multisel_mode && is_button_press &&
           ! gtk_widget_has_focus (widget))
         gtk_widget_grab_focus (widget);
 
@@ -1398,7 +1403,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                                           bevent->x, bevent->y))
             {
               if (bevent->state & gimp_get_extend_selection_mask ()                       &&
-                  bevent->type == GDK_BUTTON_PRESS                                        &&
+                  is_button_press                                                         &&
                   bevent->window == gtk_tree_view_get_bin_window (GTK_TREE_VIEW (widget)) &&
                   ! gtk_tree_view_is_blank_at_pos (GTK_TREE_VIEW (widget),
                                                    bevent->x, bevent->y, NULL, NULL,
@@ -1493,7 +1498,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                                     bevent->x, bevent->y);
 
       if ((toggled_cell || clicked_cell) &&
-          bevent->type == GDK_BUTTON_PRESS && ! gtk_widget_has_focus (widget))
+          is_button_press && ! gtk_widget_has_focus (widget))
         gtk_widget_grab_focus (widget);
 
       if (! toggled_cell && ! clicked_cell)
@@ -1504,7 +1509,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                                       column, &column_area,
                                                       bevent->x, bevent->y);
 
-          if (edit_cell && bevent->type == GDK_BUTTON_RELEASE)
+          if (edit_cell && is_button_release)
             {
               gchar *editing_path;
 
@@ -1556,8 +1561,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
         {
           handled = TRUE;
 
-          if (bevent->type == GDK_BUTTON_PRESS ||
-              bevent->type == GDK_BUTTON_RELEASE)
+          if (is_button_press || is_button_release)
             {
               /*  don't select item if a toggle was clicked */
               if (! toggled_cell)
@@ -1565,7 +1569,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                   gchar *path_str = gtk_tree_path_to_string (path);
 
                   handled = FALSE;
-                  if (bevent->type == GDK_BUTTON_RELEASE && clicked_cell)
+                  if (is_button_release && clicked_cell)
                     handled =
                       gimp_cell_renderer_viewable_pre_clicked (clicked_cell,
                                                                path_str,
@@ -1574,7 +1578,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                   if (! handled && ! multisel_mode && ! modifiers)
                     {
                       if (! tree_view->priv->editing_path &&
-                          (bevent->type == GDK_BUTTON_RELEASE ||
+                          (is_button_release ||
                            ! gimp_container_view_is_item_selected (container_view, renderer->viewable)))
                         /* If we click on currently selected item,
                          * handle simple click on release only for it
@@ -1601,7 +1605,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                                                            &iter,
                                                            FALSE, FALSE);
 
-                  if (bevent->type == GDK_BUTTON_PRESS &&
+                  if (is_button_press &&
                       (toggled_cell || clicked_cell))
                     {
                       gchar *path_str = gtk_tree_path_to_string (path);
@@ -1632,12 +1636,12 @@ gimp_container_tree_view_button (GtkWidget             *widget,
                     }
                 }
             }
-          else if (bevent->type == GDK_2BUTTON_PRESS)
+          else if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_2BUTTON_PRESS)
             {
               gboolean success = TRUE;
 
               /*  don't select item if a toggle was clicked */
-              if (bevent->type == GDK_BUTTON_RELEASE && ! toggled_cell)
+              if (is_button_release && ! toggled_cell)
                 {
                   success = gimp_container_view_set_1_selected (container_view,
                                                                 renderer->viewable);
@@ -1673,7 +1677,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
         }
       else if (bevent->button == 2)
         {
-          if (bevent->type == GDK_BUTTON_PRESS)
+          if (is_button_press)
             {
               if (clicked_cell)
                 {
@@ -1694,7 +1698,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
       g_object_unref (renderer);
 
       handled = (multisel_mode ? handled :
-                 (bevent->type == GDK_BUTTON_RELEASE ? FALSE : TRUE));
+                 (is_button_release ? FALSE : TRUE));
     }
   else
     {
@@ -1708,7 +1712,7 @@ gimp_container_tree_view_button (GtkWidget             *widget,
     }
 
   if (handled                          &&
-      bevent->type == GDK_BUTTON_PRESS &&
+      is_button_press                  &&
       ! gtk_widget_has_focus (widget)  &&
       ! toggled_cell                   &&
       ! clicked_cell)

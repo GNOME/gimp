@@ -466,7 +466,7 @@ splash_button_event (GtkWidget      *window,
                      GdkEventButton *event,
                      GimpSplash     *splash)
 {
-  if (event->type == GDK_BUTTON_PRESS && splash->alt_timeout_id == 0)
+  if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_BUTTON_PRESS && splash->alt_timeout_id == 0)
     {
       splash->alt            = TRUE;
       splash->alt_timeout_id = g_timeout_add (300, (GSourceFunc) splash_unset_alt, splash);
@@ -481,7 +481,7 @@ splash_key_event (GtkWidget   *window,
                   GdkEventKey *event,
                   GimpSplash  *splash)
 {
-  if (event->type == GDK_KEY_PRESS && splash->alt_timeout_id == 0)
+  if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_KEY_PRESS && splash->alt_timeout_id == 0)
     {
       splash->alt            = TRUE;
       splash->alt_timeout_id = g_timeout_add (300, (GSourceFunc) splash_unset_alt, splash);

@@ -271,7 +271,7 @@ gimp_navigation_view_button_press (GtkWidget      *widget,
   tx = bevent->x;
   ty = bevent->y;
 
-  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
+  if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS && bevent->button == 1)
     {
       if (! gimp_navigation_view_point_in_marker (nav_view, tx, ty))
         {

@@ -628,7 +628,7 @@ gimp_tool_button_button_press (GtkWidget      *widget,
         {
           return TRUE;
         }
-      else if (event->type == GDK_BUTTON_PRESS && event->button == 1 &&
+      else if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_BUTTON_PRESS && event->button == 1 &&
                ! tool_button->priv->menu_timeout_id)
         {
           GdkEventButton *timeout_event;
@@ -646,7 +646,7 @@ gimp_tool_button_button_press (GtkWidget      *widget,
         }
     }
 
-  if (event->type == GDK_2BUTTON_PRESS && event->button == 1)
+  if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_2BUTTON_PRESS && event->button == 1)
     {
       GimpContext *context;
       GimpDock    *dock;

@@ -635,7 +635,7 @@ shape_pressed (GtkWidget      *widget,
     return TRUE;
 
   /* ignore double and triple click */
-  if (event->type == GDK_BUTTON_PRESS)
+  if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_BUTTON_PRESS)
     {
       CursorOffset *p = g_object_get_data (G_OBJECT(widget), "cursor-offset");
 

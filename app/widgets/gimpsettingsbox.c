@@ -564,7 +564,7 @@ gimp_settings_box_menu_press (GtkWidget       *widget,
 {
   GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
 
-  if (bevent->type == GDK_BUTTON_PRESS)
+  if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS)
     {
       gtk_menu_popup_at_widget (GTK_MENU (private->menu), widget,
                                 GDK_GRAVITY_WEST,

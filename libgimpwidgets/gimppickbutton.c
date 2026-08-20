@@ -231,7 +231,7 @@ gimp_pick_button_mouse_press (GtkWidget      *invisible,
                               GdkEventButton *event,
                               GimpPickButton *button)
 {
-  if (event->type == GDK_BUTTON_PRESS && event->button == 1)
+  if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_BUTTON_PRESS && event->button == 1)
     {
       g_signal_connect (invisible, "motion-notify-event",
                         G_CALLBACK (gimp_pick_button_mouse_motion),

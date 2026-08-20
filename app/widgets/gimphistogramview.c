@@ -583,7 +583,7 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
 
   if (! view->grab_seat &&
-      bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
+      gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS && bevent->button == 1)
     {
       GdkSeat       *seat = gdk_event_get_seat ((GdkEvent *) bevent);
       GtkAllocation  allocation;

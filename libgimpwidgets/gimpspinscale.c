@@ -617,7 +617,7 @@ gimp_spin_scale_get_target (GtkWidget *widget,
         {
           return TARGET_NUMBER;
         }
-      else if (event->type == GDK_MOTION_NOTIFY)
+      else if (gdk_event_get_event_type (event) == GDK_MOTION_NOTIFY)
         {
           return TARGET_GRAB;
         }

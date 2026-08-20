@@ -229,8 +229,8 @@ gimp_polar_button_press_event (GtkWidget      *widget,
 {
   GimpPolarPrivate *priv = GET_PRIVATE (widget);
 
-  if (bevent->type == GDK_BUTTON_PRESS &&
-      bevent->button == 1              &&
+  if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS &&
+      bevent->button == 1                                                &&
       priv->target != POLAR_TARGET_NONE)
     {
       gdouble angle;
