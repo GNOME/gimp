@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-10 18:13+0000\n"
-"PO-Revision-Date: 2026-08-12 22:39+0200\n"
+"POT-Creation-Date: 2026-08-15 19:47+0000\n"
+"PO-Revision-Date: 2026-08-20 21:22+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -851,11 +851,19 @@ msgstr "Femdeling"
 msgid "Golden sections"
 msgstr "Gyldne utval"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:27
+msgid ""
+"No selection to base guides on.\n"
+"Make a selection first!"
+msgstr ""
+"Ikkje noko utval å laga hjelpelinjene etter.\n"
+"Lag først eit utval."
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "New Guides from _Selection"
 msgstr "Nye hjelpelinjer frå _utvalet"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:34
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "Lagar fire hjelpelinjer ved kantane av det gjeldande utvalet"
 
