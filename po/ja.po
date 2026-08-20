@@ -7185,8 +7185,7 @@ msgstr "選択したレイヤーをグループ化"
 
 #: app/actions/layers-commands.c:614
 msgid "New layer group"
-msgid_plural "New layer groups"
-msgstr[0] "新しいレイヤーグループ"
+msgstr "新しいレイヤーグループ"
 
 #: app/actions/layers-commands.c:725
 msgid "Raise Layer"
@@ -16845,7 +16844,7 @@ msgstr "利用可能なものがありません"
 msgid "Author:"
 msgstr "作者:"
 
-# #: app/dialogs/module-dialog.c:367
+#: app/dialogs/module-dialog.c:367
 msgid "Date:"
 msgstr "日付:"
 
@@ -19527,12 +19526,12 @@ msgstr "表示の回転"
 msgid "Select Rotation Angle"
 msgstr "回転角度の選択"
 
-#: app/display/gimpdisplayshell-rotate-dialog.c:152
+#: app/display/gimpdisplayshell-rotate-dialog.c:153
 #: app/tools/gimpmeasuretool.c:788
 msgid "Angle:"
 msgstr "角度:"
 
-#: app/display/gimpdisplayshell-rotate-dialog.c:166
+#: app/display/gimpdisplayshell-rotate-dialog.c:167
 msgid "degrees"
 msgstr "度"
 
