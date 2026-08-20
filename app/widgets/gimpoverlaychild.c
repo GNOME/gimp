@@ -172,12 +172,10 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   attributes.visual      = gtk_widget_get_visual (child->widget);
   attributes.event_mask  = (gtk_widget_get_events (widget) |
                             GDK_EXPOSURE_MASK);
-  attributes.cursor      = gdk_cursor_new_for_display (display, GDK_LEFT_PTR);
 
   attributes_mask = (GDK_WA_X        |
                      GDK_WA_Y        |
-                     GDK_WA_VISUAL   |
-                     GDK_WA_CURSOR);
+                     GDK_WA_VISUAL);
 
   child->window = gdk_window_new (gdk_screen_get_root_window (screen),
                                   &attributes, attributes_mask);
@@ -185,6 +183,7 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   gtk_widget_set_parent_window (child->widget, child->window);
   gdk_offscreen_window_set_embedder (child->window,
                                      gtk_widget_get_window (widget));
+  gdk_window_set_cursor (child->window, gdk_cursor_new_for_display (display, GDK_LEFT_PTR));
 
   g_object_unref (attributes.cursor);
 
