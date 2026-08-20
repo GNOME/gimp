@@ -44,6 +44,7 @@ try:
   os.makedirs(GIMP3_DIRECTORY, mode=0o700, exist_ok=False)
   os.environ["GIMP3_DIRECTORY"] = GIMP3_DIRECTORY
   sys.stderr.write(f"INFO: temporary GIMP configuration directory: {os.path.relpath(GIMP3_DIRECTORY)}\n")
+  os.environ["XDG_CACHE_HOME"] = os.path.join(GIMP3_DIRECTORY, '.cache')
 
   # Copy just the strictly needed plug-ins by the script or test (seee issue #11385)
   def is_script_file(filepath):
