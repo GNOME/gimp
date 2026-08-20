@@ -197,15 +197,12 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
 {
   GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (cell);
   GtkStyleContext        *style  = gtk_widget_get_style_context (widget);
-  GtkStateFlags           state;
   GdkRGBA                 color;
   gint                    xpad, ypad;
   gint                    width;
   gint                    x, y;
 
   gtk_cell_renderer_get_padding (cell, &xpad, &ypad);
-
-  state = gtk_cell_renderer_get_state (cell, widget, flags);
 
   y = cell_area->y + (cell_area->height - DASHES_HEIGHT) / 2;
   width = cell_area->width - 2 * xpad;
@@ -222,7 +219,9 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
         }
     }
 
-  gtk_style_context_get_color (style, state, &color);
+  gtk_style_context_get_color (style,
+                               gtk_cell_renderer_get_state (cell, widget, flags),
+                               &color);
   gdk_cairo_set_source_rgba (cr, &color);
 
   cairo_fill (cr);

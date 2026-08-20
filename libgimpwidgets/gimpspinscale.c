@@ -369,7 +369,6 @@ gimp_spin_scale_draw (GtkWidget *widget,
       GtkStyleContext *style = gtk_widget_get_style_context (widget);
       GtkAllocation    allocation;
       GdkRectangle     text_area;
-      GtkStateFlags    state;
       gint             minimum_width;
       gint             natural_width;
       PangoRectangle   ink;
@@ -386,8 +385,6 @@ gimp_spin_scale_draw (GtkWidget *widget,
       gtk_widget_get_allocation (widget, &allocation);
 
       gtk_entry_get_text_area (GTK_ENTRY (widget), &text_area);
-
-      state = gtk_widget_get_state_flags (widget);
 
       GTK_WIDGET_CLASS (parent_class)->get_preferred_width (widget,
                                                             &minimum_width,
@@ -433,11 +430,15 @@ gimp_spin_scale_draw (GtkWidget *widget,
 
       layout_offset_x -= ink.x;
 
-      gtk_style_context_get_color (style, state, &text_color);
+      gtk_style_context_get_color (style,
+                                   gtk_widget_get_state_flags (widget),
+                                   &text_color);
 
       gtk_style_context_save (style);
       gtk_style_context_add_class (style, GTK_STYLE_CLASS_PROGRESSBAR);
-      gtk_style_context_get_color (style, state, &bar_text_color);
+      gtk_style_context_get_color (style,
+                                   gtk_widget_get_state_flags (widget),
+                                   &bar_text_color);
       gtk_style_context_restore (style);
 
       progress_fraction = gtk_entry_get_progress_fraction (GTK_ENTRY (widget));

@@ -483,7 +483,6 @@ gimp_meter_draw (GtkWidget *widget,
   GtkAllocation    allocation;
   gint             size  = meter->priv->size;
   GtkStyleContext *style = gtk_widget_get_style_context (widget);
-  GtkStateFlags    state = gtk_style_context_get_state (style);
   GdkRGBA          fg;
   gint             i;
   gint             j;
@@ -493,7 +492,9 @@ gimp_meter_draw (GtkWidget *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  gtk_style_context_get_color (style, state, &fg);
+  gtk_style_context_get_color (style,
+                               gtk_style_context_get_state (style),
+                               &fg);
 
   /* translate to gauge center */
   cairo_translate (cr,

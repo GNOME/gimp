@@ -367,14 +367,15 @@ gimp_tool_button_draw (GtkWidget *widget,
   if (GIMP_IS_TOOL_GROUP (tool_button->priv->tool_item))
     {
       GtkStyleContext *style = gtk_widget_get_style_context (widget);
-      GtkStateFlags    state = gtk_widget_get_state_flags (widget);
       GdkRGBA          fg;
       GtkAllocation    allocation;
       gint             size;
       gint             x1, y1;
       gint             x2, y2;
 
-      gtk_style_context_get_color (style, state, &fg);
+      gtk_style_context_get_color (style,
+                                   gtk_widget_get_state_flags (widget),
+                                   &fg);
 
       gtk_widget_get_allocation (widget, &allocation);
 

@@ -645,7 +645,6 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
   {
     GtkWidget       *widget  = GTK_WIDGET (shell);
     GtkStyleContext *context = gtk_widget_get_style_context (widget);
-    GtkStateFlags    state   = gtk_widget_get_state_flags (widget);
     PangoLayout     *layout;
     gchar           *msg;
     GtkAllocation    allocation;
@@ -672,7 +671,9 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
     scale = MIN (((gdouble) allocation.width  / 2.0) / (gdouble) width,
                  ((gdouble) allocation.height / 2.0) / (gdouble) height);
 
-    gtk_style_context_get_color (context, state, &color);
+    gtk_style_context_get_color (context,
+                                 gtk_widget_get_state_flags (widget),
+                                 &color);
     gdk_cairo_set_source_rgba (cr, &color);
 
     cairo_move_to (cr,

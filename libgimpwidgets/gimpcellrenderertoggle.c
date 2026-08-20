@@ -439,7 +439,9 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
         {
           GdkRGBA color;
 
-          gtk_style_context_get_color (context, state, &color);
+          gtk_style_context_get_color (context,
+                                       gtk_cell_renderer_get_state (cell, widget, flags),
+                                       &color);
           gdk_cairo_set_source_rgba (cr, &color);
           cairo_set_line_width (cr, scale_factor * 1.5);
           cairo_move_to (cr,
