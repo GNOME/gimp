@@ -2585,7 +2585,19 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
         gimp_layer_set_lock_alpha (layer, layer_lock_alpha, TRUE);
 
       if (GIMP_IS_LINK_LAYER (layer) && link)
-        gimp_link_layer_set_link (GIMP_LINK_LAYER (layer), link, TRUE);
+        {
+          GimpMatrix3           matrix;
+          GimpInterpolationType interpolation = GIMP_INTERPOLATION_NONE;
+          gint                  offset_x;
+          gint                  offset_y;
+
+          gimp_link_layer_get_transform (GIMP_LINK_LAYER (layer), &matrix,
+                                         &offset_x, &offset_y, &interpolation);
+
+          gimp_link_layer_set_link_with_matrix (GIMP_LINK_LAYER (layer), link,
+                                                &matrix, interpolation,
+                                                offset_x, offset_y, TRUE);
+        }
 
       if (gimp_item_is_vector_layer (item) && path)
           gimp_vector_layer_set_path (GIMP_VECTOR_LAYER (layer), path, TRUE);
