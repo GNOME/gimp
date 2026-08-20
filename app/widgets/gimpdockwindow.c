@@ -24,6 +24,9 @@
 #include <gegl.h>
 
 #include <gtk/gtk.h>
+#ifdef PLATFORM_OSX
+#include <gdk/quartz/gdkquartz-cocoa-access.h>
+#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -127,7 +130,7 @@ static void            gimp_dock_window_get_property              (GObject      
 static void            gimp_dock_window_style_updated             (GtkWidget                  *widget);
 static gboolean        gimp_dock_window_delete_event              (GtkWidget                  *widget,
                                                                    GdkEventAny                *event);
-#ifdef G_OS_WIN32
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
 static void            gimp_dock_window_realize                   (GimpDockWindow             *dock_window,
                                                                    gpointer                    data);
 #endif
@@ -156,6 +159,9 @@ static void            gimp_dock_window_image_flush               (GimpImage    
                                                                    GimpDockWindow             *dock_window);
 static void            gimp_dock_window_update_title              (GimpDockWindow             *dock_window);
 static gboolean        gimp_dock_window_update_title_idle         (GimpDockWindow             *dock_window);
+#ifdef PLATFORM_OSX
+static gboolean        gimp_dock_window_update_focus_idle         (gpointer                    data);
+#endif
 static gchar         * gimp_dock_window_get_description           (GimpDockWindow             *dock_window,
                                                                    gboolean                    complete);
 static void            gimp_dock_window_dock_removed              (GimpDockWindow             *dock_window,
@@ -271,7 +277,7 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
   gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dock_window), FALSE);
 
-#ifdef G_OS_WIN32
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   g_signal_connect (dock_window, "realize",
                     G_CALLBACK (gimp_dock_window_realize),
                     NULL);
@@ -706,16 +712,63 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   return FALSE;
 }
 
-#ifdef G_OS_WIN32
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
 static void
 gimp_dock_window_realize (GimpDockWindow *dock_window,
                           gpointer        data)
 {
+#ifdef PLATFORM_OSX
+  GimpGuiConfig *config;
+  Gimp          *gimp;
+  NSWindow      *ns_window;
+  NSUInteger     minimize_mask;
+  NSButton      *maximize_button;
+#endif
+
   dock_window->p = gimp_dock_window_get_instance_private (dock_window);
 
   if (dock_window->p->context && dock_window->p->context->gimp)
-    gimp_window_set_title_bar_theme (dock_window->p->context->gimp,
-                                     GTK_WIDGET (dock_window));
+    {
+#ifdef G_OS_WIN32
+      gimp_window_set_title_bar_theme (dock_window->p->context->gimp,
+                                       GTK_WIDGET (dock_window));
+#endif
+
+#ifdef PLATFORM_OSX
+      gimp   = GIMP (dock_window->p->context->gimp);
+      config = GIMP_GUI_CONFIG (gimp->config);
+
+      if (config->dock_window_hint == GIMP_WINDOW_HINT_UTILITY)
+        {
+          /* since GTK can not create NSPanel, let's make the NSWindow behave like one */
+          ns_window = gdk_quartz_window_get_nswindow (gtk_widget_get_window (GTK_WIDGET (dock_window)));
+          if (ns_window)
+            {
+              /* keep dockable window transient (since gimp_dialog_auto_transient don't work well here)*/
+              [[NSApp mainWindow] addChildWindow:ns_window ordered:NSWindowAbove];
+
+              /* keep dockable window transient when restored */
+              [[NSNotificationCenter defaultCenter] addObserverForName:NSWindowDidDeminiaturizeNotification
+                                                    object:nil
+                                                    queue:[NSOperationQueue mainQueue]
+                                                    usingBlock:^(NSNotification *note) {
+                g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
+              }];
+
+              /* remove minimize button */
+              minimize_mask = [ns_window styleMask];
+              minimize_mask &= ~NSWindowStyleMaskMiniaturizable;
+              [ns_window setStyleMask:minimize_mask];
+
+              /* disable maximize button (while still preserving resizable attribute) */
+              maximize_button = [ns_window standardWindowButton:NSWindowZoomButton];
+              if (maximize_button)
+                /* do NOT use setHidden:YES since it breaks addChildWindow */
+                [maximize_button setEnabled:NO];
+            }
+        }
+#endif
+    }
 }
 #endif
 
@@ -934,6 +987,34 @@ gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
   return FALSE;
 }
 
+#ifdef PLATFORM_OSX
+static gboolean
+gimp_dock_window_update_focus_idle (gpointer data)
+{
+  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (data);
+  NSWindow       *ns_window;
+
+  if (! GTK_IS_WIDGET (dock_window) || ! gtk_widget_get_realized (GTK_WIDGET (dock_window)))
+    return G_SOURCE_REMOVE;
+
+  ns_window = gdk_quartz_window_get_nswindow (gtk_widget_get_window (GTK_WIDGET (dock_window)));
+  if (ns_window)
+    {
+      NSWindow *new_parent = [NSApp mainWindow];
+      if (new_parent && new_parent != ns_window && [new_parent level] == NSNormalWindowLevel)
+        {
+          NSWindow *old_parent = [ns_window parentWindow];
+          if (old_parent)
+            [old_parent removeChildWindow:ns_window];
+
+          [new_parent addChildWindow:ns_window ordered:NSWindowAbove];
+        }
+    }
+
+  return G_SOURCE_REMOVE;
+}
+#endif
+
 static gchar *
 gimp_dock_window_get_description (GimpDockWindow *dock_window,
                                   gboolean        complete)
@@ -980,6 +1061,20 @@ gimp_dock_window_factory_display_changed (GimpContext *context,
 
   if (display && dock_window->p->auto_follow_active)
     gimp_context_set_display (dock_window->p->context, display);
+
+#ifdef PLATFORM_OSX
+  if (display && gtk_widget_get_realized (GTK_WIDGET (dock_window)))
+    {
+      if (dock_window->p->context && dock_window->p->context->gimp)
+        {
+          Gimp          *gimp   = GIMP (dock_window->p->context->gimp);
+          GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
+
+          if (config->dock_window_hint == GIMP_WINDOW_HINT_UTILITY)
+            g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
+        }
+    }
+#endif
 }
 
 static void
