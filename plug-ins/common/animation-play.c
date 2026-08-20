@@ -1046,7 +1046,6 @@ build_dialog (GimpPlay *play,
 
   /* shape_drawing_area for detached feature. */
   shape_window = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_widget_set_app_paintable (shape_window, TRUE);
   gtk_window_set_resizable (GTK_WINDOW (shape_window), FALSE);
   gtk_window_set_decorated (GTK_WINDOW (shape_window), FALSE);
   gtk_widget_add_events (shape_window, GDK_BUTTON_PRESS_MASK);
