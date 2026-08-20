@@ -1160,7 +1160,16 @@ gimp_channel_load_exit (GimpLoadState  *state,
                                 NULL);
 
 
-  if (! gimp_savable_load_peek_active_object (state))
+  if (gimp_item_get_width (GIMP_ITEM (channel)) == 0 ||
+      gimp_item_get_height (GIMP_ITEM (channel)) == 0)
+    {
+      /* This may happen for missing or corrupted buffer files. */
+      GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                               "Discarding empty channel \"%s\".",
+                               gimp_object_get_name (GIMP_ITEM (channel)));
+      g_object_unref (channel);
+    }
+  else if (! gimp_savable_load_peek_active_object (state))
     {
       /* Specific GimpChannel attributes. */
       gimp_channel_set_show_masked (channel, show_masked);
@@ -1202,6 +1211,7 @@ gimp_channel_load_exit (GimpLoadState  *state,
     }
   else
     {
+      g_object_unref (channel);
       g_return_val_if_reached (FALSE);
     }
 
