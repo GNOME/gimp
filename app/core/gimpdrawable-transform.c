@@ -106,8 +106,9 @@ gimp_drawable_transform_buffer_affine (GimpDrawable            *drawable,
                                   &x1, &y1, &x2, &y2);
 
   /*  Get the new temporary buffer for the transformed result  */
-  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
-                                gegl_buffer_get_format (orig_buffer));
+  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
+                                     gegl_buffer_get_format (orig_buffer),
+                                     drawable);
 
   gimp_matrix3_identity (&gegl_matrix);
   gimp_matrix3_translate (&gegl_matrix, u1, v1);

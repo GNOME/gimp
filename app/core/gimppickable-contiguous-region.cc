@@ -365,7 +365,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
                                             gegl_buffer_get_format (fill_buffer));
       gegl_color_get_pixel (fill_color, fill_format, fill_col);
 
-      src_buffer = gimp_gegl_buffer_dup (src_buffer);
+      src_buffer = gimp_gegl_buffer_dup (src_buffer, NULL);
       gi = gegl_buffer_iterator_new (src_buffer, NULL, 0, NULL,
                                      GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 2);
       gegl_buffer_iterator_add (gi, fill_buffer,

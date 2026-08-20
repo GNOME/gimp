@@ -1541,7 +1541,8 @@ gimp_drawable_filter_apply_with_mask (GimpDrawableFilter  *filter,
       gimp_channel_clear (gimp_image_get_mask (image), NULL, FALSE);
 
       buffer =
-        gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)));
+        gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
+                              GIMP_DRAWABLE (gimp_image_get_mask (image)));
       gimp_drawable_set_buffer (GIMP_DRAWABLE (gimp_image_get_mask (image)),
                                 FALSE, NULL, buffer);
 
@@ -1553,7 +1554,8 @@ gimp_drawable_filter_apply_with_mask (GimpDrawableFilter  *filter,
   if (mask)
     {
       buffer =
-        gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)));
+        gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)),
+                              GIMP_DRAWABLE (gimp_image_get_mask (image)));
       gimp_drawable_set_buffer (GIMP_DRAWABLE (gimp_image_get_mask (image)),
                                 FALSE, NULL, buffer);
       g_object_unref (buffer);

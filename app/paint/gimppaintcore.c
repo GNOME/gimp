@@ -417,7 +417,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
     {
       GeglBuffer *buffer = gimp_pickable_get_buffer (core->image_pickable);
 
-      core->saved_proj_buffer = gimp_gegl_buffer_dup (buffer);
+      core->saved_proj_buffer = gimp_gegl_buffer_dup (buffer, NULL);
     }
 
   for (GList *iter = drawables; iter; iter = iter->next)
@@ -431,7 +431,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
       g_hash_table_insert (core->original_bounds, iter->data,
                            rect);
       g_hash_table_insert (core->undo_buffers, iter->data,
-                           gimp_gegl_buffer_dup (gimp_drawable_get_buffer (iter->data)));
+                           gimp_gegl_buffer_dup (gimp_drawable_get_buffer (iter->data), NULL));
 
       max_width  = MAX (max_width, gimp_item_get_width (iter->data));
       max_height = MAX (max_height, gimp_item_get_height (iter->data));
@@ -609,10 +609,11 @@ gimp_paint_core_finish (GimpPaintCore *core,
               g_return_if_fail (GIMP_IS_LAYER (iter->data) || GIMP_IS_LAYER_MASK (iter->data));
 
               /* create a copy of original buffer from undo data */
-              buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                        old_rect.width,
-                                                        old_rect.height),
-                                        gimp_drawable_get_format (iter->data));
+              buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                             old_rect.width,
+                                                             old_rect.height),
+                                             gimp_drawable_get_format (iter->data),
+                                             GIMP_DRAWABLE (iter->data));
 
               gimp_gegl_buffer_copy (undo_buffer,
                                      GEGL_RECTANGLE (old_rect.x - rect.x,
@@ -638,10 +639,11 @@ gimp_paint_core_finish (GimpPaintCore *core,
                     other_drawable = GIMP_DRAWABLE (GIMP_LAYER (drawables->data)->mask);
 
                   /* create a copy of original buffer by taking the required area */
-                  other_old = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                               old_rect.width,
-                                                               old_rect.height),
-                                               gimp_drawable_get_format (other_drawable));
+                  other_old = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                                    old_rect.width,
+                                                                    old_rect.height),
+                                                    gimp_drawable_get_format (other_drawable),
+                                                    other_drawable);
 
                   gimp_gegl_buffer_copy (gimp_drawable_get_buffer (other_drawable),
                                          GEGL_RECTANGLE (old_rect.x - rect.x,
@@ -773,10 +775,11 @@ gimp_paint_core_cancel (GimpPaintCore *core,
               g_signal_emit_by_name (iter->data, "update", bbox.x, bbox.y, bbox.width, bbox.height);
 
               /* create a copy of original buffer from undo data */
-              buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                        old_rect.width,
-                                                        old_rect.height),
-                                        gimp_drawable_get_format (iter->data));
+              buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                             old_rect.width,
+                                                             old_rect.height),
+                                             gimp_drawable_get_format (iter->data),
+                                             GIMP_DRAWABLE (iter->data));
 
               gimp_gegl_buffer_copy (undo_buffer,
                                      GEGL_RECTANGLE (old_rect.x - new_rect.x,
@@ -798,10 +801,11 @@ gimp_paint_core_cancel (GimpPaintCore *core,
                     other_drawable = GIMP_DRAWABLE (GIMP_LAYER (drawables->data)->mask);
 
                   /* create a copy of original buffer by taking the required area */
-                  other_old = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                               old_rect.width,
-                                                               old_rect.height),
-                                               gimp_drawable_get_format (other_drawable));
+                  other_old = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                                    old_rect.width,
+                                                                    old_rect.height),
+                                                    gimp_drawable_get_format (other_drawable),
+                                                    other_drawable);
 
                   gimp_gegl_buffer_copy (gimp_drawable_get_buffer (other_drawable),
                                          GEGL_RECTANGLE (old_rect.x - new_rect.x,

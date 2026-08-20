@@ -26,12 +26,14 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 #include <gegl-plugin.h>
+#include <glib/gstdio.h>
 
 #include "libgimpcolor/gimpcolor.h"
 
 #include "gimp-gegl-types.h"
 
 #include "core/gimperror.h"
+#include "core/gimpdrawable.h"
 #include "core/gimppattern.h"
 #include "core/gimpprogress.h"
 
@@ -42,15 +44,16 @@
 
 /*  local function prototypes  */
 
-static gboolean   gimp_gegl_op_blacklisted    (const gchar        *name,
-                                               const gchar        *categories,
-                                               gboolean            block_gimp_ops,
-                                               GError            **error);
-static GList    * gimp_gegl_get_op_subclasses (GType               type,
-                                               GList              *classes,
-                                               gboolean            block_gimp_ops);
-static gint       gimp_gegl_compare_op_names  (GeglOperationClass *a,
-                                               GeglOperationClass *b);
+static gboolean   gimp_gegl_op_blacklisted         (const gchar         *name,
+                                                    const gchar         *categories,
+                                                    gboolean             block_gimp_ops,
+                                                    GError             **error);
+static GList    * gimp_gegl_get_op_subclasses      (GType                type,
+                                                    GList               *classes,
+                                                    gboolean             block_gimp_ops);
+static gint       gimp_gegl_compare_op_names       (GeglOperationClass  *a,
+                                                    GeglOperationClass  *b);
+static void       gimp_gegl_buffer_drawable_unlink (gchar               *path);
 
 
 /* Comes from gegl/operation/gegl-operations.h which is not public. */
@@ -323,11 +326,45 @@ gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
 }
 
 GeglBuffer *
-gimp_gegl_buffer_dup (GeglBuffer *buffer)
+gimp_gegl_buffer_new (const GeglRectangle *extent,
+                      const Babl          *format,
+                      GimpDrawable        *drawable)
+{
+  GeglBuffer *buffer;
+  gchar      *path = NULL;
+
+  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (extent != NULL, NULL);
+
+  if (drawable)
+    path = gimp_drawable_get_new_cache_path (drawable);
+
+  buffer = g_object_new (GEGL_TYPE_BUFFER,
+                         "format", format,
+                         "path",   path,
+                         "x",      extent->x,
+                         "y",      extent->y,
+                         "width",  extent->width,
+                         "height", extent->height,
+                         NULL);
+
+  if (path)
+    /* Trick to delete the on-disk file when destroying the buffer. */
+    g_object_set_data_full (G_OBJECT (buffer),
+                            "gimp-gegl-buffer-drawable-destroy", g_strdup (path),
+                            (GDestroyNotify) gimp_gegl_buffer_drawable_unlink);
+
+  return buffer;
+}
+
+GeglBuffer *
+gimp_gegl_buffer_dup (GeglBuffer   *buffer,
+                      GimpDrawable *drawable)
 {
   GeglBuffer          *new_buffer;
   const GeglRectangle *extent;
   const GeglRectangle *abyss;
+  gchar               *path = NULL;
   GeglRectangle        rect;
   gint                 shift_x;
   gint                 shift_y;
@@ -335,9 +372,12 @@ gimp_gegl_buffer_dup (GeglBuffer *buffer)
   gint                 tile_height;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
 
   extent = gegl_buffer_get_extent (buffer);
   abyss  = gegl_buffer_get_abyss  (buffer);
+  if (drawable)
+    path = gimp_drawable_get_new_cache_path (drawable);
 
   g_object_get (buffer,
                 "shift-x",     &shift_x,
@@ -360,6 +400,7 @@ gimp_gegl_buffer_dup (GeglBuffer *buffer)
                              "shift-y",      shift_y,
                              "tile-width",   tile_width,
                              "tile-height",  tile_height,
+                             "path",         path,
                              NULL);
 
   gegl_rectangle_align_to_buffer (&rect, extent, buffer,
@@ -367,6 +408,12 @@ gimp_gegl_buffer_dup (GeglBuffer *buffer)
 
   gimp_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
                          new_buffer, &rect);
+
+  if (path)
+    /* Trick to delete the on-disk file when destroying the buffer. */
+    g_object_set_data_full (G_OBJECT (buffer),
+                            "gimp-gegl-buffer-drawable-destroy", g_strdup (path),
+                            (GDestroyNotify) gimp_gegl_buffer_drawable_unlink);
 
   return new_buffer;
 }
@@ -694,4 +741,13 @@ gimp_gegl_compare_op_names (GeglOperationClass *a,
   if (! name_b) name_b = b->name;
 
   return strcmp (name_a, name_b);
+}
+
+static void
+gimp_gegl_buffer_drawable_unlink (gchar *path)
+{
+  g_return_if_fail (g_str_has_prefix (path, gimp_cache_directory ()));
+  /* We ignore failure: the buffer may have never been flushed to disk. */
+  g_unlink (path);
+  g_free (path);
 }

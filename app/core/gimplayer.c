@@ -37,6 +37,7 @@
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-utils.h"
 #include "gimpboundary.h"
@@ -1676,8 +1677,6 @@ gimp_layer_save (GimpSavable   *savable,
 {
   GimpLayer              *layer = GIMP_LAYER (savable);
   GimpImage              *image = gimp_item_get_image (GIMP_ITEM (layer));
-  const Babl             *image_format;
-  const Babl             *format;
   GimpLayerMode           mode;
   GimpLayerColorSpace     space;
   GimpLayerCompositeMode  composite_mode;
@@ -1697,12 +1696,6 @@ gimp_layer_save (GimpSavable   *savable,
                                   "attached-to", "%u", (guint) gimp_item_get_tattoo (item),
                                   NULL);
     }
-
-  /* Do not store the format if it's the same as the image. */
-  image_format = gimp_image_get_layer_format (image, TRUE);
-  format       = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
-  if (image_format != format)
-    gimp_savable_format_save (format, state);
 
   parent_savable_iface->save (savable, state);
 
@@ -1816,10 +1809,6 @@ gimp_layer_load_enter (GimpLoadState  *state,
                                   gimp_layer_enter_mask,
                                   gimp_layer_exit_mask,
                                   NULL, NULL);
-  gimp_savable_load_add_handlers (state, "format",
-                                  gimp_savable_enter_format,
-                                  gimp_savable_exit_format,
-                                  NULL, NULL);
 
   if (real_type == GIMP_TYPE_LAYER)
     {
@@ -1843,7 +1832,6 @@ gimp_layer_load_exit (GimpLoadState  *state,
   GimpLayer              *layer;
   GimpLayerMask          *mask             = NULL;
   const gchar            *name             = NULL;
-  const Babl             *format           = NULL;
   gdouble                 opacity          = -1.0;
   GimpLayerMode           mode             = GIMP_LAYER_MODE_NORMAL;
   GimpLayerColorSpace     blend_space      = GIMP_LAYER_COLOR_SPACE_AUTO;
@@ -1913,18 +1901,8 @@ gimp_layer_load_exit (GimpLoadState  *state,
   gimp_layer_set_composite_mode (layer, composite_mode, FALSE);
 
   gimp_savable_load_get_values (state,
-                                "format",     &format,
                                 "lock-alpha", &lock_alpha,
                                 NULL);
-
-  if (format && format != gimp_drawable_get_format (GIMP_DRAWABLE (layer)))
-    {
-      g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                   "%s: format \"%s\" of layer \"%s\" inconsistent with buffer format \"%s\"",
-                   G_STRFUNC, babl_get_name (format), name,
-                   babl_get_name (gimp_drawable_get_format (GIMP_DRAWABLE (layer))));
-      gimp_drawable_set_format (GIMP_DRAWABLE (layer), format, TRUE, FALSE);
-    }
 
   gimp_layer_set_lock_alpha (layer, lock_alpha, FALSE);
   if (! GIMP_IS_GROUP_LAYER (layer) &&
@@ -2133,10 +2111,10 @@ gimp_layer_real_convert_type (GimpLayer        *layer,
     }
 
   dest_buffer =
-    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                                     gimp_item_get_height (GIMP_ITEM (layer))),
-                     new_format);
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                          gimp_item_get_width  (GIMP_ITEM (layer)),
+                                          gimp_item_get_height (GIMP_ITEM (layer))),
+                          new_format, drawable);
 
   if (dest_profile)
     {
@@ -2880,10 +2858,11 @@ gimp_layer_add_alpha (GimpLayer *layer)
   item     = GIMP_ITEM (layer);
   drawable = GIMP_DRAWABLE (layer);
 
-  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                gimp_item_get_width  (item),
-                                                gimp_item_get_height (item)),
-                                gimp_drawable_get_format_with_alpha (drawable));
+  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                     gimp_item_get_width  (item),
+                                                     gimp_item_get_height (item)),
+                                     gimp_drawable_get_format_with_alpha (drawable),
+                                     GIMP_DRAWABLE (layer));
 
   gimp_gegl_buffer_copy (
     gimp_drawable_get_buffer (drawable), NULL, GEGL_ABYSS_NONE,
@@ -2909,10 +2888,11 @@ gimp_layer_remove_alpha (GimpLayer   *layer,
     return;
 
   new_buffer =
-    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                     gimp_item_get_width  (GIMP_ITEM (layer)),
-                                     gimp_item_get_height (GIMP_ITEM (layer))),
-                     gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                          gimp_item_get_width  (GIMP_ITEM (layer)),
+                                          gimp_item_get_height (GIMP_ITEM (layer))),
+                          gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)),
+                          GIMP_DRAWABLE (layer));
 
   gimp_gegl_apply_flatten (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                            NULL, NULL, new_buffer,

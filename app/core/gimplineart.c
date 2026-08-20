@@ -679,10 +679,8 @@ gimp_line_art_prepare_async (GimpLineArt *line_art,
 
   gimp_pickable_flush (line_art->priv->input);
 
-  buffer = gimp_gegl_buffer_dup (
-    gimp_pickable_get_buffer (line_art->priv->input));
-
-  data  = line_art_data_new (buffer, line_art);
+  buffer = gimp_gegl_buffer_dup (gimp_pickable_get_buffer (line_art->priv->input), NULL);
+  data   = line_art_data_new (buffer, line_art);
 
   g_object_unref (buffer);
 
@@ -1133,7 +1131,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
             goto end3;
 
           g_object_unref (closed);
-          closed = gimp_gegl_buffer_dup (strokes);
+          closed = gimp_gegl_buffer_dup (strokes, NULL);
 
           /* Draw splines */
           while (candidates)

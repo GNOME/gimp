@@ -447,7 +447,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable      *drawable,
   if (mask_buffer)
     *mask_buffer = new_mask;
 
-  rendered_mask = gimp_gegl_buffer_dup (new_mask);
+  rendered_mask = gimp_gegl_buffer_dup (new_mask, NULL);
   if (gimp_fill_options_get_feather (options, &feather_radius))
     {
       /* Feathering for the line art algorithm is not applied during

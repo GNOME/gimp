@@ -460,7 +460,7 @@ gimp_image_merge_group_layer (GimpImage      *image,
       GeglNode      *mode_node = gimp_drawable_get_mode_node (drawable);
 
       rect = gegl_node_get_bounding_box (mode_node);
-      pass_through_buffer = gegl_buffer_new (&rect, gimp_drawable_get_format (drawable));
+      pass_through_buffer = gimp_gegl_buffer_new (&rect, gimp_drawable_get_format (drawable), NULL);
       gegl_node_blit_buffer (mode_node, pass_through_buffer, &rect, 0, GEGL_ABYSS_NONE);
     }
 
@@ -498,8 +498,9 @@ gimp_image_merge_group_layer (GimpImage      *image,
         {
           GeglBuffer *buffer;
 
-          buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect.width, rect.height),
-                                    gimp_drawable_get_format (GIMP_DRAWABLE (layer)));
+          buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect.width, rect.height),
+                                         gimp_drawable_get_format (GIMP_DRAWABLE (layer)),
+                                         GIMP_DRAWABLE (layer));
           gegl_buffer_copy (pass_through_buffer, &rect, GEGL_ABYSS_NONE,
                             buffer, GEGL_RECTANGLE (0, 0, rect.width, rect.height));
           g_object_unref (pass_through_buffer);

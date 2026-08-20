@@ -1415,7 +1415,7 @@ gimp_foreground_select_undo_pop (StrokeUndo *undo,
   GeglBuffer *buffer;
   gint        width, height;
 
-  buffer = gimp_gegl_buffer_dup (undo->saved_trimap);
+  buffer = gimp_gegl_buffer_dup (undo->saved_trimap, NULL);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);

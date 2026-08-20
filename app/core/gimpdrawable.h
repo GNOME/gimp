@@ -177,7 +177,7 @@ void            gimp_drawable_set_buffer_full         (GimpDrawable       *drawa
 GeglBuffer    * gimp_drawable_get_buffer_with_effects (GimpDrawable       *drawable);
 
 void            gimp_drawable_steal_buffer            (GimpDrawable       *drawable,
-                                                       GimpDrawable       *src_drawable);
+                                                       GimpDrawable      **src_drawable);
 
 void            gimp_drawable_set_format              (GimpDrawable       *drawable,
                                                        const Babl         *format,
@@ -231,6 +231,7 @@ gboolean          gimp_drawable_end_paint            (GimpDrawable    *drawable)
 gboolean          gimp_drawable_flush_paint          (GimpDrawable    *drawable);
 gboolean          gimp_drawable_is_painting          (GimpDrawable    *drawable);
 
-gboolean          gimp_drawable_save_buffer          (GimpDrawable    *drawable);
+gchar           * gimp_drawable_get_new_cache_path   (GimpDrawable    *drawable);
+
 
 G_DEFINE_AUTOPTR_CLEANUP_FUNC (GimpDrawable, g_object_unref);

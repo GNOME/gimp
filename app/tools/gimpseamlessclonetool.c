@@ -308,12 +308,12 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
         {
           GList *pasted_drawables = gimp_image_get_selected_drawables (GIMP_IMAGE (paste));
 
-          sc->paste = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (pasted_drawables->data)));
+          sc->paste = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (pasted_drawables->data)), NULL);
           g_list_free (pasted_drawables);
         }
       else if (GIMP_IS_BUFFER (paste))
         {
-          sc->paste = gimp_gegl_buffer_dup (gimp_buffer_get_buffer (GIMP_BUFFER (paste)));
+          sc->paste = gimp_gegl_buffer_dup (gimp_buffer_get_buffer (GIMP_BUFFER (paste)), NULL);
         }
       g_object_unref (paste);
 

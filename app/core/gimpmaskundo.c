@@ -25,6 +25,7 @@
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-memsize.h"
 #include "gimpchannel.h"
@@ -231,8 +232,8 @@ gimp_mask_undo_pop (GimpUndo            *undo,
       gint        width  = gimp_item_get_width  (item);
       gint        height = gimp_item_get_height (item);
 
-      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                mask_undo->format);
+      buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                     mask_undo->format, drawable);
 
       gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
       g_object_unref (buffer);

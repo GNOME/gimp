@@ -32,6 +32,7 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "path/gimpvectorlayer.h"
 
@@ -2322,8 +2323,9 @@ gimp_group_layer_update_mask_size (GimpGroupLayer *group)
   if (gegl_rectangle_equal (&bounds, &mask_bounds))
     return;
 
-  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, bounds.width, bounds.height),
-                            gimp_drawable_get_format (GIMP_DRAWABLE (mask)));
+  buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, bounds.width, bounds.height),
+                                 gimp_drawable_get_format (GIMP_DRAWABLE (mask)),
+                                 GIMP_DRAWABLE (mask));
 
   if (private->suspended_mask_buffer)
     {

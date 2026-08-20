@@ -36,6 +36,7 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimpcontext.h"
@@ -963,10 +964,11 @@ gimp_image_convert_profile_layers (GimpImage                *image,
 
       alpha = gimp_drawable_has_alpha (drawable);
 
-      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                gimp_item_get_width  (item),
-                                                gimp_item_get_height (item)),
-                                gimp_image_get_layer_format (image, alpha));
+      buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                     gimp_item_get_width  (item),
+                                                     gimp_item_get_height (item)),
+                                     gimp_image_get_layer_format (image, alpha),
+                                     drawable);
 
       gimp_gegl_convert_color_profile (gimp_drawable_get_buffer (drawable),
                                        NULL,

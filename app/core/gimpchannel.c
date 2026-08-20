@@ -37,6 +37,7 @@
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-mask.h"
 #include "gegl/gimp-gegl-nodes.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"
@@ -558,10 +559,10 @@ gimp_channel_duplicate (GimpItem *item,
               GeglBuffer *new_buffer;
 
               new_buffer =
-                gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                 gimp_item_get_width  (new_item),
-                                                 gimp_item_get_height (new_item)),
-                                 format);
+                gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                      gimp_item_get_width  (new_item),
+                                                      gimp_item_get_height (new_item)),
+                                      format, new_drawable);
 
               gegl_buffer_set_format (new_buffer,
                                       gimp_drawable_get_format (new_drawable));
@@ -607,10 +608,10 @@ gimp_channel_convert (GimpItem  *item,
       format = gimp_drawable_get_format_without_alpha (drawable);
 
       new_buffer =
-        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                         gimp_item_get_width (item),
-                                         gimp_item_get_height (item)),
-                         format);
+        gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                              gimp_item_get_width (item),
+                                              gimp_item_get_height (item)),
+                              format, drawable);
 
       gimp_gegl_apply_flatten (gimp_drawable_get_buffer (drawable),
                                NULL, NULL,
@@ -748,8 +749,9 @@ gimp_channel_scale (GimpItem              *item,
       GeglBuffer   *new_buffer;
 
       new_buffer =
-        gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
-                         gimp_drawable_get_format (drawable));
+        gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, new_width, new_height),
+                              gimp_drawable_get_format (drawable),
+                              drawable);
 
       gimp_drawable_set_buffer_full (drawable,
                                      gimp_item_is_attached (item), NULL,
@@ -940,10 +942,10 @@ gimp_channel_convert_type (GimpDrawable     *drawable,
   GeglBuffer *dest_buffer;
 
   dest_buffer =
-    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                     gimp_item_get_height (GIMP_ITEM (drawable))),
-                     new_format);
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                          gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                          gimp_item_get_height (GIMP_ITEM (drawable))),
+                          new_format, drawable);
 
   if (mask_dither_type == GEGL_DITHER_NONE)
     {
@@ -997,6 +999,7 @@ gimp_channel_set_buffer (GimpDrawable        *drawable,
                                                   push_undo, undo_desc,
                                                   buffer, bounds);
 
+  buffer = gimp_drawable_get_buffer (drawable);
   gegl_buffer_signal_connect (buffer, "changed",
                               G_CALLBACK (gimp_channel_buffer_changed),
                               channel);

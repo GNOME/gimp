@@ -624,7 +624,7 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasTransformPreview *transform_p
       buffer = gimp_pickable_get_buffer (pickable);
 
       if (gimp_tile_handler_validate_get_assigned (buffer))
-        buffer = gimp_gegl_buffer_dup (buffer);
+        buffer = gimp_gegl_buffer_dup (buffer, NULL);
       else
         buffer = g_object_ref (buffer);
 

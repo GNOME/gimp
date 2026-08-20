@@ -996,6 +996,9 @@ gimp_image_constructed (GObject *object)
                            image, G_CONNECT_SWAPPED);
 
   gimp_container_add (image->gimp->images, GIMP_OBJECT (image));
+
+  (void) gimp_image_get_buffers_folder (image);
+  (void) gimp_image_get_cache_xml_file (image);
 }
 
 static void

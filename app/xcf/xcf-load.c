@@ -1306,7 +1306,6 @@ xcf_load_image (Gimp     *gimp,
 
       if (vdata != NULL)
         {
-          GimpLayer              *vlayer;
           GimpVectorLayerOptions *options;
           GimpPath               *path;
           GimpLayerMask          *mask;
@@ -1379,62 +1378,59 @@ xcf_load_image (Gimp     *gimp,
             GPOINTER_TO_INT (g_object_get_data (G_OBJECT (layer),
                                                 "gimp-layer-mask-show"));
 
-
-          /* Duplicate GEGL buffer so we retain any raster edits */
           if (modified)
-            raster_buffer =
-              gimp_gegl_buffer_dup (gimp_drawable_get_buffer (iter->data));
+            /* Duplicate GEGL buffer so we retain any raster edits. This
+             * must happen before gimp_layer_from_layer() as the source
+             * layer will be invalid after.
+             */
+            raster_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (iter->data), NULL);
 
-          vlayer = gimp_layer_from_layer (layer, GIMP_TYPE_VECTOR_LAYER,
-                                          "image",                image,
-                                          "vector-layer-options", options,
-                                          NULL);
+          gimp_layer_from_layer (&layer, GIMP_TYPE_VECTOR_LAYER,
+                                 "image",                image,
+                                 "vector-layer-options", options,
+                                 NULL);
           g_object_unref (options);
-
-          if (modified)
-            gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vlayer), FALSE);
 
           if (raster_buffer)
             {
-              gimp_drawable_set_buffer (GIMP_DRAWABLE (vlayer), FALSE, NULL,
+              gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer), FALSE);
+              gimp_drawable_set_buffer (GIMP_DRAWABLE (layer), FALSE, NULL,
                                         raster_buffer);
               g_object_unref (raster_buffer);
             }
 
-          gimp_object_set_name (GIMP_OBJECT (vlayer), name);
+          gimp_object_set_name (GIMP_OBJECT (layer), name);
           g_free (name);
 
           if (mask)
             {
-              g_object_set_data_full (G_OBJECT (vlayer), "gimp-layer-mask",
+              g_object_set_data_full (G_OBJECT (layer), "gimp-layer-mask",
                                       mask, (GDestroyNotify) g_object_unref);
 
-              g_object_set_data (G_OBJECT (vlayer), "gimp-layer-mask-apply",
+              g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-apply",
                                  GINT_TO_POINTER (apply_mask));
-              g_object_set_data (G_OBJECT (vlayer), "gimp-layer-mask-edit",
+              g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-edit",
                                  GINT_TO_POINTER (edit_mask));
-              g_object_set_data (G_OBJECT (vlayer), "gimp-layer-mask-show",
+              g_object_set_data (G_OBJECT (layer), "gimp-layer-mask-show",
                                  GINT_TO_POINTER (show_mask));
             }
           if (filter_data_list)
-            g_object_set_data_full (G_OBJECT (vlayer), "gimp-layer-effects",
+            g_object_set_data_full (G_OBJECT (layer), "gimp-layer-effects",
                                     filter_data_list,
                                     (GDestroyNotify) xcf_load_free_effects);
 
           if (selected)
             {
               info->selected_layers = g_list_delete_link (info->selected_layers, selected);
-              info->selected_layers = g_list_prepend (info->selected_layers, vlayer);
+              info->selected_layers = g_list_prepend (info->selected_layers, layer);
             }
           if (linked)
             {
               info->linked_layers = g_list_delete_link (info->linked_layers, linked);
-              info->linked_layers = g_list_prepend (info->linked_layers, vlayer);
+              info->linked_layers = g_list_prepend (info->linked_layers, layer);
             }
           if (floating)
-            info->floating_sel = vlayer;
-
-          layer = vlayer;
+            info->floating_sel = layer;
         }
 
       /* If any layer has a transformation matrix, we apply it after
@@ -2708,9 +2704,9 @@ xcf_load_layer_props (XcfInfo    *info,
                       link   = gimp_link_new (info->gimp, link_file,
                                               (gint) dimensions[0], (gint) dimensions[1],
                                               FALSE, NULL, NULL);
-                      *layer = gimp_layer_from_layer (*layer, GIMP_TYPE_LINK_LAYER,
-                                                      "image", image,
-                                                      NULL);
+                      gimp_layer_from_layer (layer, GIMP_TYPE_LINK_LAYER,
+                                             "image", image,
+                                             NULL);
 
                       gimp_link_layer_set_link (GIMP_LINK_LAYER (*layer), link, FALSE);
                       gimp_link_layer_set_xcf_flags (GIMP_LINK_LAYER (*layer), flags);
@@ -3073,8 +3069,7 @@ xcf_load_channel_props (XcfInfo      *info,
             gimp_image_take_mask (image, mask);
 
             gimp_drawable_steal_buffer (GIMP_DRAWABLE (mask),
-                                        GIMP_DRAWABLE (*channel));
-            g_object_unref (*channel);
+                                        (GimpDrawable **) channel);
             *channel = mask;
 
             /* Don't restore info->selected_channels because the

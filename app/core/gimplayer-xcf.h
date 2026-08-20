@@ -22,6 +22,6 @@
 
 #pragma once
 
-GimpLayer * gimp_layer_from_layer (GimpLayer *layer,
-                                   GType      new_layer_type,
-                                   ...) G_GNUC_NULL_TERMINATED;
+void gimp_layer_from_layer (GimpLayer **layer,
+                            GType       new_layer_type,
+                            ...) G_GNUC_NULL_TERMINATED;

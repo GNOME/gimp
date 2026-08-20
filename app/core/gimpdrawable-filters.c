@@ -329,7 +329,7 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
           graph       = gimp_filter_stack_get_graph (GIMP_FILTER_STACK (drawable->private->filter_stack));
           output      = gegl_node_get_output_proxy (graph, "output");
           output_rect = gegl_node_get_bounding_box (output);
-          buffer      = gegl_buffer_new (&output_rect, gimp_drawable_get_format (drawable));
+          buffer      = gimp_gegl_buffer_new (&output_rect, gimp_drawable_get_format (drawable), drawable);
 
           applicator  = gimp_filter_get_applicator (GIMP_FILTER (filter));
           gimp_applicator_set_dest_buffer (applicator, buffer);
@@ -364,7 +364,8 @@ gimp_drawable_merge_filters (GimpDrawable *drawable)
   gimp_image_undo_group_end (gimp_item_get_image (GIMP_ITEM (drawable)));
 
   /* Restore selection after merging down */
-  buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)));
+  buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)),
+                                 GIMP_DRAWABLE (gimp_image_get_mask (image)));
   gimp_drawable_set_buffer (GIMP_DRAWABLE (gimp_image_get_mask (image)),
                             FALSE, NULL, buffer);
   g_object_unref (buffer);
@@ -428,16 +429,15 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
       if (format != gimp_drawable_get_format (drawable))
         {
-          buffer = gegl_buffer_new (gegl_buffer_get_extent (dest_buffer),
-                                    format);
+          buffer = gimp_gegl_buffer_new (gegl_buffer_get_extent (dest_buffer), format, drawable);
 
           dest_buffer = buffer;
         }
     }
   else
     {
-      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect.width, rect.height),
-                                format);
+      buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect.width, rect.height),
+                                     format, drawable);
 
       dest_buffer = g_object_new (GEGL_TYPE_BUFFER,
                                   "source",  buffer,

@@ -243,8 +243,7 @@ static GeglNode * gimp_drawable_real_get_source_node (GimpDrawable    *drawable)
 static void       gimp_drawable_format_changed     (GimpDrawable      *drawable);
 static void       gimp_drawable_alpha_changed      (GimpDrawable      *drawable);
 
-static const gchar * gimp_drawable_get_cache_file     (GimpDrawable    *drawable);
-static void          gimp_drawable_cache_thread       (GimpDrawable    *drawable);
+static gchar       * gimp_drawable_get_cache_path     (GimpDrawable    *drawable);
 
 static gboolean      gimp_drawable_enter_filters      (GimpLoadState   *state,
                                                        const gchar    **attribute_names,
@@ -375,10 +374,7 @@ gimp_drawable_init (GimpDrawable *drawable)
 {
   drawable->private = gimp_drawable_get_instance_private (drawable);
 
-  drawable->private->cache_path     = NULL;
   drawable->private->cache_outdated = TRUE;
-  drawable->private->cache_thread   = NULL;
-  g_mutex_init (&drawable->private->cache_mutex);
 
   _gimp_drawable_filters_init (drawable);
 }
@@ -444,17 +440,6 @@ gimp_drawable_finalize (GObject *object)
   g_clear_object (&drawable->private->buffer_source_node);
 
   _gimp_drawable_filters_finalize (drawable);
-
-  if (drawable->private->cache_path)
-    {
-      if (g_unlink (drawable->private->cache_path) == -1)
-        g_critical ("%s: failed to delete the drawable cache `%s`: %s\n",
-                    G_STRFUNC, drawable->private->cache_path,
-                    g_strerror (errno));
-      g_free (drawable->private->cache_path);
-    }
-  g_mutex_clear (&drawable->private->cache_mutex);
-  g_clear_pointer (&drawable->private->cache_thread, g_thread_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -627,7 +612,8 @@ gimp_drawable_duplicate (GimpItem *item,
       GimpContainer *filters;
       GList         *list;
 
-      new_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
+      new_buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (drawable),
+                                         new_drawable);
 
       gimp_drawable_set_buffer (new_drawable, FALSE, NULL, new_buffer);
       g_object_unref (new_buffer);
@@ -706,9 +692,10 @@ gimp_drawable_scale (GimpItem              *item,
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   GeglBuffer   *new_buffer;
 
-  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                new_width, new_height),
-                                gimp_drawable_get_format (drawable));
+  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                     new_width, new_height),
+                                     gimp_drawable_get_format (drawable),
+                                     drawable);
 
   gimp_gegl_apply_scale (gimp_drawable_get_buffer (drawable),
                          progress, C_("undo-type", "Scale"),
@@ -768,9 +755,10 @@ gimp_drawable_resize (GimpItem     *item,
                                         &copy_width,
                                         &copy_height);
 
-  new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                new_width, new_height),
-                                gimp_drawable_get_format (drawable));
+  new_buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                     new_width, new_height),
+                                     gimp_drawable_get_format (drawable),
+                                     drawable);
 
   if (! intersect              ||
       copy_width  != new_width ||
@@ -1006,6 +994,7 @@ gimp_drawable_save (GimpSavable   *savable,
   GimpContainer *filters;
   GList         *iter;
   gint           num_effects = 0;
+  const Babl    *format;
 
   parent_savable_iface->save (savable, state);
 
@@ -1014,17 +1003,30 @@ gimp_drawable_save (GimpSavable   *savable,
                               "height", "%d", gimp_item_get_height (GIMP_ITEM (drawable)),
                               NULL);
 
+  format = gimp_drawable_get_format (drawable);
+  gimp_savable_format_save (format, state);
+
   if (! GIMP_IS_GROUP_LAYER (drawable))
     {
-      gchar *filename;
+      gchar *path;
 
-      /* Trigger a saving to be sure we have the latest buffer on disk. */
-      gimp_drawable_save_buffer (drawable);
+      if (drawable->private->cache_outdated)
+        {
+          gegl_buffer_flush (gimp_drawable_get_buffer (drawable));
+          drawable->private->cache_outdated = FALSE;
+        }
 
-      filename = g_path_get_basename (gimp_drawable_get_cache_file (drawable));
-      gimp_savable_print_element (state, "buffer", NULL, NULL, "file", "%s", filename, NULL);
+      if ((path = gimp_drawable_get_cache_path (drawable)))
+        {
+          gchar *filename;
 
-      g_free (filename);
+          gegl_buffer_flush (gimp_drawable_get_buffer (drawable));
+          filename = g_path_get_basename (path);
+          gimp_savable_print_element (state, "buffer", NULL, NULL, "file", "%s", filename, NULL);
+          g_free (filename);
+        }
+
+      g_free (path);
     }
 
   /* Get filter information */
@@ -1088,6 +1090,11 @@ gimp_drawable_load_enter (GimpLoadState  *state,
 {
   parent_savable_iface->load_enter (state, attribute_names, attribute_values, user_data, error);
 
+  gimp_savable_load_add_handlers (state, "format",
+                                  gimp_savable_enter_format,
+                                  gimp_savable_exit_format,
+                                  NULL, NULL);
+
   gimp_savable_load_add_simple_handler (state, "dimensions", G_TYPE_NONE,
                                         NULL, NULL, NULL,
                                         TRUE, FALSE,
@@ -1118,6 +1125,7 @@ gimp_drawable_load_exit (GimpLoadState  *state,
   gint          width           = 0;
   gint          height          = 0;
   const gchar  *buffer_filename = NULL;
+  const Babl   *format          = NULL;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (gimp_savable_load_peek_active_object (state)), FALSE);
   drawable = GIMP_DRAWABLE (gimp_savable_load_peek_active_object (state));
@@ -1136,6 +1144,7 @@ gimp_drawable_load_exit (GimpLoadState  *state,
 
   if (gimp_savable_load_get_values (state,
                                     "buffer:file", &buffer_filename,
+                                    "format",      &format,
                                     NULL))
     {
       GFile      *buffers_dir;
@@ -1163,7 +1172,10 @@ gimp_drawable_load_exit (GimpLoadState  *state,
           return TRUE;
         }
 
-      buffer = gegl_buffer_load (g_file_peek_path (buffer_file));
+      buffer = g_object_new (GEGL_TYPE_BUFFER,
+                             "format", format,
+                             "path",   g_file_peek_path (buffer_file),
+                             NULL);
 
       if (buffer == NULL)
         {
@@ -1262,10 +1274,10 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
   GeglBuffer *dest_buffer;
 
   dest_buffer =
-    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                     gimp_item_get_height (GIMP_ITEM (drawable))),
-                     new_format);
+    gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                          gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                          gimp_item_get_height (GIMP_ITEM (drawable))),
+                          new_format, drawable);
 
   gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                          GEGL_ABYSS_NONE,
@@ -1375,9 +1387,7 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
                               G_CALLBACK (gimp_drawable_buffer_changed),
                               drawable);
 
-  g_mutex_lock (&drawable->private->cache_mutex);
   drawable->private->cache_outdated = TRUE;
-  g_mutex_unlock (&drawable->private->cache_mutex);
 }
 
 static void
@@ -1385,9 +1395,7 @@ gimp_drawable_buffer_changed (GeglBuffer          *buffer,
                               const GeglRectangle *rect,
                               GimpDrawable        *drawable)
 {
-  g_mutex_lock (&drawable->private->cache_mutex);
   drawable->private->cache_outdated = TRUE;
-  g_mutex_unlock (&drawable->private->cache_mutex);
 }
 
 static GeglRectangle
@@ -1456,7 +1464,7 @@ gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
   gint        width  = gegl_buffer_get_width (buffer);
   gint        height = gegl_buffer_get_height (buffer);
 
-  tmp = gimp_gegl_buffer_dup (buffer);
+  tmp = gimp_gegl_buffer_dup (buffer, drawable);
 
   gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                          GEGL_RECTANGLE (x, y, width, height), GEGL_ABYSS_NONE,
@@ -1498,51 +1506,20 @@ gimp_drawable_alpha_changed (GimpDrawable *drawable)
   g_signal_emit (drawable, gimp_drawable_signals[ALPHA_CHANGED], 0);
 }
 
-static const gchar *
-gimp_drawable_get_cache_file (GimpDrawable *drawable)
+static gchar *
+gimp_drawable_get_cache_path (GimpDrawable *drawable)
 {
+  GeglBuffer *buffer;
+  gchar      *path = NULL;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  if (! drawable->private->cache_path)
-    {
-      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      const gchar *folder;
-      gchar       *path;
-      gchar       *filename;
-
-      g_return_val_if_fail (image != NULL, NULL);
-      g_return_val_if_fail (gimp_image_get_buffers_folder (image) != NULL, FALSE);
-
-      folder   = gimp_image_get_buffers_folder (image);
-      filename = g_strdup_printf ("%s-%d.buffer",
-                                  g_type_name (G_TYPE_FROM_INSTANCE (drawable)),
-                                  gimp_item_get_id (GIMP_ITEM (drawable)));
-      path     = g_build_filename (folder, filename, NULL);
-      drawable->private->cache_path = path;
-
-      g_free (filename);
-    }
-
-  g_return_val_if_fail (drawable->private->cache_path != NULL, FALSE);
-
-  return drawable->private->cache_path;
-}
-
-static void
-gimp_drawable_cache_thread (GimpDrawable *drawable)
-{
-  g_mutex_lock (&drawable->private->cache_mutex);
-
-  if (drawable->private->cache_outdated)
-    {
-      gegl_buffer_save (gimp_drawable_get_buffer (drawable),
-                        drawable->private->cache_path, NULL);
-      drawable->private->cache_outdated = FALSE;
-    }
-
-  g_clear_pointer (&drawable->private->cache_thread, g_thread_unref);
-  g_mutex_unlock (&drawable->private->cache_mutex);
-  g_object_unref (drawable);
+  buffer = gimp_drawable_get_buffer (drawable);
+  if (buffer)
+    g_object_get (buffer,
+                  "path", &path,
+                  NULL);
+  return path;
 }
 
 static gboolean
@@ -1582,7 +1559,8 @@ gimp_drawable_new (GType          type,
                                            offset_x, offset_y,
                                            width, height));
 
-  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height), format);
+  buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height), format,
+                                 drawable);
 
   gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
   g_object_unref (buffer);
@@ -1928,11 +1906,58 @@ gimp_drawable_set_buffer_full (GimpDrawable        *drawable,
 {
   GimpItem      *item;
   GeglRectangle  curr_bounds;
+  gboolean       recreate_buffer = (! GIMP_IS_GROUP_LAYER (drawable));
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
   item = GIMP_ITEM (drawable);
+
+  if (recreate_buffer)
+    {
+      GimpImage *image = gimp_item_get_image (item);
+      gchar     *path  = NULL;
+
+      g_return_if_fail (image != NULL);
+
+      g_object_get (buffer, "path", &path, NULL);
+      if (path)
+        {
+          const gchar *folder;
+          gchar       *dirname;
+          gchar       *basename;
+          gchar       *prefix;
+
+          folder   = gimp_image_get_buffers_folder (image);
+          dirname  = g_path_get_dirname (path);
+          basename = g_path_get_basename (path);
+          prefix   = g_strdup_printf ("%s-%d-",
+                                      g_type_name (G_TYPE_FROM_INSTANCE (drawable)),
+                                      gimp_item_get_id (GIMP_ITEM (drawable)));
+
+          if (g_strcmp0 (folder, dirname) == 0 && g_str_has_prefix (basename, prefix))
+            recreate_buffer = FALSE;
+
+          g_free (dirname);
+          g_free (basename);
+          g_free (prefix);
+          g_free (path);
+        }
+
+
+      if (recreate_buffer)
+        {
+          GeglBuffer *file_buffer;
+
+          file_buffer = gimp_gegl_buffer_new (gegl_buffer_get_extent (buffer),
+                                              gegl_buffer_get_format (buffer),
+                                              drawable);
+          gimp_gegl_buffer_copy (buffer, NULL,
+                                 GEGL_ABYSS_NONE,
+                                 file_buffer, NULL);
+          buffer = file_buffer;
+        }
+    }
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
@@ -1976,6 +2001,11 @@ gimp_drawable_set_buffer_full (GimpDrawable        *drawable,
 
   if (update)
     gimp_drawable_update (drawable, 0, 0, -1, -1);
+
+  gegl_buffer_flush (gimp_drawable_get_buffer (drawable));
+
+  if (recreate_buffer)
+    g_object_unref (buffer);
 }
 
 GeglBuffer *
@@ -2028,29 +2058,24 @@ gimp_drawable_get_buffer_with_effects (GimpDrawable *drawable)
 }
 
 void
-gimp_drawable_steal_buffer (GimpDrawable *drawable,
-                            GimpDrawable *src_drawable)
+gimp_drawable_steal_buffer (GimpDrawable  *drawable,
+                            GimpDrawable **src_drawable)
 {
   GeglBuffer *buffer;
-  GeglBuffer *replacement_buffer;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GIMP_IS_DRAWABLE (src_drawable));
+  g_return_if_fail (src_drawable && GIMP_IS_DRAWABLE (*src_drawable));
 
-  buffer = gimp_drawable_get_buffer (src_drawable);
+  buffer = gimp_drawable_get_buffer (*src_drawable);
 
   g_return_if_fail (buffer != NULL);
 
   g_object_ref (buffer);
 
-  replacement_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, 1, 1),
-                                        gegl_buffer_get_format (buffer));
+  gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
 
-  gimp_drawable_set_buffer (src_drawable, FALSE, NULL, replacement_buffer);
-  gimp_drawable_set_buffer (drawable,     FALSE, NULL, buffer);
-
-  g_object_unref (replacement_buffer);
   g_object_unref (buffer);
+  g_clear_object (src_drawable);
 }
 
 void
@@ -2082,10 +2107,10 @@ gimp_drawable_set_format (GimpDrawable *drawable,
     gimp_image_undo_push_drawable_format (gimp_item_get_image (item),
                                           NULL, drawable);
 
-  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                            gimp_item_get_width  (item),
-                                            gimp_item_get_height (item)),
-                            format);
+  buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                 gimp_item_get_width  (item),
+                                                 gimp_item_get_height (item)),
+                                 format, drawable);
 
   if (copy_buffer)
     {
@@ -2489,7 +2514,7 @@ gimp_drawable_start_paint (GimpDrawable *drawable)
       g_return_if_fail (drawable->private->paint_copy_region == NULL);
       g_return_if_fail (drawable->private->paint_update_region == NULL);
 
-      drawable->private->paint_buffer = gimp_gegl_buffer_dup (buffer);
+      drawable->private->paint_buffer = gimp_gegl_buffer_dup (buffer, drawable);
     }
 
   drawable->private->paint_count++;
@@ -2588,23 +2613,28 @@ gimp_drawable_is_painting (GimpDrawable *drawable)
   return drawable->private->paint_count > 0;
 }
 
-gboolean
-gimp_drawable_save_buffer (GimpDrawable *drawable)
+gchar *
+gimp_drawable_get_new_cache_path (GimpDrawable *drawable)
 {
-  g_return_val_if_fail (gimp_drawable_get_cache_file (drawable), FALSE);
+  static gint  count = 0;
+  gchar       *path  = NULL;
+  GimpImage   *image;
+  const gchar *folder;
+  gchar       *filename;
 
-  /* If we cannot lock the mutex or we already have a running thread,
-   * let's just ignore the save attempt. It's not a huge issue since the
-   * automatic save can just happen later.
-   */
-  if (g_mutex_trylock (&drawable->private->cache_mutex))
-    {
-      if (drawable->private->cache_thread == NULL)
-        drawable->private->cache_thread = g_thread_new ("drawable-caching",
-                                                        (GThreadFunc) gimp_drawable_cache_thread,
-                                                        g_object_ref (drawable));
-      g_mutex_unlock (&drawable->private->cache_mutex);
-    }
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  return TRUE;
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  g_return_val_if_fail (image != NULL, NULL);
+
+  folder   = gimp_image_get_buffers_folder (image);
+  filename = g_strdup_printf ("%s-%d-%d.buffer",
+                              g_type_name (G_TYPE_FROM_INSTANCE (drawable)),
+                              gimp_item_get_id (GIMP_ITEM (drawable)), count++);
+  path     = g_build_filename (folder, filename, NULL);
+
+  g_free (filename);
+
+  return path;
 }

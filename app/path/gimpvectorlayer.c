@@ -46,6 +46,8 @@
 #include "core/gimpsavable.h"
 #include "core/gimpsavable-load.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpvectorlayer.h"
 #include "gimpvectorlayeroptions.h"
 #include "gimppath.h"
@@ -1005,10 +1007,11 @@ gimp_vector_layer_render (GimpVectorLayer *layer)
   /* Resize layer according to path size */
   gimp_item_bounds (GIMP_ITEM (layer->options->path), &x, &y, &width, &height);
 
-  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                            (gint) ceil (width + stroke),
-                                            (gint) ceil (height + stroke)),
-                            gimp_drawable_get_format (drawable));
+  buffer = gimp_gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                 (gint) ceil (width + stroke),
+                                                 (gint) ceil (height + stroke)),
+                                 gimp_drawable_get_format (drawable),
+                                 drawable);
   gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
   g_object_unref (buffer);
 

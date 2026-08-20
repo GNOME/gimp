@@ -478,7 +478,8 @@ gimp_image_new_from_drawables (Gimp     *gimp,
           GeglBuffer  *buffer;
 
           new_selection = gimp_image_get_mask (new_image);
-          buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)));
+          buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)),
+                                         GIMP_DRAWABLE (new_selection));
           gimp_drawable_set_buffer (GIMP_DRAWABLE (new_selection),
                                     FALSE, NULL, buffer);
           g_object_unref (buffer);

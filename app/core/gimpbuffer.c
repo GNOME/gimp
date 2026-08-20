@@ -408,7 +408,7 @@ gimp_buffer_new (GeglBuffer    *buffer,
                               NULL);
 
   if (copy_pixels)
-    gimp_buffer->buffer = gimp_gegl_buffer_dup (buffer);
+    gimp_buffer->buffer = gimp_gegl_buffer_dup (buffer, NULL);
   else
     gimp_buffer->buffer = g_object_ref (buffer);
 

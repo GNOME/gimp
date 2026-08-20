@@ -338,7 +338,8 @@ gimp_drawable_filter_undo_pop (GimpUndo            *undo,
       GeglBuffer *buffer = NULL;
 
       /* Restore selection after undo or redo */
-      buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)));
+      buffer = gimp_gegl_buffer_dup (gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)),
+                                     GIMP_DRAWABLE (gimp_image_get_mask (image)));
       gimp_drawable_set_buffer (GIMP_DRAWABLE (gimp_image_get_mask (image)),
                                 FALSE, NULL, buffer);
       g_object_unref (buffer);

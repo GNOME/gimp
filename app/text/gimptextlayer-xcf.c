@@ -103,9 +103,9 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
 
   if (text)
     {
-      *layer = gimp_layer_from_layer (*layer, GIMP_TYPE_TEXT_LAYER,
-                                      "image", gimp_item_get_image (GIMP_ITEM (*layer)),
-                                      NULL);
+      gimp_layer_from_layer (layer, GIMP_TYPE_TEXT_LAYER,
+                             "image", gimp_item_get_image (GIMP_ITEM (*layer)),
+                             NULL);
       gimp_text_layer_set_text (GIMP_TEXT_LAYER (*layer), text);
       g_object_unref (text);
 
