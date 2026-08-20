@@ -280,7 +280,6 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
   if (rect.width > 2 && rect.height > 2)
     {
       GtkStyleContext *context = gtk_widget_get_style_context (widget);
-      GtkStateFlags    state;
       GdkRGBA          color;
       gdouble          rgba[4];
 
@@ -320,10 +319,10 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                        rect.x + 0.5, rect.y + 0.5,
                        rect.width - 1, rect.height - 1);
 
-      state = gtk_cell_renderer_get_state (cell, widget, flags);
-
       cairo_set_line_width (cr, 1);
-      gtk_style_context_get_color (context, state, &color);
+      gtk_style_context_get_color (context,
+                                   gtk_cell_renderer_get_state (cell, widget, flags),
+                                   &color);
       gdk_cairo_set_source_rgba (cr, &color);
       cairo_stroke (cr);
     }

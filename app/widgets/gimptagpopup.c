@@ -586,14 +586,16 @@ gimp_tag_popup_get_border (GtkWidget *widget,
                            GtkBorder *border)
 {
   GtkStyleContext *context;
-  GtkStateFlags    state;
   GtkBorder        padding, border_width;
 
   context = gtk_widget_get_style_context (widget);
-  state = gtk_widget_get_state_flags (widget);
 
-  gtk_style_context_get_padding (context, state, &padding);
-  gtk_style_context_get_border (context, state, &border_width);
+  gtk_style_context_get_padding (context,
+                                 gtk_widget_get_state_flags (widget),
+                                 &padding);
+  gtk_style_context_get_border (context,
+                                gtk_widget_get_state_flags (widget),
+                                &border_width);
 
   border->left   = border_width.left + padding.left;
   border->right  = border_width.right + padding.right;
