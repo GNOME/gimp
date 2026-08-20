@@ -593,7 +593,7 @@ arrow_on_button_press (GtkWidget      *widget,
     }
   else if (event->button == 1)
     {
-      if (event->type == GDK_2BUTTON_PRESS)
+      if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_2BUTTON_PRESS)
         edit_shape ((gint) event->x, (gint) event->y);
       else
         select_shape (widget, event);

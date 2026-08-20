@@ -507,7 +507,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
    gint y = get_real_coord((gint) event->y);
    static Object_t *obj;
 
-   if (event->type == GDK_2BUTTON_PRESS)
+   if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_2BUTTON_PRESS)
       return FALSE;
    round_to_grid(&x, &y);
 

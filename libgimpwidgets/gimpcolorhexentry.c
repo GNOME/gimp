@@ -317,7 +317,7 @@ gimp_color_hex_entry_events (GtkWidget *widget,
                       gtk_editable_set_position (GTK_EDITABLE (entry),
                                                  position);
                   }
-                else if (event->type == GDK_FOCUS_CHANGE || check_color)
+                else if (gdk_event_get_event_type (event) == GDK_FOCUS_CHANGE || check_color)
                   {
                     gtk_entry_set_text (GTK_ENTRY (entry), buffer);
                   }

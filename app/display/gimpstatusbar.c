@@ -1124,7 +1124,7 @@ gimp_statusbar_soft_proof_popover_shown (GtkWidget      *button,
                                          GdkEventButton *bevent,
                                          GimpStatusbar  *statusbar)
 {
-  if (bevent->type == GDK_BUTTON_PRESS)
+  if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS)
     {
       if (bevent->button == 3)
         gtk_widget_set_visible (statusbar->soft_proof_popover, TRUE);

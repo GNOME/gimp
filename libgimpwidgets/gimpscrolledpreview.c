@@ -474,7 +474,7 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
 {
   GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
 
-  if (event->type == GDK_SCROLL)
+  if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_SCROLL)
     {
       GdkEventScroll *sevent = (GdkEventScroll *) event;
       GtkAdjustment  *adj_x;
@@ -562,7 +562,7 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
   if (priv->nav_popup)
     return TRUE;
 
-  if (event->type == GDK_BUTTON_PRESS && event->button == 1)
+  if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_BUTTON_PRESS && event->button == 1)
     {
       GtkStyleContext *context = gtk_widget_get_style_context (widget);
       GtkWidget       *toplevel;

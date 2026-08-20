@@ -369,7 +369,7 @@ gimp_dash_editor_button_press (GtkWidget      *widget,
   GimpDashEditor *editor = GIMP_DASH_EDITOR (widget);
   gint            index;
 
-  if (bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
+  if (bevent->button == 1 && gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS)
     {
       gtk_grab_add (widget);
 

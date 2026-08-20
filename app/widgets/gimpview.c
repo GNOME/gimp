@@ -441,7 +441,7 @@ gimp_view_button_press_event (GtkWidget      *widget,
   GimpView *view = GIMP_VIEW (widget);
 
 #ifdef DEBUG_MEMSIZE
-  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 2)
+  if (gdk_event_get_event_type ((GdkEvent*)bevent) == GDK_BUTTON_PRESS && bevent->button == 2)
     {
       gimp_debug_memsize = TRUE;
 
@@ -458,7 +458,7 @@ gimp_view_button_press_event (GtkWidget      *widget,
   if (! gtk_widget_get_realized (widget))
     return FALSE;
 
-  if (bevent->type == GDK_BUTTON_PRESS)
+  if (gdk_event_get_event_type ((GdkEvent*)bevent) == GDK_BUTTON_PRESS)
     {
       if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
         {
@@ -498,7 +498,7 @@ gimp_view_button_press_event (GtkWidget      *widget,
           return FALSE;
         }
     }
-  else if (bevent->type == GDK_2BUTTON_PRESS)
+  else if (gdk_event_get_event_type ((GdkEvent*)bevent) == GDK_2BUTTON_PRESS)
     {
       if (bevent->button == 1)
         g_signal_emit (widget, view_signals[DOUBLE_CLICKED], 0);

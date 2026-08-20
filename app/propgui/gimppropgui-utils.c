@@ -166,7 +166,7 @@ gimp_prop_kelvin_presets_button_press (GtkWidget      *widget,
                                        GdkEventButton *bevent,
                                        GtkMenu        *menu)
 {
-  if (bevent->type == GDK_BUTTON_PRESS)
+  if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS)
     {
       gtk_menu_popup_at_widget (menu, widget,
                                 GDK_GRAVITY_WEST,

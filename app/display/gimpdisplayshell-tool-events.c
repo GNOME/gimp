@@ -1507,7 +1507,7 @@ gimp_display_shell_ruler_button_press (GtkWidget           *widget,
   if (! gimp_display_get_image (display))
     return TRUE;
 
-  if (event->type == GDK_BUTTON_PRESS && event->button == 1)
+  if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_BUTTON_PRESS && event->button == 1)
     {
       GimpTool *active_tool = tool_manager_get_active (display->gimp);
 
@@ -2457,7 +2457,7 @@ gimp_display_triggers_context_menu (const GdkEvent   *event,
                                     const GimpCoords *image_coords,
                                     gboolean          force)
 {
-  if (event->type == GDK_BUTTON_PRESS)
+  if (gdk_event_get_event_type (event) == GDK_BUTTON_PRESS)
     {
       const GdkEventButton *bevent   = (const GdkEventButton *) event;
       gboolean              triggers = force;

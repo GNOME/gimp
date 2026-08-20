@@ -580,7 +580,7 @@ gimp_dockbook_menu_button_press (GimpDockbook   *dockbook,
 {
   gboolean handled = FALSE;
 
-  if (bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
+  if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS && bevent->button == 1)
     handled = gimp_dockbook_show_menu (dockbook);
 
   return handled;

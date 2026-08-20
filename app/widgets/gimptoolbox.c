@@ -433,7 +433,7 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
   GimpDisplay *display;
   gboolean     stop_event = GDK_EVENT_PROPAGATE;
 
-  if (event->type == GDK_BUTTON_PRESS && event->button == 2)
+  if (gdk_event_get_event_type ((GdkEvent *) event) == GDK_BUTTON_PRESS && event->button == 2)
     {
       GtkClipboard *clipboard;
 

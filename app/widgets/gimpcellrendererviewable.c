@@ -388,7 +388,7 @@ gimp_cell_renderer_viewable_clicked (GimpCellRendererViewable *cell,
           GdkEventButton  *bevent    = (GdkEventButton *) event;
           GdkModifierType  modifiers = gtk_accelerator_get_default_mod_mask ();
 
-          if (bevent->type == GDK_BUTTON_PRESS &&
+          if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS &&
               (bevent->state & modifiers) == 0 &&
               (bevent->button == 1 || bevent->button == 2))
             {

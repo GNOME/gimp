@@ -212,7 +212,7 @@ gimp_palette_view_button_press (GtkWidget      *widget,
   if (! entry || bevent->button == 2)
     return TRUE;
 
-  if (bevent->type == GDK_BUTTON_PRESS)
+  if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS)
     g_signal_emit (view, view_signals[ENTRY_CLICKED], 0,
                    entry, bevent->state);
 
@@ -227,11 +227,11 @@ gimp_palette_view_button_press (GtkWidget      *widget,
     }
   else if (bevent->button == 1)
     {
-      if (bevent->type == GDK_BUTTON_PRESS)
+      if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_BUTTON_PRESS)
         {
           gimp_palette_view_select_entry (view, entry);
         }
-      else if (bevent->type == GDK_2BUTTON_PRESS && entry == view->selected)
+      else if (gdk_event_get_event_type ((GdkEvent *) bevent) == GDK_2BUTTON_PRESS && entry == view->selected)
         {
           g_signal_emit (view, view_signals[ENTRY_ACTIVATED], 0, entry);
         }
