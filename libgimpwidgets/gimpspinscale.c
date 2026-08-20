@@ -613,7 +613,7 @@ gimp_spin_scale_get_target (GtkWidget *widget,
        * the position.
        */
       if (x >= layout_x && x < layout_x + logical.width &&
-          y >= (layout_y + logical.height)/4 && y < 3 * (layout_y + logical.height)/4)
+          y >= (layout_y + logical.height)/4.f && y < 3 * (layout_y + logical.height)/4.f)
         {
           return TARGET_NUMBER;
         }
