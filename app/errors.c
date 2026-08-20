@@ -40,7 +40,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
+#include "core/gimpidtable.h"
 #include "core/gimpitem.h"
 #include "core/gimpparamspecs.h"
 
@@ -148,45 +148,82 @@ errors_exit (void)
     g_free (full_prog_name);
 }
 
-GList *
-errors_recovered (void)
+GHashTable *
+errors_recovered (Gimp *gimp)
 {
-  GList *recovered   = NULL;
-  gchar *backup_path = g_build_filename (gimp_directory (), "backups", NULL);
-  GDir  *backup_dir  = NULL;
+  GHashTable      *recovering;
+  gchar           *backup_path = g_build_filename (gimp_cache_directory (), "images", NULL);
+  GFile           *backups_dir = g_file_new_for_path (backup_path);
+  GFileEnumerator *enumerator;
 
-  if ((backup_dir = g_dir_open (backup_path, 0, NULL)))
+  recovering = g_hash_table_new_full (g_direct_hash, g_direct_equal,
+                                      NULL, g_object_unref);
+  enumerator = g_file_enumerate_children (backups_dir,
+                                          G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                          G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                          G_FILE_ATTRIBUTE_TIME_MODIFIED ","
+                                          G_FILE_ATTRIBUTE_TIME_CHANGED,
+                                          G_FILE_QUERY_INFO_NONE,
+                                          NULL, NULL);
+  if (enumerator)
     {
-      const gchar *file;
+      GFileInfo  *info;
+      GRegex     *basename_regex = g_regex_new ("^image-([1-9][0-9]*)$", G_REGEX_DEFAULT,
+                                               G_REGEX_MATCH_DEFAULT, NULL);
 
-      while ((file = g_dir_read_name (backup_dir)))
+      while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
         {
-          if (g_str_has_suffix (file, ".xcf"))
-            {
-              gchar *path = g_build_filename (backup_path, file, NULL);
+          GFile      *subdir;
+          GFile      *xml;
+          gchar      *basename;
+          GMatchInfo *match_info = NULL;
 
-              if (g_file_test (path, G_FILE_TEST_IS_REGULAR) &&
-                  ! g_file_test (path, G_FILE_TEST_IS_SYMLINK))
+          subdir   = g_file_enumerator_get_child (enumerator, info);
+          basename = g_file_get_basename (subdir);
+          xml      = g_file_get_child (subdir, "wlbr-project.xml");
+
+          if (! g_file_info_get_attribute_boolean (info,
+                                                   G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN) &&
+              g_file_query_file_type (subdir,
+                                      G_FILE_QUERY_INFO_NONE,
+                                      NULL) == G_FILE_TYPE_DIRECTORY                    &&
+              g_file_query_exists (xml, NULL)                                           &&
+              g_regex_match (basename_regex, basename, G_REGEX_MATCH_DEFAULT, &match_info))
+            {
+              gchar  *id_str;
+              gint64  id;
+
+              id_str = g_match_info_fetch (match_info, 1);
+              id     = g_ascii_strtoll (id_str, NULL, 10);
+              if (errno != ERANGE && (gint64) (gint) id == id)
                 {
-                  /* A quick basic security check. It is not foolproof,
-                   * but better than nothing to make sure we are not
-                   * trying to read, then delete a folder or a symlink
-                   * to a file outside the backup directory.
+                  /* The reason why we need to reserve the image IDs is
+                   * that while recovering an image, it may trigger
+                   * further image creation (with link layers), which
+                   * could therefore take over the ID of an image to
+                   * recover next. So we make sure all our needed IDs
+                   * stay available.
                    */
-                  recovered = g_list_append (recovered, path);
-                }
-              else
-                {
-                  g_free (path);
+                  gimp_id_table_reserve (gimp->image_table, (gint) id);
+                  g_hash_table_insert (recovering, GINT_TO_POINTER ((gint) id), g_object_ref (subdir));
                 }
             }
+          /* TODO: should we delete invalid cache folders or other broken data? */
+
+          g_free (basename);
+          g_clear_object (&xml);
+          g_clear_object (&subdir);
+          g_clear_object (&info);
+          g_clear_pointer (&match_info, g_match_info_free);
         }
 
-      g_dir_close (backup_dir);
+      g_regex_unref (basename_regex);
+      g_object_unref (enumerator);
     }
   g_free (backup_path);
+  g_object_unref (backups_dir);
 
-  return recovered;
+  return recovering;
 }
 
 void

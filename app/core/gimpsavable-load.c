@@ -95,7 +95,8 @@ struct _GimpConfigHandlerData
 
 static void     gimp_savable_load_init_state    (GimpLoadState        *state,
                                                  Gimp                 *gimp,
-                                                 GFile                *backup_dir);
+                                                 GFile                *backup_dir,
+                                                 gint                  ID);
 static void     gimp_wlbr_load_start_element    (GMarkupParseContext  *context,
                                                  const gchar          *element_name,
                                                  const gchar         **attribute_names,
@@ -1183,9 +1184,10 @@ gboolean
 gimp_savable_load_parse (GimpLoadState  *state,
                          Gimp           *gimp,
                          GFile          *backup_dir,
+                         gint            ID,
                          GError        **error)
 {
-  gimp_savable_load_init_state (state, gimp, backup_dir);
+  gimp_savable_load_init_state (state, gimp, backup_dir, ID);
   gimp_savable_load (GIMP_TYPE_IMAGE, state);
 
   return gimp_xml_parser_parse_gfile (state->xml_parser, state->xml_file, error);
@@ -1316,7 +1318,8 @@ gimp_savable_exit_element (GimpLoadState  *state,
 static void
 gimp_savable_load_init_state (GimpLoadState *state,
                               Gimp          *gimp,
-                              GFile         *backup_dir)
+                              GFile         *backup_dir,
+                              gint           ID)
 {
   state->markup_parser.start_element = gimp_wlbr_load_start_element;
   state->markup_parser.end_element   = gimp_wlbr_load_end_element;
@@ -1326,6 +1329,7 @@ gimp_savable_load_init_state (GimpLoadState *state,
 
   state->gimp       = gimp;
   state->image      = NULL;
+  state->ID         = ID;
   state->objects    = g_queue_new ();
   state->xml_file   = g_file_get_child (backup_dir, "wlbr-project.xml");
   state->subdir     = backup_dir;

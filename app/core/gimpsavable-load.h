@@ -181,6 +181,7 @@ gboolean     gimp_savable_exit_matrix            (GimpLoadState            *stat
 gboolean      gimp_savable_load_parse            (GimpLoadState            *state,
                                                   Gimp                     *gimp,
                                                   GFile                    *backup_dir,
+                                                  gint                      ID,
                                                   GError                  **error);
 void          gimp_savable_load_free_state       (GimpLoadState            *state);
 void          gimp_savable_load_append_text      (GimpLoadState            *state,

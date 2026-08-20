@@ -197,12 +197,13 @@ gimp_image_save_to_cache (GimpImage *image,
 
 GimpImage *
 gimp_image_load_from_cache (Gimp  *gimp,
-                            GFile *backup_dir)
+                            GFile *backup_dir,
+                            gint   ID)
 {
   GError        *error = NULL;
   GimpLoadState  state = { 0 };
 
-  if (! gimp_savable_load_parse (&state, gimp, backup_dir, &error))
+  if (! gimp_savable_load_parse (&state, gimp, backup_dir, ID, &error))
     {
       g_printerr ("Error loading '%s': %s\n",
                   gimp_file_get_utf8_name (backup_dir),
@@ -211,11 +212,7 @@ gimp_image_load_from_cache (Gimp  *gimp,
     }
 
   if (state.image)
-    {
-      gimp_image_undo_enable (state.image);
-      gimp_image_flush (state.image);
-      gimp_create_display (gimp, state.image, gimp_unit_pixel (), 1.0, NULL);
-    }
+    gimp_image_undo_enable (state.image);
 
   gimp_savable_load_free_state (&state);
 
@@ -640,8 +637,14 @@ gimp_image_exit_format (GimpLoadState  *state,
 
   image_type = gimp_babl_format_get_base_type (format);
   precision  = gimp_babl_format_get_precision (format);
-  image      = gimp_create_image (state->gimp, width, height,
-                                  image_type, precision, FALSE);
+  image      = g_object_new (GIMP_TYPE_IMAGE,
+                             "gimp",      state->gimp,
+                             "width",     width,
+                             "height",    height,
+                             "base-type", image_type,
+                             "precision", precision,
+                             "id",        state->ID,
+                             NULL);
   gimp_image_undo_disable (image);
   state->image = image;
 

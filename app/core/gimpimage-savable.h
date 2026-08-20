@@ -27,7 +27,8 @@ void         gimp_image_save_to_cache   (GimpImage      *image,
                                          GFile          *xcf_file);
 
 GimpImage  * gimp_image_load_from_cache (Gimp           *gimp,
-                                         GFile          *backup_subdir);
+                                         GFile          *backup_subdir,
+                                         gint            ID);
 
 
 /* Protected functions (use only in GimpImage implementation). */

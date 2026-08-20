@@ -51,6 +51,7 @@ struct _GimpLoadState
   Gimp          *gimp;
 
   GimpImage     *image;
+  gint           ID;
   GQueue        *objects;
   GFile         *xml_file;
   GFile         *subdir;

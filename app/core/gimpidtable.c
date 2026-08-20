@@ -29,9 +29,6 @@
 #include "gimpidtable.h"
 
 
-#define GIMP_ID_TABLE_START_ID 1
-#define GIMP_ID_TABLE_END_ID   G_MAXINT
-
 
 struct _GimpIdTablePrivate
 {
@@ -44,6 +41,8 @@ static void    gimp_id_table_finalize    (GObject    *object);
 static gint64  gimp_id_table_get_memsize (GimpObject *object,
                                           gint64     *gui_size);
 
+static gboolean gimp_id_table_exists     (GimpIdTable *id_table,
+                                          gint         id);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpIdTable, gimp_id_table, GIMP_TYPE_OBJECT)
 
@@ -93,6 +92,9 @@ gimp_id_table_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
+
+/* Public Functions */
+
 /**
  * gimp_id_table_new:
  *
@@ -109,13 +111,14 @@ gimp_id_table_new (void)
  * @id_table: A #GimpIdTable
  * @data: Data to insert and assign an id to
  *
- * Insert data in the id table. The data will get an, in this table,
- * unused ID assigned to it that can be used to later lookup the data.
+ * Insert data in the id table. The data will get an unused ID assigned
+ * to it that can be used to later lookup the data.
  *
  * Returns: The assigned ID.
  **/
 gint
-gimp_id_table_insert (GimpIdTable *id_table, gpointer data)
+gimp_id_table_insert (GimpIdTable *id_table,
+                      gpointer     data)
 {
   gint new_id;
   gint start_id;
@@ -126,10 +129,12 @@ gimp_id_table_insert (GimpIdTable *id_table, gpointer data)
 
   do
     {
-      new_id = id_table->priv->next_id++;
+      new_id = id_table->priv->next_id;
 
       if (id_table->priv->next_id == GIMP_ID_TABLE_END_ID)
         id_table->priv->next_id = GIMP_ID_TABLE_START_ID;
+      else
+        id_table->priv->next_id++;
 
       if (start_id == id_table->priv->next_id)
         {
@@ -140,16 +145,16 @@ gimp_id_table_insert (GimpIdTable *id_table, gpointer data)
           break;
         }
     }
-  while (gimp_id_table_lookup (id_table, new_id));
+  while (gimp_id_table_exists (id_table, new_id));
 
   return gimp_id_table_insert_with_id (id_table, new_id, data);
 }
 
 /**
  * gimp_id_table_insert_with_id:
- * @id_table: An #GimpIdTable
- * @id: The ID to use. Must be greater than 0.
- * @data: The data to associate with the id
+ * @id_table: A #GimpIdTable.
+ * @id:       The ID to use. Must be greater than 0.
+ * @data:     The data to associate with @id.
  *
  * Insert data in the id table with a specific ID. If data already
  * exists with the given ID, this function fails.
@@ -172,9 +177,9 @@ gimp_id_table_insert_with_id (GimpIdTable *id_table, gint id, gpointer data)
 
 /**
  * gimp_id_table_replace:
- * @id_table: An #GimpIdTable
- * @id: The ID to use. Must be greater than 0.
- * @data: The data to insert/replace
+ * @id_table: A #GimpIdTable.
+ * @id:       The ID to use. Must be greater than 0.
+ * @data:     The data to insert/replace.
  *
  * Replaces (if an item with the given ID exists) or inserts a new
  * entry in the id table.
@@ -189,11 +194,67 @@ gimp_id_table_replace (GimpIdTable *id_table, gint id, gpointer data)
 }
 
 /**
+ * gimp_id_table_reserve:
+ * @id_table: A #GimpIdTable
+ * @id:       An unused ID to reserve.
+ *
+ * Reserve an ID for data which doesn't exist yet. It is your
+ * responsibility to ensure that @id was not already used yet. Usually
+ * this function is only used when reinstating existing data so we know
+ * no IDs were set yet!
+ **/
+void
+gimp_id_table_reserve (GimpIdTable *id_table,
+                       gint         id)
+{
+  g_return_if_fail (GIMP_IS_ID_TABLE (id_table));
+  g_return_if_fail (id >= GIMP_ID_TABLE_START_ID && id <= GIMP_ID_TABLE_END_ID);
+  g_return_if_fail (! gimp_id_table_exists (id_table, id));
+
+  g_hash_table_insert (id_table->priv->id_table, GINT_TO_POINTER (id), NULL);
+}
+
+void
+gimp_id_table_unreserve (GimpIdTable *id_table,
+                         gint         id)
+{
+  g_return_if_fail (GIMP_IS_ID_TABLE (id_table));
+  g_return_if_fail (id >= GIMP_ID_TABLE_START_ID && id <= GIMP_ID_TABLE_END_ID);
+  g_return_if_fail (gimp_id_table_exists (id_table, id) &&
+                    gimp_id_table_lookup (id_table, id) == NULL);
+
+  g_hash_table_remove (id_table->priv->id_table, GINT_TO_POINTER (id));
+}
+
+/**
+ * gimp_id_table_insert_reserved:
+ * @id_table: A #GimpIdTable
+ * @id:       An unused ID to reserve.
+ * @data:     Data to insert and assign @id to.
+ *
+ * Insert data in the id table with an ID previously reserved with
+ * gimp_id_table_reserve().
+ **/
+void
+gimp_id_table_insert_reserved (GimpIdTable *id_table,
+                               gint         id,
+                               gpointer     data)
+{
+  g_return_if_fail (GIMP_IS_ID_TABLE (id_table));
+  g_return_if_fail (id >= GIMP_ID_TABLE_START_ID && id <= GIMP_ID_TABLE_END_ID);
+  g_return_if_fail (gimp_id_table_exists (id_table, id) &&
+                    gimp_id_table_lookup (id_table, id) == NULL);
+
+  gimp_id_table_replace (id_table, id, data);
+}
+
+/**
  * gimp_id_table_lookup:
- * @id_table: An #GimpIdTable
+ * @id_table: A #GimpIdTable
  * @id: The ID of the data to lookup
  *
- * Lookup data based on ID.
+ * Lookup data based on ID. Note that it cannot distinguish a reserved
+ * ID from an absent ID.
  *
  * Returns: (nullable) (transfer none): The data,
  *          or %NULL if no data with the given ID was found.
@@ -206,10 +267,9 @@ gimp_id_table_lookup (GimpIdTable *id_table, gint id)
   return g_hash_table_lookup (id_table->priv->id_table, GINT_TO_POINTER (id));
 }
 
-
 /**
  * gimp_id_table_remove:
- * @id_table: An #GimpIdTable
+ * @id_table: A #GimpIdTable
  * @id: The ID of the data to remove.
  *
  * Remove the data from the table with the given ID.
@@ -225,4 +285,25 @@ gimp_id_table_remove (GimpIdTable *id_table, gint id)
   g_return_val_if_fail (id_table != NULL, FALSE);
 
   return g_hash_table_remove (id_table->priv->id_table, GINT_TO_POINTER (id));
+}
+
+
+/* Private Functions */
+
+/**
+ * gimp_id_table_exists:
+ * @id_table: A #GimpIdTable
+ * @id:       The ID of the data to lookup
+ *
+ * Verify if an ID has data or is reserved.
+ *
+ * Returns: whether @id exists in @id_table.
+ **/
+static gboolean
+gimp_id_table_exists (GimpIdTable *id_table,
+                      gint         id)
+{
+  g_return_val_if_fail (GIMP_IS_ID_TABLE (id_table), FALSE);
+
+  return g_hash_table_lookup_extended (id_table->priv->id_table, GINT_TO_POINTER (id), NULL, NULL);
 }

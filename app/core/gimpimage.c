@@ -672,8 +672,9 @@ gimp_image_class_init (GimpImageClass *klass)
 
   g_object_class_install_property (object_class, PROP_ID,
                                    g_param_spec_int ("id", NULL, NULL,
-                                                     0, G_MAXINT, 0,
-                                                     GIMP_PARAM_READABLE));
+                                                     -1, G_MAXINT, -1,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_int ("width", NULL, NULL,
@@ -777,7 +778,7 @@ gimp_image_init (GimpImage *image)
 
   image->priv = private;
 
-  private->ID                  = 0;
+  private->ID                  = -1;
 
   private->load_proc           = NULL;
   private->save_proc           = NULL;
@@ -953,7 +954,11 @@ gimp_image_constructed (GObject *object)
 
   config = image->gimp->config;
 
-  private->ID = gimp_id_table_insert (image->gimp->image_table, image);
+  if (private->ID < 0)
+    private->ID = gimp_id_table_insert (image->gimp->image_table, image);
+  else
+    gimp_id_table_insert_reserved (image->gimp->image_table,
+                                   private->ID, image);
 
   template = config->default_image;
 
@@ -1075,6 +1080,9 @@ gimp_image_set_property (GObject      *object,
       break;
 
     case PROP_ID:
+      private->ID = g_value_get_int (value);
+      break;
+
     case PROP_METADATA:
     case PROP_BUFFER:
     default:

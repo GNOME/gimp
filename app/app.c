@@ -56,7 +56,9 @@
 #include "core/gimp.h"
 #include "core/gimp-batch.h"
 #include "core/gimp-user-install.h"
+#include "core/gimpidtable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-savable.h"
 
 #include "file/file-open.h"
 
@@ -411,53 +413,48 @@ app_activate_callback (GimpCoreApp *app,
        * and query interactively to know if we should recover or discard
        * them.
        */
-      GList *recovered_files;
-      GList *iter;
+      GHashTable *recovering;
 
-      recovered_files = errors_recovered ();
-      if (recovered_files &&
-          gui_recover (g_list_length (recovered_files)))
+      recovering = errors_recovered (gimp);
+      if (g_hash_table_size (recovering))
         {
-          for (iter = recovered_files; iter; iter = iter->next)
+          if (gui_recover ((g_hash_table_size (recovering))))
             {
-              GFile             *file;
-              GimpImage         *image;
-              GError            *error = NULL;
-              GimpPDBStatusType  status;
+              GList *IDs = g_hash_table_get_keys (recovering);
 
-              file = g_file_new_for_path (iter->data);
-              image = file_open_with_display (gimp,
-                                              gimp_get_user_context (gimp),
-                                              NULL,
-                                              file,
-                                              gimp_core_app_get_as_new (app),
-                                              NULL,
-                                              &status, &error);
-              if (image)
+              for (GList *iter = IDs; iter; iter = iter->next)
                 {
-                  /* Break ties with the backup directory. */
-                  gimp_image_set_file (image, NULL);
-                  /* One of the rare exceptions where we should call
-                   * gimp_image_dirty() directly instead of creating
-                   * an undo. We want the image to be dirty from
-                   * scratch, without anything to undo.
-                   */
-                  gimp_image_dirty (image, GIMP_DIRTY_IMAGE);
-                }
-              else
-                {
-                  g_error_free (error);
+                  GimpImage *image;
+                  gint       id     = GPOINTER_TO_INT (iter->data);
+                  GFile     *subdir = g_hash_table_lookup (recovering, GINT_TO_POINTER (id));
+
+                  image = gimp_image_load_from_cache (gimp, subdir, id);
+                  if (image)
+                    {
+                      /* TODO: we should be able to distinguish
+                       * recovered images which were clean when GIMP
+                       * crashed.
+                       */
+                      gimp_image_dirty (image, GIMP_DIRTY_IMAGE);
+                      gimp_image_flush (image);
+                      gimp_create_display (gimp, image, gimp_unit_pixel (), 1.0, NULL);
+                      g_object_unref (image);
+                    }
+                  else
+                    {
+                      gimp_id_table_unreserve (gimp->image_table, id);
+                      /* TODO: should we delete the cache folder when
+                       * recovering failed?
+                       */
+                    }
                 }
 
-              g_object_unref (file);
+              g_list_free (IDs);
             }
+          /* TODO: when ! gui_recover(), delete cache. */
         }
-      /* Delete backup XCF images. */
-      for (iter = recovered_files; iter; iter = iter->next)
-        {
-          g_unlink (iter->data);
-        }
-      g_list_free_full (recovered_files, g_free);
+
+      g_hash_table_unref (recovering);
     }
 #endif
 

@@ -22,6 +22,9 @@
 
 #include "gimpobject.h"
 
+#define GIMP_ID_TABLE_START_ID 1
+#define GIMP_ID_TABLE_END_ID   G_MAXINT
+
 
 #define GIMP_TYPE_ID_TABLE            (gimp_id_table_get_type ())
 #define GIMP_ID_TABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ID_TABLE, GimpIdTable))
@@ -47,17 +50,25 @@ struct _GimpIdTableClass
 };
 
 
-GType          gimp_id_table_get_type       (void);
-GimpIdTable *  gimp_id_table_new            (void);
-gint           gimp_id_table_insert         (GimpIdTable *id_table,
-                                             gpointer     data);
-gint           gimp_id_table_insert_with_id (GimpIdTable *id_table,
-                                             gint         id,
-                                             gpointer     data);
-void           gimp_id_table_replace        (GimpIdTable *id_table,
-                                             gint         id,
-                                             gpointer     data);
-gpointer       gimp_id_table_lookup         (GimpIdTable *id_table,
-                                             gint         id);
-gboolean       gimp_id_table_remove         (GimpIdTable *id_table,
-                                             gint         id);
+GType          gimp_id_table_get_type        (void);
+GimpIdTable *  gimp_id_table_new             (void);
+gboolean       gimp_id_table_is_valid_id     (gint64       id);
+gint           gimp_id_table_insert          (GimpIdTable *id_table,
+                                              gpointer     data);
+void           gimp_id_table_reserve         (GimpIdTable *id_table,
+                                              gint         id);
+void           gimp_id_table_unreserve       (GimpIdTable *id_table,
+                                              gint         id);
+void           gimp_id_table_insert_reserved (GimpIdTable *id_table,
+                                              gint         id,
+                                              gpointer     data);
+gint           gimp_id_table_insert_with_id  (GimpIdTable *id_table,
+                                              gint         id,
+                                              gpointer     data);
+void           gimp_id_table_replace         (GimpIdTable *id_table,
+                                              gint         id,
+                                              gpointer     data);
+gpointer       gimp_id_table_lookup          (GimpIdTable *id_table,
+                                              gint         id);
+gboolean       gimp_id_table_remove          (GimpIdTable *id_table,
+                                              gint         id);
