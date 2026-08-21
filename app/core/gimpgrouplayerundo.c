@@ -88,15 +88,15 @@ gimp_group_layer_undo_constructed (GObject *object)
 
     case GIMP_UNDO_GROUP_LAYER_RESUME_MASK:
       group_layer_undo->mask_buffer =
-        _gimp_group_layer_get_suspended_mask(group,
-                                             &group_layer_undo->mask_bounds);
+        _gimp_group_layer_get_suspended_mask (group,
+                                              &group_layer_undo->mask_bounds);
 
       if (group_layer_undo->mask_buffer)
         g_object_ref (group_layer_undo->mask_buffer);
       break;
 
     case GIMP_UNDO_GROUP_LAYER_CONVERT:
-      group_layer_undo->prev_type = gimp_drawable_get_base_type (GIMP_DRAWABLE (group));
+      group_layer_undo->prev_type      = gimp_drawable_get_base_type (GIMP_DRAWABLE (group));
       group_layer_undo->prev_precision = gimp_drawable_get_precision (GIMP_DRAWABLE (group));
       group_layer_undo->prev_has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (group));
       break;
