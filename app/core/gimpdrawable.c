@@ -1010,17 +1010,15 @@ gimp_drawable_save (GimpSavable   *savable,
     {
       gchar *path;
 
-      if (drawable->private->cache_outdated)
-        {
-          gegl_buffer_flush (gimp_drawable_get_buffer (drawable));
-          drawable->private->cache_outdated = FALSE;
-        }
-
       if ((path = gimp_drawable_get_cache_path (drawable)))
         {
           gchar *filename;
 
-          gegl_buffer_flush (gimp_drawable_get_buffer (drawable));
+          if (drawable->private->cache_outdated)
+            {
+              gegl_buffer_flush (GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable));
+              drawable->private->cache_outdated = FALSE;
+            }
           filename = g_path_get_basename (path);
           gimp_savable_print_element (state, "buffer", NULL, NULL, "file", "%s", filename, NULL);
           g_free (filename);
@@ -1514,7 +1512,7 @@ gimp_drawable_get_cache_path (GimpDrawable *drawable)
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable);
   if (buffer)
     g_object_get (buffer,
                   "path", &path,
@@ -2001,8 +1999,6 @@ gimp_drawable_set_buffer_full (GimpDrawable        *drawable,
 
   if (update)
     gimp_drawable_update (drawable, 0, 0, -1, -1);
-
-  gegl_buffer_flush (gimp_drawable_get_buffer (drawable));
 
   if (recreate_buffer)
     g_object_unref (buffer);
@@ -2514,7 +2510,7 @@ gimp_drawable_start_paint (GimpDrawable *drawable)
       g_return_if_fail (drawable->private->paint_copy_region == NULL);
       g_return_if_fail (drawable->private->paint_update_region == NULL);
 
-      drawable->private->paint_buffer = gimp_gegl_buffer_dup (buffer, drawable);
+      drawable->private->paint_buffer = gimp_gegl_buffer_dup (buffer, NULL);
     }
 
   drawable->private->paint_count++;
