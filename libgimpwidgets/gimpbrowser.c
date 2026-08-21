@@ -400,7 +400,7 @@ gimp_browser_show_message (GimpBrowser *browser,
     }
 
   while (g_main_context_pending (NULL))
-    g_main_context_iteration(NULL, TRUE);
+    g_main_context_iteration (NULL, TRUE);
 }
 
 

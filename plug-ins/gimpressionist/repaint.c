@@ -858,7 +858,7 @@ repaint (ppm_t *p, ppm_t *a)
               preview_set_button_label (tmps);
 
               while (g_main_context_pending (NULL))
-                g_main_context_iteration(NULL, TRUE);
+                g_main_context_iteration (NULL, TRUE);
             }
         }
 

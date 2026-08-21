@@ -404,7 +404,7 @@ splash_update (const gchar *text1,
     splash_timer_elapsed ();
 
   while (g_main_context_pending (NULL))
-    g_main_context_iteration(NULL, TRUE);
+    g_main_context_iteration (NULL, TRUE);
 }
 
 
