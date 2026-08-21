@@ -24,6 +24,7 @@ struct _GimpDrawablePrivate
   GeglBuffer       *shadow; /* shadow buffer            */
 
   gboolean          cache_outdated;
+  guint             cache_flush_idle;
 
   GimpColorProfile *format_profile;
 
