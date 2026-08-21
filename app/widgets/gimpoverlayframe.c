@@ -54,6 +54,8 @@ gimp_overlay_frame_class_init (GimpOverlayFrameClass *klass)
 static void
 gimp_overlay_frame_init (GimpOverlayFrame *frame)
 {
+  gtk_widget_set_app_paintable (GTK_WIDGET (frame), TRUE);
+
   gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (frame)),
                                "background");
 }
