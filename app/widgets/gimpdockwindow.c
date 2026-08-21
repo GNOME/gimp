@@ -717,9 +717,11 @@ static void
 gimp_dock_window_realize (GimpDockWindow *dock_window,
                           gpointer        data)
 {
-#ifdef PLATFORM_OSX
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   GimpGuiConfig *config;
   Gimp          *gimp;
+#endif
+#ifdef PLATFORM_OSX
   NSWindow      *ns_window;
   NSUInteger     minimize_mask;
   NSButton      *maximize_button;
@@ -729,15 +731,31 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
 
   if (dock_window->p->context && dock_window->p->context->gimp)
     {
-#ifdef G_OS_WIN32
-      gimp_window_set_title_bar_theme (dock_window->p->context->gimp,
-                                       GTK_WIDGET (dock_window));
-#endif
-
-#ifdef PLATFORM_OSX
       gimp   = GIMP (dock_window->p->context->gimp);
       config = GIMP_GUI_CONFIG (gimp->config);
 
+#ifdef G_OS_WIN32
+      gimp_window_set_title_bar_theme (dock_window->p->context->gimp,
+                                       GTK_WIDGET (dock_window));
+
+      if (config->dock_window_hint == GIMP_WINDOW_HINT_UTILITY)
+        {
+          GimpDisplay *display = gimp_context_get_display (dock_window->p->context);
+
+          if (display)
+            {
+              GtkWidget *toplevel = gimp_display_get_window (display);
+
+              if (toplevel)
+                {
+                  gtk_window_set_transient_for (GTK_WINDOW (dock_window),
+                                                GTK_WINDOW (toplevel));
+                }
+            }
+        }
+#endif
+
+#ifdef PLATFORM_OSX
       if (config->dock_window_hint == GIMP_WINDOW_HINT_UTILITY)
         {
           /* since GTK can not create NSPanel, let's make the NSWindow behave like one */
