@@ -1936,7 +1936,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
 #ifdef GDK_WINDOWING_WIN32
   /* This seems to help a lot on Windoze. */
   while (g_main_context_pending (NULL))
-    g_main_context_iteration(NULL, TRUE);
+    g_main_context_iteration (NULL, TRUE);
 #endif
 
   return return_val;
