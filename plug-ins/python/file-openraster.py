@@ -421,7 +421,7 @@ def load_ora(procedure, run_mode, file, metadata, flags, config, data):
         else:
             path, name, x, y, opac, visible, layer_mode, selected, locked = get_layer_attributes(item)
 
-            if not path.lower().endswith('.png'):
+            if not path.lower().endswith('.png') and not path.lower().endswith('.svg'):
                 continue
             if not name:
                 # use the filename without extension as name
@@ -430,6 +430,8 @@ def load_ora(procedure, run_mode, file, metadata, flags, config, data):
 
             # create temp file. Needed because gimp cannot load files from inside a zip file
             tmp = os.path.join(tempdir, 'tmp.png')
+            if path.lower().endswith('.svg'):
+                tmp = os.path.join(tempdir, 'tmp.svg')
             with open(tmp, 'wb') as fid:
                 try:
                     data = orafile.read(path)
