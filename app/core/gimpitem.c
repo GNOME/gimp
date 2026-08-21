@@ -317,11 +317,13 @@ gimp_item_class_init (GimpItemClass *klass)
 
   gimp_item_props[PROP_IMAGE] = g_param_spec_object ("image", NULL, NULL,
                                                      GIMP_TYPE_IMAGE,
-                                                     GIMP_PARAM_READWRITE |
+                                                     GIMP_PARAM_READWRITE    |
+                                                     G_PARAM_EXPLICIT_NOTIFY |
                                                      G_PARAM_CONSTRUCT);
   gimp_item_props[PROP_ID] = g_param_spec_int ("id", NULL, NULL,
                                                0, G_MAXINT, 0,
-                                               GIMP_PARAM_READABLE);
+                                               GIMP_PARAM_READWRITE |
+                                               G_PARAM_EXPLICIT_NOTIFY);
 
   gimp_item_props[PROP_WIDTH] = g_param_spec_int ("width", NULL, NULL,
                                                   1, GIMP_MAX_IMAGE_SIZE, 1,
@@ -384,6 +386,7 @@ gimp_item_init (GimpItem *item)
 
   g_object_force_floating (G_OBJECT (item));
 
+  private->ID                     = 0;
   private->parasites              = gimp_parasite_list_new ();
   private->visible                = TRUE;
   private->bind_visible_to_active = TRUE;
@@ -435,6 +438,9 @@ gimp_item_set_property (GObject      *object,
     {
     case PROP_IMAGE:
       gimp_item_set_image (item, g_value_get_object (value));
+      break;
+    case PROP_ID:
+      gimp_item_set_id (item, g_value_get_int (value));
       break;
 
     default:
@@ -2162,6 +2168,33 @@ gimp_item_get_by_id (Gimp *gimp,
     return NULL;
 
   return (GimpItem *) gimp_id_table_lookup (gimp->item_table, item_id);
+}
+
+/* In current code, the ID is assumed to be set optionally, after
+ * construction, when we try to re-assign previous IDs to loaded items.
+ *
+ * The @id attribute must have been reserved.
+ */
+void
+gimp_item_set_id (GimpItem *item,
+                  gint      id)
+{
+  GimpItemPrivate *private;
+  GimpImage       *image;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (id >= GIMP_ID_TABLE_START_ID && id <= GIMP_ID_TABLE_END_ID);
+
+  private = GET_PRIVATE (item);
+  image   = private->image;
+
+  g_return_if_fail (image != NULL && private->ID != 0);
+
+  gimp_id_table_remove (image->gimp->item_table, private->ID);
+  gimp_id_table_insert_reserved (image->gimp->item_table, id, item);
+  private->ID = id;
+
+  g_object_notify_by_pspec (G_OBJECT (item), gimp_item_props[PROP_ID]);
 }
 
 GimpTattoo

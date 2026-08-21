@@ -34,6 +34,7 @@
 #include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimptilehandlervalidate.h"
 
+#include "gimp.h"
 #include "gimp-memsize.h"
 #include "gimp-utils.h"
 #include "gimpchannel.h"
@@ -50,6 +51,7 @@
 #include "gimpdrawablefiltermask.h"
 #include "gimpfilterstack.h"
 #include "gimpgrouplayer.h"
+#include "gimpidtable.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-undo-push.h"
@@ -1151,8 +1153,10 @@ gimp_drawable_load_exit (GimpLoadState  *state,
                                     NULL))
     {
       GFile      *buffers_dir;
-      GeglBuffer *buffer;
       GFile      *buffer_file;
+      GeglBuffer *buffer      = NULL;
+      gint64      id          = 0;
+      gboolean    is_ancestor = FALSE;
 
       buffers_dir = g_file_get_child (state->subdir, "buffers");
       buffer_file = g_file_get_child (buffers_dir, buffer_filename);
@@ -1160,46 +1164,83 @@ gimp_drawable_load_exit (GimpLoadState  *state,
       /* Prevent malicious files trying to exit the allowed directory to
        * read external files on the FS.
        */
-      if (! gimp_file_is_ancestor (buffers_dir, buffer_file))
-        {
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                       "%s: unauthorized buffer file '%s': %s",
-                       G_STRFUNC,
-                       gimp_object_get_name (GIMP_OBJECT (drawable)),
-                       buffer_filename);
+      if (gimp_file_is_ancestor (buffers_dir, buffer_file))
+        is_ancestor = TRUE;
+      else
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                                 "%s: unauthorized buffer file '%s': %s",
+                                 G_STRFUNC,
+                                 gimp_object_get_name (GIMP_OBJECT (drawable)),
+                                 buffer_filename);
 
-          g_object_unref (drawable);
-          g_object_unref (buffers_dir);
-          g_object_unref (buffer_file);
-
-          return TRUE;
-        }
-
-      buffer = g_object_new (GEGL_TYPE_BUFFER,
-                             "format", format,
-                             "path",   g_file_peek_path (buffer_file),
-                             NULL);
+      if (*error == NULL)
+        buffer = g_object_new (GEGL_TYPE_BUFFER,
+                               "format", format,
+                               "path",   g_file_peek_path (buffer_file),
+                               NULL);
 
       if (buffer == NULL)
+        GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                                 "%s: invalid buffer file content for drawable '%s': %s",
+                                 G_STRFUNC,
+                                 gimp_object_get_name (GIMP_OBJECT (drawable)),
+                                 buffer_filename);
+
+      if (*error == NULL)
         {
-          g_set_error (error, GIMP_WLBR_ERROR, GIMP_WLBR_ERROR_FORMAT,
-                       "%s: invalid buffer file content for drawable '%s': %s",
-                       G_STRFUNC,
-                       gimp_object_get_name (GIMP_OBJECT (drawable)),
-                       buffer_filename);
+          gchar      *pattern;
+          GRegex     *regex;
+          GMatchInfo *matches = NULL;
+          GType       gtype;
 
-          g_object_unref (drawable);
-          g_object_unref (buffers_dir);
-          g_object_unref (buffer_file);
+          gtype   = G_TYPE_FROM_INSTANCE (drawable);
+          pattern = g_strdup_printf ("^%s-([1-9][0-9]*)-[0-9]*\\.buffer$", g_type_name (gtype));
+          regex   = g_regex_new (pattern, G_REGEX_DEFAULT, G_REGEX_MATCH_DEFAULT, NULL);
+          if (g_regex_match (regex, buffer_filename, G_REGEX_MATCH_DEFAULT, &matches))
+            {
+              gchar  *id_str;
 
-          return TRUE;
+              id_str = g_match_info_fetch (matches, 1);
+              id     = g_ascii_strtoll (id_str, NULL, 10);
+              if (errno == ERANGE || (gint64) (gint) id != id              ||
+                  id < GIMP_ID_TABLE_START_ID || id > GIMP_ID_TABLE_END_ID ||
+                  (gimp_item_get_id (GIMP_ITEM (drawable)) != id &&
+                   ! gimp_id_table_reserve (state->gimp->item_table, (gint) id)))
+                id = 0;
+            }
+          else
+            {
+              GIMP_SAVABLE_LOAD_ERROR (error, GIMP_WLBR_ERROR_DATA, ;,
+                                       "%s: invalid buffer file name pattern for drawable '%s': %s",
+                                       G_STRFUNC,
+                                       gimp_object_get_name (GIMP_OBJECT (drawable)),
+                                       buffer_filename);
+            }
+
+          if (id > 0 && gimp_item_get_id (GIMP_ITEM (drawable)) != id)
+            gimp_item_set_id (GIMP_ITEM (drawable), (gint) id);
+
+          gimp_drawable_set_buffer (GIMP_DRAWABLE (drawable), FALSE, NULL, buffer);
+
+          /* We are trying to reserve the same ID so that we can just
+           * reuse the buffer file as-is. This may fail though because
+           * every run is different. In such a case, the original buffer
+           * file will still be used for initialization, but the
+           * drawable will end up syncing to a new file. So let's delete
+           * the old file once we are done.
+           */
+          if (id == 0 && is_ancestor)
+            g_file_delete (buffer_file, NULL, NULL);
+
+          g_clear_pointer (&matches, g_match_info_free);
+          g_regex_unref (regex);
+          g_free (pattern);
         }
-
-      gimp_drawable_set_buffer (GIMP_DRAWABLE (drawable), FALSE, NULL, buffer);
+      /* TODO: test further what happens with invalid buffer file or metadata. */
 
       g_object_unref (buffers_dir);
       g_object_unref (buffer_file);
-      g_object_unref (buffer);
+      g_clear_object (&buffer);
     }
 
   return TRUE;

@@ -203,15 +203,21 @@ gimp_id_table_replace (GimpIdTable *id_table, gint id, gpointer data)
  * this function is only used when reinstating existing data so we know
  * no IDs were set yet!
  **/
-void
+gboolean
 gimp_id_table_reserve (GimpIdTable *id_table,
                        gint         id)
 {
-  g_return_if_fail (GIMP_IS_ID_TABLE (id_table));
-  g_return_if_fail (id >= GIMP_ID_TABLE_START_ID && id <= GIMP_ID_TABLE_END_ID);
-  g_return_if_fail (! gimp_id_table_exists (id_table, id));
+  gboolean success;
 
-  g_hash_table_insert (id_table->priv->id_table, GINT_TO_POINTER (id), NULL);
+  g_return_val_if_fail (GIMP_IS_ID_TABLE (id_table), FALSE);
+  g_return_val_if_fail (id >= GIMP_ID_TABLE_START_ID && id <= GIMP_ID_TABLE_END_ID, FALSE);
+  g_return_val_if_fail (! gimp_id_table_exists (id_table, id), FALSE);
+
+  success = (! gimp_id_table_exists (id_table, id));
+  if (success)
+    g_hash_table_insert (id_table->priv->id_table, GINT_TO_POINTER (id), NULL);
+
+  return success;
 }
 
 void

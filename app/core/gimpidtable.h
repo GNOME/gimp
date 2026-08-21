@@ -55,7 +55,7 @@ GimpIdTable *  gimp_id_table_new             (void);
 gboolean       gimp_id_table_is_valid_id     (gint64       id);
 gint           gimp_id_table_insert          (GimpIdTable *id_table,
                                               gpointer     data);
-void           gimp_id_table_reserve         (GimpIdTable *id_table,
+gboolean       gimp_id_table_reserve         (GimpIdTable *id_table,
                                               gint         id);
 void           gimp_id_table_unreserve       (GimpIdTable *id_table,
                                               gint         id);

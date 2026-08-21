@@ -316,6 +316,8 @@ void            gimp_item_remove_offset_node (GimpItem           *item,
 gint            gimp_item_get_id             (GimpItem           *item);
 GimpItem      * gimp_item_get_by_id          (Gimp               *gimp,
                                               gint                id);
+void            gimp_item_set_id             (GimpItem           *item,
+                                              gint                id);
 
 GimpTattoo      gimp_item_get_tattoo         (GimpItem           *item);
 void            gimp_item_set_tattoo         (GimpItem           *item,
