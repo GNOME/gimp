@@ -768,6 +768,15 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
                 g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
               }];
 
+              /* keep dockable window transient when app becomes active
+                 (e.g. after opening gimp from terminal )*/
+              [[NSNotificationCenter defaultCenter] addObserverForName:NSApplicationDidBecomeActiveNotification
+                                                    object:nil
+                                                    queue:[NSOperationQueue mainQueue]
+                                                    usingBlock:^(NSNotification *note) {
+                g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
+              }];
+
               /* remove minimize button */
               minimize_mask = [ns_window styleMask];
               minimize_mask &= ~NSWindowStyleMaskMiniaturizable;
