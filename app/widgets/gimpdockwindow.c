@@ -133,6 +133,8 @@ static void            gimp_dock_window_get_property              (GObject      
 static void            gimp_dock_window_style_updated             (GtkWidget                  *widget);
 static gboolean        gimp_dock_window_delete_event              (GtkWidget                  *widget,
                                                                    GdkEventAny                *event);
+static gboolean        gimp_dock_window_key_press_event           (GtkWidget                  *widget,
+                                                                   GdkEventKey                *event);
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
 static void            gimp_dock_window_realize                   (GimpDockWindow             *dock_window,
                                                                    gpointer                    data);
@@ -202,8 +204,9 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
   object_class->set_property  = gimp_dock_window_set_property;
   object_class->get_property  = gimp_dock_window_get_property;
 
-  widget_class->style_updated = gimp_dock_window_style_updated;
-  widget_class->delete_event  = gimp_dock_window_delete_event;
+  widget_class->style_updated   = gimp_dock_window_style_updated;
+  widget_class->delete_event    = gimp_dock_window_delete_event;
+  widget_class->key_press_event = gimp_dock_window_key_press_event;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
@@ -713,6 +716,50 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   g_object_unref (info);
 
   return FALSE;
+}
+
+/* Make image window related keyboard shortcuts work also when a
+   dock window is the focused window. See: #9921 */
+static gboolean
+gimp_dock_window_key_press_event (GtkWidget   *widget,
+                                  GdkEventKey *event)
+{
+  GtkApplication *app;
+  gboolean        handled = FALSE;
+
+  /* dockable own shortcuts */
+  if (GTK_WIDGET_CLASS (parent_class)->key_press_event (widget, event))
+    return TRUE;
+
+  /* gimp main window shortcuts */
+  app = gtk_window_get_application (GTK_WINDOW (widget));
+  if (!app)
+    {
+      GApplication *default_app = g_application_get_default ();
+      if (default_app && GTK_IS_APPLICATION (default_app))
+        app = GTK_APPLICATION (default_app);
+    }
+  if (app)
+    {
+      GList *app_windows = gtk_application_get_windows (app);
+      GList *iter;
+      for (iter = app_windows; iter; iter = g_list_next (iter))
+        {
+          GtkWindow *app_win = GTK_WINDOW (iter->data);
+          if (app_win != GTK_WINDOW (widget) &&
+              !GIMP_IS_DOCK_WINDOW (app_win) &&
+              !GTK_IS_DIALOG (app_win))
+            {
+              if (gtk_window_activate_key (app_win, event))
+                {
+                  handled = TRUE;
+                  break;
+                }
+            }
+        }
+    }
+
+  return handled;
 }
 
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
