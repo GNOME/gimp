@@ -24,6 +24,7 @@
 #include <gegl.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #ifdef _WIN32
 #include <gdk/gdkwin32.h>
 #endif
@@ -135,7 +136,7 @@ static gboolean        gimp_dock_window_delete_event              (GtkWidget    
                                                                    GdkEventAny                *event);
 static gboolean        gimp_dock_window_key_press_event           (GtkWidget                  *widget,
                                                                    GdkEventKey                *event);
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
 static void            gimp_dock_window_realize                   (GimpDockWindow             *dock_window,
                                                                    gpointer                    data);
 #endif
@@ -164,7 +165,7 @@ static void            gimp_dock_window_image_flush               (GimpImage    
                                                                    GimpDockWindow             *dock_window);
 static void            gimp_dock_window_update_title              (GimpDockWindow             *dock_window);
 static gboolean        gimp_dock_window_update_title_idle         (GimpDockWindow             *dock_window);
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
 static gboolean        gimp_dock_window_update_focus_idle         (gpointer                    data);
 #endif
 static gchar         * gimp_dock_window_get_description           (GimpDockWindow             *dock_window,
@@ -283,7 +284,7 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
   gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dock_window), FALSE);
 
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   g_signal_connect (dock_window, "realize",
                     G_CALLBACK (gimp_dock_window_realize),
                     NULL);
@@ -762,7 +763,7 @@ gimp_dock_window_key_press_event (GtkWidget   *widget,
   return handled;
 }
 
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
 static void
 gimp_dock_window_realize (GimpDockWindow *dock_window,
                           gpointer        data)
@@ -789,8 +790,12 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
 
       if (config->dock_window_hint == GIMP_WINDOW_HINT_UTILITY)
         {
+#ifdef GDK_WINDOWING_WAYLAND
+          g_idle_add ((GSourceFunc) gimp_dock_window_update_focus_idle, dock_window);
+#endif
+
 #ifdef G_OS_WIN32
-           /* keep dockable window transient */
+          /* keep dockable window transient */
           HWND main_window = GetActiveWindow();
           g_object_set_data (G_OBJECT (dock_window), "win32-parent-window", (gpointer) main_window);
           g_idle_add ((GSourceFunc) gimp_dock_window_update_focus_idle, dock_window);
@@ -1056,11 +1061,14 @@ gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
   return FALSE;
 }
 
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
 static gboolean
 gimp_dock_window_update_focus_idle (gpointer data)
 {
   GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (data);
+#ifdef GDK_WINDOWING_WAYLAND
+  GtkApplication *app;
+#endif
 #ifdef _WIN32
   HWND            hwnd_window;
 #endif
@@ -1070,6 +1078,21 @@ gimp_dock_window_update_focus_idle (gpointer data)
 
   if (! GTK_IS_WIDGET (dock_window) || ! gtk_widget_get_realized (GTK_WIDGET (dock_window)))
     return G_SOURCE_REMOVE;
+
+#ifdef GDK_WINDOWING_WAYLAND
+  app = gtk_window_get_application (GTK_WINDOW (dock_window));
+  if (!app)
+    {
+      GApplication *default_app = g_application_get_default ();
+      if (default_app && GTK_IS_APPLICATION (default_app))
+        app = GTK_APPLICATION (default_app);
+    }
+  if (app)
+    {
+      GtkWindow *app_win = gtk_application_get_active_window (app);
+      gtk_window_set_transient_for (GTK_WINDOW (dock_window), app_win);
+    }
+#endif
 
 #ifdef G_OS_WIN32
   hwnd_window = (HWND) gdk_win32_window_get_handle (gtk_widget_get_window (GTK_WIDGET (dock_window)));
@@ -1162,7 +1185,7 @@ gimp_dock_window_factory_display_changed (GimpContext *context,
   if (display && dock_window->p->auto_follow_active)
     gimp_context_set_display (dock_window->p->context, display);
 
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   if (gtk_widget_get_realized (GTK_WIDGET (dock_window)))
     {
       if (dock_window->p->context && dock_window->p->context->gimp)
@@ -1180,7 +1203,11 @@ gimp_dock_window_factory_display_changed (GimpContext *context,
                 SetWindowLongPtrW (dock_hwnd, GWLP_HWNDPARENT, (LONG_PTR)NULL);
 #endif
               if (display)
+#ifdef GDK_WINDOWING_WAYLAND
+                g_timeout_add (50, (GSourceFunc) gimp_dock_window_update_focus_idle, dock_window);
+#elif defined(G_OS_WIN32) || defined(PLATFORM_OSX)
                 g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
+#endif
             }
         }
     }
