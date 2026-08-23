@@ -322,8 +322,7 @@ gimp_item_class_init (GimpItemClass *klass)
                                                      G_PARAM_CONSTRUCT);
   gimp_item_props[PROP_ID] = g_param_spec_int ("id", NULL, NULL,
                                                0, G_MAXINT, 0,
-                                               GIMP_PARAM_READWRITE |
-                                               G_PARAM_EXPLICIT_NOTIFY);
+                                               GIMP_PARAM_READABLE);
 
   gimp_item_props[PROP_WIDTH] = g_param_spec_int ("width", NULL, NULL,
                                                   1, GIMP_MAX_IMAGE_SIZE, 1,
@@ -438,9 +437,6 @@ gimp_item_set_property (GObject      *object,
     {
     case PROP_IMAGE:
       gimp_item_set_image (item, g_value_get_object (value));
-      break;
-    case PROP_ID:
-      gimp_item_set_id (item, g_value_get_int (value));
       break;
 
     default:
@@ -2172,6 +2168,9 @@ gimp_item_get_by_id (Gimp *gimp,
 
 /* In current code, the ID is assumed to be set optionally, after
  * construction, when we try to re-assign previous IDs to loaded items.
+ *
+ * Do not use this function in code other than for loading code. Items
+ * are not expected to change ID in normal usage.
  *
  * The @id attribute must have been reserved.
  */
