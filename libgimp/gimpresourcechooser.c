@@ -18,6 +18,10 @@
 
 #include "config.h"
 
+#ifdef PLATFORM_OSX
+#import <AppKit/AppKit.h>
+#endif
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -574,6 +578,9 @@ gimp_resource_chooser_clicked (GimpResourceChooser *self)
     {
       GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (self));
       GBytes    *handle   = NULL;
+#ifdef PLATFORM_OSX
+      NSRunningApplication *gimp_app;
+#endif
 
       if (GIMP_IS_DIALOG (toplevel))
         handle = gimp_dialog_get_native_handle (GIMP_DIALOG (toplevel));
@@ -586,6 +593,26 @@ gimp_resource_chooser_clicked (GimpResourceChooser *self)
                                                            self,
                                                            NULL));
       gimp_resource_chooser_set_remote_dialog (self, priv->resource);
+
+#ifdef PLATFORM_OSX
+      /* activate the parent GIMP process so the resource dialog appears on top */
+      gimp_app = [NSRunningApplication runningApplicationWithProcessIdentifier:getppid()];
+      if (gimp_app)
+        {
+          if (@available(macOS 14.0, *))
+            {
+              [[NSApplication sharedApplication] yieldActivationToApplication:gimp_app];
+              [gimp_app activateFromApplication:[NSRunningApplication currentApplication] options:0];
+            }
+          else
+            {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+              [gimp_app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+#pragma clang diagnostic pop
+            }
+        }
+#endif
     }
 }
 
