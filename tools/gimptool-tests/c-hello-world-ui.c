@@ -147,6 +147,7 @@ hello_world_run (GimpProcedure        *procedure,
       dialog = gimp_procedure_dialog_new (procedure,
                                           GIMP_PROCEDURE_CONFIG (config),
                                           "Hello World");
+      gimp_window_set_transient (GTK_WINDOW (dialog));
       gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
 
       if (! gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog)))
