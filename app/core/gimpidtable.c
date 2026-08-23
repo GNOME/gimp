@@ -198,10 +198,12 @@ gimp_id_table_replace (GimpIdTable *id_table, gint id, gpointer data)
  * @id_table: A #GimpIdTable
  * @id:       An unused ID to reserve.
  *
- * Reserve an ID for data which doesn't exist yet. It is your
- * responsibility to ensure that @id was not already used yet. Usually
- * this function is only used when reinstating existing data so we know
- * no IDs were set yet!
+ * Reserve an ID for data which doesn't exist yet. The reservation may
+ * fail so you should check the return value, unless you know for a fact
+ * that @id cannot be taken yet.
+ *
+ * Returns: %TRUE if the reservation succeeded; FALSE is the @id is
+ * already taken or reserved.
  **/
 gboolean
 gimp_id_table_reserve (GimpIdTable *id_table,
@@ -211,7 +213,6 @@ gimp_id_table_reserve (GimpIdTable *id_table,
 
   g_return_val_if_fail (GIMP_IS_ID_TABLE (id_table), FALSE);
   g_return_val_if_fail (id >= GIMP_ID_TABLE_START_ID && id <= GIMP_ID_TABLE_END_ID, FALSE);
-  g_return_val_if_fail (! gimp_id_table_exists (id_table, id), FALSE);
 
   success = (! gimp_id_table_exists (id_table, id));
   if (success)
