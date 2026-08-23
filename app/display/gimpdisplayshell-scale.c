@@ -1060,12 +1060,13 @@ gimp_display_shell_scale_get_screen_resolution (GimpDisplayShell *shell,
                                                 gdouble          *xres,
                                                 gdouble          *yres)
 {
-  gdouble x, y;
+  GimpImage *image = gimp_display_get_image (shell->display);
+  gdouble    x;
+  gdouble    y;
 
-  if (shell->dot_for_dot)
+  if (shell->dot_for_dot && image)
     {
-      gimp_image_get_resolution (gimp_display_get_image (shell->display),
-                                 &x, &y);
+      gimp_image_get_resolution (image, &x, &y);
     }
   else
     {
@@ -1091,14 +1092,18 @@ gimp_display_shell_scale_get_image_size_for_scale (GimpDisplayShell *shell,
                                                    gint             *w,
                                                    gint             *h)
 {
-  GimpImage *image = gimp_display_get_image (shell->display);
-  gdouble    scale_x;
-  gdouble    scale_y;
+  GimpImage *image   = gimp_display_get_image (shell->display);
+  gdouble    scale_x = 1.0f;
+  gdouble    scale_y = 1.0f;
 
-  gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
+  if (image)
+    {
+      gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x,
+                                                  &scale_y);
 
-  if (w) *w = scale_x * gimp_image_get_width  (image);
-  if (h) *h = scale_y * gimp_image_get_height (image);
+      if (w) *w = scale_x * gimp_image_get_width  (image);
+      if (h) *h = scale_y * gimp_image_get_height (image);
+    }
 }
 
 /**
@@ -1115,18 +1120,22 @@ gimp_display_shell_calculate_scale_x_and_y (GimpDisplayShell *shell,
                                             gdouble          *scale_x,
                                             gdouble          *scale_y)
 {
-  GimpImage *image = gimp_display_get_image (shell->display);
-  gdouble    xres;
-  gdouble    yres;
-  gdouble    screen_xres;
-  gdouble    screen_yres;
+  GimpImage *image       = gimp_display_get_image (shell->display);
+  gdouble    xres        = 1.0f;
+  gdouble    yres        = 1.0f;
+  gdouble    screen_xres = 1.0f;
+  gdouble    screen_yres = 1.0f;
 
-  gimp_image_get_resolution (image, &xres, &yres);
-  gimp_display_shell_scale_get_screen_resolution (shell,
-                                                  &screen_xres, &screen_yres);
+  if (image)
+    {
+      gimp_image_get_resolution (image, &xres, &yres);
+      gimp_display_shell_scale_get_screen_resolution (shell,
+                                                      &screen_xres,
+                                                      &screen_yres);
 
-  if (scale_x) *scale_x = scale * screen_xres / xres;
-  if (scale_y) *scale_y = scale * screen_yres / yres;
+      if (scale_x) *scale_x = scale * screen_xres / xres;
+      if (scale_y) *scale_y = scale * screen_yres / yres;
+    }
 }
 
 /**
