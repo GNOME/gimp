@@ -275,6 +275,12 @@ gui_init (Gimp         *gimp,
    */
   if ([NSWindow respondsToSelector:@selector(setAllowsAutomaticWindowTabbing:)])
     [NSWindow setAllowsAutomaticWindowTabbing:NO];
+
+  /* respect the macOS "Show scroll bars: Always" system preference. See: #16291 */
+  if ([NSScroller preferredScrollerStyle] == NSScrollerStyleLegacy)
+    g_object_set (gtk_settings_get_default (),
+                  "gtk-overlay-scrolling", FALSE,
+                  NULL);
 #endif /* GDK_WINDOWING_QUARTZ */
 
   gimp_dnd_init (gimp);
