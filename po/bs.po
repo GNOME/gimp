@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-21 10:20+0000\n"
-"PO-Revision-Date: 2026-08-21 18:56+0200\n"
+"POT-Creation-Date: 2026-08-24 18:11+0000\n"
+"PO-Revision-Date: 2026-08-24 22:34+0200\n"
 "Last-Translator: Alen Galinec <mind.on.warp@gmail.com>\n"
 "Language-Team: Bosnian\n"
 "Language: bs\n"
@@ -200,19 +200,19 @@ msgstr ""
 "niste, idite na https://www.gnu.org/licenses/."
 
 #. TRANSLATORS: title for info message in terminal window
-#: app/app.c:545
+#: app/app.c:542
 msgid "INFO"
 msgstr ""
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:547
+#: app/app.c:544
 msgid ""
 "GIMP is now running as a background process. You can quit anytime with Ctrl-"
 "C (SIGINT)."
 msgstr ""
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:550
+#: app/app.c:547
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr ""
 
@@ -527,8 +527,9 @@ msgstr "Unaprijed podeseni alati"
 msgid "Tool Preset Editor"
 msgstr "Urednik unaprijed podesenih alata"
 
+#. Help
 #. fix native search bar not appearing on non-Enligsh locales
-#: app/actions/actions.c:189 app/menus/menus.c:668
+#: app/actions/actions.c:189 app/menus/menus.c:671
 msgid "Help"
 msgstr "Pomoć"
 
@@ -580,7 +581,7 @@ msgid "Plug-ins"
 msgstr "Dodaci"
 
 #. Quick Mask Color
-#: app/actions/actions.c:216 app/core/gimpchannel.c:396
+#: app/actions/actions.c:216 app/core/gimpchannel.c:397
 #: app/dialogs/preferences-dialog.c:1824
 msgid "Quick Mask"
 msgstr "Brza maska"
@@ -630,7 +631,9 @@ msgstr "Putanje"
 msgid "View"
 msgstr "Pogled"
 
-#: app/actions/actions.c:249
+#. Windows
+#. fix native windows list not appearing on dock. See: #428
+#: app/actions/actions.c:249 app/menus/menus.c:682
 msgid "Windows"
 msgstr "Prozori"
 
@@ -1319,7 +1322,7 @@ msgstr[0] "Spusti kanal na dno"
 msgstr[1] "Spusti kanal na dno"
 msgstr[2] "Spusti kanal na dno"
 
-#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:535
 #: app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260
 #: app/widgets/gimplayertreeview.c:906
 #, c-format
@@ -3063,7 +3066,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2535
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2546
 #: app/core/gimppalette.c:647 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -8610,7 +8613,7 @@ msgid "Remove Alpha Channel"
 msgstr "Ukloni alfa kanal"
 
 #: app/actions/layers-commands.c:1967 app/core/gimpchannel-select.c:433
-#: app/core/gimplayer.c:472
+#: app/core/gimplayer.c:473
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa u izbor"
@@ -12678,11 +12681,11 @@ msgstr ""
 msgid "Pattern syntax for searching and selecting items:"
 msgstr ""
 
-#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:443
+#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:444
 msgid "Layer"
 msgstr "Sloj"
 
-#: app/config/gimpdialogconfig.c:426 app/core/gimpchannel.c:263
+#: app/config/gimpdialogconfig.c:426 app/core/gimpchannel.c:264
 #: app/operations/gimpcurvesconfig.c:120 app/operations/gimplevelsconfig.c:135
 #: app/operations/gimpoperationthreshold.c:95
 #: app/widgets/gimpchanneltreeview.c:333
@@ -14717,7 +14720,7 @@ msgctxt "undo-type"
 msgid "Vector"
 msgstr ""
 
-#: app/core/core-enums.c:1344 app/core/gimpdrawable-transform.c:717
+#: app/core/core-enums.c:1344 app/core/gimpdrawable-transform.c:718
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Trasformiši"
@@ -15152,7 +15155,7 @@ msgstr "Paketni režim je isključen pošto nije dostupan interpreter „%s“."
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:488 app/widgets/gimpdevices.c:172
+#: app/menus/menus.c:490 app/widgets/gimpdevices.c:172
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Brisanje „%s“ nije uspjelo: %s"
@@ -15206,7 +15209,7 @@ msgstr "Ne mogu da postavim plutajući izbor jer je izabrana oblast prazna."
 msgid "Cannot copy because the selected region is empty."
 msgstr "Ne mogu da postavim plutajući izbor jer je izabrana oblast prazna."
 
-#: app/core/gimp-edit.c:654 app/core/gimpimage-new.c:583
+#: app/core/gimp-edit.c:654 app/core/gimpimage-new.c:584
 msgid "Pasted Layer"
 msgstr "Umetnuti sloj"
 
@@ -15381,7 +15384,7 @@ msgstr ""
 #.
 #: app/core/gimp-tags.c:87
 msgid "tags-locale:C"
-msgstr "lokalne-oznake:C"
+msgstr "tags-locale:bs"
 
 #: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:188
 #: app/gui/themes.c:728
@@ -15723,125 +15726,125 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Izbor po boji"
 
-#: app/core/gimpchannel.c:280
+#: app/core/gimpchannel.c:281
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Preimenuj kanal"
 
-#: app/core/gimpchannel.c:281
+#: app/core/gimpchannel.c:282
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Premjesti kanal"
 
-#: app/core/gimpchannel.c:282
+#: app/core/gimpchannel.c:283
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Omjer kanala"
 
-#: app/core/gimpchannel.c:283
+#: app/core/gimpchannel.c:284
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Promijeni dimenzije kanala"
 
-#: app/core/gimpchannel.c:284
+#: app/core/gimpchannel.c:285
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Obrni kanal"
 
-#: app/core/gimpchannel.c:285
+#: app/core/gimpchannel.c:286
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Rotiraj kanal"
 
-#: app/core/gimpchannel.c:286 app/core/gimpdrawable-transform.c:1049
+#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1050
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Transformiši kanal"
 
-#: app/core/gimpchannel.c:287 app/core/gimpchannel.c:318
+#: app/core/gimpchannel.c:288 app/core/gimpchannel.c:319
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Popuni kanal"
 
-#: app/core/gimpchannel.c:288
+#: app/core/gimpchannel.c:289
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Iscrtaj kanal"
 
-#: app/core/gimpchannel.c:289
+#: app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Kanal u izbor"
 
-#: app/core/gimpchannel.c:290
+#: app/core/gimpchannel.c:291
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Promijeni redoslijed kanala"
 
-#: app/core/gimpchannel.c:291
+#: app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Podigni kanal"
 
-#: app/core/gimpchannel.c:292
+#: app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Podigni kanal na vrh"
 
-#: app/core/gimpchannel.c:293
+#: app/core/gimpchannel.c:294
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Spusti kanal"
 
-#: app/core/gimpchannel.c:294
+#: app/core/gimpchannel.c:295
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Spusti kanal na dno"
 
-#: app/core/gimpchannel.c:295
+#: app/core/gimpchannel.c:296
 msgid "Channel cannot be raised higher."
 msgstr "Kanal se ne može podići više."
 
-#: app/core/gimpchannel.c:296
+#: app/core/gimpchannel.c:297
 msgid "Channel cannot be lowered more."
 msgstr "Kanal se ne može spustiti niže."
 
-#: app/core/gimpchannel.c:315
+#: app/core/gimpchannel.c:316
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Umekšaj kanal"
 
-#: app/core/gimpchannel.c:316
+#: app/core/gimpchannel.c:317
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Izoštri kanal"
 
-#: app/core/gimpchannel.c:317
+#: app/core/gimpchannel.c:318
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Očisti kanal"
 
-#: app/core/gimpchannel.c:319
+#: app/core/gimpchannel.c:320
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Invertuj kanal"
 
-#: app/core/gimpchannel.c:320
+#: app/core/gimpchannel.c:321
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Granice kanala"
 
-#: app/core/gimpchannel.c:321
+#: app/core/gimpchannel.c:322
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Proširi kanal"
 
-#: app/core/gimpchannel.c:322
+#: app/core/gimpchannel.c:323
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Suzi kanal"
 
-#: app/core/gimpchannel.c:323
+#: app/core/gimpchannel.c:324
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Flip Channel"
@@ -15849,27 +15852,27 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Obrni kanal"
 
-#: app/core/gimpchannel.c:821
+#: app/core/gimpchannel.c:823
 #, fuzzy
 #| msgid "Cannot stroke empty channel."
 msgid "Cannot fill empty channel."
 msgstr "Ne može da iscrta prazan kanal."
 
-#: app/core/gimpchannel.c:857
+#: app/core/gimpchannel.c:859
 msgid "Cannot stroke empty channel."
 msgstr "Ne može da iscrta prazan kanal."
 
-#: app/core/gimpchannel.c:1862
+#: app/core/gimpchannel.c:1876
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Podesi boju kanala"
 
-#: app/core/gimpchannel.c:1916
+#: app/core/gimpchannel.c:1930
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Podesi neprovidnost kanala"
 
-#: app/core/gimpchannel.c:2001 app/core/gimpselection.c:162
+#: app/core/gimpchannel.c:2015 app/core/gimpselection.c:162
 msgid "Selection Mask"
 msgstr "Izabrana Maska"
 
@@ -15963,11 +15966,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:479 app/core/gimpdatafactory.c:482
-#: app/core/gimpitem.c:728 app/core/gimpitem.c:731
+#: app/core/gimpitem.c:730 app/core/gimpitem.c:733
 msgid "copy"
 msgstr "kopija"
 
-#: app/core/gimpdatafactory.c:491 app/core/gimpitem.c:739
+#: app/core/gimpdatafactory.c:491 app/core/gimpitem.c:741
 #, c-format
 msgid "%s copy"
 msgstr "%s kopija"
@@ -16052,7 +16055,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:714 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:710 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Razmjer"
@@ -16072,7 +16075,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Izjednači"
 
-#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:820
+#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:821
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Float Selection"
@@ -16134,22 +16137,22 @@ msgstr "Pomjeri crtež"
 msgid "Not enough points to stroke"
 msgstr "Nema dovoljno tačaka za iscrtavanje"
 
-#: app/core/gimpdrawable-transform.c:804 app/tools/gimpfliptool.c:139
+#: app/core/gimpdrawable-transform.c:805 app/tools/gimpfliptool.c:139
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Obrni"
 
-#: app/core/gimpdrawable-transform.c:887 app/tools/gimprotatetool.c:131
+#: app/core/gimpdrawable-transform.c:888 app/tools/gimprotatetool.c:131
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Rotiraj"
 
-#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:471
+#: app/core/gimpdrawable-transform.c:1048 app/core/gimplayer.c:472
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Transformiši sloj"
 
-#: app/core/gimpdrawable-transform.c:1061
+#: app/core/gimpdrawable-transform.c:1062
 msgid "Transformation"
 msgstr "Transformiši"
 
@@ -16189,8 +16192,8 @@ msgstr ""
 msgid "Cannot rename effect masks."
 msgstr "Ne mogu da preimenujem masku sloja."
 
-#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:780
-#: app/core/gimplayer.c:2419 app/core/gimplayermask.c:304
+#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:781
+#: app/core/gimplayer.c:2397 app/core/gimplayermask.c:304
 #, c-format
 msgid "%s mask"
 msgstr "%s maska"
@@ -16389,50 +16392,50 @@ msgstr "Uspravni pomjeraj prve linije mreže; ovo može biti i negativan broj."
 msgid "Offset unit"
 msgstr "Ofset"
 
-#: app/core/gimpgrouplayer.c:308
+#: app/core/gimpgrouplayer.c:309
 msgid "Layer Group"
 msgstr "Grupa slojeva"
 
-#: app/core/gimpgrouplayer.c:323
+#: app/core/gimpgrouplayer.c:324
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Preimenuj grupu slojeva"
 
-#: app/core/gimpgrouplayer.c:324
+#: app/core/gimpgrouplayer.c:325
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Premjesti grupu slojeva"
 
-#: app/core/gimpgrouplayer.c:325
+#: app/core/gimpgrouplayer.c:326
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Rangiraj grupu slojeva"
 
-#: app/core/gimpgrouplayer.c:326
+#: app/core/gimpgrouplayer.c:327
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Promijeni veličinu grupe slojeva"
 
-#: app/core/gimpgrouplayer.c:327
+#: app/core/gimpgrouplayer.c:328
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Obrni grupu slojeva"
 
-#: app/core/gimpgrouplayer.c:328
+#: app/core/gimpgrouplayer.c:329
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Rotiraj grupu slojeva"
 
-#: app/core/gimpgrouplayer.c:329
+#: app/core/gimpgrouplayer.c:330
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformiši grupu slojeva"
 
-#: app/core/gimpimage.c:713 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:714 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr ""
 
-#: app/core/gimpimage.c:2171 app/pdb/drawable-filter-cmds.c:661
+#: app/core/gimpimage.c:2182 app/pdb/drawable-filter-cmds.c:661
 #: app/widgets/gimpdrawabletreeview-filters.c:976
 #, fuzzy
 #| msgctxt "undo-type"
@@ -16440,193 +16443,193 @@ msgstr ""
 msgid "Remove filter"
 msgstr "Ukloni stavku"
 
-#: app/core/gimpimage.c:2780
+#: app/core/gimpimage.c:2791
 msgid " (exported)"
 msgstr " (izvezeno)"
 
-#: app/core/gimpimage.c:2784
+#: app/core/gimpimage.c:2795
 msgid " (overwritten)"
 msgstr " (pripisano)"
 
-#: app/core/gimpimage.c:2793
+#: app/core/gimpimage.c:2804
 msgid " (imported)"
 msgstr " (uvezeno)"
 
-#: app/core/gimpimage.c:3041 app/core/gimpimage.c:3055
-#: app/core/gimpimage.c:3098
+#: app/core/gimpimage.c:3052 app/core/gimpimage.c:3066
+#: app/core/gimpimage.c:3109
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3123 app/core/gimpimage.c:3237
+#: app/core/gimpimage.c:3134 app/core/gimpimage.c:3248
 #, c-format
 msgid "Channel effects were saved in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3132
+#: app/core/gimpimage.c:3143
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3139
+#: app/core/gimpimage.c:3150
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3146
+#: app/core/gimpimage.c:3157
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3153
+#: app/core/gimpimage.c:3164
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3161 app/core/gimpimage.c:3229
+#: app/core/gimpimage.c:3172 app/core/gimpimage.c:3240
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3172
+#: app/core/gimpimage.c:3183
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3180
+#: app/core/gimpimage.c:3191
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3192
+#: app/core/gimpimage.c:3203
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3206
+#: app/core/gimpimage.c:3217
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3214
+#: app/core/gimpimage.c:3225
 #, c-format
 msgid "Link layers were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3246
+#: app/core/gimpimage.c:3257
 #, fuzzy, c-format
 #| msgctxt "image-map-region"
 #| msgid "Use the selection as input"
 msgid "Multiple path selection was added in %s"
 msgstr "Koristi izbor kao ulaz"
 
-#: app/core/gimpimage.c:3258
+#: app/core/gimpimage.c:3269
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3265
+#: app/core/gimpimage.c:3276
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3279
+#: app/core/gimpimage.c:3290
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3287
+#: app/core/gimpimage.c:3298
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3295
+#: app/core/gimpimage.c:3306
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3312
+#: app/core/gimpimage.c:3323
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3319
+#: app/core/gimpimage.c:3330
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3336
+#: app/core/gimpimage.c:3347
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3347
+#: app/core/gimpimage.c:3358
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3353
+#: app/core/gimpimage.c:3364
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3484
+#: app/core/gimpimage.c:3495
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Promijeni rezoluciju slike"
 
-#: app/core/gimpimage.c:3536
+#: app/core/gimpimage.c:3547
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Promijeni jedinicu slike"
 
-#: app/core/gimpimage.c:4575
+#: app/core/gimpimage.c:4586
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: app/core/gimpimage.c:4637
+#: app/core/gimpimage.c:4648
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Prikači parazita slici"
 
-#: app/core/gimpimage.c:4682
+#: app/core/gimpimage.c:4693
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Ukloni parazita sa slike"
 
-#: app/core/gimpimage.c:5655
+#: app/core/gimpimage.c:5666
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodaj sloj"
 
-#: app/core/gimpimage.c:5715 app/core/gimpimage.c:5746
+#: app/core/gimpimage.c:5726 app/core/gimpimage.c:5757
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Ukloni sloj"
 
-#: app/core/gimpimage.c:5740
+#: app/core/gimpimage.c:5751
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Ukloni plutajući izbor"
 
-#: app/core/gimpimage.c:5903
+#: app/core/gimpimage.c:5914
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: app/core/gimpimage.c:5933 app/core/gimpimage.c:5961
+#: app/core/gimpimage.c:5944 app/core/gimpimage.c:5972
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Ukloni kanal"
 
-#: app/core/gimpimage.c:6023
+#: app/core/gimpimage.c:6034
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodaj putanju"
 
-#: app/core/gimpimage.c:6058 app/core/gimpimage.c:6066
+#: app/core/gimpimage.c:6069 app/core/gimpimage.c:6077
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Ukloni putanju"
@@ -16636,22 +16639,22 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Rasporedi objekte"
 
-#: app/core/gimpimage-color-profile.c:121
+#: app/core/gimpimage-color-profile.c:122
 msgid "Enable 'Use sRGB Profile'"
 msgstr ""
 
-#: app/core/gimpimage-color-profile.c:138
+#: app/core/gimpimage-color-profile.c:139
 msgid "Disable 'Use sRGB Profile'"
 msgstr ""
 
-#: app/core/gimpimage-color-profile.c:202
+#: app/core/gimpimage-color-profile.c:203
 #, fuzzy, c-format
 #| msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgid "ICC profile validation failed: Parasite's name is not '%s'"
 msgstr ""
 "Validacija ICC profila nije uspjela: Parazitno ime nije \"icc-profile\""
 
-#: app/core/gimpimage-color-profile.c:217
+#: app/core/gimpimage-color-profile.c:218
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -16659,17 +16662,17 @@ msgstr ""
 "Validacija ICC profila nije uspjela: Parazitni flegovi nisu  (PERSISTENT | "
 "UNDOABLE)"
 
-#: app/core/gimpimage-color-profile.c:276
+#: app/core/gimpimage-color-profile.c:277
 msgid "ICC profile validation failed: "
 msgstr "Validacija ICC profila nije uspjela: "
 
-#: app/core/gimpimage-color-profile.c:278
+#: app/core/gimpimage-color-profile.c:279
 #, fuzzy
 #| msgid "ICC profile validation failed: "
 msgid "Simulation ICC profile validation failed: "
 msgstr "Validacija ICC profila nije uspjela: "
 
-#: app/core/gimpimage-color-profile.c:548
+#: app/core/gimpimage-color-profile.c:549
 #, fuzzy
 #| msgid ""
 #| "ICC profile validation failed: Color profile is not for RGB color space"
@@ -16678,42 +16681,42 @@ msgid ""
 msgstr ""
 "Validacija ICC profila nije uspjela: Profil boja nije za RGB prostor boja"
 
-#: app/core/gimpimage-color-profile.c:558
+#: app/core/gimpimage-color-profile.c:559
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Validacija ICC profila nije uspjela: Profil boja nije za RGB prostor boja"
 
-#: app/core/gimpimage-color-profile.c:617
+#: app/core/gimpimage-color-profile.c:618
 #, fuzzy
 #| msgid "Color Profile"
 msgid "Assigning color profile"
 msgstr "Profil boja"
 
-#: app/core/gimpimage-color-profile.c:618
+#: app/core/gimpimage-color-profile.c:619
 #, fuzzy
 #| msgid "Select Printer Color Profile"
 msgid "Discarding color profile"
 msgstr "Izaberite profil boja za štampač"
 
-#: app/core/gimpimage-color-profile.c:622
+#: app/core/gimpimage-color-profile.c:623
 #, fuzzy
 #| msgid "Color Profile"
 msgid "Assign color profile"
 msgstr "Profil boja"
 
-#: app/core/gimpimage-color-profile.c:623
+#: app/core/gimpimage-color-profile.c:624
 #, fuzzy
 #| msgid "Color Profile"
 msgid "Discard color profile"
 msgstr "Profil boja"
 
-#: app/core/gimpimage-color-profile.c:666
+#: app/core/gimpimage-color-profile.c:667
 #, fuzzy, c-format
 #| msgid "Revert '%s' to '%s'?"
 msgid "Converting from '%s' to '%s'"
 msgstr "Vrati „%s“ na „%s“?"
 
-#: app/core/gimpimage-color-profile.c:671
+#: app/core/gimpimage-color-profile.c:672
 #, fuzzy
 #| msgid "Color Profile"
 msgid "Color profile conversion"
@@ -16769,7 +16772,7 @@ msgstr "Pretvaram u indeksirane boje (korak 2)"
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Pretvaram u indeksirane boje (korak 3)"
 
-#: app/core/gimpimage-convert-precision.c:76
+#: app/core/gimpimage-convert-precision.c:77
 #, fuzzy, c-format
 #| msgid "Convert Image to %s"
 msgctxt "undo-type"
@@ -16777,8 +16780,8 @@ msgid "Convert Image to %s"
 msgstr "Konvertuj Sliku u %s"
 
 #. dithering
-#: app/core/gimpimage-convert-precision.c:198
-#: app/core/gimpimage-convert-precision.c:219
+#: app/core/gimpimage-convert-precision.c:200
+#: app/core/gimpimage-convert-precision.c:221
 #: app/dialogs/convert-indexed-dialog.c:240
 #: app/dialogs/convert-precision-dialog.c:212
 #: app/tools/gimpgradientoptions.c:130
@@ -16901,12 +16904,12 @@ msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Spoji grupu slojeva"
 
-#: app/core/gimpimage-merge.c:586
+#: app/core/gimpimage-merge.c:587
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Spoji vidljive putanje"
 
-#: app/core/gimpimage-merge.c:622
+#: app/core/gimpimage-merge.c:623
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Nema dovoljno vidljivih putanja za spajanje. Mora ih biti najmanje dvije."
@@ -17015,7 +17018,7 @@ msgstr[2] "%d slojeva"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Ne mogu da otvorim prikaz „%s“: %s"
 
-#: app/core/gimpitem.c:2010 app/core/gimpitem.c:2077
+#: app/core/gimpitem.c:2012 app/core/gimpitem.c:2079
 #: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
 #: app/widgets/gimpdrawabletreeview-filters.c:774
 #, fuzzy
@@ -17023,17 +17026,17 @@ msgstr "Ne mogu da otvorim prikaz „%s“: %s"
 msgid "A selected layer's pixels are locked."
 msgstr "Pikseli aktivnog sloja su zaključani."
 
-#: app/core/gimpitem.c:2386
+#: app/core/gimpitem.c:2418
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Priloži parazita"
 
-#: app/core/gimpitem.c:2396
+#: app/core/gimpitem.c:2428
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Prikači parazita predmetu"
 
-#: app/core/gimpitem.c:2447 app/core/gimpitem.c:2454
+#: app/core/gimpitem.c:2479 app/core/gimpitem.c:2486
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Ukloni parazita sa stavke"
@@ -17049,7 +17052,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Usidri plutajući izbor"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1126
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1127
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -17062,83 +17065,83 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Plutajući izbor prebaci u sloj"
 
-#: app/core/gimplayer.c:465
+#: app/core/gimplayer.c:466
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Preimenuj sloj"
 
-#: app/core/gimplayer.c:466
+#: app/core/gimplayer.c:467
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Pomjeri sloj"
 
-#: app/core/gimplayer.c:467
+#: app/core/gimplayer.c:468
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Skaliraj sloj"
 
-#: app/core/gimplayer.c:468
+#: app/core/gimplayer.c:469
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Promijeni dimenziju sloja"
 
-#: app/core/gimplayer.c:469
+#: app/core/gimplayer.c:470
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Obrni sloj"
 
-#: app/core/gimplayer.c:470
+#: app/core/gimplayer.c:471
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Rotiraj sloj"
 
-#: app/core/gimplayer.c:473
+#: app/core/gimplayer.c:474
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Promijeni raspored sloja"
 
-#: app/core/gimplayer.c:474
+#: app/core/gimplayer.c:475
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Podigni sloj"
 
-#: app/core/gimplayer.c:475
+#: app/core/gimplayer.c:476
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Podigni sloj na vrh"
 
-#: app/core/gimplayer.c:476
+#: app/core/gimplayer.c:477
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Spusti sloj"
 
-#: app/core/gimplayer.c:477
+#: app/core/gimplayer.c:478
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Spusti sloj na dno"
 
-#: app/core/gimplayer.c:478
+#: app/core/gimplayer.c:479
 msgid "Layer cannot be raised higher."
 msgstr "Sloj se ne može podići više."
 
-#: app/core/gimplayer.c:479
+#: app/core/gimplayer.c:480
 msgid "Layer cannot be lowered more."
 msgstr "Sloj se ne može spustiti niže."
 
-#: app/core/gimplayer.c:824
+#: app/core/gimplayer.c:825
 #, fuzzy
 #| msgid "Selection Mask"
 msgid "Floating Mask"
 msgstr "Izabrana Maska"
 
-#: app/core/gimplayer.c:826
+#: app/core/gimplayer.c:827
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Flip Channel"
 msgid "Floating Channel"
 msgstr "Obrni kanal"
 
-#: app/core/gimplayer.c:828
+#: app/core/gimplayer.c:829
 #, fuzzy
 #| msgid "Floated Layer"
 msgid "Floating Layer"
@@ -17148,7 +17151,7 @@ msgstr "Plutajući sloj"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:833
+#: app/core/gimplayer.c:834
 #, fuzzy, c-format
 #| msgid "%s (%s)"
 msgid ""
@@ -17156,27 +17159,27 @@ msgid ""
 "(%s)"
 msgstr "%s (%s)"
 
-#: app/core/gimplayer.c:2302
+#: app/core/gimplayer.c:2280
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Ne mogu da dodam masku jer sloj već ima jednu."
 
-#: app/core/gimplayer.c:2314
+#: app/core/gimplayer.c:2292
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Ne mogu da dodam masku sa različitim dimenzijama od izabranog sloja."
 
-#: app/core/gimplayer.c:2320
+#: app/core/gimplayer.c:2298
 #, fuzzy
 #| msgid "Add Layer Mask"
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Dodaj masku za slojeve"
 
-#: app/core/gimplayer.c:2458
+#: app/core/gimplayer.c:2436
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Prenesi alfa na masku"
 
-#: app/core/gimplayer.c:2622
+#: app/core/gimplayer.c:2600
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Apply Layer Mask"
@@ -17184,7 +17187,7 @@ msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Primijeni masku sloja"
 
-#: app/core/gimplayer.c:2623
+#: app/core/gimplayer.c:2601
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Delete Layer Mask"
@@ -17192,7 +17195,7 @@ msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Izbriši masku za slojeve"
 
-#: app/core/gimplayer.c:2733
+#: app/core/gimplayer.c:2711
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Enable Layer Mask"
@@ -17200,7 +17203,7 @@ msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Omogući masku sloja"
 
-#: app/core/gimplayer.c:2734
+#: app/core/gimplayer.c:2712
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Disable Layer Mask"
@@ -17208,7 +17211,7 @@ msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Onemogući masku sloja"
 
-#: app/core/gimplayer.c:2815
+#: app/core/gimplayer.c:2793
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Show Layer Mask"
@@ -17216,35 +17219,35 @@ msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Prikaži masku sloja"
 
-#: app/core/gimplayer.c:2894
+#: app/core/gimplayer.c:2873
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodaj alfa kanal"
 
-#: app/core/gimplayer.c:2924
+#: app/core/gimplayer.c:2904
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Ukloni alfa kanal"
 
-#: app/core/gimplayer.c:2945
+#: app/core/gimplayer.c:2925
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Sloj na veličinu slike"
 
-#: app/core/gimplayer.c:3128
+#: app/core/gimplayer.c:3108
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer opacity"
 msgid "Set layer's blend space"
 msgstr "Postavi neprozirnost sloja"
 
-#: app/core/gimplayer.c:3175
+#: app/core/gimplayer.c:3155
 #, fuzzy
 #| msgid "Set layer or path as active"
 msgid "Set layer's composite space"
 msgstr "Učini sloj ili putanju aktivnom"
 
-#: app/core/gimplayer.c:3222
+#: app/core/gimplayer.c:3202
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer mode"
@@ -20272,7 +20275,7 @@ msgid "Item search"
 msgstr ""
 
 #. Keyboard Shortcuts
-#: app/dialogs/preferences-dialog.c:1911 app/menus/menus.c:652
+#: app/dialogs/preferences-dialog.c:1911 app/menus/menus.c:654
 msgid "Keyboard Shortcuts"
 msgstr "Prečice sa tastature"
 
@@ -21180,7 +21183,7 @@ msgstr "Format statusne linije slike"
 
 #. Input Devices
 #: app/dialogs/preferences-dialog.c:3290 app/dialogs/preferences-dialog.c:3291
-#: app/menus/menus.c:645
+#: app/menus/menus.c:647
 msgid "Input Devices"
 msgstr "Ulazni uređaji"
 
@@ -21824,7 +21827,7 @@ msgstr "Saznajte više"
 #.
 #: app/dialogs/tips-parser.c:187
 msgid "tips-locale:C"
-msgstr "tips-locale:sr"
+msgstr "tips-locale:bs"
 
 #: app/dialogs/user-install-dialog.c:86
 msgid "GIMP User Installation"
@@ -25280,61 +25283,61 @@ msgstr "Putanje nisu nađene u baferu"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Nisam uspio da uvezem putanje iz „%s“: %s"
 
-#: app/path/gimpvectorlayer.c:198 app/tools/gimppathtool.c:867
+#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:867
 #, fuzzy
 #| msgid "Text Layer"
 msgid "Vector Layer"
 msgstr "Sloj za tekst"
 
-#: app/path/gimpvectorlayer.c:211
+#: app/path/gimpvectorlayer.c:213
 #, fuzzy
 #| msgid "Rename Text Layer"
 msgid "Rename Vector Layer"
 msgstr "Promjeni naziv tekstualnog sloja"
 
-#: app/path/gimpvectorlayer.c:212
+#: app/path/gimpvectorlayer.c:214
 #, fuzzy
 #| msgid "Move Text Layer"
 msgid "Move Vector Layer"
 msgstr "Premjesti tekstualni sloj"
 
-#: app/path/gimpvectorlayer.c:213
+#: app/path/gimpvectorlayer.c:215
 #, fuzzy
 #| msgid "Scale Text Layer"
 msgid "Scale Vector Layer"
 msgstr "Povećaj ili smanji tekstualni sloj"
 
-#: app/path/gimpvectorlayer.c:214
+#: app/path/gimpvectorlayer.c:216
 #, fuzzy
 #| msgid "Resize Text Layer"
 msgid "Resize Vector Layer"
 msgstr "Promjeni veličinu tekstualnog sloja"
 
-#: app/path/gimpvectorlayer.c:215
+#: app/path/gimpvectorlayer.c:217
 #, fuzzy
 #| msgid "Flip Text Layer"
 msgid "Flip Vector Layer"
 msgstr "Okreni tekstualni sloj"
 
-#: app/path/gimpvectorlayer.c:216
+#: app/path/gimpvectorlayer.c:218
 #, fuzzy
 #| msgid "Rotate Text Layer"
 msgid "Rotate Vector Layer"
 msgstr "Rotiraj tekstualni sloj"
 
-#: app/path/gimpvectorlayer.c:217
+#: app/path/gimpvectorlayer.c:219
 #, fuzzy
 #| msgid "Transform Text Layer"
 msgid "Transform Vector Layer"
 msgstr "Transformiši tekstualni sloj"
 
-#: app/path/gimpvectorlayer.c:784
+#: app/path/gimpvectorlayer.c:786
 #, fuzzy
 #| msgid "Discard Text Information"
 msgid "Discard Vector Information"
 msgstr "Zanemari podatke o tekstu"
 
-#: app/path/gimpvectorlayer.c:877
+#: app/path/gimpvectorlayer.c:879
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Change metadata"
@@ -26795,7 +26798,7 @@ msgstr "Transformiši tekstualni sloj"
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zbog nedostatka fontova, nije moguća upotreba teksta."
 
-#: app/text/gimptextlayer.c:1188
+#: app/text/gimptextlayer.c:1189
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -32292,11 +32295,11 @@ msgid "Configure this tab"
 msgstr "Podesi ovaj tab"
 
 #. Auto button
-#: app/widgets/gimpdockwindow.c:397
+#: app/widgets/gimpdockwindow.c:404
 msgid "Auto"
 msgstr "Auto"
 
-#: app/widgets/gimpdockwindow.c:408
+#: app/widgets/gimpdockwindow.c:415
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr "Kada je omogućen, dijalog automatski prati sliku na kojoj radite."
@@ -33940,28 +33943,28 @@ msgid ""
 "error: %s."
 msgstr ""
 
-#: app/xcf/xcf-load.c:1505
+#: app/xcf/xcf-load.c:1501
 #, fuzzy
 #| msgctxt "item-set"
 #| msgid "All linked layers"
 msgid "Linked Layers"
 msgstr "Svi vezani slojevi"
 
-#: app/xcf/xcf-load.c:1515
+#: app/xcf/xcf-load.c:1511
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Shrink Channel"
 msgid "Linked Channels"
 msgstr "Suzi kanal"
 
-#: app/xcf/xcf-load.c:1540
+#: app/xcf/xcf-load.c:1536
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Raise Path"
 msgid "Linked Paths"
 msgstr "Podigni putanju"
 
-#: app/xcf/xcf-load.c:1588
+#: app/xcf/xcf-load.c:1584
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -33969,7 +33972,7 @@ msgstr ""
 "Ova XCF datoteka je korumpirana! Učitao sam najviše što sam mogao, ali je "
 "nepotpuna."
 
-#: app/xcf/xcf-load.c:1615
+#: app/xcf/xcf-load.c:1611
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -33977,7 +33980,7 @@ msgstr ""
 "Ova XCF datoteka je nepotpuna! Nisam mogao spasiti čak niti jedan djelimični "
 "podatak slike iz nje."
 
-#: app/xcf/xcf-load.c:1833
+#: app/xcf/xcf-load.c:1829
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -33987,21 +33990,21 @@ msgstr ""
 "nije ispravno čuvala indeksirane mape boja.\n"
 "Mijenjam mapu sivih boja."
 
-#: app/xcf/xcf-load.c:2664
+#: app/xcf/xcf-load.c:2660
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
 "to a raster layer."
 msgstr ""
 
-#: app/xcf/xcf-load.c:2684
+#: app/xcf/xcf-load.c:2680
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
 "is downgraded to a raster layer."
 msgstr ""
 
-#: app/xcf/xcf-load.c:3416
+#: app/xcf/xcf-load.c:3411
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -34010,7 +34013,7 @@ msgid ""
 "developers."
 msgstr ""
 
-#: app/xcf/xcf-load.c:4358
+#: app/xcf/xcf-load.c:4353
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
