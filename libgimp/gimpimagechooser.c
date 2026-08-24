@@ -331,7 +331,7 @@ gimp_image_chooser_new (const gchar *title,
 {
   GtkWidget *chooser;
 
-  g_return_val_if_fail (image == NULL, NULL);
+  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
 
   chooser = g_object_new (GIMP_TYPE_IMAGE_CHOOSER,
                           "title", title,
