@@ -60,7 +60,6 @@ static gboolean menurc_deleted = FALSE;
 
 #ifdef PLATFORM_OSX
 static Gimp    *unique_gimp        = NULL;
-static gboolean help_menu_added    = FALSE;
 static gboolean window_menu_added  = FALSE;
 #endif
 
@@ -668,12 +667,12 @@ menus_quartz_app_menu (Gimp *gimp)
     {
       /* Help */
       /* fix native search bar not appearing on non-Enligsh locales */
-      if ((! help_menu_added && [menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Help")]]) ||
+      if (([menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Help")]]) ||
           [[menu_item title] isEqualToString:@"Help"])
         {
           if ([menu_item hasSubmenu])
             [NSApp setHelpMenu:[menu_item submenu]];
-          help_menu_added = TRUE;
+          /* do NOT check if the help menu was set, always set due to GTK */
           break;
         }
 
