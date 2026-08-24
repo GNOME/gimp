@@ -49,8 +49,6 @@
 #include "windows-menu.h"
 
 
-/* macOS provide native native windows list (see app/menus.c) so we hide gimp/duplicated one */
-#ifndef PLATFORM_OSX
 static void      windows_menu_display_add                (GimpContainer     *container,
                                                           GimpDisplay       *display,
                                                           GimpUIManager     *manager);
@@ -64,6 +62,10 @@ static void      windows_menu_display_reorder            (GimpContainer     *con
                                                           GimpUIManager     *manager);
 static void      windows_menu_image_notify               (GimpDisplay       *display,
                                                           const GParamSpec  *unused,
+                                                          GimpUIManager     *manager);
+#ifdef PLATFORM_OSX
+static void      windows_menu_single_window_mode_notify  (GimpDisplayConfig *config,
+                                                          const GParamSpec  *pspec,
                                                           GimpUIManager     *manager);
 #endif
 static void      windows_menu_dock_window_added          (GimpDialogFactory *factory,
@@ -92,8 +94,6 @@ windows_menu_setup (GimpUIManager *manager,
   g_object_set_data (G_OBJECT (manager), "image-menu-ui-path",
                      (gpointer) ui_path);
 
-/* macOS provide native native windows list (see app/menus.c) so we hide gimp/duplicated one */
-#ifndef PLATFORM_OSX
   g_signal_connect_object (manager->gimp->displays, "add",
                            G_CALLBACK (windows_menu_display_add),
                            manager, 0);
@@ -104,6 +104,14 @@ windows_menu_setup (GimpUIManager *manager,
                            G_CALLBACK (windows_menu_display_reorder),
                            manager, 0);
 
+#ifdef PLATFORM_OSX
+  /* macOS provide native native windows list (see app/menus.c) so we
+     hide gimp/duplicated one on multi window mode */
+  g_signal_connect_object (manager->gimp->config, "notify::single-window-mode",
+                           G_CALLBACK (windows_menu_single_window_mode_notify),
+                           manager, 0);
+#endif
+
   for (list = gimp_get_display_iter (manager->gimp);
        list;
        list = g_list_next (list))
@@ -112,7 +120,6 @@ windows_menu_setup (GimpUIManager *manager,
 
       windows_menu_display_add (manager->gimp->displays, display, manager);
     }
-#endif
 
   g_signal_connect_object (gimp_dialog_factory_get_singleton (), "dock-window-added",
                            G_CALLBACK (windows_menu_dock_window_added),
@@ -153,8 +160,6 @@ windows_menu_setup (GimpUIManager *manager,
 
 /*  private functions  */
 
-/* macOS provide native native windows list (see app/menus.c) so we hide gimp/duplicated one */
-#ifndef PLATFORM_OSX
 static void
 windows_menu_display_add (GimpContainer *container,
                           GimpDisplay   *display,
@@ -213,6 +218,11 @@ windows_menu_image_notify (GimpDisplay      *display,
 {
   windows_menu_display_remove (manager->gimp->displays, display, manager);
 
+#ifdef PLATFORM_OSX
+  if (! GIMP_GUI_CONFIG (manager->gimp->config)->single_window_mode)
+    return;
+#endif
+
   if (gimp_display_get_image (display))
     {
       gchar *action_name;
@@ -224,7 +234,25 @@ windows_menu_image_notify (GimpDisplay      *display,
       g_free (action_name);
     }
 }
-#endif /* !PLATFORM_OSX */
+
+#ifdef PLATFORM_OSX
+static void
+windows_menu_single_window_mode_notify (GimpDisplayConfig *config,
+                                        const GParamSpec  *pspec,
+                                        GimpUIManager     *manager)
+{
+  GList *list;
+
+  for (list = gimp_get_display_iter (manager->gimp);
+       list;
+       list = g_list_next (list))
+    {
+      GimpDisplay *display = list->data;
+
+      windows_menu_image_notify (display, NULL, manager);
+    }
+}
+#endif
 
 static void
 windows_menu_dock_window_added (GimpDialogFactory *factory,
