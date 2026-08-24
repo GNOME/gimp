@@ -49,6 +49,8 @@
 #include "windows-menu.h"
 
 
+/* macOS provide native native windows list (see app/menus.c) so we hide gimp/duplicated one */
+#ifndef PLATFORM_OSX
 static void      windows_menu_display_add                (GimpContainer     *container,
                                                           GimpDisplay       *display,
                                                           GimpUIManager     *manager);
@@ -63,6 +65,7 @@ static void      windows_menu_display_reorder            (GimpContainer     *con
 static void      windows_menu_image_notify               (GimpDisplay       *display,
                                                           const GParamSpec  *unused,
                                                           GimpUIManager     *manager);
+#endif
 static void      windows_menu_dock_window_added          (GimpDialogFactory *factory,
                                                           GimpDockWindow    *dock_window,
                                                           GimpUIManager     *manager);
@@ -89,6 +92,8 @@ windows_menu_setup (GimpUIManager *manager,
   g_object_set_data (G_OBJECT (manager), "image-menu-ui-path",
                      (gpointer) ui_path);
 
+/* macOS provide native native windows list (see app/menus.c) so we hide gimp/duplicated one */
+#ifndef PLATFORM_OSX
   g_signal_connect_object (manager->gimp->displays, "add",
                            G_CALLBACK (windows_menu_display_add),
                            manager, 0);
@@ -107,6 +112,7 @@ windows_menu_setup (GimpUIManager *manager,
 
       windows_menu_display_add (manager->gimp->displays, display, manager);
     }
+#endif
 
   g_signal_connect_object (gimp_dialog_factory_get_singleton (), "dock-window-added",
                            G_CALLBACK (windows_menu_dock_window_added),
@@ -147,6 +153,8 @@ windows_menu_setup (GimpUIManager *manager,
 
 /*  private functions  */
 
+/* macOS provide native native windows list (see app/menus.c) so we hide gimp/duplicated one */
+#ifndef PLATFORM_OSX
 static void
 windows_menu_display_add (GimpContainer *container,
                           GimpDisplay   *display,
@@ -216,6 +224,7 @@ windows_menu_image_notify (GimpDisplay      *display,
       g_free (action_name);
     }
 }
+#endif /* !PLATFORM_OSX */
 
 static void
 windows_menu_dock_window_added (GimpDialogFactory *factory,

@@ -59,7 +59,9 @@
 static gboolean menurc_deleted = FALSE;
 
 #ifdef PLATFORM_OSX
-static Gimp    *unique_gimp    = NULL;
+static Gimp    *unique_gimp        = NULL;
+static gboolean help_menu_added    = FALSE;
+static gboolean window_menu_added  = FALSE;
 #endif
 
 
@@ -661,15 +663,28 @@ menus_quartz_app_menu (Gimp *gimp)
   [item setTarget:[GimpappMenuHandler class]];
   [item setAction:@selector (gimpQuit:)];
 
-  /* Help */
+  /* Help and Windows */
   for (NSMenuItem *menu_item in [main_menu itemArray])
     {
+      /* Help */
       /* fix native search bar not appearing on non-Enligsh locales */
-      if (([menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Help")]]) ||
+      if ((! help_menu_added && [menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Help")]]) ||
           [[menu_item title] isEqualToString:@"Help"])
         {
           if ([menu_item hasSubmenu])
             [NSApp setHelpMenu:[menu_item submenu]];
+          help_menu_added = TRUE;
+          break;
+        }
+
+      /* Windows */
+       /* fix native windows list not appearing on dock. See: #428 */
+      if ((! window_menu_added && [menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Windows")]]) ||
+          [[menu_item title] isEqualToString:@"Windows"])
+        {
+          if ([menu_item hasSubmenu])
+            [NSApp setWindowsMenu:[menu_item submenu]];
+          window_menu_added = TRUE;
           break;
         }
     }
