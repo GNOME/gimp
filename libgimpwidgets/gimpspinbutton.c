@@ -100,6 +100,22 @@ gimp_spin_button_class_init (GimpSpinButtonClass *klass)
   widget_class->focus_out_event = gimp_spin_button_focus_out;
 
   spin_button_class->input      = gimp_spin_button_input;
+
+#ifdef PLATFORM_OSX
+  /* ignore Ctrl+A/C/X/V like GtkEntry. See: #12193 */
+  {
+    GtkBindingSet *set = gtk_binding_set_by_class (widget_class);
+
+    gtk_binding_entry_skip (set, GDK_KEY_a, GDK_CONTROL_MASK);
+    gtk_binding_entry_skip (set, GDK_KEY_c, GDK_CONTROL_MASK);
+    gtk_binding_entry_skip (set, GDK_KEY_x, GDK_CONTROL_MASK);
+    gtk_binding_entry_skip (set, GDK_KEY_v, GDK_CONTROL_MASK);
+    gtk_binding_entry_skip (set, GDK_KEY_A, GDK_CONTROL_MASK);
+    gtk_binding_entry_skip (set, GDK_KEY_C, GDK_CONTROL_MASK);
+    gtk_binding_entry_skip (set, GDK_KEY_X, GDK_CONTROL_MASK);
+    gtk_binding_entry_skip (set, GDK_KEY_V, GDK_CONTROL_MASK);
+  }
+#endif
 }
 
 static void
@@ -160,6 +176,36 @@ static gboolean
 gimp_spin_button_key_press (GtkWidget   *widget,
                             GdkEventKey *event)
 {
+#ifdef PLATFORM_OSX
+  /* map Command+A/C/X/V like GtkEntry. See: #12193 */
+  if ((event->state & GDK_MOD2_MASK) != 0 &&
+      (event->state & GDK_MOD1_MASK) == 0 &&
+      GTK_IS_EDITABLE (widget))
+    {
+      switch (gdk_keyval_to_lower (event->keyval))
+        {
+        case GDK_KEY_a:
+          gtk_editable_select_region (GTK_EDITABLE (widget), 0, -1);
+          return TRUE;
+
+        case GDK_KEY_c:
+          gtk_editable_copy_clipboard (GTK_EDITABLE (widget));
+          return TRUE;
+
+        case GDK_KEY_x:
+          gtk_editable_cut_clipboard (GTK_EDITABLE (widget));
+          return TRUE;
+
+        case GDK_KEY_v:
+          gtk_editable_paste_clipboard (GTK_EDITABLE (widget));
+          return TRUE;
+
+        default:
+          break;
+        }
+    }
+#endif
+
   switch (event->keyval)
     {
       case GDK_KEY_Return:
