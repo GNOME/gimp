@@ -64,19 +64,19 @@ typedef struct _GimpSpinButtonPrivate
 /*  local function prototypes  */
 
 static gboolean   gimp_spin_button_scroll    (GtkWidget      *widget,
-                                                GdkEventScroll *event);
+                                              GdkEventScroll *event);
 static gboolean   gimp_spin_button_key_press (GtkWidget      *widget,
-                                                GdkEventKey    *event);
+                                              GdkEventKey    *event);
 static gboolean   gimp_spin_button_focus_in  (GtkWidget      *widget,
-                                                GdkEventFocus  *event);
+                                              GdkEventFocus  *event);
 static gboolean   gimp_spin_button_focus_out (GtkWidget      *widget,
-                                                GdkEventFocus  *event);
+                                              GdkEventFocus  *event);
 
 static gint       gimp_spin_button_input     (GtkSpinButton  *spin_button,
-                                                gdouble        *new_value);
+                                              gdouble        *new_value);
 
 static void       gimp_spin_button_changed   (GtkEditable    *editable,
-                                                gpointer        data);
+                                              gpointer        data);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpSpinButton, gimp_spin_button,
@@ -100,22 +100,6 @@ gimp_spin_button_class_init (GimpSpinButtonClass *klass)
   widget_class->focus_out_event = gimp_spin_button_focus_out;
 
   spin_button_class->input      = gimp_spin_button_input;
-
-#ifdef PLATFORM_OSX
-  /* ignore Ctrl+A/C/X/V like GtkEntry. See: #12193 */
-  {
-    GtkBindingSet *set = gtk_binding_set_by_class (widget_class);
-
-    gtk_binding_entry_skip (set, GDK_KEY_a, GDK_CONTROL_MASK);
-    gtk_binding_entry_skip (set, GDK_KEY_c, GDK_CONTROL_MASK);
-    gtk_binding_entry_skip (set, GDK_KEY_x, GDK_CONTROL_MASK);
-    gtk_binding_entry_skip (set, GDK_KEY_v, GDK_CONTROL_MASK);
-    gtk_binding_entry_skip (set, GDK_KEY_A, GDK_CONTROL_MASK);
-    gtk_binding_entry_skip (set, GDK_KEY_C, GDK_CONTROL_MASK);
-    gtk_binding_entry_skip (set, GDK_KEY_X, GDK_CONTROL_MASK);
-    gtk_binding_entry_skip (set, GDK_KEY_V, GDK_CONTROL_MASK);
-  }
-#endif
 }
 
 static void
@@ -176,73 +160,43 @@ static gboolean
 gimp_spin_button_key_press (GtkWidget   *widget,
                             GdkEventKey *event)
 {
-#ifdef PLATFORM_OSX
-  /* map Command+A/C/X/V like GtkEntry. See: #12193 */
-  if ((event->state & GDK_MOD2_MASK) != 0 &&
-      (event->state & GDK_MOD1_MASK) == 0 &&
-      GTK_IS_EDITABLE (widget))
-    {
-      switch (gdk_keyval_to_lower (event->keyval))
-        {
-        case GDK_KEY_a:
-          gtk_editable_select_region (GTK_EDITABLE (widget), 0, -1);
-          return TRUE;
-
-        case GDK_KEY_c:
-          gtk_editable_copy_clipboard (GTK_EDITABLE (widget));
-          return TRUE;
-
-        case GDK_KEY_x:
-          gtk_editable_cut_clipboard (GTK_EDITABLE (widget));
-          return TRUE;
-
-        case GDK_KEY_v:
-          gtk_editable_paste_clipboard (GTK_EDITABLE (widget));
-          return TRUE;
-
-        default:
-          break;
-        }
-    }
-#endif
-
   switch (event->keyval)
     {
-    case GDK_KEY_Return:
-    case GDK_KEY_KP_Enter:
-    case GDK_KEY_ISO_Enter:
-    case GDK_KEY_Escape:
-      {
-        GtkEntry      *entry       = GTK_ENTRY (widget);
-        GtkSpinButton *spin_button = GTK_SPIN_BUTTON (widget);
-        gchar         *text;
-        gboolean       changed;
+      case GDK_KEY_Return:
+      case GDK_KEY_KP_Enter:
+      case GDK_KEY_ISO_Enter:
+      case GDK_KEY_Escape:
+        {
+          GtkEntry      *entry       = GTK_ENTRY (widget);
+          GtkSpinButton *spin_button = GTK_SPIN_BUTTON (widget);
+          gchar         *text;
+          gboolean       changed;
 
-        text = g_strdup (gtk_entry_get_text (entry));
+          text = g_strdup (gtk_entry_get_text (entry));
 
-        if (event->keyval == GDK_KEY_Escape)
-          {
-            gtk_spin_button_set_value (
-              spin_button,
-              gtk_spin_button_get_value (spin_button));
-          }
-        else
-          {
-            gtk_spin_button_update (spin_button);
-          }
+          if (event->keyval == GDK_KEY_Escape)
+            {
+              gtk_spin_button_set_value (
+                spin_button,
+                gtk_spin_button_get_value (spin_button));
+            }
+          else
+            {
+              gtk_spin_button_update (spin_button);
+            }
 
-        changed = strcmp (gtk_entry_get_text (entry), text);
+          changed = strcmp (gtk_entry_get_text (entry), text);
 
-        g_free (text);
+          g_free (text);
 
-        if (changed)
-          {
-            gtk_editable_set_position (GTK_EDITABLE (widget), -1);
+          if (changed)
+            {
+              gtk_editable_set_position (GTK_EDITABLE (widget), -1);
 
-            return TRUE;
-          }
-      }
-      break;
+              return TRUE;
+            }
+        }
+        break;
     }
 
   return GTK_WIDGET_CLASS (parent_class)->key_press_event (widget, event);
@@ -429,7 +383,7 @@ gimp_spin_button_new_with_range (gdouble min,
     }
 
   gtk_spin_button_configure   (GTK_SPIN_BUTTON (spin_button),
-                             adjustment, step, digits);
+                               adjustment, step, digits);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin_button), TRUE);
 
   return spin_button;
