@@ -1207,6 +1207,8 @@ gimp_drawable_load_exit (GimpLoadState  *state,
                   (gimp_item_get_id (GIMP_ITEM (drawable)) != id &&
                    ! gimp_id_table_reserve (state->gimp->item_table, (gint) id)))
                 id = 0;
+
+              g_free (id_str);
             }
           else
             {

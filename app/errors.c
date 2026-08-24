@@ -207,6 +207,8 @@ errors_recovered (Gimp *gimp)
                   gimp_id_table_reserve (gimp->image_table, (gint) id);
                   g_hash_table_insert (recovering, GINT_TO_POINTER ((gint) id), g_object_ref (subdir));
                 }
+
+              g_free (id_str);
             }
           /* TODO: should we delete invalid cache folders or other broken data? */
 
