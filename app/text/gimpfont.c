@@ -194,6 +194,9 @@ G_DEFINE_TYPE_WITH_CODE (GimpFont, gimp_font, GIMP_TYPE_DATA,
 
 #define parent_class gimp_font_parent_class
 
+static GimpSavableInterface *parent_savable_iface = NULL;
+
+
 static void
 gimp_font_config_iface_init (GimpConfigInterface *iface)
 {
@@ -204,6 +207,8 @@ gimp_font_config_iface_init (GimpConfigInterface *iface)
 static void
 gimp_font_savable_iface_init (GimpSavableInterface *iface)
 {
+  parent_savable_iface = g_type_interface_peek_parent (iface);
+
   iface->tag        = "font";
   iface->save       = gimp_font_save;
   iface->load_enter = gimp_font_load_enter;
@@ -498,19 +503,26 @@ gimp_font_save (GimpSavable   *savable,
 {
   GimpFont *font = GIMP_FONT (savable);
 
-  gimp_savable_print_element_start (state, "font", NULL);
-  gimp_savable_print_element (state, "hash", "%s", gimp_font_get_hash (font), NULL);
-  gimp_savable_print_element (state, "full-name", "%s", font->fullname, NULL);
-  gimp_savable_print_element (state, "family", "%s", font->family, NULL);
-  gimp_savable_print_element (state, "style", "%s", font->style, NULL);
-  gimp_savable_print_element (state, "psname", "%s", font->psname, NULL);
+  if (gimp_data_is_internal (GIMP_DATA (font)))
+    {
+      parent_savable_iface->save (savable, state);
+    }
+  else
+    {
+      gimp_savable_print_element_start (state, "font", NULL);
+      gimp_savable_print_element (state, "hash", "%s", gimp_font_get_hash (font), NULL);
+      gimp_savable_print_element (state, "full-name", "%s", font->fullname, NULL);
+      gimp_savable_print_element (state, "family", "%s", font->family, NULL);
+      gimp_savable_print_element (state, "style", "%s", font->style, NULL);
+      gimp_savable_print_element (state, "psname", "%s", font->psname, NULL);
 
-  gimp_savable_print_element (state, "index", "%d", font->index, NULL);
-  gimp_savable_print_element (state, "weight", "%d", font->weight, NULL);
-  gimp_savable_print_element (state, "slant", "%d", font->slant, NULL);
-  gimp_savable_print_element (state, "width", "%d", font->width, NULL);
-  gimp_savable_print_element (state, "version", "%d", font->fontversion, NULL);
-  gimp_savable_print_element_end (state, "font");
+      gimp_savable_print_element (state, "index", "%d", font->index, NULL);
+      gimp_savable_print_element (state, "weight", "%d", font->weight, NULL);
+      gimp_savable_print_element (state, "slant", "%d", font->slant, NULL);
+      gimp_savable_print_element (state, "width", "%d", font->width, NULL);
+      gimp_savable_print_element (state, "version", "%d", font->fontversion, NULL);
+      gimp_savable_print_element_end (state, "font");
+    }
 }
 
 static gboolean
@@ -554,6 +566,13 @@ gimp_font_load_enter (GimpLoadState  *state,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
   gimp_savable_load_add_simple_handler (state, "version", G_TYPE_INT,
                                         NULL, NULL, NULL, FALSE, FALSE, NULL);
+
+  /* For internal fonts, calling the parent's load_enter() will find the
+   * corresponding data. Otherwise, it'll be a no-op and the real font
+   * will be retrieved in load_exit().
+   */
+  parent_savable_iface->load_enter (state, attribute_names, attribute_values,
+                                    user_data, error);
   return TRUE;
 }
 
@@ -576,23 +595,25 @@ gimp_font_load_exit (GimpLoadState  *state,
   gint         width    = -1;
   gint         version  = -1;
 
-  gimp_savable_load_get_values (state,
-                                "hash",      &hash,
-                                "full-name", &fullname,
-                                "family",    &family,
-                                "style",     &style,
-                                "psname",    &psname,
-                                "index",     &index,
-                                "weight",    &weight,
-                                "slant",     &slant,
-                                "width",     &width,
-                                "version",   &version,
-                                NULL);
-  font = gimp_font_find_font (hash, fullname, family, style, psname,
-                              index, weight, slant, width, version);
+  if (gimp_savable_load_get_values (state,
+                                    "hash",      &hash,
+                                    "full-name", &fullname,
+                                    "family",    &family,
+                                    "style",     &style,
+                                    "psname",    &psname,
+                                    "index",     &index,
+                                    "weight",    &weight,
+                                    "slant",     &slant,
+                                    "width",     &width,
+                                    "version",   &version,
+                                    NULL))
+    {
+      font = gimp_font_find_font (hash, fullname, family, style, psname,
+                                  index, weight, slant, width, version);
 
-  gimp_savable_load_store_value (state, "font", g_object_ref (font), g_object_unref);
-  gimp_savable_load_bubble_up (state, "font");
+      gimp_savable_load_store_value (state, "font", g_object_ref (font), g_object_unref);
+      gimp_savable_load_bubble_up (state, "font");
+    }
 
   return TRUE;
 }
@@ -1433,19 +1454,26 @@ gimp_font_get_sample_string (PangoContext         *context,
 static const gchar *
 gimp_font_get_hash (GimpFont *font)
 {
+  GimpFontFactory *font_factory  = GIMP_FONT_CLASS (g_type_class_peek (GIMP_TYPE_FONT))->font_factory;
+  PangoContext    *pango_context = gimp_font_factory_get_pango_context (font_factory);
+
   g_return_val_if_fail (font, NULL);
+  /* Note: pango_context may be NULL in particular when fonts are not
+   * fully loaded yet, or more simply when starting GIMP with
+   * --no-fonts CLI option. In such a case, the font will be internal
+   * anyway and this function should not be called.
+   */
+  g_return_val_if_fail (PANGO_IS_CONTEXT (pango_context), NULL);
 
   /* Computing the hash is expensive, so it's only done in a few case, such as
    * when serializing, when a similar fonts at deserialization looks like it
    * could be a good identity candidate.
    */
-  if (font->hash == NULL)
+  if (font->hash == NULL && pango_context != NULL)
     {
-      PangoFontDescription *pfd           = pango_font_description_from_string (font->lookup_name);
-      GimpFontFactory      *font_factory  = GIMP_FONT_CLASS (g_type_class_peek (GIMP_TYPE_FONT))->font_factory;
-      PangoContext         *pango_context = gimp_font_factory_get_pango_context (font_factory);
-      PangoFcFont          *pango_font    = PANGO_FC_FONT (pango_context_load_font (pango_context, pfd));
-      GChecksum            *checksum      = g_checksum_new (G_CHECKSUM_SHA256);
+      PangoFontDescription *pfd        = pango_font_description_from_string (font->lookup_name);
+      PangoFcFont          *pango_font = PANGO_FC_FONT (pango_context_load_font (pango_context, pfd));
+      GChecksum            *checksum   = g_checksum_new (G_CHECKSUM_SHA256);
       gchar                *file;
       hb_blob_t            *hb_blob;
       guint                 length;
