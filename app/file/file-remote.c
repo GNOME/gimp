@@ -25,6 +25,10 @@
 
 #include <string.h>
 
+#ifdef PLATFORM_OSX
+#import <Foundation/Foundation.h>
+#endif
+
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -73,6 +77,10 @@ static void       file_remote_mount_file_cancel  (GimpProgress    *progress,
 
 static GFile    * file_remote_get_temp_file      (Gimp            *gimp,
                                                   GFile           *file);
+#ifdef PLATFORM_OSX
+static void       file_remote_download_cancel    (GimpProgress         *progress,
+                                                  NSURLSessionDataTask *task);
+#endif
 static gboolean   file_remote_copy_file          (Gimp            *gimp,
                                                   GFile           *src_file,
                                                   GFile           *dest_file,
@@ -269,6 +277,15 @@ file_remote_get_temp_file (Gimp  *gimp,
   return temp_file;
 }
 
+#ifdef PLATFORM_OSX
+static void
+file_remote_download_cancel (GimpProgress         *progress,
+                             NSURLSessionDataTask *task)
+{
+  [task cancel];
+}
+#endif
+
 static gboolean
 file_remote_copy_file (Gimp            *gimp,
                        GFile           *src_file,
@@ -280,6 +297,83 @@ file_remote_copy_file (Gimp            *gimp,
   RemoteProgress  remote_progress = { 0, };
   gboolean        success;
   GError         *my_error = NULL;
+
+#ifdef PLATFORM_OSX
+  /* GIO has no working http(s) GVfs backend on macOS, which is the
+     same issue that used to break the update check (see: app/gimp-update.c) */
+  if (mode == DOWNLOAD)
+    {
+      gchar *scheme = g_file_get_uri_scheme (src_file);
+
+      if (scheme && (! strcmp (scheme, "http") || ! strcmp (scheme, "https")))
+        {
+          gchar                *uri;
+          NSURL                *request;
+          NSURLSession         *session;
+
+          NSURLSessionDataTask *task;
+          GMainLoop            *main_loop  = g_main_loop_new (NULL, FALSE);
+          __block gboolean      success    = FALSE;
+          __block GError       *real_error = NULL;
+
+          if (progress)
+            gimp_progress_start (progress, TRUE, _("Opening remote file"));
+
+          uri = g_file_get_uri (src_file);
+
+          request = [NSURL URLWithString: @(uri)];
+          g_free (uri);
+
+          session = [NSURLSession sessionWithConfiguration: [NSURLSessionConfiguration defaultSessionConfiguration]];
+          /* completionHandler is called on a background thread */
+          task = [session dataTaskWithURL:request completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error)
+            {
+              if (error)
+                {
+                  /* if the user cancelled the download, fail silently like on Linux */
+                  if (! ([[error domain] isEqualToString: NSURLErrorDomain] &&
+                         [error code] == NSURLErrorCancelled))
+                    g_set_error_literal (&real_error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                         [[error localizedDescription] UTF8String]);
+                }
+              else
+                {
+                  gchar *dest_path = g_file_get_path (dest_file);
+                  success = g_file_set_contents (dest_path, [data bytes], [data length], &real_error);
+                  g_free (dest_path);
+                }
+
+              g_main_loop_quit (main_loop);
+            }];
+          if (progress)
+            g_signal_connect (progress, "cancel",
+                              G_CALLBACK (file_remote_download_cancel),
+                              task);
+          [task resume];
+          g_main_loop_run (main_loop);
+          g_main_loop_unref (main_loop);
+          if (progress)
+            g_signal_handlers_disconnect_by_func (progress,
+                                                  file_remote_download_cancel,
+                                                  task);
+
+          if (progress)
+            {
+              gimp_progress_set_value (progress, 1.0);
+              gimp_progress_end (progress);
+            }
+
+          if (real_error)
+            g_propagate_error (error, real_error);
+
+          g_free (scheme);
+
+          return success;
+        }
+
+      g_free (scheme);
+    }
+#endif
 
   remote_progress.mode     = mode;
   remote_progress.progress = progress;
