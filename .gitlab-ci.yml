@@ -366,10 +366,6 @@ gimp-debian-nonreloc:
 .debian:
   extends: .debian-nonreloc
   rules:
-    #Developers (on GNOME/gimp namespace) can create multi-arch .appimage
-    #Non developers (e.g. on MRs), however, can create x64-only .appimage
-    - if: '$RUNNER == "aarch64" && $CI_PROJECT_NAMESPACE != "GNOME"'
-      when: never
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:AppImage.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:AppImage.*/'
       interruptible: true
     - if: '$GIMP_CI_APPIMAGE != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_APPIMAGE.*/'
@@ -485,10 +481,6 @@ gimp-flatpak:
 .snap:
   extends: .default
   rules:
-    #Developers (on GNOME/gimp namespace) can create multi-arch .snap
-    #Non developers (e.g. on MRs), however, can create x64-only .snap
-    - if: '$RUNNER == "aarch64" && $CI_PROJECT_NAMESPACE != "GNOME"'
-      when: never
     - if: '$CI_MERGE_REQUEST_LABELS =~ /.*Package:Snap.*/ || $CI_MERGE_REQUEST_DESCRIPTION =~ /.*Package:Snap.*/'
       interruptible: true
     - if: '$GIMP_CI_SNAP != null || "$[[ inputs.distribution_pipeline ]]" =~ /.*GIMP_CI_SNAP.*/'
