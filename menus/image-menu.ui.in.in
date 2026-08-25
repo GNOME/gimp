@@ -140,7 +140,10 @@
           <attribute name="hidden-when">macos-menubar</attribute>
           <attribute name="action">app.dialogs-keyboard-shortcuts</attribute>
         </item>
-        <item><attribute name="action">app.dialogs-module-dialog</attribute></item>
+        <item>
+          <attribute name="hidden-when">macos-menubar</attribute>
+          <attribute name="action">app.dialogs-module-dialog</attribute>
+        </item>
       </section>
     </submenu>
 
