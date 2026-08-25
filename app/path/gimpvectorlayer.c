@@ -305,8 +305,22 @@ static void
 gimp_vector_layer_set_rasterized (GimpRasterizable *rasterizable,
                                   gboolean          rasterized)
 {
+  GimpVectorLayer *layer = GIMP_VECTOR_LAYER (rasterizable);
+
   if (! rasterized)
-    gimp_vector_layer_render (GIMP_VECTOR_LAYER (rasterizable));
+    {
+      gimp_vector_layer_render (layer);
+
+      g_signal_connect_object (layer->options, "notify",
+                               G_CALLBACK (gimp_vector_layer_changed_options),
+                               layer, G_CONNECT_SWAPPED);
+    }
+  else
+    {
+      g_signal_handlers_disconnect_by_func (layer->options,
+                                            G_CALLBACK (gimp_vector_layer_changed_options),
+                                            layer);
+    }
 }
 
 static void
@@ -1093,6 +1107,7 @@ gimp_vector_layer_changed_options (GimpVectorLayer *layer)
 
   if (layer->options && ! layer->options->path)
     gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (layer), TRUE);
-  else if (gimp_item_is_attached (item))
+  else if (gimp_item_is_attached (item) &&
+           ! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer)))
     gimp_vector_layer_refresh (layer);
 }
