@@ -83,6 +83,12 @@
 #include "gimp-intl.h"
 #include "gimp-log.h"
 
+#ifdef PLATFORM_OSX
+/* macOS virtual keycode for the physical "grave/section" key (kVK_ANSI_Grave),
+   stable across keyboard layouts even when it is a dead key (e.g. Brazilian ABNT2) */
+#define GIMP_MACOS_KVK_ANSI_GRAVE 50
+#endif
+
 
 /*  local function prototypes  */
 
@@ -123,6 +129,11 @@ static void       gimp_display_shell_released                 (GimpDisplayShell 
 
 static gboolean   gimp_display_shell_tab_pressed              (GimpDisplayShell  *shell,
                                                                const GdkEventKey *event);
+
+#ifdef PLATFORM_OSX
+static gboolean   gimp_display_shell_cmd_pressed              (GimpDisplayShell  *shell,
+                                                               const GdkEventKey *event);
+#endif
 
 static void       gimp_display_shell_update_focus             (GimpDisplayShell  *shell,
                                                                gboolean           focus_in,
@@ -321,6 +332,16 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
           {
             return gimp_display_shell_tab_pressed (shell, kevent);
           }
+
+#ifdef PLATFORM_OSX
+        /* on macOS, Cmd+` is used instead of Alt+Tab. See: #428 */
+        if (kevent->hardware_keycode == GIMP_MACOS_KVK_ANSI_GRAVE &&
+            (kevent->state & gimp_get_primary_accelerator_mask ()) ==
+            gimp_get_primary_accelerator_mask ())
+          {
+            return gimp_display_shell_cmd_pressed (shell, kevent);
+          }
+#endif
       }
       break;
 
@@ -1059,6 +1080,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               /* Make sure the picked layer is reset. */
               g_clear_weak_pointer (&shell->picked_layer);
 
+#ifdef PLATFORM_OSX
+            /* on macOS, Cmd+` is used instead of Alt+Tab. See: #428 */
+            if (kevent->hardware_keycode == GIMP_MACOS_KVK_ANSI_GRAVE &&
+                (kevent->state & gimp_get_primary_accelerator_mask ()) ==
+                gimp_get_primary_accelerator_mask ())
+              {
+                return_val = gimp_display_shell_cmd_pressed (shell, kevent);
+              }
+            else
+#endif
             switch (kevent->keyval)
               {
               case GDK_KEY_Left:
@@ -2148,6 +2179,7 @@ gimp_display_shell_tab_pressed (GimpDisplayShell  *shell,
           return TRUE;
         }
     }
+#ifndef PLATFORM_OSX
   else if (kevent->state & GDK_MOD1_MASK)
     {
       if (image)
@@ -2163,6 +2195,13 @@ gimp_display_shell_tab_pressed (GimpDisplayShell  *shell,
           return TRUE;
         }
     }
+#else
+  else if (kevent->state & GDK_MOD1_MASK)
+    {
+      /* ensure this codepath never runs on macOS. See: #428 */
+      return FALSE;
+    }
+#endif
   else
     {
       gimp_ui_manager_activate_action (manager, "windows",
@@ -2173,6 +2212,28 @@ gimp_display_shell_tab_pressed (GimpDisplayShell  *shell,
 
   return FALSE;
 }
+
+#ifdef PLATFORM_OSX
+static gboolean
+gimp_display_shell_cmd_pressed (GimpDisplayShell  *shell,
+                                const GdkEventKey *kevent)
+{
+  GimpUIManager *manager = menus_get_image_manager_singleton (shell->display->gimp);
+  GimpImage     *image   = gimp_display_get_image (shell->display);
+
+  if (image && ! gimp_image_is_empty (image))
+    {
+      if (kevent->state & GDK_SHIFT_MASK)
+        gimp_ui_manager_activate_action (manager, "windows",
+                                         "windows-show-display-previous");
+      else
+        gimp_ui_manager_activate_action (manager, "windows",
+                                         "windows-show-display-next");
+    }
+
+  return TRUE;
+}
+#endif
 
 static void
 gimp_display_shell_update_focus (GimpDisplayShell *shell,
