@@ -114,6 +114,7 @@ static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
 
 static gchar     * about_dialog_debug_text      (void);
+static gchar     * about_dialog_markdown_text   (gchar        **lines);
 static void        about_dialog_add_debug_info  (GtkBox        *vbox);
 static void        about_dialog_copy_debug_info (GtkButton     *button,
                                                  gpointer       data);
@@ -1189,6 +1190,41 @@ about_dialog_info_grid (gchar **lines)
   return grid;
 }
 
+/* markdown version of the grid lines for the clipboard. caller frees. */
+static gchar *
+about_dialog_markdown_text (gchar **lines)
+{
+  GString *md = g_string_new (NULL);
+  gint     i;
+
+  for (i = 0; lines[i]; i++)
+    {
+      gchar *sep;
+
+      if (! *lines[i])
+        continue;
+
+      sep = strchr (lines[i], ':');
+      if (sep)
+        {
+          gchar       *k = g_strndup (lines[i], sep - lines[i] + 1);
+          const gchar *v = sep + 1;
+
+          while (*v == ' ')
+            v++;
+
+          g_string_append_printf (md, "- **%s** %s\n", k, v);
+          g_free (k);
+        }
+      else
+        {
+          g_string_append_printf (md, "- %s\n", lines[i]);
+        }
+    }
+
+  return g_string_free (md, FALSE);
+}
+
 /* once the pointer leaves the Copy button, put its tooltip back to the
  * "Copy ..." wording so a fresh hover doesn't still read "Copied ..."
  */
@@ -1218,6 +1254,7 @@ about_dialog_add_debug_info (GtkBox *dialog_vbox)
   GList      *children;
   GList      *iter;
   gchar      *text;
+  gchar      *markdown;
   gchar     **lines;
   gint        pos = -1;
   gint        i;
@@ -1238,8 +1275,9 @@ about_dialog_add_debug_info (GtkBox *dialog_vbox)
   if (! GTK_IS_BOX (page))
     return;
 
-  text  = about_dialog_debug_text ();
-  lines = g_strsplit (text, "\n", -1);
+  text     = about_dialog_debug_text ();
+  lines    = g_strsplit (text, "\n", -1);
+  markdown = about_dialog_markdown_text (lines);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_widget_set_halign (vbox, GTK_ALIGN_CENTER);
@@ -1256,8 +1294,7 @@ about_dialog_add_debug_info (GtkBox *dialog_vbox)
 
   button = gtk_button_new_with_mnemonic (_("_Copy"));
   gtk_widget_set_tooltip_text (button, _("Copy Version Information"));
-  /* stash the copy blob on the button - it outlives the grid's own copy */
-  g_object_set_data_full (G_OBJECT (button), "debug-text", text, g_free);
+  g_object_set_data_full (G_OBJECT (button), "debug-text", markdown, g_free);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (about_dialog_copy_debug_info), NULL);
   g_signal_connect (button, "leave-notify-event",
@@ -1273,6 +1310,7 @@ about_dialog_add_debug_info (GtkBox *dialog_vbox)
                       about_dialog_info_grid (lines), FALSE, FALSE, 0);
 
   g_strfreev (lines);
+  g_free (text);
 
   /* drop it right before the copyright line, so it sits between the website
    * link and the copyright
