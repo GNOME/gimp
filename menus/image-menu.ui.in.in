@@ -910,7 +910,10 @@
           </section>
         </submenu>
         <item><attribute name="action">app.dialogs-tips</attribute></item>
-        <item><attribute name="action">app.dialogs-welcome</attribute></item>
+        <item>
+          <attribute name="hidden-when">macos-menubar</attribute>
+          <attribute name="action">app.dialogs-welcome</attribute>
+        </item>
       </section>
       <section>
         <item><attribute name="action">app.dialogs-action-search</attribute></item>
@@ -926,7 +929,10 @@
           <item><attribute name="action">app.help-online-bug-tracker</attribute></item>
           <item><attribute name="action">app.help-online-developer-web-site</attribute></item>
         </submenu>
-        <item><attribute name="action">app.dialogs-about</attribute></item>
+        <item>
+          <attribute name="hidden-when">macos-menubar</attribute>
+          <attribute name="action">app.dialogs-about</attribute>
+        </item>
       </section>
     </submenu>
   </menu>

@@ -227,7 +227,10 @@ editor_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_menu_label (procedure, _("U_nits"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_TOOL_MEASURE);
+#ifndef PLATFORM_OSX
+      /* on macOS, this is already available from the native menu. See: app/menus/menus.c */
       gimp_procedure_add_menu_path (procedure, "<Image>/Edit/[Preferences]");
+#endif
 
       gimp_procedure_set_documentation (procedure,
                                         _("Create or alter units used in GIMP"),
