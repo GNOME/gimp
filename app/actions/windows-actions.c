@@ -97,16 +97,25 @@ static void  windows_actions_single_window_mode_notify (GimpDisplayConfig *confi
  * gtk_accelerator_valid() returns FALSE for GDK_tab.
  */
 
+#ifndef PLATFORM_OSX
+#define WINDOWS_SHOW_DISPLAY_NEXT_ACCEL     "<alt>Tab"
+#define WINDOWS_SHOW_DISPLAY_PREVIOUS_ACCEL "<alt><shift>Tab"
+#else
+/* on macOS, Cmd+` is used. See: #428 and app/display/gimpdisplayshell-tool-events.c */
+#define WINDOWS_SHOW_DISPLAY_NEXT_ACCEL     "<primary>grave"
+#define WINDOWS_SHOW_DISPLAY_PREVIOUS_ACCEL "<primary><shift>grave"
+#endif
+
 static const GimpActionEntry windows_actions[] =
 {
   { "windows-show-display-next", NULL,
-    NC_("windows-action", "Next Image"), NULL, { "<alt>Tab", "Forward", NULL },
+    NC_("windows-action", "Next Image"), NULL, { WINDOWS_SHOW_DISPLAY_NEXT_ACCEL, "Forward", NULL },
     NC_("windows-action", "Switch to the next image"),
     windows_show_display_next_cmd_callback,
     NULL },
 
   { "windows-show-display-previous", NULL,
-    NC_("windows-action", "Previous Image"), NULL, { "<alt><shift>Tab", "Back", NULL },
+    NC_("windows-action", "Previous Image"), NULL, { WINDOWS_SHOW_DISPLAY_PREVIOUS_ACCEL, "Back", NULL },
     NC_("windows-action", "Switch to the previous image"),
     windows_show_display_previous_cmd_callback,
     NULL },
