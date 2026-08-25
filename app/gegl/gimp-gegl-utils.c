@@ -411,7 +411,7 @@ gimp_gegl_buffer_dup (GeglBuffer   *buffer,
 
   if (path)
     /* Trick to delete the on-disk file when destroying the buffer. */
-    g_object_set_data_full (G_OBJECT (buffer),
+    g_object_set_data_full (G_OBJECT (new_buffer),
                             "gimp-gegl-buffer-drawable-destroy", g_strdup (path),
                             (GDestroyNotify) gimp_gegl_buffer_drawable_unlink);
 
