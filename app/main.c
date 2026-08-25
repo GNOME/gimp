@@ -379,7 +379,12 @@ gimp_macos_setenv (const char * progname)
   /* these need to be set regardless of whether GIMP is relocatable or not*/
   if (g_getenv ("HOME") != NULL)
     {
-      tmp = g_strdup_printf ("%s/Library/Application Support/GIMP/%s/cache",
+      /* Use standard ~/Library/Caches/GIMP on macOS, not a subdirectory of the
+         config directory like in the past (~/Library/Application Support/GIMP).
+         Various libraries create their cache directory very early at startup,
+         before GIMP gets a chance to check if the config directory already exists,
+         so various dirs like e.g. "brushes" get skipped. See: #4958. */
+      tmp = g_strdup_printf ("%s/Library/Caches/GIMP/%s",
                              g_getenv ("HOME"), GIMP_APP_VERSION);
       g_setenv ("XDG_CACHE_HOME", tmp, TRUE);
       g_free (tmp);
