@@ -309,17 +309,11 @@ gimp_data_factories_wait (Gimp *gimp)
   GList    *excluded;
   gboolean  loaded = TRUE;
 
-  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
-#define GIMPTYPE_TO_POINTER(t) ((gpointer) (guintptr) (t))
   /* Curves are the only data type without a factory. */
   excluded = g_list_prepend (NULL, GIMPTYPE_TO_POINTER (GIMP_TYPE_CURVE));
-#undef GIMPTYPE_TO_POINTER
 
   data_types = gimp_get_type_children (GIMP_TYPE_DATA, NULL, excluded);
   g_list_free (excluded);
-
-  /* TODO: when bumping GLib >= 2.80, use GPOINTER_TO_TYPE instead. */
-#define GIMPPOINTER_TO_TYPE(p) ((GType) (guintptr) (p))
 
   for (GList *iter = data_types; iter; iter = iter->next)
     {
@@ -340,8 +334,6 @@ gimp_data_factories_wait (Gimp *gimp)
             }
         }
     }
-
-#undef GIMPPOINTER_TO_TYPE
 
   g_list_free (data_types);
 

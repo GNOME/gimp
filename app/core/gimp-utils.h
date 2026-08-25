@@ -36,6 +36,13 @@
 #define MAX4(a,b,c,d) MAX (MAX ((a), (b)), MAX ((c), (d)))
 
 
+/* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER and
+ * GPOINTER_TO_TYPE directly.
+ */
+#define GIMPTYPE_TO_POINTER(t) ((gpointer) (guintptr) (t))
+#define GIMPPOINTER_TO_TYPE(p) ((GType) (guintptr) (p))
+
+
 gint         gimp_get_pid                          (void);
 guint64      gimp_get_physical_memory_size         (void);
 gchar      * gimp_get_default_language             (const gchar     *category);
