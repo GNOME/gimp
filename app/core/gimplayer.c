@@ -1749,11 +1749,7 @@ gimp_layer_load_enter (GimpLoadState  *state,
   GimpLayer *layer;
   GType      real_type;
 
-  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
-#define GIMPPOINTER_TO_TYPE(p) ((GType) (guintptr) (p))
   real_type = user_data ? GIMPPOINTER_TO_TYPE (user_data) : GIMP_TYPE_LAYER;
-#undef GIMPPOINTER_TO_TYPE
-
   if (real_type == GIMP_TYPE_LAYER)
     {
       while (*attribute_names)

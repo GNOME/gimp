@@ -31,6 +31,7 @@
 
 #include "config/gimpxmlparser.h"
 
+#include "gimp-utils.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
 #include "gimpitem.h"
@@ -223,8 +224,6 @@ gimp_savable_load (GType          savable_type,
   klass = g_type_class_ref (savable_type);
   iface = g_type_interface_peek (klass, GIMP_TYPE_SAVABLE);
 
-  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
-#define GIMPTYPE_TO_POINTER(t) ((gpointer) (guintptr) (t))
   if (iface->tag)
     /* For all class handlers, use the leaf type as user data. */
     gimp_savable_load_add_handlers (state, iface->tag,
@@ -232,7 +231,6 @@ gimp_savable_load (GType          savable_type,
                                     iface->load_exit,
                                     GIMPTYPE_TO_POINTER (savable_type),
                                     NULL);
-#undef GIMPTYPE_TO_POINTER
 
   g_type_class_unref (klass);
 }
@@ -651,11 +649,8 @@ gimp_savable_load_add_simple_handler (GimpLoadState          *state,
       attribute_type = va_arg (args, GType);
       g_return_if_fail (attribute_type != G_TYPE_NONE);
 
-      /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
-#define GIMPTYPE_TO_POINTER(t) ((gpointer) (guintptr) (t))
       g_hash_table_insert (data->attributes, g_strdup (attribute),
                            GIMPTYPE_TO_POINTER (attribute_type));
-#undef GIMPTYPE_TO_POINTER
 
       attribute = va_arg (args, gchar *);
     }

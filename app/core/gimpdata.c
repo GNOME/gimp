@@ -28,6 +28,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimp-memsize.h"
 #include "gimpdata.h"
 #include "gimpdatafactory.h"
@@ -604,10 +605,7 @@ gimp_data_load_enter (GimpLoadState  *state,
       GObjectClass         *klass;
       GimpSavableInterface *iface;
 
-      /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
-#define GIMPPOINTER_TO_TYPE(p) ((GType) (guintptr) (p))
       real_type = user_data ? GIMPPOINTER_TO_TYPE (user_data) : GIMP_TYPE_DATA;
-#undef GIMPPOINTER_TO_TYPE
       g_return_val_if_fail (real_type != GIMP_TYPE_DATA &&
                             g_type_is_a (real_type, GIMP_TYPE_DATA), FALSE);
       klass     = g_type_class_ref (real_type);

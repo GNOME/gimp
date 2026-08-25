@@ -36,6 +36,7 @@
 #include "path/gimpvectorlayeroptions.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimp-palettes.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-fill.h"
@@ -391,12 +392,8 @@ gimp_fill_options_load_exit (GimpLoadState  *state,
 
   g_return_val_if_fail (GIMP_IS_VECTOR_LAYER (gimp_savable_load_peek_active_object (state)), FALSE);
 
-  layer = GIMP_VECTOR_LAYER (gimp_savable_load_peek_active_object (state));
-
-  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
-#define GIMPPOINTER_TO_TYPE(p) ((GType) (guintptr) (p))
+  layer     = GIMP_VECTOR_LAYER (gimp_savable_load_peek_active_object (state));
   real_type = user_data ? GIMPPOINTER_TO_TYPE (user_data) : GIMP_TYPE_FILL_OPTIONS;
-#undef GIMPPOINTER_TO_TYPE
 
   if (real_type == GIMP_TYPE_FILL_OPTIONS)
     options = layer->options->fill_options;

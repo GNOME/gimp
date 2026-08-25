@@ -1754,9 +1754,6 @@ gimp_get_type_children (GType  type,
 
   dtypes = g_type_children (type, &n_types);
 
-  /* TODO: when bumping GLib >= 2.80, use GTYPE_TO_POINTER instead. */
-#define GIMPTYPE_TO_POINTER(t) ((gpointer) (guintptr) (t))
-
   for (gint i = 0; i < n_types; i++)
     {
       if (g_list_find (excluded, GIMPTYPE_TO_POINTER (dtypes[i])))
@@ -1765,8 +1762,6 @@ gimp_get_type_children (GType  type,
       types = gimp_get_type_children (dtypes[i], types, excluded);
       types = g_list_prepend (types, GIMPTYPE_TO_POINTER (dtypes[i]));
     }
-
-#undef GIMPTYPE_TO_POINTER
 
   g_free (dtypes);
 
