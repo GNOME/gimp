@@ -224,12 +224,12 @@ static void       gimp_drawable_format_changed     (GimpDrawable      *drawable)
 static void       gimp_drawable_alpha_changed      (GimpDrawable      *drawable);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
-                         G_ADD_PRIVATE (GimpDrawable)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
-                                                gimp_color_managed_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_pickable_iface_init))
+G_DEFINE_ABSTRACT_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
+                                  G_ADD_PRIVATE (GimpDrawable)
+                                  G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
+                                                         gimp_color_managed_iface_init)
+                                  G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
+                                                         gimp_pickable_iface_init))
 
 #define parent_class gimp_drawable_parent_class
 

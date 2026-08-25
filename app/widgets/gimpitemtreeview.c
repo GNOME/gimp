@@ -35,6 +35,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -265,6 +266,8 @@ static gboolean gimp_item_tree_view_move_cursor                (GimpItemTreeView
 static void     gimp_item_tree_view_blink_item_column          (GimpItemTreeView *view,
                                                                 GimpItem         *item,
                                                                 gint              column);
+
+static GList  * gimp_item_tree_view_get_allowed_types          (GType             gtype);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
@@ -1510,6 +1513,7 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
   GList                 *dup_children           = NULL;
   GList                 *iter;
   GimpImage             *src_image              = NULL;
+  GList                 *item_types;
   GType                  src_viewable_type      = G_TYPE_NONE;
   gint                   dest_index             = -1;
 
@@ -1517,6 +1521,7 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
 
   dropped_viewables = g_list_copy (src_viewables);
 
+  item_types      =  gimp_item_tree_view_get_allowed_types (GIMP_TYPE_ITEM);
   item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (item_view);
 
   for (iter = dropped_viewables; iter; iter = iter->next)
@@ -1528,18 +1533,19 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
        */
       if (src_viewable_type == G_TYPE_NONE)
         {
-          src_viewable_type = G_TYPE_FROM_INSTANCE (src_viewable);
+          for (GList *iter2 = item_types; iter2; iter2 = iter2->next)
+            {
+              GType item_type = GIMPPOINTER_TO_TYPE (iter2->data);
+              if (g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable), item_type))
+                {
+                  src_viewable_type = item_type;
+                  break;
+                }
+            }
+          g_return_if_fail (src_viewable_type != G_TYPE_NONE);
         }
       else
         {
-          if (g_type_is_a (src_viewable_type,
-                           G_TYPE_FROM_INSTANCE (src_viewable)))
-            /* It is possible to move different types of a same
-             * parenting hierarchy, for instance GimpLayer and
-             * GimpGroupLayer.
-             */
-            src_viewable_type = G_TYPE_FROM_INSTANCE (src_viewable);
-
           g_return_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (src_viewable),
                                          src_viewable_type));
         }
@@ -1549,6 +1555,8 @@ gimp_item_tree_view_drop_viewables (GimpContainerTreeView   *tree_view,
       else
         g_return_if_fail (src_image == gimp_item_get_image (GIMP_ITEM (iter->data)));
     }
+
+  g_list_free (item_types);
 
   /* What does it mean when an item and a children of this item are
    * dropped together? Does it mean we want to copy the tree structure
@@ -2470,4 +2478,28 @@ gimp_item_tree_view_blink_item_column (GimpItemTreeView *view,
   gimp_widget_blink_rect (GTK_WIDGET (GIMP_CONTAINER_TREE_VIEW (view)->view), &rect);
 
   gtk_tree_path_free (path);
+}
+
+/* This will list the allowed base GType-s for a tree view.
+ * Call it with GIMP_TYPE_ITEM as argument and let it do the recursion
+ * for you.
+ */
+static GList *
+gimp_item_tree_view_get_allowed_types (GType gtype)
+{
+  GList *types = NULL;
+  GType *item_types;
+  guint  n_item_types;
+
+  item_types = g_type_children (gtype, &n_item_types);
+  for (gint i = 0; i < n_item_types; i++)
+    if (G_TYPE_IS_ABSTRACT (item_types[i]))
+      types = g_list_concat (types,
+                             gimp_item_tree_view_get_allowed_types (item_types[i]));
+    else
+      types = g_list_prepend (types, GIMPTYPE_TO_POINTER (item_types[i]));
+
+  g_free (item_types);
+
+  return types;
 }
