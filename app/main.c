@@ -365,20 +365,35 @@ gimp_windows_setenv ()
 }
 #endif
 
-#if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
+#if defined(__APPLE__)
 static void
 gimp_macos_setenv (const char * progname)
 {
+  gchar *tmp;
+#if defined(ENABLE_RELOCATABLE_RESOURCES)
+  gchar *resolved_path;
+  /* on some OSX installations open file limit is 256 and GIMP needs more */
+  struct rlimit limit;
+#endif
+
+  /* these need to be set regardless of whether GIMP is relocatable or not*/
+  if (g_getenv ("HOME") != NULL)
+    {
+      tmp = g_strdup_printf ("%s/Library/Application Support/GIMP/%s/cache",
+                             g_getenv ("HOME"), GIMP_APP_VERSION);
+      g_setenv ("XDG_CACHE_HOME", tmp, TRUE);
+      g_free (tmp);
+    }
+
+  g_setenv ("GTK_IM_MODULE", "quartz", TRUE);
+
+#if defined(ENABLE_RELOCATABLE_RESOURCES)
   /* helper to set environment variables for GIMP to be relocatable.
    * Due to the changes on macOS 10.15, it is not recommended to set it in
    * a shell wrapper inside Contents/MacOS (like AppImage's AppRun) anymore.
    * LSEnvironment on Info.plist, limited to bundle scope, would not be enough.
    * That way, we make sure our python is called instead of system one etc
    */
-  gchar  *resolved_path;
-  /* on some OSX installations open file limit is 256 and GIMP needs more */
-  struct  rlimit limit;
-
   limit.rlim_cur = 10000;
   limit.rlim_max = 10000;
   setrlimit (RLIMIT_NOFILE, &limit);
@@ -386,7 +401,6 @@ gimp_macos_setenv (const char * progname)
   if (resolved_path && ! g_getenv ("GIMP_NO_WRAPPER"))
     {
       gchar   *path;
-      gchar   *tmp;
       gchar   *bin_dir;
       gchar   *lib_dir;
       gchar   *share_dir;
@@ -453,13 +467,6 @@ gimp_macos_setenv (const char * progname)
         tmp = g_strdup_printf ("%s", share_dir);
       g_setenv ("XDG_DATA_DIRS", tmp, TRUE);
       g_free (tmp);
-      if (g_getenv ("HOME") != NULL)
-        {
-          tmp = g_strdup_printf ("%s/Library/Application Support/GIMP/%s/cache",
-                                 g_getenv ("HOME"), GIMP_APP_VERSION);
-          g_setenv ("XDG_CACHE_HOME", tmp, TRUE);
-          g_free (tmp);
-        }
 
       /* Bare minimum to run GTK apps */
       tmp = g_strdup_printf ("%s/gio/modules", lib_dir);
@@ -473,9 +480,6 @@ gimp_macos_setenv (const char * progname)
       g_free (tmp);
       tmp = g_strdup_printf ("%s/gtk-3.0/3.0.0/immodules.cache", lib_dir);
       g_setenv ("GTK_IM_MODULE_FILE", tmp, TRUE);
-      g_free (tmp);
-      tmp = g_strdup ("quartz");
-      g_setenv ("GTK_IM_MODULE", tmp, TRUE);
       g_free (tmp);
 
       /* Other needed runtime paths (related to features) */
@@ -506,8 +510,9 @@ gimp_macos_setenv (const char * progname)
       g_free (etc_dir);
     }
   g_free (resolved_path);
+#endif /* ENABLE_RELOCATABLE_RESOURCES */
 }
-#endif
+#endif /* __APPLE__ */
 
 /* gimp_early_configuration () is executed as soon as we can read
  * the "gimprc" files, but before any library initialization takes
@@ -626,7 +631,8 @@ main (int    argc,
   gimp_attach_console_window ();
 #endif
 
-#if defined(ENABLE_RELOCATABLE_RESOURCES) && defined(__APPLE__)
+#if defined(__APPLE__)
+#if defined(ENABLE_RELOCATABLE_RESOURCES)
   /* remove MacOS session identifier from the command line args */
   newargc = 0;
   for (gint i = 0; i < argc; i++)
@@ -643,6 +649,7 @@ main (int    argc,
       argv[newargc] = NULL; /* glib expects NULL terminated array */
       argc = newargc;
     }
+#endif
 
   gimp_macos_setenv (argv[0]);
 #endif
