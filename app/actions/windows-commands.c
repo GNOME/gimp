@@ -123,9 +123,10 @@ windows_show_display_next_cmd_callback (GimpAction *action,
                                         GVariant   *value,
                                         gpointer    data)
 {
-  GimpDisplay *display;
-  Gimp        *gimp;
-  gint         index;
+  GimpDisplay      *display;
+  Gimp             *gimp;
+  gint              index;
+  GimpDisplayShell *shell;
   return_if_no_display (display, data);
   return_if_no_gimp (gimp, data);
 
@@ -138,7 +139,11 @@ windows_show_display_next_cmd_callback (GimpAction *action,
 
   display = GIMP_DISPLAY (gimp_container_get_child_by_index (gimp->displays,
                                                              index));
-  gimp_display_shell_present (gimp_display_get_shell (display));
+  shell = gimp_display_get_shell (display);
+  gimp_display_shell_present (shell);
+
+  /* fix cycling shortcut not working due to nothing focused to catch the key press */
+  gtk_widget_grab_focus (shell->canvas);
 }
 
 void
@@ -146,9 +151,10 @@ windows_show_display_previous_cmd_callback (GimpAction *action,
                                             GVariant   *value,
                                             gpointer    data)
 {
-  GimpDisplay *display;
-  Gimp        *gimp;
-  gint         index;
+  GimpDisplay      *display;
+  Gimp             *gimp;
+  gint              index;
+  GimpDisplayShell *shell;
   return_if_no_display (display, data);
   return_if_no_gimp (gimp, data);
 
@@ -161,7 +167,11 @@ windows_show_display_previous_cmd_callback (GimpAction *action,
 
   display = GIMP_DISPLAY (gimp_container_get_child_by_index (gimp->displays,
                                                              index));
-  gimp_display_shell_present (gimp_display_get_shell (display));
+  shell = gimp_display_get_shell (display);
+  gimp_display_shell_present (shell);
+
+  /* fix cycling shortcut not working due to nothing focused to catch the key press */
+  gtk_widget_grab_focus (shell->canvas);
 }
 
 void
