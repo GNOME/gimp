@@ -592,6 +592,20 @@ menus_get_image_manager_singleton (Gimp *gimp)
   gimp_ui_manager_activate_action (ui_manager, "dialogs", "dialogs-keyboard-shortcuts");
 }
 
++ (void) gimpShowModules:(id) sender
+{
+  GimpUIManager *ui_manager = menus_get_image_manager_singleton (unique_gimp);
+
+  gimp_ui_manager_activate_action (ui_manager, "dialogs", "dialogs-module-dialog");
+}
+
++ (void) gimpShowUnits:(id) sender
+{
+  GimpUIManager *ui_manager = menus_get_image_manager_singleton (unique_gimp);
+
+  gimp_ui_manager_activate_action (ui_manager, "plug-in", "plug-in-unit-editor");
+}
+
 + (void) gimpQuit:(id) sender
 {
   GimpUIManager *ui_manager = menus_get_image_manager_singleton (unique_gimp);
@@ -655,6 +669,20 @@ menus_quartz_app_menu (Gimp *gimp)
                              keyEquivalent:@""];
   [item setTarget:[GimpappMenuHandler class]];
   [app_menu insertItem:item atIndex:5];
+
+  /* Modules */
+  item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Modules")]
+                                    action:@selector (gimpShowModules:)
+                             keyEquivalent:@""];
+  [item setTarget:[GimpappMenuHandler class]];
+  [app_menu insertItem:item atIndex:6];
+
+  /* Units */
+  item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Units")]
+                                    action:@selector (gimpShowUnits:)
+                             keyEquivalent:@""];
+  [item setTarget:[GimpappMenuHandler class]];
+  [app_menu insertItem:item atIndex:7];
 
   /* Quit */
   last_index = [app_menu numberOfItems] - 1;
