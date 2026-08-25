@@ -346,7 +346,6 @@ load_image (GFile        *file,
 
       if (nPlanes <= 0)
         {
-          g_message (_("Invalid ILBM header value."));
           return image;
         }
 
