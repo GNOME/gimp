@@ -253,9 +253,6 @@ static gboolean      gimp_drawable_enter_filters      (GimpLoadState   *state,
                                                        gpointer         user_data,
                                                        GError         **error);
 
-static gboolean      gimp_drawable_flush_cache_now    (GimpDrawable    *drawable);
-static void          gimp_drawable_flush_cache        (GimpDrawable    *drawable);
-
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
                          G_ADD_PRIVATE (GimpDrawable)
@@ -435,10 +432,6 @@ gimp_drawable_finalize (GObject *object)
 
   while (drawable->private->paint_count)
     gimp_drawable_end_paint (drawable);
-
-  if (drawable->private->cache_flush_idle)
-    g_source_remove (drawable->private->cache_flush_idle);
-  drawable->private->cache_flush_idle = 0;
 
   g_clear_object (&drawable->private->buffer);
   g_clear_object (&drawable->private->format_profile);
@@ -1024,8 +1017,10 @@ gimp_drawable_save (GimpSavable   *savable,
           gchar *filename;
 
           if (drawable->private->cache_outdated)
-            gimp_drawable_flush_cache_now (drawable);
-
+            {
+              gegl_buffer_flush (GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable));
+              drawable->private->cache_outdated = FALSE;
+            }
           filename = g_path_get_basename (path);
           gimp_savable_print_element (state, "buffer", NULL, NULL, "file", "%s", filename, NULL);
           g_free (filename);
@@ -1256,7 +1251,6 @@ gimp_drawable_real_update (GimpDrawable *drawable,
                            gint          height)
 {
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
-  gimp_drawable_flush_cache (drawable);
 }
 
 static void
@@ -1434,7 +1428,7 @@ gimp_drawable_real_set_buffer (GimpDrawable        *drawable,
                               G_CALLBACK (gimp_drawable_buffer_changed),
                               drawable);
 
-  gimp_drawable_flush_cache (drawable);
+  drawable->private->cache_outdated = TRUE;
 }
 
 static void
@@ -1442,7 +1436,7 @@ gimp_drawable_buffer_changed (GeglBuffer          *buffer,
                               const GeglRectangle *rect,
                               GimpDrawable        *drawable)
 {
-  gimp_drawable_flush_cache (drawable);
+  drawable->private->cache_outdated = TRUE;
 }
 
 static GeglRectangle
@@ -1580,39 +1574,6 @@ gimp_drawable_enter_filters (GimpLoadState  *state,
 
   return TRUE;
 }
-
-static gboolean
-gimp_drawable_flush_cache_now (GimpDrawable *drawable)
-{
-  if (g_main_current_source () == NULL)
-    {
-      /* When called directly (not in idle function), make sure we
-       * remove any running source for flushing later (now useless).
-       */
-      if (drawable->private->cache_flush_idle)
-        g_source_remove (drawable->private->cache_flush_idle);
-    }
-  drawable->private->cache_flush_idle = 0;
-  gegl_buffer_flush (GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable));
-  drawable->private->cache_outdated = FALSE;
-
-  return G_SOURCE_REMOVE;
-}
-
-static void
-gimp_drawable_flush_cache (GimpDrawable *drawable)
-{
-  drawable->private->cache_outdated = TRUE;
-  if (drawable->private->cache_flush_idle == 0)
-    {
-      guint idle_id;
-      idle_id = g_idle_add_full (G_PRIORITY_LOW,
-                                 (GSourceFunc) gimp_drawable_flush_cache_now,
-                                 drawable, NULL);
-      drawable->private->cache_flush_idle = idle_id;
-    }
-}
-
 
 /*  public functions  */
 
