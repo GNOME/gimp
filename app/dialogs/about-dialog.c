@@ -1034,7 +1034,7 @@ about_dialog_debug_text (void)
   else if (strstr (type_name, "X11"))
     display_sys = "X11";
   else if (strstr (type_name, "Win32"))
-    display_sys = "Windows (GDI)";
+    display_sys = "GDI";
   else if (strstr (type_name, "Quartz"))
     display_sys = "Quartz";
   else if (strstr (type_name, "Broadway"))
