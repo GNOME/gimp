@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_WIN32
+#include <windows.h>
 #include <gdk/gdkwin32.h>
 #endif
 
@@ -87,7 +88,82 @@ static void        gimp_osx_display_callback       (AXObserverRef      observer,
 }
 #endif
 
-#if !defined(GDK_WINDOWING_WIN32) && !defined(GDK_WINDOWING_QUARTZ)
+#ifdef GDK_WINDOWING_WIN32
+static DWORD plugin_pid = 0;
+static DWORD gimp_pid   = 0;
+
+static void
+gimp_win32_set_visible (gboolean visible)
+{
+  GList *plugin_win = gtk_window_list_toplevels ();
+  GList *list;
+
+  for (list = plugin_win; list; list = g_list_next (list))
+    {
+      GtkWidget *win = list->data;
+      HWND       hwnd_window;
+
+      if (! gtk_widget_get_mapped (win))
+        continue;
+
+      hwnd_window = (HWND) gdk_win32_window_get_handle (gtk_widget_get_window (GTK_WIDGET (win)));
+
+      if (visible)
+        {
+          /* gimp main window is active, show dialog on top always */
+          ShowWindow (hwnd_window, SW_SHOWNOACTIVATE);
+          SetWindowPos (hwnd_window, HWND_TOPMOST, 0, 0, 0, 0,
+                        SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+        }
+      else
+        {
+          /* gimp main window is not active, hide dialog */
+          ShowWindow (hwnd_window, SW_HIDE);
+        }
+    }
+
+  g_list_free (plugin_win);
+}
+
+static void
+gimp_win32_display_callback (HWINEVENTHOOK hook,
+                             DWORD         event,
+                             HWND          hwnd,
+                             LONG          id_object,
+                             LONG          id_child,
+                             DWORD         event_thread,
+                             DWORD         event_time)
+{
+  /* SetWinEventHook() gives no per-window refcon like AXObserverAddNotification() does */
+  DWORD pid = 0;
+
+  if (id_object != OBJID_WINDOW || hwnd == NULL)
+    return;
+
+  GetWindowThreadProcessId (hwnd, &pid);
+
+  switch (event)
+    {
+    case EVENT_SYSTEM_MINIMIZESTART:
+      if (pid == gimp_pid)
+        gimp_win32_set_visible (FALSE);
+      break;
+    case EVENT_SYSTEM_MINIMIZEEND:
+      if (pid == gimp_pid)
+        gimp_win32_set_visible (TRUE);
+      break;
+    case EVENT_SYSTEM_FOREGROUND:
+      /* show when gimp or one of our own plug-in windows is activated;
+         hide otherwise, or we would stay on top of other apps */
+      gimp_win32_set_visible (pid == gimp_pid || pid == plugin_pid);
+      break;
+    default:
+      break;
+    }
+}
+#endif
+
+#if !defined(GDK_WINDOWING_QUARTZ)
 static GdkWindow * gimp_ui_get_foreign_window      (gpointer           window);
 #endif
 static gboolean    gimp_window_transient_on_mapped (GtkWidget         *window,
@@ -457,10 +533,7 @@ gimp_osx_focus_window (gpointer user_data)
 }
 #endif
 
-/* Currently broken on Win32 so avoiding a "defined but not used"
- * warning when building on Windows.
- */
-#if !defined(GDK_WINDOWING_WIN32) && !defined(GDK_WINDOWING_QUARTZ)
+#if !defined(GDK_WINDOWING_QUARTZ)
 static GdkWindow *
 gimp_ui_get_foreign_window (gpointer window)
 {
@@ -485,6 +558,10 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
                                  GBytes      *handle)
 {
   gboolean transient_set = FALSE;
+#ifdef GDK_WINDOWING_WIN32
+  static HWINEVENTHOOK gimp_app_min;
+  static HWINEVENTHOOK gimp_app_res;
+#endif
 #ifdef GDK_WINDOWING_QUARTZ
   NSArray        *plugin_win        = [NSApp windows];
   pid_t           plugin_pid        = getpid();
@@ -534,10 +611,12 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
       transient_set = TRUE;
     }
 #endif
-  /* To know why it is disabled on Win32, see gimp_window_set_transient_cb() in
-   * app/widgets/gimpwidgets-utils.c.
+  /* Windows does support cross-process transiency, but calling
+   * gdk_window_set_transient_for() (aka SetWindowLongPtr (GWLP_HWNDPARENT))
+   * hangs GIMP and the plug-in, see gimp_window_set_transient_cb() in
+   * app/widgets/gimpwidgets-utils.c. So we emulate it with WinEvent API.
    */
-#if 0 && defined (GDK_WINDOWING_WIN32)
+#ifdef GDK_WINDOWING_WIN32
   if (! transient_set)
     {
       GdkWindow *parent;
@@ -552,9 +631,30 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
       parent = gimp_ui_get_foreign_window ((gpointer) parent_ID);
 
       if (parent)
-        gdk_window_set_transient_for (gtk_widget_get_window (window), parent);
+        {
+          /* see: #10229 */
+          /* gdk_window_set_transient_for (gtk_widget_get_window (window), parent); */
 
-      transient_set = TRUE;
+          plugin_pid = GetCurrentProcessId ();
+          GetWindowThreadProcessId ((HWND) parent_ID, &gimp_pid);
+
+          /* first, set all plug-in windows as always visible */
+          gimp_win32_set_visible (TRUE);
+
+          /* if gimp app is activated or deactivated, or minimized or
+             restored, do the same on the plug-in windows */
+          if (! gimp_app_min && ! gimp_app_res)
+            {
+              gimp_app_min =
+                SetWinEventHook (EVENT_SYSTEM_MINIMIZESTART, EVENT_SYSTEM_MINIMIZEEND,
+                                 NULL, gimp_win32_display_callback,
+                                 0, 0, WINEVENT_OUTOFCONTEXT);
+              gimp_app_res =
+                SetWinEventHook (EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND,
+                                 NULL, gimp_win32_display_callback,
+                                 0, 0, WINEVENT_OUTOFCONTEXT);
+            }
+        }
     }
 #endif
 
