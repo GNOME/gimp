@@ -357,8 +357,7 @@ load_layer_resource (PSDlayerres   *res_a,
     }
 
   /* Process layer resource blocks */
-  if (memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0       ||
-      memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0 ||
+  if (memcmp (res_a->key, PSD_LADJ_BLACK_WHITE, 4) == 0 ||
       memcmp (res_a->key, PSD_LADJ_SELECTIVE, 4) == 0   ||
       memcmp (res_a->key, PSD_LADJ_GRAD_MAP, 4) == 0    ||
       memcmp (res_a->key, PSD_LADJ_PHOTO_FILT, 4) == 0  ||
@@ -374,6 +373,7 @@ load_layer_resource (PSDlayerres   *res_a,
     }
   /* TODO: Implement all adjustment layers */
   else if (memcmp (res_a->key, PSD_LADJ_LEVEL, 4) == 0      ||
+           memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0      ||
            memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0 ||
            memcmp (res_a->key, PSD_LADJ_BALANCE, 4) == 0    ||
            memcmp (res_a->key, PSD_LADJ_HUE, 4) == 0        ||
@@ -619,6 +619,65 @@ load_resource_ladj (const PSDlayerres  *res_a,
               in_out[i][j + 1];
 
           lyr_a->adjustment_layer->in_out_gamma[i][4] = gamma[i];
+        }
+    }
+  else if (memcmp (res_a->key, PSD_LADJ_CURVE, 4) == 0)
+    {
+      guchar  extra       = 0;
+      guint32 count_bits  = 0;
+      guint32 count       = 0;
+      gushort curve_count = 0;
+      gushort input_c     = 0;
+      gushort output_c    = 0;
+
+      memcpy (lyr_a->adjustment_layer->type, PSD_LADJ_CURVE, 4);
+
+      /* PSDs have an extra space that's not included in docs.
+       * It seems to vary from the standalone ACV format */
+      if (psd_read (input, &extra, 1, error) < 1         ||
+          ! psd_read_int16 (input, &lyr_a->adjustment_layer->version,
+                            res_a->ibm_pc_format, error) ||
+          ! psd_read_uint32 (input, &count_bits, res_a->ibm_pc_format, error))
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      for (gint i = 0; i < 17; i++)
+        {
+          if (count_bits & (1 < i))
+            count++;
+        }
+      /* TODO: Currently GIMP only supports 4 curves channels,
+       * Value/RGB, R, G, and B. PS supports 17. */
+      count = MIN (4, count);
+
+      lyr_a->adjustment_layer->curve_count = count;
+      for (gint i = 0; i < count; i++)
+        {
+          lyr_a->adjustment_layer->curve[i] = gimp_curve_new ();
+
+          if (! psd_read_uint16 (input, &curve_count, res_a->ibm_pc_format,
+                                error))
+            {
+              psd_set_error (error);
+              return -1;
+            }
+
+          gimp_curve_set_curve_type (lyr_a->adjustment_layer->curve[i],
+                                     GIMP_CURVE_SMOOTH);
+
+          for (gint j = 0; j < curve_count; j++)
+            {
+              if (! psd_read_uint16 (input, &output_c, res_a->ibm_pc_format, error) ||
+                  ! psd_read_uint16 (input, &input_c, res_a->ibm_pc_format, error))
+                {
+                  psd_set_error (error);
+                  return -1;
+                }
+              gimp_curve_add_point (lyr_a->adjustment_layer->curve[i],
+                                    input_c / 255.0f, output_c / 255.0f);
+            }
         }
     }
   else if (memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0)
