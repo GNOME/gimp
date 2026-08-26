@@ -190,6 +190,11 @@ static gboolean  gimp_image_window_window_state_event  (GtkWidget           *wid
                                                         GdkEventWindowState *event);
 static void      gimp_image_window_style_updated       (GtkWidget           *widget);
 
+#ifdef G_OS_WIN32
+static void      gimp_image_window_realize             (GtkWidget           *widget,
+                                                        gpointer             data);
+#endif
+
 static void      gimp_image_window_monitor_changed     (GimpWindow          *window,
                                                         GdkMonitor          *monitor);
 
@@ -362,6 +367,17 @@ gimp_image_window_session_managed_iface_init (GimpSessionManagedInterface *iface
   iface->set_aux_info = gimp_image_window_set_aux_info;
 }
 
+#ifdef G_OS_WIN32
+static void
+gimp_image_window_realize (GtkWidget *widget,
+                           gpointer   data)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (widget);
+
+  gimp_window_set_title_bar_theme (private->gimp, widget);
+}
+#endif
+
 static void
 gimp_image_window_constructed (GObject *object)
 {
@@ -379,6 +395,12 @@ gimp_image_window_constructed (GObject *object)
 
   gimp_assert (GIMP_IS_GIMP (private->gimp));
   gimp_assert (GIMP_IS_DIALOG_FACTORY (private->dialog_factory));
+
+#ifdef G_OS_WIN32
+  g_signal_connect (window, "realize",
+                    G_CALLBACK (gimp_image_window_realize),
+                    NULL);
+#endif
 
   g_signal_connect_object (private->dialog_factory, "dock-window-added",
                            G_CALLBACK (gimp_image_window_update_ui_manager),
