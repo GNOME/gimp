@@ -645,7 +645,7 @@ load_resource_ladj (const PSDlayerres  *res_a,
 
       for (gint i = 0; i < 17; i++)
         {
-          if (count_bits & (1 < i))
+          if (count_bits & (1 << i))
             count++;
         }
       /* TODO: Currently GIMP only supports 4 curves channels,
@@ -678,6 +678,16 @@ load_resource_ladj (const PSDlayerres  *res_a,
               gimp_curve_add_point (lyr_a->adjustment_layer->curve[i],
                                     input_c / 255.0f, output_c / 255.0f);
             }
+        }
+
+      /* Version 1 of the Curve adjustment layer may or may not have a copy
+       * of the data in ACV format after the main data. We'll just jump back
+       * to the beginning of the block so we don't have to worry about reading
+       * it properly, as there's no documented "hint" as to when it's there. */
+      if (! psd_seek (input, res_a->data_start, G_SEEK_SET, error))
+        {
+          psd_set_error (error);
+          return -1;
         }
     }
   else if (memcmp (res_a->key, PSD_LADJ_BRIGHTNESS, 4) == 0)
