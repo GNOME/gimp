@@ -1002,7 +1002,16 @@ about_dialog_debug_text (void)
   if (! os_name)
     {
       gchar *name    = g_get_os_info (G_OS_INFO_KEY_NAME);
+#ifndef PLATFORM_OSX
       gchar *version = g_get_os_info (G_OS_INFO_KEY_VERSION_ID);
+#else
+      /* glib doesn't fill G_OS_INFO_KEY_VERSION_* on macOS */
+      NSOperatingSystemVersion macos_version = [[NSProcessInfo processInfo] operatingSystemVersion];
+      gchar *version = g_strdup_printf ("%ld.%ld.%ld",
+                                        (long) macos_version.majorVersion,
+                                        (long) macos_version.minorVersion,
+                                        (long) macos_version.patchVersion);
+#endif
 
       if (name && version)
         os_name = g_strdup_printf ("%s %s", name, version);
