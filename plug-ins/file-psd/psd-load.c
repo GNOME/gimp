@@ -3621,6 +3621,29 @@ add_adjustment_layer (GimpLayer *layer,
           gimp_drawable_filter_update (filter);
         }
     }
+  else if (memcmp (ladj->type, PSD_LADJ_CURVE, 4) == 0)
+    {
+      GimpDrawableFilterConfig *config;
+
+      filter = gimp_drawable_append_new_filter (GIMP_DRAWABLE (layer),
+                                                "gimp:curves",
+                                                NULL,
+                                                GIMP_LAYER_MODE_REPLACE,
+                                                1.0, NULL);
+
+      config = gimp_drawable_filter_get_config (filter);
+
+      for (gint i = ladj->curve_count - 1; i >= 0; i--)
+       {
+         g_object_set (config, "channel", i, NULL);
+         gimp_drawable_filter_update (filter);
+          g_object_set (config,
+                        "trc",   GIMP_TRC_PERCEPTUAL,
+                        "curve", ladj->curve[i],
+                        NULL);
+         gimp_drawable_filter_update (filter);
+       }
+    }
   else if (memcmp (ladj->type, PSD_LADJ_BRIGHTNESS, 4) == 0)
     {
       gfloat brightness;
