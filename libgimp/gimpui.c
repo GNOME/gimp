@@ -89,8 +89,10 @@ static void        gimp_osx_display_callback       (AXObserverRef      observer,
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
-static DWORD plugin_pid = 0;
-static DWORD gimp_pid   = 0;
+static DWORD plugin_pid      = 0;
+static DWORD gimp_pid        = 0;
+static HWND  gimp_hwnd       = NULL;
+static HWND  gimp_extra_hwnd = NULL;
 
 static void
 gimp_win32_set_visible (gboolean visible)
@@ -125,6 +127,21 @@ gimp_win32_set_visible (gboolean visible)
   g_list_free (plugin_win);
 }
 
+static gboolean
+gimp_win32_reorder_core_dialog (gpointer hwnd)
+{
+  /* on its first appearance, a gimp core window (help dialog, resource
+     chooser, etc.) can still be mid-setup. Try to put it on top twice. */
+  if ((HWND) hwnd == gimp_extra_hwnd)
+    {
+      SetWindowPos ((HWND) hwnd, HWND_TOPMOST, 0, 0, 0, 0,
+                    SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+      SetForegroundWindow ((HWND) hwnd);
+    }
+
+  return G_SOURCE_REMOVE;
+}
+
 static void
 gimp_win32_display_callback (HWINEVENTHOOK hook,
                              DWORD         event,
@@ -155,7 +172,31 @@ gimp_win32_display_callback (HWINEVENTHOOK hook,
     case EVENT_SYSTEM_FOREGROUND:
       /* show when gimp or one of our own plug-in windows is activated;
          hide otherwise, or we would stay on top of other apps */
-      gimp_win32_set_visible (pid == gimp_pid || pid == plugin_pid);
+      if (pid != gimp_pid && pid != plugin_pid)
+        {
+          gimp_win32_set_visible (FALSE);
+
+          if (gimp_extra_hwnd)
+            {
+              /* hide gimp help or gimp resource dialog */
+              SetWindowPos (gimp_extra_hwnd, HWND_BOTTOM, 0, 0, 0, 0,
+                            SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+              gimp_extra_hwnd = NULL;
+            }
+        }
+      else if (hwnd == gimp_hwnd || pid == plugin_pid)
+        {
+          gimp_win32_set_visible (TRUE);
+        }
+      else
+        {
+          /* show gimp help or gimp resource dialog */
+          gimp_extra_hwnd = hwnd;
+          SetWindowPos (hwnd, HWND_TOPMOST, 0, 0, 0, 0,
+                        SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+          SetForegroundWindow (hwnd);
+          g_timeout_add (200, gimp_win32_reorder_core_dialog, hwnd);
+        }
       break;
     default:
       break;
@@ -636,7 +677,8 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
           /* gdk_window_set_transient_for (gtk_widget_get_window (window), parent); */
 
           plugin_pid = GetCurrentProcessId ();
-          GetWindowThreadProcessId ((HWND) parent_ID, &gimp_pid);
+          gimp_hwnd  = (HWND) parent_ID;
+          GetWindowThreadProcessId (gimp_hwnd, &gimp_pid);
 
           /* first, set all plug-in windows as always visible */
           gimp_win32_set_visible (TRUE);
