@@ -6,6 +6,225 @@
 This is the stable branch of GIMP.
 
 
+Overview of Changes from GIMP 3.2.4 to GIMP 3.2.6
+=================================================
+
+Core:
+
+  - macOS: Macbook touchpad over-sensitivity now fixed.
+  - Destructive-only filter actions will be made insensitive on all
+    non-raster layers (unless rasterized).
+  - Windows: in release builds, we now attach our standard outputs to
+    the Windows console on certain scenarios only (when there is no
+    interface, or in verbose mode, or when --console-messages is set, or
+    finally when there are batch commands). By default, we are back to
+    how it was before GIMP 3.2.0, which is that GIMP doesn't output
+    anything on native shells it was called from.
+  - Fix expand from center which was failing in some cases.
+  - Layers to Image Size only works for raster (or rasterized) layers.
+  - Clipboard brush and pattern max size bumped to 8192 on Aarch64
+    architecture too (this was changed in 3.2.0 RC2, but only for x86-64
+    and PPC64).
+  - Dashboard backtraces now work on Windows Aarch64 too (additionally
+    to Windows x86-64).
+  - No pass-through reduction on group layers with non-destructive
+    filters.
+  - Dashboard backtraces now work on macOS with native API without
+    libbacktrace.
+  - MyPaint's custom brush directory ($USERPROFILE/.mypaint) better
+    retrieved on Windows.
+  - XCF:
+    * Visibility lock on paths is now properly saved.
+    * Channel filters were not saved either.
+    * XCF is bumped to version 26.
+  - Clear does not affect non-raster layers, unless rasterized.
+  - Improved management of plug-in pipes and process watch. In
+    particular, we avoid various warnings (about empty contexts or
+    broken pipes) when closing GIMP if plug-ins processes didn't end
+    first or just when closing some plug-ins.
+  - Stop noninteractive filters on invisible layers unless the relevant
+    option is enabled in Preferences.
+  - We now verify if a plug-in has been updated since last start by
+    using the changed time (ctime) as fallback when the modified time
+    (mtime) is 0. This is because on some environment (such as ostree,
+    hence flatpak), all files mtimes are set to the UNIX epoch.
+  - Various small changes or fixes were made to prepare for a potential
+    GTK 4 port.
+  - Cache directory on macOS is now in ~/Library/Caches/ (instead of
+    ~/Library/Application Support/).
+
+Tools:
+
+  - Warp tool: properly show the warp cursor even when hovering other
+    images from where we started warping.
+  - Crop tool: do not change position of vector layers.
+  - Gradient tool:
+    * The non-linear blending space was always used, even
+      when linear blending was requested.
+    * Fixed transparent areas when the Offset is set to 100% (1.0) and
+      the Repeat policy is set to Truncate.
+  - Filters: clip setting was lost when editing non-destructive filters.
+  - Text tool: ignore selected layer mask of a text layer when selecting
+    it with the tool to edit the text contents. The layer mask still
+    stays the selected item in such a case.
+  - Heal tool: dark smudge at crop boundaries is fixed.
+  - Color Picker tool: there was an exception ignoring Sample Merged
+    option when a single layer was visible (allowing to retrieve the
+    exact palette color from indexed images). This exception has been
+    further restricted to the absence of filters. Sample Merged, even of
+    single layer images, should return the color after filters are
+    applied.
+  - MyPaint Brush tool: broken initialization was sometimes triggering a
+    stroke being skipped.
+
+Graphical User Interface:
+
+  - MyPaint brush previews are now loaded at full size instead of 48×48.
+  - Alpha Component previews fixed.
+  - Caret/text cursor color now specifically set in our theme to prevent
+    it from being overridden by the system theme.
+  - macOS:
+    * Title bar color scheme now follows the chosen theme scheme.
+    * Transiency of dialogs on macOS was globally broken and is now
+      being worked around on a case-by-case basis.
+    * Minimize button removed from various dialogs.
+    * Fix dockable windows not floating.
+    * GIMP's Spin buttons now respect the Cmd key.
+    * Scrollbars are now always shown.
+    * Use Cmd+` instead of Alt+Tab.
+    * Modules and Units are now listed on the mac menu like in 2.10.
+    * Welcome and About dialogs are redundant from the application menu
+      and were removed.
+  - Inactive arrow color (e.g. for notebook tabs) is now defined.
+  - GimpColorScale style now moved to proper CSS.
+  - GEGL Graph dialog now shows error messages for the graph in full.
+  - When "Reduce Animation" (or similar accessibility option) is
+    requested in OS settings, our splash will display less text (bigger
+    section titles only) and no progress bar.
+  - Time format is now more consistently displayed on the About dialog.
+  - Tooltips are now given a max width to prevent them from getting
+    overly large.
+  - Size entry in Scale and Print Size dialogs receive the focus by
+    default as a UX enhancement.
+  - Spins of Arbitrary Zoom and Rotation dialogs receive the default focus.
+  - Next tip is the default focus for the Tips dialog.
+  - Space and Enter activate/deactivate modules.
+  - Prefer Dark Theme setting was not correctly saved when the current
+    theme doesn't have a dark theme variant.
+  - Canvas checkerboard is not rotated with the view anymore.
+  - More theme fixes were applied.
+  - Pattern thumbnails are more properly filling their area by tiling
+    them when relevant.
+
+Plug-Ins:
+
+  - Various security bugs fixed: ZDI-CAN-29403, ZDI-CAN-29395,
+    ZDI-CAN-29399, ZDI-CAN-29405, ZDI-CAN-29396, ZDI-CAN-29406,
+    ZDI-CAN-29401, ZDI-CAN-29398, ZDI-CAN-29400, ZDI-CAN-29404
+  - RawTherapee spawned from GIMP's AppImage does not crash anymore.
+  - PDF: multi-page PDF are now loaded with an image size ensuring that
+    all layers are visible (in case of pages of different dimensions).
+  - File-Raw: minimum darktable is version 5.6 (the relevant changes
+    happened on darktable side).
+  - Mail: add Windows MAPI support.
+  - NL Filter: now made sensitive on layers with alpha channel too.
+  - Python Console: Tab completion feature was not fully ported to
+    Python 3.
+  - ICO/CUR: frames are now better sorted (with the same weighted
+    scoring as Win32) when exporting. This was a reason why wrong sizes
+    may be picked by some tools.
+  - PNG: Use existing transparent PNG index first when exporting.
+  - Metadata Editor: fix empty Licensor fields.
+  - PS: we default to A4 for unknown images. Though arbitrary, since
+    Postscript traditionally represents printed pages, it is more likely
+    than other form factors.
+  - DDS: support additional mimetype "image/vnd.ms-dds" (used by
+    Microsoft) and "image/x-dds" (used in Linux) to detect DDS files.
+  - Various plug-ins are made transient to the calling core GIMP window.
+  - JPEG: with recent enough libjpeg-turbo (3.1.90+), all 8-bit JPEG
+    will now be loaded as 16bpc directly through the 12-bit pipeline.
+    This improves the recoverable dynamic range in cases where encoded
+    input was not limited to 8-bit input, as well as accuracy during
+    olor conversion and resampling.
+
+API:
+
+  - libgimp/PDB:
+    * fix return value of deprecated gimp_drawable_levels().
+  - libgimpcolor:
+    * fix gimp_color_is_out_of_gamut() with grayscale space.
+  - libgimpui:
+    * Fix inconsistent GimpProcedureDialog buttons order on Windows.
+    * Cross-process transiency is now emulated on macOS (which doesn't
+      have the exact API match) for the gimp_window_set_transient*()
+      functions.
+    * Center plug-in windows relative to the screen on macOS.
+    * GimpProcedureDialog will now use the icon set on the associated
+      GimpProcedure (likely only visible on platforms showing window
+      icons).
+    * Resource dialogs where not appearing over the calling plug-in's
+      GimpResourceChooser on macOS.
+    * Cross-process transiency is now emulated on Windows too, using
+      WinEvent API. Note that similarly to what is done on macOS, it
+      doesn't really make the child window transient to the parent one.
+      But it ensures it is made visible.
+  - libgimpwidgets:
+    * Plug-ins' title bar will now follow dark mode on macOS.
+    * Do not show minimize button on dialogs on macOS.
+  - PDB: failing PDB calls only alert through gimp_message() when run
+    interactively. Non-interactive (including from last run) calls
+    don't print (or pop-up) errors anymore and the caller is expected
+    to check return values and process or display errors themselves if
+    relevant.
+
+Utilities:
+
+  * gimptool can now compile and link GEGL operations with
+    --cflags-geglop, --libs-geglop and --build-geglop CLI options.
+  * gimptool works better on macOS and when it runs on .app bundle.
+  * gimptool sets relocated PKG_CONFIG_PATH on Windows, macOS and
+    AppImage relocatable bundles.
+
+Build:
+
+  - New analysis job running Tartan.
+  - Full build CI pipeline for GIMP on macOS now on our Gitlab instance
+    (hence deprecating the old CI on CircleCI, just for the sake of
+    macOS).
+  - MSIX (Windows package) now allows opening multiple images from "Open
+    With".
+  - Make sure our packages for Windows and macOS builds, as well as our
+    AppImage, ship with the required libraries to create plug-ins.
+  - Our minimum Windows version for our MSIX package is now 10.0.20348.0
+    in order to comply with a requirement from MS about
+    fileSystemWriteVirtualization. Note that the installer still works
+    on Windows 10.0.0.0 and up.
+  - Faster in-build GIMP runs where only the required plug-ins are
+    initialized.
+  - Our defcheck utility now has macOS support.
+  - Some jobs are run more conditionally to avoid unecessary and
+    wasteful checks:
+    * file-plug-in-tests are not run on translation commits.
+    * meson-health runs on specific conditions only.
+  - New commit message checks in CI.
+  - Our Windows installer scripts now work with any Python (without hard
+    dependency on MSYS2 as it used to have when we had our 32-bit TWAIN
+    code).
+  - GdkPixbuf minimum requirement bumped to version 2.32.0 in order to
+    drop the deprecated to-pixdata for embedded PNG resources (which
+    triggered a lot of useless WARNING messages about Glycin when
+    building GIMP initially).
+  - clang-format file improved to better match our coding style.
+  - MSVC: Python plug-ins are not installed because introspection is not
+    supported there.
+  - Windows installer now uses InnoSetup 7.0.2.
+  - Add LLDB support to '-Ddebug-self-in-build' build option and display
+    a proper discovery message when in-build GIMP crashes to encourage
+    bug reporters to make stacktraces of that happening.
+  - Damned Lies (translation) commits now follow our "<module>:" prefix
+    rule in the commit message.
+
+
 Overview of Changes from GIMP 3.2.2 to GIMP 3.2.4
 =================================================
 
@@ -27,7 +246,7 @@ Core:
   - The "Layers to Image Size" and "Resize Layer to Selection" actions
     will only work on raster layers too.
 
-Tool
+Tools:
 
   - Text tool:
     * When editing text, prioritize our global actions when a
