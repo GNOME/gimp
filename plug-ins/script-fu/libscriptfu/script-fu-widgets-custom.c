@@ -68,7 +68,7 @@
  * SF-ADJUSTMENT:SF-SLIDER is custom.
  * Default widget for property of type DOUBLE is an entry w/ spinner.
  * Customize to a slider w/ spinner.
- * 
+ *
  * SF-ADJUSTMENT:SF-SPINNER is custom.
  * Customize to set increments and digits from the script author's declaration
  * instead of the stock widget's auto-computed increments and digits.
@@ -158,7 +158,7 @@ sf_widget_custom_option (GimpProcedureDialog *dialog,
  * For SF-ADJUSTMENT:SF-SLIDER or SF-ADJUSTMENT:SF-SPINNER.
  * The stock widget has already computed increments and digits based on the range,
  * which is not what the script author declared for increments and digits.
- * Step and page increments are NOT from properties of the arg, 
+ * Step and page increments are NOT from properties of the arg,
  * like some PDB procedure arguments.
  * "arg->default_value.sfa_adjustment" is what the author declared.
  */
@@ -170,7 +170,7 @@ sf_widget_adjustment_set_digits_and_increments (GimpLabelSpin *label_spin,
   g_return_if_fail (GIMP_IS_LABEL_SPIN (label_spin));
   g_return_if_fail (arg->type == SF_ADJUSTMENT);
 
-  /* Order important: set digits before increments 
+  /* Order important: set digits before increments
    * since setting digits auto recomputes and sets increments.
    */
   gimp_label_spin_set_digits (label_spin,
@@ -181,7 +181,7 @@ sf_widget_adjustment_set_digits_and_increments (GimpLabelSpin *label_spin,
 }
 
 /* Adds widget for arg of type SF-ADJUSTMENT:SF_SLIDER to the dialog.
- * Customizes the widget: 
+ * Customizes the widget:
  *  - ScaleEntry (slider) instead of entry (both having spin buttons)
  *  - sets digits and increments from the author's declaration, in arg
  */
@@ -191,7 +191,7 @@ sf_widget_custom_slider (GimpProcedureDialog *dialog,
 {
   GtkWidget *scale_entry;
 
-  /* Widget belongs to dialog, 
+  /* Widget belongs to dialog,
    * retain ref only long enough to set increments and digits.
    */
   scale_entry = gimp_procedure_dialog_get_widget (dialog,
@@ -256,6 +256,60 @@ sf_widget_custom_add_to_dialog (GimpProcedureDialog *dialog,
     }
 }
 
+static GtkWidget *
+sf_widgets_first_entry (GtkWidget *widget)
+{
+  GtkWidget *result = NULL;
+
+  if (! gtk_widget_get_visible (widget) ||
+      ! gtk_widget_get_sensitive (widget))
+    return NULL;
+
+  if (GTK_IS_SPIN_BUTTON (widget) ||
+      GTK_IS_ENTRY (widget) ||
+      GTK_IS_TEXT_VIEW (widget))
+    return widget;
+
+  if (GTK_IS_CONTAINER (widget))
+    {
+      GList *children = gtk_container_get_children (GTK_CONTAINER (widget));
+
+      for (GList *iter = children; iter != NULL; iter = iter->next)
+        {
+          result = sf_widgets_first_entry (GTK_WIDGET (iter->data));
+          if (result != NULL)
+            break;
+        }
+
+      g_list_free (children);
+    }
+
+  return result;
+}
+
+void
+script_fu_widgets_grab_focus_on_first_entry (GtkWidget *dialog)
+{
+  GtkWidget *content;
+  GtkWidget *entry;
+
+  g_return_if_fail (GTK_IS_DIALOG (dialog));
+
+  content = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+  entry   = sf_widgets_first_entry (content);
+
+  if (entry != NULL)
+    {
+      gtk_widget_grab_focus (entry);
+
+      if (GTK_IS_ENTRY (entry))
+        {
+          gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+        }
+
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+    }
+}
 
 /* Add custom widgets to dialog, for certain type of args of script. */
 void

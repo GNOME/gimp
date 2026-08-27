@@ -234,6 +234,9 @@ sf_dialog_run (GimpProcedure        *procedure,
   [NSApp activateIgnoringOtherApps:YES];
 #endif
 
+  /* focus the first spin/text entry like on GIMP 2.10 */
+  script_fu_widgets_grab_focus_on_first_entry (GTK_WIDGET (dialog));
+
   not_canceled = gimp_procedure_dialog_run (dialog);
 
 #if DEBUG_CONFIG_PROPERTIES
