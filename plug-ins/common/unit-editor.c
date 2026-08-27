@@ -453,12 +453,13 @@ on_app_activate (GApplication *gapp, gpointer user_data)
                     G_CALLBACK (unit_editor_key_press_event),
                     NULL);
 
-  gtk_widget_set_visible (GTK_WIDGET (self->window), TRUE);
-
 #if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
   /* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_application_window_new */
+  gtk_widget_realize (GTK_WIDGET (self->window));
   gimp_window_set_title_bar_theme (GTK_WIDGET (self->window));
 #endif
+
+  gtk_widget_set_visible (GTK_WIDGET (self->window), TRUE);
 }
 
 static gboolean
