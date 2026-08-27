@@ -788,14 +788,15 @@ refresh_dialog (gchar *imagename)
                                    MIN (expected_drawing_area_height + 90,
                                         workarea.height - 60));
 
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+      /* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_application_window_new */
+      gtk_widget_realize (window);
+      gimp_window_set_title_bar_theme (window);
+#endif
+
       gtk_widget_set_visible (window, TRUE);
 
       gimp_window_set_transient (GTK_WINDOW (window));
-
-#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
-      /* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_application_window_new */
-      gimp_window_set_title_bar_theme (window);
-#endif
     }
 }
 
@@ -1042,6 +1043,13 @@ build_dialog (GimpPlay *play,
 
   gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
   gtk_window_set_default_size (GTK_WINDOW (window), width + 20, height + 90);
+
+#ifdef G_OS_WIN32
+  /* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_application_window_new */
+  gtk_widget_realize (window);
+  gimp_window_set_title_bar_theme (window);
+#endif
+
   gtk_widget_set_visible (window, TRUE);
 
   /* shape_drawing_area for detached feature. */

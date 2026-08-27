@@ -1706,12 +1706,13 @@ dialog (GimpImap *imap)
   _statusbar = make_statusbar (main_vbox, imap->dlg);
   statusbar_set_zoom (_statusbar, 1);
 
-  gtk_widget_set_visible (imap->dlg, TRUE);
-
 #if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
   /* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_window_new */
+  gtk_widget_realize (imap->dlg);
   gimp_window_set_title_bar_theme (imap->dlg);
 #endif
+
+  gtk_widget_set_visible (imap->dlg, TRUE);
 
   _mru = mru_create ();
   init_preferences ();
