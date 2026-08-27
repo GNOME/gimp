@@ -23,4 +23,6 @@
 void    script_fu_widgets_custom_add (GimpProcedureDialog *dialog,
                                       SFScript            *script);
 
+void    script_fu_widgets_grab_focus_on_first_entry (GtkWidget *dialog);
+
 #endif /* __SCRIPT_FU_WIDGETS_CUSTOM_H__ */

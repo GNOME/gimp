@@ -34,6 +34,7 @@
 #include "script-fu-types.h"
 
 #include "script-fu-interface.h"
+#include "script-fu-widgets-custom.h"
 #include "script-fu-scripts.h"
 #include "script-fu-script.h"
 #include "script-fu-arg.h"
@@ -498,6 +499,9 @@ script_fu_interface_dialog (SFScript  *script,
     }
 
   g_object_unref (group);
+
+  /* focus the first spin/text entry like on GIMP 2.10 */
+  script_fu_widgets_grab_focus_on_first_entry (dialog);
 
 #ifdef G_OS_WIN32
     {
