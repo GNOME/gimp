@@ -628,12 +628,23 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
           if (GTK_IS_WINDOW (parent_toplevel))
             {
-              GimpGuiConfig *config = NULL;
+              GimpGuiConfig *config          = NULL;
+#ifndef G_OS_WIN32
+              /* On Linux, this is not needed since window compositors are smart.
+                 On macOS, this breaks animation and positioning of the dialog
+                 so we use gimp_dialog_auto_transient which cycles all dialogs */
+              gboolean       force_transient = FALSE;
+#else
+              /* On Windows, this is needed and works well in the same process,
+                 otherwise dialogs like "Open Location" and "About" get lost */
+              gboolean       force_transient = TRUE;
+#endif
 
               if (context != NULL)
                 config = GIMP_GUI_CONFIG (context->gimp->config);
 
-              if (! config || config->dock_window_hint == GIMP_WINDOW_HINT_KEEP_ABOVE)
+              if (force_transient || ! config ||
+                  config->dock_window_hint == GIMP_WINDOW_HINT_KEEP_ABOVE)
                 {
                   gtk_window_set_transient_for (GTK_WINDOW (dialog),
                                                 GTK_WINDOW (parent_toplevel));

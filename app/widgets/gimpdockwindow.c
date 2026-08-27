@@ -795,7 +795,7 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
 #endif
 
 #ifdef G_OS_WIN32
-          /* keep dockable window transient */
+          /* keep dockable window transient (since gimp_dialog_factory_dialog_new_internal is not enough)*/
           HWND main_window = GetActiveWindow();
           g_object_set_data (G_OBJECT (dock_window), "win32-parent-window", (gpointer) main_window);
           g_idle_add ((GSourceFunc) gimp_dock_window_update_focus_idle, dock_window);
