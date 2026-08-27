@@ -84,6 +84,21 @@
   </provides>
 
   <releases>
+    <release version="3.2.6" date="2026-08-29">
+      <url type="details">https://www.gimp.org/release/3.2.6/</url>
+      <description>
+        <p>
+        This new bugfix release of GIMP 3.2 brings a whole new level of stability:
+        </p>
+        <ul>
+          <li>Bug fixes and usability improvements to recently added features and non-destructive workflows</li>
+          <li>A lot of maintenance love happened for the macOS version</li>
+          <li>gimptool utility can now compile GEGL operations (filters) and work better on macOS, Windows and AppImage</li>
+          <li>Many file formats support improved</li>
+          <li>Various vulnerabilities fixed</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.2.4" date="2026-04-17">
       <url type="details">https://www.gimp.org/release/3.2.4/</url>
       <description>
