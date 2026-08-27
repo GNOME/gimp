@@ -22,6 +22,7 @@
 
 #ifdef GDK_WINDOWING_WIN32
 #include <windows.h>
+#include <tlhelp32.h>
 #include <gdk/gdkwin32.h>
 #endif
 
@@ -128,6 +129,40 @@ gimp_win32_set_visible (gboolean visible)
 }
 
 static gboolean
+gimp_win32_is_plugin_from_plugin (DWORD pid)
+{
+  /* a plug-in cannot spawn another plug-in directly: every plug-in process,
+    no matter where the dialog was launched from, is a direct child of gimp core.
+    e.g. a metadata editor opened from an export dialog. See: #6223 */
+  HANDLE         process_list;
+  PROCESSENTRY32 process;
+  gboolean       is_child = FALSE;
+
+  process_list = CreateToolhelp32Snapshot (TH32CS_SNAPPROCESS, 0);
+  if (process_list == INVALID_HANDLE_VALUE)
+    return FALSE;
+
+  process.dwSize = sizeof (PROCESSENTRY32);
+
+  if (Process32First (process_list, &process))
+    {
+      do
+        {
+          if (process.th32ProcessID == pid)
+            {
+              is_child = (process.th32ParentProcessID == gimp_pid);
+              break;
+            }
+        }
+      while (Process32Next (process_list, &process));
+    }
+
+  CloseHandle (process_list);
+
+  return is_child;
+}
+
+static gboolean
 gimp_win32_reorder_core_dialog (gpointer hwnd)
 {
   /* on its first appearance, a gimp core window (help dialog, resource
@@ -172,7 +207,8 @@ gimp_win32_display_callback (HWINEVENTHOOK hook,
     case EVENT_SYSTEM_FOREGROUND:
       /* show when gimp or one of our own plug-in windows is activated;
          hide otherwise, or we would stay on top of other apps */
-      if (pid != gimp_pid && pid != plugin_pid)
+      if (pid != gimp_pid && pid != plugin_pid &&
+          ! gimp_win32_is_plugin_from_plugin (pid))
         {
           gimp_win32_set_visible (FALSE);
 
