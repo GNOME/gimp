@@ -445,8 +445,12 @@ gimp_font_factory_add_directories (GimpFontFactory *factory,
                                    GList           *path,
                                    GError         **error)
 {
-  GString *error_details = g_string_new (NULL);
-  GList   *list;
+  GString    *error_details = g_string_new (NULL);
+  GList      *loaded_dirs   = NULL;
+  GList      *list;
+  GHashTable *loaded_fonts;
+
+  loaded_fonts = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
   for (list = path; list; list = list->next)
     {
@@ -469,63 +473,60 @@ gimp_font_factory_add_directories (GimpFontFactory *factory,
       }
 #endif
 
-      if (! dirpath ||
-          FcFalse == FcConfigAppFontAddDir (config, (const FcChar8 *) dirpath))
-        {
-          const gchar *errpath = dirpath ? dirpath : "?";
-
-          g_string_append_printf (error_details, "\n- %s%s",
-                                  errpath, G_DIR_SEPARATOR_S);
-        }
+      if (! dirpath)
+        g_string_append_printf (error_details, "\n- %s%s",
+                                g_file_peek_path (list->data) ? g_file_peek_path (list->data) : "?",
+                                G_DIR_SEPARATOR_S);
+      else if (FcFalse == FcConfigAppFontAddDir (config, (const FcChar8 *) dirpath))
+        g_string_append_printf (error_details, "\n- %s%s",
+                                dirpath, G_DIR_SEPARATOR_S);
       else
-        {
-          /* FcConfigAppFontAddDir() does not report individual font file
-           * failures (e.g. permission errors, corrupt files). As we want
-           * to present the user with a list of all font files which weren't
-           * succesfully loaded we build a set of what fontconfig actually
-           * loaded and then scan the directory tree for font files that
-           * are missing. */
-          GHashTable *loaded_fonts;
-          FcFontSet  *font_set;
-
-          /* Keys are canonicalized paths. We need to canonicalize
-           * on both sides (here and in recursive_check_fontdir) to avoid
-           * producing false positive error reports caused by different
-           * ways to represent paths. */
-          loaded_fonts = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                g_free, NULL);
-          font_set     = FcConfigGetFonts (config, FcSetApplication);
-
-          if (font_set)
-            {
-              for (gint i = 0; i < font_set->nfont; i++)
-                {
-                  FcChar8 *filename = NULL;
-
-                  if (FcPatternGetString (font_set->fonts[i], FC_FILE, 0,
-                                         &filename) == FcResultMatch)
-                    {
-                      g_hash_table_add (loaded_fonts,
-                                        g_canonicalize_filename (
-                                          (const gchar *) filename,
-                                          NULL));
-                    }
-                }
-            }
-
-          gimp_font_factory_recursive_check_fontdir (list->data, loaded_fonts,
-                                                     error_details);
-          g_hash_table_destroy (loaded_fonts);
-        }
+        loaded_dirs = g_list_prepend (loaded_dirs, list->data);
 
       g_free (dirpath);
     }
+
+  if (loaded_dirs != NULL)
+    {
+      /* FcConfigAppFontAddDir() does not report individual font file
+       * failures (e.g. permission errors, corrupt files). As we want
+       * to present the user with a list of all font files which weren't
+       * succesfully loaded we build a set of what fontconfig actually
+       * loaded and then scan the directory tree for font files that
+       * are missing.
+       */
+      FcFontSet  *font_set;
+
+      /* Keys are canonicalized paths. We need to canonicalize
+       * on both sides (here and in recursive_check_fontdir) to avoid
+       * producing false positive error reports caused by different
+       * ways to represent paths. */
+      font_set = FcConfigGetFonts (config, FcSetApplication);
+
+      if (font_set)
+        for (gint i = 0; i < font_set->nfont; i++)
+          {
+            FcChar8 *filename = NULL;
+
+            if (FcPatternGetString (font_set->fonts[i], FC_FILE, 0,
+                                    &filename) == FcResultMatch)
+              g_hash_table_add (loaded_fonts,
+                                g_canonicalize_filename ((const gchar *) filename,
+                                                         NULL));
+          }
+    }
+
+  for (list = loaded_dirs; list; list = list->next)
+    gimp_font_factory_recursive_check_fontdir (list->data, loaded_fonts,
+                                               error_details);
 
   if (error_details->len > 0)
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                  _("Some fonts failed to load:%s"), error_details->str);
 
   g_string_free (error_details, TRUE);
+  g_hash_table_destroy (loaded_fonts);
+  g_list_free (loaded_dirs);
 }
 
 static gboolean
