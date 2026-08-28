@@ -693,17 +693,6 @@ menus_quartz_app_menu (Gimp *gimp)
   /* Help and Windows */
   for (NSMenuItem *menu_item in [main_menu itemArray])
     {
-      /* Help */
-      /* fix native search bar not appearing on non-Enligsh locales */
-      if (([menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Help")]]) ||
-          [[menu_item title] isEqualToString:@"Help"])
-        {
-          if ([menu_item hasSubmenu])
-            [NSApp setHelpMenu:[menu_item submenu]];
-          /* do NOT check if the help menu was set, always set due to GTK */
-          break;
-        }
-
       /* Windows */
        /* fix native windows list not appearing on dock. See: #428 */
       if ((! window_menu_added && [menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Windows")]]) ||
@@ -712,6 +701,18 @@ menus_quartz_app_menu (Gimp *gimp)
           if ([menu_item hasSubmenu])
             [NSApp setWindowsMenu:[menu_item submenu]];
           window_menu_added = TRUE;
+          /* no break: "Windows" precedes "Help" in the menu bar, so
+             we must keep iterating to reach and set the Help menu below */
+        }
+
+      /* Help */
+      /* fix native search bar not appearing on non-Enligsh locales */
+      if (([menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Help")]]) ||
+          [[menu_item title] isEqualToString:@"Help"])
+        {
+          if ([menu_item hasSubmenu])
+            [NSApp setHelpMenu:[menu_item submenu]];
+          /* do NOT check if the help menu was set, always set due to GTK */
           break;
         }
     }
