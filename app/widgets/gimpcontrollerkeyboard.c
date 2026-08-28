@@ -207,6 +207,12 @@ gimp_controller_keyboard_init (GimpControllerKeyboard *keyboard)
               gtk_accelerator_parse (kevent->modifier_string, NULL,
                                      &kevent->modifiers);
               gdk_keymap_map_virtual_modifiers (keymap, &kevent->modifiers);
+
+#ifdef PLATFORM_OSX
+              /* on macOS, Cmd is also the Super and Hyper key. See: #13938 */
+              kevent->modifiers &= ~(GDK_SUPER_MASK |
+                                     GDK_META_MASK);
+#endif
             }
 
           if (kevent->modifiers != 0)

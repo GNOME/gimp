@@ -206,6 +206,12 @@ gimp_controller_wheel_init (GimpControllerWheel *wheel)
               gtk_accelerator_parse (wevent->modifier_string, NULL,
                                      &wevent->modifiers);
               gdk_keymap_map_virtual_modifiers (keymap, &wevent->modifiers);
+
+#ifdef PLATFORM_OSX
+              /* on macOS, Cmd is also the Super and Hyper key. See: #13938 */
+              wevent->modifiers &= ~(GDK_SUPER_MASK |
+                                     GDK_META_MASK);
+#endif
             }
 
           if (wevent->modifiers != 0)
