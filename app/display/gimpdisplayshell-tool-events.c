@@ -2279,6 +2279,16 @@ gimp_display_shell_macos_shortcut (GimpDisplayShell  *shell,
       return TRUE;
     }
 
+  /* on macOS, Ctrl+Cmd+Space opens the Emoji viewer */
+  if ((kevent->keyval == GDK_KEY_space || kevent->keyval == GDK_KEY_KP_Space) &&
+      (kevent->state & GDK_CONTROL_MASK)                                      &&
+      (kevent->state & primary))
+    {
+      [NSApp orderFrontCharacterPalette:nil];
+
+      return TRUE;
+    }
+
   return FALSE;
 }
 #endif
