@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-18 22:16+0000\n"
-"PO-Revision-Date: 2026-08-19 08:12+0800\n"
+"POT-Creation-Date: 2026-08-28 19:30+0000\n"
+"PO-Revision-Date: 2026-08-29 07:32+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -172,19 +172,19 @@ msgstr ""
 "licenses/"
 
 #. TRANSLATORS: title for info message in terminal window
-#: app/app.c:545
+#: app/app.c:542
 msgid "INFO"
 msgstr "信息"
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:547
+#: app/app.c:544
 msgid ""
 "GIMP is now running as a background process. You can quit anytime with Ctrl-"
 "C (SIGINT)."
 msgstr "GIMP 现在作为后台进程运行。您可以随时按 Ctrl-C（SIGINT）退出。"
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:550
+#: app/app.c:547
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "如果您想要立即退出，可以带 --quit 命令选项调用 GIMP。"
 
@@ -333,11 +333,11 @@ msgstr "显示带有实验性特性的首选项页面"
 msgid "Show an image submenu with debug actions"
 msgstr "显示带有调试操作的图像子菜单"
 
-#: app/main.c:820
+#: app/main.c:832
 msgid "[FILE|URI...]"
 msgstr "[文件|URI…]"
 
-#: app/main.c:850
+#: app/main.c:862
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -345,11 +345,11 @@ msgstr ""
 "GIMP 无法初始化图形用户界面。\n"
 "请确定您已正确安装和配置显示环境。"
 
-#: app/main.c:919
+#: app/main.c:931
 msgid "Another GIMP instance is already running."
 msgstr "另一个 GIMP 实例已在运行。"
 
-#: app/main.c:1002
+#: app/main.c:1014
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "（键入任意字符关闭本窗口）\n"
@@ -386,7 +386,7 @@ msgid "Brush Editor"
 msgstr "笔刷编辑器"
 
 #. initialize the list of gimp brushes
-#: app/actions/actions.c:117 app/core/gimp-data-factories.c:406
+#: app/actions/actions.c:117 app/core/gimp-data-factories.c:398
 #: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3479
 msgid "Brushes"
 msgstr "笔刷"
@@ -470,7 +470,7 @@ msgid "Filters"
 msgstr "滤镜"
 
 #. initialize the list of gimp fonts
-#: app/actions/actions.c:174 app/core/gimp-data-factories.c:440
+#: app/actions/actions.c:174 app/core/gimp-data-factories.c:432
 #: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3509
 msgid "Fonts"
 msgstr "字体"
@@ -481,12 +481,12 @@ msgid "Gradient Editor"
 msgstr "渐变编辑器"
 
 #. initialize the list of gimp gradients
-#: app/actions/actions.c:180 app/core/gimp-data-factories.c:431
+#: app/actions/actions.c:180 app/core/gimp-data-factories.c:423
 #: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3503
 msgid "Gradients"
 msgstr "渐变"
 
-#: app/actions/actions.c:183 app/core/gimp-data-factories.c:447
+#: app/actions/actions.c:183 app/core/gimp-data-factories.c:439
 #: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3515
 msgid "Tool Presets"
 msgstr "工具预设"
@@ -496,8 +496,9 @@ msgstr "工具预设"
 msgid "Tool Preset Editor"
 msgstr "工具预设编辑器"
 
+#. Help
 #. fix native search bar not appearing on non-Enligsh locales
-#: app/actions/actions.c:189 app/menus/menus.c:668
+#: app/actions/actions.c:189 app/menus/menus.c:716
 msgid "Help"
 msgstr "帮助"
 
@@ -518,7 +519,7 @@ msgid "Layers"
 msgstr "图层"
 
 #. initialize the list of mypaint brushes
-#: app/actions/actions.c:201 app/core/gimp-data-factories.c:416
+#: app/actions/actions.c:201 app/core/gimp-data-factories.c:408
 #: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3521
 msgid "MyPaint Brushes"
 msgstr "MyPaint 笔刷"
@@ -529,13 +530,13 @@ msgid "Palette Editor"
 msgstr "色板编辑器"
 
 #. initialize the list of gimp palettes
-#: app/actions/actions.c:207 app/core/gimp-data-factories.c:426
+#: app/actions/actions.c:207 app/core/gimp-data-factories.c:418
 #: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3497
 msgid "Palettes"
 msgstr "色板"
 
 #. initialize the list of gimp patterns
-#: app/actions/actions.c:210 app/core/gimp-data-factories.c:421
+#: app/actions/actions.c:210 app/core/gimp-data-factories.c:413
 #: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3491
 msgid "Patterns"
 msgstr "图案"
@@ -545,7 +546,7 @@ msgid "Plug-ins"
 msgstr "插件"
 
 #. Quick Mask Color
-#: app/actions/actions.c:216 app/core/gimpchannel.c:396
+#: app/actions/actions.c:216 app/core/gimpchannel.c:397
 #: app/dialogs/preferences-dialog.c:1824
 msgid "Quick Mask"
 msgstr "快速蒙板"
@@ -571,7 +572,7 @@ msgstr "文本工具"
 msgid "Text Editor"
 msgstr "文本编辑器"
 
-#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:543
+#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:549
 msgid "Tool Options"
 msgstr "工具选项"
 
@@ -592,7 +593,9 @@ msgstr "路径"
 msgid "View"
 msgstr "查看"
 
-#: app/actions/actions.c:249
+#. Windows
+#. fix native windows list not appearing on dock. See: #428
+#: app/actions/actions.c:249 app/menus/menus.c:705
 msgid "Windows"
 msgstr "窗口"
 
@@ -1103,7 +1106,7 @@ msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "通道移至底端"
 
-#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:535
 #: app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260
 #: app/widgets/gimplayertreeview.c:906
 #, c-format
@@ -2572,7 +2575,7 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
 #: app/dialogs/welcome-dialog.c:1255 app/display/gimpdisplayshell-dnd.c:707
-#: app/display/gimpimagewindow.c:2266 app/widgets/gimplayertreeview.c:864
+#: app/display/gimpimagewindow.c:2288 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -2585,7 +2588,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2535
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2546
 #: app/core/gimppalette.c:647 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -5564,7 +5567,7 @@ msgstr "编辑该渐变"
 msgid "Save '%s' as POV-Ray"
 msgstr "将“%s”保存为 POV-Ray"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:899
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:902
 msgctxt "help-action"
 msgid "_Help"
 msgstr "帮助(_H)"
@@ -6169,19 +6172,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "删除此图像"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:568
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:571
 msgid "Lock content"
 msgstr "锁定内容"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:569
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:572
 msgid "Unlock content"
 msgstr "解锁内容"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:582
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:585
 msgid "Lock position"
 msgstr "锁定位置"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:583
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:586
 msgid "Unlock position"
 msgstr "解锁位置"
 
@@ -7182,7 +7185,7 @@ msgid "Remove Alpha Channel"
 msgstr "移除透明通道"
 
 #: app/actions/layers-commands.c:1967 app/core/gimpchannel-select.c:433
-#: app/core/gimplayer.c:472
+#: app/core/gimplayer.c:473
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "透明到选区"
@@ -10235,103 +10238,103 @@ msgstr "请输入新显示器的名称："
 msgid "Can't open display '%s'. Please try another one:"
 msgstr "无法打开显示器“%s”。请尝试另一个："
 
-#: app/actions/windows-actions.c:103
+#: app/actions/windows-actions.c:112
 msgctxt "windows-action"
 msgid "Next Image"
 msgstr "下一个图像"
 
-#: app/actions/windows-actions.c:104
+#: app/actions/windows-actions.c:113
 msgctxt "windows-action"
 msgid "Switch to the next image"
 msgstr "切换到下一个图像"
 
-#: app/actions/windows-actions.c:109
+#: app/actions/windows-actions.c:118
 msgctxt "windows-action"
 msgid "Previous Image"
 msgstr "上一个图像"
 
-#: app/actions/windows-actions.c:110
+#: app/actions/windows-actions.c:119
 msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "切换到上一个图像"
 
-#: app/actions/windows-actions.c:115 menus/image-menu.ui.in.in:888
+#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:891
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "标签页位置(_T)"
 
-#: app/actions/windows-actions.c:121
+#: app/actions/windows-actions.c:130
 msgctxt "windows-action"
 msgid "_Hide Docks"
 msgstr "隐藏停靠(_H)"
 
-#: app/actions/windows-actions.c:122
+#: app/actions/windows-actions.c:131
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
 msgstr "当启用时仅显示图像窗口，隐藏所有停靠和其他对话框。"
 
-#: app/actions/windows-actions.c:128
+#: app/actions/windows-actions.c:137
 msgctxt "windows-action"
 msgid "_Show Tabs"
 msgstr "显示标签页(_S)"
 
-#: app/actions/windows-actions.c:129
+#: app/actions/windows-actions.c:138
 msgctxt "windows-action"
 msgid "When enabled, the image tabs bar is shown."
 msgstr "当启用时，显示图像标签栏。"
 
-#: app/actions/windows-actions.c:135
+#: app/actions/windows-actions.c:144
 msgctxt "windows-action"
 msgid "Single-Window _Mode"
 msgstr "单窗口模式(_M)"
 
-#: app/actions/windows-actions.c:136
+#: app/actions/windows-actions.c:145
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
 msgstr "当启用时，GIMP 处于单窗口模式。"
 
-#: app/actions/windows-actions.c:145
+#: app/actions/windows-actions.c:154
 msgctxt "windows-tabs-position-action"
 msgid "_Top"
 msgstr "顶部(_T)"
 
-#: app/actions/windows-actions.c:146
+#: app/actions/windows-actions.c:155
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
 msgstr "将标签页放置于顶部"
 
-#: app/actions/windows-actions.c:150
+#: app/actions/windows-actions.c:159
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
 msgstr "底部(_B)"
 
-#: app/actions/windows-actions.c:151
+#: app/actions/windows-actions.c:160
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
 msgstr "将标签页放置于底部"
 
-#: app/actions/windows-actions.c:155
+#: app/actions/windows-actions.c:164
 msgctxt "windows-tabs-position-action"
 msgid "_Left"
 msgstr "左侧(_L)"
 
-#: app/actions/windows-actions.c:156
+#: app/actions/windows-actions.c:165
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the left"
 msgstr "将标签页放置于左侧"
 
-#: app/actions/windows-actions.c:160
+#: app/actions/windows-actions.c:169
 msgctxt "windows-tabs-position-action"
 msgid "_Right"
 msgstr "右侧(_R)"
 
-#: app/actions/windows-actions.c:161
+#: app/actions/windows-actions.c:170
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
 msgstr "将标签页放置于右侧"
 
-#: app/actions/windows-actions.c:278 app/actions/windows-actions.c:280
+#: app/actions/windows-actions.c:287 app/actions/windows-actions.c:289
 msgid "Single-window mode disabled"
 msgstr "单窗口模式已禁用"
 
@@ -10339,7 +10342,7 @@ msgstr "单窗口模式已禁用"
 #. * tab or window above others) specific images or views of image. The part
 #. * between quotes is the image name and other view identifiers.
 #.
-#: app/actions/windows-actions.c:393
+#: app/actions/windows-actions.c:402
 #, c-format
 msgid "Show \"%s-%d.%d\""
 msgstr "显示“%s-%d.%d”"
@@ -10347,13 +10350,13 @@ msgstr "显示“%s-%d.%d”"
 #. TRANSLATORS: the first argument (%1$s) is the image name, the
 #. * second (%2$d) is its tab order in the graphical interface.
 #.
-#: app/actions/windows-actions.c:472
+#: app/actions/windows-actions.c:481
 #, c-format
 msgid "Switch to the first image view: %1$s"
 msgid_plural "Switch to image view %2$d: %1$s"
 msgstr[0] "切换到第 %2$d 个图像视图：%1$s"
 
-#: app/actions/windows-commands.c:208
+#: app/actions/windows-commands.c:218
 msgid ""
 "The chosen recent dock contains a toolbox. Please close the currently open "
 "toolbox and try again."
@@ -10588,11 +10591,11 @@ msgstr "解析您的“%s”文件时出错。默认值将被使用。您的配�
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "用于搜索和选择项目的模式语法："
 
-#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:443
+#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:444
 msgid "Layer"
 msgstr "图层"
 
-#: app/config/gimpdialogconfig.c:426 app/core/gimpchannel.c:263
+#: app/config/gimpdialogconfig.c:426 app/core/gimpchannel.c:264
 #: app/operations/gimpcurvesconfig.c:120 app/operations/gimplevelsconfig.c:135
 #: app/operations/gimpoperationthreshold.c:95
 #: app/widgets/gimpchanneltreeview.c:333
@@ -12371,7 +12374,7 @@ msgctxt "undo-type"
 msgid "Vector"
 msgstr "矢量"
 
-#: app/core/core-enums.c:1344 app/core/gimpdrawable-transform.c:717
+#: app/core/core-enums.c:1344 app/core/gimpdrawable-transform.c:718
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "变换"
@@ -12711,7 +12714,9 @@ msgid "Parasites"
 msgstr "内嵌信息"
 
 #. initialize the module list
+#. Modules
 #: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3539
+#: app/menus/menus.c:680
 msgid "Modules"
 msgstr "模块"
 
@@ -12754,24 +12759,24 @@ msgstr "批处理解释程序“%s”不可用。批处理模式已禁用。"
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:488 app/widgets/gimpdevices.c:172
+#: app/menus/menus.c:489 app/widgets/gimpdevices.c:172
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "删除“%s”失败：%s"
 
 #. initialize the list of gimp dynamics
-#: app/core/gimp-data-factories.c:411 app/core/gimpcontext.c:706
+#: app/core/gimp-data-factories.c:403 app/core/gimpcontext.c:706
 #: app/dialogs/preferences-dialog.c:3485 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "动态"
 
 #. initialize the color history
-#: app/core/gimp-data-factories.c:436 app/core/gimp-palettes.c:60
+#: app/core/gimp-data-factories.c:428 app/core/gimp-palettes.c:60
 msgid "Color History"
 msgstr "颜色历史"
 
 #. update tag cache
-#: app/core/gimp-data-factories.c:453
+#: app/core/gimp-data-factories.c:445
 msgid "Updating tag cache"
 msgstr "正在更新标签缓存"
 
@@ -12797,7 +12802,7 @@ msgstr "无法剪切，因为选中区域为空。"
 msgid "Cannot copy because the selected region is empty."
 msgstr "无法复制，因为选中区域为空。"
 
-#: app/core/gimp-edit.c:654 app/core/gimpimage-new.c:583
+#: app/core/gimp-edit.c:654 app/core/gimpimage-new.c:584
 msgid "Pasted Layer"
 msgstr "被粘贴的图层"
 
@@ -12922,12 +12927,12 @@ msgid "Please wait: %s\n"
 msgstr "请稍候：%s\n"
 
 #: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299
-#: app/core/gimpdata.c:771 app/core/gimpdata.c:784
+#: app/core/gimpdata.c:769 app/core/gimpdata.c:782
 #, c-format
 msgid "Error saving '%s': "
 msgstr "保存“%s”时出错："
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:790
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:788
 #, c-format
 msgid "Error saving '%s'"
 msgstr "保存“%s”时出错"
@@ -12993,7 +12998,7 @@ msgstr "正在创建文件夹“%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "无法创建“%s”文件夹：%s"
 
-#: app/core/gimp-utils.c:653 app/core/gimpfilloptions.c:588
+#: app/core/gimp-utils.c:653 app/core/gimpfilloptions.c:585
 msgid "No patterns available for this operation."
 msgstr "没有可供此操作使用的图案。"
 
@@ -13003,17 +13008,17 @@ msgid ""
 "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
 msgstr "Photoshop 资源文件中出现致命解析错误：RLE 压缩数据损坏。"
 
-#: app/core/gimp-utils.c:1906
+#: app/core/gimp-utils.c:1901
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "该解析器不支持瓦状层叠式列表。"
 
-#: app/core/gimp-utils.c:1929
+#: app/core/gimp-utils.c:1924
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> 必须内置 <ol> 或 <ul> 标签。"
 
-#: app/core/gimp-utils.c:1934
+#: app/core/gimp-utils.c:1929
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "未知标签 <%s>。"
@@ -13257,148 +13262,148 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "按索引颜色选择"
 
-#: app/core/gimpchannel.c:280
+#: app/core/gimpchannel.c:281
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "重命名通道"
 
-#: app/core/gimpchannel.c:281
+#: app/core/gimpchannel.c:282
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "移动通道"
 
-#: app/core/gimpchannel.c:282
+#: app/core/gimpchannel.c:283
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "缩放通道"
 
-#: app/core/gimpchannel.c:283
+#: app/core/gimpchannel.c:284
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "改变通道大小"
 
-#: app/core/gimpchannel.c:284
+#: app/core/gimpchannel.c:285
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "翻转通道"
 
-#: app/core/gimpchannel.c:285
+#: app/core/gimpchannel.c:286
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "旋转通道"
 
-#: app/core/gimpchannel.c:286 app/core/gimpdrawable-transform.c:1049
+#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1050
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "变换通道"
 
-#: app/core/gimpchannel.c:287 app/core/gimpchannel.c:318
+#: app/core/gimpchannel.c:288 app/core/gimpchannel.c:319
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "填充通道"
 
-#: app/core/gimpchannel.c:288
+#: app/core/gimpchannel.c:289
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "描边通道"
 
-#: app/core/gimpchannel.c:289
+#: app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "通道到选区"
 
-#: app/core/gimpchannel.c:290
+#: app/core/gimpchannel.c:291
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "重排通道"
 
-#: app/core/gimpchannel.c:291
+#: app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "升高通道"
 
-#: app/core/gimpchannel.c:292
+#: app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "通道移至顶端"
 
-#: app/core/gimpchannel.c:293
+#: app/core/gimpchannel.c:294
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "降低通道"
 
-#: app/core/gimpchannel.c:294
+#: app/core/gimpchannel.c:295
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "通道移至底端"
 
-#: app/core/gimpchannel.c:295
+#: app/core/gimpchannel.c:296
 msgid "Channel cannot be raised higher."
 msgstr "通道无法再升高。"
 
-#: app/core/gimpchannel.c:296
+#: app/core/gimpchannel.c:297
 msgid "Channel cannot be lowered more."
 msgstr "通道无法再降低。"
 
-#: app/core/gimpchannel.c:315
+#: app/core/gimpchannel.c:316
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "羽化通道"
 
-#: app/core/gimpchannel.c:316
+#: app/core/gimpchannel.c:317
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "锐化通道"
 
-#: app/core/gimpchannel.c:317
+#: app/core/gimpchannel.c:318
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "清空通道"
 
-#: app/core/gimpchannel.c:319
+#: app/core/gimpchannel.c:320
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "反转通道"
 
-#: app/core/gimpchannel.c:320
+#: app/core/gimpchannel.c:321
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "通道加边"
 
-#: app/core/gimpchannel.c:321
+#: app/core/gimpchannel.c:322
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "增长通道"
 
-#: app/core/gimpchannel.c:322
+#: app/core/gimpchannel.c:323
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "收缩通道"
 
-#: app/core/gimpchannel.c:323
+#: app/core/gimpchannel.c:324
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "溢出通道"
 
-#: app/core/gimpchannel.c:821
+#: app/core/gimpchannel.c:823
 msgid "Cannot fill empty channel."
 msgstr "无法填充空通道。"
 
-#: app/core/gimpchannel.c:857
+#: app/core/gimpchannel.c:859
 msgid "Cannot stroke empty channel."
 msgstr "无法描边空通道。"
 
-#: app/core/gimpchannel.c:1862
+#: app/core/gimpchannel.c:1876
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "设置通道颜色"
 
-#: app/core/gimpchannel.c:1916
+#: app/core/gimpchannel.c:1930
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "设置通道不透明度"
 
-#: app/core/gimpchannel.c:2001 app/core/gimpselection.c:162
+#: app/core/gimpchannel.c:2015 app/core/gimpselection.c:162
 msgid "Selection Mask"
 msgstr "选区蒙板"
 
@@ -13455,7 +13460,7 @@ msgid "Palette"
 msgstr "色板"
 
 #: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742
-#: app/text/gimpfont.c:677 app/tools/gimptextoptions.c:812
+#: app/text/gimpfont.c:698 app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "字体"
 
@@ -13476,11 +13481,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:479 app/core/gimpdatafactory.c:482
-#: app/core/gimpitem.c:728 app/core/gimpitem.c:731
+#: app/core/gimpitem.c:730 app/core/gimpitem.c:733
 msgid "copy"
 msgstr "副本"
 
-#: app/core/gimpdatafactory.c:491 app/core/gimpitem.c:739
+#: app/core/gimpdatafactory.c:491 app/core/gimpitem.c:741
 #, c-format
 msgid "%s copy"
 msgstr "%s 副本"
@@ -13557,7 +13562,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:714 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:703 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "缩放"
@@ -13577,7 +13582,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "均等"
 
-#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:820
+#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:821
 msgid "Floating Selection"
 msgstr "浮动选区"
 
@@ -13626,22 +13631,22 @@ msgstr "偏移可绘区"
 msgid "Not enough points to stroke"
 msgstr "没有足够的点形成笔触"
 
-#: app/core/gimpdrawable-transform.c:804 app/tools/gimpfliptool.c:139
+#: app/core/gimpdrawable-transform.c:805 app/tools/gimpfliptool.c:139
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "翻转"
 
-#: app/core/gimpdrawable-transform.c:887 app/tools/gimprotatetool.c:131
+#: app/core/gimpdrawable-transform.c:888 app/tools/gimprotatetool.c:131
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "旋转"
 
-#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:471
+#: app/core/gimpdrawable-transform.c:1048 app/core/gimplayer.c:472
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "变换图层"
 
-#: app/core/gimpdrawable-transform.c:1061
+#: app/core/gimpdrawable-transform.c:1062
 msgid "Transformation"
 msgstr "变换"
 
@@ -13671,8 +13676,8 @@ msgstr "调用 GEGL 操作“%s”时使用了无效的辅助输入名称“%s�
 msgid "Cannot rename effect masks."
 msgstr "无法重命名特效蒙板。"
 
-#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:780
-#: app/core/gimplayer.c:2419 app/core/gimplayermask.c:304
+#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:781
+#: app/core/gimplayer.c:2393 app/core/gimplayermask.c:304
 #, c-format
 msgid "%s mask"
 msgstr "%s 蒙板"
@@ -13681,67 +13686,67 @@ msgstr "%s 蒙板"
 msgid "Output type"
 msgstr "输出类型"
 
-#: app/core/gimpfilloptions.c:137
+#: app/core/gimpfilloptions.c:138
 msgid "Style"
 msgstr "样式"
 
-#: app/core/gimpfilloptions.c:145
+#: app/core/gimpfilloptions.c:146
 msgid "Custom style"
 msgstr "自定义样式"
 
-#: app/core/gimpfilloptions.c:153 app/pdb/gimppdbcontext.c:101
+#: app/core/gimpfilloptions.c:154 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:183 app/tools/gimpselectionoptions.c:91
 #: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "抗锯齿"
 
-#: app/core/gimpfilloptions.c:160 app/tools/gimpbucketfilloptions.c:193
+#: app/core/gimpfilloptions.c:161 app/tools/gimpbucketfilloptions.c:193
 #: app/tools/gimpselectionoptions.c:98
 msgid "Feather edges"
 msgstr "羽化边缘"
 
-#: app/core/gimpfilloptions.c:161 app/tools/gimpbucketfilloptions.c:194
+#: app/core/gimpfilloptions.c:162 app/tools/gimpbucketfilloptions.c:194
 msgid "Enable feathering of fill edges"
 msgstr "启用填充边缘羽化"
 
-#: app/core/gimpfilloptions.c:167 app/paint/gimpmybrushoptions.c:108
+#: app/core/gimpfilloptions.c:168 app/paint/gimpmybrushoptions.c:108
 #: app/tools/gimpbucketfilloptions.c:200 app/tools/gimpcoloroptions.c:86
 #: app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:105 app/widgets/gimpbrusheditor.c:160
 msgid "Radius"
 msgstr "半径"
 
-#: app/core/gimpfilloptions.c:168 app/tools/gimpbucketfilloptions.c:201
+#: app/core/gimpfilloptions.c:169 app/tools/gimpbucketfilloptions.c:201
 #: app/tools/gimpselectionoptions.c:106
 msgid "Radius of feathering"
 msgstr "羽化半径"
 
-#: app/core/gimpfilloptions.c:550 app/core/gimpfilloptions.c:663
+#: app/core/gimpfilloptions.c:547 app/core/gimpfilloptions.c:660
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "以前景色填充"
 
-#: app/core/gimpfilloptions.c:555 app/core/gimpfilloptions.c:666
+#: app/core/gimpfilloptions.c:552 app/core/gimpfilloptions.c:663
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "以背景色填充"
 
-#: app/core/gimpfilloptions.c:565
+#: app/core/gimpfilloptions.c:562
 msgctxt "undo-type"
 msgid "Fill with Middle Gray (CIELAB) Color"
 msgstr "以中灰（CIELAB）色填充"
 
-#: app/core/gimpfilloptions.c:571
+#: app/core/gimpfilloptions.c:568
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "以白色填充"
 
-#: app/core/gimpfilloptions.c:578
+#: app/core/gimpfilloptions.c:575
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "以透明填充"
 
-#: app/core/gimpfilloptions.c:594 app/core/gimpfilloptions.c:669
+#: app/core/gimpfilloptions.c:591 app/core/gimpfilloptions.c:666
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "以图案填充"
@@ -13846,239 +13851,239 @@ msgstr "第一条网格线的竖直偏移；可以是负数。"
 msgid "Offset unit"
 msgstr "偏移单位"
 
-#: app/core/gimpgrouplayer.c:308
+#: app/core/gimpgrouplayer.c:309
 msgid "Layer Group"
 msgstr "图层组"
 
-#: app/core/gimpgrouplayer.c:323
+#: app/core/gimpgrouplayer.c:324
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "重命名图层组"
 
-#: app/core/gimpgrouplayer.c:324
+#: app/core/gimpgrouplayer.c:325
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "移动图层组"
 
-#: app/core/gimpgrouplayer.c:325
+#: app/core/gimpgrouplayer.c:326
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "缩放图层组"
 
-#: app/core/gimpgrouplayer.c:326
+#: app/core/gimpgrouplayer.c:327
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "改变图层组大小"
 
-#: app/core/gimpgrouplayer.c:327
+#: app/core/gimpgrouplayer.c:328
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "翻转图层组"
 
-#: app/core/gimpgrouplayer.c:328
+#: app/core/gimpgrouplayer.c:329
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "旋转图层组"
 
-#: app/core/gimpgrouplayer.c:329
+#: app/core/gimpgrouplayer.c:330
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "变换图层组"
 
-#: app/core/gimpimage.c:713 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:714 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "对称"
 
-#: app/core/gimpimage.c:2171 app/pdb/drawable-filter-cmds.c:661
+#: app/core/gimpimage.c:2182 app/pdb/drawable-filter-cmds.c:661
 #: app/widgets/gimpdrawabletreeview-filters.c:976
 msgid "Remove filter"
 msgstr "移除滤镜"
 
-#: app/core/gimpimage.c:2780
+#: app/core/gimpimage.c:2791
 msgid " (exported)"
 msgstr "（已导出）"
 
-#: app/core/gimpimage.c:2784
+#: app/core/gimpimage.c:2795
 msgid " (overwritten)"
 msgstr "（已覆盖）"
 
-#: app/core/gimpimage.c:2793
+#: app/core/gimpimage.c:2804
 msgid " (imported)"
 msgstr "（已导入）"
 
-#: app/core/gimpimage.c:3041 app/core/gimpimage.c:3055
-#: app/core/gimpimage.c:3098
+#: app/core/gimpimage.c:3052 app/core/gimpimage.c:3066
+#: app/core/gimpimage.c:3109
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "图层模式“%s”已添加到 %s"
 
-#: app/core/gimpimage.c:3123 app/core/gimpimage.c:3237
+#: app/core/gimpimage.c:3134 app/core/gimpimage.c:3248
 #, c-format
 msgid "Channel effects were saved in %s"
 msgstr "通道特效已保存到 %s"
 
-#: app/core/gimpimage.c:3132
+#: app/core/gimpimage.c:3143
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "图层组已添加到 %s"
 
-#: app/core/gimpimage.c:3139
+#: app/core/gimpimage.c:3150
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "图层组蒙板已添加到 %s"
 
-#: app/core/gimpimage.c:3146
+#: app/core/gimpimage.c:3157
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "图层组位置锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3153
+#: app/core/gimpimage.c:3164
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "图层组透明通道锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3161 app/core/gimpimage.c:3229
+#: app/core/gimpimage.c:3172 app/core/gimpimage.c:3240
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "可见性锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3172
+#: app/core/gimpimage.c:3183
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "文本图层中字体信息的格式已在 %s 中更改"
 
-#: app/core/gimpimage.c:3180
+#: app/core/gimpimage.c:3191
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "图层特效已添加到 %s"
 
-#: app/core/gimpimage.c:3192
+#: app/core/gimpimage.c:3203
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "在 %s 中添加了新的感知混合空间"
 
-#: app/core/gimpimage.c:3206
+#: app/core/gimpimage.c:3217
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "矢量图层已添加到 %s"
 
-#: app/core/gimpimage.c:3214
+#: app/core/gimpimage.c:3225
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "链接图层已添加到 %s"
 
-#: app/core/gimpimage.c:3246
+#: app/core/gimpimage.c:3257
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "多个路径选区已添加到 %s"
 
-#: app/core/gimpimage.c:3258
+#: app/core/gimpimage.c:3269
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "路径中存储的颜色标签已添加到 %s"
 
-#: app/core/gimpimage.c:3265
+#: app/core/gimpimage.c:3276
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "路径中存储的锁定已添加到 %s"
 
-#: app/core/gimpimage.c:3279
+#: app/core/gimpimage.c:3290
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "高位深图像已添加到 %s"
 
-#: app/core/gimpimage.c:3287
+#: app/core/gimpimage.c:3298
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "高位深图像编码已固定到 %s"
 
-#: app/core/gimpimage.c:3295
+#: app/core/gimpimage.c:3306
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "内置 zlib 压缩已添加到 %s"
 
-#: app/core/gimpimage.c:3312
+#: app/core/gimpimage.c:3323
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "对大于 4GB 图像文件的支持已添加到 %s"
 
-#: app/core/gimpimage.c:3319
+#: app/core/gimpimage.c:3330
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "多个图层选区被添加进 %s"
 
-#: app/core/gimpimage.c:3336
+#: app/core/gimpimage.c:3347
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "画布外参考线添加至 %s"
 
-#: app/core/gimpimage.c:3347
+#: app/core/gimpimage.c:3358
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "项目设置和项目名称中的模式搜索已添加进 %s"
 
-#: app/core/gimpimage.c:3353
+#: app/core/gimpimage.c:3364
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "多个通道选择已添加进 %s"
 
-#: app/core/gimpimage.c:3484
+#: app/core/gimpimage.c:3495
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "改变图像分辨率"
 
-#: app/core/gimpimage.c:3536
+#: app/core/gimpimage.c:3547
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "改变图像单位"
 
-#: app/core/gimpimage.c:4575
+#: app/core/gimpimage.c:4586
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "“GIMP 注释”内嵌信息校验失败：注释包含无效的 UTF-8"
 
-#: app/core/gimpimage.c:4637
+#: app/core/gimpimage.c:4648
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "添加内嵌信息到图像"
 
-#: app/core/gimpimage.c:4682
+#: app/core/gimpimage.c:4693
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "从图像移除内嵌信息"
 
-#: app/core/gimpimage.c:5655
+#: app/core/gimpimage.c:5666
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "添加图层"
 
-#: app/core/gimpimage.c:5715 app/core/gimpimage.c:5746
+#: app/core/gimpimage.c:5726 app/core/gimpimage.c:5757
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "移除图层"
 
-#: app/core/gimpimage.c:5740
+#: app/core/gimpimage.c:5751
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "移除浮动选区"
 
-#: app/core/gimpimage.c:5903
+#: app/core/gimpimage.c:5914
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "添加通道"
 
-#: app/core/gimpimage.c:5933 app/core/gimpimage.c:5961
+#: app/core/gimpimage.c:5944 app/core/gimpimage.c:5972
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "移除通道"
 
-#: app/core/gimpimage.c:6023
+#: app/core/gimpimage.c:6034
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "添加路径"
 
-#: app/core/gimpimage.c:6058 app/core/gimpimage.c:6066
+#: app/core/gimpimage.c:6069 app/core/gimpimage.c:6077
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "移除路径"
@@ -14088,64 +14093,64 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "整理对象"
 
-#: app/core/gimpimage-color-profile.c:121
+#: app/core/gimpimage-color-profile.c:122
 msgid "Enable 'Use sRGB Profile'"
 msgstr "启用“使用 sRGB 特性文件”"
 
-#: app/core/gimpimage-color-profile.c:138
+#: app/core/gimpimage-color-profile.c:139
 msgid "Disable 'Use sRGB Profile'"
 msgstr "禁用“使用 sRGB 特性文件”"
 
-#: app/core/gimpimage-color-profile.c:202
+#: app/core/gimpimage-color-profile.c:203
 #, c-format
 msgid "ICC profile validation failed: Parasite's name is not '%s'"
 msgstr "ICC 特性文件验证失败：内嵌信息的名字不是“%s”"
 
-#: app/core/gimpimage-color-profile.c:217
+#: app/core/gimpimage-color-profile.c:218
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
 msgstr "ICC 特性文件验证失败：内嵌信息的标志不是 (PERSISTENT | UNDOABLE)"
 
-#: app/core/gimpimage-color-profile.c:276
+#: app/core/gimpimage-color-profile.c:277
 msgid "ICC profile validation failed: "
 msgstr "ICC 特性文件验证失败："
 
-#: app/core/gimpimage-color-profile.c:278
+#: app/core/gimpimage-color-profile.c:279
 msgid "Simulation ICC profile validation failed: "
 msgstr "模拟 ICC 特性文件验证失败："
 
-#: app/core/gimpimage-color-profile.c:548
+#: app/core/gimpimage-color-profile.c:549
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr "ICC 特性文件验证失败：特性文件不可用于灰度色彩空间"
 
-#: app/core/gimpimage-color-profile.c:558
+#: app/core/gimpimage-color-profile.c:559
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr "ICC 特性文件验证失败：特性文件不可用于 RGB 色彩空间"
 
-#: app/core/gimpimage-color-profile.c:617
+#: app/core/gimpimage-color-profile.c:618
 msgid "Assigning color profile"
 msgstr "正在指定特性文件"
 
-#: app/core/gimpimage-color-profile.c:618
+#: app/core/gimpimage-color-profile.c:619
 msgid "Discarding color profile"
 msgstr "正在丢弃特性文件"
 
-#: app/core/gimpimage-color-profile.c:622
+#: app/core/gimpimage-color-profile.c:623
 msgid "Assign color profile"
 msgstr "指定特性文件"
 
-#: app/core/gimpimage-color-profile.c:623
+#: app/core/gimpimage-color-profile.c:624
 msgid "Discard color profile"
 msgstr "丢弃特性文件"
 
-#: app/core/gimpimage-color-profile.c:666
+#: app/core/gimpimage-color-profile.c:667
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "从“%s”转换为“%s”"
 
-#: app/core/gimpimage-color-profile.c:671
+#: app/core/gimpimage-color-profile.c:672
 msgid "Color profile conversion"
 msgstr "特性文件转换"
 
@@ -14196,15 +14201,15 @@ msgstr "正在转换为索引颜色（第 2 阶段）"
 msgid "Converting to indexed colors (stage 3)"
 msgstr "正在转换为索引颜色（第 3 阶段）"
 
-#: app/core/gimpimage-convert-precision.c:76
+#: app/core/gimpimage-convert-precision.c:77
 #, c-format
 msgctxt "undo-type"
 msgid "Convert Image to %s"
 msgstr "将图像转换为 %s"
 
 #. dithering
-#: app/core/gimpimage-convert-precision.c:198
-#: app/core/gimpimage-convert-precision.c:219
+#: app/core/gimpimage-convert-precision.c:200
+#: app/core/gimpimage-convert-precision.c:221
 #: app/dialogs/convert-indexed-dialog.c:240
 #: app/dialogs/convert-precision-dialog.c:212
 #: app/tools/gimpgradientoptions.c:130
@@ -14320,12 +14325,12 @@ msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "合并图层组"
 
-#: app/core/gimpimage-merge.c:586
+#: app/core/gimpimage-merge.c:587
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "合并可见路径"
 
-#: app/core/gimpimage-merge.c:622
+#: app/core/gimpimage-merge.c:623
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "没有足够多的可见路径可合并。至少需要两个。"
 
@@ -14425,23 +14430,23 @@ msgstr[0] "%d 个图层"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "无法打开缩略图“%s”：%s"
 
-#: app/core/gimpitem.c:2010 app/core/gimpitem.c:2077
+#: app/core/gimpitem.c:2012 app/core/gimpitem.c:2079
 #: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
 #: app/widgets/gimpdrawabletreeview-filters.c:774
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
 
-#: app/core/gimpitem.c:2386
+#: app/core/gimpitem.c:2418
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "添加内嵌信息"
 
-#: app/core/gimpitem.c:2396
+#: app/core/gimpitem.c:2428
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "添加内嵌信息到项目"
 
-#: app/core/gimpitem.c:2447 app/core/gimpitem.c:2454
+#: app/core/gimpitem.c:2479 app/core/gimpitem.c:2486
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "从项目移除内嵌信息"
@@ -14455,7 +14460,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "固定浮动选区"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1126
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1127
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14466,78 +14471,78 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "浮动选区到图层"
 
-#: app/core/gimplayer.c:465
+#: app/core/gimplayer.c:466
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "重命名图层"
 
-#: app/core/gimplayer.c:466
+#: app/core/gimplayer.c:467
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "移动图层"
 
-#: app/core/gimplayer.c:467
+#: app/core/gimplayer.c:468
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "缩放图层"
 
-#: app/core/gimplayer.c:468
+#: app/core/gimplayer.c:469
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "改变图层大小"
 
-#: app/core/gimplayer.c:469
+#: app/core/gimplayer.c:470
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "翻转图层"
 
-#: app/core/gimplayer.c:470
+#: app/core/gimplayer.c:471
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "旋转图层"
 
-#: app/core/gimplayer.c:473
+#: app/core/gimplayer.c:474
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "重排图层"
 
-#: app/core/gimplayer.c:474
+#: app/core/gimplayer.c:475
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "升高图层"
 
-#: app/core/gimplayer.c:475
+#: app/core/gimplayer.c:476
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "图层移至顶端"
 
-#: app/core/gimplayer.c:476
+#: app/core/gimplayer.c:477
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "降低图层"
 
-#: app/core/gimplayer.c:477
+#: app/core/gimplayer.c:478
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "图层移至底端"
 
-#: app/core/gimplayer.c:478
+#: app/core/gimplayer.c:479
 msgid "Layer cannot be raised higher."
 msgstr "图层无法再升高。"
 
-#: app/core/gimplayer.c:479
+#: app/core/gimplayer.c:480
 msgid "Layer cannot be lowered more."
 msgstr "图层无法再降低。"
 
-#: app/core/gimplayer.c:824
+#: app/core/gimplayer.c:825
 msgid "Floating Mask"
 msgstr "浮动蒙板"
 
-#: app/core/gimplayer.c:826
+#: app/core/gimplayer.c:827
 msgid "Floating Channel"
 msgstr "浮动通道"
 
-#: app/core/gimplayer.c:828
+#: app/core/gimplayer.c:829
 msgid "Floating Layer"
 msgstr "浮动图层"
 
@@ -14545,7 +14550,7 @@ msgstr "浮动图层"
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
 #.
-#: app/core/gimplayer.c:833
+#: app/core/gimplayer.c:834
 #, c-format
 msgid ""
 "%s\n"
@@ -14554,73 +14559,73 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:2302
+#: app/core/gimplayer.c:2276
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "无法添加图层蒙板，因为已有一个。"
 
-#: app/core/gimplayer.c:2314
+#: app/core/gimplayer.c:2288
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "无法添加跟指定图层尺寸不同的图层蒙板。"
 
-#: app/core/gimplayer.c:2320
+#: app/core/gimplayer.c:2294
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "添加图层蒙板"
 
-#: app/core/gimplayer.c:2458
+#: app/core/gimplayer.c:2432
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "将透明度转移到蒙板"
 
-#: app/core/gimplayer.c:2622
+#: app/core/gimplayer.c:2596
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "应用图层蒙板"
 
-#: app/core/gimplayer.c:2623
+#: app/core/gimplayer.c:2597
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "删除图层蒙板"
 
-#: app/core/gimplayer.c:2733
+#: app/core/gimplayer.c:2707
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "启用图层蒙板"
 
-#: app/core/gimplayer.c:2734
+#: app/core/gimplayer.c:2708
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "禁用图层蒙板"
 
-#: app/core/gimplayer.c:2815
+#: app/core/gimplayer.c:2789
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "显示图层蒙板"
 
-#: app/core/gimplayer.c:2894
+#: app/core/gimplayer.c:2869
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "添加透明通道"
 
-#: app/core/gimplayer.c:2924
+#: app/core/gimplayer.c:2900
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "移除透明通道"
 
-#: app/core/gimplayer.c:2945
+#: app/core/gimplayer.c:2921
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "图层到图像大小"
 
-#: app/core/gimplayer.c:3128
+#: app/core/gimplayer.c:3104
 msgid "Set layer's blend space"
 msgstr "设置图层混合空间"
 
-#: app/core/gimplayer.c:3175
+#: app/core/gimplayer.c:3151
 msgid "Set layer's composite space"
 msgstr "设置图层合成空间"
 
-#: app/core/gimplayer.c:3222
+#: app/core/gimplayer.c:3198
 msgid "Set layer's composite mode"
 msgstr "设置图层合成模式"
 
@@ -15507,48 +15512,48 @@ msgstr ""
 "这是一个开发版本构建\n"
 "提交编号 %s"
 
-#: app/dialogs/about-dialog.c:1040
+#: app/dialogs/about-dialog.c:1049
 msgid "built from source"
 msgstr "从源代码构建"
 
-#: app/dialogs/about-dialog.c:1050 app/dialogs/module-dialog.c:366
+#: app/dialogs/about-dialog.c:1059 app/dialogs/module-dialog.c:366
 msgid "Version:"
 msgstr "版本："
 
-#: app/dialogs/about-dialog.c:1052
+#: app/dialogs/about-dialog.c:1061
 msgid "OS:"
 msgstr "OS："
 
-#: app/dialogs/about-dialog.c:1068
+#: app/dialogs/about-dialog.c:1077
 #, c-format
 msgid "Memory: %s (%s free)\n"
 msgstr "内存：%s（%s 空闲）\n"
 
-#: app/dialogs/about-dialog.c:1074 app/dialogs/about-dialog.c:1081
+#: app/dialogs/about-dialog.c:1083 app/dialogs/about-dialog.c:1090
 msgid "Memory:"
 msgstr "内存："
 
-#: app/dialogs/about-dialog.c:1103
+#: app/dialogs/about-dialog.c:1112
 msgid "Swap:"
 msgstr "交换空间："
 
-#: app/dialogs/about-dialog.c:1114
+#: app/dialogs/about-dialog.c:1123
 msgid "Library Versions:"
 msgstr "共享库版本："
 
-#: app/dialogs/about-dialog.c:1191 app/dialogs/about-dialog.c:1249
+#: app/dialogs/about-dialog.c:1200 app/dialogs/about-dialog.c:1258
 msgid "Copy Version Information"
 msgstr "复制版本信息"
 
-#: app/dialogs/about-dialog.c:1246
+#: app/dialogs/about-dialog.c:1255
 msgid "Version Information"
 msgstr "版本信息"
 
-#: app/dialogs/about-dialog.c:1248
+#: app/dialogs/about-dialog.c:1257
 msgid "_Copy"
 msgstr "复制(_C)"
 
-#: app/dialogs/about-dialog.c:1305
+#: app/dialogs/about-dialog.c:1314
 msgid "Copied Version Information"
 msgstr "已复制版本信息"
 
@@ -15572,7 +15577,7 @@ msgstr "锁定位置和大小(_S)"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:192
-#: app/widgets/gimpdrawabletreeview.c:177 app/widgets/gimpitemtreeview.c:596
+#: app/widgets/gimpdrawabletreeview.c:177 app/widgets/gimpitemtreeview.c:599
 msgid "Lock visibility"
 msgstr "锁定可见性"
 
@@ -16036,7 +16041,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/dialogs/file-save-dialog.c:854
+#: app/dialogs/file-save-dialog.c:854 app/tools/gimppainttool.c:385
 msgid "Unknown error"
 msgstr "未知错误"
 
@@ -17170,7 +17175,7 @@ msgid "Item search"
 msgstr "项目搜索"
 
 #. Keyboard Shortcuts
-#: app/dialogs/preferences-dialog.c:1911 app/menus/menus.c:652
+#: app/dialogs/preferences-dialog.c:1911 app/menus/menus.c:673
 msgid "Keyboard Shortcuts"
 msgstr "快捷键"
 
@@ -17891,7 +17896,7 @@ msgstr "图像状态栏格式"
 
 #. Input Devices
 #: app/dialogs/preferences-dialog.c:3290 app/dialogs/preferences-dialog.c:3291
-#: app/menus/menus.c:645
+#: app/menus/menus.c:666
 msgid "Input Devices"
 msgstr "输入设备"
 
@@ -18866,7 +18871,7 @@ msgid "Y"
 msgstr "Y"
 
 #. Units
-#: app/display/gimpcursorview.c:249
+#: app/display/gimpcursorview.c:249 app/menus/menus.c:687
 msgid "Units"
 msgstr "单位"
 
@@ -18909,7 +18914,7 @@ msgstr "导航图像显示"
 msgid "Drop image files here to open them"
 msgstr "拖动图像到此处以打开"
 
-#: app/display/gimpdisplayshell-callbacks.c:659
+#: app/display/gimpdisplayshell-callbacks.c:658
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -19026,7 +19031,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "将颜色拖放到图层"
 
-#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1592
+#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1600
 #: app/widgets/gimplayertreeview.c:855
 msgid "Drop layers"
 msgstr "拖放图层"
@@ -19125,7 +19130,7 @@ msgstr "（干净）"
 msgid "(none)"
 msgstr "（无）"
 
-#: app/display/gimpdisplayshell-tool-events.c:1772
+#: app/display/gimpdisplayshell-tool-events.c:1824
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "拾取的图层：“%s”"
@@ -19263,7 +19268,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "单击并拖动以旋转对焦"
 
 #: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729
-#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:680
+#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:681
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s 可限定角度"
@@ -19614,30 +19619,30 @@ msgstr "仅支持平台原生的文件路径：“%s”无法作为链接打开�
 msgid "Circular reference detected with '%s'."
 msgstr "检测到“%s”存在循环引用。"
 
-#: app/file/file-remote.c:113
+#: app/file/file-remote.c:121
 msgid "Mounting remote volume"
 msgstr "正在挂载远程卷"
 
-#: app/file/file-remote.c:289
+#: app/file/file-remote.c:320 app/file/file-remote.c:383
 msgid "Opening remote file"
 msgstr "正在打开远程文件"
 
-#: app/file/file-remote.c:355
+#: app/file/file-remote.c:449
 #, c-format
 msgid "Downloading image (%s of %s)"
 msgstr "正在下载图像（%s/%s）"
 
-#: app/file/file-remote.c:359
+#: app/file/file-remote.c:453
 #, c-format
 msgid "Uploading image (%s of %s)"
 msgstr "正在上传图像（%s/%s）"
 
-#: app/file/file-remote.c:382
+#: app/file/file-remote.c:476
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "下载了大小为 %s 的图像数据"
 
-#: app/file/file-remote.c:386
+#: app/file/file-remote.c:480
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "上传了大小为 %s 的图像数据"
@@ -20695,19 +20700,19 @@ msgstr "明度"
 msgid "The alpha value"
 msgstr "透明通道明度"
 
-#: app/gui/gui.c:330
+#: app/gui/gui.c:336
 msgid "Image Recovery"
 msgstr "图像恢复"
 
-#: app/gui/gui.c:332
+#: app/gui/gui.c:338
 msgid "_Discard"
 msgstr "丢弃(_D)"
 
-#: app/gui/gui.c:333
+#: app/gui/gui.c:339
 msgid "_Recover"
 msgstr "恢复(_R)"
 
-#: app/gui/gui.c:344
+#: app/gui/gui.c:350
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 
@@ -20717,7 +20722,7 @@ msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:353
+#: app/gui/gui.c:359
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20728,7 +20733,7 @@ msgstr[0] "从崩溃中抢救了 %d 张图像。您想要尝试并恢复它们�
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:569
+#: app/gui/gui.c:575
 msgid "Documents"
 msgstr "文档"
 
@@ -21346,43 +21351,43 @@ msgstr "缓冲区中未找到路径"
 msgid "Failed to import paths from '%s': %s"
 msgstr "无法从“%s”导入路径：%s"
 
-#: app/path/gimpvectorlayer.c:198 app/tools/gimppathtool.c:867
+#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:867
 msgid "Vector Layer"
 msgstr "矢量图层"
 
-#: app/path/gimpvectorlayer.c:211
+#: app/path/gimpvectorlayer.c:213
 msgid "Rename Vector Layer"
 msgstr "重命名矢量图层"
 
-#: app/path/gimpvectorlayer.c:212
+#: app/path/gimpvectorlayer.c:214
 msgid "Move Vector Layer"
 msgstr "移动矢量图层"
 
-#: app/path/gimpvectorlayer.c:213
+#: app/path/gimpvectorlayer.c:215
 msgid "Scale Vector Layer"
 msgstr "缩放矢量图层"
 
-#: app/path/gimpvectorlayer.c:214
+#: app/path/gimpvectorlayer.c:216
 msgid "Resize Vector Layer"
 msgstr "改变矢量图层大小"
 
-#: app/path/gimpvectorlayer.c:215
+#: app/path/gimpvectorlayer.c:217
 msgid "Flip Vector Layer"
 msgstr "翻转矢量图层"
 
-#: app/path/gimpvectorlayer.c:216
+#: app/path/gimpvectorlayer.c:218
 msgid "Rotate Vector Layer"
 msgstr "旋转矢量图层"
 
-#: app/path/gimpvectorlayer.c:217
+#: app/path/gimpvectorlayer.c:219
 msgid "Transform Vector Layer"
 msgstr "变换矢量图层"
 
-#: app/path/gimpvectorlayer.c:784
+#: app/path/gimpvectorlayer.c:800
 msgid "Discard Vector Information"
 msgstr "丢弃矢量信息"
 
-#: app/path/gimpvectorlayer.c:877
+#: app/path/gimpvectorlayer.c:893
 msgid "Change Vector Layer Path"
 msgstr "更改矢量图层路径"
 
@@ -22547,11 +22552,11 @@ msgstr "7,500 K – D75"
 msgid "9,300 K"
 msgstr "9,300 K"
 
-#: app/propgui/gimppropgui-utils.c:97
+#: app/propgui/gimppropgui-utils.c:93
 msgid "Choose from a list of common color temperatures"
 msgstr "从一个通用色温列表中选择"
 
-#: app/propgui/gimppropgui-utils.c:148
+#: app/propgui/gimppropgui-utils.c:144
 msgid "New Seed"
 msgstr "新的种子"
 
@@ -22574,17 +22579,13 @@ msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 msgstr ""
-"Pack my box with\n"
-"five dozen liquor jugs."
+"我能吞下玻璃\n"
+"而不伤身体。"
 
-#: app/text/gimpfontfactory.c:464
+#: app/text/gimpfontfactory.c:525
 #, c-format
-msgid ""
-"Some fonts failed to load:\n"
-"%s"
-msgstr ""
-"有些字体无法加载：\n"
-"%s"
+msgid "Some fonts failed to load:%s"
+msgstr "有些字体加载失败：%s"
 
 #: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1742
 msgid "Add Text Layer"
@@ -22634,7 +22635,7 @@ msgstr "变换文本图层"
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "由于没有字体，文本功能不可用。"
 
-#: app/text/gimptextlayer.c:1188
+#: app/text/gimptextlayer.c:1189
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -22654,7 +22655,7 @@ msgstr ""
 "\n"
 "某些文本属性可能有错。除非您要编辑的是文本图层，否则不必担心。"
 
-#: app/text/gimptextlayout.c:701
+#: app/text/gimptextlayout.c:707
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -23060,12 +23061,12 @@ msgid "No valid line art source selected."
 msgstr "未选择有效的线条艺术源。"
 
 #: app/tools/gimpbucketfilltool.c:813 app/tools/gimpbucketfilltool.c:953
-#: app/tools/gimpcolorpickertool.c:271 app/tools/gimppainttool.c:498
+#: app/tools/gimpcolorpickertool.c:271 app/tools/gimppainttool.c:499
 msgid "Click in any image to pick the background color"
 msgstr "在图像中任意单击可拾取背景色"
 
 #: app/tools/gimpbucketfilltool.c:820 app/tools/gimpbucketfilltool.c:962
-#: app/tools/gimpcolorpickertool.c:263 app/tools/gimppainttool.c:492
+#: app/tools/gimpcolorpickertool.c:263 app/tools/gimppainttool.c:493
 msgid "Click in any image to pick the foreground color"
 msgstr "在图像中任意单击以拾取前景色"
 
@@ -24705,16 +24706,16 @@ msgstr "无法在多个图层上绘制。仅选择一个图层。"
 msgid "Cannot paint on layer groups."
 msgstr "不能在图层组上绘画。"
 
-#: app/tools/gimppainttool.c:711
+#: app/tools/gimppainttool.c:712
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s 可画出直线"
 
-#: app/tools/gimppainttool.c:946
+#: app/tools/gimppainttool.c:947
 msgid "The selected drawable does not have an alpha channel."
 msgstr "选中可绘区没有透明通道。"
 
-#: app/tools/gimppainttool.c:957
+#: app/tools/gimppainttool.c:958
 msgid "The selected layer's alpha channel is locked."
 msgstr "选中图层的透明通道已被锁定。"
 
@@ -26558,12 +26559,12 @@ msgstr "光标右移"
 msgid "Keyboard"
 msgstr "键盘"
 
-#: app/widgets/gimpcontrollerkeyboard.c:234
+#: app/widgets/gimpcontrollerkeyboard.c:240
 msgid "Keyboard Events"
 msgstr "键盘事件"
 
-#: app/widgets/gimpcontrollerkeyboard.c:235
-#: app/widgets/gimpcontrollerwheel.c:234
+#: app/widgets/gimpcontrollerkeyboard.c:241
+#: app/widgets/gimpcontrollerwheel.c:240
 msgid "Ready"
 msgstr "就绪"
 
@@ -26682,7 +26683,7 @@ msgstr "右滚"
 msgid "Mouse Wheel"
 msgstr "鼠标滚轮"
 
-#: app/widgets/gimpcontrollerwheel.c:233
+#: app/widgets/gimpcontrollerwheel.c:239
 msgid "Mouse Wheel Events"
 msgstr "鼠标滚轮事件"
 
@@ -27400,11 +27401,11 @@ msgid "Configure this tab"
 msgstr "配置此标签页"
 
 #. Auto button
-#: app/widgets/gimpdockwindow.c:391
+#: app/widgets/gimpdockwindow.c:404
 msgid "Auto"
 msgstr "自动"
 
-#: app/widgets/gimpdockwindow.c:402
+#: app/widgets/gimpdockwindow.c:415
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr "当启用时，对话框将自动跟随你正在编辑的图片。"
@@ -27842,27 +27843,27 @@ msgstr[0] "索引颜色（%d 个颜色）"
 msgid "Select an image in the left pane"
 msgstr "在左侧面板中选择图像"
 
-#: app/widgets/gimpitemtreeview.c:570
+#: app/widgets/gimpitemtreeview.c:573
 msgid "Set Item Exclusive Content Lock"
 msgstr "设置项目唯一内容锁定"
 
-#: app/widgets/gimpitemtreeview.c:584
+#: app/widgets/gimpitemtreeview.c:587
 msgid "Set Item Exclusive Position Lock"
 msgstr "设置项目唯一位置锁定"
 
-#: app/widgets/gimpitemtreeview.c:597
+#: app/widgets/gimpitemtreeview.c:600
 msgid "Unlock visibility"
 msgstr "解锁可见性"
 
-#: app/widgets/gimpitemtreeview.c:598
+#: app/widgets/gimpitemtreeview.c:601
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "设置项目唯一可见性锁定"
 
-#: app/widgets/gimpitemtreeview.c:624
+#: app/widgets/gimpitemtreeview.c:627
 msgid "Select items by patterns and store item sets"
 msgstr "按模式选择项目并存储项目集合"
 
-#: app/widgets/gimpitemtreeview.c:1737
+#: app/widgets/gimpitemtreeview.c:1745
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
@@ -28105,12 +28106,12 @@ msgstr "元数据在早于 2.10 版本的 GIMP 中不可见。"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:329
+#: app/widgets/gimpsearchpopup.c:332
 msgid "menu"
 msgstr "菜单"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:333
+#: app/widgets/gimpsearchpopup.c:336
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -28493,7 +28494,7 @@ msgstr ""
 "激活的渐变。\n"
 "单击打开渐变对话框。"
 
-#: app/widgets/gimptoolbutton.c:542
+#: app/widgets/gimptoolbutton.c:543
 msgid "Also in group:"
 msgstr "同样在分组："
 
@@ -28819,31 +28820,31 @@ msgstr ""
 "通过旧版本 GIMP 保存的损坏 XMP 元数据无法转换且会被忽略。\n"
 "如果您不知道 XMP 是什么，很可能您并不需要它。报告的错误：%s。"
 
-#: app/xcf/xcf-load.c:1505
+#: app/xcf/xcf-load.c:1501
 msgid "Linked Layers"
 msgstr "链接的图层"
 
-#: app/xcf/xcf-load.c:1515
+#: app/xcf/xcf-load.c:1511
 msgid "Linked Channels"
 msgstr "链接的通道"
 
-#: app/xcf/xcf-load.c:1540
+#: app/xcf/xcf-load.c:1536
 msgid "Linked Paths"
 msgstr "链接的路径"
 
-#: app/xcf/xcf-load.c:1588
+#: app/xcf/xcf-load.c:1584
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "此 XCF 文件已损坏！已尽可能抢救图像数据，但抢救得到的部分不完整。"
 
-#: app/xcf/xcf-load.c:1615
+#: app/xcf/xcf-load.c:1611
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "此 XCF 文件已损坏！未能抢救任何图像数据。"
 
-#: app/xcf/xcf-load.c:1833
+#: app/xcf/xcf-load.c:1829
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28853,14 +28854,14 @@ msgstr ""
 "未能正确地保存索引颜色表。\n"
 "将使用灰度颜色表取代原颜色表。"
 
-#: app/xcf/xcf-load.c:2664
+#: app/xcf/xcf-load.c:2660
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
 "to a raster layer."
 msgstr "XCF 警告：XCF 文件中有无效链接。链接图层“%s”已降级为栅格化图层。"
 
-#: app/xcf/xcf-load.c:2684
+#: app/xcf/xcf-load.c:2680
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
@@ -28868,7 +28869,7 @@ msgid ""
 msgstr ""
 "XCF 警告：检测到 XCF 文件中有循环引用。链接图层“%s”已降级为栅格化图层。"
 
-#: app/xcf/xcf-load.c:3416
+#: app/xcf/xcf-load.c:3411
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -28880,7 +28881,7 @@ msgstr ""
 "染。\n"
 "这种情况不应发生。您应将该问题报告给滤镜的开发者。"
 
-#: app/xcf/xcf-load.c:4358
+#: app/xcf/xcf-load.c:4353
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
@@ -29052,307 +29053,307 @@ msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "缓冲区(_B)"
 
-#: menus/image-menu.ui.in.in:150
+#: menus/image-menu.ui.in.in:153
 msgctxt "select-action"
 msgid "_Select"
 msgstr "选择(_S)"
 
-#: menus/image-menu.ui.in.in:156
+#: menus/image-menu.ui.in.in:159
 msgctxt "view-action"
 msgid "_Float"
 msgstr "浮动(_F)"
 
-#: menus/image-menu.ui.in.in:183
+#: menus/image-menu.ui.in.in:186
 msgctxt "view-action"
 msgid "_View"
 msgstr "视图(_V)"
 
-#: menus/image-menu.ui.in.in:188
+#: menus/image-menu.ui.in.in:191
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "缩放(_Z)"
 
-#: menus/image-menu.ui.in.in:213
+#: menus/image-menu.ui.in.in:216
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "翻转和旋转(_F)"
 
-#: menus/image-menu.ui.in.in:237
+#: menus/image-menu.ui.in.in:240
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "移动至屏幕"
 
-#: menus/image-menu.ui.in.in:246
+#: menus/image-menu.ui.in.in:249
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "色彩管理(_C)"
 
-#: menus/image-menu.ui.in.in:253
+#: menus/image-menu.ui.in.in:256
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "显示再现意图(_R)"
 
-#: menus/image-menu.ui.in.in:285
+#: menus/image-menu.ui.in.in:288
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "衬垫颜色(_P)"
 
-#: menus/image-menu.ui.in.in:309
+#: menus/image-menu.ui.in.in:312
 msgctxt "image-action"
 msgid "_Image"
 msgstr "图像(_I)"
 
-#: menus/image-menu.ui.in.in:316
+#: menus/image-menu.ui.in.in:319
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "模式(_M)"
 
-#: menus/image-menu.ui.in.in:322
+#: menus/image-menu.ui.in.in:325
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "编码(_E)"
 
-#: menus/image-menu.ui.in.in:338
+#: menus/image-menu.ui.in.in:341
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "色彩管理(_N)"
 
-#: menus/image-menu.ui.in.in:355
+#: menus/image-menu.ui.in.in:358
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "软打样再现意图(_N)"
 
-#: menus/image-menu.ui.in.in:369
+#: menus/image-menu.ui.in.in:372
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "变换(_T)"
 
-#: menus/image-menu.ui.in.in:402
+#: menus/image-menu.ui.in.in:405
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "参考线(_G)"
 
-#: menus/image-menu.ui.in.in:410
+#: menus/image-menu.ui.in.in:413
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "元数据(_D)"
 
-#: menus/image-menu.ui.in.in:418
+#: menus/image-menu.ui.in.in:421
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "图层(_L)"
 
-#: menus/image-menu.ui.in.in:444
+#: menus/image-menu.ui.in.in:447
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "堆叠(_K)"
 
-#: menus/image-menu.ui.in.in:461
+#: menus/image-menu.ui.in.in:464
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "蒙板(_M)"
 
-#: menus/image-menu.ui.in.in:483
+#: menus/image-menu.ui.in.in:486
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "透明(_A)"
 
-#: menus/image-menu.ui.in.in:501
+#: menus/image-menu.ui.in.in:504
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "变换(_T)"
 
-#: menus/image-menu.ui.in.in:531
+#: menus/image-menu.ui.in.in:534
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "颜色(_C)"
 
-#: menus/image-menu.ui.in.in:552
+#: menus/image-menu.ui.in.in:555
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "自动(_A)"
 
-#: menus/image-menu.ui.in.in:560
+#: menus/image-menu.ui.in.in:563
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "分量(_O)"
 
-#: menus/image-menu.ui.in.in:566
+#: menus/image-menu.ui.in.in:569
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "去色(_E)"
 
-#: menus/image-menu.ui.in.in:573
+#: menus/image-menu.ui.in.in:576
 msgctxt "image-action"
 msgid "_Map"
 msgstr "映射(_M)"
 
-#: menus/image-menu.ui.in.in:584
+#: menus/image-menu.ui.in.in:587
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "色彩映射(_T)"
 
-#: menus/image-menu.ui.in.in:591
+#: menus/image-menu.ui.in.in:594
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "信息(_N)"
 
-#: menus/image-menu.ui.in.in:609
+#: menus/image-menu.ui.in.in:612
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "工具(_T)"
 
-#: menus/image-menu.ui.in.in:612
+#: menus/image-menu.ui.in.in:615
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "选择工具(_S)"
 
-#: menus/image-menu.ui.in.in:625
+#: menus/image-menu.ui.in.in:628
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "绘画工具(_P)"
 
-#: menus/image-menu.ui.in.in:642
+#: menus/image-menu.ui.in.in:645
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "变换工具(_T)"
 
-#: menus/image-menu.ui.in.in:681
+#: menus/image-menu.ui.in.in:684
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "滤镜(_R)"
 
-#: menus/image-menu.ui.in.in:686
+#: menus/image-menu.ui.in.in:689
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "最近使用"
 
-#: menus/image-menu.ui.in.in:695
+#: menus/image-menu.ui.in.in:698
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "模糊(_B)"
 
-#: menus/image-menu.ui.in.in:710
+#: menus/image-menu.ui.in.in:713
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "增强(_H)"
 
-#: menus/image-menu.ui.in.in:720
+#: menus/image-menu.ui.in.in:723
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "扭曲(_D)"
 
-#: menus/image-menu.ui.in.in:739
+#: menus/image-menu.ui.in.in:742
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "光照和阴影(_L)"
 
-#: menus/image-menu.ui.in.in:754
+#: menus/image-menu.ui.in.in:757
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "噪点(_N)"
 
-#: menus/image-menu.ui.in.in:764
+#: menus/image-menu.ui.in.in:767
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "边缘检测(_T)"
 
-#: menus/image-menu.ui.in.in:773
+#: menus/image-menu.ui.in.in:776
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "常规(_G)"
 
-#: menus/image-menu.ui.in.in:784
+#: menus/image-menu.ui.in.in:787
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "合成(_O)"
 
-#: menus/image-menu.ui.in.in:787
+#: menus/image-menu.ui.in.in:790
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "艺术(_A)"
 
-#: menus/image-menu.ui.in.in:799
+#: menus/image-menu.ui.in.in:802
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "装饰(_D)"
 
-#: menus/image-menu.ui.in.in:802
+#: menus/image-menu.ui.in.in:805
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "映射(_M)"
 
-#: menus/image-menu.ui.in.in:814
+#: menus/image-menu.ui.in.in:817
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "渲染(_R)"
 
-#: menus/image-menu.ui.in.in:817
+#: menus/image-menu.ui.in.in:820
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "分形(_F)"
 
-#: menus/image-menu.ui.in.in:820
+#: menus/image-menu.ui.in.in:823
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "噪点(_O)"
 
-#: menus/image-menu.ui.in.in:828
+#: menus/image-menu.ui.in.in:831
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "图案(_P)"
 
-#: menus/image-menu.ui.in.in:841
+#: menus/image-menu.ui.in.in:844
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "网络(_W)"
 
-#: menus/image-menu.ui.in.in:847
+#: menus/image-menu.ui.in.in:850
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "动画(_I)"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:853
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "开发(_V)"
 
-#: menus/image-menu.ui.in.in:852
+#: menus/image-menu.ui.in.in:855
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "插件示例(_E)"
 
-#: menus/image-menu.ui.in.in:855
+#: menus/image-menu.ui.in.in:858
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:858
+#: menus/image-menu.ui.in.in:861
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:865
+#: menus/image-menu.ui.in.in:868
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "窗口(_W)"
 
-#: menus/image-menu.ui.in.in:868
+#: menus/image-menu.ui.in.in:871
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "最近关闭的停靠(_R)"
 
-#: menus/image-menu.ui.in.in:872
+#: menus/image-menu.ui.in.in:875
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "可停靠对话框(_D)"
 
-#: menus/image-menu.ui.in.in:904
+#: menus/image-menu.ui.in.in:907
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "用户手册(_U)"
 
-#: menus/image-menu.ui.in.in:920
+#: menus/image-menu.ui.in.in:926
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "GIMP 在线(_G)"
