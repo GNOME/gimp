@@ -2267,6 +2267,18 @@ gimp_display_shell_macos_shortcut (GimpDisplayShell  *shell,
       return TRUE;
     }
 
+  /* on macOS, Cmd+Shift+/ opens the Help menu. See: #7111 */
+  if ((kevent->keyval == GDK_KEY_question ||
+       (kevent->keyval == GDK_KEY_slash && (kevent->state & GDK_SHIFT_MASK))) &&
+      (kevent->state & primary))
+    {
+      NSEvent *nsevent = gdk_quartz_event_get_nsevent ((GdkEvent *) kevent);
+      if (nsevent)
+        [NSApp sendEvent:nsevent];
+
+      return TRUE;
+    }
+
   return FALSE;
 }
 #endif
