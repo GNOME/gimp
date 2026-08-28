@@ -84,6 +84,9 @@
 #include "gimp-log.h"
 
 #ifdef PLATFORM_OSX
+#import <AppKit/AppKit.h>
+#include <gdk/quartz/gdkquartz-cocoa-access.h>
+
 /* macOS virtual keycode for the physical "grave/section" key (kVK_ANSI_Grave),
    stable across keyboard layouts even when it is a dead key (e.g. Brazilian ABNT2) */
 #define GIMP_MACOS_KVK_ANSI_GRAVE 50
@@ -132,6 +135,8 @@ static gboolean   gimp_display_shell_tab_pressed              (GimpDisplayShell 
 
 #ifdef PLATFORM_OSX
 static gboolean   gimp_display_shell_cmd_pressed              (GimpDisplayShell  *shell,
+                                                               const GdkEventKey *event);
+static gboolean   gimp_display_shell_macos_shortcut           (GimpDisplayShell  *shell,
                                                                const GdkEventKey *event);
 #endif
 
@@ -341,6 +346,9 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
           {
             return gimp_display_shell_cmd_pressed (shell, kevent);
           }
+        /* other standard macOS shortcuts (handled by the OS) */
+        if (gimp_display_shell_macos_shortcut (shell, kevent))
+          return TRUE;
 #endif
       }
       break;
@@ -1087,6 +1095,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 gimp_get_primary_accelerator_mask ())
               {
                 return_val = gimp_display_shell_cmd_pressed (shell, kevent);
+              }
+            /* other standard macOS shortcuts (handled by the OS) */
+            else if (gimp_display_shell_macos_shortcut (shell, kevent))
+              {
+                return_val = TRUE;
               }
             else
 #endif
@@ -2232,6 +2245,29 @@ gimp_display_shell_cmd_pressed (GimpDisplayShell  *shell,
     }
 
   return TRUE;
+}
+
+/* GDKquartz intercepts every key combo before either AppKit or macOS gets
+   to see it, so let's redirect some baked in shortcuts back to macOS */
+static gboolean
+gimp_display_shell_macos_shortcut (GimpDisplayShell  *shell,
+                                   const GdkEventKey *kevent)
+{
+  GdkModifierType primary = gimp_get_primary_accelerator_mask ();
+
+  /* on macOS, Ctrl+F2 is used instead of Alt. See: #13502 */
+  if (kevent->keyval == GDK_KEY_F2       &&
+      (kevent->state & GDK_CONTROL_MASK) &&
+      ! (kevent->state & primary))
+    {
+      NSEvent *nsevent = gdk_quartz_event_get_nsevent ((GdkEvent *) kevent);
+      if (nsevent)
+        [NSApp sendEvent:nsevent];
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 #endif
 
