@@ -61,7 +61,6 @@ static gboolean menurc_deleted = FALSE;
 #ifdef PLATFORM_OSX
 static Gimp    *unique_gimp        = NULL;
 static gboolean app_menu_added     = FALSE;
-static gboolean window_menu_added  = FALSE;
 #endif
 
 
@@ -703,12 +702,11 @@ menus_quartz_app_menu (Gimp *gimp)
     {
       /* Windows */
        /* fix native windows list not appearing on dock. See: #428 */
-      if ((! window_menu_added && [menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Windows")]]) ||
+      if (([menu_item title] && [[menu_item title] isEqualToString:[NSString stringWithUTF8String:_("Windows")]]) ||
           [[menu_item title] isEqualToString:@"Windows"])
         {
           if ([menu_item hasSubmenu])
             [NSApp setWindowsMenu:[menu_item submenu]];
-          window_menu_added = TRUE;
           /* no break: "Windows" precedes "Help" in the menu bar, so
              we must keep iterating to reach and set the Help menu below */
         }
@@ -720,7 +718,7 @@ menus_quartz_app_menu (Gimp *gimp)
         {
           if ([menu_item hasSubmenu])
             [NSApp setHelpMenu:[menu_item submenu]];
-          /* do NOT check if the help menu was set, always set due to GTK */
+          /* do NOT check if the Windows or Help menu was set, always set due to MWM */
           break;
         }
     }
