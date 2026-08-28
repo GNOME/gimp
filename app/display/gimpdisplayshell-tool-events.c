@@ -722,6 +722,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         if (bevent->button == 1 && shell->button1_release_pending)
           {
             gimp_display_shell_released (shell, event, NULL);
+
+            /* In button1_release_pending state, the active tool should
+             * not be active! See #12792 and !2657.
+             */
+            active_tool = tool_manager_get_active (gimp);
+            g_return_val_if_fail (! active_tool ||
+                                  ! gimp_tool_control_is_active (active_tool->control),
+                                  TRUE);
             return TRUE;
           }
 
@@ -1267,8 +1275,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
               case GDK_KEY_space:
               case GDK_KEY_KP_Space:
-                if ((state & GDK_BUTTON1_MASK) &&
-                    shell->display->config->space_bar_action != GIMP_SPACE_BAR_ACTION_NONE)
+                if ((state & GDK_BUTTON1_MASK))
                   {
                     shell->button1_release_pending = TRUE;
                     shell->space_release_pending   = FALSE;
@@ -2075,6 +2082,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
   switch (shell->display->config->space_bar_action)
     {
     case GIMP_SPACE_BAR_ACTION_NONE:
+      shell->space_release_pending = FALSE;
       break;
 
     case GIMP_SPACE_BAR_ACTION_PAN:
