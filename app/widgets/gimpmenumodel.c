@@ -780,10 +780,28 @@ gimp_menu_model_initialize (GimpMenuModel *model,
           action = gimp_ui_manager_find_action (model->priv->manager, NULL, action_name);
 
           if (model->priv->manager->store_action_paths)
-            /* Special-case the main menu manager when constructing it as
-             * this is the only one which should set the menu path.
-             */
-            gimp_action_set_menu_path (action, gimp_menu_model_get_path (model));
+            {
+              /* Special-case the main menu manager when constructing it as
+               * this is the only one which should set the menu path.
+               */
+              const gchar *menu_path = gimp_menu_model_get_path (model);
+
+#ifdef PLATFORM_OSX
+              /* on macOS, entries flagged with "hidden-when" == "macos-menubar"
+                 are relocated to the "GIMP" Mac menu. See: #9877 */
+              gchar *hidden_when = NULL;
+
+              if (g_menu_item_get_attribute (item, "hidden-when", "s", &hidden_when) &&
+                  g_strcmp0 (hidden_when, "macos-menubar") == 0)
+                {
+                  menu_path = g_strdup_printf ("/GIMP/%s",
+                                               gimp_action_get_short_label (action));
+                }
+              g_free (hidden_when);
+#endif
+
+              gimp_action_set_menu_path (action, menu_path);
+            }
 
           g_signal_connect_object (action,
                                    "notify::visible",
