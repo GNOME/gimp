@@ -49,6 +49,9 @@
 #include "gimp-intl.h"
 
 
+#define DEFAULT_SEARCH_WIDTH 480
+
+
 enum
 {
   COLUMN_ICON,
@@ -425,7 +428,7 @@ gimp_search_popup_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gtk_window_set_default_size (GTK_WINDOW (popup), 480, -1);
+  gtk_window_set_default_size (GTK_WINDOW (popup), DEFAULT_SEARCH_WIDTH, -1);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (popup), main_vbox);
