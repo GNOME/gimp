@@ -1267,7 +1267,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
               case GDK_KEY_space:
               case GDK_KEY_KP_Space:
-                if ((state & GDK_BUTTON1_MASK))
+                if ((state & GDK_BUTTON1_MASK) &&
+                    shell->display->config->space_bar_action != GIMP_SPACE_BAR_ACTION_NONE)
                   {
                     shell->button1_release_pending = TRUE;
                     shell->space_release_pending   = FALSE;
