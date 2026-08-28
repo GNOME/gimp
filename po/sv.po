@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-17 11:01+0000\n"
-"PO-Revision-Date: 2026-08-17 22:56+0200\n"
+"POT-Creation-Date: 2026-08-28 19:36+0000\n"
+"PO-Revision-Date: 2026-08-28 23:01+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -336,11 +336,11 @@ msgstr "Visa en inställningssida med experimentella funktioner"
 msgid "Show an image submenu with debug actions"
 msgstr "Visa en bildundermeny med felsökningsåtgärder"
 
-#: app/main.c:820
+#: app/main.c:832
 msgid "[FILE|URI...]"
 msgstr "[FIL|URI…]"
 
-#: app/main.c:850
+#: app/main.c:862
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -348,11 +348,11 @@ msgstr ""
 "GIMP kunde inte initiera det grafiska användargränssnittet.\n"
 "Kontrollera att det finns en korrekt konfiguration för din displaymiljö."
 
-#: app/main.c:919
+#: app/main.c:931
 msgid "Another GIMP instance is already running."
 msgstr "En annan instans av GIMP körs redan."
 
-#: app/main.c:1002
+#: app/main.c:1014
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Tryck på en tangent för att stänga fönstret)\n"
@@ -390,7 +390,7 @@ msgid "Brush Editor"
 msgstr "Penselredigerare"
 
 #. initialize the list of gimp brushes
-#: app/actions/actions.c:117 app/core/gimp-data-factories.c:406
+#: app/actions/actions.c:117 app/core/gimp-data-factories.c:398
 #: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3516
 msgid "Brushes"
 msgstr "Penslar"
@@ -474,7 +474,7 @@ msgid "Filters"
 msgstr "Filter"
 
 #. initialize the list of gimp fonts
-#: app/actions/actions.c:174 app/core/gimp-data-factories.c:440
+#: app/actions/actions.c:174 app/core/gimp-data-factories.c:432
 #: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3546
 msgid "Fonts"
 msgstr "Typsnitt"
@@ -485,12 +485,12 @@ msgid "Gradient Editor"
 msgstr "Gradientredigerare"
 
 #. initialize the list of gimp gradients
-#: app/actions/actions.c:180 app/core/gimp-data-factories.c:431
+#: app/actions/actions.c:180 app/core/gimp-data-factories.c:423
 #: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3540
 msgid "Gradients"
 msgstr "Gradienter"
 
-#: app/actions/actions.c:183 app/core/gimp-data-factories.c:447
+#: app/actions/actions.c:183 app/core/gimp-data-factories.c:439
 #: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3552
 msgid "Tool Presets"
 msgstr "Verktygsförinställning"
@@ -500,8 +500,9 @@ msgstr "Verktygsförinställning"
 msgid "Tool Preset Editor"
 msgstr "Verktygsförinställningsredigare"
 
+#. Help
 #. fix native search bar not appearing on non-Enligsh locales
-#: app/actions/actions.c:189 app/menus/menus.c:668
+#: app/actions/actions.c:189 app/menus/menus.c:716
 msgid "Help"
 msgstr "Hjälp"
 
@@ -522,7 +523,7 @@ msgid "Layers"
 msgstr "Lager"
 
 #. initialize the list of mypaint brushes
-#: app/actions/actions.c:201 app/core/gimp-data-factories.c:416
+#: app/actions/actions.c:201 app/core/gimp-data-factories.c:408
 #: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3558
 msgid "MyPaint Brushes"
 msgstr "MyPaint-penslar"
@@ -533,13 +534,13 @@ msgid "Palette Editor"
 msgstr "Palettredigerare"
 
 #. initialize the list of gimp palettes
-#: app/actions/actions.c:207 app/core/gimp-data-factories.c:426
+#: app/actions/actions.c:207 app/core/gimp-data-factories.c:418
 #: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3534
 msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp patterns
-#: app/actions/actions.c:210 app/core/gimp-data-factories.c:421
+#: app/actions/actions.c:210 app/core/gimp-data-factories.c:413
 #: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3528
 msgid "Patterns"
 msgstr "Mönster"
@@ -575,7 +576,7 @@ msgstr "Textverktyg"
 msgid "Text Editor"
 msgstr "Textredigerare"
 
-#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:543
+#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:549
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
 
@@ -596,7 +597,9 @@ msgstr "Banor"
 msgid "View"
 msgstr "Visa"
 
-#: app/actions/actions.c:249
+#. Windows
+#. fix native windows list not appearing on dock. See: #428
+#: app/actions/actions.c:249 app/menus/menus.c:705
 msgid "Windows"
 msgstr "Fönster"
 
@@ -2585,7 +2588,7 @@ msgstr "Ange en beskrivning för markören"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
-#: app/display/gimpdisplayshell-dnd.c:707 app/display/gimpimagewindow.c:2266
+#: app/display/gimpdisplayshell-dnd.c:707 app/display/gimpimagewindow.c:2288
 #: app/widgets/gimplayertreeview.c:859 app/widgets/gimptoolbox.c:852
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -5608,7 +5611,7 @@ msgstr "Redigera denna gradient"
 msgid "Save '%s' as POV-Ray"
 msgstr "Spara ”%s” som POV-Ray"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:899
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:902
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_Hjälp"
@@ -6176,19 +6179,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Ta bort denna bild"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:568
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:571
 msgid "Lock content"
 msgstr "Lås innehåll"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:569
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:572
 msgid "Unlock content"
 msgstr "Lås upp innehåll"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:582
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:585
 msgid "Lock position"
 msgstr "Lås position"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:583
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:586
 msgid "Unlock position"
 msgstr "Lås upp position"
 
@@ -10198,104 +10201,104 @@ msgstr "Ange namnet på den nya displayen:"
 msgid "Can't open display '%s'. Please try another one:"
 msgstr "Kan inte öppna displayen ”%s”. Försök med en annan:"
 
-#: app/actions/windows-actions.c:103
+#: app/actions/windows-actions.c:112
 msgctxt "windows-action"
 msgid "Next Image"
 msgstr "Nästa bild"
 
-#: app/actions/windows-actions.c:104
+#: app/actions/windows-actions.c:113
 msgctxt "windows-action"
 msgid "Switch to the next image"
 msgstr "Växla till nästa bild"
 
-#: app/actions/windows-actions.c:109
+#: app/actions/windows-actions.c:118
 msgctxt "windows-action"
 msgid "Previous Image"
 msgstr "Föregående bild"
 
-#: app/actions/windows-actions.c:110
+#: app/actions/windows-actions.c:119
 msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Växla till föregående bild"
 
-#: app/actions/windows-actions.c:115 menus/image-menu.ui.in.in:888
+#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:891
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "_Flikposition"
 
-#: app/actions/windows-actions.c:121
+#: app/actions/windows-actions.c:130
 msgctxt "windows-action"
 msgid "_Hide Docks"
 msgstr "_Dölj dockor"
 
-#: app/actions/windows-actions.c:122
+#: app/actions/windows-actions.c:131
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
 "När aktiverat göms dockor och andra dialoger, endast bildfönstren visas."
 
-#: app/actions/windows-actions.c:128
+#: app/actions/windows-actions.c:137
 msgctxt "windows-action"
 msgid "_Show Tabs"
 msgstr "_Visa flikar"
 
-#: app/actions/windows-actions.c:129
+#: app/actions/windows-actions.c:138
 msgctxt "windows-action"
 msgid "When enabled, the image tabs bar is shown."
 msgstr "När aktiverad visas bildfliksraden."
 
-#: app/actions/windows-actions.c:135
+#: app/actions/windows-actions.c:144
 msgctxt "windows-action"
 msgid "Single-Window _Mode"
 msgstr "Ett program_fönster"
 
-#: app/actions/windows-actions.c:136
+#: app/actions/windows-actions.c:145
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
 msgstr "När aktiverat körs GIMP i ett enda fönster."
 
-#: app/actions/windows-actions.c:145
+#: app/actions/windows-actions.c:154
 msgctxt "windows-tabs-position-action"
 msgid "_Top"
 msgstr "Öv_erst"
 
-#: app/actions/windows-actions.c:146
+#: app/actions/windows-actions.c:155
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
 msgstr "Positionera flikarna längst upp"
 
-#: app/actions/windows-actions.c:150
+#: app/actions/windows-actions.c:159
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
 msgstr "_Nederst"
 
-#: app/actions/windows-actions.c:151
+#: app/actions/windows-actions.c:160
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
 msgstr "Positionera flikarna längst ner"
 
-#: app/actions/windows-actions.c:155
+#: app/actions/windows-actions.c:164
 msgctxt "windows-tabs-position-action"
 msgid "_Left"
 msgstr "_Vänster"
 
-#: app/actions/windows-actions.c:156
+#: app/actions/windows-actions.c:165
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the left"
 msgstr "Positionera flikarna till vänster"
 
-#: app/actions/windows-actions.c:160
+#: app/actions/windows-actions.c:169
 msgctxt "windows-tabs-position-action"
 msgid "_Right"
 msgstr "_Höger"
 
-#: app/actions/windows-actions.c:161
+#: app/actions/windows-actions.c:170
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
 msgstr "Positionera flikarna till höger"
 
-#: app/actions/windows-actions.c:278 app/actions/windows-actions.c:280
+#: app/actions/windows-actions.c:287 app/actions/windows-actions.c:289
 msgid "Single-window mode disabled"
 msgstr "Läge med ett programfönster inaktiverat"
 
@@ -10303,7 +10306,7 @@ msgstr "Läge med ett programfönster inaktiverat"
 #. * tab or window above others) specific images or views of image. The part
 #. * between quotes is the image name and other view identifiers.
 #.
-#: app/actions/windows-actions.c:393
+#: app/actions/windows-actions.c:402
 #, c-format
 msgid "Show \"%s-%d.%d\""
 msgstr "Visa ”%s-%d.%d”"
@@ -10311,14 +10314,14 @@ msgstr "Visa ”%s-%d.%d”"
 #. TRANSLATORS: the first argument (%1$s) is the image name, the
 #. * second (%2$d) is its tab order in the graphical interface.
 #.
-#: app/actions/windows-actions.c:472
+#: app/actions/windows-actions.c:481
 #, c-format
 msgid "Switch to the first image view: %1$s"
 msgid_plural "Switch to image view %2$d: %1$s"
 msgstr[0] "Växla till den första bildvyn: %1$s"
 msgstr[1] "Växla till bildvy %2$d: %1$s"
 
-#: app/actions/windows-commands.c:208
+#: app/actions/windows-commands.c:218
 msgid ""
 "The chosen recent dock contains a toolbox. Please close the currently open "
 "toolbox and try again."
@@ -12848,7 +12851,9 @@ msgid "Parasites"
 msgstr "Parasiter"
 
 #. initialize the module list
+#. Modules
 #: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3576
+#: app/menus/menus.c:680
 msgid "Modules"
 msgstr "Moduler"
 
@@ -12891,24 +12896,24 @@ msgstr "Satstolken ”%s” är inte tillgänglig. Satsläge inaktiverat."
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:488 app/widgets/gimpdevices.c:172
+#: app/menus/menus.c:489 app/widgets/gimpdevices.c:172
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Ta bort ”%s” misslyckades: %s"
 
 #. initialize the list of gimp dynamics
-#: app/core/gimp-data-factories.c:411 app/core/gimpcontext.c:706
+#: app/core/gimp-data-factories.c:403 app/core/gimpcontext.c:706
 #: app/dialogs/preferences-dialog.c:3522 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "Dynamik"
 
 #. initialize the color history
-#: app/core/gimp-data-factories.c:436 app/core/gimp-palettes.c:60
+#: app/core/gimp-data-factories.c:428 app/core/gimp-palettes.c:60
 msgid "Color History"
 msgstr "Färghistorik"
 
 #. update tag cache
-#: app/core/gimp-data-factories.c:453
+#: app/core/gimp-data-factories.c:445
 msgid "Updating tag cache"
 msgstr "Uppdaterar taggcache"
 
@@ -13150,17 +13155,17 @@ msgstr ""
 "Ödesdigert tolkningsfel i Photoshop-resursfil: RLE-komprimerade data är "
 "skadade."
 
-#: app/core/gimp-utils.c:1793
+#: app/core/gimp-utils.c:1788
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Denna tolk stöder inte överlappande listor."
 
-#: app/core/gimp-utils.c:1816
+#: app/core/gimp-utils.c:1811
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> måste vara inuti taggarna <ol> eller <ul>."
 
-#: app/core/gimp-utils.c:1821
+#: app/core/gimp-utils.c:1816
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Okänd tagg <%s>."
@@ -13835,7 +13840,7 @@ msgstr "Kan inte byta namn på effektmasker."
 msgid "%s mask"
 msgstr "%s-mask"
 
-#: app/core/gimpdynamicsoutput.c:136
+#: app/core/gimpdynamicsoutput.c:141
 msgid "Output type"
 msgstr "Utmatningstyp"
 
@@ -15591,22 +15596,22 @@ msgstr "Verktygsförinställningsfil är skadad."
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:241
+#: app/dialogs/about-dialog.c:246
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revision %d)"
 
-#: app/dialogs/about-dialog.c:249
+#: app/dialogs/about-dialog.c:259
 msgid "About GIMP"
 msgstr "Om GIMP"
 
-#: app/dialogs/about-dialog.c:258
+#: app/dialogs/about-dialog.c:268
 msgid "Visit the GIMP website"
 msgstr "Besök webbplatsen för GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:264
+#: app/dialogs/about-dialog.c:274
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander <po@danielnylander.se>\n"
@@ -15621,33 +15626,33 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: app/dialogs/about-dialog.c:318 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:328 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "_Hjälp"
 
-#: app/dialogs/about-dialog.c:495
+#: app/dialogs/about-dialog.c:530
 msgid "Update available!"
 msgstr "Uppdatering tillgänglig!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:525
+#: app/dialogs/about-dialog.c:560
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Hämta GIMP %s revision %d (utgiven %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:535
+#: app/dialogs/about-dialog.c:570
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Utgåvekommentar</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:540
+#: app/dialogs/about-dialog.c:575
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Hämta GIMP %s (utgiven %s)\n"
 
-#: app/dialogs/about-dialog.c:565 app/dialogs/about-dialog.c:588
+#: app/dialogs/about-dialog.c:600 app/dialogs/about-dialog.c:623
 msgid "Check for updates"
 msgstr "Sök uppdateringar"
 
@@ -15655,7 +15660,7 @@ msgstr "Sök uppdateringar"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:609
+#: app/dialogs/about-dialog.c:644
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Senast kontrollerad %s, %s"
@@ -15664,16 +15669,16 @@ msgstr "Senast kontrollerad %s, %s"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:615
+#: app/dialogs/about-dialog.c:650
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "Aktuell så sent som %s vid %s"
 
-#: app/dialogs/about-dialog.c:843
+#: app/dialogs/about-dialog.c:878
 msgid "GIMP is brought to you by"
 msgstr "GIMP presenteras av"
 
-#: app/dialogs/about-dialog.c:918
+#: app/dialogs/about-dialog.c:953
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -15703,7 +15708,7 @@ msgstr "Lås position och _storlek"
 
 #: app/dialogs/channel-options-dialog.c:130
 #: app/dialogs/layer-options-dialog.c:192
-#: app/widgets/gimpdrawabletreeview.c:176 app/widgets/gimpitemtreeview.c:596
+#: app/widgets/gimpdrawabletreeview.c:176 app/widgets/gimpitemtreeview.c:599
 msgid "Lock visibility"
 msgstr "Lås synlighet"
 
@@ -16171,7 +16176,7 @@ msgstr ""
 "Sparande av filen ”%s” misslyckades:\n"
 "%s"
 
-#: app/dialogs/file-save-dialog.c:854
+#: app/dialogs/file-save-dialog.c:854 app/tools/gimppainttool.c:385
 msgid "Unknown error"
 msgstr "Okänt fel"
 
@@ -17336,7 +17341,7 @@ msgid "Item search"
 msgstr "Objektsökning"
 
 #. Keyboard Shortcuts
-#: app/dialogs/preferences-dialog.c:1919 app/menus/menus.c:652
+#: app/dialogs/preferences-dialog.c:1919 app/menus/menus.c:673
 msgid "Keyboard Shortcuts"
 msgstr "Tangentbordsgenvägar"
 
@@ -18080,7 +18085,7 @@ msgstr "Bildstatusradsformat"
 
 #. Input Devices
 #: app/dialogs/preferences-dialog.c:3327 app/dialogs/preferences-dialog.c:3328
-#: app/menus/menus.c:645
+#: app/menus/menus.c:666
 msgid "Input Devices"
 msgstr "Inmatningsenheter"
 
@@ -19082,7 +19087,7 @@ msgid "Y"
 msgstr "Y"
 
 #. Units
-#: app/display/gimpcursorview.c:249
+#: app/display/gimpcursorview.c:249 app/menus/menus.c:687
 msgid "Units"
 msgstr "Måttenheter"
 
@@ -19125,7 +19130,7 @@ msgstr "Navigera i bildvisningen"
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
 
-#: app/display/gimpdisplayshell-callbacks.c:659
+#: app/display/gimpdisplayshell-callbacks.c:658
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -19258,7 +19263,7 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Släpp färg till lager"
 
-#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1592
+#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1600
 #: app/widgets/gimplayertreeview.c:850
 msgid "Drop layers"
 msgstr "Förkasta lager"
@@ -19307,12 +19312,12 @@ msgstr "Rotera vy"
 msgid "Select Rotation Angle"
 msgstr "Välj rotationsvinkel"
 
-#: app/display/gimpdisplayshell-rotate-dialog.c:152
+#: app/display/gimpdisplayshell-rotate-dialog.c:153
 #: app/tools/gimpmeasuretool.c:788
 msgid "Angle:"
 msgstr "Vinkel:"
 
-#: app/display/gimpdisplayshell-rotate-dialog.c:166
+#: app/display/gimpdisplayshell-rotate-dialog.c:167
 msgid "degrees"
 msgstr "grader"
 
@@ -19357,7 +19362,7 @@ msgstr "(ren)"
 msgid "(none)"
 msgstr "(ingen)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1772
+#: app/display/gimpdisplayshell-tool-events.c:1824
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Lager valt: ”%s”"
@@ -19496,7 +19501,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "Klicka och dra för att rotera fokus"
 
 #: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729
-#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:680
+#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:681
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s för begränsade vinklar"
@@ -19853,30 +19858,30 @@ msgstr ""
 msgid "Circular reference detected with '%s'."
 msgstr "Cirkelreferens upptäckt med ”%s”."
 
-#: app/file/file-remote.c:113
+#: app/file/file-remote.c:121
 msgid "Mounting remote volume"
 msgstr "Monterar fjärrvolym"
 
-#: app/file/file-remote.c:289
+#: app/file/file-remote.c:320 app/file/file-remote.c:383
 msgid "Opening remote file"
 msgstr "Öppnar fjärrfil"
 
-#: app/file/file-remote.c:355
+#: app/file/file-remote.c:449
 #, c-format
 msgid "Downloading image (%s of %s)"
 msgstr "Hämtar bild (%s av %s)"
 
-#: app/file/file-remote.c:359
+#: app/file/file-remote.c:453
 #, c-format
 msgid "Uploading image (%s of %s)"
 msgstr "Skickar bild (%s av %s)"
 
-#: app/file/file-remote.c:382
+#: app/file/file-remote.c:476
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Hämtade %s av bilddata"
 
-#: app/file/file-remote.c:386
+#: app/file/file-remote.c:480
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "Skickade upp %s av bilddata"
@@ -20943,19 +20948,19 @@ msgstr "Värde"
 msgid "The alpha value"
 msgstr "Alfavärdet"
 
-#: app/gui/gui.c:330
+#: app/gui/gui.c:336
 msgid "Image Recovery"
 msgstr "Bildåterskapande"
 
-#: app/gui/gui.c:332
+#: app/gui/gui.c:338
 msgid "_Discard"
 msgstr "_Förkasta"
 
-#: app/gui/gui.c:333
+#: app/gui/gui.c:339
 msgid "_Recover"
 msgstr "Å_terskapa"
 
-#: app/gui/gui.c:344
+#: app/gui/gui.c:350
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Ajdå! Det verkar som att GIMP återställdes från en krasch!"
 
@@ -20965,7 +20970,7 @@ msgstr "Ajdå! Det verkar som att GIMP återställdes från en krasch!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:353
+#: app/gui/gui.c:359
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20977,7 +20982,7 @@ msgstr[1] "%d bilder räddades från kraschen. Vill du försöka återskapa dem?
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:569
+#: app/gui/gui.c:575
 msgid "Documents"
 msgstr "Dokument"
 
@@ -21616,11 +21621,11 @@ msgstr "Rotera vektorlager"
 msgid "Transform Vector Layer"
 msgstr "Transformera vektorlager"
 
-#: app/path/gimpvectorlayer.c:602
+#: app/path/gimpvectorlayer.c:616
 msgid "Discard Vector Information"
 msgstr "Förkasta vektorinformation"
 
-#: app/path/gimpvectorlayer.c:695
+#: app/path/gimpvectorlayer.c:709
 msgid "Change Vector Layer Path"
 msgstr "Ändra bana för vektorlager"
 
@@ -22819,11 +22824,11 @@ msgstr "7500 K – D75"
 msgid "9,300 K"
 msgstr "9300 K"
 
-#: app/propgui/gimppropgui-utils.c:97
+#: app/propgui/gimppropgui-utils.c:93
 msgid "Choose from a list of common color temperatures"
 msgstr "Välj från en lista över vanliga färgtemperaturer"
 
-#: app/propgui/gimppropgui-utils.c:148
+#: app/propgui/gimppropgui-utils.c:144
 msgid "New Seed"
 msgstr "Nytt frö"
 
@@ -22849,14 +22854,10 @@ msgstr ""
 "Yxmördaren Julia Blomqvist\n"
 "på fäktning i Schweiz."
 
-#: app/text/gimpfontfactory.c:464
+#: app/text/gimpfontfactory.c:525
 #, c-format
-msgid ""
-"Some fonts failed to load:\n"
-"%s"
-msgstr ""
-"Några typsnitt kunde inte läsas in:\n"
-"%s"
+msgid "Some fonts failed to load:%s"
+msgstr "Några typsnitt kunde inte läsas in:%s"
 
 #: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1668
 msgid "Add Text Layer"
@@ -22929,7 +22930,7 @@ msgstr ""
 "Vissa textegenskaper kan vara felaktiga. Om du inte vill redigera textlagret "
 "behöver du inte oroa dig för detta."
 
-#: app/text/gimptextlayout.c:701
+#: app/text/gimptextlayout.c:707
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -23352,12 +23353,12 @@ msgid "No valid line art source selected."
 msgstr "Ingen giltig källa för linjegrafik markerad."
 
 #: app/tools/gimpbucketfilltool.c:813 app/tools/gimpbucketfilltool.c:953
-#: app/tools/gimpcolorpickertool.c:271 app/tools/gimppainttool.c:498
+#: app/tools/gimpcolorpickertool.c:271 app/tools/gimppainttool.c:499
 msgid "Click in any image to pick the background color"
 msgstr "Klicka i en bild för att välja bakgrundsfärgen"
 
 #: app/tools/gimpbucketfilltool.c:820 app/tools/gimpbucketfilltool.c:962
-#: app/tools/gimpcolorpickertool.c:263 app/tools/gimppainttool.c:492
+#: app/tools/gimpcolorpickertool.c:263 app/tools/gimppainttool.c:493
 msgid "Click in any image to pick the foreground color"
 msgstr "Klicka i en bild för att välja förgrundsfärgen"
 
@@ -25033,16 +25034,16 @@ msgstr "Kan inte måla på flera lager. Markera endast ett lager."
 msgid "Cannot paint on layer groups."
 msgstr "Kan inte måla på lagergrupper."
 
-#: app/tools/gimppainttool.c:711
+#: app/tools/gimppainttool.c:712
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s för en rak linje"
 
-#: app/tools/gimppainttool.c:946
+#: app/tools/gimppainttool.c:947
 msgid "The selected drawable does not have an alpha channel."
 msgstr "Den markerade ritytan har ingen alfakanal."
 
-#: app/tools/gimppainttool.c:957
+#: app/tools/gimppainttool.c:958
 msgid "The selected layer's alpha channel is locked."
 msgstr "Det markerade lagrets alfakanal är låst."
 
@@ -26903,12 +26904,12 @@ msgstr "Markör höger"
 msgid "Keyboard"
 msgstr "Tangentbord"
 
-#: app/widgets/gimpcontrollerkeyboard.c:229
+#: app/widgets/gimpcontrollerkeyboard.c:235
 msgid "Keyboard Events"
 msgstr "Tangentbordshändelser"
 
-#: app/widgets/gimpcontrollerkeyboard.c:230
-#: app/widgets/gimpcontrollerwheel.c:229
+#: app/widgets/gimpcontrollerkeyboard.c:236
+#: app/widgets/gimpcontrollerwheel.c:235
 msgid "Ready"
 msgstr "Redo"
 
@@ -27029,7 +27030,7 @@ msgstr "Stega höger"
 msgid "Mouse Wheel"
 msgstr "Mushjul"
 
-#: app/widgets/gimpcontrollerwheel.c:228
+#: app/widgets/gimpcontrollerwheel.c:234
 msgid "Mouse Wheel Events"
 msgstr "Mushjulshändelser"
 
@@ -27595,7 +27596,8 @@ msgstr "Y-lutning"
 #. * TODO: this should be actually tested with a device having such
 #. * feature.
 #.
-#: app/widgets/gimpdeviceinfo.c:68
+#: app/widgets/gimpdeviceinfo.c:68 app/widgets/gimpdynamicseditor.c:165
+#: app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Wheel"
 msgstr "Mushjul"
 
@@ -27603,7 +27605,8 @@ msgstr "Mushjul"
 msgid "Distance"
 msgstr "Avstånd"
 
-#: app/widgets/gimpdeviceinfo.c:70
+#: app/widgets/gimpdeviceinfo.c:70 app/widgets/gimpdynamicseditor.c:166
+#: app/widgets/gimpdynamicsoutputeditor.c:75
 msgid "Rotation"
 msgstr "Rotation"
 
@@ -27656,7 +27659,7 @@ msgid "Pressure Curve"
 msgstr "Tryckkurva"
 
 #: app/widgets/gimpdeviceinfoeditor.c:353
-#: app/widgets/gimpdynamicsoutputeditor.c:206
+#: app/widgets/gimpdynamicsoutputeditor.c:207
 msgid "_Reset Curve"
 msgstr "Å_terställ kurva"
 
@@ -27764,11 +27767,11 @@ msgid "Configure this tab"
 msgstr "Konfigurera denna flik"
 
 #. Auto button
-#: app/widgets/gimpdockwindow.c:391
+#: app/widgets/gimpdockwindow.c:404
 msgid "Auto"
 msgstr "Auto"
 
-#: app/widgets/gimpdockwindow.c:402
+#: app/widgets/gimpdockwindow.c:415
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr "När aktiverat följer dialogen automatiskt bilden du arbetar på."
@@ -27830,31 +27833,23 @@ msgstr "Kan inte ändra ordning för ett filter som redigeras."
 msgid "Velocity"
 msgstr "Hastighet"
 
-#: app/widgets/gimpdynamicseditor.c:165
-msgid "Wheel/Rotation"
-msgstr "Hjul/rotation"
-
-#: app/widgets/gimpdynamicseditor.c:166
-#: app/widgets/gimpdynamicsoutputeditor.c:75
+#: app/widgets/gimpdynamicseditor.c:167
+#: app/widgets/gimpdynamicsoutputeditor.c:76
 msgid "Random"
 msgstr "Slumpmässig"
 
-#: app/widgets/gimpdynamicseditor.c:167
-#: app/widgets/gimpdynamicsoutputeditor.c:76
+#: app/widgets/gimpdynamicseditor.c:168
+#: app/widgets/gimpdynamicsoutputeditor.c:77
 msgid "Fade"
 msgstr "Uttoning"
 
-#: app/widgets/gimpdynamicseditor.c:180
+#: app/widgets/gimpdynamicseditor.c:181
 msgid "Mapping matrix"
 msgstr "Kartläggningsmatris"
 
-#: app/widgets/gimpdynamicseditor.c:313 app/widgets/gimptoolpreseteditor.c:152
+#: app/widgets/gimpdynamicseditor.c:314 app/widgets/gimptoolpreseteditor.c:152
 msgid "Icon:"
 msgstr "Ikon:"
-
-#: app/widgets/gimpdynamicsoutputeditor.c:74
-msgid "Wheel / Rotation"
-msgstr "Hjul/rotation"
 
 #: app/widgets/gimperrordialog.c:176
 msgid "Too many error messages!"
@@ -28250,27 +28245,27 @@ msgstr[1] "Indexerad färg (%d färger)"
 msgid "Select an image in the left pane"
 msgstr "Välj en bild i den vänstra panelen"
 
-#: app/widgets/gimpitemtreeview.c:570
+#: app/widgets/gimpitemtreeview.c:573
 msgid "Set Item Exclusive Content Lock"
 msgstr "Ställ in objektsexklusivt innehållslås"
 
-#: app/widgets/gimpitemtreeview.c:584
+#: app/widgets/gimpitemtreeview.c:587
 msgid "Set Item Exclusive Position Lock"
 msgstr "Ställ in objektsexklusivt positionslås"
 
-#: app/widgets/gimpitemtreeview.c:597
+#: app/widgets/gimpitemtreeview.c:600
 msgid "Unlock visibility"
 msgstr "Lås upp synlighet"
 
-#: app/widgets/gimpitemtreeview.c:598
+#: app/widgets/gimpitemtreeview.c:601
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Ställ in objektsexklusivt synlighetslås"
 
-#: app/widgets/gimpitemtreeview.c:624
+#: app/widgets/gimpitemtreeview.c:627
 msgid "Select items by patterns and store item sets"
 msgstr "Markera objekt genom mönster och lagra objektuppsättningar"
 
-#: app/widgets/gimpitemtreeview.c:1737
+#: app/widgets/gimpitemtreeview.c:1745
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
@@ -28509,12 +28504,12 @@ msgstr "Metadata kommer inte att vara synligt i GIMP äldre än version 2.10."
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "shortcut: Ctrl+Alt+O"
 #.
-#: app/widgets/gimpsearchpopup.c:293
+#: app/widgets/gimpsearchpopup.c:319
 msgid "shortcut"
 msgstr "kortkommando"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:297 app/widgets/gimpsearchpopup.c:319
+#: app/widgets/gimpsearchpopup.c:323 app/widgets/gimpsearchpopup.c:345
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -28523,7 +28518,7 @@ msgstr "%s: %s"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:315
+#: app/widgets/gimpsearchpopup.c:341
 msgid "menu"
 msgstr "meny"
 
@@ -28901,7 +28896,7 @@ msgstr ""
 "Den aktiva gradienten.\n"
 "Klicka för att öppna gradientdialogen."
 
-#: app/widgets/gimptoolbutton.c:542
+#: app/widgets/gimptoolbutton.c:543
 msgid "Also in group:"
 msgstr "Också i gruppen:"
 
@@ -29471,307 +29466,307 @@ msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Buffert"
 
-#: menus/image-menu.ui.in.in:150
+#: menus/image-menu.ui.in.in:153
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Markera"
 
-#: menus/image-menu.ui.in.in:156
+#: menus/image-menu.ui.in.in:159
 msgctxt "view-action"
 msgid "_Float"
 msgstr "_Flytande"
 
-#: menus/image-menu.ui.in.in:183
+#: menus/image-menu.ui.in.in:186
 msgctxt "view-action"
 msgid "_View"
 msgstr "_Visa"
 
-#: menus/image-menu.ui.in.in:188
+#: menus/image-menu.ui.in.in:191
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Zooma"
 
-#: menus/image-menu.ui.in.in:213
+#: menus/image-menu.ui.in.in:216
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Vänd & rotera"
 
-#: menus/image-menu.ui.in.in:237
+#: menus/image-menu.ui.in.in:240
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Flytta till skärm"
 
-#: menus/image-menu.ui.in.in:246
+#: menus/image-menu.ui.in.in:249
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "_Färghantering"
 
-#: menus/image-menu.ui.in.in:253
+#: menus/image-menu.ui.in.in:256
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "_Renderingsåtergivning för skärm"
 
-#: menus/image-menu.ui.in.in:285
+#: menus/image-menu.ui.in.in:288
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "_Utfyllnadsfärg"
 
-#: menus/image-menu.ui.in.in:309
+#: menus/image-menu.ui.in.in:312
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Bild"
 
-#: menus/image-menu.ui.in.in:316
+#: menus/image-menu.ui.in.in:319
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Läge"
 
-#: menus/image-menu.ui.in.in:322
+#: menus/image-menu.ui.in.in:325
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_Kodning"
 
-#: menus/image-menu.ui.in.in:338
+#: menus/image-menu.ui.in.in:341
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "Färgha_ntering"
 
-#: menus/image-menu.ui.in.in:355
+#: menus/image-menu.ui.in.in:358
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "Re_nderingsåtergivningsmetod för korrekturgranskning"
 
-#: menus/image-menu.ui.in.in:369
+#: menus/image-menu.ui.in.in:372
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_Transform"
 
-#: menus/image-menu.ui.in.in:402
+#: menus/image-menu.ui.in.in:405
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Hjälplinjer"
 
-#: menus/image-menu.ui.in.in:410
+#: menus/image-menu.ui.in.in:413
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Meta_data"
 
-#: menus/image-menu.ui.in.in:418
+#: menus/image-menu.ui.in.in:421
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_Lager"
 
-#: menus/image-menu.ui.in.in:444
+#: menus/image-menu.ui.in.in:447
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "Stac_k"
 
-#: menus/image-menu.ui.in.in:461
+#: menus/image-menu.ui.in.in:464
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Mask"
 
-#: menus/image-menu.ui.in.in:483
+#: menus/image-menu.ui.in.in:486
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "_Transparens"
 
-#: menus/image-menu.ui.in.in:501
+#: menus/image-menu.ui.in.in:504
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Transform"
 
-#: menus/image-menu.ui.in.in:531
+#: menus/image-menu.ui.in.in:534
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Färger"
 
-#: menus/image-menu.ui.in.in:552
+#: menus/image-menu.ui.in.in:555
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Auto"
 
-#: menus/image-menu.ui.in.in:560
+#: menus/image-menu.ui.in.in:563
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "K_omponenter"
 
-#: menus/image-menu.ui.in.in:566
+#: menus/image-menu.ui.in.in:569
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "_Avmätta"
 
-#: menus/image-menu.ui.in.in:573
+#: menus/image-menu.ui.in.in:576
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Mappa"
 
-#: menus/image-menu.ui.in.in:584
+#: menus/image-menu.ui.in.in:587
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_Tonmappning"
 
-#: menus/image-menu.ui.in.in:591
+#: menus/image-menu.ui.in.in:594
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "I_nfo"
 
-#: menus/image-menu.ui.in.in:609
+#: menus/image-menu.ui.in.in:612
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "Ver_ktyg"
 
-#: menus/image-menu.ui.in.in:612
+#: menus/image-menu.ui.in.in:615
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "Markerings_verktyg"
 
-#: menus/image-menu.ui.in.in:625
+#: menus/image-menu.ui.in.in:628
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "_Målarverktyg"
 
-#: menus/image-menu.ui.in.in:642
+#: menus/image-menu.ui.in.in:645
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "_Transformeringsverktyg"
 
-#: menus/image-menu.ui.in.in:681
+#: menus/image-menu.ui.in.in:684
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "Filte_r"
 
-#: menus/image-menu.ui.in.in:686
+#: menus/image-menu.ui.in.in:689
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Senast använda"
 
-#: menus/image-menu.ui.in.in:695
+#: menus/image-menu.ui.in.in:698
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_Oskärpa"
 
-#: menus/image-menu.ui.in.in:710
+#: menus/image-menu.ui.in.in:713
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "Fö_rbättra"
 
-#: menus/image-menu.ui.in.in:720
+#: menus/image-menu.ui.in.in:723
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "För_vrängningar"
 
-#: menus/image-menu.ui.in.in:739
+#: menus/image-menu.ui.in.in:742
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Ljus och skugga"
 
-#: menus/image-menu.ui.in.in:754
+#: menus/image-menu.ui.in.in:757
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_Brus"
 
-#: menus/image-menu.ui.in.in:764
+#: menus/image-menu.ui.in.in:767
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "_Leta kanter"
 
-#: menus/image-menu.ui.in.in:773
+#: menus/image-menu.ui.in.in:776
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Allmänna"
 
-#: menus/image-menu.ui.in.in:784
+#: menus/image-menu.ui.in.in:787
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "K_ombinera"
 
-#: menus/image-menu.ui.in.in:787
+#: menus/image-menu.ui.in.in:790
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "Ar_tistiska"
 
-#: menus/image-menu.ui.in.in:799
+#: menus/image-menu.ui.in.in:802
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "_Dekor"
 
-#: menus/image-menu.ui.in.in:802
+#: menus/image-menu.ui.in.in:805
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Mappa"
 
-#: menus/image-menu.ui.in.in:814
+#: menus/image-menu.ui.in.in:817
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Rendera"
 
-#: menus/image-menu.ui.in.in:817
+#: menus/image-menu.ui.in.in:820
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fraktaler"
 
-#: menus/image-menu.ui.in.in:820
+#: menus/image-menu.ui.in.in:823
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_Brus"
 
-#: menus/image-menu.ui.in.in:828
+#: menus/image-menu.ui.in.in:831
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Mönster"
 
-#: menus/image-menu.ui.in.in:841
+#: menus/image-menu.ui.in.in:844
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_Webb"
 
-#: menus/image-menu.ui.in.in:847
+#: menus/image-menu.ui.in.in:850
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "An_imation"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:853
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "Ut_veckling"
 
-#: menus/image-menu.ui.in.in:852
+#: menus/image-menu.ui.in.in:855
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "_Exempel på insticksmoduler"
 
-#: menus/image-menu.ui.in.in:855
+#: menus/image-menu.ui.in.in:858
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:858
+#: menus/image-menu.ui.in.in:861
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:865
+#: menus/image-menu.ui.in.in:868
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "Fö_nster"
 
-#: menus/image-menu.ui.in.in:868
+#: menus/image-menu.ui.in.in:871
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Senaste stängda dockningar"
 
-#: menus/image-menu.ui.in.in:872
+#: menus/image-menu.ui.in.in:875
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Dockningsbara dialoger"
 
-#: menus/image-menu.ui.in.in:904
+#: menus/image-menu.ui.in.in:907
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "Använ_darhandbok"
 
-#: menus/image-menu.ui.in.in:920
+#: menus/image-menu.ui.in.in:926
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP på nätet"
@@ -29893,6 +29888,12 @@ msgstr "Verktygsförinställningsmeny"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Ångringshistorikmeny"
+
+#~ msgid "Wheel/Rotation"
+#~ msgstr "Hjul/rotation"
+
+#~ msgid "Wheel / Rotation"
+#~ msgstr "Hjul/rotation"
 
 #, c-format
 #~ msgid "%s Curve"
