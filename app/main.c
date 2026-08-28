@@ -1248,6 +1248,12 @@ gimp_init_i18n (void)
 
   setlocale (LC_ALL, "");
 
+#ifdef PLATFORM_OSX
+  /* keep the monetary sign characters ASCII so GtkSpinButton accepts
+     the '-' (minus) character. See GNOME/gimp#13641 and GNOME/GTK!8802. */
+  setlocale (LC_MONETARY, "C");
+#endif
+
   gimp_bind_text_domain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
   bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");

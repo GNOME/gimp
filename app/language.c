@@ -787,6 +787,12 @@ language_init (const gchar  *language,
       actual_language = g_strdup (language);
     }
 
+#ifdef PLATFORM_OSX
+  /* keep the monetary sign characters ASCII so GtkSpinButton accepts
+     the '-' (minus) character. See GNOME/gimp#13641 and GNOME/GTK!8802. */
+  setlocale (LC_MONETARY, "C");
+#endif
+
   return actual_language;
 }
 
