@@ -381,7 +381,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
                                      display, coords, time, constrain,
                                      &error))
     {
-      gimp_tool_message_literal (tool, display, error->message);
+      gimp_tool_message_literal (tool, display,
+                                 error ? error->message : _("Unknown error"));
       g_clear_error (&error);
       return;
     }
