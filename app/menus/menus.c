@@ -60,6 +60,7 @@ static gboolean menurc_deleted = FALSE;
 
 #ifdef PLATFORM_OSX
 static Gimp    *unique_gimp        = NULL;
+static gboolean app_menu_added     = FALSE;
 static gboolean window_menu_added  = FALSE;
 #endif
 
@@ -639,56 +640,63 @@ menus_quartz_app_menu (Gimp *gimp)
 
   [app_menu setTitle:@"GIMP"];
 
-  /* About */
-  item = [app_menu itemAtIndex:0];
-  [item setTarget:[GimpappMenuHandler class]];
-  [item setAction:@selector (gimpShowAbout:)];
+  /* customize the GIMP Mac menu only once: otherwise every new image window
+     (on multi-window mode) duplicates the entries we insert here. */
+  if (! app_menu_added)
+    {
+      app_menu_added = TRUE;
 
-  /* Welcome Dialog */
-  item = [[NSMenuItem alloc] initWithTitle:@"Welcome Dialog"
-                                    action:@selector (gimpShowWelcomeDialog:)
-                             keyEquivalent:@""];
-  [item setTarget:[GimpappMenuHandler class]];
-  [app_menu insertItem:item atIndex:1];
+      /* About */
+      item = [app_menu itemAtIndex:0];
+      [item setTarget:[GimpappMenuHandler class]];
+      [item setAction:@selector (gimpShowAbout:)];
 
-  /* Settings */
-  item = [app_menu itemAtIndex:3];
-  [item setTarget:[GimpappMenuHandler class]];
-  [item setAction:@selector (gimpShowPreferences:)];
+      /* Welcome Dialog */
+      item = [[NSMenuItem alloc] initWithTitle:@"Welcome Dialog"
+                                        action:@selector (gimpShowWelcomeDialog:)
+                                 keyEquivalent:@""];
+      [item setTarget:[GimpappMenuHandler class]];
+      [app_menu insertItem:item atIndex:1];
 
-  /* Input Devices */
-  item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Input Devices")]
-                                    action:@selector (gimpShowInputDevices:)
-                             keyEquivalent:@""];
-  [item setTarget:[GimpappMenuHandler class]];
-  [app_menu insertItem:item atIndex:4];
+      /* Settings */
+      item = [app_menu itemAtIndex:3];
+      [item setTarget:[GimpappMenuHandler class]];
+      [item setAction:@selector (gimpShowPreferences:)];
 
-  /* Keyboard Shortcuts */
-  item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Keyboard Shortcuts")]
-                                    action:@selector (gimpShowKeyboardShortcuts:)
-                             keyEquivalent:@""];
-  [item setTarget:[GimpappMenuHandler class]];
-  [app_menu insertItem:item atIndex:5];
+      /* Input Devices */
+      item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Input Devices")]
+                                        action:@selector (gimpShowInputDevices:)
+                                 keyEquivalent:@""];
+      [item setTarget:[GimpappMenuHandler class]];
+      [app_menu insertItem:item atIndex:4];
 
-  /* Modules */
-  item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Modules")]
-                                    action:@selector (gimpShowModules:)
-                             keyEquivalent:@""];
-  [item setTarget:[GimpappMenuHandler class]];
-  [app_menu insertItem:item atIndex:6];
+      /* Keyboard Shortcuts */
+      item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Keyboard Shortcuts")]
+                                        action:@selector (gimpShowKeyboardShortcuts:)
+                                 keyEquivalent:@""];
+      [item setTarget:[GimpappMenuHandler class]];
+      [app_menu insertItem:item atIndex:5];
 
-  /* Units */
-  item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Units")]
-                                    action:@selector (gimpShowUnits:)
-                             keyEquivalent:@""];
-  [item setTarget:[GimpappMenuHandler class]];
-  [app_menu insertItem:item atIndex:7];
+      /* Modules */
+      item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Modules")]
+                                        action:@selector (gimpShowModules:)
+                                 keyEquivalent:@""];
+      [item setTarget:[GimpappMenuHandler class]];
+      [app_menu insertItem:item atIndex:6];
 
-  /* Quit */
-  last_index = [app_menu numberOfItems] - 1;
-  item       = [app_menu itemAtIndex:last_index];
-  [item setTarget:[GimpappMenuHandler class]];
-  [item setAction:@selector (gimpQuit:)];
+      /* Units */
+      item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:_("Units")]
+                                        action:@selector (gimpShowUnits:)
+                                 keyEquivalent:@""];
+      [item setTarget:[GimpappMenuHandler class]];
+      [app_menu insertItem:item atIndex:7];
+
+      /* Quit */
+      last_index = [app_menu numberOfItems] - 1;
+      item       = [app_menu itemAtIndex:last_index];
+      [item setTarget:[GimpappMenuHandler class]];
+      [item setAction:@selector (gimpQuit:)];
+    }
 
   /* Help and Windows */
   for (NSMenuItem *menu_item in [main_menu itemArray])
