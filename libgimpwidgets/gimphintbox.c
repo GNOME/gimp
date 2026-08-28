@@ -248,10 +248,11 @@ gimp_hint_box_set_hint (GimpHintBox *box,
   if (g_strcmp0 (box->hint, hint) == 0)
     return;
 
-  g_object_set (box->label,
-                "label",      hint,
-                "use-markup", use_markup,
-                NULL);
+  if (box->label)
+    g_object_set (box->label,
+                  "label",      hint,
+                  "use-markup", use_markup,
+                  NULL);
 
   g_free (box->hint);
   box->hint = g_strdup (hint);
