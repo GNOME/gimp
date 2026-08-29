@@ -872,6 +872,13 @@ gimp_dock_window_map (GimpDockWindow *dock_window,
               return;
             }
 
+#if defined (GDK_WINDOWING_WAYLAND) || defined (PLATFORM_OSX)
+          /* re-mapping the dock window (e.g. with the Tab key) lets it steal
+             focus on Linux and macOS (not on Windows due to SWP_NOACTIVATE),
+             so focus back to the main window */
+          g_object_set_data (G_OBJECT (dock_window), "gimp-dock-window-refocus-main",
+                             GINT_TO_POINTER (TRUE));
+#endif
           g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
         }
     }
@@ -1107,9 +1114,20 @@ gimp_dock_window_update_focus_idle (gpointer data)
 #ifdef PLATFORM_OSX
   NSWindow       *ns_window;
 #endif
+#if defined (GDK_WINDOWING_WAYLAND) || defined (PLATFORM_OSX)
+  gboolean        refocus_main;
+#endif
 
   if (! GTK_IS_WIDGET (dock_window) || ! gtk_widget_get_realized (GTK_WIDGET (dock_window)))
     return G_SOURCE_REMOVE;
+
+#if defined (GDK_WINDOWING_WAYLAND) || defined (PLATFORM_OSX)
+  /* set by gimp_dock_window_map() when the dock window is being re-mapped
+   * (e.g. with the Tab key) which requires to refocus main window */
+  refocus_main = (g_object_get_data (G_OBJECT (dock_window),
+                                     "gimp-dock-window-refocus-main") != NULL);
+  g_object_set_data (G_OBJECT (dock_window), "gimp-dock-window-refocus-main", NULL);
+#endif
 
 #ifdef GDK_WINDOWING_WAYLAND
   app = gtk_window_get_application (GTK_WINDOW (dock_window));
@@ -1122,7 +1140,11 @@ gimp_dock_window_update_focus_idle (gpointer data)
   if (app)
     {
       GtkWindow *app_win = gtk_application_get_active_window (app);
+
       gtk_window_set_transient_for (GTK_WINDOW (dock_window), app_win);
+
+      if (refocus_main)
+        gdk_window_focus (gtk_widget_get_window (GTK_WIDGET (app_win)), GDK_CURRENT_TIME);
     }
 #endif
 
@@ -1162,6 +1184,9 @@ gimp_dock_window_update_focus_idle (gpointer data)
             [old_parent removeChildWindow:ns_window];
 
           [new_parent addChildWindow:ns_window ordered:NSWindowAbove];
+
+          if (refocus_main)
+            [new_parent makeKeyWindow];
         }
     }
 #endif
