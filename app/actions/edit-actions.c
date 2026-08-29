@@ -281,8 +281,8 @@ edit_actions_update (GimpActionGroup *group,
   gchar        *redo_name    = NULL;
   gboolean      undo_enabled = FALSE;
 
-  gboolean      have_no_groups = FALSE; /* At least 1 selected layer is not a group.         */
-  gboolean      have_writable  = TRUE;  /* At least 1 selected layer has no contents lock.   */
+  gboolean      have_no_groups = FALSE; /* At least 1 selected layer is not a group.          */
+  gboolean      all_writable   = TRUE;  /* No selected layers or children have contents lock. */
 
   if (image)
     {
@@ -295,29 +295,12 @@ edit_actions_update (GimpActionGroup *group,
           GimpContainer *container = gimp_viewable_get_children (GIMP_VIEWABLE (iter->data));
 
           if (gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
-            have_writable = FALSE;
+            all_writable = FALSE;
 
-          /* If we have a layer group, check if any of its children have
-           * content locked.
-           */
           if (! container)
-            {
-              have_no_groups = TRUE;
-            }
-          else
-            {
-              gint n_children = gimp_container_get_n_children (container);
+            have_no_groups = TRUE;
 
-              for (gint i = 0; i < n_children; i++)
-                {
-                  GimpObject *child = gimp_container_get_child_by_index (container, i);
-
-                  if (gimp_item_is_content_locked (GIMP_ITEM (child), NULL))
-                    have_writable = FALSE;
-                }
-            }
-
-          if (have_no_groups && have_writable)
+          if (have_no_groups && ! all_writable)
             break;
         }
 
@@ -370,7 +353,7 @@ edit_actions_update (GimpActionGroup *group,
   g_free (undo_name);
   g_free (redo_name);
 
-  SET_SENSITIVE ("edit-cut",                         have_writable);
+  SET_SENSITIVE ("edit-cut",                         all_writable);
   SET_SENSITIVE ("edit-copy",                        drawables);
   SET_SENSITIVE ("edit-copy-visible",                image);
   /*             "edit-paste" is always active */
@@ -378,15 +361,15 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-paste-into",                  image);
   SET_SENSITIVE ("edit-paste-into-in-place",         image);
 
-  SET_SENSITIVE ("edit-named-cut",          have_writable && have_no_groups);
+  SET_SENSITIVE ("edit-named-cut",          all_writable && have_no_groups);
   SET_SENSITIVE ("edit-named-copy",         drawables);
   SET_SENSITIVE ("edit-named-copy-visible", drawables);
   /*             "edit-named-paste" is always active */
 
-  SET_SENSITIVE ("edit-clear",              have_writable && have_no_groups);
-  SET_SENSITIVE ("edit-fill-fg",            have_writable && have_no_groups);
-  SET_SENSITIVE ("edit-fill-bg",            have_writable && have_no_groups);
-  SET_SENSITIVE ("edit-fill-pattern",       have_writable && have_no_groups);
+  SET_SENSITIVE ("edit-clear",              all_writable && have_no_groups);
+  SET_SENSITIVE ("edit-fill-fg",            all_writable && have_no_groups);
+  SET_SENSITIVE ("edit-fill-bg",            all_writable && have_no_groups);
+  SET_SENSITIVE ("edit-fill-pattern",       all_writable && have_no_groups);
 
 #undef SET_LABEL
 #undef SET_SENSITIVE

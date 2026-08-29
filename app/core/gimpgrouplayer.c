@@ -112,6 +112,9 @@ static gboolean        gimp_group_layer_get_expanded (GimpViewable    *viewable)
 static void            gimp_group_layer_set_expanded (GimpViewable    *viewable,
                                                       gboolean         expanded);
 
+static gboolean   gimp_group_layer_is_content_locked (GimpItem        *item,
+                                                      GimpItem       **locked_item,
+                                                      gboolean         check_children);
 static gboolean  gimp_group_layer_is_position_locked (GimpItem        *item,
                                                       GimpItem       **locked_item,
                                                       gboolean         check_children);
@@ -313,6 +316,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   viewable_class->set_expanded           = gimp_group_layer_set_expanded;
   viewable_class->get_expanded           = gimp_group_layer_get_expanded;
 
+  item_class->is_content_locked          = gimp_group_layer_is_content_locked;
   item_class->is_position_locked         = gimp_group_layer_is_position_locked;
   item_class->duplicate                  = gimp_group_layer_duplicate;
   item_class->convert                    = gimp_group_layer_convert;
@@ -567,13 +571,53 @@ gimp_group_layer_set_expanded (GimpViewable *viewable,
 }
 
 static gboolean
+gimp_group_layer_is_content_locked (GimpItem  *item,
+                                    GimpItem **locked_item,
+                                    gboolean   check_children)
+{
+  /* A content-locked child locks the group too. */
+  if (check_children)
+    {
+      GimpGroupLayerPrivate *private = GET_PRIVATE (item);
+      GList                 *list;
+
+      for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
+           list;
+           list = g_list_next (list))
+        {
+          GimpItem *child = list->data;
+
+          if (gimp_item_get_lock_content (child))
+            {
+              if (locked_item)
+                *locked_item = child;
+
+              return TRUE;
+            }
+          else if (GIMP_IS_GROUP_LAYER (child) &&
+                   gimp_group_layer_is_content_locked (child,
+                                                       locked_item,
+                                                       TRUE))
+            {
+              return TRUE;
+            }
+        }
+    }
+
+  /* A locked parent locks the group too! Which is handled by parent
+   * implementation of the method.
+   */
+  return GIMP_ITEM_CLASS (parent_class)->is_content_locked (item,
+                                                            locked_item,
+                                                            FALSE);
+}
+
+static gboolean
 gimp_group_layer_is_position_locked (GimpItem  *item,
                                      GimpItem **locked_item,
                                      gboolean   check_children)
 {
-  /* Lock position is particular because a locked child locks the group
-   * too.
-   */
+  /* A position-locked child locks the group too. */
   if (check_children)
     {
       GimpGroupLayerPrivate *private = GET_PRIVATE (item);
@@ -602,7 +646,7 @@ gimp_group_layer_is_position_locked (GimpItem  *item,
         }
     }
 
-  /* And a locked parent locks the group too! Which is handled by parent
+  /* A locked parent locks the group too! Which is handled by parent
    * implementation of the method.
    */
   return GIMP_ITEM_CLASS (parent_class)->is_position_locked (item,

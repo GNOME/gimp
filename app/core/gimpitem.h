@@ -43,7 +43,8 @@ struct _GimpItemClass
   void            (* unset_removed)      (GimpItem               *item);
   gboolean        (* is_attached)        (GimpItem               *item);
   gboolean        (* is_content_locked)  (GimpItem               *item,
-                                          GimpItem              **locked_item);
+                                          GimpItem              **locked_item,
+                                          gboolean                checking_children);
   gboolean        (* is_position_locked) (GimpItem               *item,
                                           GimpItem              **locked_item,
                                           gboolean                checking_children);
