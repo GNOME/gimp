@@ -139,6 +139,8 @@ static gboolean        gimp_dock_window_key_press_event           (GtkWidget    
 #if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
 static void            gimp_dock_window_realize                   (GimpDockWindow             *dock_window,
                                                                    gpointer                    data);
+static void            gimp_dock_window_map                       (GimpDockWindow             *dock_window,
+                                                                   gpointer                    data);
 #endif
 static GList         * gimp_dock_window_get_docks                 (GimpDockContainer          *dock_container);
 static GList         * gimp_dock_window_get_docks_self            (GimpDockWindow             *self);
@@ -287,6 +289,9 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
 #if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   g_signal_connect (dock_window, "realize",
                     G_CALLBACK (gimp_dock_window_realize),
+                    NULL);
+  g_signal_connect (dock_window, "map",
+                    G_CALLBACK (gimp_dock_window_map),
                     NULL);
 #endif
 }
@@ -841,6 +846,33 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
                 [maximize_button setEnabled:NO];
             }
 #endif
+        }
+    }
+}
+
+static void
+gimp_dock_window_map (GimpDockWindow *dock_window,
+                      gpointer        data)
+{
+  GimpGuiConfig *config;
+
+  dock_window->p = gimp_dock_window_get_instance_private (dock_window);
+
+  if (dock_window->p->context && dock_window->p->context->gimp)
+    {
+      config = GIMP_GUI_CONFIG (GIMP (dock_window->p->context->gimp)->config);
+
+      if (config->dock_window_hint == GIMP_WINDOW_HINT_UTILITY)
+        {
+          /* re-establish transiency on later maps (e.g. after using Tab key). See #12448 */
+          if (! g_object_get_data (G_OBJECT (dock_window), "gimp-dock-window-mapped"))
+            {
+              g_object_set_data (G_OBJECT (dock_window), "gimp-dock-window-mapped",
+                                GINT_TO_POINTER (TRUE));
+              return;
+            }
+
+          g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
         }
     }
 }
