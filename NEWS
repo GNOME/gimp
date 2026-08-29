@@ -18,7 +18,7 @@ Core:
   * Improve list of "Recent Images" in the Welcome dialog, with no
     arbirtrary limitation of 8 rows.
   * More GtkTreeView replaced in preparation of GTK4 port.
-  * Various easy functions replaced in preparation of GTK4 port.
+  * Various preliminatory changes in preparation of GTK4 port.
   * macOS: touchpads are now less sensitive in pan gestures and behave as
     expected.
   * MSIX: it is now possible to open multiple images from the OS.
@@ -48,7 +48,13 @@ Core:
   * Dashboard backtraces now support macOS.
   * Clear does not affect non-raster layers, unless rasterized.
   * New project format for GIMP (meant to replace XCF) is under
-    development.
+    development. Sub-Features:
+    - More robust image recovery (e.g. after a crash, external energy
+      loss or other issues) reimplemented based on the new format.
+    - Constant, reliable and seamless auto-save of opened images.
+  * About dialog: more info about the OS, dependencies and hardware is
+    being shown. A "Copy" button allows to easily add the
+    markdown-formatted info to clipboard for pasting in reports.
 
 Tools:
 
@@ -109,6 +115,9 @@ Graphical User Interface:
   * Spin of Arbitrary Zoom dialog receives the default focus.
   * Next tip is the default focus for the Tips dialog.
   * Space and Enter activate/deactivate modules.
+  * Themes:
+    - Add dotted lines on focused check/radio buttons and combo boxes.
+    - More theme fixes related to GIMP over KDE Breeze.
 
 Plug-Ins:
 
@@ -144,6 +153,14 @@ Plug-Ins:
     - Be more robust by ignoring an empty layer comps list.
     - Load vector layer paths ('vmsk' and 'vsms' blocks, used for vector
       masks and vector shapes).
+    - Minimal PSD vector layer import support.
+      Currently only vector layers with solid color fills and strokes
+      are loaded. Vector layers with gradients or patterns are not yet
+      supported, and are still rendered as raster layers.
+    - Import PSD Curves adjustment layers.
+      Note that PSD supports up to 17 channels for Curves, while GIMP
+      currently only handles 4 (the Alpha channel should not be included
+      in this).
   * New import support for MacPaint images.
   * GBR: fix exporting grayscale GBRs with alpha channels.
   * file-raw-data: various code improvements.
@@ -230,6 +247,8 @@ Plug-Ins:
     Postscript traditionally represents printed pages, it is more likely
     than other form factors.
   * Various plug-ins are made transient to the calling core GIMP window.
+  * Warn if "New Guides from Selection" lacks selection.
+  * OpenRaster: import OpenRaster SVG layers.
 
 API:
 
