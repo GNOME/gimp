@@ -131,7 +131,8 @@ static gint64     gimp_item_get_memsize             (GimpObject     *object,
                                                      gint64         *gui_size);
 
 static gboolean   gimp_item_real_is_content_locked  (GimpItem       *item,
-                                                     GimpItem      **locked_item);
+                                                     GimpItem      **locked_item,
+                                                     gboolean        check_children);
 static gboolean   gimp_item_real_is_position_locked (GimpItem       *item,
                                                      GimpItem      **locked_item,
                                                      gboolean        check_children);
@@ -480,7 +481,8 @@ gimp_item_get_memsize (GimpObject *object,
 
 static gboolean
 gimp_item_real_is_content_locked (GimpItem  *item,
-                                  GimpItem **locked_item)
+                                  GimpItem **locked_item,
+                                  gboolean   check_children)
 {
   GimpItem *parent = gimp_item_get_parent (item);
 
@@ -489,7 +491,8 @@ gimp_item_real_is_content_locked (GimpItem  *item,
       if (locked_item)
         *locked_item = item;
     }
-  else if (parent && gimp_item_is_content_locked (parent, locked_item))
+  else if (parent &&
+           GIMP_ITEM_GET_CLASS (item)->is_content_locked (parent, locked_item, FALSE))
     {
       return TRUE;
     }
@@ -2525,7 +2528,7 @@ gimp_item_is_content_locked (GimpItem  *item,
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return GIMP_ITEM_GET_CLASS (item)->is_content_locked (item, locked_item);
+  return GIMP_ITEM_GET_CLASS (item)->is_content_locked (item, locked_item, TRUE);
 }
 
 void

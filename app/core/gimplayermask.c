@@ -37,7 +37,8 @@ static void            gimp_layer_mask_preview_thaw         (GimpViewable      *
 
 static gboolean        gimp_layer_mask_is_attached          (GimpItem          *item);
 static gboolean        gimp_layer_mask_is_content_locked    (GimpItem          *item,
-                                                             GimpItem         **locked_item);
+                                                             GimpItem         **locked_item,
+                                                             gboolean           check_children);
 static gboolean        gimp_layer_mask_is_position_locked   (GimpItem          *item,
                                                              GimpItem         **locked_item,
                                                              gboolean           check_children);
@@ -135,7 +136,8 @@ gimp_layer_mask_preview_thaw (GimpViewable *viewable)
 
 static gboolean
 gimp_layer_mask_is_content_locked (GimpItem  *item,
-                                   GimpItem **locked_item)
+                                   GimpItem **locked_item,
+                                   gboolean   check_children)
 {
   GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
   GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
