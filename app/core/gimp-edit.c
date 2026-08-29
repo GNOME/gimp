@@ -271,7 +271,7 @@ gimp_edit_copy (GimpImage     *image,
         {
           GList *all_items;
 
-          all_items = gimp_image_get_layer_list (clip_image);
+          all_items = gimp_image_get_layer_iter (clip_image);
 
           for (iter = all_items; iter; iter = g_list_next (iter))
             {
@@ -296,7 +296,6 @@ gimp_edit_copy (GimpImage     *image,
                                 selection_bounds.width, selection_bounds.height,
                                 item_x - selection_bounds.x, item_y - selection_bounds.y);
             }
-          g_list_free (all_items);
 
           /* We need to store the original offsets before the image was
            * resized, in order to move it into the correct location for
