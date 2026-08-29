@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-27 23:25+0000\n"
-"PO-Revision-Date: 2026-07-29 14:12+0500\n"
+"POT-Creation-Date: 2026-08-27 22:26+0000\n"
+"PO-Revision-Date: 2026-08-29 11:56+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -83,7 +83,7 @@ msgid "Script Console"
 msgstr "Скрипт консолі"
 
 #: plug-ins/script-fu/console/script-fu-console.c:124
-#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/console/script-fu-console.c:251
 msgid "_Save"
 msgstr "_Сақтау"
 
@@ -92,34 +92,34 @@ msgid "C_lear"
 msgstr "_Тазарту"
 
 #: plug-ins/script-fu/console/script-fu-console.c:126
-#: plug-ins/script-fu/console/script-fu-console.c:313
+#: plug-ins/script-fu/console/script-fu-console.c:315
 msgid "_Close"
 msgstr "_Жабу"
 
-#: plug-ins/script-fu/console/script-fu-console.c:187
+#: plug-ins/script-fu/console/script-fu-console.c:189
 msgid "_Browse..."
 msgstr "_Шолу..."
 
-#: plug-ins/script-fu/console/script-fu-console.c:246
+#: plug-ins/script-fu/console/script-fu-console.c:248
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu консолінің шығысын сақтау"
 
-#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/console/script-fu-console.c:251
 #: plug-ins/script-fu/server/script-fu-server.c:968
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_Cancel"
 msgstr "_Бас тарту"
 
-#: plug-ins/script-fu/console/script-fu-console.c:282
+#: plug-ins/script-fu/console/script-fu-console.c:284
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Жазу үшін '%s' файлын ашу мүмкін болмады: %s"
 
-#: plug-ins/script-fu/console/script-fu-console.c:308
+#: plug-ins/script-fu/console/script-fu-console.c:310
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu процедуралар браузері"
 
-#: plug-ins/script-fu/console/script-fu-console.c:312
+#: plug-ins/script-fu/console/script-fu-console.c:314
 msgid "_Apply"
 msgstr "Іске _асыру"
 
@@ -168,44 +168,44 @@ msgstr "Се_рверді іске қосу..."
 msgid "Server for remote Script-Fu operation"
 msgstr "Script-Fu операцияларын қашықтан орындауға арналған сервер"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:141
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu бір уақытта екі скриптті өңдей алмайды."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:143
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Сіз «%s» скриптін іске қосып қойғансыз."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Reset"
 msgstr "_Ысыру"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:169
 msgid "_OK"
 msgstr "_Жарайды"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:274
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu түс таңдау"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:395
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:396
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu файл таңдау"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu бума таңдау"
 
 #. Log to stdout.  Later to Gimp.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:807
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:811
 #, c-format
 msgid "Error while executing %s:"
 msgstr "%s орындау кезіндегі қате:"
@@ -852,11 +852,19 @@ msgstr "Бестен бір бөлік ережесі"
 msgid "Golden sections"
 msgstr "Алтын қималар"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:27
+msgid ""
+"No selection to base guides on.\n"
+"Make a selection first!"
+msgstr ""
+"Бағыттауыштарды негіздеуге болатын таңдау жоқ.\n"
+"Алдымен таңдау жасаңыз!"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "New Guides from _Selection"
 msgstr "_Таңдаудан жаңа бағыттағыштар"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:34
 msgid "Create four guides around the bounding box of the current selection"
 msgstr ""
 "Ағымдағы таңдаудың шектеуші тіктөртбұрышының айналасында төрт бағыттағыш "
