@@ -42,6 +42,26 @@ GimpGetColorFunc      _gimp_get_foreground_func = NULL;
 GimpGetColorFunc      _gimp_get_background_func = NULL;
 GimpEnsureModulesFunc _gimp_ensure_modules_func = NULL;
 
+#if !defined(G_OS_WIN32) && !defined(PLATFORM_OSX)
+static void
+gimp_widgets_init_platform_settings (void)
+{
+  GtkSettings *settings = gtk_settings_get_default ();
+
+  if (settings == NULL)
+    return;
+
+  /* prefer KDE_FULL_SESSION instead of XDG_CURRENT_DESKTOP and
+     KDE_SESSION_VERSION instead of XDG_SESSION_DESKTOP since
+     the formers are set by KDE, with no margin for error */
+  if (g_getenv ("KDE_FULL_SESSION") != NULL &&
+      g_getenv ("KDE_SESSION_VERSION") != NULL)
+    g_object_set (settings,
+                  "gtk-alternative-button-order", TRUE,
+                  "gtk-dialogs-use-header",       FALSE,
+                  NULL);
+}
+#endif
 
 static void
 gimp_widgets_init_foreign_enums (void)
@@ -191,6 +211,13 @@ gimp_widgets_init (GimpHelpFunc           standard_help_func,
   g_list_free_full (icons, g_object_unref);
 
   gimp_widgets_init_foreign_enums ();
+
+#if !defined(G_OS_WIN32) && !defined(PLATFORM_OSX)
+  /* align GtkSettings with the UX conventions of the running platform.
+     GTK already do the right thing on Windows and macOS. KDE Plasma follows
+     the same conventions of Windows but GTK does not detect it. See: #11606 */
+  gimp_widgets_init_platform_settings ();
+#endif
 
   gimp_widgets_initialized = TRUE;
   g_free (base_dir);
