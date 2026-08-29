@@ -23,23 +23,11 @@
 
 #include <string.h>
 
-#ifdef _WIN32
-#include <dwmapi.h>
-#include <gdk/gdkwin32.h>
-
-#ifndef DWMWA_USE_IMMERSIVE_DARK_MODE
-#define DWMWA_USE_IMMERSIVE_DARK_MODE 20
-#endif
-#endif
-
-#ifdef PLATFORM_OSX
-#import <AppKit/AppKit.h>
-#endif
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 
 #define PLUG_IN_PROC     "plug-in-unit-editor"
@@ -146,51 +134,6 @@ static GActionEntry ACTIONS[] =
   { "refresh", refresh_action },
 };
 
-
-/* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c since gtk_application_window_new
- * is a bare GTK function that naturally have no connection with gimp automatization.
- */
-#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
-static void
-gimp_window_set_title_bar_theme (GtkWidget *dialog)
-{
-#ifdef G_OS_WIN32
-  HWND           hwnd;
-#endif
-  GdkWindow     *window        = NULL;
-  gboolean       use_dark_mode = FALSE;
-
-  window = gtk_widget_get_window (GTK_WIDGET (dialog));
-  if (window)
-    {
-      GtkStyleContext *style;
-      GdkRGBA         *color = NULL;
-
-      style = gtk_widget_get_style_context (dialog);
-      gtk_style_context_get (style, gtk_style_context_get_state (style),
-                             GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
-                             NULL);
-      if (color)
-        {
-          if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
-            use_dark_mode = TRUE;
-
-          gdk_rgba_free (color);
-        }
-
-#ifdef G_OS_WIN32
-        hwnd = (HWND) gdk_win32_window_get_handle (window);
-        DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
-                               &use_dark_mode, sizeof (use_dark_mode));
-#elif defined(PLATFORM_OSX)
-        if (use_dark_mode)
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
-        else
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
-#endif
-    }
-}
-#endif
 
 static void
 gimp_unit_editor_class_init (GimpUnitEditorClass *klass)
@@ -443,7 +386,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
 
   unit_list_init (GTK_TREE_VIEW (self->tv));
 
-  if (!use_header_bar)
+  if (! use_header_bar)
     {
       gtk_container_add (GTK_CONTAINER (vbox), action_container);
       gtk_widget_set_visible (action_container, TRUE);
@@ -453,10 +396,10 @@ on_app_activate (GApplication *gapp, gpointer user_data)
                     G_CALLBACK (unit_editor_key_press_event),
                     NULL);
 
-#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
-  /* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_application_window_new */
+#if defined (G_OS_WIN32) || \
+    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
   gtk_widget_realize (GTK_WIDGET (self->window));
-  gimp_window_set_title_bar_theme (GTK_WIDGET (self->window));
+  gimp_widget_set_title_bar_theme (GTK_WIDGET (self->window));
 #endif
 
   gtk_widget_set_visible (GTK_WIDGET (self->window), TRUE);
@@ -635,6 +578,13 @@ new_unit_dialog (GtkWindow *main_window,
 
           gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (msg),
                                                     _("Please fill in all text fields."));
+
+#if defined (G_OS_WIN32) || \
+    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+          gtk_widget_realize (msg);
+          gimp_widget_set_title_bar_theme (msg);
+#endif
+
           gtk_dialog_run (GTK_DIALOG (msg));
           gtk_widget_destroy (msg);
 
