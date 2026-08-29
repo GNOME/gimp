@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-3-0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-28 20:39+0000\n"
-"PO-Revision-Date: 2026-07-29 14:17+0500\n"
+"POT-Creation-Date: 2026-08-27 16:06+0000\n"
+"PO-Revision-Date: 2026-08-29 11:56+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <Kazakh>\n"
 "Language: kk\n"
@@ -32,7 +32,7 @@ msgstr "C тіліндегі плагин мысалы"
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215 plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425 plug-ins/common/smooth-palette.c:193 plug-ins/common/sparkle.c:301
 #: plug-ins/common/sphere-designer.c:3187 plug-ins/common/tile.c:222 plug-ins/common/tile-small.c:312 plug-ins/common/van-gogh-lic.c:242 plug-ins/common/warp.c:344
 #: plug-ins/common/wavelet-decompose.c:179 plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427 plug-ins/gfig/gfig.c:213 plug-ins/gimpressionist/gimp.c:184
-#: plug-ins/gradient-flare/gradient-flare.c:925 plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:264 plug-ins/lighting/lighting-main.c:777 plug-ins/map-object/map-object-main.c:537
+#: plug-ins/gradient-flare/gradient-flare.c:925 plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:322 plug-ins/lighting/lighting-main.c:777 plug-ins/map-object/map-object-main.c:537
 #: plug-ins/pagecurl/pagecurl.c:297
 #, c-format
 msgid "Procedure '%s' only works with one drawable."
@@ -42,23 +42,23 @@ msgstr "«%s» процедурасы тек бір сызылатынмен ж�
 msgid "Plug-In Example in C"
 msgstr "C тіліндегі плагин мысалы"
 
-#: extensions/goat-exercises/goat-exercise-c.c:182 extensions/goat-exercises/goat-exercise-gjs.js:95 extensions/goat-exercises/goat-exercise-lua.lua:72
-#: extensions/goat-exercises/goat-exercise-py3.py:78 extensions/goat-exercises/goat-exercise-vala.vala:73 plug-ins/common/busy-dialog.c:283 plug-ins/common/cml-explorer.c:1374
+#: extensions/goat-exercises/goat-exercise-c.c:182 extensions/goat-exercises/goat-exercise-gjs.js:96 extensions/goat-exercises/goat-exercise-lua.lua:73
+#: extensions/goat-exercises/goat-exercise-py3.py:79 extensions/goat-exercises/goat-exercise-vala.vala:73 plug-ins/common/busy-dialog.c:283 plug-ins/common/cml-explorer.c:1374
 #: plug-ins/common/cml-explorer.c:2143 plug-ins/common/cml-explorer.c:2340 plug-ins/common/curve-bend.c:1893 plug-ins/common/curve-bend.c:1915 plug-ins/common/file-gif-export.c:1213
 #: plug-ins/common/file-heif.c:2489 plug-ins/common/file-pdf-export.c:1050 plug-ins/common/file-pdf-load.c:585 plug-ins/common/qbist.c:840 plug-ins/common/qbist.c:888
-#: plug-ins/common/sphere-designer.c:2295 plug-ins/common/sphere-designer.c:2643 plug-ins/common/unit-editor.c:459 plug-ins/flame/flame.c:619 plug-ins/flame/flame.c:809
+#: plug-ins/common/sphere-designer.c:2295 plug-ins/common/sphere-designer.c:2643 plug-ins/common/unit-editor.c:527 plug-ins/flame/flame.c:619 plug-ins/flame/flame.c:809
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1491 plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1515 plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1402 plug-ins/gfig/gfig-dialog.c:349 plug-ins/gfig/gfig-dialog.c:772 plug-ins/gfig/gfig-dialog.c:811 plug-ins/gimpressionist/brush.c:269
 #: plug-ins/gimpressionist/orientmap.c:528 plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401 plug-ins/gradient-flare/gradient-flare.c:3360
 #: plug-ins/gradient-flare/gradient-flare.c:3474 plug-ins/ifs-compose/ifs-compose.c:914 plug-ins/ifs-compose/ifs-compose.c:2614 plug-ins/ifs-compose/ifs-compose.c:2638
 #: plug-ins/imagemap/imap_browse.c:79 plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73 plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
-#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1193 plug-ins/metadata/metadata-editor.c:1695 plug-ins/metadata/metadata-editor.c:5587
-#: plug-ins/metadata/metadata-editor.c:5622 plug-ins/print/print.c:458
+#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1193 plug-ins/metadata/metadata-editor.c:1691 plug-ins/metadata/metadata-editor.c:5583
+#: plug-ins/metadata/metadata-editor.c:5618 plug-ins/print/print.c:516
 msgid "_Cancel"
 msgstr "Бас _тарту"
 
-#: extensions/goat-exercises/goat-exercise-c.c:183 extensions/goat-exercises/goat-exercise-gjs.js:96 extensions/goat-exercises/goat-exercise-lua.lua:73
-#: extensions/goat-exercises/goat-exercise-py3.py:79 extensions/goat-exercises/goat-exercise-vala.vala:74
+#: extensions/goat-exercises/goat-exercise-c.c:183 extensions/goat-exercises/goat-exercise-gjs.js:97 extensions/goat-exercises/goat-exercise-lua.lua:74
+#: extensions/goat-exercises/goat-exercise-py3.py:80 extensions/goat-exercises/goat-exercise-vala.vala:74
 msgid "_Source"
 msgstr "Бастапқы _код"
 
@@ -70,8 +70,8 @@ msgstr "І_ске қосу"
 #. XXX We use printf-style string for sharing the localized
 #. string. You may just use recommended Python format() or
 #. any style you like in your plug-ins.
-#: extensions/goat-exercises/goat-exercise-c.c:203 extensions/goat-exercises/goat-exercise-lua.lua:91 extensions/goat-exercises/goat-exercise-py3.py:96
-#: extensions/goat-exercises/goat-exercise-vala.vala:90
+#: extensions/goat-exercises/goat-exercise-c.c:204 extensions/goat-exercises/goat-exercise-lua.lua:92 extensions/goat-exercises/goat-exercise-py3.py:97
+#: extensions/goat-exercises/goat-exercise-vala.vala:91
 #, c-format, python-format, lua-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
@@ -92,9 +92,9 @@ msgstr "JavaScript (GJS) тіліндегі плагин мысалы"
 msgid "Plug-In Example in JavaScript (GJS)"
 msgstr "JavaScript (GJS) тіліндегі плагин мысалы"
 
-#: extensions/goat-exercises/goat-exercise-gjs.js:97 extensions/goat-exercises/goat-exercise-lua.lua:74 extensions/goat-exercises/goat-exercise-py3.py:80 plug-ins/common/cml-explorer.c:1375
-#: plug-ins/common/file-heif.c:2490 plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644 plug-ins/common/unit-editor.c:280 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:5756 plug-ins/flame/flame.c:810 plug-ins/fractal-explorer/fractal-explorer.c:1403 plug-ins/gimpressionist/orientmap.c:529 plug-ins/gimpressionist/presets.c:647
+#: extensions/goat-exercises/goat-exercise-gjs.js:98 extensions/goat-exercises/goat-exercise-lua.lua:75 extensions/goat-exercises/goat-exercise-py3.py:81 plug-ins/common/cml-explorer.c:1375
+#: plug-ins/common/file-heif.c:2490 plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644 plug-ins/common/unit-editor.c:342 plug-ins/file-exr/file-exr.c:457
+#: plug-ins/file-psd/psd-load.c:6292 plug-ins/flame/flame.c:810 plug-ins/fractal-explorer/fractal-explorer.c:1403 plug-ins/gimpressionist/orientmap.c:529 plug-ins/gimpressionist/presets.c:647
 #: plug-ins/gimpressionist/sizemap.c:402 plug-ins/gradient-flare/gradient-flare.c:3475 plug-ins/ifs-compose/ifs-compose.c:915 plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
 msgstr "_ОК"
@@ -122,11 +122,11 @@ msgid "Plug-In Example in Lua"
 msgstr "Lua тіліндегі плагин мысалы"
 
 #. CANCEL, CLOSE, DELETE_EVENT
-#: extensions/goat-exercises/goat-exercise-lua.lua:175
+#: extensions/goat-exercises/goat-exercise-lua.lua:176
 msgid "Plug-In Example in _Lua"
 msgstr "Lua _тіліндегі плагин мысалы"
 
-#: extensions/goat-exercises/goat-exercise-lua.lua:179 extensions/goat-exercises/goat-exercise-lua.lua:180
+#: extensions/goat-exercises/goat-exercise-lua.lua:180 extensions/goat-exercises/goat-exercise-lua.lua:181
 msgid "Plug-in example in Lua"
 msgstr "Lua тіліндегі плагин мысалы"
 
@@ -190,7 +190,7 @@ msgstr "Көрінетін қабаттарды туралау"
 msgid "_Horizontal style"
 msgstr "_Горизонталды стиль"
 
-#: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215 plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439 plug-ins/file-dds/dds.c:197 plug-ins/file-tiff/file-tiff.c:152
+#: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215 plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439 plug-ins/file-dds/dds.c:196 plug-ins/file-tiff/file-tiff.c:152
 #: plug-ins/fractal-explorer/fractal-explorer.c:345 plug-ins/fractal-explorer/fractal-explorer.c:355 plug-ins/fractal-explorer/fractal-explorer.c:365 plug-ins/lighting/lighting-main.c:213
 #: plug-ins/lighting/lighting-main.c:336 plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454 plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
 #: plug-ins/metadata/metadata-tags.c:211 plug-ins/metadata/metadata-tags.c:223 plug-ins/metadata/metadata-tags.c:254
@@ -257,7 +257,7 @@ msgstr "Төменгі жиек"
 msgid "_Grid"
 msgstr "_Тор"
 
-#: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:741 plug-ins/gfig/gfig-dialog.c:1331 plug-ins/gfig/gfig-menu.ui:31 plug-ins/imagemap/imap_main.c:1590 plug-ins/imagemap/imap-menu.ui.in:189
+#: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:741 plug-ins/gfig/gfig-dialog.c:1331 plug-ins/gfig/gfig-menu.ui:31 plug-ins/imagemap/imap_main.c:1648 plug-ins/imagemap/imap-menu.ui.in:189
 #: plug-ins/imagemap/imap-menu.ui.in:281
 msgid "Grid"
 msgstr "Тор"
@@ -335,128 +335,128 @@ msgstr "Анимация фонын табу"
 msgid "Optimizing animation"
 msgstr "Анимацияны оңтайландыру"
 
-#: plug-ins/common/animation-play.c:336
+#: plug-ins/common/animation-play.c:394
 msgid "_Playback..."
 msgstr "_Ойнату..."
 
-#: plug-ins/common/animation-play.c:341
+#: plug-ins/common/animation-play.c:399
 msgid "Preview a GIMP layer-based animation"
 msgstr "GIMP қабаттарына негізделген анимацияны алдын ала қарау"
 
-#: plug-ins/common/animation-play.c:376
+#: plug-ins/common/animation-play.c:434
 #, c-format
 msgid "Procedure '%s' only works in interactive mode."
 msgstr "«%s» процедурасы тек интерактивті режимде жұмыс істейді."
 
-#: plug-ins/common/animation-play.c:394 plug-ins/common/animation-play.c:945 plug-ins/common/animation-play.c:1457
+#: plug-ins/common/animation-play.c:452 plug-ins/common/animation-play.c:1011 plug-ins/common/animation-play.c:1530
 msgid "Start playback"
 msgstr "Ойнатуды бастау"
 
-#: plug-ins/common/animation-play.c:395 plug-ins/common/animation-play.c:949
+#: plug-ins/common/animation-play.c:453 plug-ins/common/animation-play.c:1015
 msgid "Step back to previous frame"
 msgstr "Алдыңғы кадрға қайту"
 
-#: plug-ins/common/animation-play.c:396 plug-ins/common/animation-play.c:952
+#: plug-ins/common/animation-play.c:454 plug-ins/common/animation-play.c:1018
 msgid "Step to next frame"
 msgstr "Келесі кадрға өту"
 
-#: plug-ins/common/animation-play.c:397 plug-ins/common/animation-play.c:955
+#: plug-ins/common/animation-play.c:455 plug-ins/common/animation-play.c:1021
 msgid "Rewind the animation"
 msgstr "Анимацияны кері айналдыру"
 
-#: plug-ins/common/animation-play.c:402
+#: plug-ins/common/animation-play.c:460
 msgid "Increase the speed of the animation"
 msgstr "Анимация жылдамдығын арттыру"
 
-#: plug-ins/common/animation-play.c:403
+#: plug-ins/common/animation-play.c:461
 msgid "Decrease the speed of the animation"
 msgstr "Анимация жылдамдығын төмендету"
 
-#: plug-ins/common/animation-play.c:404
+#: plug-ins/common/animation-play.c:462
 msgid "Reset the speed of the animation"
 msgstr "Анимация жылдамдығын бастапқыға қайтару"
 
-#: plug-ins/common/animation-play.c:409 plug-ins/common/animation-play.c:890
+#: plug-ins/common/animation-play.c:467 plug-ins/common/animation-play.c:956
 msgid "Detach the animation from the dialog window"
 msgstr "Сұхбат терезесінен анимацияны ажырату"
 
-#: plug-ins/common/animation-play.c:410 plug-ins/common/animation-play.c:888
+#: plug-ins/common/animation-play.c:468 plug-ins/common/animation-play.c:954
 msgid "Reload the image"
 msgstr "Суретті қайта жүктеу"
 
-#: plug-ins/common/animation-play.c:411 plug-ins/imagemap/imap-menu.ui.in:23
+#: plug-ins/common/animation-play.c:469 plug-ins/imagemap/imap-menu.ui.in:23
 msgid "Quit"
 msgstr "Шығу"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:501 plug-ins/common/animation-play.c:559 plug-ins/common/animation-play.c:865
+#: plug-ins/common/animation-play.c:559 plug-ins/common/animation-play.c:617 plug-ins/common/animation-play.c:931
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
 
 #. Image Name
-#: plug-ins/common/animation-play.c:698
+#: plug-ins/common/animation-play.c:756
 msgid "Animation Playback:"
 msgstr "Анимацияны ойнату:"
 
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
-#: plug-ins/common/animation-play.c:792 plug-ins/common/file-gif-export.c:221
+#: plug-ins/common/animation-play.c:858 plug-ins/common/file-gif-export.c:221
 msgid "Cumulative layers (combine)"
 msgstr "Кумулятивті қабаттар (біріктіру)"
 
-#: plug-ins/common/animation-play.c:797 plug-ins/common/file-gif-export.c:222
+#: plug-ins/common/animation-play.c:863 plug-ins/common/file-gif-export.c:222
 msgid "One frame per layer (replace)"
 msgstr "Бір қабатқа бір кадр (алмастыру)"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:820
+#: plug-ins/common/animation-play.c:886
 #, c-format
 msgid "%d fps"
 msgstr "%d fps"
 
-#: plug-ins/common/animation-play.c:831
+#: plug-ins/common/animation-play.c:897
 msgid "Default framerate"
 msgstr "Бастапқы кадр жиілігі"
 
-#: plug-ins/common/animation-play.c:851
+#: plug-ins/common/animation-play.c:917
 msgid "Playback speed"
 msgstr "Ойнату жылдамдығы"
 
 #. Zoom Options
-#: plug-ins/common/animation-play.c:881 plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679 plug-ins/imagemap/imap-menu.ui.in:268
+#: plug-ins/common/animation-play.c:947 plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679 plug-ins/imagemap/imap-menu.ui.in:268
 msgid "Zoom"
 msgstr "Масштабтау"
 
-#: plug-ins/common/animation-play.c:888
+#: plug-ins/common/animation-play.c:954
 msgid "Reload"
 msgstr "Қайта жүктеу"
 
-#: plug-ins/common/animation-play.c:890
+#: plug-ins/common/animation-play.c:956
 msgid "Detach"
 msgstr "Ажырату"
 
-#: plug-ins/common/animation-play.c:893 plug-ins/imagemap/imap-menu.ui.in:209
+#: plug-ins/common/animation-play.c:959 plug-ins/imagemap/imap-menu.ui.in:209
 msgid "Help"
 msgstr "Көмек"
 
-#: plug-ins/common/animation-play.c:948
+#: plug-ins/common/animation-play.c:1014
 msgid "Step _back"
 msgstr "Кері қ_адам"
 
-#: plug-ins/common/animation-play.c:951
+#: plug-ins/common/animation-play.c:1017
 msgid "_Step"
 msgstr "_Қадам"
 
-#: plug-ins/common/animation-play.c:1060
+#: plug-ins/common/animation-play.c:1133
 msgid "Memory could not be allocated to the frame container."
 msgstr "Кадрлар контейнеріне жад бөліне алмады."
 
-#: plug-ins/common/animation-play.c:1131
+#: plug-ins/common/animation-play.c:1204
 msgid "Invalid image. Did you close it?"
 msgstr "Жарамсыз сурет. Сіз оны жаптыңыз ба?"
 
-#: plug-ins/common/animation-play.c:1457
+#: plug-ins/common/animation-play.c:1530
 msgid "Stop playback"
 msgstr "Ойнатуды тоқтату"
 
@@ -518,13 +518,13 @@ msgstr "Жалюзи"
 
 #. * Create the "background" layer to hold the image...
 #: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1246 plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475 plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
-#: plug-ins/common/file-drhalo.c:238 plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:431
+#: plug-ins/common/file-drhalo.c:238 plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:437
 #: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-macpaint.c:247 plug-ins/common/file-pcx.c:729 plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745 plug-ins/common/file-pix.c:431
 #: plug-ins/common/file-png.c:1083 plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296 plug-ins/common/file-raw-data.c:834 plug-ins/common/file-raw-data.c:1955
 #: plug-ins/common/file-sunras.c:1061 plug-ins/common/file-tga.c:1103 plug-ins/common/file-tim.c:403 plug-ins/common/file-tim.c:551 plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
 #: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:864 plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398 plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
-#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706 plug-ins/file-jpeg/jpeg-load.c:259 plug-ins/file-psd/psd-image-res-load.c:1113 plug-ins/file-psd/psd-load.c:4932
-#: plug-ins/file-sgi/sgi.c:456 plug-ins/file-tiff/file-tiff-load.c:1666 plug-ins/file-tiff/file-tiff-load.c:2503 plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
+#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706 plug-ins/file-jpeg/jpeg-load.c:259 plug-ins/file-psd/psd-image-res-load.c:1113 plug-ins/file-psd/psd-load.c:5468
+#: plug-ins/file-sgi/sgi.c:456 plug-ins/file-tiff/file-tiff-load.c:1667 plug-ins/file-tiff/file-tiff-load.c:2517 plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
 #: plug-ins/gfig/gfig-dialog.c:1262 plug-ins/gimpressionist/general.c:147 plug-ins/map-object/map-object-apply.c:241 plug-ins/screenshot/screenshot-win32.c:310 plug-ins/twain/twain.c:630
 msgid "Background"
 msgstr "Фон"
@@ -1098,7 +1098,7 @@ msgstr "CML шолушысының параметрлерін сақтау"
 #: plug-ins/common/file-raw-data.c:1552 plug-ins/common/file-sunras.c:616 plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:737 plug-ins/common/file-xmc.c:1270
 #: plug-ins/common/sphere-designer.c:2208 plug-ins/file-bmp/bmp-export.c:301 plug-ins/file-fli/fli-gimp.c:823 plug-ins/file-icns/file-icns-export.c:442 plug-ins/file-ico/ico-export.c:1374
 #: plug-ins/file-ico/ico-export.c:1657 plug-ins/file-jpeg/jpeg-export.c:319 plug-ins/file-psd/psd-export.c:2534 plug-ins/file-psd/psd-export.c:2702 plug-ins/file-tiff/file-tiff-export.c:1101
-#: plug-ins/file-tiff/file-tiff-export.c:1221 plug-ins/flame/flame.c:586 plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396 plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
+#: plug-ins/file-tiff/file-tiff-export.c:1222 plug-ins/flame/flame.c:586 plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396 plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
 #: plug-ins/lighting/lighting-ui.c:796
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1775,15 +1775,15 @@ msgstr "Бос таңдауларда жұмыс істей алмайды."
 
 #: plug-ins/common/curve-bend.c:808 plug-ins/common/file-cel.c:330 plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361 plug-ins/common/file-drhalo.c:201 plug-ins/common/file-farbfeld.c:273
 #: plug-ins/common/file-gif-load.c:481 plug-ins/common/file-iff.c:277 plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:198 plug-ins/common/file-mng.c:1067 plug-ins/common/file-mng.c:1814
-#: plug-ins/common/file-paa.c:191 plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:801 plug-ins/common/file-png.c:1372 plug-ins/common/file-ps.c:1158
-#: plug-ins/common/file-ps.c:3756 plug-ins/common/file-psp.c:2844 plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:257 plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
-#: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861 plug-ins/common/file-seattle-filmworks.c:232 plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:772
+#: plug-ins/common/file-paa.c:191 plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533 plug-ins/common/file-png.c:801 plug-ins/common/file-png.c:1372 plug-ins/common/file-ps.c:1161
+#: plug-ins/common/file-ps.c:3759 plug-ins/common/file-psp.c:2844 plug-ins/common/file-psp.c:2894 plug-ins/common/file-pvr.c:257 plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:611
+#: plug-ins/common/file-raw-data.c:810 plug-ins/common/file-raw-data.c:1861 plug-ins/common/file-seattle-filmworks.c:232 plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:775
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277 plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329 plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:656
 #: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465 plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276 plug-ins/file-cin/cineon-lib.c:90
 #: plug-ins/file-cin/dpx-lib.c:131 plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263 plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:447 plug-ins/file-fli/fli-gimp.c:498
-#: plug-ins/file-icns/file-icns-load.c:643 plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:759 plug-ins/file-ico/ico-load.c:909 plug-ins/file-ico/ico-load.c:1129
-#: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711 plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708 plug-ins/file-psd/psd-load.c:248
-#: plug-ins/file-psd/psd-load.c:253 plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:540 plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
+#: plug-ins/file-icns/file-icns-load.c:643 plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:764 plug-ins/file-ico/ico-load.c:914 plug-ins/file-ico/ico-load.c:1166
+#: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:711 plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708 plug-ins/file-psd/psd-load.c:257
+#: plug-ins/file-psd/psd-load.c:262 plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:540 plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1724
 #: plug-ins/fractal-explorer/fractal-explorer.c:1171 plug-ins/gfig/gfig.c:529 plug-ins/help/gimphelplocale.c:257 plug-ins/help/gimphelplocale.c:273 plug-ins/lighting/lighting-ui.c:927
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -2227,7 +2227,7 @@ msgid "Image dimensions too large: width %d x height %d"
 msgstr "Сурет өлшемдері тым үлкен: ені %d x биіктігі %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:254 plug-ins/common/file-farbfeld.c:316 plug-ins/common/file-macpaint.c:260 plug-ins/file-fits/fits.c:499 plug-ins/file-fits/fits.c:581
-#: plug-ins/file-psd/psd-load.c:5311 plug-ins/file-tiff/file-tiff-load.c:1984 plug-ins/file-tiff/file-tiff-load.c:2081 plug-ins/file-tiff/file-tiff-load.c:2278
+#: plug-ins/file-psd/psd-load.c:5847 plug-ins/file-tiff/file-tiff-load.c:1985 plug-ins/file-tiff/file-tiff-load.c:2088 plug-ins/file-tiff/file-tiff-load.c:2110 plug-ins/file-tiff/file-tiff-load.c:2292
 #, c-format
 msgid "There was not enough memory to complete the operation."
 msgstr "Операцияны аяқтау үшін жад жеткіліксіз."
@@ -2285,7 +2285,7 @@ msgstr "Сұр реңкті суретті әртүрлі мәтіндік пі�
 msgid "This plug-in uses aalib to export grayscale image as ascii art into a variety of text formats"
 msgstr "Бұл плагин сұр реңкті суретті ascii art ретінде мәтіндік пішімдердің алуан түріне экспорттау үшін aalib пайдаланады"
 
-#: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:244
+#: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:243
 msgid "_Format"
 msgstr "Пі_шім"
 
@@ -2343,11 +2343,11 @@ msgstr "Сурет тақырыптамасын оқу кезінде EOF нем
 #. * Open the file for reading...
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353 plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473 plug-ins/common/file-heif.c:1051 plug-ins/common/file-jp2.c:1379
 #: plug-ins/common/file-mng.c:1059 plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525 plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368 plug-ins/common/file-png.c:793
-#: plug-ins/common/file-pnm.c:688 plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:801 plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:427
+#: plug-ins/common/file-pnm.c:688 plug-ins/common/file-ps.c:1151 plug-ins/common/file-raw-data.c:801 plug-ins/common/file-raw-data.c:1853 plug-ins/common/file-sunras.c:427
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242 plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618 plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:646
 #: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:490
-#: plug-ins/file-icns/file-icns-load.c:635 plug-ins/file-ico/ico-load.c:751 plug-ins/file-ico/ico-load.c:901 plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:261
-#: plug-ins/file-raw/file-another-rawtherapee.c:353 plug-ins/file-raw/file-darktable.c:467 plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315 plug-ins/file-tiff/file-tiff-load.c:319
+#: plug-ins/file-icns/file-icns-load.c:635 plug-ins/file-ico/ico-load.c:756 plug-ins/file-ico/ico-load.c:906 plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:270
+#: plug-ins/file-raw/file-another-rawtherapee.c:353 plug-ins/file-raw/file-darktable.c:467 plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315 plug-ins/file-tiff/file-tiff-load.c:320
 #, c-format
 msgid "Opening '%s'"
 msgstr "Ашылуда: '%s'"
@@ -2405,8 +2405,8 @@ msgstr "'%s': палитра деректерін оқу кезінде EOF не
 #. init the progress meter
 #. * Open the file for writing...
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364 plug-ins/common/file-gif-export.c:943 plug-ins/common/file-html-table.c:358 plug-ins/common/file-jp2.c:1822
-#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:649 plug-ins/common/file-png.c:1940 plug-ins/common/file-pnm.c:1632 plug-ins/common/file-ps.c:1372
-#: plug-ins/common/file-qoi.c:350 plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:810 plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:729 plug-ins/common/file-xbm.c:1030
+#: plug-ins/common/file-jpegxl.c:1389 plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:649 plug-ins/common/file-png.c:1940 plug-ins/common/file-pnm.c:1632 plug-ins/common/file-ps.c:1375
+#: plug-ins/common/file-qoi.c:350 plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:813 plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:729 plug-ins/common/file-xbm.c:1030
 #: plug-ins/common/file-xpm.c:720 plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:293 plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:787
 #: plug-ins/file-icns/file-icns-export.c:821 plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1645 plug-ins/file-jpeg/jpeg-export.c:274 plug-ins/file-psd/psd-export.c:2472
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1091
@@ -2680,7 +2680,7 @@ msgstr "'%s' файлында пиксель деректері жеткілік
 msgid "Cannot save images with alpha channel."
 msgstr "Альфа-арнасы бар суреттерді сақтау мүмкін емес."
 
-#: plug-ins/common/file-dicom.c:1566 plug-ins/common/file-ps.c:1367 plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:674
+#: plug-ins/common/file-dicom.c:1566 plug-ins/common/file-ps.c:1370 plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:674
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Белгісіз сурет түрлерінде операция орындау мүмкін емес."
@@ -3018,7 +3018,7 @@ msgstr "кадр ақпараты"
 msgid "local colormap"
 msgstr "жергілікті түстер картасы"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:448
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:454
 msgid "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr "Шаршы емес пиксельдер. Егер \"Нүктеге нүкте\" режимі іске қосылған болса, сурет қысылған болып көрінуі мүмкін."
 
@@ -3527,8 +3527,8 @@ msgid "_Generate full HTML document"
 msgstr "Толық HTML құжатын _жасау"
 
 #: plug-ins/common/file-html-table.c:214
-msgid "If enabled GTM will output a full HTML document with <HTML>, <BODY>, etc. tags instead of just the table html."
-msgstr "Егер іске қосылған болса, GTM тек кестенің html-інің орнына <HTML>, <BODY> және т.б. тегтері бар толық HTML құжатын шығарады."
+msgid "If enabled GIMP Table Magic will output a full HTML document with <HTML>, <BODY>, etc. tags instead of just the table html."
+msgstr "Іске қосылған болса, GIMP Table Magic тек кестенің html кодының орнына <HTML>, <BODY> және т.б. тегтері бар толық HTML құжатын шығарады."
 
 #: plug-ins/common/file-html-table.c:221
 msgid "_Border"
@@ -3543,16 +3543,16 @@ msgid "_Use cellspan"
 msgstr "Cellspan _пайдалану"
 
 #: plug-ins/common/file-html-table.c:228
-msgid "If enabled GTM will replace any rectangular sections of identically colored blocks with one large cell with ROWSPAN and COLSPAN values."
-msgstr "Егер іске қосылған болса, GTM бірдей боялған блоктардың кез келген тіктөртбұрышты бөліктерін ROWSPAN және COLSPAN мәндері бар бір үлкен ұяшықпен алмастырады."
+msgid "If enabled GIMP Table Magic will replace any rectangular sections of identically colored blocks with one large cell with ROWSPAN and COLSPAN values."
+msgstr "Іске қосылған болса, GIMP Table Magic бірдей түсті блоктардың кез келген тік төртбұрышты бөлімдерін ROWSPAN және COLSPAN мәндері бар бір үлкен ұяшықпен алмастырады."
 
 #: plug-ins/common/file-html-table.c:236
 msgid "Co_mpress TD tags"
 msgstr "TD тегтерін с_ығу"
 
 #: plug-ins/common/file-html-table.c:237
-msgid "Enabling this will cause GTM to leave no whitespace between the TD tags and the cell content. This is only necessary for pixel level positioning control."
-msgstr "Мұны іске қосу GTM-ге TD тегтері мен ұяшық мазмұны арасында бос орын қалдырмауға әкеледі. Бұл тек пиксель деңгейіндегі позициялауды басқару үшін қажет."
+msgid "Enabling this will cause GIMP Table Magic to leave no whitespace between the TD tags and the cell content. This is only necessary for pixel level positioning control."
+msgstr "Бұны іске қосу нәтижесінде GIMP Table Magic TD тегтері мен ұяшық мазмұны арасында бос орын қалдырмайды. Бұл тек пиксель деңгейінде орналастыруды басқару үшін қажет."
 
 #: plug-ins/common/file-html-table.c:246
 msgid "Cell-pa_dding"
@@ -3622,7 +3622,11 @@ msgstr "Жарамсыз немесе жоқ ILBM суреті"
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM құрамында сурет деректері жоқ - палитра файлы болуы мүмкін"
 
-#: plug-ins/common/file-iff.c:365 plug-ins/common/file-iff.c:384
+#: plug-ins/common/file-iff.c:349
+msgid "Invalid ILBM header value."
+msgstr "ILBM тақырыптамасының мәні жарамсыз."
+
+#: plug-ins/common/file-iff.c:371 plug-ins/common/file-iff.c:390
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "Жарамсыз ILBM түстер картасының өлшемі"
@@ -3783,15 +3787,15 @@ msgstr "Түс кеңістігі жоқ JPEG 2000 суреті"
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
 msgstr "Қолдау көрсетілмейтін JPEG 2000%s «%s», %d компоненті бар."
 
-#: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:940 plug-ins/file-psd/psd-export.c:3022 plug-ins/file-tiff/file-tiff-export.c:1390
+#: plug-ins/common/file-jp2.c:1301 plug-ins/file-jpeg/jpeg-export.c:940 plug-ins/file-psd/psd-export.c:3022 plug-ins/file-tiff/file-tiff-export.c:1391
 msgid "No soft-proofing profile"
 msgstr "Жұмсақ байқау профилі жоқ"
 
-#: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035 plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:3030 plug-ins/file-tiff/file-tiff-export.c:1399
+#: plug-ins/common/file-jp2.c:1309 plug-ins/common/file-jpegxl.c:2035 plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:3030 plug-ins/file-tiff/file-tiff-export.c:1400
 msgid "Name of the color profile used for CMYK export."
 msgstr "CMYK экспорттау үшін пайдаланылатын түс профилінің аты."
 
-#: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054 plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:3041 plug-ins/file-tiff/file-tiff-export.c:1421
+#: plug-ins/common/file-jp2.c:1320 plug-ins/common/file-jpegxl.c:2054 plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:3041 plug-ins/file-tiff/file-tiff-export.c:1422
 #, c-format
 msgid "Profile: %s"
 msgstr "Профиль: %s"
@@ -4267,12 +4271,12 @@ msgstr "%s: Барлық DCX суреттерін жүктеу мүмкін ем
 msgid "'%s' is not a PCX file"
 msgstr "«%s» PCX файлы емес"
 
-#: plug-ins/common/file-pcx.c:674 plug-ins/common/file-wbmp.c:464 plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606 plug-ins/file-psd/psd-load.c:731
+#: plug-ins/common/file-pcx.c:674 plug-ins/common/file-wbmp.c:464 plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606 plug-ins/file-psd/psd-load.c:740
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз сурет ені: %d"
 
-#: plug-ins/common/file-pcx.c:681 plug-ins/common/file-wbmp.c:470 plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615 plug-ins/file-psd/psd-load.c:723
+#: plug-ins/common/file-pcx.c:681 plug-ins/common/file-wbmp.c:470 plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615 plug-ins/file-psd/psd-load.c:732
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз сурет биіктігі: %d"
@@ -4323,7 +4327,7 @@ msgstr "Оң шекара шектен тыс (< %d болуы керек): %d"
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Төменгі шекара шектен тыс (< %d болуы керек): %d"
 
-#: plug-ins/common/file-pcx.c:1295 plug-ins/common/file-qoi.c:369 plug-ins/common/file-svg.c:819 plug-ins/common/file-svg.c:835
+#: plug-ins/common/file-pcx.c:1295 plug-ins/common/file-qoi.c:369 plug-ins/common/file-svg.c:822 plug-ins/common/file-svg.c:838
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "«%s» файлына жазу сәтсіз аяқталды: %s"
@@ -4444,7 +4448,7 @@ msgstr ""
 msgid "Export Image as Multi-Page PDF"
 msgstr "Суретті көп бетті PDF ретінде экспорттау"
 
-#: plug-ins/common/file-pdf-export.c:1033 plug-ins/metadata/metadata-editor.c:5622
+#: plug-ins/common/file-pdf-export.c:1033 plug-ins/metadata/metadata-editor.c:5618
 msgid "_Export"
 msgstr "Экспорт_тау"
 
@@ -4468,7 +4472,7 @@ msgstr "Таңдалған беттерді өшіру"
 msgid "Add this image"
 msgstr "Осы суретті қосу"
 
-#: plug-ins/common/file-pdf-export.c:1201 plug-ins/common/file-pdf-export.c:1274 plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2233 plug-ins/file-tiff/file-tiff-load.c:1668
+#: plug-ins/common/file-pdf-export.c:1201 plug-ins/common/file-pdf-export.c:1274 plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2236 plug-ins/file-tiff/file-tiff-load.c:1669
 #, c-format
 msgid "Page %d"
 msgstr "Бет %d"
@@ -5151,63 +5155,63 @@ msgstr "Алдын ала қарау өл_шемі"
 msgid "Maximum size of preview. Set to 0 for no preview."
 msgstr "Алдын ала қараудың максимум өлшемі. Алдын ала қарамау үшін 0 етіп орнатыңыз."
 
-#: plug-ins/common/file-ps.c:1169
+#: plug-ins/common/file-ps.c:1172
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "'%s' PostScript файлын интерпретациялау мүмкін емес"
 
-#: plug-ins/common/file-ps.c:1255
+#: plug-ins/common/file-ps.c:1258
 msgid "Rendered EPS"
 msgstr "Рендерленген EPS"
 
-#: plug-ins/common/file-ps.c:1283
+#: plug-ins/common/file-ps.c:1286
 #, c-format
 msgid "%s-pages"
 msgstr "%s-бет"
 
-#: plug-ins/common/file-ps.c:1354
+#: plug-ins/common/file-ps.c:1357
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "PostScript экспорты альфа-арналары бар суреттерді өңдей алмайды"
 
-#: plug-ins/common/file-ps.c:3844
+#: plug-ins/common/file-ps.c:3847
 msgid "Pages:"
 msgstr "Беттер:"
 
-#: plug-ins/common/file-ps.c:3848
+#: plug-ins/common/file-ps.c:3851
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Жүктелетін беттер (мысалы: 1-4 немесе 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3854
+#: plug-ins/common/file-ps.c:3857
 msgid "Open as"
 msgstr "Қалайша ашу"
 
-#: plug-ins/common/file-ps.c:3942
+#: plug-ins/common/file-ps.c:3945
 msgid "When toggled, the resulting image will be scaled to fit into the given size without changing the aspect ratio."
 msgstr "Ауыстырып-қосқыш іске қосылғанда, алынған сурет арақатынасын өзгертпей көрсетілген өлшемге сәйкес масштабталады."
 
-#: plug-ins/common/file-ps.c:3948
+#: plug-ins/common/file-ps.c:3951
 msgid "Image Size"
 msgstr "Сурет өлшемі"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3965
+#: plug-ins/common/file-ps.c:3968
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3966
+#: plug-ins/common/file-ps.c:3969
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3967
+#: plug-ins/common/file-ps.c:3970
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3968
+#: plug-ins/common/file-ps.c:3971
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3975
+#: plug-ins/common/file-ps.c:3978
 msgid "Output"
 msgstr "Шығыс"
 
@@ -6007,79 +6011,79 @@ msgstr "Оқу кезінде EOF кездесті"
 msgid "Write error occurred"
 msgstr "Жазу қатесі орын алды"
 
-#: plug-ins/common/file-svg.c:284
+#: plug-ins/common/file-svg.c:287
 msgid "SVG image"
 msgstr "SVG суреті"
 
-#: plug-ins/common/file-svg.c:287
+#: plug-ins/common/file-svg.c:290
 msgid "Loads files in SVG file format"
 msgstr "Файлдарды SVG файл пішімінде жүктейді"
 
-#: plug-ins/common/file-svg.c:302
+#: plug-ins/common/file-svg.c:305
 msgid "SVG"
 msgstr "SVG"
 
-#: plug-ins/common/file-svg.c:311
+#: plug-ins/common/file-svg.c:314
 msgid "_Paths"
 msgstr "_Жолдар"
 
-#: plug-ins/common/file-svg.c:312
+#: plug-ins/common/file-svg.c:315
 msgid "Whether and how to import paths so that they can be used with the path tool"
 msgstr "Жол сайманымен пайдалану үшін жолдарды импорттау керек пе және қалай импорттау керек"
 
-#: plug-ins/common/file-svg.c:313
+#: plug-ins/common/file-svg.c:316
 msgid "Don't import paths"
 msgstr "Жолдарды импорттамау"
 
-#: plug-ins/common/file-svg.c:314
+#: plug-ins/common/file-svg.c:317
 msgid "Import paths individually"
 msgstr "Жолдарды жеке-жеке импорттау"
 
-#: plug-ins/common/file-svg.c:315
+#: plug-ins/common/file-svg.c:318
 msgid "Merge imported paths"
 msgstr "Импортталған жолдарды біріктіру"
 
-#: plug-ins/common/file-svg.c:327
+#: plug-ins/common/file-svg.c:330
 msgid "Scalable Vector Graphic"
 msgstr "Масштабталатын векторлық графика"
 
-#: plug-ins/common/file-svg.c:330
+#: plug-ins/common/file-svg.c:333
 msgid "Exports files in SVG file format"
 msgstr "Файлдарды SVG файл пішімінде экспорттайды"
 
-#: plug-ins/common/file-svg.c:331
+#: plug-ins/common/file-svg.c:334
 msgid "Exports files in SVG file format (Scalable Vector Graphic)"
 msgstr "Файлдарды SVG файл пішімінде (Масштабталатын векторлық графика) экспорттайды"
 
-#: plug-ins/common/file-svg.c:356
+#: plug-ins/common/file-svg.c:359
 msgid "_Title"
 msgstr "А_тауы"
 
-#: plug-ins/common/file-svg.c:357
+#: plug-ins/common/file-svg.c:360
 msgid "Optional <title> for SVG"
 msgstr "SVG үшін міндетті емес <title>"
 
-#: plug-ins/common/file-svg.c:362
+#: plug-ins/common/file-svg.c:365
 msgid "Em_bed raster layers as"
 msgstr "Растрлық қа_баттарды келесідей ендіру"
 
-#: plug-ins/common/file-svg.c:364
+#: plug-ins/common/file-svg.c:367
 msgid "PNG (always)"
 msgstr "PNG (әрдайым)"
 
-#: plug-ins/common/file-svg.c:365
+#: plug-ins/common/file-svg.c:368
 msgid "JPEG (for opaque images, PNG otherwise)"
 msgstr "JPEG (мөлдір емес суреттер үшін, әйтпесе PNG)"
 
-#: plug-ins/common/file-svg.c:366
+#: plug-ins/common/file-svg.c:369
 msgid "Do not export raster layers"
 msgstr "Растрлық қабаттарды экспорттамау"
 
-#: plug-ins/common/file-svg.c:372
+#: plug-ins/common/file-svg.c:375
 msgid "As In_kscape SVG"
 msgstr "In_kscape SVG ретінде"
 
-#: plug-ins/common/file-svg.c:373
+#: plug-ins/common/file-svg.c:376
 msgid "Include Inkscape-specific attributes in exported SVG. The exported SVG may not be compatible with all viewers."
 msgstr "Экспортталатын SVG файлына Inkscape-ке тән атрибуттарды қамту. Экспортталған SVG барлық қарау құралдарымен үйлесімді болмауы мүмкін."
 
@@ -6087,15 +6091,15 @@ msgstr "Экспортталатын SVG файлына Inkscape-ке тән а�
 #. * option (XML_PARSE_HUGE in libxml) because it is considered
 #. * unsafe, possibly consumming too much memory with malicious XML
 #. * files.
-#: plug-ins/common/file-svg.c:423
+#: plug-ins/common/file-svg.c:426
 msgid "Disable safety size limits?"
 msgstr "Қауіпсіздік өлшем шектеулерін сөндіру керек пе?"
 
-#: plug-ins/common/file-svg.c:428
+#: plug-ins/common/file-svg.c:431
 msgid "_No"
 msgstr "_Жоқ"
 
-#: plug-ins/common/file-svg.c:429
+#: plug-ins/common/file-svg.c:432
 msgid "_Yes"
 msgstr "_Иә"
 
@@ -6108,7 +6112,7 @@ msgstr "_Иә"
 #. * just directly return from the plug-in as a failure run in other
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
-#: plug-ins/common/file-svg.c:453
+#: plug-ins/common/file-svg.c:456
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to consume too much memory."
@@ -6116,27 +6120,27 @@ msgstr ""
 "Талдау қатесі орын алды.\n"
 "Қауіпсіздік шектеулерін сөндіру көмектесуі мүмкін. Зиянды SVG файлдары мұны тым көп жад тұтыну үшін пайдалануы мүмкін."
 
-#: plug-ins/common/file-svg.c:465
+#: plug-ins/common/file-svg.c:468
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "Қауіпсіздік мақсатында бұны тек сенімді кіріс үшін пайдалану керек!"
 
-#: plug-ins/common/file-svg.c:472
+#: plug-ins/common/file-svg.c:475
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "Алып деректерді талдауға кедергі келтіретін шектеулерсіз қайталау керек пе?"
 
-#: plug-ins/common/file-svg.c:774 plug-ins/file-exr/file-exr.c:380 plug-ins/file-exr/file-exr.c:394
+#: plug-ins/common/file-svg.c:777 plug-ins/file-exr/file-exr.c:380 plug-ins/file-exr/file-exr.c:394
 msgid "Unknown reason"
 msgstr "Белгісіз себеп"
 
-#: plug-ins/common/file-svg.c:780
+#: plug-ins/common/file-svg.c:783
 msgid "Rendering SVG"
 msgstr "SVG рендерлеу"
 
-#: plug-ins/common/file-svg.c:790
+#: plug-ins/common/file-svg.c:793
 msgid "Rendered SVG"
 msgstr "Рендерленген SVG"
 
-#: plug-ins/common/file-svg.c:1146
+#: plug-ins/common/file-svg.c:1149
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, and JPEG images.\n"
 "Your image links external image files in other formats which may not show up in all viewers."
@@ -7006,7 +7010,7 @@ msgstr "Қолжетімді суреттер:"
 msgid "On film:"
 msgstr "Кинотаспада:"
 
-#: plug-ins/common/film.c:1042 plug-ins/common/unit-editor.c:460
+#: plug-ins/common/film.c:1042 plug-ins/common/unit-editor.c:528
 msgid "_Add"
 msgstr "Қ_осу"
 
@@ -7446,28 +7450,28 @@ msgstr "Сәйкестіктер жоқ"
 msgid "Plug-in Browser"
 msgstr "Плагиндер браузері"
 
-#: plug-ins/common/plugin-browser.c:617 plug-ins/common/unit-editor.c:114 plug-ins/metadata/metadata-editor.c:612 plug-ins/metadata/metadata-editor.c:648 plug-ins/metadata/metadata-editor.c:655
+#: plug-ins/common/plugin-browser.c:619 plug-ins/common/unit-editor.c:127 plug-ins/metadata/metadata-editor.c:612 plug-ins/metadata/metadata-editor.c:648 plug-ins/metadata/metadata-editor.c:655
 #: plug-ins/metadata/metadata-editor.c:662
 msgid "Name"
 msgstr "Аты"
 
-#: plug-ins/common/plugin-browser.c:625 plug-ins/common/plugin-browser.c:686
+#: plug-ins/common/plugin-browser.c:627 plug-ins/common/plugin-browser.c:688
 msgid "Menu Path"
 msgstr "Мәзір жолы"
 
-#: plug-ins/common/plugin-browser.c:633 plug-ins/common/plugin-browser.c:695
+#: plug-ins/common/plugin-browser.c:635 plug-ins/common/plugin-browser.c:697
 msgid "Image Types"
 msgstr "Сурет түрлері"
 
-#: plug-ins/common/plugin-browser.c:643 plug-ins/common/plugin-browser.c:704
+#: plug-ins/common/plugin-browser.c:645 plug-ins/common/plugin-browser.c:706
 msgid "Installation Date"
 msgstr "Орнату күні"
 
-#: plug-ins/common/plugin-browser.c:665
+#: plug-ins/common/plugin-browser.c:667
 msgid "List View"
 msgstr "Тізім көрінісі"
 
-#: plug-ins/common/plugin-browser.c:726
+#: plug-ins/common/plugin-browser.c:728
 msgid "Tree View"
 msgstr "Ағаш көрінісі"
 
@@ -7483,7 +7487,7 @@ msgstr "PDB ішіндегі қолжетімді процедураларды �
 msgid "Procedure Browser"
 msgstr "Процедуралар браузері"
 
-#: plug-ins/common/procedure-browser.c:184
+#: plug-ins/common/procedure-browser.c:186
 #, c-format
 msgid "Procedure %s allows only interactive invocation."
 msgstr "%s процедурасы тек интерактивті шақыруға рұқсат етеді."
@@ -8169,31 +8173,31 @@ msgstr "М_өлдірсіздік"
 msgid "Number of Segments"
 msgstr "Сегменттер саны"
 
-#: plug-ins/common/unit-editor.c:112
+#: plug-ins/common/unit-editor.c:125
 msgid "Saved"
 msgstr "Сақталған"
 
-#: plug-ins/common/unit-editor.c:112
+#: plug-ins/common/unit-editor.c:125
 msgid "A unit definition will only be saved before GIMP exits if this column is checked."
 msgstr "Бұл баған белгіленген болса ғана, GIMP жабылғанға дейін юнит анықтамасы сақталады."
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:127
 msgid "The name to be used to identify this unit in the graphical interface"
 msgstr "Графикалық интерфейсте осы юнитті идентификациялау үшін пайдаланылатын атау"
 
-#: plug-ins/common/unit-editor.c:116
+#: plug-ins/common/unit-editor.c:129
 msgid "Factor"
 msgstr "Фактор"
 
-#: plug-ins/common/unit-editor.c:116
+#: plug-ins/common/unit-editor.c:129
 msgid "How many units make up an inch."
 msgstr "Бір дюймді қанша юнит құрайды."
 
-#: plug-ins/common/unit-editor.c:117
+#: plug-ins/common/unit-editor.c:130
 msgid "Digits"
 msgstr "Цифрлар"
 
-#: plug-ins/common/unit-editor.c:117
+#: plug-ins/common/unit-editor.c:130
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many decimal digits the input field should provide to get approximately the same accuracy as an \"inch\" input field with two "
 "decimal digits."
@@ -8201,81 +8205,81 @@ msgstr ""
 "Бұл өріс сандық кіріс өрістері үшін кеңес болып табылады. Ол екі ондық цифры бар «дюйм» кіріс өрісімен шамамен бірдей дәлдік алу үшін кіріс өрісі қанша ондық цифрды қамтамасыз ету керектігін "
 "көрсетеді."
 
-#: plug-ins/common/unit-editor.c:122
+#: plug-ins/common/unit-editor.c:135
 msgid "Symbol"
 msgstr "Таңба"
 
-#: plug-ins/common/unit-editor.c:122
+#: plug-ins/common/unit-editor.c:135
 msgid "The unit's symbol if it has one (e.g. \" for inches). The unit's abbreviation is used if doesn't have a symbol."
 msgstr "Юниттің таңбасы, егер ол болса (мысалы, дюйм үшін \"). Егер таңбасы болмаса, юниттің аббревиатурасы пайдаланылады."
 
-#: plug-ins/common/unit-editor.c:125
+#: plug-ins/common/unit-editor.c:138
 msgid "Abbreviation"
 msgstr "Аббревиатура"
 
-#: plug-ins/common/unit-editor.c:125
+#: plug-ins/common/unit-editor.c:138
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr "Юниттің аббревиатурасы (мысалы, сантиметр үшін «см»)."
 
-#: plug-ins/common/unit-editor.c:170
+#: plug-ins/common/unit-editor.c:228
 msgid "U_nits"
 msgstr "Ю_ниттер"
 
-#: plug-ins/common/unit-editor.c:175
+#: plug-ins/common/unit-editor.c:236
 msgid "Create or alter units used in GIMP"
 msgstr "GIMP ішінде пайдаланылатын юниттерді жасау немесе өзгерту"
 
-#: plug-ins/common/unit-editor.c:227 plug-ins/common/unit-editor.c:248
+#: plug-ins/common/unit-editor.c:288 plug-ins/common/unit-editor.c:310
 msgid "Unit Editor"
 msgstr "Юнит түзеткіші"
 
 #. destroy model automatically with view
 #. Put buttons in
-#: plug-ins/common/unit-editor.c:259 plug-ins/fractal-explorer/fractal-explorer.c:1347 plug-ins/gimpressionist/presets.c:1077
+#: plug-ins/common/unit-editor.c:321 plug-ins/fractal-explorer/fractal-explorer.c:1347 plug-ins/gimpressionist/presets.c:1077
 msgid "_Refresh"
 msgstr "Жаңа_рту"
 
-#: plug-ins/common/unit-editor.c:269
+#: plug-ins/common/unit-editor.c:331
 msgid "_Help"
 msgstr "_Көмек"
 
-#: plug-ins/common/unit-editor.c:309
+#: plug-ins/common/unit-editor.c:371
 msgid "Create a new unit from scratch"
 msgstr "Нөлден жаңа юнит жасау"
 
-#: plug-ins/common/unit-editor.c:316
+#: plug-ins/common/unit-editor.c:378
 msgid "Create a new unit using the currently selected unit as template"
 msgstr "Ағымдағы таңдалған юнитті үлгі ретінде пайдаланып жаңа юнит жасау"
 
-#: plug-ins/common/unit-editor.c:455
+#: plug-ins/common/unit-editor.c:523
 msgid "Add a New Unit"
 msgstr "Жаңа юнит қосу"
 
-#: plug-ins/common/unit-editor.c:484
+#: plug-ins/common/unit-editor.c:552
 msgid "_Name:"
 msgstr "А_ты:"
 
-#: plug-ins/common/unit-editor.c:496
+#: plug-ins/common/unit-editor.c:564
 msgid "_Factor:"
 msgstr "_Фактор:"
 
-#: plug-ins/common/unit-editor.c:507
+#: plug-ins/common/unit-editor.c:575
 msgid "_Digits:"
 msgstr "_Цифрлар:"
 
-#: plug-ins/common/unit-editor.c:519
+#: plug-ins/common/unit-editor.c:587
 msgid "_Symbol:"
 msgstr "Таң_ба:"
 
-#: plug-ins/common/unit-editor.c:531
+#: plug-ins/common/unit-editor.c:599
 msgid "_Abbreviation:"
 msgstr "А_ббревиатура:"
 
-#: plug-ins/common/unit-editor.c:566
+#: plug-ins/common/unit-editor.c:634
 msgid "Incomplete input"
 msgstr "Кіріс толық емес"
 
-#: plug-ins/common/unit-editor.c:569
+#: plug-ins/common/unit-editor.c:637
 msgid "Please fill in all text fields."
 msgstr "Барлық мәтіндік өрістерді толтырыңыз."
 
@@ -8813,303 +8817,303 @@ msgstr "Импорттау кезінде суретті вертикалды а
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:176 plug-ins/file-dds/dds.c:177
+#: plug-ins/file-dds/dds.c:175 plug-ins/file-dds/dds.c:176
 msgid "Exports files in DDS image format"
 msgstr "Файлдарды DDS сурет пішімінде экспорттау"
 
-#: plug-ins/file-dds/dds.c:198
+#: plug-ins/file-dds/dds.c:197
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:199
+#: plug-ins/file-dds/dds.c:198
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:200
+#: plug-ins/file-dds/dds.c:199
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:201
+#: plug-ins/file-dds/dds.c:200
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:202
+#: plug-ins/file-dds/dds.c:201
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:203
+#: plug-ins/file-dds/dds.c:202
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:205
+#: plug-ins/file-dds/dds.c:204
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:206
+#: plug-ins/file-dds/dds.c:205
 msgid "Alpha Exponent (DXT5)"
 msgstr "Alpha Exponent (DXT5)"
 
-#: plug-ins/file-dds/dds.c:207
+#: plug-ins/file-dds/dds.c:206
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:208
+#: plug-ins/file-dds/dds.c:207
 msgid "YCoCg scaled (DXT5)"
 msgstr "YCoCg scaled (DXT5)"
 
-#: plug-ins/file-dds/dds.c:213
+#: plug-ins/file-dds/dds.c:212
 msgid "Compressio_n"
 msgstr "Сығ_у"
 
-#: plug-ins/file-dds/dds.c:214
+#: plug-ins/file-dds/dds.c:213
 msgid "Compression format"
 msgstr "Сығу пішімі"
 
-#: plug-ins/file-dds/dds.c:220
+#: plug-ins/file-dds/dds.c:219
 msgid "Use percept_ual error metric"
 msgstr "Перцепти_вті қате метрикасын пайдалану"
 
-#: plug-ins/file-dds/dds.c:221
+#: plug-ins/file-dds/dds.c:220
 msgid "Use a perceptual error metric during compression"
 msgstr "Сығу кезінде перцептивті қате метрикасын пайдалану"
 
-#: plug-ins/file-dds/dds.c:225 plug-ins/file-dds/dds.c:294 plug-ins/file-dds/dds.c:311 plug-ins/file-webp/file-webp.c:180 plug-ins/gradient-flare/gradient-flare.c:2628
+#: plug-ins/file-dds/dds.c:224 plug-ins/file-dds/dds.c:293 plug-ins/file-dds/dds.c:310 plug-ins/file-webp/file-webp.c:180 plug-ins/gradient-flare/gradient-flare.c:2628
 msgid "Default"
 msgstr "Бастапқы"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:225
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:227
+#: plug-ins/file-dds/dds.c:226
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:228
+#: plug-ins/file-dds/dds.c:227
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:229
+#: plug-ins/file-dds/dds.c:228
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:230
+#: plug-ins/file-dds/dds.c:229
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:231
+#: plug-ins/file-dds/dds.c:230
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:231
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:233
+#: plug-ins/file-dds/dds.c:232
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:234
+#: plug-ins/file-dds/dds.c:233
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:235
+#: plug-ins/file-dds/dds.c:234
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:236
+#: plug-ins/file-dds/dds.c:235
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:237
+#: plug-ins/file-dds/dds.c:236
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:238
+#: plug-ins/file-dds/dds.c:237
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:239
+#: plug-ins/file-dds/dds.c:238
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:245
+#: plug-ins/file-dds/dds.c:244
 msgid "Pixel format"
 msgstr "Пиксель пішімі"
 
-#: plug-ins/file-dds/dds.c:251
+#: plug-ins/file-dds/dds.c:250
 msgid "Sav_e type"
 msgstr "Сақ_тау түрі"
 
-#: plug-ins/file-dds/dds.c:252
+#: plug-ins/file-dds/dds.c:251
 msgid "How to export the image"
 msgstr "Суретті қалай экспорттау керек"
 
-#: plug-ins/file-dds/dds.c:253
+#: plug-ins/file-dds/dds.c:252
 msgid "Selected layer"
 msgstr "Таңдалған қабат"
 
-#: plug-ins/file-dds/dds.c:254
+#: plug-ins/file-dds/dds.c:253
 msgid "All visible layers"
 msgstr "Барлық көрінетін қабаттар"
 
-#: plug-ins/file-dds/dds.c:255
+#: plug-ins/file-dds/dds.c:254
 msgid "As cube map"
 msgstr "Кубтық карта ретінде"
 
-#: plug-ins/file-dds/dds.c:256
+#: plug-ins/file-dds/dds.c:255
 msgid "As volume map"
 msgstr "Томдық карта ретінде"
 
-#: plug-ins/file-dds/dds.c:257
+#: plug-ins/file-dds/dds.c:256
 msgid "As texture array"
 msgstr "Текстура массиві ретінде"
 
-#: plug-ins/file-dds/dds.c:263
+#: plug-ins/file-dds/dds.c:262
 msgid "Flip image _vertically on export"
 msgstr "Экспорттау кезінде суретті _вертикалды аудару"
 
-#: plug-ins/file-dds/dds.c:264
+#: plug-ins/file-dds/dds.c:263
 msgid "Flip the image vertically on export"
 msgstr "Экспорттау кезінде суретті вертикалды аудару"
 
-#: plug-ins/file-dds/dds.c:269
+#: plug-ins/file-dds/dds.c:268
 msgid "Set _transparent color"
 msgstr "_Мөлдір түсті орнату"
 
-#: plug-ins/file-dds/dds.c:270
+#: plug-ins/file-dds/dds.c:269
 msgid "Make an indexed color transparent"
 msgstr "Индекстелген түсті мөлдір ету"
 
-#: plug-ins/file-dds/dds.c:275
+#: plug-ins/file-dds/dds.c:274
 msgid "Transparent inde_x"
 msgstr "Мөлдір ин_декс"
 
-#: plug-ins/file-dds/dds.c:276
+#: plug-ins/file-dds/dds.c:275
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr "Мөлдір түс индексі немесе сөндіру үшін -1 (тек индекстелген суреттер үшін)."
 
-#: plug-ins/file-dds/dds.c:282
+#: plug-ins/file-dds/dds.c:281
 msgid "_Mipmaps"
 msgstr "_Мипмаптар"
 
-#: plug-ins/file-dds/dds.c:283
+#: plug-ins/file-dds/dds.c:282
 msgid "How to handle mipmaps"
 msgstr "Мипмаптарды қалай өңдеу керек"
 
-#: plug-ins/file-dds/dds.c:284
+#: plug-ins/file-dds/dds.c:283
 msgid "No mipmaps"
 msgstr "Мипмаптар жоқ"
 
-#: plug-ins/file-dds/dds.c:285
+#: plug-ins/file-dds/dds.c:284
 msgid "Generate mipmaps"
 msgstr "Мипмаптарды генерациялау"
 
-#: plug-ins/file-dds/dds.c:286
+#: plug-ins/file-dds/dds.c:285
 msgid "Use existing mipmaps"
 msgstr "Бар мипмаптарды пайдалану"
 
-#: plug-ins/file-dds/dds.c:292
+#: plug-ins/file-dds/dds.c:291
 msgid "F_ilter"
 msgstr "Сүз_гі"
 
-#: plug-ins/file-dds/dds.c:293
+#: plug-ins/file-dds/dds.c:292
 msgid "Filtering to use when generating mipmaps"
 msgstr "Мипмаптарды генерациялау кезінде пайдаланылатын сүзгілеу"
 
-#: plug-ins/file-dds/dds.c:295
+#: plug-ins/file-dds/dds.c:294
 msgid "Nearest"
 msgstr "Ең жақын"
 
-#: plug-ins/file-dds/dds.c:296 plug-ins/map-object/map-object-main.c:142
+#: plug-ins/file-dds/dds.c:295 plug-ins/map-object/map-object-main.c:142
 msgid "Box"
 msgstr "Қорап"
 
-#: plug-ins/file-dds/dds.c:297
+#: plug-ins/file-dds/dds.c:296
 msgid "Triangle"
 msgstr "Үшбұрыш"
 
-#: plug-ins/file-dds/dds.c:298
+#: plug-ins/file-dds/dds.c:297
 msgid "Quadratic"
 msgstr "Квадраттық"
 
-#: plug-ins/file-dds/dds.c:299
+#: plug-ins/file-dds/dds.c:298
 msgid "B-Spline"
 msgstr "B-сплайн"
 
-#: plug-ins/file-dds/dds.c:300
+#: plug-ins/file-dds/dds.c:299
 msgid "Mitchell"
 msgstr "Mitchell"
 
-#: plug-ins/file-dds/dds.c:301
+#: plug-ins/file-dds/dds.c:300
 msgid "Catmull-Rom"
 msgstr "Catmull-Rom"
 
-#: plug-ins/file-dds/dds.c:302
+#: plug-ins/file-dds/dds.c:301
 msgid "Lanczos"
 msgstr "Lanczos"
 
-#: plug-ins/file-dds/dds.c:303
+#: plug-ins/file-dds/dds.c:302
 msgid "Kaiser"
 msgstr "Kaiser"
 
-#: plug-ins/file-dds/dds.c:309
+#: plug-ins/file-dds/dds.c:308
 msgid "_Wrap mode"
 msgstr "Айнала тасымалдау ре_жимі"
 
-#: plug-ins/file-dds/dds.c:310
+#: plug-ins/file-dds/dds.c:309
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "Мипмаптарды генерациялау кезінде пайдаланылатын айнала тасымалдау режимі"
 
-#: plug-ins/file-dds/dds.c:312
+#: plug-ins/file-dds/dds.c:311
 msgid "Mirror"
 msgstr "Айна"
 
-#: plug-ins/file-dds/dds.c:313
+#: plug-ins/file-dds/dds.c:312
 msgid "Repeat"
 msgstr "Қайталау"
 
-#: plug-ins/file-dds/dds.c:314
+#: plug-ins/file-dds/dds.c:313
 msgid "Clamp"
 msgstr "Қысқыш"
 
-#: plug-ins/file-dds/dds.c:320
+#: plug-ins/file-dds/dds.c:319
 msgid "Appl_y gamma correction"
 msgstr "Гамма түзетуін іске ас_ыру"
 
-#: plug-ins/file-dds/dds.c:321
+#: plug-ins/file-dds/dds.c:320
 msgid "Use gamma correct mipmap filtering"
 msgstr "Гамма бойынша түзетілген мипмап сүзгілеуін пайдалану"
 
-#: plug-ins/file-dds/dds.c:326
+#: plug-ins/file-dds/dds.c:325
 msgid "Use sRG_B colorspace"
 msgstr "sRG_B түс кеңістігін пайдалану"
 
-#: plug-ins/file-dds/dds.c:327
+#: plug-ins/file-dds/dds.c:326
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "Гамма түзетуі үшін sRGB түс кеңістігін пайдалану"
 
-#: plug-ins/file-dds/dds.c:332 plug-ins/flame/flame.c:204
+#: plug-ins/file-dds/dds.c:331 plug-ins/flame/flame.c:204
 msgid "_Gamma"
 msgstr "_Гамма"
 
-#: plug-ins/file-dds/dds.c:333
+#: plug-ins/file-dds/dds.c:332
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "Гамма түзетуі үшін пайдаланылатын гамма мәні (мысалы, 2.2)"
 
-#: plug-ins/file-dds/dds.c:338
+#: plug-ins/file-dds/dds.c:337
 msgid "Preserve al_pha test coverage"
 msgstr "Аль_фа-тест қамтуын сақтау"
 
-#: plug-ins/file-dds/dds.c:339
+#: plug-ins/file-dds/dds.c:338
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "Альфа-арна карталары үшін альфа-тест қамтуын сақтау"
 
-#: plug-ins/file-dds/dds.c:345
+#: plug-ins/file-dds/dds.c:344
 msgid "Alp_ha test threshold"
 msgstr "Аль_фа-тест табалдырығы"
 
-#: plug-ins/file-dds/dds.c:346
+#: plug-ins/file-dds/dds.c:345
 msgid "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr "Альфа-тест қамтуы сақталуы тиіс альфа-тест табалдырығының мәні"
 
@@ -9553,7 +9557,7 @@ msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "Icns жүктеу үшін уақытша %s '%s' файлын ашу қатесі: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-ico/ico-load.c:1121 plug-ins/file-jpeg/jpeg-load.c:697 plug-ins/file-psd/psd-thumb-load.c:72 plug-ins/file-raw/file-another-rawtherapee.c:469
+#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-jpeg/jpeg-load.c:697 plug-ins/file-psd/psd-thumb-load.c:72 plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:620 plug-ins/file-raw/file-rawtherapee.c:466
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -9641,17 +9645,17 @@ msgstr "Белсенді нүкте _Y:"
 msgid "Called non-interactively with %d and %d hotspot coordinates with an image of %d icons."
 msgstr "Интерактивті емес режимде %d және %d белсенді нүкте координаталарымен %d таңбашадан тұратын суретпен шақырылды."
 
-#: plug-ins/file-ico/ico-load.c:228
+#: plug-ins/file-ico/ico-load.c:233
 #, c-format
 msgid "Could not read '%lu' bytes"
 msgstr "'%lu' байт оқу мүмкін емес"
 
-#: plug-ins/file-ico/ico-load.c:256
+#: plug-ins/file-ico/ico-load.c:261
 #, c-format
 msgid "Icon #%d has zero width or height"
 msgstr "#%d таңбашасының ені немесе биіктігі нөлге тең"
 
-#: plug-ins/file-ico/ico-load.c:955 plug-ins/file-ico/ico-load.c:967 plug-ins/file-ico/ico-load.c:995 plug-ins/file-ico/ico-load.c:1007
+#: plug-ins/file-ico/ico-load.c:960 plug-ins/file-ico/ico-load.c:972 plug-ins/file-ico/ico-load.c:1000 plug-ins/file-ico/ico-load.c:1012
 #, c-format
 msgid "Invalid ANI metadata"
 msgstr "Жарамсыз ANI метадеректері"
@@ -9930,7 +9934,7 @@ msgstr "Индекстелген сурет ескертуі"
 msgid "Photoshop does not support indexed images that have more than one layer. Layers will be merged on export."
 msgstr "Photoshop бірден көп қабаты бар индекстелген суреттерді қолдамайды. Экспорттау кезінде қабаттар біріктіріледі."
 
-#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:5795
+#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:6331
 msgid "Compatibility Notice"
 msgstr "Үйлесімділік ескертпесі"
 
@@ -9942,156 +9946,156 @@ msgstr ""
 "Ескірген қабат режимдерінің Photoshop-пен үйлесімділігі жақсырақ, бірақ Photoshop-тың 'Қиылған қабаттарды топ ретінде араластыру' функциясын пайдалану үшін қажет 'Аяға қию' функциясын қолдамайды. "
 "Егер дисплей мәселелеріне тап болсаңыз, осы қабат режимдеріне ауысуды қарастырыңыз."
 
-#: plug-ins/file-psd/psd-load.c:372 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:381 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "PSD файлын жүктеу қатесі: %s"
 
-#: plug-ins/file-psd/psd-load.c:575
+#: plug-ins/file-psd/psd-load.c:584
 #, c-format
 msgid "Invalid PSD metadata layer format"
 msgstr "Жарамсыз PSD метадеректер қабатының пішімі"
 
-#: plug-ins/file-psd/psd-load.c:681
+#: plug-ins/file-psd/psd-load.c:690
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Жарамды Photoshop құжаты файлы емес"
 
-#: plug-ins/file-psd/psd-load.c:688
+#: plug-ins/file-psd/psd-load.c:697
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Қолдау көрсетілмейтін файл пішімі нұсқасы: %d"
 
-#: plug-ins/file-psd/psd-load.c:695
+#: plug-ins/file-psd/psd-load.c:704
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Файлда арналар тым көп: %d"
 
-#: plug-ins/file-psd/psd-load.c:701 plug-ins/file-psd/psd-load.c:709 plug-ins/file-psd/psd-load.c:716 plug-ins/file-psd/psd-load.c:4761 plug-ins/file-psd/psd-load.c:4775
-#: plug-ins/file-psd/psd-load.c:4788
+#: plug-ins/file-psd/psd-load.c:710 plug-ins/file-psd/psd-load.c:718 plug-ins/file-psd/psd-load.c:725 plug-ins/file-psd/psd-load.c:5297 plug-ins/file-psd/psd-load.c:5311
+#: plug-ins/file-psd/psd-load.c:5324
 #, c-format
 msgid "Not enough channels: %d"
 msgstr "Арналар жеткіліксіз: %d"
 
-#: plug-ins/file-psd/psd-load.c:740
+#: plug-ins/file-psd/psd-load.c:749
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз сурет өлшемі: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:755 plug-ins/file-psd/psd-load.c:765
+#: plug-ins/file-psd/psd-load.c:764 plug-ins/file-psd/psd-load.c:774
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Қолдау көрсетілмейтін түс режимі: %s"
 
-#: plug-ins/file-psd/psd-load.c:792
+#: plug-ins/file-psd/psd-load.c:801
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Қолдау көрсетілмейтін биттік тереңдік: %d"
 
-#: plug-ins/file-psd/psd-load.c:826 plug-ins/file-psd/psd-load.c:836 plug-ins/file-psd/psd-load.c:1075 plug-ins/file-psd/psd-load.c:1437
+#: plug-ins/file-psd/psd-load.c:835 plug-ins/file-psd/psd-load.c:845 plug-ins/file-psd/psd-load.c:1084 plug-ins/file-psd/psd-load.c:1446
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Файл зақымдалған!"
 
-#: plug-ins/file-psd/psd-load.c:982
+#: plug-ins/file-psd/psd-load.c:991
 #, c-format
 msgid "Invalid value for number of layers: %d."
 msgstr "Қабаттар саны үшін жарамсыз мән: %d."
 
-#: plug-ins/file-psd/psd-load.c:1024
+#: plug-ins/file-psd/psd-load.c:1033
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Қабатта арналар тым көп: %d"
 
-#: plug-ins/file-psd/psd-load.c:1109
+#: plug-ins/file-psd/psd-load.c:1118
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз қабат биіктігі: %d"
 
-#: plug-ins/file-psd/psd-load.c:1118
+#: plug-ins/file-psd/psd-load.c:1127
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз қабат ені: %d"
 
-#: plug-ins/file-psd/psd-load.c:1128
+#: plug-ins/file-psd/psd-load.c:1137
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз қабат өлшемі: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1149
+#: plug-ins/file-psd/psd-load.c:1158
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз маска ақпаратының өлшемі."
 
-#: plug-ins/file-psd/psd-load.c:1309
+#: plug-ins/file-psd/psd-load.c:1318
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз қабат маскасының биіктігі: %d"
 
-#: plug-ins/file-psd/psd-load.c:1318
+#: plug-ins/file-psd/psd-load.c:1327
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз қабат маскасының ені: %d"
 
-#: plug-ins/file-psd/psd-load.c:1328
+#: plug-ins/file-psd/psd-load.c:1337
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз қабат маскасының өлшемі: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1349 plug-ins/file-psd/psd-load.c:1383 plug-ins/file-psd/psd-load.c:1415 plug-ins/file-psd/psd-load.c:1452
+#: plug-ins/file-psd/psd-load.c:1358 plug-ins/file-psd/psd-load.c:1392 plug-ins/file-psd/psd-load.c:1424 plug-ins/file-psd/psd-load.c:1461
 #, c-format
 msgid "Invalid block size."
 msgstr "Жарамсыз блок өлшемі."
 
-#: plug-ins/file-psd/psd-load.c:1977 plug-ins/file-psd/psd-load.c:5303
+#: plug-ins/file-psd/psd-load.c:1986 plug-ins/file-psd/psd-load.c:5839
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Қолдау көрсетілмейтін немесе жарамсыз арна өлшемі"
 
-#: plug-ins/file-psd/psd-load.c:2718
+#: plug-ins/file-psd/psd-load.c:2743
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Арна өлшемдері %u x %u жарамсыз"
 
-#: plug-ins/file-psd/psd-load.c:2786 plug-ins/file-psd/psd-load.c:4901
+#: plug-ins/file-psd/psd-load.c:2811 plug-ins/file-psd/psd-load.c:5437
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Қолдау көрсетілмейтін сығу режимі: %d"
 
-#: plug-ins/file-psd/psd-load.c:3441 plug-ins/file-psd/psd-load.c:4141
+#: plug-ins/file-psd/psd-load.c:3480 plug-ins/file-psd/psd-load.c:4203
 msgid "Inner Shadow"
 msgstr "Ішкі көлеңке"
 
-#: plug-ins/file-psd/psd-load.c:3442 plug-ins/file-psd/psd-load.c:4142 plug-ins/file-psd/psd-load.c:4153 plug-ins/file-psd/psd-load.c:4169
+#: plug-ins/file-psd/psd-load.c:3481 plug-ins/file-psd/psd-load.c:4204 plug-ins/file-psd/psd-load.c:4215 plug-ins/file-psd/psd-load.c:4231
 msgid "imported"
 msgstr "импортталған"
 
-#: plug-ins/file-psd/psd-load.c:4152
+#: plug-ins/file-psd/psd-load.c:4214
 msgid "Outer Glow"
 msgstr "Сыртқы жарқырау"
 
-#: plug-ins/file-psd/psd-load.c:4168
+#: plug-ins/file-psd/psd-load.c:4230
 msgid "Stroke"
 msgstr "Контур"
 
-#: plug-ins/file-psd/psd-load.c:4172
+#: plug-ins/file-psd/psd-load.c:4234
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "Өңделмейтін контур түрі: қате рендеринг күтіледі."
 
-#: plug-ins/file-psd/psd-load.c:5078
+#: plug-ins/file-psd/psd-load.c:5614
 msgid "Extra"
 msgstr "Қосымша"
 
-#: plug-ins/file-psd/psd-load.c:5380
+#: plug-ins/file-psd/psd-load.c:5916
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Деректердің сығылғанын ашу сәтсіз аяқталды"
 
-#: plug-ins/file-psd/psd-load.c:5772
+#: plug-ins/file-psd/psd-load.c:6308
 msgid "Duotone Import"
 msgstr "Дуотон импорттау"
 
-#: plug-ins/file-psd/psd-load.c:5773
+#: plug-ins/file-psd/psd-load.c:6309
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10101,7 +10105,7 @@ msgstr ""
 "Дуотон түс кеңістігінің деректері сақталды\n"
 "және экспорттау кезінде қайта іске асырылуы мүмкін."
 
-#: plug-ins/file-psd/psd-load.c:5796
+#: plug-ins/file-psd/psd-load.c:6332
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -10561,7 +10565,7 @@ msgstr "GeoTIFF деректерін сақтау"
 msgid "Store Photoshop image resources (paths, alpha channel names, ...) in TIFF tag (Photoshop)"
 msgstr "Photoshop сурет ресурстарын (жолдар, альфа арналарының атаулары, ...) TIFF тегінде (Photoshop) сақтау"
 
-#: plug-ins/file-tiff/file-tiff.c:548
+#: plug-ins/file-tiff/file-tiff.c:553
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr "Бірнеше қабатты экспорттау кезінде \"Қабаттарды сақтау\" опциясы орнатылмаған."
@@ -10587,16 +10591,16 @@ msgstr ""
 msgid "Failed a scanline write on row %d"
 msgstr "%d жолында скан жолын жазу сәтсіз аяқталды"
 
-#: plug-ins/file-tiff/file-tiff-export.c:1246
+#: plug-ins/file-tiff/file-tiff-export.c:1247
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Әртүрлі биттік тереңдіктегі беттерді жазу біртүрлі."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1369
+#: plug-ins/file-tiff/file-tiff-export.c:1370
 msgid "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a different compression algorithm, or cancel."
 msgstr "Ескерту: TIFF файлының максималды өлшемінен асып кетті. BigTIFF ретінде немесе басқа сығу алгоритмімен қайталап көріңіз, немесе бас тартыңыз."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1426
+#: plug-ins/file-tiff/file-tiff-export.c:1427
 #, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
@@ -10605,23 +10609,23 @@ msgstr ""
 "Тағайындалған жұмсақ байқау профилі CMYK профилі емес.\n"
 "Бұл профиль экспортталған суретке кірістірілмейді."
 
-#: plug-ins/file-tiff/file-tiff-load.c:327
+#: plug-ins/file-tiff/file-tiff-load.c:328
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "TIFF суреті емес немесе сурет зақымдалған."
 
-#: plug-ins/file-tiff/file-tiff-load.c:356
+#: plug-ins/file-tiff/file-tiff-load.c:357
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "'%s' TIFF құрамында бумалар жоқ"
 
-#: plug-ins/file-tiff/file-tiff-load.c:363
+#: plug-ins/file-tiff/file-tiff-load.c:364
 #, c-format
 msgid "TIFF '%s' directory count by header failed though there seems to be %d page. Attempting to load the file with this assumption."
 msgid_plural "TIFF '%s' directory count by header failed though there seem to be %d pages. Attempting to load the file with this assumption."
 msgstr[0] "'%s' TIFF бумалар санын тақырыптама арқылы есептеу сәтсіз аяқталды, бірақ онда %d бет бар сияқты. Файлды осы жорамалмен жүктеуге тырысу."
 
-#: plug-ins/file-tiff/file-tiff-load.c:494
+#: plug-ins/file-tiff/file-tiff-load.c:495
 msgid "Extra channels with unspecified data."
 msgstr "Көрсетілмеген деректері бар қосымша арналар."
 
@@ -10631,55 +10635,55 @@ msgstr "Көрсетілмеген деректері бар қосымша ар
 #. * must be present if there are extra samples". So the files
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
-#: plug-ins/file-tiff/file-tiff-load.c:506
+#: plug-ins/file-tiff/file-tiff-load.c:507
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Сәйкес емес TIFF: 'ExtraSamples' өрісі жоқ қосымша арналар."
 
-#: plug-ins/file-tiff/file-tiff-load.c:642
+#: plug-ins/file-tiff/file-tiff-load.c:643
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "%d / %d бетін оқу мүмкін емес. Сурет зақымдалған болуы мүмкін.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:671
+#: plug-ins/file-tiff/file-tiff-load.c:672
 #, c-format
 msgid "This image has a linear color profile but it was not set on the first layer. The layers below layer # %d will be interpreted as non linear."
 msgstr "Бұл суретте сызықтық түс профилі бар, бірақ ол бірінші қабатта орнатылмаған. # %d қабатынан төмен қабаттар сызықтық емес ретінде түсіндіріледі."
 
-#: plug-ins/file-tiff/file-tiff-load.c:679
+#: plug-ins/file-tiff/file-tiff-load.c:680
 msgid "This image has multiple color profiles. We will use the first one. If this leads to incorrect results you should consider loading each layer as a separate image."
 msgstr "Бұл суретте бірнеше түс профилі бар. Біз біріншісін пайдаланамыз. Егер бұл қате нәтижелерге әкелсе, әр қабатты бөлек сурет ретінде жүктеуді қарастыру керек."
 
-#: plug-ins/file-tiff/file-tiff-load.c:691
+#: plug-ins/file-tiff/file-tiff-load.c:692
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "Күдікті биттік тереңдік: %d, бет %d. Сурет зақымдалған болуы мүмкін."
 
-#: plug-ins/file-tiff/file-tiff-load.c:765
+#: plug-ins/file-tiff/file-tiff-load.c:766
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Қолдау көрсетілмейтін биттік тереңдік: %d, бет %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:780
+#: plug-ins/file-tiff/file-tiff-load.c:781
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "'%s' ішінен сурет енін алу мүмкін емес"
 
-#: plug-ins/file-tiff/file-tiff-load.c:788
+#: plug-ins/file-tiff/file-tiff-load.c:789
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "'%s' ішінен сурет ұзындығын алу мүмкін емес"
 
-#: plug-ins/file-tiff/file-tiff-load.c:796
+#: plug-ins/file-tiff/file-tiff-load.c:797
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr "Жарамсыз сурет өлшемдері (%u x %u), бет %d. Сурет зақымдалған болуы мүмкін."
 
-#: plug-ins/file-tiff/file-tiff-load.c:817
+#: plug-ins/file-tiff/file-tiff-load.c:818
 #, c-format
 msgid "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-is-white"
 msgstr "'%s' ішінен фотометриканы алу мүмкін емес. Сурет CCITT бойынша сығылған, min-is-white деп жорамалданады"
 
-#: plug-ins/file-tiff/file-tiff-load.c:824
+#: plug-ins/file-tiff/file-tiff-load.c:825
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "'%s' ішінен фотометриканы алу мүмкін емес. min-is-black деп жорамалданады"
@@ -10687,52 +10691,52 @@ msgstr "'%s' ішінен фотометриканы алу мүмкін еме�
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:856
+#: plug-ins/file-tiff/file-tiff-load.c:857
 #, c-format
 msgid "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr "%s үшін альфа-арна түрі анықталмаған. Альфа алдын ала көбейтілмеген деп жорамалданады"
 
-#: plug-ins/file-tiff/file-tiff-load.c:881
+#: plug-ins/file-tiff/file-tiff-load.c:882
 #, c-format
 msgid "Image '%s' does not conform to the TIFF specification: ExtraSamples field is not set while extra channels are present. Assuming the first extra channel is non-premultiplied alpha."
 msgstr "'%s' суреті TIFF спецификациясына сәйкес келмейді: қосымша арналар болған кезде ExtraSamples өрісі орнатылмаған. Бірінші қосымша арна алдын ала көбейтілмеген альфа деп жорамалданады."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1170
+#: plug-ins/file-tiff/file-tiff-load.c:1171
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Жарамсыз немесе белгісіз сығу %u. Сығуды ешқандай етіп орнату."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1228
+#: plug-ins/file-tiff/file-tiff-load.c:1229
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Жаңа суретті жасау мүмкін емес: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1414
+#: plug-ins/file-tiff/file-tiff-load.c:1415
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Белгісіз ажыратымдылық юнит түрі %d, dpi деп жорамалданады"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1424
+#: plug-ins/file-tiff/file-tiff-load.c:1425
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Ескерту: ажыратымдылық юнит түрінсіз көрсетілген, dpi деп жорамалданады"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1432
+#: plug-ins/file-tiff/file-tiff-load.c:1433
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Ескерту: y ажыратымдылық ақпараты жоқ, x-пен бірдей деп жорамалданады"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1453
+#: plug-ins/file-tiff/file-tiff-load.c:1454
 msgid "Invalid image resolution info, using default"
 msgstr "Жарамсыз суреттің ажыратымдылық ақпараты, бастапқысы қолданылуда"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1515
+#: plug-ins/file-tiff/file-tiff-load.c:1516
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "'%s' ішінен түстер карталарын алу мүмкін емес"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1524
+#: plug-ins/file-tiff/file-tiff-load.c:1525
 msgid "Indexed TIFFs with color maps larger than 256 colors are not yet supported"
 msgstr "Түс карталары 256 түстен үлкен индекстелген TIFF файлдарына әзірше қолдау көрсетілмейді"
 
@@ -10740,72 +10744,72 @@ msgstr "Түс карталары 256 түстен үлкен индекстел
 #. * Photoshop. A higher number most likely means a corrupt image
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
-#: plug-ins/file-tiff/file-tiff-load.c:1614
+#: plug-ins/file-tiff/file-tiff-load.c:1615
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Қосымша арналардың күдікті саны: %d. Мүмкін зақымдалған сурет."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1628 plug-ins/file-tiff/file-tiff-load.c:1655
+#: plug-ins/file-tiff/file-tiff-load.c:1629 plug-ins/file-tiff/file-tiff-load.c:1656
 msgid "Composite"
 msgstr "Құрама"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1721
+#: plug-ins/file-tiff/file-tiff-load.c:1722
 msgid "TIFF Channel"
 msgstr "TIFF арнасы"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1911
+#: plug-ins/file-tiff/file-tiff-load.c:1912
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "TIFF '%s' ішінен ешқандай деректер оқылмады. Файл зақымдалған болуы мүмкін."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1991
+#: plug-ins/file-tiff/file-tiff-load.c:1992
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: Қолдау көрсетілмейтін сурет пішімі, RGBA жүктегіші жоқ"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2123 plug-ins/file-tiff/file-tiff-load.c:2343
+#: plug-ins/file-tiff/file-tiff-load.c:2137 plug-ins/file-tiff/file-tiff-load.c:2357
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "Мозаиканы оқу сәтсіз аяқталды. Сурет %d жолында зақымдалған болуы мүмкін."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2132 plug-ins/file-tiff/file-tiff-load.c:2352
+#: plug-ins/file-tiff/file-tiff-load.c:2146 plug-ins/file-tiff/file-tiff-load.c:2366
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Скан жолын оқу сәтсіз аяқталды. Сурет %d жолында зақымдалған болуы мүмкін."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2615
+#: plug-ins/file-tiff/file-tiff-load.c:2629
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be corrupt."
 msgstr "Sketchbook сурет өлшемдері (%u x %u) %i қабаты үшін жарамсыз. Сурет зақымдалған болуы мүмкін."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2767 plug-ins/file-tiff/file-tiff-load.c:2819
+#: plug-ins/file-tiff/file-tiff-load.c:2781 plug-ins/file-tiff/file-tiff-load.c:2833
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
 msgstr "tiff метадеректерін жүктеу үшін уақытша %s файлын '%s' ашуға тырысу қатесі: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3248
+#: plug-ins/file-tiff/file-tiff-load.c:3262
 msgid "Import from TIFF"
 msgstr "TIFF-тен импорттау"
 
 #. Show Reduced
-#: plug-ins/file-tiff/file-tiff-load.c:3271
+#: plug-ins/file-tiff/file-tiff-load.c:3285
 msgid "_Show reduced images"
 msgstr "Кішірейтілген суреттерді көр_сету"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3323
+#: plug-ins/file-tiff/file-tiff-load.c:3337
 msgid "Process extra channel as:"
 msgstr "Қосымша арнаны келесідей өңдеу:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3326
+#: plug-ins/file-tiff/file-tiff-load.c:3340
 msgid "_Non-premultiplied alpha"
 msgstr "Ал_дын ала көбейтілмеген альфа"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3327
+#: plug-ins/file-tiff/file-tiff-load.c:3341
 msgid "Pre_multiplied alpha"
 msgstr "А_лдын ала көбейтілген альфа"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3328
+#: plug-ins/file-tiff/file-tiff-load.c:3342
 msgid "Channe_l"
 msgstr "Ар_на"
 
@@ -11073,27 +11077,27 @@ msgstr[0] "%d сүзгі"
 msgid "GEGL Filter Browser"
 msgstr "GEGL сүзгі браузері"
 
-#: plug-ins/filter-browser/filter-browser.c:756
+#: plug-ins/filter-browser/filter-browser.c:757
 msgid "by name"
 msgstr "аты бойынша"
 
-#: plug-ins/filter-browser/filter-browser.c:757
+#: plug-ins/filter-browser/filter-browser.c:758
 msgid "by title"
 msgstr "тақырыбы бойынша"
 
-#: plug-ins/filter-browser/filter-browser.c:758
+#: plug-ins/filter-browser/filter-browser.c:759
 msgid "by description"
 msgstr "сипаттамасы бойынша"
 
-#: plug-ins/filter-browser/filter-browser.c:850
+#: plug-ins/filter-browser/filter-browser.c:851
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL сүзгі браузері"
 
-#: plug-ins/filter-browser/filter-browser.c:855
+#: plug-ins/filter-browser/filter-browser.c:856
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Қолжетімді GEGL операциялары (яғни, сүзгілер) туралы ақпаратты көрсету."
 
-#: plug-ins/filter-browser/filter-browser.c:857
+#: plug-ins/filter-browser/filter-browser.c:858
 msgid "Shows a list of all GEGL operations, their details and what parameters they are configured with. The list contains operations provided by GEGL itself, GIMP and plug-ins loaded by GEGL."
 msgstr ""
 "Барлық GEGL операцияларының тізімін, олардың мәліметтерін және қандай параметрлермен бапталғанын көрсетеді. Тізімде GEGL өзі, GIMP және GEGL арқылы жүктелген плагиндер ұсынатын операциялар бар."
@@ -11719,7 +11723,7 @@ msgstr "Сызық"
 msgid "Create line"
 msgstr "Сызық жасау"
 
-#: plug-ins/gfig/gfig-dialog.c:382 plug-ins/gfig/gfig-dialog.c:1408 plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1607 plug-ins/imagemap/imap-menu.ui.in:163
+#: plug-ins/gfig/gfig-dialog.c:382 plug-ins/gfig/gfig-dialog.c:1408 plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1665 plug-ins/imagemap/imap-menu.ui.in:163
 #: plug-ins/imagemap/imap-menu.ui.in:251
 msgid "Rectangle"
 msgstr "Тіктөртбұрыш"
@@ -11728,7 +11732,7 @@ msgstr "Тіктөртбұрыш"
 msgid "Create rectangle"
 msgstr "Тіктөртбұрыш жасау"
 
-#: plug-ins/gfig/gfig-dialog.c:384 plug-ins/gfig/gfig-menu.ui:54 plug-ins/gradient-flare/gradient-flare.c:4013 plug-ins/imagemap/imap_main.c:1609 plug-ins/imagemap/imap-menu.ui.in:168
+#: plug-ins/gfig/gfig-dialog.c:384 plug-ins/gfig/gfig-menu.ui:54 plug-ins/gradient-flare/gradient-flare.c:4013 plug-ins/imagemap/imap_main.c:1667 plug-ins/imagemap/imap-menu.ui.in:168
 #: plug-ins/imagemap/imap-menu.ui.in:256
 msgid "Circle"
 msgstr "Шеңбер"
@@ -11753,7 +11757,7 @@ msgstr "Доға"
 msgid "Create arc"
 msgstr "Доға жасау"
 
-#: plug-ins/gfig/gfig-dialog.c:390 plug-ins/gfig/gfig-menu.ui:69 plug-ins/gradient-flare/gradient-flare.c:4030 plug-ins/imagemap/imap_main.c:1611 plug-ins/imagemap/imap-menu.ui.in:173
+#: plug-ins/gfig/gfig-dialog.c:390 plug-ins/gfig/gfig-menu.ui:69 plug-ins/gradient-flare/gradient-flare.c:4030 plug-ins/imagemap/imap_main.c:1669 plug-ins/imagemap/imap-menu.ui.in:173
 #: plug-ins/imagemap/imap-menu.ui.in:261
 msgid "Polygon"
 msgstr "Көпбұрыш"
@@ -11799,7 +11803,7 @@ msgid "Move a single point"
 msgstr "Бір нүктені жылжыту"
 
 #: plug-ins/gfig/gfig-dialog.c:403 plug-ins/gfig/gfig-dialog.c:1265 plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53 plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1572 plug-ins/imagemap/imap-menu.ui.in:44 plug-ins/imagemap/imap-menu.ui.in:322 plug-ins/imagemap/imap-menu.ui.in:359
+#: plug-ins/imagemap/imap_main.c:1630 plug-ins/imagemap/imap-menu.ui.in:44 plug-ins/imagemap/imap-menu.ui.in:322 plug-ins/imagemap/imap-menu.ui.in:359
 msgid "Copy"
 msgstr "Көшіру"
 
@@ -12100,11 +12104,11 @@ msgstr "Паразитті жүктеу үшін «%s» уақытша файл�
 msgid "File"
 msgstr "Файл"
 
-#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1556
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1614
 msgid "Open"
 msgstr "Ашу"
 
-#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1559 plug-ins/imagemap/imap-menu.ui.in:9
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1617 plug-ins/imagemap/imap-menu.ui.in:9
 msgid "Save"
 msgstr "Сақтау"
 
@@ -12116,7 +12120,7 @@ msgstr "Жабу"
 msgid "Edit"
 msgstr "Түзету"
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962 plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1565 plug-ins/imagemap/imap-menu.ui.in:32
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962 plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1623 plug-ins/imagemap/imap-menu.ui.in:32
 msgid "Undo"
 msgstr "Болдырмау"
 
@@ -12124,7 +12128,7 @@ msgstr "Болдырмау"
 msgid "Clear"
 msgstr "Тазарту"
 
-#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1562 plug-ins/imagemap/imap-menu.ui.in:74
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1620 plug-ins/imagemap/imap-menu.ui.in:74
 msgid "Preferences"
 msgstr "Баптаулар"
 
@@ -13116,7 +13120,7 @@ msgstr "Созу"
 msgid "New"
 msgstr "Жаңа"
 
-#: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35 plug-ins/imagemap/imap_main.c:1567 plug-ins/imagemap/imap-menu.ui.in:36
+#: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35 plug-ins/imagemap/imap_main.c:1625 plug-ins/imagemap/imap-menu.ui.in:36
 msgid "Redo"
 msgstr "Қайталау"
 
@@ -13233,7 +13237,7 @@ msgstr "_Радиус:"
 msgid "Create"
 msgstr "Жасау"
 
-#: plug-ins/imagemap/imap_cmd_cut.c:54 plug-ins/imagemap/imap_cmd_cut_object.c:50 plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui.in:40 plug-ins/imagemap/imap-menu.ui.in:318
+#: plug-ins/imagemap/imap_cmd_cut.c:54 plug-ins/imagemap/imap_cmd_cut_object.c:50 plug-ins/imagemap/imap_main.c:1628 plug-ins/imagemap/imap-menu.ui.in:40 plug-ins/imagemap/imap-menu.ui.in:318
 #: plug-ins/imagemap/imap-menu.ui.in:355
 msgid "Cut"
 msgstr "Қиып алу"
@@ -13367,7 +13371,7 @@ msgstr "Алдыңғы көрініске жылжыту"
 msgid "Move Up"
 msgstr "Жоғары жылжыту"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1574 plug-ins/imagemap/imap-menu.ui.in:48 plug-ins/imagemap/imap-menu.ui.in:293
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1632 plug-ins/imagemap/imap-menu.ui.in:48 plug-ins/imagemap/imap-menu.ui.in:293
 msgid "Paste"
 msgstr "Кірістіру"
 
@@ -13540,97 +13544,97 @@ msgstr "с_ол жақтан пиксельдер"
 msgid "pixels from _top"
 msgstr "ж_оғарыдан пиксельдер"
 
-#: plug-ins/imagemap/imap_main.c:221
+#: plug-ins/imagemap/imap_main.c:279
 msgid "_Image Map..."
 msgstr "_Сурет картасы..."
 
-#: plug-ins/imagemap/imap_main.c:225
+#: plug-ins/imagemap/imap_main.c:283
 msgid "Create a clickable imagemap"
 msgstr "Шертілетін сурет картасын жасау"
 
-#: plug-ins/imagemap/imap_main.c:658 plug-ins/imagemap/imap_settings.c:180
+#: plug-ins/imagemap/imap_main.c:716 plug-ins/imagemap/imap_settings.c:180
 msgid "<Untitled>"
 msgstr "<Атаусыз>"
 
-#: plug-ins/imagemap/imap_main.c:806
+#: plug-ins/imagemap/imap_main.c:864
 msgid "Some data has been changed!"
 msgstr "Кейбір деректер өзгертілген!"
 
-#: plug-ins/imagemap/imap_main.c:809
+#: plug-ins/imagemap/imap_main.c:867
 msgid "Do you really want to discard your changes?"
 msgstr "Өзгерістеріңізді шынымен елемегіңіз келе ме?"
 
-#: plug-ins/imagemap/imap_main.c:1068
+#: plug-ins/imagemap/imap_main.c:1126
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "«%s» файлы сақталды."
 
-#: plug-ins/imagemap/imap_main.c:1072
+#: plug-ins/imagemap/imap_main.c:1130
 msgid "Couldn't save file:"
 msgstr "Файлды сақтау мүмкін емес:"
 
-#: plug-ins/imagemap/imap_main.c:1085
+#: plug-ins/imagemap/imap_main.c:1143
 msgid "Image size has changed."
 msgstr "Сурет өлшемі өзгертілген."
 
-#: plug-ins/imagemap/imap_main.c:1086
+#: plug-ins/imagemap/imap_main.c:1144
 msgid "Resize area's?"
 msgstr "Аумақ өлшемін өзгерту керек пе?"
 
-#: plug-ins/imagemap/imap_main.c:1128
+#: plug-ins/imagemap/imap_main.c:1186
 msgid "Couldn't read file:"
 msgstr "Файлды оқу мүмкін емес:"
 
-#: plug-ins/imagemap/imap_main.c:1181
+#: plug-ins/imagemap/imap_main.c:1239
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_main.c:1577 plug-ins/imagemap/imap-menu.ui.in:105 plug-ins/imagemap/imap-menu.ui.in:271
+#: plug-ins/imagemap/imap_main.c:1635 plug-ins/imagemap/imap-menu.ui.in:105 plug-ins/imagemap/imap-menu.ui.in:271
 msgid "Zoom In"
 msgstr "Үлкейту"
 
-#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap-menu.ui.in:109 plug-ins/imagemap/imap-menu.ui.in:275
+#: plug-ins/imagemap/imap_main.c:1637 plug-ins/imagemap/imap-menu.ui.in:109 plug-ins/imagemap/imap-menu.ui.in:275
 msgid "Zoom Out"
 msgstr "Кішірейту"
 
-#: plug-ins/imagemap/imap_main.c:1582
+#: plug-ins/imagemap/imap_main.c:1640
 msgid "Edit Map Info"
 msgstr "Карта ақпаратын түзету"
 
-#: plug-ins/imagemap/imap_main.c:1585
+#: plug-ins/imagemap/imap_main.c:1643
 msgid "Move Area to Front"
 msgstr "Аумақты алдыңғы көрініске жылжыту"
 
-#: plug-ins/imagemap/imap_main.c:1587
+#: plug-ins/imagemap/imap_main.c:1645
 msgid "Move Area to Bottom"
 msgstr "Аумақты төменгі жаққа жылжыту"
 
-#: plug-ins/imagemap/imap_main.c:1605 plug-ins/imagemap/imap-menu.ui.in:158 plug-ins/imagemap/imap-menu.ui.in:246
+#: plug-ins/imagemap/imap_main.c:1663 plug-ins/imagemap/imap-menu.ui.in:158 plug-ins/imagemap/imap-menu.ui.in:246
 msgid "Arrow"
 msgstr "Бағдарша"
 
-#: plug-ins/imagemap/imap_main.c:1605
+#: plug-ins/imagemap/imap_main.c:1663
 msgid "Select Existing Area"
 msgstr "Бар аумақты таңдау"
 
-#: plug-ins/imagemap/imap_main.c:1607
+#: plug-ins/imagemap/imap_main.c:1665
 msgid "Define Rectangle area"
 msgstr "Тіктөртбұрышты аумақты анықтау"
 
-#: plug-ins/imagemap/imap_main.c:1609
+#: plug-ins/imagemap/imap_main.c:1667
 msgid "Define Circle/Oval area"
 msgstr "Шеңбер/Сопақ аумақты анықтау"
 
-#: plug-ins/imagemap/imap_main.c:1611
+#: plug-ins/imagemap/imap_main.c:1669
 msgid "Define Polygon area"
 msgstr "Көпбұрышты аумақты анықтау"
 
-#: plug-ins/imagemap/imap_main.c:1614 plug-ins/imagemap/imap_menu.c:180 plug-ins/imagemap/imap-menu.ui.in:302 plug-ins/imagemap/imap-menu.ui.in:339
+#: plug-ins/imagemap/imap_main.c:1672 plug-ins/imagemap/imap_menu.c:180 plug-ins/imagemap/imap-menu.ui.in:302 plug-ins/imagemap/imap-menu.ui.in:339
 msgid "Edit Area Info..."
 msgstr "Аумақ ақпаратын түзету..."
 
-#: plug-ins/imagemap/imap_main.c:1614 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1672 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Таңдалған аумақ ақпаратын түзету"
 
@@ -14985,7 +14989,7 @@ msgid "_Write Metadata"
 msgstr "Метадеректерді жа_зу"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1236 plug-ins/metadata/metadata-viewer.c:308
+#: plug-ins/metadata/metadata-editor.c:1236 plug-ins/metadata/metadata-viewer.c:310
 msgid "IPTC"
 msgstr "IPTC"
 
@@ -15017,15 +15021,15 @@ msgstr "Метадеректерді импорттау..."
 msgid "Export Metadata..."
 msgstr "Метадеректерді экспорттау..."
 
-#: plug-ins/metadata/metadata-editor.c:1691
+#: plug-ins/metadata/metadata-editor.c:1687
 msgid "Choose Date"
 msgstr "Күнді таңдау"
 
-#: plug-ins/metadata/metadata-editor.c:1696
+#: plug-ins/metadata/metadata-editor.c:1692
 msgid "Set Date"
 msgstr "Күнді орнату"
 
-#: plug-ins/metadata/metadata-editor.c:2433
+#: plug-ins/metadata/metadata-editor.c:2429
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see the following examples:\n"
@@ -15037,7 +15041,7 @@ msgstr ""
 "10deg 15' 20\", немесе 10° 15' 20\", немесе 10:15:20.45, немесе 10 15 20, немесе 10 15.30, немесе 10.45\n"
 "Ағымдағы мәнді өшіру үшін барлық мәтінді өшіріңіз."
 
-#: plug-ins/metadata/metadata-editor.c:2439
+#: plug-ins/metadata/metadata-editor.c:2435
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -15051,24 +15055,24 @@ msgstr ""
 "Таңдалған өлшем түріне байланысты мән метрмен (м) немесе футпен (фт) енгізілуі керек\n"
 "Ағымдағы мәнді өшіру үшін барлық мәтінді өшіріңіз."
 
-#: plug-ins/metadata/metadata-editor.c:2573
+#: plug-ins/metadata/metadata-editor.c:2569
 msgid "Unrated"
 msgstr "Бағаланбаған"
 
-#: plug-ins/metadata/metadata-editor.c:4683
+#: plug-ins/metadata/metadata-editor.c:4679
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "%s метадеректер тегін орнату сәтсіз аяқталды: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5584
+#: plug-ins/metadata/metadata-editor.c:5580
 msgid "Import Metadata File"
 msgstr "Метадеректер файлын импорттау"
 
-#: plug-ins/metadata/metadata-editor.c:5587
+#: plug-ins/metadata/metadata-editor.c:5583
 msgid "_Import"
 msgstr "_Импорттау"
 
-#: plug-ins/metadata/metadata-editor.c:5619
+#: plug-ins/metadata/metadata-editor.c:5615
 msgid "Export Metadata File"
 msgstr "Метадеректер файлын экспорттау"
 
@@ -15295,28 +15299,28 @@ msgstr "Метадеректерді қарау (Exif, IPTC, XMP)"
 msgid "Metadata Viewer: %s"
 msgstr "Метадеректерді қараушы: %s"
 
-#: plug-ins/metadata/metadata-viewer.c:264
+#: plug-ins/metadata/metadata-viewer.c:266
 msgid "Exif"
 msgstr "Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:286
+#: plug-ins/metadata/metadata-viewer.c:288
 msgid "XMP"
 msgstr "XMP"
 
-#: plug-ins/metadata/metadata-viewer.c:429
+#: plug-ins/metadata/metadata-viewer.c:431
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(тағы %lu таңба)"
 
-#: plug-ins/metadata/metadata-viewer.c:648
+#: plug-ins/metadata/metadata-viewer.c:650
 msgid " meter"
 msgstr " метр"
 
-#: plug-ins/metadata/metadata-viewer.c:649
+#: plug-ins/metadata/metadata-viewer.c:651
 msgid " feet"
 msgstr " фут"
 
-#: plug-ins/metadata/metadata-viewer.c:809
+#: plug-ins/metadata/metadata-viewer.c:811
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(тағы %llu байт)"
@@ -15449,35 +15453,35 @@ msgstr "Вертикалды"
 msgid "Both"
 msgstr "Екеуі де"
 
-#: plug-ins/print/print.c:166
+#: plug-ins/print/print.c:208
 msgid "_Print..."
 msgstr "_Басып шығару..."
 
-#: plug-ins/print/print.c:171
+#: plug-ins/print/print.c:213
 msgid "Print the image"
 msgstr "Суретті басып шығару"
 
-#: plug-ins/print/print.c:190
+#: plug-ins/print/print.c:232
 msgid "Page Set_up..."
 msgstr "Бетті ба_птау..."
 
-#: plug-ins/print/print.c:195
+#: plug-ins/print/print.c:237
 msgid "Adjust page size and orientation for printing"
 msgstr "Басып шығару үшін бет өлшемі мен бағдарын реттеу"
 
-#: plug-ins/print/print.c:326 plug-ins/print/print.c:456
+#: plug-ins/print/print.c:381 plug-ins/print/print.c:514
 msgid "Image Settings"
 msgstr "Сурет баптаулары"
 
-#: plug-ins/print/print.c:427
+#: plug-ins/print/print.c:485
 msgid "An error occurred while trying to print:"
 msgstr "Басып шығаруға әрекеттену кезінде қате орын алды:"
 
-#: plug-ins/print/print.c:457
+#: plug-ins/print/print.c:515
 msgid "_Print"
 msgstr "_Басып шығару"
 
-#: plug-ins/print/print.c:474
+#: plug-ins/print/print.c:538
 msgid "Printing"
 msgstr "Басып шығару"
 
