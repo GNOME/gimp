@@ -213,6 +213,13 @@ splash_create (Gimp         *gimp,
    */
   gtk_window_set_decorated (GTK_WINDOW (splash->window), FALSE);
 
+#ifdef GDK_WINDOWING_WAYLAND
+  /* on Wayland, gtk_window_set_decorated() only disables GTK's own CSD.
+     But SSD compositors like Kwin still draw a title bar. Hide it explicitly */
+  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+    gtk_window_set_titlebar (GTK_WINDOW (splash->window), g_object_new (GTK_TYPE_FIXED, NULL));
+#endif
+
   g_signal_connect_swapped (splash->window, "delete-event",
                             G_CALLBACK (exit),
                             GINT_TO_POINTER (0));
