@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-12-28 11:26+0000\n"
-"PO-Revision-Date: 2026-03-02 22:08+0500\n"
+"POT-Creation-Date: 2026-08-02 17:50+0000\n"
+"PO-Revision-Date: 2026-08-29 12:00+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <Kazakh>\n"
 "Language: kk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -27,8 +27,8 @@ msgstr "Орнатуды GIMP командасы дайындаған, gimp.org"
 
 #: build/windows/installer/lang/setup.isl.xml.in:17
 msgid ""
-"You are trying to directly downgrade from GIMP %1 to %2.%n%nPlease remove "
-"GIMP yourself before installing this version."
+"You are trying to directly downgrade from GIMP %1 to %2.%n%nPlease remove GIMP "
+"yourself before installing this version."
 msgstr ""
 "Сіз GIMP-ті %1 нұсқасынан %2 нұсқасына тікелей төмендетпекшісіз.%n%nОсы "
 "нұсқаны орнатпас бұрын GIMP-ті өзіңіз өшіріңіз."
@@ -39,21 +39,20 @@ msgstr "Әзірлеу нұсқасы"
 
 #: build/windows/installer/lang/setup.isl.xml.in:27
 msgid ""
-"This is a development version of GIMP where some features may not be "
-"finished, or it may be unstable.%nThis version of GIMP is not intended for "
-"day-to-day work as it may be unstable, and you could lose your work.%nIf "
-"you encounter any problems, first verify that they haven't already been "
-"fixed in GIT before you contact the developers or report it in GIMP gitlab:"
-"%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue "
-"with installation anyway?"
+"This is a development version of GIMP where some features may not be finished, "
+"or it may be unstable.%nThis version of GIMP is not intended for day-to-day "
+"work as it may be unstable, and you could lose your work.%nIf you encounter "
+"any problems, first verify that they haven't already been fixed in GIT before "
+"you contact the developers or report it in GIMP gitlab:%n_https://www.gimp.org/"
+"bugs%n%nDo you wish to continue with installation anyway?"
 msgstr ""
-"Бұл кейбір мүмкіндіктері аяқталмаған немесе тұрақсыз болуы мүмкін GIMP "
-"әзірлеу нұсқасы.%nGIMP-тің бұл нұсқасы күнделікті жұмысқа арналмаған, "
-"себебі ол тұрақсыз болуы және жұмысыңыздан айырылуыңыз мүмкін.%nЕгер қандай "
-"да бір мәселелер туындаса, әзірлеушілермен хабарласпас бұрын немесе GIMP "
-"gitlab-та хабарламас бұрын, олардың GIT-те түзетілмегеніне көз жеткізіңіз:"
-"%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nОрнатуды сонда да "
-"жалғастыруды қалайсыз ба?"
+"Бұл — кейбір мүмкіндіктері аяқталмаған немесе тұрақсыз болуы мүмкін GIMP "
+"әзірлеу нұсқасы.%nGIMP-тің бұл нұсқасы күнделікті жұмысқа арналмаған, өйткені "
+"ол тұрақсыз болуы және жасаған жұмысыңызды жоғалтып алуыңыз мүмкін.%nҚандай да "
+"бір мәселелерге тап болсаңыз, әзірлеушілерге хабарласу немесе бұл туралы GIMP "
+"gitlab-та хабарлау алдында олардың GIT-те әлдеқашан түзетілмегенін алдымен "
+"тексеріңіз:%n_https://www.gimp.org/bugs%n%nСонда да орнатуды жалғастыру керек "
+"пе?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
 #: build/windows/installer/lang/setup.isl.xml.in:43
@@ -72,13 +71,12 @@ msgstr "Экран баптауларының мәселесі"
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
 "display mode. This has been known to cause stability problems with GIMP, so "
-"it's recommended to change the display colour depth to 32BPP before "
-"continuing."
+"it's recommended to change the display colour depth to 32BPP before continuing."
 msgstr ""
-"Орнату бағдарламасы Windows жүйесінің 32 бит/пиксельдік режимде жұмыс "
-"істемей тұрғанын анықтады. Бұл GIMP жұмысында тұрақтылық мәселелерін "
-"тудыратыны белгілі, сондықтан жалғастырмас бұрын экран түстерінің "
-"тереңдігін 32BPP-ке ауыстыру ұсынылады."
+"Орнату бағдарламасы Windows жүйесінің 32 бит/пиксельдік режимде жұмыс істемей "
+"тұрғанын анықтады. Бұл GIMP жұмысында тұрақтылық мәселелерін тудыратыны "
+"белгілі, сондықтан жалғастырмас бұрын экран түстерінің тереңдігін 32BPP-ке "
+"ауыстыру ұсынылады."
 
 #: build/windows/installer/lang/setup.isl.xml.in:46
 msgid "E&xit"
@@ -178,8 +176,7 @@ msgstr "Lua скриптері"
 
 #: build/windows/installer/lang/setup.isl.xml.in:136
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
-msgstr ""
-"Lua скрипт тілінде жазылған GIMP плагиндерін қолдануға мүмкіндік береді."
+msgstr "Lua скрипт тілінде жазылған GIMP плагиндерін қолдануға мүмкіндік береді."
 
 #: build/windows/installer/lang/setup.isl.xml.in:140
 msgid "MyPaint brushes"
@@ -197,84 +194,81 @@ msgstr "PostScript қолдауы"
 msgid "Allow GIMP to load PostScript files"
 msgstr "GIMP-ке PostScript файлдарын жүктеуге рұқсат беру"
 
-#: build/windows/installer/lang/setup.isl.xml.in:156
-msgid "Support for 32-bit plug-ins"
-msgstr "32-биттік плагиндерді қолдау"
-
-#: build/windows/installer/lang/setup.isl.xml.in:160
-msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
-"support."
-msgstr ""
-"32-биттік плагиндерді қолдану үшін қажетті файлдарды қосу.%nTWAIN қолдауы "
-"үшін қажет."
-
-#: build/windows/installer/lang/setup.isl.xml.in:165
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid "Additional icons:"
 msgstr "Қосымша таңбашалар:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:169
+#: build/windows/installer/lang/setup.isl.xml.in:161
 msgid "Create a &desktop icon"
 msgstr "&Жұмыс үстелі таңбашасын жасау"
 
-#: build/windows/installer/lang/setup.isl.xml.in:174
+#: build/windows/installer/lang/setup.isl.xml.in:166
 msgid ""
-"There was a problem updating GIMP's environment in %1. If you get any "
-"errors loading the plug-ins, try uninstalling and re-installing GIMP."
+"There was a problem updating GIMP's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr ""
 "%1 ішіндегі GIMP ортасын жаңарту кезінде мәселе туындады. Егер плагиндерді "
 "жүктеу кезінде қателер шықса, GIMP-ті өшіріп, қайта орнатып көріңіз."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:170
 msgid "Error extracting temporary data."
 msgstr "Уақытша деректерді шығарып алу қатесі."
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid "Error updating Python interpreter info."
 msgstr "Python интерпретаторының ақпаратын жаңарту қатесі."
 
-#: build/windows/installer/lang/setup.isl.xml.in:186
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Trying to create Restore Point..."
 msgstr "Қалпына келтіру нүктесін жасау әрекеті..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:190
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Cleaning up old files..."
 msgstr "Ескі файлдарды тазалау..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:187
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr ""
-"Есіңізде болсын: GIMP — еркін бағдарламалық қамтама.%n%nКелесі сайтты "
-"шолыңыз:"
+"Есіңізде болсын: GIMP — еркін бағдарламалық қамтама.%n%nКелесі сайтты шолыңыз:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:199
+#: build/windows/installer/lang/setup.isl.xml.in:191
 msgid "for free updates."
 msgstr "тегін жаңартулар алу үшін."
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "GIMP Python кеңейтуі үшін ортаны баптау..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:206
+#: build/windows/installer/lang/setup.isl.xml.in:198
 msgid "Setting up GIMP environment..."
 msgstr "GIMP ортасын баптау..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:211
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Launch GIMP"
 msgstr "GIMP-ті іске қосу"
 
-#: build/windows/installer/lang/setup.isl.xml.in:216
+#: build/windows/installer/lang/setup.isl.xml.in:208
 msgid "Removing add-on"
 msgstr "Қосымшаны өшіру"
 
-#: build/windows/installer/lang/setup.isl.xml.in:221
+#: build/windows/installer/lang/setup.isl.xml.in:213
 msgid ""
-"Do you want to delete your personal GIMP files (e.g. settings, tool "
-"presets, custom brushes)?%n%nA copy will be made on Desktop."
+"Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
+"custom brushes)?%n%nA copy will be made on Desktop."
 msgstr ""
 "Жеке GIMP файлдарын (мысалы, баптаулар, сайман пресеттері, таңдамалы "
 "қылқаламдар) өшіруді қалайсыз ба?%n%nКөшірмесі Жұмыс үстелінде жасалады."
 
-#: build/windows/installer/lang/setup.isl.xml.in:225
+#: build/windows/installer/lang/setup.isl.xml.in:217
 msgid "Internal error (%1)."
 msgstr "Ішкі қате (%1)."
+
+#~ msgid "Support for 32-bit plug-ins"
+#~ msgstr "32-биттік плагиндерді қолдау"
+
+#~ msgid ""
+#~ "Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
+#~ "support."
+#~ msgstr ""
+#~ "32-биттік плагиндерді қолдану үшін қажетті файлдарды қосу.%nTWAIN қолдауы "
+#~ "үшін қажет."
