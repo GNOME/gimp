@@ -262,7 +262,9 @@ gimp_tool_palette_height_for_width (GtkWidget *widget,
   if (n_tools % tool_columns)
     tool_rows++;
 
-  *min_height = *pref_height = tool_rows * button_height;
+  /* see: #7454 */
+  *min_height = tool_rows * button_height / 2;
+  *pref_height = tool_rows * button_height;
 }
 
 static void
