@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-28 20:39+0000\n"
-"PO-Revision-Date: 2026-07-29 13:17+0500\n"
+"POT-Creation-Date: 2026-08-29 02:46+0000\n"
+"PO-Revision-Date: 2026-08-29 11:57+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -125,17 +125,17 @@ msgstr ""
 "Сіз GIMP-пен бірге GNU General Public License лицензиясының көшірмесін алуыңыз керек еді. Олай болмаса, мынаны қараңыз: https://www.gnu.org/licenses/"
 
 #. TRANSLATORS: title for info message in terminal window
-#: app/app.c:545
+#: app/app.c:542
 msgid "INFO"
 msgstr "АҚПАРАТ"
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:547
+#: app/app.c:544
 msgid "GIMP is now running as a background process. You can quit anytime with Ctrl-C (SIGINT)."
 msgstr "GIMP қазір фондық процесс ретінде орындалуда. Ctrl-C (SIGINT) көмегімен кез келген уақытта шығуға болады."
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:550
+#: app/app.c:547
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Егер сіз оның орнына бірден шыққыңыз келсе, GIMP-ті --quit жалаушасымен шақырыңыз."
 
@@ -283,11 +283,11 @@ msgstr "Эксперименталды функциялары бар бапта�
 msgid "Show an image submenu with debug actions"
 msgstr "Жөндеу әрекеттері бар сурет ішкі мәзірін көрсету"
 
-#: app/main.c:772
+#: app/main.c:832
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: app/main.c:802
+#: app/main.c:862
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -295,11 +295,11 @@ msgstr ""
 "GIMP графикалық пайдаланушы интерфейсін инициализациялай алмады.\n"
 "Дисплей ортасы үшін дұрыс баптаулар бар екеніне көз жеткізіңіз."
 
-#: app/main.c:871
+#: app/main.c:931
 msgid "Another GIMP instance is already running."
 msgstr "Басқа GIMP данасы қазірдің өзінде жұмыс істеп тұр."
 
-#: app/main.c:954
+#: app/main.c:1014
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Бұл терезені жабу үшін кез келген таңбаны енгізіңіз)\n"
@@ -331,7 +331,7 @@ msgid "Brush Editor"
 msgstr "Қылқалам түзеткіші"
 
 #. initialize the list of gimp brushes
-#: app/actions/actions.c:117 app/core/gimp-data-factories.c:406 app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3479
+#: app/actions/actions.c:117 app/core/gimp-data-factories.c:398 app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3479
 msgid "Brushes"
 msgstr "Қылқаламдар"
 
@@ -409,7 +409,7 @@ msgid "Filters"
 msgstr "Сүзгілер"
 
 #. initialize the list of gimp fonts
-#: app/actions/actions.c:174 app/core/gimp-data-factories.c:440 app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3509
+#: app/actions/actions.c:174 app/core/gimp-data-factories.c:432 app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3509
 msgid "Fonts"
 msgstr "Қаріптер"
 
@@ -418,11 +418,11 @@ msgid "Gradient Editor"
 msgstr "Градиент түзеткіші"
 
 #. initialize the list of gimp gradients
-#: app/actions/actions.c:180 app/core/gimp-data-factories.c:431 app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3503
+#: app/actions/actions.c:180 app/core/gimp-data-factories.c:423 app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3503
 msgid "Gradients"
 msgstr "Градиенттер"
 
-#: app/actions/actions.c:183 app/core/gimp-data-factories.c:447 app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3515
+#: app/actions/actions.c:183 app/core/gimp-data-factories.c:439 app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3515
 msgid "Tool Presets"
 msgstr "Саймандардың алдын ала баптаулары"
 
@@ -430,7 +430,9 @@ msgstr "Саймандардың алдын ала баптаулары"
 msgid "Tool Preset Editor"
 msgstr "Сайманның алдын ала баптауының түзеткіші"
 
-#: app/actions/actions.c:189
+#. Help
+#. fix native search bar not appearing on non-Enligsh locales
+#: app/actions/actions.c:189 app/menus/menus.c:716
 msgid "Help"
 msgstr "Көмек"
 
@@ -442,12 +444,12 @@ msgstr "Сурет"
 msgid "Images"
 msgstr "Суреттер"
 
-#: app/actions/actions.c:198 app/dialogs/dialogs.c:376 app/dialogs/resize-dialog.c:173 app/widgets/gimpitemchooser.c:269 app/widgets/gimppickablechooser.c:264
+#: app/actions/actions.c:198 app/dialogs/dialogs.c:376 app/dialogs/resize-dialog.c:174 app/widgets/gimpitemchooser.c:269 app/widgets/gimppickablechooser.c:264
 msgid "Layers"
 msgstr "Қабаттар"
 
 #. initialize the list of mypaint brushes
-#: app/actions/actions.c:201 app/core/gimp-data-factories.c:416 app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3521
+#: app/actions/actions.c:201 app/core/gimp-data-factories.c:408 app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3521
 msgid "MyPaint Brushes"
 msgstr "MyPaint қылқаламдары"
 
@@ -456,12 +458,12 @@ msgid "Palette Editor"
 msgstr "Палитра түзеткіші"
 
 #. initialize the list of gimp palettes
-#: app/actions/actions.c:207 app/core/gimp-data-factories.c:426 app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3497
+#: app/actions/actions.c:207 app/core/gimp-data-factories.c:418 app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3497
 msgid "Palettes"
 msgstr "Палитралар"
 
 #. initialize the list of gimp patterns
-#: app/actions/actions.c:210 app/core/gimp-data-factories.c:421 app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3491
+#: app/actions/actions.c:210 app/core/gimp-data-factories.c:413 app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3491
 msgid "Patterns"
 msgstr "Өрнектер"
 
@@ -470,7 +472,7 @@ msgid "Plug-ins"
 msgstr "Плагиндер"
 
 #. Quick Mask Color
-#: app/actions/actions.c:216 app/core/gimpchannel.c:378 app/dialogs/preferences-dialog.c:1824
+#: app/actions/actions.c:216 app/core/gimpchannel.c:397 app/dialogs/preferences-dialog.c:1824
 msgid "Quick Mask"
 msgstr "Жылдам маска"
 
@@ -495,7 +497,7 @@ msgstr "Мәтін сайманы"
 msgid "Text Editor"
 msgstr "Мәтін түзеткіші"
 
-#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:543
+#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:549
 msgid "Tool Options"
 msgstr "Сайман опциялары"
 
@@ -515,7 +517,9 @@ msgstr "Жолдар"
 msgid "View"
 msgstr "Көрініс"
 
-#: app/actions/actions.c:249
+#. Windows
+#. fix native windows list not appearing on dock. See: #428
+#: app/actions/actions.c:249 app/menus/menus.c:705
 msgid "Windows"
 msgstr "Терезелер"
 
@@ -1024,7 +1028,7 @@ msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Арналарды ең төмен түсіру"
 
-#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534 app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260 app/widgets/gimplayertreeview.c:901
+#: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:535 app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260 app/widgets/gimplayertreeview.c:906
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s арна көшірмесі"
@@ -2386,7 +2390,7 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 секунд"
 
-#: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263 app/actions/edit-commands.c:174 app/actions/error-console-commands.c:97 app/actions/file-commands.c:463
+#: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263 app/actions/edit-commands.c:175 app/actions/error-console-commands.c:97 app/actions/file-commands.c:463
 #: app/actions/gradient-editor-commands.c:410 app/actions/gradient-editor-commands.c:521 app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187 app/actions/templates-commands.c:248
 #: app/actions/text-editor-commands.c:64 app/actions/text-tool-commands.c:168 app/actions/tool-options-commands.c:210 app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
 #: app/dialogs/color-profile-dialog.c:154 app/dialogs/color-profile-dialog.c:172 app/dialogs/color-profile-dialog.c:190 app/dialogs/color-profile-dialog.c:208 app/dialogs/convert-indexed-dialog.c:142
@@ -2394,10 +2398,10 @@ msgstr "240 секунд"
 #: app/dialogs/grid-dialog.c:102 app/dialogs/image-merge-layers-dialog.c:100 app/dialogs/image-new-dialog.c:106 app/dialogs/image-new-dialog.c:326 app/dialogs/image-scale-dialog.c:210
 #: app/dialogs/input-devices-dialog.c:66 app/dialogs/input-devices-dialog.c:121 app/dialogs/item-options-dialog.c:147 app/dialogs/layer-add-mask-dialog.c:122 app/dialogs/palette-import-dialog.c:161
 #: app/dialogs/preferences-dialog.c:222 app/dialogs/preferences-dialog.c:607 app/dialogs/preferences-dialog.c:1168 app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:151
-#: app/dialogs/resize-dialog.c:227 app/dialogs/resolution-calibrate-dialog.c:73 app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:129 app/dialogs/template-options-dialog.c:118
+#: app/dialogs/resize-dialog.c:228 app/dialogs/resolution-calibrate-dialog.c:73 app/dialogs/scale-dialog.c:138 app/dialogs/stroke-dialog.c:129 app/dialogs/template-options-dialog.c:118
 #: app/dialogs/path-export-dialog.c:83 app/dialogs/path-import-dialog.c:93 app/display/gimpdisplayshell-close.c:181 app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123 app/display/gimpdisplayshell-scale-dialog.c:131 app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1858 app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429 app/widgets/gimpactionview.c:621
+#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1870 app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429 app/widgets/gimpactionview.c:621
 #: app/widgets/gimpcolordialog.c:492 app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573 app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:837
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:337 app/widgets/gimphelp.c:594 app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:690 app/widgets/gimppdbdialog.c:148
 #: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:705
@@ -2457,8 +2461,8 @@ msgid "Enter a description for the marker"
 msgstr "Маркер үшін сипаттаманы енгізіңіз"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:418 app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:254 app/dialogs/file-open-dialog.c:300
-#: app/dialogs/file-open-location-dialog.c:217 app/dialogs/file-open-location-dialog.c:233 app/dialogs/welcome-dialog.c:1255 app/display/gimpdisplayshell-dnd.c:707 app/display/gimpimagewindow.c:2266
-#: app/widgets/gimplayertreeview.c:859 app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
+#: app/dialogs/file-open-location-dialog.c:219 app/dialogs/file-open-location-dialog.c:235 app/dialogs/welcome-dialog.c:1255 app/display/gimpdisplayshell-dnd.c:707 app/display/gimpimagewindow.c:2288
+#: app/widgets/gimplayertreeview.c:864 app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -2469,7 +2473,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75 app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2533 app/core/gimppalette.c:629 app/core/gimppalette-import.c:223
+#: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75 app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2546 app/core/gimppalette.c:647 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
 msgstr "Атаусыз"
@@ -3316,7 +3320,7 @@ msgstr "Сәйкес файлы жоқ жазбаларды өшіру"
 msgid "Clear Document History"
 msgstr "Құжаттар тарихын тазарту"
 
-#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:175 app/dialogs/preferences-dialog.c:608
+#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:176 app/dialogs/preferences-dialog.c:608
 msgid "Cl_ear"
 msgstr "Та_зарту"
 
@@ -3801,86 +3805,86 @@ msgstr "_Болдырмау"
 msgid "_Redo"
 msgstr "Қай_талау"
 
-#: app/actions/edit-commands.c:166
+#: app/actions/edit-commands.c:167
 msgid "Clear Undo History"
 msgstr "Болдырмау тарихын тазарту"
 
-#: app/actions/edit-commands.c:193
+#: app/actions/edit-commands.c:194
 msgid "Really clear image's undo history?"
 msgstr "Суреттің болдырмау тарихын шынымен тазарту керек пе?"
 
-#: app/actions/edit-commands.c:206
+#: app/actions/edit-commands.c:207
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Бұл суреттің болдырмау тарихын тазарту %s жадты босатады."
 
-#: app/actions/edit-commands.c:250
+#: app/actions/edit-commands.c:251
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
 msgstr[0] "%d қабатты алмасу буферіне қиып алу."
 
-#: app/actions/edit-commands.c:255
+#: app/actions/edit-commands.c:256
 msgid "Cut pixels to the clipboard."
 msgstr "Пиксельдерді алмасу буферіне қиып алу."
 
-#: app/actions/edit-commands.c:298
+#: app/actions/edit-commands.c:299
 msgid "Copied layer to the clipboard."
 msgstr "Қабат алмасу буферіне көшірілді."
 
-#: app/actions/edit-commands.c:299 app/actions/edit-commands.c:331
+#: app/actions/edit-commands.c:300 app/actions/edit-commands.c:332
 msgid "Copied pixels to the clipboard."
 msgstr "Пиксельдер алмасу буферіне көшірілді."
 
-#: app/actions/edit-commands.c:448 app/actions/edit-commands.c:795 app/tools/gimpseamlessclonetool.c:304
+#: app/actions/edit-commands.c:449 app/actions/edit-commands.c:798 app/tools/gimpseamlessclonetool.c:304
 msgid "There is no image data in the clipboard to paste."
 msgstr "Алмасу буферінде кірістіруге болатын сурет деректері жоқ."
 
-#: app/actions/edit-commands.c:464
+#: app/actions/edit-commands.c:465
 msgid "Cut Named"
 msgstr "Атымен қиып алу"
 
-#: app/actions/edit-commands.c:467 app/actions/edit-commands.c:489 app/actions/edit-commands.c:511
+#: app/actions/edit-commands.c:468 app/actions/edit-commands.c:490 app/actions/edit-commands.c:512
 msgid "Enter a name for this buffer"
 msgstr "Бұл буфер үшін атты енгізіңіз"
 
-#: app/actions/edit-commands.c:486
+#: app/actions/edit-commands.c:487
 msgid "Copy Named"
 msgstr "Атымен көшіру"
 
-#: app/actions/edit-commands.c:508
+#: app/actions/edit-commands.c:509
 msgid "Copy Visible Named"
 msgstr "Көрінетінін атымен көшіру"
 
-#: app/actions/edit-commands.c:556
+#: app/actions/edit-commands.c:557
 msgid "Clear"
 msgstr "Тазарту"
 
-#: app/actions/edit-commands.c:686
+#: app/actions/edit-commands.c:689
 msgid "A selected layer's alpha channel is locked."
 msgstr "Таңдалған қабаттың альфа-арнасы құлыпталған."
 
-#: app/actions/edit-commands.c:752
+#: app/actions/edit-commands.c:755
 msgid "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr "Жаңа қабат ретінде кірістірілді, өйткені нысана жалғыз қабат немесе қабат маскасы емес."
 
-#: app/actions/edit-commands.c:759
+#: app/actions/edit-commands.c:762
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Жаңа қабат ретінде кірістірілді, өйткені нысана қабаттар тобы болып табылады."
 
-#: app/actions/edit-commands.c:766
+#: app/actions/edit-commands.c:769
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Жаңа қабат ретінде кірістірілді, өйткені нысана пиксельдері құлыпталған."
 
-#: app/actions/edit-commands.c:812
+#: app/actions/edit-commands.c:815
 msgid "There are no selected layers or channels to cut from."
 msgstr "Қиып алатын таңдалған қабаттар немесе арналар жоқ."
 
-#: app/actions/edit-commands.c:817 app/actions/edit-commands.c:850 app/actions/edit-commands.c:875
+#: app/actions/edit-commands.c:820 app/actions/edit-commands.c:853 app/actions/edit-commands.c:878
 msgid "(Unnamed Buffer)"
 msgstr "(Атаусыз буфер)"
 
-#: app/actions/edit-commands.c:845
+#: app/actions/edit-commands.c:848
 msgid "There are no selected layers or channels to copy from."
 msgstr "Көшіріп алатын таңдалған қабаттар немесе арналар жоқ."
 
@@ -5414,7 +5418,7 @@ msgstr "Осы градиентті түзету"
 msgid "Save '%s' as POV-Ray"
 msgstr "«%s» файлын POV-Ray ретінде сақтау"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:899
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:902
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_Көмек"
@@ -6007,19 +6011,19 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Осы суретті өшіру"
 
-#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:568
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:571
 msgid "Lock content"
 msgstr "Мазмұнды құлыптау"
 
-#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:569
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:572
 msgid "Unlock content"
 msgstr "Мазмұн құлпын ашу"
 
-#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:582
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:585
 msgid "Lock position"
 msgstr "Позицияны құлыптау"
 
-#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:583
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:586
 msgid "Unlock position"
 msgstr "Позиция құлпын ашу"
 
@@ -6180,7 +6184,7 @@ msgctxt "layers-action"
 msgid "_Anchor Floating Layer or Mask"
 msgstr "Жылжымалы қабатты немесе масканы _зәкірлеу"
 
-#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1313
+#: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1318
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
 msgstr "Жылжымалы қабатты немесе масканы зәкірлеу"
@@ -7006,7 +7010,7 @@ msgstr "Альфа-арнаны қосу"
 msgid "Remove Alpha Channel"
 msgstr "Альфа-арнаны өшіру"
 
-#: app/actions/layers-commands.c:1967 app/core/gimpchannel-select.c:433 app/core/gimplayer.c:449
+#: app/actions/layers-commands.c:1967 app/core/gimpchannel-select.c:433 app/core/gimplayer.c:473
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Альфаны таңдауға айналдыру"
@@ -7030,7 +7034,7 @@ msgstr "Альфаны таңдаумен қиылыстыру"
 msgid "Empty Selection"
 msgstr "Бос таңдау"
 
-#: app/actions/layers-commands.c:2022 app/actions/layers-commands.c:2066 app/widgets/gimplayertreeview.c:1154
+#: app/actions/layers-commands.c:2022 app/actions/layers-commands.c:2066 app/widgets/gimplayertreeview.c:1159
 msgid "Set layers opacity"
 msgstr "Қабаттар мөлдірсіздігін орнату"
 
@@ -7838,7 +7842,7 @@ msgstr "Барлық сүзгілерді бастапқыға қайтару"
 
 #: app/actions/plug-in-commands.c:188 app/actions/tool-options-commands.c:211 app/dialogs/fill-dialog.c:114 app/dialogs/grid-dialog.c:101 app/dialogs/image-new-dialog.c:105
 #: app/dialogs/input-devices-dialog.c:65 app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:223 app/dialogs/preferences-dialog.c:1167 app/dialogs/print-size-dialog.c:122
-#: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:128 app/display/gimpdisplayshell-rotate-dialog.c:122 app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
+#: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:128 app/display/gimpdisplayshell-rotate-dialog.c:122 app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:264
 msgid "_Reset"
 msgstr "_Бастапқыға қайтару"
@@ -10032,122 +10036,122 @@ msgstr "Жаңа дисплейдің атын енгізіңіз:"
 msgid "Can't open display '%s'. Please try another one:"
 msgstr "'%s' дисплейін ашу мүмкін емес. Басқасын көріңіз:"
 
-#: app/actions/windows-actions.c:103
+#: app/actions/windows-actions.c:112
 msgctxt "windows-action"
 msgid "Next Image"
 msgstr "Келесі сурет"
 
-#: app/actions/windows-actions.c:104
+#: app/actions/windows-actions.c:113
 msgctxt "windows-action"
 msgid "Switch to the next image"
 msgstr "Келесі суретке ауысу"
 
-#: app/actions/windows-actions.c:109
+#: app/actions/windows-actions.c:118
 msgctxt "windows-action"
 msgid "Previous Image"
 msgstr "Алдыңғы сурет"
 
-#: app/actions/windows-actions.c:110
+#: app/actions/windows-actions.c:119
 msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Алдыңғы суретке ауысу"
 
-#: app/actions/windows-actions.c:115 menus/image-menu.ui.in.in:888
+#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:891
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "Беттер ор_наласуы"
 
-#: app/actions/windows-actions.c:121
+#: app/actions/windows-actions.c:130
 msgctxt "windows-action"
 msgid "_Hide Docks"
 msgstr "Доктарды жа_сыру"
 
-#: app/actions/windows-actions.c:122
+#: app/actions/windows-actions.c:131
 msgctxt "windows-action"
 msgid "When enabled, docks and other dialogs are hidden, leaving only image windows."
 msgstr "Қосулы болғанда, доктар мен басқа сұхбат терезелері жасырылып, тек сурет терезелері қалады."
 
-#: app/actions/windows-actions.c:128
+#: app/actions/windows-actions.c:137
 msgctxt "windows-action"
 msgid "_Show Tabs"
 msgstr "Беттерді көр_сету"
 
-#: app/actions/windows-actions.c:129
+#: app/actions/windows-actions.c:138
 msgctxt "windows-action"
 msgid "When enabled, the image tabs bar is shown."
 msgstr "Қосулы болғанда, сурет беттерінің жолағы көрсетіледі."
 
-#: app/actions/windows-actions.c:135
+#: app/actions/windows-actions.c:144
 msgctxt "windows-action"
 msgid "Single-Window _Mode"
 msgstr "Бір терезелі ре_жим"
 
-#: app/actions/windows-actions.c:136
+#: app/actions/windows-actions.c:145
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
 msgstr "Іске қосылғанда GIMP бір терезелі режимде болады."
 
-#: app/actions/windows-actions.c:145
+#: app/actions/windows-actions.c:154
 msgctxt "windows-tabs-position-action"
 msgid "_Top"
 msgstr "_Жоғарғы"
 
-#: app/actions/windows-actions.c:146
+#: app/actions/windows-actions.c:155
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
 msgstr "Беттерді жоғарыда орналастыру"
 
-#: app/actions/windows-actions.c:150
+#: app/actions/windows-actions.c:159
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
 msgstr "_Төменгі"
 
-#: app/actions/windows-actions.c:151
+#: app/actions/windows-actions.c:160
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
 msgstr "Беттерді төменде орналастыру"
 
-#: app/actions/windows-actions.c:155
+#: app/actions/windows-actions.c:164
 msgctxt "windows-tabs-position-action"
 msgid "_Left"
 msgstr "_Сол жақ"
 
-#: app/actions/windows-actions.c:156
+#: app/actions/windows-actions.c:165
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the left"
 msgstr "Беттерді сол жақта орналастыру"
 
-#: app/actions/windows-actions.c:160
+#: app/actions/windows-actions.c:169
 msgctxt "windows-tabs-position-action"
 msgid "_Right"
 msgstr "_Оң жақ"
 
-#: app/actions/windows-actions.c:161
+#: app/actions/windows-actions.c:170
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
 msgstr "Беттерді оң жақта орналастыру"
 
-#: app/actions/windows-actions.c:278 app/actions/windows-actions.c:280
+#: app/actions/windows-actions.c:287 app/actions/windows-actions.c:289
 msgid "Single-window mode disabled"
 msgstr "Бір терезелі режим сөндірілген"
 
 #. TRANSLATORS: label for an action allowing to show (i.e. raise the image
 #. * tab or window above others) specific images or views of image. The part
 #. * between quotes is the image name and other view identifiers.
-#: app/actions/windows-actions.c:393
+#: app/actions/windows-actions.c:402
 #, c-format
 msgid "Show \"%s-%d.%d\""
 msgstr "«%s-%d.%d» көрсету"
 
 #. TRANSLATORS: the first argument (%1$s) is the image name, the
 #. * second (%2$d) is its tab order in the graphical interface.
-#: app/actions/windows-actions.c:472
+#: app/actions/windows-actions.c:481
 #, c-format
 msgid "Switch to the first image view: %1$s"
 msgid_plural "Switch to image view %2$d: %1$s"
 msgstr[0] "%2$d сурет көрінісіне ауысу: %1$s"
 
-#: app/actions/windows-commands.c:208
+#: app/actions/windows-commands.c:218
 msgid "The chosen recent dock contains a toolbox. Please close the currently open toolbox and try again."
 msgstr "Таңдалған соңғы докта саймандар тақтасы бар. Ағымдағы ашық саймандар тақтасын жауып, қайталап көріңіз."
 
@@ -10356,7 +10360,7 @@ msgstr "«%s» файлын жазу үшін ашу мүмкін емес: %s"
 msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "«%%s» талдау қатесі: жол %s таңбадан ұзын."
 
-#: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206 app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145 app/gui/themes.c:719 app/tools/gimpfiltertool-settings.c:229
+#: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206 app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145 app/gui/themes.c:716 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "«%s» жазу қатесі: %s"
@@ -10375,16 +10379,16 @@ msgstr "«%s» файлын талдау кезінде қате орын алд
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Элементтерді іздеу және таңдауға арналған өрнек синтаксисі:"
 
-#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:420
+#: app/config/gimpdialogconfig.c:319 app/core/gimplayer.c:444
 msgid "Layer"
 msgstr "Қабат"
 
-#: app/config/gimpdialogconfig.c:426 app/core/gimpchannel.c:248 app/operations/gimpcurvesconfig.c:120 app/operations/gimplevelsconfig.c:135 app/operations/gimpoperationthreshold.c:95
+#: app/config/gimpdialogconfig.c:426 app/core/gimpchannel.c:264 app/operations/gimpcurvesconfig.c:120 app/operations/gimplevelsconfig.c:135 app/operations/gimpoperationthreshold.c:95
 #: app/widgets/gimpchanneltreeview.c:333
 msgid "Channel"
 msgstr "Арна"
 
-#: app/config/gimpdialogconfig.c:440 app/path/gimppath.c:225 app/widgets/gimppathtreeview.c:254
+#: app/config/gimpdialogconfig.c:440 app/path/gimppath.c:243 app/widgets/gimppathtreeview.c:254
 msgid "Path"
 msgstr "Жол"
 
@@ -11971,7 +11975,7 @@ msgctxt "undo-type"
 msgid "Vector"
 msgstr "Вектор"
 
-#: app/core/core-enums.c:1344 app/core/gimpdrawable-transform.c:717
+#: app/core/core-enums.c:1344 app/core/gimpdrawable-transform.c:718
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Түрлендіру"
@@ -12311,7 +12315,8 @@ msgid "Parasites"
 msgstr "Паразиттер"
 
 #. initialize the module list
-#: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3539
+#. Modules
+#: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3539 app/menus/menus.c:680
 msgid "Modules"
 msgstr "Модульдер"
 
@@ -12352,23 +12357,23 @@ msgstr "Топтамалық режим сөндірілген."
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "'%s' топтамалық интерпретаторы қолжетімді емес. Топтамалық режим сөндірілген."
 
-#: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338 app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449 app/menus/menus.c:488 app/widgets/gimpdevices.c:172
+#: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338 app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449 app/menus/menus.c:489 app/widgets/gimpdevices.c:172
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "\"%s\" өшіру сәтсіз аяқталды: %s"
 
 #. initialize the list of gimp dynamics
-#: app/core/gimp-data-factories.c:411 app/core/gimpcontext.c:706 app/dialogs/preferences-dialog.c:3485 app/tools/gimppaintoptions-gui.c:329
+#: app/core/gimp-data-factories.c:403 app/core/gimpcontext.c:706 app/dialogs/preferences-dialog.c:3485 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "Динамика"
 
 #. initialize the color history
-#: app/core/gimp-data-factories.c:436 app/core/gimp-palettes.c:60
+#: app/core/gimp-data-factories.c:428 app/core/gimp-palettes.c:60
 msgid "Color History"
 msgstr "Түстер тарихы"
 
 #. update tag cache
-#: app/core/gimp-data-factories.c:453
+#: app/core/gimp-data-factories.c:445
 msgid "Updating tag cache"
 msgstr "Тегтер кэшін жаңарту"
 
@@ -12394,7 +12399,7 @@ msgstr "Таңдалған аумақ бос болғандықтан қиып �
 msgid "Cannot copy because the selected region is empty."
 msgstr "Таңдалған аумақ бос болғандықтан көшіру мүмкін емес."
 
-#: app/core/gimp-edit.c:654 app/core/gimpimage-new.c:583
+#: app/core/gimp-edit.c:654 app/core/gimpimage-new.c:584
 msgid "Pasted Layer"
 msgstr "Кірістірілген қабат"
 
@@ -12513,12 +12518,12 @@ msgstr "Алдыңғы көріністен мөлдірге (қатты жие�
 msgid "Please wait: %s\n"
 msgstr "Күте тұрыңыз: %s\n"
 
-#: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299 app/core/gimpdata.c:690 app/core/gimpdata.c:703
+#: app/core/gimp-internal-data.c:286 app/core/gimp-internal-data.c:299 app/core/gimpdata.c:769 app/core/gimpdata.c:782
 #, c-format
 msgid "Error saving '%s': "
 msgstr "'%s' сақтау қатесі: "
 
-#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:709
+#: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:788
 #, c-format
 msgid "Error saving '%s'"
 msgstr "'%s' сақтау қатесі"
@@ -12542,7 +12547,7 @@ msgstr "“%s” еншілес процесін орындау сәтсіз а�
 msgid "tags-locale:C"
 msgstr "tags-locale:kk"
 
-#: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:151 app/gui/themes.c:731
+#: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:188 app/gui/themes.c:728
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "'%s' жабу қатесі: %s"
@@ -12575,26 +12580,26 @@ msgstr "'%s' бумасын жасау..."
 msgid "Cannot create folder '%s': %s"
 msgstr "'%s' бумасын жасау мүмкін емес: %s"
 
-#: app/core/gimp-utils.c:593 app/core/gimpfilloptions.c:495
+#: app/core/gimp-utils.c:653 app/core/gimpfilloptions.c:585
 msgid "No patterns available for this operation."
 msgstr "Бұл операция үшін қолжетімді өрнектер жоқ."
 
-#: app/core/gimp-utils.c:1170
+#: app/core/gimp-utils.c:1230
 #, c-format
 msgid "Fatal parse error in Photoshop resource file: RLE compressed data is corrupt."
 msgstr "Photoshop ресурс файлындағы қатаң талдау қатесі: RLE арқылы сығылған деректер зақымдалған."
 
-#: app/core/gimp-utils.c:1846
+#: app/core/gimp-utils.c:1901
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Бұл талдағыш қабаттасқан тізімдерді қолдамайды."
 
-#: app/core/gimp-utils.c:1869
+#: app/core/gimp-utils.c:1924
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> элементі <ol> немесе <ul> тегтерінің ішінде болуы керек."
 
-#: app/core/gimp-utils.c:1874
+#: app/core/gimp-utils.c:1929
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Белгісіз <%s> тегі."
@@ -12833,148 +12838,148 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Индекстелген түс бойынша таңдау"
 
-#: app/core/gimpchannel.c:265
+#: app/core/gimpchannel.c:281
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Арна атын өзгерту"
 
-#: app/core/gimpchannel.c:266
+#: app/core/gimpchannel.c:282
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Арнаны жылжыту"
 
-#: app/core/gimpchannel.c:267
+#: app/core/gimpchannel.c:283
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Арнаны масштабтау"
 
-#: app/core/gimpchannel.c:268
+#: app/core/gimpchannel.c:284
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Арна өлшемін өзгерту"
 
-#: app/core/gimpchannel.c:269
+#: app/core/gimpchannel.c:285
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Арнаны аудару"
 
-#: app/core/gimpchannel.c:270
+#: app/core/gimpchannel.c:286
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Арнаны бұру"
 
-#: app/core/gimpchannel.c:271 app/core/gimpdrawable-transform.c:1049
+#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1050
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Арнаны түрлендіру"
 
-#: app/core/gimpchannel.c:272 app/core/gimpchannel.c:303
+#: app/core/gimpchannel.c:288 app/core/gimpchannel.c:319
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Арнаны бояу"
 
-#: app/core/gimpchannel.c:273
+#: app/core/gimpchannel.c:289
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Арнаны сызу"
 
-#: app/core/gimpchannel.c:274
+#: app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Арнаны таңдауға айналдыру"
 
-#: app/core/gimpchannel.c:275
+#: app/core/gimpchannel.c:291
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Арнаны қайта реттеу"
 
-#: app/core/gimpchannel.c:276
+#: app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Арнаны көтеру"
 
-#: app/core/gimpchannel.c:277
+#: app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Арнаны ең жоғарыға көтеру"
 
-#: app/core/gimpchannel.c:278
+#: app/core/gimpchannel.c:294
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Арнаны төмендету"
 
-#: app/core/gimpchannel.c:279
+#: app/core/gimpchannel.c:295
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Арнаны ең төменге түсіру"
 
-#: app/core/gimpchannel.c:280
+#: app/core/gimpchannel.c:296
 msgid "Channel cannot be raised higher."
 msgstr "Арнаны бұдан жоғары көтеру мүмкін емес."
 
-#: app/core/gimpchannel.c:281
+#: app/core/gimpchannel.c:297
 msgid "Channel cannot be lowered more."
 msgstr "Арнаны бұдан төмен түсіру мүмкін емес."
 
-#: app/core/gimpchannel.c:300
+#: app/core/gimpchannel.c:316
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Арнаны жұмсарту"
 
-#: app/core/gimpchannel.c:301
+#: app/core/gimpchannel.c:317
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Арнаны айқындау"
 
-#: app/core/gimpchannel.c:302
+#: app/core/gimpchannel.c:318
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Арнаны тазарту"
 
-#: app/core/gimpchannel.c:304
+#: app/core/gimpchannel.c:320
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Арнаны инверсиялау"
 
-#: app/core/gimpchannel.c:305
+#: app/core/gimpchannel.c:321
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Арна шекарасы"
 
-#: app/core/gimpchannel.c:306
+#: app/core/gimpchannel.c:322
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Арнаны өсіру"
 
-#: app/core/gimpchannel.c:307
+#: app/core/gimpchannel.c:323
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Арнаны кішірейту"
 
-#: app/core/gimpchannel.c:308
+#: app/core/gimpchannel.c:324
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Арнаны құю"
 
-#: app/core/gimpchannel.c:803
+#: app/core/gimpchannel.c:823
 msgid "Cannot fill empty channel."
 msgstr "Бос арнаны бояу мүмкін емес."
 
-#: app/core/gimpchannel.c:839
+#: app/core/gimpchannel.c:859
 msgid "Cannot stroke empty channel."
 msgstr "Бос арнаны сызу мүмкін емес."
 
-#: app/core/gimpchannel.c:1701
+#: app/core/gimpchannel.c:1876
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Арна түсін орнату"
 
-#: app/core/gimpchannel.c:1755
+#: app/core/gimpchannel.c:1930
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Арна мөлдірсіздігін орнату"
 
-#: app/core/gimpchannel.c:1840 app/core/gimpselection.c:162
+#: app/core/gimpchannel.c:2015 app/core/gimpselection.c:162
 msgid "Selection Mask"
 msgstr "Таңдау маскасы"
 
@@ -12982,7 +12987,7 @@ msgstr "Таңдау маскасы"
 msgid "Foreground"
 msgstr "Алдыңғы көрініс"
 
-#: app/core/gimpcontext.c:669 app/core/gimpgrid.c:137
+#: app/core/gimpcontext.c:669 app/core/gimpgrid.c:135
 msgid "Foreground color"
 msgstr "Алдыңғы көрініс түсі"
 
@@ -12990,7 +12995,7 @@ msgstr "Алдыңғы көрініс түсі"
 msgid "Background"
 msgstr "Фон"
 
-#: app/core/gimpcontext.c:676 app/core/gimpgrid.c:144
+#: app/core/gimpcontext.c:676 app/core/gimpgrid.c:142
 msgid "Background color"
 msgstr "Фон түсі"
 
@@ -13010,7 +13015,7 @@ msgstr "Бояу динамикасы"
 msgid "MyPaint Brush"
 msgstr "MyPaint қылқаламы"
 
-#: app/core/gimpcontext.c:720 app/core/gimpcontext.c:721 app/core/gimppattern.c:85
+#: app/core/gimpcontext.c:720 app/core/gimpcontext.c:721 app/core/gimppattern.c:89
 msgid "Pattern"
 msgstr "Өрнек"
 
@@ -13023,7 +13028,7 @@ msgstr "Градиент"
 msgid "Palette"
 msgstr "Палитра"
 
-#: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742 app/text/gimpfont.c:646 app/tools/gimptextoptions.c:812
+#: app/core/gimpcontext.c:741 app/core/gimpcontext.c:742 app/text/gimpfont.c:698 app/tools/gimptextoptions.c:812
 msgid "Font"
 msgstr "Қаріп"
 
@@ -13042,11 +13047,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdatafactory.c:479 app/core/gimpdatafactory.c:482 app/core/gimpitem.c:628 app/core/gimpitem.c:631
+#: app/core/gimpdatafactory.c:479 app/core/gimpdatafactory.c:482 app/core/gimpitem.c:730 app/core/gimpitem.c:733
 msgid "copy"
 msgstr "көшірмесі"
 
-#: app/core/gimpdatafactory.c:491 app/core/gimpitem.c:639
+#: app/core/gimpdatafactory.c:491 app/core/gimpitem.c:741
 #, c-format
 msgid "%s copy"
 msgstr "%s көшірмесі"
@@ -13112,7 +13117,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/core/gimpdrawable.c:694 app/tools/gimpscaletool.c:121
+#: app/core/gimpdrawable.c:703 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Масштабтау"
@@ -13132,7 +13137,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Теңестіру"
 
-#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:794
+#: app/core/gimpdrawable-floating-selection.c:207 app/core/gimplayer.c:821
 msgid "Floating Selection"
 msgstr "Жылжымалы таңдау"
 
@@ -13140,7 +13145,7 @@ msgstr "Жылжымалы таңдау"
 msgid "Computing alpha of unknown pixels"
 msgstr "Белгісіз пиксельдердің альфасын есептеу"
 
-#: app/core/gimpdrawable-fill.c:214 app/path/gimppath.c:727
+#: app/core/gimpdrawable-fill.c:214 app/path/gimppath.c:811
 msgid "Not enough points to fill"
 msgstr "Бояу үшін нүктелер жеткіліксіз"
 
@@ -13175,40 +13180,40 @@ msgctxt "undo-type"
 msgid "Offset Drawable"
 msgstr "Сызылатын нысанның ығысуы"
 
-#: app/core/gimpdrawable-stroke.c:111 app/paint/gimppaintcore-stroke.c:335 app/path/gimppath.c:749
+#: app/core/gimpdrawable-stroke.c:111 app/paint/gimppaintcore-stroke.c:335 app/path/gimppath.c:833
 msgid "Not enough points to stroke"
 msgstr "Сызу үшін нүктелер жеткіліксіз"
 
-#: app/core/gimpdrawable-transform.c:804 app/tools/gimpfliptool.c:139
+#: app/core/gimpdrawable-transform.c:805 app/tools/gimpfliptool.c:139
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Аудару"
 
-#: app/core/gimpdrawable-transform.c:887 app/tools/gimprotatetool.c:131
+#: app/core/gimpdrawable-transform.c:888 app/tools/gimprotatetool.c:131
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Бұру"
 
-#: app/core/gimpdrawable-transform.c:1047 app/core/gimplayer.c:448
+#: app/core/gimpdrawable-transform.c:1048 app/core/gimplayer.c:472
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Қабатты түрлендіру"
 
-#: app/core/gimpdrawable-transform.c:1061
+#: app/core/gimpdrawable-transform.c:1062
 msgid "Transformation"
 msgstr "Түрлендіру"
 
-#: app/core/gimpdrawablefilter.c:1167
+#: app/core/gimpdrawablefilter.c:1278
 #, c-format
 msgid "GEGL operation '%s' has been called with a non-existent argument name '%s' (#%d)."
 msgstr "GEGL «%s» операциясы жоқ «%s» (#%d) аргумент атымен шақырылды."
 
-#: app/core/gimpdrawablefilter.c:1231
+#: app/core/gimpdrawablefilter.c:1342
 #, c-format
 msgid "GEGL operation '%s' has been called with a wrong value type for argument '%s' (#%d). Expected %s, got %s."
 msgstr "GEGL «%s» операциясы «%s» (#%d) аргументі үшін қате мән түрімен шақырылды. Күтілгені %s, алынғаны %s."
 
-#: app/core/gimpdrawablefilter.c:1306
+#: app/core/gimpdrawablefilter.c:1417
 #, c-format
 msgid "GEGL operation '%s' has been called with an invalid aux input name '%s'."
 msgstr "GEGL «%s» операциясы жарамсыз «%s» қосымша кіріс атымен шақырылды."
@@ -13218,7 +13223,7 @@ msgstr "GEGL «%s» операциясы жарамсыз «%s» қосымша 
 msgid "Cannot rename effect masks."
 msgstr "Эффект маскаларының атын өзгерту мүмкін емес."
 
-#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:754 app/core/gimplayer.c:2153 app/core/gimplayermask.c:304
+#: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:781 app/core/gimplayer.c:2393 app/core/gimplayermask.c:304
 #, c-format
 msgid "%s mask"
 msgstr "%s маскасы"
@@ -13227,61 +13232,61 @@ msgstr "%s маскасы"
 msgid "Output type"
 msgstr "Шығыс түрі"
 
-#: app/core/gimpfilloptions.c:122
+#: app/core/gimpfilloptions.c:138
 msgid "Style"
 msgstr "Стиль"
 
-#: app/core/gimpfilloptions.c:130
+#: app/core/gimpfilloptions.c:146
 msgid "Custom style"
 msgstr "Таңдауыңызша стиль"
 
-#: app/core/gimpfilloptions.c:138 app/pdb/gimppdbcontext.c:101 app/tools/gimpbucketfilloptions.c:183 app/tools/gimpselectionoptions.c:91 app/tools/gimptextoptions.c:178
+#: app/core/gimpfilloptions.c:154 app/pdb/gimppdbcontext.c:101 app/tools/gimpbucketfilloptions.c:183 app/tools/gimpselectionoptions.c:91 app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
 msgstr "Тегістеу"
 
-#: app/core/gimpfilloptions.c:145 app/tools/gimpbucketfilloptions.c:193 app/tools/gimpselectionoptions.c:98
+#: app/core/gimpfilloptions.c:161 app/tools/gimpbucketfilloptions.c:193 app/tools/gimpselectionoptions.c:98
 msgid "Feather edges"
 msgstr "Жиектерді жұмсарту"
 
-#: app/core/gimpfilloptions.c:146 app/tools/gimpbucketfilloptions.c:194
+#: app/core/gimpfilloptions.c:162 app/tools/gimpbucketfilloptions.c:194
 msgid "Enable feathering of fill edges"
 msgstr "Бояу жиектерін жұмсартуды іске қосу"
 
-#: app/core/gimpfilloptions.c:152 app/paint/gimpmybrushoptions.c:108 app/tools/gimpbucketfilloptions.c:200 app/tools/gimpcoloroptions.c:86 app/tools/gimprectangleselectoptions.c:101
+#: app/core/gimpfilloptions.c:168 app/paint/gimpmybrushoptions.c:108 app/tools/gimpbucketfilloptions.c:200 app/tools/gimpcoloroptions.c:86 app/tools/gimprectangleselectoptions.c:101
 #: app/tools/gimpselectionoptions.c:105 app/widgets/gimpbrusheditor.c:160
 msgid "Radius"
 msgstr "Радиус"
 
-#: app/core/gimpfilloptions.c:153 app/tools/gimpbucketfilloptions.c:201 app/tools/gimpselectionoptions.c:106
+#: app/core/gimpfilloptions.c:169 app/tools/gimpbucketfilloptions.c:201 app/tools/gimpselectionoptions.c:106
 msgid "Radius of feathering"
 msgstr "Жұмсарту радиусы"
 
-#: app/core/gimpfilloptions.c:457 app/core/gimpfilloptions.c:570
+#: app/core/gimpfilloptions.c:547 app/core/gimpfilloptions.c:660
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Алдыңғы көрініс түсімен бояу"
 
-#: app/core/gimpfilloptions.c:462 app/core/gimpfilloptions.c:573
+#: app/core/gimpfilloptions.c:552 app/core/gimpfilloptions.c:663
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Фон түсімен бояу"
 
-#: app/core/gimpfilloptions.c:472
+#: app/core/gimpfilloptions.c:562
 msgctxt "undo-type"
 msgid "Fill with Middle Gray (CIELAB) Color"
 msgstr "Орташа сұр (CIELAB) түспен бояу"
 
-#: app/core/gimpfilloptions.c:478
+#: app/core/gimpfilloptions.c:568
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Ақ түспен бояу"
 
-#: app/core/gimpfilloptions.c:485
+#: app/core/gimpfilloptions.c:575
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Мөлдірлікпен бояу"
 
-#: app/core/gimpfilloptions.c:501 app/core/gimpfilloptions.c:576
+#: app/core/gimpfilloptions.c:591 app/core/gimpfilloptions.c:666
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Өрнекпен бояу"
@@ -13327,292 +13332,292 @@ msgstr "Сызықтық градиенттер табылмады."
 msgid "Writing POV file '%s' failed: %s"
 msgstr "POV файлына '%s' жазу сәтсіз аяқталды: %s"
 
-#: app/core/gimpgrid.c:129
+#: app/core/gimpgrid.c:127
 msgid "Line style"
 msgstr "Сызық стилі"
 
-#: app/core/gimpgrid.c:130
+#: app/core/gimpgrid.c:128
 msgid "Line style used for the grid."
 msgstr "Тор үшін қолданылатын сызық стилі."
 
-#: app/core/gimpgrid.c:138
+#: app/core/gimpgrid.c:136
 msgid "The foreground color of the grid."
 msgstr "Тордың алдыңғы көрініс түсі."
 
-#: app/core/gimpgrid.c:145
+#: app/core/gimpgrid.c:143
 msgid "The background color of the grid; only used in double dashed line style."
 msgstr "Тордың фон түсі; тек қос штрихты сызық стилінде қолданылады."
 
-#: app/core/gimpgrid.c:152
+#: app/core/gimpgrid.c:150
 msgid "Spacing X"
 msgstr "X аралығы"
 
-#: app/core/gimpgrid.c:153
+#: app/core/gimpgrid.c:151
 msgid "Horizontal spacing of grid lines."
 msgstr "Тор сызықтарының горизонталды аралығы."
 
-#: app/core/gimpgrid.c:159
+#: app/core/gimpgrid.c:157
 msgid "Spacing Y"
 msgstr "Y аралығы"
 
-#: app/core/gimpgrid.c:160
+#: app/core/gimpgrid.c:158
 msgid "Vertical spacing of grid lines."
 msgstr "Тор сызықтарының вертикалды аралығы."
 
-#: app/core/gimpgrid.c:166
+#: app/core/gimpgrid.c:164
 msgid "Spacing unit"
 msgstr "Аралық юниті"
 
-#: app/core/gimpgrid.c:173
+#: app/core/gimpgrid.c:171
 msgid "Offset X"
 msgstr "X ығысуы"
 
-#: app/core/gimpgrid.c:174
+#: app/core/gimpgrid.c:172
 msgid "Horizontal offset of the first grid line; this may be a negative number."
 msgstr "Бірінші тор сызығының горизонталды ығысуы; бұл теріс сан болуы мүмкін."
 
-#: app/core/gimpgrid.c:182
+#: app/core/gimpgrid.c:180
 msgid "Offset Y"
 msgstr "Y ығысуы"
 
-#: app/core/gimpgrid.c:183
+#: app/core/gimpgrid.c:181
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "Бірінші тор сызығының вертикалды ығысуы; бұл теріс сан болуы мүмкін."
 
-#: app/core/gimpgrid.c:191
+#: app/core/gimpgrid.c:189
 msgid "Offset unit"
 msgstr "Ығысу юниті"
 
-#: app/core/gimpgrouplayer.c:282
+#: app/core/gimpgrouplayer.c:309
 msgid "Layer Group"
 msgstr "Қабаттар тобы"
 
-#: app/core/gimpgrouplayer.c:297
+#: app/core/gimpgrouplayer.c:324
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Қабаттар тобының атын өзгерту"
 
-#: app/core/gimpgrouplayer.c:298
+#: app/core/gimpgrouplayer.c:325
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Қабаттар тобын жылжыту"
 
-#: app/core/gimpgrouplayer.c:299
+#: app/core/gimpgrouplayer.c:326
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Қабаттар тобын масштабтау"
 
-#: app/core/gimpgrouplayer.c:300
+#: app/core/gimpgrouplayer.c:327
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Қабаттар тобының өлшемін өзгерту"
 
-#: app/core/gimpgrouplayer.c:301
+#: app/core/gimpgrouplayer.c:328
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Қабаттар тобын аудару"
 
-#: app/core/gimpgrouplayer.c:302
+#: app/core/gimpgrouplayer.c:329
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Қабаттар тобын бұру"
 
-#: app/core/gimpgrouplayer.c:303
+#: app/core/gimpgrouplayer.c:330
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Қабаттар тобын түрлендіру"
 
-#: app/core/gimpimage.c:713 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:714 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "Симметрия"
 
-#: app/core/gimpimage.c:2169 app/pdb/drawable-filter-cmds.c:661 app/widgets/gimpdrawabletreeview-filters.c:976
+#: app/core/gimpimage.c:2182 app/pdb/drawable-filter-cmds.c:661 app/widgets/gimpdrawabletreeview-filters.c:976
 msgid "Remove filter"
 msgstr "Сүзгіні өшіру"
 
-#: app/core/gimpimage.c:2778
+#: app/core/gimpimage.c:2791
 msgid " (exported)"
 msgstr " (экспортталған)"
 
-#: app/core/gimpimage.c:2782
+#: app/core/gimpimage.c:2795
 msgid " (overwritten)"
 msgstr " (үстінен жазылған)"
 
-#: app/core/gimpimage.c:2791
+#: app/core/gimpimage.c:2804
 msgid " (imported)"
 msgstr " (импортталған)"
 
-#: app/core/gimpimage.c:3039 app/core/gimpimage.c:3053 app/core/gimpimage.c:3096
+#: app/core/gimpimage.c:3052 app/core/gimpimage.c:3066 app/core/gimpimage.c:3109
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Қабаттың '%s' режимі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3121 app/core/gimpimage.c:3235
+#: app/core/gimpimage.c:3134 app/core/gimpimage.c:3248
 #, c-format
 msgid "Channel effects were saved in %s"
 msgstr "Арна эффектілері %s ішіне сақталды"
 
-#: app/core/gimpimage.c:3130
+#: app/core/gimpimage.c:3143
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Қабаттар тобы %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3137
+#: app/core/gimpimage.c:3150
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Қабаттар тобындағы маскалар %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3144
+#: app/core/gimpimage.c:3157
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Қабаттар тобындағы позиция құлыптары %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3151
+#: app/core/gimpimage.c:3164
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Қабаттар тобындағы альфа-арна құлыптары %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3159 app/core/gimpimage.c:3227
+#: app/core/gimpimage.c:3172 app/core/gimpimage.c:3240
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Көріну құлыптары %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3170
+#: app/core/gimpimage.c:3183
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Мәтіндік қабаттағы қаріп ақпаратының пішімі %s ішінде өзгертілді"
 
-#: app/core/gimpimage.c:3178
+#: app/core/gimpimage.c:3191
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Қабат эффектілері %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3190
+#: app/core/gimpimage.c:3203
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Жаңа перцептивті араластыру кеңістігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3204
+#: app/core/gimpimage.c:3217
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "Векторлық қабаттар %s нұсқасында қосылды"
 
-#: app/core/gimpimage.c:3212
+#: app/core/gimpimage.c:3225
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "Сілтеме қабаттары %s нұсқасында қосылды"
 
-#: app/core/gimpimage.c:3244
+#: app/core/gimpimage.c:3257
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Бірнеше жолды таңдау мүмкіндігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3256
+#: app/core/gimpimage.c:3269
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Жолда түс тегтерін сақтау мүмкіндігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3263
+#: app/core/gimpimage.c:3276
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Жолда құлыптарды сақтау мүмкіндігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3277
+#: app/core/gimpimage.c:3290
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Биттік тереңдігі жоғары суреттер %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3285
+#: app/core/gimpimage.c:3298
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Биттік тереңдігі жоғары суреттерді кодтау %s ішінде түзетілді"
 
-#: app/core/gimpimage.c:3293
+#: app/core/gimpimage.c:3306
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Ішкі zlib сығуы %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3310
+#: app/core/gimpimage.c:3323
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "4 ГБ-тан үлкен сурет файлдарына қолдау көрсету %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3317
+#: app/core/gimpimage.c:3330
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Бірнеше қабатты таңдау мүмкіндігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3334
+#: app/core/gimpimage.c:3347
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Кенептен тыс бағыттауыштар %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3345
+#: app/core/gimpimage.c:3358
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Элементтер жиынтығы және элемент атынан өрнек бойынша іздеу %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3351
+#: app/core/gimpimage.c:3364
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Бірнеше арнаны таңдау мүмкіндігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3471
+#: app/core/gimpimage.c:3495
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Сурет ажыратымдылығын өзгерту"
 
-#: app/core/gimpimage.c:3523
+#: app/core/gimpimage.c:3547
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Сурет юнитін өзгерту"
 
-#: app/core/gimpimage.c:4562
+#: app/core/gimpimage.c:4586
 #, c-format
 msgid "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "'gimp-comment' паразитін валидациялау сәтсіз аяқталды: пікірде жарамсыз UTF-8 бар"
 
-#: app/core/gimpimage.c:4624
+#: app/core/gimpimage.c:4648
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Суретке паразит тіркеу"
 
-#: app/core/gimpimage.c:4669
+#: app/core/gimpimage.c:4693
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Суреттен паразитті өшіру"
 
-#: app/core/gimpimage.c:5642
+#: app/core/gimpimage.c:5666
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Қабатты қосу"
 
-#: app/core/gimpimage.c:5702 app/core/gimpimage.c:5733
+#: app/core/gimpimage.c:5726 app/core/gimpimage.c:5757
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Қабатты өшіру"
 
-#: app/core/gimpimage.c:5727
+#: app/core/gimpimage.c:5751
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Жылжымалы таңдауды өшіру"
 
-#: app/core/gimpimage.c:5890
+#: app/core/gimpimage.c:5914
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Арнаны қосу"
 
-#: app/core/gimpimage.c:5920 app/core/gimpimage.c:5948
+#: app/core/gimpimage.c:5944 app/core/gimpimage.c:5972
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Арнаны өшіру"
 
-#: app/core/gimpimage.c:6010
+#: app/core/gimpimage.c:6034
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Жолды қосу"
 
-#: app/core/gimpimage.c:6045 app/core/gimpimage.c:6053
+#: app/core/gimpimage.c:6069 app/core/gimpimage.c:6077
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Жолды өшіру"
@@ -13622,61 +13627,61 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Объектілерді реттеу"
 
-#: app/core/gimpimage-color-profile.c:121
+#: app/core/gimpimage-color-profile.c:122
 msgid "Enable 'Use sRGB Profile'"
 msgstr "'sRGB профилін пайдалану' опциясын іске қосу"
 
-#: app/core/gimpimage-color-profile.c:138
+#: app/core/gimpimage-color-profile.c:139
 msgid "Disable 'Use sRGB Profile'"
 msgstr "'sRGB профилін пайдалану' опциясын сөндіру"
 
-#: app/core/gimpimage-color-profile.c:202
+#: app/core/gimpimage-color-profile.c:203
 #, c-format
 msgid "ICC profile validation failed: Parasite's name is not '%s'"
 msgstr "ICC профилін валидациялау сәтсіз аяқталды: Паразит аты '%s' емес."
 
-#: app/core/gimpimage-color-profile.c:217
+#: app/core/gimpimage-color-profile.c:218
 msgid "ICC profile validation failed: Parasite's flags are not (PERSISTENT | UNDOABLE)"
 msgstr "ICC профилін валидациялау сәтсіз аяқталды: Паразит жалаушалары (PERSISTENT | UNDOABLE) емес."
 
-#: app/core/gimpimage-color-profile.c:276
+#: app/core/gimpimage-color-profile.c:277
 msgid "ICC profile validation failed: "
 msgstr "ICC профилін валидациялау сәтсіз аяқталды: "
 
-#: app/core/gimpimage-color-profile.c:278
+#: app/core/gimpimage-color-profile.c:279
 msgid "Simulation ICC profile validation failed: "
 msgstr "Модельдеуші ICC профилін валидациялау сәтсіз аяқталды: "
 
-#: app/core/gimpimage-color-profile.c:548
+#: app/core/gimpimage-color-profile.c:549
 msgid "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr "ICC профилін валидациялау сәтсіз аяқталды: Түс профилі сұр реңкті түстер кеңістігі үшін емес"
 
-#: app/core/gimpimage-color-profile.c:558
+#: app/core/gimpimage-color-profile.c:559
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr "ICC профилін валидациялау сәтсіз аяқталды: Түс профилі RGB түстер кеңістігі үшін емес"
 
-#: app/core/gimpimage-color-profile.c:617
+#: app/core/gimpimage-color-profile.c:618
 msgid "Assigning color profile"
 msgstr "Түс профилін тағайындау"
 
-#: app/core/gimpimage-color-profile.c:618
+#: app/core/gimpimage-color-profile.c:619
 msgid "Discarding color profile"
 msgstr "Түс профилін елемеу"
 
-#: app/core/gimpimage-color-profile.c:622
+#: app/core/gimpimage-color-profile.c:623
 msgid "Assign color profile"
 msgstr "Түс профилін тағайындау"
 
-#: app/core/gimpimage-color-profile.c:623
+#: app/core/gimpimage-color-profile.c:624
 msgid "Discard color profile"
 msgstr "Түс профилін елемеу"
 
-#: app/core/gimpimage-color-profile.c:666
+#: app/core/gimpimage-color-profile.c:667
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "«%s» күйінен «%s» күйіне түрлендіру"
 
-#: app/core/gimpimage-color-profile.c:671
+#: app/core/gimpimage-color-profile.c:672
 msgid "Color profile conversion"
 msgstr "Түс профилін түрлендіру"
 
@@ -13685,7 +13690,7 @@ msgstr "Түс профилін түрлендіру"
 msgid "Colormap of Image #%d (%s)"
 msgstr "#%d (%s) суретінің түстер картасы"
 
-#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:950
+#: app/core/gimpimage-colormap.c:227 app/core/gimppalette.c:968
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Түстер картасын орнату"
@@ -13695,7 +13700,7 @@ msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Түстер картасын алып тастау"
 
-#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:741
+#: app/core/gimpimage-colormap.c:397 app/core/gimppalette.c:759
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Түстер картасының жазбасын өзгерту"
@@ -13727,14 +13732,14 @@ msgstr "Индекстелген түстерге түрлендіру (2-кез
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Индекстелген түстерге түрлендіру (3-кезең)"
 
-#: app/core/gimpimage-convert-precision.c:76
+#: app/core/gimpimage-convert-precision.c:77
 #, c-format
 msgctxt "undo-type"
 msgid "Convert Image to %s"
 msgstr "Суретті %s форматына түрлендіру"
 
 #. dithering
-#: app/core/gimpimage-convert-precision.c:198 app/core/gimpimage-convert-precision.c:219 app/dialogs/convert-indexed-dialog.c:240 app/dialogs/convert-precision-dialog.c:212
+#: app/core/gimpimage-convert-precision.c:200 app/core/gimpimage-convert-precision.c:221 app/dialogs/convert-indexed-dialog.c:240 app/dialogs/convert-precision-dialog.c:212
 #: app/tools/gimpgradientoptions.c:130
 msgid "Dithering"
 msgstr "Дизеринг"
@@ -13847,12 +13852,12 @@ msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Қабаттар тобын біріктіру"
 
-#: app/core/gimpimage-merge.c:586
+#: app/core/gimpimage-merge.c:587
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Көрінетін жолдарды біріктіру"
 
-#: app/core/gimpimage-merge.c:622
+#: app/core/gimpimage-merge.c:623
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "Біріктіру үшін көрінетін жолдар жеткіліксіз. Кемінде екеуі болуы керек."
 
@@ -13886,7 +13891,7 @@ msgctxt "undo-type"
 msgid "Set Sample Point Pick Mode"
 msgstr "Үлгі нүктесін таңдау режимін орнату"
 
-#: app/core/gimpimage-savable.c:127
+#: app/core/gimpimage-savable.c:164
 #, c-format
 msgid "Error creating '%s': %s"
 msgstr "'%s' жасау қатесі: %s"
@@ -13951,21 +13956,21 @@ msgstr[0] "%d қабат"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "«%s» нобайын ашу мүмкін болмады: %s"
 
-#: app/core/gimpitem.c:1910 app/core/gimpitem.c:1977 app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730 app/widgets/gimpdrawabletreeview-filters.c:774
+#: app/core/gimpitem.c:2012 app/core/gimpitem.c:2079 app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730 app/widgets/gimpdrawabletreeview-filters.c:774
 msgid "A selected layer's pixels are locked."
 msgstr "Таңдалған қабаттың пиксельдері құлыпталған."
 
-#: app/core/gimpitem.c:2286
+#: app/core/gimpitem.c:2418
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Паразитті тіркеу"
 
-#: app/core/gimpitem.c:2296
+#: app/core/gimpitem.c:2428
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Паразитті элементке тіркеу"
 
-#: app/core/gimpitem.c:2347 app/core/gimpitem.c:2354
+#: app/core/gimpitem.c:2479 app/core/gimpitem.c:2486
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Паразитті элементтен алып тастау"
@@ -13979,7 +13984,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Жылжымалы таңдауды зәкірлеу"
 
-#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1100
+#: app/core/gimplayer-floating-selection.c:183 app/core/gimplayer.c:1127
 msgid "Cannot create a new layer from the floating selection because it belongs to a layer mask or channel."
 msgstr "Жылжымалы таңдаудан жаңа қабат жасау мүмкін емес, себебі ол қабат маскасына немесе арнасына тиесілі."
 
@@ -13988,85 +13993,85 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Жылжымалы таңдауды қабатқа айналдыру"
 
-#: app/core/gimplayer.c:442
+#: app/core/gimplayer.c:466
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Қабат атын өзгерту"
 
-#: app/core/gimplayer.c:443
+#: app/core/gimplayer.c:467
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Қабатты жылжыту"
 
-#: app/core/gimplayer.c:444
+#: app/core/gimplayer.c:468
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Қабатты масштабтау"
 
-#: app/core/gimplayer.c:445
+#: app/core/gimplayer.c:469
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Қабат өлшемін өзгерту"
 
-#: app/core/gimplayer.c:446
+#: app/core/gimplayer.c:470
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Қабатты аудару"
 
-#: app/core/gimplayer.c:447
+#: app/core/gimplayer.c:471
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Қабатты бұру"
 
-#: app/core/gimplayer.c:450
+#: app/core/gimplayer.c:474
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Қабатты қайта реттеу"
 
-#: app/core/gimplayer.c:451
+#: app/core/gimplayer.c:475
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Қабатты көтеру"
 
-#: app/core/gimplayer.c:452
+#: app/core/gimplayer.c:476
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Қабатты жоғарыға көтеру"
 
-#: app/core/gimplayer.c:453
+#: app/core/gimplayer.c:477
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Қабатты төмендету"
 
-#: app/core/gimplayer.c:454
+#: app/core/gimplayer.c:478
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Қабатты төменге түсіру"
 
-#: app/core/gimplayer.c:455
+#: app/core/gimplayer.c:479
 msgid "Layer cannot be raised higher."
 msgstr "Қабатты бұдан жоғары көтеру мүмкін емес."
 
-#: app/core/gimplayer.c:456
+#: app/core/gimplayer.c:480
 msgid "Layer cannot be lowered more."
 msgstr "Қабатты бұдан төмен түсіру мүмкін емес."
 
-#: app/core/gimplayer.c:798
+#: app/core/gimplayer.c:825
 msgid "Floating Mask"
 msgstr "Жылжымалы маска"
 
-#: app/core/gimplayer.c:800
+#: app/core/gimplayer.c:827
 msgid "Floating Channel"
 msgstr "Жылжымалы арна"
 
-#: app/core/gimplayer.c:802
+#: app/core/gimplayer.c:829
 msgid "Floating Layer"
 msgstr "Жылжымалы қабат"
 
 #. TRANSLATORS: the first %s will be the type of floating item, i.e.
 #. * either a "Floating Layer" or "Floating Mask" usually. The second will
 #. * be a layer name.
-#: app/core/gimplayer.c:807
+#: app/core/gimplayer.c:834
 #, c-format
 msgid ""
 "%s\n"
@@ -14075,73 +14080,73 @@ msgstr ""
 "%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:2036
+#: app/core/gimplayer.c:2276
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Қабат маскасын қосу мүмкін емес, себебі қабатта ол қазірдің өзінде бар."
 
-#: app/core/gimplayer.c:2048
+#: app/core/gimplayer.c:2288
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Көрсетілген қабаттың өлшемдерінен басқаша қабат маскасын қосу мүмкін емес."
 
-#: app/core/gimplayer.c:2054
+#: app/core/gimplayer.c:2294
 msgctxt "undo-type"
 msgid "Add Layer Masks"
 msgstr "Қабат маскаларын қосу"
 
-#: app/core/gimplayer.c:2192
+#: app/core/gimplayer.c:2432
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Альфа-арнаны маскаға тасымалдау"
 
-#: app/core/gimplayer.c:2356
+#: app/core/gimplayer.c:2596
 msgctxt "undo-type"
 msgid "Apply Layer Masks"
 msgstr "Қабат маскаларын іске асыру"
 
-#: app/core/gimplayer.c:2357
+#: app/core/gimplayer.c:2597
 msgctxt "undo-type"
 msgid "Delete Layer Masks"
 msgstr "Қабат маскаларын өшіру"
 
-#: app/core/gimplayer.c:2467
+#: app/core/gimplayer.c:2707
 msgctxt "undo-type"
 msgid "Enable Layer Masks"
 msgstr "Қабат маскаларын іске қосу"
 
-#: app/core/gimplayer.c:2468
+#: app/core/gimplayer.c:2708
 msgctxt "undo-type"
 msgid "Disable Layer Masks"
 msgstr "Қабат маскаларын сөндіру"
 
-#: app/core/gimplayer.c:2549
+#: app/core/gimplayer.c:2789
 msgctxt "undo-type"
 msgid "Show Layer Masks"
 msgstr "Қабат маскаларын көрсету"
 
-#: app/core/gimplayer.c:2628
+#: app/core/gimplayer.c:2869
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Альфа-арнаны қосу"
 
-#: app/core/gimplayer.c:2658
+#: app/core/gimplayer.c:2900
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Альфа-арнаны өшіру"
 
-#: app/core/gimplayer.c:2679
+#: app/core/gimplayer.c:2921
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Қабатты сурет өлшеміне келтіру"
 
-#: app/core/gimplayer.c:2862
+#: app/core/gimplayer.c:3104
 msgid "Set layer's blend space"
 msgstr "Қабаттың араластыру кеңістігін орнату"
 
-#: app/core/gimplayer.c:2909
+#: app/core/gimplayer.c:3151
 msgid "Set layer's composite space"
 msgstr "Қабаттың композиттік кеңістігін орнату"
 
-#: app/core/gimplayer.c:2956
+#: app/core/gimplayer.c:3198
 msgid "Set layer's composite mode"
 msgstr "Қабаттың композит режимін орнату"
 
@@ -14200,47 +14205,47 @@ msgstr "Максималды түзу тұйықтау ұзындығы"
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Сызықтық өнерді тұйықтауға арналған максималды түзу ұзындығы (пиксельмен)"
 
-#: app/core/gimplink.c:295
+#: app/core/gimplink.c:411
 msgid "The file got deleted"
 msgstr "Файл өшірілді"
 
-#: app/core/gimplink.c:390
+#: app/core/gimplink.c:506
 msgid "No file was set"
 msgstr "Ешқандай файл орнатылмады"
 
-#: app/core/gimplinklayer.c:208
+#: app/core/gimplinklayer.c:219
 msgid "Link Layer"
 msgstr "Сілтеме қабаты"
 
-#: app/core/gimplinklayer.c:217
+#: app/core/gimplinklayer.c:228
 msgid "Rename Link Layer"
 msgstr "Сілтеме қабатының атын өзгерту"
 
-#: app/core/gimplinklayer.c:218
+#: app/core/gimplinklayer.c:229
 msgid "Move Link Layer"
 msgstr "Сілтеме қабатын жылжыту"
 
-#: app/core/gimplinklayer.c:219
+#: app/core/gimplinklayer.c:230
 msgid "Scale Link Layer"
 msgstr "Сілтеме қабатын масштабтау"
 
-#: app/core/gimplinklayer.c:220
+#: app/core/gimplinklayer.c:231
 msgid "Resize Link Layer"
 msgstr "Сілтеме қабатының өлшемін өзгерту"
 
-#: app/core/gimplinklayer.c:221
+#: app/core/gimplinklayer.c:232
 msgid "Flip Link Layer"
 msgstr "Сілтеме қабатын аудару"
 
-#: app/core/gimplinklayer.c:222
+#: app/core/gimplinklayer.c:233
 msgid "Rotate Link Layer"
 msgstr "Сілтеме қабатын бұру"
 
-#: app/core/gimplinklayer.c:223 app/core/gimplinklayer.c:584
+#: app/core/gimplinklayer.c:234 app/core/gimplinklayer.c:598
 msgid "Transform Link Layer"
 msgstr "Сілтеме қабатын түрлендіру"
 
-#: app/core/gimplinklayer.c:853
+#: app/core/gimplinklayer.c:997
 msgid "Set layer link"
 msgstr "Қабат сілтемесін орнату"
 
@@ -14254,7 +14259,7 @@ msgstr "MyPaint қылқалам файлының өлшемі тым үлкен
 msgid "Failed to deserialize MyPaint brush."
 msgstr "MyPaint қылқаламын десериализациялау сәтсіз аяқталды."
 
-#: app/core/gimppalette.c:546
+#: app/core/gimppalette.c:564
 msgctxt "undo-type"
 msgid "Change Colormap format restriction"
 msgstr "Түстер картасы пішімінің шектеуін өзгерту"
@@ -14624,39 +14629,39 @@ msgstr "Алдын ала баптау"
 msgid "Last used: %s"
 msgstr "Соңғы пайдаланылған: %s"
 
-#: app/core/gimpstrokeoptions.c:161
+#: app/core/gimpstrokeoptions.c:186
 msgid "Method"
 msgstr "Әдіс"
 
-#: app/core/gimpstrokeoptions.c:169
+#: app/core/gimpstrokeoptions.c:194
 msgid "Line width"
 msgstr "Сызық ені"
 
-#: app/core/gimpstrokeoptions.c:176 app/core/gimptemplate.c:158 app/tools/gimptextoptions.c:165 app/tools/gimptextoptions.c:308
+#: app/core/gimpstrokeoptions.c:201 app/core/gimptemplate.c:158 app/tools/gimptextoptions.c:165 app/tools/gimptextoptions.c:308
 msgid "Unit"
 msgstr "Юнит"
 
-#: app/core/gimpstrokeoptions.c:183
+#: app/core/gimpstrokeoptions.c:208
 msgid "Cap style"
 msgstr "Ұш стилі"
 
-#: app/core/gimpstrokeoptions.c:190
+#: app/core/gimpstrokeoptions.c:215
 msgid "Join style"
 msgstr "Қосылу стилі"
 
-#: app/core/gimpstrokeoptions.c:197
+#: app/core/gimpstrokeoptions.c:222
 msgid "Miter limit"
 msgstr "Қиылысу шегі"
 
-#: app/core/gimpstrokeoptions.c:198 app/tools/gimptextoptions.c:330
+#: app/core/gimpstrokeoptions.c:223 app/tools/gimptextoptions.c:330
 msgid "Convert a mitered join to a bevelled join if the miter would extend to a distance of more than miter-limit * line-width from the actual join point."
 msgstr "Егер қиылыс нақты қосылу нүктесінен (қиылысу шегі * сызық ені) мәнінен артық қашықтыққа созылса, бұрыштық қосылуды қиғаш қосылуға түрлендіру."
 
-#: app/core/gimpstrokeoptions.c:207
+#: app/core/gimpstrokeoptions.c:232
 msgid "Dash offset"
 msgstr "Штрих ығысуы"
 
-#: app/core/gimpstrokeoptions.c:229
+#: app/core/gimpstrokeoptions.c:254
 msgid "Emulate brush dynamics"
 msgstr "Қылқалам динамикасын эмуляциялау"
 
@@ -14918,59 +14923,59 @@ msgstr "Сайманның алдын ала баптау файлы зақым�
 #. Translators: the %s is GIMP version, the %d is the
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
-#: app/dialogs/about-dialog.c:244
+#: app/dialogs/about-dialog.c:256
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (ревизия %d)"
 
-#: app/dialogs/about-dialog.c:252
+#: app/dialogs/about-dialog.c:269
 msgid "About GIMP"
 msgstr "GIMP туралы"
 
-#: app/dialogs/about-dialog.c:261
+#: app/dialogs/about-dialog.c:278
 msgid "Visit the GIMP website"
 msgstr "GIMP веб-сайтына өту"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:267
+#: app/dialogs/about-dialog.c:284
 msgid "translator-credits"
 msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
 
-#: app/dialogs/about-dialog.c:321 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:339 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "_Көмек"
 
-#: app/dialogs/about-dialog.c:498
+#: app/dialogs/about-dialog.c:541
 msgid "Update available!"
 msgstr "Жаңарту қолжетімді!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:528
+#: app/dialogs/about-dialog.c:571
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "GIMP %s нұсқасын (ревизия %d) жүктеп алу (шығарылған күні: %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:538
+#: app/dialogs/about-dialog.c:581
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Шығарылым пікірі</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:543
+#: app/dialogs/about-dialog.c:586
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "GIMP %s жүктеп алу (шығарылған күні: %s)\n"
 
-#: app/dialogs/about-dialog.c:568 app/dialogs/about-dialog.c:591
+#: app/dialogs/about-dialog.c:611 app/dialogs/about-dialog.c:634
 msgid "Check for updates"
 msgstr "Жаңартуларды тексеру"
 
 #. Translators: first string is the date in the locale's date
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
-#: app/dialogs/about-dialog.c:612
+#: app/dialogs/about-dialog.c:655
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Соңғы рет %s күні, сағат %s тексерілді"
@@ -14978,16 +14983,16 @@ msgstr "Соңғы рет %s күні, сағат %s тексерілді"
 #. Translators: first string is the date in the locale's date
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
-#: app/dialogs/about-dialog.c:618
+#: app/dialogs/about-dialog.c:661
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "%s күнгі, сағат %s жағдайы бойынша жаңартылған"
 
-#: app/dialogs/about-dialog.c:846
+#: app/dialogs/about-dialog.c:889
 msgid "GIMP is brought to you by"
 msgstr "GIMP-ті сізге ұсынатындар:"
 
-#: app/dialogs/about-dialog.c:921
+#: app/dialogs/about-dialog.c:964
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -14995,6 +15000,51 @@ msgid ""
 msgstr ""
 "Бұл — әзірлеу сатысындағы құрастыру\n"
 "бекiту (commit) %s"
+
+#: app/dialogs/about-dialog.c:1049
+msgid "built from source"
+msgstr "бастапқы кодтан құрастырылған"
+
+#: app/dialogs/about-dialog.c:1059 app/dialogs/module-dialog.c:366
+msgid "Version:"
+msgstr "Нұсқасы:"
+
+#: app/dialogs/about-dialog.c:1061
+msgid "OS:"
+msgstr "ОЖ:"
+
+#: app/dialogs/about-dialog.c:1077
+#, c-format
+msgid "Memory: %s (%s free)\n"
+msgstr "Жады: %s (%s бос)\n"
+
+#: app/dialogs/about-dialog.c:1083 app/dialogs/about-dialog.c:1090
+msgid "Memory:"
+msgstr "Жады:"
+
+#: app/dialogs/about-dialog.c:1112
+msgid "Swap:"
+msgstr "Своп:"
+
+#: app/dialogs/about-dialog.c:1123
+msgid "Library Versions:"
+msgstr "Кітапхана нұсқалары:"
+
+#: app/dialogs/about-dialog.c:1200 app/dialogs/about-dialog.c:1258
+msgid "Copy Version Information"
+msgstr "Нұсқа ақпаратын көшіру"
+
+#: app/dialogs/about-dialog.c:1255
+msgid "Version Information"
+msgstr "Нұсқа ақпараты"
+
+#: app/dialogs/about-dialog.c:1257
+msgid "_Copy"
+msgstr "_Көшіру"
+
+#: app/dialogs/about-dialog.c:1314
+msgid "Copied Version Information"
+msgstr "Көшірілген нұсқа ақпараты"
 
 #: app/dialogs/action-search-dialog.c:68
 msgid "Search Actions"
@@ -15012,7 +15062,7 @@ msgstr "_Пиксельдерді құлыптау"
 msgid "Lock position and _size"
 msgstr "Орнын және ө_лшемін құлыптау"
 
-#: app/dialogs/channel-options-dialog.c:130 app/dialogs/layer-options-dialog.c:192 app/widgets/gimpdrawabletreeview.c:177 app/widgets/gimpitemtreeview.c:596
+#: app/dialogs/channel-options-dialog.c:130 app/dialogs/layer-options-dialog.c:192 app/widgets/gimpdrawabletreeview.c:177 app/widgets/gimpitemtreeview.c:599
 msgid "Lock visibility"
 msgstr "Көрінуін құлыптау"
 
@@ -15370,12 +15420,12 @@ msgstr "қ/ж"
 msgid "Open Location"
 msgstr "Орналасуды ашу"
 
-#: app/dialogs/file-open-location-dialog.c:112
+#: app/dialogs/file-open-location-dialog.c:114
 msgid "Enter location (URI):"
 msgstr "Орналасуды енгізіңіз (URI):"
 
 #. error should never be NULL, also issue #3093
-#: app/dialogs/file-open-location-dialog.c:236
+#: app/dialogs/file-open-location-dialog.c:238
 msgid "Invalid URI"
 msgstr "URI жарамсыз"
 
@@ -15438,7 +15488,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/dialogs/file-save-dialog.c:854
+#: app/dialogs/file-save-dialog.c:854 app/tools/gimppainttool.c:385
 msgid "Unknown error"
 msgstr "Белгісіз қате"
 
@@ -15490,7 +15540,7 @@ msgstr "Көрінбейтін қабаттарды _елемеу"
 msgid "Create a New Image"
 msgstr "Жаңа сурет жасау"
 
-#: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1807 app/dialogs/resize-dialog.c:258
+#: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1807 app/dialogs/resize-dialog.c:259
 msgid "_Template:"
 msgstr "_Үлгі:"
 
@@ -15512,7 +15562,7 @@ msgstr "Таңдалған өлшемдегі сурет Баптаулар сұ
 msgid "Image Properties"
 msgstr "Сурет қасиеттері"
 
-#: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:113 app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:352 app/tools/gimpgradienttool-editor.c:1818
+#: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:116 app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:352 app/tools/gimpgradienttool-editor.c:1818
 #: app/tools/gimpmeasuretool.c:741 app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:222 app/widgets/gimpcriticaldialog.c:244 app/widgets/gimpsettingsbox.c:642
 #: app/widgets/gimptexteditor.c:164
 msgid "_Close"
@@ -15539,7 +15589,7 @@ msgstr "Сурет масштабын өзгерту"
 msgid "Confirm Scaling"
 msgstr "Масштабтауды растау"
 
-#: app/dialogs/image-scale-dialog.c:211 app/dialogs/scale-dialog.c:138 app/tools/gimpscaletool.c:98 app/tools/gimpscaletool.c:123
+#: app/dialogs/image-scale-dialog.c:211 app/dialogs/scale-dialog.c:139 app/tools/gimpscaletool.c:98 app/tools/gimpscaletool.c:123
 msgid "_Scale"
 msgstr "_Масштабтау"
 
@@ -15693,7 +15743,7 @@ msgstr "Абсолютті жолмен _сақтау"
 msgid "_Associated path:"
 msgstr "Б_айланыстырылған жол:"
 
-#: app/dialogs/layer-options-dialog.c:477 app/dialogs/resize-dialog.c:514 app/widgets/gimptemplateeditor.c:489
+#: app/dialogs/layer-options-dialog.c:477 app/dialogs/resize-dialog.c:515 app/widgets/gimptemplateeditor.c:489
 msgid "_Fill with:"
 msgstr "Келесімен _бояу:"
 
@@ -15784,43 +15834,39 @@ msgstr "Бұрылған"
 msgid "Would you like to rotate the image?"
 msgstr "Суретті бұрғыңыз келе ме?"
 
-#: app/dialogs/module-dialog.c:108
+#: app/dialogs/module-dialog.c:111
 msgid "Module Manager"
 msgstr "Модульдер басқарушысы"
 
-#: app/dialogs/module-dialog.c:112
+#: app/dialogs/module-dialog.c:115
 msgid "_Refresh"
 msgstr "_Жаңарту"
 
-#: app/dialogs/module-dialog.c:132
+#: app/dialogs/module-dialog.c:135
 msgid "You will have to restart GIMP for the changes to take effect."
 msgstr "Өзгерістер күшіне енуі үшін GIMP-ті қайта іске қосу керек."
 
-#: app/dialogs/module-dialog.c:293
+#: app/dialogs/module-dialog.c:300
 msgid "Only in memory"
 msgstr "Тек жадта"
 
-#: app/dialogs/module-dialog.c:297
+#: app/dialogs/module-dialog.c:304
 msgid "No longer available"
 msgstr "Енді қолжетімді емес"
 
-#: app/dialogs/module-dialog.c:329
+#: app/dialogs/module-dialog.c:365
 msgid "Author:"
 msgstr "Авторы:"
 
-#: app/dialogs/module-dialog.c:330
-msgid "Version:"
-msgstr "Нұсқасы:"
-
-#: app/dialogs/module-dialog.c:331
+#: app/dialogs/module-dialog.c:367
 msgid "Date:"
 msgstr "Күні:"
 
-#: app/dialogs/module-dialog.c:332
+#: app/dialogs/module-dialog.c:368
 msgid "Copyright:"
 msgstr "Авторлық құқығы:"
 
-#: app/dialogs/module-dialog.c:333
+#: app/dialogs/module-dialog.c:369
 msgid "Location:"
 msgstr "Орналасуы:"
 
@@ -16525,7 +16571,7 @@ msgid "Item search"
 msgstr "Элементтерді іздеу"
 
 #. Keyboard Shortcuts
-#: app/dialogs/preferences-dialog.c:1911
+#: app/dialogs/preferences-dialog.c:1911 app/menus/menus.c:673
 msgid "Keyboard Shortcuts"
 msgstr "Пернетақта жарлықтары"
 
@@ -17232,7 +17278,8 @@ msgstr "Сурет тақырыбының пішімі"
 msgid "Image Statusbar Format"
 msgstr "Суреттің қалып-күй жолағының пішімі"
 
-#: app/dialogs/preferences-dialog.c:3290 app/dialogs/preferences-dialog.c:3291
+#. Input Devices
+#: app/dialogs/preferences-dialog.c:3290 app/dialogs/preferences-dialog.c:3291 app/menus/menus.c:666
 msgid "Input Devices"
 msgstr "Кіріс құрылғылары"
 
@@ -17609,31 +17656,31 @@ msgstr "Барлық өзгерістерді елемеу және барлық
 msgid "_Discard Changes"
 msgstr "Өзгерістерді е_лемеу"
 
-#: app/dialogs/resize-dialog.c:172
+#: app/dialogs/resize-dialog.c:173
 msgid "Canvas Size"
 msgstr "Кенеп өлшемі"
 
-#: app/dialogs/resize-dialog.c:184 app/dialogs/scale-dialog.c:114
+#: app/dialogs/resize-dialog.c:185 app/dialogs/scale-dialog.c:115
 msgid "Layer Size"
 msgstr "Қабат өлшемі"
 
-#: app/dialogs/resize-dialog.c:185 app/paint/gimppaintoptions.c:333
+#: app/dialogs/resize-dialog.c:186 app/paint/gimppaintoptions.c:333
 msgid "Fill With"
 msgstr "Келесімен бояу"
 
-#: app/dialogs/resize-dialog.c:226
+#: app/dialogs/resize-dialog.c:227
 msgid "Re_set"
 msgstr "Б_астапқыға қайтару"
 
-#: app/dialogs/resize-dialog.c:228
+#: app/dialogs/resize-dialog.c:229
 msgid "_Resize"
 msgstr "Өлшемін өз_герту"
 
-#: app/dialogs/resize-dialog.c:295
+#: app/dialogs/resize-dialog.c:296
 msgid "Reset the template selection"
 msgstr "Үлгі таңдауын бастапқыға қайтару"
 
-#: app/dialogs/resize-dialog.c:302
+#: app/dialogs/resize-dialog.c:303
 msgid ""
 "Template and image print resolution don't match.\n"
 "Choose how to scale the canvas:"
@@ -17644,42 +17691,42 @@ msgstr ""
 #. offset frame
 #. The offset frame
 #. offset frame
-#: app/dialogs/resize-dialog.c:379 app/operations/gimpoperationoffset.c:119 app/tools/gimpgradientoptions.c:90 app/tools/gimpoffsettool.c:130 app/tools/gimpoffsettool.c:472
+#: app/dialogs/resize-dialog.c:380 app/operations/gimpoperationoffset.c:119 app/tools/gimpgradientoptions.c:90 app/tools/gimpoffsettool.c:130 app/tools/gimpoffsettool.c:472
 #: app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:216
 msgid "Offset"
 msgstr "Ығысу"
 
-#: app/dialogs/resize-dialog.c:402 app/tools/gimpoffsettool.c:496 app/tools/gimptransform3dtool.c:270 app/tools/gimptransform3dtool.c:382
+#: app/dialogs/resize-dialog.c:403 app/tools/gimpoffsettool.c:496 app/tools/gimptransform3dtool.c:270 app/tools/gimptransform3dtool.c:382
 msgid "_X:"
 msgstr "_X:"
 
-#: app/dialogs/resize-dialog.c:403 app/tools/gimpoffsettool.c:498 app/tools/gimptransform3dtool.c:271 app/tools/gimptransform3dtool.c:387
+#: app/dialogs/resize-dialog.c:404 app/tools/gimpoffsettool.c:498 app/tools/gimptransform3dtool.c:271 app/tools/gimptransform3dtool.c:387
 msgid "_Y:"
 msgstr "_Y:"
 
 #. Button to center the image on canvas just below the preview.
-#: app/dialogs/resize-dialog.c:448
+#: app/dialogs/resize-dialog.c:449
 msgid "C_enter"
 msgstr "Ор_тасы"
 
-#: app/dialogs/resize-dialog.c:474
+#: app/dialogs/resize-dialog.c:475
 msgid "Resize _layers:"
 msgstr "Қабаттар өл_шемін өзгерту:"
 
-#: app/dialogs/resize-dialog.c:524
+#: app/dialogs/resize-dialog.c:525
 msgid "Resize _text layers"
 msgstr "Мәтіндік қабаттар өл_шемін өзгерту"
 
-#: app/dialogs/resize-dialog.c:537
+#: app/dialogs/resize-dialog.c:538
 msgid "Resizing text layers will make them uneditable"
 msgstr "Мәтіндік қабаттардың өлшемін өзгерту оларды түзетілмейтін қылады"
 
-#: app/dialogs/resize-dialog.c:767
+#: app/dialogs/resize-dialog.c:773
 #, c-format
 msgid "Scale template to %.2f ppi"
 msgstr "Үлгіні %.2f ppi деңгейіне масштабтау"
 
-#: app/dialogs/resize-dialog.c:772
+#: app/dialogs/resize-dialog.c:778
 #, c-format
 msgid "Set image to %.2f ppi"
 msgstr "Суретті %.2f ppi деңгейіне орнату"
@@ -17701,15 +17748,15 @@ msgid "_Vertical:"
 msgstr "_Вертикалды:"
 
 #. Image size frame
-#: app/dialogs/scale-dialog.c:103 app/widgets/gimptemplateeditor.c:187
+#: app/dialogs/scale-dialog.c:104 app/widgets/gimptemplateeditor.c:187
 msgid "Image Size"
 msgstr "Сурет өлшемі"
 
-#: app/dialogs/scale-dialog.c:181 app/paint/gimppaintoptions.c:470 app/propgui/gimppropgui-newsprint.c:262
+#: app/dialogs/scale-dialog.c:182 app/paint/gimppaintoptions.c:470 app/propgui/gimppropgui-newsprint.c:262
 msgid "Quality"
 msgstr "Сапа"
 
-#: app/dialogs/scale-dialog.c:193
+#: app/dialogs/scale-dialog.c:194
 msgid "I_nterpolation:"
 msgstr "И_нтерполяция:"
 
@@ -17767,7 +17814,7 @@ msgid "_Next Tip"
 msgstr "К_елесі кеңес"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:196 app/dialogs/welcome-dialog.c:1100
+#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1100
 msgid "Learn more"
 msgstr "Көбірек білу"
 
@@ -18185,7 +18232,7 @@ msgid "Y"
 msgstr "Y"
 
 #. Units
-#: app/display/gimpcursorview.c:249
+#: app/display/gimpcursorview.c:249 app/menus/menus.c:687
 msgid "Units"
 msgstr "Юниттер"
 
@@ -18227,7 +18274,7 @@ msgstr "Сурет дисплейінде навигациялау"
 msgid "Drop image files here to open them"
 msgstr "Сурет файлдарын ашу үшін оларды осында тастаңыз"
 
-#: app/display/gimpdisplayshell-callbacks.c:659
+#: app/display/gimpdisplayshell-callbacks.c:658
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -18328,11 +18375,11 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Түсті қабатқа тастау"
 
-#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1592 app/widgets/gimplayertreeview.c:850
+#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1600 app/widgets/gimplayertreeview.c:855
 msgid "Drop layers"
 msgstr "Қабаттарды тастау"
 
-#: app/display/gimpdisplayshell-dnd.c:800 app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:927 app/widgets/gimptoolbox-dnd.c:277
+#: app/display/gimpdisplayshell-dnd.c:800 app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:932 app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Тасталған буфер"
 
@@ -18374,11 +18421,11 @@ msgstr "Көріністі бұру"
 msgid "Select Rotation Angle"
 msgstr "Бұру бұрышын таңдау"
 
-#: app/display/gimpdisplayshell-rotate-dialog.c:152 app/tools/gimpmeasuretool.c:788
+#: app/display/gimpdisplayshell-rotate-dialog.c:153 app/tools/gimpmeasuretool.c:788
 msgid "Angle:"
 msgstr "Бұрыш:"
 
-#: app/display/gimpdisplayshell-rotate-dialog.c:165
+#: app/display/gimpdisplayshell-rotate-dialog.c:167
 msgid "degrees"
 msgstr "градус"
 
@@ -18398,12 +18445,12 @@ msgstr "Масштабтау қатынасы:"
 msgid "Zoom:"
 msgstr "Масштабтау:"
 
-#: app/display/gimpdisplayshell-scale-dialog.c:246
+#: app/display/gimpdisplayshell-scale-dialog.c:247
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "Басқа_лар (%s)..."
 
-#: app/display/gimpdisplayshell-scale-dialog.c:250
+#: app/display/gimpdisplayshell-scale-dialog.c:251
 #, c-format
 msgid "Custom Zoom (%s)..."
 msgstr "Таңдауыңызша масштабтау (%s)..."
@@ -18421,7 +18468,7 @@ msgstr "(таза)"
 msgid "(none)"
 msgstr "(ешбірі)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1772
+#: app/display/gimpdisplayshell-tool-events.c:1824
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Таңдалған қабат: «%s»"
@@ -18554,7 +18601,7 @@ msgstr "Фокусты жылжыту үшін шертіп, сүйреңіз"
 msgid "Click-Drag to rotate the focus"
 msgstr "Фокусты бұру үшін шертіп, сүйреңіз"
 
-#: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729 app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:680
+#: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729 app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:681
 #, c-format
 msgid "%s for constrained angles"
 msgstr "шектелген бұрыштар үшін %s"
@@ -18899,30 +18946,30 @@ msgstr "Тек платформаға тән файл жолдарына қол�
 msgid "Circular reference detected with '%s'."
 msgstr "'%s' үшін тұйықталған сілтеме анықталды."
 
-#: app/file/file-remote.c:113
+#: app/file/file-remote.c:121
 msgid "Mounting remote volume"
 msgstr "Қашықтағы томды тіркеу"
 
-#: app/file/file-remote.c:289
+#: app/file/file-remote.c:320 app/file/file-remote.c:383
 msgid "Opening remote file"
 msgstr "Қашықтағы файлды ашу"
 
-#: app/file/file-remote.c:355
+#: app/file/file-remote.c:449
 #, c-format
 msgid "Downloading image (%s of %s)"
 msgstr "Суретті жүктеп алу (%s, барлығы %s)"
 
-#: app/file/file-remote.c:359
+#: app/file/file-remote.c:453
 #, c-format
 msgid "Uploading image (%s of %s)"
 msgstr "Суретті жүктеп салу (%s, барлығы %s)"
 
-#: app/file/file-remote.c:382
+#: app/file/file-remote.c:476
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Сурет деректерінің %s жүктелді"
 
-#: app/file/file-remote.c:386
+#: app/file/file-remote.c:480
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "Сурет деректерінің %s жүктеп салынды"
@@ -19919,19 +19966,19 @@ msgstr "Мән"
 msgid "The alpha value"
 msgstr "Альфа мәні"
 
-#: app/gui/gui.c:330
+#: app/gui/gui.c:336
 msgid "Image Recovery"
 msgstr "Суретті қалпына келтіру"
 
-#: app/gui/gui.c:332
+#: app/gui/gui.c:338
 msgid "_Discard"
 msgstr "_Елемеу"
 
-#: app/gui/gui.c:333
+#: app/gui/gui.c:339
 msgid "_Recover"
 msgstr "Қал_пына келтіру"
 
-#: app/gui/gui.c:344
+#: app/gui/gui.c:350
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Ойбу! GIMP құлаудан кейін қалпына келген сияқты!"
 
@@ -19940,7 +19987,7 @@ msgstr "Ойбу! GIMP құлаудан кейін қалпына келген �
 #. * any singular/plural form of your language if
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
-#: app/gui/gui.c:353
+#: app/gui/gui.c:359
 #, c-format
 msgid "An image was salvaged from the crash. Do you want to try and recover it?"
 msgid_plural "%d images were salvaged from the crash. Do you want to try and recover them?"
@@ -19948,7 +19995,7 @@ msgstr[0] "Құлаудан %d сурет құтқарылды. Оны қалп�
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
-#: app/gui/gui.c:569
+#: app/gui/gui.c:575
 msgid "Documents"
 msgstr "Құжаттар"
 
@@ -19960,7 +20007,7 @@ msgstr "GIMP іске қосылуы"
 msgid "Loading"
 msgstr "Жүктелуде"
 
-#: app/gui/themes.c:518
+#: app/gui/themes.c:515
 #, c-format
 msgid "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, gimp-light.css nor gimp.css."
 msgstr "Жарамсыз тема: «%s» бумасында gimp-dark.css, gimp-gray.css, gimp-light.css немесе gimp.css файлдарының ешбірі жоқ."
@@ -20417,102 +20464,102 @@ msgctxt "source-align-mode"
 msgid "Fixed"
 msgstr "Бекітілген"
 
-#: app/path/gimppath.c:243
+#: app/path/gimppath.c:261
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Жол атын өзгерту"
 
-#: app/path/gimppath.c:244
+#: app/path/gimppath.c:262
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Жолды жылжыту"
 
-#: app/path/gimppath.c:245
+#: app/path/gimppath.c:263
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Жолды масштабтау"
 
-#: app/path/gimppath.c:246
+#: app/path/gimppath.c:264
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Жол өлшемін өзгерту"
 
-#: app/path/gimppath.c:247
+#: app/path/gimppath.c:265
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Жолды аудару"
 
-#: app/path/gimppath.c:248
+#: app/path/gimppath.c:266
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Жолды бұру"
 
-#: app/path/gimppath.c:249
+#: app/path/gimppath.c:267
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Жолды түрлендіру"
 
-#: app/path/gimppath.c:250
+#: app/path/gimppath.c:268
 msgctxt "undo-type"
 msgid "Fill Path"
 msgstr "Жолды бояу"
 
-#: app/path/gimppath.c:251
+#: app/path/gimppath.c:269
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "Жолды сызу"
 
-#: app/path/gimppath.c:252
+#: app/path/gimppath.c:270
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Жолды таңдауға айналдыру"
 
-#: app/path/gimppath.c:253
+#: app/path/gimppath.c:271
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Жолды қайта реттеу"
 
-#: app/path/gimppath.c:254
+#: app/path/gimppath.c:272
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Жолды көтеру"
 
-#: app/path/gimppath.c:255
+#: app/path/gimppath.c:273
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Жолды ең жоғарыға көтеру"
 
-#: app/path/gimppath.c:256
+#: app/path/gimppath.c:274
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Жолды төмендету"
 
-#: app/path/gimppath.c:257
+#: app/path/gimppath.c:275
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Жолды ең төменге түсіру"
 
-#: app/path/gimppath.c:258
+#: app/path/gimppath.c:276
 msgid "Path cannot be raised higher."
 msgstr "Жолды одан әрі көтеру мүмкін емес."
 
-#: app/path/gimppath.c:259
+#: app/path/gimppath.c:277
 msgid "Path cannot be lowered more."
 msgstr "Жолды одан әрі төмендету мүмкін емес."
 
-#: app/path/gimppath.c:505
+#: app/path/gimppath.c:589
 msgid "Move Path"
 msgstr "Жолды жылжыту"
 
-#: app/path/gimppath.c:605
+#: app/path/gimppath.c:689
 msgid "Flip Path"
 msgstr "Жолды аудару"
 
-#: app/path/gimppath.c:636
+#: app/path/gimppath.c:720
 msgid "Rotate Path"
 msgstr "Жолды бұру"
 
-#: app/path/gimppath.c:668
+#: app/path/gimppath.c:752
 msgid "Transform Path"
 msgstr "Жолды түрлендіру"
 
@@ -20543,43 +20590,43 @@ msgstr "Буферден жолдар табылмады"
 msgid "Failed to import paths from '%s': %s"
 msgstr "«%s» ішінен жолдарды импорттау сәтсіз аяқталды: %s"
 
-#: app/path/gimpvectorlayer.c:187 app/tools/gimppathtool.c:867
+#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:867
 msgid "Vector Layer"
 msgstr "Векторлық қабат"
 
-#: app/path/gimpvectorlayer.c:200
+#: app/path/gimpvectorlayer.c:213
 msgid "Rename Vector Layer"
 msgstr "Векторлық қабаттың атын өзгерту"
 
-#: app/path/gimpvectorlayer.c:201
+#: app/path/gimpvectorlayer.c:214
 msgid "Move Vector Layer"
 msgstr "Векторлық қабатты жылжыту"
 
-#: app/path/gimpvectorlayer.c:202
+#: app/path/gimpvectorlayer.c:215
 msgid "Scale Vector Layer"
 msgstr "Векторлық қабатты масштабтау"
 
-#: app/path/gimpvectorlayer.c:203
+#: app/path/gimpvectorlayer.c:216
 msgid "Resize Vector Layer"
 msgstr "Векторлық қабаттың өлшемін өзгерту"
 
-#: app/path/gimpvectorlayer.c:204
+#: app/path/gimpvectorlayer.c:217
 msgid "Flip Vector Layer"
 msgstr "Векторлық қабатты аудару"
 
-#: app/path/gimpvectorlayer.c:205
+#: app/path/gimpvectorlayer.c:218
 msgid "Rotate Vector Layer"
 msgstr "Векторлық қабатты бұру"
 
-#: app/path/gimpvectorlayer.c:206
+#: app/path/gimpvectorlayer.c:219
 msgid "Transform Vector Layer"
 msgstr "Векторлық қабатты түрлендіру"
 
-#: app/path/gimpvectorlayer.c:643
+#: app/path/gimpvectorlayer.c:800
 msgid "Discard Vector Information"
 msgstr "Векторлық ақпаратты елемеу"
 
-#: app/path/gimpvectorlayer.c:736
+#: app/path/gimpvectorlayer.c:893
 msgid "Change Vector Layer Path"
 msgstr "Векторлық қабат жолын өзгерту"
 
@@ -21648,11 +21695,11 @@ msgstr "7 500 K – D75"
 msgid "9,300 K"
 msgstr "9 300 K"
 
-#: app/propgui/gimppropgui-utils.c:97
+#: app/propgui/gimppropgui-utils.c:93
 msgid "Choose from a list of common color temperatures"
 msgstr "Жалпы түс температураларының тізімінен таңдау"
 
-#: app/propgui/gimppropgui-utils.c:148
+#: app/propgui/gimppropgui-utils.c:144
 msgid "New Seed"
 msgstr "Жаңа тұқым"
 
@@ -21670,7 +21717,7 @@ msgstr "Бұл операцияда түзетілетін қасиеттер ж
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
-#: app/text/gimpfont.c:58
+#: app/text/gimpfont.c:59
 msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
@@ -21678,16 +21725,12 @@ msgstr ""
 "Ішімдік құйылған бес ондаған құмыраны\n"
 "қорабыма сал."
 
-#: app/text/gimpfontfactory.c:464
+#: app/text/gimpfontfactory.c:525
 #, c-format
-msgid ""
-"Some fonts failed to load:\n"
-"%s"
-msgstr ""
-"Кейбір қаріптерді жүктеу сәтсіз аяқталды:\n"
-"%s"
+msgid "Some fonts failed to load:%s"
+msgstr "Кейбір қаріптерді жүктеу сәтсіз аяқталды:%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1730
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1742
 msgid "Add Text Layer"
 msgstr "Мәтіндік қабатты қосу"
 
@@ -21699,43 +21742,43 @@ msgstr "Мәтін паразитіндегі белгілеу пішімі жа
 msgid "Empty text parasite"
 msgstr "Бос мәтін паразиті"
 
-#: app/text/gimptextlayer.c:166
+#: app/text/gimptextlayer.c:177
 msgid "Text Layer"
 msgstr "Мәтіндік қабат"
 
-#: app/text/gimptextlayer.c:178
+#: app/text/gimptextlayer.c:189
 msgid "Rename Text Layer"
 msgstr "Мәтіндік қабаттың атын өзгерту"
 
-#: app/text/gimptextlayer.c:179 app/tools/gimptexttool.c:1295
+#: app/text/gimptextlayer.c:190 app/tools/gimptexttool.c:1307
 msgid "Move Text Layer"
 msgstr "Мәтіндік қабатты жылжыту"
 
-#: app/text/gimptextlayer.c:180
+#: app/text/gimptextlayer.c:191
 msgid "Scale Text Layer"
 msgstr "Мәтіндік қабатты масштабтау"
 
-#: app/text/gimptextlayer.c:181
+#: app/text/gimptextlayer.c:192
 msgid "Resize Text Layer"
 msgstr "Мәтіндік қабат өлшемін өзгерту"
 
-#: app/text/gimptextlayer.c:182
+#: app/text/gimptextlayer.c:193
 msgid "Flip Text Layer"
 msgstr "Мәтіндік қабатты аудару"
 
-#: app/text/gimptextlayer.c:183
+#: app/text/gimptextlayer.c:194
 msgid "Rotate Text Layer"
 msgstr "Мәтіндік қабатты бұру"
 
-#: app/text/gimptextlayer.c:184
+#: app/text/gimptextlayer.c:195
 msgid "Transform Text Layer"
 msgstr "Мәтіндік қабатты түрлендіру"
 
-#: app/text/gimptextlayer.c:716 app/text/gimptextlayer.c:857
+#: app/text/gimptextlayer.c:833 app/text/gimptextlayer.c:974
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Қаріптердің жоқтығынан мәтіндік функция қолжетімді емес."
 
-#: app/text/gimptextlayer.c:1071
+#: app/text/gimptextlayer.c:1189
 msgid "Your text cannot be rendered. It is likely too big. Please make it shorter or use a smaller font."
 msgstr "Мәтініңізді рендерлеу мүмкін емес. Ол тым үлкен болуы мүмкін. Оны қысқарақ етіңіз немесе кішірек қаріпті пайдаланыңыз."
 
@@ -21752,7 +21795,7 @@ msgstr ""
 "\n"
 "Кейбір мәтін қасиеттері қате болуы мүмкін. Егер мәтіндік қабатты түзетуді қаламасаңыз, бұған алаңдамауыңызға болады."
 
-#: app/text/gimptextlayout.c:701
+#: app/text/gimptextlayout.c:707
 msgid "The new text layout cannot be generated. Most likely the font size is too big."
 msgstr "Жаңа мәтін жаймасын жасау мүмкін емес. Қаріп өлшемі тым үлкен болуы мүмкін."
 
@@ -22133,11 +22176,11 @@ msgstr "Белсенді қабат көрінбейді."
 msgid "No valid line art source selected."
 msgstr "Жарамды сызықтық өнер көзі таңдалмаған."
 
-#: app/tools/gimpbucketfilltool.c:813 app/tools/gimpbucketfilltool.c:953 app/tools/gimpcolorpickertool.c:271 app/tools/gimppainttool.c:498
+#: app/tools/gimpbucketfilltool.c:813 app/tools/gimpbucketfilltool.c:953 app/tools/gimpcolorpickertool.c:271 app/tools/gimppainttool.c:499
 msgid "Click in any image to pick the background color"
 msgstr "Фон түсін таңдау үшін кез келген суретті шертіңіз"
 
-#: app/tools/gimpbucketfilltool.c:820 app/tools/gimpbucketfilltool.c:962 app/tools/gimpcolorpickertool.c:263 app/tools/gimppainttool.c:492
+#: app/tools/gimpbucketfilltool.c:820 app/tools/gimpbucketfilltool.c:962 app/tools/gimpcolorpickertool.c:263 app/tools/gimppainttool.c:493
 msgid "Click in any image to pick the foreground color"
 msgstr "Алдыңғы көрініс түсін таңдау үшін кез келген суретті шертіңіз"
 
@@ -23736,16 +23779,16 @@ msgstr "Бірнеше қабатта бояу мүмкін емес. Тек б�
 msgid "Cannot paint on layer groups."
 msgstr "Қабаттар топтарында бояу мүмкін емес."
 
-#: app/tools/gimppainttool.c:711
+#: app/tools/gimppainttool.c:712
 #, c-format
 msgid "%s for a straight line"
 msgstr "Түзу сызық үшін %s"
 
-#: app/tools/gimppainttool.c:946
+#: app/tools/gimppainttool.c:947
 msgid "The selected drawable does not have an alpha channel."
 msgstr "Таңдалған сызылатын элементте альфа-арна жоқ."
 
-#: app/tools/gimppainttool.c:957
+#: app/tools/gimppainttool.c:958
 msgid "The selected layer's alpha channel is locked."
 msgstr "Таңдалған қабаттың альфа-арнасы құлыпталған."
 
@@ -23799,11 +23842,11 @@ msgstr "Векторлық қабатты қосу"
 msgid "Confirm Path Editing"
 msgstr "Жолды түзетуді растау"
 
-#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1857
+#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1869
 msgid "Create _New Layer"
 msgstr "_Жаңа қабат жасау"
 
-#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1859
+#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1871
 msgid "_Edit Anyway"
 msgstr "Сонда да _түзету"
 
@@ -24321,51 +24364,51 @@ msgstr "Қорап:"
 msgid "Language:"
 msgstr "Тілі:"
 
-#: app/tools/gimptexttool.c:222
+#: app/tools/gimptexttool.c:224
 msgid "Text"
 msgstr "Мәтін"
 
-#: app/tools/gimptexttool.c:223
+#: app/tools/gimptexttool.c:225
 msgid "Text Tool: Create or edit text layers"
 msgstr "Мәтін сайманы: Мәтіндік қабаттарды жасау немесе түзету"
 
-#: app/tools/gimptexttool.c:224
+#: app/tools/gimptexttool.c:226
 msgid "Te_xt"
 msgstr "Мә_тін"
 
-#: app/tools/gimptexttool.c:1097
+#: app/tools/gimptexttool.c:1109
 msgid "Fonts are still loading"
 msgstr "Қаріптер әлі де жүктелуде"
 
-#: app/tools/gimptexttool.c:1108
+#: app/tools/gimptexttool.c:1120
 msgid "Text box: "
 msgstr "Мәтін қорабы: "
 
-#: app/tools/gimptexttool.c:1265
+#: app/tools/gimptexttool.c:1277
 msgid "Reshape Text Layer"
 msgstr "Мәтіндік қабат пішінін өзгерту"
 
-#: app/tools/gimptexttool.c:1850 app/tools/gimptexttool.c:1853
+#: app/tools/gimptexttool.c:1862 app/tools/gimptexttool.c:1865
 msgid "Confirm Text Editing"
 msgstr "Мәтінді түзетуді растау"
 
-#: app/tools/gimptexttool.c:1881
+#: app/tools/gimptexttool.c:1893
 msgid "The text layer you picked was rasterized. Editing its text will discard any modifications."
 msgstr "Сіз таңдаған мәтіндік қабат растрланған. Оның мәтінін түзету кез келген өзгерістерді елемейтін болады."
 
-#: app/tools/gimptexttool.c:2501
+#: app/tools/gimptexttool.c:2513
 msgid "Text is required."
 msgstr "Мәтін қажет."
 
-#: app/tools/gimptexttool.c:2504
+#: app/tools/gimptexttool.c:2516
 msgid "No image."
 msgstr "Сурет жоқ."
 
-#: app/tools/gimptexttool.c:2507
+#: app/tools/gimptexttool.c:2519
 msgid "No layer."
 msgstr "Қабат жоқ."
 
-#: app/tools/gimptexttool.c:2518
+#: app/tools/gimptexttool.c:2530
 msgid "Exactly one path must be selected."
 msgstr "Тек бір жол таңдалуы тиіс."
 
@@ -25528,11 +25571,11 @@ msgstr "Курсор оңға"
 msgid "Keyboard"
 msgstr "Пернетақта"
 
-#: app/widgets/gimpcontrollerkeyboard.c:234
+#: app/widgets/gimpcontrollerkeyboard.c:240
 msgid "Keyboard Events"
 msgstr "Пернетақта оқиғалары"
 
-#: app/widgets/gimpcontrollerkeyboard.c:235 app/widgets/gimpcontrollerwheel.c:234
+#: app/widgets/gimpcontrollerkeyboard.c:241 app/widgets/gimpcontrollerwheel.c:240
 msgid "Ready"
 msgstr "Дайын"
 
@@ -25641,7 +25684,7 @@ msgstr "Оңға айналдыру"
 msgid "Mouse Wheel"
 msgstr "Тышқан дөңгелегі"
 
-#: app/widgets/gimpcontrollerwheel.c:233
+#: app/widgets/gimpcontrollerwheel.c:239
 msgid "Mouse Wheel Events"
 msgstr "Тышқан дөңгелегінің оқиғалары"
 
@@ -26336,11 +26379,11 @@ msgid "Configure this tab"
 msgstr "Осы бетті баптау"
 
 #. Auto button
-#: app/widgets/gimpdockwindow.c:391
+#: app/widgets/gimpdockwindow.c:409
 msgid "Auto"
 msgstr "Авто"
 
-#: app/widgets/gimpdockwindow.c:402
+#: app/widgets/gimpdockwindow.c:420
 msgid "When enabled, the dialog automatically follows the image you are working on."
 msgstr "Іске қосылған кезде, сұхбат терезесі сіз жұмыс істеп жатқан суретті автоматты түрде бақылайды."
 
@@ -26356,7 +26399,7 @@ msgstr "Позиция мен өлшемді құлыптау"
 msgid "Cannot select items while a floating selection is active."
 msgstr "Жылжымалы таңдау белсенді болған кезде элементтерді таңдау мүмкін емес."
 
-#: app/widgets/gimpdrawabletreeview.c:677 app/widgets/gimplayertreeview.c:978
+#: app/widgets/gimpdrawabletreeview.c:677 app/widgets/gimplayertreeview.c:983
 msgctxt "singular"
 msgid "New Layer"
 msgstr "Жаңа қабат"
@@ -26761,27 +26804,27 @@ msgstr[0] "Индекстелген түс (%d түс)"
 msgid "Select an image in the left pane"
 msgstr "Сол жақ панельден суретті таңдаңыз"
 
-#: app/widgets/gimpitemtreeview.c:570
+#: app/widgets/gimpitemtreeview.c:573
 msgid "Set Item Exclusive Content Lock"
 msgstr "Элементтің эксклюзивті мазмұн құлыптауын орнату"
 
-#: app/widgets/gimpitemtreeview.c:584
+#: app/widgets/gimpitemtreeview.c:587
 msgid "Set Item Exclusive Position Lock"
 msgstr "Элементтің эксклюзивті позиция құлыптауын орнату"
 
-#: app/widgets/gimpitemtreeview.c:597
+#: app/widgets/gimpitemtreeview.c:600
 msgid "Unlock visibility"
 msgstr "Көріну құлпын ашу"
 
-#: app/widgets/gimpitemtreeview.c:598
+#: app/widgets/gimpitemtreeview.c:601
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Элементтің эксклюзивті көріну құлыптауын орнату"
 
-#: app/widgets/gimpitemtreeview.c:624
+#: app/widgets/gimpitemtreeview.c:627
 msgid "Select items by patterns and store item sets"
 msgstr "Элементтерді өрнектер бойынша таңдау және элементтер жиынын сақтау"
 
-#: app/widgets/gimpitemtreeview.c:1737
+#: app/widgets/gimpitemtreeview.c:1745
 #, c-format
 msgid "%d item selected"
 msgid_plural "%d items selected"
@@ -26852,23 +26895,23 @@ msgstr "Альфа-арна құлпын ашу"
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Элементтің эксклюзивті альфа-арна құлыптауын орнату"
 
-#: app/widgets/gimplayertreeview.c:1097
+#: app/widgets/gimplayertreeview.c:1102
 msgid "Set layers mode"
 msgstr "Қабаттар режимін орнату"
 
-#: app/widgets/gimplayertreeview.c:1305
+#: app/widgets/gimplayertreeview.c:1310
 msgctxt "layers-action"
 msgid "Anchor the floating mask"
 msgstr "Жылжымалы масканы бекіту"
 
-#: app/widgets/gimplayertreeview.c:1308
+#: app/widgets/gimplayertreeview.c:1313
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Жылжымалы қабатты бекіту"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:1581
+#: app/widgets/gimplayertreeview.c:1586
 msgid "No channels to create a layer mask from."
 msgstr "Қабат маскасын жасайтын арналар жоқ."
 
@@ -27018,13 +27061,13 @@ msgstr "Метадеректер 2.10-нан ескі GIMP нұсқаларын�
 #. TRANSLATORS: a helper label indicating the menu path for an action,
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
-#: app/widgets/gimpsearchpopup.c:303
+#: app/widgets/gimpsearchpopup.c:332
 msgid "menu"
 msgstr "мәзір"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various
 #. ways.
-#: app/widgets/gimpsearchpopup.c:307
+#: app/widgets/gimpsearchpopup.c:336
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -27405,7 +27448,7 @@ msgstr ""
 "Белсенді градиент.\n"
 "Градиент сұхбат терезесін ашу үшін шертіңіз."
 
-#: app/widgets/gimptoolbutton.c:542
+#: app/widgets/gimptoolbutton.c:543
 msgid "Also in group:"
 msgstr "Сонымен қатар топта:"
 
@@ -27726,27 +27769,27 @@ msgstr ""
 "GIMP ескі нұсқасымен сақталған зақымдалған XMP метадеректерін түрлендіру мүмкін емес және олар еленбейді.\n"
 "Егер XMP не екенін білмесеңіз, ол сізге қажет емес шығар. Хабарланған қате: %s."
 
-#: app/xcf/xcf-load.c:1460
+#: app/xcf/xcf-load.c:1501
 msgid "Linked Layers"
 msgstr "Байланысқан қабаттар"
 
-#: app/xcf/xcf-load.c:1470
+#: app/xcf/xcf-load.c:1511
 msgid "Linked Channels"
 msgstr "Байланысқан арналар"
 
-#: app/xcf/xcf-load.c:1495
+#: app/xcf/xcf-load.c:1536
 msgid "Linked Paths"
 msgstr "Байланысқан жолдар"
 
-#: app/xcf/xcf-load.c:1543
+#: app/xcf/xcf-load.c:1584
 msgid "This XCF file is corrupt!  I have loaded as much of it as I can, but it is incomplete."
 msgstr "Бұл XCF файлы зақымдалған! Мен оның мүмкіндігінше көп бөлігін жүктедім, бірақ ол толық емес."
 
-#: app/xcf/xcf-load.c:1570
+#: app/xcf/xcf-load.c:1611
 msgid "This XCF file is corrupt!  I could not even salvage any partial image data from it."
 msgstr "Бұл XCF файлы зақымдалған! Мен одан тіпті сурет деректерінің бір бөлігін де құтқара алмадым."
 
-#: app/xcf/xcf-load.c:1788
+#: app/xcf/xcf-load.c:1829
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -27756,17 +27799,17 @@ msgstr ""
 "индекстелген түстер картасын дұрыс сақтамаған.\n"
 "Сұр реңкті картамен алмастырылады."
 
-#: app/xcf/xcf-load.c:2619
+#: app/xcf/xcf-load.c:2660
 #, c-format
 msgid "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded to a raster layer."
 msgstr "XCF ескертуі: XCF файлында жарамсыз сілтеме. \"%s\" сілтеме қабаты растрлық қабатқа төмендетіледі."
 
-#: app/xcf/xcf-load.c:2639
+#: app/xcf/xcf-load.c:2680
 #, c-format
 msgid "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" is downgraded to a raster layer."
 msgstr "XCF ескертуі: XCF файлында тұйықталған сілтеме анықталды. \"%s\" сілтеме қабаты растрлық қабатқа төмендетіледі."
 
-#: app/xcf/xcf-load.c:3372
+#: app/xcf/xcf-load.c:3411
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The property was ignored and the filter may not render properly.\n"
@@ -27775,7 +27818,7 @@ msgstr ""
 "XCF ескертуі: «%2$s» сүзгісінің %1$s нұсқасында %3$s қасиеті жоқ. Қасиет еленбеді және сүзгі дұрыс рендерленбеуі мүмкін.\n"
 "Бұл болмауы тиіс еді. Мәселе туралы сүзгі әзірлеушілеріне хабарлауыңыз керек."
 
-#: app/xcf/xcf-load.c:4314
+#: app/xcf/xcf-load.c:4353
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was discarded.\n"
@@ -27943,307 +27986,307 @@ msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Буфер"
 
-#: menus/image-menu.ui.in.in:150
+#: menus/image-menu.ui.in.in:153
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Таңдау"
 
-#: menus/image-menu.ui.in.in:156
+#: menus/image-menu.ui.in.in:159
 msgctxt "view-action"
 msgid "_Float"
 msgstr "_Жылжымалы"
 
-#: menus/image-menu.ui.in.in:183
+#: menus/image-menu.ui.in.in:186
 msgctxt "view-action"
 msgid "_View"
 msgstr "_Көрініс"
 
-#: menus/image-menu.ui.in.in:188
+#: menus/image-menu.ui.in.in:191
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "_Масштабтау"
 
-#: menus/image-menu.ui.in.in:213
+#: menus/image-menu.ui.in.in:216
 msgctxt "view-action"
 msgid "_Flip & Rotate"
 msgstr "_Аудару және бұру"
 
-#: menus/image-menu.ui.in.in:237
+#: menus/image-menu.ui.in.in:240
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Экранға жылжыту"
 
-#: menus/image-menu.ui.in.in:246
+#: menus/image-menu.ui.in.in:249
 msgctxt "view-action"
 msgid "_Color Management"
 msgstr "Түстерді б_асқару"
 
-#: menus/image-menu.ui.in.in:253
+#: menus/image-menu.ui.in.in:256
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
 msgstr "Дисплейді р_ендерлеу мақсаты"
 
-#: menus/image-menu.ui.in.in:285
+#: menus/image-menu.ui.in.in:288
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "Ше_гініс түсі"
 
-#: menus/image-menu.ui.in.in:309
+#: menus/image-menu.ui.in.in:312
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Сурет"
 
-#: menus/image-menu.ui.in.in:316
+#: menus/image-menu.ui.in.in:319
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Режим"
 
-#: menus/image-menu.ui.in.in:322
+#: menus/image-menu.ui.in.in:325
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "К_одтау"
 
-#: menus/image-menu.ui.in.in:338
+#: menus/image-menu.ui.in.in:341
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "Түстерді б_асқару"
 
-#: menus/image-menu.ui.in.in:355
+#: menus/image-menu.ui.in.in:358
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "Жұмсақ байқауды р_ендерлеу мақсаты"
 
-#: menus/image-menu.ui.in.in:369
+#: menus/image-menu.ui.in.in:372
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "Тү_рлендіру"
 
-#: menus/image-menu.ui.in.in:402
+#: menus/image-menu.ui.in.in:405
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "Бағ_ыттауыштар"
 
-#: menus/image-menu.ui.in.in:410
+#: menus/image-menu.ui.in.in:413
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Метадерект_ер"
 
-#: menus/image-menu.ui.in.in:418
+#: menus/image-menu.ui.in.in:421
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "Қа_бат"
 
-#: menus/image-menu.ui.in.in:444
+#: menus/image-menu.ui.in.in:447
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "Сте_к"
 
-#: menus/image-menu.ui.in.in:461
+#: menus/image-menu.ui.in.in:464
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Маска"
 
-#: menus/image-menu.ui.in.in:483
+#: menus/image-menu.ui.in.in:486
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "Мөлдір_лік"
 
-#: menus/image-menu.ui.in.in:501
+#: menus/image-menu.ui.in.in:504
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "Тү_рлендіру"
 
-#: menus/image-menu.ui.in.in:531
+#: menus/image-menu.ui.in.in:534
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Түстер"
 
-#: menus/image-menu.ui.in.in:552
+#: menus/image-menu.ui.in.in:555
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Авто"
 
-#: menus/image-menu.ui.in.in:560
+#: menus/image-menu.ui.in.in:563
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "Комп_оненттер"
 
-#: menus/image-menu.ui.in.in:566
+#: menus/image-menu.ui.in.in:569
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "Түссізд_ендіру"
 
-#: menus/image-menu.ui.in.in:573
+#: menus/image-menu.ui.in.in:576
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Карта"
 
-#: menus/image-menu.ui.in.in:584
+#: menus/image-menu.ui.in.in:587
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_Тондарды сәйкестендіру"
 
-#: menus/image-menu.ui.in.in:591
+#: menus/image-menu.ui.in.in:594
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "Ақпа_рат"
 
-#: menus/image-menu.ui.in.in:609
+#: menus/image-menu.ui.in.in:612
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "_Саймандар"
 
-#: menus/image-menu.ui.in.in:612
+#: menus/image-menu.ui.in.in:615
 msgctxt "tools-action"
 msgid "_Selection Tools"
 msgstr "Таң_дау саймандары"
 
-#: menus/image-menu.ui.in.in:625
+#: menus/image-menu.ui.in.in:628
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "Бо_яу саймандары"
 
-#: menus/image-menu.ui.in.in:642
+#: menus/image-menu.ui.in.in:645
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "Түр_лендіру саймандары"
 
-#: menus/image-menu.ui.in.in:681
+#: menus/image-menu.ui.in.in:684
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "Сүзгі_лер"
 
-#: menus/image-menu.ui.in.in:686
+#: menus/image-menu.ui.in.in:689
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Соңғы қолданылған"
 
-#: menus/image-menu.ui.in.in:695
+#: menus/image-menu.ui.in.in:698
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_Бұлыңғырлау"
 
-#: menus/image-menu.ui.in.in:710
+#: menus/image-menu.ui.in.in:713
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "Жақ_сарту"
 
-#: menus/image-menu.ui.in.in:720
+#: menus/image-menu.ui.in.in:723
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "Бұр_малау"
 
-#: menus/image-menu.ui.in.in:739
+#: menus/image-menu.ui.in.in:742
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Жарық және көлеңке"
 
-#: menus/image-menu.ui.in.in:754
+#: menus/image-menu.ui.in.in:757
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_Шу"
 
-#: menus/image-menu.ui.in.in:764
+#: menus/image-menu.ui.in.in:767
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "Жиекті анықт_ау"
 
-#: menus/image-menu.ui.in.in:773
+#: menus/image-menu.ui.in.in:776
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Жалпы"
 
-#: menus/image-menu.ui.in.in:784
+#: menus/image-menu.ui.in.in:787
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "Бірікт_іру"
 
-#: menus/image-menu.ui.in.in:787
+#: menus/image-menu.ui.in.in:790
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Көркемдік"
 
-#: menus/image-menu.ui.in.in:799
+#: menus/image-menu.ui.in.in:802
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "Безе_ндіру"
 
-#: menus/image-menu.ui.in.in:802
+#: menus/image-menu.ui.in.in:805
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Карта"
 
-#: menus/image-menu.ui.in.in:814
+#: menus/image-menu.ui.in.in:817
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Рендерлеу"
 
-#: menus/image-menu.ui.in.in:817
+#: menus/image-menu.ui.in.in:820
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Фракталдар"
 
-#: menus/image-menu.ui.in.in:820
+#: menus/image-menu.ui.in.in:823
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "Ш_у"
 
-#: menus/image-menu.ui.in.in:828
+#: menus/image-menu.ui.in.in:831
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "Өрн_ек"
 
-#: menus/image-menu.ui.in.in:841
+#: menus/image-menu.ui.in.in:844
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_Веб"
 
-#: menus/image-menu.ui.in.in:847
+#: menus/image-menu.ui.in.in:850
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "Аним_ация"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:853
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "Әзірл_еу"
 
-#: menus/image-menu.ui.in.in:852
+#: menus/image-menu.ui.in.in:855
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "Плагин мысалд_ары"
 
-#: menus/image-menu.ui.in.in:855
+#: menus/image-menu.ui.in.in:858
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:858
+#: menus/image-menu.ui.in.in:861
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:865
+#: menus/image-menu.ui.in.in:868
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Терезелер"
 
-#: menus/image-menu.ui.in.in:868
+#: menus/image-menu.ui.in.in:871
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "Ж_ақында жабылған доктар"
 
-#: menus/image-menu.ui.in.in:872
+#: menus/image-menu.ui.in.in:875
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "Д_окталатын сұхбат терезелері"
 
-#: menus/image-menu.ui.in.in:904
+#: menus/image-menu.ui.in.in:907
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "Пайдалан_ушы нұсқаулығы"
 
-#: menus/image-menu.ui.in.in:920
+#: menus/image-menu.ui.in.in:926
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "GIMP _интернетте"
