@@ -2749,6 +2749,35 @@ gimp_is_win32_system_theme_dark (void)
 
   return status == ERROR_SUCCESS && val == 0;
 }
+
+/* returns the system accent color as a CSS hex string */
+gchar *
+themes_get_system_accent_color (gboolean prefer_dark)
+{
+  BYTE  palette[32]  = { 0 };
+  DWORD palette_size = sizeof (palette);
+  guint darken;
+
+  if (RegGetValueW (HKEY_CURRENT_USER,
+                    L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Accent",
+                    L"AccentPalette",
+                    RRF_RT_REG_BINARY,
+                    NULL,
+                    palette,
+                    &palette_size) == ERROR_SUCCESS)
+    {
+      /* on WinUI, the philosophy of shades is inverted. So, we diverge from it. In
+         dark mode we use index 4 (Dark1), in light mode we use index 2 (Light1). */
+      darken = (prefer_dark ? 4 : 2) * 4;
+
+      return g_strdup_printf ("#%02x%02x%02x",
+                              palette[darken],
+                              palette[darken + 1],
+                              palette[darken + 2]);
+    }
+
+  return NULL;
+}
 #endif
 
 #ifdef PLATFORM_OSX
@@ -2768,4 +2797,30 @@ themes_macos_is_dark_mode_active (void)
 
     return is_dark;
 }
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
+/* returns the system accent color as a CSS hex string */
+gchar *
+themes_get_system_accent_color (gboolean prefer_dark)
+{
+  NSColor *accent;
+  gdouble  darken;
+
+  accent = [[NSColor controlAccentColor]
+            colorUsingColorSpace:[NSColorSpace sRGBColorSpace]];
+  /* controlAccentColor is the "pure" accent; macOS renders it differently,
+     slightly darker */
+  darken = prefer_dark ? 0.25 : 0.15;
+  accent = [[accent blendedColorWithFraction:darken ofColor:[NSColor blackColor]]
+            colorUsingColorSpace:[NSColorSpace sRGBColorSpace]];
+
+  if (accent)
+    return g_strdup_printf ("#%02x%02x%02x",
+                            (guint) ([accent redComponent]   * 255.0 + 0.5),
+                            (guint) ([accent greenComponent] * 255.0 + 0.5),
+                            (guint) ([accent blueComponent]  * 255.0 + 0.5));
+
+  return NULL;
+}
+#endif
 #endif
