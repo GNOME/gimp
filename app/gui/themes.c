@@ -609,6 +609,94 @@ themes_apply_theme (Gimp          *gimp,
 
         }
 
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+      /* when using the system theme (which is Adwaita on Windows/macOS), use
+         the WinUI/Cocoa accent color instead of the hardcoded Adwaita blue */
+      if (! error && ! strcmp (config->theme, "System"))
+        {
+          gchar *gtk_theme = NULL;
+          gchar *accent    = NULL;
+
+          g_object_get (gtk_settings_get_default (),
+                        "gtk-theme-name", &gtk_theme, NULL);
+
+          if (! strcmp (gtk_theme, "Adwaita") || ! strcmp (gtk_theme, "Adwaita-dark"))
+            accent = themes_get_system_accent_color (prefer_dark_theme);
+
+          if (accent)
+            {
+              g_output_stream_printf (
+                output, NULL, NULL, &error,
+                "\n"
+                "@define-color system_accent %s;\n"
+                "@define-color accent_color @system_accent;\n"
+                "@define-color accent_bg_color @system_accent;\n"
+                "@define-color theme_selected_bg_color @system_accent;\n"
+                "@define-color theme_unfocused_selected_bg_color @system_accent;\n"
+                "\n"
+                "selection,\n"
+                "*:selected, *:selected:focus,\n"
+                "row:selected, flowboxchild:selected,\n"
+                "treeview.view:selected, treeview.view:selected:focus,\n"
+                "menuitem:hover, .menu menuitem:hover, .context-menu menuitem:hover {\n"
+                "  background-color: @system_accent;\n"
+                "  color: #ffffff;\n"
+                "}\n"
+                "entry:focus, spinbutton:focus:not(.vertical) {\n"
+                "  border-color: @system_accent;\n"
+                "  box-shadow: inset 0 0 0 1px @system_accent;\n"
+                "}\n"
+                "checkbutton check:checked, checkbutton check:indeterminate,\n"
+                "radiobutton radio:checked, radiobutton radio:indeterminate {\n"
+                "  background-image: none;\n"
+                "  background-color: @system_accent;\n"
+                "  border-color: shade(@system_accent, 0.8);\n"
+                "}\n"
+                "switch:checked {\n"
+                "  background-color: @system_accent;\n"
+                "  border-color: shade(@system_accent, 0.8);\n"
+                "}\n"
+                "switch:checked > slider {\n"
+                "  border-color: shade(@system_accent, 0.8);\n"
+                "}\n"
+                "progressbar > trough > progress,\n"
+                "levelbar block.filled {\n"
+                "  background-color: @system_accent;\n"
+                "}\n"
+                "scale highlight,\n"
+                "scale trough > progress {\n"
+                "  background-color: @system_accent;\n"
+                "  border-color: shade(@system_accent, 0.8);\n"
+                "}\n"
+                "button.suggested-action {\n"
+                "  background-image: none;\n"
+                "  background-color: @system_accent;\n"
+                "  border-color: shade(@system_accent, 0.8);\n"
+                "  color: #ffffff;\n"
+                "}\n"
+                "notebook > header > tabs > tab:checked {\n"
+                "  box-shadow: inset 0 -4px @system_accent;\n"
+                "}\n"
+                "menubar > menuitem:hover {\n"
+                "  box-shadow: inset 0 -3px @system_accent;\n"
+                "}\n"
+                "*:link, *:visited,\n"
+                "button:link, button:visited,\n"
+                "button:link > label, button:visited > label {\n"
+                "  color: @system_accent;\n"
+                "}\n"
+                "*:link:hover, button:link > label:hover,\n"
+                "*:link:active, button:link > label:active {\n"
+                "  color: shade(@system_accent, 1.15);\n"
+                "}\n",
+                accent);
+            }
+
+          g_free (accent);
+          g_free (gtk_theme);
+        }
+#endif
+
       if (! error && config->override_icon_size)
         {
           const gchar *tool_icon_size   = "large-toolbar";
