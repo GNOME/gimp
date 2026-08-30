@@ -110,6 +110,7 @@ enum
   SELECTED_CHANNELS_CHANGED,
   SELECTED_PATHS_CHANGED,
   SELECTED_LAYERS_CHANGED,
+  SELECTED_DRAWABLES_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
   MASK_CHANGED,
@@ -352,11 +353,11 @@ gimp_image_class_init (GimpImageClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[SELECTED_LAYERS_CHANGED] =
-    g_signal_new ("selected-layers-changed",
+  gimp_image_signals[SELECTED_PATHS_CHANGED] =
+    g_signal_new ("selected-paths-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, selected_layers_changed),
+                  G_STRUCT_OFFSET (GimpImageClass, selected_paths_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -368,11 +369,19 @@ gimp_image_class_init (GimpImageClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[SELECTED_PATHS_CHANGED] =
-    g_signal_new ("selected-paths-changed",
+  gimp_image_signals[SELECTED_LAYERS_CHANGED] =
+    g_signal_new ("selected-layers-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, selected_paths_changed),
+                  G_STRUCT_OFFSET (GimpImageClass, selected_layers_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
+  gimp_image_signals[SELECTED_DRAWABLES_CHANGED] =
+    g_signal_new ("selected-drawables-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, selected_drawables_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -1852,6 +1861,12 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GList            *layers  = gimp_image_get_selected_layers (image);
 
+  if (private->layer_stack)
+    for (GList *iter = private->layer_stack->data; iter; iter = iter->next)
+      g_signal_handlers_disconnect_by_func (iter->data,
+                                            G_CALLBACK (gimp_image_selected_drawables_changed),
+                                            image);
+
   if (layers)
     {
       /*  Configure the layer stack to reflect this change  */
@@ -1867,8 +1882,15 @@ gimp_image_selected_layers_notify (GimpItemTree     *tree,
       private->layer_stack = g_slist_prepend (private->layer_stack, g_list_copy (layers));
     }
 
+  for (GList *iter = layers; iter; iter = iter->next)
+    g_signal_connect_swapped (iter->data, "edit-mask-changed",
+                              G_CALLBACK (gimp_image_selected_drawables_changed),
+                              image);
+
   if (layers && gimp_image_get_selected_channels (image))
     gimp_image_set_selected_channels (image, NULL);
+  else
+    g_signal_emit (image, gimp_image_signals[SELECTED_DRAWABLES_CHANGED], 0);
 
   g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
 }
@@ -1884,6 +1906,8 @@ gimp_image_selected_channels_notify (GimpItemTree     *tree,
 
   if (channels && gimp_image_get_selected_layers (image))
     gimp_image_set_selected_layers (image, NULL);
+  else
+    g_signal_emit (image, gimp_image_signals[SELECTED_DRAWABLES_CHANGED], 0);
 }
 
 static void
@@ -3874,11 +3898,11 @@ gimp_image_alpha_changed (GimpImage *image)
 }
 
 void
-gimp_image_selected_layers_changed (GimpImage *image)
+gimp_image_selected_drawables_changed (GimpImage *image)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[SELECTED_LAYERS_CHANGED], 0);
+  g_signal_emit (image, gimp_image_signals[SELECTED_DRAWABLES_CHANGED], 0);
 }
 
 void
