@@ -223,10 +223,13 @@ gimp_controller_manager_restore (GimpControllerManager *self,
   while ((found = gimp_container_search (GIMP_CONTAINER (self),
                                         (GimpContainerSearchFunc) gimp_controller_search_invalid,
                                         NULL)))
-    /* Clean out the manager off invalid controllers. This may happen
-     * in particular with the removed GimpControllerMouse, which our
-     * migration code would translate as a deserialized
-     * GimpControllerInfo with NULL controller.
+    /* Clean out the manager off invalid controllers. This should not
+     * happen, even with removed controllers (e.g. GimpControllerMouse),
+     * which our migration code should take care of (and if it doesn't,
+     * the whole controllerrc ends up invalid).
+     * That's still good sanitization, as a purposely created invalid
+     * controllerrc with no (controller "<name>") line could add a NULL
+     * controller which could crash the software.
      */
     gimp_container_remove (GIMP_CONTAINER (self), found);
 
