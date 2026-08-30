@@ -4053,7 +4053,7 @@ gimp_image_alpha_changed (GimpImage *image)
 }
 
 void
-gimp_image_active_drawable_changed (GimpImage *image)
+gimp_image_selected_layers_changed (GimpImage *image)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
