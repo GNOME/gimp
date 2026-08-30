@@ -2760,14 +2760,6 @@ gimp_layer_set_edit_mask (GimpLayer *layer,
       layer->edit_mask = edit ? TRUE : FALSE;
 
       g_signal_emit (layer, layer_signals[EDIT_MASK_CHANGED], 0);
-
-      if (gimp_item_is_attached (GIMP_ITEM (layer)))
-        /* Technically the selected layers haven't changed, yet this is
-         * needed to trigger tools to re-evaluate the selected
-         * drawables.
-         * TODO: add a "selected-drawables-changed" signal.
-         */
-        gimp_image_selected_layers_changed (gimp_item_get_image (GIMP_ITEM (layer)));
     }
 }
 

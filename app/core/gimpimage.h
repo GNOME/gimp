@@ -55,6 +55,7 @@ struct _GimpImageClass
   void (* selected_channels_changed)    (GimpImage            *image);
   void (* selected_paths_changed)       (GimpImage            *image);
   void (* selected_layers_changed)      (GimpImage            *image);
+  void (* selected_drawables_changed)   (GimpImage            *image);
   void (* component_visibility_changed) (GimpImage            *image,
                                          GimpChannelType       channel);
   void (* component_active_changed)     (GimpImage            *image,
@@ -255,7 +256,7 @@ GimpComponentMask     gimp_image_get_visible_mask             (GimpImage        
 void                  gimp_image_mode_changed                 (GimpImage          *image);
 void                  gimp_image_precision_changed            (GimpImage          *image);
 void                  gimp_image_alpha_changed                (GimpImage          *image);
-void                  gimp_image_selected_layers_changed      (GimpImage          *image);
+void                  gimp_image_selected_drawables_changed   (GimpImage          *image);
 void                  gimp_image_invalidate                   (GimpImage          *image,
                                                                gint                x,
                                                                gint                y,

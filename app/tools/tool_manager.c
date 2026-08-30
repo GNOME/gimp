@@ -70,38 +70,38 @@ struct _GimpToolManager
 
 /*  local function prototypes  */
 
-static GimpToolManager * tool_manager_get                       (Gimp            *gimp);
+static GimpToolManager * tool_manager_get                        (Gimp            *gimp);
 
-static void              tool_manager_select_tool               (GimpToolManager *tool_manager,
-                                                                 GimpTool        *tool);
+static void              tool_manager_select_tool                (GimpToolManager *tool_manager,
+                                                                  GimpTool        *tool);
 
-static void              tool_manager_set_active_tool_group     (GimpToolManager *tool_manager,
-                                                                 GimpToolGroup   *tool_group);
+static void              tool_manager_set_active_tool_group      (GimpToolManager *tool_manager,
+                                                                  GimpToolGroup   *tool_group);
 
-static void              tool_manager_tool_changed              (GimpContext     *user_context,
-                                                                 GimpToolInfo    *tool_info,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_preset_changed            (GimpContext     *user_context,
-                                                                 GimpToolPreset  *preset,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_image_clean_dirty         (GimpImage       *image,
-                                                                 GimpDirtyMask    dirty_mask,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_image_saving              (GimpImage       *image,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_tool_ancestry_changed     (GimpToolInfo    *tool_info,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_group_active_tool_changed (GimpToolGroup   *tool_group,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_image_changed             (GimpContext     *context,
-                                                                 GimpImage       *image,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_selected_layers_changed   (GimpImage       *image,
-                                                                 GimpToolManager *tool_manager);
-static void              tool_manager_active_tool_deactivated   (GimpContext     *context,
-                                                                 GimpToolManager *tool_manager);
+static void              tool_manager_tool_changed               (GimpContext     *user_context,
+                                                                  GimpToolInfo    *tool_info,
+                                                                  GimpToolManager *tool_manager);
+static void              tool_manager_preset_changed             (GimpContext     *user_context,
+                                                                  GimpToolPreset  *preset,
+                                                                  GimpToolManager *tool_manager);
+static void              tool_manager_image_clean_dirty          (GimpImage       *image,
+                                                                  GimpDirtyMask    dirty_mask,
+                                                                  GimpToolManager *tool_manager);
+static void              tool_manager_image_saving               (GimpImage       *image,
+                                                                  GimpToolManager *tool_manager);
+static void              tool_manager_tool_ancestry_changed      (GimpToolInfo    *tool_info,
+                                                                  GimpToolManager *tool_manager);
+static void              tool_manager_group_active_tool_changed  (GimpToolGroup   *tool_group,
+                                                                  GimpToolManager *tool_manager);
+static void              tool_manager_image_changed              (GimpContext     *context,
+                                                                  GimpImage       *image,
+                                                                  GimpToolManager *tool_manager);
+static void              tool_manager_selected_drawables_changed (GimpImage       *image,
+                                                                  GimpToolManager *tool_manager);
+static void              tool_manager_active_tool_deactivated    (GimpContext     *context,
+                                                                  GimpToolManager *tool_manager);
 
-static void              tool_manager_cast_spell                (GimpToolInfo    *tool_info);
+static void              tool_manager_cast_spell                 (GimpToolInfo    *tool_info);
 
 
 static GQuark tool_manager_quark = 0;
@@ -158,8 +158,8 @@ tool_manager_init (Gimp *gimp)
   tool_manager_image_changed (user_context,
                               gimp_context_get_image (user_context),
                               tool_manager);
-  tool_manager_selected_layers_changed (gimp_context_get_image (user_context),
-                                        tool_manager);
+  tool_manager_selected_drawables_changed (gimp_context_get_image (user_context),
+                                           tool_manager);
 
   tool_manager_tool_changed (user_context,
                              gimp_context_get_tool (user_context),
@@ -192,7 +192,7 @@ tool_manager_exit (Gimp *gimp)
 
   if (tool_manager->image)
     g_signal_handlers_disconnect_by_func (tool_manager->image,
-                                          tool_manager_selected_layers_changed,
+                                          tool_manager_selected_drawables_changed,
                                           tool_manager);
 
   gimp_container_remove_handler (gimp->images,
@@ -985,11 +985,9 @@ tool_manager_image_changed (GimpContext     *context,
                             GimpToolManager *tool_manager)
 {
   if (tool_manager->image)
-    {
-      g_signal_handlers_disconnect_by_func (tool_manager->image,
-                                            tool_manager_selected_layers_changed,
-                                            tool_manager);
-    }
+    g_signal_handlers_disconnect_by_func (tool_manager->image,
+                                          tool_manager_selected_drawables_changed,
+                                          tool_manager);
 
   tool_manager->image = image;
 
@@ -1005,14 +1003,14 @@ tool_manager_image_changed (GimpContext     *context,
     }
 
   if (image)
-    g_signal_connect (tool_manager->image, "selected-layers-changed",
-                      G_CALLBACK (tool_manager_selected_layers_changed),
+    g_signal_connect (tool_manager->image, "selected-drawables-changed",
+                      G_CALLBACK (tool_manager_selected_drawables_changed),
                       tool_manager);
 }
 
 static void
-tool_manager_selected_layers_changed (GimpImage       *image,
-                                      GimpToolManager *tool_manager)
+tool_manager_selected_drawables_changed (GimpImage       *image,
+                                         GimpToolManager *tool_manager)
 {
   /* Re-activate transform tools when changing selected layers */
   if (image                                                    &&
@@ -1023,8 +1021,7 @@ tool_manager_selected_layers_changed (GimpImage       *image,
                              tool_manager->active_tool->tool_info);
 
       tool_manager_tool_changed (tool_manager->gimp->user_context,
-                                 gimp_context_get_tool (
-                                   tool_manager->gimp->user_context),
+                                 gimp_context_get_tool (tool_manager->gimp->user_context),
                                  tool_manager);
     }
 }
