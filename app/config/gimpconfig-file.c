@@ -198,9 +198,9 @@ gimp_config_file_copy (const gchar         *source,
       size_t write_len;
 
       write_bytes = post_process_callback (user_data);
-      write_len   = strlen (write_bytes);
+      write_len   = write_bytes ? strlen (write_bytes) : 0;
 
-      if (fwrite (write_bytes, 1, write_len, dfile) < write_len)
+      if (write_bytes && fwrite (write_bytes, 1, write_len, dfile) < write_len)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Error writing '%s': %s"),

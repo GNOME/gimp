@@ -77,6 +77,8 @@ struct _GimpUserInstall
   gpointer                log_data;
 
   GHashTable             *accels;
+  GString                *buffered_lines;
+  gboolean                drop_buffered;
 };
 
 typedef enum
@@ -168,6 +170,8 @@ gimp_user_install_new (GObject  *gimp,
   install->gimp    = gimp;
   install->verbose = verbose;
   install->accels  = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+  install->buffered_lines = NULL;
+  install->drop_buffered  = FALSE;
 
   user_install_detect_old (install, gimp_directory ());
 
@@ -1005,49 +1009,97 @@ user_update_templaterc (const GMatchInfo *matched_value,
   return FALSE;
 }
 
+/* All these patterns are overshadowed by the latest ".*", but I leave
+ * them around to have a good vision of what we look for and replace.
+ * The reason of this catch-all is that we want to bufferize all data
+ * until we are sure we haven't recognized an obsolete module.
+ */
 #define CONTROLLERRC_UPDATE_PATTERN \
   "\\(map \"(scroll|cursor)-[^\"]*\\bcontrol\\b[^\"]*\""    "|" \
-  "\\(controller \"GimpControllerMouse\"\\)"
+  "\\(GimpControllerInfo .*"                                "|" \
+  "\\(controller \"GimpControllerMouse\"\\)"                "|" \
+  "\\(controller \"ControllerMidi\""                        "|" \
+  ".*"
 
 static gboolean
 user_update_controllerrc (const GMatchInfo *matched_value,
                           GString          *new_value,
                           gpointer          data)
 {
-  gchar *original;
+  GimpUserInstall *install  = (GimpUserInstall *) data;
+  gchar           *original = g_match_info_fetch (matched_value, 0);
 
-  original = g_match_info_fetch (matched_value, 0);
+  if (strstr (original, "(GimpControllerInfo"))
+    {
+      if (install->buffered_lines && ! install->drop_buffered)
+        g_string_append (new_value, install->buffered_lines->str);
+      if (install->buffered_lines)
+        g_string_free (install->buffered_lines, TRUE);
 
-  if (g_str_has_prefix (original, "(controller"))
+      install->buffered_lines = g_string_new (original);
+      install->drop_buffered  = FALSE;
+    }
+  else if (strstr (original, "(controller \"GimpControllerMouse\""))
     {
       /* GimpControllerMouse was removed in commit 76ddf4421c (for GIMP
-       * 3.0). Just removing this line would technically create an
-       * invalid GimpControllerInfo, but this goes together with a
-       * sanitization to remove invalid controllers with
-       * gimp_controller_search_invalid().
+       * 3.0).
        */
+      install->drop_buffered = TRUE;
     }
-  else
+#ifdef __APPLE__
+  else if (strstr (original, "(controller \"ControllerMidi\""))
+    {
+      /* MIDI controller was removed from macOS support in commit
+       * acfc9639 (GIMP 3.2.6).
+       */
+      install->drop_buffered = TRUE;
+    }
+#endif
+  else if (strstr (original, "(map "))
     {
       gchar  *replacement;
       GRegex *regexp = NULL;
 
-      /* No need of a complicated pattern here.
-       * CONTROLLERRC_UPDATE_PATTERN took care of it first.
+      /* Various events whose name had "control" renamed with "primary"
+       * in GIMP 2.10.0. See commit e50103c.
        */
-      regexp = g_regex_new ("\\bcontrol\\b", 0, 0, NULL);
-
+      regexp = g_regex_new ("(\\(map \"(scroll|cursor)-[^\"]*)-\\bcontrol\\b",
+                            0, 0, NULL);
       replacement = g_regex_replace (regexp, original, -1, 0,
-                                     "primary", 0, NULL);
-      g_string_append (new_value, replacement);
+                                     "\\1-primary", 0, NULL);
+      if (install->buffered_lines)
+        g_string_append_printf (install->buffered_lines, "\n%s", replacement);
+      else
+        install->buffered_lines = g_string_new (replacement);
 
       g_free (replacement);
       g_regex_unref (regexp);
+    }
+  else if (strlen (original) > 0)
+    {
+      if (install->buffered_lines)
+        g_string_append_printf (install->buffered_lines, "\n%s", original);
+      else
+        install->buffered_lines = g_string_new (original);
     }
 
   g_free (original);
 
   return FALSE;
+}
+
+static gchar *
+user_update_post_process_controllerrc (gpointer user_data)
+{
+  GimpUserInstall *install  = (GimpUserInstall *) user_data;
+  gchar           *buffered = NULL;
+
+  if (install->buffered_lines)
+    buffered = g_string_free (install->buffered_lines, install->drop_buffered);
+
+  install->buffered_lines = NULL;
+
+  return buffered;
 }
 
 #define SESSIONRC_UPDATE_PATTERN_2TO3 \
@@ -1679,8 +1731,9 @@ user_install_migrate_files (GimpUserInstall *install)
             }
           else if (strcmp (basename, "controllerrc") == 0)
             {
-              update_pattern  = CONTROLLERRC_UPDATE_PATTERN;
-              update_callback = user_update_controllerrc;
+              update_pattern        = CONTROLLERRC_UPDATE_PATTERN;
+              update_callback       = user_update_controllerrc;
+              post_process_callback = user_update_post_process_controllerrc;
             }
           else if (strcmp (basename, "gimprc") == 0)
             {
