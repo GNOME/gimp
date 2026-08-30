@@ -381,6 +381,13 @@ gui_unique_quartz_init (Gimp *gimp)
                  queue: [NSOperationQueue mainQueue]
             usingBlock: themeChangeHandler];
 
+  /* same as above but for the system accent color */
+  [[NSNotificationCenter defaultCenter]
+    addObserverForName: NSSystemColorsDidChangeNotification
+                object: nil
+                 queue: [NSOperationQueue mainQueue]
+            usingBlock: themeChangeHandler];
+
   /* Using the event handler is a hack, it is necessary because
    * gtkosx_application will drop the file open events if any
    * event processing is done before gtkosx_application_ready is
@@ -416,6 +423,11 @@ gui_unique_quartz_exit (void)
   [[NSDistributedNotificationCenter defaultCenter]
     removeObserver: themeChangeHandler
               name: @"AppleInterfaceThemeChangedNotification"
+            object: nil];
+
+  [[NSNotificationCenter defaultCenter]
+    removeObserver: themeChangeHandler
+              name: NSSystemColorsDidChangeNotification
             object: nil];
 
   themeChangeHandler = NULL;
