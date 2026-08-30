@@ -2999,3 +2999,49 @@ gimp_item_is_rasterized (GimpItem *item)
           (GIMP_IS_LINK_LAYER (item) && ! gimp_item_is_link_layer (item)) ||
           (GIMP_IS_VECTOR_LAYER (item) && ! gimp_item_is_vector_layer (item)));
 }
+
+/* Returns whether @item is writable. If it is not writable,
+ * @read_only_item will be set to the first non-writable item found
+ * which made @item non-writable (in some cases, it can be a child or
+ * parent item).
+ *
+ * Non-writable items are:
+ *
+ * - Rasterizable items (which were not rasterized) or groups with a
+ *   rasterizable child;
+ * - Items whose content is locked (because itself, a child or parent is
+ *   locked).
+ */
+gboolean
+gimp_item_is_writable (GimpItem  *item,
+                       GimpItem **read_only_item)
+{
+  GimpContainer *container;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  if (gimp_item_is_content_locked (item, read_only_item))
+    {
+      return FALSE;
+    }
+  else if (gimp_item_is_rasterizable (item))
+    {
+      if (read_only_item)
+        *read_only_item = item;
+      return FALSE;
+    }
+  else if ((container = gimp_viewable_get_children (GIMP_VIEWABLE (item))))
+    {
+      gint n_children = gimp_container_get_n_children (container);
+
+      for (gint i = 0; i < n_children; i++)
+        {
+          GimpObject *child = gimp_container_get_child_by_index (container, i);
+
+          if (! gimp_item_is_writable (GIMP_ITEM (child), read_only_item))
+            return FALSE;
+        }
+    }
+
+  return TRUE;
+}
