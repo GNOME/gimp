@@ -2454,7 +2454,7 @@ load_sketchbook_layers (TIFF      *tif,
   guint32         image_height       = gimp_image_get_height (image);
   guint32         image_width        = gimp_image_get_width (image);
   GList          *selected_layer     = NULL;
-  GimpGroupLayer *group_layer        = NULL;
+  GimpGroupLayer *parent_layer       = NULL;
   GeglColor      *fill_color;
   GeglColor      *foreground_color;
   GimpLayer      *background_layer;
@@ -2464,7 +2464,6 @@ load_sketchbook_layers (TIFF      *tif,
   gchar          *hex_color;
   gint            layer_count        = 0;
   gint            sel_layer_index    = 0;
-  gint            group_index        = 0;
   gboolean        background_visible = TRUE;
   gint16          sub_len;
   void           *ptr;
@@ -2508,24 +2507,6 @@ load_sketchbook_layers (TIFF      *tif,
 
   g_strfreev (image_settings);
 
-  fill_color = gegl_color_new (hex_color);
-  g_free (hex_color);
-
-  foreground_color = gegl_color_duplicate (gimp_context_get_foreground ());
-  gimp_context_set_foreground (fill_color);
-
-  background_layer = gimp_layer_new (image, _("Background"),
-                                     image_width, image_height,
-                                     GIMP_RGBA_IMAGE, 100, default_mode);
-
-  gimp_image_insert_layer (image, background_layer, NULL, -1);
-  gimp_drawable_fill (GIMP_DRAWABLE (background_layer), GIMP_FILL_FOREGROUND);
-  gimp_item_set_visible (GIMP_ITEM (background_layer), background_visible);
-
-  g_object_unref (fill_color);
-  gimp_context_set_foreground (foreground_color);
-  g_object_unref (foreground_color);
-
   /* The layers are stored in BGRA format */
   format = babl_format_new (babl_model ("R~aG~aB~aA"),
                                         babl_type ("u8"),
@@ -2543,7 +2524,7 @@ load_sketchbook_layers (TIFF      *tif,
 
       memcpy (offsets, ptr, sub_len * sizeof (offsets[0]));
 
-      for (gint i = 0; i < sub_len; i++)
+      for (gint i = sub_len - 1; i >= 0; i--)
         {
           gchar  *alias_sublayer_info = NULL;
           gint32  alias_sublayer_len  = 0;
@@ -2568,13 +2549,14 @@ load_sketchbook_layers (TIFF      *tif,
               gfloat        opacity          = 100;
               gboolean      visible          = TRUE;
               gboolean      locked           = FALSE;
+              gboolean      is_group_layer   = FALSE;
               gint          alias_blend_mode = 0;
-              gint          in_group         = 0;
+              guint         in_group         = 0;
               guint32      *pixels           = NULL;
               gsize         pixels_size;
               guint32       row;
 
-              layer_settings = g_strsplit (alias_sublayer_info, ", ", 11);
+              layer_settings = g_strsplit (alias_sublayer_info, ", ", 12);
               if (layer_settings[0] != NULL)
                 {
                   opacity = (gfloat) g_ascii_strtod (layer_settings[0], &endptr);
@@ -2583,8 +2565,14 @@ load_sketchbook_layers (TIFF      *tif,
               if (layer_settings[2] != NULL)
                 visible = g_ascii_strtoll (layer_settings[2], &endptr, 10);
 
-              if (layer_settings[3] != NULL)
-                locked = g_ascii_strtoll (layer_settings[3], &endptr, 10);
+              if (layer_settings[4] != NULL)
+                locked = g_ascii_strtoll (layer_settings[4], &endptr, 10);
+
+              /* Sample files contradict the documentation. This field is 1
+               * if the layer is a group layer, 0 if it's a regular layer */
+              if (layer_settings[5] != NULL)
+                is_group_layer = g_ascii_strtoll (layer_settings[5], &endptr,
+                                                  10);
 
               /* Undocumented, but based on sample images, the first reserved
                * value represents the blend mode */
@@ -2646,51 +2634,46 @@ load_sketchbook_layers (TIFF      *tif,
               if (! TIFFGetField (tif, TIFFTAG_YPOSITION, &y_pos))
                 y_pos = 0.0f;
 
-              blend_mode = convert_alias_blend (alias_blend_mode, FALSE);
+              blend_mode = convert_alias_blend (alias_blend_mode,
+                                                is_group_layer);
 
-              if (count == group_index)
+              if (is_group_layer)
                 {
-                  gimp_item_set_name (GIMP_ITEM (group_layer), layer_name);
+                  layer =
+                    GIMP_LAYER (gimp_group_layer_new (image, layer_name));
 
-                  blend_mode = convert_alias_blend (alias_blend_mode, TRUE);
-                  gimp_layer_set_mode (GIMP_LAYER (group_layer), blend_mode);
-
-                  layer = GIMP_LAYER (group_layer);
-                  if (in_group != 0)
-                    {
-                      group_layer = gimp_group_layer_new (image, NULL);
-
-                      gimp_image_insert_layer (image, GIMP_LAYER (group_layer),
-                                               NULL, 0);
-                      gimp_image_reorder_item (image, GIMP_ITEM (layer),
-                                               GIMP_ITEM (group_layer), 0);
-                      group_index = in_group;
-                    }
+                  gimp_layer_set_mode (GIMP_LAYER (layer), blend_mode);
+                  gimp_layer_set_opacity (GIMP_LAYER (layer), opacity);
                 }
-              else if (in_group != 0 && group_index != in_group)
-                {
-                  group_layer = gimp_group_layer_new (image, NULL);
-
-                  gimp_image_insert_layer (image, GIMP_LAYER (group_layer),
-                                           NULL, 0);
-                  group_index = in_group;
-                }
-              else if (in_group == 0)
-                {
-                  group_layer = NULL;
-                }
-
-              if (layer == NULL)
+              else
                 {
                   layer = gimp_layer_new (image, layer_name, layer_width,
                                           layer_height, GIMP_RGBA_IMAGE,
                                           opacity, blend_mode);
-                  gimp_image_insert_layer (image, layer,
-                                           GIMP_LAYER (group_layer), 0);
+                }
+              gimp_item_set_tattoo (GIMP_ITEM (layer), i);
+
+              parent_layer = NULL;
+              if (in_group > 0)
+                {
+                  parent_layer =
+                    GIMP_GROUP_LAYER (gimp_image_get_layer_by_tattoo (image,
+                                                                      in_group));
+
+                  /* Older versions of Sketchbook have an in_group offset
+                   * by 1 */
+                  in_group++;
+                  if (! parent_layer)
+                    parent_layer =
+                      GIMP_GROUP_LAYER (gimp_image_get_layer_by_tattoo (image,
+                                                                        in_group));
                 }
 
+              gimp_image_insert_layer (image, layer, GIMP_LAYER (parent_layer),
+                                       count);
+
               /* Mark selected layer */
-              if (count == sel_layer_index)
+              if (i == sel_layer_index)
                 selected_layer = g_list_prepend (selected_layer, layer);
 
               /* Loading pixel data */
@@ -2710,11 +2693,11 @@ load_sketchbook_layers (TIFF      *tif,
 #if G_BYTE_ORDER != G_LITTLE_ENDIAN
                       guint32 row_start = row * layer_width;
                       guint32 row_end   = row_start + layer_width;
-                      guint32 i;
+                      guint32 j;
 
                       /* Make sure our channels are in the right order */
-                      for (i = row_start; i < row_end; i++)
-                        pixels[i] = GUINT32_FROM_LE (pixels[i]);
+                      for (j = row_start; j < row_end; j++)
+                        pixels[j] = GUINT32_FROM_LE (pixels[j]);
 #endif
                       gegl_buffer_set (buffer,
                                        GEGL_RECTANGLE (0, layer_height - row - 1,
@@ -2740,7 +2723,7 @@ load_sketchbook_layers (TIFF      *tif,
               gimp_item_set_visible (GIMP_ITEM (layer), visible);
               gimp_item_set_color_tag (GIMP_ITEM (layer), color_tag);
               /* Set locks after copying pixel data over */
-              gimp_item_set_lock_content (GIMP_ITEM (layer), locked);
+              /* gimp_item_set_lock_content (GIMP_ITEM (layer), locked); */
               gimp_layer_set_lock_alpha (layer, locked);
 
               gimp_progress_update ((gdouble) count / (gdouble) layer_count);
@@ -2748,6 +2731,25 @@ load_sketchbook_layers (TIFF      *tif,
             }
 #endif
         }
+
+      /* Add background layer at bottom of stack */
+      fill_color = gegl_color_new (hex_color);
+      g_free (hex_color);
+
+      foreground_color = gegl_color_duplicate (gimp_context_get_foreground ());
+      gimp_context_set_foreground (fill_color);
+
+      background_layer = gimp_layer_new (image, _("Background"),
+                                         image_width, image_height,
+                                         GIMP_RGBA_IMAGE, 100, default_mode);
+
+      gimp_image_insert_layer (image, background_layer, NULL, count);
+      gimp_drawable_fill (GIMP_DRAWABLE (background_layer), GIMP_FILL_FOREGROUND);
+      gimp_item_set_visible (GIMP_ITEM (background_layer), background_visible);
+
+      g_object_unref (fill_color);
+      gimp_context_set_foreground (foreground_color);
+      g_object_unref (foreground_color);
 
       if (selected_layer)
         gimp_image_take_selected_layers (image, selected_layer);
