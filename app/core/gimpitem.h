@@ -403,3 +403,6 @@ gboolean        gimp_item_is_in_set          (GimpItem           *item,
 
 gboolean        gimp_item_is_rasterizable    (GimpItem           *item);
 gboolean        gimp_item_is_rasterized      (GimpItem           *item);
+
+gboolean        gimp_item_is_writable        (GimpItem           *item,
+                                              GimpItem          **read_only_item);
