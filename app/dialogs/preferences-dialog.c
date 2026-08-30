@@ -2011,7 +2011,28 @@ prefs_dialog_new (Gimp       *gimp,
         gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
         gtk_container_add (GTK_CONTAINER (row), grid);
 
-        name_label = gtk_label_new (themes[i]);
+        if (! strcmp (themes[i], "System"))
+          {
+            gchar *gtk_theme = NULL;
+            gchar *label_text;
+
+            g_object_get (gtk_settings_get_default (),
+                          "gtk-theme-name", &gtk_theme, NULL);
+
+            /* make clear to the user which GTK system theme is being used.
+               This is to avoid confusion from old GTK2 users (#10632) and
+               to avoid expections from new GTK3 users (#14023).
+               This also helps a lot debugging system theme leaks. */
+            label_text = g_strdup_printf ("%s (%s)", themes[i], gtk_theme);
+            name_label = gtk_label_new (label_text);
+
+            g_free (label_text);
+            g_free (gtk_theme);
+          }
+        else
+          {
+            name_label = gtk_label_new (themes[i]);
+          }
         g_object_set (name_label, "xalign", 0.0, NULL);
         gtk_grid_attach (GTK_GRID (grid), name_label, 1, 0, 1, 1);
 
