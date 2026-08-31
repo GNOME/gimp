@@ -919,8 +919,11 @@ gimp_color_area_drag_begin (GtkWidget      *widget,
                           window,
                           (GDestroyNotify) gtk_widget_destroy);
 
+#ifndef PLATFORM_OSX
+  /* Gtk-WARNING: gtk_drag_set_icon_widget is not supported on Mac OS X */
   gtk_drag_set_icon_widget (context, window,
                             DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
+#endif
 }
 
 static void

@@ -769,8 +769,11 @@ gimp_dnd_data_drag_begin (GtkWidget      *widget,
       g_object_set_data_full (G_OBJECT (widget), "gimp-dnd-data-widget",
                               window, (GDestroyNotify) gtk_widget_destroy);
 
+#ifndef PLATFORM_OSX
+      /* Gtk-WARNING: gtk_drag_set_icon_widget is not supported on Mac OS X */
       gtk_drag_set_icon_widget (context, window,
                                 DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
+#endif
 
       /*  remember for which drag context the widget was made  */
       g_object_set_data (G_OBJECT (window), "gimp-gdk-drag-context", context);
