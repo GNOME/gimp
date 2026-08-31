@@ -454,7 +454,8 @@ sgiOpenFile(FILE *file, /* I - File to open */
                   return (NULL);
                 }
               sgip->table[0] =
-                g_try_malloc ((gsize) sgip->ysize * sgip->zsize * 4);
+                g_try_malloc ((gsize) sgip->ysize * sgip->zsize *
+                              sizeof (goffset));
               if (sgip->table[0] == NULL)
                 {
                   free(sgip->table);
@@ -466,7 +467,8 @@ sgiOpenFile(FILE *file, /* I - File to open */
                 sgip->table[i] = sgip->table[0] + i * sgip->ysize;
               sgip->length    = calloc(sgip->zsize, sizeof(goffset *));
               sgip->length[0] =
-                g_try_malloc ((gsize) sgip->ysize * sgip->zsize * 4);
+                g_try_malloc ((gsize) sgip->ysize * sgip->zsize *
+                              sizeof (goffset));
               for (i = 1; i < sgip->zsize; i ++)
                 sgip->length[i] = sgip->length[0] + i * sgip->ysize;
               break;
