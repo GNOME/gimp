@@ -52,6 +52,14 @@ Core:
     GTK 4 port.
   - Cache directory on macOS is now in ~/Library/Caches/ (instead of
     ~/Library/Application Support/).
+  - Added "Rotation" input for dynamics. This gives us support of the
+    Wacom Art Pen 2 stylus at least.
+  - Various performance improvements in text tool and font handling were
+    made.
+  - It is now possible to cut layer groups with a selection (which will
+    cut every children, recursively), as long as every child is writable
+    ("Content Lock" must not be set and the layers must be raster, or
+    rasterized).
 
 Tools:
 
@@ -90,11 +98,17 @@ Graphical User Interface:
     * Minimize button removed from various dialogs.
     * Fix dockable windows not floating.
     * GIMP's Spin buttons now respect the Cmd key.
-    * Scrollbars are now always shown.
+    * Scrollbars hiding now follows the relevant macOS system setting to
+      allow always showing them if requested (this is not the default),
+      just like it does with supported DEs.
     * Use Cmd+` instead of Alt+Tab.
     * Modules and Units are now listed on the mac menu like in 2.10.
     * Welcome and About dialogs are redundant from the application menu
       and were removed.
+    * Ctrl+F2 is used on behalf of Alt.
+    * Cmd+Shift+/ opens the Help menu.
+    * Ctrl+Cmd+Space opens the Emoji viewer.
+    * Improve localization for menu items.
   - Inactive arrow color (e.g. for notebook tabs) is now defined.
   - GimpColorScale style now moved to proper CSS.
   - GEGL Graph dialog now shows error messages for the graph in full.
@@ -115,6 +129,15 @@ Graphical User Interface:
   - More theme fixes were applied.
   - Pattern thumbnails are more properly filling their area by tiling
     them when relevant.
+  - Script-Fu will focus the first widget of every dialog by default,
+    will make it activate the default response if it's an entry subtype,
+    and will make OK the default response.
+  - Various fixes specific to KDE, as well as theme fixes related to
+    GIMP over KDE Breeze.
+  - The "System" theme in Preferences > Themes will now be listed with
+    the actual system theme's name written in between parentheses. E.g.:
+    "System (Adwaita)".
+  - Add accent color support to System theme on Windows and macOS.
 
 Plug-Ins:
 
@@ -141,11 +164,12 @@ Plug-Ins:
   - DDS: support additional mimetype "image/vnd.ms-dds" (used by
     Microsoft) and "image/x-dds" (used in Linux) to detect DDS files.
   - Various plug-ins are made transient to the calling core GIMP window.
-  - JPEG: with recent enough libjpeg-turbo (3.1.90+), all 8-bit JPEG
-    will now be loaded as 16bpc directly through the 12-bit pipeline.
-    This improves the recoverable dynamic range in cases where encoded
-    input was not limited to 8-bit input, as well as accuracy during
-    olor conversion and resampling.
+  - TIFF:
+    * More Sketchbook layer mode support on load: "Inverse Alpha
+      Mask" (GIMP's "Erase" blend mode) and group layers can now be set
+      as "Pass-Through", defaulting to "Normal (Legacy)", depending on
+      how they are set internally.
+    * Sketchbook TIFF group layer loading improved.
 
 API:
 
