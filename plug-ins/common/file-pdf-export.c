@@ -972,6 +972,7 @@ gui_single (GimpProcedure       *procedure,
                                                 "missing-fonts-label",
                                                 text, FALSE, FALSE);
       gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
+      gtk_label_set_max_width_chars (GTK_LABEL (widget), 80);
       gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (window),
                                         "convert-text-layers-frame",
                                         "convert-text-layers", TRUE,
