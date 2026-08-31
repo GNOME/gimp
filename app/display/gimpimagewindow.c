@@ -1998,6 +1998,17 @@ gimp_image_window_config_notify (GimpImageWindow *window,
         }
 
       gimp_image_window_update_tabs (window);
+
+      /* macOS ([GdkQuartzView updateLayer]) have cluncky timing for rendering. This
+         fixes: `Gtk-WARNING: Drawing a gadget with negative dimensions`. See: #13203*/
+      if (gtk_widget_get_realized (GTK_WIDGET (window)))
+        {
+          GtkAllocation allocation;
+
+          gtk_widget_get_preferred_size (GTK_WIDGET (window), NULL, NULL);
+          gtk_widget_get_allocation (GTK_WIDGET (window), &allocation);
+          gtk_widget_size_allocate (GTK_WIDGET (window), &allocation);
+        }
     }
 
   /* Session management */
