@@ -141,9 +141,15 @@ Graphical User Interface:
 
 Plug-Ins:
 
-  - Various security bugs fixed: ZDI-CAN-29403, ZDI-CAN-29395,
-    ZDI-CAN-29399, ZDI-CAN-29405, ZDI-CAN-29396, ZDI-CAN-29406,
-    ZDI-CAN-29401, ZDI-CAN-29398, ZDI-CAN-29400, ZDI-CAN-29404
+  - Various security bugs fixed: CVE-2026-18301, CVE-2026-18304,
+    CVE-2026-18302, CVE-2026-18303, CVE-2026-18305, CVE-2026-18306,
+    CVE-2026-18307, CVE-2026-18308, CVE-2026-18309, CVE-2026-62438,
+    CVE-2026-62439, ZDI-CAN-29400, #16424, CVE-2026-59087,
+    CVE-2026-59088, CVE-2026-59089, CVE-2026-66757, CVE-2026-59091,
+    CVE-2026-66758, CVE-2026-66759, CVE-2026-78465, CVE-2026-78475,
+    #16581, CVE-2026-79902, CVE-2026-80101, #16584, #16585, #16586,
+    #16587.
+    Cf.: https://gitlab.gnome.org/Teams/Releng/security/-/wikis/home#gimp
   - RawTherapee spawned from GIMP's AppImage does not crash anymore.
   - PDF: multi-page PDF are now loaded with an image size ensuring that
     all layers are visible (in case of pages of different dimensions).
