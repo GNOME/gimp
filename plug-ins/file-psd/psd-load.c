@@ -1304,7 +1304,7 @@ read_layer_info (PSDimage      *img_a,
           if (block_len + 4 > block_rem)
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("invalid block size."));
+                           _("invalid block size"));
               /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
               g_debug ("Invalid block size: %" G_GSIZE_FORMAT, (gsize) block_len);
               free_lyr_a (lyr_a, img_a->num_layers);
@@ -1338,7 +1338,7 @@ read_layer_info (PSDimage      *img_a,
           if (read_len > block_rem)
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("invalid block size."));
+                           _("invalid block size"));
               /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
               g_debug ("Invalid block size: %" G_GSIZE_FORMAT, (gsize) read_len);
               free_lyr_a (lyr_a, img_a->num_layers);
@@ -1368,7 +1368,7 @@ read_layer_info (PSDimage      *img_a,
               if (header_size > block_rem)
                 {
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               _("invalid block size."));
+                               _("invalid block size"));
                   /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
                   g_debug ("Invalid block size: %" G_GSIZE_FORMAT, (gsize) header_size);
                   free_lyr_a (lyr_a, img_a->num_layers);
@@ -1405,7 +1405,7 @@ read_layer_info (PSDimage      *img_a,
               if (res_a.data_len > block_rem)
                 {
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               _("invalid block size."));
+                               _("invalid block size"));
                   /* Translations have problems with using G_GSIZE_FORMAT, let's use g_debug. */
                   g_debug ("Invalid block size: %" G_GSIZE_FORMAT, res_a.data_len);
                   free_lyr_a (lyr_a, img_a->num_layers);
