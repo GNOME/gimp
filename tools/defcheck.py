@@ -68,7 +68,9 @@ if sys.platform in ['win32', 'cygwin']:
    platform_macos = False
 elif sys.platform == 'darwin':
    libextension   = ".dylib"
-   command        = "dyld_info -exports "
+   command        = getenv("NM", default="nm") + " -gU "
+   if shutil.which("dyld_info"):
+     command      = "dyld_info -exports "
    platform_linux = False
    platform_win32 = False
    platform_macos = True
@@ -161,7 +163,21 @@ for df in def_files:
             if len(parts) >= 4:
                nmsymbols += " 0 0 " + parts[3] # Keep the [2::3] logic happy
 
-   elif platform_macos:
+   elif platform_macos and not shutil.which("dyld_info"): # macOS 11 and earlier
+      lines = nm.split(sep='\n')
+      for line in lines:
+         parts = line.split()
+         if len(parts) == 3 and parts[1].upper() in "TDBRS":
+            symbol = parts[2]
+         elif len(parts) == 2 and parts[0].upper() in "TDBRS":
+            symbol = parts[1]
+         else:
+            continue
+         if symbol.startswith('_'):
+            symbol = symbol[1:]
+         nmsymbols += " 0 0 " + symbol # Keep the [2::3] logic happy
+
+   elif platform_macos: # macOS 12 and up
       lines = nm.split(sep='\n')
       for line in lines:
          parts = line.split()
