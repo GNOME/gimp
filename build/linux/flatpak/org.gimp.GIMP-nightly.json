@@ -110,8 +110,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.8.tar.gz",
-                            "sha256": "ea51b0609f58a9afa063b60daa1539948b62247721e154f4fff0ad3aec9f9756",
+                            "url": "https://github.com/Exiv2/exiv2/archive/refs/tags/v0.28.9.tar.gz",
+                            "sha256": "700b76b97695b2fab4ef8c79619c68ae57d09e0c130724791cafbd39e0eb4aef",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
@@ -135,8 +135,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.14.tar.gz",
-                    "sha256": "13c3327100a7b92e4c6a048db03ef07ee2db8e79baa4c517c6fae71e5b80034b",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.15.tar.gz",
+                    "sha256": "445ed5b0ea4d9cf98be3a4f219e419628b123b61dec65ccb743ab9b07fbebdaa",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -187,8 +187,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.25.zip",
-                            "sha256": "5ce391d1d09ff2f6b21af492fa72bd693e416a4a682ec48c04f91e5c0e16f383",
+                            "url": "https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.26.zip",
+                            "sha256": "cc64b9177e8c7eed2d3960a3dd9b0aa061ddc4c43c9067af1209e208e4a8144f",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 242778,
