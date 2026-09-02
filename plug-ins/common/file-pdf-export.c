@@ -2176,8 +2176,9 @@ draw_layer (GimpImage            *image,
 
       gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
 
-      if ((! gimp_item_is_text_layer (GIMP_ITEM (layer))    &&
-           ! gimp_item_is_vector_layer (GIMP_ITEM (layer))) ||
+      if (((! gimp_item_is_text_layer (GIMP_ITEM (layer))               ||
+           gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (layer))) &&
+           ! gimp_item_is_vector_layer (GIMP_ITEM (layer)))             ||
           convert_text)
         {
           /* For raster layers */
