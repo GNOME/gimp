@@ -232,31 +232,31 @@ this_module (void)
  * gimp_directory:
  *
  * Returns the user-specific GIMP settings directory. If the
- * environment variable GIMP3_DIRECTORY exists, it is used. If it is
- * an absolute path, it is used as is.  If it is a relative path, it
+ * environment variable `GIMP3_DIRECTORY` exists, it is used. If it is
+ * an absolute path, it is used as is. If it is a relative path, it
  * is taken to be a subdirectory of the home directory. If it is a
  * relative path, and no home directory can be determined, it is taken
- * to be a subdirectory of gimp_data_directory().
+ * to be a subdirectory of [func@Gimp.data_directory].
  *
- * The usual case is that no GIMP3_DIRECTORY environment variable
- * exists, and then we use the GIMPDIR subdirectory of the local
- * configuration directory:
+ * The usual case is that no `GIMP3_DIRECTORY` environment variable
+ * exists, and then we use a subdirectory of the local configuration
+ * directory (which subdirectory may vary depending on build setup):
  *
- * - UNIX: $XDG_CONFIG_HOME (defaults to $HOME/.config/)
+ * - UNIX: `$XDG_CONFIG_HOME` (defaults to `$HOME/.config/`)
  *
- * - Windows: CSIDL_APPDATA
+ * - Windows: `CSIDL_APPDATA`
  *
  * - OSX (UNIX exception): the Application Support Directory.
  *
  * If neither the configuration nor home directory exist,
- * g_get_user_config_dir() will return {tmp}/{user_name}/.config/ where
- * the temporary directory {tmp} and the {user_name} are determined
- * according to platform rules.
+ * [func@GLib.get_user_config_dir] will return
+ * `{tmp}/{user_name}/.config/` where the temporary directory `{tmp}` and
+ * the `{user_name}` are determined according to platform rules.
  *
  * In any case, we always return some non-empty string, whether it
  * corresponds to an existing directory or not.
  *
- * In config files such as gimprc, the string ${gimp_dir} expands to
+ * In config files such as `gimprc`, the string "${gimp_dir}" expands to
  * this directory.
  *
  * The returned string is owned by GIMP and must not be modified or
@@ -264,7 +264,7 @@ this_module (void)
  * GLib, which isn't necessarily UTF-8 (on Windows it is always
  * UTF-8.)
  *
- * Returns: The user-specific GIMP settings directory.
+ * Returns: (type filename): The user-specific GIMP settings directory.
  **/
 const gchar *
 gimp_directory (void)
@@ -415,20 +415,19 @@ gimp_directory (void)
  * Returns the top installation directory of GIMP. On Unix the
  * compile-time defined installation prefix is used. On Windows, the
  * installation directory as deduced from the executable's full
- * filename is used. On OSX we ask [NSBundle mainBundle] for the
+ * filename is used. On OSX we ask `[NSBundle mainBundle]` for the
  * resource path to check if GIMP is part of a relocatable bundle.
  *
- * In config files such as gimprc, the string ${gimp_installation_dir}
+ * In config files such as gimprc, the string "${gimp_installation_dir}"
  * expands to this directory.
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * GLib, which isn't necessarily UTF-8. (On Windows it always is
- * UTF-8.)
+ * GLib, which isn't necessarily UTF-8 (on Windows it is always UTF-8.)
  *
  * Since: 2.8
  *
- * Returns: The toplevel installation directory of GIMP.
+ * Returns: (type filename): The toplevel installation directory of GIMP.
  **/
 const gchar *
 gimp_installation_directory (void)
@@ -569,23 +568,22 @@ gimp_installation_directory (void)
  * gimp_data_directory:
  *
  * Returns the default top directory for GIMP data. If the environment
- * variable GIMP3_DATADIR exists, that is used.  It should be an
- * absolute pathname.  Otherwise, on Unix the compile-time defined
+ * variable `GIMP3_DATADIR` exists, that is used. It should be an
+ * absolute pathname. Otherwise, on Unix the compile-time defined
  * directory is used. On Windows, the installation directory as
  * deduced from the executable's full filename is used.
  *
  * Note that the actual directories used for GIMP data files can be
  * overridden by the user in the preferences dialog.
  *
- * In config files such as gimprc, the string ${gimp_data_dir} expands
+ * In config files such as gimprc, the string "${gimp_data_dir}" expands
  * to this directory.
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * GLib, which isn't necessarily UTF-8. (On Windows it always is
- * UTF-8.)
+ * GLib, which isn't necessarily UTF-8 (on Windows it is always UTF-8).
  *
- * Returns: The top directory for GIMP data.
+ * Returns: (type filename): The top directory for GIMP data.
  **/
 const gchar *
 gimp_data_directory (void)
@@ -610,19 +608,18 @@ gimp_data_directory (void)
  * gimp_locale_directory:
  *
  * Returns the top directory for GIMP locale files. If the environment
- * variable GIMP3_LOCALEDIR exists, that is used.  It should be an
- * absolute pathname.  Otherwise, on Unix the compile-time defined
+ * variable `GIMP3_LOCALEDIR` exists, that is used. It should be an
+ * absolute pathname. Otherwise, on Unix the compile-time defined
  * directory is used. On Windows, the installation directory as deduced
  * from the executable's full filename is used.
  *
  * The returned string is owned by GIMP and must not be modified or
- * freed. The returned string encoding depends on the system where GIMP
- * is running: on UNIX it's in the encoding used for filenames by
- * the C library (which isn't necessarily UTF-8); on Windows it's UTF-8.
+ * freed. The returned string is in the encoding used for filenames by
+ * GLib, which isn't necessarily UTF-8 (on Windows it is always UTF-8).
  *
- * On UNIX the returned string can be passed directly to the bindtextdomain()
- * function from libintl; on Windows the returned string can be converted to
- * UTF-16 and passed to the wbindtextdomain() function from libintl.
+ * On UNIX the returned string can be passed directly to the `bindtextdomain()`
+ * function from `libintl`; on Windows the returned string can be converted to
+ * UTF-16 and passed to the `wbindtextdomain()` function from `libintl`.
  *
  * Returns: (type filename): The top directory for GIMP locale files.
  */
@@ -648,20 +645,19 @@ gimp_locale_directory (void)
  * gimp_sysconf_directory:
  *
  * Returns the top directory for GIMP config files. If the environment
- * variable GIMP3_SYSCONFDIR exists, that is used.  It should be an
- * absolute pathname.  Otherwise, on Unix the compile-time defined
+ * variable `GIMP3_SYSCONFDIR` exists, that is used.  It should be an
+ * absolute pathname. Otherwise, on Unix the compile-time defined
  * directory is used. On Windows, the installation directory as deduced
  * from the executable's full filename is used.
  *
- * In config files such as gimprc, the string ${gimp_sysconf_dir}
+ * In config files such as gimprc, the string "${gimp_sysconf_dir}"
  * expands to this directory.
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * GLib, which isn't necessarily UTF-8. (On Windows it always is
- * UTF-8.).
+ * GLib, which isn't necessarily UTF-8 (on Windows it is always UTF-8).
  *
- * Returns: The top directory for GIMP config files.
+ * Returns: (type filename): The top directory for GIMP config files.
  **/
 const gchar *
 gimp_sysconf_directory (void)
@@ -686,7 +682,7 @@ gimp_sysconf_directory (void)
  * gimp_plug_in_directory:
  *
  * Returns the default top directory for GIMP plug-ins and modules. If
- * the environment variable GIMP3_PLUGINDIR exists, that is used.  It
+ * the environment variable `GIMP3_PLUGINDIR` exists, that is used.  It
  * should be an absolute pathname. Otherwise, on Unix the compile-time
  * defined directory is used. On Windows, the installation directory
  * as deduced from the executable's full filename is used.
@@ -694,15 +690,14 @@ gimp_sysconf_directory (void)
  * Note that the actual directories used for GIMP plug-ins and modules
  * can be overridden by the user in the preferences dialog.
  *
- * In config files such as gimprc, the string ${gimp_plug_in_dir}
+ * In config files such as gimprc, the string "${gimp_plug_in_dir}"
  * expands to this directory.
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * GLib, which isn't necessarily UTF-8. (On Windows it always is
- * UTF-8.)
+ * GLib, which isn't necessarily UTF-8 (on Windows it is always UTF-8).
  *
- * Returns: The top directory for GIMP plug_ins and modules.
+ * Returns: (type filename): The top directory for GIMP plug_ins and modules.
  **/
 const gchar *
 gimp_plug_in_directory (void)
@@ -727,24 +722,23 @@ gimp_plug_in_directory (void)
  * gimp_cache_directory:
  *
  * Returns the default top directory for GIMP cached files. If the
- * environment variable GIMP3_CACHEDIR exists, that is used.  It
+ * environment variable `GIMP3_CACHEDIR` exists, that is used.  It
  * should be an absolute pathname.  Otherwise, a subdirectory of the
- * directory returned by g_get_user_cache_dir() is used.
+ * directory returned by [GLib.get_user_cache_dir] is used.
  *
  * Note that the actual directories used for GIMP caches files can
  * be overridden by the user in the preferences dialog.
  *
- * In config files such as gimprc, the string ${gimp_cache_dir}
+ * In config files such as gimprc, the string "${gimp_cache_dir}"
  * expands to this directory.
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * GLib, which isn't necessarily UTF-8. (On Windows it always is
- * UTF-8.).
+ * GLib, which isn't necessarily UTF-8 (on Windows it is always UTF-8).
  *
  * Since: 2.10.10
  *
- * Returns: The default top directory for GIMP cached files.
+ * Returns: (type filename): The default top directory for GIMP cached files.
  **/
 const gchar *
 gimp_cache_directory (void)
@@ -773,7 +767,7 @@ gimp_cache_directory (void)
  * should be an absolute pathname. Otherwise, a subdirectory of the
  * directory returned by [func@GLib.get_tmp_dir] is used.
  *
- * In config files such as gimprc, the string ${gimp_temp_dir} expands
+ * In config files such as gimprc, the string "${gimp_temp_dir}" expands
  * to this directory.
  *
  * Note that the actual directories used for GIMP temporary files can
@@ -781,14 +775,14 @@ gimp_cache_directory (void)
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * GLib, which isn't necessarily UTF-8 (On Windows it always is UTF-8.).
+ * GLib, which isn't necessarily UTF-8 (on Windows it is always UTF-8).
  *
  * The returned directory path might already exists, or it might not. It
  * is your responsibility to make sure it does before using it.
  *
  * Since: 2.10.10
  *
- * Returns: The default top directory for GIMP temporary files.
+ * Returns: (type filename): The default top directory for GIMP temporary files.
  **/
 const gchar *
 gimp_temp_directory (void)
@@ -846,12 +840,11 @@ gimp_child_file (const gchar *parent,
  * Returns a #GFile in the user's GIMP directory, or the GIMP
  * directory itself if @first_element is %NULL.
  *
- * See also: gimp_directory().
+ * See also: [func@Gimp.directory].
  *
  * Since: 2.10
  *
- * Returns: (transfer full):
- *          a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full): a new @GFile for the path.
  **/
 GFile *
 gimp_directory_file (const gchar *first_element,
@@ -877,12 +870,11 @@ gimp_directory_file (const gchar *first_element,
  * Returns a #GFile in the installation directory, or the installation
  * directory itself if @first_element is %NULL.
  *
- * See also: gimp_installation_directory().
+ * See also: [func@Gimp.installation_directory].
  *
  * Since: 2.10.10
  *
- * Returns: (transfer full):
- *          a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full): a new @GFile for the path.
  **/
 GFile *
 gimp_installation_directory_file (const gchar *first_element,
@@ -908,12 +900,11 @@ gimp_installation_directory_file (const gchar *first_element,
  * Returns a #GFile in the data directory, or the data directory
  * itself if @first_element is %NULL.
  *
- * See also: gimp_data_directory().
+ * See also: [func@Gimp.data_directory].
  *
  * Since: 2.10
  *
- * Returns: (transfer full):
- *          a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full): a new @GFile for the path.
  **/
 GFile *
 gimp_data_directory_file (const gchar *first_element,
@@ -939,12 +930,11 @@ gimp_data_directory_file (const gchar *first_element,
  * Returns a #GFile in the locale directory, or the locale directory
  * itself if @first_element is %NULL.
  *
- * See also: gimp_locale_directory().
+ * See also: [func@Gimp.locale_directory].
  *
  * Since: 2.10
  *
- * Returns: (transfer full):
- *          a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full): a new @GFile for the path.
  **/
 GFile *
 gimp_locale_directory_file (const gchar *first_element,
@@ -970,12 +960,11 @@ gimp_locale_directory_file (const gchar *first_element,
  * Returns a #GFile in the sysconf directory, or the sysconf directory
  * itself if @first_element is %NULL.
  *
- * See also: gimp_sysconf_directory().
+ * See also: [func@Gimp.sysconf_directory].
  *
  * Since: 2.10
  *
- * Returns: (transfer full):
- *          a new @GFile for the path, Free with g_object_unref().
+ * Returns: (transfer full): a new @GFile for the path.
  **/
 GFile *
 gimp_sysconf_directory_file (const gchar *first_element,
@@ -1098,14 +1087,13 @@ gimp_path_runtime_fix (gchar **path)
 
 /**
  * gimp_path_parse:
- * @path:         A list of directories separated by #G_SEARCHPATH_SEPARATOR.
+ * @path:         A list of directories separated by
+ *                [const@GLib.SEARCHPATH_SEPARATOR].
  * @max_paths:    The maximum number of directories to return.
  * @check:        %TRUE if you want the directories to be checked.
- * @check_failed: (element-type filename) (out callee-allocates):
-                  Returns a #GList of path elements for which the check failed.
+ * @check_failed: (element-type filename) (out callee-allocates): a #GList of path elements for which the check failed.
  *
- * Returns: (element-type filename) (transfer full):
-            A #GList of all directories in @path.
+ * Returns: (element-type filename) (transfer full): A #GList of all directories in @path.
  **/
 GList *
 gimp_path_parse (const gchar  *path,
@@ -1185,11 +1173,10 @@ gimp_path_parse (const gchar  *path,
 
 /**
  * gimp_path_to_str:
- * @path: (element-type filename):
- *        A list of directories as returned by gimp_path_parse().
+ * @path: (element-type filename): A list of directories as returned by `gimp_path_parse()`.
  *
- * Returns: (type filename) (transfer full):
- *          A searchpath string separated by #G_SEARCHPATH_SEPARATOR.
+ * Returns: (type filename) (transfer full): A searchpath string separated
+ *          by [const@GLib.SEARCHPATH_SEPARATOR].
  **/
 gchar *
 gimp_path_to_str (GList *path)
@@ -1221,8 +1208,7 @@ gimp_path_to_str (GList *path)
 
 /**
  * gimp_path_free:
- * @path: (element-type filename):
- *        A list of directories as returned by gimp_path_parse().
+ * @path: (element-type filename): A list of directories as returned by `gimp_path_parse()`.
  *
  * This function frees the memory allocated for the list and the strings
  * it contains.
@@ -1235,12 +1221,9 @@ gimp_path_free (GList *path)
 
 /**
  * gimp_path_get_user_writable_dir:
- * @path: (element-type filename):
- *        A list of directories as returned by gimp_path_parse().
+ * @path: (element-type filename): A list of directories as returned by `gimp_path_parse()`.
  *
- * Note that you have to g_free() the returned string.
- *
- * Returns: The first directory in @path where the user has write permission.
+ * Returns: (transfer full): The first directory in @path where the user has write permission.
  **/
 gchar *
 gimp_path_get_user_writable_dir (GList *path)
