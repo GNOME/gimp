@@ -2116,6 +2116,8 @@ prefs_dialog_new (Gimp       *gimp,
                         _("50%"));
     gtk_scale_add_mark (GTK_SCALE (scale), 100.0, GTK_POS_BOTTOM,
                         _("100%"));
+    gtk_scale_add_mark (GTK_SCALE (scale), 150.0, GTK_POS_BOTTOM,
+                        _("150%"));
     gtk_scale_add_mark (GTK_SCALE (scale), 200.0, GTK_POS_BOTTOM,
                         _("200%"));
     gtk_range_set_value (GTK_RANGE (scale),
