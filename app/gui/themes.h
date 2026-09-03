@@ -25,6 +25,11 @@
 void     themes_init                 (Gimp          *gimp);
 void     themes_exit                 (Gimp          *gimp);
 
+gboolean themes_theme_is_system      (Gimp          *gimp,
+                                      const gchar   *theme_name);
+gboolean themes_theme_is_default     (Gimp          *gimp,
+                                      const gchar   *theme_name);
+
 gchar ** themes_list_themes          (Gimp          *gimp,
                                       gint          *n_themes);
 GFile  * themes_get_theme_dir        (Gimp          *gimp,

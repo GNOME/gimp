@@ -181,6 +181,62 @@ themes_exit (Gimp *gimp)
 #endif
 }
 
+gboolean
+themes_theme_is_system (Gimp        *gimp,
+                        const gchar *theme_name)
+{
+  gboolean is_system = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (theme_name != NULL, FALSE);
+
+  if (g_strcmp0 (theme_name, "System") == 0)
+    {
+      GFile *theme_dir;
+      GFile *parent_dir;
+      GFile *system_dir;
+
+      theme_dir  = themes_get_theme_dir (gimp, theme_name);
+      parent_dir = g_file_get_parent (theme_dir);
+      system_dir = gimp_file_new_for_config_path ("${gimp_data_dir}/themes", NULL);
+
+      is_system = g_file_equal (system_dir, parent_dir);
+
+      g_object_unref (system_dir);
+      g_object_unref (parent_dir);
+    }
+
+  return is_system;
+}
+
+gboolean
+themes_theme_is_default (Gimp        *gimp,
+                         const gchar *theme_name)
+{
+  gboolean is_default = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (theme_name != NULL, FALSE);
+
+  if (g_strcmp0 (theme_name, GIMP_CONFIG_DEFAULT_THEME) == 0)
+    {
+      GFile *theme_dir;
+      GFile *parent_dir;
+      GFile *system_dir;
+
+      theme_dir  = themes_get_theme_dir (gimp, theme_name);
+      parent_dir = g_file_get_parent (theme_dir);
+      system_dir = gimp_file_new_for_config_path ("${gimp_data_dir}/themes", NULL);
+
+      is_default = g_file_equal (system_dir, parent_dir);
+
+      g_object_unref (system_dir);
+      g_object_unref (parent_dir);
+    }
+
+  return is_default;
+}
+
 gchar **
 themes_list_themes (Gimp *gimp,
                     gint *n_themes)

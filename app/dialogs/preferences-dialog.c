@@ -2068,23 +2068,33 @@ prefs_dialog_new (Gimp       *gimp,
         gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
         gtk_container_add (GTK_CONTAINER (row), grid);
 
-        if (! strcmp (themes[i], "System"))
+        if (themes_theme_is_system (gimp, themes[i]))
           {
             gchar *gtk_theme = NULL;
             gchar *label_text;
-
-            g_object_get (gtk_settings_get_default (),
-                          "gtk-theme-name", &gtk_theme, NULL);
 
             /* make clear to the user which GTK system theme is being used.
                This is to avoid confusion from old GTK2 users (#10632) and
                to avoid expections from new GTK3 users (#14023).
                This also helps a lot debugging system theme leaks. */
-            label_text = g_strdup_printf ("%s (%s)", themes[i], gtk_theme);
+            g_object_get (gtk_settings_get_default (),
+                          "gtk-theme-name", &gtk_theme, NULL);
+
+            /* TRANSLATORS: this is the name of GIMP's "System" theme
+             * (which makes only minor styling over the real system
+             * theme). The part between parenthese will be the name of
+             * the actual system theme. E.g.: "System (Adwaita)"
+             */
+            label_text = g_strdup_printf (C_("theme-name", "System (%s)"), gtk_theme);
             name_label = gtk_label_new (label_text);
 
             g_free (label_text);
             g_free (gtk_theme);
+          }
+        else if (themes_theme_is_default (gimp, themes[i]))
+          {
+            /* TRANSLATORS: this is the name of GIMP's "Default" theme. */
+            name_label = gtk_label_new (C_("theme-name", "Default"));
           }
         else
           {
