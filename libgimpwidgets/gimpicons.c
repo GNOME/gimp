@@ -164,8 +164,7 @@ gimp_icons_set_icon_theme (GFile *path)
   search_path = g_file_get_parent (path);
   icon_theme_name = g_file_get_basename (path);
 
-  if (gimp_icons_sanity_check (search_path, "hicolor") &&
-      gimp_icons_sanity_check (search_path, icon_theme_name))
+  if (gimp_icons_sanity_check (search_path, icon_theme_name))
     {
       if (icon_theme_path)
         {
