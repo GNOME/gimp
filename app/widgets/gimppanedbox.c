@@ -344,8 +344,9 @@ gimp_paned_box_get_handle_drag (GimpPanedBox   *paned_box,
 
   if (area)
     {
-      area->x      = allocation.x + area_x;
-      area->y      = allocation.y + area_y;
+      /* see: #12275 */
+      area->x      = area_x;
+      area->y      = area_y;
       area->width  = area_w;
       area->height = area_h;
     }
