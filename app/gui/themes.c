@@ -905,11 +905,21 @@ themes_theme_paths_notify (GimpExtensionManager *manager,
 
                       basename = g_path_get_basename (name);
 
-                      if (gimp->be_verbose)
-                        g_print ("Adding theme '%s' (%s)\n",
-                                 basename, name);
+                      if (g_hash_table_contains (themes_hash, basename))
+                        {
+                          g_printerr ("Skipping duplicate theme \"%s\": '%s'\n",
+                                      basename, name);
+                          g_free (basename);
+                          g_object_unref (file);
+                        }
+                      else
+                        {
+                          if (gimp->be_verbose)
+                            g_print ("Adding theme '%s' (%s)\n",
+                                     basename, name);
 
-                      g_hash_table_insert (themes_hash, basename, file);
+                          g_hash_table_insert (themes_hash, basename, file);
+                        }
                     }
 
                   g_object_unref (info);
