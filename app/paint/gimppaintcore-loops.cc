@@ -923,7 +923,11 @@ struct TempCompBuffer : Base
   {
     Base::init_step (params, state, iter, roi, area, rect);
 
-    const Babl *format       = gegl_buffer_get_format (params->src_buffer);
+    /* The compositing buffer receives the output of the layer mode, which is
+     * written in paint_buf's format (potentially different from src_buffer's
+     * format).
+     */
+    const Babl *format       = gimp_temp_buf_get_format (params->paint_buf);
     const gint  n_components = babl_format_get_n_components (format);
 
     state->comp_buffer_data = gegl_scratch_new (gfloat,
