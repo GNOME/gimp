@@ -2578,6 +2578,7 @@ msgid "All Files"
 msgstr "Alle bestanden"
 
 #: app/actions/dashboard-commands.c:149
+#: app/actions/error-console-commands.c:105
 msgid "Log Files (*.log)"
 msgstr "Logbestanden (*.log)"
 
