@@ -19,10 +19,6 @@
 
 #include <string.h>
 
-#ifdef PLATFORM_OSX
-#import <AppKit/AppKit.h>
-#endif
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -33,6 +29,7 @@
 #include "print-draw-page.h"
 
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 
 #define PLUG_IN_BINARY       "print"
@@ -119,44 +116,6 @@ G_DEFINE_TYPE (Print, print, GIMP_TYPE_PLUG_IN)
 GIMP_MAIN (PRINT_TYPE)
 DEFINE_STD_SET_I18N
 
-
-/* We reuse code from app/widgets/gimpwidgets-utils.c since gtk_print_operation_new
- * is a special GTK function that have no connection with gimp automatization.
- * It is only needed on macOS where the plug-in is fully rendered.
- * Skipped on Linux due to portals and on Windows due to native/uncontroled dialogs.
- */
-#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
-static void
-gimp_window_set_title_bar_theme (GtkWidget *dialog)
-{
-  GdkWindow     *window        = NULL;
-  gboolean       use_dark_mode = FALSE;
-
-  window = gtk_widget_get_window (GTK_WIDGET (dialog));
-  if (window)
-    {
-      GtkStyleContext *style;
-      GdkRGBA         *color = NULL;
-
-      style = gtk_widget_get_style_context (dialog);
-      gtk_style_context_get (style, gtk_style_context_get_state (style),
-                             GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
-                             NULL);
-      if (color)
-        {
-          if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
-            use_dark_mode = TRUE;
-
-          gdk_rgba_free (color);
-        }
-
-        if (use_dark_mode)
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
-        else
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
-    }
-}
-#endif
 
 static void
 print_class_init (PrintClass *klass)
@@ -365,8 +324,7 @@ print_image (GimpImage *image,
       gimp_window_set_transient (GTK_WINDOW (printwindow));
       gtk_widget_set_visible (printwindow, TRUE);
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
-      /* We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_print_operation_new */
-      gimp_window_set_title_bar_theme (printwindow);
+      gimp_widget_set_title_bar_theme (printwindow);
 #endif
 #endif
 
@@ -487,6 +445,10 @@ print_show_error (const gchar *message)
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                             "%s", message);
 
+#if (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+  gimp_widget_set_title_bar_theme (dialog);
+#endif
+
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
 }
@@ -518,9 +480,8 @@ begin_print (GtkPrintOperation *operation,
                           layout_gui, TRUE, TRUE, 0);
       gtk_widget_show_all (dialog);
 
-#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
-      /* We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_print_operation_new */
-      gimp_window_set_title_bar_theme (dialog);
+#if defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
+      gimp_widget_set_title_bar_theme (dialog);
 #endif
 
       if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)
