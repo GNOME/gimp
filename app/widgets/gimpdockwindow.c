@@ -796,14 +796,18 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
       if (config->dock_window_hint == GIMP_WINDOW_HINT_UTILITY)
         {
 #ifdef GDK_WINDOWING_WAYLAND
-          g_idle_add ((GSourceFunc) gimp_dock_window_update_focus_idle, dock_window);
+          g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                           (GSourceFunc) gimp_dock_window_update_focus_idle,
+                           g_object_ref (dock_window), g_object_unref);
 #endif
 
 #ifdef G_OS_WIN32
           /* keep dockable window transient (since gimp_dialog_factory_dialog_new_internal is not enough)*/
           HWND main_window = GetActiveWindow();
           g_object_set_data (G_OBJECT (dock_window), "win32-parent-window", (gpointer) main_window);
-          g_idle_add ((GSourceFunc) gimp_dock_window_update_focus_idle, dock_window);
+          g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                           (GSourceFunc) gimp_dock_window_update_focus_idle,
+                           g_object_ref (dock_window), g_object_unref);
 #endif
 
 #ifdef PLATFORM_OSX
@@ -822,7 +826,9 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
                                                     object:nil
                                                     queue:[NSOperationQueue mainQueue]
                                                     usingBlock:^(NSNotification *note) {
-                g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
+                g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                 gimp_dock_window_update_focus_idle,
+                                 g_object_ref (dock_window), g_object_unref);
               }];
 
               /* keep dockable window transient when app becomes active
@@ -831,7 +837,9 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
                                                     object:nil
                                                     queue:[NSOperationQueue mainQueue]
                                                     usingBlock:^(NSNotification *note) {
-                g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
+                g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                 gimp_dock_window_update_focus_idle,
+                                 g_object_ref (dock_window), g_object_unref);
               }];
 
               /* remove minimize button */
@@ -879,7 +887,9 @@ gimp_dock_window_map (GimpDockWindow *dock_window,
           g_object_set_data (G_OBJECT (dock_window), "gimp-dock-window-refocus-main",
                              GINT_TO_POINTER (TRUE));
 #endif
-          g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
+          g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                           gimp_dock_window_update_focus_idle,
+                           g_object_ref (dock_window), g_object_unref);
         }
     }
 }
@@ -1256,7 +1266,9 @@ gimp_dock_window_factory_display_changed (GimpContext *context,
                 SetWindowLongPtrW (dock_hwnd, GWLP_HWNDPARENT, (LONG_PTR)NULL);
 #endif
               if (display)
-                g_idle_add (gimp_dock_window_update_focus_idle, dock_window);
+                g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                 gimp_dock_window_update_focus_idle,
+                                 g_object_ref (dock_window), g_object_unref);
             }
         }
     }
