@@ -25,19 +25,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef _WIN32
-#include <dwmapi.h>
-#include <gdk/gdkwin32.h>
-
-#ifndef DWMWA_USE_IMMERSIVE_DARK_MODE
-#define DWMWA_USE_IMMERSIVE_DARK_MODE 20
-#endif
-#endif
-
-#ifdef PLATFORM_OSX
-#import <AppKit/AppKit.h>
-#endif
-
 #include <glib/gstdio.h>
 
 #include <gtk/gtk.h>
@@ -68,6 +55,7 @@
 #include "imap_string.h"
 
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 
 #define MAX_ZOOM_FACTOR 8
@@ -180,51 +168,6 @@ static const GActionEntry ACTIONS[] =
   { "colormode", set_preview_color, "s", "'color'", NULL },
   { "shape", set_func, "s", "'arrow'", NULL },
 };
-
-/* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c since gtk_window_new
- * is a bare GTK function that naturally have no connection with gimp automatization.
- */
-#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
-static void
-gimp_window_set_title_bar_theme (GtkWidget *dialog)
-{
-#ifdef G_OS_WIN32
-  HWND           hwnd;
-#endif
-  GdkWindow     *window        = NULL;
-  gboolean       use_dark_mode = FALSE;
-
-  window = gtk_widget_get_window (GTK_WIDGET (dialog));
-  if (window)
-    {
-      GtkStyleContext *style;
-      GdkRGBA         *color = NULL;
-
-      style = gtk_widget_get_style_context (dialog);
-      gtk_style_context_get (style, gtk_style_context_get_state (style),
-                             GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
-                             NULL);
-      if (color)
-        {
-          if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
-            use_dark_mode = TRUE;
-
-          gdk_rgba_free (color);
-        }
-
-#ifdef G_OS_WIN32
-        hwnd = (HWND) gdk_win32_window_get_handle (window);
-        DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
-                               &use_dark_mode, sizeof (use_dark_mode));
-#elif defined(PLATFORM_OSX)
-        if (use_dark_mode)
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
-        else
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
-#endif
-    }
-}
-#endif
 
 static void
 gimp_imap_class_init (GimpImapClass *klass)
@@ -856,15 +799,21 @@ static void
 do_data_changed_dialog (void (*continue_cb)(gpointer),
                         gpointer param)
 {
-  GtkWidget *dialog = gtk_message_dialog_new
-    (NULL,
-     GTK_DIALOG_DESTROY_WITH_PARENT,
-     GTK_MESSAGE_QUESTION,
-     GTK_BUTTONS_YES_NO,
-     _("Some data has been changed!"));
-  gtk_message_dialog_format_secondary_text
-    (GTK_MESSAGE_DIALOG (dialog),
-     _("Do you really want to discard your changes?"));
+  GtkWidget *dialog;
+
+  dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
+                                   _("Some data has been changed!"));
+
+  gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                            _("Do you really want to discard "
+                                              "your changes?"));
+
+#if defined (G_OS_WIN32) || \
+    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+  gtk_widget_realize (dialog);
+  gimp_widget_set_title_bar_theme (dialog);
+#endif
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
     continue_cb (param);
@@ -1134,14 +1083,22 @@ save_as (const gchar *filename)
 static void
 do_image_size_changed_dialog (void)
 {
-   GtkWidget *dialog = gtk_message_dialog_new_with_markup
-     (NULL,
-      GTK_DIALOG_DESTROY_WITH_PARENT,
-      GTK_MESSAGE_QUESTION,
-      GTK_BUTTONS_YES_NO,
-      "<span weight=\"bold\" size=\"larger\">%s</span>\n\n%s",
-      _("Image size has changed."),
-      _("Resize area's?"));
+  GtkWidget *dialog;
+
+  dialog =
+    gtk_message_dialog_new_with_markup (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+                                        GTK_MESSAGE_QUESTION,
+                                        GTK_BUTTONS_YES_NO,
+                                        "<span weight=\"bold\" size=\"larger\">"
+                                        "%s</span>\n\n%s",
+                                        _("Image size has changed."),
+                                        _("Resize area's?"));
+
+#if defined (G_OS_WIN32) || \
+    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+  gtk_widget_realize (dialog);
+  gimp_widget_set_title_bar_theme (dialog);
+#endif
 
    if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
      {
@@ -1706,10 +1663,10 @@ dialog (GimpImap *imap)
   _statusbar = make_statusbar (main_vbox, imap->dlg);
   statusbar_set_zoom (_statusbar, 1);
 
-#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
-  /* FIXME: We reuse code from app/widgets/gimpwidgets-utils.c due to gtk_window_new */
+#if defined (G_OS_WIN32) || \
+    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
   gtk_widget_realize (imap->dlg);
-  gimp_window_set_title_bar_theme (imap->dlg);
+  gimp_widget_set_title_bar_theme (imap->dlg);
 #endif
 
   gtk_widget_set_visible (imap->dlg, TRUE);
