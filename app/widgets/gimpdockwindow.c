@@ -872,10 +872,9 @@ gimp_dock_window_map (GimpDockWindow *dock_window,
               return;
             }
 
-#if defined (PLATFORM_OSX)
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
           /* re-mapping the dock window (e.g. with the Tab key) lets it steal
-             focus on Linux and macOS (not on Windows due to SWP_NOACTIVATE),
-             so focus back to the main window */
+             focus, so focus back to the main window */
           g_object_set_data (G_OBJECT (dock_window), "gimp-dock-window-refocus-main",
                              GINT_TO_POINTER (TRUE));
 #endif
@@ -1114,14 +1113,14 @@ gimp_dock_window_update_focus_idle (gpointer data)
 #ifdef PLATFORM_OSX
   NSWindow       *ns_window;
 #endif
-#if defined (PLATFORM_OSX)
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gboolean        refocus_main;
 #endif
 
   if (! GTK_IS_WIDGET (dock_window) || ! gtk_widget_get_realized (GTK_WIDGET (dock_window)))
     return G_SOURCE_REMOVE;
 
-#if defined (PLATFORM_OSX)
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   /* set by gimp_dock_window_map() when the dock window is being re-mapped
    * (e.g. with the Tab key) which requires to refocus main window */
   refocus_main = (g_object_get_data (G_OBJECT (dock_window),
@@ -1150,15 +1149,48 @@ gimp_dock_window_update_focus_idle (gpointer data)
     {
       HWND new_parent = (HWND) g_object_get_data (G_OBJECT (dock_window), "win32-parent-window");
       if (new_parent)
-        g_object_set_data (G_OBJECT (dock_window), "win32-parent-window", NULL);
+        {
+          g_object_set_data (G_OBJECT (dock_window), "win32-parent-window", NULL);
+        }
       else
-        new_parent = GetActiveWindow();
+        {
+          /* GetActiveWindow() is unreliable for docks: showing/re-mapping the dock
+             (e.g. with the Tab key) has already made it the active window */
+          GtkApplication *app = gtk_window_get_application (GTK_WINDOW (dock_window));
+          if (! app)
+            {
+              GApplication *default_app = g_application_get_default ();
+              if (default_app && GTK_IS_APPLICATION (default_app))
+                app = GTK_APPLICATION (default_app);
+            }
+          if (app)
+            {
+              GList *app_windows = gtk_application_get_windows (app);
+              GList *iter;
+              for (iter = app_windows; iter; iter = g_list_next (iter))
+                {
+                  GtkWindow *app_win = GTK_WINDOW (iter->data);
+                  if (gtk_widget_get_window (GTK_WIDGET (app_win)) &&
+                      !GIMP_IS_DOCK_WINDOW (app_win) &&
+                      !GTK_IS_DIALOG (app_win))
+                    {
+                      new_parent = (HWND) gdk_win32_window_get_handle (gtk_widget_get_window (GTK_WIDGET (app_win)));
+                      break;
+                    }
+                }
+            }
+          if (! new_parent)
+            new_parent = GetActiveWindow ();
+        }
 
       if (hwnd_window && new_parent && hwnd_window != new_parent)
         {
           SetWindowLongPtrW (hwnd_window, GWLP_HWNDPARENT, (LONG_PTR)new_parent);
           SetWindowPos (hwnd_window, HWND_TOP, 0, 0, 0, 0,
                         SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+
+          if (refocus_main)
+            SetForegroundWindow (new_parent);
         }
     }
 #endif
