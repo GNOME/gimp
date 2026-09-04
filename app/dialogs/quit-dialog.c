@@ -60,8 +60,6 @@ struct _QuitDialog
   gboolean               do_quit;
 
   GtkWidget             *dialog;
-  GimpContainerTreeView *tree_view;
-  GtkTreeViewColumn     *save_column;
   GtkWidget             *ok_button;
   GimpMessageBox        *box;
   GtkWidget             *lost_label;
