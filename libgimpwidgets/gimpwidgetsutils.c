@@ -693,11 +693,13 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
                 /* Due to a bug in Windows, the meanings of LCS_sRGB and
                  * LCS_WINDOWS_COLOR_SPACE are swapped.
                  */
-                if (GetStandardColorSpaceProfileW (NULL, LCS_sRGB, NULL, &len) != 0 && len > 0)
-                  {
-                    filename_utf16 = (wchar_t*) g_malloc0 (len);
-                    GetStandardColorSpaceProfileW (NULL, LCS_sRGB, filename_utf16, &len);
-                  }
+                /* The standard profiles easily fit in MAX_PATH, so just
+                 * query into a fixed buffer instead of sizing first
+                 * (GetStandardColorSpaceProfileW() fails on a NULL one).*/
+                wchar_t buffer[MAX_PATH] = { 0 };
+                len = sizeof (buffer);
+                if (GetStandardColorSpaceProfileW (NULL, LCS_sRGB, buffer, &len))
+                  filename_utf16 = g_memdup2 (buffer, (wcslen (buffer) + 1) * sizeof (wchar_t));
               }
 
             if (filename_utf16 != NULL)
