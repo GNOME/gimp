@@ -28,6 +28,11 @@
 #include <winbase.h>
 #endif
 
+#ifdef PLATFORM_OSX
+#import <AppKit/AppKit.h>
+#include <gdk/quartz/gdkquartz-cocoa-access.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -1248,6 +1253,26 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
 }
 
 
+#ifdef PLATFORM_OSX
+static gboolean
+gimp_image_window_focus_idle (gpointer data)
+{
+  GimpImageWindow *window     = GIMP_IMAGE_WINDOW (data);
+  GdkWindow       *gdk_window = gtk_widget_get_window (GTK_WIDGET (window));
+
+  if (gdk_window)
+    {
+      NSWindow *ns_window = gdk_quartz_window_get_nswindow (gdk_window);
+
+      if (ns_window)
+        [ns_window makeKeyAndOrderFront:nil];
+    }
+
+  return G_SOURCE_REMOVE;
+}
+#endif
+
+
 /*  public functions  */
 
 GimpImageWindow *
@@ -1305,6 +1330,12 @@ gimp_image_window_new (Gimp              *gimp,
           gtk_window_set_geometry_hints (GTK_WINDOW (window),
                                          NULL, NULL, GDK_HINT_USER_POS);
         }
+
+#ifdef PLATFORM_OSX
+      g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                       gimp_image_window_focus_idle,
+                       g_object_ref (window), g_object_unref);
+#endif
     }
 
   return window;
