@@ -25,6 +25,7 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -1402,10 +1403,56 @@ prefs_dialog_new (Gimp       *gimp,
                                  GTK_GRID (grid), row++, size_group,
                                  object, "color-profile-path");
 
-    button = gimp_prop_check_button_new (color_config,
-                                         "display-profile-from-gdk",
-                                         _("_Try to use the system monitor "
-                                           "profile"));
+    {
+      GdkDisplay       *display         = gdk_display_get_default ();
+      gint              monitor_list    = gdk_display_get_n_monitors (display);
+      gint              monitor_number;
+      GimpColorProfile *monitor_profile = NULL;
+      gboolean          monitor_agree   = TRUE;
+      gchar            *label;
+
+      /* show the profile name at least when every monitor reports the same */
+      for (monitor_number = 0; monitor_number < monitor_list; monitor_number++)
+        {
+          GdkMonitor       *monitor = gdk_display_get_monitor (display, monitor_number);
+          GimpColorProfile *profile = NULL;
+
+          if (monitor)
+            profile = gimp_monitor_get_color_profile (monitor);
+
+          if (monitor_number == 0)
+            {
+              monitor_profile = profile;
+            }
+          else
+            {
+              if ((monitor_profile == NULL) != (profile == NULL) ||
+                  (monitor_profile != NULL && profile != NULL &&
+                   ! gimp_color_profile_is_equal (monitor_profile, profile)))
+                monitor_agree = FALSE;
+
+              g_clear_object (&profile);
+            }
+
+          if (! monitor_agree)
+            break;
+        }
+
+      if (monitor_agree && monitor_profile)
+        label = g_strdup_printf ("%s (%s)",
+                                 _("_Try to use the system monitor "
+                                   "profile"),
+                                 gimp_color_profile_get_label (monitor_profile));
+      else
+        label = g_strdup (_("_Try to use the system monitor profile"));
+
+      g_clear_object (&monitor_profile);
+
+      button = gimp_prop_check_button_new (color_config,
+                                           "display-profile-from-gdk",
+                                           label);
+      g_free (label);
+    }
     gtk_grid_attach (GTK_GRID (grid), button, 1, row, 1, 1);
     row++;
 
