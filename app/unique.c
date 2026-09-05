@@ -83,6 +83,30 @@ gimp_unique_batch_run (const gchar  *batch_interpreter,
 }
 
 #ifdef G_OS_WIN32
+/* prevent race on Windows so we can open multiple files. see: #364 */
+static gboolean
+gimp_unique_win32_send (HWND            window_handle,
+                        COPYDATASTRUCT *copydata)
+{
+  gint retry;
+
+  for (retry = 0; retry < 100; retry++)
+    {
+      DWORD_PTR dwResult = 0;
+      LRESULT   ret;
+
+      ret = SendMessageTimeoutW (window_handle,
+                                 WM_COPYDATA, (WPARAM) window_handle, (LPARAM) copydata,
+                                 SMTO_NORMAL | SMTO_ABORTIFHUNG, 300, &dwResult);
+
+      if (ret)
+        return TRUE;
+
+      g_usleep (300000);
+    }
+
+  return FALSE;
+}
 
 static gboolean
 gimp_unique_win32_open (const gchar **filenames,
@@ -99,6 +123,7 @@ gimp_unique_win32_open (const gchar **filenames,
   if (window_handle)
     {
       COPYDATASTRUCT  copydata = { 0, };
+      gboolean        success  = TRUE;
 
       if (filenames)
         {
@@ -118,8 +143,8 @@ gimp_unique_win32_open (const gchar **filenames,
                   copydata.cbData = strlen (uri) + 1;  /* size in bytes   */
                   copydata.dwData = (long) as_new;
 
-                  SendMessage (window_handle,
-                               WM_COPYDATA, (WPARAM) window_handle, (LPARAM) &copydata);
+                  if (! gimp_unique_win32_send (window_handle, &copydata))
+                    success = FALSE;
 
                   g_free (uri);
                   g_object_unref (file);
@@ -135,11 +160,11 @@ gimp_unique_win32_open (const gchar **filenames,
         }
       else
         {
-          SendMessage (window_handle,
-                       WM_COPYDATA, (WPARAM) window_handle, (LPARAM) &copydata);
+          if (! gimp_unique_win32_send (window_handle, &copydata))
+            success = FALSE;
         }
 
-      return TRUE;
+      return success;
     }
 
 #endif
