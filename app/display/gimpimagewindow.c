@@ -1284,13 +1284,17 @@ gimp_image_window_new (Gimp              *gimp,
   if (! GIMP_GUI_CONFIG (private->gimp->config)->single_window_mode)
     {
       GdkMonitor *pointer_monitor = gimp_get_monitor_at_pointer ();
+      gboolean    place_manually  = (pointer_monitor != monitor);
 
       /*  If we are supposed to go to a monitor other than where the
        *  pointer is, place the window on that monitor manually,
        *  otherwise simply let the window manager place the window on
        *  the poiner's monitor.
        */
-      if (pointer_monitor != monitor)
+#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
+      place_manually = TRUE;
+#endif
+      if (place_manually)
         {
           GdkRectangle rect;
 
