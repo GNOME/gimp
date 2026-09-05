@@ -402,8 +402,10 @@ gimp_window_set_transient_for (GtkWindow *window,
   g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (handle != NULL);
 
-#ifdef GDK_WINDOWING_QUARTZ
-  /* Use GTK instead of [win center] to avoid top-left render glitch on plug-ins */
+#if defined (GDK_WINDOWING_WIN32) || defined (GDK_WINDOWING_QUARTZ)
+  /* Windows and macOS don't use real cross-process transiency, so the
+     plug-in won't be on the right monitor. Center it before it is mapped
+     (on macOS this also avoids a top-left render glitch on plug-ins). */
   gtk_window_set_position (window, GTK_WIN_POS_CENTER);
 #endif
 
@@ -446,8 +448,10 @@ gimp_window_set_transient_for_display (GtkWindow   *window,
   g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-#ifdef GDK_WINDOWING_QUARTZ
-  /* Use GTK instead of [win center] to avoid top-left render glitch on plug-ins */
+#if defined (GDK_WINDOWING_WIN32) || defined (GDK_WINDOWING_QUARTZ)
+  /* Windows and macOS don't use real cross-process transiency, so the
+     plug-in won't be on the right monitor. Center it before it is mapped
+     (on macOS this also avoids a top-left render glitch on plug-ins). */
   gtk_window_set_position (window, GTK_WIN_POS_CENTER);
 #endif
 
@@ -485,8 +489,10 @@ gimp_window_set_transient (GtkWindow *window)
   g_return_if_fail (gimp_ui_initialized);
   g_return_if_fail (GTK_IS_WINDOW (window));
 
-#ifdef GDK_WINDOWING_QUARTZ
-  /* Use GTK instead of [win center] to avoid top-left render glitch on plug-ins */
+#if defined (GDK_WINDOWING_WIN32) || defined (GDK_WINDOWING_QUARTZ)
+  /* Windows and macOS don't use real cross-process transiency, so the
+     plug-in won't be on the right monitor. Center it before it is mapped
+     (on macOS this also avoids a top-left render glitch on plug-ins). */
   gtk_window_set_position (window, GTK_WIN_POS_CENTER);
 #endif
 
