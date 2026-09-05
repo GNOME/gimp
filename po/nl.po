@@ -33,7 +33,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-03 23:33+0000\n"
+"POT-Creation-Date: 2026-09-05 12:40+0000\n"
 "PO-Revision-Date: 2026-09-04 11:28+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
@@ -371,12 +371,12 @@ msgstr ""
 "Zorg ervoor dat er een juiste instelling voor uw weergaveomgeving bestaat."
 
 # Er is al een instantie van GIMP opgestart. technotalk
-#: app/main.c:931
+#: app/main.c:966
 msgid "Another GIMP instance is already running."
 msgstr "Er is al een andere sessie van GIMP actief."
 
 # elke willekeurige toets sluit dit venster
-#: app/main.c:1014
+#: app/main.c:1050
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Druk op een willekeurige toets om dit venster te sluiten)\n"
@@ -2577,8 +2577,7 @@ msgstr "_Opnemen"
 msgid "All Files"
 msgstr "Alle bestanden"
 
-#: app/actions/dashboard-commands.c:149
-#: app/actions/error-console-commands.c:105
+#: app/actions/dashboard-commands.c:149 app/actions/error-console-commands.c:105
 msgid "Log Files (*.log)"
 msgstr "Logbestanden (*.log)"
 
@@ -17700,7 +17699,7 @@ msgstr "100%"
 
 #: app/dialogs/preferences-dialog.c:2120 app/dialogs/welcome-dialog.c:714
 msgid "150%"
-msgstr ""
+msgstr "150%"
 
 #: app/dialogs/preferences-dialog.c:2122 app/dialogs/welcome-dialog.c:716
 msgid "200%"
