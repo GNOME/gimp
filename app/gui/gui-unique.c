@@ -201,7 +201,8 @@ gui_unique_win32_message_handler (HWND   hWnd,
 
               g_object_watch_closure (G_OBJECT (unique_gimp), closure);
 
-              source = g_idle_source_new ();
+              /* be patient on opening to avoid stuckness */
+              source = g_timeout_source_new (50);
               g_source_set_priority (source, G_PRIORITY_LOW);
               g_source_set_closure (source, closure);
               g_source_attach (source, NULL);
@@ -337,7 +338,8 @@ gui_unique_quartz_idle_open (GFile *file)
 
       g_object_watch_closure (G_OBJECT (unique_gimp), closure);
 
-      source = g_idle_source_new ();
+      /* be patient on opening to avoid stuckness */
+      source = g_timeout_source_new (50);
       g_source_set_priority (source, G_PRIORITY_LOW);
       g_source_set_closure (source, closure);
       g_source_attach (source, NULL);

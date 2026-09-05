@@ -922,21 +922,57 @@ main (int    argc,
     new_instance = TRUE;
 
 #ifndef GIMP_CONSOLE_COMPILATION
-  if (! new_instance && gimp_unique_open (filenames, as_new))
+  if (! new_instance)
     {
-      int success = EXIT_SUCCESS;
+      gboolean is_running = FALSE;
 
-      if (be_verbose)
-        g_print ("%s\n",
-                 _("Another GIMP instance is already running."));
+#ifndef G_OS_WIN32
+      is_running = gimp_unique_open (filenames, as_new);
+#else
+      /* Windows Explorer spawns separate processes when multiple files are selected
+         (except for the MSIX, where the it passes each filename as on Unix: 55c97120).
+         The only realiable way to them communicate is a mutex early on main.c. See: #364 */
+      HANDLE primary_instance = CreateMutexW (NULL, FALSE, L"Local\\gimp_primary_instance_running");
+      DWORD  primary_instance_error = primary_instance ? GetLastError () : 0;
 
-      if (batch_commands &&
-          ! gimp_unique_batch_run (batch_interpreter, batch_commands))
-        success = EXIT_FAILURE;
+      if (primary_instance && primary_instance_error == ERROR_ALREADY_EXISTS)
+        {
+          /* another GIMP instance is already running */
+          for (gint retry = 0; retry < 20; retry++)
+            {
+              is_running = gimp_unique_open (filenames, as_new);
 
-      gdk_notify_startup_complete ();
+              if (is_running)
+                break;
 
-      return success;
+              g_usleep (100000);
+            }
+
+          CloseHandle (primary_instance);
+        }
+      else
+        {
+          /* this is the primary GIMP instance */
+          is_running = FALSE;
+        }
+#endif
+
+      if (is_running)
+        {
+          int success = EXIT_SUCCESS;
+
+          if (be_verbose)
+            g_print ("%s\n",
+                     _("Another GIMP instance is already running."));
+
+          if (batch_commands &&
+              ! gimp_unique_batch_run (batch_interpreter, batch_commands))
+            success = EXIT_FAILURE;
+
+          gdk_notify_startup_complete ();
+
+          return success;
+        }
     }
 #endif
 
