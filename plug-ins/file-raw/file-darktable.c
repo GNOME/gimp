@@ -34,6 +34,9 @@
 #define LOAD_THUMB_PROC   "file-darktable-load-thumb"
 #define REGISTRY_KEY_BASE "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\darktable"
 
+/* macOS app-bundle identifier candidates */
+static const gchar *DARKTABLE_BUNDLE_IDS[] = { "org.darktable", NULL };
+
 
 typedef struct _Darktable      Darktable;
 typedef struct _DarktableClass DarktableClass;
@@ -113,7 +116,7 @@ darktable_init_procedures (GimpPlugIn *plug_in)
   gboolean  search_path      = FALSE;
   gchar    *exec_path        = file_raw_get_executable_path ("darktable", NULL,
                                                              "DARKTABLE_EXECUTABLE",
-                                                             "org.darktable",
+                                                             DARKTABLE_BUNDLE_IDS,
                                                              REGISTRY_KEY_BASE,
                                                              &search_path);
   gchar    *argv[]           = { exec_path, "--gimp" , "version", NULL };
@@ -438,7 +441,7 @@ load_image (GFile        *file,
   gboolean  search_path      = FALSE;
   gchar    *exec_path        = file_raw_get_executable_path ("darktable", NULL,
                                                              "DARKTABLE_EXECUTABLE",
-                                                             "org.darktable",
+                                                             DARKTABLE_BUNDLE_IDS,
                                                              REGISTRY_KEY_BASE,
                                                              &search_path);
   gchar    *argv[]           =
@@ -587,7 +590,7 @@ load_thumbnail_image (GFile   *file,
   gboolean  search_path      = FALSE;
   gchar    *exec_path        = file_raw_get_executable_path ("darktable", "-cli",
                                                              "DARKTABLE_EXECUTABLE",
-                                                             "org.darktable",
+                                                             DARKTABLE_BUNDLE_IDS,
                                                              REGISTRY_KEY_BASE,
                                                              &search_path);
   gchar    *argv[]           =

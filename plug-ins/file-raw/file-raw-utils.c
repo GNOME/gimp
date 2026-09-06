@@ -36,12 +36,12 @@
 
 
 gchar *
-file_raw_get_executable_path (const gchar *main_executable,
-                              const gchar *suffix,
-                              const gchar *env_variable,
-                              const gchar *mac_bundle_id,
-                              const gchar *win32_registry_key_base,
-                              gboolean    *search_path)
+file_raw_get_executable_path (const gchar  *main_executable,
+                              const gchar  *suffix,
+                              const gchar  *env_variable,
+                              const gchar **mac_bundle_ids,
+                              const gchar  *win32_registry_key_base,
+                              gboolean     *search_path)
 {
   /*
    * First check for the environment variable.
@@ -61,12 +61,12 @@ file_raw_get_executable_path (const gchar *main_executable,
     return g_strconcat (dt_env, suffix, NULL);
 
 #if defined (GDK_WINDOWING_QUARTZ)
-  if (mac_bundle_id)
+  for (gint j = 0; mac_bundle_ids && mac_bundle_ids[j]; j++)
     {
       CFStringRef bundle_id;
 
       /* For macOS, attempt searching for an app bundle first. */
-      bundle_id = CFStringCreateWithCString (NULL, mac_bundle_id,
+      bundle_id = CFStringCreateWithCString (NULL, mac_bundle_ids[j],
                                              kCFStringEncodingUTF8);
       if (bundle_id)
         {
@@ -115,7 +115,7 @@ file_raw_get_executable_path (const gchar *main_executable,
               ret = g_malloc0 (len * 2 * sizeof (gchar));
               if (! CFStringGetCString (path, ret, 2 * len * sizeof (gchar),
                                         kCFStringEncodingUTF8))
-                ret = NULL;
+                g_clear_pointer (&ret, g_free);
 
               CFRelease (path);
               CFRelease (absolute_url);
@@ -124,11 +124,14 @@ file_raw_get_executable_path (const gchar *main_executable,
 
               if (ret)
                 return ret;
+
+              continue;
             }
 
           CFRelease (bundle_id);
         }
-      /* else, app bundle was not found, try path search as last resort. */
+      /* else, app bundle was not found, try the next candidate and
+       * eventually fall back to a path search as last resort. */
     }
 
 #elif defined (GDK_WINDOWING_WIN32)

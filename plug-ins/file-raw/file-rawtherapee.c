@@ -35,6 +35,9 @@
 #define LOAD_THUMB_PROC   "file-rawtherapee-load-thumb"
 #define REGISTRY_KEY_BASE "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\rawtherapee"
 
+/* macOS app-bundle identifier candidates */
+static const gchar *RAWTHERAPEE_BUNDLE_IDS[] = { "com.rawtherapee.rawtherapee5", "com.rawtherapee.rawtherapee", NULL };
+
 
 typedef struct _Rawtherapee      Rawtherapee;
 typedef struct _RawtherapeeClass RawtherapeeClass;
@@ -110,7 +113,7 @@ rawtherapee_init_procedures (GimpPlugIn *plug_in)
   gboolean  search_path      = FALSE;
   gchar    *exec_path        = file_raw_get_executable_path ("rawtherapee", NULL,
                                                              "RAWTHERAPEE_EXECUTABLE",
-                                                             "com.rawtherapee.rawtherapee",
+                                                             RAWTHERAPEE_BUNDLE_IDS,
                                                              REGISTRY_KEY_BASE,
                                                              &search_path);
 #ifdef G_OS_WIN32
@@ -335,7 +338,7 @@ load_image (GFile        *file,
   gboolean   search_path        = FALSE;
   gchar     *exec_path          = file_raw_get_executable_path ("rawtherapee", NULL,
                                                                "RAWTHERAPEE_EXECUTABLE",
-                                                               "com.rawtherapee.rawtherapee",
+                                                               RAWTHERAPEE_BUNDLE_IDS,
                                                                REGISTRY_KEY_BASE,
                                                                &search_path);
 
@@ -438,7 +441,7 @@ load_thumbnail_image (GFile   *file,
   gboolean  search_path = FALSE;
   gchar    *exec_path   = file_raw_get_executable_path ("rawtherapee", "-cli",
                                                         "RAWTHERAPEE_EXECUTABLE",
-                                                        "com.rawtherapee.rawtherapee",
+                                                        RAWTHERAPEE_BUNDLE_IDS,
                                                         REGISTRY_KEY_BASE,
                                                         &search_path);
   gchar *argv[] =
