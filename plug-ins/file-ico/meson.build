@@ -4,6 +4,8 @@ plugin_sourcecode = [
   'ico-dialog.c',
   'ico-load.c',
   'ico-export.c',
+  'ani-load.c',
+  'ani-export.c',
   'ico.c',
 ]
 plugin_sources = plugin_sourcecode

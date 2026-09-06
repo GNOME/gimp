@@ -31,8 +31,11 @@
 /* #define ICO_DBG */
 
 #include "ico.h"
-#include "ico-load.h"
+#include "ani.h"
+#include "ani-export.h"
+#include "ani-load.h"
 #include "ico-export.h"
+#include "ico-load.h"
 
 #include "libgimp/stdplugins-intl.h"
 

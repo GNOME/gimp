@@ -27,6 +27,7 @@
 /* #define ICO_DBG */
 
 #include "ico.h"
+#include "ani.h"
 #include "ico-dialog.h"
 #include "ico-export.h"
 

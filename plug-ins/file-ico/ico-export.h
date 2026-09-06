@@ -42,22 +42,41 @@ GimpPDBStatusType cur_export_image        (GFile                *file,
                                            gint32              **new_hot_spot_y,
                                            GError              **error);
 
-GimpPDBStatusType ani_export_image        (GFile                *file,
-                                           GimpImage            *image,
-                                           GimpProcedure        *procedure,
-                                           GimpProcedureConfig  *config,
-                                           gint32                run_mode,
-                                           gsize                *n_hot_spot_x,
-                                           const gint32         *hot_spot_x,
-                                           gint32              **new_hot_spot_x,
-                                           gsize                *n_hot_spot_y,
-                                           const gint32         *hot_spot_y,
-                                           gint32              **new_hot_spot_y,
-                                           AniFileHeader        *header,
-                                           AniSaveInfo          *ani_info,
-                                           GError              **error);
+gboolean          ico_cmap_contains_black (GimpPalette         *cmap);
 
-gboolean          ico_cmap_contains_black (GimpPalette          *cmap);
+gboolean          ico_save_init           (GimpImage           *image,
+                                           gint32               run_mode,
+                                           IcoSaveInfo         *info,
+                                           gint                 n_hot_spot_x,
+                                           const gint32        *hot_spot_x,
+                                           gint                 n_hot_spot_y,
+                                           const gint32        *hot_spot_y,
+                                           GError             **error);
 
+gboolean          ico_save_dialog         (GimpImage           *image,
+                                           GimpProcedure       *procedure,
+                                           GimpProcedureConfig *config,
+                                           IcoSaveInfo         *info,
+                                           AniFileHeader       *ani_header,
+                                           AniSaveInfo         *ani_info);
+
+void              ico_save_info_free      (IcoSaveInfo         *info);
+
+GimpPDBStatusType shared_save_image       (GFile               *file,
+                                           FILE                *fp_ani,
+                                           GimpImage           *image,
+                                           GimpProcedure       *procedure,
+                                           GimpProcedureConfig *config,
+                                           gint32               run_mode,
+                                           gsize               *n_hot_spot_x,
+                                           const gint32        *hot_spot_x,
+                                           gint32             **new_hot_spot_x,
+                                           gsize               *n_hot_spot_y,
+                                           const gint32        *hot_spot_y,
+                                           gint32             **new_hot_spot_y,
+                                           gint32               file_offset,
+                                           gint                 icon_index,
+                                           GError             **error,
+                                           IcoSaveInfo         *info);
 
 #endif /* __ICO_EXPORT_H__ */
