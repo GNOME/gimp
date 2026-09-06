@@ -200,6 +200,10 @@ static void      gimp_image_window_realize             (GtkWidget           *wid
                                                         gpointer             data);
 #endif
 
+#ifdef PLATFORM_OSX
+static gboolean  gimp_image_window_restore_cursor      (gpointer             canvas);
+#endif
+
 static void      gimp_image_window_monitor_changed     (GimpWindow          *window,
                                                         GdkMonitor          *monitor);
 
@@ -838,6 +842,20 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
 
   private->window_state = event->new_window_state;
 
+#ifdef PLATFORM_OSX
+  /* macOS does not restore the tool's cursor when the image window regains
+     focus, leaving the canvas with the default arrow pointer (see: #7867). */
+  if ((event->changed_mask     & GDK_WINDOW_STATE_FOCUSED) &&
+      (event->new_window_state & GDK_WINDOW_STATE_FOCUSED) &&
+      gtk_widget_get_realized (shell->canvas))
+    {
+      shell->current_cursor = (GimpCursorType) -1;
+      g_idle_add_full (G_PRIORITY_LOW,
+                       gimp_image_window_restore_cursor,
+                       g_object_ref (shell->canvas), g_object_unref);
+    }
+#endif
+
   if (event->changed_mask & GDK_WINDOW_STATE_FULLSCREEN)
     {
       gboolean fullscreen = gimp_image_window_get_fullscreen (window);
@@ -894,6 +912,37 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
 
   return FALSE;
 }
+
+#ifdef PLATFORM_OSX
+static gboolean
+gimp_image_window_restore_cursor (gpointer canvas)
+{
+  GdkWindow *window;
+  NSWindow  *ns_window;
+  GdkCursor *custom_cursor;
+
+  if (! gtk_widget_get_realized (GTK_WIDGET (canvas)))
+    return G_SOURCE_REMOVE;
+
+  window = gtk_widget_get_window (GTK_WIDGET (canvas));
+
+  /* drop system cursor (for when switching between another app to gimp) */
+  ns_window = gdk_quartz_window_get_nswindow (gdk_window_get_toplevel (window));
+  if (ns_window)
+    [ns_window disableCursorRects];
+
+  /* set custom cursor (for when switching between another window inside gimp) */
+  custom_cursor = gdk_window_get_cursor (window);
+  if (custom_cursor)
+    g_object_ref (custom_cursor);
+  gdk_window_set_cursor (window, custom_cursor);
+  gdk_display_flush (gdk_window_get_display (window));
+  if (custom_cursor)
+    g_object_unref (custom_cursor);
+
+  return G_SOURCE_REMOVE;
+}
+#endif
 
 static void
 gimp_image_window_style_updated (GtkWidget *widget)
