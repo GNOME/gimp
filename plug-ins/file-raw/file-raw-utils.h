@@ -22,12 +22,12 @@
 #define __FILE_RAW_UTILS_H__
 
 
-gchar * file_raw_get_executable_path (const gchar *main_executable,
-                                      const gchar *suffix,
-                                      const gchar *env_variable,
-                                      const gchar *mac_bundle_id,
-                                      const gchar *win32_registry_key_base,
-                                      gboolean    *search_path);
+gchar * file_raw_get_executable_path (const gchar  *main_executable,
+                                      const gchar  *suffix,
+                                      const gchar  *env_variable,
+                                      const gchar **mac_bundle_ids,
+                                      const gchar  *win32_registry_key_base,
+                                      gboolean     *search_path);
 
 #ifdef __linux__
 void    file_raw_sanitize_child_env  (gpointer     user_data);
