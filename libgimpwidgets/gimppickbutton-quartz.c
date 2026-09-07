@@ -132,7 +132,27 @@
   if (controller.cursor)
     [controller.cursor set];
 
+  /* do not pick color when just hovering */
+}
+
+- (void)mouseDragged:(NSEvent *)event
+{
+  /* ensure custom GIMP dropper cursor */
+  if (controller.cursor)
+    [controller.cursor set];
+
+  /* only pick the color when clicked, like Linux and Windows */
   [self pickColor:event];
+}
+
+- (void)rightMouseDragged:(NSEvent *)event
+{
+  [self mouseDragged:event];
+}
+
+- (void)otherMouseDragged:(NSEvent *)event
+{
+  [self mouseDragged:event];
 }
 
 - (void)mouseUp:(NSEvent *)event
