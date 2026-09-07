@@ -249,6 +249,12 @@ ani_load_image (GFile    *file,
     }
   fclose (fp);
 
+  /* A zero rate is unplayable in Windows and we write no separate
+   * 'rate' chunk, so fall back to the default delay.
+   */
+  if (header.jif_rate == 0)
+    header.jif_rate = ANI_DEFAULT_JIF_RATE;
+
   /* Saving header metadata */
   str = g_strdup_printf ("%d", header.jif_rate);
   parasite = gimp_parasite_new ("ani-header",

@@ -118,6 +118,14 @@ ani_export_image (GFile                *file,
       g_free (parasite_data);
     }
 
+  /* A zero rate is unplayable in Windows and we write no separate
+   * 'rate' chunk, so fall back to the default delay.
+   */
+  if (header->jif_rate == 0)
+    header->jif_rate = ANI_DEFAULT_JIF_RATE;
+  else if (header->jif_rate > ANI_MAX_JIF_RATE)
+    header->jif_rate = ANI_MAX_JIF_RATE;
+
   parasite = gimp_image_get_parasite (image, "ani-info-inam");
   if (parasite)
     {

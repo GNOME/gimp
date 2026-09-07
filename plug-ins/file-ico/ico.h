@@ -97,6 +97,12 @@ typedef struct _IcoSaveInfo
     gint        *hot_spot_y;
 } IcoSaveInfo;
 
+#define ANI_MIN_JIF_RATE     1                /* smallest playable frame delay: 1/60 s (~60 fps) */
+#define ANI_DEFAULT_JIF_RATE 8                /* default frame delay: 8/60 s (~7.5 fps) */
+#define ANI_MAX_JIF_RATE     (G_MAXINT / 100) /* largest safe delay: ~4.1 days. Windows playback
+                                                  does rate*100 in signed 32-bit; above this it
+                                                  overflows */
+
 typedef struct
 {
   gint index;

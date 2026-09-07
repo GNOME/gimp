@@ -413,7 +413,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                        "Default delay",
                                        "Default delay between frames "
                                        "in jiffies (1/60 of a second)",
-                                       0, G_MAXINT, 8,
+                                       ANI_MIN_JIF_RATE, ANI_MAX_JIF_RATE, ANI_DEFAULT_JIF_RATE,
                                        G_PARAM_READWRITE);
 
       gimp_procedure_add_int32_array_argument (procedure, "hot-spot-x",
