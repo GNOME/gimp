@@ -1394,6 +1394,9 @@ ani_export_image (GFile                *file,
 #endif
   fwrite (id, 4, 1, fp);
 
+  /* RIFF LIST/INFO text is written as UTF-8 (XMP Specification
+   * Part 3, section 2.3.2.1).
+   */
   if ((ani_info->inam && strlen (ani_info->inam) > 0) ||
       (ani_info->iart && strlen (ani_info->iart) > 0))
     {

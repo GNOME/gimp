@@ -965,12 +965,28 @@ ani_load_image (GFile   *file,
               inam[size] = '\0';
             }
 
-          if (n_read < 1 || (inam && ! g_utf8_validate (inam, -1, NULL)))
+          if (n_read < 1)
             {
               fclose (fp);
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Invalid ANI metadata"));
               return NULL;
+            }
+
+          if (inam && ! g_utf8_validate (inam, -1, NULL))
+            {
+              /* RIFF LIST/INFO text is nominally UTF-8 (XMP
+               * Specification Part 3, section 2.3.2.1), but legacy
+               * ANI files store INAM/IART as Windows-1252 (CP_ACP).
+               * Convert rather than rejecting the whole file; if
+               * conversion also fails, drop this field and keep
+               * loading.
+               */
+              gchar *converted = g_convert (inam, -1, "UTF-8",
+                                            "WINDOWS-1252",
+                                            NULL, NULL, NULL);
+              g_free (inam);
+              inam = converted;
             }
 
           /* Metadata length must be even. If data itself is odd,
@@ -1005,12 +1021,28 @@ ani_load_image (GFile   *file,
               iart[size] = '\0';
             }
 
-          if (n_read < 1 || (iart && ! g_utf8_validate (iart, -1, NULL)))
+          if (n_read < 1)
             {
               fclose (fp);
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Invalid ANI metadata"));
               return NULL;
+            }
+
+          if (iart && ! g_utf8_validate (iart, -1, NULL))
+            {
+              /* RIFF LIST/INFO text is nominally UTF-8 (XMP
+               * Specification Part 3, section 2.3.2.1), but legacy
+               * ANI files store INAM/IART as Windows-1252 (CP_ACP).
+               * Convert rather than rejecting the whole file; if
+               * conversion also fails, drop this field and keep
+               * loading.
+               */
+              gchar *converted = g_convert (iart, -1, "UTF-8",
+                                            "WINDOWS-1252",
+                                            NULL, NULL, NULL);
+              g_free (iart);
+              iart = converted;
             }
 
           if (size % 2 != 0)
