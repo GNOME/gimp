@@ -128,6 +128,10 @@
 
 - (void)mouseMoved:(NSEvent *)event
 {
+  /* ensure custom GIMP dropper cursor */
+  if (controller.cursor)
+    [controller.cursor set];
+
   [self pickColor:event];
 }
 
