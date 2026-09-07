@@ -328,12 +328,31 @@ _gimp_resource_chooser_set_drag_target (GimpResourceChooser  *chooser,
   g_return_if_fail (drag_target != NULL);
   g_return_if_fail (drag_region_widget != NULL);
 
+#ifdef PLATFORM_OSX
+  /* on macOS, GDK turns any custom target containing a "/" to a UTI-like
+     format, but not the other way around. So, rewrite "/" to "-" to work
+     (see app/widgets/gimpdnd.c) */
+  GtkTargetEntry  quartz_target = *drag_target;
+  gchar          *quartz_name   = g_strdup (drag_target->target);
+
+  g_strdelimit (quartz_name, "/", '-');
+  quartz_target.target = quartz_name;
+#endif
+
   gtk_drag_dest_set (drag_region_widget,
                      GTK_DEST_DEFAULT_HIGHLIGHT |
                      GTK_DEST_DEFAULT_MOTION |
                      GTK_DEST_DEFAULT_DROP,
+#ifndef PLATFORM_OSX
                      drag_target, 1,  /* Pass array of size 1 */
+#else
+                     &quartz_target, 1,
+#endif
                      GDK_ACTION_COPY);
+
+#ifdef PLATFORM_OSX
+  g_free (quartz_name);
+#endif
 
   /* connect drag_region_widget's drag_received signal to chooser's callback. */
   g_signal_connect_swapped (drag_region_widget, "drag-data-received",

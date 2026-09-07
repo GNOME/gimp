@@ -77,7 +77,14 @@ static void  gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
 static void  gimp_image_combo_box_changed   (GimpImageComboBox *combo_box);
 
 
+#ifndef PLATFORM_OSX
 static const GtkTargetEntry target = { "application/x-gimp-image-id", 0 };
+#else
+/* on macOS, GDK turns any custom target containing a "/" to a UTI-like
+   format, but not the other way around. So, rewrite "/" to "-" to work
+   (see app/widgets/gimpdnd.c) */
+static const GtkTargetEntry target = { "application-x-gimp-image-id", 0 };
+#endif
 
 
 G_DEFINE_TYPE (GimpImageComboBox, gimp_image_combo_box, GIMP_TYPE_INT_COMBO_BOX)

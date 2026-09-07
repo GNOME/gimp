@@ -280,7 +280,7 @@ static gboolean    gimp_dnd_set_tool_item_data  (GtkWidget        *widget,
 
 
 
-static const GimpDndDataDef dnd_data_defs[] =
+static GimpDndDataDef dnd_data_defs[] =
 {
   {
     { NULL, 0, -1 },
@@ -684,6 +684,25 @@ gimp_dnd_init (Gimp *gimp)
   g_return_if_fail (the_dnd_gimp == NULL);
 
   the_dnd_gimp = gimp;
+
+#ifdef PLATFORM_OSX
+  /* on macOS, GDK turns any custom target containing a "/" to a UTI-like
+     format, but not the other way around. So, rewrite "/" to "-" to work */
+  for (gint i = 0; i < G_N_ELEMENTS (dnd_data_defs); i++)
+    {
+      const gchar *quartz_target = dnd_data_defs[i].target_entry.target;
+
+      if (quartz_target &&
+          (g_str_has_prefix (quartz_target, "application/x-gimp-") ||
+           g_strcmp0 (quartz_target, "application/x-geglcolor") == 0))
+        {
+          gchar *quartz_name = g_strdup (quartz_target);
+
+          g_strdelimit (quartz_name, "/", '-');
+          dnd_data_defs[i].target_entry.target = quartz_name;
+        }
+    }
+#endif
 }
 
 
