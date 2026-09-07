@@ -122,6 +122,9 @@ static void       load_photoshop_metadata  (TIFF                *tif,
 static void       load_photoshop_layers    (TIFF                *tif,
                                             GimpImage           *image,
                                             gboolean             is_cmyk);
+static void           convert_gdal_range   (GimpDrawable        *drawable,
+                                            gchar               *gdal_metadata);
+
 static GimpLayerMode  convert_alias_blend  (gint                 alias_blend_mode,
                                             gboolean             is_group_layer);
 static GimpColorTag   convert_alias_tag    (gint                 alias_color_tag);
@@ -308,6 +311,9 @@ load_image (GimpProcedure        *procedure,
   gchar             *sketchbook_info;
   gint               sketchbook_len;
   gboolean           sketchbook_layers  = FALSE;
+  gchar             *gdal_metadata;
+  gint               gdal_len;
+  gboolean           has_gdal_metadata  = FALSE;
   gchar             *photoshop_info;
   gint               photoshop_len;
   gboolean           photoshop_metadata = FALSE;
@@ -1379,6 +1385,12 @@ load_image (GimpProcedure        *procedure,
             gimp_image_attach_parasite (*image, parasite);
             gimp_parasite_free (parasite);
           }
+
+        /* Check if there is GDAL metadata */
+#ifdef TIFFTAG_GDAL_METADATA
+        has_gdal_metadata = TIFFGetField (tif, TIFFTAG_GDAL_METADATA,
+                                          &gdal_len, &gdal_metadata);
+#endif
       }
 
       /* any resolution info in the file? */
@@ -1878,6 +1890,9 @@ load_image (GimpProcedure        *procedure,
                 }
               g_list_free (layers);
             }
+
+          if (has_gdal_metadata)
+            convert_gdal_range (GIMP_DRAWABLE (layer), gdal_metadata);
         }
 
       gimp_progress_update (1.0);
@@ -2861,6 +2876,88 @@ load_photoshop_layers (TIFF           *tif,
       gimp_value_array_unref (return_vals);
     }
 #endif
+}
+
+static void
+convert_gdal_range (GimpDrawable *drawable,
+                    gchar        *gdal_metadata)
+{
+  GeglBuffer          *buffer;
+  GeglBufferIterator  *iter;
+  gchar              **partial_metadata;
+  gfloat               low  = 0.0;
+  gfloat               high = 1.0;
+
+  /* TODO: Right now we only need one value from this metadata,
+   * so setting up a full XML parser seems overkill. In the future,
+   * if we expand to use other values in the XML metadata, it might
+   * be worthwhile to move the custom functions (Sketchbook, Photoshop,
+   * etc) to a new file to streamline file-tiff-load.c */
+  if (gdal_metadata)
+    {
+      partial_metadata = g_strsplit (gdal_metadata, "\"actual_range\"", 6);
+
+      if (partial_metadata && g_strv_length (partial_metadata) > 1)
+        {
+          gchar **bracket_split;
+          gint    offset = g_strv_length (partial_metadata) - 1;
+
+          for (gint i = 0; i < g_strv_length (partial_metadata); i++)
+            g_print ("%d) \n%s\n", i, partial_metadata[i]);
+
+          bracket_split = g_strsplit_set (partial_metadata[offset], "{", 2);
+          if (bracket_split && g_strv_length (bracket_split) > 1)
+            {
+              gchar **comma_split;
+
+              comma_split = g_strsplit_set (bracket_split[1], ",", 2);
+              if (comma_split && g_strv_length (comma_split) > 1)
+                {
+                  gchar **final_split;
+
+                  low = g_ascii_strtod (comma_split[0], NULL);
+
+                  final_split = g_strsplit_set (comma_split[1], "}", 2);
+                  if (final_split && g_strv_length (final_split) > 1)
+                    {
+                      high = g_ascii_strtod (final_split[0], NULL);
+
+                      high = MAX ((high - low), 1.0);
+                    }
+                  g_strfreev (final_split);
+                }
+              g_strfreev (comma_split);
+            }
+          g_strfreev (bracket_split);
+        }
+      g_strfreev (partial_metadata);
+    }
+
+  /* If the range is 0 to 1, no need to adjust */
+  if (low == 0.0 && high == 1.0)
+    return;
+
+  buffer = gimp_drawable_get_buffer (drawable);
+  iter = gegl_buffer_iterator_new (buffer, NULL, 0, NULL,
+                                   GEGL_ACCESS_READWRITE,
+                                   GEGL_ABYSS_NONE, 1);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      gfloat *s   = iter->items[0].data;
+      gint    len = iter->length;
+
+      while (len--)
+        {
+          if (isnan (s[0]))
+            s[0] = 0.0f;
+          else
+            s[0] = (s[0] - low) / high;
+
+          s++;
+        }
+    }
+  g_object_unref (buffer);
 }
 
 static GimpLayerMode
