@@ -457,6 +457,11 @@ entry selection {
   color: @bg-color;
 }
 
+/* fix blue focus from Adwaita */
+entry:focus, entry:focus-within {
+  box-shadow: none;
+}
+
 paned separator {
   background-image: none;
   background-color: @bg-color;
