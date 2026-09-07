@@ -554,6 +554,8 @@ _gimp_pick_button_quartz_pick (GimpPickButton *button)
   if (!CGPreflightScreenCaptureAccess())
     {
       CGRequestScreenCaptureAccess();
+      g_message ("Could not capture colors via ScreenCaptureKit API. Pleave give the needed permissions");
+      [NSApp deactivate];
 
       [pool release];
       return;

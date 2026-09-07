@@ -755,9 +755,11 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
       gimp_app_permissions = @{(__bridge id)kAXTrustedCheckOptionPrompt: @YES};
       gimp_app_istrusted = AXIsProcessTrustedWithOptions ((__bridge CFDictionaryRef)gimp_app_permissions);
       if (! gimp_app_istrusted)
-        g_message ("Could not minimize/maximize plug-in window via Accessibility API. It may stay always on top");
-
-      for (NSWindow *win in plugin_win)
+        {
+          gimp_message ("Could not minimize/maximize plug-in window via Accessibility API. Pleave give the needed permissions");
+          [NSApp deactivate];
+        }
+      else for (NSWindow *win in plugin_win)
         {
           /* first, set all plug-in windows as always visible */
           [win setLevel:NSFloatingWindowLevel];
