@@ -6,15 +6,16 @@
 # Enrico Nicoletto <liverig@gmail.com>, 2021.
 # Hugo Fortini <hugofortinipbi@gmail.com>, 2024.
 # João Pedro Salmazo Pitarelo <joao.pitarelo@proton.me>, 2026.
+# Rafael Coelho Costa <coelho38r@proton.me>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-17 12:56+0000\n"
-"PO-Revision-Date: 2026-03-31 11:07-0300\n"
-"Last-Translator: João Pedro Salmazo Pitarelo <joao.pitarelo@proton.me>\n"
-"Language-Team: Brazilian Portuguese <<https://br.gnome.org/traducao>>\n"
+"POT-Creation-Date: 2026-08-02 17:50+0000\n"
+"PO-Revision-Date: 2026-08-26 13:05-0300\n"
+"Last-Translator: Rafael Coelho Costa <coelho38r@proton.me>\n"
+"Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,16 +51,15 @@ msgid ""
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
-"installation anyway?"
+"www.gimp.org/bugs%n%nDo you wish to continue with installation anyway?"
 msgstr ""
 "Esta é uma versão de desenvolvimento do GIMP na qual alguns recursos podem "
-"estar inacabados ou instáveis.%nEsta versão do GIMP não é recomendada para "
-"uso diário devido à possibilidade de instabilidade e de você perder seu "
-"trabalho.%nSe você encontrar qualquer problema, primeiramente verifique se "
-"ele não já foi corrigido no GIT antes de entrar em contato com os "
-"desenvolvedores ou reportar no GitLab do GIMP:%n_https://gitlab.gnome.org/"
-"GNOME/gimp/issues%n%nVocê deseja continuar com a instalação mesmo assim?"
+"não estar concluídos ou a versão pode ser instável.%nEsta versão do GIMP não "
+"se destina ao uso diário, pois pode ser instável e você pode perder seu "
+"trabalho.%nSe você encontrar algum problema, verifique primeiro se ele já "
+"foi corrigido no Git antes de entrar em contato com os desenvolvedores ou "
+"relatá-lo no GitLab do GIMP:%n_https://www.gimp.org/bugs%n%nDeseja continuar "
+"com a instalação mesmo assim?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
 #: build/windows/installer/lang/setup.isl.xml.in:43
