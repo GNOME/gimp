@@ -242,6 +242,14 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
       break;
     }
 
+#ifdef PLATFORM_OSX
+  /* on macOS, the (x, y) that GTK passes to the drag-n-drop handlers are
+     offset (see #12211) so query the pointer position relative to the widget */
+  gdk_window_get_device_position (gtk_widget_get_window (GTK_WIDGET (tree_view->view)),
+                                  gdk_drag_context_get_device (context),
+                                  &x, &y, NULL);
+#endif
+
   gtk_tree_view_convert_widget_to_bin_window_coords (tree_view->view, x, y, &x, &y);
   if (gtk_tree_view_get_path_at_pos (tree_view->view, x, y,
                                      &drop_path, NULL, NULL, NULL))
