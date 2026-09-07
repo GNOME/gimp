@@ -649,7 +649,25 @@ gimp_fg_bg_editor_drag_motion (GtkWidget      *widget,
                                guint           time)
 {
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
-  GimpFgBgTarget  target = gimp_fg_bg_editor_target (editor, x, y);
+  GimpFgBgTarget  target;
+
+#ifdef PLATFORM_OSX
+  /* on macOS, the (x, y) that GTK passes to the drag-n-drop handlers are
+     offset (see #12211) so query the pointer position relative to the widget */
+  gdk_window_get_device_position (gtk_widget_get_window (widget),
+                                  gdk_drag_context_get_device (context),
+                                  &x, &y, NULL);
+  if (! gtk_widget_get_has_window (widget))
+    {
+      GtkAllocation allocation;
+
+      gtk_widget_get_allocation (widget, &allocation);
+      x -= allocation.x;
+      y -= allocation.y;
+    }
+#endif
+
+  target = gimp_fg_bg_editor_target (editor, x, y);
 
   if (target == GIMP_FG_BG_TARGET_FOREGROUND ||
       target == GIMP_FG_BG_TARGET_BACKGROUND)
@@ -789,6 +807,22 @@ gimp_fg_bg_editor_drop_color (GtkWidget *widget,
                               gpointer   data)
 {
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
+
+#ifdef PLATFORM_OSX
+  /* on macOS, the (x, y) that GTK passes to the drag-n-drop handlers are
+     offset (see #12211) so query the pointer position relative to the widget */
+  gdk_window_get_device_position (gtk_widget_get_window (widget),
+                                  gdk_seat_get_pointer (gdk_display_get_default_seat (gtk_widget_get_display (widget))),
+                                  &x, &y, NULL);
+  if (! gtk_widget_get_has_window (widget))
+    {
+      GtkAllocation allocation;
+
+      gtk_widget_get_allocation (widget, &allocation);
+      x -= allocation.x;
+      y -= allocation.y;
+    }
+#endif
 
   if (editor->context)
     {
