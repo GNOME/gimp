@@ -139,7 +139,14 @@ G_DEFINE_TYPE (GimpColorArea, gimp_color_area, GTK_TYPE_DRAWING_AREA)
 
 static guint gimp_color_area_signals[LAST_SIGNAL] = { 0 };
 
+#ifndef PLATFORM_OSX
 static const GtkTargetEntry target = { "application/x-geglcolor", 0 };
+#else
+/* on macOS, GDK turns any custom target containing a "/" to a UTI-like
+   format, but not the other way around. So, rewrite "/" to "-" to work
+   (see app/widgets/gimpdnd.c) */
+static const GtkTargetEntry target = { "application-x-geglcolor", 0 };
+#endif
 
 
 static void
