@@ -355,6 +355,142 @@ gimp_widget_set_title_bar_theme (GtkWidget *dialog)
 #endif
 }
 
+/**
+ * gimp_widget_set_auto_transient:
+ * @dialog:
+ *
+ * The same auto-transient logic that #GimpDialog applies to itself, exposed
+ * for core windows that are not #GimpDialog (e.g. the About dialog and the
+ * action search popup). It will no-op on platforms other than macOS.
+ *
+ */
+void
+gimp_widget_set_auto_transient (GtkWidget *dialog)
+{
+#ifdef PLATFORM_OSX
+  NSWindow    *parent_window            = nil;
+  NSWindow    *dialog_window            = nil;
+  const gchar *dialog_window_gtk_title  = gtk_window_get_title (GTK_WINDOW (dialog));
+  NSString    *dialog_window_ns_title   = dialog_window_gtk_title ? [NSString stringWithUTF8String:dialog_window_gtk_title] : nil;
+
+  /* we cycle since this is the only reliable way to checking the parent window,
+     gdk_quartz_window_get_nswindow would not be enough */
+  for (NSWindow *win in [NSApp windows])
+    {
+      if (! [win isVisible])
+        continue;
+
+      /* child dialog window */
+      if (! dialog_window && [win canBecomeKeyWindow] && [win parentWindow] == nil)
+        {
+          if (dialog_window_ns_title && [[win title] isEqualToString:dialog_window_ns_title])
+            dialog_window = win;
+        }
+
+      /* gimp main window */
+      if (! parent_window && [win canBecomeMainWindow] && [win parentWindow] == nil && ! [win isSheet])
+        {
+          if ((! dialog_window_ns_title || ![[win title] isEqualToString:dialog_window_ns_title]) && win != dialog_window)
+            parent_window = win;
+        }
+
+      if (dialog_window && parent_window)
+        break;
+    }
+  if (parent_window && dialog_window)
+    {
+      /* Ideally we should use addChildWindow but it breaks animations
+      [parent_window addChildWindow:dialog_window ordered:NSWindowAbove]; */
+      __block NSWindow     *focus_saved         = nil;
+      __block id            activate_observer   = nil;
+      __block id            deactivate_observer = nil;
+      __block id            focus_save_observer = nil;
+      __block id            focus_set_observer  = nil;
+      __block id            close_observer      = nil;
+      NSNotificationCenter *center              = [NSNotificationCenter defaultCenter];
+
+      /* gimp main window is active, show dialog on top always */
+      [dialog_window setLevel:NSFloatingWindowLevel];
+      [dialog_window setHidesOnDeactivate:YES];
+      activate_observer = [center
+                           addObserverForName:NSWindowDidBecomeKeyNotification
+                           object:parent_window
+                           queue:[NSOperationQueue mainQueue]
+                           usingBlock:^(NSNotification * _Nonnull note) {
+        if (! [dialog_window isVisible])
+          [dialog_window orderFrontRegardless];
+      }];
+
+      /* gimp main window is not active, hide dialog */
+      deactivate_observer = [center
+                             addObserverForName:NSWindowDidResignKeyNotification
+                             object:parent_window
+                             queue:[NSOperationQueue mainQueue]
+                             usingBlock:^(NSNotification * _Nonnull note) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          NSWindow *key_window = [NSApp keyWindow];
+          if ([NSApp isActive] && key_window != parent_window && key_window != dialog_window)
+            [dialog_window orderOut:nil];
+        });
+      }];
+
+      /* gimp main window is not active, save last focused window/dialog */
+      focus_save_observer = [center
+                             addObserverForName:NSApplicationWillResignActiveNotification
+                             object:nil
+                             queue:[NSOperationQueue mainQueue]
+                             usingBlock:^(NSNotification * _Nonnull note) {
+        focus_saved = [NSApp keyWindow];
+      }];
+
+      /* gimp main window is active, show dialog focused or not */
+      focus_set_observer = [center
+                            addObserverForName:NSApplicationDidBecomeActiveNotification
+                            object:nil
+                            queue:[NSOperationQueue mainQueue]
+                            usingBlock:^(NSNotification * _Nonnull note) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          if ([parent_window isMiniaturized])
+            [parent_window deminiaturize:nil];
+          [parent_window orderFront:nil];
+          if ([dialog_window isVisible])
+            [dialog_window orderWindow:NSWindowAbove relativeTo:[parent_window windowNumber]];
+
+          if (focus_saved == parent_window)
+            [parent_window makeKeyWindow];
+          else
+            [dialog_window makeKeyAndOrderFront:nil];
+        });
+      }];
+
+      /* gimp main window is active but dialog is gone, show main window focused */
+      close_observer = [center
+                        addObserverForName:NSWindowWillCloseNotification
+                        object:dialog_window
+                        queue:[NSOperationQueue mainQueue]
+                        usingBlock:^(NSNotification * _Nonnull note) {
+        [parent_window makeKeyWindow];
+
+        if (activate_observer)   [center removeObserver:activate_observer];
+        if (deactivate_observer) [center removeObserver:deactivate_observer];
+        if (focus_save_observer) [center removeObserver:focus_save_observer];
+        if (focus_set_observer)  [center removeObserver:focus_set_observer];
+        if (close_observer)      [center removeObserver:close_observer];
+      }];
+
+      {
+        /* On the first opening, center the dialog like Linux and Windows. See: #871 */
+        NSRect  parent_frame      = [parent_window frame];
+        NSRect  dialog_frame      = [dialog_window frame];
+        CGFloat dialog_position_x = parent_frame.origin.x + (parent_frame.size.width - dialog_frame.size.width) / 2.0;
+        CGFloat dialog_position_y = parent_frame.origin.y + (parent_frame.size.height - dialog_frame.size.height) / 2.0;
+
+        [dialog_window setFrameOrigin:NSMakePoint(dialog_position_x, dialog_position_y)];
+      }
+    }
+#endif
+}
+
 /* clean up babl (in particular, so that the fish cache is constructed) if the
  * compiler supports destructors
  */
