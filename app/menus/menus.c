@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -59,6 +61,10 @@
 static gboolean menurc_deleted = FALSE;
 
 #ifdef PLATFORM_OSX
+/* position of the "Settings"/"Preferences" item in the macOS app menu
+   used by menus_quartz_app_menu() and menus_quartz_get_settings_label */
+#define QUARTZ_APP_MENU_SETTINGS_INDEX 3
+
 static Gimp    *unique_gimp        = NULL;
 static gboolean app_menu_added     = FALSE;
 #endif
@@ -657,8 +663,8 @@ menus_quartz_app_menu (Gimp *gimp)
       [item setTarget:[GimpappMenuHandler class]];
       [app_menu insertItem:item atIndex:1];
 
-      /* Settings */
-      item = [app_menu itemAtIndex:3];
+      /* Settings (this will be later picked by menus_quartz_get_settings_label() */
+      item = [app_menu itemAtIndex:QUARTZ_APP_MENU_SETTINGS_INDEX];
       [item setTarget:[GimpappMenuHandler class]];
       [item setAction:@selector (gimpShowPreferences:)];
 
@@ -722,5 +728,34 @@ menus_quartz_app_menu (Gimp *gimp)
           break;
         }
     }
+}
+
+/* return the label currently shown on the "Settings" entry of
+   the macOS application menu, see menus_quartz_app_menu() */
+gchar *
+menus_quartz_get_settings_label (void)
+{
+  NSMenu   *main_menu = [NSApp mainMenu];
+  NSMenu   *app_menu;
+  NSString *title;
+  gchar    *label;
+
+  if (! main_menu || [main_menu numberOfItems] < 1)
+    return NULL;
+
+  app_menu = [[main_menu itemAtIndex:0] submenu];
+  if (! app_menu || [app_menu numberOfItems] <= QUARTZ_APP_MENU_SETTINGS_INDEX)
+    return NULL;
+
+  title = [[app_menu itemAtIndex:QUARTZ_APP_MENU_SETTINGS_INDEX] title];
+  if (! title || [title length] == 0)
+    return NULL;
+
+  label = g_strdup ([title UTF8String]);
+  if (g_str_has_suffix (label, "\xe2\x80\xa6") ||
+      g_str_has_suffix (label, "..."))
+    label[strlen (label) - 3] = '\0';
+
+  return g_strchomp (label);
 }
 #endif

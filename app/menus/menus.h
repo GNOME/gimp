@@ -34,4 +34,5 @@ GimpUIManager   * menus_get_image_manager_singleton (Gimp      *gimp);
 
 #ifdef PLATFORM_OSX
 void              menus_quartz_app_menu             (Gimp      *gimp);
+gchar           * menus_quartz_get_settings_label   (void);
 #endif
