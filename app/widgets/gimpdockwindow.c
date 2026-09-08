@@ -815,7 +815,7 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
           ns_window = gdk_quartz_window_get_nswindow (gtk_widget_get_window (GTK_WIDGET (dock_window)));
           if (ns_window)
             {
-              /* keep dockable window transient (since gimp_dialog_auto_transient don't work well here)*/
+              /* keep dockable window transient (since gimp_widget_set_auto_transient don't work well here)*/
               NSWindow *main_window = [NSApp mainWindow];
               g_object_set_data (G_OBJECT (dock_window), "osx-parent-window", main_window);
               /* do NOT call gimp_dock_window_update_focus_idle here to avoid glitches */

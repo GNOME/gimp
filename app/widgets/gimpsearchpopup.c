@@ -31,6 +31,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "widgets-types.h"
 
@@ -195,6 +196,13 @@ gimp_search_popup_init (GimpSearchPopup *search_popup)
 #if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
   g_signal_connect (search_popup, "realize",
                     G_CALLBACK (gimp_search_popup_realize),
+                    NULL);
+#endif
+
+#ifdef PLATFORM_OSX
+  /* since `widget` is not created with gimp_dialog_new */
+  g_signal_connect (search_popup, "map",
+                    G_CALLBACK (gimp_widget_set_auto_transient),
                     NULL);
 #endif
 }

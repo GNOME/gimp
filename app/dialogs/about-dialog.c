@@ -34,6 +34,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "dialogs-types.h"
 
@@ -296,6 +297,12 @@ about_dialog_create (Gimp           *gimp,
       g_signal_connect (widget, "unmap",
                         G_CALLBACK (about_dialog_unmap),
                         &dialog);
+#ifdef PLATFORM_OSX
+      /* since `widget` is not created with gimp_dialog_new */
+      g_signal_connect (widget, "map",
+                        G_CALLBACK (gimp_widget_set_auto_transient),
+                        NULL);
+#endif
 
       /*  kids, don't try this at home!  */
       container = gtk_dialog_get_content_area (GTK_DIALOG (widget));

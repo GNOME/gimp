@@ -632,7 +632,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 #ifndef G_OS_WIN32
               /* On Linux, this is not needed since window compositors are smart.
                  On macOS, this breaks animation and positioning of the dialog
-                 so we use gimp_dialog_auto_transient which cycles all dialogs */
+                 so we use gimp_widget_set_auto_transient which cycles all dialogs */
               gboolean       force_transient = FALSE;
 #else
               /* On Windows, this is needed and works well in the same process,

@@ -50,6 +50,8 @@ void  gimp_widget_set_bound_property  (GtkWidget             *widget,
 
 void  gimp_widget_set_title_bar_theme (GtkWidget             *dialog);
 
+void  gimp_widget_set_auto_transient  (GtkWidget             *dialog);
+
 
 G_END_DECLS
 
