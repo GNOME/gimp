@@ -221,7 +221,7 @@ Build:
   - Full build CI pipeline for GIMP on macOS now on our Gitlab instance
     (hence deprecating the old CI on CircleCI, just for the sake of
     macOS).
-  - MSIX (Windows package) now allows opening multiple images from "Open
+  - .exe installer and MSIX now allows opening multiple images from "Open
     With".
   - Make sure our packages for Windows and macOS builds, as well as our
     AppImage, ship with the required libraries to create plug-ins.
