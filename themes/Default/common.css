@@ -49,6 +49,13 @@
   color: @disabled-fg-color;
 }
 
+/* fix blue/cyan Adwaita leak on the tree lines */
+treeview.view,
+treeview.view:selected {
+  border-left-color: mix(@fg-color, @extreme-bg-color, 0.5);
+  border-top-color:  @bg-color;
+}
+
 /* Selected text in a treeview cell (e.g. layer name in edition mode). */
 .view selection {
   background-color: @fg-color;
