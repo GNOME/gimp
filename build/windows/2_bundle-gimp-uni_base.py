@@ -27,7 +27,7 @@ with open("config.h") as file:
         value = value.strip().strip('"').strip("'")
       config_vars[key] = value
 globals().update(config_vars)
-if not ENABLE_RELOCATABLE_RESOURCES:
+if not config_vars.get("ENABLE_RELOCATABLE_RESOURCES"):
   print("\n\033[31m(ERROR)\033[0m: No relocatable GIMP build found. You can build GIMP with '-Drelocatable-bundle=yes' to make a build suitable for bundle creation.")
   sys.exit(1)
 
