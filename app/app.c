@@ -91,6 +91,11 @@ static void       app_activate_callback      (GimpCoreApp        *app,
 static gboolean   app_exit_after_callback    (Gimp               *gimp,
                                               gboolean            kill_it,
                                               GApplication       *app);
+#ifdef PLATFORM_OSX
+static void       app_language_notify        (GObject            *config,
+                                              GParamSpec         *pspec,
+                                              gpointer            user_data);
+#endif
 
 #ifdef G_OS_WIN32
 static BOOL       app_quit_on_ctrl_c         (DWORD               ctrl_type);
@@ -350,6 +355,20 @@ app_init_update_noop (const gchar *text1,
   /*  deliberately do nothing  */
 }
 
+#ifdef PLATFORM_OSX
+static void
+app_language_notify (GObject    *config,
+                     GParamSpec *pspec,
+                     gpointer    user_data)
+{
+  gchar *language = NULL;
+
+  g_object_get (config, "language", &language, NULL);
+  language_set_macos_menu_bar_lang (language);
+  g_free (language);
+}
+#endif
+
 static void
 app_activate_callback (GimpCoreApp *app,
                        gpointer     user_data)
@@ -387,6 +406,14 @@ app_activate_callback (GimpCoreApp *app,
    *  parsed gimprc, e.g. the data factories
    */
   gimp_initialize (gimp, update_status_func);
+
+#ifdef PLATFORM_OSX
+  /* macOS freezes [[NSBundle mainBundle] preferredLocalizations] before main(),
+     so a language change only reaches those menus on the next launch. That
+     is why we need to call it here, not only on language.c. */
+  g_signal_connect (gimp->edit_config, "notify::language",
+                    G_CALLBACK (app_language_notify), NULL);
+#endif
 
   g_object_get (gimp->edit_config,
                 "prev-language", &prev_language,

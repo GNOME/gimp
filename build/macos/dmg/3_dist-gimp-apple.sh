@@ -130,6 +130,19 @@ conf_plist "%GIMP_VERSION%" "$CUSTOM_GIMP_VERSION"
 conf_plist "%GIMP_APP_VERSION%" "$GIMP_APP_VERSION"
 ### List supported filetypes
 sed -i '' "s|%FILE_TYPES%|$(tr -d '\n' < $BUILD_DIR/plug-ins/file_associations_mac.list)|g" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/Info.plist"
+### List supported locales on Apple format (for macOS 'Window' and 'Help' menu etc)
+LOCALIZATIONS=$(awk '
+  $1 == "" || $1 ~ /^#/ { next }
+  { lang = $1 }
+  lang == "zh_CN"  { lang = "zh-Hans" }
+  lang == "zh_TW"  { lang = "zh-Hant" }
+  lang == "zh_HK"  { lang = "zh-Hant-HK" }
+  lang ~ /@latin$/ { sub(/@latin$/, "-Latn", lang) }
+  lang ~ /@/       { sub(/@.*/, "", lang) }
+                   { gsub(/_/, "-", lang) }
+  !seen[lang]++    { printf "<string>%s</string>", lang }
+' po/LINGUAS)
+conf_plist "%LOCALIZATIONS%" "$LOCALIZATIONS"
 
 ## 4.2 Create or copy .DS_Store to set .dmg background and icon layout
 printf '(INFO): generating .DS_Store\n'

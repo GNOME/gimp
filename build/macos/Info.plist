@@ -4,6 +4,13 @@
   <dict>
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
+    <key>CFBundleAllowMixedLocalizations</key>
+    <true/>
+    <key>CFBundleLocalizations</key>
+    <array>
+      <string>en</string>
+      %LOCALIZATIONS%
+    </array>
     <key>CFBundleExecutable</key>
     <string>gimp-%GIMP_APP_VERSION%</string>
     <key>CFBundleIconFile</key>
