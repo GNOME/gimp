@@ -809,8 +809,7 @@ do_data_changed_dialog (void (*continue_cb)(gpointer),
                                             _("Do you really want to discard "
                                               "your changes?"));
 
-#if defined (G_OS_WIN32) || \
-    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (dialog);
   gimp_widget_set_title_bar_theme (dialog);
 #endif
@@ -1094,8 +1093,7 @@ do_image_size_changed_dialog (void)
                                         _("Image size has changed."),
                                         _("Resize area's?"));
 
-#if defined (G_OS_WIN32) || \
-    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (dialog);
   gimp_widget_set_title_bar_theme (dialog);
 #endif
@@ -1663,8 +1661,7 @@ dialog (GimpImap *imap)
   _statusbar = make_statusbar (main_vbox, imap->dlg);
   statusbar_set_zoom (_statusbar, 1);
 
-#if defined (G_OS_WIN32) || \
-    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (imap->dlg);
   gimp_widget_set_title_bar_theme (imap->dlg);
 #endif
