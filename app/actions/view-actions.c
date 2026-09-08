@@ -320,7 +320,12 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     GIMP_HELP_VIEW_SHOW_STATUSBAR },
 
   { "view-fullscreen", GIMP_ICON_VIEW_FULLSCREEN,
+#ifndef PLATFORM_OSX
     NC_("view-action", "Fullscr_een"), NULL, { "F11", NULL },
+#else
+    /* macOS reserves F11 to "Show Desktop". Use the macOS-standard Ctrl+Cmd+F */
+    NC_("view-action", "Fullscr_een"), NULL, { "<control><primary>F", NULL },
+#endif
     NC_("view-action", "Toggle fullscreen view"),
     view_fullscreen_cmd_callback,
     FALSE,
