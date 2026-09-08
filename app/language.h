@@ -24,3 +24,7 @@
 
 const gchar * language_init (const gchar  *language,
                              const gchar **system_lang_l10n);
+
+#ifdef PLATFORM_OSX
+void          language_set_macos_menu_bar_lang (const gchar *language);
+#endif

@@ -218,6 +218,13 @@ for lang in lang_array:
   # FIXME: For language list in text tool options (not working)
   if glob(f"{OPT_PREFIX}/share/locale/{lang}/LC_MESSAGES/iso_639_3.mo"):
     bundle(OPT_PREFIX, f"share/locale/{lang}/LC_MESSAGES/iso_639_3.mo")
+# GTK (built with QUARTZ_RELOCATION) looks for its catalogs (gtk30.mo etc.) at
+# <bundle>/Contents/Resources/share/locale, so its stock strings get translated,
+# including the "Hide"/"Quit"/"Services"... entries of the macOS app menu.
+gtk_locale_link = GIMP_DISTRIB / "Resources" / "share" / "locale"
+gtk_locale_link.parent.mkdir(parents=True, exist_ok=True)
+gtk_locale_link.unlink(missing_ok=True)
+gtk_locale_link.symlink_to(Path("..") / "locale")
 bundle(GIMP_PREFIX, "etc/gimp")
 
 
@@ -293,6 +300,7 @@ for d in (pythonpath, pythonpath / "site-packages"):
 #####Needed since we use [[NSBundle mainBundle] bundlePath] on libgimpbase/gimpenv.c
 real_path = Path(f"{GIMP_DISTRIB}/share")
 link_path = Path(f"{GIMP_DISTRIB}/lib/Python.framework/Versions/{PYTHON_VERSION}/Resources/Python.app/Contents/share")
+link_path.unlink(missing_ok=True)
 link_path.parent.mkdir(parents=True, exist_ok=True)
 link_path.symlink_to(os.path.relpath(real_path, link_path.parent))
 #### lua is buggy, and hard to bundle due to LUA_*PATH etc (see AppImage script)

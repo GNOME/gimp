@@ -791,6 +791,11 @@ language_init (const gchar  *language,
   /* keep the monetary sign characters ASCII so GtkSpinButton accepts
      the '-' (minus) character. See GNOME/gimp#13641 and GNOME/GTK!8802. */
   setlocale (LC_MONETARY, "C");
+
+  /* localize the native parts of the menu bar (the "Window" menu items,
+     the "Help" search field etc). (NOTE: the "About/Hide"/"Quit" entries of
+     GIMP app menu are from GTK (see: build/macos/2_bundle-gimp-uni_base.py) */
+  language_set_macos_menu_bar_lang (language);
 #endif
 
   return actual_language;
@@ -876,3 +881,53 @@ language_get_system_lang_id (void)
     return NULL;
 #endif
 }
+
+#ifdef PLATFORM_OSX
+void
+language_set_macos_menu_bar_lang (const gchar *language)
+{
+  /* macOS localize the menu bar with one of the CFBundleLocalizations in Info.plist */
+  CFStringRef default_languages = CFSTR ("AppleLanguages");
+  CFStringRef managed_languages = CFSTR ("GIMPAppleLanguages");
+
+  if (language && strlen (language) > 0)
+    {
+      gchar       **parts  = g_strsplit_set (language, "@.", 2);
+      const gchar  *script = "";
+      gchar        *identifier;
+      CFStringRef   cf_identifier;
+      CFArrayRef    cf_managed_languages;
+
+      /* turn the GIMP/gettext language code into one that macOS understand */
+      if (! g_ascii_strcasecmp (parts[1] ? parts[1] : "", "latin"))
+        script = "-Latn";
+      else if (! g_ascii_strcasecmp (parts[1] ? parts[1] : "", "cyrillic"))
+        script = "-Cyrl";
+      identifier = g_strconcat (g_strdelimit (parts[0], "_", '-'), script, NULL);
+
+      /* prefer CFPreferences, which is crash-safe, instead of NSUserDefaults */
+      cf_identifier = CFStringCreateWithCString (NULL, identifier, kCFStringEncodingUTF8);
+      cf_managed_languages  = CFArrayCreate (NULL, (const void **) &cf_identifier, 1, &kCFTypeArrayCallBacks);
+      CFPreferencesSetAppValue (default_languages, cf_managed_languages, kCFPreferencesCurrentApplication);
+      CFPreferencesSetAppValue (managed_languages, kCFBooleanTrue, kCFPreferencesCurrentApplication);
+
+      CFRelease (cf_managed_languages);
+      CFRelease (cf_identifier);
+      g_free (identifier);
+      g_strfreev (parts);
+    }
+  else
+    {
+      CFPropertyListRef managed = CFPreferencesCopyAppValue (managed_languages, kCFPreferencesCurrentApplication);
+
+      if (managed != NULL)
+        {
+          CFPreferencesSetAppValue (default_languages, NULL, kCFPreferencesCurrentApplication);
+          CFPreferencesSetAppValue (managed_languages, NULL, kCFPreferencesCurrentApplication);
+          CFRelease (managed);
+        }
+    }
+
+  CFPreferencesAppSynchronize (kCFPreferencesCurrentApplication);
+}
+#endif
