@@ -34,6 +34,10 @@
 
 #include "display/gimpimagewindow.h"
 
+#ifdef PLATFORM_OSX
+#include "menus/menus.h"
+#endif
+
 #include "actions.h"
 #include "dialogs-actions.h"
 #include "dialogs-commands.h"
@@ -449,4 +453,18 @@ dialogs_actions_update (GimpActionGroup *group,
 
   gimp_action_group_set_action_label (group, "dialogs-toolbox", toolbox_label);
   gimp_action_group_set_action_tooltip (group, "dialogs-toolbox", toolbox_tooltip);
+
+#ifdef PLATFORM_OSX
+  /* match the wording of the macOS HIG. See: #15695 and preferences-dialog.c */
+  {
+    gchar *settings_label = menus_quartz_get_settings_label ();
+
+    if (settings_label != NULL)
+      {
+        gimp_action_group_set_action_label (group, "dialogs-preferences",
+                                            settings_label);
+        g_free (settings_label);
+      }
+  }
+#endif
 }

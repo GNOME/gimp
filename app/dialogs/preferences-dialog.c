@@ -1152,6 +1152,10 @@ prefs_dialog_new (Gimp       *gimp,
   GimpCoreConfig    *core_config;
   GimpDisplayConfig *display_config;
   GList             *manuals;
+  const gchar       *title;
+#ifdef PLATFORM_OSX
+  gchar             *mac_title;
+#endif
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
@@ -1160,7 +1164,15 @@ prefs_dialog_new (Gimp       *gimp,
   core_config    = GIMP_CORE_CONFIG (config);
   display_config = GIMP_DISPLAY_CONFIG (config);
 
-  dialog = gimp_dialog_new (_("Preferences"), "gimp-preferences",
+  title = _("Preferences");
+#ifdef PLATFORM_OSX
+  /* match the wording of the macOS HIG. See: #15695 */
+  mac_title = menus_quartz_get_settings_label ();
+  if (mac_title != NULL)
+    title = mac_title;
+#endif
+
+  dialog = gimp_dialog_new (title, "gimp-preferences",
                             NULL, 0,
                             prefs_help_func,
                             GIMP_HELP_PREFS_DIALOG,
@@ -1170,6 +1182,10 @@ prefs_dialog_new (Gimp       *gimp,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
+
+#ifdef PLATFORM_OSX
+  g_free (mac_title);
+#endif
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                             RESPONSE_RESET,
