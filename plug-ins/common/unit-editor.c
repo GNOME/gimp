@@ -396,8 +396,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
                     G_CALLBACK (unit_editor_key_press_event),
                     NULL);
 
-#if defined (G_OS_WIN32) || \
-    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (GTK_WIDGET (self->window));
   gimp_widget_set_title_bar_theme (GTK_WIDGET (self->window));
 #endif
@@ -579,8 +578,7 @@ new_unit_dialog (GtkWindow *main_window,
           gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (msg),
                                                     _("Please fill in all text fields."));
 
-#if defined (G_OS_WIN32) || \
-    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
           gtk_widget_realize (msg);
           gimp_widget_set_title_bar_theme (msg);
 #endif

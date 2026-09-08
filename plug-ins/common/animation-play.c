@@ -730,8 +730,7 @@ refresh_dialog (gchar *imagename)
                                    MIN (expected_drawing_area_height + 90,
                                         workarea.height - 60));
 
-#if defined (G_OS_WIN32) || \
-    (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
       gtk_widget_realize (window);
       gimp_widget_set_title_bar_theme (window);
 #endif

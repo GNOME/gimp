@@ -323,9 +323,7 @@ print_image (GimpImage *image,
       printwindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       gimp_window_set_transient (GTK_WINDOW (printwindow));
       gtk_widget_set_visible (printwindow, TRUE);
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
       gimp_widget_set_title_bar_theme (printwindow);
-#endif
 #endif
 
       g_signal_connect_swapped (operation, "end-print",
@@ -445,7 +443,7 @@ print_show_error (const gchar *message)
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                             "%s", message);
 
-#if (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+#ifdef PLATFORM_OSX
   gimp_widget_set_title_bar_theme (dialog);
 #endif
 
@@ -480,7 +478,7 @@ begin_print (GtkPrintOperation *operation,
                           layout_gui, TRUE, TRUE, 0);
       gtk_widget_show_all (dialog);
 
-#if defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
+#ifdef PLATFORM_OSX
       gimp_widget_set_title_bar_theme (dialog);
 #endif
 
