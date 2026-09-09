@@ -425,6 +425,9 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
       toggle_rect.width  -= border.left + border.right;
       toggle_rect.height -= border.top + border.bottom;
 
+      /* fix glitch on System theme */
+      gimp_cell_renderer_toggle_create_pixbuf (toggle, widget);
+
       /* For high DPI displays, pixbuf size is bigger than logical size. */
       cairo_scale (cr, (gdouble) 1.0 / scale_factor, (gdouble) 1.0 / scale_factor);
       gdk_cairo_set_source_pixbuf (cr, toggle->pixbuf,
