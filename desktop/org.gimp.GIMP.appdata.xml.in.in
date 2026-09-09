@@ -91,6 +91,7 @@
         This new bugfix release of GIMP 3.2 brings a whole new level of stability:
         </p>
         <ul>
+          <li>New input axis "Rotation" (a.k.a. "barrel rotation") supported in dynamics</li>
           <li>Bug fixes and usability improvements to recently added features and non-destructive workflows</li>
           <li>A lot of maintenance love happened for the macOS version</li>
           <li>gimptool utility can now compile GEGL operations (filters) and work better on macOS, Windows and AppImage</li>
