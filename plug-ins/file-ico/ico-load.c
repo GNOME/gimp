@@ -274,7 +274,7 @@ static gboolean
 ico_read_png (FILE    *fp,
               guint32  header,
               guchar  *buf,
-              gint     maxsize,
+              gsize    maxsize,
               gint    *width,
               gint    *height,
               gint    *bpp)
@@ -283,6 +283,7 @@ ico_read_png (FILE    *fp,
   png_infop     info;
   png_uint_32   w;
   png_uint_32   h;
+  gsize         total_size;
   gint32        bit_depth;
   gint32        color_type;
   guint32     **rows;
@@ -310,15 +311,14 @@ ico_read_png (FILE    *fp,
   png_get_IHDR (png_ptr, info, &w, &h, &bit_depth, &color_type,
                 NULL, NULL, NULL);
   /* Check for overflow */
-  if ((w * h * 4) < w       ||
-      (w * h * 4) < h       ||
-      (w * h * 4) < (w * h) ||
-      (w * h * 4) > maxsize)
+  if (! g_size_checked_mul (&total_size, w, h)          ||
+      ! g_size_checked_mul (&total_size, total_size, 4) ||
+      total_size > maxsize)
     {
       png_destroy_read_struct (&png_ptr, &info, NULL);
       return FALSE;
     }
-  D(("ico_read_png: %ix%i, %i bits, %i type\n", (gint)w, (gint)h,
+  D(("ico_read_png: %ix%i, %i bits, %i type\n", (gint) w, (gint) h,
      bit_depth, color_type));
   switch (color_type)
     {
@@ -353,13 +353,13 @@ ico_read_png (FILE    *fp,
       break;
     }
 
-  *width = w;
+  *width  = w;
   *height = h;
-  *bpp = 32; /* always expanded to 32bpp RGBA */
-  rows = g_new (guint32*, h);
-  rows[0] = (guint32*) buf;
+  *bpp    = 32; /* always expanded to 32bpp RGBA */
+  rows    = g_new (guint32 *, h);
+  rows[0] = (guint32 *) buf;
   for (i = 1; i < h; i++)
-    rows[i] = rows[i-1] + w;
+    rows[i] = rows[i - 1] + w;
   png_read_image (png_ptr, (png_bytepp) rows);
   png_destroy_read_struct (&png_ptr, &info, NULL);
   g_free (rows);
@@ -432,7 +432,7 @@ static gboolean
 ico_read_icon (FILE    *fp,
                guint32  header_size,
                guchar  *buf,
-               gint     maxsize,
+               gsize    maxsize,
                gint    *width,
                gint    *height,
                gint    *bpp)
@@ -683,7 +683,7 @@ ico_load_layer (FILE        *fp,
                 GimpImage   *image,
                 gint32       icon_num,
                 guchar      *buf,
-                gint         maxsize,
+                gsize        maxsize,
                 gint32       file_offset,
                 gchar       *layer_prefix,
                 IcoLoadInfo *info)
@@ -699,8 +699,8 @@ ico_load_layer (FILE        *fp,
 
   if (first_bytes == ICO_PNG_MAGIC)
     {
-      if (!ico_read_png (fp, first_bytes, buf, maxsize, &width, &height,
-                         &info->bpp))
+      if (! ico_read_png (fp, first_bytes, buf, maxsize, &width, &height,
+                          &info->bpp))
         return NULL;
     }
   else if (first_bytes == 40)
@@ -744,12 +744,13 @@ ico_load_image (GFile        *file,
   FILE          *fp;
   IcoFileHeader  header;
   IcoLoadInfo   *info;
-  gint           max_width, max_height;
+  gsize          max_width;
+  gsize          max_height;
   gint           i;
   GimpImage     *image;
   guchar        *buf;
   guint          icon_count;
-  gint           maxsize;
+  gsize          maxsize;
   gchar         *str;
 
   if (! file_offset)
@@ -769,7 +770,7 @@ ico_load_image (GFile        *file,
   if (file_offset)
     fseek (fp, *file_offset, SEEK_SET);
 
-  header = ico_read_init (fp);
+  header     = ico_read_init (fp);
   icon_count = header.icon_count;
   if (!icon_count)
     {
@@ -794,7 +795,9 @@ ico_load_image (GFile        *file,
       if (info[i].height > max_height)
         max_height = info[i].height;
     }
-  if (max_width <= 0 || max_height <= 0)
+  if (max_width <= 0 || max_height <= 0 ||
+      max_width > GIMP_MAX_IMAGE_SIZE   ||
+      max_height > GIMP_MAX_IMAGE_SIZE)
     {
       g_free (info);
       fclose (fp);
@@ -804,9 +807,18 @@ ico_load_image (GFile        *file,
 
   image = gimp_image_new (max_width, max_height, GIMP_RGB);
 
-  maxsize = max_width * max_height * 4;
-  buf     = g_try_new (guchar, maxsize);
-  if (! buf)
+  if (max_width <= 0 || max_height <= 0 ||
+      max_width > GIMP_MAX_IMAGE_SIZE   ||
+      max_height > GIMP_MAX_IMAGE_SIZE)
+    {
+      g_free (info);
+      fclose (fp);
+      return NULL;
+    }
+
+  if (! g_size_checked_mul (&maxsize, max_width, max_height) ||
+      ! g_size_checked_mul (&maxsize, maxsize, 4)            ||
+      ! (buf = g_try_new (guchar, maxsize)))
     {
       g_free (info);
       fclose (fp);
@@ -865,6 +877,9 @@ ico_load_image (GFile        *file,
           gimp_item_attach_parasite (GIMP_ITEM (layer), parasite);
           gimp_parasite_free (parasite);
         }
+
+      if (! file_offset)
+        gimp_progress_update (i / (gfloat) icon_count);
     }
 
   if (file_offset)
@@ -1242,7 +1257,8 @@ ico_load_thumbnail_image (GFile   *file,
 
   image = gimp_image_new (info[match].width, info[match].height, GIMP_RGB);
   buf   = g_new (guchar, info[match].width * info[match].height * 4);
-  ico_load_layer (fp, image, match, buf, info[match].width * info[match].height * 4,
+  ico_load_layer (fp, image, match, buf,
+                  info[match].width * info[match].height * 4,
                   file_offset, "Thumbnail", info + match);
   g_free (buf);
 
