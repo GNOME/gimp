@@ -61,6 +61,7 @@ enum
   PROP_MANAGER,
   PROP_MODEL,
   PROP_PATH,
+  PROP_TRANSLATED_PATH,
   PROP_IS_SECTION,
   PROP_TITLE,
   PROP_COLOR,
@@ -72,6 +73,7 @@ struct _GimpMenuModelPrivate
   GMenuModel    *model;
 
   gchar         *path;
+  gchar         *translated_path;
   gboolean       is_section;
   /* If this GimpMenuModel represents a submenu for a bigger menu, this object
    * will not be NULL.
@@ -189,6 +191,11 @@ gimp_menu_model_class_init (GimpMenuModelClass *klass)
                                                         NULL, NULL, NULL,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_TRANSLATED_PATH,
+                                   g_param_spec_string ("translated-path",
+                                                        NULL, NULL, NULL,
+                                                        GIMP_PARAM_WRITABLE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_IS_SECTION,
                                    g_param_spec_boolean ("section",
                                                         NULL, NULL, FALSE,
@@ -213,8 +220,9 @@ gimp_menu_model_init (GimpMenuModel *model)
 {
   model->priv = gimp_menu_model_get_instance_private (model);
 
-  model->priv->items         = NULL;
-  model->priv->path          = NULL;
+  model->priv->items           = NULL;
+  model->priv->path            = NULL;
+  model->priv->translated_path = NULL;
   model->priv->is_section    = FALSE;
   model->priv->submenu_item  = NULL;
   model->priv->submenu_color = NULL;
@@ -232,6 +240,7 @@ gimp_menu_model_finalize (GObject *object)
   g_clear_object (&model->priv->model);
   g_list_free_full (model->priv->items, g_object_unref);
   g_free (model->priv->path);
+  g_free (model->priv->translated_path);
   g_clear_object (&model->priv->submenu_color);
   g_hash_table_destroy (model->priv->named_sections);
 
@@ -292,6 +301,9 @@ gimp_menu_model_set_property (GObject      *object,
       break;
     case PROP_PATH:
       model->priv->path = g_value_dup_string (value);
+      break;
+    case PROP_TRANSLATED_PATH:
+      model->priv->translated_path = g_value_dup_string (value);
       break;
     case PROP_IS_SECTION:
       model->priv->is_section = g_value_get_boolean (value);
@@ -636,29 +648,33 @@ gimp_menu_model_set_color (GimpMenuModel *model,
 static GimpMenuModel *
 gimp_menu_model_new_section (GimpUIManager *manager,
                              GMenuModel    *model,
-                             const gchar   *path)
+                             const gchar   *path,
+                             const gchar   *translated_path)
 {
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
 
   return g_object_new (GIMP_TYPE_MENU_MODEL,
-                       "manager", manager,
-                       "model",   model,
-                       "path",    path,
-                       "section", TRUE,
+                       "manager",         manager,
+                       "model",           model,
+                       "path",            path,
+                       "translated-path", translated_path,
+                       "section",         TRUE,
                        NULL);
 }
 
 static GimpMenuModel *
 gimp_menu_model_new_submenu (GimpUIManager *manager,
                              GMenuModel    *model,
-                             const gchar   *path)
+                             const gchar   *path,
+                             const gchar   *translated_path)
 {
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
 
   return g_object_new (GIMP_TYPE_MENU_MODEL,
-                       "manager", manager,
-                       "model",   model,
-                       "path",    path,
+                       "manager",         manager,
+                       "model",           model,
+                       "path",            path,
+                       "translated-path", translated_path,
                        NULL);
 }
 
@@ -693,7 +709,8 @@ gimp_menu_model_initialize (GimpMenuModel *model,
           gchar         *section_name = NULL;
 
           submodel = gimp_menu_model_new_section (model->priv->manager, subsection,
-                                                  model->priv->path);
+                                                  model->priv->path,
+                                                  model->priv->translated_path);
           item = g_menu_item_new_section (label, G_MENU_MODEL (submodel));
 
           if (g_menu_model_get_item_attribute (G_MENU_MODEL (gmodel), i,
@@ -711,6 +728,7 @@ gimp_menu_model_initialize (GimpMenuModel *model,
           gchar         *canon_label;
           const gchar   *group_label;
           gchar         *path;
+          gchar         *translated_path;
 
           g_return_if_fail (action_name != NULL);
 
@@ -730,7 +748,13 @@ gimp_menu_model_initialize (GimpMenuModel *model,
                                   canon_label);
           g_free (canon_label);
 
-          submodel = gimp_menu_model_new_submenu (model->priv->manager, submenu, path);
+          translated_path = g_strdup_printf ("%s/%s",
+                                             model->priv->translated_path ?
+                                             model->priv->translated_path : "",
+                                             group_label);
+
+          submodel = gimp_menu_model_new_submenu (model->priv->manager, submenu, path,
+                                                  translated_path);
           item     = g_menu_item_new_submenu (group_label, G_MENU_MODEL (submodel));
           g_signal_connect_object (action, "notify::group-label",
                                    G_CALLBACK (gimp_menu_model_notify_group_label),
@@ -738,13 +762,16 @@ gimp_menu_model_initialize (GimpMenuModel *model,
 
           g_object_unref (submodel);
           g_free (path);
+          g_free (translated_path);
         }
       else if (submenu != NULL)
         {
           GimpMenuModel *submodel;
           gchar         *canon_label;
           gchar         *path;
+          gchar         *translated_path;
           const gchar   *en_label;
+          const gchar   *trans_label;
           gchar         *en_label_copy;
 
           g_return_if_fail (label != NULL);
@@ -757,7 +784,17 @@ gimp_menu_model_initialize (GimpMenuModel *model,
                                   canon_label);
           g_free (canon_label);
 
-          submodel = gimp_menu_model_new_submenu (model->priv->manager, submenu, path);
+          trans_label = g_object_get_data (G_OBJECT (submenu),
+                                           "gimp-ui-manager-menu-model-label");
+          if (trans_label == NULL)
+            trans_label = en_label;
+          translated_path = g_strdup_printf ("%s/%s",
+                                             model->priv->translated_path ?
+                                             model->priv->translated_path : "",
+                                             trans_label);
+
+          submodel = gimp_menu_model_new_submenu (model->priv->manager, submenu, path,
+                                                  translated_path);
           item     = g_menu_item_new_submenu (label, G_MENU_MODEL (submodel));
 
           en_label_copy = g_strdup (en_label);
@@ -767,6 +804,7 @@ gimp_menu_model_initialize (GimpMenuModel *model,
 
           g_object_unref (submodel);
           g_free (path);
+          g_free (translated_path);
         }
       else
         {
@@ -784,7 +822,9 @@ gimp_menu_model_initialize (GimpMenuModel *model,
               /* Special-case the main menu manager when constructing it as
                * this is the only one which should set the menu path.
                */
-              const gchar *menu_path = gimp_menu_model_get_path (model);
+              const gchar *menu_path = model->priv->translated_path ?
+                                       model->priv->translated_path :
+                                       gimp_menu_model_get_path (model);
 
 #ifdef PLATFORM_OSX
               /* on macOS, entries flagged with "hidden-when" == "macos-menubar"
@@ -1192,7 +1232,10 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
       g_free (detailed_action_name);
 
       if (model->priv->manager->store_action_paths)
-        gimp_action_set_menu_path (GIMP_ACTION (action), gimp_menu_model_get_path (model));
+        gimp_action_set_menu_path (GIMP_ACTION (action),
+                                   model->priv->translated_path ?
+                                   model->priv->translated_path :
+                                   gimp_menu_model_get_path (model));
 
       if (top)
         {
@@ -1232,13 +1275,19 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
       GMenuItem     *item;
       gchar         *canon_label;
       gchar         *submodel_path;
+      gchar         *submodel_translated_path;
 
       canon_label   = gimp_utils_make_canonical_menu_label (new_dir);
       submodel_path = g_strdup_printf ("%s/%s",
                                        model->priv->path ? model->priv->path : "",
                                        canon_label);
+      submodel_translated_path = g_strdup_printf ("%s/%s",
+                                                  model->priv->translated_path ?
+                                                  model->priv->translated_path : "",
+                                                  new_dir);
 
-      submodel = gimp_menu_model_new_submenu (model->priv->manager, NULL, submodel_path);
+      submodel = gimp_menu_model_new_submenu (model->priv->manager, NULL, submodel_path,
+                                              submodel_translated_path);
       item     = g_menu_item_new_submenu (new_dir, G_MENU_MODEL (submodel));
 
       if (model->priv->path == NULL)
@@ -1250,6 +1299,7 @@ gimp_menu_model_ui_added (GimpUIManager *manager,
       g_free (canon_label);
       g_object_unref (submodel);
       g_free (submodel_path);
+      g_free (submodel_translated_path);
       g_free (new_dir);
 
       g_menu_model_items_changed (G_MENU_MODEL (model),

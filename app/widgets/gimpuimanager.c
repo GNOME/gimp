@@ -1013,6 +1013,11 @@ gimp_ui_manager_store_builder_path (GMenuModel *model,
 
               g_object_set_data_full (G_OBJECT (submenu), "gimp-ui-manager-menu-model-en-label",
                                       en_label, (GDestroyNotify) g_free);
+
+              /* also keep the translated label so helper widgets (e.g. the
+                 action search popup `/`) can show a localized menu path */
+              g_object_set_data_full (G_OBJECT (submenu), "gimp-ui-manager-menu-model-label",
+                                      g_strdup (label), (GDestroyNotify) g_free);
             }
 
           g_free (label);
