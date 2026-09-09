@@ -249,27 +249,6 @@
         </ul>
       </description>
     </release>
-    <release version="3.0.8" date="2026-01-24">
-      <url type="details">https://www.gimp.org/release/3.0.8/</url>
-      <description>
-        <p>
-        This micro release in the 3.0 series fixes many bugs, assorted with various usability improvements.
-        </p>
-        <ul>
-          <li>Font loading on start massively sped up</li>
-          <li>Images won't start loading anymore before all fonts are loaded</li>
-          <li>Several parts of the graphical interface are better matching the theme and settings</li>
-          <li demo="layer-list,
-                    layer-list:item-effect-header-icon">
-          No outlines in the "Fx" column anymore when hovering
-          </li>
-          <li>Three functions added in the public API and one function was deprecated</li>
-          <li>Better support of run environments without a display</li>
-          <li>Many more bugs and usability issues have been fixed</li>
-          <li>Reported instabilities and vulnerabilities were fixed</li>
-        </ul>
-      </description>
-    </release>
     <release version="3.2.0~rc2" date="2025-12-14" type="development">
       <url type="details">https://www.gimp.org/release/3.2.0-RC2/</url>
       <description>
@@ -314,23 +293,6 @@
           <li>PDF format export will export vector layer as paths</li>
           <li>Many new API for text, vector and link layers for plug-in developers</li>
           <li>Improved support of macOS application menu and quit action</li>
-        </ul>
-      </description>
-    </release>
-    <release version="3.0.6" date="2025-10-04">
-      <url type="details">https://www.gimp.org/release/3.0.6/</url>
-      <description>
-        <p>
-        This micro release in the 3.0 series fixes some major bugs, assorted with various usability improvements.
-        </p>
-        <ul>
-          <li demo="brush-list,brush-list:viewables-follow-theme">
-          New toggle in Brushes and Fonts dialogs to render their previews using theme colors
-          </li>
-          <li>The Print plug-in now pops a second dialog for fine-tuning prints in sandboxed environments (e.g. Flatpak or Snap)</li>
-          <li>A bug in Windows prevented GIMP to work when the system was set to specific locales</li>
-          <li>Various usability issues have been handled</li>
-          <li>Reported instabilities and vulnerabilities were fixed</li>
         </ul>
       </description>
     </release>
@@ -411,6 +373,44 @@
       </description>
     </release>
 
+    <release version="3.0.8" date="2026-01-24">
+      <url type="details">https://www.gimp.org/release/3.0.8/</url>
+      <description>
+        <p>
+        This micro release in the 3.0 series fixes many bugs, assorted with various usability improvements.
+        </p>
+        <ul>
+          <li>Font loading on start massively sped up</li>
+          <li>Images won't start loading anymore before all fonts are loaded</li>
+          <li>Several parts of the graphical interface are better matching the theme and settings</li>
+          <li demo="layer-list,
+                    layer-list:item-effect-header-icon">
+          No outlines in the "Fx" column anymore when hovering
+          </li>
+          <li>Three functions added in the public API and one function was deprecated</li>
+          <li>Better support of run environments without a display</li>
+          <li>Many more bugs and usability issues have been fixed</li>
+          <li>Reported instabilities and vulnerabilities were fixed</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.0.6" date="2025-10-04">
+      <url type="details">https://www.gimp.org/release/3.0.6/</url>
+      <description>
+        <p>
+        This micro release in the 3.0 series fixes some major bugs, assorted with various usability improvements.
+        </p>
+        <ul>
+          <li demo="brush-list,brush-list:viewables-follow-theme">
+          New toggle in Brushes and Fonts dialogs to render their previews using theme colors
+          </li>
+          <li>The Print plug-in now pops a second dialog for fine-tuning prints in sandboxed environments (e.g. Flatpak or Snap)</li>
+          <li>A bug in Windows prevented GIMP to work when the system was set to specific locales</li>
+          <li>Various usability issues have been handled</li>
+          <li>Reported instabilities and vulnerabilities were fixed</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.0.4" date="2025-05-17">
       <url type="details">https://www.gimp.org/release/3.0.4/</url>
       <description>
@@ -545,17 +545,6 @@
         </ul>
       </description>
     </release>
-    <release version="2.10.38" date="2024-05-02">
-      <description>
-        <p>
-            GIMP 2.10.38 has been the first bug-fix only release for a long
-            time, correcting various bugs, some more annoying than others.
-        </p>
-        <p>
-            On Windows, the Windows Ink API support has been backported.
-        </p>
-      </description>
-    </release>
     <release version="2.99.18" date="2024-02-17" type="development">
       <description>
         <p>
@@ -583,32 +572,6 @@
           <li>On Windows, the title bar will use light or dark mode depending on the current theme</li>
           <li>On Wayland, pad buttons can be mapped to actions</li>
           <li>Major API updates</li>
-        </ul>
-      </description>
-    </release>
-    <release version="2.10.36" date="2023-11-05">
-      <description>
-        <p>
-            This new version of GIMP comes with many fixes, including
-            vulnerability corrections. It is highly recommended to update. It
-            also provides a few interesting changes, such as:
-        </p>
-        <ul>
-          <li>
-          Adobe ACB and ASE palette support
-          </li>
-          <li>
-          New gradient: FG to Transparent (Hardedge)
-          </li>
-          <li>
-          Some text tool algorithm enhancement when replacing formatted text
-          </li>
-          <li>
-          Better theming of item locks (when hovering them or setting them active)
-          </li>
-          <li>
-          Improvements in handling a few specific metadata
-          </li>
         </ul>
       </description>
     </release>
@@ -645,51 +608,6 @@
           <li>Newly added support for import and export: PAM and QOI</li>
           <li>Newly added import-only support: Amiga IFF/ILBM and DCX</li>
           <li>Script-Fu: new type 'byte' to handle binary data</li>
-        </ul>
-      </description>
-    </release>
-    <release version="2.10.34" date="2023-02-21">
-      <description>
-        <p>
-          A new stable releases with a lot of bug fixes and a few enhancements:
-        </p>
-        <ul>
-          <li>
-            New template selector in "Canvas Size" dialog
-          </li>
-          <li>
-            "Change Color" dialogs: color scale (0..255/0..100) and models (LCh/HSV) settings remembered across sessions
-          </li>
-          <li>
-            New header with "visible" and "link" icons in item dockables
-          </li>
-          <li>
-            Clipping layers better supported when importing PSD files
-          </li>
-          <li>
-            Paths are now exported to PSD
-          </li>
-          <li>
-            JPEG XL export added
-          </li>
-          <li>
-            Metadata in JPEG XL import
-          </li>
-          <li>
-            New option "Show reduced images" when loading TIFF images
-          </li>
-          <li>
-            16-bit per channel export for raw image data
-          </li>
-          <li>
-            More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, Dicom and Help
-          </li>
-          <li>
-            Color picking on X11 will ignore the Wayland portal; new implementation for color picking on Windows
-          </li>
-          <li>
-            Check for updates fixed on macOS
-          </li>
         </ul>
       </description>
     </release>
@@ -779,47 +697,6 @@
         </ul>
       </description>
     </release>
-    <release version="2.10.32" date="2022-06-12">
-      <description>
-        <p>
-          GIMP continues strengthening its bases with this new version 2.10.32 fixing many bugs and improving format support.
-          Notable changes:
-        </p>
-        <ul>
-          <li>
-            8 and 16-bit CMYK(A) TIFF files import is now supported
-          </li>
-          <li>
-            BIGTIFF import and export are now supported
-          </li>
-          <li>
-            JPEG XL files import is now supported
-          </li>
-          <li>
-            DDS export has new "Flip" (useful for some game engine) and "Visible layers" options
-          </li>
-          <li>
-            Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP
-          </li>
-          <li>
-            The screenshot plug-in on Windows has now an option to capture the cursor
-          </li>
-          <li>
-            Several usability improvements in official themes and icons
-          </li>
-          <li>
-            New support for localized glyphs ('locl') in Text tool
-            depending on the value of the "Language" tool option
-          </li>
-          <li>
-            More robust XCF import
-          </li>
-          <li>
-            Several metadata handling improvements
-          </li>
-        </ul>
-      </description>
-    </release>
     <release version="2.99.10" date="2022-02-22" type="development">
       <description>
         <p>
@@ -872,15 +749,6 @@
         </ul>
       </description>
     </release>
-    <release version="2.10.30" date="2021-12-19">
-      <description>
-        <p>
-          GIMP 2.10.30 fixes many bugs, updates backend implementations
-          to follow OS evolutions, improves metadata support as well as
-          support of several formats, such as PSD and AVIF.
-        </p>
-      </description>
-    </release>
     <release version="2.99.8" date="2021-10-17" type="development">
       <description>
         <p>
@@ -927,22 +795,6 @@
         </ul>
       </description>
     </release>
-    <release version="2.10.28" date="2021-09-14">
-      <description>
-        <p>
-          GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some
-          theme data was not properly installed.
-        </p>
-      </description>
-    </release>
-    <release version="2.10.26" date="2021-09-05">
-      <description>
-        <p>
-          GIMP 2.10.26 is a bug fix release, containing dozens of
-          fixes, both in core, scripts and plug-in code.
-        </p>
-      </description>
-    </release>
     <release version="2.99.6" date="2021-04-26" type="development">
       <url type="details">https://www.gimp.org/news/2021/04/29/gimp-2-99-6-released/</url>
       <description>
@@ -977,38 +829,6 @@
           </li>
           <li>
           TIFF export stores the ICC profile and comment on each layer to prevent ambiguous files
-          </li>
-        </ul>
-      </description>
-    </release>
-    <release version="2.10.24" date="2021-03-28">
-      <url type="details">https://www.gimp.org/news/2021/03/29/gimp-2-10-24-released/</url>
-      <description>
-        <p>
-          GIMP 2.10.24 is again mostly a bug fix release. Notable changes:
-        </p>
-        <ul>
-          <li>
-            GeoTIFF metadata support added
-          </li>
-          <li>
-            PDF import now proposes an option to load layers in reverse
-            orders and allows fractional pixel density
-          </li>
-          <li>
-            Raw image import updated to handle API changes in darktable 3.6 and over
-          </li>
-          <li>
-            File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD
-          </li>
-          <li>
-            Many fixes and improvements to the metadata viewer and editor
-          </li>
-          <li>
-            New Kabyle translation
-          </li>
-          <li>
-            Off-canvas point snapping (to grid, guides, paths) made possible
           </li>
         </ul>
       </description>
@@ -1088,6 +908,187 @@
       </description>
     </release>
 
+    <release version="2.10.38" date="2024-05-02">
+      <description>
+        <p>
+            GIMP 2.10.38 has been the first bug-fix only release for a long
+            time, correcting various bugs, some more annoying than others.
+        </p>
+        <p>
+            On Windows, the Windows Ink API support has been backported.
+        </p>
+      </description>
+    </release>
+    <release version="2.10.36" date="2023-11-05">
+      <description>
+        <p>
+            This new version of GIMP comes with many fixes, including
+            vulnerability corrections. It is highly recommended to update. It
+            also provides a few interesting changes, such as:
+        </p>
+        <ul>
+          <li>
+          Adobe ACB and ASE palette support
+          </li>
+          <li>
+          New gradient: FG to Transparent (Hardedge)
+          </li>
+          <li>
+          Some text tool algorithm enhancement when replacing formatted text
+          </li>
+          <li>
+          Better theming of item locks (when hovering them or setting them active)
+          </li>
+          <li>
+          Improvements in handling a few specific metadata
+          </li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.10.34" date="2023-02-21">
+      <description>
+        <p>
+          A new stable releases with a lot of bug fixes and a few enhancements:
+        </p>
+        <ul>
+          <li>
+            New template selector in "Canvas Size" dialog
+          </li>
+          <li>
+            "Change Color" dialogs: color scale (0..255/0..100) and models (LCh/HSV) settings remembered across sessions
+          </li>
+          <li>
+            New header with "visible" and "link" icons in item dockables
+          </li>
+          <li>
+            Clipping layers better supported when importing PSD files
+          </li>
+          <li>
+            Paths are now exported to PSD
+          </li>
+          <li>
+            JPEG XL export added
+          </li>
+          <li>
+            Metadata in JPEG XL import
+          </li>
+          <li>
+            New option "Show reduced images" when loading TIFF images
+          </li>
+          <li>
+            16-bit per channel export for raw image data
+          </li>
+          <li>
+            More plug-ins got bug-fixes: DDS, WebP, Flame, Animation Playback, HEIF, Dicom and Help
+          </li>
+          <li>
+            Color picking on X11 will ignore the Wayland portal; new implementation for color picking on Windows
+          </li>
+          <li>
+            Check for updates fixed on macOS
+          </li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.10.32" date="2022-06-12">
+      <description>
+        <p>
+          GIMP continues strengthening its bases with this new version 2.10.32 fixing many bugs and improving format support.
+          Notable changes:
+        </p>
+        <ul>
+          <li>
+            8 and 16-bit CMYK(A) TIFF files import is now supported
+          </li>
+          <li>
+            BIGTIFF import and export are now supported
+          </li>
+          <li>
+            JPEG XL files import is now supported
+          </li>
+          <li>
+            DDS export has new "Flip" (useful for some game engine) and "Visible layers" options
+          </li>
+          <li>
+            Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP
+          </li>
+          <li>
+            The screenshot plug-in on Windows has now an option to capture the cursor
+          </li>
+          <li>
+            Several usability improvements in official themes and icons
+          </li>
+          <li>
+            New support for localized glyphs ('locl') in Text tool
+            depending on the value of the "Language" tool option
+          </li>
+          <li>
+            More robust XCF import
+          </li>
+          <li>
+            Several metadata handling improvements
+          </li>
+        </ul>
+      </description>
+    </release>
+
+    <release version="2.10.30" date="2021-12-19">
+      <description>
+        <p>
+          GIMP 2.10.30 fixes many bugs, updates backend implementations
+          to follow OS evolutions, improves metadata support as well as
+          support of several formats, such as PSD and AVIF.
+        </p>
+      </description>
+    </release>
+    <release version="2.10.28" date="2021-09-14">
+      <description>
+        <p>
+          GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some
+          theme data was not properly installed.
+        </p>
+      </description>
+    </release>
+    <release version="2.10.26" date="2021-09-05">
+      <description>
+        <p>
+          GIMP 2.10.26 is a bug fix release, containing dozens of
+          fixes, both in core, scripts and plug-in code.
+        </p>
+      </description>
+    </release>
+    <release version="2.10.24" date="2021-03-28">
+      <url type="details">https://www.gimp.org/news/2021/03/29/gimp-2-10-24-released/</url>
+      <description>
+        <p>
+          GIMP 2.10.24 is again mostly a bug fix release. Notable changes:
+        </p>
+        <ul>
+          <li>
+            GeoTIFF metadata support added
+          </li>
+          <li>
+            PDF import now proposes an option to load layers in reverse
+            orders and allows fractional pixel density
+          </li>
+          <li>
+            Raw image import updated to handle API changes in darktable 3.6 and over
+          </li>
+          <li>
+            File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD
+          </li>
+          <li>
+            Many fixes and improvements to the metadata viewer and editor
+          </li>
+          <li>
+            New Kabyle translation
+          </li>
+          <li>
+            Off-canvas point snapping (to grid, guides, paths) made possible
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.22" date="2020-10-04">
       <url type="details">https://www.gimp.org/news/2020/10/04/gimp-2-10-22-released/</url>
       <description>
@@ -1599,11 +1600,12 @@
       </description>
     </release>
     <release version="2.9.6" date="2017-08-24" type="development" />
+    <release version="2.9.4" date="2016-07-13" type="development" />
+    <release version="2.9.2" date="2015-11-27" type="development" />
+
     <release version="2.8.22" date="2017-05-11"/>
     <release version="2.8.20" date="2017-02-01"/>
     <release version="2.8.18" date="2016-07-14"/>
-    <release version="2.9.4" date="2016-07-13" type="development" />
-    <release version="2.9.2" date="2015-11-27" type="development" />
     <release version="2.8.16" date="2015-11-22"/>
     <release version="2.8.14" date="2014-08-26"/>
     <release version="2.8.12" date="2014-08-25"/>
