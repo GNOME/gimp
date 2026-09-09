@@ -324,6 +324,11 @@ _gimp_resource_chooser_set_drag_target (GimpResourceChooser  *chooser,
                                         GtkWidget            *drag_region_widget,
                                         const GtkTargetEntry *drag_target)
 {
+#ifdef PLATFORM_OSX
+  GtkTargetEntry  quartz_target;
+  gchar          *quartz_name;
+#endif
+
   g_return_if_fail (GIMP_IS_RESOURCE_CHOOSER (chooser));
   g_return_if_fail (drag_target != NULL);
   g_return_if_fail (drag_region_widget != NULL);
@@ -332,8 +337,8 @@ _gimp_resource_chooser_set_drag_target (GimpResourceChooser  *chooser,
   /* on macOS, GDK turns any custom target containing a "/" to a UTI-like
      format, but not the other way around. So, rewrite "/" to "-" to work
      (see app/widgets/gimpdnd.c) */
-  GtkTargetEntry  quartz_target = *drag_target;
-  gchar          *quartz_name   = g_strdup (drag_target->target);
+  quartz_target = *drag_target;
+  quartz_name   = g_strdup (drag_target->target);
 
   g_strdelimit (quartz_name, "/", '-');
   quartz_target.target = quartz_name;
