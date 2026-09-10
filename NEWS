@@ -109,6 +109,10 @@ Graphical User Interface:
     * Cmd+Shift+/ opens the Help menu.
     * Ctrl+Cmd+Space opens the Emoji viewer.
     * Improve localization for menu items.
+    * Fullscreen shortcut is Ctrl + Cmd + F (F11 is reserved).
+    * "Windows" and "Help" menu labels are now localized.
+    * Rename "Preferences" to "Settings" as is standard on this
+      platform.
   - Inactive arrow color (e.g. for notebook tabs) is now defined.
   - GimpColorScale style now moved to proper CSS.
   - GEGL Graph dialog now shows error messages for the graph in full.
@@ -138,6 +142,10 @@ Graphical User Interface:
     the actual system theme's name written in between parentheses. E.g.:
     "System (Adwaita)".
   - Add accent color support to System theme on Windows and macOS.
+  - Add 150% mark to Font Scaling.
+  - When a system monitor profile is set, mark down its label between
+    parentheses, after "Try to use the system monitor profile" text in
+    Preferences.
 
 Plug-Ins:
 
@@ -153,8 +161,10 @@ Plug-Ins:
   - RawTherapee spawned from GIMP's AppImage does not crash anymore.
   - PDF: multi-page PDF are now loaded with an image size ensuring that
     all layers are visible (in case of pages of different dimensions).
-  - File-Raw: minimum darktable is version 5.6 (the relevant changes
-    happened on darktable side).
+  - File-Raw:
+    * Minimum darktable is version 5.6 (the relevant changes
+      happened on darktable side).
+    * New versions of RawTherapee are now detected as well.
   - Mail: add Windows MAPI support.
   - NL Filter: now made sensitive on layers with alpha channel too.
   - Python Console: Tab completion feature was not fully ported to
@@ -176,6 +186,9 @@ Plug-Ins:
       as "Pass-Through", defaulting to "Normal (Legacy)", depending on
       how they are set internally.
     * Sketchbook TIFF group layer loading improved.
+  - ANI: When metadata fails UTF-8 validation, we fallback to loading it
+    as Windows-1252 (legacy ANI files used this charset). If this fails
+    too, just drop the field and continue loading.
 
 API:
 
@@ -201,6 +214,9 @@ API:
   - libgimpwidgets:
     * Plug-ins' title bar will now follow dark mode on macOS.
     * Do not show minimize button on dialogs on macOS.
+    * The GimpPickButton on macOS does not pick on hovering anymore, but
+      when explicitly clicked, just like on other OSes. It is more
+      consistent and feels much less slow now.
   - PDB: failing PDB calls only alert through gimp_message() when run
     interactively. Non-interactive (including from last run) calls
     don't print (or pop-up) errors anymore and the caller is expected
