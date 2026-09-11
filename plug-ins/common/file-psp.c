@@ -2548,16 +2548,17 @@ read_selection_block (FILE      *f,
       return -1;
     }
 
-  pixels = g_try_malloc0 ((gsize) width * height);
+  selection = gimp_image_get_selection (image);
+  buffer    = gimp_drawable_get_buffer (GIMP_DRAWABLE (selection));
+
+  pixels = g_try_malloc0 ((gsize) gegl_buffer_get_width (buffer) *
+                          gegl_buffer_get_height (buffer));
   if (pixels == NULL)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error reading channel information chunk"));
       return -1;
     }
-
-  selection = gimp_image_get_selection (image);
-  buffer    = gimp_drawable_get_buffer (GIMP_DRAWABLE (selection));
 
   /* Per the specification, this will always be a 1 byte grayscale channel */
   if (ia->compression == PSP_COMP_NONE)
