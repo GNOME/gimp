@@ -350,8 +350,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10071/ghostscript-10.07.1.tar.gz",
-                    "sha512": "480aef1284dbe4d059dd0f9cc60dd5772d5093239df68b838f7f4f7d2efd77de8f03a7baeffbdbe65126a660c1c169137dd7d8cc28dd3bab59cd286a24ca1491",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10080/ghostscript-10.08.0.tar.gz",
+                    "sha512": "429f9b1eb85dc5a463468242fcd1de1dac015cac4195472a4d30a59b3c9baa7f6aeeb2ca22ee3f009631bcdae76fb52bc226e499a79b8bdad3167d3d538e8528",
                     "x-checker-data": {
                         "//": "Bypass broken url-template with anitya checker - See https://github.com/flathub/flatpak-external-data-checker/issues/360",
                         "type": "json",
@@ -774,8 +774,11 @@
                 {
                     "type": "shell",
                     "commands": [
-                        "sed -i \"/<release[^>]*date=\\\"TODO\\\"[^>]*>/,/<\\/release>/d\" desktop/org.gimp.GIMP.appdata.xml.in.in",
-                        "appdata='desktop/org.gimp.GIMP.appdata.xml.in.in'; v=$(awk -F\"'\" '/version:/ {print $2; exit}' meson.build | sed 's/-/~/g' | tr '[:upper:]' '[:lower:]'); grep -q \"version=\\\"$v\\\"\" $appdata || grep -q \"date=\\\"$(date --iso-8601)\\\"\" $appdata || sed -i \"/<releases>/a <release version=\\\"$v\\\" date=\\\"$(date --iso-8601)\\\" type=\\\"snapshot\\\"></release>\" $appdata"
+                        "appdata='desktop/org.gimp.GIMP.appdata.xml.in.in'; mv=$(awk -F\"'\" '/version:/ {print $2; exit}' meson.build | sed 's/-/~/g' | tr '[:upper:]' '[:lower:]'); av=$(grep '<release[^>]*version=' $appdata | head -1 | sed 's/^.*version=\"\\([^\"]*\\)\".*$/\\1/'); appstreamcli vercmp $mv '>=' $av || sed -i \"/<release[^>]*version=\\\"$av\\\"[^>]*>/,/<\\/release>/d\" $appdata",
+                        "appdata='desktop/org.gimp.GIMP.appdata.xml.in.in'; v=$(awk -F\"'\" '/version:/ {print $2; exit}' meson.build | sed 's/-/~/g' | tr '[:upper:]' '[:lower:]'); grep -q \"version=\\\"$v\\\"\" $appdata || grep -q \"date=\\\"$(date --iso-8601)\\\"\" $appdata || sed -i \"/<releases>/a <release version=\\\"$v\\\" date=\\\"$(date --iso-8601)\\\" type=\\\"snapshot\\\"></release>\" $appdata",
+                        "echo ### AppStream Metadata ###",
+                        "cat desktop/org.gimp.GIMP.appdata.xml.in.in",
+                        "echo ##########################"
                     ]
                 }
             ],
