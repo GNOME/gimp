@@ -37,6 +37,11 @@ try:
   GIMP_GLOBAL_BUILD_ROOT  = os.environ.get("GIMP_GLOBAL_BUILD_ROOT", ".")
   GIMP_GLOBAL_SOURCE_ROOT = os.environ.get("GIMP_GLOBAL_SOURCE_ROOT")
   GIMP_TESTING_PLUG_INS   = os.environ.get("GIMP_TESTING_PLUG_INS")
+  if os.environ.get("GIMP_TESTING_PLUG_INS_IGNORE"):
+    # This native GIMP is not the one we just (cross-)built: it can't load
+    # plug-ins requested through $GIMP_TESTING_PLUG_INS (see in-build-gimp.py),
+    # so ignore that variable and let it use its own bundled plug-ins. See: #16758
+    GIMP_TESTING_PLUG_INS = None
 
   # Create the temporary config directory
   suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
@@ -80,6 +85,9 @@ try:
       if sys.platform in ['win32', 'cygwin'] and not is_script_file(src):
         src += '.exe'
         dst += '.exe'
+      if not os.path.exists(src):
+        raise FileNotFoundError(f"$GIMP_TESTING_PLUG_INS plug-in not found: '{src}' "
+                                f"(built for $GIMP_SELF_IN_BUILD='{os.environ.get('GIMP_SELF_IN_BUILD')}'?)")
       shutil.copyfile(src, dst)
       os.chmod(dst, stat.S_IRWXU | stat.S_IRGRP | stat.S_IXGRP | stat.S_IROTH | stat.S_IXOTH | stat.S_IWRITE)
       if not is_script_file(dst):

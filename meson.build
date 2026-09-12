@@ -2112,6 +2112,10 @@ else
   endif
 
   gimp_run_env.set('GIMP_SELF_IN_BUILD', native_gimp_exe.full_path())
+  # This native GIMP is not the one we just (cross-)built: it can't load
+  # plug-ins requested through $GIMP_TESTING_PLUG_INS (see in-build-gimp.py),
+  # so ignore that variable and let it use its own bundled plug-ins. See: #16758
+  gimp_run_env.set('GIMP_TESTING_PLUG_INS_IGNORE', '1')
   gimp_exe_depends = []
 endif
 
