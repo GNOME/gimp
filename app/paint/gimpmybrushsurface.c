@@ -320,9 +320,9 @@ spectral_to_rgb (float *spectral,
 static float
 spectral_blend_factor (float x)
 {
-  const float ver_fac  = 1.65f; /* vertical compression factor */
-  const float hor_fac  = 8.0f;  /* horizontal compression factor */
-  const float hor_offs = 3.0f; /* horizontal offset */
+  const float ver_fac  = 1.65f;      /* vertical compression factor */
+  const float hor_fac  = 5.714286f;  /* horizontal compression factor, saturates at x = 1.0 */
+  const float hor_offs = 2.857143f;  /* horizontal offset, keeps the 50/50 point at x = 0.5 */
   float       b;
 
   b = x * hor_fac - hor_offs;
