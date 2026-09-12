@@ -2902,9 +2902,6 @@ convert_gdal_range (GimpDrawable *drawable,
           gchar **bracket_split;
           gint    offset = g_strv_length (partial_metadata) - 1;
 
-          for (gint i = 0; i < g_strv_length (partial_metadata); i++)
-            g_print ("%d) \n%s\n", i, partial_metadata[i]);
-
           bracket_split = g_strsplit_set (partial_metadata[offset], "{", 2);
           if (bracket_split && g_strv_length (bracket_split) > 1)
             {
