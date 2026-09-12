@@ -4,7 +4,7 @@
 # BUILD-TIME ONLY DEPS
 gettext|homebrew:gettext \
 gi-docgen|homebrew:gi-docgen \
-gobject-introspection +quartz -x11|homebrew:gobject-introspection \
+gobject-introspection +quartz -x11 -dbus|homebrew:gobject-introspection \
 libxslt|homebrew:libxslt \
 meson|homebrew:meson \
 perl5 #homebrew uses perl from macOS \
@@ -23,7 +23,7 @@ freetype|homebrew:freetype \
 gdk-pixbuf2 +quartz -x11|homebrew:gdk-pixbuf \
 gexiv2|homebrew:gexiv2 \
 ghostscript -x11|homebrew:ghostscript \
-glib2 +quartz -x11|homebrew:glib \
+glib2 +quartz -x11 -dbus|homebrew:glib \
 glib-networking|homebrew:glib-networking \
 graphviz -x11|homebrew:graphviz \
 gtk3 +quartz -x11|homebrew:gtk+3 \ adwaita-icon-theme +quartz -x11|homebrew:adwaita-icon-theme \ shared-mime-info|homebrew:shared-mime-info \

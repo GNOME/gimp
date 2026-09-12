@@ -44,9 +44,7 @@ if [ -f "$OPT_PREFIX/bin/port" ]; then
   elif echo "$CI_JOB_NAME" | grep -q 'deps'; then
     export first_cache=true
   fi
-  if [ -z "$GITLAB_CI" ] || { echo "$CI_JOB_NAME" | grep -q 'deps' && { [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] || [ "$first_cache" ]; }; }; then
-    eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync -Nv
-  fi
+  eval $( [ "$OPT_PREFIX" = /opt/local ] && echo sudo ) port sync -Nv
   if [ "$OPT_PREFIX" != '/opt/local' ] && [ "$OPT_PREFIX" != '/opt/homebrew' ]; then
     opt='configure.cflags-append -Werror=unguarded-availability-new'; file="$OPT_PREFIX/var/macports/sources/rsync.macports.org/macports/release/tarballs/ports/mail/libidn2/Portfile"; grep -q -- "$opt" $file || printf "\n$opt\n" >> "$file"
   fi
