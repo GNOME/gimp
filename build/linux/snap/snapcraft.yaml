@@ -153,6 +153,7 @@ parts:
       - libmaxflow-dev
       - libopenexr-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/321
       - libsuitesparse-dev
+      - opencl-headers
     stage-packages:
       - graphviz #FIXME: https://github.com/ubuntu/gnome-sdk/issues/324
       - libmaxflow0
