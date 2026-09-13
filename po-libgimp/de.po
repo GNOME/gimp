@@ -12,28 +12,30 @@
 # Daniel Winzen <d@winzen4.de>, 2013.
 # Tim Sabsch <tim@sabsch.com>, 2018-2020, 2022-2024.
 # Jürgen Benvenuti <gastornis@posteo.org>, 2024.
+# Ulf Martin Prill <ulf_martin_prill@gmx.de>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-04-10 20:56+0000\n"
-"PO-Revision-Date: 2024-10-07 21:51+0200\n"
-"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
+"POT-Creation-Date: 2026-09-08 20:40+0000\n"
+"PO-Revision-Date: 2026-09-13 14:04+0200\n"
+"Last-Translator: Ulf Martin Prill <ulf_martin_prill@gmx.de>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Project-Style: gnome\n"
 
 #: libgimp/gimpbrushchooser.c:134 libgimp/gimppatternchooser.c:129
 msgid "_Browse..."
 msgstr "_Durchsuchen …"
 
-#: libgimp/gimpdrawablechooser.c:238
+#: libgimp/gimpdrawablechooser.c:240 libgimp/gimpimagechooser.c:218
+#: libgimp/gimpitemchooser.c:237
 msgid "Browse..."
 msgstr "Durchsuchen …"
 
@@ -183,90 +185,99 @@ msgstr "Ebenen zuschneiden"
 msgid "Resize Image to Layers"
 msgstr "Bildgröße auf Ebenen anpassen"
 
-#: libgimp/gimpexportprocedure.c:550
+#: libgimp/gimpexportprocedure.c:553
 msgid "Save _Exif"
 msgstr "Exi_f speichern"
 
-#: libgimp/gimpexportprocedure.c:551
+#: libgimp/gimpexportprocedure.c:554
 msgid "Save Exif (Exchangeable image file format) metadata"
 msgstr "Exif-Metadaten (Exchangeable image file format) speichern"
 
-#: libgimp/gimpexportprocedure.c:559
+#: libgimp/gimpexportprocedure.c:562
 msgid "Save _IPTC"
 msgstr "_IPTC speichern"
 
-#: libgimp/gimpexportprocedure.c:560
+#: libgimp/gimpexportprocedure.c:563
 msgid "Save IPTC (International Press Telecommunications Council) metadata"
 msgstr ""
 "IPTC-Metadaten (International Press Telecommunications Council) speichern"
 
-#: libgimp/gimpexportprocedure.c:568
+#: libgimp/gimpexportprocedure.c:571
 msgid "Save _XMP"
 msgstr "X_MP speichern"
 
-#: libgimp/gimpexportprocedure.c:569
+#: libgimp/gimpexportprocedure.c:572
 msgid "Save XMP (Extensible Metadata Platform) metadata"
 msgstr "XMP-Metadaten (Extensible Metadata Platform) speichern"
 
-#: libgimp/gimpexportprocedure.c:577
+#: libgimp/gimpexportprocedure.c:580
 msgid "Save color _profile"
 msgstr "Farbprofi_l speichern"
 
-#: libgimp/gimpexportprocedure.c:578
+#: libgimp/gimpexportprocedure.c:581
 msgid "Save the ICC color profile as metadata"
 msgstr "Das ICC-Farbprofil als Metadaten speichern"
 
-#: libgimp/gimpexportprocedure.c:586
+#: libgimp/gimpexportprocedure.c:589
 msgid "Save _thumbnail"
 msgstr "Vo_rschau speichern"
 
-#: libgimp/gimpexportprocedure.c:587
+#: libgimp/gimpexportprocedure.c:590
 msgid "Save a smaller representation of the image as metadata"
 msgstr "Eine kleinere Darstellung des Bildes als Metadaten speichern"
 
-#: libgimp/gimpexportprocedure.c:595
+#: libgimp/gimpexportprocedure.c:598
 msgid "Save c_omment"
 msgstr "Kommen_tar speichern"
 
-#: libgimp/gimpexportprocedure.c:596
+#: libgimp/gimpexportprocedure.c:599
 msgid "Save a comment as metadata"
 msgstr "Kommentar als Metadaten speichern"
 
-#: libgimp/gimpexportprocedure.c:600
+#: libgimp/gimpexportprocedure.c:603
 msgid "Comment"
 msgstr "Kommentar"
 
-#: libgimp/gimpexportprocedure.c:601
+#: libgimp/gimpexportprocedure.c:604
 msgid "Image comment"
 msgstr "Bildkommentar"
 
-#: libgimp/gimpexportproceduredialog.c:150
+#: libgimp/gimpexportproceduredialog.c:156
 msgid "Metadata"
 msgstr "Metadaten"
 
-#: libgimp/gimpexportproceduredialog.c:159
+#: libgimp/gimpexportproceduredialog.c:165
 msgid "Edit Metadata"
 msgstr "Metadaten bearbeiten"
 
-#: libgimp/gimpexportproceduredialog.c:159
+#: libgimp/gimpexportproceduredialog.c:165
 msgid "(edit)"
 msgstr "(bearbeiten)"
 
+#: libgimp/gimpexportproceduredialog.c:330
+msgid "Transparency will be lost"
+msgstr "Die Transparenz geht verloren"
+
+#: libgimp/gimpexportproceduredialog.c:335
+#, c-format
+msgid "This format does not support transparency: %s"
+msgstr "Dieses Format unterstützt keine Transparenz: %s"
+
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexportproceduredialog.c:436
+#: libgimp/gimpexportproceduredialog.c:502
 #, c-format
 msgid "Export Image as %s"
 msgstr "Bild exportieren als %s"
 
-#: libgimp/gimpimagemetadata.c:124
+#: libgimp/gimpimagemetadata.c:203
 msgid "Background"
 msgstr "Hintergrund"
 
-#: libgimp/gimpimagemetadata-save.c:770 modules/controller-midi.c:426
+#: libgimp/gimpimagemetadata-save.c:867 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:273 libgimp/gimpvectorloadprocedure.c:445
+#: libgimp/gimploadprocedure.c:276 libgimp/gimpvectorloadprocedure.c:448
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -329,71 +340,71 @@ msgid "by type"
 msgstr "nach Typ"
 
 #. count label
-#: libgimp/gimpprocbrowserdialog.c:358 libgimp/gimpprocbrowserdialog.c:516
-#: libgimpwidgets/gimpbrowser.c:161
+#: libgimp/gimpprocbrowserdialog.c:356 libgimp/gimpprocbrowserdialog.c:514
+#: libgimpwidgets/gimpbrowser.c:165
 msgid "No matches"
 msgstr "Keine Treffer"
 
-#: libgimp/gimpprocbrowserdialog.c:361
+#: libgimp/gimpprocbrowserdialog.c:359
 msgid "Search term invalid or incomplete"
 msgstr "Der Suchbegriff ist ungültig oder unvollständig"
 
-#: libgimp/gimpprocbrowserdialog.c:370
+#: libgimp/gimpprocbrowserdialog.c:368
 msgid "Searching"
 msgstr "Suchen"
 
-#: libgimp/gimpprocbrowserdialog.c:382
+#: libgimp/gimpprocbrowserdialog.c:380
 msgid "Searching by name"
 msgstr "Nach Namen suchen"
 
-#: libgimp/gimpprocbrowserdialog.c:403
+#: libgimp/gimpprocbrowserdialog.c:401
 msgid "Searching by description"
 msgstr "Nach Beschreibung suchen"
 
-#: libgimp/gimpprocbrowserdialog.c:411
+#: libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by help"
 msgstr "Nach Hilfe suchen"
 
-#: libgimp/gimpprocbrowserdialog.c:419
+#: libgimp/gimpprocbrowserdialog.c:417
 msgid "Searching by authors"
 msgstr "Nach Autoren suchen"
 
-#: libgimp/gimpprocbrowserdialog.c:427
+#: libgimp/gimpprocbrowserdialog.c:425
 msgid "Searching by copyright"
 msgstr "Nach Copyright suchen"
 
-#: libgimp/gimpprocbrowserdialog.c:435
+#: libgimp/gimpprocbrowserdialog.c:433
 msgid "Searching by date"
 msgstr "Nach Datum suchen"
 
-#: libgimp/gimpprocbrowserdialog.c:443
+#: libgimp/gimpprocbrowserdialog.c:441
 msgid "Searching by type"
 msgstr "Nach Typ suchen"
 
-#: libgimp/gimpprocbrowserdialog.c:456
+#: libgimp/gimpprocbrowserdialog.c:454
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d Prozedur"
 msgstr[1] "%d Prozeduren"
 
-#: libgimp/gimpprocbrowserdialog.c:465
+#: libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "Keine Treffer für die Suchanfrage"
 
-#: libgimp/gimpprocbrowserdialog.c:469
+#: libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d Prozedur entspricht Ihrer Suchanfrage"
 msgstr[1] "%d Prozeduren entsprechen Ihrer Suchanfrage"
 
-#: libgimp/gimpprocedure.c:2162
+#: libgimp/gimpprocedure.c:2270
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Prozedur »%s« hat sich ohne Rückgabewerte beendet"
 
-#: libgimp/gimpprocedure.c:2368
+#: libgimp/gimpprocedure.c:2476
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -402,7 +413,7 @@ msgstr ""
 "Prozedur »%s« lieferte einen falschen Wertetyp für den Rückgabewert »%s« "
 "(Nr. %d). %s erwartet, %s erhalten."
 
-#: libgimp/gimpprocedure.c:2380
+#: libgimp/gimpprocedure.c:2488
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
@@ -411,7 +422,7 @@ msgstr ""
 "Prozedur »%s« wurde mit einem falschen Wertetyp für das Argument »%s« (Nr. "
 "%d) aufgerufen. %s erwartet, %s erhalten."
 
-#: libgimp/gimpprocedure.c:2415
+#: libgimp/gimpprocedure.c:2523
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -420,7 +431,7 @@ msgstr ""
 "Die Prozedur »%s« hat »%s« als Rückgabewert »%s« (Nr. %d, Typ %s) "
 "zurückgegeben. Dieser liegt außerhalb des Wertebereiches."
 
-#: libgimp/gimpprocedure.c:2429
+#: libgimp/gimpprocedure.c:2537
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -429,14 +440,14 @@ msgstr ""
 "Die Prozedur »%s« wurden mit dem Wert »%s« für das Argument »%s« (Nr. %d, "
 "Typ %s) aufgerufen. Dieser liegt außerhalb des Wertebereiches."
 
-#: libgimp/gimpprocedure.c:2473
+#: libgimp/gimpprocedure.c:2581
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "Die Prozedur »%s« lieferte eine ungültige UTF-8-Zeichenkette für das "
 "Argument »%s«."
 
-#: libgimp/gimpprocedure.c:2483
+#: libgimp/gimpprocedure.c:2591
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -445,79 +456,79 @@ msgstr ""
 "Die Prozedur »%s« wurde mit einer ungültigen UTF-8-Zeichenkette für das "
 "Argument »%s« aufgerufen."
 
-#: libgimp/gimpproceduredialog.c:314 libgimp/gimpproceduredialog.c:613
+#: libgimp/gimpproceduredialog.c:345 libgimp/gimpproceduredialog.c:651
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "Ö_ffnen"
 
-#: libgimp/gimpproceduredialog.c:316 libgimp/gimpproceduredialog.c:615
+#: libgimp/gimpproceduredialog.c:347 libgimp/gimpproceduredialog.c:653
 msgid "_Export"
 msgstr "E_xportieren"
 
-#: libgimp/gimpproceduredialog.c:318 libgimp/gimpproceduredialog.c:617
+#: libgimp/gimpproceduredialog.c:349 libgimp/gimpproceduredialog.c:655
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
-#: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:276
+#: libgimpwidgets/gimpfileentry.c:463 libgimpwidgets/gimpquerybox.c:276
 #: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
 #: libgimpwidgets/gimpquerybox.c:481
 msgid "_OK"
 msgstr "_OK"
 
-#: libgimp/gimpproceduredialog.c:326 libgimpwidgets/gimpcolorbutton.c:551
+#: libgimp/gimpproceduredialog.c:357 libgimpwidgets/gimpcolorbutton.c:551
 msgid "_Reset"
 msgstr "_Zurücksetzen"
 
-#: libgimp/gimpproceduredialog.c:344 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:375 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: libgimpwidgets/gimpfilechooser.c:714 libgimpwidgets/gimpfileentry.c:465
+#: libgimpwidgets/gimpfilechooser.c:713 libgimpwidgets/gimpfileentry.c:463
 #: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339
 #: libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
 msgid "_Cancel"
 msgstr "Abbre_chen"
 
-#: libgimp/gimpproceduredialog.c:379
+#: libgimp/gimpproceduredialog.c:417
 msgid "_Load Saved Settings"
 msgstr "_Gespeicherte Einstellungen laden"
 
-#: libgimp/gimpproceduredialog.c:380
+#: libgimp/gimpproceduredialog.c:418
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr ""
 "Einstellungen laden, die mit dem Knopf »Einstellungen speichern« gespeichert "
 "wurden"
 
-#: libgimp/gimpproceduredialog.c:392
+#: libgimp/gimpproceduredialog.c:430
 msgid "_Save Settings"
 msgstr "Einstellungen _speichern"
 
-#: libgimp/gimpproceduredialog.c:393
+#: libgimp/gimpproceduredialog.c:431
 msgid "Store current settings for later reuse"
 msgstr "Aktuelle Einstellungen zur späteren Nutzung speichern"
 
-#: libgimp/gimpproceduredialog.c:869
+#: libgimp/gimpproceduredialog.c:1024
 msgid "Brush Chooser"
 msgstr "Pinsel-Auswahldialog"
 
-#: libgimp/gimpproceduredialog.c:873
+#: libgimp/gimpproceduredialog.c:1028
 msgid "Font Chooser"
 msgstr "Schriftart-Auswahldialog"
 
-#: libgimp/gimpproceduredialog.c:877
+#: libgimp/gimpproceduredialog.c:1032
 msgid "Gradient Chooser"
 msgstr "Farbverlauf-Auswahldialog"
 
-#: libgimp/gimpproceduredialog.c:881
+#: libgimp/gimpproceduredialog.c:1036
 msgid "Palette Chooser"
 msgstr "Paletten-Auswahldialog"
 
-#: libgimp/gimpproceduredialog.c:885
+#: libgimp/gimpproceduredialog.c:1040
 msgid "Pattern Chooser"
 msgstr "Muster-Auswahldialog"
 
-#: libgimp/gimpproceduredialog.c:2647
+#: libgimp/gimpproceduredialog.c:2957
 msgid "Reset to _Initial Values"
 msgstr "_Auf Anfangswerte zurücksetzen"
 
-#: libgimp/gimpproceduredialog.c:2656
+#: libgimp/gimpproceduredialog.c:2966
 msgid "Reset to _Factory Defaults"
 msgstr "Auf _Werkseinstellungen zurücksetzen"
 
@@ -557,17 +568,32 @@ msgstr "Datum:"
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: libgimp/gimppropwidgets.c:191
+#: libgimp/gimppropwidgets.c:190
+#, c-format
+msgid "Choose image: %s"
+msgstr "Bild wählen: %s"
+
+#: libgimp/gimppropwidgets.c:251 libgimp/gimppropwidgets.c:321
 #, c-format
 msgid "Choose layer: %s"
 msgstr "Ebene wählen: %s"
 
-#: libgimp/gimppropwidgets.c:193
+#: libgimp/gimppropwidgets.c:253 libgimp/gimppropwidgets.c:323
 #, c-format
 msgid "Choose channel: %s"
 msgstr "Kanal wählen: %s"
 
-#: libgimp/gimppropwidgets.c:195
+#: libgimp/gimppropwidgets.c:255
+#, c-format
+msgid "Choose path: %s"
+msgstr "Pfad wählen: %s"
+
+#: libgimp/gimppropwidgets.c:257
+#, c-format
+msgid "Choose item: %s"
+msgstr "Element wählen: %s"
+
+#: libgimp/gimppropwidgets.c:325
 #, c-format
 msgid "Choose drawable: %s"
 msgstr "Zeichenfläche wählen: %s"
@@ -581,12 +607,12 @@ msgstr ""
 "Dimensionen in physikalischer Einheit anzuzeigen"
 
 #: libgimp/gimpresolutionentry-private.c:144
-#: libgimp/gimpvectorloadprocedure.c:125
+#: libgimp/gimpvectorloadprocedure.c:126
 msgid "_Keep aspect ratio"
 msgstr "_Seitenverhältnis beibehalten"
 
 #: libgimp/gimpresolutionentry-private.c:145
-#: libgimp/gimpvectorloadprocedure.c:126
+#: libgimp/gimpvectorloadprocedure.c:127
 msgid "Force dimensions with aspect ratio"
 msgstr "Seitenverhältnis von Dimensionen erzwingen"
 
@@ -596,39 +622,39 @@ msgstr "Seitenverhältnis von Dimensionen erzwingen"
 msgid "pixels/%a"
 msgstr "Pixel/%a"
 
-#: libgimp/gimpvectorloadprocedure.c:111
+#: libgimp/gimpvectorloadprocedure.c:112
 msgid "_Width (pixels)"
 msgstr "_Breite (Pixel)"
 
-#: libgimp/gimpvectorloadprocedure.c:118
+#: libgimp/gimpvectorloadprocedure.c:119
 msgid "_Height (pixels)"
 msgstr "_Höhe (Pixel)"
 
-#: libgimp/gimpvectorloadprocedure.c:130
+#: libgimp/gimpvectorloadprocedure.c:131
 msgid "_Prefer native dimensions"
 msgstr "_Ursprüngliche Dimensionen bevorzugen"
 
-#: libgimp/gimpvectorloadprocedure.c:131
+#: libgimp/gimpvectorloadprocedure.c:132
 msgid "Load and use dimensions from source file"
 msgstr "Dimensionen aus der Quelldatei laden und verwenden"
 
-#: libgimp/gimpvectorloadprocedure.c:139
+#: libgimp/gimpvectorloadprocedure.c:142
 msgid "Resolu_tion"
 msgstr "_Auflösung"
 
-#: libgimp/gimpvectorloadprocedure.c:140
+#: libgimp/gimpvectorloadprocedure.c:143
 msgid "Pixel Density: number of pixels per physical unit"
 msgstr "Pixeldichte: Anzahl der Pixel pro physikalischer Einheit"
 
-#: libgimp/gimpvectorloadprocedure.c:145
+#: libgimp/gimpvectorloadprocedure.c:148
 msgid "Unit"
 msgstr "Einheit"
 
-#: libgimp/gimpvectorloadprocedure.c:146
+#: libgimp/gimpvectorloadprocedure.c:149
 msgid "Physical unit"
 msgstr "Physikalische Einheit"
 
-#: libgimp/gimpvectorloadprocedure.c:368
+#: libgimp/gimpvectorloadprocedure.c:371
 msgid ""
 "dimensions could neither be extracted nor computed from the vector image's "
 "data."
@@ -636,11 +662,11 @@ msgstr ""
 "Dimensionen konnten aus den Daten der Vektorgrafik weder extrahiert noch "
 "berechnet werden."
 
-#: libgimp/gimpvectorloadprocedure.c:373
+#: libgimp/gimpvectorloadprocedure.c:376
 msgid "Vector image loading plug-in failed: "
 msgstr "Das Plugin zum Laden von Vektorgrafiken ist fehlgeschlagen: "
 
-#: libgimp/gimpvectorloadprocedure.c:397
+#: libgimp/gimpvectorloadprocedure.c:400
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
@@ -931,23 +957,23 @@ msgstr "64-Bit-Fließkommazahl"
 
 #: libgimpbase/gimpbaseenums.c:387
 msgctxt "convert-palette-type"
-msgid "Generate optimum palette"
-msgstr "Optimale Palette erzeugen"
+msgid "_Generate optimum palette"
+msgstr "_Optimale Palette erzeugen"
 
 #: libgimpbase/gimpbaseenums.c:388
 msgctxt "convert-palette-type"
-msgid "Use web-optimized palette"
-msgstr "Internet-optimierte Palette verwenden"
+msgid "Use _web-optimized palette"
+msgstr "_Web-optimierte Palette verwenden"
 
 #: libgimpbase/gimpbaseenums.c:389
 msgctxt "convert-palette-type"
-msgid "Use black and white (1-bit) palette"
-msgstr "Schwarz/Weiß-Palette (1-Bit) verwenden"
+msgid "Use _black and white (1-bit) palette"
+msgstr "_Schwarz/Weiß-Palette (1-Bit) verwenden"
 
 #: libgimpbase/gimpbaseenums.c:390
 msgctxt "convert-palette-type"
-msgid "Use custom palette"
-msgstr "Eigene Palette verwenden"
+msgid "Use custom _palette"
+msgstr "Eigene _Palette verwenden"
 
 #: libgimpbase/gimpbaseenums.c:419
 msgctxt "convolve-type"
@@ -1673,76 +1699,106 @@ msgid "Filled"
 msgstr "Blocksatz"
 
 #: libgimpbase/gimpbaseenums.c:1804
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "Gefüllt"
+
+#: libgimpbase/gimpbaseenums.c:1805
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "Umrandet"
+
+#: libgimpbase/gimpbaseenums.c:1806
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "Umrandet und gefüllt"
+
+#: libgimpbase/gimpbaseenums.c:1836
+msgctxt "text-outline-direction"
+msgid "Outer"
+msgstr "Außen"
+
+#: libgimpbase/gimpbaseenums.c:1837
+msgctxt "text-outline-direction"
+msgid "Inner"
+msgstr "Innen"
+
+#: libgimpbase/gimpbaseenums.c:1838
+msgctxt "text-outline-direction"
+msgid "Centered"
+msgstr "Zentriert"
+
+#: libgimpbase/gimpbaseenums.c:1868
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Schatten"
 
-#: libgimpbase/gimpbaseenums.c:1805
+#: libgimpbase/gimpbaseenums.c:1869
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Mitten"
 
-#: libgimpbase/gimpbaseenums.c:1806
+#: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Glanzlichter"
 
-#: libgimpbase/gimpbaseenums.c:1835
+#: libgimpbase/gimpbaseenums.c:1899
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (vorwärts)"
 
-#: libgimpbase/gimpbaseenums.c:1836
+#: libgimpbase/gimpbaseenums.c:1900
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Korrigierend (rückwärts)"
 
-#: libgimpbase/gimpbaseenums.c:1867
+#: libgimpbase/gimpbaseenums.c:1931
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Anpassen"
 
-#: libgimpbase/gimpbaseenums.c:1868
+#: libgimpbase/gimpbaseenums.c:1932
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Zuschneiden"
 
-#: libgimpbase/gimpbaseenums.c:1869
+#: libgimpbase/gimpbaseenums.c:1933
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Auf Ergebnis zuschneiden"
 
-#: libgimpbase/gimpbaseenums.c:1870
+#: libgimpbase/gimpbaseenums.c:1934
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Auf Seitenverhältnis zuschneiden"
 
-#: libgimpbase/gimpmetadata.c:1218
+#: libgimpbase/gimpmetadata.c:1222
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Metadaten können nur aus lokalen Dateien geladen werden"
 
-#: libgimpbase/gimpmetadata.c:1274
+#: libgimpbase/gimpmetadata.c:1278
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Metadaten können nur in lokalen Dateien gespeichert werden"
 
-#: libgimpbase/gimpmetadata.c:1323
+#: libgimpbase/gimpmetadata.c:1327
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Ungültige Größe der Exif-Daten."
 
-#: libgimpbase/gimpmetadata.c:1368
+#: libgimpbase/gimpmetadata.c:1372
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Auswerten der Exif-Daten ist fehlgeschlagen."
 
-#: libgimpbase/gimpmetadata.c:1420
+#: libgimpbase/gimpmetadata.c:1424
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Auswerten der IPTC-Daten ist fehlgeschlagen."
 
-#: libgimpbase/gimpmetadata.c:1468
+#: libgimpbase/gimpmetadata.c:1472
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Auswerten der XMP-Daten ist fehlgeschlagen."
@@ -1777,32 +1833,32 @@ msgctxt "unit-plural"
 msgid "percent"
 msgstr "Prozent"
 
-#: libgimpbase/gimputils.c:220 libgimpbase/gimputils.c:225
+#: libgimpbase/gimputils.c:223 libgimpbase/gimputils.c:228
 msgid "(invalid UTF-8 string)"
 msgstr "(Ungültige UTF-8-Zeichenkette)"
 
-#: libgimpbase/gimputils.c:395
+#: libgimpbase/gimputils.c:398
 msgid "File path is NULL"
 msgstr "Dateipfad ist NULL"
 
-#: libgimpbase/gimputils.c:403
+#: libgimpbase/gimputils.c:406
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Fehler bei der Umwandlung eines UTF-8-Dateinamens in breites Zeichen"
 
-#: libgimpbase/gimputils.c:411
+#: libgimpbase/gimputils.c:414
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() fehlgeschlagen"
 
-#: libgimpbase/gimputils.c:450
+#: libgimpbase/gimputils.c:453
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "»%s« kann nicht eine gültige NSURL umgewandelt werden."
 
-#: libgimpbase/gimputils.c:478
+#: libgimpbase/gimputils.c:481
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Verbindung zu org.freedesktop.FileManager1 ist fehlgeschlagen: "
 
-#: libgimpbase/gimputils.c:502
+#: libgimpbase/gimputils.c:505
 msgid "Calling ShowItems failed: "
 msgstr "Aufruf von ShowItems ist fehlgeschlagen: "
 
@@ -1823,7 +1879,7 @@ msgstr "Farbprofil konnte nicht im Speicher abgelegt werden"
 msgid "(unnamed profile)"
 msgstr "(unbenanntes Profil)"
 
-#: libgimpcolor/gimpcolorprofile.c:621 libgimpwidgets/gimpcolorselect.c:2083
+#: libgimpcolor/gimpcolorprofile.c:621 libgimpwidgets/gimpcolorselect.c:2094
 #, c-format
 msgid "Model: %s"
 msgstr "Modell: %s"
@@ -2117,7 +2173,7 @@ msgstr "ungültiger Wert »%ld« für Symbol %s"
 msgid "while parsing token '%s': %s"
 msgstr "beim Verarbeiten von %s: %s"
 
-#: libgimpconfig/gimpconfig-iface.c:664 libgimpconfig/gimpconfig-iface.c:677
+#: libgimpconfig/gimpconfig-iface.c:708 libgimpconfig/gimpconfig-iface.c:721
 #: libgimpconfig/gimpscanner.c:886 libgimpconfig/gimpscanner.c:964
 #: libgimpwidgets/gimpcolorprofilestore.c:756
 msgid "fatal parse error"
@@ -2175,19 +2231,19 @@ msgstr "Fehler beim Verarbeiten von »%s« in Zeile %d: %s"
 msgid "Module '%s' load error: %s"
 msgstr "Fehler beim Laden von Modul »%s«: %s"
 
-#: libgimpmodule/gimpmoduledb.c:450
+#: libgimpmodule/gimpmoduledb.c:460
 msgid "Module error"
 msgstr "Modulfehler"
 
-#: libgimpmodule/gimpmoduledb.c:451
+#: libgimpmodule/gimpmoduledb.c:461
 msgid "Loaded"
 msgstr "Geladen"
 
-#: libgimpmodule/gimpmoduledb.c:452
+#: libgimpmodule/gimpmoduledb.c:462
 msgid "Load failed"
 msgstr "Laden fehlgeschlagen"
 
-#: libgimpmodule/gimpmoduledb.c:453
+#: libgimpmodule/gimpmoduledb.c:463
 msgid "Not loaded"
 msgstr "Nicht geladen"
 
@@ -2210,14 +2266,10 @@ msgstr "Fehler beim Anlegen des Ordners für Vorschaubilder »%s«."
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Die Vorschau enthält keine Thumb::URI-Marke"
 
-#: libgimpthumb/gimpthumbnail.c:920
+#: libgimpthumb/gimpthumbnail.c:932
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Das Vorschaubild für %s konnte nicht erstellt werden: %s"
-
-#: libgimpwidgets/gimpbrowser.c:134
-msgid "_Search:"
-msgstr "_Suche:"
 
 #: libgimpwidgets/gimpcolorbutton.c:375
 msgid "_Foreground Color"
@@ -2289,7 +2341,7 @@ msgstr "Schieberegler"
 #. * string, but for now, I had to preserve string freeze.
 #.
 #: libgimpwidgets/gimpcolorscales.c:359 libgimpwidgets/gimpcolorscales.c:691
-#: libgimpwidgets/gimpcolorselect.c:2094 modules/color-selector-water.c:206
+#: libgimpwidgets/gimpcolorselect.c:2105 modules/color-selector-water.c:206
 #: modules/color-selector-water.c:242 modules/color-selector-wheel.c:136
 #: modules/color-selector-wheel.c:175
 msgid "Profile: sRGB"
@@ -2311,14 +2363,14 @@ msgstr "LCh"
 msgid "HSV"
 msgstr "HSV"
 
-#: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
-#: modules/color-selector-cmyk.c:301 modules/color-selector-cmyk.c:385
+#: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2124
+#: modules/color-selector-cmyk.c:326 modules/color-selector-cmyk.c:410
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
 
-#: libgimpwidgets/gimpcolorscales.c:722 libgimpwidgets/gimpcolorselect.c:2126
+#: libgimpwidgets/gimpcolorscales.c:722 libgimpwidgets/gimpcolorselect.c:2137
 #: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
 msgid "Profile: <i>unknown</i>"
 msgstr "Profil: <i>unbekannt</i>"
@@ -2357,7 +2409,7 @@ msgstr "Der Name der Steuerung"
 msgid "The controller's state, as human-readable string"
 msgstr "Der Zustand der Steuerung, als menschenlesbare Zeichenkette"
 
-#: libgimpwidgets/gimpdialog.c:196
+#: libgimpwidgets/gimpdialog.c:273
 msgid "_Help"
 msgstr "_Hilfe"
 
@@ -2386,15 +2438,15 @@ msgstr "Gibt an, ob die Datei existiert oder nicht"
 msgid "Can't show file in file manager: %s"
 msgstr "Anzeige in der Dateiverwaltung ist nicht möglich: %s"
 
-#: libgimpwidgets/gimpfileentry.c:454
+#: libgimpwidgets/gimpfileentry.c:453
 msgid "Select Folder"
 msgstr "Ordner auswählen"
 
-#: libgimpwidgets/gimpfileentry.c:456
+#: libgimpwidgets/gimpfileentry.c:455
 msgid "Select File"
 msgstr "Datei auswählen"
 
-#: libgimpwidgets/gimphelpui.c:387
+#: libgimpwidgets/gimphelpui.c:388
 msgid "Press F1 for more help"
 msgstr "Drücken Sie F1 für mehr Hilfe"
 
@@ -2434,7 +2486,7 @@ msgid "the target to open to"
 msgstr "das zu öffnende Ziel"
 
 #. Count label
-#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1014
+#: libgimpwidgets/gimppageselector.c:275 libgimpwidgets/gimppageselector.c:1028
 msgid "Nothing selected"
 msgstr "Keine Auswahl"
 
@@ -2456,15 +2508,21 @@ msgstr "_Alles auswählen"
 msgid "Page %d"
 msgstr "Seite %d"
 
-#: libgimpwidgets/gimppageselector.c:1019
+#: libgimpwidgets/gimppageselector.c:1033
 msgid "One page selected"
 msgstr "Eine Seite ausgewählt"
 
-#: libgimpwidgets/gimppageselector.c:1026
-#: libgimpwidgets/gimppageselector.c:1030
+#: libgimpwidgets/gimppageselector.c:1040
+#, c-format
+msgid "The page is selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "Eine Seite ausgewählt"
+msgstr[1] "Alle %d Seite ausgewählt"
+
+#: libgimpwidgets/gimppageselector.c:1044
 #, c-format
 msgid "%d page selected"
-msgid_plural "All %d pages selected"
+msgid_plural "%d pages selected"
 msgstr[0] "%d Seite ausgewählt"
 msgstr[1] "%d Seiten ausgewählt"
 
@@ -2501,30 +2559,30 @@ msgstr ""
 msgid "_Preview"
 msgstr "_Vorschau"
 
-#: libgimpwidgets/gimppreviewarea.c:154
+#: libgimpwidgets/gimppreviewarea.c:152
 msgid "Check Size"
 msgstr "Schachbrettgröße"
 
-#: libgimpwidgets/gimppreviewarea.c:162
+#: libgimpwidgets/gimppreviewarea.c:160
 msgid "Check Style"
 msgstr "Schachbrettmuster"
 
-#: libgimpwidgets/gimppreviewarea.c:170
+#: libgimpwidgets/gimppreviewarea.c:168
 msgid "Custom Checks Color 1"
 msgstr "Eigene Schachbrettfarbe 1"
 
-#: libgimpwidgets/gimppreviewarea.c:177
+#: libgimpwidgets/gimppreviewarea.c:175
 msgid "Custom Checks Color 2"
 msgstr "Eigene Schachbrettfarbe 2"
 
-#: libgimpwidgets/gimppropwidgets.c:2474
+#: libgimpwidgets/gimppropwidgets.c:2552
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Dieses Texteingabefeld ist auf %d Zeichen beschränkt."
 msgstr[1] "Dieses Texteingabefeld ist auf %d Zeichen beschränkt."
 
-#: libgimpwidgets/gimpwidgets.c:259
+#: libgimpwidgets/gimpwidgets.c:260
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -2532,29 +2590,29 @@ msgstr ""
 "Benutzen Sie diesen Wert für den Zufallsgenerator - dies ermöglicht es, "
 "»zufällige« Funktionen zu wiederholen"
 
-#: libgimpwidgets/gimpwidgets.c:263
+#: libgimpwidgets/gimpwidgets.c:264
 msgid "_New Seed"
 msgstr "_Neu Würfeln"
 
-#: libgimpwidgets/gimpwidgets.c:279
+#: libgimpwidgets/gimpwidgets.c:280
 msgid "Seed random number generator with a generated random number"
 msgstr "Der Zufallsgenerator wird mit einer Zufallszahl initialisiert"
 
-#: libgimpwidgets/gimpwidgets.c:283
+#: libgimpwidgets/gimpwidgets.c:284
 msgid "_Randomize"
 msgstr "_Zufällig"
 
-#: libgimpwidgets/gimpwidgets-private.c:51
+#: libgimpwidgets/gimpwidgets-private.c:84
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Deaktiviert"
 
-#: libgimpwidgets/gimpwidgets-private.c:52
+#: libgimpwidgets/gimpwidgets-private.c:85
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Bildschirm"
 
-#: libgimpwidgets/gimpwidgets-private.c:53
+#: libgimpwidgets/gimpwidgets-private.c:86
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Fenster"
@@ -2711,51 +2769,55 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Verkleinern"
 
-#: modules/color-selector-cmyk.c:85
+#: modules/color-selector-cmyk.c:89
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK-Farbwähler (mittels Farbprofil)"
 
-#: modules/color-selector-cmyk.c:119
+#: modules/color-selector-cmyk.c:123
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: modules/color-selector-cmyk.c:143
+#: modules/color-selector-cmyk.c:147
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: modules/color-selector-cmyk.c:145
+#: modules/color-selector-cmyk.c:149
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: modules/color-selector-cmyk.c:147
+#: modules/color-selector-cmyk.c:151
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: modules/color-selector-cmyk.c:149
+#: modules/color-selector-cmyk.c:153
 msgid "_K"
 msgstr "_K"
 
-#: modules/color-selector-cmyk.c:153
+#: modules/color-selector-cmyk.c:157
 msgid "Cyan"
 msgstr "Cyan"
 
-#: modules/color-selector-cmyk.c:154
+#: modules/color-selector-cmyk.c:158
 msgid "Magenta"
 msgstr "Magenta"
 
-#: modules/color-selector-cmyk.c:155
+#: modules/color-selector-cmyk.c:159
 msgid "Yellow"
 msgstr "Gelb (Yellow)"
 
-#: modules/color-selector-cmyk.c:156
+#: modules/color-selector-cmyk.c:160
 msgid "Black"
 msgstr "Schwarz (Key)"
 
-#: modules/color-selector-cmyk.c:288 modules/color-selector-cmyk.c:367
+#: modules/color-selector-cmyk.c:270
+msgid "Total Ink Coverage"
+msgstr "Gesamtfarbdeckung"
+
+#: modules/color-selector-cmyk.c:313 modules/color-selector-cmyk.c:392
 msgid "Profile: (none)"
 msgstr "Profil: (keines)"
 
@@ -2779,121 +2841,121 @@ msgstr "HSV-Farbrad"
 msgid "Wheel"
 msgstr "Rad"
 
-#: modules/controller-dx-dinput.c:154
+#: modules/controller-dx-dinput.c:157
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX-DirectInput-Eingabeereignissteuerung"
 
-#: modules/controller-dx-dinput.c:194 modules/controller-linux-input.c:218
+#: modules/controller-dx-dinput.c:197 modules/controller-linux-input.c:218
 #: modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Gerät:"
 
-#: modules/controller-dx-dinput.c:195
+#: modules/controller-dx-dinput.c:198
 msgid "The device to read DirectInput events from."
 msgstr "Das Gerätes, von welchem DirectInput-Ereignisse ausgelesen werden."
 
-#: modules/controller-dx-dinput.c:204
+#: modules/controller-dx-dinput.c:207
 msgid "DirectX DirectInput"
 msgstr "DirectX-DirectInput"
 
-#: modules/controller-dx-dinput.c:417
+#: modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d"
 msgstr "Taste %d"
 
-#: modules/controller-dx-dinput.c:420
+#: modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Press"
 msgstr "Taste %d gedrückt"
 
-#: modules/controller-dx-dinput.c:423
+#: modules/controller-dx-dinput.c:426
 #, c-format
 msgid "Button %d Release"
 msgstr "Taste %d losgelassen"
 
-#: modules/controller-dx-dinput.c:440 modules/controller-linux-input.c:90
+#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "X-Bewegung links"
 
-#: modules/controller-dx-dinput.c:443 modules/controller-linux-input.c:91
+#: modules/controller-dx-dinput.c:446 modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "X-Bewegung rechts"
 
-#: modules/controller-dx-dinput.c:449
+#: modules/controller-dx-dinput.c:452
 msgid "Y Move Away"
 msgstr "Y weggeschoben"
 
-#: modules/controller-dx-dinput.c:452
+#: modules/controller-dx-dinput.c:455
 msgid "Y Move Near"
 msgstr "Y herangezogen"
 
-#: modules/controller-dx-dinput.c:458 modules/controller-linux-input.c:94
+#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Z-Bewegung hoch"
 
-#: modules/controller-dx-dinput.c:461 modules/controller-linux-input.c:95
+#: modules/controller-dx-dinput.c:464 modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Z-Bewegung runter"
 
-#: modules/controller-dx-dinput.c:467
+#: modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Away"
 msgstr "X-Achsenneigung weggeschoben"
 
-#: modules/controller-dx-dinput.c:470
+#: modules/controller-dx-dinput.c:473
 msgid "X Axis Tilt Near"
 msgstr "X-Achsenneigung herangezogen"
 
-#: modules/controller-dx-dinput.c:476 modules/controller-linux-input.c:99
+#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Y-Achsen-Neigung rechts"
 
-#: modules/controller-dx-dinput.c:479 modules/controller-linux-input.c:100
+#: modules/controller-dx-dinput.c:482 modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Y-Achsen-Neigung links"
 
-#: modules/controller-dx-dinput.c:485 modules/controller-linux-input.c:101
+#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Z-Achse links gedreht"
 
-#: modules/controller-dx-dinput.c:488 modules/controller-linux-input.c:102
+#: modules/controller-dx-dinput.c:491 modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Z-Achse rechts gedreht"
 
-#: modules/controller-dx-dinput.c:499
+#: modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Schieber um %d erhöht"
 
-#: modules/controller-dx-dinput.c:502
+#: modules/controller-dx-dinput.c:505
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Schieber um %d verringert"
 
-#: modules/controller-dx-dinput.c:512
+#: modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X-Ansicht"
 
-#: modules/controller-dx-dinput.c:515
+#: modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y-Ansicht"
 
-#: modules/controller-dx-dinput.c:518
+#: modules/controller-dx-dinput.c:521
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d Eingabe"
 
-#: modules/controller-dx-dinput.c:1079
+#: modules/controller-dx-dinput.c:1082
 msgid "DirectInput Events"
 msgstr "DirectInput-Ereignisse"
 
-#: modules/controller-dx-dinput.c:1090 modules/controller-linux-input.c:525
+#: modules/controller-dx-dinput.c:1093 modules/controller-linux-input.c:525
 #: modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Kein Gerät eingerichtet"
 
-#: modules/controller-dx-dinput.c:1115 modules/controller-linux-input.c:588
+#: modules/controller-dx-dinput.c:1118 modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Gerät nicht verfügbar"
 
@@ -3256,6 +3318,9 @@ msgstr "Kontrastwiederholungen"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
+
+#~ msgid "_Search:"
+#~ msgstr "_Suche:"
 
 #~ msgctxt "pdb-proc-type"
 #~ msgid "GIMP Extension"
