@@ -351,7 +351,6 @@ script_fu_parse_default_spec (scheme   *sc,
         arg->default_value.sfa_adjustment.digits =
           sc->vptr->ivalue (sc->vptr->pair_car (adj_list));
 
-        adj_list = sc->vptr->pair_cdr (adj_list);
         arg->default_value.sfa_adjustment.type =
           sc->vptr->ivalue (sc->vptr->pair_car (adj_list));
       }
