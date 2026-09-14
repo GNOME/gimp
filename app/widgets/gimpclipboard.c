@@ -445,6 +445,20 @@ gimp_clipboard_get_buffer (Gimp *gimp)
                 }
             }
 
+          if (! buffer)
+            {
+              /* on macOS, GDK may fail to on some mimes (like image/png).
+                 Let it find any other usable target as last resort. See: #16768 */
+              GdkPixbuf *pixbuf = gtk_clipboard_wait_for_image (clipboard);
+
+              if (pixbuf)
+                {
+                  buffer = gimp_buffer_new_from_pixbuf (pixbuf, _("Clipboard"),
+                                                        0, 0);
+                  g_object_unref (pixbuf);
+                }
+            }
+
           gimp_unset_busy (gimp);
         }
 
