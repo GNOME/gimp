@@ -355,8 +355,13 @@ gimp_windows_setenv ()
                   *w_exe_last_slash = L'\0';
 
                   /* finally, set env var */
-                  _snwprintf(w_env_path, sizeof (w_env_path) / sizeof (wchar_t),
-                             L"%ls\\share\\glib-2.0\\schemas", w_exe_path);
+#ifndef _UCRT
+                  _snwprintf (w_env_path, sizeof (w_env_path) / sizeof (wchar_t),
+                              L"%ls\\share\\glib-2.0\\schemas", w_exe_path);
+#else
+                  _snwprintf_s (w_env_path, sizeof (w_env_path) / sizeof (wchar_t), _TRUNCATE,
+                                L"%ls\\share\\glib-2.0\\schemas", w_exe_path);
+#endif
                   SetEnvironmentVariableW (L"GSETTINGS_SCHEMA_DIR", w_env_path);
                 }
             }
