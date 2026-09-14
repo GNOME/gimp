@@ -83,6 +83,8 @@ gimp_unique_batch_run (const gchar  *batch_interpreter,
 }
 
 #ifdef G_OS_WIN32
+
+#ifndef GIMP_CONSOLE_COMPILATION
 /* prevent race on Windows so we can open multiple files. see: #364 */
 static gboolean
 gimp_unique_win32_send (HWND            window_handle,
@@ -107,6 +109,7 @@ gimp_unique_win32_send (HWND            window_handle,
 
   return FALSE;
 }
+#endif
 
 static gboolean
 gimp_unique_win32_open (const gchar **filenames,
