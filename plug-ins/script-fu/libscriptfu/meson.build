@@ -56,6 +56,9 @@ libscriptfu = library('gimp-scriptfu-'+ gimp_api_version,
     '-DSTANDALONE=0',
     '-DUSE_INTERFACE=1',
     '-DUSE_STRLWR=0',
+    # scriptfu-tinyscheme is link_whole into this DLL, never a separate one.
+    # Without this, lld-link fails with LNK4217 ("locally defined symbol imported")
+    '-D_SCHEME_SOURCE',
   ],
   dependencies: [
     libgimpui_dep,
