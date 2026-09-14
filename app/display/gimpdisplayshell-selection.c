@@ -55,6 +55,11 @@ struct _Selection
   gboolean          show_selection;   /*  is the selection visible?         */
   guint             timeout;          /*  timer for successive draws        */
   cairo_pattern_t  *segs_in_mask;     /*  cache for rendered segments       */
+
+  gboolean          valid;            /* whether segs_in/segs_out/segs_in_mask
+                                       * are still current, i.e. don't need to
+                                       * be regenerated before the next draw.
+                                       */
 };
 
 
@@ -64,6 +69,7 @@ static void      selection_start          (Selection          *selection);
 static void      selection_stop           (Selection          *selection);
 
 static void      selection_undraw         (Selection          *selection);
+static void      selection_invalidate     (Selection          *selection);
 
 static void      selection_render_mask    (Selection          *selection);
 
@@ -111,6 +117,19 @@ gimp_display_shell_selection_init (GimpDisplayShell *shell)
   g_signal_connect (shell, "visibility-notify-event",
                     G_CALLBACK (selection_visibility_notify_event),
                     selection);
+
+  /* The cached segs_in/segs_out/segs_in_mask depend on the view
+   * transform, so they need to be regenerated whenever it changes.
+   */
+  g_signal_connect_swapped (shell, "scaled",
+                            G_CALLBACK (selection_invalidate),
+                            selection);
+  g_signal_connect_swapped (shell, "scrolled",
+                            G_CALLBACK (selection_invalidate),
+                            selection);
+  g_signal_connect_swapped (shell, "rotated",
+                            G_CALLBACK (selection_invalidate),
+                            selection);
 }
 
 void
@@ -130,6 +149,9 @@ gimp_display_shell_selection_free (GimpDisplayShell *shell)
                                         selection);
   g_signal_handlers_disconnect_by_func (shell,
                                         selection_visibility_notify_event,
+                                        selection);
+  g_signal_handlers_disconnect_by_func (shell,
+                                        selection_invalidate,
                                         selection);
 
   selection_free_segs (selection);
@@ -275,7 +297,12 @@ gimp_display_shell_selection_draw (GimpDisplayShell *shell,
           shell->selection->index++;
         }
 
-      selection_generate_segs (shell->selection);
+      if (! shell->selection->valid)
+        {
+          selection_generate_segs (shell->selection);
+
+          shell->selection->valid = TRUE;
+        }
 
       if (shell->selection->segs_in)
         {
@@ -302,6 +329,7 @@ selection_undraw (Selection *selection)
   gint x, y, w, h;
 
   selection_stop (selection);
+  selection_invalidate (selection);
 
   if (gimp_display_shell_mask_bounds (selection->shell, &x, &y, &w, &h))
     {
@@ -442,6 +470,14 @@ selection_free_segs (Selection *selection)
   selection->n_segs_out = 0;
 
   g_clear_pointer (&selection->segs_in_mask, cairo_pattern_destroy);
+
+  selection_invalidate (selection);
+}
+
+static void
+selection_invalidate (Selection *selection)
+{
+  selection->valid = FALSE;
 }
 
 static gboolean
