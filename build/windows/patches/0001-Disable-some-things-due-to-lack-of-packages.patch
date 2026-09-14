@@ -1,6 +1,6 @@
-From 59a12185b73f9b1e0b0d088f1c7a32eb5a020849 Mon Sep 17 00:00:00 2001
+From db4dd3f43b92701298d919db0a59486a78c2b564 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Sun, 5 Jul 2026 17:56:35 -0300
+Date: Mon, 14 Sep 2026 13:51:19 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 ---
@@ -15,9 +15,9 @@ Subject: [PATCH] Disable some things due to lack of packages
  app/widgets/meson.build                 |  2 -
  devel-docs/meson.build                  |  2 +-
  libgimp/meson.build                     |  4 +-
- meson.build                             | 39 ++++---------------
+ meson.build                             | 42 ++++----------------
  plug-ins/meson.build                    |  9 -----
- 13 files changed, 12 insertions(+), 153 deletions(-)
+ 13 files changed, 12 insertions(+), 156 deletions(-)
 
 diff --git a/app/core/gimp.c b/app/core/gimp.c
 index bba1e86608..be367be104 100644
@@ -52,7 +52,7 @@ index bba1e86608..be367be104 100644
  
    gimp_data_factories_save (gimp);
 diff --git a/app/core/meson.build b/app/core/meson.build
-index f96f333fb6..72f1fd5c42 100644
+index 73fb01ef8c..080f52fe72 100644
 --- a/app/core/meson.build
 +++ b/app/core/meson.build
 @@ -125,9 +125,6 @@ libappcore_sources = [
@@ -238,7 +238,7 @@ index deecd7dc55..8420f04b53 100644
  
    /* Give automatic tests a chance to use plug-ins from the build
 diff --git a/app/widgets/meson.build b/app/widgets/meson.build
-index d182f7763e..d84dfae3eb 100644
+index fb9d335a85..5e5c30e29d 100644
 --- a/app/widgets/meson.build
 +++ b/app/widgets/meson.build
 @@ -120,8 +120,6 @@ libappwidgets_sources = [
@@ -263,7 +263,7 @@ index 7dd25ed1ba..234a951148 100644
    subdir('reference')
  endif
 diff --git a/libgimp/meson.build b/libgimp/meson.build
-index 06ceea343e..e81e1240be 100644
+index 6007681c4a..c9350c0d34 100644
 --- a/libgimp/meson.build
 +++ b/libgimp/meson.build
 @@ -530,7 +530,9 @@ libgimpui_introspectable_files = [
@@ -278,7 +278,7 @@ index 06ceea343e..e81e1240be 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index 0c889d6ea3..187bb756cd 100644
+index b74fc18cff..4f4e374328 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -292,7 +292,7 @@ warning_cflags_common = [
@@ -299,7 +299,7 @@ index 0c889d6ea3..187bb756cd 100644
  
  libarchive = dependency('libarchive')
  
-@@ -1193,7 +1193,7 @@ pygobject_found = ''
+@@ -1194,7 +1194,7 @@ pygobject_found = ''
  pygobject_gexiv2_found = false
  foreach py : py_candidates
    #Check if PyGobject installation have pycairo (#13105)
@@ -308,7 +308,7 @@ index 0c889d6ea3..187bb756cd 100644
    if python_tmp.found() and python_tmp.language_version().version_compare(python3_minver)
      python = python_tmp
      #Check if PyGObject installation have minimum version
-@@ -1212,9 +1212,7 @@ foreach py : py_candidates
+@@ -1213,9 +1213,7 @@ foreach py : py_candidates
                                          '''except (ImportError):''',
                                          '''    sys.exit(1)''']),
                                          check: false).returncode() == 0
@@ -319,7 +319,7 @@ index 0c889d6ea3..187bb756cd 100644
    endif
  endforeach
  
-@@ -1223,11 +1221,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
+@@ -1224,11 +1222,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
  endif
  message('Found Python @0@'.format(python.language_version()))
  
@@ -331,7 +331,7 @@ index 0c889d6ea3..187bb756cd 100644
  ## Javascript
  
  gjs = find_program('gjs', required: false)
-@@ -1981,15 +1974,11 @@ subdir('libgimpwidgets')
+@@ -1982,15 +1975,11 @@ subdir('libgimpwidgets')
  subdir('libgimp')
  
  # Executables, plugins
@@ -347,7 +347,7 @@ index 0c889d6ea3..187bb756cd 100644
  ################################################################################
  # Make GIMP runnable without being installed for unit-testing or as a build
  # tool.
-@@ -2007,13 +1996,13 @@ if get_option('debug-self-in-build')
+@@ -2023,13 +2012,13 @@ if get_option('debug-self-in-build')
  endif
  gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
  
@@ -363,11 +363,10 @@ index 0c889d6ea3..187bb756cd 100644
    gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
  
    menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
-@@ -2071,18 +2060,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
-     gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpthumb.full_path())
+@@ -2088,21 +2077,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
      gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpwidgets.full_path())
    endif
--else
+ else
 -  # Cross-builds require an existing native GIMP installed, unless we
 -  # can run target binaries.
 -  native_gimp_exe = find_program([gimpconsole_exe_name, gimpmain_exe_name],
@@ -378,11 +377,15 @@ index 0c889d6ea3..187bb756cd 100644
 -  endif
 -
 -  gimp_run_env.set('GIMP_SELF_IN_BUILD', native_gimp_exe.full_path())
+-  # This native GIMP is not the one we just (cross-)built: it can't load
+-  # plug-ins requested through $GIMP_TESTING_PLUG_INS (see in-build-gimp.py),
+-  # so ignore that variable and let it use its own bundled plug-ins. See: #16758
+-  gimp_run_env.set('GIMP_TESTING_PLUG_INS_IGNORE', '1')
 -  gimp_exe_depends = []
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2091,7 +2068,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
+@@ -2111,7 +2085,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
  # Subdirs: part 2
  
  # gimp-data submodule part 2
@@ -391,7 +394,7 @@ index 0c889d6ea3..187bb756cd 100644
  
  # Unit testing
  subdir('app/tests')
-@@ -2276,7 +2253,7 @@ final_message = [
+@@ -2296,7 +2270,7 @@ final_message = [
  '''  Test appdata         @0@'''.format(appstreamcli.found()),
  '',
  '''Documentation:''',
