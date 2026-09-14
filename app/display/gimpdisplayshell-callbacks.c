@@ -273,6 +273,11 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
 
       shell->disp_width  = allocation->width;
       shell->disp_height = allocation->height;
+
+      /* The cached marching-ants segments/mask are sized to the canvas
+       * window, so they need to be regenerated on resize.
+       */
+      gimp_display_shell_selection_undraw (shell);
     }
 
   gtk_widget_add_tick_callback (widget,
