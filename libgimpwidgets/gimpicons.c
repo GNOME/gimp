@@ -123,8 +123,8 @@ static gboolean
 gimp_icons_sanity_check (GFile       *path,
                          const gchar *theme_name)
 {
-  gboolean exists = FALSE;
-  GFile *child = g_file_get_child (path, theme_name);
+  gboolean  exists = FALSE;
+  GFile    *child  = g_file_get_child (path, theme_name);
 
   if (g_file_query_exists (child, NULL))
     {
@@ -139,8 +139,10 @@ gimp_icons_sanity_check (GFile       *path,
       g_object_unref (index);
     }
   else
-    g_printerr ("%s: Icon theme path has no '%s' subdirectory: %s\n",
-                G_STRFUNC, theme_name, gimp_file_get_utf8_name (path));
+    {
+      g_printerr ("%s: Icon theme path has no '%s' subdirectory: %s\n",
+                  G_STRFUNC, theme_name, gimp_file_get_utf8_name (path));
+    }
 
   g_object_unref (child);
 
