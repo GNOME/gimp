@@ -55,6 +55,8 @@ Core:
   * About dialog: more info about the OS, dependencies and hardware is
     being shown. A "Copy" button allows to easily add the
     markdown-formatted info to clipboard for pasting in reports.
+  * Improve internal logics to determine if an item is "writable"
+    regarding actions modifying item contents.
 
 Tools:
 
@@ -118,6 +120,8 @@ Graphical User Interface:
   * Themes:
     - Add dotted lines on focused check/radio buttons and combo boxes.
     - More theme fixes related to GIMP over KDE Breeze.
+  * The "Default" and "System" themes, as well as "Default" and "Legacy"
+    icon themes' names are now shown localized.
 
 Plug-Ins:
 
@@ -206,6 +210,8 @@ Plug-Ins:
     - Differentiate correctly pass-through group layers.
     - Metadata are explicitly not exported for BigTIFF (Exiv2 does not
       have support).
+    - Use GDAL metadata (tells software how to normalize the elevation
+      ranges) in TIFF import.
   * PDF: on export of multi-page documents, the image size is now made
     so that all pages/layers are contained within the image.
   * JPEG:
@@ -280,6 +286,8 @@ API:
       + gimp_context_set_image
       + gimp_export_procedure_get_export_metadata
       + gimp_export_procedure_set_export_metadata
+    - Deprecated:
+      + gimp_plug_in_add_menu_branch in favor of gimp_procedure_add_menu_path
   * libgimpui:
     - GimpProcedureDialog will now use the icon set on the associated
       GimpProcedure (likely only visible on platforms showing window
