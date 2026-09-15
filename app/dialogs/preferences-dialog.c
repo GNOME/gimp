@@ -2301,7 +2301,15 @@ prefs_dialog_new (Gimp       *gimp,
         image = gtk_image_new_from_surface (surface);
         gtk_grid_attach (GTK_GRID (grid), image, 0, 0, 1, 2);
 
-        name_label = gtk_label_new (icon_themes[i]);
+        if (icon_themes_theme_is_default (gimp, icon_themes[i]))
+          /* TRANSLATORS: this is the name of GIMP's "Default" icon theme. */
+          name_label = gtk_label_new (C_("icon-theme-name", "Default"));
+        else if (icon_themes_theme_is_legacy (gimp, icon_themes[i]))
+          /* TRANSLATORS: this is the name of GIMP's "Legacy" icon theme. */
+          name_label = gtk_label_new (C_("icon-theme-name", "Legacy"));
+        else
+          name_label = gtk_label_new (icon_themes[i]);
+
         g_object_set (name_label, "xalign", 0.0, NULL);
         gtk_grid_attach (GTK_GRID (grid), name_label, 1, 0, 1, 1);
 

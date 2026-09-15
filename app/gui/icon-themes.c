@@ -117,12 +117,21 @@ icon_themes_init (Gimp *gimp)
 
                           if (strcmp ("hicolor", basename))
                             {
-                              if (gimp->be_verbose)
-                                g_print ("Adding icon theme '%s' (%s)\n",
-                                         basename, name);
+                              if (g_hash_table_contains (icon_themes_hash, basename))
+                                {
+                                  g_printerr ("Skipping duplicate icon theme \"%s\": '%s'\n",
+                                              basename, name);
+                                  g_free (basename);
+                                }
+                              else
+                                {
+                                  if (gimp->be_verbose)
+                                    g_print ("Adding icon theme '%s' (%s)\n",
+                                             basename, name);
 
-                              g_hash_table_insert (icon_themes_hash, basename,
-                                                   g_object_ref (file));
+                                  g_hash_table_insert (icon_themes_hash, basename,
+                                                       g_object_ref (file));
+                                }
                             }
                           else
                             {
@@ -165,6 +174,62 @@ icon_themes_exit (Gimp *gimp)
       g_hash_table_destroy (icon_themes_hash);
       icon_themes_hash = NULL;
     }
+}
+
+gboolean
+icon_themes_theme_is_default (Gimp        *gimp,
+                              const gchar *theme_name)
+{
+  gboolean is_default = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (theme_name != NULL, FALSE);
+
+  if (g_strcmp0 (theme_name, GIMP_CONFIG_DEFAULT_ICON_THEME) == 0)
+    {
+      GFile *theme_dir;
+      GFile *parent_dir;
+      GFile *system_dir;
+
+      theme_dir  = icon_themes_get_theme_dir (gimp, theme_name);
+      parent_dir = g_file_get_parent (theme_dir);
+      system_dir = gimp_file_new_for_config_path ("${gimp_data_dir}/icons", NULL);
+
+      is_default = g_file_equal (system_dir, parent_dir);
+
+      g_object_unref (system_dir);
+      g_object_unref (parent_dir);
+    }
+
+  return is_default;
+}
+
+gboolean
+icon_themes_theme_is_legacy (Gimp        *gimp,
+                             const gchar *theme_name)
+{
+  gboolean is_default = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (theme_name != NULL, FALSE);
+
+  if (g_strcmp0 (theme_name, "Legacy") == 0)
+    {
+      GFile *theme_dir;
+      GFile *parent_dir;
+      GFile *system_dir;
+
+      theme_dir  = icon_themes_get_theme_dir (gimp, theme_name);
+      parent_dir = g_file_get_parent (theme_dir);
+      system_dir = gimp_file_new_for_config_path ("${gimp_data_dir}/icons", NULL);
+
+      is_default = g_file_equal (system_dir, parent_dir);
+
+      g_object_unref (system_dir);
+      g_object_unref (parent_dir);
+    }
+
+  return is_default;
 }
 
 gchar **

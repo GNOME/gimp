@@ -24,6 +24,11 @@
 void        icon_themes_init                    (Gimp        *gimp);
 void        icon_themes_exit                    (Gimp        *gimp);
 
+gboolean    icon_themes_theme_is_default        (Gimp        *gimp,
+                                                 const gchar *theme_name);
+gboolean    icon_themes_theme_is_legacy         (Gimp        *gimp,
+                                                 const gchar *theme_name);
+
 gchar    ** icon_themes_list_themes             (Gimp        *gimp,
                                                  gint        *n_themes);
 GFile     * icon_themes_get_theme_dir           (Gimp        *gimp,
