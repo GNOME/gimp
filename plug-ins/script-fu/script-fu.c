@@ -314,33 +314,6 @@ script_fu_run_init (GimpProcedure *procedure,
 static void
 script_fu_extension_init (GimpPlugIn *plug_in)
 {
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/Help", N_("_GIMP Online"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/Help", N_("_User Manual"));
-
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/Filters/Development",
-                                N_("_Script-Fu"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/Filters/Development/Script-Fu",
-                                N_("_Test"));
-
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
-                                N_("_Buttons"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
-                                N_("_Logos"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
-                                N_("_Patterns"));
-
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create",
-                                N_("_Web Page Themes"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create/Web Page Themes",
-                                N_("_Alien Glow"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create/Web Page Themes",
-                                N_("_Beveled Pattern"));
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/File/Create/Web Page Themes",
-                                N_("_Classic.Gimp.Org"));
-
-  gimp_plug_in_add_menu_branch (plug_in, "<Image>/Filters",
-                                N_("Alpha to _Logo"));
-
   /* Commented out until fixed or replaced.
    * script_fu_register_refresh_procedure (plug_in);
    */
