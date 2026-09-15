@@ -21,6 +21,7 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -42,6 +43,7 @@
 
 #include "text/gimptextlayer.h"
 
+#include "path/gimppath.h"
 #include "path/gimpvectorlayer.h"
 
 #include "gimp-intl.h"
@@ -79,6 +81,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
   GList           *list;
   GimpItem        *item;
   gint             old_width, old_height;
+  GHashTable      *path_origins;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -91,6 +94,31 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
                                C_("undo-type", "Resize Image"));
+
+  /*  Record the pre-translation origin of each GimpPath  */
+  path_origins = g_hash_table_new_full (g_direct_hash,
+                                        g_direct_equal,
+                                        NULL,
+                                        g_free);
+
+  for (list = gimp_image_get_path_iter (image);
+       list;
+       list = g_list_next (list))
+    {
+      GimpItem *path_item = list->data;
+      gdouble   x;
+      gdouble   y;
+
+      if (gimp_item_bounds_f (path_item, &x, &y, NULL, NULL))
+        {
+          GimpVector2 *origin = g_new (GimpVector2, 1);
+
+          origin->x = x;
+          origin->y = y;
+
+          g_hash_table_insert (path_origins, path_item, origin);
+        }
+    }
 
   resize_layers = gimp_image_item_list_get_list (image,
                                                  GIMP_ITEM_TYPE_LAYERS,
@@ -137,6 +165,9 @@ gimp_image_resize_with_layers (GimpImage    *image,
       if (! resize_text_layers && gimp_item_is_text_layer (item))
         continue;
 
+      if (gimp_item_is_vector_layer (item))
+        continue;
+
       /* note that we call gimp_item_start_move(), and not
        * gimp_item_start_transform().  see the comment in gimp_item_resize()
        * for more information.
@@ -162,9 +193,6 @@ gimp_image_resize_with_layers (GimpImage    *image,
           gint old_offset_x;
           gint old_offset_y;
 
-          if (gimp_item_is_vector_layer (item))
-            continue;
-
           gimp_item_get_offset (item, &old_offset_x, &old_offset_y);
 
           gimp_item_resize (item, context, fill_type,
@@ -175,10 +203,36 @@ gimp_image_resize_with_layers (GimpImage    *image,
         }
       else
         {
+          gint resize_offset_x = offset_x;
+          gint resize_offset_y = offset_y;
+
+          /*  Use recorded GimpPath origins to fix their offsets  */
+          if (GIMP_IS_PATH (item))
+            {
+              GimpVector2 *origin;
+
+              origin = g_hash_table_lookup (path_origins, item);
+
+              if (origin != NULL)
+                {
+                  gdouble x;
+                  gdouble y;
+
+                  gimp_item_bounds_f (item, &x, &y, NULL, NULL);
+                  resize_offset_x =
+                      SIGNED_ROUND (offset_x - (x - origin->x));
+                  resize_offset_y =
+                      SIGNED_ROUND (offset_y - (y - origin->y));
+                }
+            }
+
           gimp_item_resize (item, context, GIMP_FILL_TRANSPARENT,
-                            new_width, new_height, offset_x, offset_y);
+                            new_width, new_height,
+                            resize_offset_x, resize_offset_y);
         }
     }
+
+  g_hash_table_unref (path_origins);
 
   /*  Reposition or remove all guides  */
   list = gimp_image_get_guides (image);
