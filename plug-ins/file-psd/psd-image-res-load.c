@@ -1018,20 +1018,22 @@ load_resource_1033 (const PSDimageres  *res_a,
 {
   /* Load thumbnail image */
 
-  struct jpeg_decompress_struct cinfo;
-  struct jpeg_error_mgr         jerr;
+  struct jpeg_decompress_struct  cinfo;
+  struct jpeg_error_mgr          jerr;
 
-  FILE                 *f;
-  ThumbnailInfo         thumb_info;
-  GeglBuffer           *buffer;
-  const Babl           *format;
-  GimpLayer            *layer;
-  guchar               *buf;
-  guchar               *rgb_buf;
-  guchar              **rowbuf;
-  gint                  i;
+  FILE                          *f;
+  ThumbnailInfo                  thumb_info;
+  GeglBuffer                    *buffer;
+  const Babl                    *format;
+  GimpLayer                     *layer;
+  guchar                        *buf;
+  guchar                        *rgb_buf;
+  guchar                       **rowbuf;
+  gsize                          alloc = 0;
+  gint                           i;
 
-  IFDBG(2) g_debug ("Process image resource block %d: Thumbnail Image", res_a->id);
+  IFDBG(2) g_debug ("Process image resource block %d: Thumbnail Image",
+                    res_a->id);
 
   /* Read thumbnail resource header info */
   if (psd_read (input, &thumb_info.format,         4, error) < 4 ||
@@ -1077,14 +1079,14 @@ load_resource_1033 (const PSDimageres  *res_a,
     return -1;
 
   /* Now seek to the same position as we have in input. */
-  fseek(f, g_seekable_tell (G_SEEKABLE (input)), SEEK_SET);
+  fseek (f, g_seekable_tell (G_SEEKABLE (input)), SEEK_SET);
 
   /* Step 1: Allocate and initialize JPEG decompression object */
   cinfo.err = jpeg_std_error (&jerr);
   jpeg_create_decompress (&cinfo);
 
   /* Step 2: specify data source (eg, a file) */
-  jpeg_stdio_src(&cinfo, f);
+  jpeg_stdio_src (&cinfo, f);
 
   /* Step 3: read file parameters with jpeg_read_header() */
   jpeg_read_header (&cinfo, TRUE);
@@ -1096,11 +1098,18 @@ load_resource_1033 (const PSDimageres  *res_a,
   jpeg_start_decompress (&cinfo);
 
   /* temporary buffers */
-  buf = g_new (guchar, cinfo.output_height * cinfo.output_width
-               * cinfo.output_components);
+  if (cinfo.output_width > GIMP_MAX_IMAGE_SIZE                               ||
+      cinfo.output_height > GIMP_MAX_IMAGE_SIZE                              ||
+      ! g_size_checked_mul (&alloc, cinfo.output_height, cinfo.output_width) ||
+      ! g_size_checked_mul (&alloc, alloc, cinfo.output_components)          ||
+      ! (buf = g_try_new0 (guchar, alloc)))
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
   if (res_a->id == PSD_THUMB_RES)
-    rgb_buf = g_new (guchar, cinfo.output_height * cinfo.output_width
-                     * cinfo.output_components);
+    rgb_buf = g_try_new0 (guchar, alloc);
   else
     rgb_buf = NULL;
   rowbuf = g_new (guchar *, cinfo.output_height);
