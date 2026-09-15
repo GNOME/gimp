@@ -1105,6 +1105,9 @@ load_resource_1033 (const PSDimageres  *res_a,
       ! (buf = g_try_new0 (guchar, alloc)))
     {
       psd_set_error (error);
+      jpeg_destroy_decompress (&cinfo);
+      fclose (f);
+
       return -1;
     }
 
@@ -1136,7 +1139,7 @@ load_resource_1033 (const PSDimageres  *res_a,
                            (JSAMPARRAY) &rowbuf[cinfo.output_scanline], 1);
     }
 
-  if (res_a->id == PSD_THUMB_RES)   /* Order is BGR for resource 1033 */
+  if (res_a->id == PSD_THUMB_RES && rgb_buf) /* Order is BGR for resource 1033 */
     {
       guchar *dst = rgb_buf;
       guchar *src = buf;
