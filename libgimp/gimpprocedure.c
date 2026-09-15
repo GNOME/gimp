@@ -663,7 +663,7 @@ sanitize_menu_path_separators (const gchar *menu_path)
  *
  * @run_func is called via [method@Procedure.run].
  *
- * For %GIMP_PDB_PROC_TYPE_PLUGIN and %GIMP_PDB_PROC_TYPE_PERSISTENT
+ * For [enum@Gimp.PDBProcType.PLUGIN] and [Gimp.PDBProcType.PERSISTENT]
  * procedures the call of @run_func is basically the lifetime of the
  * plug-in.
  *
@@ -800,7 +800,7 @@ gimp_procedure_set_image_types (GimpProcedure *procedure,
  * @procedure:  A #GimpProcedure.
  *
  * This function retrieves the list of image types the procedure can
- * operate on. See gimp_procedure_set_image_types().
+ * operate on. See [method@Gimp.Procedure.set_image_types].
  *
  * Returns: The image types.
  *
@@ -829,8 +829,9 @@ gimp_procedure_get_image_types (GimpProcedure *procedure)
  * procedure as sensitive (hence forbid running it otherwise), yet it
  * will not forbid thid-party plug-ins for instance to run manually your
  * registered procedure. Therefore you should still handle non-supported
- * cases appropriately by returning with %GIMP_PDB_EXECUTION_ERROR and a
- * suitable error message.
+ * cases appropriately by returning with
+ * [enum@Gimp.PDBStatusType.EXECUTION_ERROR] and a suitable error
+ * message.
  *
  * Similarly third-party plug-ins should verify they are allowed to call
  * a procedure with [method@Procedure.get_sensitivity_mask] when running
@@ -896,7 +897,7 @@ gimp_procedure_get_sensitivity_mask (GimpProcedure *procedure)
  *
  * Sets the label to use for the @procedure's menu entry, The
  * location(s) where to register in the menu hierarchy is chosen using
- * gimp_procedure_add_menu_path().
+ * [method@Gimp.Procedure.add_menu_path].
  *
  * Plug-ins are responsible for their own translations. You are expected to send
  * localized strings to GIMP if your plug-in is internationalized.
@@ -927,7 +928,7 @@ gimp_procedure_set_menu_label (GimpProcedure *procedure,
  * @procedure: A #GimpProcedure.
  *
  * Returns: The procedure's menu label given in
- *          gimp_procedure_set_menu_label().
+ *          [method@Gimp.Procedure.set_menu_label].
  *
  * Since: 3.0
  **/
@@ -965,15 +966,14 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
  * g_free (path);
  * ```
  *
- * See also: gimp_plug_in_add_menu_branch().
- *
  * GIMP menus also have a concept of named section. For instance, say you are
  * creating a plug-in which you want to show next to the "Export", "Export As"
- * plug-ins in the File menu. You would add it to the menu path "File/[Export]".
+ * plug-ins in the File menu. You would add it to the menu path `"File/[Export]"`.
  * If you actually wanted to create a submenu called "[Export]" (with square
- * brackets), double the brackets: "File/[[Export]]"
+ * brackets), double the brackets: `"File/[[Export]]"`
  *
- * See also: https://gitlab.gnome.org/GNOME/gimp/-/blob/master/menus/image-menu.ui.in.in
+ * See the [`image-menu` UI file](https://gitlab.gnome.org/GNOME/gimp/-/blob/master/menus/image-menu.ui.in.in)
+ * for the various "section-name" available in the main menu.
  *
  * This function will place your procedure to the bottom of the selected path or
  * section. Order is not assured relatively to other plug-ins.
@@ -1009,7 +1009,7 @@ gimp_procedure_add_menu_path (GimpProcedure *procedure,
  * @procedure: A #GimpProcedure.
  *
  * Returns: (transfer none) (element-type gchar*): the @procedure's
- *          menu paths as added with gimp_procedure_add_menu_path().
+ *          menu paths as added with [method@Gimp.Procedure.add_menu_path].
  *
  * Since: 3.0
  **/
@@ -1756,7 +1756,7 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
  * or auxiliary arguments can be automatically synced with a #GimpParasite of
  * the #GimpImage the procedure is running on.
  *
- * In order to enable this, set @sync to %GIMP_ARGUMENT_SYNC_PARASITE.
+ * In order to enable this, set @sync to [enum@Gimp.ArgumentSync.PARASITE].
  *
  * Currently, it is possible to sync a string argument of type
  * #GParamSpecString with an image parasite of the same name, for
@@ -1799,7 +1799,7 @@ gimp_procedure_set_argument_sync (GimpProcedure    *procedure,
  * @arg_name:  the name of one of @procedure's arguments or auxiliary arguments
  *
  * Returns: The #GimpArgumentSync value set with
- *          gimp_procedure_set_argument_sync():
+ *          [method@Gimp.Procedure.set_argument_sync].
  *
  * Since: 3.0
  **/
@@ -1838,8 +1838,9 @@ gimp_procedure_get_argument_sync (GimpProcedure *procedure,
  * @status:    the success status of the procedure run.
  * @error:     (in) (nullable) (transfer full):
  *             an optional #GError. This parameter should be set if
- *             @status is either #GIMP_PDB_EXECUTION_ERROR or
- *             #GIMP_PDB_CALLING_ERROR.
+ *             @status is either
+ *             [enum@Gimp.PDBStatusType.EXECUTION_ERROR] or
+ *             [enum@Gimp.PDBStatusType.CALLING_ERROR].
  *
  * Format the expected return values from procedures.
  *
@@ -2336,7 +2337,7 @@ _gimp_procedure_get_ref_count (GimpProcedure *procedure,
  *
  * Returns: (transfer full): the expected #GimpValueArray which could be given as
  *          arguments to run @procedure, with all values set to
- *          defaults. Free with gimp_value_array_unref().
+ *          defaults. Free with [method@Gimp.ValueArray.unref].
  *
  * Since: 3.0
  **/
