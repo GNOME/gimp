@@ -198,12 +198,12 @@ static gchar        * gimp_config_path_unexpand_only (const gchar  *path) G_GNUC
  * @name: directory name (in UTF-8 encoding)
  *
  * Creates a search path as it is used in the `gimprc` file. The path
- * returned by [func@Gimp.ConfigInterface.build_data_path] includes a
- * directory below the user's gimp directory and one in the system-wide
+ * returned by [func@Gimp.ConfigInterface.build_data_path] includes first a
+ * directory below the user's gimp directory then one in the system-wide
  * data directory.
  *
  * Note that you cannot use this path directly with gimp_path_parse().
- * As it is in the gimprc notation, you first need to expand and
+ * As it is in the `gimprc` notation, you first need to expand and
  * recode it using [func@Gimp.ConfigPath.expand].
  *
  * Returns: a newly allocated string
@@ -231,12 +231,12 @@ gimp_config_build_data_path (const gchar *name)
  * @name: directory name (in UTF-8 encoding)
  *
  * Creates a search path as it is used in the gimprc file. The path
- * returned by [func@Gimp.ConfigInterface.build_plug_in_path] includes fist a
+ * returned by [func@Gimp.ConfigInterface.build_plug_in_path] includes first a
  * directory below the user's gimp directory then one in the system-wide
  * plug-in directory.
  *
  * Note that you cannot use this path directly with `gimp_path_parse()`.
- * As it is in the gimprc notation, you first need to expand and
+ * As it is in the `gimprc` notation, you first need to expand and
  * recode it using [func@Gimp.ConfigPath.expand]
  *
  * Returns: a newly allocated string
