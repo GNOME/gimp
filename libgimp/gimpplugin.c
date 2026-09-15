@@ -120,14 +120,6 @@ enum
 };
 
 
-typedef struct _GimpPlugInMenuBranch GimpPlugInMenuBranch;
-
-struct _GimpPlugInMenuBranch
-{
-  gchar *menu_path;
-  gchar *menu_label;
-};
-
 typedef struct _GimpPlugInPrivate
 {
   gchar      *program_name;
@@ -145,8 +137,6 @@ typedef struct _GimpPlugInPrivate
 
   gchar      *help_domain_name;
   GFile      *help_domain_uri;
-
-  GList      *menu_branches;
 
   GList      *temp_procedures;
 
@@ -364,7 +354,6 @@ gimp_plug_in_finalize (GObject *object)
 {
   GimpPlugIn        *plug_in = GIMP_PLUG_IN (object);
   GimpPlugInPrivate *priv;
-  GList             *list;
 
   priv = gimp_plug_in_get_instance_private (plug_in);
 
@@ -374,17 +363,6 @@ gimp_plug_in_finalize (GObject *object)
 
   g_clear_pointer (&priv->help_domain_name, g_free);
   g_clear_object  (&priv->help_domain_uri);
-
-  for (list = priv->menu_branches; list; list = g_list_next (list))
-    {
-      GimpPlugInMenuBranch *branch = list->data;
-
-      g_free (branch->menu_path);
-      g_free (branch->menu_label);
-      g_slice_free (GimpPlugInMenuBranch, branch);
-    }
-
-  g_clear_pointer (&priv->menu_branches, g_list_free);
 
   gimp_plug_in_destroy_proxies (plug_in, priv->displays,  "display",  TRUE);
   gimp_plug_in_destroy_proxies (plug_in, priv->images,    "image",    TRUE);
@@ -516,40 +494,18 @@ gimp_plug_in_set_help_domain (GimpPlugIn  *plug_in,
  * @menu_path:  The sub-menu's menu path.
  * @menu_label: The menu label of the sub-menu.
  *
- * Add a new sub-menu to the GIMP menus.
- *
- * This function installs a sub-menu which does not belong to any
- * procedure at the location @menu_path.
- *
- * For translations of @menu_label to work properly, @menu_label
- * should only be marked for translation but passed to this function
- * untranslated, for example using N_("Submenu"). GIMP will look up
- * the translation in the textdomain registered for the plug-in.
- *
- * See also: gimp_procedure_add_menu_path().
+ * This function is a no-op and should not be used anymore.
+ * Use [method@Gimp.Procedure.add_menu_path] instead.
  *
  * Since: 3.0
+ *
+ * Deprecated: 3.4: Use gimp_procedure_add_menu_path().
  **/
 void
 gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
                               const gchar *menu_path,
                               const gchar *menu_label)
 {
-  GimpPlugInPrivate    *priv;
-  GimpPlugInMenuBranch *branch;
-
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-  g_return_if_fail (menu_path != NULL);
-  g_return_if_fail (menu_label != NULL);
-
-  priv = gimp_plug_in_get_instance_private (plug_in);
-
-  branch = g_slice_new (GimpPlugInMenuBranch);
-
-  branch->menu_path  = g_strdup (menu_path);
-  branch->menu_label = g_strdup (menu_label);
-
-  priv->menu_branches = g_list_append (priv->menu_branches, branch);
 }
 
 /**
@@ -1255,14 +1211,6 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
     {
       _gimp_plug_in_help_register (priv->help_domain_name,
                                    priv->help_domain_uri);
-    }
-
-  for (list = priv->menu_branches; list; list = g_list_next (list))
-    {
-      GimpPlugInMenuBranch *branch = list->data;
-
-      _gimp_plug_in_menu_branch_register (branch->menu_path,
-                                          branch->menu_label);
     }
 }
 

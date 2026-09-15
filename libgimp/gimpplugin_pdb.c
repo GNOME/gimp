@@ -74,10 +74,7 @@ _gimp_plug_in_help_register (const gchar *domain_name,
  *
  * Register a sub-menu.
  *
- * This procedure installs a sub-menu which does not belong to any
- * procedure. The menu-name should be the untranslated menu label. GIMP
- * will look up the translation in the textdomain registered for the
- * plug-in.
+ * This procedure is a no-op and should not be used anymore.
  *
  * Returns: TRUE on success.
  *

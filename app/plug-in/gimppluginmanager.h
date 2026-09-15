@@ -53,7 +53,6 @@ struct _GimpPlugInManager
   GSList            *display_export_procs;
   GSList            *display_raw_load_procs;
 
-  GSList            *menu_branches;
   GSList            *help_domains;
 
   GimpPlugIn        *current_plug_in;
@@ -77,11 +76,6 @@ struct _GimpPlugInManagerClass
                               GimpPlugIn        *plug_in);
   void (* plug_in_closed)    (GimpPlugInManager *manager,
                               GimpPlugIn        *plug_in);
-
-  void (* menu_branch_added) (GimpPlugInManager *manager,
-                              GFile             *file,
-                              const gchar       *menu_path,
-                              const gchar       *menu_label);
 };
 
 

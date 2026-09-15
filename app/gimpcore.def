@@ -897,7 +897,6 @@ gimp_curve_get_closest_point
 gimp_gegl_init
 gimp_image_get_guides
 gimp_image_get_sample_points
-gimp_plug_in_manager_get_menu_branches
 desaturate_region
 file_utils_filename_is_uri
 get_pid

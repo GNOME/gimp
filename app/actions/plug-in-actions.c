@@ -34,7 +34,6 @@
 
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginmanager-help-domain.h"
-#include "plug-in/gimppluginmanager-menu-branch.h"
 #include "plug-in/gimppluginprocedure.h"
 
 #include "widgets/gimpaction.h"

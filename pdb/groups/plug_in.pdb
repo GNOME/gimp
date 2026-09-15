@@ -103,14 +103,13 @@ sub plug_in_menu_branch_register {
     $blurb = "Register a sub-menu.";
 
     $help = <<HELP;
-This procedure installs a sub-menu which does not belong to any procedure.
-The menu-name should be the untranslated menu label. GIMP will look up the
-translation in the textdomain registered for the plug-in.
+This procedure is a no-op and should not be used anymore.
 HELP
 
     &mitch_pdb_misc('2005', '2.4');
 
     $lib_private = 1;
+    $deprecated_since = '3.4.0';
 
     @inargs = (
 	{ name => 'menu_path', type => 'string',
@@ -122,15 +121,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
-
-  if (plug_in)
-    {
-      gimp_plug_in_manager_add_menu_branch (gimp->plug_in_manager,
-                                            plug_in->file, menu_path, menu_name);
-    }
-  else
-    success = FALSE;
+  /* No-op. Just avoiding unused variable warnings. */
+  (void) menu_path;
+  (void) menu_name;
 }
 CODE
     );
@@ -216,7 +209,6 @@ CODE
               "plug-in/gimpplugin.h"
               "plug-in/gimpplugindef.h"
               "plug-in/gimppluginmanager.h"
-              "plug-in/gimppluginmanager-menu-branch.h"
               "plug-in/gimppluginmanager-query.h"
               "plug-in/gimppluginprocedure.h"
               "gimppdb-utils.h");
