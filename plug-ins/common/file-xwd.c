@@ -1390,10 +1390,10 @@ load_xwd_f2_d1_b1 (GFile           *file,
   data = g_malloc (tile_height * width);
 
   allocation = xwdhdr->l_bytes_per_line + 8;
-  if (ceil (width * (bpp / 8)) > allocation)
+  if (ceil (width * (bpp / 8.0f)) > allocation)
     {
       g_warning ("XWD: Mismatch between width and bytes per line");
-      allocation = ceil (width * (bpp / 8));
+      allocation = ceil (width * (bpp / 8.0f));
     }
   scanline = g_new0 (guchar, allocation);
 
@@ -2294,12 +2294,12 @@ load_xwd_f1_d24_b1 (GFile            *file,
   bpp             = xwdhdr->l_bits_per_pixel;
 
   allocation = xwdhdr->l_bytes_per_line;
-  if (ceil (width * (bpp / 8)) > allocation)
+  if (ceil (width * (bpp / 8.0f)) > allocation)
     {
       g_warning ("XWD: Mismatch between width and bytes per line");
-      allocation = ceil (width * (bpp / 8));
+      allocation = ceil (width * (bpp / 8.0f));
     }
-  xwddata = g_try_malloc (xwdhdr->l_bytes_per_line);
+  xwddata = g_try_malloc (allocation);
   if (xwddata == NULL)
     return NULL;
 
