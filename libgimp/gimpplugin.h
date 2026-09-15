@@ -192,6 +192,7 @@ void            gimp_plug_in_set_help_domain        (GimpPlugIn    *plug_in,
                                                      const gchar   *domain_name,
                                                      GFile         *domain_uri);
 
+GIMP_DEPRECATED_FOR(gimp_procedure_add_menu_path)
 void            gimp_plug_in_add_menu_branch        (GimpPlugIn    *plug_in,
                                                      const gchar   *menu_path,
                                                      const gchar   *menu_label);

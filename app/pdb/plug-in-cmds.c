@@ -38,7 +38,6 @@
 #include "core/gimpparamspecs.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimpplugindef.h"
-#include "plug-in/gimppluginmanager-menu-branch.h"
 #include "plug-in/gimppluginmanager-query.h"
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
@@ -165,15 +164,9 @@ plug_in_menu_branch_register_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
-
-      if (plug_in)
-        {
-          gimp_plug_in_manager_add_menu_branch (gimp->plug_in_manager,
-                                                plug_in->file, menu_path, menu_name);
-        }
-      else
-        success = FALSE;
+      /* No-op. Just avoiding unused variable warnings. */
+      (void) menu_path;
+      (void) menu_name;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -352,7 +345,7 @@ register_plug_in_procs (GimpPDB *pdb)
                                "gimp-plug-in-menu-branch-register");
   gimp_procedure_set_static_help (procedure,
                                   "Register a sub-menu.",
-                                  "This procedure installs a sub-menu which does not belong to any procedure. The menu-name should be the untranslated menu label. GIMP will look up the translation in the textdomain registered for the plug-in.",
+                                  "This procedure is a no-op and should not be used anymore.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",

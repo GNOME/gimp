@@ -46,7 +46,6 @@
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-data.h"
 #include "gimppluginmanager-help-domain.h"
-#include "gimppluginmanager-menu-branch.h"
 #include "gimppluginshm.h"
 #include "gimptemporaryprocedure.h"
 
@@ -57,7 +56,6 @@ enum
 {
   PLUG_IN_OPENED,
   PLUG_IN_CLOSED,
-  MENU_BRANCH_ADDED,
   LAST_SIGNAL
 };
 
@@ -109,19 +107,6 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_PLUG_IN);
 
-  manager_signals[MENU_BRANCH_ADDED] =
-    g_signal_new ("menu-branch-added",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpPlugInManagerClass,
-                                   menu_branch_added),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT_STRING_STRING,
-                  G_TYPE_NONE, 3,
-                  G_TYPE_FILE,
-                  G_TYPE_STRING,
-                  G_TYPE_STRING);
-
   object_class->finalize         = gimp_plug_in_manager_finalize;
 
   gimp_object_class->get_memsize = gimp_plug_in_manager_get_memsize;
@@ -169,7 +154,6 @@ gimp_plug_in_manager_finalize (GObject *object)
 
   g_clear_pointer (&manager->debug, gimp_plug_in_debug_free);
 
-  gimp_plug_in_manager_menu_branch_exit (manager);
   gimp_plug_in_manager_help_domain_exit (manager);
   gimp_plug_in_manager_data_free (manager);
 
@@ -216,7 +200,6 @@ gimp_plug_in_manager_get_memsize (GimpObject *object,
   memsize += gimp_g_slist_get_memsize (manager->display_export_procs, 0);
   memsize += gimp_g_slist_get_memsize (manager->display_raw_load_procs, 0);
 
-  memsize += gimp_g_slist_get_memsize (manager->menu_branches,  0 /* FIXME */);
   memsize += gimp_g_slist_get_memsize (manager->help_domains,   0 /* FIXME */);
 
   memsize += gimp_g_slist_get_memsize_foreach (manager->open_plug_ins,
