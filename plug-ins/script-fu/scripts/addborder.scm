@@ -37,6 +37,9 @@
     (map (lambda (x) (deltacolor x delta)) col)
   )
 
+  (define (get-opacity color)
+    (* (/ (cadddr color) 255.0) 100))
+
   (define (gen_top_array xsize ysize owidth oheight width height)
     (let* ((n_array (cons-array 10 'double)))
       (vector-set! n_array 0 0 )
@@ -124,6 +127,7 @@
                                             100 LAYER-MODE-NORMAL))))
 
            (gimp-context-push)
+           (gimp-context-set-opacity (get-opacity color))
            (gimp-context-set-antialias FALSE)
            (gimp-context-set-feather FALSE)
 
