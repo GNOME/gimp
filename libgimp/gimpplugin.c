@@ -499,7 +499,7 @@ gimp_plug_in_set_help_domain (GimpPlugIn  *plug_in,
  *
  * Since: 3.0
  *
- * Deprecated: 3.4: Use gimp_procedure_add_menu_path().
+ * Deprecated: 3.2.8: Use gimp_procedure_add_menu_path().
  **/
 void
 gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
