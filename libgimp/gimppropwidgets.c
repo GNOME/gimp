@@ -286,7 +286,7 @@ gimp_prop_item_chooser_new (GObject     *config,
  *
  * Since: 3.0
  *
- * Deprecated: 3.2: Use gimp_prop_item_chooser_new().
+ * Deprecated: 3.2: Use [func@GimpUi.prop_item_chooser_new].
  */
 GtkWidget *
 gimp_prop_drawable_chooser_new (GObject     *config,

@@ -688,8 +688,8 @@ gimp_get_pdb (void)
  * [enum@Gimp.PDBStatusType.EXECUTION_ERROR] as a status and with a well
  * written [struct@GLib.Error] message to display.
  *
- * Deprecated: there are no alternatives. Quit your plug-ins cleanly
- *             instead.
+ * Deprecated: 3.2.4: there are no alternatives. Quit your plug-ins
+ *                    cleanly instead.
  **/
 void
 gimp_quit (void)

@@ -45,7 +45,7 @@
  *
  * Since: 3.0
  *
- * Deprecated: 3.2: Use GimpItemChooser.
+ * Deprecated: 3.2: Use [class@GimpUi.ItemChooser].
  **/
 
 #define CELL_SIZE 40
@@ -364,7 +364,7 @@ gimp_drawable_chooser_get_property (GObject    *object,
  *
  * Since: 3.0
  *
- * Deprecated: 3.2: Use gimp_item_chooser_new().
+ * Deprecated: 3.2: Use [ctor@GimpUi.ItemChooser.new].
  */
 GtkWidget *
 gimp_drawable_chooser_new (const gchar  *title,
@@ -402,7 +402,7 @@ gimp_drawable_chooser_new (const gchar  *title,
  *
  * Since: 3.0
  *
- * Deprecated: 3.2: Use gimp_item_chooser_get_item().
+ * Deprecated: 3.2: Use [method@GimpUi.ItemChooser.get_item].
  */
 GimpDrawable *
 gimp_drawable_chooser_get_drawable (GimpDrawableChooser *chooser)
@@ -422,7 +422,7 @@ gimp_drawable_chooser_get_drawable (GimpDrawableChooser *chooser)
  *
  * Since: 3.0
  *
- * Deprecated: 3.2: Use gimp_item_chooser_set_item().
+ * Deprecated: 3.2: Use [method@GimpUi.ItemChooser.set_item].
  */
 void
 gimp_drawable_chooser_set_drawable (GimpDrawableChooser *chooser,
@@ -451,7 +451,7 @@ gimp_drawable_chooser_set_drawable (GimpDrawableChooser *chooser,
  *
  * Since: 3.0
  *
- * Deprecated: 3.2: Use gimp_item_chooser_get_label().
+ * Deprecated: 3.2: Use [method@GimpUi.ItemChooser.get_label].
  */
 GtkWidget *
 gimp_drawable_chooser_get_label (GimpDrawableChooser *chooser)
