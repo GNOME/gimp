@@ -495,11 +495,10 @@ gimp_plug_in_set_help_domain (GimpPlugIn  *plug_in,
  * @menu_label: The menu label of the sub-menu.
  *
  * This function is a no-op and should not be used anymore.
- * Use [method@Gimp.Procedure.add_menu_path] instead.
  *
  * Since: 3.0
  *
- * Deprecated: 3.2.8: Use gimp_procedure_add_menu_path().
+ * Deprecated: 3.2.8: Use [method@Gimp.Procedure.add_menu_path].
  **/
 void
 gimp_plug_in_add_menu_branch (GimpPlugIn  *plug_in,
