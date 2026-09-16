@@ -1437,9 +1437,9 @@ file_chooser_set_default_folder (GtkFileChooser *chooser)
   if (! fractalexplorer_path)
     return;
 
-  path_list = gimp_path_parse (fractalexplorer_path, 256, FALSE, NULL);
+  path_list = gimp_parse_search_path (fractalexplorer_path, 256, FALSE, NULL);
 
-  dir = gimp_path_get_user_writable_dir (path_list);
+  dir = gimp_get_user_writable_dir (path_list);
 
   if (! dir)
     dir = g_strdup (gimp_directory ());
@@ -1447,7 +1447,7 @@ file_chooser_set_default_folder (GtkFileChooser *chooser)
   gtk_file_chooser_set_current_folder (chooser, dir);
 
   g_free (dir);
-  gimp_path_free (path_list);
+  gimp_free_paths (path_list);
 }
 
 static void

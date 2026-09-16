@@ -1086,9 +1086,8 @@ gimp_path_runtime_fix (gchar **path)
 }
 
 /**
- * gimp_path_parse:
- * @path:         A list of directories separated by
- *                [const@GLib.SEARCHPATH_SEPARATOR].
+ * gimp_parse_search_path:
+ * @path: (type filename): A list of directories separated by [const@GLib.SEARCHPATH_SEPARATOR].
  * @max_paths:    The maximum number of directories to return.
  * @check:        %TRUE if you want the directories to be checked.
  * @check_failed: (element-type filename) (out callee-allocates): a #GList of path elements for which the check failed.
@@ -1096,10 +1095,10 @@ gimp_path_runtime_fix (gchar **path)
  * Returns: (element-type filename) (transfer full): A #GList of all directories in @path.
  **/
 GList *
-gimp_path_parse (const gchar  *path,
-                 gint          max_paths,
-                 gboolean      check,
-                 GList       **check_failed)
+gimp_parse_search_path (const gchar  *path,
+                        gint          max_paths,
+                        gboolean      check,
+                        GList       **check_failed)
 {
   gchar    **patharray;
   GList     *list      = NULL;
@@ -1172,20 +1171,20 @@ gimp_path_parse (const gchar  *path,
 }
 
 /**
- * gimp_path_to_str:
- * @path: (element-type filename): A list of directories as returned by `gimp_path_parse()`.
+ * gimp_create_search_path:
+ * @paths: (element-type filename): A list of directories as returned by [func@Gimp.parse_search_path].
  *
  * Returns: (type filename) (transfer full): A searchpath string separated
  *          by [const@GLib.SEARCHPATH_SEPARATOR].
  **/
 gchar *
-gimp_path_to_str (GList *path)
+gimp_create_search_path (GList *paths)
 {
   GString *str    = NULL;
   GList   *list;
   gchar   *retval = NULL;
 
-  for (list = path; list; list = g_list_next (list))
+  for (list = paths; list; list = g_list_next (list))
     {
       gchar *dir = list->data;
 
@@ -1207,26 +1206,26 @@ gimp_path_to_str (GList *path)
 }
 
 /**
- * gimp_path_free:
- * @path: (element-type filename): A list of directories as returned by `gimp_path_parse()`.
+ * gimp_free_paths:
+ * @paths: (element-type filename): A list of directories as returned by [func@Gimp.parse_search_path].
  *
  * This function frees the memory allocated for the list and the strings
  * it contains.
  **/
 void
-gimp_path_free (GList *path)
+gimp_free_paths (GList *paths)
 {
-  g_list_free_full (path, (GDestroyNotify) g_free);
+  g_list_free_full (paths, (GDestroyNotify) g_free);
 }
 
 /**
- * gimp_path_get_user_writable_dir:
- * @path: (element-type filename): A list of directories as returned by `gimp_path_parse()`.
+ * gimp_get_user_writable_dir:
+ * @paths: (element-type filename): A list of directories as returned by [func@Gimp.parse_search_path].
  *
- * Returns: (transfer full): The first directory in @path where the user has write permission.
+ * Returns: (transfer full): The first directory in @paths where the user has write permission.
  **/
 gchar *
-gimp_path_get_user_writable_dir (GList *path)
+gimp_get_user_writable_dir (GList *paths)
 {
   GList    *list;
   uid_t     euid;
@@ -1234,12 +1233,12 @@ gimp_path_get_user_writable_dir (GList *path)
   GStatBuf  filestat;
   gint      err;
 
-  g_return_val_if_fail (path != NULL, NULL);
+  g_return_val_if_fail (paths != NULL, NULL);
 
   euid = geteuid ();
   egid = getegid ();
 
-  for (list = path; list; list = g_list_next (list))
+  for (list = paths; list; list = g_list_next (list))
     {
       gchar *dir = list->data;
 
@@ -1268,6 +1267,76 @@ gimp_path_get_user_writable_dir (GList *path)
 
   return NULL;
 }
+
+
+/* Deprecated Public Functions */
+
+/**
+ * gimp_path_parse:
+ * @path: (type filename): A list of directories separated by [const@GLib.SEARCHPATH_SEPARATOR].
+ * @max_paths:    The maximum number of directories to return.
+ * @check:        %TRUE if you want the directories to be checked.
+ * @check_failed: (element-type filename) (out callee-allocates): a #GList of path elements for which the check failed.
+ *
+ * Returns: (element-type filename) (transfer full): A #GList of all directories in @path.
+ *
+ * Deprecated: 3.4: Use [func@Gimp.parse_search_path] instead.
+ **/
+GList *
+gimp_path_parse (const gchar  *path,
+                 gint          max_paths,
+                 gboolean      check,
+                 GList       **check_failed)
+{
+  return gimp_parse_search_path (path, max_paths, check, check_failed);
+}
+
+/**
+ * gimp_path_to_str:
+ * @path: (element-type filename): A list of directories as returned by `gimp_path_parse()`.
+ *
+ * Returns: (type filename) (transfer full): A searchpath string separated
+ *          by [const@GLib.SEARCHPATH_SEPARATOR].
+ *
+ * Deprecated: 3.4: Use [func@Gimp.create_search_path] instead.
+ **/
+gchar *
+gimp_path_to_str (GList *path)
+{
+  return gimp_create_search_path (path);
+}
+
+/**
+ * gimp_path_free:
+ * @path: (element-type filename): A list of directories as returned by `gimp_path_parse()`.
+ *
+ * This function frees the memory allocated for the list and the strings
+ * it contains.
+ *
+ * Deprecated: 3.4: Use [func@Gimp.free_paths] instead.
+ **/
+void
+gimp_path_free (GList *path)
+{
+  gimp_free_paths (path);
+}
+
+/**
+ * gimp_path_get_user_writable_dir:
+ * @path: (element-type filename): A list of directories as returned by `gimp_path_parse()`.
+ *
+ * Returns: (transfer full): The first directory in @path where the user has write permission.
+ *
+ * Deprecated: 3.4: Use [func@Gimp.get_user_writable_dir] instead.
+ **/
+gchar *
+gimp_path_get_user_writable_dir (GList *path)
+{
+  return gimp_get_user_writable_dir (path);
+}
+
+
+/* Private Functions */
 
 static gchar *
 gimp_env_get_dir (const gchar *gimp_env_name,

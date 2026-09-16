@@ -512,7 +512,7 @@ gimp_ui_manager_get_model (GimpUIManager *manager,
        */
       if (menus_path_override)
         {
-          GList *paths = gimp_path_parse (menus_path_override, 2, FALSE, NULL);
+          GList *paths = gimp_parse_search_path (menus_path_override, 2, FALSE, NULL);
           GList *list;
 
           for (list = paths; list; list = g_list_next (list))

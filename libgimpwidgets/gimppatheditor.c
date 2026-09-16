@@ -413,7 +413,7 @@ gimp_path_editor_set_path (GimpPathEditor *editor,
 
   g_free (old_path);
 
-  path_list = gimp_path_parse (path, 256, FALSE, NULL);
+  path_list = gimp_parse_search_path (path, 256, FALSE, NULL);
 
   gtk_list_store_clear (editor->dir_list);
 
@@ -437,7 +437,7 @@ gimp_path_editor_set_path (GimpPathEditor *editor,
       editor->num_items++;
     }
 
-  gimp_path_free (path_list);
+  gimp_free_paths (path_list);
 
   g_signal_emit (editor, gimp_path_editor_signals[PATH_CHANGED], 0);
 }
@@ -496,7 +496,7 @@ gimp_path_editor_set_writable_path (GimpPathEditor *editor,
 
   gtk_tree_view_column_set_visible (editor->writable_column, TRUE);
 
-  path_list = gimp_path_parse (path, 256, FALSE, NULL);
+  path_list = gimp_parse_search_path (path, 256, FALSE, NULL);
 
   model = GTK_TREE_MODEL (editor->dir_list);
 
@@ -528,7 +528,7 @@ gimp_path_editor_set_writable_path (GimpPathEditor *editor,
         }
     }
 
-  gimp_path_free (path_list);
+  gimp_free_paths (path_list);
 
   if (writable_changed)
     g_signal_emit (editor, gimp_path_editor_signals[WRITABLE_CHANGED], 0);

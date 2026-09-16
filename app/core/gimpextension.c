@@ -790,7 +790,7 @@ gimp_extension_file_cmp (GFile *a,
  * @path:      A list of directories separated by ':'.
  * @error:
  *
- * Very similar to gimp_path_parse() except that we don't use
+ * Very similar to gimp_parse_search_path() except that we don't use
  * G_SEARCHPATH_SEPARATOR as path separator, because it must not be
  * os-dependent.
  * Also we only allow relative path which are children of the main

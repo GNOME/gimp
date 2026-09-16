@@ -202,7 +202,7 @@ static gchar        * gimp_config_path_unexpand_only (const gchar  *path) G_GNUC
  * directory below the user's gimp directory then one in the system-wide
  * data directory.
  *
- * Note that you cannot use this path directly with gimp_path_parse().
+ * Note that you cannot use this path directly with [func@Gimp.parse_search_path].
  * As it is in the `gimprc` notation, you first need to expand and
  * recode it using [func@Gimp.ConfigPath.expand].
  *
@@ -235,7 +235,7 @@ gimp_config_build_data_path (const gchar *name)
  * directory below the user's gimp directory then one in the system-wide
  * plug-in directory.
  *
- * Note that you cannot use this path directly with `gimp_path_parse()`.
+ * Note that you cannot use this path directly with [func@Gimp.parse_search_path].
  * As it is in the `gimprc` notation, you first need to expand and
  * recode it using [func@Gimp.ConfigPath.expand]
  *
@@ -260,7 +260,7 @@ gimp_config_build_plug_in_path (const gchar *name)
  * returned by `func@Gimp.ConfigInterface.build_writable_path] is just the writable
  * parts of the search path constructed by [func@Gimp.ConfigInterface.build_data_path].
  *
- * Note that you cannot use this path directly with `gimp_path_parse()`.
+ * Note that you cannot use this path directly with [func@Gimp.parse_search_path].
  * As it is in the gimprc notation, you first need to expand and
  * recode it using [func@Gimp.ConfigPath.expand].
  *
@@ -282,7 +282,7 @@ gimp_config_build_writable_path (const gchar *name)
  * returned by [func@Gimp.ConfigInterface.build_system_path] is just the read-only
  * parts of the search path constructed by [func@Gimp.ConfigInterface.build_plug_in_path].
  *
- * Note that you cannot use this path directly with `gimp_path_parse()`.
+ * Note that you cannot use this path directly with [func@Gimp.parse_search_path].
  * As it is in the gimprc notation, you first need to expand and
  * recode it using [func@Gimp.ConfigPath.expand].
  *
@@ -347,15 +347,15 @@ gimp_config_path_expand (const gchar  *path,
  * @path:  a NUL-terminated string in UTF-8 encoding
  * @error: return location for errors
  *
- * Paths as stored in the gimprc have to be treated special. The
+ * Paths as stored in the `gimprc` have to be treated specially. The
  * string may contain special identifiers such as for example
  * "${gimp_dir}" that have to be substituted before use. Also the user's
  * filesystem may be in a different encoding than UTF-8 (which is what
  * is used for the gimprc).
  *
  * This function runs @path through [func@Gimp.ConfigPath.expand] and
- * `gimp_path_parse()`, then turns the filenames returned by
- * `gimp_path_parse()` into %GFile using [func@Gio.File.new_for_path].
+ * [func@Gimp.parse_search_path], then turns the filenames returned by
+ * `gimp_parse_search_path()` into %GFile using [func@Gio.File.new_for_path].
  *
  * Returns: (element-type GFile) (transfer full): a #GList of newly allocated #GFile objects.
  *
@@ -377,7 +377,7 @@ gimp_config_path_expand_to_files (const gchar  *path,
   if (! expanded)
     return NULL;
 
-  files = gimp_path_parse (expanded, 256, FALSE, NULL);
+  files = gimp_parse_search_path (expanded, 256, FALSE, NULL);
 
   g_free (expanded);
 
@@ -719,7 +719,7 @@ gimp_config_path_unexpand_only (const gchar *path)
   GList *list;
   gchar *unexpanded;
 
-  files = gimp_path_parse (path, 256, FALSE, NULL);
+  files = gimp_parse_search_path (path, 256, FALSE, NULL);
 
   for (list = files; list; list = g_list_next (list))
     {
@@ -742,9 +742,9 @@ gimp_config_path_unexpand_only (const gchar *path)
         }
     }
 
-  unexpanded = gimp_path_to_str (files);
+  unexpanded = gimp_create_search_path (files);
 
-  gimp_path_free (files);
+  gimp_free_paths (files);
 
   return unexpanded;
 }

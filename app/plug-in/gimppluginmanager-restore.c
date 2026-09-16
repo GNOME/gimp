@@ -638,10 +638,10 @@ gimp_plug_in_manager_ignore_plugin_basename (const gchar *plugin_basename)
   gboolean     ignore = FALSE;
 
   ignore_basenames_string = g_getenv ("GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES");
-  ignore_basenames        = gimp_path_parse (ignore_basenames_string,
-                                             256 /*max_paths*/,
-                                             FALSE /*check*/,
-                                             NULL /*check_failed*/);
+  ignore_basenames        = gimp_parse_search_path (ignore_basenames_string,
+                                                    256 /*max_paths*/,
+                                                    FALSE /*check*/,
+                                                    NULL /*check_failed*/);
 
   for (iter = ignore_basenames; iter; iter = g_list_next (iter))
     {
@@ -654,7 +654,7 @@ gimp_plug_in_manager_ignore_plugin_basename (const gchar *plugin_basename)
         }
     }
 
-  gimp_path_free (ignore_basenames);
+  gimp_free_paths (ignore_basenames);
 
   return ignore;
 }

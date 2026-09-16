@@ -1588,9 +1588,9 @@ gflare_save (GFlare *gflare)
           return;
         }
 
-      list = gimp_path_parse (gflare_path, 256, FALSE, NULL);
-      path = gimp_path_get_user_writable_dir (list);
-      gimp_path_free (list);
+      list = gimp_parse_search_path (gflare_path, 256, FALSE, NULL);
+      path = gimp_get_user_writable_dir (list);
+      gimp_free_paths (list);
 
       if (! path)
         path = g_strdup (gimp_directory ());

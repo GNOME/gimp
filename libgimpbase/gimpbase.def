@@ -44,6 +44,7 @@ EXPORTS
 	gimp_core_object_array_get_type
 	gimp_cpu_accel_get_support
 	gimp_cpu_accel_set_use
+	gimp_create_search_path
 	gimp_data_directory
 	gimp_data_directory_file
 	gimp_desaturate_mode_get_type
@@ -79,6 +80,8 @@ EXPORTS
 	gimp_flags_value_get_desc
 	gimp_flags_value_get_help
 	gimp_foreground_extract_mode_get_type
+	gimp_free_paths
+	gimp_get_user_writable_dir
 	gimp_gradient_blend_color_space_get_type
 	gimp_gradient_segment_color_get_type
 	gimp_gradient_segment_type_get_type
@@ -179,6 +182,7 @@ EXPORTS
 	gimp_parasite_is_type
 	gimp_parasite_is_undoable
 	gimp_parasite_new
+	gimp_parse_search_path
 	gimp_path_free
 	gimp_path_get_user_writable_dir
 	gimp_path_parse

@@ -68,13 +68,27 @@ GFile       * gimp_sysconf_directory_file      (const gchar *first_element,
 GFile       * gimp_plug_in_directory_file      (const gchar *first_element,
                                                 ...) G_GNUC_MALLOC;
 
+GList       * gimp_parse_search_path           (const gchar  *path,
+                                                gint          max_paths,
+                                                gboolean      check,
+                                                GList       **check_failed);
+gchar       * gimp_create_search_path          (GList        *paths) G_GNUC_MALLOC;
+void          gimp_free_paths                  (GList        *paths);
+gchar       * gimp_get_user_writable_dir       (GList        *paths) G_GNUC_MALLOC;
+
+
+/* Deprecated Functions */
+
+GIMP_DEPRECATED_FOR(gimp_parse_search_path)
 GList       * gimp_path_parse                  (const gchar  *path,
                                                 gint          max_paths,
                                                 gboolean      check,
                                                 GList       **check_failed);
+GIMP_DEPRECATED_FOR(gimp_create_search_path)
 gchar       * gimp_path_to_str                 (GList        *path) G_GNUC_MALLOC;
+GIMP_DEPRECATED_FOR(gimp_free_paths)
 void          gimp_path_free                   (GList        *path);
-
+GIMP_DEPRECATED_FOR(gimp_get_user_writable_dir)
 gchar       * gimp_path_get_user_writable_dir  (GList        *path) G_GNUC_MALLOC;
 
 
