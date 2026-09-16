@@ -950,15 +950,27 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
  * @menu_path: The @procedure's additional menu path.
  *
  * Adds a menu path to the procedure. Only procedures which have a menu
- * label can add a menu path.
+ * label can add a menu path. So you must call
+ * [method@Gimp.Procedure.set_menu_label] first.
  *
- * Menu paths are untranslated paths to known menus and submenus with the
- * syntax `<Prefix>/Path/To/Submenu`, for example `<Image>/Layer/Transform`.
- * GIMP will localize these.
- * Nevertheless you should localize unknown parts of the path. For instance, say
- * you want to create procedure to create customized layers and add a `Create`
- * submenu which you want to localize from your plug-in with gettext. You could
- * call:
+ * Menu paths follow the syntax `<Menu>/Path/To/Submenu`, for example
+ * `<Image>/Layer/Transform`. The `<Image>` menu corresponds to GIMP's
+ * main menu and is therefore the most commonly used. Other common menus
+ * are `<Layers>`, `<Channels>` and `<Paths>` for the contextual menus
+ * shown in the respective item dockables, or again `<Brushes>`,
+ * `<Dynamics>`, `<MyPaintBrushes>`, `<Gradients>`, `<Palettes>`,
+ * `<Patterns>`, `<ToolPresets>`, `<Fonts>` and `<Buffers>` for
+ * contextual menus shown in resource dockables.
+ *
+ * Menu path elements to known menus and submenus must be passed
+ * untranslated (i.e. in US English), and the GIMP process will localize
+ * these.
+ * Nevertheless you should localize unknown parts of the path. For
+ * instance, say you register a procedure to create customized layers
+ * and want it to be under a `Create` submenu. Whereas the "Layer" menu
+ * name localization will be handled by GIMP itself, the new submenu is
+ * created by your plug-in, so you must localize it yourself, e.g. with
+ * gettext:
  *
  * ```C
  * path = g_build_path ("/", "<Image>/Layer", _("Create"), NULL);
@@ -967,13 +979,21 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
  * ```
  *
  * GIMP menus also have a concept of named section. For instance, say you are
- * creating a plug-in which you want to show next to the "Export", "Export As"
- * plug-ins in the File menu. You would add it to the menu path `"File/[Export]"`.
+ * creating a @procedure which you want to show next to the "Export", "Export As"
+ * items in the File menu. You would add it to the menu path `"File/[Export]"`.
  * If you actually wanted to create a submenu called "[Export]" (with square
  * brackets), double the brackets: `"File/[[Export]]"`
  *
+ * Finally if you want the procedure to show inside a new submenu
+ * "Layers" (e.g. because your plug-in is for exporting individual
+ * layers and you want to add several procedures in a single submenu),
+ * which itself is in the "Export" section of the File menu, add the
+ * menu path `"File/[Export]/Layers"`.
+ *
  * See the [`image-menu` UI file](https://gitlab.gnome.org/GNOME/gimp/-/blob/master/menus/image-menu.ui.in.in)
- * for the various "section-name" available in the main menu.
+ * for the various "section-name" available in the main menu
+ * (`<Image>`). Check out the other `.ui` files in this same directory
+ * to find the "section-name" of other menus.
  *
  * This function will place your procedure to the bottom of the selected path or
  * section. Order is not assured relatively to other plug-ins.
