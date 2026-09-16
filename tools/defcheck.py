@@ -201,29 +201,27 @@ for df in def_files:
       current_idx = sys.argv.index(df)
       if current_idx + 1 < len(sys.argv) and sys.argv[current_idx + 1].endswith(".gir"):
          gir_filename = sys.argv[current_idx + 1]
-      else:
-         continue
-      try:
-         tree = ET.parse(gir_filename)
-         for elem in tree.iter():
-            c_id = None
-            for k, v in elem.attrib.items():
-               if k == 'c:identifier' or k.endswith('}identifier'):
-                  c_id = v
-            if c_id and not elem.tag.endswith('function-macro'):
-               if any(child.tag.endswith('varargs') or child.get('name') == 'va_list' for child in elem.iter()):
-                  continue
-               introspectable = elem.get('introspectable') != '0'
-               has_skip_reason = False
-               for child in elem:
-                  if child.tag == 'attribute' or child.tag.endswith('}attribute'):
-                     if child.get('name') == 'skip-reason':
-                        has_skip_reason = True
-               girsymbols[c_id] = (introspectable, has_skip_reason)
-      except Exception as e:
-         print("trouble reading {} - {}".format(gir_filename, e))
-         have_errors = -1
-         continue
+         try:
+            tree = ET.parse(gir_filename)
+            for elem in tree.iter():
+               c_id = None
+               for k, v in elem.attrib.items():
+                  if k == 'c:identifier' or k.endswith('}identifier'):
+                     c_id = v
+               if c_id and not elem.tag.endswith('function-macro'):
+                  if any(child.tag.endswith('varargs') or child.get('name') == 'va_list' for child in elem.iter()):
+                     continue
+                  introspectable = elem.get('introspectable') != '0'
+                  has_skip_reason = False
+                  for child in elem:
+                     if child.tag == 'attribute' or child.tag.endswith('}attribute'):
+                        if child.get('name') == 'skip-reason':
+                           has_skip_reason = True
+                  girsymbols[c_id] = (introspectable, has_skip_reason)
+         except Exception as e:
+            print("trouble reading {} - {}".format(gir_filename, e))
+            have_errors = -1
+            continue
 
    missing_gir = []
    #missing_gir = [s for s in nmsymbols if s not in girsymbols and s not in exclude_symbols] if gir_mode else []
