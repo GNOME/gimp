@@ -38,7 +38,9 @@
   )
 
   (define (get-opacity color)
-    (* (/ (cadddr color) 255.0) 100))
+    (if (= (length color) 4)
+      (* (/ (cadddr color) 255.0) 100)
+      (100.0)))
 
   (define (gen_top_array xsize ysize owidth oheight width height)
     (let* ((n_array (cons-array 10 'double)))
