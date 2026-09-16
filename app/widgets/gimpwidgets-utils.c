@@ -2441,7 +2441,7 @@ gimp_utils_make_canonical_menu_label (const gchar *path)
  *
  * Moreover if @section_names is not %NULL, then any path component of the form
  * "[section]" will be removed and "section" will be stored inside
- * @section_names at the same level as the following path component. Furthermore,
+ * @section_names at the same level as the path component. Furthermore,
  * "[[label]]" or "[[label]" will both be transformed into a component path
  * "[label]", without being removed, as a way to create menu paths containing
  * square brackets.
@@ -2454,9 +2454,8 @@ gimp_utils_break_menu_path (const gchar   *path,
   GRegex   *path_regex;
   gchar   **paths;
   GString  *mnemonic_string = NULL;
-  gint      start = 0;
-  gint      new_length = 0;
-  gchar    *pending_section = NULL;
+  gint      start           = 0;
+  gint      new_length      = 0;
 
   g_return_val_if_fail (path != NULL, NULL);
 
@@ -2501,39 +2500,47 @@ gimp_utils_break_menu_path (const gchar   *path,
               g_free (paths[i]);
               paths[i] = canon_path;
             }
-          else
+          else if (new_length == 0)
             {
               paths[i][path_len - 1] = '\0';
-              g_free (pending_section);
-              pending_section = g_strdup (paths[i] + 1);
-
-              g_free (paths[i]);
+              g_printerr ("WARNING: ignoring section \"[%s]\" from path root: %s\n",
+                          paths[i] + 1, path);
+              g_clear_pointer (&paths[i], g_free);
               continue;
             }
-        }
+          else
+            {
+              gchar *section;
 
-      if (section_names != NULL)
-        {
-          (*section_names)[new_length] = pending_section;
-          pending_section = NULL;
+              paths[i][path_len - 1] = '\0';
+              section = g_strdup (paths[i] + 1);
+              g_clear_pointer (&paths[i], g_free);
+
+              if (section_names && (*section_names)[new_length - 1] != NULL)
+                {
+                  g_printerr ("WARNING: dropping repetitive section \"[%s]\" from path: %s\n",
+                              section, path);
+                  g_free (section);
+                }
+              else if (section_names != NULL)
+                {
+                  (*section_names)[new_length - 1] = section;
+                }
+              else
+                {
+                  g_free (section);
+                }
+
+              continue;
+            }
         }
 
       if (mnemonic_string != NULL)
         g_string_append_printf (mnemonic_string, "/%s", paths[i]);
 
       canon_path = gimp_utils_make_canonical_menu_label (paths[i]);
-      g_free (paths[i]);
-      paths[new_length] = canon_path;
-      new_length++;
-    }
-
-  paths[new_length] = NULL;
-
-  if (section_names != NULL && pending_section != NULL)
-    {
-      /* A trailing [section] without a following path component. */
-      (*section_names)[new_length] = pending_section;
-      pending_section = NULL;
+      g_clear_pointer (&paths[i], g_free);
+      paths[new_length++] = canon_path;
     }
 
   if (mnemonic_path1 != NULL)
@@ -2544,6 +2551,26 @@ gimp_utils_break_menu_path (const gchar   *path,
   return paths;
 }
 
+/**
+ * gimp_utils_are_menu_path_identical:
+ * @path1:
+ * @path2:
+ * @canonical_path1:
+ * @mnemonic_path1:
+ * @path1_section_names:
+ *
+ * Evaluate whether @path1 and @path2 are identical, including section
+ * names in the path.
+ *
+ * If @canonical_path1 is non-%NULL, it will contain the canonical path.
+ *
+ * If @mnemonic_path1 is non-%NULL, it will contain the path, including
+ * any mnemonics.
+ *
+ * if @path1 is at least as long as @path2, then @path1_section_name is
+ * the optional section name in @path1 on the path elements whose index
+ * is the last element's of @path2.
+ */
 gboolean
 gimp_utils_are_menu_path_identical (const gchar  *path1,
                                     const gchar  *path2,
@@ -2567,6 +2594,8 @@ gimp_utils_are_menu_path_identical (const gchar  *path1,
   paths1 = gimp_utils_break_menu_path (path1, mnemonic_path1, &section_names1);
   paths2 = gimp_utils_break_menu_path (path2, NULL, &section_names2);
 
+  g_return_val_if_fail (section_names1 && section_names2, FALSE);
+
   len1 = g_strv_length (paths1);
   len2 = g_strv_length (paths2);
 
@@ -2587,8 +2616,7 @@ gimp_utils_are_menu_path_identical (const gchar  *path1,
           /* If the menu model path (path2) requires a specific section at this
            * level, the registering path (path1) must match it exactly.
            */
-          if (section_names2 && section_names2[i] && section_names1 &&
-              g_strcmp0 (section_names1[i], section_names2[i]) != 0)
+          if (section_names2[i] && g_strcmp0 (section_names1[i], section_names2[i]) != 0)
             {
               identical = FALSE;
               break;
@@ -2605,29 +2633,21 @@ gimp_utils_are_menu_path_identical (const gchar  *path1,
       g_free (joined);
     }
 
-  if (section_names1)
+  if (path1_section_name)
     {
-      if (path1_section_name)
-        {
-          if (len2 <= len1 && section_names1[len2] != NULL)
-            *path1_section_name = g_strdup (section_names1[len2]);
-          else
-            *path1_section_name = NULL;
-        }
-
-      for (i = 0; i <= len1; i++)
-        g_free (section_names1[i]);
-
-      g_free (section_names1);
+      if (len2 > 0 && len2 <= len1 && section_names1[len2 - 1] != NULL)
+        *path1_section_name = g_strdup (section_names1[len2 - 1]);
+      else
+        *path1_section_name = NULL;
     }
 
-  if (section_names2)
-    {
-      for (i = 0; i <= len2; i++)
-        g_free (section_names2[i]);
+  for (i = 0; i <= len1; i++)
+    g_free (section_names1[i]);
+  g_free (section_names1);
 
-      g_free (section_names2);
-    }
+  for (i = 0; i <= len2; i++)
+    g_free (section_names2[i]);
+  g_free (section_names2);
 
   g_strfreev (paths1);
   g_strfreev (paths2);
