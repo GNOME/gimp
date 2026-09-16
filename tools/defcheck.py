@@ -197,10 +197,14 @@ for df in def_files:
    #READ GIR/TYPELIB SYMBOLS
    girsymbols = {}
    gir_mode = any(arg.endswith(".gir") for arg in sys.argv[1:])
+   gir_filename = None
    if gir_mode:
       current_idx = sys.argv.index(df)
-      if current_idx + 1 < len(sys.argv) and sys.argv[current_idx + 1].endswith(".gir"):
-         gir_filename = sys.argv[current_idx + 1]
+      for i in range(current_idx + 1, len(sys.argv)):
+         if sys.argv[i].endswith(".gir"):
+           gir_filename = sys.argv[i]
+           break
+      if gir_filename is not None:
          try:
             tree = ET.parse(gir_filename)
             for elem in tree.iter():
@@ -208,6 +212,8 @@ for df in def_files:
                for k, v in elem.attrib.items():
                   if k == 'c:identifier' or k.endswith('}identifier'):
                      c_id = v
+               if c_id not in nmsymbols:
+                  continue
                if c_id and not elem.tag.endswith('function-macro'):
                   if any(child.tag.endswith('varargs') or child.get('name') == 'va_list' for child in elem.iter()):
                      continue
@@ -222,6 +228,11 @@ for df in def_files:
             print("trouble reading {} - {}".format(gir_filename, e))
             have_errors = -1
             continue
+      else:
+         print(f'No associated GIR file with {df}.')
+         print(f'Make sure a GIR file is set AFTER {df} in: libgimp/meson.build:')
+         have_errors = -1
+         continue
 
    missing_gir = []
    #missing_gir = [s for s in nmsymbols if s not in girsymbols and s not in exclude_symbols] if gir_mode else []
@@ -230,7 +241,7 @@ for df in def_files:
    missing_skip = [s for s, (intro, skip) in girsymbols.items() if not intro and not skip and s not in missing_introspect] if gir_mode else []
 
 
-   if missing_defs or missing_nms or doublesymbols or not sortok or missing_gir or missing_introspect or missing_skip:
+   if missing_defs or missing_nms or doublesymbols or not sortok:
       print()
       print("Problem found in", filename)
 
@@ -260,6 +271,12 @@ for df in def_files:
             if s != "":
                print("     * ", s)
 
+      have_errors = -1
+
+   if missing_gir or missing_introspect or missing_skip:
+      print()
+      print("Problem found in", gir_filename)
+
       #if missing_gir:
       #   print("  the following symbols are in the library,")
       #   print("  but are not listed in the .gir-file:")
@@ -277,7 +294,7 @@ for df in def_files:
       #   print()
 
       if missing_skip:
-         print("  the following symbols are marked as non-introspectable,")
+         print(f"  the following symbols from {os.path.basename(libname)} are marked as non-introspectable,")
          print("  but do not have a skip-reason attribute, which is ambiguous:")
          for s in missing_skip:
             print("     ?", s)
