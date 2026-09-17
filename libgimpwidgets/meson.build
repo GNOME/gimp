@@ -180,6 +180,8 @@ libgimpwidgets_headers_introspectable = files(
 
 libgimpwidgets_headers = [
   libgimpwidgets_headers_introspectable,
+  # The GimpController API is still considered experimental and can only
+  # be run with a special macro GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION set.
   'gimpcontroller.h',
 ]
 

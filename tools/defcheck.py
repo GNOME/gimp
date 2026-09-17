@@ -250,8 +250,12 @@ for df in def_files:
 
    exclude_symbols = [ ]
    fun_def_pattern = re.compile("\\b(gimp_[a-z_]*) *\\(")
+   special_cased   = {
+       'libgimpwidgets': [ 'gimpcontroller.h' ]
+   }
    for filename in os.listdir(os.path.join(src_root, directory)):
-      if filename.endswith('-private.h'):
+      private_equivalent = special_cased[directory] if directory in special_cased else [ ]
+      if filename.endswith('-private.h') or filename in private_equivalent:
          priv_header = os.path.join(src_root, directory, filename)
          with open(priv_header) as fd:
            for line in fd:
