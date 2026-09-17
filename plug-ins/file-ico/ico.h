@@ -114,17 +114,28 @@ typedef struct _AniSaveInfo
     gchar *iart;   /* Author name metadata */
 } AniSaveInfo;
 
+typedef struct
+{
+  gint index;
+  gint width;
+  gint height;
+  gint depth;
+} IcoSortKey;
+
 /* Miscellaneous helper functions below: */
 
-gint     ico_rowstride (gint width,
-                        gint bpp);
+gint     ico_rowstride (gint        width,
+                        gint        bpp);
 
 /* Allocates a 32-bit padded bitmap for various color depths.
    Returns the allocated array directly, and the length of the
    array in the len pointer */
-guint8 * ico_alloc_map  (gint     width,
-                         gint     height,
-                         gint     bpp,
-                         gint    *len);
+guint8 * ico_alloc_map (gint        width,
+                        gint        height,
+                        gint        bpp,
+                        gint       *len);
+
+void     ico_sort_keys (IcoSortKey *keys,
+                        gint        n_keys);
 
 #endif /* __ICO_H__ */

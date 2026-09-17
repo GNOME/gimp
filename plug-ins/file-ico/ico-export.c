@@ -1568,33 +1568,6 @@ ani_export_image (GFile                *file,
   return GIMP_PDB_SUCCESS;
 }
 
-typedef struct
-{
-  gint index;
-  gint width;
-  gint height;
-  gint depth;
-} IcoSortKey;
-
-static gint
-ico_sort_key_compare (const void *a,
-                      const void *b)
-{
-  const IcoSortKey *ka = (const IcoSortKey *) a;
-  const IcoSortKey *kb = (const IcoSortKey *) b;
-  gint              diff;
-
-  diff = ka->depth - kb->depth;
-  if (diff != 0)
-    return diff;
-
-  diff = kb->width - ka->width;
-  if (diff != 0)
-    return diff;
-
-  return kb->height - ka->height;
-}
-
 GimpPDBStatusType
 shared_save_image (GFile                *file,
                    FILE                 *fp_ani,
@@ -1689,7 +1662,7 @@ shared_save_image (GFile                *file,
   if (fp_ani)
     order[0].index = icon_index;
 
-  qsort (order, num_icons, sizeof (IcoSortKey), ico_sort_key_compare);
+  ico_sort_keys (order, num_icons);
 
   entries = g_new0 (IcoFileEntry, num_icons);
   if (fwrite (entries, sizeof (IcoFileEntry), num_icons, fp) <= 0)

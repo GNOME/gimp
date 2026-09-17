@@ -792,3 +792,29 @@ ico_alloc_map (gint  width,
 
   return map;
 }
+
+static gint
+ico_sort_key_compare (const void *a,
+                      const void *b)
+{
+  const IcoSortKey *ka = (const IcoSortKey *) a;
+  const IcoSortKey *kb = (const IcoSortKey *) b;
+  gint              diff;
+
+  diff = ka->depth - kb->depth;
+  if (diff != 0)
+    return diff;
+
+  diff = kb->width - ka->width;
+  if (diff != 0)
+    return diff;
+
+  return kb->height - ka->height;
+}
+
+void
+ico_sort_keys (IcoSortKey *keys,
+               gint        n_keys)
+{
+  qsort (keys, n_keys, sizeof (IcoSortKey), ico_sort_key_compare);
+}
