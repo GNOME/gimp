@@ -31,7 +31,7 @@
 
 #include "gimpwidgets.h"
 
-#include "gimpeevl.h"
+#include "gimpeevl-private.h"
 #include "gimpsizeentry.h"
 
 
