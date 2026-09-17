@@ -24,7 +24,7 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpprotocol.h"
+#include "libgimpbase/gimpprotocol-private.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "libgimp/gimpgpparams.h"

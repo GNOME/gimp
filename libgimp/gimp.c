@@ -89,8 +89,8 @@
 #include "gimp.h"
 
 #include "libgimpbase/gimpbase-private.h"
-#include "libgimpbase/gimpprotocol.h"
-#include "libgimpbase/gimpwire.h"
+#include "libgimpbase/gimpprotocol-private.h"
+#include "libgimpbase/gimpwire-private.h"
 
 #include "gimp-debug.h"
 #include "gimp-private.h"

@@ -22,7 +22,7 @@
 
 #include "gimp.h"
 
-#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+#include "libgimpbase/gimpwire-private.h" /* FIXME kill this include */
 
 #include "gimploadprocedure.h"
 #include "gimppdb_pdb.h"

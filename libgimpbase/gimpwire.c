@@ -24,7 +24,7 @@
 
 #include <libgimpcolor/gimpcolortypes.h>
 
-#include "gimpwire.h"
+#include "gimpwire-private.h"
 
 
 typedef struct _GimpWireHandler  GimpWireHandler;
