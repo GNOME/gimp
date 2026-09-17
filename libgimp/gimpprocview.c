@@ -36,7 +36,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gimp.h"
-#include "gimpparamspecs-desc.h"
+#include "gimpparamspecs-desc-private.h"
 
 #include "gimpuitypes.h"
 #include "gimpprocview.h"
