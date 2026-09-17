@@ -27,7 +27,7 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "gimp.h"
-#include "gimpparamspecs-desc.h"
+#include "gimpparamspecs-desc-private.h"
 
 #include "libgimp-intl.h"
 
