@@ -30,7 +30,7 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "gimpeevl.h"
+#include "gimpeevl-private.h"
 
 
 typedef struct
