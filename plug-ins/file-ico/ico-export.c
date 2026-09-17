@@ -1377,21 +1377,13 @@ ani_export_image (GFile                *file,
     }
 
   /* Writing the .ani header data */
-#ifndef _UCRT
-  strcpy (id, "RIFF");
-#else
-  strcpy_s (id, sizeof (id), "RIFF");
-#endif
+  memcpy (id, "RIFF", 4);
   size = 0;
   fwrite (id, 4, 1, fp);
   ofs_size_riff = ftell (fp);
   fwrite (&size, sizeof (size), 1, fp);
 
-#ifndef _UCRT
-  strcpy (id, "ACON");
-#else
-  strcpy_s (id, sizeof (id), "ACON");
-#endif
+  memcpy (id, "ACON", 4);
   fwrite (id, 4, 1, fp);
 
   /* RIFF LIST/INFO text is written as UTF-8 (XMP Specification
@@ -1402,28 +1394,17 @@ ani_export_image (GFile                *file,
     {
       gint32 string_size;
 
-#ifndef _UCRT
-      strcpy (id, "LIST");
-#else
-      strcpy_s (id, sizeof (id), "LIST");
-#endif
+      memcpy (id, "LIST", 4);
       fwrite (id, 4, 1, fp);
       ofs_size_info = ftell (fp);
       fwrite (&size, sizeof (size), 1, fp);
 
-#ifndef _UCRT
-      strcpy (id, "INFO");
-#else
-      strcpy_s (id, sizeof (id), "INFO");
-#endif
+      memcpy (id, "INFO", 4);
       fwrite (id, 4, 1, fp);
       if (ani_info->inam && strlen (ani_info->inam) > 0) /* Cursor name */
         {
-#ifndef _UCRT
-          strcpy (id, "INAM");
-#else
-          strcpy_s (id, sizeof (id), "INAM");
-#endif
+          memcpy (id, "INAM", 4);
+
           fwrite (id, 4, 1, fp);
           string_size = strlen (ani_info->inam) + 1;
           fwrite (&string_size, 4, 1, fp);
@@ -1436,11 +1417,8 @@ ani_export_image (GFile                *file,
         }
       if (ani_info->iart && strlen (ani_info->iart) > 0) /* Author name */
         {
-#ifndef _UCRT
-          strcpy (id, "IART");
-#else
-          strcpy_s (id, sizeof (id), "IART");
-#endif
+          memcpy (id, "IART", 4);
+
           fwrite (id, 4, 1, fp);
           string_size = strlen (ani_info->iart) + 1;
           fwrite (&string_size, 4, 1, fp);
@@ -1459,37 +1437,21 @@ ani_export_image (GFile                *file,
       fseek (fp, 0L, SEEK_END);
     }
 
-  #ifndef _UCRT
-  strcpy (id, "anih");
-#else
-  strcpy_s (id, sizeof (id), "anih");
-#endif
+  memcpy (id, "anih", 4);
   size = sizeof (*header);
   fwrite (id, 4, 1, fp);
   fwrite (&size, sizeof (size), 1, fp);
   fwrite (header, sizeof (*header), 1, fp);
 
-#ifndef _UCRT
-  strcpy (id, "LIST");
-#else
-  strcpy_s (id, sizeof (id), "LIST");
-#endif
+  memcpy (id, "LIST", 4);
   fwrite (id, 4, 1, fp);
   ofs_size_list = ftell (fp);
   fwrite (&size, sizeof (size), 1, fp);
 
-#ifndef _UCRT
-  strcpy (id, "fram");
-#else
-  strcpy_s (id, sizeof (id), "fram");
-#endif
+  memcpy (id, "fram", 4);
   fwrite (id, 4, 1, fp);
 
-#ifndef _UCRT
-  strcpy (id, "icon");
-#else
-  strcpy_s (id, sizeof (id), "icon");
-#endif
+  memcpy (id, "icon", 4);
   for (i = 0; i < info.num_icons; i++ )
     {
       GimpPDBStatusType status;
