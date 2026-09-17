@@ -744,9 +744,11 @@ ico_load_image (GFile        *file,
   FILE          *fp;
   IcoFileHeader  header;
   IcoLoadInfo   *info;
+  IcoSortKey    *order;
   gsize          max_width;
   gsize          max_height;
   gint           i;
+  gint           j;
   GimpImage     *image;
   guchar        *buf;
   guint          icon_count;
@@ -825,14 +827,26 @@ ico_load_image (GFile        *file,
       return NULL;
     }
 
+  order = g_new (IcoSortKey, icon_count);
   for (i = 0; i < icon_count; i++)
+    {
+      order[i].index  = i;
+      order[i].width  = info[i].width;
+      order[i].height = info[i].height;
+      order[i].depth  = info[i].bpp;
+    }
+  ico_sort_keys (order, icon_count);
+
+  for (j = 0; j < icon_count; j++)
     {
       GimpLayer *layer;
       gchar     *layer_name;
       gchar     *icon_metadata;
 
+      i = order[j].index;
+
       /* Layer name is built after the load so info->bpp is already set. */
-      layer = ico_load_layer (fp, image, i + 1, buf, maxsize,
+      layer = ico_load_layer (fp, image, j + 1, buf, maxsize,
                               file_offset ? *file_offset : 0,
                               NULL, info + i);
 
@@ -850,11 +864,13 @@ ico_load_image (GFile        *file,
         }
       else
         {
+          /* #N numbers the final stack position (post-sort), not the
+           * original file-entry index. */
           if (header.resource_type == 1)
-            layer_name = g_strdup_printf ("Icon #%i %s ", i + 1,
+            layer_name = g_strdup_printf ("Icon #%i %s ", j + 1,
                                           icon_metadata);
           else
-            layer_name = g_strdup_printf ("Cursor #%i %s ", i + 1,
+            layer_name = g_strdup_printf ("Cursor #%i %s ", j + 1,
                                           icon_metadata);
         }
 
@@ -879,8 +895,10 @@ ico_load_image (GFile        *file,
         }
 
       if (! file_offset)
-        gimp_progress_update (i / (gfloat) icon_count);
+        gimp_progress_update (j / (gfloat) icon_count);
     }
+
+  g_free (order);
 
   if (file_offset)
     *file_offset = ftell (fp);
