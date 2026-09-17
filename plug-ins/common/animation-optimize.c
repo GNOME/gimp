@@ -1382,7 +1382,7 @@ static void
 remove_disposal_tag (gchar *dest,
                      gchar *src)
 {
-  gint        offset = 0;
+  gint        offset     = 0;
   gint        destoffset = 0;
   gint        length;
   int         taglength;
@@ -1390,12 +1390,7 @@ remove_disposal_tag (gchar *dest,
 
   length = strlen (src);
 
-#ifndef _UCRT
-  strcpy (dest, src);
-#else
-  strcpy_s (dest, length + 1, src);
-#endif
-
+  g_strlcpy (dest, src, length + 1);
   while (offset<=length)
     {
       if (is_disposal_tag (&src[offset], &dummy, &taglength))
@@ -1414,7 +1409,7 @@ static void
 remove_ms_tag (gchar *dest,
                gchar *src)
 {
-  gint offset = 0;
+  gint offset     = 0;
   gint destoffset = 0;
   gint length;
   gint taglength;
@@ -1422,12 +1417,7 @@ remove_ms_tag (gchar *dest,
 
   length = strlen (src);
 
-#ifndef _UCRT
-  strcpy (dest, src);
-#else
-  strcpy_s (dest, length + 1, src);
-#endif
-
+  g_strlcpy (dest, src, length + 1);
   while (offset<=length)
     {
       if (is_ms_tag (&src[offset], &dummy, &taglength))

@@ -1434,14 +1434,9 @@ compose_dialog (GimpProcedure       *procedure,
             composevals.inputs[j].comp.val = composeint.selected[j].comp.val;
         }
 
-#ifndef _UCRT
-      strcpy (composevals.compose_type,
-              compose_dsc[compose_idx].compose_type);
-#else
-      strcpy_s (composevals.compose_type,
-                sizeof (composevals.compose_type),
-                compose_dsc[compose_idx].compose_type);
-#endif
+      g_strlcpy (composevals.compose_type,
+                 compose_dsc[compose_idx].compose_type,
+                 sizeof (composevals.compose_type));
     }
 
   return run;

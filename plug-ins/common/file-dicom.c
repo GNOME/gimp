@@ -416,7 +416,7 @@ load_image (GFile   *file,
         }
 
       tag = (group_word << 16) | element_word;
-      fread(value_rep, 2, 1, dicom);
+      fread (value_rep, 2, 1, dicom);
       value_rep[2] = 0;
 
       /* Check if the value rep looks valid. There probably is a
@@ -444,11 +444,7 @@ load_image (GFile   *file,
           element_length_chars[1] = value_rep[1];
 
           /* Unknown value rep. It is not used right now anyhow */
-#ifndef _UCRT
-          strcpy (value_rep, "??");
-#else
-          strcpy_s (value_rep, sizeof (value_rep), "??");
-#endif
+          memcpy (value_rep, "??", 2);
 
           /* For implicit value_values the length is always four bytes,
              so we need to read another two. */
