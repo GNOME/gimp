@@ -249,7 +249,7 @@ for df in def_files:
          continue
 
    exclude_symbols = [ ]
-   fun_def_pattern = re.compile("\\b(gimp_[a-z_]*) *\\(")
+   fun_def_pattern = re.compile("\\b((gimp|gp)_[a-z_]*) *\\(")
    special_cased   = {
        'libgimpwidgets': [ 'gimpcontroller.h' ]
    }

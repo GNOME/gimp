@@ -25,7 +25,7 @@
 #include "gimp.h"
 
 #include "libgimpbase/gimpversion-private.h"
-#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+#include "libgimpbase/gimpwire-private.h" /* FIXME kill this include */
 
 #include "gimpvectorloadprocedure.h"
 #include "gimppdb_pdb.h"

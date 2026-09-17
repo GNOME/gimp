@@ -20,7 +20,7 @@
 
 #include "gimp.h"
 
-#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+#include "libgimpbase/gimpwire-private.h" /* FIXME kill this include */
 
 #include "gimpplugin-private.h"
 

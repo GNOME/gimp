@@ -913,8 +913,8 @@ CODE
               <gegl-plugin.h>
 
               "libgimpbase/gimpbase.h"
-              "libgimpbase/gimpprotocol.h"
-              "libgimpbase/gimpwire.h"
+              "libgimpbase/gimpprotocol-private.h"
+              "libgimpbase/gimpwire-private.h"
 
               "libgimp/gimpgpparams.h"
 

@@ -73,8 +73,8 @@
 #endif /* G_OS_WIN32 || G_WITH_CYGWIN */
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpprotocol.h"
-#include "libgimpbase/gimpwire.h"
+#include "libgimpbase/gimpprotocol-private.h"
+#include "libgimpbase/gimpwire-private.h"
 
 #include "plug-in-types.h"
 

@@ -22,8 +22,8 @@
 
 #include "gimp.h"
 
-#include "libgimpbase/gimpprotocol.h"
-#include "libgimpbase/gimpwire.h"
+#include "libgimpbase/gimpprotocol-private.h"
+#include "libgimpbase/gimpwire-private.h"
 
 #include "gimpgpparams.h"
 #include "gimppdb-private.h"

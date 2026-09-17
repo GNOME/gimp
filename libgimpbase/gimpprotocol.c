@@ -27,8 +27,8 @@
 #include "gimpchoice.h"
 #include "gimpparamspecs.h"
 #include "gimpparasite.h"
-#include "gimpprotocol.h"
-#include "gimpwire.h"
+#include "gimpprotocol-private.h"
+#include "gimpwire-private.h"
 
 
 static void _gp_quit_read                (GIOChannel       *channel,
