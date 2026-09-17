@@ -30,9 +30,11 @@ Needs the tool "nm", "objdump", "dumpbin" or "dyld_info" to work
 
 import os, sys, subprocess, shutil, glob
 from os import getenv, path
+import re
 import xml.etree.ElementTree as ET
 
 def_files = sys.argv[1:]
+src_root  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def read_def_symbols(filename):
    symbols = []
@@ -208,22 +210,34 @@ for df in def_files:
          try:
             tree = ET.parse(gir_filename)
             for elem in tree.iter():
-               c_id = None
+               c_id            = None
+               introspectable  = False
+               has_skip_reason = False
                for k, v in elem.attrib.items():
                   if k == 'c:identifier' or k.endswith('}identifier'):
                      c_id = v
-               if c_id not in nmsymbols:
+                     break
+                  elif k.endswith('}get-type'):
+                     # The *_get_type() functions are not introspected
+                     # the same way as other functions.
+                     c_id = v
+                     introspectable = True
+                     break
+               if c_id is None or c_id not in nmsymbols:
                   continue
-               if c_id and not elem.tag.endswith('function-macro'):
-                  if any(child.tag.endswith('varargs') or child.get('name') == 'va_list' for child in elem.iter()):
-                     continue
+               if not introspectable and not elem.tag.endswith('function-macro'):
                   introspectable = elem.get('introspectable') != '0'
-                  has_skip_reason = False
-                  for child in elem:
-                     if child.tag == 'attribute' or child.tag.endswith('}attribute'):
-                        if child.get('name') == 'skip-reason':
-                           has_skip_reason = True
-                  girsymbols[c_id] = (introspectable, has_skip_reason)
+                  if any(child.tag.endswith('varargs') or child.get('name') == 'va_list' for child in elem.iter()):
+                     # Variable arguments functions don't need a reason.
+                     # They are just not introspected by nature.
+                     has_skip_reason = True
+                  else:
+                     has_skip_reason = False
+                     for child in elem:
+                        if child.tag == 'attribute' or child.tag.endswith('}attribute'):
+                           if child.get('name') == 'skip-reason':
+                              has_skip_reason = True
+               girsymbols[c_id] = (introspectable, has_skip_reason)
          except Exception as e:
             print("trouble reading {} - {}".format(gir_filename, e))
             have_errors = -1
@@ -233,6 +247,17 @@ for df in def_files:
          print(f'Make sure a GIR file is set AFTER {df} in: libgimp/meson.build:')
          have_errors = -1
          continue
+
+   exclude_symbols = [ ]
+   fun_def_pattern = re.compile("\\b(gimp_[a-z_]*) *\\(")
+   for filename in os.listdir(os.path.join(src_root, directory)):
+      if filename.endswith('-private.h'):
+         priv_header = os.path.join(src_root, directory, filename)
+         with open(priv_header) as fd:
+           for line in fd:
+             m = fun_def_pattern.search(line)
+             if m is not None:
+                exclude_symbols += [m.group(1)]
 
    missing_gir = []
    #missing_gir = [s for s in nmsymbols if s not in girsymbols and s not in exclude_symbols] if gir_mode else []
@@ -277,13 +302,13 @@ for df in def_files:
       print()
       print("Problem found in", gir_filename)
 
-      #if missing_gir:
-      #   print("  the following symbols are in the library,")
-      #   print("  but are not listed in the .gir-file:")
-      #   for s in missing_gir:
-      #      print("     +", s)
-      #   print("  Please add GI annotations on the pertinent headers.")
-      #   print()
+      if missing_gir:
+         print(f"  the following symbols are in the library {os.path.basename(libname)},")
+         print("  but are not listed in the .gir-file:")
+         for s in missing_gir:
+            print("     +", s)
+         print("  Please add GI annotations on the pertinent headers.")
+         print()
 
       #if missing_introspect:
       #   print("  the following symbols are in both library and gir,")
