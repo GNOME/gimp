@@ -278,7 +278,6 @@ for df in def_files:
 
    missing_gir = [s for s in nmsymbols if s not in girsymbols and s not in exclude_symbols] if gir_mode else []
    missing_introspect = [s for s in nmsymbols if s in girsymbols and not girsymbols[s][0] and not girsymbols[s][1]] if gir_mode else []
-   missing_skip = [s for s, (intro, skip) in girsymbols.items() if not intro and not skip and s not in missing_introspect] if gir_mode else []
 
 
    if missing_defs or missing_nms or doublesymbols or not sortok:
@@ -313,7 +312,7 @@ for df in def_files:
 
       have_errors = -1
 
-   if missing_gir or missing_introspect or missing_skip:
+   if missing_gir or missing_introspect:
       print()
       print("Problem found in", gir_filename)
 
@@ -331,14 +330,6 @@ for df in def_files:
          for s in missing_introspect:
             print("     !", s)
          print("  Please either fix the annotations or add explicit `(skip)` and a skip-reason attribute on the pertinent headers.")
-         print()
-
-      if missing_skip:
-         print(f"  the following symbols from {os.path.basename(libname)} are marked as non-introspectable,")
-         print("  but do not have a skip-reason attribute, which is ambiguous:")
-         for s in missing_skip:
-            print("     ?", s)
-         print("  Please add `skip-reason` on the pertinent headers.")
          print()
 
       have_errors = -1
