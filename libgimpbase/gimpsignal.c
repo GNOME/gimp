@@ -24,7 +24,7 @@
 
 #include <glib.h>
 
-#include "gimpsignal.h"
+#include "gimpsignal-private.h"
 
 
 /**

@@ -25,7 +25,7 @@
 #include <glib.h>
 
 #ifndef G_OS_WIN32
-#include "libgimpbase/gimpsignal.h"
+#include "libgimpbase/gimpsignal-private.h"
 
 #else
 
