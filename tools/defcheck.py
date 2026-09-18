@@ -268,8 +268,15 @@ for df in def_files:
              if m is not None:
                 exclude_symbols += [m.group(1)]
 
-   missing_gir = []
-   #missing_gir = [s for s in nmsymbols if s not in girsymbols and s not in exclude_symbols] if gir_mode else []
+   # It looks like extern variables are not introspectable. We have
+   # GIMP_MAJOR_VERSION, etc. macros anyways. The variables are only
+   # used to do a core sanity check and ensure the libgimp and core
+   # binaries are matching versions. These 3 version symbols will
+   # therefore be made private in GIMP 4, but we can't remove them now
+   # for API stability.
+   exclude_symbols += [ 'gimp_major_version', 'gimp_minor_version', 'gimp_micro_version' ]
+
+   missing_gir = [s for s in nmsymbols if s not in girsymbols and s not in exclude_symbols] if gir_mode else []
    missing_introspect = []
    #missing_introspect = [s for s in nmsymbols if s in girsymbols and not girsymbols[s][0] and not girsymbols[s][1]] if gir_mode else []
    missing_skip = [s for s, (intro, skip) in girsymbols.items() if not intro and not skip and s not in missing_introspect] if gir_mode else []

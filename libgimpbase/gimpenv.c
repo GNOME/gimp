@@ -46,6 +46,7 @@
 #include "gimpenv.h"
 #include "gimpenv-private.h"
 #include "gimpversion.h"
+#include "gimpversion-private.h"
 #include "gimpreloc.h"
 
 #ifdef G_OS_WIN32
@@ -97,6 +98,7 @@ static gchar * gimp_env_get_dir   (const gchar *gimp_env_name,
 static gchar    *gimp_temp_dir           = NULL;
 static gboolean  gimp_temp_dir_generated = FALSE;
 
+GIMP_WARNING_API_BREAK("Move these variables to a private header.")
 const guint gimp_major_version = GIMP_MAJOR_VERSION;
 const guint gimp_minor_version = GIMP_MINOR_VERSION;
 const guint gimp_micro_version = GIMP_MICRO_VERSION;
