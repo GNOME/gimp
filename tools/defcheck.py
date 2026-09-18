@@ -277,8 +277,7 @@ for df in def_files:
    exclude_symbols += [ 'gimp_major_version', 'gimp_minor_version', 'gimp_micro_version' ]
 
    missing_gir = [s for s in nmsymbols if s not in girsymbols and s not in exclude_symbols] if gir_mode else []
-   missing_introspect = []
-   #missing_introspect = [s for s in nmsymbols if s in girsymbols and not girsymbols[s][0] and not girsymbols[s][1]] if gir_mode else []
+   missing_introspect = [s for s in nmsymbols if s in girsymbols and not girsymbols[s][0] and not girsymbols[s][1]] if gir_mode else []
    missing_skip = [s for s, (intro, skip) in girsymbols.items() if not intro and not skip and s not in missing_introspect] if gir_mode else []
 
 
@@ -326,13 +325,13 @@ for df in def_files:
          print("  Please add GI annotations on the pertinent headers.")
          print()
 
-      #if missing_introspect:
-      #   print("  the following symbols are in both library and gir,")
-      #   print("  but are implied as non-introspectable in the .gir-file:")
-      #   for s in missing_introspect:
-      #      print("     !", s)
-      #   print("  Please add explicit `(skip)` on the pertinent headers.")
-      #   print()
+      if missing_introspect:
+         print("  the following symbols are in both library and gir,")
+         print("  but are implied as non-introspectable in the .gir-file:")
+         for s in missing_introspect:
+            print("     !", s)
+         print("  Please either fix the annotations or add explicit `(skip)` and a skip-reason attribute on the pertinent headers.")
+         print()
 
       if missing_skip:
          print(f"  the following symbols from {os.path.basename(libname)} are marked as non-introspectable,")
