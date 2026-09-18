@@ -240,14 +240,17 @@ Plug-Ins:
       delay in FLC export. The int argument is available
       non-interactively too as "default-delay" argument.
     - Store aspect ratio in file.
-  * ICO/CUR: use Win32 scoring for ICO/CUR/ANI thumbnail selection.
-    Replace the ad-hoc "largest frame not exceeding the requested size"
-    heuristic in ico_load_thumbnail_image() with the same weighted scoring
-    used by LookupIconIdFromDirectoryEx: size delta penalized x2 when the
-    entry is smaller than requested, bpp mismatch weighted x2. On a tie,
-    prefer the higher color depth. This fixes thumbnails for multi-size
-    ICO/CUR files where the old heuristic could pick the wrong frame (e.g.
-    a small frame instead of the closest match to the requested size).
+  * ICO/CUR:
+    - Use Win32 scoring for ICO/CUR/ANI thumbnail selection when
+      exporting. Replace the ad-hoc "largest frame not exceeding the
+      requested size" heuristic in ico_load_thumbnail_image() with the
+      same weighted scoring used by LookupIconIdFromDirectoryEx: size
+      delta penalized x2 when the entry is smaller than requested, bpp
+      mismatch weighted x2. On a tie, prefer the higher color depth.
+      This fixes thumbnails for multi-size ICO/CUR files where the old
+      heuristic could pick the wrong frame (e.g.  a small frame instead
+      of the closest match to the requested size).
+    - Sort layers on load, using the same sort algorithm than on export.
   * PNG: better heuristic for a transparency index.
   * PS: we default to A4 for unknown images. Though arbitrary, since
     Postscript traditionally represents printed pages, it is more likely
@@ -271,9 +274,17 @@ API:
     - New functions:
       + gimp_choice_add_deprecated
       + gimp_choice_is_deprecated
+      + gimp_parse_search_path
+      + gimp_create_search_path
+      + gimp_free_paths
+      + gimp_get_user_writable_dir
     - Deprecated:
       + GP_EXTENSION_ACK in favor of GP_PERSISTENT_ACK
       + gp_extension_ack_write in favor of gp_persistent_ack_write
+      + gimp_path_parse in favor of gimp_parse_search_path
+      + gimp_path_to_str in favor of gimp_create_search_path
+      + gimp_path_free in favor of gimp_free_paths
+      + gimp_path_get_user_writable_dir in favor of gimp_get_user_writable_dir
   * libgimp:
     - New functions:
       + gimp_procedure_set_help_uri
@@ -288,6 +299,8 @@ API:
       + gimp_export_procedure_set_export_metadata
     - Deprecated:
       + gimp_plug_in_add_menu_branch in favor of gimp_procedure_add_menu_path
+    - gimp_procedure_add_menu_path improved to allow section names in
+      any part of the menu path (not just at the end).
   * libgimpui:
     - GimpProcedureDialog will now use the icon set on the associated
       GimpProcedure (likely only visible on platforms showing window
@@ -353,3 +366,6 @@ Build:
     bug reporters to make stacktraces of that happening.
   * Damned Lies (translation) commits now follow our "<module>:" prefix
     rule in the commit message.
+  * The build test for .def file got enhance to also test the
+    introspected API (looking for API which failed to be introspected;
+    and when it is skipped on purpose, make sure we added a reason why).
