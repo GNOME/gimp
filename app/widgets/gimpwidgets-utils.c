@@ -45,6 +45,7 @@
 #ifdef PLATFORM_OSX
 #import <AppKit/AppKit.h>
 #include <ApplicationServices/ApplicationServices.h>
+#include <gdk/quartz/gdkquartz-cocoa-access.h>
 #endif
 
 #include "libgimpbase/gimpbase.h"
@@ -2757,6 +2758,9 @@ gimp_window_set_title_bar_theme (Gimp      *gimp,
 #ifdef G_OS_WIN32
   HWND           hwnd;
 #endif
+#ifdef PLATFORM_OSX
+  NSWindow      *ns_window;
+#endif
   GdkWindow     *window        = NULL;
   gboolean       use_dark_mode = FALSE;
 
@@ -2804,11 +2808,16 @@ gimp_window_set_title_bar_theme (Gimp      *gimp,
         DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
                                &use_dark_mode, sizeof (use_dark_mode));
 #elif defined(PLATFORM_OSX)
-        /* Unlike the Windows codepath this is only needed by app/gui/gui.c and app/gui/themes.c*/
-        if (use_dark_mode)
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
-        else
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+        /* set the appearance on this dialog's NSWindow rather than on NSApp,
+           which was leaving it unstyled (e.g. invisible) on macOS 27 */
+        ns_window = gdk_quartz_window_get_nswindow (gtk_widget_get_window (GTK_WIDGET (dialog)));
+        if (ns_window)
+          {
+            if (use_dark_mode)
+              [ns_window setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
+            else
+              [ns_window setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+          }
 #endif
     }
 }

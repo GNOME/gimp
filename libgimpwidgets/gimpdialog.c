@@ -46,6 +46,7 @@
 
 #ifdef PLATFORM_OSX
 #import <AppKit/AppKit.h>
+#include <gdk/quartz/gdkquartz-cocoa-access.h>
 #endif
 
 /**
@@ -893,6 +894,9 @@ gimp_dialog_set_title_bar_theme (GtkWidget *dialog)
   HWND             hwnd;
   GdkWindow       *window        = NULL;
 #endif
+#ifdef PLATFORM_OSX
+  NSWindow        *ns_window;
+#endif
 
   GtkStyleContext *style;
   GdkRGBA         *color = NULL;
@@ -923,10 +927,16 @@ gimp_dialog_set_title_bar_theme (GtkWidget *dialog)
       UpdateWindow (hwnd);
     }
 #elif defined(PLATFORM_OSX)
-  if (use_dark_mode)
-    [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
-  else
-    [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+  /* set the appearance on this dialog's NSWindow rather than on NSApp,
+     which was leaving it unstyled (e.g. invisible) on macOS 27 */
+  ns_window = gdk_quartz_window_get_nswindow (gtk_widget_get_window (GTK_WIDGET (dialog)));
+  if (ns_window)
+    {
+      if (use_dark_mode)
+        [ns_window setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
+      else
+        [ns_window setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+    }
 #endif
 }
 #endif
