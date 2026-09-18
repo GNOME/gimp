@@ -242,6 +242,11 @@ for df in def_files:
             print("trouble reading {} - {}".format(gir_filename, e))
             have_errors = -1
             continue
+      elif directory == 'libgimpthumb':
+         # As a special exception libgimpthumb is on its own. It is not
+         # part of libgimp nor libgimpui library collections, and is not
+         # introspected.
+         gir_mode = False
       else:
          print(f'No associated GIR file with {df}.')
          print(f'Make sure a GIR file is set AFTER {df} in: libgimp/meson.build:')

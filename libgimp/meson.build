@@ -738,6 +738,8 @@ if host_machine.system() != 'emscripten'
   # Verify .def files for Windows linking (and for macOS too when -Wl,-exported_symbols_list is used).
   # We check this on non-Windows/non-macOS platform (Debian) on CI, and on Windows and macOS itself.
   # (This also checks if .gir files have parity with the library so parity with .def files too)
+  # The corresponding gir file must be after all the libs of a given module.
+  # As an exception, libgimpthumb is not introspected and part of no module.
   custom_target('check-def-files',
     input: [
       libgimpbase_def,
@@ -745,12 +747,12 @@ if host_machine.system() != 'emscripten'
       libgimpconfig_def,
       libgimpmath_def,
       libgimpmodule_def,
-      libgimpthumb_def,
       libgimp_def,
       have_gobject_introspection ? libgimp_gir : [],
       libgimpwidgets_def,
       libgimpui_def,
       have_gobject_introspection ? libgimpui_gir : [],
+      libgimpthumb_def,
     ],
     depends: [
       libgimpbase,
