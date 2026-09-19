@@ -31,6 +31,11 @@
 
 #include <locale.h>
 
+#ifdef PLATFORM_OSX
+#include <objc/runtime.h>
+#include <xlocale.h>
+#endif
+
 #include <gio/gio.h>
 #include <glib/gstdio.h>
 
@@ -523,6 +528,48 @@ gimp_macos_setenv (const char * progname)
 #endif /* ENABLE_RELOCATABLE_RESOURCES */
 }
 #endif /* __APPLE__ */
+
+#ifdef PLATFORM_OSX
+static void
+setlocale_lc_numeric (void)
+{
+  typedef void * (* SvgDocumentFunc) (id, SEL);
+
+  Class           glyph_class;
+  SEL             glyph_selector;
+  Method          glyph_method = NULL;
+  SvgDocumentFunc glyph_method_original;
+  locale_t        glyph_locale_custom;
+  id              glyph_method_custom;
+
+  /* find the method that decodes the vector glyphs */
+  glyph_class = objc_getClass ("_CUIThemeVectorGlyphRendition");
+  glyph_selector = sel_registerName ("svgDocument");
+  if (glyph_class)
+    glyph_method = class_getInstanceMethod (glyph_class, glyph_selector);
+  if (! glyph_method)
+    return;
+  glyph_method_original = (SvgDocumentFunc) method_getImplementation (glyph_method);
+
+  /* setting LC_NUMERIC* affects spin buttons etc so let's restrict to macOS menu.
+     We do that by making AppKit call the wrapper instead of the original method */
+  glyph_locale_custom = newlocale (LC_NUMERIC_MASK, "C", NULL);
+  glyph_method_custom = (id) ^ void * (id self)
+    {
+      locale_t  glyph_locale_old;
+      void     *glyph;
+
+      glyph_locale_old = uselocale (glyph_locale_custom);
+      glyph = glyph_method_original (self, glyph_selector);
+      uselocale (glyph_locale_old);
+
+      return glyph;
+    };
+
+  method_setImplementation (glyph_method,
+                            imp_implementationWithBlock (glyph_method_custom));
+}
+#endif /* PLATFORM_OSX */
 
 /* gimp_early_configuration () is executed as soon as we can read
  * the "gimprc" files, but before any library initialization takes
@@ -1293,6 +1340,10 @@ gimp_init_i18n (void)
   /* keep the monetary sign characters ASCII so GtkSpinButton accepts
      the '-' (minus) character. See GNOME/gimp#13641 and GNOME/GTK!8802. */
   setlocale (LC_MONETARY, "C");
+
+  /* keep the decimal point as '.', otherwise the vector glyphs drawn by AppKit
+     (shortcut modifiers, arrows, checkboxes etc) break on macOS 27. See: #16792 */
+  setlocale_lc_numeric ();
 #endif
 
   gimp_bind_text_domain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
