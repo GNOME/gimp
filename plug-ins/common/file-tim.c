@@ -564,11 +564,14 @@ load_image (GFile        *file,
         if (tim_header.type[0] == PSX_4BPP)
           {
             guchar *pixels;
+            guchar *rgb_pixels;
             guchar *row;
 
-            pixels = g_try_malloc0 (width);
-            row    = g_try_malloc0 (width * 2);
-            if (! pixels || ! row)
+            pixels     = g_try_malloc0 (width);
+            rgb_pixels = g_try_malloc0 (width * 8);
+            row        = g_try_malloc0 (width * 2);
+
+            if (! pixels || ! rgb_pixels || ! row)
               {
                 g_set_error (error, G_FILE_ERROR, 0,
                              _("Memory could not be allocated."));
@@ -581,15 +584,42 @@ load_image (GFile        *file,
               {
                 if (fread (pixels, width, 1, fp) > 0)
                   {
-                    for (gint j = 0; j < width; j++)
+                    if (! promote_to_rgb)
                       {
-                        row[j * 2]     = pixels[j] & 0x0F;
-                        row[j * 2 + 1] = pixels[j] >> 4;
-                      }
+                        for (gint j = 0; j < width; j++)
+                          {
+                            row[j * 2]     = pixels[j] & 0x0F;
+                            row[j * 2 + 1] = pixels[j] >> 4;
+                          }
 
-                    gegl_buffer_set (buffer,
-                                     GEGL_RECTANGLE (0, (i * 2), width, 2), 0,
-                                     NULL, row, GEGL_AUTO_ROWSTRIDE);
+                        gegl_buffer_set (buffer,
+                                         GEGL_RECTANGLE (0, (i * 2), width, 2),
+                                         0, NULL, row, GEGL_AUTO_ROWSTRIDE);
+                      }
+                    else
+                      {
+                        gint index = 0;
+
+                        for (gint j = 0; j < width; j += 2)
+                          {
+                            index = pixels[j] & 0x0F;
+
+                            for (gint k = 0; k < 4; k++)
+                              rgb_pixels[(j * 4) + k] =
+                                color_map[index * 4 + k];
+
+                            index = pixels[j] >> 4;
+
+                            for (gint k = 0; k < 4; k++)
+                              rgb_pixels[((j + 1) * 4) + k] =
+                                color_map[index * 4 + k];
+                          }
+
+                        gegl_buffer_set (buffer,
+                                         GEGL_RECTANGLE (0, i, width, 1), 0,
+                                         NULL, rgb_pixels,
+                                         GEGL_AUTO_ROWSTRIDE);
+                      }
                   }
                 else
                   {
@@ -599,6 +629,7 @@ load_image (GFile        *file,
               }
             g_free (pixels);
             g_free (row);
+            g_free (rgb_pixels);
           }
         else if (tim_header.type[0] == PSX_8BPP)
           {
@@ -630,11 +661,11 @@ load_image (GFile        *file,
                       {
                         gint index = 0;
 
-                        for (gint i = 0; i < width; i++)
+                        for (gint j = 0; j < width; j++)
                           {
-                            index = pixels[i];
-                            for (gint j = 0; j < 4; j++)
-                              rgb_pixels[(i * 4) + j] = color_map[index * 4 + j];
+                            index = pixels[j];
+                            for (gint k = 0; k < 4; k++)
+                              rgb_pixels[(j * 4) + k] = color_map[index * 4 + k];
                           }
 
                         gegl_buffer_set (buffer,
