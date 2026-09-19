@@ -291,6 +291,7 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" ] && [ "$CI_PIPELINE_SOURCE"
     xcrun stapler staple -v "$1"
   }
 
+if [ -z "$CERT_CREDENTIALS_READY" ]; then
   #Prepare certs to be stored on cert_container
   security delete-keychain cert_container 2>/dev/null || true
   security create-keychain -p "" cert_container
@@ -316,6 +317,8 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" ] && [ "$CI_PIPELINE_SOURCE"
     exit 1
   fi
   rm -rf cert_dir
+  export CERT_CREDENTIALS_READY=1
+fi
 
   printf '(INFO): signing lib/ (except Python.framework)\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/" \
