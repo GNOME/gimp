@@ -96,6 +96,7 @@
 
 #ifdef GDK_WINDOWING_QUARTZ
 #import <AppKit/AppKit.h>
+#include <gdk/quartz/gdkquartz-cocoa-access.h>
 
 /* Forward declare since we are building against old SDKs. */
 #if !defined(MAC_OS_X_VERSION_10_12) || \
@@ -156,6 +157,12 @@ static void        gui_display_changed           (GimpContext        *context,
                                                   Gimp               *gimp);
 
 static void        gui_check_unique_accelerators (Gimp               *gimp);
+
+#ifdef GDK_WINDOWING_QUARTZ
+static gboolean    gui_macos_shortcut            (const GdkEventKey  *kevent);
+static void        gui_macos_event_handler       (GdkEvent           *event,
+                                                  gpointer            data);
+#endif
 
 
 /*  private variables  */
@@ -281,6 +288,9 @@ gui_init (Gimp         *gimp,
     g_object_set (gtk_settings_get_default (),
                   "gtk-overlay-scrolling", FALSE,
                   NULL);
+
+  /* standard macOS shortcuts (handled by the OS) */
+  gdk_event_handler_set (gui_macos_event_handler, NULL, NULL);
 #endif /* GDK_WINDOWING_QUARTZ */
 
   gimp_dnd_init (gimp);
@@ -411,6 +421,61 @@ gui_sanity_check (void)
 
   return NULL;
 }
+
+#ifdef GDK_WINDOWING_QUARTZ
+/* GDKquartz intercepts every key combo before either AppKit or macOS gets
+   to see it, so let's redirect some baked in shortcuts back to macOS */
+static gboolean
+gui_macos_shortcut (const GdkEventKey *kevent)
+{
+  GdkModifierType primary  = gimp_get_primary_accelerator_mask ();
+  gboolean        redirect = FALSE;
+
+  /* on macOS, Ctrl+F2 is used instead of Alt. See: #13502 */
+  if (kevent->keyval == GDK_KEY_F2       &&
+      (kevent->state & GDK_CONTROL_MASK) &&
+      ! (kevent->state & primary))
+    redirect = TRUE;
+
+  /* on macOS, Cmd+Shift+/ opens the Help menu. See: #7111 */
+  else if ((kevent->keyval == GDK_KEY_question ||
+            (kevent->keyval == GDK_KEY_slash && (kevent->state & GDK_SHIFT_MASK))) &&
+           (kevent->state & primary))
+    redirect = TRUE;
+
+  if (redirect)
+    {
+      NSEvent *nsevent = gdk_quartz_event_get_nsevent ((GdkEvent *) kevent);
+      if (nsevent)
+        [NSApp sendEvent:nsevent];
+
+      return TRUE;
+    }
+
+  /* on macOS, Ctrl+Cmd+Space opens the Emoji viewer */
+  if ((kevent->keyval == GDK_KEY_space || kevent->keyval == GDK_KEY_KP_Space) &&
+      (kevent->state & GDK_CONTROL_MASK)                                      &&
+      (kevent->state & primary))
+    {
+      [NSApp orderFrontCharacterPalette:nil];
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static void
+gui_macos_event_handler (GdkEvent *event,
+                         gpointer  data)
+{
+  if (event->type == GDK_KEY_PRESS &&
+      gui_macos_shortcut ((const GdkEventKey *) event))
+    return;
+
+  gtk_main_do_event (event);
+}
+#endif /* GDK_WINDOWING_QUARTZ */
 
 static void
 gui_help_func (const gchar *help_id,
