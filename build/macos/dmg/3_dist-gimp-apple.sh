@@ -257,6 +257,40 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K\n"
 DMG_ARTIFACT="gimp-${CUSTOM_GIMP_VERSION}-${ARCH}.dmg"
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KCompressing %s\n" ${DMG_ARTIFACT}
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" ] && [ "$CI_PIPELINE_SOURCE" != 'merge_request_event' ]; then
+  notarize()
+  {
+    printf "(INFO): submitting ${1##*${1%.*}} to Apple servers\n"
+    NOTARY_IN="$1"
+    if echo "$1" | grep -q '.app'; then
+      NOTARY_IN="gimp-app-notarize-${ARCH}.zip"
+      ditto -c -k --keepParent "$1" "$NOTARY_IN"
+    fi
+    NOTARY_OUT="$(xcrun notarytool submit "$NOTARY_IN" --apple-id ${notarization_login} --team-id ${notarization_teamid} --password ${notarization_password} --wait 2>&1)"
+    if echo "$1" | grep -q '.app'; then
+      rm -f "$NOTARY_IN"
+    fi
+    printf "$NOTARY_OUT\n"
+
+    # Show Request UUID
+    REQUEST_UUID=$(echo "$NOTARY_OUT" | grep -oE "id: [0-9a-f-]+" | head -n 1 | awk '{print $2}')
+    if [ -z "$REQUEST_UUID" ]; then
+      printf "\033[31m(ERROR)\033[0m: Failed finding Request UUID in notarytool output\n"
+      exit 1
+    fi
+    printf "(INFO): Request UUID: $REQUEST_UUID\n"
+
+    # Show log
+    NOTARY_STATUS=$(echo "$NOTARY_OUT" | grep status: | awk -F ": " '{print $NF}')
+    if ! echo "$NOTARY_STATUS" | grep -q 'Accepted'; then
+      printf "\033[31m(ERROR)\033[0m: Notarization failed with status: $NOTARY_STATUS. Showing log\n"
+      xcrun notarytool log --apple-id "${notarization_login}" --team-id "${notarization_teamid}" --password "${notarization_password}" "$REQUEST_UUID"
+      exit 1
+    fi
+
+    printf "(INFO): stapling the notarization ticket to ${1##*${1%.*}}\n"
+    xcrun stapler staple -v "$1"
+  }
+
   #Prepare certs to be stored on cert_container
   security delete-keychain cert_container 2>/dev/null || true
   security create-keychain -p "" cert_container
@@ -352,6 +386,11 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" ] && [ "$CI_PIPELINE_SOURCE"
   printf '(INFO): signing .app\n'
   codesign -s "${codesign_subject}" \
     --options runtime --timestamp --entitlements "build/macos/dmg/gimp-hardening.entitlements" "$DMG_MOUNT/$BUNDLE_NAME.app"
+
+  # Notarize to staple the ticket on the .app itself (not just the .dmg further
+  # below), so that Gatekeeper doesn't need network access to validate it once
+  # it is copied/dragged out of the disk image or for edge cases. See #16781.
+  notarize "$DMG_MOUNT/$BUNDLE_NAME.app"
 fi
 hdiutil detach "$DMG_MOUNT"
 hdiutil convert -verbose "temp_$ARCH.dmg" -format ULFO -o "$DMG_ARTIFACT"
@@ -366,32 +405,7 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K\n"
 # 6.A NOTARIZE .DMG
 if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" ] && [ "$CI_PIPELINE_SOURCE" != 'merge_request_event' ]; then
   printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KNotarizing ${DMG_ARTIFACT}\n"
-  printf "(INFO): submitting to Apple servers\n"
-  NOTARY_OUT="$(xcrun notarytool submit ${DMG_ARTIFACT} --apple-id ${notarization_login} --team-id ${notarization_teamid} --password ${notarization_password} --wait 2>&1)"
-  printf "$NOTARY_OUT\n"
-
-  # Show Request UUID
-  REQUEST_UUID=$(echo "$NOTARY_OUT" | grep -oE "id: [0-9a-f-]+" | head -n 1 | awk '{print $2}')
-  if [ -z "$REQUEST_UUID" ]; then
-    printf "\033[31m(ERROR)\033[0m: Failed finding Request UUID in notarytool output\n"
-    exit 1
-  fi
-  printf "(INFO): Request UUID: $REQUEST_UUID\n"
-
-  # Show log
-  NOTARY_STATUS=$(echo "$NOTARY_OUT" | grep status: | awk -F ": " '{print $NF}')
-  if ! echo "$NOTARY_STATUS" | grep -q 'Accepted'; then
-    printf "\033[31m(ERROR)\033[0m: Notarization failed with status: $NOTARY_STATUS. Showing log\n"
-    xcrun notarytool log --apple-id "${notarization_login}" --team-id "${notarization_teamid}" --password "${notarization_password}" "$REQUEST_UUID"
-    exit 1
-  fi
-
-  printf "(INFO): stapling the notarization ticket to the DMG\n"
-  xcrun stapler staple -v ${DMG_ARTIFACT}
-  if [ ! $? -eq 0 ]; then
-    printf '\033[31m(ERROR)\033[0m: Failed to staple notarization ticket to DMG file\n'
-    exit 1
-  fi
+  notarize "${DMG_ARTIFACT}"
   printf "\e[0Ksection_end:`date +%s`:${ARCH}_notarize\r\e[0K\n"
 else
 
