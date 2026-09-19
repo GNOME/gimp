@@ -285,6 +285,10 @@ set_orient_vector (const gchar *str)
 
   n = atoi (tmps);
 
+  /* index comes from the file, don't trust it */
+  if (n < 0 || n >= MAXORIENTVECT)
+    return;
+
   if (!(tmps = strchr (tmps, ',')))
     return;
   pcvals.orient_vectors[n].x = g_ascii_strtod (++tmps, NULL);
@@ -321,6 +325,10 @@ static void set_size_vector (const gchar *str)
   int          n;
 
   n = atoi (tmps);
+
+  /* index comes from the file, don't trust it */
+  if (n < 0 || n >= MAXSIZEVECT)
+    return;
 
   if (!(tmps = strchr (tmps, ',')))
     return;
