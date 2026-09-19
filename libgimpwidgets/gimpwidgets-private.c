@@ -76,6 +76,23 @@ gimp_widgets_init_platform_settings (void)
 }
 #endif
 
+#ifdef PLATFORM_OSX
+static void
+gimp_widgets_dialog_realize_quartz (GtkWidget *widget)
+{
+  /* GtkDialog primitively loads a header bar titlebar with a RGBA visual.
+     GDK Quartz turns an RGBA visual into a non-opaque NSWindow on macOS 27.
+     So restore the default visual before the GdkWindow is created. See: #16782 */
+  if (! gtk_style_context_has_class (gtk_widget_get_style_context (widget),
+                                     GTK_STYLE_CLASS_CSD) &&
+      gtk_widget_get_visual (widget) ==
+      gdk_screen_get_rgba_visual (gtk_widget_get_screen (widget)))
+    gtk_widget_set_visual (widget, NULL);
+
+  g_signal_chain_from_overridden_handler (widget);
+}
+#endif
+
 static void
 gimp_widgets_init_foreign_enums (void)
 {
@@ -230,6 +247,12 @@ gimp_widgets_init (GimpHelpFunc           standard_help_func,
      GTK already do the right thing on Windows and macOS. KDE Plasma follows
      the same conventions of Windows but GTK does not detect it. See: #11606 */
   gimp_widgets_init_platform_settings ();
+#endif
+
+#ifdef PLATFORM_OSX
+  /* fix invisible title bar on macOS */
+  g_signal_override_class_handler ("realize", GTK_TYPE_DIALOG,
+                                   G_CALLBACK (gimp_widgets_dialog_realize_quartz));
 #endif
 
   gimp_widgets_initialized = TRUE;
