@@ -696,13 +696,19 @@ pvr_decode_rect (GimpLayer  *layer,
   gsize       count;
   guchar     *pixels;
   guchar     *data;
+  gsize       pixel_size;
+
+  if (! g_size_checked_mul (&pixel_size, (guint32) width, height)  ||
+      ! g_size_checked_mul (&pixel_size, pixel_size, n_components) ||
+      (pixels = g_try_malloc0 (pixel_size)) == NULL)
+    return FALSE;
 
   count = width * height * 2;
-  data  = g_try_malloc (count);
+  data  = g_try_malloc0 (count);
   if (data == NULL)
     return FALSE;
 
-  pixels = g_try_malloc (width * height * n_components);
+  pixels = g_try_malloc0 (pixel_size);
   if (pixels == NULL)
     {
       g_free (data);
