@@ -378,9 +378,12 @@ def set_rpath(binary, destbin=None):
 
   # Handle LC_ID_DYLIB (only on shared libraries)
   regex = re.search(r'cmd LC_ID_DYLIB.*?\n\s*name (.+?) \(offset', out, re.DOTALL)
-  if (".dylib" in binary or ".so" in binary) and regex:
+  if regex:
     old_dylib_path = regex.group(1).strip()
-    new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
+    if ".framework" in old_dylib_path:
+      new_dylib_path = os.path.join("@rpath", old_dylib_path[old_dylib_path.rfind("/", 0, old_dylib_path.find(".framework")) + 1:])
+    else:
+      new_dylib_path = os.path.join("@rpath", os.path.basename(old_dylib_path))
     if old_dylib_path != new_dylib_path:
       install_cmd.extend(['-id', new_dylib_path])
       #try:
