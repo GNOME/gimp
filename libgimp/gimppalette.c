@@ -97,13 +97,13 @@ gimp_palette_get_colormap (GimpPalette *palette,
  * gimp_palette_set_colormap:
  * @palette: The palette.
  * @format: The desired color format.
- * @colormap (array length=num_bytes): The new colormap values.
+ * @colormap: (array length=num_bytes): The new colormap values.
  * @num_bytes: The byte-size of @colormap.
  *
  * This procedure sets the entries in the specified palette in one go,
  * though they must all be in the same @format.
  *
- * The number of entries depens on the @num_bytes size of @colormap and
+ * The number of entries depends on the @num_bytes size of @colormap and
  * the bytes-per-pixel size of @format.
  * The procedure will fail if @num_bytes is not an exact multiple of the
  * number of bytes per pixel of @format.
