@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-27 23:25+0000\n"
-"PO-Revision-Date: 2026-07-22 11:38+0200\n"
+"POT-Creation-Date: 2026-09-16 14:50+0000\n"
+"PO-Revision-Date: 2026-08-19 20:43+0200\n"
 "Last-Translator: Mateusz Jastrząb <matti161@gmail.com>\n"
 "Language-Team: Polish <https://l10n.gnome.org/teams/pl/>\n"
 "Language: pl\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Gtranslator 51.0\n"
 
 #: plug-ins/script-fu/script-fu.c:119
 msgid "Script-Fu _Console"
@@ -32,54 +32,6 @@ msgstr "_Konsola Script-Fu"
 #: plug-ins/script-fu/script-fu.c:124
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktywna konsola do programowania w Script-Fu"
-
-#: plug-ins/script-fu/script-fu.c:317
-msgid "_GIMP Online"
-msgstr "_GIMP w sieci"
-
-#: plug-ins/script-fu/script-fu.c:318
-msgid "_User Manual"
-msgstr "Podręcznik _użytkownika"
-
-#: plug-ins/script-fu/script-fu.c:321
-msgid "_Script-Fu"
-msgstr "_Script-Fu"
-
-#: plug-ins/script-fu/script-fu.c:323
-msgid "_Test"
-msgstr "_Test"
-
-#: plug-ins/script-fu/script-fu.c:326
-msgid "_Buttons"
-msgstr "_Przyciski"
-
-#: plug-ins/script-fu/script-fu.c:328
-msgid "_Logos"
-msgstr "_Logo"
-
-#: plug-ins/script-fu/script-fu.c:330
-msgid "_Patterns"
-msgstr "_Desenie"
-
-#: plug-ins/script-fu/script-fu.c:333
-msgid "_Web Page Themes"
-msgstr "Moty_wy stron internetowych"
-
-#: plug-ins/script-fu/script-fu.c:335
-msgid "_Alien Glow"
-msgstr "_Nieziemska poświata"
-
-#: plug-ins/script-fu/script-fu.c:337
-msgid "_Beveled Pattern"
-msgstr "_Deseń przestrzenny"
-
-#: plug-ins/script-fu/script-fu.c:339
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
-
-#: plug-ins/script-fu/script-fu.c:342
-msgid "Alpha to _Logo"
-msgstr "Alfa na _logo"
 
 #: plug-ins/script-fu/script-fu-eval.c:52
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
@@ -90,7 +42,7 @@ msgid "Script Console"
 msgstr "Konsola skryptu"
 
 #: plug-ins/script-fu/console/script-fu-console.c:124
-#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/console/script-fu-console.c:251
 msgid "_Save"
 msgstr "_Zapisz"
 
@@ -99,34 +51,34 @@ msgid "C_lear"
 msgstr "Wy_czyść"
 
 #: plug-ins/script-fu/console/script-fu-console.c:126
-#: plug-ins/script-fu/console/script-fu-console.c:313
+#: plug-ins/script-fu/console/script-fu-console.c:315
 msgid "_Close"
 msgstr "Za_mknij"
 
-#: plug-ins/script-fu/console/script-fu-console.c:187
+#: plug-ins/script-fu/console/script-fu-console.c:189
 msgid "_Browse..."
 msgstr "_Przeglądaj…"
 
-#: plug-ins/script-fu/console/script-fu-console.c:246
+#: plug-ins/script-fu/console/script-fu-console.c:248
 msgid "Save Script-Fu Console Output"
 msgstr "Zapisywanie wyjścia konsoli Script-Fu"
 
-#: plug-ins/script-fu/console/script-fu-console.c:249
+#: plug-ins/script-fu/console/script-fu-console.c:251
 #: plug-ins/script-fu/server/script-fu-server.c:968
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_Cancel"
 msgstr "_Anuluj"
 
-#: plug-ins/script-fu/console/script-fu-console.c:282
+#: plug-ins/script-fu/console/script-fu-console.c:284
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nie można otworzyć „%s” do zapisywania: %s"
 
-#: plug-ins/script-fu/console/script-fu-console.c:308
+#: plug-ins/script-fu/console/script-fu-console.c:310
 msgid "Script-Fu Procedure Browser"
 msgstr "Przeglądarka procedur Script-Fu"
 
-#: plug-ins/script-fu/console/script-fu-console.c:312
+#: plug-ins/script-fu/console/script-fu-console.c:314
 msgid "_Apply"
 msgstr "Za_stosuj"
 
@@ -175,45 +127,45 @@ msgstr "Uruchom _serwer…"
 msgid "Server for remote Script-Fu operation"
 msgstr "Serwer dla zdalnego działania Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:141
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu nie może przetwarzać dwóch skryptów jednocześnie."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:143
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Skrypt „%s” jest już uruchomiony."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Reset"
 msgstr "_Przywróć"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:169
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:274
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu: wybór koloru"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:395
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:396
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu: wybór pliku"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:398
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu: wybór katalogu"
 
 #. Log to stdout.  Later to Gimp.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:807
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:811
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Błąd podczas wykonywania %s:"
@@ -248,35 +200,35 @@ msgstr "_Praca na kopii"
 msgid "_Keep bump layer"
 msgstr "_Zachowanie warstw wypukłości"
 
-#: plug-ins/script-fu/scripts/addborder.scm:121
+#: plug-ins/script-fu/scripts/addborder.scm:126
 msgid "Border Layer"
 msgstr "Warstwa krawędzi"
 
-#: plug-ins/script-fu/scripts/addborder.scm:174
+#: plug-ins/script-fu/scripts/addborder.scm:180
 msgid "Add _Border..."
 msgstr "Dodaj _krawędź…"
 
-#: plug-ins/script-fu/scripts/addborder.scm:175
+#: plug-ins/script-fu/scripts/addborder.scm:181
 msgid "Add a border around an image"
 msgstr "Dodaje krawędź dookoła obrazu"
 
-#: plug-ins/script-fu/scripts/addborder.scm:181
+#: plug-ins/script-fu/scripts/addborder.scm:187
 msgid "Border X size"
 msgstr "Poziomy rozmiar krawędzi"
 
-#: plug-ins/script-fu/scripts/addborder.scm:182
+#: plug-ins/script-fu/scripts/addborder.scm:188
 msgid "Border Y size"
 msgstr "Pionowy rozmiar krawędzi"
 
-#: plug-ins/script-fu/scripts/addborder.scm:183
+#: plug-ins/script-fu/scripts/addborder.scm:189
 msgid "Border color"
 msgstr "Kolor krawędzi"
 
-#: plug-ins/script-fu/scripts/addborder.scm:184
+#: plug-ins/script-fu/scripts/addborder.scm:190
 msgid "Delta value on color"
 msgstr "Przyrost wartości koloru"
 
-#: plug-ins/script-fu/scripts/addborder.scm:185
+#: plug-ins/script-fu/scripts/addborder.scm:191
 #: plug-ins/script-fu/scripts/drop-shadow.scm:182
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:210
 msgid "Allow resizing"
@@ -861,11 +813,19 @@ msgstr "Zasada pięciopodziału"
 msgid "Golden sections"
 msgstr "Złoty podział"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:27
+msgid ""
+"No selection to base guides on.\n"
+"Make a selection first!"
+msgstr ""
+"Brak zaznaczenia będącego podstawą prowadnicy.\n"
+"Najpierw coś zaznacz!"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "New Guides from _Selection"
 msgstr "Nowa prowadnica z _zaznaczenia"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:34
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "Tworzy cztery prowadnice dookoła granic bieżącego zaznaczenia"
 
@@ -1525,3 +1485,39 @@ msgstr "Poziome przesunięcie cienia"
 #: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Drop shadow Y offset"
 msgstr "Pionowe przesunięcie cienia"
+
+#~ msgid "_GIMP Online"
+#~ msgstr "_GIMP w sieci"
+
+#~ msgid "_User Manual"
+#~ msgstr "Podręcznik _użytkownika"
+
+#~ msgid "_Script-Fu"
+#~ msgstr "_Script-Fu"
+
+#~ msgid "_Test"
+#~ msgstr "_Test"
+
+#~ msgid "_Buttons"
+#~ msgstr "_Przyciski"
+
+#~ msgid "_Logos"
+#~ msgstr "_Logo"
+
+#~ msgid "_Patterns"
+#~ msgstr "_Desenie"
+
+#~ msgid "_Web Page Themes"
+#~ msgstr "Moty_wy stron internetowych"
+
+#~ msgid "_Alien Glow"
+#~ msgstr "_Nieziemska poświata"
+
+#~ msgid "_Beveled Pattern"
+#~ msgstr "_Deseń przestrzenny"
+
+#~ msgid "_Classic.Gimp.Org"
+#~ msgstr "_Classic.Gimp.Org"
+
+#~ msgid "Alpha to _Logo"
+#~ msgstr "Alfa na _logo"
