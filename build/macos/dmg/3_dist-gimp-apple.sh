@@ -347,8 +347,8 @@ fi
       codesign -s "${codesign_subject}" \
         --options runtime --timestamp ${PYTHON_SIGN_ENTITLEMENT} ${PYTHON_SIGN_CONSTRAINT} "$bin"
     done
-  codesign -s "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/Python.framework/Versions/${PYTHON_VERSION}/Python" \
-    --options runtime --timestamp ${PYTHON_SIGN_CONSTRAINT} "$PYTHON_FRAMEWORK_BIN"
+  codesign -s "${codesign_subject}" \
+    --options runtime --timestamp ${PYTHON_SIGN_CONSTRAINT} "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/Python.framework/Versions/${PYTHON_VERSION}/Python"
 
   printf '(INFO): signing MacOS/ executables called by GIMP\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/python3" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/xdg-email" | while read -r bin; do
