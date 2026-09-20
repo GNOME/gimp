@@ -669,7 +669,7 @@ gimp-win:
       variables: *dmg_vars
   parallel:
     matrix:
-      - ARCH: [arm64]
+      - ARCH: [arm64, x86_64]
   tags:
     - macos
     - marathon
