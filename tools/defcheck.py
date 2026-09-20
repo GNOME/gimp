@@ -28,7 +28,7 @@ Needs the tool "nm", "objdump", "dumpbin" or "dyld_info" to work
 
 """
 
-import os, sys, subprocess, shutil, glob
+import os, sys, subprocess, shutil, glob, fnmatch
 from os import getenv, path
 import re
 import xml.etree.ElementTree as ET
@@ -38,6 +38,7 @@ src_root  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def read_def_symbols(filename):
    symbols = []
+   data_symbols = set()
    with open(filename, encoding="utf-8") as def_file:
       for line in def_file:
          line = line.split(";", 1)[0].strip()
@@ -46,9 +47,43 @@ def read_def_symbols(filename):
          # DATA marks variable exports in .def files and is not part of the symbol name.
          parts = line.split()
          symbols.append(parts[0])
-   return symbols
+         if len(parts) > 1 and parts[1] == "DATA":
+            data_symbols.add(parts[0])
+   return symbols, data_symbols
 
 have_errors = 0
+
+
+# PROJECT-SPECIFIC CONFIGURATION
+# This script is synced between BABL, GEGL and GIMP. Everything that differs
+# lives in this block, the rest should stay identical for easier maintenance
+
+# Symbols to ignore only when checking the .def files.
+exclude_symbols = [ ]
+
+# Some .def files are concatenated, which can result in an unsorted error.
+# We allow those cases to be skipped by defining them here.
+ignore_sorting_errors = [ ]
+
+# Symbols to ignore only when checking the .gir files.
+# It looks like extern variables are not introspectable. We have
+# GIMP_MAJOR_VERSION, etc. macros anyways. The variables are only
+# used to do a core sanity check and ensure the libgimp and core
+# binaries are matching versions. These 3 version symbols will
+# therefore be made private in GIMP 4, but we can't remove them now
+# for API stability.
+gir_exclude_symbols = [ 'gimp_major_version', 'gimp_minor_version', 'gimp_micro_version' ]
+
+# Regex matching the project prefix to find the functions in private headers
+symbol_prefix = "(gimp|gp)"
+
+# Headers not named *-private.h which are nonetheless not stable public API
+special_cased = {
+   'libgimpwidgets': [ 'gimpcontroller.h' ]
+}
+
+# Directories of the libraries with no associated .gir file as an exception
+not_introspected = [ 'libgimpthumb' ]
 
 
 #READ LIBRARY SYMBOLS
@@ -101,7 +136,7 @@ for df in def_files:
 
    filename = df
    try:
-      defsymbols = read_def_symbols (filename)
+      defsymbols, def_data_symbols = read_def_symbols (filename)
    except IOError as message:
       print(message)
       sys.exit (-1)
@@ -115,8 +150,9 @@ for df in def_files:
    sortok = True
    for i in range (len (defsymbols)-1):
       if defsymbols[i].lower() > defsymbols[i+1].lower():
-         sorterrors += f"{defsymbols[i]} > {defsymbols[i+1]}\n"
-         sortok = False
+         if not defsymbols[i+1] in ignore_sorting_errors:
+            sorterrors += f"{defsymbols[i]} > {defsymbols[i+1]}\n"
+            sortok = False
    sorterrors = sorterrors.split(sep='\n')
 
    status, nm = subprocess.getstatusoutput (command + f'"{libname}"')
@@ -192,8 +228,8 @@ for df in def_files:
    nmsymbols = nmsymbols.split()[2::3]
    nmsymbols = [s for s in nmsymbols if s[0] != '_' and not s.startswith("OBJC_")]
 
-   missing_defs = [s for s in nmsymbols  if s not in defsymbols]
-   missing_nms  = [s for s in defsymbols if s not in nmsymbols]
+   missing_defs = [s for s in nmsymbols  if s not in defsymbols and s not in exclude_symbols]
+   missing_nms  = [s for s in defsymbols if s not in nmsymbols  and s not in exclude_symbols]
 
 
    #READ GIR/TYPELIB SYMBOLS
@@ -242,23 +278,19 @@ for df in def_files:
             print("trouble reading {} - {}".format(gir_filename, e))
             have_errors = -1
             continue
-      elif directory == 'libgimpthumb':
-         # As a special exception libgimpthumb is on its own. It is not
-         # part of libgimp nor libgimpui library collections, and is not
-         # introspected.
+      elif directory in not_introspected:
+         # This library is on its own. It is not part of any library
+         # collection sharing a .gir file, and is not introspected.
          gir_mode = False
       else:
          print(f'No associated GIR file with {df}.')
-         print(f'Make sure a GIR file is set AFTER {df} in: libgimp/meson.build:')
+         print(f'Make sure a GIR file is set AFTER {df} in meson.build, or add')
+         print(f'{directory} to not_introspected in {os.path.basename(__file__)}.')
          have_errors = -1
          continue
 
-   exclude_symbols = [ ]
-   fun_def_pattern = re.compile("\\b((gimp|gp)_[a-z_]*) *\\(")
-   special_cased   = {
-       'libgimpwidgets': [ 'gimpcontroller.h' ]
-   }
-   for filename in os.listdir(os.path.join(src_root, directory)):
+   fun_def_pattern = re.compile("\\b(" + symbol_prefix + "_[a-z0-9_]*)\\s*\\(")
+   for filename in [os.path.relpath(os.path.join(root, f), os.path.join(src_root, directory)) for root, _, files in os.walk(os.path.join(src_root, directory)) for f in files]:
       private_equivalent = special_cased[directory] if directory in special_cased else [ ]
       if filename.endswith('-private.h') or filename in private_equivalent:
          priv_header = os.path.join(src_root, directory, filename)
@@ -266,17 +298,11 @@ for df in def_files:
            for line in fd:
              m = fun_def_pattern.search(line)
              if m is not None:
-                exclude_symbols += [m.group(1)]
+                gir_exclude_symbols += [m.group(1)]
+   def is_gir_excluded(symbol):
+      return symbol in def_data_symbols or any(fnmatch.fnmatchcase(symbol, pattern) for pattern in gir_exclude_symbols)
 
-   # It looks like extern variables are not introspectable. We have
-   # GIMP_MAJOR_VERSION, etc. macros anyways. The variables are only
-   # used to do a core sanity check and ensure the libgimp and core
-   # binaries are matching versions. These 3 version symbols will
-   # therefore be made private in GIMP 4, but we can't remove them now
-   # for API stability.
-   exclude_symbols += [ 'gimp_major_version', 'gimp_minor_version', 'gimp_micro_version' ]
-
-   missing_gir = [s for s in nmsymbols if s not in girsymbols and s not in exclude_symbols] if gir_mode else []
+   missing_gir = [s for s in nmsymbols if s not in girsymbols and not is_gir_excluded(s)] if gir_mode else []
    missing_introspect = [s for s in nmsymbols if s in girsymbols and not girsymbols[s][0] and not girsymbols[s][1]] if gir_mode else []
 
 
