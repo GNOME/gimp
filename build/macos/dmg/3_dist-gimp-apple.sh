@@ -342,12 +342,13 @@ fi
     done
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/Python.framework/Versions/${PYTHON_VERSION}/Resources/" \
        "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/Python.framework/Versions/${PYTHON_VERSION}/bin/" \
-       "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/Python.framework/Versions/${PYTHON_VERSION}/Python" \
     -type f \( -perm -100 -o -perm -010 -o -perm -001 \) -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
       printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
         --options runtime --timestamp ${PYTHON_SIGN_ENTITLEMENT} ${PYTHON_SIGN_CONSTRAINT} "$bin"
     done
+  codesign -s "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/Python.framework/Versions/${PYTHON_VERSION}/Python" \
+    --options runtime --timestamp ${PYTHON_SIGN_CONSTRAINT} "$PYTHON_FRAMEWORK_BIN"
 
   printf '(INFO): signing MacOS/ executables called by GIMP\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/python3" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/xdg-email" | while read -r bin; do
