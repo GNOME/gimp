@@ -329,16 +329,11 @@ fi
     done
 
   printf '(INFO): signing Python.framework\n'
-  if [ "$ARCH" = 'arm64' ]; then
-    PYTHON_SIGN_OPT='--launch-constraint-parent'
-    PYTHON_SIGN_VAL='build/macos/dmg/python.coderequirement'
-    cp build/macos/dmg/python.coderequirement build/macos/dmg/python.coderequirement.bak
-    sed -i '' "s|%BUNDLE_IDENTIFIER%|$BUNDLE_IDENTIFIER|" build/macos/dmg/python.coderequirement
-    sed -i '' "s|%notarization_teamid%|$notarization_teamid|" build/macos/dmg/python.coderequirement
-  else
-    PYTHON_SIGN_OPT='--entitlements'
-    PYTHON_SIGN_VAL='build/macos/dmg/gimp-hardening.entitlements'
-  fi
+  PYTHON_SIGN_OPT='--launch-constraint-parent'
+  PYTHON_SIGN_VAL='build/macos/dmg/python.coderequirement'
+  cp build/macos/dmg/python.coderequirement build/macos/dmg/python.coderequirement.bak
+  sed -i '' "s|%BUNDLE_IDENTIFIER%|$BUNDLE_IDENTIFIER|" build/macos/dmg/python.coderequirement
+  sed -i '' "s|%notarization_teamid%|$notarization_teamid|" build/macos/dmg/python.coderequirement
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/Python.framework/Versions/${PYTHON_VERSION}/lib/" \
     -type f \( \( -perm -100 -o -perm -010 -o -perm -001 \) -o -name "*.dylib" \) -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
       printf "(INFO): signing $bin\n"
