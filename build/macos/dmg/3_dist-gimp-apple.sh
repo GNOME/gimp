@@ -329,8 +329,8 @@ fi
     done
 
   printf '(INFO): signing Python.framework\n'
-  PYTHON_SIGN_OPT='--launch-constraint-parent'
-  PYTHON_SIGN_VAL='build/macos/dmg/python.coderequirement'
+  PYTHON_SIGN_CONSTRAINT='--launch-constraint-parent build/macos/dmg/python.coderequirement'
+  PYTHON_SIGN_ENTITLEMENT='--entitlements build/macos/dmg/python.entitlements'
   cp build/macos/dmg/python.coderequirement build/macos/dmg/python.coderequirement.bak
   sed -i '' "s|%BUNDLE_IDENTIFIER%|$BUNDLE_IDENTIFIER|" build/macos/dmg/python.coderequirement
   sed -i '' "s|%notarization_teamid%|$notarization_teamid|" build/macos/dmg/python.coderequirement
@@ -346,20 +346,22 @@ fi
     -type f \( -perm -100 -o -perm -010 -o -perm -001 \) -print0 | xargs -0 file | grep ' Mach-O ' | awk -F ':' '{print $1}' | while read -r bin; do
       printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
-        --options runtime --timestamp ${PYTHON_SIGN_OPT} ${PYTHON_SIGN_VAL} "$bin"
+        --options runtime --timestamp ${PYTHON_SIGN_ENTITLEMENT} ${PYTHON_SIGN_CONSTRAINT} "$bin"
     done
 
   printf '(INFO): signing MacOS/ executables called by GIMP\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/python3" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/xdg-email" | while read -r bin; do
     if [ -f "$bin" ]; then
       printf "(INFO): signing $bin\n"
+      PYTHON_BIN_ENTITLEMENT=''
+      if [ "$(basename "$bin")" = 'python3' ]; then
+        PYTHON_BIN_ENTITLEMENT="${PYTHON_SIGN_ENTITLEMENT}"
+      fi
       codesign -s "${codesign_subject}" \
-        --options runtime --timestamp ${PYTHON_SIGN_OPT} ${PYTHON_SIGN_VAL} "$bin"
+        --options runtime --timestamp ${PYTHON_BIN_ENTITLEMENT} ${PYTHON_SIGN_CONSTRAINT} "$bin"
     fi
   done
-  if [ "$ARCH" = 'arm64' ]; then
-    mv -f build/macos/dmg/python.coderequirement.bak build/macos/dmg/python.coderequirement
-  fi
+  mv -f build/macos/dmg/python.coderequirement.bak build/macos/dmg/python.coderequirement
 
   printf '(INFO): signing MacOS/ executables related to gegl\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS" -type f -perm +111 \
