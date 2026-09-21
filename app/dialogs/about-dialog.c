@@ -1116,8 +1116,8 @@ about_dialog_debug_text (void)
                                               G_FILE_ATTRIBUTE_FILESYSTEM_FREE);
           gchar *free_str = g_format_size (free_space);
 
-          g_string_append_printf (text, "%s %s free on partition\n",
-                                  _("Swap:"), free_str);
+          g_string_append_printf (text, _("Swap: %s free on partition\n"),
+                                  free_str);
           g_free (free_str);
           g_object_unref (info);
         }
