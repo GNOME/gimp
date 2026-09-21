@@ -33,7 +33,6 @@
 #ifdef GDK_WINDOWING_QUARTZ
 #include <unistd.h>
 #include <Cocoa/Cocoa.h>
-#include <ApplicationServices/ApplicationServices.h>
 #endif
 
 #ifdef GDK_WINDOWING_WAYLAND
@@ -75,17 +74,23 @@ static void        gimp_ensure_modules             (void);
 #ifdef GDK_WINDOWING_QUARTZ
 static gboolean    gimp_osx_focus_window           (gpointer);
 
-static void        gimp_osx_display_callback       (AXObserverRef      observer,
-                                                    AXUIElementRef     element,
-                                                    CFStringRef        notification,
-                                                    void              *refcon)
+static void        gimp_osx_display_callback       (CFNotificationCenterRef  center,
+                                                    void                    *observer,
+                                                    CFNotificationName       name,
+                                                    const void              *object,
+                                                    CFDictionaryRef          user_info)
 {
-  NSWindow *win = (__bridge NSWindow *)refcon;
-
-  if (CFStringCompare (notification, kAXWindowMiniaturizedNotification, 0) == kCFCompareEqualTo)
-    [win orderOut:nil];
-  else if (CFStringCompare (notification, kAXWindowDeminiaturizedNotification, 0) == kCFCompareEqualTo)
-    [win orderFront:nil];
+  /* sent by the GIMP main process, see gimp_image_window_window_state_event() */
+  if (CFStringCompare (name, CFSTR ("GIMP-" GIMP_MUTEX_VERSION ".window-miniaturized"), 0) == kCFCompareEqualTo)
+    {
+      for (NSWindow *win in [NSApp windows])
+        [win orderOut:nil];
+    }
+  else
+    {
+      for (NSWindow *win in [NSApp windows])
+        [win orderFront:nil];
+    }
 }
 #endif
 
@@ -649,13 +654,7 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
   NSArray        *plugin_win        = [NSApp windows];
   pid_t           plugin_pid        = getpid();
   pid_t           gimp_pid          = getppid();
-  NSDictionary   *gimp_app_permissions;
-  BOOL            gimp_app_istrusted;
-  AXUIElementRef  gimp_app;
-  AXObserverRef   gimp_app_observer = NULL;
-  AXError         gimp_app_observer_err;
-  AXError         gimp_app_min;
-  AXError         gimp_app_res;
+  static gboolean gimp_app_observer;
   static gboolean not_gimp_observer_added;
 #endif
 
@@ -751,41 +750,32 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
       gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
 
 #ifdef GDK_WINDOWING_QUARTZ
-      /*  macOS does not support cross-process trasiency so we use Accessibility API */
-      gimp_app_permissions = @{(__bridge id)kAXTrustedCheckOptionPrompt: @YES};
-      gimp_app_istrusted = AXIsProcessTrustedWithOptions ((__bridge CFDictionaryRef)gimp_app_permissions);
-      if (! gimp_app_istrusted)
-        {
-          gimp_message ("Could not minimize/maximize plug-in window via Accessibility API. Pleave give the needed permissions");
-          [NSApp deactivate];
-        }
-      else for (NSWindow *win in plugin_win)
+      /*  macOS does not support cross-process trasiency so we use NotificationCenter API*/
+      for (NSWindow *win in plugin_win)
         {
           /* first, set all plug-in windows as always visible */
           [win setLevel:NSFloatingWindowLevel];
+        }
 
-          /* if gimp app is minimzed or restored, do the same on the plug-in windows
-             otherwise the windows would stay always visible over other apps */
-          gimp_app = AXUIElementCreateApplication (gimp_pid);
-          if (!gimp_app)
-            continue;
-          gimp_app_observer_err = AXObserverCreate (gimp_pid, gimp_osx_display_callback, &gimp_app_observer);
-          if (gimp_app_observer_err == kAXErrorSuccess)
-            {
-              gimp_app_min = AXObserverAddNotification (gimp_app_observer, gimp_app, kAXWindowMiniaturizedNotification, (__bridge void *)win);
-              gimp_app_res = AXObserverAddNotification (gimp_app_observer, gimp_app, kAXWindowDeminiaturizedNotification, (__bridge void *)win);
-              if (gimp_app_min == kAXErrorSuccess && gimp_app_res == kAXErrorSuccess)
-                {
-                  CFRunLoopAddSource (CFRunLoopGetCurrent(),
-                                      AXObserverGetRunLoopSource (gimp_app_observer),
-                                      kCFRunLoopDefaultMode);
-                }
-              else
-                {
-                  g_message ("Could not minimize/maximize plug-in window via Accessibility API. It may stay always on top");
-                }
-            }
-          CFRelease (gimp_app);
+      /* if gimp app is minimzed or restored, do the same on the plug-in windows
+         otherwise the windows would stay always visible over other apps */
+      if (! gimp_app_observer)
+        {
+          CFStringRef gimp_pid_str = CFStringCreateWithFormat (NULL, NULL, CFSTR ("%d"), gimp_pid);
+          CFNotificationCenterAddObserver (CFNotificationCenterGetDistributedCenter (),
+                                           &gimp_app_observer,
+                                           gimp_osx_display_callback,
+                                           CFSTR ("GIMP-" GIMP_MUTEX_VERSION ".window-miniaturized"),
+                                           gimp_pid_str,
+                                           CFNotificationSuspensionBehaviorDeliverImmediately);
+          CFNotificationCenterAddObserver (CFNotificationCenterGetDistributedCenter (),
+                                           &gimp_app_observer,
+                                           gimp_osx_display_callback,
+                                           CFSTR ("GIMP-" GIMP_MUTEX_VERSION ".window-deminiaturized"),
+                                           gimp_pid_str,
+                                           CFNotificationSuspensionBehaviorDeliverImmediately);
+          CFRelease (gimp_pid_str);
+          gimp_app_observer = TRUE;
         }
 
       /* if gimp app is hidden or show, do the same on the plug-in windows
