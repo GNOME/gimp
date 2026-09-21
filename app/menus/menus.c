@@ -657,7 +657,7 @@ menus_quartz_app_menu (Gimp *gimp)
       [item setAction:@selector (gimpShowAbout:)];
 
       /* Welcome Dialog */
-      item = [[NSMenuItem alloc] initWithTitle:@"Welcome Dialog"
+      item = [[NSMenuItem alloc] initWithTitle:[NSString stringWithUTF8String:C_("dialogs-action", "Welcome Dialog")]
                                         action:@selector (gimpShowWelcomeDialog:)
                                  keyEquivalent:@""];
       [item setTarget:[GimpappMenuHandler class]];
