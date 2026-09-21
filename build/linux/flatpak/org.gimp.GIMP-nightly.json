@@ -214,8 +214,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/aous72/OpenJPH/archive/refs/tags/0.31.0.tar.gz",
-                            "sha256": "fe169dbbaae71a169a0a6a68dccb346616193252c1ca044217afa0d5d1dc436f",
+                            "url": "https://github.com/aous72/OpenJPH/archive/refs/tags/0.32.0.tar.gz",
+                            "sha256": "5cb1ebe18e5ee1322d23ff2130b37562d447d1ad5586c3d16cf84be3ae30f719",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 375199,
@@ -610,8 +610,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.14.0.tar.gz",
-                    "sha256": "c552c4b4bb7d0978796e57263a73295bca0c6b41ad137b45b4f264cfe9300fcb",
+                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v7.14.1.tar.gz",
+                    "sha256": "81e560e1f74546df139edb765b3f5bc865866da23062312ffe8fd821063c8397",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 4908,
