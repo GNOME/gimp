@@ -2295,7 +2295,16 @@ gimp_color_profile_chooser_dialog_connect_path (GtkWidget   *dialog,
 void
 gimp_widget_flush_expose (void)
 {
+#ifdef GDK_WINDOWING_WIN32
+  /* During window movement, GDK's GetQueueStatus() can report pending Windows
+   * messages even when subsequent PeekMessageW() calls return no messages,
+   * causing g_main_context_pending() to return TRUE indefinitely.
+   * Limit the event pump to 10 iterations.
+   */
+  for (guint i = 0; i < 10 && g_main_context_pending (NULL); i++)
+#else
   while (g_main_context_pending (NULL))
+#endif
     g_main_context_iteration (NULL, FALSE);
 }
 
