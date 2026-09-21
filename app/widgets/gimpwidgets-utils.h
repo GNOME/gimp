@@ -155,6 +155,7 @@ void              gimp_color_profile_chooser_dialog_connect_path
                                                     GObject               *config,
                                                     const gchar           *property_name);
 
+/* Process pending events; on Windows, run at most 10 iterations per call. */
 void              gimp_widget_flush_expose         (void);
 
 void              gimp_make_valid_action_name      (gchar                 *action_name);
