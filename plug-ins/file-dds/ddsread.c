@@ -566,7 +566,7 @@ read_dds (GFile                *file,
   load_info.tile_height = gimp_tile_height ();
 
   pixels = g_new (guchar, load_info.tile_height * load_info.width * load_info.gimp_bpp);
-  buf = g_malloc (load_info.linear_size);
+  buf    = g_malloc (load_info.linear_size + 1);
 
   if (load_info.cubemap_faces)  /* Cubemap texture */
     {
@@ -1245,9 +1245,10 @@ load_layer (FILE             *fp,
 
   if (! (load_info->fmt_flags & DDPF_FOURCC))  /* Read uncompressed pixel data */
     {
-      guint   rowstride   = width * load_info->bpp;
-      guint32 sign_add[4] = { 0, 0, 0, 0 };
-      guint   idx_r = 0, idx_b = 2;
+      guint    rowstride   = width * load_info->bpp;
+      guint32  sign_add[4] = { 0, 0, 0, 0 };
+      guint    idx_r       = 0, idx_b = 2;
+      guchar  *pbuf        = buf;
 
       /* Prior plug-in versions (3.9.91 and earlier) wrote the R and G channels reversed for RGB10A2. */
       if ((load_info->gimp_version > 0)       &&
@@ -1318,6 +1319,7 @@ load_layer (FILE             *fp,
                                _("Requested data exceeds size of file.\n"));
                   return FALSE;
                 }
+              buf = pbuf;
               if (! fread (buf, rowstride, 1, fp))
                 {
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
