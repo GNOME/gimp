@@ -32,6 +32,7 @@
 
 #ifdef GDK_WINDOWING_QUARTZ
 #include <unistd.h>
+#include <libproc.h>
 #include <Cocoa/Cocoa.h>
 #endif
 
@@ -780,7 +781,6 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
 
       /* if gimp app is hidden or show, do the same on the plug-in windows
          (this is NOT the same as minimization/restoration of gimp app) */
-      not_gimp_observer_added = FALSE;
       if (! not_gimp_observer_added)
         {
           /* gimp main window is not active, save last focused window/dialog */
@@ -790,13 +790,17 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
                                                               queue:[NSOperationQueue mainQueue]
                                                               usingBlock:^(NSNotification *note) {
             NSRunningApplication *deactivated_app = [[note userInfo] objectForKey:NSWorkspaceApplicationKey];
-            pid_t deactivated_pid = 0;
+            pid_t                 deactivated_pid = 0;
+            struct proc_bsdinfo   deactivated_info;
             if (!deactivated_app)
               return;
             deactivated_pid = [deactivated_app processIdentifier];
             if (deactivated_pid == plugin_pid)
               focus_saved = YES;
-            else if (deactivated_pid == gimp_pid)
+            /* take into account other plug-ins too */
+            else if (deactivated_pid == gimp_pid ||
+                     (proc_pidinfo (deactivated_pid, PROC_PIDTBSDINFO, 0, &deactivated_info, sizeof (deactivated_info)) == sizeof (deactivated_info) &&
+                      deactivated_info.pbi_ppid == gimp_pid))
               focus_saved = NO;
           }];
 
@@ -806,16 +810,36 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
                                                               queue:[NSOperationQueue mainQueue]
                                                               usingBlock:^(NSNotification *note) {
 
-            NSRunningApplication *not_gimp_app = [[note userInfo] objectForKey:NSWorkspaceApplicationKey];
-            pid_t not_gimp_pid = 0;
+            NSRunningApplication *not_gimp_app       = [[note userInfo] objectForKey:NSWorkspaceApplicationKey];
+            pid_t                 not_gimp_pid       = 0;
+            struct proc_bsdinfo   not_gimp_info;
+            BOOL                  not_gimp           = NO;
+            static BOOL           not_gimp_activated = NO;
+            BOOL                  focus_restore      = NO;
             if (!not_gimp_app)
               return;
             not_gimp_pid = [not_gimp_app processIdentifier];
+            /* take into account other plug-ins too */
+            if (proc_pidinfo (not_gimp_pid, PROC_PIDTBSDINFO, 0, &not_gimp_info, sizeof (not_gimp_info)) == sizeof (not_gimp_info) &&
+                not_gimp_info.pbi_ppid == gimp_pid)
+              return;
+            not_gimp = (not_gimp_pid != gimp_pid && not_gimp_pid != plugin_pid);
+            if (not_gimp)
+              {
+                not_gimp_activated = YES;
+              }
+            else
+              {
+                /* only give focus back to the plug-in when coming back from
+                 * another app, not when the user clicked the main window */
+                focus_restore = focus_saved && not_gimp_activated;
+                not_gimp_activated = NO;
+              }
             /* we fetch win again rather than using stale 'plugin_win' due to
              * extension/persistent plug-in (e.g. old-style script-fu) */
             for (NSWindow *win in [NSApp windows])
               {
-                if (not_gimp_pid != gimp_pid && not_gimp_pid != plugin_pid)
+                if (not_gimp)
                   {
                     /* gimp main window is not active, hide dialog */
                     [win orderOut:nil];
@@ -823,7 +847,7 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
                 else
                   {
                     /* gimp main window is active, show dialog on top always */
-                    if (!focus_saved)
+                    if (!focus_restore)
                       {
                         [win orderFront:nil];
                       }
