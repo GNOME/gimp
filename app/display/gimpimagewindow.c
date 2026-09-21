@@ -29,6 +29,7 @@
 #endif
 
 #ifdef PLATFORM_OSX
+#include <unistd.h>
 #import <AppKit/AppKit.h>
 #include <gdk/quartz/gdkquartz-cocoa-access.h>
 #endif
@@ -908,6 +909,17 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
           else
             gtk_window_set_title (GTK_WINDOW (window), shell->title);
         }
+
+#ifdef PLATFORM_OSX
+      /* macOS has no cross-process transiency: so tell the plug-ins (see
+         gimp_osx_display_callback() on gimpui.c). See: #16778 */
+      [[NSDistributedNotificationCenter defaultCenter]
+        postNotificationName: (iconified ? @"GIMP-" GIMP_MUTEX_VERSION ".window-miniaturized"
+                                         : @"GIMP-" GIMP_MUTEX_VERSION ".window-deminiaturized")
+        object: [NSString stringWithFormat: @"%d", getpid ()]
+        userInfo: nil
+        deliverImmediately: YES];
+#endif
     }
 
   return FALSE;
