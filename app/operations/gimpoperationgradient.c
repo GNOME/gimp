@@ -1331,13 +1331,13 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
   /*  have at least two values in the cache  */
   cache_size = MAX (cache_size, 2);
 
-  /*  don't use a cache if its necessary size is too big  */
-  if (cache_size > GRADIENT_CACHE_MAX_SIZE)
-    {
-      g_mutex_unlock (&self->gradient_cache_mutex);
-
-      return;
-    }
+  /*  clamp the cache to its maximum size, rather than not using a cache at
+   *  all if it's too large: the uncached path allocates a GeglColor and runs
+   *  a handful of babl conversions per pixel, and is a lot slower. At the
+   *  maximum cache size we still have >3 samples per pixel for the longest
+   *  possible gradient.
+   */
+  cache_size = MIN (cache_size, GRADIENT_CACHE_MAX_SIZE);
 
   self->gradient_cache      = g_new0 (gdouble, cache_size * 4);
   self->gradient_cache_size = cache_size;
