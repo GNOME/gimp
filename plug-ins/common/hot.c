@@ -360,7 +360,12 @@ pluginCore (GimpImage    *image,
   gint        width, height;
   gint        sel_x1, sel_x2, sel_y1, sel_y2;
   gint        prog_interval;
-  guchar     *src, *s, *dst, *d;
+  guchar     *src = NULL;
+  guchar     *dst = NULL;
+  guchar     *s;
+  guchar     *d;
+  gsize       src_allocation;
+  gsize       dst_allocation;
   guchar      r, prev_r=0, new_r=0;
   guchar      g, prev_g=0, new_g=0;
   guchar      b, prev_b=0, new_b=0;
@@ -426,8 +431,17 @@ pluginCore (GimpImage    *image,
   sel_x2 = sel_x1 + width;
   sel_y2 = sel_y1 + height;
 
-  src = g_new (guchar, width * height * src_bpp);
-  dst = g_new (guchar, width * height * dest_bpp);
+   if (! g_size_checked_mul (&src_allocation, width, height)            ||
+       ! g_size_checked_mul (&src_allocation, src_allocation, src_bpp)  ||
+       ! g_size_checked_mul (&dst_allocation, width, height)            ||
+       ! g_size_checked_mul (&dst_allocation, dst_allocation, dest_bpp) ||
+       ! (src = g_try_new0 (guchar, src_allocation))                    ||
+       ! (dst = g_try_new0 (guchar, dst_allocation)))
+    {
+      g_free (src);
+
+      return success;
+    }
 
   src_buffer = gimp_drawable_get_buffer (drawable);
 
