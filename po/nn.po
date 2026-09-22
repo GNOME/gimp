@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-09-16 15:11+0000\n"
-"PO-Revision-Date: 2026-09-17 20:35+0200\n"
+"PO-Revision-Date: 2026-09-22 21:41+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -15779,7 +15779,7 @@ msgstr "Bibliotekversjon:"
 
 #: app/dialogs/about-dialog.c:1243 app/dialogs/about-dialog.c:1303
 msgid "Copy Version Information"
-msgstr "Kopier versjonsnformasjonen"
+msgstr "Kopier versjonsinformasjonen"
 
 #: app/dialogs/about-dialog.c:1300
 msgid "Version Information"
