@@ -1290,7 +1290,8 @@ gimp_image_finalize (GObject *object)
     {
       GError *error = NULL;
 
-      if (! g_file_delete (private->cache_xml, NULL, &error))
+      if (! g_file_delete (private->cache_xml, NULL, &error) &&
+          ! (error->domain == G_IO_ERROR && error->code == G_IO_ERROR_NOT_FOUND))
         g_printerr ("%s: failed to delete the cached XML file `%s`: %s\n",
                     G_STRFUNC, g_file_peek_path (private->cache_xml),
                     error->message);
