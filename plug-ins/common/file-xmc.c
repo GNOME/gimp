@@ -639,6 +639,7 @@ load_image (GFile   *file,
   guint32         *tmppixel;  /* pixel data (guchar * bpp = guint32) */
   gint             img_width;
   gint             img_height;
+  gsize            allocation;
   gint             hot_spot_x;
   gint             hot_spot_y;
   gint             i, j;
@@ -695,6 +696,17 @@ load_image (GFile   *file,
   DM_XMC ("xhot=%i,\tyhot=%i,\timg_width=%i,\timg_height=%i\n",
           hot_spot_x, hot_spot_y, img_width, img_height);
 
+  /* Temporary buffer */
+  if (! g_size_checked_mul (&allocation, img_width, img_height) ||
+      ! (tmppixel = g_try_new0 (guint32, allocation))
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Image dimensions too large: width %d x height %d"),
+                   img_width, img_height);
+      fclose (fp);
+      return NULL;
+    }
+
   image = gimp_image_new (img_width, img_height, GIMP_RGB);
 
   if (! set_hotspot_to_parasite (image, hot_spot_x, hot_spot_y))
@@ -702,9 +714,6 @@ load_image (GFile   *file,
       fclose (fp);
       return NULL;
     }
-
-  /* Temporary buffer */
-  tmppixel = g_new (guint32, img_width * img_height);
 
   /* load each frame to each layer one by one */
   for (i = 0; i < imagesp->nimage; i++)
@@ -877,6 +886,7 @@ load_thumbnail (GFile   *file,
   gint           sel_num = -1; /* the index of selected image chunk */
   gint           width;
   gint           height;
+  gsize          allocation;
   gint           i;
 
   g_return_val_if_fail (img_width, NULL);
@@ -1013,6 +1023,17 @@ load_thumbnail (GFile   *file,
   width  = xcIs->images[sel_num]->width;
   height = xcIs->images[sel_num]->height;
 
+  /* Temporary buffer */
+  if (! g_size_checked_mul (&allocation, width, height) ||
+      ! (tmppixel = g_try_new0 (guint32, allocation))
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Image dimensions too large: width %d x height %d"),
+                   width, height);
+      fclose (fp);
+      return NULL;
+    }
+
   image = gimp_image_new (width, height, GIMP_RGB);
 
   layer = gimp_layer_new (image, NULL, width, height,
@@ -1027,9 +1048,6 @@ load_thumbnail (GFile   *file,
    */
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-
-  /* Temporary buffer */
-  tmppixel = g_new (guint32, width * height);
 
   /* copy the chunk data to tmppixel */
   fseek (fp, positions[sel_num], SEEK_SET);
