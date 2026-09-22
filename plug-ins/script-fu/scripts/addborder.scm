@@ -37,10 +37,12 @@
     (map (lambda (x) (deltacolor x delta)) col)
   )
 
-  (define (get-opacity color)
-    (if (= (length color) 4)
-      (* (/ (cadddr color) 255.0) 100)
-      (100.0)))
+  (define (get-opacity col)
+    (let* ((opac 100.0))
+      (if (= (length col) 4) (set! opac (* (/ (cadddr color) 255.0) 100)))
+      opac
+    )
+  )
 
   (define (gen_top_array xsize ysize owidth oheight width height)
     (let* ((n_array (cons-array 10 'double)))
