@@ -294,6 +294,13 @@ about_dialog_create (Gimp           *gimp,
 
       g_set_weak_pointer (&dialog.dialog, widget);
 
+#ifdef PLATFORM_OSX
+      /* restore the focus manually for MWM sake */
+      if (previous_key_window)
+        g_object_set_data (G_OBJECT (widget), "gimp-transient-parent-window",
+                           previous_key_window);
+#endif
+
       g_signal_connect (widget, "response",
                         G_CALLBACK (about_dialog_response),
                         NULL);
@@ -418,15 +425,6 @@ about_dialog_unmap (GtkWidget       *widget,
       g_source_remove (dialog->timer);
       dialog->timer = 0;
     }
-
-#ifdef PLATFORM_OSX
-  /* restore the focus manually due to the reason stated on about_dialog_create */
-  if (previous_key_window && [previous_key_window canBecomeKeyWindow])
-    {
-      [previous_key_window makeKeyAndOrderFront:nil];
-      previous_key_window = nil;
-    }
-#endif
 }
 
 static GdkPixbuf *

@@ -392,6 +392,7 @@ gimp_widget_set_auto_transient (GtkWidget *dialog)
 {
 #ifdef PLATFORM_OSX
   NSWindow    *parent_window            = nil;
+  NSWindow    *parent_window_forced     = (NSWindow *) g_object_get_data (G_OBJECT (dialog), "gimp-transient-parent-window");
   NSWindow    *dialog_window            = nil;
   const gchar *dialog_window_gtk_title  = gtk_window_get_title (GTK_WINDOW (dialog));
   NSString    *dialog_window_ns_title   = dialog_window_gtk_title ? [NSString stringWithUTF8String:dialog_window_gtk_title] : nil;
@@ -416,6 +417,11 @@ gimp_widget_set_auto_transient (GtkWidget *dialog)
           if ((! dialog_window_ns_title || ![[win title] isEqualToString:dialog_window_ns_title]) && win != dialog_window)
             parent_window = win;
         }
+
+      if (parent_window_forced && parent_window_forced != dialog_window && [parent_window_forced isVisible] &&
+          [parent_window_forced canBecomeMainWindow] && [parent_window_forced parentWindow] == nil &&
+          ! [parent_window_forced isSheet])
+        parent_window = parent_window_forced;
 
       if (dialog_window && parent_window)
         break;

@@ -241,6 +241,15 @@ gimp_dialog_init (GimpDialog *dialog)
                     G_CALLBACK (gimp_dialog_drop_title_bar_min),
                     NULL);
 
+  /* restore the focus manually for MWM sake */
+  {
+    NSWindow *previous_key_window = [NSApp keyWindow];
+
+    if (previous_key_window)
+      g_object_set_data (G_OBJECT (dialog), "gimp-transient-parent-window",
+                         previous_key_window);
+  }
+
   /* Make dialogs transient to the main window, like on Linux and Windows, but
      independently of GTK parenting since it is unreliable on macOS. See: #12257 */
   g_signal_connect (GTK_WIDGET (dialog), "map",

@@ -103,12 +103,6 @@ static void       gimp_search_popup_realize              (GimpSearchPopup   *sea
                                                           gpointer           data);
 #endif
 
-#ifdef PLATFORM_OSX
-static void       gimp_search_popup_osx_save_focus       (void);
-static void       gimp_search_popup_osx_restore_focus    (GtkWidget *widget,
-                                                          gpointer   user_data);
-#endif
-
 static void       gimp_search_popup_confirm              (GimpPopup *popup);
 
 /* Signal handlers on the search entry */
@@ -237,7 +231,7 @@ gimp_search_popup_new (Gimp                    *gimp,
 
 #ifdef PLATFORM_OSX
   /* since `widget` is not created with gimp_dialog_new, there is no auto focus */
-  gimp_search_popup_osx_save_focus ();
+  previous_key_window = [NSApp keyWindow];
 #endif
 
   widget = g_object_new (GIMP_TYPE_SEARCH_POPUP,
@@ -255,10 +249,10 @@ gimp_search_popup_new (Gimp                    *gimp,
   gtk_window_set_modal (GTK_WINDOW (widget), FALSE);
 
 #ifdef PLATFORM_OSX
-  /* restore the focus manually due to the reason stated above */
-  g_signal_connect (widget, "unmap",
-                    G_CALLBACK (gimp_search_popup_osx_restore_focus),
-                    NULL);
+  /* restore the focus manually due to the reason stated above and for MWM sake */
+  if (previous_key_window)
+    g_object_set_data (G_OBJECT (widget), "gimp-transient-parent-window",
+                       previous_key_window);
 #endif
 
   return widget;
@@ -596,25 +590,6 @@ gimp_search_popup_realize (GimpSearchPopup *search_popup,
                                 GDK_FUNC_MAXIMIZE);
     }
 #endif
-}
-#endif
-
-#ifdef PLATFORM_OSX
-static void
-gimp_search_popup_osx_save_focus (void)
-{
-  previous_key_window = [NSApp keyWindow];
-}
-
-static void
-gimp_search_popup_osx_restore_focus (GtkWidget *widget,
-                                     gpointer   user_data)
-{
-  if (previous_key_window && [previous_key_window canBecomeKeyWindow])
-    {
-      [previous_key_window makeKeyAndOrderFront:nil];
-      previous_key_window = nil;
-    }
 }
 #endif
 
