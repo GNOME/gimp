@@ -1116,6 +1116,8 @@ wia = platform_windows ? cc.find_library('wiaguid') : no_dep
 
 cfitsio_dep = dependency('cfitsio', required: get_option('fits'))
 
+# Fallback support for Camera RAW imports
+libraw= dependency('libraw', required: get_option('camera-raw'))
 
 ################################################################################
 # Email sending
@@ -2278,6 +2280,7 @@ final_message = [
 '''  Amiga IFF/ILBM:      @0@'''.format(have_ilbm),
 '''  Email:               @0@'''.format(email_message),
 '''  FITS:                @0@'''.format(cfitsio_dep.found()),
+'''  Camera RAW:          @0@'''.format(libraw.found()),
 '',
 '''Experimental Plug-Ins (discouraged except for developers):''',
 '''  Lua plug-ins:        @0@'''.format(have_lua_output),

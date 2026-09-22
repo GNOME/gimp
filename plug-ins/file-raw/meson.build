@@ -1,13 +1,22 @@
 
 file_raw_exes = [
-  'file-another-rawtherapee',
-  'file-darktable',
-  'file-raw-placeholder',
-  'file-rawtherapee',
+  { 'name': 'file-another-rawtherapee', },
+  { 'name': 'file-darktable', },
+  { 'name': 'file-raw-placeholder', },
+  { 'name': 'file-rawtherapee', },
 ]
 
-foreach plugin_name : file_raw_exes
+if libraw.found()
+  file_raw_exes += {
+    'name': 'file-raw-fallback',
+    'deps': [ libraw, ],
+  }
+endif
 
+foreach plugin : file_raw_exes
+
+  plugin_name = plugin.get('name')
+  plugin_deps = plugin.get('deps', [])
   plugin_sourcecode = [
     plugin_name +'.c',
     'file-raw-utils.c',
@@ -36,7 +45,7 @@ foreach plugin_name : file_raw_exes
 
   plugin_exe = executable(plugin_name,
                           plugin_sources,
-                          dependencies: libgimpui_dep,
+                          dependencies: [ plugin_deps, libgimpui_dep ],
                           win_subsystem: 'windows',
                           install: true,
                           install_dir: gimpplugindir / 'plug-ins' / plugin_name)
