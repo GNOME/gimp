@@ -698,7 +698,7 @@ load_image (GFile   *file,
 
   /* Temporary buffer */
   if (! g_size_checked_mul (&allocation, img_width, img_height) ||
-      ! (tmppixel = g_try_new0 (guint32, allocation))
+      ! (tmppixel = g_try_new0 (guint32, allocation)))
     {
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
                    _("Image dimensions too large: width %d x height %d"),
@@ -1025,7 +1025,7 @@ load_thumbnail (GFile   *file,
 
   /* Temporary buffer */
   if (! g_size_checked_mul (&allocation, width, height) ||
-      ! (tmppixel = g_try_new0 (guint32, allocation))
+      ! (tmppixel = g_try_new0 (guint32, allocation)))
     {
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
                    _("Image dimensions too large: width %d x height %d"),
