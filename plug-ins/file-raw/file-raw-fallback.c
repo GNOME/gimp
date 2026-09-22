@@ -295,7 +295,9 @@ load_image (GFile        *file,
     }
 
   /* Ensure image is imported as 16 bpc */
-  raw_info->params.output_bps = 16;
+  raw_info->params.output_bps    = 16;
+  /* Try to use camera white balance */
+  raw_info->params.use_camera_wb = 1;
 
   raw_error = libraw_dcraw_process (raw_info);
   if (raw_error != LIBRAW_SUCCESS)
@@ -433,6 +435,9 @@ load_thumbnail_image (GFile   *file,
       libraw_close (raw_info);
       return NULL;
     }
+
+  /* Try to use camera white balance */
+  raw_info->params.use_camera_wb = 1;
 
   thumbnail = libraw_dcraw_make_mem_thumb (raw_info, &raw_error);
   if (raw_error == LIBRAW_SUCCESS)
