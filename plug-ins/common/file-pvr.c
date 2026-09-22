@@ -759,14 +759,16 @@ pvr_decode_twiddle (GimpLayer  *layer,
 {
   gint        twiddle[MAX_TWIDDLE_SIZE];
   GeglBuffer *buffer;
-  guint       end      = 0;
-  gint        distance = 0;
-  gint        stride   = 0;
-  gint        offset   = 0;
+  guint       end        = 0;
+  gint        distance   = 0;
+  gint        stride     = 0;
+  gint        offset     = 0;
+  gsize       pixel_size = 0;
   guchar     *pixels;
 
-  pixels = g_try_malloc0 (width * height * n_components);
-  if (pixels == NULL)
+  if (! g_size_checked_mul (&pixel_size, width, height)            ||
+      ! g_size_checked_mul (&pixel_size, pixel_size, n_components) ||
+      ! (pixels = g_try_malloc0 (pixel_size)))
     return FALSE;
 
   /* Initialize twiddle look up table */
@@ -804,8 +806,9 @@ pvr_decode_twiddle (GimpLayer  *layer,
 
               offset2 += mipmap_offset;
 
-              if (offset2 + 1 >= data_size)
-                return FALSE;
+              if ((offset2 + 1) >= data_size ||
+                  (offset + n_components) > pixel_size)
+                break;
 
               p = data[offset2] | (data[offset2 + 1] << 8);
               if (! pvr_decode_color (pixel_mode, p, pixels, offset))
