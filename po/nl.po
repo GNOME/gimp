@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-15 18:04+0000\n"
-"PO-Revision-Date: 2026-09-16 10:38+0200\n"
+"POT-Creation-Date: 2026-09-22 20:58+0000\n"
+"PO-Revision-Date: 2026-09-23 15:03+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -219,117 +219,117 @@ msgstr "%s versie %s wordt gebruikt"
 msgid "System Language"
 msgstr "Systeemtaal"
 
-#: app/main.c:164
+#: app/main.c:169
 msgid "Show version information and exit"
 msgstr "Versie-informatie tonen en afsluiten"
 
-#: app/main.c:169
+#: app/main.c:174
 msgid "Show license information and exit"
 msgstr "Licentie-informatie tonen en afsluiten"
 
-#: app/main.c:174
+#: app/main.c:179
 msgid "Be more verbose"
 msgstr "Meer informatie geven"
 
-#: app/main.c:179
+#: app/main.c:184
 msgid "Start a new GIMP instance"
 msgstr "Een nieuwe instantie van GIMP opstarten"
 
-#: app/main.c:184
+#: app/main.c:189
 msgid "Open images as new"
 msgstr "Afbeeldingen openen als nieuw"
 
-#: app/main.c:202
+#: app/main.c:207
 msgid "Run without a user interface"
 msgstr "Uitvoeren zonder een gebruikersinterface"
 
-#: app/main.c:207
+#: app/main.c:212
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Geen penselen, kleurverlopen, patronen, … laden"
 
-#: app/main.c:212
+#: app/main.c:217
 msgid "Do not load any fonts"
 msgstr "Geen lettertypes laden"
 
-#: app/main.c:217
+#: app/main.c:222
 msgid "Do not show a splash screen"
 msgstr "Opstartvenster niet tonen"
 
-#: app/main.c:222
+#: app/main.c:227
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Geen gedeeld geheugen tussen GIMP en plug-ins gebruiken"
 
-#: app/main.c:227
+#: app/main.c:232
 msgid "Do not use special CPU acceleration functions"
 msgstr "Geen speciale functies voor CPU-versnelling gebruiken"
 
-#: app/main.c:232
+#: app/main.c:237
 msgid "Use an alternate sessionrc file"
 msgstr "Een alternatief sessionrc-bestand gebruiken"
 
-#: app/main.c:237
+#: app/main.c:242
 msgid "Use an alternate user gimprc file"
 msgstr "Een alternatief gebruikers-gimprc-bestand gebruiken"
 
-#: app/main.c:242
+#: app/main.c:247
 msgid "Use an alternate system gimprc file"
 msgstr "Een alternatief systeem-gimprc-bestand gebruiken"
 
-#: app/main.c:247
+#: app/main.c:252
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Uit te voeren batch-opdracht (kan meerdere keren worden gebruikt)"
 
-#: app/main.c:252
+#: app/main.c:257
 msgid "The procedure to process batch commands with"
 msgstr "De procedure waarmee batch-opdrachten worden verwerkt"
 
-#: app/main.c:257
+#: app/main.c:262
 msgid "Quit immediately after performing requested actions"
 msgstr "Stop onmiddellijk na het uitvoeren van de gevraagde acties"
 
-#: app/main.c:262
+#: app/main.c:267
 msgid "Send messages to console instead of using a dialog"
 msgstr "Waarschuwingen in console tonen in plaats van in een dialoogvenster"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:268
+#: app/main.c:273
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB compatibiliteitsmodus (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:274
+#: app/main.c:279
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Debuggen bij een crash (never|ask|always)"
 
-#: app/main.c:279
+#: app/main.c:284
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Niet-fatale debugsignaalhandlers inschakelen"
 
-#: app/main.c:284
+#: app/main.c:289
 msgid "Make all warnings fatal"
 msgstr "Alle waarschuwingen fataal laten zijn"
 
-#: app/main.c:289
+#: app/main.c:294
 msgid "Output a gimprc file with default settings"
 msgstr "Een gimprc-bestand produceren met standaard instellingen"
 
-#: app/main.c:305
+#: app/main.c:310
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Gesorteerde lijst van verouderde procedures in the PDB tonen"
 
-#: app/main.c:310
+#: app/main.c:315
 msgid "Show a preferences page with experimental features"
 msgstr "Een pagina Voorkeuren tonen met experimentele functies"
 
-#: app/main.c:315
+#: app/main.c:320
 msgid "Show an image submenu with debug actions"
 msgstr "Een submenu tonen met acties voor foutopsporing"
 
-#: app/main.c:837
+#: app/main.c:884
 msgid "[FILE|URI...]"
 msgstr "[BESTAND|URI...]"
 
-#: app/main.c:867
+#: app/main.c:914
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -337,12 +337,12 @@ msgstr "GIMP kon de grafische gebruikersinterface niet initialiseren.\n"
 "Zorg ervoor dat er een juiste instelling voor uw weergaveomgeving bestaat."
 
 # Er is al een instantie van GIMP opgestart. technotalk
-#: app/main.c:971
+#: app/main.c:1018
 msgid "Another GIMP instance is already running."
 msgstr "Er is al een andere sessie van GIMP actief."
 
 # elke willekeurige toets sluit dit venster
-#: app/main.c:1055
+#: app/main.c:1102
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Druk op een willekeurige toets om dit venster te sluiten)\n"
@@ -488,7 +488,7 @@ msgstr "Gereedschapsvoorinstellingen"
 #: app/actions/actions.c:186 app/dialogs/dialogs.c:442
 #: app/widgets/gimptoolpreseteditor.c:99
 msgid "Tool Preset Editor"
-msgstr "Bewerker gereedschapsvoorinstellingen"
+msgstr "Bewerker Gereedschapsvoorinstellingen"
 
 #. Help
 #. fix native search bar not appearing on non-Enligsh locales
@@ -567,9 +567,9 @@ msgstr "Tekst"
 
 #: app/actions/actions.c:231
 msgid "Text Editor"
-msgstr "Tekstverwerker"
+msgstr "Tekstbewerker"
 
-#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:549
+#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:614
 msgid "Tool Options"
 msgstr "Gereedschapsopties"
 
@@ -681,7 +681,7 @@ msgstr "Penselen ve_rnieuwen"
 #: app/actions/brushes-actions.c:80
 msgctxt "brushes-action"
 msgid "Refresh brushes"
-msgstr "Penselen vernieuwen"
+msgstr "Penselen verversen"
 
 #: app/actions/brushes-actions.c:88
 msgctxt "brushes-action"
@@ -891,7 +891,7 @@ msgstr "P_ositie kanaal vergrendelen"
 #: app/actions/channels-actions.c:126
 msgctxt "channels-action"
 msgid "None"
-msgstr "Geen"
+msgstr "Niets selecteren"
 
 #: app/actions/channels-actions.c:127
 msgctxt "channels-action"
@@ -972,7 +972,7 @@ msgstr "Kleurlabel kanaal: instellen op paars"
 #: app/actions/channels-actions.c:174
 msgctxt "channels-action"
 msgid "Gray"
-msgstr "Grijs"
+msgstr "Grijswaarden"
 
 #: app/actions/channels-actions.c:175
 msgctxt "channels-action"
@@ -2506,7 +2506,7 @@ msgstr "240 Seconden"
 #: app/dialogs/layer-add-mask-dialog.c:122
 #: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:223
 #: app/dialogs/preferences-dialog.c:608 app/dialogs/preferences-dialog.c:1181
-#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:151
+#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:149
 #: app/dialogs/resize-dialog.c:228 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:138 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
@@ -2587,7 +2587,7 @@ msgstr "Geef een beschrijving van het markeerpunt"
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
 #: app/dialogs/welcome-dialog.c:1257 app/display/gimpdisplayshell-dnd.c:707
-#: app/display/gimpimagewindow.c:2383 app/widgets/gimplayertreeview.c:864
+#: app/display/gimpimagewindow.c:2395 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3168,7 +3168,8 @@ msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Nuttige tips voor het gebruik van GIMP tonen"
 
-#: app/actions/dialogs-actions.c:353
+#. Welcome Dialog
+#: app/actions/dialogs-actions.c:353 app/menus/menus.c:660
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "Welkomstvenster"
@@ -3585,7 +3586,7 @@ msgstr "Witbalans werkt alleen op RGB-kleurlagen."
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:73
 #: app/operations/gimpoperationlevels.c:63 app/tools/gimplevelstool.c:141
 msgid "Levels"
-msgstr "Kleurniveaus"
+msgstr "Niveaus"
 
 #: app/actions/drawable-commands.c:244
 msgid "Lock/Unlock content"
@@ -3961,7 +3962,7 @@ msgstr "Op_nieuw uitvoeren"
 
 #: app/actions/edit-commands.c:167
 msgid "Clear Undo History"
-msgstr "Geschiedenis Ongedaan maken wissen"
+msgstr "Geschiedenis wissen"
 
 #: app/actions/edit-commands.c:194
 msgid "Really clear image's undo history?"
@@ -5208,7 +5209,7 @@ msgstr "Verwijderen"
 #: app/actions/gradient-editor-actions.c:102
 msgctxt "gradient-editor-action"
 msgid "Recenter"
-msgstr "Opnieuw centreren"
+msgstr "Middelpunt herberekenen"
 
 #: app/actions/gradient-editor-actions.c:107
 msgctxt "gradient-editor-action"
@@ -5937,7 +5938,7 @@ msgstr "Afbeelding naar 32-bit integer converteren"
 #: app/actions/image-actions.c:221
 msgctxt "image-convert-action"
 msgid "16-bit floating point"
-msgstr "16-bit decimaal"
+msgstr "16-bit zwevende komma"
 
 #: app/actions/image-actions.c:223
 msgctxt "image-convert-action"
@@ -5947,7 +5948,7 @@ msgstr "Afbeelding naar 16-bit decimale precisie converteren"
 #: app/actions/image-actions.c:227
 msgctxt "image-convert-action"
 msgid "32-bit floating point"
-msgstr "32-bit decimale precisie"
+msgstr "32-bit zwevende komma"
 
 #: app/actions/image-actions.c:229
 msgctxt "image-convert-action"
@@ -6409,7 +6410,7 @@ msgstr "_Zwevende laag of masker verankeren"
 #: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1318
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
-msgstr "De zwevende laag / het zwevende masker verankeren"
+msgstr "De zwevende laag of masker verankeren"
 
 # de N wordt gebruikt voor Nieuwe laag
 #: app/actions/layers-actions.c:147 app/actions/layers-actions.c:156
@@ -6651,7 +6652,7 @@ msgstr "Verhinderen dat transparantie-informatie van deze laag aangepast wordt"
 #: app/actions/layers-actions.c:382
 msgctxt "layers-action"
 msgid "Auto"
-msgstr "Automatisch"
+msgstr "Auto"
 
 #: app/actions/layers-actions.c:329
 msgctxt "layers-action"
@@ -6758,7 +6759,7 @@ msgstr "Composietmodus laag: doorsnede"
 #: app/actions/layers-actions.c:415
 msgctxt "layers-action"
 msgid "None"
-msgstr "Geen"
+msgstr "Niets selecteren"
 
 #: app/actions/layers-actions.c:416
 msgctxt "layers-action"
@@ -6839,7 +6840,7 @@ msgstr "Kleurnaam laag: naar paars"
 #: app/actions/layers-actions.c:463
 msgctxt "layers-action"
 msgid "Gray"
-msgstr "Grijs"
+msgstr "Grijswaarden"
 
 # grijswaarden/grijstinten
 #: app/actions/layers-actions.c:464
@@ -7283,7 +7284,7 @@ msgstr "Alfa van selectie aftrekken"
 #: app/actions/layers-commands.c:1979 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
-msgstr "Doorsnede van alfa met selectie"
+msgstr "Doorsnede van alfa en selectie"
 
 #: app/actions/layers-commands.c:1992
 msgid "Empty Selection"
@@ -7738,7 +7739,7 @@ msgstr "Positie kanaal vast_zetten"
 #: app/actions/paths-actions.c:189
 msgctxt "paths-action"
 msgid "None"
-msgstr "Geen"
+msgstr "Niets selecteren"
 
 #: app/actions/paths-actions.c:190
 msgctxt "paths-action"
@@ -7835,7 +7836,7 @@ msgstr "Paden naar sele_ctie"
 #: app/actions/paths-actions.c:247
 msgctxt "paths-action"
 msgid "Path to selection"
-msgstr "Pad naar selectie"
+msgstr "Selectie uit paden"
 
 #: app/actions/paths-actions.c:252
 msgctxt "paths-action"
@@ -7950,7 +7951,7 @@ msgstr "Padattributen"
 
 #: app/actions/paths-commands.c:181
 msgid "Edit Path Attributes"
-msgstr "Padattributen bewerken"
+msgstr "Padeigenschappen bewerken"
 
 #: app/actions/paths-commands.c:220
 msgid "New Path"
@@ -8418,7 +8419,7 @@ msgstr "_Nieuw sjabloon..."
 #: app/actions/templates-actions.c:49
 msgctxt "templates-action"
 msgid "Create a new template"
-msgstr "Nieuw sjabloon aanmaken"
+msgstr "Nieuwe sjabloon aanmaken"
 
 #: app/actions/templates-actions.c:54
 msgctxt "templates-action"
@@ -8527,7 +8528,7 @@ msgstr "Boven naar beneden, rechts naar links"
 #: app/actions/text-editor-actions.c:68
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr "Verticaal, rechts naar links (gemengde oriëntatie)"
+msgstr "Boven naar beneden, rechts naar links (gemengde oriëntatie)"
 
 #: app/actions/text-editor-actions.c:73
 msgctxt "text-editor-action"
@@ -8537,7 +8538,7 @@ msgstr "Boven naar beneden, rechts naar links, staand"
 #: app/actions/text-editor-actions.c:74
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr "Verticaal, rechts naar links (staand)"
+msgstr "Boven naar beneden, rechts naar links, staand"
 
 #: app/actions/text-editor-actions.c:79
 msgctxt "text-editor-action"
@@ -8547,7 +8548,7 @@ msgstr "Boven naar beneden, links naar rechts"
 #: app/actions/text-editor-actions.c:80
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr "Verticaal, links naar rechts (gemengde oriëntatie)"
+msgstr "Boven naar beneden, links naar rechts (gemengde oriëntatie)"
 
 #: app/actions/text-editor-actions.c:85
 msgctxt "text-editor-action"
@@ -8557,7 +8558,7 @@ msgstr "Boven naar beneden, links naar rechts, staand"
 #: app/actions/text-editor-actions.c:86
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr "Verticaal, links naar rechts (staand)"
+msgstr "Boven naar beneden, links naar rechts, staand"
 
 #: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:165
 msgid "Open Text File (UTF-8)"
@@ -8673,22 +8674,22 @@ msgstr "Van rechts naar links"
 #: app/actions/text-tool-actions.c:134
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr "Verticaal, rechts naar links (gemengde oriëntatie)"
+msgstr "Boven naar beneden, rechts naar links (gemengde oriëntatie)"
 
 #: app/actions/text-tool-actions.c:139
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr "Verticaal, rechts naar links (staand)"
+msgstr "Boven naar beneden, rechts naar links, staand"
 
 #: app/actions/text-tool-actions.c:144
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr "Verticaal, links naar rechts (gemengde oriëntatie)"
+msgstr "Boven naar beneden, links naar rechts (gemengde oriëntatie)"
 
 #: app/actions/text-tool-actions.c:149
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr "Verticaal, links naar rechts (staand)"
+msgstr "Boven naar beneden, links naar rechts, staand"
 
 #: app/actions/text-tool-commands.c:218
 #, c-format
@@ -8833,7 +8834,7 @@ msgstr "Locatie van instellingenbestand tonen in bestandsbeheer"
 #: app/actions/tool-presets-actions.c:70
 msgctxt "tool-presets-action"
 msgid "_Save Tool Options to Preset"
-msgstr "Gereedschapsopties op_slaan naar voorinstelling"
+msgstr "Gereed_schapsopties bewaren naar voorinstelling"
 
 #: app/actions/tool-presets-actions.c:71
 msgctxt "tool-presets-action"
@@ -10344,7 +10345,7 @@ msgstr "Weergave openen"
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
+#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:199
 #: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpdeviceinfoeditor.c:838 app/widgets/gimperrordialog.c:76
@@ -11161,7 +11162,7 @@ msgstr "Onthoud het huidige gereedschap, patroon, penseel en de kleur voor een v
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
-msgstr "Indien ingeschakeld, hetzelfde gereedschap en opties ervan zullen worden gebruikt voor alle invoerapparaten. Er treedt geen wisseling in gereedschap op als het invoerapparaat wijzigt."
+msgstr "Indien in geschakeld zullen hetzelfde gereedschap en opties worden gebruikt voor alle invoerapparaten. Er zal geen wisseling van gereedschap gebeuren als het invoerapparaat wijzigt."
 
 #: app/config/gimprc-blurbs.h:427
 msgid ""
@@ -11690,7 +11691,7 @@ msgstr "Afbeelding"
 #: app/core/core-enums.c:26
 msgctxt "align-reference-type"
 msgid "Selection"
-msgstr "Selectie"
+msgstr "Selecteren"
 
 #: app/core/core-enums.c:27
 msgctxt "align-reference-type"
@@ -11771,7 +11772,7 @@ msgstr "Hard"
 #: app/core/core-enums.c:133
 msgctxt "channel-border-style"
 msgid "Smooth"
-msgstr "Glad"
+msgstr "Vloeiend"
 
 # zachte/vage/onscherpe randen
 #: app/core/core-enums.c:134
@@ -11782,7 +11783,7 @@ msgstr "Zachte randen"
 #: app/core/core-enums.c:170
 msgctxt "color-pick-mode"
 msgid "Pixel"
-msgstr "Beeldpunt"
+msgstr "Pixel (Beeldpunt)"
 
 #: app/core/core-enums.c:171
 msgctxt "color-pick-mode"
@@ -11827,7 +11828,7 @@ msgstr "CIE xyY"
 #: app/core/core-enums.c:179
 msgctxt "color-pick-mode"
 msgid "CIE Yu'v'"
-msgstr "CIE Yu'v'"
+msgstr "CIE Yu‘v’"
 
 #: app/core/core-enums.c:209
 msgctxt "color-profile-policy"
@@ -11852,7 +11853,7 @@ msgstr "Converteren naar voorkeursprofiel RGB of grijswaarden (met standaard het
 #: app/core/core-enums.c:306
 msgctxt "convert-dither-type"
 msgid "None"
-msgstr "Geen"
+msgstr "Niets selecteren"
 
 # kleurbenadering
 #: app/core/core-enums.c:307
@@ -11996,12 +11997,12 @@ msgstr "Hardheid"
 #: app/core/core-enums.c:569
 msgctxt "dynamics-output-type"
 msgid "Force"
-msgstr "Kracht"
+msgstr "Forceer"
 
 #: app/core/core-enums.c:570
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
-msgstr "Helling"
+msgstr "Verhouding"
 
 #: app/core/core-enums.c:571
 msgctxt "dynamics-output-type"
@@ -12011,22 +12012,22 @@ msgstr "Tussenruimte"
 #: app/core/core-enums.c:572
 msgctxt "dynamics-output-type"
 msgid "Rate"
-msgstr "Snelheid"
+msgstr "Lengte"
 
 #: app/core/core-enums.c:573
 msgctxt "dynamics-output-type"
 msgid "Flow"
-msgstr "Snelheid"
+msgstr "Vloeien"
 
 #: app/core/core-enums.c:574
 msgctxt "dynamics-output-type"
 msgid "Jitter"
-msgstr "Spikkelen"
+msgstr "Spikkeleffect"
 
 #: app/core/core-enums.c:602
 msgctxt "custom-style"
 msgid "Solid color"
-msgstr "Dekkende kleur"
+msgstr "Effen kleur"
 
 #: app/core/core-enums.c:603
 msgctxt "custom-style"
@@ -12151,7 +12152,7 @@ msgstr "RGB"
 #: app/core/core-enums.c:859
 msgctxt "item-set"
 msgid "None"
-msgstr "Geen"
+msgstr "Niets selecteren"
 
 #: app/core/core-enums.c:860
 msgctxt "item-set"
@@ -12876,7 +12877,7 @@ msgstr "Verwijderen van ‘%s’ mislukt: %s"
 #: app/core/gimp-data-factories.c:403 app/core/gimpcontext.c:706
 #: app/dialogs/preferences-dialog.c:3589 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
-msgstr "Gedrag"
+msgstr "Penseelgedrag"
 
 # Documentgeschiedenis/overzicht ‘ongedaan maken’
 # wissen/leegmaken
@@ -13332,7 +13333,7 @@ msgstr "Fatale leesfout in penseelbestand: ‘%s’: inconsistente parameters."
 
 #: app/core/gimpbuffer.c:106
 msgid "Buffer"
-msgstr "Buffer"
+msgstr "Buffers"
 
 #: app/core/gimpchannel-select.c:70
 msgctxt "undo-type"
@@ -13563,7 +13564,7 @@ msgstr "Patroon"
 #: app/tools/gimpgradientoptions.c:286 app/tools/gimpgradienttool.c:174
 #: app/tools/gimpgradienttool.c:872 app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
-msgstr "Kleurverlopen"
+msgstr "Kleurverloop"
 
 #: app/core/gimpcontext.c:734 app/core/gimpcontext.c:735
 #: app/core/gimppalette.c:137 app/widgets/gimpcolorselectorpalette.c:59
@@ -13669,7 +13670,7 @@ msgstr "Kon gegevens niet laden:\n"
 #: app/core/gimpdrawable.c:703 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
-msgstr "Schalen"
+msgstr "Schaal"
 
 #: app/core/gimpdrawable-bucket-fill.c:92
 msgctxt "undo-type"
@@ -13803,7 +13804,7 @@ msgstr "Aangepaste stijl"
 #: app/tools/gimpbucketfilloptions.c:183 app/tools/gimpselectionoptions.c:91
 #: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
-msgstr "Randen glad maken"
+msgstr "Antialiassen"
 
 # zachte/vage/onscherpe randen
 #: app/core/gimpfilloptions.c:161 app/tools/gimpbucketfilloptions.c:193
@@ -14391,7 +14392,7 @@ msgstr "Zichtbare lagen samenvoegen"
 #: app/core/gimpimage-merge.c:237
 msgctxt "undo-type"
 msgid "Flatten Image"
-msgstr "Afbeelding pletten"
+msgstr "Alle lagen samenvoegen"
 
 #: app/core/gimpimage-merge.c:266
 msgid "Cannot flatten an image without any visible layer."
@@ -15273,7 +15274,7 @@ msgstr "Penseelgedrag nabootsen"
 #: app/display/gimpstatusbar.c:2158 app/widgets/gimpimagepropview.c:407
 #: app/widgets/gimpsymmetryeditor.c:167 app/widgets/gimpsymmetryeditor.c:177
 msgid "None"
-msgstr "Geen"
+msgstr "Niets selecteren"
 
 #: app/core/gimpsymmetry.c:151
 msgid "Active"
@@ -15380,7 +15381,7 @@ msgstr "Interval op de Y-as (pixels)"
 
 #: app/core/gimpsymmetry-tiling.c:128
 msgid "Shift"
-msgstr "Verschuiving"
+msgstr "Shift"
 
 #: app/core/gimpsymmetry-tiling.c:129
 msgid "X-shift between lines (pixels)"
@@ -15447,7 +15448,7 @@ msgstr "Afbeeldingstype"
 
 #: app/core/gimptemplate.c:196 app/core/gimptemplate.c:203
 msgid "Precision"
-msgstr "Bitdiepte"
+msgstr "Nauwkeurigheid"
 
 #: app/core/gimptemplate.c:212 app/widgets/gimphistogrameditor.c:128
 msgid "Linear/Perceptual"
@@ -15655,9 +15656,10 @@ msgstr "Geheugen: %s (%s vrij)\n"
 msgid "Memory:"
 msgstr "Geheugen:"
 
-#: app/dialogs/about-dialog.c:1120
-msgid "Swap:"
-msgstr "Wisselgeheugen:"
+#: app/dialogs/about-dialog.c:1119
+#, c-format
+msgid "Swap: %s free on partition\n"
+msgstr "Wisselgeheugen: %s vrij op partitie\n"
 
 #: app/dialogs/about-dialog.c:1131
 msgid "Library Versions:"
@@ -15770,7 +15772,7 @@ msgstr "Afbeelding naar grijswaarden omzetten"
 # afdrukvoorbeeld/softproof/
 #: app/dialogs/color-profile-dialog.c:200
 msgid "Soft-Proof Profile"
-msgstr "Renderintentie afdrukvoorbeeld"
+msgstr "Profiel afdrukvoorbeeld"
 
 #: app/dialogs/color-profile-dialog.c:203
 msgid "Select Soft-Proof Profile"
@@ -15816,7 +15818,7 @@ msgstr "Doelprofiel selecteren"
 #: app/widgets/gimpwidgets-constructors.c:97
 msgctxt "profile"
 msgid "None"
-msgstr "Geen"
+msgstr "Niets selecteren"
 
 #: app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert the image to the built-in grayscale color profile?"
@@ -15967,7 +15969,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Bent u zeker dat u ‘%s’ uit de lijst en van de schijf wilt verwijderen?"
 
-#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:189
+#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:196
 #: app/gui/gui-message.c:268
 msgid "GIMP Message"
 msgstr "GIMP-bericht"
@@ -15990,7 +15992,7 @@ msgstr "Fouten"
 
 #: app/dialogs/dialogs.c:328
 msgid "Pointer"
-msgstr "Aanwijzer"
+msgstr "Muisaanwijzer"
 
 #: app/dialogs/dialogs.c:368
 msgid "History"
@@ -16007,7 +16009,7 @@ msgstr "Histogram"
 #. Selection Bounding Box
 #: app/dialogs/dialogs.c:396 app/display/gimpcursorview.c:274
 msgid "Selection"
-msgstr "Selectie"
+msgstr "Selecteren"
 
 #: app/dialogs/dialogs.c:396
 msgid "Selection Editor"
@@ -17115,7 +17117,7 @@ msgstr "_IPTC-data altijd exporteren indien beschikbaar"
 
 #: app/dialogs/preferences-dialog.c:1648
 msgid "Update metadata automatically"
-msgstr "Automatisch metadata bijwerken"
+msgstr "Automatisch metagegevens bijwerken"
 
 #: app/dialogs/preferences-dialog.c:1651
 msgid "Metadata can contain sensitive information."
@@ -17137,11 +17139,11 @@ msgstr "RAW-bestanden importeren"
 
 #: app/dialogs/preferences-dialog.c:1699
 msgid "Experimental Playground"
-msgstr "Experimentele speelplaats"
+msgstr "Experimentele afdeling"
 
 #: app/dialogs/preferences-dialog.c:1700
 msgid "Playground"
-msgstr "Experimentele speelplaats"
+msgstr "Experimentele afdeling"
 
 #: app/dialogs/preferences-dialog.c:1707
 msgid ""
@@ -17168,7 +17170,7 @@ msgstr "O_penCL gebruiken"
 #. Very unstable tools
 #: app/dialogs/preferences-dialog.c:1732
 msgid "Experimental"
-msgstr "Experimentele speelplaats"
+msgstr "Experimentele afdeling"
 
 # muisaanwijzer/pointer
 #: app/dialogs/preferences-dialog.c:1736
@@ -17249,7 +17251,7 @@ msgstr "Lagen _uitbreiden"
 #. Move Tool
 #: app/dialogs/preferences-dialog.c:1837
 msgid "Move Tool"
-msgstr "Gereedschap Verplaatsen"
+msgstr "Verplaatsen"
 
 #: app/dialogs/preferences-dialog.c:1841
 msgid "Set _layer or path as active"
@@ -17671,7 +17673,7 @@ msgstr "Alleen binnen actieve groepen samenvoegen"
 
 #: app/dialogs/preferences-dialog.c:2598
 msgid "Discard invisible layers"
-msgstr "Onzichtbare lagen verwijderen"
+msgstr "Onzichtbare lagen verwerpen"
 
 #. New Channel Dialog
 #: app/dialogs/preferences-dialog.c:2602
@@ -17835,7 +17837,7 @@ msgstr "G_eschiedenis wissen"
 
 #: app/dialogs/preferences-dialog.c:2847 app/dialogs/preferences-dialog.c:2848
 msgid "Display"
-msgstr "Weergave"
+msgstr "Beeldscherm"
 
 #. Transparency
 #: app/dialogs/preferences-dialog.c:2857
@@ -18123,7 +18125,7 @@ msgstr "_Links- of rechtshandige muisaanwijzer:"
 # tekenen vond ik net iets duidelijker
 #: app/dialogs/preferences-dialog.c:3420
 msgid "Paint Tools"
-msgstr "Tekengereedschappen"
+msgstr "Tekenen"
 
 #: app/dialogs/preferences-dialog.c:3424
 msgid "Show _brush outline"
@@ -18432,61 +18434,61 @@ msgstr "Resolutie _Y:"
 msgid "pixels/%a"
 msgstr "beeldpunten/%a"
 
-#: app/dialogs/quit-dialog.c:144
+#: app/dialogs/quit-dialog.c:142
 msgid "Quit GIMP"
 msgstr "GIMP afsluiten"
 
-#: app/dialogs/quit-dialog.c:144
+#: app/dialogs/quit-dialog.c:142
 msgid "Close All Images"
 msgstr "Alle afbeeldingen sluiten"
 
-#: app/dialogs/quit-dialog.c:222
+#: app/dialogs/quit-dialog.c:220
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Niet-opgeslagen wijzigingen zullen verloren gaan."
 
-#: app/dialogs/quit-dialog.c:225
+#: app/dialogs/quit-dialog.c:223
 msgid "If you close these images now, changes will be lost."
 msgstr "Als u deze afbeeldingen nu sluit, zullen er wijzigingen verloren gaan."
 
 #. TRANSLATORS: unless your language
 #. msgstr[0] applies to 1 only (as
 #. in English), replace "one" with %d.
-#: app/dialogs/quit-dialog.c:312
+#: app/dialogs/quit-dialog.c:310
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "Er is één bestand met niet-opgeslagen wijzigingen:"
 msgstr[1] "Er zijn %d bestanden met niet-opgeslagen wijzigingen:"
 
-#: app/dialogs/quit-dialog.c:323
+#: app/dialogs/quit-dialog.c:321
 #, c-format
 msgid "Press %s to quit."
 msgstr "Druk op %s om af te sluiten."
 
-#: app/dialogs/quit-dialog.c:326
+#: app/dialogs/quit-dialog.c:324
 #, c-format
 msgid "Press %s to close all images."
 msgstr "Druk op %s om alle afbeeldingen te sluiten."
 
-#: app/dialogs/quit-dialog.c:330 app/dialogs/user-install-dialog.c:90
+#: app/dialogs/quit-dialog.c:328 app/dialogs/user-install-dialog.c:90
 msgid "_Quit"
 msgstr "GIMP _afsluiten"
 
-#: app/dialogs/quit-dialog.c:330
+#: app/dialogs/quit-dialog.c:328
 msgid "Cl_ose"
 msgstr "_Sluiten"
 
-#: app/dialogs/quit-dialog.c:354
+#: app/dialogs/quit-dialog.c:352
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr "Druk op %s om alle wijzigingen te verwerpen en af te sluiten."
 
-#: app/dialogs/quit-dialog.c:357
+#: app/dialogs/quit-dialog.c:355
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr "Druk op %s om alle wijzigingen te verwerpen en alle afbeeldingen te sluiten."
 
-#: app/dialogs/quit-dialog.c:365 app/display/gimpdisplayshell-close.c:182
+#: app/dialogs/quit-dialog.c:363 app/display/gimpdisplayshell-close.c:182
 msgid "_Discard Changes"
 msgstr "_Wijzigingen verwerpen"
 
@@ -18914,7 +18916,7 @@ msgstr "Klik op een item met een pijlpunt van %s om een rondleiding te krijgen."
 #: app/display/display-enums.c:89
 msgctxt "compass-orientation"
 msgid "Auto"
-msgstr "Automatisch"
+msgstr "Auto"
 
 #: app/display/display-enums.c:90
 msgctxt "compass-orientation"
@@ -18949,7 +18951,7 @@ msgstr "Regel van vijfden"
 #: app/display/display-enums.c:160
 msgctxt "guides-type"
 msgid "Golden sections"
-msgstr "Gulden snedes"
+msgstr "Gulden snede"
 
 #: app/display/display-enums.c:161
 msgctxt "guides-type"
@@ -18965,7 +18967,7 @@ msgstr "Aantal lijnen"
 #: app/display/display-enums.c:163
 msgctxt "guides-type"
 msgid "Line spacing"
-msgstr "Lijnafstand"
+msgstr "Regelafstand"
 
 #: app/display/display-enums.c:384
 msgctxt "rectangle-fixed-rule"
@@ -19025,7 +19027,7 @@ msgstr "Geen opdracht"
 #: app/display/display-enums.c:617
 msgctxt "modifier-action"
 msgid "Pan"
-msgstr "Verplaatsen"
+msgstr "Verschuiven (hor.)"
 
 #: app/display/display-enums.c:618
 msgctxt "modifier-action"
@@ -19096,7 +19098,7 @@ msgstr "Begrenzingsvak van de selectie"
 #. Width
 #: app/display/gimpcursorview.c:312
 msgid "W"
-msgstr "B"
+msgstr "W"
 
 #. Height
 #: app/display/gimpcursorview.c:319
@@ -19356,7 +19358,7 @@ msgstr "(ongewijzigd)"
 msgid "(none)"
 msgstr "(geen)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1824
+#: app/display/gimpdisplayshell-tool-events.c:1811
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Gekozen laag: ‘%s’"
@@ -19622,7 +19624,7 @@ msgstr "%s om de hele lijn te bewegen"
 
 #: app/display/gimptoolpath.c:281 app/tools/gimppathoptions.c:122
 msgid "Edit Mode"
-msgstr "Bewerkingsmodus"
+msgstr "Modus Bewerken"
 
 # veelhoek / polygon
 #: app/display/gimptoolpath.c:290 app/tools/gimppathoptions.c:130
@@ -20055,7 +20057,7 @@ msgstr "Geïndexeerd"
 #: app/gegl/gimp-gegl-enums.c:25
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
-msgstr "Kooitransformatiegebied maken of aanpassen"
+msgstr "De kooi creëren of aanpassen"
 
 #: app/gegl/gimp-gegl-enums.c:26
 msgctxt "cage-mode"
@@ -20068,7 +20070,7 @@ msgstr "De kooi vervormen\n"
 #: app/operations/operations-enums.c:27
 msgctxt "layer-color-space"
 msgid "Auto"
-msgstr "Automatisch"
+msgstr "Auto"
 
 #: app/operations/operations-enums.c:28
 msgctxt "layer-color-space"
@@ -20093,7 +20095,7 @@ msgstr "RGB (perceptueel)"
 #: app/operations/operations-enums.c:62
 msgctxt "layer-composite-mode"
 msgid "Auto"
-msgstr "Automatisch"
+msgstr "Auto"
 
 #: app/operations/operations-enums.c:63
 msgctxt "layer-composite-mode"
@@ -20453,12 +20455,12 @@ msgstr "Aftrekken"
 #: app/operations/operations-enums.c:258
 msgctxt "layer-mode"
 msgid "Darken only"
-msgstr "Enkel donkerder"
+msgstr "Enkel donkerder maken"
 
 #: app/operations/operations-enums.c:259
 msgctxt "layer-mode"
 msgid "Lighten only"
-msgstr "Enkel lichter maken"
+msgstr "Enkel Lichter maken"
 
 #: app/operations/operations-enums.c:260
 msgctxt "layer-mode"
@@ -20585,7 +20587,7 @@ msgstr "Kleur wissen"
 #: app/operations/operations-enums.c:287
 msgctxt "layer-mode"
 msgid "Erase"
-msgstr "Gummen"
+msgstr "Wissen"
 
 #: app/operations/operations-enums.c:288
 msgctxt "layer-mode"
@@ -20724,7 +20726,7 @@ msgstr "Lichtheid"
 #: app/operations/gimphuesaturationconfig.c:119
 #: app/operations/gimphuesaturationconfig.c:120
 msgid "Overlap"
-msgstr "Overlapping"
+msgstr "Overlappen"
 
 #: app/operations/gimplevelsconfig.c:129
 msgid "Linear"
@@ -20862,7 +20864,7 @@ msgstr "Grijstint kiezen op grond van"
 
 #: app/operations/gimpoperationhuesaturation.c:65
 msgid "Hue-Saturation"
-msgstr "Tint/verzadiging"
+msgstr "Tint/Verzadiging"
 
 #: app/operations/gimpoperationhuesaturation.c:67
 msgid "Adjust hue, saturation, and lightness"
@@ -20938,7 +20940,7 @@ msgstr "Hoge drempelwaarde"
 
 #: app/operations/gimpoperationthresholdalpha.c:78
 msgid "Threshold Alpha"
-msgstr "Alfa-drempelwaarde"
+msgstr "Alfadrempel"
 
 #: app/operations/gimpoperationthresholdalpha.c:81
 msgid ""
@@ -20954,19 +20956,19 @@ msgstr "Waarde"
 msgid "The alpha value"
 msgstr "De alfawaarde"
 
-#: app/gui/gui.c:336
+#: app/gui/gui.c:346
 msgid "Image Recovery"
 msgstr "Beeldherstel"
 
-#: app/gui/gui.c:338
+#: app/gui/gui.c:348
 msgid "_Discard"
 msgstr "Wijzigingen _verwerpen"
 
-#: app/gui/gui.c:339
+#: app/gui/gui.c:349
 msgid "_Recover"
 msgstr "He_rstel"
 
-#: app/gui/gui.c:350
+#: app/gui/gui.c:360
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Oeps! Het lijkt erop dat GIMP zich herstelde van een crash!"
 
@@ -20976,7 +20978,7 @@ msgstr "Oeps! Het lijkt erop dat GIMP zich herstelde van een crash!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:359
+#: app/gui/gui.c:369
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20988,7 +20990,7 @@ msgstr[1] "%d afbeeldingen werden gered tijdens de crash. Wilt u proberen ze ter
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:575
+#: app/gui/gui.c:640
 msgid "Documents"
 msgstr "Documenten"
 
@@ -21021,7 +21023,7 @@ msgstr "Verfspuit"
 #: app/paint/gimpairbrushoptions.c:71
 msgctxt "airbrush-tool"
 msgid "Rate"
-msgstr "Snelheid"
+msgstr "Lengte"
 
 #: app/paint/gimpairbrushoptions.c:79
 msgid "Motion only"
@@ -21029,7 +21031,7 @@ msgstr "Enkel beweging"
 
 #: app/paint/gimpairbrushoptions.c:86
 msgid "Flow"
-msgstr "Snelheid"
+msgstr "Vloeien"
 
 #: app/paint/gimpbrushcore.c:383
 msgid "No brushes available for use with this tool."
@@ -21063,11 +21065,11 @@ msgstr "Bewerkingstype"
 #: app/paint/gimpconvolveoptions.c:77
 msgctxt "convolve-tool"
 msgid "Rate"
-msgstr "Snelheid"
+msgstr "Lengte"
 
 #: app/paint/gimpdodgeburn.c:67
 msgid "Dodge/Burn"
-msgstr "Doordrukken/tegenhouden"
+msgstr "Doordrukken/Tegenhouden"
 
 #: app/paint/gimpdodgeburnoptions.c:71
 msgid "Type"
@@ -21116,7 +21118,7 @@ msgstr "Hoek"
 #: app/paint/gimpinkoptions.c:100 app/widgets/gimpdynamicseditor.c:164
 #: app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Tilt"
-msgstr "Helling"
+msgstr "Kantelen"
 
 #. Blob shape widgets
 #: app/paint/gimpinkoptions.c:107 app/tools/gimpgradientoptions.c:96
@@ -21219,7 +21221,7 @@ msgstr "Tussenruimte"
 
 #: app/paint/gimppaintoptions.c:248
 msgid "Force"
-msgstr "Kracht"
+msgstr "Forceer"
 
 #: app/paint/gimppaintoptions.c:249
 msgid "Brush Force"
@@ -21413,7 +21415,7 @@ msgstr "Smeren"
 #: app/paint/gimpsmudgeoptions.c:72
 msgctxt "smudge-tool"
 msgid "Rate"
-msgstr "Snelheid"
+msgstr "Lengte"
 
 #: app/paint/gimpsmudgeoptions.c:73
 msgid "The strength of smudging"
@@ -21422,7 +21424,7 @@ msgstr "De smeersnelheid"
 #: app/paint/gimpsmudgeoptions.c:79
 msgctxt "smudge-tool"
 msgid "Flow"
-msgstr "Snelheid"
+msgstr "Vloeien"
 
 #: app/paint/gimpsmudgeoptions.c:80
 msgid "The amount of brush color to blend"
@@ -21451,7 +21453,7 @@ msgstr "Geregistreerd uitlijnen kan niet op meer dan één tekengebied. Selectee
 #: app/paint/gimpsourceoptions.c:102 app/tools/gimpcloneoptions-gui.c:301
 #: app/tools/gimphealtool.c:106
 msgid "Alignment"
-msgstr "Uitlijning"
+msgstr "Uitlijnen"
 
 #: app/paint/paint-enums.c:53
 msgctxt "perspective-clone-mode"
@@ -21466,7 +21468,7 @@ msgstr "Klonen met perspectief"
 #: app/paint/paint-enums.c:84
 msgctxt "source-align-mode"
 msgid "None"
-msgstr "Geen"
+msgstr "Niets selecteren"
 
 #: app/paint/paint-enums.c:85
 msgctxt "source-align-mode"
@@ -21699,7 +21701,7 @@ msgstr "Curves"
 #: app/pdb/drawable-color-cmds.c:331
 msgctxt "undo-type"
 msgid "Extract Component"
-msgstr "Component extraheren"
+msgstr "Extraheer component"
 
 #: app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
@@ -21709,12 +21711,12 @@ msgstr "Grijswaarden"
 #: app/pdb/drawable-color-cmds.c:546
 msgctxt "undo-type"
 msgid "Hue-Saturation"
-msgstr "Tint/verzadiging"
+msgstr "Tint/Verzadiging"
 
 #: app/pdb/drawable-color-cmds.c:581
 msgctxt "undo-type"
 msgid "Invert"
-msgstr "Inverteren"
+msgstr "Omkeren"
 
 #: app/pdb/drawable-color-cmds.c:649
 msgctxt "undo-type"
@@ -21724,7 +21726,7 @@ msgstr "Niveaus"
 #: app/pdb/drawable-color-cmds.c:737
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
-msgstr "Schaduwen/hoge lichten"
+msgstr "Schaduwen/Hooglichten"
 
 #: app/pdb/drawable-color-cmds.c:777
 msgctxt "undo-type"
@@ -22709,7 +22711,7 @@ msgstr "Schaduwen"
 
 #: app/propgui/gimppropgui-shadows-highlights.c:78
 msgid "Highlights"
-msgstr "Hoge lichten"
+msgstr "Hooglichten"
 
 #: app/propgui/gimppropgui-shadows-highlights.c:94
 msgid "Common"
@@ -23557,7 +23559,7 @@ msgstr "Alles buiten de selectie dimmen"
 
 #: app/tools/gimpcropoptions.c:88 app/tools/gimprectangleselectoptions.c:87
 msgid "Highlight opacity"
-msgstr "Helderheid buiten selectie"
+msgstr "Dekking hoge lichten"
 
 #: app/tools/gimpcropoptions.c:89 app/tools/gimprectangleselectoptions.c:88
 msgid "How much to dim everything outside selection"
@@ -24010,7 +24012,7 @@ msgstr "Welke 'matting'-methode te gebruiken"
 #: app/tools/gimpforegroundselectoptions.c:132
 msgctxt "measurement"
 msgid "Levels"
-msgstr "Kleurniveaus"
+msgstr "Niveaus"
 
 # processors/processoren
 #: app/tools/gimpforegroundselectoptions.c:133
@@ -24027,7 +24029,7 @@ msgstr "Aantal niveaus om oplossing te vinden"
 
 #: app/tools/gimpforegroundselectoptions.c:146
 msgid "Iterations"
-msgstr "Herhalingen"
+msgstr "Iteraties"
 
 # processors/processoren
 #: app/tools/gimpforegroundselectoptions.c:147
@@ -24135,7 +24137,7 @@ msgstr "Toverstaf"
 #: app/tools/gimpgegltool.c:85 app/tools/gimpgegltool.c:302
 #: app/tools/gimpgegltool.c:304 app/tools/gimpoperationtool.c:132
 msgid "GEGL Operation"
-msgstr "GEGL-bewerking"
+msgstr "GEGL Bewerking"
 
 #: app/tools/gimpgegltool.c:86
 msgid "Run an arbitrary GEGL operation"
@@ -24463,7 +24465,7 @@ msgstr "Nieuw deel van selectielijn weergeven tijdens slepen van knooppunt"
 
 #: app/tools/gimpiscissorstool.c:292
 msgid "Scissors Select"
-msgstr "Schaar selectie"
+msgstr "Schaar"
 
 #: app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
@@ -24699,7 +24701,7 @@ msgstr "Gereedschap wisselen (%s)"
 
 #: app/tools/gimpmoveoptions.c:191
 msgid "Pick a layer or guide"
-msgstr "Een laag of hulplijn kiezen"
+msgstr "Kies een laag of hulplijn"
 
 #: app/tools/gimpmoveoptions.c:192
 msgid "Move the selected layers"
@@ -24707,7 +24709,7 @@ msgstr "De geselecteerde lagen verplaatsen"
 
 #: app/tools/gimpmoveoptions.c:196
 msgid "Pick a path"
-msgstr "Een pad kiezen"
+msgstr "Kies een pad"
 
 #: app/tools/gimpmoveoptions.c:197
 msgid "Move the active path"
@@ -24785,7 +24787,7 @@ msgstr "Raster tonen"
 #: app/tools/gimptransformgridoptions.c:574
 #: app/tools/gimptransformgridoptions.c:585
 msgid "Scale"
-msgstr "Schalen"
+msgstr "Schaal"
 
 #: app/tools/gimpnpointdeformationoptions.c:228
 msgid "Rigid (Rubber)"
@@ -25454,7 +25456,7 @@ msgstr "Lettergrootte"
 
 #: app/tools/gimptextoptions.c:185
 msgid "Hinting"
-msgstr "Hinten"
+msgstr "Hinting"
 
 #: app/tools/gimptextoptions.c:186
 msgid ""
@@ -25484,7 +25486,7 @@ msgstr "Inspringen van eerste regel"
 # rasterlijnafstand/spatiering
 #: app/tools/gimptextoptions.c:226
 msgid "Line spacing"
-msgstr "Lijnafstand"
+msgstr "Regelafstand"
 
 #: app/tools/gimptextoptions.c:227
 msgid "Adjust line spacing"
@@ -25501,7 +25503,7 @@ msgstr "Letterafstand aanpassen"
 
 #: app/tools/gimptextoptions.c:242
 msgid "Box"
-msgstr "Vak"
+msgstr "Blok"
 
 #: app/tools/gimptextoptions.c:243
 msgid ""
@@ -25855,7 +25857,7 @@ msgstr "Modus Transformeren"
 
 #: app/tools/gimptransform3doptions.c:85
 msgid "Unified interaction"
-msgstr "Uniforme interactie"
+msgstr "Geïntegreerde interactie"
 
 #: app/tools/gimptransform3doptions.c:86
 msgid "Combine all interaction modes"
@@ -25890,7 +25892,7 @@ msgstr "Lokaal frame (%s)"
 
 #: app/tools/gimptransform3dtool.c:114
 msgid "3D Transform"
-msgstr "3D-Transformatie"
+msgstr "3D-transformatie"
 
 #: app/tools/gimptransform3dtool.c:115
 msgid ""
@@ -25904,7 +25906,7 @@ msgstr "_3D-Transformatie"
 #: app/tools/gimptransform3dtool.c:139
 msgctxt "undo-type"
 msgid "3D Transform"
-msgstr "3D-Transformatie"
+msgstr "3D-transformatie"
 
 #: app/tools/gimptransform3dtool.c:140
 msgid "3D transformation"
@@ -25925,7 +25927,7 @@ msgstr "_Z:"
 
 #: app/tools/gimptransform3dtool.c:434
 msgid "Z"
-msgstr "Z"
+msgstr "U"
 
 #: app/tools/gimptransform3dtool.c:438
 msgid "Rotation axis order"
@@ -26061,7 +26063,7 @@ msgstr "Tussenruimte penseel"
 
 #: app/tools/gimpwarpoptions.c:128 app/tools/gimpwarpoptions.c:339
 msgid "Abyss policy"
-msgstr "Randgedrag"
+msgstr "Afsnijbeleid"
 
 #: app/tools/gimpwarpoptions.c:129
 msgid "Out-of-bounds sampling behavior"
@@ -26118,7 +26120,7 @@ msgstr "Aantal animatieframes"
 #. the stroke frame
 #: app/tools/gimpwarpoptions.c:350
 msgid "Stroke"
-msgstr "Lijn"
+msgstr "Penseelstreek"
 
 #. the animation frame
 #: app/tools/gimpwarpoptions.c:372
@@ -26245,7 +26247,7 @@ msgstr "Laag"
 #: app/tools/tools-enums.c:123
 msgctxt "transform-type"
 msgid "Selection"
-msgstr "Selectie"
+msgstr "Selecteren"
 
 #: app/tools/tools-enums.c:124
 msgctxt "transform-type"
@@ -26693,7 +26695,7 @@ msgstr "Enkel geïndexeerde afbeeldingen hebben een kleurenkaart."
 #: app/widgets/gimpcompressioncombobox.c:102
 msgctxt "compression"
 msgid "None"
-msgstr "Geen"
+msgstr "Niets selecteren"
 
 #: app/widgets/gimpcompressioncombobox.c:114
 msgctxt "compression"
@@ -26738,7 +26740,7 @@ msgstr "Staat:"
 #: app/widgets/gimpcontrollereditor.c:339
 #: app/widgets/gimpdeviceinfoeditor.c:391
 msgid "Event"
-msgstr "Actie"
+msgstr "Gebeurtenis"
 
 #: app/widgets/gimpcontrollereditor.c:364
 #: app/widgets/gimpdeviceinfoeditor.c:448
@@ -26780,7 +26782,7 @@ msgstr "Opdracht selecteren voor actie ‘%s’"
 
 #: app/widgets/gimpcontrollereditor.c:657
 msgid "Select Controller Event Action"
-msgstr "Actie selecteren bij controllergebeurtenis"
+msgstr "Actie selecteren bij gebeurtenis van invoerapparaat"
 
 #: app/widgets/gimpcontrollerinfo.c:110
 msgid "Input Controller"
@@ -27351,7 +27353,7 @@ msgstr "Aantal lopende asynchrone bewerkingen"
 #: app/widgets/gimpdashboard.c:740
 msgctxt "dashboard-variable"
 msgid "Tile"
-msgstr "Tegel"
+msgstr "Betegelen"
 
 #: app/widgets/gimpdashboard.c:741
 msgid "Total size of tile memory"
@@ -27695,7 +27697,7 @@ msgstr "Dit tabblad configureren"
 #. Auto button
 #: app/widgets/gimpdockwindow.c:409
 msgid "Auto"
-msgstr "Automatisch"
+msgstr "Auto"
 
 #: app/widgets/gimpdockwindow.c:420
 msgid ""
@@ -29789,6 +29791,9 @@ msgstr "Menu Gereedschapsvoorinstellingen"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Menu Geschiedenis"
+
+#~ msgid "Swap:"
+#~ msgstr "Wisselgeheugen:"
 
 #~ msgid "free"
 #~ msgstr "vrij"
