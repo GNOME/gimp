@@ -1477,6 +1477,7 @@ export_image (GFile                *file,
   const Babl             *format = NULL;
   guchar                 *cmap   = NULL;  /* colormap for indexed images */
   guchar                 *buf;
+  gsize                   buf_size      = 0;
   guchar                 *components[4] = { 0, };
   gint                    n_components;
   gint32                  width, height, bpp;
@@ -1507,7 +1508,15 @@ export_image (GFile                *file,
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  buf = g_new (guchar, width * height * bpp);
+  if (! g_size_checked_mul (&buf_size, width, height) ||
+      ! g_size_checked_mul (&buf_size, buf_size, bpp) ||
+      ! (buf = g_try_new0 (guchar, buf_size)))
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Image dimensions too large: width %d x height %d"),
+                   width, height);
+      return FALSE;
+    }
 
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
                    format, buf,
