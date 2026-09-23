@@ -764,6 +764,7 @@ export_image (GFile         *file,
   gint           i;
   gint           transparent;
   gint           offset_x, offset_y;
+  gsize          pixel_size;
 
   GList         *layers;
   GList         *list;
@@ -1046,13 +1047,28 @@ export_image (GFile         *file,
 
       buffer = gimp_drawable_get_buffer (drawable);
       gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
-      cols = gimp_drawable_get_width (drawable);
-      rows = gimp_drawable_get_height (drawable);
+      cols      = gimp_drawable_get_width (drawable);
+      rows      = gimp_drawable_get_height (drawable);
       rowstride = cols;
 
-      pixels = g_new (guchar, (cols * rows *
-                               (((drawable_type == GIMP_INDEXEDA_IMAGE) ||
-                                 (drawable_type == GIMP_GRAYA_IMAGE)) ? 2 : 1)));
+      if (! g_size_checked_mul (&pixel_size, cols, rows))
+        {
+          g_object_unref (buffer);
+          return FALSE;
+        }
+      if (((drawable_type == GIMP_INDEXEDA_IMAGE) ||
+           (drawable_type == GIMP_GRAYA_IMAGE))   &&
+          ! g_size_checked_mul (&pixel_size, pixel_size, 2))
+        {
+          g_object_unref (buffer);
+          return FALSE;
+        }
+
+      if (! (pixels = g_try_new0 (guchar, pixel_size)))
+        {
+          g_object_unref (buffer);
+          return FALSE;
+        }
 
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, cols, rows), 1.0,
                        format, pixels,
