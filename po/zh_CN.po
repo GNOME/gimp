@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-15 18:04+0000\n"
-"PO-Revision-Date: 2026-09-16 07:55+0800\n"
+"POT-Creation-Date: 2026-09-22 20:58+0000\n"
+"PO-Revision-Date: 2026-09-24 07:47+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 50.0\n"
+"X-Generator: Gtranslator 51.0\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -227,117 +227,117 @@ msgstr "使用 %s 版本 %s"
 msgid "System Language"
 msgstr "系统语言"
 
-#: app/main.c:164
+#: app/main.c:169
 msgid "Show version information and exit"
 msgstr "显示版本信息并退出"
 
-#: app/main.c:169
+#: app/main.c:174
 msgid "Show license information and exit"
 msgstr "显示许可信息并退出"
 
-#: app/main.c:174
+#: app/main.c:179
 msgid "Be more verbose"
 msgstr "输出更详细信息"
 
-#: app/main.c:179
+#: app/main.c:184
 msgid "Start a new GIMP instance"
 msgstr "启动一个新的 GIMP 实例"
 
-#: app/main.c:184
+#: app/main.c:189
 msgid "Open images as new"
 msgstr "作为新图像打开"
 
-#: app/main.c:202
+#: app/main.c:207
 msgid "Run without a user interface"
 msgstr "不以图形界面运行"
 
-#: app/main.c:207
+#: app/main.c:212
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "不加载笔刷、渐变、图案…"
 
-#: app/main.c:212
+#: app/main.c:217
 msgid "Do not load any fonts"
 msgstr "不加载任何字体"
 
-#: app/main.c:217
+#: app/main.c:222
 msgid "Do not show a splash screen"
 msgstr "不显示启动画面"
 
-#: app/main.c:222
+#: app/main.c:227
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "不在 GIMP 和插件之间使用共享内存"
 
-#: app/main.c:227
+#: app/main.c:232
 msgid "Do not use special CPU acceleration functions"
 msgstr "不使用特殊 CPU 加速功能"
 
-#: app/main.c:232
+#: app/main.c:237
 msgid "Use an alternate sessionrc file"
 msgstr "使用代替的 sessionrc 文件"
 
-#: app/main.c:237
+#: app/main.c:242
 msgid "Use an alternate user gimprc file"
 msgstr "使用代替的用户 gimprc 文件"
 
-#: app/main.c:242
+#: app/main.c:247
 msgid "Use an alternate system gimprc file"
 msgstr "使用代替的系统 gimprc 文件"
 
-#: app/main.c:247
+#: app/main.c:252
 msgid "Batch command to run (can be used multiple times)"
 msgstr "要运行的批处理命令（可以使用多次）"
 
-#: app/main.c:252
+#: app/main.c:257
 msgid "The procedure to process batch commands with"
 msgstr "处理批处理命令的过程"
 
-#: app/main.c:257
+#: app/main.c:262
 msgid "Quit immediately after performing requested actions"
 msgstr "执行请求的操作后立即退出"
 
-#: app/main.c:262
+#: app/main.c:267
 msgid "Send messages to console instead of using a dialog"
 msgstr "在控制台而不是对话框中显示警告信息"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:268
+#: app/main.c:273
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB 兼容模式 (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:274
+#: app/main.c:279
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "崩溃时调试 (never|query|always)"
 
-#: app/main.c:279
+#: app/main.c:284
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "启用非致命调试信号处理程序"
 
-#: app/main.c:284
+#: app/main.c:289
 msgid "Make all warnings fatal"
 msgstr "将所有警告作为致命的"
 
-#: app/main.c:289
+#: app/main.c:294
 msgid "Output a gimprc file with default settings"
 msgstr "输出默认设置的 gimprc 文件"
 
-#: app/main.c:305
+#: app/main.c:310
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "排序列出 PDB 中的已弃用过程"
 
-#: app/main.c:310
+#: app/main.c:315
 msgid "Show a preferences page with experimental features"
 msgstr "显示带有实验性特性的首选项页面"
 
-#: app/main.c:315
+#: app/main.c:320
 msgid "Show an image submenu with debug actions"
 msgstr "显示带有调试操作的图像子菜单"
 
-#: app/main.c:837
+#: app/main.c:884
 msgid "[FILE|URI...]"
 msgstr "[文件|URI…]"
 
-#: app/main.c:867
+#: app/main.c:914
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -345,11 +345,11 @@ msgstr ""
 "GIMP 无法初始化图形用户界面。\n"
 "请确定您已正确安装和配置显示环境。"
 
-#: app/main.c:971
+#: app/main.c:1018
 msgid "Another GIMP instance is already running."
 msgstr "另一个 GIMP 实例已在运行。"
 
-#: app/main.c:1055
+#: app/main.c:1102
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "（键入任意字符关闭本窗口）\n"
@@ -572,7 +572,7 @@ msgstr "文本工具"
 msgid "Text Editor"
 msgstr "文本编辑器"
 
-#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:549
+#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:614
 msgid "Tool Options"
 msgstr "工具选项"
 
@@ -2494,7 +2494,7 @@ msgstr "240 秒"
 #: app/dialogs/layer-add-mask-dialog.c:122
 #: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:223
 #: app/dialogs/preferences-dialog.c:608 app/dialogs/preferences-dialog.c:1181
-#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:151
+#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:149
 #: app/dialogs/resize-dialog.c:228 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:138 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
@@ -2575,7 +2575,7 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
 #: app/dialogs/welcome-dialog.c:1257 app/display/gimpdisplayshell-dnd.c:707
-#: app/display/gimpimagewindow.c:2383 app/widgets/gimplayertreeview.c:864
+#: app/display/gimpimagewindow.c:2395 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3152,7 +3152,8 @@ msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "显示一些关于 GIMP 的小窍门"
 
-#: app/actions/dialogs-actions.c:353
+#. Welcome Dialog
+#: app/actions/dialogs-actions.c:353 app/menus/menus.c:660
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "欢迎对话框"
@@ -10213,7 +10214,7 @@ msgstr "打开显示器"
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
+#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:199
 #: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpdeviceinfoeditor.c:838 app/widgets/gimperrordialog.c:76
@@ -15534,9 +15535,10 @@ msgstr "内存：%s（%s 空闲）\n"
 msgid "Memory:"
 msgstr "内存："
 
-#: app/dialogs/about-dialog.c:1120
-msgid "Swap:"
-msgstr "交换空间："
+#: app/dialogs/about-dialog.c:1119
+#, c-format
+msgid "Swap: %s free on partition\n"
+msgstr "交换：磁盘上 %s 空闲\n"
 
 #: app/dialogs/about-dialog.c:1131
 msgid "Library Versions:"
@@ -15832,7 +15834,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "您确定要从列表移除“%s”并在硬盘上删除它吗？"
 
-#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:189
+#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:196
 #: app/gui/gui-message.c:268
 msgid "GIMP Message"
 msgstr "GIMP 消息"
@@ -18255,60 +18257,60 @@ msgstr "Y 分辨率(_Y)："
 msgid "pixels/%a"
 msgstr "像素/%a"
 
-#: app/dialogs/quit-dialog.c:144
+#: app/dialogs/quit-dialog.c:142
 msgid "Quit GIMP"
 msgstr "退出 GIMP"
 
-#: app/dialogs/quit-dialog.c:144
+#: app/dialogs/quit-dialog.c:142
 msgid "Close All Images"
 msgstr "关闭全部图像"
 
-#: app/dialogs/quit-dialog.c:222
+#: app/dialogs/quit-dialog.c:220
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "如果您现在退出 GIMP，这些更改将会丢失。"
 
-#: app/dialogs/quit-dialog.c:225
+#: app/dialogs/quit-dialog.c:223
 msgid "If you close these images now, changes will be lost."
 msgstr "如果您现在关闭这些图像，更改将会丢失。"
 
 #. TRANSLATORS: unless your language
 #. msgstr[0] applies to 1 only (as
 #. in English), replace "one" with %d.
-#: app/dialogs/quit-dialog.c:312
+#: app/dialogs/quit-dialog.c:310
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "有 %d 幅修改后还没保存的图像："
 
-#: app/dialogs/quit-dialog.c:323
+#: app/dialogs/quit-dialog.c:321
 #, c-format
 msgid "Press %s to quit."
 msgstr "按 %s 键以退出。"
 
-#: app/dialogs/quit-dialog.c:326
+#: app/dialogs/quit-dialog.c:324
 #, c-format
 msgid "Press %s to close all images."
 msgstr "按 %s 键以关闭所有图像。"
 
-#: app/dialogs/quit-dialog.c:330 app/dialogs/user-install-dialog.c:90
+#: app/dialogs/quit-dialog.c:328 app/dialogs/user-install-dialog.c:90
 msgid "_Quit"
 msgstr "退出(_Q)"
 
-#: app/dialogs/quit-dialog.c:330
+#: app/dialogs/quit-dialog.c:328
 msgid "Cl_ose"
 msgstr "关闭(_O)"
 
-#: app/dialogs/quit-dialog.c:354
+#: app/dialogs/quit-dialog.c:352
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr "按 %s 键以丢弃所有更改并退出。"
 
-#: app/dialogs/quit-dialog.c:357
+#: app/dialogs/quit-dialog.c:355
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr "按 %s 键以丢弃所有更改并关闭所有图像。"
 
-#: app/dialogs/quit-dialog.c:365 app/display/gimpdisplayshell-close.c:182
+#: app/dialogs/quit-dialog.c:363 app/display/gimpdisplayshell-close.c:182
 msgid "_Discard Changes"
 msgstr "丢弃更改(_D)"
 
@@ -19164,7 +19166,7 @@ msgstr "（干净）"
 msgid "(none)"
 msgstr "（无）"
 
-#: app/display/gimpdisplayshell-tool-events.c:1824
+#: app/display/gimpdisplayshell-tool-events.c:1811
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "拾取的图层：“%s”"
@@ -20734,19 +20736,19 @@ msgstr "明度"
 msgid "The alpha value"
 msgstr "透明通道明度"
 
-#: app/gui/gui.c:336
+#: app/gui/gui.c:346
 msgid "Image Recovery"
 msgstr "图像恢复"
 
-#: app/gui/gui.c:338
+#: app/gui/gui.c:348
 msgid "_Discard"
 msgstr "丢弃(_D)"
 
-#: app/gui/gui.c:339
+#: app/gui/gui.c:349
 msgid "_Recover"
 msgstr "恢复(_R)"
 
-#: app/gui/gui.c:350
+#: app/gui/gui.c:360
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 
@@ -20756,7 +20758,7 @@ msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:359
+#: app/gui/gui.c:369
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20767,7 +20769,7 @@ msgstr[0] "从崩溃中抢救了 %d 张图像。您想要尝试并恢复它们�
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:575
+#: app/gui/gui.c:640
 msgid "Documents"
 msgstr "文档"
 
@@ -29506,6 +29508,9 @@ msgstr "工具预设菜单"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
+
+#~ msgid "Swap:"
+#~ msgstr "交换空间："
 
 #~ msgid "Disabled because filters cannot be merged on vector layers."
 #~ msgstr "已禁用，因为滤镜无法合并到矢量图层上。"
