@@ -1403,6 +1403,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
       fg_color = gimp_get_style_color (widget, GTK_STYLE_PROPERTY_COLOR);
       gegl_color_get_pixel (fg_color, babl_format ("R'G'B' u8"), fg_rgb);
+      g_object_unref (fg_color);
 
       cairo_surface_flush (surface);
 
@@ -1449,7 +1450,17 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
 
           for (j = 0; j < width; j++)
             {
-              *d = fg_rgb[0] | fg_rgb[1] << 8 | fg_rgb[2] << 16 | s[channel] << 24;
+              /*  invert so that higher values render lighter in light
+               *  themes and darker in dark themes, matching the
+               *  channel's foreground/background contrast
+               */
+              guint a = 255 - s[channel];
+
+              /*  CAIRO_FORMAT_ARGB32 is premultiplied 0xAARRGGBB  */
+              *d = a << 24 |
+                   ((fg_rgb[0] * a + 127) / 255) << 16 |
+                   ((fg_rgb[1] * a + 127) / 255) << 8 |
+                   ((fg_rgb[2] * a + 127) / 255);
 
               s += 4;
               d += 1;
