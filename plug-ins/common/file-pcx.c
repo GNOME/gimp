@@ -1094,6 +1094,7 @@ export_image (GFile         *file,
   GimpImageType  drawable_type;
   guchar        *cmap= NULL;
   guchar        *pixels;
+  gsize          pixel_size;
   gint           offset_x, offset_y;
   guint          width, height;
   gdouble        resolution_x, resolution_y;
@@ -1189,7 +1190,12 @@ export_image (GFile         *file,
     }
   pcx_header.bytesperline = GUINT16_TO_LE (pcx_header.bytesperline);
 
-  pixels = (guchar *) g_malloc (width * height * pcx_header.planes);
+  if (! g_size_checked_mul (&pixel_size, width, height)                 ||
+      ! g_size_checked_mul (&pixel_size, pixel_size, pcx_header.planes) ||
+      ! (pixels = (guchar *) g_try_malloc0 (pixel_size)))
+    {
+      return FALSE;
+    }
 
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
                    format, pixels,
@@ -1198,12 +1204,16 @@ export_image (GFile         *file,
   if ((offset_x < 0) || (offset_x > (1<<16)))
     {
       g_message (_("Invalid X offset: %d"), offset_x);
+      g_object_unref (buffer);
+      g_free (pixels);
       return FALSE;
     }
 
   if ((offset_y < 0) || (offset_y > (1<<16)))
     {
       g_message (_("Invalid Y offset: %d"), offset_y);
+      g_object_unref (buffer);
+      g_free (pixels);
       return FALSE;
     }
 
@@ -1211,6 +1221,8 @@ export_image (GFile         *file,
     {
       g_message (_("Right border out of bounds (must be < %d): %d"), (1<<16),
                  offset_x + width - 1);
+      g_object_unref (buffer);
+      g_free (pixels);
       return FALSE;
     }
 
@@ -1218,6 +1230,8 @@ export_image (GFile         *file,
     {
       g_message (_("Bottom border out of bounds (must be < %d): %d"), (1<<16),
                  offset_y + height - 1);
+      g_object_unref (buffer);
+      g_free (pixels);
       return FALSE;
     }
 
@@ -1228,6 +1242,8 @@ export_image (GFile         *file,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
                    gimp_file_get_utf8_name (file), g_strerror (errno));
+      g_object_unref (buffer);
+      g_free (pixels);
       return FALSE;
     }
 
@@ -1283,6 +1299,8 @@ export_image (GFile         *file,
       break;
 
     default:
+      g_object_unref (buffer);
+      g_free (pixels);
       return FALSE;
     }
 
