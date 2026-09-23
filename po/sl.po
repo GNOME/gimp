@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-15 18:04+0000\n"
-"PO-Revision-Date: 2026-09-16 07:17+0200\n"
+"POT-Creation-Date: 2026-09-22 20:58+0000\n"
+"PO-Revision-Date: 2026-09-23 21:22+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -225,117 +225,117 @@ msgstr "uporablja %s različice %s"
 msgid "System Language"
 msgstr "Sistemski jezik"
 
-#: app/main.c:164
+#: app/main.c:169
 msgid "Show version information and exit"
 msgstr "Pokaži podatke o različici in končaj z delom"
 
-#: app/main.c:169
+#: app/main.c:174
 msgid "Show license information and exit"
 msgstr "Pokaži licenčne podatke in končaj z delom"
 
-#: app/main.c:174
+#: app/main.c:179
 msgid "Be more verbose"
 msgstr "Bolj opisno"
 
-#: app/main.c:179
+#: app/main.c:184
 msgid "Start a new GIMP instance"
 msgstr "Zaženi še en program GIMP"
 
-#: app/main.c:184
+#: app/main.c:189
 msgid "Open images as new"
 msgstr "Odpri slike kot nove"
 
-#: app/main.c:202
+#: app/main.c:207
 msgid "Run without a user interface"
 msgstr "Zaženi brez uporabniškega vmesnika"
 
-#: app/main.c:207
+#: app/main.c:212
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Ne naloži čopičev, prelivov, palet, vzorcev, ..."
 
-#: app/main.c:212
+#: app/main.c:217
 msgid "Do not load any fonts"
 msgstr "Ne naloži pisav"
 
-#: app/main.c:217
+#: app/main.c:222
 msgid "Do not show a splash screen"
 msgstr "Ne pokaži zagonskega okna"
 
-#: app/main.c:222
+#: app/main.c:227
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Ne uporabljaj deljenega pomnilnika med GIMP-om in vstavki"
 
-#: app/main.c:227
+#: app/main.c:232
 msgid "Do not use special CPU acceleration functions"
 msgstr "Ne uporabi posebnih funkcij pospeševanja CPE"
 
-#: app/main.c:232
+#: app/main.c:237
 msgid "Use an alternate sessionrc file"
 msgstr "Uporabi nadomestno datoteko sessionrc"
 
-#: app/main.c:237
+#: app/main.c:242
 msgid "Use an alternate user gimprc file"
 msgstr "Uporabi nadomestno uporabniško datoteko gimprc"
 
-#: app/main.c:242
+#: app/main.c:247
 msgid "Use an alternate system gimprc file"
 msgstr "Uporabi nadomestno sistemsko datoteko gimprc"
 
-#: app/main.c:247
+#: app/main.c:252
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Paketni ukaz (lahko uporabljen večkrat)"
 
-#: app/main.c:252
+#: app/main.c:257
 msgid "The procedure to process batch commands with"
 msgstr "Procedura, ki naj obdela paketne ukaze"
 
-#: app/main.c:257
+#: app/main.c:262
 msgid "Quit immediately after performing requested actions"
 msgstr "Takoj po opravljenih zahtevanih dejanjih zapri program"
 
-#: app/main.c:262
+#: app/main.c:267
 msgid "Send messages to console instead of using a dialog"
 msgstr "Izpiši sporočila v konzoli namesto v pogovornih oknih"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:268
+#: app/main.c:273
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Način združljivosti PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:274
+#: app/main.c:279
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Razhrošči v primeru sesutja (never|query|always)"
 
-#: app/main.c:279
+#: app/main.c:284
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Omogoči obdelavo neusodnih razhroščevalnih signalov"
 
-#: app/main.c:284
+#: app/main.c:289
 msgid "Make all warnings fatal"
 msgstr "Vsa opozorila naj bodo usodna"
 
-#: app/main.c:289
+#: app/main.c:294
 msgid "Output a gimprc file with default settings"
 msgstr "Izvozi datoteko gimprc s privzetimi nastavitvami"
 
-#: app/main.c:305
+#: app/main.c:310
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Izpiši razvrščen seznam zastarelih procedur v PDB"
 
-#: app/main.c:310
+#: app/main.c:315
 msgid "Show a preferences page with experimental features"
 msgstr "Pokaži stran nastavitev s poskusnimi funkcionalnostmi"
 
-#: app/main.c:315
+#: app/main.c:320
 msgid "Show an image submenu with debug actions"
 msgstr "Pokaži podmeni slike z dejanji razhroščevanja"
 
-#: app/main.c:837
+#: app/main.c:884
 msgid "[FILE|URI...]"
 msgstr "[DATOTEKA|URI...]"
 
-#: app/main.c:867
+#: app/main.c:914
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -343,11 +343,11 @@ msgstr ""
 "GIMP ne more inicializirati grafičnega uporabniškega vmesnika.\n"
 "Prepričajte se, da obstaja prava nastavitev za vaše zaslonsko okolje."
 
-#: app/main.c:971
+#: app/main.c:1018
 msgid "Another GIMP instance is already running."
 msgstr "GIMP je že zagnan."
 
-#: app/main.c:1055
+#: app/main.c:1102
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Pritisnite katero koli tipko, da zaprete to okno)\n"
@@ -573,7 +573,7 @@ msgstr "Orodje za besedilo"
 msgid "Text Editor"
 msgstr "Urejevalnik besedila"
 
-#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:549
+#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:614
 msgid "Tool Options"
 msgstr "Možnosti orodja"
 
@@ -2508,7 +2508,7 @@ msgstr "240 s"
 #: app/dialogs/layer-add-mask-dialog.c:122
 #: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:223
 #: app/dialogs/preferences-dialog.c:608 app/dialogs/preferences-dialog.c:1181
-#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:151
+#: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:149
 #: app/dialogs/resize-dialog.c:228 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:138 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
@@ -2589,7 +2589,7 @@ msgstr "Vnesite opis oznake"
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
 #: app/dialogs/welcome-dialog.c:1257 app/display/gimpdisplayshell-dnd.c:707
-#: app/display/gimpimagewindow.c:2383 app/widgets/gimplayertreeview.c:864
+#: app/display/gimpimagewindow.c:2395 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3166,7 +3166,8 @@ msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Pokaže priročne namige pri delu s programom GIMP"
 
-#: app/actions/dialogs-actions.c:353
+#. Welcome Dialog
+#: app/actions/dialogs-actions.c:353 app/menus/menus.c:660
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "Pogovorno okno dobrodošlice"
@@ -10309,7 +10310,7 @@ msgstr "Odpri zaslon"
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:192
+#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:199
 #: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpdeviceinfoeditor.c:838 app/widgets/gimperrordialog.c:76
@@ -15832,9 +15833,10 @@ msgstr "Pomnilnik: %s (prosto %s)\n"
 msgid "Memory:"
 msgstr "Pomnilnik:"
 
-#: app/dialogs/about-dialog.c:1120
-msgid "Swap:"
-msgstr "Izmenjalna datoteka:"
+#: app/dialogs/about-dialog.c:1119
+#, c-format
+msgid "Swap: %s free on partition\n"
+msgstr "Izmenjevalna datoteka: %s prostora na razdelku\n"
 
 #: app/dialogs/about-dialog.c:1131
 msgid "Library Versions:"
@@ -16131,7 +16133,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Ste prepričani, da želite izbrisati »%s« s seznama in z diska?"
 
-#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:189
+#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:196
 #: app/gui/gui-message.c:268
 msgid "GIMP Message"
 msgstr "Sporočilo GIMP"
@@ -18590,26 +18592,26 @@ msgstr "Ločljivost _Y:"
 msgid "pixels/%a"
 msgstr "slik. točk/%a"
 
-#: app/dialogs/quit-dialog.c:144
+#: app/dialogs/quit-dialog.c:142
 msgid "Quit GIMP"
 msgstr "Zapri GIMP"
 
-#: app/dialogs/quit-dialog.c:144
+#: app/dialogs/quit-dialog.c:142
 msgid "Close All Images"
 msgstr "Zapri vse slike"
 
-#: app/dialogs/quit-dialog.c:222
+#: app/dialogs/quit-dialog.c:220
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Če boste zdaj zaprli GIMP, bodo te spremembe izgubljene."
 
-#: app/dialogs/quit-dialog.c:225
+#: app/dialogs/quit-dialog.c:223
 msgid "If you close these images now, changes will be lost."
 msgstr "Če zdaj ne shranite slik, bodo spremembe izgubljene."
 
 #. TRANSLATORS: unless your language
 #. msgstr[0] applies to 1 only (as
 #. in English), replace "one" with %d.
-#: app/dialogs/quit-dialog.c:312
+#: app/dialogs/quit-dialog.c:310
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
@@ -18618,35 +18620,35 @@ msgstr[1] "%d slika nima shranjenih sprememb:"
 msgstr[2] "%d sliki nimata shranjenih sprememb:"
 msgstr[3] "%d slike nimajo shranjenih sprememb:"
 
-#: app/dialogs/quit-dialog.c:323
+#: app/dialogs/quit-dialog.c:321
 #, c-format
 msgid "Press %s to quit."
 msgstr "Pritisnite %s za izhod."
 
-#: app/dialogs/quit-dialog.c:326
+#: app/dialogs/quit-dialog.c:324
 #, c-format
 msgid "Press %s to close all images."
 msgstr "Pritisnite %s, da zaprete vse slike."
 
-#: app/dialogs/quit-dialog.c:330 app/dialogs/user-install-dialog.c:90
+#: app/dialogs/quit-dialog.c:328 app/dialogs/user-install-dialog.c:90
 msgid "_Quit"
 msgstr "_Izhod"
 
-#: app/dialogs/quit-dialog.c:330
+#: app/dialogs/quit-dialog.c:328
 msgid "Cl_ose"
 msgstr "Z_apri"
 
-#: app/dialogs/quit-dialog.c:354
+#: app/dialogs/quit-dialog.c:352
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr "Pritisnite %s, da opustite vse spremembe in zaprete program."
 
-#: app/dialogs/quit-dialog.c:357
+#: app/dialogs/quit-dialog.c:355
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr "Pritisnite %s, da opustite vse spremembe in zaprete vse slike."
 
-#: app/dialogs/quit-dialog.c:365 app/display/gimpdisplayshell-close.c:182
+#: app/dialogs/quit-dialog.c:363 app/display/gimpdisplayshell-close.c:182
 msgid "_Discard Changes"
 msgstr "_Zavrzi spremembe"
 
@@ -19524,7 +19526,7 @@ msgstr "(čisto)"
 msgid "(none)"
 msgstr "(brez)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1824
+#: app/display/gimpdisplayshell-tool-events.c:1811
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Izbrana plast: »%s«"
@@ -21106,19 +21108,19 @@ msgstr "Vrednost"
 msgid "The alpha value"
 msgstr "Vrednost alfe"
 
-#: app/gui/gui.c:336
+#: app/gui/gui.c:346
 msgid "Image Recovery"
 msgstr "Obnovitev slike"
 
-#: app/gui/gui.c:338
+#: app/gui/gui.c:348
 msgid "_Discard"
 msgstr "_Zavrzi"
 
-#: app/gui/gui.c:339
+#: app/gui/gui.c:349
 msgid "_Recover"
 msgstr "_Obnovi"
 
-#: app/gui/gui.c:350
+#: app/gui/gui.c:360
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Ojoj! Videti je, da se je GIMP obnovil iz sesutja!"
 
@@ -21128,7 +21130,7 @@ msgstr "Ojoj! Videti je, da se je GIMP obnovil iz sesutja!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:359
+#: app/gui/gui.c:369
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -21146,7 +21148,7 @@ msgstr[3] ""
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:575
+#: app/gui/gui.c:640
 msgid "Documents"
 msgstr "Dokumenti"
 
