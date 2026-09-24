@@ -1529,11 +1529,12 @@ export_image (GFile        *file,
   gchar          today_string[16];
   gchar         *photometric_interp;
   gint           samples_per_pixel;
-  gboolean       retval = TRUE;
-  guint16        zero = 0;
-  guint16        seven = 7;
-  guint16        eight = 8;
-  guchar        *src = NULL;
+  gboolean       retval   = TRUE;
+  guint16        zero     = 0;
+  guint16        seven    = 7;
+  guint16        eight    = 8;
+  guchar        *src      = NULL;
+  gsize          src_size = 0;
 
   drawable_type = gimp_drawable_type (drawable);
 
@@ -1646,7 +1647,12 @@ export_image (GFile        *file,
 
   /* Pixel data */
   group = 0x7fe0;
-  src = g_new (guchar, height * width * samples_per_pixel);
+  if (! g_size_checked_mul (&src_size, height, width)               ||
+      ! g_size_checked_mul (&src_size, src_size, samples_per_pixel) ||
+      ! (src = g_try_new0 (guchar, src_size)))
+    {
+      return FALSE;
+    }
   if (src)
     {
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
