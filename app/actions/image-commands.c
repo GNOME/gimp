@@ -1200,6 +1200,9 @@ image_convert_indexed_callback (GtkWidget              *dialog,
       if (progress)
         gimp_progress_end (progress);
 
+      /* Conversion failed, make the dialog active so the user can try again. */
+      gtk_widget_set_sensitive (dialog, TRUE);
+
       return;
     }
 

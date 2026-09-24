@@ -315,6 +315,9 @@ convert_dialog_response (GtkWidget     *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
+      /* Ignore further button clicks while the conversion is ongoing. */
+      gtk_widget_set_sensitive (dialog, FALSE);
+
       private->callback (dialog,
                          private->image,
                          private->palette_type,
