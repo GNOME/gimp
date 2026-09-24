@@ -1539,7 +1539,7 @@ export_image (GFile                *file,
   switch (planar_conf)
     {
     case RAW_PLANAR_CONTIGUOUS:
-      if (! fwrite (buf, width * height * bpp, 1, fp))
+      if (! fwrite (buf, buf_size, 1, fp))
         {
           fclose (fp);
           return FALSE;
@@ -1591,7 +1591,7 @@ export_image (GFile                *file,
 
     case RAW_PLANAR_SEPARATE:
       for (c = 0; c < n_components; c++)
-        components[c] = g_new (guchar, width * height * bpc);
+        components[c] = g_new (guchar, (buf_size / n_components));
 
       for (i = 0; i < width * height; i++)
         {
@@ -1609,7 +1609,7 @@ export_image (GFile                *file,
       ret = TRUE;
       for (c = 0; c < n_components; c++)
         {
-          if (! fwrite (components[c], width * height * bpc, 1, fp))
+          if (! fwrite (components[c], (buf_size / n_components), 1, fp))
             ret = FALSE;
 
           g_free (components[c]);
