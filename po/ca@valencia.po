@@ -18206,7 +18206,7 @@ msgstr "Gota"
 
 #: ../app/paint/gimpconvolveoptions.c:68
 msgid "Convolve Type"
-msgstr "Estil de la gota (%s)"
+msgstr "Estil de la gota"
 
 #: ../app/paint/gimpconvolveoptions.c:76
 msgctxt "convolve-tool"

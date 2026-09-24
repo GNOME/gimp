@@ -12806,7 +12806,7 @@ msgstr "Mòduls"
 #: app/core/gimp-batch.c:69
 msgid "No batch interpreters are available. Batch mode disabled."
 msgstr ""
-"L'intèrpret d'ordres «%s» no està disponible. El mode per lots està "
+"No hi ha cap intèrpret d'ordres disponible. El mode per lots està "
 "desactivat."
 
 #: app/core/gimp-batch.c:86
@@ -19037,7 +19037,7 @@ msgstr "La selecció de la capa va cap a baix"
 
 #: app/display/gimpdisplayshell-layer-select.c:277
 msgid "Layer Selection Moved Up"
-msgstr "La selecció de la capa va cap a baix"
+msgstr "La selecció de la capa va cap a dalt"
 
 #: app/display/gimpdisplayshell-rotate-dialog.c:115
 msgid "Rotate View"
@@ -20741,7 +20741,7 @@ msgstr "Gota"
 
 #: app/paint/gimpconvolveoptions.c:69
 msgid "Convolve Type"
-msgstr "Estil de la gota (%s)"
+msgstr "Estil de la gota"
 
 #: app/paint/gimpconvolveoptions.c:77
 msgctxt "convolve-tool"

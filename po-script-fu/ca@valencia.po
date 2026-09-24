@@ -78,7 +78,7 @@ msgstr "Lluentor estil _Àlien"
 
 #: ../plug-ins/script-fu/script-fu.c:327
 msgid "_Beveled Pattern"
-msgstr "Patró_ bisellat"
+msgstr "Patró _bisellat"
 
 #: ../plug-ins/script-fu/script-fu.c:329
 msgid "_Classic.Gimp.Org"
