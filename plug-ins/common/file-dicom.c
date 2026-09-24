@@ -1649,27 +1649,27 @@ export_image (GFile        *file,
   group = 0x7fe0;
   if (! g_size_checked_mul (&src_size, height, width)               ||
       ! g_size_checked_mul (&src_size, src_size, samples_per_pixel) ||
+      (src_size >= (G_MAXUINT - 6))                                 ||
       ! (src = g_try_new0 (guchar, src_size)))
     {
-      return FALSE;
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Image dimensions too large: width %d x height %d"),
+                   width, height);
+      retval = FALSE;
     }
-  if (src)
+  else
     {
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
                        format, src,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       elements = dicom_add_element (elements, group, 0x0010, "OW",
-                                    width * height * samples_per_pixel,
+                                    src_size,
                                     (guint8 *) src);
 
       elements = dicom_add_tags (dicom, group_stream, elements);
 
       g_free (src);
-    }
-  else
-    {
-      retval = FALSE;
     }
 
   fclose (dicom);
