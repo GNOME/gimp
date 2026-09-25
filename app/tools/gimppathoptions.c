@@ -135,9 +135,9 @@ gimp_path_options_class_init (GimpPathOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PATH_POLYGONAL,
                             "path-auto-connect",
-                            _("Auto-Connect on Click"),
+                            _("Auto-connect on click"),
                             _("If checked, clicking on the end node in "
-                              "Design mode will complete the path"),
+                              "Design mode will close the path"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
