@@ -88,6 +88,12 @@ typedef struct
   gboolean        visible;
 } GimpAboutDialog;
 
+typedef struct
+{
+  const gchar *key;
+  gchar       *value;
+} GimpAboutInfo;
+
 #ifdef PLATFORM_OSX
 static NSWindow *previous_key_window = nil;
 #endif
@@ -114,8 +120,8 @@ static gboolean    about_dialog_anim_draw     (GtkWidget       *widget,
 static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
 
-static gchar     * about_dialog_debug_text      (void);
-static gchar     * about_dialog_markdown_text   (gchar        **lines);
+static GPtrArray * about_dialog_debug_info      (void);
+static gchar     * about_dialog_markdown_text   (GPtrArray     *info);
 static void        about_dialog_add_debug_info  (GtkBox        *vbox);
 static void        about_dialog_copy_debug_info (GtkButton     *button,
                                                  gpointer       data);
@@ -984,14 +990,37 @@ about_dialog_add_unstable_message (GtkWidget *vbox)
 
 #endif /* ! GIMP_RELEASE */
 
+static void
+about_dialog_info_free (gpointer data)
+{
+  GimpAboutInfo *info = data;
+
+  g_free (info->value);
+  g_free (info);
+}
+
+/* takes ownership of value */
+static void
+about_dialog_info_add (GPtrArray   *array,
+                       const gchar *key,
+                       gchar       *value)
+{
+  GimpAboutInfo *info = g_new (GimpAboutInfo, 1);
+
+  info->key   = key;
+  info->value = value;
+
+  g_ptr_array_add (array, info);
+}
+
 /* the version block shown in the about dialog and dropped on the clipboard by
  * the Copy button - a few lines a bug report actually needs, not the full
  * dump. caller frees.
  */
-static gchar *
-about_dialog_debug_text (void)
+static GPtrArray *
+about_dialog_debug_info (void)
 {
-  GString     *text;
+  GPtrArray   *info;
   GdkDisplay  *display;
   gchar       *os_name;
   gchar       *package;
@@ -1054,18 +1083,20 @@ about_dialog_debug_text (void)
   if (g_strcmp0 (GIMP_BUILD_ID, "unknown") == 0)
     package = g_strdup (_("built from source"));
   else if (gimp_version_get_revision () > 0)
-    package = g_strdup_printf ("%s revision %d",
+    /* Translators: build id, revision number */
+    package = g_strdup_printf (_("%s revision %d"),
                                GIMP_BUILD_ID, gimp_version_get_revision ());
   else
     package = g_strdup (GIMP_BUILD_ID);
 
-  text = g_string_new (NULL);
+  info = g_ptr_array_new_with_free_func (about_dialog_info_free);
 
-  g_string_append_printf (text, "%s %s (%s)\n",
-                          _("Version:"), GIMP_VERSION, package);
-  g_string_append_printf (text, "%s %s (%s)\n",
-                          _("OS:"), os_name ? os_name : "unknown",
-                          display_sys);
+  about_dialog_info_add (info, _("Version:"),
+                         g_strdup_printf ("%s (%s)", GIMP_VERSION, package));
+  about_dialog_info_add (info, _("OS:"),
+                         g_strdup_printf ("%s (%s)",
+                                          os_name ? os_name : _("unknown"),
+                                          display_sys));
 
   /* total physical RAM - gimp_get_physical_memory_size returns 0 where the
    * platform can't tell us
@@ -1080,20 +1111,22 @@ about_dialog_debug_text (void)
         {
           gchar *free_size = g_format_size (avail_mem);
 
-          g_string_append_printf (text, _("Memory: %s (%s free)\n"),
-                                  mem_size, free_size);
+          /* Translators: total RAM, then how much of it is free */
+          about_dialog_info_add (info, _("Memory:"),
+                                 g_strdup_printf (_("%s (%s free)"),
+                                                  mem_size, free_size));
           g_free (free_size);
         }
       else
         {
-          g_string_append_printf (text, "%s %s\n", _("Memory:"), mem_size);
+          about_dialog_info_add (info, _("Memory:"), g_strdup (mem_size));
         }
 
       g_free (mem_size);
     }
   else
     {
-      g_string_append_printf (text, "%s %s\n", _("Memory:"), "unknown");
+      about_dialog_info_add (info, _("Memory:"), g_strdup (_("unknown")));
     }
 
   /* how much room is left on the partition GEGL swaps to - the dir itself
@@ -1103,93 +1136,73 @@ about_dialog_debug_text (void)
   g_object_get (gegl_config (), "swap", &swap_dir, NULL);
   if (swap_dir)
     {
-      GFile     *file = g_file_new_for_path (swap_dir);
-      GFileInfo *info = g_file_query_filesystem_info (
-                          file, G_FILE_ATTRIBUTE_FILESYSTEM_FREE, NULL, NULL);
+      GFile     *file    = g_file_new_for_path (swap_dir);
+      GFileInfo *fs_info = g_file_query_filesystem_info (
+                             file, G_FILE_ATTRIBUTE_FILESYSTEM_FREE,
+                             NULL, NULL);
 
-      if (info)
+      if (fs_info)
         {
           guint64 free_space =
-            g_file_info_get_attribute_uint64 (info,
+            g_file_info_get_attribute_uint64 (fs_info,
                                               G_FILE_ATTRIBUTE_FILESYSTEM_FREE);
           gchar *free_str = g_format_size (free_space);
 
-          g_string_append_printf (text, _("Swap: %s free on partition\n"),
-                                  free_str);
+          about_dialog_info_add (info, _("Swap:"),
+                                 g_strdup_printf (_("%s free on partition"),
+                                                  free_str));
           g_free (free_str);
-          g_object_unref (info);
+          g_object_unref (fs_info);
         }
 
       g_object_unref (file);
       g_free (swap_dir);
     }
 
-  g_string_append_printf (text,
-                          "%s GEGL %d.%d.%d, babl %d.%d.%d, GTK %d.%d.%d",
-                          _("Library Versions:"),
-                          gegl_major, gegl_minor, gegl_micro,
-                          babl_major, babl_minor, babl_micro,
-                          gtk_get_major_version (),
-                          gtk_get_minor_version (),
-                          gtk_get_micro_version ());
+  about_dialog_info_add (info, _("Library Versions:"),
+                         g_strdup_printf ("GEGL %d.%d.%d, babl %d.%d.%d, "
+                                          "GTK %d.%d.%d",
+                                          gegl_major, gegl_minor, gegl_micro,
+                                          babl_major, babl_minor, babl_micro,
+                                          gtk_get_major_version (),
+                                          gtk_get_minor_version (),
+                                          gtk_get_micro_version ()));
 
   g_free (os_name);
   g_free (package);
 
-  return g_string_free (text, FALSE);
+  return info;
 }
 
-/* lay the "key: value" lines out in a two-column grid so all the values line
- * up. the key's colon always comes before any colon in the value (e.g. a
- * windows "C:\" path), so a split on the first colon is safe.
- */
+/* lay the key/value pairs out in a two-column grid so all the values line up */
 static GtkWidget *
-about_dialog_info_grid (gchar **lines)
+about_dialog_info_grid (GPtrArray *info)
 {
   GtkWidget *grid;
-  gint       i;
-  gint       row = 0;
+  guint      i;
 
   grid = gtk_grid_new ();
   gtk_widget_set_halign (grid, GTK_ALIGN_CENTER);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
 
-  for (i = 0; lines[i]; i++)
+  for (i = 0; i < info->len; i++)
     {
-      GtkWidget   *key;
-      GtkWidget   *value;
-      gchar       *sep = strchr (lines[i], ':');
-      gchar       *k;
-      const gchar *v;
+      GimpAboutInfo *line = g_ptr_array_index (info, i);
+      GtkWidget     *key;
+      GtkWidget     *value;
 
-      if (sep)
-        {
-          k = g_strndup (lines[i], sep - lines[i] + 1);
-          v = sep + 1;
-          while (*v == ' ')
-            v++;
-        }
-      else
-        {
-          k = g_strdup (lines[i]);
-          v = "";
-        }
-
-      key = gtk_label_new (k);
+      key = gtk_label_new (line->key);
       gtk_label_set_xalign (GTK_LABEL (key), 0.0);
 
-      value = gtk_label_new (v);
+      value = gtk_label_new (line->value);
       gtk_label_set_xalign (GTK_LABEL (value), 0.0);
       gtk_label_set_selectable (GTK_LABEL (value), TRUE);
       gtk_label_set_ellipsize (GTK_LABEL (value), PANGO_ELLIPSIZE_MIDDLE);
       gtk_label_set_max_width_chars (GTK_LABEL (value), 50);
 
-      gtk_grid_attach (GTK_GRID (grid), key,   0, row, 1, 1);
-      gtk_grid_attach (GTK_GRID (grid), value, 1, row, 1, 1);
-
-      g_free (k);
-      row++;
+      gtk_grid_attach (GTK_GRID (grid), key,   0, i, 1, 1);
+      gtk_grid_attach (GTK_GRID (grid), value, 1, i, 1, 1);
     }
 
   return grid;
@@ -1197,34 +1210,16 @@ about_dialog_info_grid (gchar **lines)
 
 /* markdown version of the grid lines for the clipboard. caller frees. */
 static gchar *
-about_dialog_markdown_text (gchar **lines)
+about_dialog_markdown_text (GPtrArray *info)
 {
   GString *md = g_string_new (NULL);
-  gint     i;
+  guint    i;
 
-  for (i = 0; lines[i]; i++)
+  for (i = 0; i < info->len; i++)
     {
-      gchar *sep;
+      GimpAboutInfo *line = g_ptr_array_index (info, i);
 
-      if (! *lines[i])
-        continue;
-
-      sep = strchr (lines[i], ':');
-      if (sep)
-        {
-          gchar       *k = g_strndup (lines[i], sep - lines[i] + 1);
-          const gchar *v = sep + 1;
-
-          while (*v == ' ')
-            v++;
-
-          g_string_append_printf (md, "- **%s** %s\n", k, v);
-          g_free (k);
-        }
-      else
-        {
-          g_string_append_printf (md, "- %s\n", lines[i]);
-        }
+      g_string_append_printf (md, "- **%s** %s\n", line->key, line->value);
     }
 
   return g_string_free (md, FALSE);
@@ -1258,9 +1253,8 @@ about_dialog_add_debug_info (GtkBox *dialog_vbox)
   GtkWidget  *button;
   GList      *children;
   GList      *iter;
-  gchar      *text;
+  GPtrArray  *info;
   gchar      *markdown;
-  gchar     **lines;
   gint        pos = -1;
   gint        i;
 
@@ -1280,9 +1274,8 @@ about_dialog_add_debug_info (GtkBox *dialog_vbox)
   if (! GTK_IS_BOX (page))
     return;
 
-  text     = about_dialog_debug_text ();
-  lines    = g_strsplit (text, "\n", -1);
-  markdown = about_dialog_markdown_text (lines);
+  info     = about_dialog_debug_info ();
+  markdown = about_dialog_markdown_text (info);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_widget_set_halign (vbox, GTK_ALIGN_CENTER);
@@ -1312,10 +1305,9 @@ about_dialog_add_debug_info (GtkBox *dialog_vbox)
 
   /* every line shows in the dialog and rides the clipboard copy alike */
   gtk_box_pack_start (GTK_BOX (vbox),
-                      about_dialog_info_grid (lines), FALSE, FALSE, 0);
+                      about_dialog_info_grid (info), FALSE, FALSE, 0);
 
-  g_strfreev (lines);
-  g_free (text);
+  g_ptr_array_unref (info);
 
   /* drop it right before the copyright line, so it sits between the website
    * link and the copyright
