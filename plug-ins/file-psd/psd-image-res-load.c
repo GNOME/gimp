@@ -275,7 +275,7 @@ get_image_resource_header (PSDimageres   *res_a,
   if (*error)
     return -1;
   if (name != NULL)
-    g_strlcpy (res_a->name, name, write_len + 1);
+    g_strlcpy (res_a->name, name, sizeof (res_a->name));
   else
     res_a->name[0] = 0x0;
   g_free (name);
