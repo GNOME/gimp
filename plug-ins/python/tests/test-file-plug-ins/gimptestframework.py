@@ -198,6 +198,19 @@ class FileLoadTest(object):
                 self.failure_reason = msg
                 self.log.error("--> " + msg)
                 return RESULT_FAIL
+            elif expected == EXPECTED_FAIL and status == Gimp.PDBStatusType.EXECUTION_ERROR:
+                err = result.index(1)
+                # A regular loading failure should have an error defined
+                if err is None:
+                    # This can happen if the plug-in did an API call that returned an error.
+                    # A file loading plug-in should catch the error before doing an invalid
+                    # API call and return a relevant error.
+                    self.unexpected_failure_images.append(image_file)
+                    msg = "Regression loading " + image_file + ". Loading failed due to an execution error (error in API call?)."
+                    self.failure_reason = msg
+                    self.log.error("--> " + msg)
+                    return RESULT_FAIL
+
             return RESULT_OK
 
     def load_test_images(self, test_images):
