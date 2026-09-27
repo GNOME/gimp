@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-29 02:49+0000\n"
-"PO-Revision-Date: 2026-08-29 12:02+0500\n"
+"POT-Creation-Date: 2026-09-19 20:48+0000\n"
+"PO-Revision-Date: 2026-09-27 16:48+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -166,12 +166,12 @@ msgstr ""
 "licenses/"
 
 #. TRANSLATORS: title for info message in terminal window
-#: app/app.c:545
+#: app/app.c:572
 msgid "INFO"
 msgstr "АҚПАРАТ"
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:547
+#: app/app.c:574
 msgid ""
 "GIMP is now running as a background process. You can quit anytime with Ctrl-"
 "C (SIGINT)."
@@ -180,7 +180,7 @@ msgstr ""
 "келген уақытта шығуға болады."
 
 #. TRANSLATORS: info message displayed in terminal window.
-#: app/app.c:550
+#: app/app.c:577
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr ""
 "Егер сіз оның орнына бірден шыққыңыз келсе, GIMP-ті --quit жалаушасымен "
@@ -225,117 +225,117 @@ msgstr "%s нұсқасы %s пайдаланылуда"
 msgid "System Language"
 msgstr "Жүйелік тіл"
 
-#: app/main.c:164
+#: app/main.c:169
 msgid "Show version information and exit"
 msgstr "Нұсқа туралы ақпаратты көрсету және шығу"
 
-#: app/main.c:169
+#: app/main.c:174
 msgid "Show license information and exit"
 msgstr "Лицензия туралы ақпаратты көрсету және шығу"
 
-#: app/main.c:174
+#: app/main.c:179
 msgid "Be more verbose"
 msgstr "Толығырақ ақпарат шығару"
 
-#: app/main.c:179
+#: app/main.c:184
 msgid "Start a new GIMP instance"
 msgstr "Жаңа GIMP данасын іске қосу"
 
-#: app/main.c:184
+#: app/main.c:189
 msgid "Open images as new"
 msgstr "Суреттерді жаңа ретінде ашу"
 
-#: app/main.c:202
+#: app/main.c:207
 msgid "Run without a user interface"
 msgstr "Пайдаланушы интерфейсінсіз іске қосу"
 
-#: app/main.c:207
+#: app/main.c:212
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Қылқаламдарды, градиенттерді, өрнектерді жүктемеу..."
 
-#: app/main.c:212
+#: app/main.c:217
 msgid "Do not load any fonts"
 msgstr "Ешқандай қаріптерді жүктемеу"
 
-#: app/main.c:217
+#: app/main.c:222
 msgid "Do not show a splash screen"
 msgstr "Қарсы алу экранын көрсетпеу"
 
-#: app/main.c:222
+#: app/main.c:227
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "GIMP және плагиндер арасында ортақ жадты пайдаланбау"
 
-#: app/main.c:227
+#: app/main.c:232
 msgid "Do not use special CPU acceleration functions"
 msgstr "Процессордың арнайы үдету функцияларын пайдаланбау"
 
-#: app/main.c:232
+#: app/main.c:237
 msgid "Use an alternate sessionrc file"
 msgstr "Балама sessionrc файлын пайдалану"
 
-#: app/main.c:237
+#: app/main.c:242
 msgid "Use an alternate user gimprc file"
 msgstr "Балама пайдаланушы gimprc файлын пайдалану"
 
-#: app/main.c:242
+#: app/main.c:247
 msgid "Use an alternate system gimprc file"
 msgstr "Балама жүйелік gimprc файлын пайдалану"
 
-#: app/main.c:247
+#: app/main.c:252
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Орындалатын топтамалық команда (бірнеше рет пайдалануға болады)"
 
-#: app/main.c:252
+#: app/main.c:257
 msgid "The procedure to process batch commands with"
 msgstr "Топтамалық командаларды өңдеуге арналған процедура"
 
-#: app/main.c:257
+#: app/main.c:262
 msgid "Quit immediately after performing requested actions"
 msgstr "Сұралған әрекеттерді орындағаннан кейін бірден шығу"
 
-#: app/main.c:262
+#: app/main.c:267
 msgid "Send messages to console instead of using a dialog"
 msgstr "Сұхбат терезесін пайдалану орнына хабарламаларды консольге жіберу"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:268
+#: app/main.c:273
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB үйлесімділік режимі (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:274
+#: app/main.c:279
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Құлау жағдайында жөндеу (never|query|always)"
 
-#: app/main.c:279
+#: app/main.c:284
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Қатаң емес жөндеу сигналдарының өңдеушілерін іске қосу"
 
-#: app/main.c:284
+#: app/main.c:289
 msgid "Make all warnings fatal"
 msgstr "Барлық ескертулерді қатаң қатеге айналдыру"
 
-#: app/main.c:289
+#: app/main.c:294
 msgid "Output a gimprc file with default settings"
 msgstr "Бастапқы баптаулары бар gimprc файлын шығару"
 
-#: app/main.c:305
+#: app/main.c:310
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "PDB ішіндегі ескірген процедуралардың сұрыпталған тізімін шығару"
 
-#: app/main.c:310
+#: app/main.c:315
 msgid "Show a preferences page with experimental features"
 msgstr "Эксперименталды функциялары бар баптаулар бетін көрсету"
 
-#: app/main.c:315
+#: app/main.c:320
 msgid "Show an image submenu with debug actions"
 msgstr "Жөндеу әрекеттері бар сурет ішкі мәзірін көрсету"
 
-#: app/main.c:832
+#: app/main.c:884
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: app/main.c:862
+#: app/main.c:914
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -343,11 +343,11 @@ msgstr ""
 "GIMP графикалық пайдаланушы интерфейсін инициализациялай алмады.\n"
 "Дисплей ортасы үшін дұрыс баптаулар бар екеніне көз жеткізіңіз."
 
-#: app/main.c:931
+#: app/main.c:1018
 msgid "Another GIMP instance is already running."
 msgstr "Басқа GIMP данасы қазірдің өзінде жұмыс істеп тұр."
 
-#: app/main.c:1014
+#: app/main.c:1102
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Бұл терезені жабу үшін кез келген таңбаны енгізіңіз)\n"
@@ -387,7 +387,7 @@ msgstr "Қылқалам түзеткіші"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:117 app/core/gimp-data-factories.c:398
-#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3516
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3602
 msgid "Brushes"
 msgstr "Қылқаламдар"
 
@@ -436,7 +436,7 @@ msgstr "Докталатын"
 
 #. Document History
 #: app/actions/actions.c:150 app/dialogs/dialogs.c:368
-#: app/dialogs/preferences-dialog.c:1281
+#: app/dialogs/preferences-dialog.c:1298
 msgid "Document History"
 msgstr "Құжат тарихы"
 
@@ -471,7 +471,7 @@ msgstr "Сүзгілер"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:174 app/core/gimp-data-factories.c:432
-#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3546
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3632
 msgid "Fonts"
 msgstr "Қаріптер"
 
@@ -482,12 +482,12 @@ msgstr "Градиент түзеткіші"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:180 app/core/gimp-data-factories.c:423
-#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3540
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3626
 msgid "Gradients"
 msgstr "Градиенттер"
 
 #: app/actions/actions.c:183 app/core/gimp-data-factories.c:439
-#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3552
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3638
 msgid "Tool Presets"
 msgstr "Саймандардың алдын ала баптаулары"
 
@@ -498,11 +498,11 @@ msgstr "Сайманның алдын ала баптауының түзеткі
 
 #. Help
 #. fix native search bar not appearing on non-Enligsh locales
-#: app/actions/actions.c:189 app/menus/menus.c:716
+#: app/actions/actions.c:189 app/menus/menus.c:722
 msgid "Help"
 msgstr "Көмек"
 
-#: app/actions/actions.c:192 app/core/gimpimage.c:614
+#: app/actions/actions.c:192 app/core/gimpimage.c:623
 msgid "Image"
 msgstr "Сурет"
 
@@ -520,7 +520,7 @@ msgstr "Қабаттар"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:201 app/core/gimp-data-factories.c:408
-#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3558
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3644
 msgid "MyPaint Brushes"
 msgstr "MyPaint қылқаламдары"
 
@@ -531,23 +531,23 @@ msgstr "Палитра түзеткіші"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:207 app/core/gimp-data-factories.c:418
-#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3534
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3620
 msgid "Palettes"
 msgstr "Палитралар"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:210 app/core/gimp-data-factories.c:413
-#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3528
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3614
 msgid "Patterns"
 msgstr "Өрнектер"
 
-#: app/actions/actions.c:213 app/dialogs/preferences-dialog.c:3564
+#: app/actions/actions.c:213 app/dialogs/preferences-dialog.c:3650
 msgid "Plug-ins"
 msgstr "Плагиндер"
 
 #. Quick Mask Color
 #: app/actions/actions.c:216 app/core/gimpchannel.c:360
-#: app/dialogs/preferences-dialog.c:1832
+#: app/dialogs/preferences-dialog.c:1895
 msgid "Quick Mask"
 msgstr "Жылдам маска"
 
@@ -580,12 +580,12 @@ msgstr "Сайман опциялары"
 msgid "Tool Path"
 msgstr "Сайман жолы"
 
-#: app/actions/actions.c:240 app/widgets/gimptoolpalette.c:328
+#: app/actions/actions.c:240 app/widgets/gimptoolpalette.c:330
 msgid "Tools"
 msgstr "Саймандар"
 
 #: app/actions/actions.c:243 app/dialogs/dialogs.c:384
-#: app/tools/gimppathtool.c:188 app/widgets/gimpitemchooser.c:319
+#: app/tools/gimppathtool.c:191 app/widgets/gimpitemchooser.c:319
 msgid "Paths"
 msgstr "Жолдар"
 
@@ -595,7 +595,7 @@ msgstr "Көрініс"
 
 #. Windows
 #. fix native windows list not appearing on dock. See: #428
-#: app/actions/actions.c:249 app/menus/menus.c:705
+#: app/actions/actions.c:249 app/menus/menus.c:711
 msgid "Windows"
 msgstr "Терезелер"
 
@@ -2492,8 +2492,8 @@ msgstr "240 секунд"
 #: app/dialogs/image-scale-dialog.c:210 app/dialogs/input-devices-dialog.c:66
 #: app/dialogs/input-devices-dialog.c:121 app/dialogs/item-options-dialog.c:147
 #: app/dialogs/layer-add-mask-dialog.c:122
-#: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:222
-#: app/dialogs/preferences-dialog.c:615 app/dialogs/preferences-dialog.c:1176
+#: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:223
+#: app/dialogs/preferences-dialog.c:616 app/dialogs/preferences-dialog.c:1189
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:181
 #: app/dialogs/resize-dialog.c:228 app/dialogs/resolution-calibrate-dialog.c:73
 #: app/dialogs/scale-dialog.c:138 app/dialogs/stroke-dialog.c:129
@@ -2504,7 +2504,7 @@ msgstr "240 секунд"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:376 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1104 app/tools/gimptexttool.c:1796
+#: app/tools/gimppathtool.c:1123 app/tools/gimptexttool.c:1796
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:562
@@ -2574,7 +2574,7 @@ msgstr "Маркер үшін сипаттаманы енгізіңіз"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
-#: app/display/gimpdisplayshell-dnd.c:707 app/display/gimpimagewindow.c:2288
+#: app/display/gimpdisplayshell-dnd.c:707 app/display/gimpimagewindow.c:2383
 #: app/widgets/gimplayertreeview.c:859 app/widgets/gimptoolbox.c:852
 #: app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -2588,7 +2588,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2455
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2479
 #: app/core/gimppalette.c:600 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -2638,574 +2638,574 @@ msgstr "_Пернетақта жарлықтарының дампын шығар
 msgid "Dump _Attached Data"
 msgstr "Тір_келген деректер дампын шығару"
 
-#: app/actions/dialogs-actions.c:47
+#: app/actions/dialogs-actions.c:51
 msgctxt "windows-action"
 msgid "Tool_box"
 msgstr "Саймандар тақ_тасы"
 
-#: app/actions/dialogs-actions.c:53
+#: app/actions/dialogs-actions.c:57
 msgctxt "dialogs-action"
 msgid "Tool _Options Dialog"
 msgstr "Сайман _опцияларының сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:54
+#: app/actions/dialogs-actions.c:58
 msgctxt "dialogs-action"
 msgid "Tool _Options"
 msgstr "Сайман _опциялары"
 
-#: app/actions/dialogs-actions.c:56
+#: app/actions/dialogs-actions.c:60
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
 msgstr "Сайман опцияларының сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:61
+#: app/actions/dialogs-actions.c:65
 msgctxt "dialogs-action"
 msgid "_Device Status Dialog"
 msgstr "Құ_рылғы қалып-күйінің сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:62
+#: app/actions/dialogs-actions.c:66
 msgctxt "dialogs-action"
 msgid "_Device Status"
 msgstr "Құ_рылғы қалып-күйі"
 
-#: app/actions/dialogs-actions.c:64
+#: app/actions/dialogs-actions.c:68
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
 msgstr "Құрылғы қалып-күйінің сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:69
+#: app/actions/dialogs-actions.c:73
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting Dialog"
 msgstr "_Симметриялы бояудың сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:70
+#: app/actions/dialogs-actions.c:74
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting"
 msgstr "_Симметриялы бояу"
 
-#: app/actions/dialogs-actions.c:72
+#: app/actions/dialogs-actions.c:76
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
 msgstr "Симметрия сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:77
+#: app/actions/dialogs-actions.c:81
 msgctxt "dialogs-action"
 msgid "_Layers Dialog"
 msgstr "_Қабаттар сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:78
+#: app/actions/dialogs-actions.c:82
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr "_Қабаттар"
 
-#: app/actions/dialogs-actions.c:80
+#: app/actions/dialogs-actions.c:84
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
 msgstr "Қабаттар сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:85
+#: app/actions/dialogs-actions.c:89
 msgctxt "dialogs-action"
 msgid "_Channels Dialog"
 msgstr "_Арналар сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:86
+#: app/actions/dialogs-actions.c:90
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr "_Арналар"
 
-#: app/actions/dialogs-actions.c:88
+#: app/actions/dialogs-actions.c:92
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
 msgstr "Арналар сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:93
+#: app/actions/dialogs-actions.c:97
 msgctxt "dialogs-action"
 msgid "_Paths Dialog"
 msgstr "_Жолдар сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:94
+#: app/actions/dialogs-actions.c:98
 msgctxt "dialogs-action"
 msgid "_Paths"
 msgstr "_Жолдар"
 
-#: app/actions/dialogs-actions.c:96
+#: app/actions/dialogs-actions.c:100
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
 msgstr "Жолдар сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:101
+#: app/actions/dialogs-actions.c:105
 msgctxt "dialogs-action"
 msgid "Color_map Dialog"
 msgstr "Түстер _картасының сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:102
+#: app/actions/dialogs-actions.c:106
 msgctxt "dialogs-action"
 msgid "Color_map"
 msgstr "Түстер _картасы"
 
-#: app/actions/dialogs-actions.c:104
+#: app/actions/dialogs-actions.c:108
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
 msgstr "Түстер картасының сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:109
+#: app/actions/dialogs-actions.c:113
 msgctxt "dialogs-action"
 msgid "Histogra_m Dialog"
 msgstr "Гистограм_ма сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:110
+#: app/actions/dialogs-actions.c:114
 msgctxt "dialogs-action"
 msgid "Histogra_m"
 msgstr "Гистограм_ма"
 
-#: app/actions/dialogs-actions.c:112
+#: app/actions/dialogs-actions.c:116
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
 msgstr "Гистограмма сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:117
+#: app/actions/dialogs-actions.c:121
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr "_Таңдау түзеткіші"
 
-#: app/actions/dialogs-actions.c:119
+#: app/actions/dialogs-actions.c:123
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr "Таңдау түзеткішін ашу"
 
-#: app/actions/dialogs-actions.c:124
+#: app/actions/dialogs-actions.c:128
 msgctxt "dialogs-action"
 msgid "Na_vigation Dialog"
 msgstr "На_вигация сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:125
+#: app/actions/dialogs-actions.c:129
 msgctxt "dialogs-action"
 msgid "Na_vigation"
 msgstr "На_вигация"
 
-#: app/actions/dialogs-actions.c:127
+#: app/actions/dialogs-actions.c:131
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
 msgstr "Дисплей навигациясының сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:132
+#: app/actions/dialogs-actions.c:136
 msgctxt "dialogs-action"
 msgid "Undo _History Dialog"
 msgstr "Болдырмау _тарихының сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:133
+#: app/actions/dialogs-actions.c:137
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr "Болдырмау _тарихы"
 
-#: app/actions/dialogs-actions.c:135
+#: app/actions/dialogs-actions.c:139
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
 msgstr "Болдырмау тарихының сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:140
+#: app/actions/dialogs-actions.c:144
 msgctxt "dialogs-action"
 msgid "_Pointer Dialog"
 msgstr "_Курсор сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:141
+#: app/actions/dialogs-actions.c:145
 msgctxt "dialogs-action"
 msgid "_Pointer"
 msgstr "_Курсор"
 
-#: app/actions/dialogs-actions.c:143
+#: app/actions/dialogs-actions.c:147
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
 msgstr "Курсор ақпаратының сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:148
+#: app/actions/dialogs-actions.c:152
 msgctxt "dialogs-action"
 msgid "_Sample Points Dialog"
 msgstr "Ү_лгі нүктелерінің сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:149
+#: app/actions/dialogs-actions.c:153
 msgctxt "dialogs-action"
 msgid "_Sample Points"
 msgstr "Ү_лгі нүктелері"
 
-#: app/actions/dialogs-actions.c:151
+#: app/actions/dialogs-actions.c:155
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
 msgstr "Үлгі нүктелеріның сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:156
+#: app/actions/dialogs-actions.c:160
 msgctxt "dialogs-action"
 msgid "Colo_rs Dialog"
 msgstr "Түст_ер сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:157
+#: app/actions/dialogs-actions.c:161
 msgctxt "dialogs-action"
 msgid "Colo_rs"
 msgstr "Түст_ер"
 
-#: app/actions/dialogs-actions.c:159
+#: app/actions/dialogs-actions.c:163
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
 msgstr "Алдыңғы көрініс / фон түстерінің сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:164
+#: app/actions/dialogs-actions.c:168
 msgctxt "dialogs-action"
 msgid "_Brushes Dialog"
 msgstr "Қ_ылқаламдар сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:165
+#: app/actions/dialogs-actions.c:169
 msgctxt "dialogs-action"
 msgid "_Brushes"
 msgstr "Қ_ылқаламдар"
 
-#: app/actions/dialogs-actions.c:167
+#: app/actions/dialogs-actions.c:171
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
 msgstr "Қылқаламдар сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:172
+#: app/actions/dialogs-actions.c:176
 msgctxt "dialogs-action"
 msgid "Brush Editor"
 msgstr "Қылқалам түзеткіші"
 
-#: app/actions/dialogs-actions.c:174
+#: app/actions/dialogs-actions.c:178
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
 msgstr "Қылқалам түзеткішін ашу"
 
-#: app/actions/dialogs-actions.c:179
+#: app/actions/dialogs-actions.c:183
 msgctxt "dialogs-action"
 msgid "Paint D_ynamics Dialog"
 msgstr "Бояу д_инамикасының сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:180
+#: app/actions/dialogs-actions.c:184
 msgctxt "dialogs-action"
 msgid "Paint D_ynamics"
 msgstr "Бояу д_инамикасы"
 
-#: app/actions/dialogs-actions.c:182
+#: app/actions/dialogs-actions.c:186
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
 msgstr "Бояу динамикасының сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:187
+#: app/actions/dialogs-actions.c:191
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
 msgstr "Бояу динамикасының түзеткіші"
 
-#: app/actions/dialogs-actions.c:189
+#: app/actions/dialogs-actions.c:193
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
 msgstr "Бояу динамикасының түзеткішін ашу"
 
-#: app/actions/dialogs-actions.c:194
+#: app/actions/dialogs-actions.c:198
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes Dialog"
 msgstr "_MyPaint қылқаламдарының сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:195
+#: app/actions/dialogs-actions.c:199
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
 msgstr "_MyPaint қылқаламдары"
 
-#: app/actions/dialogs-actions.c:197
+#: app/actions/dialogs-actions.c:201
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
 msgstr "MyPaint қылқаламдарының сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:202
+#: app/actions/dialogs-actions.c:206
 msgctxt "dialogs-action"
 msgid "P_atterns Dialog"
 msgstr "Ө_рнектер сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:203
+#: app/actions/dialogs-actions.c:207
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "Ө_рнектер"
 
-#: app/actions/dialogs-actions.c:205
+#: app/actions/dialogs-actions.c:209
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "Өрнектер сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:210
+#: app/actions/dialogs-actions.c:214
 msgctxt "dialogs-action"
 msgid "_Gradients Dialog"
 msgstr "_Градиенттер сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:211
+#: app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "_Градиенттер"
 
-#: app/actions/dialogs-actions.c:213
+#: app/actions/dialogs-actions.c:217
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "Градиенттер сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:218
+#: app/actions/dialogs-actions.c:222
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "Градиент түзеткіші"
 
-#: app/actions/dialogs-actions.c:220
+#: app/actions/dialogs-actions.c:224
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "Градиент түзеткішін ашу"
 
-#: app/actions/dialogs-actions.c:225
+#: app/actions/dialogs-actions.c:229
 msgctxt "dialogs-action"
 msgid "Pal_ettes Dialog"
 msgstr "Пал_итралар сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:226
+#: app/actions/dialogs-actions.c:230
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "Пал_итралар"
 
-#: app/actions/dialogs-actions.c:228
+#: app/actions/dialogs-actions.c:232
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "Палитралар сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:233 app/actions/dialogs-actions.c:234
+#: app/actions/dialogs-actions.c:237 app/actions/dialogs-actions.c:238
 msgctxt "dialogs-action"
 msgid "Palette _Editor"
 msgstr "Палитра _түзеткіші"
 
-#: app/actions/dialogs-actions.c:236
+#: app/actions/dialogs-actions.c:240
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "Палитра түзеткішін ашу"
 
-#: app/actions/dialogs-actions.c:241
+#: app/actions/dialogs-actions.c:245
 msgctxt "dialogs-action"
 msgid "Tool Pre_sets Dialog"
 msgstr "Сайманның алдын ала бап_тауларының сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:242
+#: app/actions/dialogs-actions.c:246
 msgctxt "dialogs-action"
 msgid "Tool Pre_sets"
 msgstr "Сайманның алдын ала бап_таулары"
 
-#: app/actions/dialogs-actions.c:244
+#: app/actions/dialogs-actions.c:248
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
 msgstr "Саймандардың алдын ала баптауларының сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:249
+#: app/actions/dialogs-actions.c:253
 msgctxt "dialogs-action"
 msgid "_Fonts Dialog"
 msgstr "_Қаріптер сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:250
+#: app/actions/dialogs-actions.c:254
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "_Қаріптер"
 
-#: app/actions/dialogs-actions.c:252
+#: app/actions/dialogs-actions.c:256
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "Қаріптер сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:257
+#: app/actions/dialogs-actions.c:261
 msgctxt "dialogs-action"
 msgid "B_uffers Dialog"
 msgstr "Б_уферлер сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:258
+#: app/actions/dialogs-actions.c:262
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "Б_уферлер"
 
-#: app/actions/dialogs-actions.c:260
+#: app/actions/dialogs-actions.c:264
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "Аталған буферлер сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:265
+#: app/actions/dialogs-actions.c:269
 msgctxt "dialogs-action"
 msgid "_Images Dialog"
 msgstr "_Суреттер сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:266
+#: app/actions/dialogs-actions.c:270
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "_Суреттер"
 
-#: app/actions/dialogs-actions.c:268
+#: app/actions/dialogs-actions.c:272
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "Суреттер сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:273
+#: app/actions/dialogs-actions.c:277
 msgctxt "dialogs-action"
 msgid "Document Histor_y Dialog"
 msgstr "Құжаттар тар_ихының сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:274
+#: app/actions/dialogs-actions.c:278
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "Құжаттар тар_ихы"
 
-#: app/actions/dialogs-actions.c:276
+#: app/actions/dialogs-actions.c:280
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "Құжаттар тарихының сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:281
+#: app/actions/dialogs-actions.c:285
 msgctxt "dialogs-action"
 msgid "_Templates Dialog"
 msgstr "_Үлгілер сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:282
+#: app/actions/dialogs-actions.c:286
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "_Үлгілер"
 
-#: app/actions/dialogs-actions.c:284
+#: app/actions/dialogs-actions.c:288
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "Сурет үлгілерінің сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:289 app/actions/dialogs-actions.c:290
+#: app/actions/dialogs-actions.c:293 app/actions/dialogs-actions.c:294
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "Қателер ко_нсолі"
 
-#: app/actions/dialogs-actions.c:292
+#: app/actions/dialogs-actions.c:296
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "Қателер консолін ашу"
 
-#: app/actions/dialogs-actions.c:297 app/actions/dialogs-actions.c:298
+#: app/actions/dialogs-actions.c:301 app/actions/dialogs-actions.c:302
 msgctxt "dialogs-action"
 msgid "_Dashboard"
 msgstr "_Бақылау тақтасы"
 
-#: app/actions/dialogs-actions.c:300
+#: app/actions/dialogs-actions.c:304
 msgctxt "dialogs-action"
 msgid "Open the dashboard"
 msgstr "Бақылау тақтасын ашу"
 
-#: app/actions/dialogs-actions.c:310 app/actions/dialogs-actions.c:311
+#: app/actions/dialogs-actions.c:314 app/actions/dialogs-actions.c:315
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "_Баптаулар"
 
-#: app/actions/dialogs-actions.c:313
+#: app/actions/dialogs-actions.c:317
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Баптаулар сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:318
+#: app/actions/dialogs-actions.c:322
 msgctxt "dialogs-action"
 msgid "_Input Devices Editor"
 msgstr "_Кіріс құрылғыларының түзеткіші"
 
-#: app/actions/dialogs-actions.c:319
+#: app/actions/dialogs-actions.c:323
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "_Кіріс құрылғылары"
 
-#: app/actions/dialogs-actions.c:321
+#: app/actions/dialogs-actions.c:325
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Кіріс құрылғыларының түзеткішін ашу"
 
-#: app/actions/dialogs-actions.c:326
+#: app/actions/dialogs-actions.c:330
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts Editor"
 msgstr "_Пернетақта жарлықтарының түзеткіші"
 
-#: app/actions/dialogs-actions.c:327
+#: app/actions/dialogs-actions.c:331
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Пернетақта жарлықтары"
 
-#: app/actions/dialogs-actions.c:329
+#: app/actions/dialogs-actions.c:333
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Пернетақта жарлықтарының түзеткішін ашу"
 
-#: app/actions/dialogs-actions.c:334
+#: app/actions/dialogs-actions.c:338
 msgctxt "dialogs-action"
 msgid "_Modules Dialog"
 msgstr "_Модульдер сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:335
+#: app/actions/dialogs-actions.c:339
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Модульдер"
 
-#: app/actions/dialogs-actions.c:337
+#: app/actions/dialogs-actions.c:341
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Модульдерді басқару сұхбат терезесін ашу"
 
-#: app/actions/dialogs-actions.c:342
+#: app/actions/dialogs-actions.c:346
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "Күннің _кеңесі"
 
-#: app/actions/dialogs-actions.c:344
+#: app/actions/dialogs-actions.c:348
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "GIMP қолдану бойынша пайдалы кеңестерді көрсету"
 
-#: app/actions/dialogs-actions.c:349
+#: app/actions/dialogs-actions.c:353
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
 msgstr "Қарсы алу сұхбат терезесі"
 
-#: app/actions/dialogs-actions.c:351
+#: app/actions/dialogs-actions.c:355
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
 msgstr "Орындалып тұрған GIMP шығарылымы туралы ақпаратты көрсету"
 
-#: app/actions/dialogs-actions.c:357 app/actions/dialogs-actions.c:362
+#: app/actions/dialogs-actions.c:361 app/actions/dialogs-actions.c:366
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "GIMP туралы"
 
-#: app/actions/dialogs-actions.c:359
+#: app/actions/dialogs-actions.c:363
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "Осы т_уралы"
 
-#: app/actions/dialogs-actions.c:367
+#: app/actions/dialogs-actions.c:371
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "Команданы _іздеу және орындау"
 
-#: app/actions/dialogs-actions.c:369
+#: app/actions/dialogs-actions.c:373
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Командаларды кілттік сөз бойынша іздеп, оларды орындау"
 
-#: app/actions/dialogs-actions.c:375
+#: app/actions/dialogs-actions.c:379
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
 msgstr "Кеңейтулерді _басқару"
 
-#: app/actions/dialogs-actions.c:377
+#: app/actions/dialogs-actions.c:381
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr "Кеңейтулерді басқару: іздеу, орнату, өшіру, жаңарту."
 
-#: app/actions/dialogs-actions.c:441
+#: app/actions/dialogs-actions.c:445
 msgid "Tool_box"
 msgstr "Саймандар тақ_тасы"
 
-#: app/actions/dialogs-actions.c:442
+#: app/actions/dialogs-actions.c:446
 msgid "Raise the toolbox"
 msgstr "Саймандар тақтасын көтеру"
 
-#: app/actions/dialogs-actions.c:446
+#: app/actions/dialogs-actions.c:450
 msgid "New Tool_box"
 msgstr "Жаңа саймандар тақ_тасы"
 
-#: app/actions/dialogs-actions.c:447
+#: app/actions/dialogs-actions.c:451
 msgid "Create a new toolbox"
 msgstr "Жаңа саймандар тақтасын жасау"
 
@@ -3444,7 +3444,7 @@ msgid "Clear Document History"
 msgstr "Құжаттар тарихын тазарту"
 
 #: app/actions/documents-commands.c:264 app/actions/edit-commands.c:176
-#: app/dialogs/preferences-dialog.c:616
+#: app/dialogs/preferences-dialog.c:617
 msgid "Cl_ear"
 msgstr "Та_зарту"
 
@@ -3927,21 +3927,21 @@ msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Таңдауды белсенді өрнекпен бояу"
 
-#: app/actions/edit-actions.c:323 app/actions/edit-actions.c:325
+#: app/actions/edit-actions.c:327 app/actions/edit-actions.c:329
 #, c-format
 msgid "_Undo %s"
 msgstr "%s болды_рмау"
 
-#: app/actions/edit-actions.c:329 app/actions/edit-actions.c:331
+#: app/actions/edit-actions.c:333 app/actions/edit-actions.c:335
 #, c-format
 msgid "_Redo %s"
 msgstr "%s қай_талау"
 
-#: app/actions/edit-actions.c:342
+#: app/actions/edit-actions.c:346
 msgid "_Undo"
 msgstr "_Болдырмау"
 
-#: app/actions/edit-actions.c:343
+#: app/actions/edit-actions.c:347
 msgid "_Redo"
 msgstr "Қай_талау"
 
@@ -6124,7 +6124,7 @@ msgstr "Суретті масштабтау"
 
 #. Scaling
 #: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2706
-#: app/dialogs/preferences-dialog.c:1750 app/pdb/image-transform-cmds.c:124
+#: app/dialogs/preferences-dialog.c:1813 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
 msgid "Scaling"
@@ -7995,12 +7995,12 @@ msgctxt "patterns-action"
 msgid "Edit pattern"
 msgstr "Өрнекті түзету"
 
-#: app/actions/plug-in-actions.c:69
+#: app/actions/plug-in-actions.c:68
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
 msgstr "Барлық _сүзгілерді бастапқыға қайтару"
 
-#: app/actions/plug-in-actions.c:70
+#: app/actions/plug-in-actions.c:69
 msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
 msgstr "Барлық плагиндерді бастапқы баптауларына қайтару"
@@ -8012,8 +8012,8 @@ msgstr "Барлық сүзгілерді бастапқыға қайтару"
 #: app/actions/plug-in-commands.c:188 app/actions/tool-options-commands.c:211
 #: app/dialogs/fill-dialog.c:114 app/dialogs/grid-dialog.c:101
 #: app/dialogs/image-new-dialog.c:105 app/dialogs/input-devices-dialog.c:65
-#: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:223
-#: app/dialogs/preferences-dialog.c:1175 app/dialogs/print-size-dialog.c:122
+#: app/dialogs/input-devices-dialog.c:122 app/dialogs/preferences-dialog.c:224
+#: app/dialogs/preferences-dialog.c:1188 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/tools/gimpfiltertool.c:375 app/tools/gimptransformgridtool.c:1261
@@ -8465,7 +8465,7 @@ msgstr "Мәтіндік файлды ашу (UTF-8)"
 
 #: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:168
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:790
+#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:792
 #: app/widgets/gimpiconpicker.c:490 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:708
 msgid "_Open"
@@ -9611,499 +9611,500 @@ msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Осы терезенің қалып-күй жолағын көрсету"
 
-#: app/actions/view-actions.c:323
+#. macOS reserves F11 to "Show Desktop". Use the macOS-standard Ctrl+Cmd+F
+#: app/actions/view-actions.c:324 app/actions/view-actions.c:327
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "Толық эк_ран"
 
-#: app/actions/view-actions.c:324
+#: app/actions/view-actions.c:329
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Толық экран режиміне ауысу"
 
-#: app/actions/view-actions.c:333
+#: app/actions/view-actions.c:338
 msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Масштабтау коэффициентін орнату"
 
-#: app/actions/view-actions.c:338
+#: app/actions/view-actions.c:343
 msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Мүмкіндігінше кішірейту"
 
-#: app/actions/view-actions.c:343
+#: app/actions/view-actions.c:348
 msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Мүмкіндігінше үлкейту"
 
-#: app/actions/view-actions.c:348
+#: app/actions/view-actions.c:353
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "Кішір_ейту"
 
-#: app/actions/view-actions.c:349
+#: app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Кішірейту"
 
-#: app/actions/view-actions.c:354
+#: app/actions/view-actions.c:359
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "Үлке_йту"
 
-#: app/actions/view-actions.c:355
+#: app/actions/view-actions.c:360
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Үлкейту"
 
-#: app/actions/view-actions.c:360
+#: app/actions/view-actions.c:365
 msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Көбірек кішірейту"
 
-#: app/actions/view-actions.c:365
+#: app/actions/view-actions.c:370
 msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Көбірек үлкейту"
 
-#: app/actions/view-actions.c:373
+#: app/actions/view-actions.c:378
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1 (1600%)"
 msgstr "Масштабтау 16:1 (1600%)"
 
-#: app/actions/view-actions.c:374
+#: app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: app/actions/view-actions.c:376
+#: app/actions/view-actions.c:381
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Масштабтау 16:1"
 
-#: app/actions/view-actions.c:381
+#: app/actions/view-actions.c:386
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1 (800%)"
 msgstr "Масштабтау 8:1 (800%)"
 
-#: app/actions/view-actions.c:382
+#: app/actions/view-actions.c:387
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: app/actions/view-actions.c:384
+#: app/actions/view-actions.c:389
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Масштабтау 8:1"
 
-#: app/actions/view-actions.c:389
+#: app/actions/view-actions.c:394
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1 (400%)"
 msgstr "Масштабтау 4:1 (400%)"
 
-#: app/actions/view-actions.c:390
+#: app/actions/view-actions.c:395
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: app/actions/view-actions.c:392
+#: app/actions/view-actions.c:397
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Масштабтау 4:1"
 
-#: app/actions/view-actions.c:397
+#: app/actions/view-actions.c:402
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1 (200%)"
 msgstr "Масштабтау 2:1 (200%)"
 
-#: app/actions/view-actions.c:398
+#: app/actions/view-actions.c:403
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: app/actions/view-actions.c:400
+#: app/actions/view-actions.c:405
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Масштабтау 2:1"
 
-#: app/actions/view-actions.c:405
+#: app/actions/view-actions.c:410
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1 (100%)"
 msgstr "Масштабтау 1:1 (100%)"
 
-#: app/actions/view-actions.c:406
+#: app/actions/view-actions.c:411
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: app/actions/view-actions.c:408
+#: app/actions/view-actions.c:413
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Масштабтау 1:1"
 
-#: app/actions/view-actions.c:413
+#: app/actions/view-actions.c:418
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2 (50%)"
 msgstr "Масштабтау 1:2 (50%)"
 
-#: app/actions/view-actions.c:414
+#: app/actions/view-actions.c:419
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: app/actions/view-actions.c:416
+#: app/actions/view-actions.c:421
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Масштабтау 1:2"
 
-#: app/actions/view-actions.c:421
+#: app/actions/view-actions.c:426
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4 (25%)"
 msgstr "Масштабтау 1:4 (25%)"
 
-#: app/actions/view-actions.c:422
+#: app/actions/view-actions.c:427
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: app/actions/view-actions.c:424
+#: app/actions/view-actions.c:429
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Масштабтау 1:4"
 
-#: app/actions/view-actions.c:429
+#: app/actions/view-actions.c:434
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8 (12.5%)"
 msgstr "Масштабтау 1:8 (12.5%)"
 
-#: app/actions/view-actions.c:430
+#: app/actions/view-actions.c:435
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: app/actions/view-actions.c:432
+#: app/actions/view-actions.c:437
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Масштабтау 1:8"
 
-#: app/actions/view-actions.c:437
+#: app/actions/view-actions.c:442
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16 (6.25%)"
 msgstr "Масштабтау 1:16 (6.25%)"
 
-#: app/actions/view-actions.c:438
+#: app/actions/view-actions.c:443
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: app/actions/view-actions.c:440
+#: app/actions/view-actions.c:445
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Масштабтау 1:16"
 
-#: app/actions/view-actions.c:445 app/actions/view-actions.c:448
+#: app/actions/view-actions.c:450 app/actions/view-actions.c:453
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Таңдауыңызша масштабтау коэффициентін орнату"
 
-#: app/actions/view-actions.c:446
+#: app/actions/view-actions.c:451
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
 msgstr "Басқа масштаб_тау коэффициенті..."
 
-#: app/actions/view-actions.c:456
+#: app/actions/view-actions.c:461
 msgctxt "view-action"
 msgid "Flip _Horizontally"
 msgstr "Горизонталды ауд_ару"
 
-#: app/actions/view-actions.c:457
+#: app/actions/view-actions.c:462
 msgctxt "view-action"
 msgid "Flip the view horizontally"
 msgstr "Көріністі горизонталды аудару"
 
-#: app/actions/view-actions.c:463
+#: app/actions/view-actions.c:468
 msgctxt "view-action"
 msgid "Flip _Vertically"
 msgstr "Вертикалды ау_дару"
 
-#: app/actions/view-actions.c:464
+#: app/actions/view-actions.c:469
 msgctxt "view-action"
 msgid "Flip the view vertically"
 msgstr "Көріністі вертикалды аудару"
 
-#: app/actions/view-actions.c:473
+#: app/actions/view-actions.c:478
 msgctxt "view-action"
 msgid "Display Rotation Absolute Angle Set"
 msgstr "Дисплей бұруының абсолютті бұрышы орнатылды"
 
-#: app/actions/view-actions.c:479
+#: app/actions/view-actions.c:484
 msgctxt "view-action"
 msgid "_Reset Rotate"
 msgstr "Бұруды та_стау"
 
-#: app/actions/view-actions.c:481
+#: app/actions/view-actions.c:486
 msgctxt "view-action"
 msgid "Reset the angle of rotation to 0°"
 msgstr "Бұру бұрышын 0°-қа қайтару"
 
-#: app/actions/view-actions.c:489
+#: app/actions/view-actions.c:494
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Сағат тілімен 15°-қа бұ_ру"
 
-#: app/actions/view-actions.c:490
+#: app/actions/view-actions.c:495
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
 msgstr "Көріністі оңға қарай 15 градусқа бұру"
 
-#: app/actions/view-actions.c:495
+#: app/actions/view-actions.c:500
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Сағат тілімен 90°-қа бұ_ру"
 
-#: app/actions/view-actions.c:496
+#: app/actions/view-actions.c:501
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
 msgstr "Көріністі оңға қарай 90 градусқа бұру"
 
-#: app/actions/view-actions.c:501
+#: app/actions/view-actions.c:506
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "_180°-қа бұру"
 
-#: app/actions/view-actions.c:502
+#: app/actions/view-actions.c:507
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "Көріністі төмен қаратып аудару"
 
-#: app/actions/view-actions.c:507
+#: app/actions/view-actions.c:512
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Сағат тіліне қарсы 90°-қа бұ_ру"
 
-#: app/actions/view-actions.c:508
+#: app/actions/view-actions.c:513
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
 msgstr "Көріністі солға қарай 90 градусқа бұру"
 
-#: app/actions/view-actions.c:513
+#: app/actions/view-actions.c:518
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Сағат тіліне қарсы 15°-қа бұ_ру"
 
-#: app/actions/view-actions.c:514
+#: app/actions/view-actions.c:519
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
 msgstr "Көріністі солға қарай 15 градусқа бұру"
 
-#: app/actions/view-actions.c:522
+#: app/actions/view-actions.c:527
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "_Перцептивті"
 
-#: app/actions/view-actions.c:523
+#: app/actions/view-actions.c:528
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr "Дисплей рендерлеу мақсаты — перцептивті"
 
-#: app/actions/view-actions.c:528
+#: app/actions/view-actions.c:533
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "Салыстырмалы ко_лориметриялық"
 
-#: app/actions/view-actions.c:529
+#: app/actions/view-actions.c:534
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr "Дисплей рендерлеу мақсаты — салыстырмалы колориметриялық"
 
-#: app/actions/view-actions.c:534
+#: app/actions/view-actions.c:539
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "Қа_нықтылық"
 
-#: app/actions/view-actions.c:535
+#: app/actions/view-actions.c:540
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr "Дисплей рендерлеу мақсаты — қанықтылық"
 
-#: app/actions/view-actions.c:540
+#: app/actions/view-actions.c:545
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "Абсолютті колори_метриялық"
 
-#: app/actions/view-actions.c:541
+#: app/actions/view-actions.c:546
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "Дисплей рендерлеу мақсаты — абсолютті колориметриялық"
 
-#: app/actions/view-actions.c:549
+#: app/actions/view-actions.c:554
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "_Темадан"
 
-#: app/actions/view-actions.c:550
+#: app/actions/view-actions.c:555
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Ағымдағы теманың фон түсін пайдалану"
 
-#: app/actions/view-actions.c:555
+#: app/actions/view-actions.c:560
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Түсті тексерудің _ақ түсі"
 
-#: app/actions/view-actions.c:556
+#: app/actions/view-actions.c:561
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Түсті тексерудің ақ түсін пайдалану"
 
-#: app/actions/view-actions.c:561
+#: app/actions/view-actions.c:566
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Түсті тексерудің қ_ара түсі"
 
-#: app/actions/view-actions.c:562
+#: app/actions/view-actions.c:567
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Түсті тексерудің қара түсін пайдалану"
 
-#: app/actions/view-actions.c:567
+#: app/actions/view-actions.c:572
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "Т_аңдауыңызша түс..."
 
-#: app/actions/view-actions.c:568
+#: app/actions/view-actions.c:573
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Еркін түсті пайдалану"
 
-#: app/actions/view-actions.c:573
+#: app/actions/view-actions.c:578
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "_Баптаулардағыдай"
 
-#: app/actions/view-actions.c:575
+#: app/actions/view-actions.c:580
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Шегініс түсін баптаулардағы мәнге қайтару"
 
-#: app/actions/view-actions.c:583
+#: app/actions/view-actions.c:588
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
 msgstr "\"Барлығын көр_сету\" режимінде шегіністі сақтау"
 
-#: app/actions/view-actions.c:585
+#: app/actions/view-actions.c:590
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr "\"Көрініс -> Барлығын көрсету\" қосулы болғанда кенеп шегінісін сақтау"
 
-#: app/actions/view-actions.c:594
+#: app/actions/view-actions.c:599
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
 msgstr "Горизонталды айналдыру ығысуын орнату"
 
-#: app/actions/view-actions.c:599
+#: app/actions/view-actions.c:604
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "Сол жақ жиекке дейін айналдыру"
 
-#: app/actions/view-actions.c:604
+#: app/actions/view-actions.c:609
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "Оң жақ жиекке дейін айналдыру"
 
-#: app/actions/view-actions.c:609
+#: app/actions/view-actions.c:614
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "Солға айналдыру"
 
-#: app/actions/view-actions.c:614
+#: app/actions/view-actions.c:619
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "Оңға айналдыру"
 
-#: app/actions/view-actions.c:619
+#: app/actions/view-actions.c:624
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "Бетті солға айналдыру"
 
-#: app/actions/view-actions.c:624
+#: app/actions/view-actions.c:629
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "Бетті оңға айналдыру"
 
-#: app/actions/view-actions.c:632
+#: app/actions/view-actions.c:637
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
 msgstr "Вертикалды айналдыру ығысуын орнату"
 
-#: app/actions/view-actions.c:637
+#: app/actions/view-actions.c:642
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "Жоғарғы жиекке дейін айналдыру"
 
-#: app/actions/view-actions.c:642
+#: app/actions/view-actions.c:647
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "Төменгі жиекке дейін айналдыру"
 
-#: app/actions/view-actions.c:647
+#: app/actions/view-actions.c:652
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "Жоғары айналдыру"
 
-#: app/actions/view-actions.c:652
+#: app/actions/view-actions.c:657
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "Төмен айналдыру"
 
-#: app/actions/view-actions.c:657
+#: app/actions/view-actions.c:662
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "Бетті жоғары айналдыру"
 
-#: app/actions/view-actions.c:662
+#: app/actions/view-actions.c:667
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "Бетті төмен айналдыру"
 
-#: app/actions/view-actions.c:848
+#: app/actions/view-actions.c:853
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Масштабтауды қай_тару (%d%%)"
 
-#: app/actions/view-actions.c:856
+#: app/actions/view-actions.c:861
 msgid "Re_vert Zoom"
 msgstr "Масштабтауды қай_тару"
 
-#: app/actions/view-actions.c:1005
+#: app/actions/view-actions.c:1010
 #, c-format
 msgid "_Zoom (%.0f%%)"
 msgstr "_Масштабтау (%.0f%%)"
 
-#: app/actions/view-actions.c:1007
+#: app/actions/view-actions.c:1012
 #, c-format
 msgid "_Zoom (%.2f%%)"
 msgstr "_Масштабтау (%.2f%%)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: app/actions/view-actions.c:1026
+#: app/actions/view-actions.c:1031
 msgid "(H+V) "
 msgstr "(Г+В) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: app/actions/view-actions.c:1032
+#: app/actions/view-actions.c:1037
 msgid "(H) "
 msgstr "(Г) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: app/actions/view-actions.c:1038
+#: app/actions/view-actions.c:1043
 msgid "(V) "
 msgstr "(В) "
 
-#: app/actions/view-actions.c:1047
+#: app/actions/view-actions.c:1052
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "Ауд_ару %s және Бұру (%d°)"
@@ -10135,7 +10136,7 @@ msgstr "Дисплейді ашу"
 #: app/dialogs/image-new-dialog.c:107 app/dialogs/image-new-dialog.c:327
 #: app/dialogs/input-devices-dialog.c:67 app/dialogs/item-options-dialog.c:148
 #: app/dialogs/keyboard-shortcuts-dialog.c:66
-#: app/dialogs/preferences-dialog.c:1177 app/dialogs/print-size-dialog.c:124
+#: app/dialogs/preferences-dialog.c:1190 app/dialogs/print-size-dialog.c:124
 #: app/dialogs/resolution-calibrate-dialog.c:74
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
@@ -10521,7 +10522,7 @@ msgstr "«%%s» талдау қатесі: жол %s таңбадан ұзын."
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:716 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:804 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "«%s» жазу қатесі: %s"
@@ -10541,7 +10542,7 @@ msgstr ""
 "«%s» файлын талдау кезінде қате орын алды. Бастапқы мәндер қолданылады. "
 "Конфигурацияңыздың сақтық көшірмесі «%s» жерінде жасалды."
 
-#: app/config/gimpcoreconfig.c:835 app/dialogs/preferences-dialog.c:1915
+#: app/config/gimpcoreconfig.c:835 app/dialogs/preferences-dialog.c:1978
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Элементтерді іздеу және таңдауға арналған өрнек синтаксисі:"
 
@@ -10811,7 +10812,7 @@ msgstr "Бастапқыда суреттің түс профилін экспо
 msgid "Export the image's comment by default."
 msgstr "Бастапқыда суреттің пікірін экспорттау."
 
-#: app/config/gimprc-blurbs.h:246 app/dialogs/preferences-dialog.c:1566
+#: app/config/gimprc-blurbs.h:246 app/dialogs/preferences-dialog.c:1629
 msgid "Export the image's thumbnail by default"
 msgstr "Бастапқыда суреттің нобайын экспорттау"
 
@@ -12482,12 +12483,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Жылжымалы таңдауды бекіту"
 
-#: app/core/core-enums.c:1340 app/core/gimp-edit.c:884
+#: app/core/core-enums.c:1340 app/core/gimp-edit.c:845
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Кірістіру"
 
-#: app/core/core-enums.c:1341 app/core/gimp-edit.c:1246
+#: app/core/core-enums.c:1341 app/core/gimp-edit.c:1207
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Қиып алу"
@@ -12843,8 +12844,8 @@ msgstr "Паразиттер"
 
 #. initialize the module list
 #. Modules
-#: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3576
-#: app/menus/menus.c:680
+#: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3662
+#: app/menus/menus.c:686
 msgid "Modules"
 msgstr "Модульдер"
 
@@ -12891,14 +12892,14 @@ msgstr ""
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
-#: app/menus/menus.c:489 app/widgets/gimpdevices.c:172
+#: app/menus/menus.c:495 app/widgets/gimpdevices.c:172
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "\"%s\" өшіру сәтсіз аяқталды: %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:403 app/core/gimpcontext.c:706
-#: app/dialogs/preferences-dialog.c:3522 app/tools/gimppaintoptions-gui.c:329
+#: app/dialogs/preferences-dialog.c:3608 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "Динамика"
 
@@ -12918,27 +12919,27 @@ msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "%d қабатты қиып алу"
 
-#: app/core/gimp-edit.c:211
+#: app/core/gimp-edit.c:173
 msgid "Cannot cut because multiple channels are selected."
 msgstr "Бірнеше арна таңдалғандықтан қиып алу мүмкін емес."
 
-#: app/core/gimp-edit.c:215
+#: app/core/gimp-edit.c:177
 msgid "Cannot copy because multiple channels are selected."
 msgstr "Бірнеше арна таңдалғандықтан көшіру мүмкін емес."
 
-#: app/core/gimp-edit.c:251
+#: app/core/gimp-edit.c:213
 msgid "Cannot cut because the selected region is empty."
 msgstr "Таңдалған аумақ бос болғандықтан қиып алу мүмкін емес."
 
-#: app/core/gimp-edit.c:254
+#: app/core/gimp-edit.c:216
 msgid "Cannot copy because the selected region is empty."
 msgstr "Таңдалған аумақ бос болғандықтан көшіру мүмкін емес."
 
-#: app/core/gimp-edit.c:654 app/core/gimpimage-new.c:583
+#: app/core/gimp-edit.c:615 app/core/gimpimage-new.c:583
 msgid "Pasted Layer"
 msgstr "Кірістірілген қабат"
 
-#: app/core/gimp-edit.c:1263
+#: app/core/gimp-edit.c:1224
 msgid "Global Buffer"
 msgstr "Глобалды буфер"
 
@@ -13096,7 +13097,7 @@ msgstr "“%s” еншілес процесін орындау сәтсіз а�
 msgid "tags-locale:C"
 msgstr "tags-locale:kk"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:728
+#: app/core/gimp-tags.c:156 app/gui/themes.c:816
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "'%s' жабу қатесі: %s"
@@ -13632,11 +13633,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:476 app/core/gimpdatafactory.c:479
-#: app/core/gimpitem.c:576 app/core/gimpitem.c:579
+#: app/core/gimpitem.c:579 app/core/gimpitem.c:582
 msgid "copy"
 msgstr "көшірмесі"
 
-#: app/core/gimpdatafactory.c:488 app/core/gimpitem.c:587
+#: app/core/gimpdatafactory.c:488 app/core/gimpitem.c:590
 #, c-format
 msgid "%s copy"
 msgstr "%s көшірмесі"
@@ -13832,7 +13833,7 @@ msgid "Cannot rename effect masks."
 msgstr "Эффект маскаларының атын өзгерту мүмкін емес."
 
 #: app/core/gimpdrawablefiltermask.c:195 app/core/gimplayer.c:732
-#: app/core/gimplayer.c:2040 app/core/gimplayermask.c:294
+#: app/core/gimplayer.c:2040 app/core/gimplayermask.c:296
 #, c-format
 msgid "%s mask"
 msgstr "%s маскасы"
@@ -14006,194 +14007,194 @@ msgstr "Бірінші тор сызығының вертикалды ығысу
 msgid "Offset unit"
 msgstr "Ығысу юниті"
 
-#: app/core/gimpgrouplayer.c:282
+#: app/core/gimpgrouplayer.c:285
 msgid "Layer Group"
 msgstr "Қабаттар тобы"
 
-#: app/core/gimpgrouplayer.c:297
+#: app/core/gimpgrouplayer.c:301
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Қабаттар тобының атын өзгерту"
 
-#: app/core/gimpgrouplayer.c:298
+#: app/core/gimpgrouplayer.c:302
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Қабаттар тобын жылжыту"
 
-#: app/core/gimpgrouplayer.c:299
+#: app/core/gimpgrouplayer.c:303
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Қабаттар тобын масштабтау"
 
-#: app/core/gimpgrouplayer.c:300
+#: app/core/gimpgrouplayer.c:304
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Қабаттар тобының өлшемін өзгерту"
 
-#: app/core/gimpgrouplayer.c:301
+#: app/core/gimpgrouplayer.c:305
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Қабаттар тобын аудару"
 
-#: app/core/gimpgrouplayer.c:302
+#: app/core/gimpgrouplayer.c:306
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Қабаттар тобын бұру"
 
-#: app/core/gimpgrouplayer.c:303
+#: app/core/gimpgrouplayer.c:307
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Қабаттар тобын түрлендіру"
 
-#: app/core/gimpimage.c:701 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:710 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "Симметрия"
 
-#: app/core/gimpimage.c:2090 app/pdb/drawable-filter-cmds.c:661
+#: app/core/gimpimage.c:2114 app/pdb/drawable-filter-cmds.c:661
 #: app/widgets/gimpdrawabletreeview-filters.c:796
 msgid "Remove filter"
 msgstr "Сүзгіні өшіру"
 
-#: app/core/gimpimage.c:2700
+#: app/core/gimpimage.c:2724
 msgid " (exported)"
 msgstr " (экспортталған)"
 
-#: app/core/gimpimage.c:2704
+#: app/core/gimpimage.c:2728
 msgid " (overwritten)"
 msgstr " (үстінен жазылған)"
 
-#: app/core/gimpimage.c:2713
+#: app/core/gimpimage.c:2737
 msgid " (imported)"
 msgstr " (импортталған)"
 
-#: app/core/gimpimage.c:2887 app/core/gimpimage.c:2901
-#: app/core/gimpimage.c:2944
+#: app/core/gimpimage.c:2911 app/core/gimpimage.c:2925
+#: app/core/gimpimage.c:2968
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Қабаттың '%s' режимі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:2969 app/core/gimpimage.c:3083
+#: app/core/gimpimage.c:2993 app/core/gimpimage.c:3107
 #, c-format
 msgid "Channel effects were saved in %s"
 msgstr "Арна эффектілері %s ішіне сақталды"
 
-#: app/core/gimpimage.c:2978
+#: app/core/gimpimage.c:3002
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Қабаттар тобы %s ішінде қосылды"
 
-#: app/core/gimpimage.c:2985
+#: app/core/gimpimage.c:3009
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Қабаттар тобындағы маскалар %s ішінде қосылды"
 
-#: app/core/gimpimage.c:2992
+#: app/core/gimpimage.c:3016
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Қабаттар тобындағы позиция құлыптары %s ішінде қосылды"
 
-#: app/core/gimpimage.c:2999
+#: app/core/gimpimage.c:3023
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Қабаттар тобындағы альфа-арна құлыптары %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3007 app/core/gimpimage.c:3075
+#: app/core/gimpimage.c:3031 app/core/gimpimage.c:3099
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Көріну құлыптары %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3018
+#: app/core/gimpimage.c:3042
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Мәтіндік қабаттағы қаріп ақпаратының пішімі %s ішінде өзгертілді"
 
-#: app/core/gimpimage.c:3026
+#: app/core/gimpimage.c:3050
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Қабат эффектілері %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3038
+#: app/core/gimpimage.c:3062
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Жаңа перцептивті араластыру кеңістігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3052
+#: app/core/gimpimage.c:3076
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "Векторлық қабаттар %s нұсқасында қосылды"
 
-#: app/core/gimpimage.c:3060
+#: app/core/gimpimage.c:3084
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "Сілтеме қабаттары %s нұсқасында қосылды"
 
-#: app/core/gimpimage.c:3092
+#: app/core/gimpimage.c:3116
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Бірнеше жолды таңдау мүмкіндігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3104
+#: app/core/gimpimage.c:3128
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Жолда түс тегтерін сақтау мүмкіндігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3111
+#: app/core/gimpimage.c:3135
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Жолда құлыптарды сақтау мүмкіндігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3125
+#: app/core/gimpimage.c:3149
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Биттік тереңдігі жоғары суреттер %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3133
+#: app/core/gimpimage.c:3157
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Биттік тереңдігі жоғары суреттерді кодтау %s ішінде түзетілді"
 
-#: app/core/gimpimage.c:3141
+#: app/core/gimpimage.c:3165
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Ішкі zlib сығуы %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3158
+#: app/core/gimpimage.c:3182
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "4 ГБ-тан үлкен сурет файлдарына қолдау көрсету %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3165
+#: app/core/gimpimage.c:3189
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Бірнеше қабатты таңдау мүмкіндігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3182
+#: app/core/gimpimage.c:3206
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Кенептен тыс бағыттауыштар %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3193
+#: app/core/gimpimage.c:3217
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Элементтер жиынтығы және элемент атынан өрнек бойынша іздеу %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3199
+#: app/core/gimpimage.c:3223
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Бірнеше арнаны таңдау мүмкіндігі %s ішінде қосылды"
 
-#: app/core/gimpimage.c:3330
+#: app/core/gimpimage.c:3354
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Сурет ажыратымдылығын өзгерту"
 
-#: app/core/gimpimage.c:3382
+#: app/core/gimpimage.c:3406
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Сурет юнитін өзгерту"
 
-#: app/core/gimpimage.c:4407
+#: app/core/gimpimage.c:4439
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14201,47 +14202,47 @@ msgstr ""
 "'gimp-comment' паразитін валидациялау сәтсіз аяқталды: пікірде жарамсыз "
 "UTF-8 бар"
 
-#: app/core/gimpimage.c:4469
+#: app/core/gimpimage.c:4501
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Суретке паразит тіркеу"
 
-#: app/core/gimpimage.c:4514
+#: app/core/gimpimage.c:4546
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Суреттен паразитті өшіру"
 
-#: app/core/gimpimage.c:5487
+#: app/core/gimpimage.c:5519
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Қабатты қосу"
 
-#: app/core/gimpimage.c:5547 app/core/gimpimage.c:5578
+#: app/core/gimpimage.c:5579 app/core/gimpimage.c:5610
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Қабатты өшіру"
 
-#: app/core/gimpimage.c:5572
+#: app/core/gimpimage.c:5604
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Жылжымалы таңдауды өшіру"
 
-#: app/core/gimpimage.c:5728
+#: app/core/gimpimage.c:5760
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Арнаны қосу"
 
-#: app/core/gimpimage.c:5758 app/core/gimpimage.c:5783
+#: app/core/gimpimage.c:5790 app/core/gimpimage.c:5815
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Арнаны өшіру"
 
-#: app/core/gimpimage.c:5843
+#: app/core/gimpimage.c:5875
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Жолды қосу"
 
-#: app/core/gimpimage.c:5878 app/core/gimpimage.c:5886
+#: app/core/gimpimage.c:5910 app/core/gimpimage.c:5918
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Жолды өшіру"
@@ -14590,23 +14591,23 @@ msgstr[0] "%d қабат"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "«%s» нобайын ашу мүмкін болмады: %s"
 
-#: app/core/gimpitem.c:1858 app/core/gimpitem.c:1925
+#: app/core/gimpitem.c:1861 app/core/gimpitem.c:1928
 #: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
 #: app/widgets/gimpdrawabletreeview-filters.c:637
 msgid "A selected layer's pixels are locked."
 msgstr "Таңдалған қабаттың пиксельдері құлыпталған."
 
-#: app/core/gimpitem.c:2234
+#: app/core/gimpitem.c:2237
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Паразитті тіркеу"
 
-#: app/core/gimpitem.c:2244
+#: app/core/gimpitem.c:2247
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Паразитті элементке тіркеу"
 
-#: app/core/gimpitem.c:2295 app/core/gimpitem.c:2302
+#: app/core/gimpitem.c:2298 app/core/gimpitem.c:2305
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Паразитті элементтен алып тастау"
@@ -14793,17 +14794,17 @@ msgstr "Қабаттың композиттік кеңістігін орнат�
 msgid "Set layer's composite mode"
 msgstr "Қабаттың композит режимін орнату"
 
-#: app/core/gimplayermask.c:87
+#: app/core/gimplayermask.c:88
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Қабат маскасын жылжыту"
 
-#: app/core/gimplayermask.c:88
+#: app/core/gimplayermask.c:89
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "Қабат маскасын таңдауға айналдыру"
 
-#: app/core/gimplayermask.c:203
+#: app/core/gimplayermask.c:205
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "Қабат маскаларының атын өзгерту мүмкін емес."
@@ -15581,52 +15582,52 @@ msgstr "Сайманның алдын ала баптау файлы зақым�
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:246
+#: app/dialogs/about-dialog.c:247
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (ревизия %d)"
 
-#: app/dialogs/about-dialog.c:259
+#: app/dialogs/about-dialog.c:260
 msgid "About GIMP"
 msgstr "GIMP туралы"
 
-#: app/dialogs/about-dialog.c:268
+#: app/dialogs/about-dialog.c:269
 msgid "Visit the GIMP website"
 msgstr "GIMP веб-сайтына өту"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:274
+#: app/dialogs/about-dialog.c:275
 msgid "translator-credits"
 msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
 
-#: app/dialogs/about-dialog.c:328 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:335 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "_Көмек"
 
-#: app/dialogs/about-dialog.c:530
+#: app/dialogs/about-dialog.c:537
 msgid "Update available!"
 msgstr "Жаңарту қолжетімді!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:560
+#: app/dialogs/about-dialog.c:567
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "GIMP %s нұсқасын (ревизия %d) жүктеп алу (шығарылған күні: %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:570
+#: app/dialogs/about-dialog.c:577
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Шығарылым пікірі</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:575
+#: app/dialogs/about-dialog.c:582
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "GIMP %s жүктеп алу (шығарылған күні: %s)\n"
 
-#: app/dialogs/about-dialog.c:600 app/dialogs/about-dialog.c:623
+#: app/dialogs/about-dialog.c:607 app/dialogs/about-dialog.c:630
 msgid "Check for updates"
 msgstr "Жаңартуларды тексеру"
 
@@ -15634,7 +15635,7 @@ msgstr "Жаңартуларды тексеру"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:644
+#: app/dialogs/about-dialog.c:651
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Соңғы рет %s күні, сағат %s тексерілді"
@@ -15643,16 +15644,16 @@ msgstr "Соңғы рет %s күні, сағат %s тексерілді"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:650
+#: app/dialogs/about-dialog.c:657
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "%s күнгі, сағат %s жағдайы бойынша жаңартылған"
 
-#: app/dialogs/about-dialog.c:878
+#: app/dialogs/about-dialog.c:885
 msgid "GIMP is brought to you by"
 msgstr "GIMP-ті сізге ұсынатындар:"
 
-#: app/dialogs/about-dialog.c:953
+#: app/dialogs/about-dialog.c:960
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -16198,11 +16199,11 @@ msgstr "Тек белсенді _топтардың ішінде бірікті�
 msgid "_Discard invisible layers"
 msgstr "Көрінбейтін қабаттарды _елемеу"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:775
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:777
 msgid "Create a New Image"
 msgstr "Жаңа сурет жасау"
 
-#: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1815
+#: app/dialogs/image-new-dialog.c:139 app/dialogs/preferences-dialog.c:1878
 #: app/dialogs/resize-dialog.c:259
 msgid "_Template:"
 msgstr "_Үлгі:"
@@ -16579,7 +16580,7 @@ msgid "Select Source"
 msgstr "Көзді таңдау"
 
 #: app/dialogs/palette-import-dialog.c:211
-#: app/dialogs/preferences-dialog.c:1775
+#: app/dialogs/preferences-dialog.c:1838
 msgid "_Gradient"
 msgstr "_Градиент"
 
@@ -16687,19 +16688,19 @@ msgstr "JASC немесе RIFF палитрасы (*.pal)"
 msgid "SwatchBooker (*.sbz)"
 msgstr "SwatchBooker (*.sbz)"
 
-#: app/dialogs/preferences-dialog.c:215
+#: app/dialogs/preferences-dialog.c:216
 msgid "Reset All Preferences"
 msgstr "Барлық баптауларды бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:233
+#: app/dialogs/preferences-dialog.c:234
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Шынымен барлық баптауларды бастапқы мәндеріне қайтару керек пе?"
 
-#: app/dialogs/preferences-dialog.c:312 app/dialogs/welcome-dialog.c:434
+#: app/dialogs/preferences-dialog.c:313 app/dialogs/welcome-dialog.c:434
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "Келесі өзгерістер күшіне енуі үшін GIMP-ті қайта іске қосу керек:"
 
-#: app/dialogs/preferences-dialog.c:597
+#: app/dialogs/preferences-dialog.c:598
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -16707,16 +16708,16 @@ msgstr ""
 "Пернетақта жарлықтары GIMP-ті келесі рет іске қосқанда бастапқы мәндеріне "
 "қайтарылады."
 
-#: app/dialogs/preferences-dialog.c:608
+#: app/dialogs/preferences-dialog.c:609
 msgid "Remove all Keyboard Shortcuts"
 msgstr "Барлық пернетақта жарлықтарын өшіру"
 
-#: app/dialogs/preferences-dialog.c:630
+#: app/dialogs/preferences-dialog.c:631
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr ""
 "Шынымен барлық мәзірлерден барлық пернетақта жарлықтарын өшіру керек пе?"
 
-#: app/dialogs/preferences-dialog.c:671
+#: app/dialogs/preferences-dialog.c:672
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -16724,7 +16725,7 @@ msgstr ""
 "Терезелердің орналасуы GIMP-ті келесі рет іске қосқанда бастапқы мәндеріне "
 "қайтарылады."
 
-#: app/dialogs/preferences-dialog.c:706
+#: app/dialogs/preferences-dialog.c:707
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -16732,7 +16733,7 @@ msgstr ""
 "Кіріс құрылғыларының параметрлері GIMP-ті келесі рет іске қосқанда бастапқы "
 "мәндеріне қайтарылады."
 
-#: app/dialogs/preferences-dialog.c:786
+#: app/dialogs/preferences-dialog.c:787
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
@@ -16740,161 +16741,161 @@ msgstr ""
 "Сайман опциялары GIMP-ті келесі рет іске қосқанда бастапқы мәндеріне "
 "қайтарылады."
 
-#: app/dialogs/preferences-dialog.c:838 app/dialogs/preferences-dialog.c:2703
+#: app/dialogs/preferences-dialog.c:839 app/dialogs/preferences-dialog.c:2789
 msgid "There's a local installation of the user manual."
 msgstr "Пайдаланушы нұсқаулығының жергілікті нұсқасы орнатылған."
 
-#: app/dialogs/preferences-dialog.c:843 app/dialogs/preferences-dialog.c:2709
+#: app/dialogs/preferences-dialog.c:844 app/dialogs/preferences-dialog.c:2795
 msgid "The user manual is not installed locally."
 msgstr "Пайдаланушы нұсқаулығы жергілікті түрде орнатылмаған."
 
-#: app/dialogs/preferences-dialog.c:1016
+#: app/dialogs/preferences-dialog.c:1017
 msgid "Show s_election"
 msgstr "Т_аңдауды көрсету"
 
-#: app/dialogs/preferences-dialog.c:1019
+#: app/dialogs/preferences-dialog.c:1020
 msgid "Show _layer boundary"
 msgstr "_Қабат шекарасын көрсету"
 
-#: app/dialogs/preferences-dialog.c:1022
+#: app/dialogs/preferences-dialog.c:1023
 msgid "Show can_vas boundary"
 msgstr "Кене_п шекарасын көрсету"
 
-#: app/dialogs/preferences-dialog.c:1025
+#: app/dialogs/preferences-dialog.c:1026
 msgid "Show _guides"
 msgstr "_Бағыттауыштарды көрсету"
 
-#: app/dialogs/preferences-dialog.c:1028
+#: app/dialogs/preferences-dialog.c:1029
 msgid "Show gri_d"
 msgstr "То_рды көрсету"
 
-#: app/dialogs/preferences-dialog.c:1031
+#: app/dialogs/preferences-dialog.c:1032
 msgid "Show _sample points"
 msgstr "Үлгі _нүктелерін көрсету"
 
-#: app/dialogs/preferences-dialog.c:1040
+#: app/dialogs/preferences-dialog.c:1041
 msgid "Show _menubar"
 msgstr "_Мәзір жолағын көрсету"
 
-#: app/dialogs/preferences-dialog.c:1044
+#: app/dialogs/preferences-dialog.c:1045
 msgid "Show _rulers"
 msgstr "_Сызғыштарды көрсету"
 
-#: app/dialogs/preferences-dialog.c:1047
+#: app/dialogs/preferences-dialog.c:1048
 msgid "Show scroll_bars"
 msgstr "Айналд_ыру жолақтарын көрсету"
 
-#: app/dialogs/preferences-dialog.c:1050
+#: app/dialogs/preferences-dialog.c:1051
 msgid "Show s_tatusbar"
 msgstr "Қалып-күй жо_лағын көрсету"
 
-#: app/dialogs/preferences-dialog.c:1056
+#: app/dialogs/preferences-dialog.c:1057
 msgid "Canvas _padding mode:"
 msgstr "Кенептің _шегініс режимі:"
 
-#: app/dialogs/preferences-dialog.c:1061
+#: app/dialogs/preferences-dialog.c:1062
 msgid "Custom p_adding color:"
 msgstr "Таңдауыңызша шегі_ніс түсі:"
 
-#: app/dialogs/preferences-dialog.c:1062
+#: app/dialogs/preferences-dialog.c:1063
 msgid "Select Custom Canvas Padding Color"
 msgstr "Таңдауыңызша кенеп шегінісінің түсін таңдау"
 
-#: app/dialogs/preferences-dialog.c:1071
+#: app/dialogs/preferences-dialog.c:1072
 msgid "_Keep canvas padding in \"Show All\" mode"
 msgstr "«Барлығын көрсету» режимінде кенеп _шегінісін сақтау"
 
-#: app/dialogs/preferences-dialog.c:1096
+#: app/dialogs/preferences-dialog.c:1097
 msgid "Snap to _Guides"
 msgstr "_Бағыттауыштарға жабысу"
 
-#: app/dialogs/preferences-dialog.c:1099
+#: app/dialogs/preferences-dialog.c:1100
 msgid "S_nap to Grid"
 msgstr "_Торға жабысу"
 
-#: app/dialogs/preferences-dialog.c:1102
+#: app/dialogs/preferences-dialog.c:1103
 msgid "Snap to Canvas _Edges"
 msgstr "Кенеп _жиектеріне жабысу"
 
-#: app/dialogs/preferences-dialog.c:1110
+#: app/dialogs/preferences-dialog.c:1111
 msgid "Snap to _Active Path"
 msgstr "_Белсенді жолға жабысу"
 
-#: app/dialogs/preferences-dialog.c:1113
+#: app/dialogs/preferences-dialog.c:1114
 msgid "Snap to _Bounding Box"
 msgstr "_Шектейтін рамкаға жабысу"
 
-#: app/dialogs/preferences-dialog.c:1116
+#: app/dialogs/preferences-dialog.c:1117
 msgid "Snap to _Equidistance"
 msgstr "_Бірдей қашықтықтарға жабысу"
 
-#: app/dialogs/preferences-dialog.c:1170
+#: app/dialogs/preferences-dialog.c:1175
 msgid "Preferences"
 msgstr "Баптаулар"
 
-#: app/dialogs/preferences-dialog.c:1216 app/dialogs/preferences-dialog.c:1217
+#: app/dialogs/preferences-dialog.c:1233 app/dialogs/preferences-dialog.c:1234
 msgid "System Resources"
 msgstr "Жүйелік ресурстар"
 
-#: app/dialogs/preferences-dialog.c:1225
+#: app/dialogs/preferences-dialog.c:1242
 msgid "Resource Consumption"
 msgstr "Ресурстарды тұтыну"
 
-#: app/dialogs/preferences-dialog.c:1231
+#: app/dialogs/preferences-dialog.c:1248
 msgid "Minimal number of _undo levels:"
 msgstr "_Болдырмау деңгейлерінің минималды саны:"
 
-#: app/dialogs/preferences-dialog.c:1234
+#: app/dialogs/preferences-dialog.c:1251
 msgid "Maximum undo _memory:"
 msgstr "_Болдырмауға арналған максималды жад:"
 
-#: app/dialogs/preferences-dialog.c:1237
+#: app/dialogs/preferences-dialog.c:1254
 msgid "Tile cache _size:"
 msgstr "_Мозаика кэшінің өлшемі:"
 
-#: app/dialogs/preferences-dialog.c:1240
+#: app/dialogs/preferences-dialog.c:1257
 msgid "Maximum _new image size:"
 msgstr "Максималды _жаңа сурет өлшемі:"
 
-#: app/dialogs/preferences-dialog.c:1244
+#: app/dialogs/preferences-dialog.c:1261
 msgid "S_wap compression:"
 msgstr "Алма_стыруды сығу:"
 
-#: app/dialogs/preferences-dialog.c:1249
+#: app/dialogs/preferences-dialog.c:1266
 msgid "Number of _threads to use:"
 msgstr "Пайдаланылатын _ағындар саны:"
 
-#: app/dialogs/preferences-dialog.c:1257
+#: app/dialogs/preferences-dialog.c:1274
 msgid "Network access"
 msgstr "Желіге қол жеткізу"
 
-#: app/dialogs/preferences-dialog.c:1261
+#: app/dialogs/preferences-dialog.c:1278
 msgid "Check for updates (requires internet)"
 msgstr "Жаңартуларды тексеру (интернетті қажет етеді)"
 
 #. Image Thumbnails
-#: app/dialogs/preferences-dialog.c:1268
+#: app/dialogs/preferences-dialog.c:1285
 msgid "Image Thumbnails"
 msgstr "Сурет нобайлары"
 
-#: app/dialogs/preferences-dialog.c:1273
+#: app/dialogs/preferences-dialog.c:1290
 msgid "Size of _thumbnails:"
 msgstr "_Нобайлар өлшемі:"
 
-#: app/dialogs/preferences-dialog.c:1277
+#: app/dialogs/preferences-dialog.c:1294
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Нобай жасау үшін максималды _файл өлшемі:"
 
-#: app/dialogs/preferences-dialog.c:1284
+#: app/dialogs/preferences-dialog.c:1301
 msgid "_Keep record of used files in the Recent Documents list"
 msgstr "Соңғы құжаттар тізімінде пайдаланылған файлдар жазбасын _сақтау"
 
 #. TODO: icon needed.
-#: app/dialogs/preferences-dialog.c:1302 app/dialogs/preferences-dialog.c:1303
+#: app/dialogs/preferences-dialog.c:1319 app/dialogs/preferences-dialog.c:1320
 msgid "Debugging"
 msgstr "Жөндеу"
 
-#: app/dialogs/preferences-dialog.c:1310
+#: app/dialogs/preferences-dialog.c:1327
 msgid ""
 "We hope you will never need these settings, but as all software, GIMP has "
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
@@ -16905,170 +16906,170 @@ msgstr ""
 "мүмкін. Егер солай болса, қателер туралы есеп беру арқылы бізге көмектесе "
 "аласыз."
 
-#: app/dialogs/preferences-dialog.c:1319
+#: app/dialogs/preferences-dialog.c:1336
 msgid "Bug Reporting"
 msgstr "Қателер туралы есеп беру"
 
-#: app/dialogs/preferences-dialog.c:1325
+#: app/dialogs/preferences-dialog.c:1342
 msgid "Debug _policy:"
 msgstr "Жөндеу _саясаты:"
 
-#: app/dialogs/preferences-dialog.c:1337
+#: app/dialogs/preferences-dialog.c:1354
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
 msgstr "Бұл мүмкіндік үшін жүйеде «gdb» немесе «lldb» орнатылған болуы керек."
 
-#: app/dialogs/preferences-dialog.c:1341
+#: app/dialogs/preferences-dialog.c:1358
 msgid ""
 "This feature is more efficient with \"gdb\" or \"lldb\" installed on your "
 "system."
 msgstr ""
 "Бұл мүмкіндік жүйеде «gdb» немесе «lldb» орнатылған болса, тиімдірек болады."
 
-#: app/dialogs/preferences-dialog.c:1354 app/dialogs/preferences-dialog.c:1355
+#: app/dialogs/preferences-dialog.c:1371 app/dialogs/preferences-dialog.c:1372
 msgid "Color Management"
 msgstr "Түстерді басқару"
 
-#: app/dialogs/preferences-dialog.c:1364
+#: app/dialogs/preferences-dialog.c:1381
 msgid "R_eset Color Management"
 msgstr "Түстерді басқаруды бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:1387
+#: app/dialogs/preferences-dialog.c:1404
 msgid "Image display _mode:"
 msgstr "Суретті көрсету _режимі:"
 
 #. Color Managed Display
-#: app/dialogs/preferences-dialog.c:1391
+#: app/dialogs/preferences-dialog.c:1408
 msgid "Color Managed Display"
 msgstr "Түстері басқарылатын дисплей"
 
-#: app/dialogs/preferences-dialog.c:1400
+#: app/dialogs/preferences-dialog.c:1417
 msgid "Select Monitor Color Profile"
 msgstr "Монитордың түс профилін таңдау"
 
-#: app/dialogs/preferences-dialog.c:1401
+#: app/dialogs/preferences-dialog.c:1418
 msgid "_Monitor profile:"
 msgstr "_Монитор профилі:"
 
-#: app/dialogs/preferences-dialog.c:1407
+#: app/dialogs/preferences-dialog.c:1459 app/dialogs/preferences-dialog.c:1463
 msgid "_Try to use the system monitor profile"
 msgstr "Жүйелік монитор профилін пайдалануды _байқап көру"
 
-#: app/dialogs/preferences-dialog.c:1414
+#: app/dialogs/preferences-dialog.c:1477
 msgid "_Rendering intent:"
 msgstr "_Рендерлеу мақсаты:"
 
-#: app/dialogs/preferences-dialog.c:1419
+#: app/dialogs/preferences-dialog.c:1482
 msgid "Use _black point compensation"
 msgstr "_Қара нүкте компенсациясын пайдалану"
 
-#: app/dialogs/preferences-dialog.c:1425 app/dialogs/preferences-dialog.c:1440
+#: app/dialogs/preferences-dialog.c:1488 app/dialogs/preferences-dialog.c:1503
 #: app/display/gimpstatusbar.c:574 app/paint/gimpinkoptions.c:94
 msgid "Speed"
 msgstr "Жылдамдық"
 
-#: app/dialogs/preferences-dialog.c:1426 app/dialogs/preferences-dialog.c:1441
+#: app/dialogs/preferences-dialog.c:1489 app/dialogs/preferences-dialog.c:1504
 #: app/display/gimpstatusbar.c:575
 msgid "Precision / Color Fidelity"
 msgstr "Дәлдік / Түстің дұрыстығы"
 
-#: app/dialogs/preferences-dialog.c:1427
+#: app/dialogs/preferences-dialog.c:1490
 msgid "_Optimize image display for:"
 msgstr "_Суретті көрсетуді келесі үшін оңтайландыру:"
 
 #. Print Simulation (Soft-proofing)
-#: app/dialogs/preferences-dialog.c:1431 app/display/gimpstatusbar.c:486
+#: app/dialogs/preferences-dialog.c:1494 app/display/gimpstatusbar.c:486
 msgid "Soft-Proofing"
 msgstr "Жұмсақ байқау"
 
-#: app/dialogs/preferences-dialog.c:1442
+#: app/dialogs/preferences-dialog.c:1505
 msgid "O_ptimize soft-proofing for:"
 msgstr "Жұмсақ байқауды келесі үшін _оңтайландыру:"
 
-#: app/dialogs/preferences-dialog.c:1451
+#: app/dialogs/preferences-dialog.c:1514
 msgid "Mar_k out of gamut colors"
 msgstr "Гаммадан тыс түстерді бел_гілеу"
 
-#: app/dialogs/preferences-dialog.c:1455
+#: app/dialogs/preferences-dialog.c:1518
 msgid "Select Warning Color"
 msgstr "Ескерту түсін таңдау"
 
 #. Preferred profiles
-#: app/dialogs/preferences-dialog.c:1465
+#: app/dialogs/preferences-dialog.c:1528
 msgid "Preferred Profiles"
 msgstr "Таңдаулы профильдер"
 
-#: app/dialogs/preferences-dialog.c:1474
+#: app/dialogs/preferences-dialog.c:1537
 msgid "Select Preferred RGB Color Profile"
 msgstr "Таңдаулы RGB түс профилін таңдау"
 
-#: app/dialogs/preferences-dialog.c:1475
+#: app/dialogs/preferences-dialog.c:1538
 msgid "_RGB profile:"
 msgstr "_RGB профилі:"
 
-#: app/dialogs/preferences-dialog.c:1482
+#: app/dialogs/preferences-dialog.c:1545
 msgid "Select Preferred Grayscale Color Profile"
 msgstr "Таңдаулы сұр реңкті түс профилін таңдау"
 
-#: app/dialogs/preferences-dialog.c:1483
+#: app/dialogs/preferences-dialog.c:1546
 msgid "_Grayscale profile:"
 msgstr "_Сұр реңкті профилі:"
 
-#: app/dialogs/preferences-dialog.c:1490
+#: app/dialogs/preferences-dialog.c:1553
 msgid "Select CMYK Color Profile"
 msgstr "CMYK түс профилін таңдау"
 
-#: app/dialogs/preferences-dialog.c:1491
+#: app/dialogs/preferences-dialog.c:1554
 msgid "_CMYK profile:"
 msgstr "_CMYK профилі:"
 
 #. Policies
-#: app/dialogs/preferences-dialog.c:1496
+#: app/dialogs/preferences-dialog.c:1559
 msgid "Policies"
 msgstr "Саясаттар"
 
-#: app/dialogs/preferences-dialog.c:1501
+#: app/dialogs/preferences-dialog.c:1564
 msgid "_File Open behavior:"
 msgstr "_Файлды ашу мінез-құлқы:"
 
-#: app/dialogs/preferences-dialog.c:1515 app/dialogs/preferences-dialog.c:1516
+#: app/dialogs/preferences-dialog.c:1578 app/dialogs/preferences-dialog.c:1579
 msgid "Image Import & Export"
 msgstr "Суретті импорттау және экспорттау"
 
 #. Import Policies
-#: app/dialogs/preferences-dialog.c:1526
+#: app/dialogs/preferences-dialog.c:1589
 msgid "Import Policies"
 msgstr "Импорттау саясаттары"
 
-#: app/dialogs/preferences-dialog.c:1530
+#: app/dialogs/preferences-dialog.c:1593
 msgid "Promote imported images to _floating point precision"
 msgstr "Импортталған суреттерді _жылжымалы нүктелі дәлдікке дейін көтеру"
 
-#: app/dialogs/preferences-dialog.c:1539
+#: app/dialogs/preferences-dialog.c:1602
 msgid "_Dither images when promoting to floating point"
 msgstr "Жылжымалы нүктеге көтерген кезде суреттерді _дизерингтеу"
 
-#: app/dialogs/preferences-dialog.c:1544
+#: app/dialogs/preferences-dialog.c:1607
 msgid "_Add an alpha channel to imported images"
 msgstr "Импортталған суреттерге альфа-арнаны _қосу"
 
-#: app/dialogs/preferences-dialog.c:1549
+#: app/dialogs/preferences-dialog.c:1612
 msgid "Color _profile policy:"
 msgstr "Түс _профилінің саясаты:"
 
-#: app/dialogs/preferences-dialog.c:1552
+#: app/dialogs/preferences-dialog.c:1615
 msgid "Metadata _rotation policy:"
 msgstr "Метадеректерді _бұру саясаты:"
 
 #. Export Policies
-#: app/dialogs/preferences-dialog.c:1556
+#: app/dialogs/preferences-dialog.c:1619
 msgid "Export Policies"
 msgstr "Экспорттау саясаттары"
 
-#: app/dialogs/preferences-dialog.c:1560
+#: app/dialogs/preferences-dialog.c:1623
 msgid "Export the i_mage's color profile by default"
 msgstr "Әдепкі бойынша суреттің түс профилін эк_спорттау"
 
-#: app/dialogs/preferences-dialog.c:1563
+#: app/dialogs/preferences-dialog.c:1626
 msgid "Export the image's comment by default"
 msgstr "Әдепкі бойынша сурет пікірін экспорттау"
 
@@ -17077,7 +17078,7 @@ msgstr "Әдепкі бойынша сурет пікірін экспортта
 #. * It determines how file export
 #. * plug-ins handle Exif by default.
 #.
-#: app/dialogs/preferences-dialog.c:1574
+#: app/dialogs/preferences-dialog.c:1637
 msgid "Export _Exif metadata by default when available"
 msgstr "Қолжетімді болғанда әдепкі бойынша _Exif метадеректерін экспорттау"
 
@@ -17086,7 +17087,7 @@ msgstr "Қолжетімді болғанда әдепкі бойынша _Exif 
 #. * It determines how file export
 #. * plug-ins handle XMP by default.
 #.
-#: app/dialogs/preferences-dialog.c:1582
+#: app/dialogs/preferences-dialog.c:1645
 msgid "Export _XMP metadata by default when available"
 msgstr "Қолжетімді болғанда әдепкі бойынша _XMP метадеректерін экспорттау"
 
@@ -17095,41 +17096,41 @@ msgstr "Қолжетімді болғанда әдепкі бойынша _XMP �
 #. * It determines how file export
 #. * plug-ins handle IPTC by default.
 #.
-#: app/dialogs/preferences-dialog.c:1590
+#: app/dialogs/preferences-dialog.c:1653
 msgid "Export _IPTC metadata by default when available"
 msgstr "Қолжетімді болғанда әдепкі бойынша _IPTC метадеректерін экспорттау"
 
-#: app/dialogs/preferences-dialog.c:1593
+#: app/dialogs/preferences-dialog.c:1656
 msgid "Update metadata automatically"
 msgstr "Метадеректерді автоматты түрде жаңарту"
 
-#: app/dialogs/preferences-dialog.c:1596
+#: app/dialogs/preferences-dialog.c:1659
 msgid "Metadata can contain sensitive information."
 msgstr "Метадеректер құпия ақпаратты қамтуы мүмкін."
 
 #. Export File Type
-#: app/dialogs/preferences-dialog.c:1600
+#: app/dialogs/preferences-dialog.c:1663
 msgid "Export File Type"
 msgstr "Экспортталатын файл түрі"
 
-#: app/dialogs/preferences-dialog.c:1604
+#: app/dialogs/preferences-dialog.c:1667
 msgid "Default export file t_ype:"
 msgstr "Әдепкі экспортталатын файл т_үрі:"
 
 #. Raw Image Importer
-#: app/dialogs/preferences-dialog.c:1608
+#: app/dialogs/preferences-dialog.c:1671
 msgid "Raw Image Importer"
 msgstr "Raw суреттерді импорттаушы"
 
-#: app/dialogs/preferences-dialog.c:1644
+#: app/dialogs/preferences-dialog.c:1707
 msgid "Experimental Playground"
 msgstr "Эксперименталды алаң"
 
-#: app/dialogs/preferences-dialog.c:1645
+#: app/dialogs/preferences-dialog.c:1708
 msgid "Playground"
 msgstr "Playground"
 
-#: app/dialogs/preferences-dialog.c:1652
+#: app/dialogs/preferences-dialog.c:1715
 msgid ""
 "These features are unfinished, buggy and may crash GIMP. It is unadvised to "
 "use them unless you really know what you are doing or you intend to "
@@ -17140,11 +17141,11 @@ msgstr ""
 "жоспарламасаңыз, оларды пайдалану ұсынылмайды."
 
 #. Hardware Acceleration
-#: app/dialogs/preferences-dialog.c:1662
+#: app/dialogs/preferences-dialog.c:1725
 msgid "Hardware Acceleration"
 msgstr "Аппараттық үдету"
 
-#: app/dialogs/preferences-dialog.c:1666
+#: app/dialogs/preferences-dialog.c:1729
 msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
@@ -17152,32 +17153,32 @@ msgstr ""
 "OpenCL драйверлері мен қолдауы эксперименталды болып табылады, баяулаулар "
 "мен мүмкін болатын құлаулар күтіледі (хабарлауыңызды өтінеміз)."
 
-#: app/dialogs/preferences-dialog.c:1672
+#: app/dialogs/preferences-dialog.c:1735
 msgid "Use O_penCL"
 msgstr "O_penCL пайдалану"
 
 #. Very unstable tools
-#: app/dialogs/preferences-dialog.c:1677
+#: app/dialogs/preferences-dialog.c:1740
 msgid "Experimental"
 msgstr "Эксперименталды"
 
-#: app/dialogs/preferences-dialog.c:1681
+#: app/dialogs/preferences-dialog.c:1744
 msgid "_N-Point Deformation tool"
 msgstr "_N-нүктелі деформация сайманы"
 
-#: app/dialogs/preferences-dialog.c:1684
+#: app/dialogs/preferences-dialog.c:1747
 msgid "_Seamless Clone tool"
 msgstr "_Жіксіз клон сайманы"
 
-#: app/dialogs/preferences-dialog.c:1687
+#: app/dialogs/preferences-dialog.c:1750
 msgid "_Paint Select tool"
 msgstr "_Бояп таңдау сайманы"
 
-#: app/dialogs/preferences-dialog.c:1702
+#: app/dialogs/preferences-dialog.c:1765
 msgid "Use GtkListBox in simple lists"
 msgstr "Қарапайым тізімдерде GtkListBox пайдалану"
 
-#: app/dialogs/preferences-dialog.c:1712 app/dialogs/preferences-dialog.c:1713
+#: app/dialogs/preferences-dialog.c:1775 app/dialogs/preferences-dialog.c:1776
 msgctxt "preferences"
 msgid "Tool Options"
 msgstr "Сайман опциялары"
@@ -17186,574 +17187,578 @@ msgstr "Сайман опциялары"
 #. Snapping Distance
 #. General
 #. general device information
-#: app/dialogs/preferences-dialog.c:1722 app/dialogs/preferences-dialog.c:2650
-#: app/dialogs/preferences-dialog.c:3088 app/dialogs/preferences-dialog.c:3112
+#: app/dialogs/preferences-dialog.c:1785 app/dialogs/preferences-dialog.c:2736
+#: app/dialogs/preferences-dialog.c:3174 app/dialogs/preferences-dialog.c:3198
 #: app/widgets/gimpcontrollereditor.c:190
 #: app/widgets/gimpdeviceinfoeditor.c:227
 msgid "General"
 msgstr "Жалпы"
 
-#: app/dialogs/preferences-dialog.c:1725
+#: app/dialogs/preferences-dialog.c:1788
 msgid "Allow _editing on non-visible layers"
 msgstr "Көрінбейтін қабаттарды _түзетуге рұқсат беру"
 
-#: app/dialogs/preferences-dialog.c:1729
+#: app/dialogs/preferences-dialog.c:1792
 msgid "_Save tool options on exit"
 msgstr "Шыққан кезде сайман опцияларын _сақтау"
 
-#: app/dialogs/preferences-dialog.c:1733
+#: app/dialogs/preferences-dialog.c:1796
 msgid "Save Tool Options _Now"
 msgstr "Сайман опцияларын _қазір сақтау"
 
-#: app/dialogs/preferences-dialog.c:1740
+#: app/dialogs/preferences-dialog.c:1803
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "Сақталған сайман опцияларын бастапқы мәндеріне _қайтару"
 
-#: app/dialogs/preferences-dialog.c:1754
+#: app/dialogs/preferences-dialog.c:1817
 msgid "Default _interpolation:"
 msgstr "Әдепкі _интерполяция:"
 
 #. Global Brush, Pattern, ...
-#: app/dialogs/preferences-dialog.c:1762
+#: app/dialogs/preferences-dialog.c:1825
 msgid "Paint Options Shared Between Tools"
 msgstr "Саймандар арасында ортақ бояу опциялары"
 
-#: app/dialogs/preferences-dialog.c:1766
+#: app/dialogs/preferences-dialog.c:1829
 msgid "_Brush"
 msgstr "_Қылқалам"
 
-#: app/dialogs/preferences-dialog.c:1769
+#: app/dialogs/preferences-dialog.c:1832
 msgid "_Dynamics"
 msgstr "_Динамика"
 
-#: app/dialogs/preferences-dialog.c:1772
+#: app/dialogs/preferences-dialog.c:1835
 msgid "_Pattern"
 msgstr "_Өрнек"
 
-#: app/dialogs/preferences-dialog.c:1778
+#: app/dialogs/preferences-dialog.c:1841
 msgid "E_xpand Layers"
 msgstr "Қабаттарды ұ_лғайту"
 
 #. Move Tool
-#: app/dialogs/preferences-dialog.c:1782
+#: app/dialogs/preferences-dialog.c:1845
 msgid "Move Tool"
 msgstr "Жылжыту сайманы"
 
-#: app/dialogs/preferences-dialog.c:1786
+#: app/dialogs/preferences-dialog.c:1849
 msgid "Set _layer or path as active"
 msgstr "_Қабатты немесе жолды белсенді ретінде орнату"
 
-#: app/dialogs/preferences-dialog.c:1798
+#: app/dialogs/preferences-dialog.c:1861
 msgid "Default New Image"
 msgstr "Әдепкі жаңа сурет"
 
-#: app/dialogs/preferences-dialog.c:1799
+#: app/dialogs/preferences-dialog.c:1862
 msgid "Default Image"
 msgstr "Әдепкі сурет"
 
-#: app/dialogs/preferences-dialog.c:1836
+#: app/dialogs/preferences-dialog.c:1899
 msgid "Quick Mask color:"
 msgstr "Жылдам маска түсі:"
 
-#: app/dialogs/preferences-dialog.c:1837
+#: app/dialogs/preferences-dialog.c:1900
 msgid "Set the default Quick Mask color"
 msgstr "Әдепкі жылдам маска түсін орнату"
 
-#: app/dialogs/preferences-dialog.c:1847
+#: app/dialogs/preferences-dialog.c:1910
 msgid "Default Image Grid"
 msgstr "Суреттің әдепкі торы"
 
-#: app/dialogs/preferences-dialog.c:1848
+#: app/dialogs/preferences-dialog.c:1911
 msgid "Default Grid"
 msgstr "Әдепкі тор"
 
-#: app/dialogs/preferences-dialog.c:1868
+#: app/dialogs/preferences-dialog.c:1931
 msgid "User Interface"
 msgstr "Пайдаланушы интерфейсі"
 
-#: app/dialogs/preferences-dialog.c:1869
+#: app/dialogs/preferences-dialog.c:1932
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: app/dialogs/preferences-dialog.c:1879 app/tools/gimptextoptions.c:195
+#: app/dialogs/preferences-dialog.c:1942 app/tools/gimptextoptions.c:195
 msgid "Language"
 msgstr "Тіл"
 
 #. Previews
-#: app/dialogs/preferences-dialog.c:1885
+#: app/dialogs/preferences-dialog.c:1948
 msgid "Previews"
 msgstr "Алдын ала қараулар"
 
-#: app/dialogs/preferences-dialog.c:1888
+#: app/dialogs/preferences-dialog.c:1951
 msgid "_Enable layer & channel previews"
 msgstr "Қабат және арна алдын ала қарауын _іске қосу"
 
-#: app/dialogs/preferences-dialog.c:1896
+#: app/dialogs/preferences-dialog.c:1959
 msgid "Enable layer _group previews"
 msgstr "Қабаттар _тобын алдын ала қарауды іске қосу"
 
-#: app/dialogs/preferences-dialog.c:1902
+#: app/dialogs/preferences-dialog.c:1965
 msgid "_Default layer & channel preview size:"
 msgstr "Қабат пен арнаның алдын ала қарауының _әдепкі өлшемі:"
 
-#: app/dialogs/preferences-dialog.c:1905
+#: app/dialogs/preferences-dialog.c:1968
 msgid "_Undo preview size:"
 msgstr "_Болдырмау алдын ала қарау өлшемі:"
 
-#: app/dialogs/preferences-dialog.c:1908
+#: app/dialogs/preferences-dialog.c:1971
 msgid "Na_vigation preview size:"
 msgstr "На_вигацияның алдын ала қарау өлшемі:"
 
 #. Item
-#: app/dialogs/preferences-dialog.c:1912
+#: app/dialogs/preferences-dialog.c:1975
 msgid "Item search"
 msgstr "Элементтерді іздеу"
 
 #. Keyboard Shortcuts
-#: app/dialogs/preferences-dialog.c:1919 app/menus/menus.c:673
+#: app/dialogs/preferences-dialog.c:1982 app/menus/menus.c:679
 msgid "Keyboard Shortcuts"
 msgstr "Пернетақта жарлықтары"
 
-#: app/dialogs/preferences-dialog.c:1923
+#: app/dialogs/preferences-dialog.c:1986
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "_Пернетақта жарлықтарын баптау..."
 
-#: app/dialogs/preferences-dialog.c:1930
+#: app/dialogs/preferences-dialog.c:1993
 msgid "_Save keyboard shortcuts on exit"
 msgstr "Шыққан кезде пернетақта жарлықтарын _сақтау"
 
-#: app/dialogs/preferences-dialog.c:1934
+#: app/dialogs/preferences-dialog.c:1997
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Пернетақта жарлықтарын _қазір сақтау"
 
-#: app/dialogs/preferences-dialog.c:1941
+#: app/dialogs/preferences-dialog.c:2004
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "Пернетақта жарлықтарын бастапқы мәндеріне _қайтару"
 
-#: app/dialogs/preferences-dialog.c:1950
+#: app/dialogs/preferences-dialog.c:2013
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "_Барлық пернетақта жарлықтарын өшіру"
 
 #. Themes
-#: app/dialogs/preferences-dialog.c:1962 app/dialogs/preferences-dialog.c:1963
+#: app/dialogs/preferences-dialog.c:2025 app/dialogs/preferences-dialog.c:2026
 #: app/dialogs/welcome-dialog.c:618
 msgid "Theme"
 msgstr "Тема"
 
-#: app/dialogs/preferences-dialog.c:1968
+#: app/dialogs/preferences-dialog.c:2031
 msgid "Select Theme"
 msgstr "Теманы таңдау"
 
-#: app/dialogs/preferences-dialog.c:2050
+#: app/dialogs/preferences-dialog.c:2134
 msgid "Color scheme variant (if available)"
 msgstr "Түс схемасының нұсқасы (қолжетімді болса)"
 
-#: app/dialogs/preferences-dialog.c:2055 app/dialogs/welcome-dialog.c:671
+#: app/dialogs/preferences-dialog.c:2139 app/dialogs/welcome-dialog.c:671
 msgid "_Override icon sizes set by the theme"
 msgstr "Тема орнатқан таңбаша өлшемдерін _алмастыру"
 
-#: app/dialogs/preferences-dialog.c:2068 app/dialogs/welcome-dialog.c:680
+#: app/dialogs/preferences-dialog.c:2152 app/dialogs/welcome-dialog.c:680
 msgid "Small"
 msgstr "Кіші"
 
-#: app/dialogs/preferences-dialog.c:2070 app/dialogs/welcome-dialog.c:682
+#: app/dialogs/preferences-dialog.c:2154 app/dialogs/welcome-dialog.c:682
 msgid "Medium"
 msgstr "Орташа"
 
-#: app/dialogs/preferences-dialog.c:2072 app/dialogs/welcome-dialog.c:684
+#: app/dialogs/preferences-dialog.c:2156 app/dialogs/welcome-dialog.c:684
 msgid "Large"
 msgstr "Үлкен"
 
-#: app/dialogs/preferences-dialog.c:2074 app/dialogs/welcome-dialog.c:686
+#: app/dialogs/preferences-dialog.c:2158 app/dialogs/welcome-dialog.c:686
 msgid "Huge"
 msgstr "Өте үлкен"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2087 app/dialogs/welcome-dialog.c:702
+#: app/dialogs/preferences-dialog.c:2171 app/dialogs/welcome-dialog.c:702
 msgid "Font Scaling"
 msgstr "Қаріпті масштабтау"
 
-#: app/dialogs/preferences-dialog.c:2089 app/dialogs/welcome-dialog.c:704
+#: app/dialogs/preferences-dialog.c:2173 app/dialogs/welcome-dialog.c:704
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 "Қаріпті масштабтау абсолютті өлшемдерді пайдаланатын темаларда жұмыс "
 "істемейді."
 
-#: app/dialogs/preferences-dialog.c:2095 app/dialogs/welcome-dialog.c:710
+#: app/dialogs/preferences-dialog.c:2179 app/dialogs/welcome-dialog.c:710
 msgid "50%"
 msgstr "50%"
 
-#: app/dialogs/preferences-dialog.c:2097 app/dialogs/welcome-dialog.c:712
+#: app/dialogs/preferences-dialog.c:2181 app/dialogs/welcome-dialog.c:712
 msgid "100%"
 msgstr "100%"
 
-#: app/dialogs/preferences-dialog.c:2099 app/dialogs/welcome-dialog.c:714
+#: app/dialogs/preferences-dialog.c:2183 app/dialogs/welcome-dialog.c:714
+msgid "150%"
+msgstr "150%"
+
+#: app/dialogs/preferences-dialog.c:2185 app/dialogs/welcome-dialog.c:716
 msgid "200%"
 msgstr "200%"
 
-#: app/dialogs/preferences-dialog.c:2117
+#: app/dialogs/preferences-dialog.c:2203
 msgid "Reload C_urrent Theme"
 msgstr "Ағы_мдағы теманы қайта жүктеу"
 
-#: app/dialogs/preferences-dialog.c:2129 app/dialogs/preferences-dialog.c:2130
+#: app/dialogs/preferences-dialog.c:2215 app/dialogs/preferences-dialog.c:2216
 msgid "Icon Theme"
 msgstr "Таңбашалар темасы"
 
-#: app/dialogs/preferences-dialog.c:2135
+#: app/dialogs/preferences-dialog.c:2221
 msgid "Select an Icon Theme"
 msgstr "Таңбашалар темасын таңдау"
 
-#: app/dialogs/preferences-dialog.c:2251 app/dialogs/welcome-dialog.c:664
+#: app/dialogs/preferences-dialog.c:2337 app/dialogs/welcome-dialog.c:664
 msgid "Use symbolic icons if available"
 msgstr "Қолжетімді болса, символдық таңбашаларды пайдалану"
 
-#: app/dialogs/preferences-dialog.c:2261 app/dialogs/preferences-dialog.c:2262
+#: app/dialogs/preferences-dialog.c:2347 app/dialogs/preferences-dialog.c:2348
 #: app/widgets/gimptoolbox.c:547
 msgid "Toolbox"
 msgstr "Саймандар тақтасы"
 
 #. Appearance
-#: app/dialogs/preferences-dialog.c:2270 app/dialogs/preferences-dialog.c:3171
+#: app/dialogs/preferences-dialog.c:2356 app/dialogs/preferences-dialog.c:3257
 #: app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "Сыртқы түрі"
 
-#: app/dialogs/preferences-dialog.c:2274
+#: app/dialogs/preferences-dialog.c:2360
 msgid "Show GIMP _logo (drag-and-drop target)"
 msgstr "GIMP _логотипін көрсету (сүйреп апару нысаны)"
 
-#: app/dialogs/preferences-dialog.c:2278
+#: app/dialogs/preferences-dialog.c:2364
 msgid "Show _foreground & background color"
 msgstr "_Алдыңғы көрініс пен фон түсін көрсету"
 
-#: app/dialogs/preferences-dialog.c:2282
+#: app/dialogs/preferences-dialog.c:2368
 msgid "Show active _brush, pattern & gradient"
 msgstr "Белсенді _қылқалам, өрнек пен градиентті көрсету"
 
-#: app/dialogs/preferences-dialog.c:2286
+#: app/dialogs/preferences-dialog.c:2372
 msgid "Show active _image"
 msgstr "Белсенді _суретті көрсету"
 
-#: app/dialogs/preferences-dialog.c:2295 app/dialogs/welcome-dialog.c:750
+#: app/dialogs/preferences-dialog.c:2381 app/dialogs/welcome-dialog.c:752
 msgid "Use tool _groups"
 msgstr "Сайман _топтарын пайдалану"
 
 #. Tool Editor
-#: app/dialogs/preferences-dialog.c:2302
+#: app/dialogs/preferences-dialog.c:2388
 msgid "Tools Configuration"
 msgstr "Саймандар конфигурациясы"
 
-#: app/dialogs/preferences-dialog.c:2317 app/dialogs/preferences-dialog.c:2318
+#: app/dialogs/preferences-dialog.c:2403 app/dialogs/preferences-dialog.c:2404
 msgid "Dialog Defaults"
 msgstr "Сұхбат терезесінің әдепкі мәндері"
 
-#: app/dialogs/preferences-dialog.c:2327
+#: app/dialogs/preferences-dialog.c:2413
 msgid "Reset Dialog _Defaults"
 msgstr "Сұхбат терезесінің _әдепкі мәндерін қайтару"
 
 #. Color profile import dialog
-#: app/dialogs/preferences-dialog.c:2335
+#: app/dialogs/preferences-dialog.c:2421
 msgid "Color Profile Import Dialog"
 msgstr "Түс профилін импорттау сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2340
+#: app/dialogs/preferences-dialog.c:2426
 msgid "Color profile policy:"
 msgstr "Түс профилінің саясаты:"
 
 #. All color profile chooser dialogs
-#: app/dialogs/preferences-dialog.c:2344
+#: app/dialogs/preferences-dialog.c:2430
 msgid "Color Profile File Dialogs"
 msgstr "Түс профилі файлының сұхбат терезелері"
 
-#: app/dialogs/preferences-dialog.c:2349
+#: app/dialogs/preferences-dialog.c:2435
 msgid "Profile folder:"
 msgstr "Профиль бумасы:"
 
-#: app/dialogs/preferences-dialog.c:2350
+#: app/dialogs/preferences-dialog.c:2436
 msgid "Select Default Folder for Color Profiles"
 msgstr "Түс профильдері үшін әдепкі буманы таңдау"
 
 #. Convert to Color Profile Dialog
-#: app/dialogs/preferences-dialog.c:2354
+#: app/dialogs/preferences-dialog.c:2440
 msgid "Convert to Color Profile Dialog"
 msgstr "Түс профиліне түрлендіру сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2359
+#: app/dialogs/preferences-dialog.c:2445
 msgid "Rendering intent:"
 msgstr "Рендерлеу мақсаты:"
 
-#: app/dialogs/preferences-dialog.c:2363
+#: app/dialogs/preferences-dialog.c:2449
 msgid "Black point compensation"
 msgstr "Қара нүкте компенсациясы"
 
 #. Convert Precision Dialog
-#: app/dialogs/preferences-dialog.c:2367
+#: app/dialogs/preferences-dialog.c:2453
 msgid "Precision Conversion Dialog"
 msgstr "Дәлдікті түрлендіру сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2374
+#: app/dialogs/preferences-dialog.c:2460
 msgid "Dither layers:"
 msgstr "Қабаттарды дизерингтеу:"
 
-#: app/dialogs/preferences-dialog.c:2379
+#: app/dialogs/preferences-dialog.c:2465
 msgid "Dither text layers:"
 msgstr "Мәтіндік қабаттарды дизерингтеу:"
 
-#: app/dialogs/preferences-dialog.c:2384
+#: app/dialogs/preferences-dialog.c:2470
 msgid "Dither channels/masks:"
 msgstr "Арналарды/маскаларды дизерингтеу:"
 
 #. Convert Indexed Dialog
-#: app/dialogs/preferences-dialog.c:2388
+#: app/dialogs/preferences-dialog.c:2474
 msgid "Indexed Conversion Dialog"
 msgstr "Индекстелген түрлендіру сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2393
+#: app/dialogs/preferences-dialog.c:2479
 msgid "Colormap:"
 msgstr "Түстер картасы:"
 
-#: app/dialogs/preferences-dialog.c:2396
+#: app/dialogs/preferences-dialog.c:2482
 msgid "Maximum number of colors:"
 msgstr "Түстердің максималды саны:"
 
-#: app/dialogs/preferences-dialog.c:2400
+#: app/dialogs/preferences-dialog.c:2486
 msgid "Remove unused and duplicate colors from colormap"
 msgstr "Түстер картасынан пайдаланылмаған және дубликат түстерді өшіру"
 
-#: app/dialogs/preferences-dialog.c:2406
+#: app/dialogs/preferences-dialog.c:2492
 msgid "Color dithering:"
 msgstr "Түстік дизеринг:"
 
-#: app/dialogs/preferences-dialog.c:2410
+#: app/dialogs/preferences-dialog.c:2496
 msgid "Enable dithering of transparency"
 msgstr "Мөлдірлікті дизерингтеуді іске қосу"
 
-#: app/dialogs/preferences-dialog.c:2413
+#: app/dialogs/preferences-dialog.c:2499
 msgid "Enable dithering of text layers"
 msgstr "Мәтіндік қабаттарды дизерингтеуді іске қосу"
 
 #. Filter Dialogs
-#: app/dialogs/preferences-dialog.c:2417
+#: app/dialogs/preferences-dialog.c:2503
 msgid "Filter Dialogs"
 msgstr "Сүзгі сұхбат терезелері"
 
-#: app/dialogs/preferences-dialog.c:2422
+#: app/dialogs/preferences-dialog.c:2508
 msgid "Keep recent settings:"
 msgstr "Соңғы баптауларды сақтау:"
 
-#: app/dialogs/preferences-dialog.c:2426
+#: app/dialogs/preferences-dialog.c:2512
 msgid "Default to the last used settings"
 msgstr "Әдепкі бойынша соңғы пайдаланылған баптауларды қолдану"
 
 #. Canvas Size Dialog
-#: app/dialogs/preferences-dialog.c:2430
+#: app/dialogs/preferences-dialog.c:2516
 msgid "Canvas Size Dialog"
 msgstr "Кенеп өлшемі сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2435
+#: app/dialogs/preferences-dialog.c:2521
 msgid "Resize layers:"
 msgstr "Қабаттар өлшемін өзгерту:"
 
-#: app/dialogs/preferences-dialog.c:2438 app/dialogs/preferences-dialog.c:2464
+#: app/dialogs/preferences-dialog.c:2524 app/dialogs/preferences-dialog.c:2550
 msgid "Fill with:"
 msgstr "Келесімен толтыру:"
 
-#: app/dialogs/preferences-dialog.c:2442
+#: app/dialogs/preferences-dialog.c:2528
 msgid "Resize text layers"
 msgstr "Мәтіндік қабаттар өлшемін өзгерту"
 
 #. New Layer Dialog
-#: app/dialogs/preferences-dialog.c:2446
+#: app/dialogs/preferences-dialog.c:2532
 msgid "New Layer Dialog"
 msgstr "Жаңа қабат сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2451
+#: app/dialogs/preferences-dialog.c:2537
 msgid "Layer name:"
 msgstr "Қабат аты:"
 
-#: app/dialogs/preferences-dialog.c:2455
+#: app/dialogs/preferences-dialog.c:2541
 msgid "Fill type:"
 msgstr "Толтыру түрі:"
 
 #. Layer Boundary Size Dialog
-#: app/dialogs/preferences-dialog.c:2459
+#: app/dialogs/preferences-dialog.c:2545
 msgid "Layer Boundary Size Dialog"
 msgstr "Қабат шекарасының өлшемі сұхбат терезесі"
 
 #. Add Layer Mask Dialog
-#: app/dialogs/preferences-dialog.c:2468
+#: app/dialogs/preferences-dialog.c:2554
 msgid "Add Layer Mask Dialog"
 msgstr "Қабат маскасын қосу сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2473
+#: app/dialogs/preferences-dialog.c:2559
 msgid "Layer mask type:"
 msgstr "Қабат маскасының түрі:"
 
-#: app/dialogs/preferences-dialog.c:2477
+#: app/dialogs/preferences-dialog.c:2563
 msgid "Invert mask"
 msgstr "Масканы инверсиялау"
 
-#: app/dialogs/preferences-dialog.c:2480
+#: app/dialogs/preferences-dialog.c:2566
 msgid "Edit mask immediately"
 msgstr "Масканы бірден түзету"
 
 #. Merge Layers Dialog
-#: app/dialogs/preferences-dialog.c:2484
+#: app/dialogs/preferences-dialog.c:2570
 msgid "Merge Layers Dialog"
 msgstr "Қабаттарды біріктіру сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2491
+#: app/dialogs/preferences-dialog.c:2577
 msgid "Merged layer size:"
 msgstr "Біріктірілген қабат өлшемі:"
 
-#: app/dialogs/preferences-dialog.c:2495
+#: app/dialogs/preferences-dialog.c:2581
 msgid "Merge within active groups only"
 msgstr "Тек белсенді топтар ішінде біріктіру"
 
-#: app/dialogs/preferences-dialog.c:2498
+#: app/dialogs/preferences-dialog.c:2584
 msgid "Discard invisible layers"
 msgstr "Көрінбейтін қабаттарды елемеу"
 
 #. New Channel Dialog
-#: app/dialogs/preferences-dialog.c:2502
+#: app/dialogs/preferences-dialog.c:2588
 msgid "New Channel Dialog"
 msgstr "Жаңа арна сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2507
+#: app/dialogs/preferences-dialog.c:2593
 msgid "Channel name:"
 msgstr "Арна аты:"
 
-#: app/dialogs/preferences-dialog.c:2511
+#: app/dialogs/preferences-dialog.c:2597
 msgid "Color and opacity:"
 msgstr "Түс пен мөлдірсіздік:"
 
-#: app/dialogs/preferences-dialog.c:2512
+#: app/dialogs/preferences-dialog.c:2598
 msgid "Default New Channel Color and Opacity"
 msgstr "Жаңа арнаның әдепкі түсі мен мөлдірсіздігі"
 
 #. New Path Dialog
-#: app/dialogs/preferences-dialog.c:2517
+#: app/dialogs/preferences-dialog.c:2603
 msgid "New Path Dialog"
 msgstr "Жаңа жол сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2522
+#: app/dialogs/preferences-dialog.c:2608
 msgid "Path name:"
 msgstr "Жол аты:"
 
 #. Export Path Dialog
-#: app/dialogs/preferences-dialog.c:2526
+#: app/dialogs/preferences-dialog.c:2612
 msgid "Export Paths Dialog"
 msgstr "Жолдарды экспорттау сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2531
+#: app/dialogs/preferences-dialog.c:2617
 msgid "Export folder:"
 msgstr "Экспорттау бумасы:"
 
-#: app/dialogs/preferences-dialog.c:2532
+#: app/dialogs/preferences-dialog.c:2618
 msgid "Select Default Folder for Exporting Paths"
 msgstr "Жолдарды экспорттау үшін әдепкі буманы таңдау"
 
-#: app/dialogs/preferences-dialog.c:2536
+#: app/dialogs/preferences-dialog.c:2622
 msgid "Export the selected paths only"
 msgstr "Тек таңдалған жолдарды экспорттау"
 
 #. Import Path Dialog
-#: app/dialogs/preferences-dialog.c:2540
+#: app/dialogs/preferences-dialog.c:2626
 msgid "Import Paths Dialog"
 msgstr "Жолдарды импорттау сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2545
+#: app/dialogs/preferences-dialog.c:2631
 msgid "Import folder:"
 msgstr "Импорттау бумасы:"
 
-#: app/dialogs/preferences-dialog.c:2546
+#: app/dialogs/preferences-dialog.c:2632
 msgid "Select Default Folder for Importing Paths"
 msgstr "Жолдарды импорттау үшін әдепкі буманы таңдау"
 
-#: app/dialogs/preferences-dialog.c:2550
+#: app/dialogs/preferences-dialog.c:2636
 msgid "Merge imported paths"
 msgstr "Импортталған жолдарды біріктіру"
 
-#: app/dialogs/preferences-dialog.c:2553
+#: app/dialogs/preferences-dialog.c:2639
 msgid "Scale imported paths"
 msgstr "Импортталған жолдарды масштабтау"
 
 #. Feather Selection Dialog
-#: app/dialogs/preferences-dialog.c:2557
+#: app/dialogs/preferences-dialog.c:2643
 msgid "Feather Selection Dialog"
 msgstr "Таңдауды жұмсарту сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2562
+#: app/dialogs/preferences-dialog.c:2648
 msgid "Feather radius:"
 msgstr "Жұмсарту радиусы:"
 
-#: app/dialogs/preferences-dialog.c:2566 app/dialogs/preferences-dialog.c:2588
-#: app/dialogs/preferences-dialog.c:2605
+#: app/dialogs/preferences-dialog.c:2652 app/dialogs/preferences-dialog.c:2674
+#: app/dialogs/preferences-dialog.c:2691
 msgid "Selected areas continue outside the image"
 msgstr "Таңдалған аймақтар сурет сыртында жалғасады"
 
 #. Grow Selection Dialog
-#: app/dialogs/preferences-dialog.c:2570
+#: app/dialogs/preferences-dialog.c:2656
 msgid "Grow Selection Dialog"
 msgstr "Таңдауды өсіру сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2575
+#: app/dialogs/preferences-dialog.c:2661
 msgid "Grow radius:"
 msgstr "Өсіру радиусы:"
 
 #. Shrink Selection Dialog
-#: app/dialogs/preferences-dialog.c:2579
+#: app/dialogs/preferences-dialog.c:2665
 msgid "Shrink Selection Dialog"
 msgstr "Таңдауды кішірейту сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2584
+#: app/dialogs/preferences-dialog.c:2670
 msgid "Shrink radius:"
 msgstr "Кішірейту радиусы:"
 
 #. Border Selection Dialog
-#: app/dialogs/preferences-dialog.c:2592
+#: app/dialogs/preferences-dialog.c:2678
 msgid "Border Selection Dialog"
 msgstr "Шекараны таңдау сұхбат терезесі"
 
-#: app/dialogs/preferences-dialog.c:2597
+#: app/dialogs/preferences-dialog.c:2683
 msgid "Border radius:"
 msgstr "Шекара радиусы:"
 
-#: app/dialogs/preferences-dialog.c:2601
+#: app/dialogs/preferences-dialog.c:2687
 msgid "Border style:"
 msgstr "Шекара стилі:"
 
 #. Fill Options Dialog
-#: app/dialogs/preferences-dialog.c:2609
+#: app/dialogs/preferences-dialog.c:2695
 msgid "Fill Selection Outline & Fill Path Dialogs"
 msgstr "Таңдау контурын бояу және жолды бояу сұхбат терезелері"
 
 #. Stroke Options Dialog
-#: app/dialogs/preferences-dialog.c:2618
+#: app/dialogs/preferences-dialog.c:2704
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "Таңдауды сызу және жолды сызу сұхбат терезелері"
 
-#: app/dialogs/preferences-dialog.c:2641 app/dialogs/preferences-dialog.c:2642
+#: app/dialogs/preferences-dialog.c:2727 app/dialogs/preferences-dialog.c:2728
 msgid "Help System"
 msgstr "Көмек жүйесі"
 
-#: app/dialogs/preferences-dialog.c:2653
+#: app/dialogs/preferences-dialog.c:2739
 msgid "Show help _buttons"
 msgstr "Көмек _батырмаларын көрсету"
 
-#: app/dialogs/preferences-dialog.c:2658
+#: app/dialogs/preferences-dialog.c:2744
 msgid "Use the online version"
 msgstr "Онлайн нұсқасын пайдалану"
 
-#: app/dialogs/preferences-dialog.c:2659
+#: app/dialogs/preferences-dialog.c:2745
 msgid "Use a locally installed copy"
 msgstr "Жергілікті орнатылған көшірмені пайдалану"
 
-#: app/dialogs/preferences-dialog.c:2660
+#: app/dialogs/preferences-dialog.c:2746
 msgid "U_ser manual:"
 msgstr "Пайдаланушы _нұсқаулығы:"
 
-#: app/dialogs/preferences-dialog.c:2671
+#: app/dialogs/preferences-dialog.c:2757
 msgid "User interface language"
 msgstr "Пайдаланушы интерфейсінің тілі"
 
@@ -17761,15 +17766,15 @@ msgstr "Пайдаланушы интерфейсінің тілі"
 #. *  that doesn't use the help browser, so don't bother showing
 #. *  the combo.
 #.
-#: app/dialogs/preferences-dialog.c:2730
+#: app/dialogs/preferences-dialog.c:2816
 msgid "Help Browser"
 msgstr "Көмек браузері"
 
-#: app/dialogs/preferences-dialog.c:2737
+#: app/dialogs/preferences-dialog.c:2823
 msgid "H_elp browser to use:"
 msgstr "Пайдаланылатын _көмек браузері:"
 
-#: app/dialogs/preferences-dialog.c:2743
+#: app/dialogs/preferences-dialog.c:2829
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
@@ -17778,186 +17783,186 @@ msgstr ""
 "пайдаланылады."
 
 #. Action Search
-#: app/dialogs/preferences-dialog.c:2760
+#: app/dialogs/preferences-dialog.c:2846
 msgid "Action Search"
 msgstr "Әрекеттерді іздеу"
 
-#: app/dialogs/preferences-dialog.c:2764
+#: app/dialogs/preferences-dialog.c:2850
 msgid "_Maximum History Size:"
 msgstr "_Тарихтың максималды өлшемі:"
 
-#: app/dialogs/preferences-dialog.c:2768
+#: app/dialogs/preferences-dialog.c:2854
 msgid "C_lear Action History"
 msgstr "Әрекеттер тарихын та_зарту"
 
-#: app/dialogs/preferences-dialog.c:2782 app/dialogs/preferences-dialog.c:2783
+#: app/dialogs/preferences-dialog.c:2868 app/dialogs/preferences-dialog.c:2869
 msgid "Display"
 msgstr "Дисплей"
 
 #. Transparency
-#: app/dialogs/preferences-dialog.c:2792
+#: app/dialogs/preferences-dialog.c:2878
 msgid "Transparency"
 msgstr "Мөлдірлік"
 
-#: app/dialogs/preferences-dialog.c:2796
+#: app/dialogs/preferences-dialog.c:2882
 msgid "_Check style:"
 msgstr "Шахмат тақтасының _стилі:"
 
-#: app/dialogs/preferences-dialog.c:2830
+#: app/dialogs/preferences-dialog.c:2916
 msgid "Check _size:"
 msgstr "Шахмат тақтасының _өлшемі:"
 
 #. Zoom Quality
-#: app/dialogs/preferences-dialog.c:2834
+#: app/dialogs/preferences-dialog.c:2920
 msgid "Zoom Quality"
 msgstr "Масштабтау сапасы"
 
-#: app/dialogs/preferences-dialog.c:2838
+#: app/dialogs/preferences-dialog.c:2924
 msgid "_Zoom quality:"
 msgstr "_Масштабтау сапасы:"
 
 #. Monitor Resolution
-#: app/dialogs/preferences-dialog.c:2842
+#: app/dialogs/preferences-dialog.c:2928
 msgid "Monitor Resolution"
 msgstr "Монитор ажыратымдылығы"
 
 #. Pixels
-#: app/dialogs/preferences-dialog.c:2846 app/display/gimpcursorview.c:224
+#: app/dialogs/preferences-dialog.c:2932 app/display/gimpcursorview.c:224
 #: app/widgets/gimpgrideditor.c:207 app/widgets/gimpgrideditor.c:242
 msgid "Pixels"
 msgstr "Пиксельдер"
 
-#: app/dialogs/preferences-dialog.c:2864 app/widgets/gimpgrideditor.c:203
+#: app/dialogs/preferences-dialog.c:2950 app/widgets/gimpgrideditor.c:203
 #: app/widgets/gimpgrideditor.c:238
 msgid "Horizontal"
 msgstr "Горизонталды"
 
-#: app/dialogs/preferences-dialog.c:2866 app/widgets/gimpgrideditor.c:205
+#: app/dialogs/preferences-dialog.c:2952 app/widgets/gimpgrideditor.c:205
 #: app/widgets/gimpgrideditor.c:240
 msgid "Vertical"
 msgstr "Вертикалды"
 
-#: app/dialogs/preferences-dialog.c:2868 app/widgets/gimpimagepropview.c:466
+#: app/dialogs/preferences-dialog.c:2954 app/widgets/gimpimagepropview.c:466
 msgid "ppi"
 msgstr "ppi"
 
-#: app/dialogs/preferences-dialog.c:2886
+#: app/dialogs/preferences-dialog.c:2972
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "Автоматты түрде _анықтау (қазіргі уақытта %d × %d ppi)"
 
-#: app/dialogs/preferences-dialog.c:2904
+#: app/dialogs/preferences-dialog.c:2990
 msgid "_Enter manually"
 msgstr "Қолмен _енгізу"
 
-#: app/dialogs/preferences-dialog.c:2919
+#: app/dialogs/preferences-dialog.c:3005
 msgid "C_alibrate..."
 msgstr "К_алибрлеу..."
 
-#: app/dialogs/preferences-dialog.c:2949 app/dialogs/preferences-dialog.c:2950
+#: app/dialogs/preferences-dialog.c:3035 app/dialogs/preferences-dialog.c:3036
 msgid "Window Management"
 msgstr "Терезелерді басқару"
 
-#: app/dialogs/preferences-dialog.c:2955
+#: app/dialogs/preferences-dialog.c:3041
 msgid "Window Manager Hints"
 msgstr "Терезе басқарушысының кеңестері"
 
-#: app/dialogs/preferences-dialog.c:2961
+#: app/dialogs/preferences-dialog.c:3047
 msgid "Hint for _docks and toolbox:"
 msgstr "_Доктар мен саймандар тақтасы үшін кеңес:"
 
-#: app/dialogs/preferences-dialog.c:2964
+#: app/dialogs/preferences-dialog.c:3050
 msgid "Focus"
 msgstr "Фокус"
 
-#: app/dialogs/preferences-dialog.c:2968
+#: app/dialogs/preferences-dialog.c:3054
 msgid "Activate the _focused image"
 msgstr "_Фокусталған суретті белсендіру"
 
 #. Window Positions
-#: app/dialogs/preferences-dialog.c:2972
+#: app/dialogs/preferences-dialog.c:3058
 msgid "Window Positions"
 msgstr "Терезе позициялары"
 
-#: app/dialogs/preferences-dialog.c:2975
+#: app/dialogs/preferences-dialog.c:3061
 msgid "_Save window positions on exit"
 msgstr "Шыққан кезде терезе позицияларын _сақтау"
 
-#: app/dialogs/preferences-dialog.c:2978
+#: app/dialogs/preferences-dialog.c:3064
 msgid "Open windows on the same _monitor they were open before"
 msgstr "Терезелерді бұрын ашылған _мониторда ашу"
 
-#: app/dialogs/preferences-dialog.c:2982
+#: app/dialogs/preferences-dialog.c:3068
 msgid "Save Window Positions _Now"
 msgstr "Терезе позицияларын _қазір сақтау"
 
-#: app/dialogs/preferences-dialog.c:2989
+#: app/dialogs/preferences-dialog.c:3075
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "Сақталған терезе позицияларын бастапқы мәндеріне _қайтару"
 
-#: app/dialogs/preferences-dialog.c:3004 app/dialogs/preferences-dialog.c:3005
+#: app/dialogs/preferences-dialog.c:3090 app/dialogs/preferences-dialog.c:3091
 msgid "Canvas Interaction"
 msgstr "Кенептегі әрекеттер"
 
 #. Space Bar
-#: app/dialogs/preferences-dialog.c:3014
+#: app/dialogs/preferences-dialog.c:3100
 msgid "Space Bar"
 msgstr "Бос орын пернесі"
 
-#: app/dialogs/preferences-dialog.c:3020
+#: app/dialogs/preferences-dialog.c:3106
 msgid "_While space bar is pressed:"
 msgstr "Бос орын _пернесі басылып тұрғанда:"
 
 #. Zoom by drag Behavior
-#: app/dialogs/preferences-dialog.c:3024 app/tools/gimpmagnifytool.c:93
+#: app/dialogs/preferences-dialog.c:3110 app/tools/gimpmagnifytool.c:93
 msgid "Zoom"
 msgstr "Масштабтау"
 
-#: app/dialogs/preferences-dialog.c:3030
+#: app/dialogs/preferences-dialog.c:3116
 msgid "Dra_g-to-zoom behavior:"
 msgstr "Масштабтау үшін сүйр_еу мінез-құлқы:"
 
-#: app/dialogs/preferences-dialog.c:3036
+#: app/dialogs/preferences-dialog.c:3122
 msgid "Drag-to-zoom spe_ed:"
 msgstr "Масштабтау үшін сүйреу жыл_дамдығы:"
 
-#: app/dialogs/preferences-dialog.c:3046 app/dialogs/preferences-dialog.c:3047
+#: app/dialogs/preferences-dialog.c:3132 app/dialogs/preferences-dialog.c:3133
 msgid "Modifiers"
 msgstr "Модификаторлар"
 
-#: app/dialogs/preferences-dialog.c:3058
+#: app/dialogs/preferences-dialog.c:3144
 msgid "_Reset Saved Modifiers Settings to Default Values"
 msgstr "Сақталған модификаторлар баптауларын бастапқы мәндерге қайта_ру"
 
-#: app/dialogs/preferences-dialog.c:3072
+#: app/dialogs/preferences-dialog.c:3158
 msgid "Snapping Behavior"
 msgstr "Жабысу мінез-құлқы"
 
-#: app/dialogs/preferences-dialog.c:3073
+#: app/dialogs/preferences-dialog.c:3159
 msgid "Snapping"
 msgstr "Жабысу"
 
-#: app/dialogs/preferences-dialog.c:3080
+#: app/dialogs/preferences-dialog.c:3166
 msgid "Default Behavior in Normal Mode"
 msgstr "Қалыпты режимдегі бастапқы мінез-құлық"
 
-#: app/dialogs/preferences-dialog.c:3084
+#: app/dialogs/preferences-dialog.c:3170
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Толық экран режиміндегі бастапқы мінез-құлық"
 
-#: app/dialogs/preferences-dialog.c:3093
+#: app/dialogs/preferences-dialog.c:3179
 msgid "_Snapping distance:"
 msgstr "Жабысу қашық_тығы:"
 
-#: app/dialogs/preferences-dialog.c:3102 app/dialogs/preferences-dialog.c:3103
+#: app/dialogs/preferences-dialog.c:3188 app/dialogs/preferences-dialog.c:3189
 msgid "Image Windows"
 msgstr "Сурет терезелері"
 
-#: app/dialogs/preferences-dialog.c:3120
+#: app/dialogs/preferences-dialog.c:3206
 msgid "Merge menu and title bar"
 msgstr "Мәзір мен тақырып жолағын біріктіру"
 
-#: app/dialogs/preferences-dialog.c:3123
+#: app/dialogs/preferences-dialog.c:3209
 msgid ""
 "GIMP will try to convince your system not to decorate image windows. If it "
 "doesn't work properly on your system (i.e. you get 2 title bars), please "
@@ -17967,383 +17972,383 @@ msgstr ""
 "жүйеңізде дұрыс жұмыс істемесе (мыс. 2 тақырып жолағы болса), қате туралы "
 "хабарлаңыз."
 
-#: app/dialogs/preferences-dialog.c:3133
+#: app/dialogs/preferences-dialog.c:3219
 msgid "Use \"Show _all\" by default"
 msgstr "Үнсіз келісім бойынша «Барлығын кө_рсету» қолдану"
 
-#: app/dialogs/preferences-dialog.c:3137
+#: app/dialogs/preferences-dialog.c:3223
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Үнсіз келісім бойынша «_Нүктеге нүкте» қолдану"
 
-#: app/dialogs/preferences-dialog.c:3143
+#: app/dialogs/preferences-dialog.c:3229
 msgid "Marching ants s_peed:"
 msgstr "Жүріп бара жатқан құмырсқалар жыл_дамдығы:"
 
 #. Zoom & Resize Behavior
-#: app/dialogs/preferences-dialog.c:3147
+#: app/dialogs/preferences-dialog.c:3233
 msgid "Zoom & Resize Behavior"
 msgstr "Масштабтау және өлшемін өзгерту мінез-құлқы"
 
-#: app/dialogs/preferences-dialog.c:3151
+#: app/dialogs/preferences-dialog.c:3237
 msgid "Resize window on _zoom"
 msgstr "Масштабтау кезінде терезе өлшемін өз_герту"
 
-#: app/dialogs/preferences-dialog.c:3154
+#: app/dialogs/preferences-dialog.c:3240
 msgid "Resize window on image _size change"
 msgstr "Сурет ө_лшемі өзгергенде терезе өлшемін өзгерту"
 
-#: app/dialogs/preferences-dialog.c:3160
+#: app/dialogs/preferences-dialog.c:3246
 msgid "Show entire image"
 msgstr "Бүкіл суретті көрсету"
 
-#: app/dialogs/preferences-dialog.c:3162
+#: app/dialogs/preferences-dialog.c:3248
 msgid "Initial zoom _ratio:"
 msgstr "Бастапқы масштабтау қа_тынасы:"
 
-#: app/dialogs/preferences-dialog.c:3170
+#: app/dialogs/preferences-dialog.c:3256
 msgid "Image Window Appearance"
 msgstr "Сурет терезесінің сыртқы түрі"
 
-#: app/dialogs/preferences-dialog.c:3180
+#: app/dialogs/preferences-dialog.c:3266
 msgid "Default Appearance in Normal Mode"
 msgstr "Қалыпты режимдегі бастапқы сыртқы түрі"
 
-#: app/dialogs/preferences-dialog.c:3185
+#: app/dialogs/preferences-dialog.c:3271
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Толық экран режиміндегі бастапқы сыртқы түрі"
 
-#: app/dialogs/preferences-dialog.c:3194
+#: app/dialogs/preferences-dialog.c:3280
 msgid "Image Title & Statusbar Format"
 msgstr "Сурет тақырыбы мен қалып-күй жолағының пішімі"
 
-#: app/dialogs/preferences-dialog.c:3195
+#: app/dialogs/preferences-dialog.c:3281
 msgid "Title & Status"
 msgstr "Тақырыбы және қалып-күйі"
 
-#: app/dialogs/preferences-dialog.c:3213
+#: app/dialogs/preferences-dialog.c:3299
 msgid "Current format"
 msgstr "Ағымдағы пішім"
 
-#: app/dialogs/preferences-dialog.c:3214
+#: app/dialogs/preferences-dialog.c:3300
 msgid "Default format"
 msgstr "Бастапқы пішім"
 
-#: app/dialogs/preferences-dialog.c:3215
+#: app/dialogs/preferences-dialog.c:3301
 msgid "Show zoom percentage"
 msgstr "Масштабтау пайызын көрсету"
 
-#: app/dialogs/preferences-dialog.c:3216
+#: app/dialogs/preferences-dialog.c:3302
 msgid "Show zoom ratio"
 msgstr "Масштабтау қатынасын көрсету"
 
-#: app/dialogs/preferences-dialog.c:3217
+#: app/dialogs/preferences-dialog.c:3303
 msgid "Show image size"
 msgstr "Сурет өлшемін көрсету"
 
-#: app/dialogs/preferences-dialog.c:3218
+#: app/dialogs/preferences-dialog.c:3304
 msgid "Show drawable size"
 msgstr "Сызылатын нысан өлшемін көрсету"
 
-#: app/dialogs/preferences-dialog.c:3231
+#: app/dialogs/preferences-dialog.c:3317
 msgid "Image Title Format"
 msgstr "Сурет тақырыбының пішімі"
 
-#: app/dialogs/preferences-dialog.c:3233
+#: app/dialogs/preferences-dialog.c:3319
 msgid "Image Statusbar Format"
 msgstr "Суреттің қалып-күй жолағының пішімі"
 
 #. Input Devices
-#: app/dialogs/preferences-dialog.c:3327 app/dialogs/preferences-dialog.c:3328
-#: app/menus/menus.c:666
+#: app/dialogs/preferences-dialog.c:3413 app/dialogs/preferences-dialog.c:3414
+#: app/menus/menus.c:672
 msgid "Input Devices"
 msgstr "Кіріс құрылғылары"
 
-#: app/dialogs/preferences-dialog.c:3339
+#: app/dialogs/preferences-dialog.c:3425
 msgid "Pointers"
 msgstr "Курсорлар"
 
-#: app/dialogs/preferences-dialog.c:3346
+#: app/dialogs/preferences-dialog.c:3432
 msgid "Pointer _mode:"
 msgstr "Курсор ре_жимі:"
 
-#: app/dialogs/preferences-dialog.c:3349
+#: app/dialogs/preferences-dialog.c:3435
 msgid "Pointer _handedness:"
 msgstr "Курсор қ_олдылығы:"
 
-#: app/dialogs/preferences-dialog.c:3353
+#: app/dialogs/preferences-dialog.c:3439
 msgid "Paint Tools"
 msgstr "Бояу саймандары"
 
-#: app/dialogs/preferences-dialog.c:3357
+#: app/dialogs/preferences-dialog.c:3443
 msgid "Show _brush outline"
 msgstr "Қылқалам ко_нтурын көрсету"
 
-#: app/dialogs/preferences-dialog.c:3365
+#: app/dialogs/preferences-dialog.c:3451
 msgid "S_nap brush outline to stroke"
 msgstr "Қылқалам контурын сызуға жабы_стыру"
 
-#: app/dialogs/preferences-dialog.c:3369
+#: app/dialogs/preferences-dialog.c:3455
 msgid "Show pointer for paint _tools"
 msgstr "Бояу саймандары үшін кур_сорды көрсету"
 
 #. Extended Input Devices
-#: app/dialogs/preferences-dialog.c:3373
+#: app/dialogs/preferences-dialog.c:3459
 msgid "Extended Input Devices"
 msgstr "Кеңейтілген кіріс құрылғылары"
 
-#: app/dialogs/preferences-dialog.c:3389
+#: app/dialogs/preferences-dialog.c:3475
 msgid "Pointer Input API:"
 msgstr "Курсор кірісінің API:"
 
-#: app/dialogs/preferences-dialog.c:3400
+#: app/dialogs/preferences-dialog.c:3486
 msgid "S_hare tool and tool options between input devices"
 msgstr "Сайман мен сайман опцияларын кіріс құрылғылары арасында бө_лісу"
 
-#: app/dialogs/preferences-dialog.c:3404
+#: app/dialogs/preferences-dialog.c:3490
 msgid "Configure E_xtended Input Devices..."
 msgstr "Кеңейтілген кіріс құрылғыларын ба_птау..."
 
-#: app/dialogs/preferences-dialog.c:3411
+#: app/dialogs/preferences-dialog.c:3497
 msgid "_Save input device settings on exit"
 msgstr "Шығу кезінде кіріс құрылғысының баптауларын _сақтау"
 
-#: app/dialogs/preferences-dialog.c:3415
+#: app/dialogs/preferences-dialog.c:3501
 msgid "Save Input Device Settings _Now"
 msgstr "Кіріс құрылғысының баптауларын қа_зір сақтау"
 
-#: app/dialogs/preferences-dialog.c:3422
+#: app/dialogs/preferences-dialog.c:3508
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "Сақталған кіріс құрылғысының баптауларын бастапқы мәндерге қайта_ру"
 
-#: app/dialogs/preferences-dialog.c:3437
+#: app/dialogs/preferences-dialog.c:3523
 msgid "Additional Input Controllers"
 msgstr "Қосымша кіріс контроллерлері"
 
-#: app/dialogs/preferences-dialog.c:3438
+#: app/dialogs/preferences-dialog.c:3524
 msgid "Input Controllers"
 msgstr "Кіріс контроллерлері"
 
-#: app/dialogs/preferences-dialog.c:3453 app/dialogs/preferences-dialog.c:3454
+#: app/dialogs/preferences-dialog.c:3539 app/dialogs/preferences-dialog.c:3540
 msgid "Folders"
 msgstr "Бумалар"
 
-#: app/dialogs/preferences-dialog.c:3461
+#: app/dialogs/preferences-dialog.c:3547
 msgid "Reset _Folders"
 msgstr "Бумаларды бастапқыға қ_айтару"
 
-#: app/dialogs/preferences-dialog.c:3477
+#: app/dialogs/preferences-dialog.c:3563
 msgid "_Temporary folder:"
 msgstr "Уақытша б_ума:"
 
-#: app/dialogs/preferences-dialog.c:3478
+#: app/dialogs/preferences-dialog.c:3564
 msgid "Select Folder for Temporary Files"
 msgstr "Уақытша файлдар үшін буманы таңдау"
 
-#: app/dialogs/preferences-dialog.c:3482
+#: app/dialogs/preferences-dialog.c:3568
 msgid "_Swap folder:"
 msgstr "Алмастыру б_умасы:"
 
-#: app/dialogs/preferences-dialog.c:3483
+#: app/dialogs/preferences-dialog.c:3569
 msgid "Select Swap Folder"
 msgstr "Алмастыру бумасын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3516
+#: app/dialogs/preferences-dialog.c:3602
 msgid "Brush Folders"
 msgstr "Қылқалам бумалары"
 
-#: app/dialogs/preferences-dialog.c:3519
+#: app/dialogs/preferences-dialog.c:3605
 msgid "Reset Brush _Folders"
 msgstr "Қылқалам б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3520
+#: app/dialogs/preferences-dialog.c:3606
 msgid "Select Brush Folders"
 msgstr "Қылқалам бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3522
+#: app/dialogs/preferences-dialog.c:3608
 msgid "Dynamics Folders"
 msgstr "Динамика бумалары"
 
-#: app/dialogs/preferences-dialog.c:3525
+#: app/dialogs/preferences-dialog.c:3611
 msgid "Reset Dynamics _Folders"
 msgstr "Динамика б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3526
+#: app/dialogs/preferences-dialog.c:3612
 msgid "Select Dynamics Folders"
 msgstr "Динамика бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3528
+#: app/dialogs/preferences-dialog.c:3614
 msgid "Pattern Folders"
 msgstr "Өрнек бумалары"
 
-#: app/dialogs/preferences-dialog.c:3531
+#: app/dialogs/preferences-dialog.c:3617
 msgid "Reset Pattern _Folders"
 msgstr "Өрнек б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3532
+#: app/dialogs/preferences-dialog.c:3618
 msgid "Select Pattern Folders"
 msgstr "Өрнек бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3534
+#: app/dialogs/preferences-dialog.c:3620
 msgid "Palette Folders"
 msgstr "Палитра бумалары"
 
-#: app/dialogs/preferences-dialog.c:3537
+#: app/dialogs/preferences-dialog.c:3623
 msgid "Reset Palette _Folders"
 msgstr "Палитра б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3538
+#: app/dialogs/preferences-dialog.c:3624
 msgid "Select Palette Folders"
 msgstr "Палитра бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3540
+#: app/dialogs/preferences-dialog.c:3626
 msgid "Gradient Folders"
 msgstr "Градиент бумалары"
 
-#: app/dialogs/preferences-dialog.c:3543
+#: app/dialogs/preferences-dialog.c:3629
 msgid "Reset Gradient _Folders"
 msgstr "Градиент б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3544
+#: app/dialogs/preferences-dialog.c:3630
 msgid "Select Gradient Folders"
 msgstr "Градиент бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3546
+#: app/dialogs/preferences-dialog.c:3632
 msgid "Font Folders"
 msgstr "Қаріп бумалары"
 
-#: app/dialogs/preferences-dialog.c:3549
+#: app/dialogs/preferences-dialog.c:3635
 msgid "Reset Font _Folders"
 msgstr "Қаріп б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3550
+#: app/dialogs/preferences-dialog.c:3636
 msgid "Select Font Folders"
 msgstr "Қаріп бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3552
+#: app/dialogs/preferences-dialog.c:3638
 msgid "Tool Preset Folders"
 msgstr "Сайманның алдын ала баптаулары бумалары"
 
-#: app/dialogs/preferences-dialog.c:3555
+#: app/dialogs/preferences-dialog.c:3641
 msgid "Reset Tool Preset _Folders"
 msgstr "Сайманның алдын ала баптаулары б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3556
+#: app/dialogs/preferences-dialog.c:3642
 msgid "Select Tool Preset Folders"
 msgstr "Сайманның алдын ала баптаулары бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3558
+#: app/dialogs/preferences-dialog.c:3644
 msgid "MyPaint Brush Folders"
 msgstr "MyPaint қылқаламдары бумалары"
 
-#: app/dialogs/preferences-dialog.c:3561
+#: app/dialogs/preferences-dialog.c:3647
 msgid "Reset MyPaint Brush _Folders"
 msgstr "MyPaint қылқаламдары б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3562
+#: app/dialogs/preferences-dialog.c:3648
 msgid "Select MyPaint Brush Folders"
 msgstr "MyPaint қылқаламдары бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3564
+#: app/dialogs/preferences-dialog.c:3650
 msgid "Plug-in Folders"
 msgstr "Плагин бумалары"
 
-#: app/dialogs/preferences-dialog.c:3567
+#: app/dialogs/preferences-dialog.c:3653
 msgid "Reset plug-in _Folders"
 msgstr "Плагин б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3568
+#: app/dialogs/preferences-dialog.c:3654
 msgid "Select plug-in Folders"
 msgstr "Плагин бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3570
+#: app/dialogs/preferences-dialog.c:3656
 msgid "Scripts"
 msgstr "Скрипттер"
 
-#: app/dialogs/preferences-dialog.c:3570
+#: app/dialogs/preferences-dialog.c:3656
 msgid "Script-Fu Folders"
 msgstr "Script-Fu бумалары"
 
-#: app/dialogs/preferences-dialog.c:3573
+#: app/dialogs/preferences-dialog.c:3659
 msgid "Reset Script-Fu _Folders"
 msgstr "Script-Fu б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3574
+#: app/dialogs/preferences-dialog.c:3660
 msgid "Select Script-Fu Folders"
 msgstr "Script-Fu бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3576
+#: app/dialogs/preferences-dialog.c:3662
 msgid "Module Folders"
 msgstr "Модуль бумалары"
 
-#: app/dialogs/preferences-dialog.c:3579
+#: app/dialogs/preferences-dialog.c:3665
 msgid "Reset Module _Folders"
 msgstr "Модуль б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3580
+#: app/dialogs/preferences-dialog.c:3666
 msgid "Select Module Folders"
 msgstr "Модуль бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3582
+#: app/dialogs/preferences-dialog.c:3668
 msgid "Interpreters"
 msgstr "Интерпретаторлар"
 
-#: app/dialogs/preferences-dialog.c:3582
+#: app/dialogs/preferences-dialog.c:3668
 msgid "Interpreter Folders"
 msgstr "Интерпретатор бумалары"
 
-#: app/dialogs/preferences-dialog.c:3585
+#: app/dialogs/preferences-dialog.c:3671
 msgid "Reset Interpreter _Folders"
 msgstr "Интерпретатор б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3586
+#: app/dialogs/preferences-dialog.c:3672
 msgid "Select Interpreter Folders"
 msgstr "Интерпретатор бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3588
+#: app/dialogs/preferences-dialog.c:3674
 msgid "Environment"
 msgstr "Орта"
 
-#: app/dialogs/preferences-dialog.c:3588
+#: app/dialogs/preferences-dialog.c:3674
 msgid "Environment Folders"
 msgstr "Орта бумалары"
 
-#: app/dialogs/preferences-dialog.c:3591
+#: app/dialogs/preferences-dialog.c:3677
 msgid "Reset Environment _Folders"
 msgstr "Орта б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3592
+#: app/dialogs/preferences-dialog.c:3678
 msgid "Select Environment Folders"
 msgstr "Орта бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3594
+#: app/dialogs/preferences-dialog.c:3680
 msgid "Themes"
 msgstr "Темалар"
 
-#: app/dialogs/preferences-dialog.c:3594
+#: app/dialogs/preferences-dialog.c:3680
 msgid "Theme Folders"
 msgstr "Тема бумалары"
 
-#: app/dialogs/preferences-dialog.c:3597
+#: app/dialogs/preferences-dialog.c:3683
 msgid "Reset Theme _Folders"
 msgstr "Тема б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3598
+#: app/dialogs/preferences-dialog.c:3684
 msgid "Select Theme Folders"
 msgstr "Тема бумаларын таңдау"
 
-#: app/dialogs/preferences-dialog.c:3600
+#: app/dialogs/preferences-dialog.c:3686
 msgid "Icon Themes"
 msgstr "Таңбашалар темалары"
 
-#: app/dialogs/preferences-dialog.c:3600
+#: app/dialogs/preferences-dialog.c:3686
 msgid "Icon Theme Folders"
 msgstr "Таңбашалар темаларының бумалары"
 
-#: app/dialogs/preferences-dialog.c:3603
+#: app/dialogs/preferences-dialog.c:3689
 msgid "Reset Icon Theme _Folders"
 msgstr "Таңбашалар темаларының б_умаларын бастапқыға қайтару"
 
-#: app/dialogs/preferences-dialog.c:3604
+#: app/dialogs/preferences-dialog.c:3690
 msgid "Select Icon Theme Folders"
 msgstr "Таңбашалар темаларының бумаларын таңдау"
 
@@ -18613,7 +18618,7 @@ msgid "_Next Tip"
 msgstr "К_елесі кеңес"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1152
+#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1154
 msgid "Learn more"
 msgstr "Көбірек білу"
 
@@ -18777,56 +18782,56 @@ msgstr "Таңбашалар темасы"
 msgid "Icon Scaling"
 msgstr "Таңбашаны масштабтау"
 
-#: app/dialogs/welcome-dialog.c:727
+#: app/dialogs/welcome-dialog.c:729
 msgid "GUI Language (requires restart)"
 msgstr "Интерфейс тілі (қайта іске қосуды талап етеді)"
 
-#: app/dialogs/welcome-dialog.c:732
+#: app/dialogs/welcome-dialog.c:734
 msgid "Additional Customizations"
 msgstr "Қосымша баптаулар"
 
-#: app/dialogs/welcome-dialog.c:736
+#: app/dialogs/welcome-dialog.c:738
 msgid "Merge menu and title bar (requires restart)"
 msgstr "Мәзір мен тақырып жолағын біріктіру (қайта іске қосуды талап етеді)"
 
-#: app/dialogs/welcome-dialog.c:744
+#: app/dialogs/welcome-dialog.c:746
 msgid "Enable check for updates (requires internet)"
 msgstr "Жаңартуларды тексеруді іске қосу (интернетті талап етеді)"
 
-#: app/dialogs/welcome-dialog.c:778
+#: app/dialogs/welcome-dialog.c:780
 msgid "C_reate"
 msgstr "Ж_асау"
 
-#: app/dialogs/welcome-dialog.c:787
+#: app/dialogs/welcome-dialog.c:789
 msgid "Open an Existing Image"
 msgstr "Бар суретті ашу"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:799
+#: app/dialogs/welcome-dialog.c:801
 msgid "Recent Images"
 msgstr "Соңғы суреттер"
 
-#: app/dialogs/welcome-dialog.c:863
+#: app/dialogs/welcome-dialog.c:865
 msgid "O_pen Selected Images"
 msgstr "Таңдалған суреттерді а_шу"
 
-#: app/dialogs/welcome-dialog.c:872
+#: app/dialogs/welcome-dialog.c:874
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr ""
 "Іске қосу кезінде көрсету (Қарсы алу сұхбат терезесін «Көмек» мәзірінен "
 "қайта көрсетуге болады)"
 
-#: app/dialogs/welcome-dialog.c:900
+#: app/dialogs/welcome-dialog.c:902
 #, c-format
 msgid "Ways to contribute"
 msgstr "Үлес қосу жолдары"
 
-#: app/dialogs/welcome-dialog.c:909 app/dialogs/welcome-dialog.c:920
+#: app/dialogs/welcome-dialog.c:911 app/dialogs/welcome-dialog.c:922
 msgid "Report Bugs"
 msgstr "Қателер туралы есеп беру"
 
-#: app/dialogs/welcome-dialog.c:911
+#: app/dialogs/welcome-dialog.c:913
 #, c-format
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
@@ -18835,11 +18840,11 @@ msgstr ""
 "Кез келген қолданба сияқты, GIMP-те қателер болуы мүмкін, сондықтан "
 "кездескен қателер туралы есеп беру әзірлеу үшін өте маңызды."
 
-#: app/dialogs/welcome-dialog.c:924 app/dialogs/welcome-dialog.c:934
+#: app/dialogs/welcome-dialog.c:926 app/dialogs/welcome-dialog.c:936
 msgid "Write Code"
 msgstr "Код жазу"
 
-#: app/dialogs/welcome-dialog.c:926
+#: app/dialogs/welcome-dialog.c:928
 #, c-format
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
@@ -18848,40 +18853,40 @@ msgstr ""
 "Біздің әзірлеушілер веб-сайты — бұл кодқа үлес қосушы болуды үйренуді "
 "бастайтын жер."
 
-#: app/dialogs/welcome-dialog.c:938 app/dialogs/welcome-dialog.c:948
+#: app/dialogs/welcome-dialog.c:940 app/dialogs/welcome-dialog.c:950
 msgid "Translate"
 msgstr "Аудару"
 
-#: app/dialogs/welcome-dialog.c:940
+#: app/dialogs/welcome-dialog.c:942
 #, c-format
 msgid "Contact the respective translation team for your language"
 msgstr "Өз тіліңіздің тиісті аударма тобымен хабарласыңыз"
 
-#: app/dialogs/welcome-dialog.c:952
+#: app/dialogs/welcome-dialog.c:954
 msgid "Donate"
 msgstr "Демеушілік ету"
 
-#: app/dialogs/welcome-dialog.c:954
+#: app/dialogs/welcome-dialog.c:956
 #, c-format
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr ""
 "Ақшалай демеушілік ету маңызды: ол GIMP-тің тұрақтылығын қамтамасыз етеді."
 
-#: app/dialogs/welcome-dialog.c:962
+#: app/dialogs/welcome-dialog.c:964
 msgid "Donate via Liberapay"
 msgstr "Liberapay арқылы демеушілік ету"
 
-#: app/dialogs/welcome-dialog.c:965
+#: app/dialogs/welcome-dialog.c:967
 msgid "Other donation options"
 msgstr "Басқа демеушілік ету опциялары"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:999
+#: app/dialogs/welcome-dialog.c:1001
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "GIMP %s шығарылым жазбалары"
 
-#: app/dialogs/welcome-dialog.c:1112
+#: app/dialogs/welcome-dialog.c:1114
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Турды алу үшін %s таңбасы бар шығарылым элементтерін шертіңіз."
@@ -19059,7 +19064,7 @@ msgid "Y"
 msgstr "Y"
 
 #. Units
-#: app/display/gimpcursorview.c:249 app/menus/menus.c:687
+#: app/display/gimpcursorview.c:249 app/menus/menus.c:693
 msgid "Units"
 msgstr "Юниттер"
 
@@ -19097,7 +19102,7 @@ msgstr "Жылдам масканы ауыстырып-қосу"
 msgid "Navigate the image display"
 msgstr "Сурет дисплейінде навигациялау"
 
-#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1608
+#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1619
 #: app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "Сурет файлдарын ашу үшін оларды осында тастаңыз"
@@ -20949,7 +20954,7 @@ msgstr "Құжаттар"
 msgid "GIMP Startup"
 msgstr "GIMP іске қосылуы"
 
-#: app/gui/splash.c:364
+#: app/gui/splash.c:371
 msgid "Loading"
 msgstr "Жүктелуде"
 
@@ -21547,7 +21552,7 @@ msgstr "Буферден жолдар табылмады"
 msgid "Failed to import paths from '%s': %s"
 msgstr "«%s» ішінен жолдарды импорттау сәтсіз аяқталды: %s"
 
-#: app/path/gimpvectorlayer.c:181 app/tools/gimppathtool.c:867
+#: app/path/gimpvectorlayer.c:181 app/tools/gimppathtool.c:886
 msgid "Vector Layer"
 msgstr "Векторлық қабат"
 
@@ -22302,11 +22307,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Бас тартылды"
 
-#: app/plug-in/gimppluginmanager.c:265
+#: app/plug-in/gimppluginmanager.c:248
 msgid "Plug-in Interpreters"
 msgstr "Плагин интерпретаторлары"
 
-#: app/plug-in/gimppluginmanager.c:275
+#: app/plug-in/gimppluginmanager.c:258
 msgid "Plug-in Environment"
 msgstr "Плагин ортасы"
 
@@ -25035,40 +25040,40 @@ msgstr ""
 msgid "Selection from Path"
 msgstr "Жолдан таңдау"
 
-#: app/tools/gimppathoptions.c:577 app/tools/gimppathtool.c:746
-#: app/tools/gimppathtool.c:1073
+#: app/tools/gimppathoptions.c:577 app/tools/gimppathtool.c:765
+#: app/tools/gimppathtool.c:1092
 msgid "Create New Vector Layer"
 msgstr "Жаңа векторлық қабатты жасау"
 
-#: app/tools/gimppathtool.c:189
+#: app/tools/gimppathtool.c:192
 msgid "Paths Tool: Create and edit paths"
 msgstr "Жолдар сайманы: Жолдарды жасау және түзету"
 
-#: app/tools/gimppathtool.c:190
+#: app/tools/gimppathtool.c:193
 msgid "Pat_hs"
 msgstr "Жол_дар"
 
-#: app/tools/gimppathtool.c:749
+#: app/tools/gimppathtool.c:768
 msgid "Create Vector Layer from Path"
 msgstr "Жолдан векторлық қабатты жасау"
 
-#: app/tools/gimppathtool.c:865
+#: app/tools/gimppathtool.c:884
 msgid "Add Vector Layer"
 msgstr "Векторлық қабатты қосу"
 
-#: app/tools/gimppathtool.c:1096 app/tools/gimppathtool.c:1099
+#: app/tools/gimppathtool.c:1115 app/tools/gimppathtool.c:1118
 msgid "Confirm Path Editing"
 msgstr "Жолды түзетуді растау"
 
-#: app/tools/gimppathtool.c:1103 app/tools/gimptexttool.c:1795
+#: app/tools/gimppathtool.c:1122 app/tools/gimptexttool.c:1795
 msgid "Create _New Layer"
 msgstr "_Жаңа қабат жасау"
 
-#: app/tools/gimppathtool.c:1105 app/tools/gimptexttool.c:1797
+#: app/tools/gimppathtool.c:1124 app/tools/gimptexttool.c:1797
 msgid "_Edit Anyway"
 msgstr "Сонда да _түзету"
 
-#: app/tools/gimppathtool.c:1127
+#: app/tools/gimppathtool.c:1146
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
@@ -26445,7 +26450,7 @@ msgstr "Қылқалам енінің пайызы"
 msgid "(None)"
 msgstr "(Ештеңе)"
 
-#: app/widgets/gimpclipboard.c:442
+#: app/widgets/gimpclipboard.c:442 app/widgets/gimpclipboard.c:456
 msgid "Clipboard"
 msgstr "Алмасу буфері"
 
@@ -28452,12 +28457,12 @@ msgstr "Метадеректер 2.10-нан ескі GIMP нұсқаларын�
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "shortcut: Ctrl+Alt+O"
 #.
-#: app/widgets/gimpsearchpopup.c:319
+#: app/widgets/gimpsearchpopup.c:327
 msgid "shortcut"
 msgstr "жарлық"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:323 app/widgets/gimpsearchpopup.c:345
+#: app/widgets/gimpsearchpopup.c:331 app/widgets/gimpsearchpopup.c:353
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -28466,7 +28471,7 @@ msgstr "%s: %s"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:341
+#: app/widgets/gimpsearchpopup.c:349
 msgid "menu"
 msgstr "мәзір"
 
