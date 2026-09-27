@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-22 20:58+0000\n"
-"PO-Revision-Date: 2026-09-23 15:03+0200\n"
+"POT-Creation-Date: 2026-09-27 01:55+0000\n"
+"PO-Revision-Date: 2026-09-27 10:39+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -459,7 +459,7 @@ msgid "File"
 msgstr "Bestand"
 
 # de F was nog ongebruikt
-#: app/actions/actions.c:171 app/widgets/gimpdrawabletreeview-filters.c:192
+#: app/actions/actions.c:171 app/widgets/gimpdrawabletreeview-filters.c:194
 msgid "Filters"
 msgstr "Filters"
 
@@ -488,7 +488,7 @@ msgstr "Gereedschapsvoorinstellingen"
 #: app/actions/actions.c:186 app/dialogs/dialogs.c:442
 #: app/widgets/gimptoolpreseteditor.c:99
 msgid "Tool Preset Editor"
-msgstr "Bewerker Gereedschapsvoorinstellingen"
+msgstr "Bewerker gereedschapsvoorinstellingen"
 
 #. Help
 #. fix native search bar not appearing on non-Enligsh locales
@@ -567,7 +567,7 @@ msgstr "Tekst"
 
 #: app/actions/actions.c:231
 msgid "Text Editor"
-msgstr "Tekstbewerker"
+msgstr "Tekstverwerker"
 
 #: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:614
 msgid "Tool Options"
@@ -681,7 +681,7 @@ msgstr "Penselen ve_rnieuwen"
 #: app/actions/brushes-actions.c:80
 msgctxt "brushes-action"
 msgid "Refresh brushes"
-msgstr "Penselen verversen"
+msgstr "Penselen vernieuwen"
 
 #: app/actions/brushes-actions.c:88
 msgctxt "brushes-action"
@@ -891,7 +891,7 @@ msgstr "P_ositie kanaal vergrendelen"
 #: app/actions/channels-actions.c:126
 msgctxt "channels-action"
 msgid "None"
-msgstr "Niets selecteren"
+msgstr "Geen"
 
 #: app/actions/channels-actions.c:127
 msgctxt "channels-action"
@@ -972,7 +972,7 @@ msgstr "Kleurlabel kanaal: instellen op paars"
 #: app/actions/channels-actions.c:174
 msgctxt "channels-action"
 msgid "Gray"
-msgstr "Grijswaarden"
+msgstr "Grijs"
 
 #: app/actions/channels-actions.c:175
 msgctxt "channels-action"
@@ -3586,7 +3586,7 @@ msgstr "Witbalans werkt alleen op RGB-kleurlagen."
 #: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:73
 #: app/operations/gimpoperationlevels.c:63 app/tools/gimplevelstool.c:141
 msgid "Levels"
-msgstr "Niveaus"
+msgstr "Kleurniveaus"
 
 #: app/actions/drawable-commands.c:244
 msgid "Lock/Unlock content"
@@ -3962,7 +3962,7 @@ msgstr "Op_nieuw uitvoeren"
 
 #: app/actions/edit-commands.c:167
 msgid "Clear Undo History"
-msgstr "Geschiedenis wissen"
+msgstr "Geschiedenis Ongedaan maken wissen"
 
 #: app/actions/edit-commands.c:194
 msgid "Really clear image's undo history?"
@@ -5122,7 +5122,7 @@ msgstr "Geen laatst gebruikte filters"
 #: app/actions/filters-commands.c:282 app/display/gimpdisplayshell-dnd.c:393
 #: app/tools/gimpfiltertool.c:334 app/tools/gimppainttool.c:355
 #: app/tools/gimptransformtool.c:739
-#: app/widgets/gimpdrawabletreeview-filters.c:767
+#: app/widgets/gimpdrawabletreeview-filters.c:824
 msgid "A selected layer is not visible."
 msgstr "Een geselecteerde laag is niet zichtbaar."
 
@@ -5209,7 +5209,7 @@ msgstr "Verwijderen"
 #: app/actions/gradient-editor-actions.c:102
 msgctxt "gradient-editor-action"
 msgid "Recenter"
-msgstr "Middelpunt herberekenen"
+msgstr "Opnieuw centreren"
 
 #: app/actions/gradient-editor-actions.c:107
 msgctxt "gradient-editor-action"
@@ -5938,7 +5938,7 @@ msgstr "Afbeelding naar 32-bit integer converteren"
 #: app/actions/image-actions.c:221
 msgctxt "image-convert-action"
 msgid "16-bit floating point"
-msgstr "16-bit zwevende komma"
+msgstr "16-bit decimaal"
 
 #: app/actions/image-actions.c:223
 msgctxt "image-convert-action"
@@ -5948,7 +5948,7 @@ msgstr "Afbeelding naar 16-bit decimale precisie converteren"
 #: app/actions/image-actions.c:227
 msgctxt "image-convert-action"
 msgid "32-bit floating point"
-msgstr "32-bit zwevende komma"
+msgstr "32-bit decimale precisie"
 
 #: app/actions/image-actions.c:229
 msgctxt "image-convert-action"
@@ -6122,7 +6122,7 @@ msgid "Set Image Canvas Size"
 msgstr "Canvasgrootte instellen"
 
 #: app/actions/image-commands.c:696 app/actions/image-commands.c:721
-#: app/actions/image-commands.c:1405
+#: app/actions/image-commands.c:1408
 msgid "Resizing"
 msgstr "Grootte wijzigen"
 
@@ -6167,32 +6167,32 @@ msgstr "Converteren naar grijswaarden (%s)"
 msgid "Converting to indexed colors"
 msgstr "Naar geïndexeerde kleuren omzetten"
 
-#: app/actions/image-commands.c:1271
+#: app/actions/image-commands.c:1274
 #, c-format
 msgid "Converting image to %s"
 msgstr "Afbeelding converteren naar %s"
 
-#: app/actions/image-commands.c:1334
+#: app/actions/image-commands.c:1337
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Converteren naar ‘%s’"
 
 # image niet meevertaald
-#: app/actions/image-commands.c:1418
+#: app/actions/image-commands.c:1421
 msgid "Change Canvas Size"
 msgstr "Canvasgrootte wijzigen"
 
-#: app/actions/image-commands.c:1467
+#: app/actions/image-commands.c:1470
 msgid "Change Print Size"
 msgstr "Afdrukgrootte wijzigen"
 
-#: app/actions/image-commands.c:1511
+#: app/actions/image-commands.c:1514
 msgid "Scale Image"
 msgstr "Afbeelding schalen"
 
 #  Scaling
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2696
+#: app/actions/image-commands.c:1523 app/actions/layers-commands.c:2696
 #: app/dialogs/preferences-dialog.c:1805 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -6410,7 +6410,7 @@ msgstr "_Zwevende laag of masker verankeren"
 #: app/actions/layers-actions.c:142 app/widgets/gimplayertreeview.c:1318
 msgctxt "layers-action"
 msgid "Anchor the floating layer or mask"
-msgstr "De zwevende laag of masker verankeren"
+msgstr "De zwevende laag / het zwevende masker verankeren"
 
 # de N wordt gebruikt voor Nieuwe laag
 #: app/actions/layers-actions.c:147 app/actions/layers-actions.c:156
@@ -6652,7 +6652,7 @@ msgstr "Verhinderen dat transparantie-informatie van deze laag aangepast wordt"
 #: app/actions/layers-actions.c:382
 msgctxt "layers-action"
 msgid "Auto"
-msgstr "Auto"
+msgstr "Automatisch"
 
 #: app/actions/layers-actions.c:329
 msgctxt "layers-action"
@@ -6759,7 +6759,7 @@ msgstr "Composietmodus laag: doorsnede"
 #: app/actions/layers-actions.c:415
 msgctxt "layers-action"
 msgid "None"
-msgstr "Niets selecteren"
+msgstr "Geen"
 
 #: app/actions/layers-actions.c:416
 msgctxt "layers-action"
@@ -6840,7 +6840,7 @@ msgstr "Kleurnaam laag: naar paars"
 #: app/actions/layers-actions.c:463
 msgctxt "layers-action"
 msgid "Gray"
-msgstr "Grijswaarden"
+msgstr "Grijs"
 
 # grijswaarden/grijstinten
 #: app/actions/layers-actions.c:464
@@ -7284,7 +7284,7 @@ msgstr "Alfa van selectie aftrekken"
 #: app/actions/layers-commands.c:1979 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
-msgstr "Doorsnede van alfa en selectie"
+msgstr "Doorsnede van alfa met selectie"
 
 #: app/actions/layers-commands.c:1992
 msgid "Empty Selection"
@@ -7739,7 +7739,7 @@ msgstr "Positie kanaal vast_zetten"
 #: app/actions/paths-actions.c:189
 msgctxt "paths-action"
 msgid "None"
-msgstr "Niets selecteren"
+msgstr "Geen"
 
 #: app/actions/paths-actions.c:190
 msgctxt "paths-action"
@@ -7836,7 +7836,7 @@ msgstr "Paden naar sele_ctie"
 #: app/actions/paths-actions.c:247
 msgctxt "paths-action"
 msgid "Path to selection"
-msgstr "Selectie uit paden"
+msgstr "Pad naar selectie"
 
 #: app/actions/paths-actions.c:252
 msgctxt "paths-action"
@@ -7951,7 +7951,7 @@ msgstr "Padattributen"
 
 #: app/actions/paths-commands.c:181
 msgid "Edit Path Attributes"
-msgstr "Padeigenschappen bewerken"
+msgstr "Padattributen bewerken"
 
 #: app/actions/paths-commands.c:220
 msgid "New Path"
@@ -8419,7 +8419,7 @@ msgstr "_Nieuw sjabloon..."
 #: app/actions/templates-actions.c:49
 msgctxt "templates-action"
 msgid "Create a new template"
-msgstr "Nieuwe sjabloon aanmaken"
+msgstr "Nieuw sjabloon aanmaken"
 
 #: app/actions/templates-actions.c:54
 msgctxt "templates-action"
@@ -8528,7 +8528,7 @@ msgstr "Boven naar beneden, rechts naar links"
 #: app/actions/text-editor-actions.c:68
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr "Boven naar beneden, rechts naar links (gemengde oriëntatie)"
+msgstr "Verticaal, rechts naar links (gemengde oriëntatie)"
 
 #: app/actions/text-editor-actions.c:73
 msgctxt "text-editor-action"
@@ -8538,7 +8538,7 @@ msgstr "Boven naar beneden, rechts naar links, staand"
 #: app/actions/text-editor-actions.c:74
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr "Boven naar beneden, rechts naar links, staand"
+msgstr "Verticaal, rechts naar links (staand)"
 
 #: app/actions/text-editor-actions.c:79
 msgctxt "text-editor-action"
@@ -8548,7 +8548,7 @@ msgstr "Boven naar beneden, links naar rechts"
 #: app/actions/text-editor-actions.c:80
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr "Boven naar beneden, links naar rechts (gemengde oriëntatie)"
+msgstr "Verticaal, links naar rechts (gemengde oriëntatie)"
 
 #: app/actions/text-editor-actions.c:85
 msgctxt "text-editor-action"
@@ -8558,7 +8558,7 @@ msgstr "Boven naar beneden, links naar rechts, staand"
 #: app/actions/text-editor-actions.c:86
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr "Boven naar beneden, links naar rechts, staand"
+msgstr "Verticaal, links naar rechts (staand)"
 
 #: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:165
 msgid "Open Text File (UTF-8)"
@@ -8674,22 +8674,22 @@ msgstr "Van rechts naar links"
 #: app/actions/text-tool-actions.c:134
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr "Boven naar beneden, rechts naar links (gemengde oriëntatie)"
+msgstr "Verticaal, rechts naar links (gemengde oriëntatie)"
 
 #: app/actions/text-tool-actions.c:139
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr "Boven naar beneden, rechts naar links, staand"
+msgstr "Verticaal, rechts naar links (staand)"
 
 #: app/actions/text-tool-actions.c:144
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr "Boven naar beneden, links naar rechts (gemengde oriëntatie)"
+msgstr "Verticaal, links naar rechts (gemengde oriëntatie)"
 
 #: app/actions/text-tool-actions.c:149
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr "Boven naar beneden, links naar rechts, staand"
+msgstr "Verticaal, links naar rechts (staand)"
 
 #: app/actions/text-tool-commands.c:218
 #, c-format
@@ -8834,7 +8834,7 @@ msgstr "Locatie van instellingenbestand tonen in bestandsbeheer"
 #: app/actions/tool-presets-actions.c:70
 msgctxt "tool-presets-action"
 msgid "_Save Tool Options to Preset"
-msgstr "Gereed_schapsopties bewaren naar voorinstelling"
+msgstr "Gereedschapsopties op_slaan naar voorinstelling"
 
 #: app/actions/tool-presets-actions.c:71
 msgctxt "tool-presets-action"
@@ -11162,7 +11162,7 @@ msgstr "Onthoud het huidige gereedschap, patroon, penseel en de kleur voor een v
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
-msgstr "Indien in geschakeld zullen hetzelfde gereedschap en opties worden gebruikt voor alle invoerapparaten. Er zal geen wisseling van gereedschap gebeuren als het invoerapparaat wijzigt."
+msgstr "Indien ingeschakeld, hetzelfde gereedschap en opties ervan zullen worden gebruikt voor alle invoerapparaten. Er treedt geen wisseling in gereedschap op als het invoerapparaat wijzigt."
 
 #: app/config/gimprc-blurbs.h:427
 msgid ""
@@ -11691,7 +11691,7 @@ msgstr "Afbeelding"
 #: app/core/core-enums.c:26
 msgctxt "align-reference-type"
 msgid "Selection"
-msgstr "Selecteren"
+msgstr "Selectie"
 
 #: app/core/core-enums.c:27
 msgctxt "align-reference-type"
@@ -11772,7 +11772,7 @@ msgstr "Hard"
 #: app/core/core-enums.c:133
 msgctxt "channel-border-style"
 msgid "Smooth"
-msgstr "Vloeiend"
+msgstr "Glad"
 
 # zachte/vage/onscherpe randen
 #: app/core/core-enums.c:134
@@ -11783,7 +11783,7 @@ msgstr "Zachte randen"
 #: app/core/core-enums.c:170
 msgctxt "color-pick-mode"
 msgid "Pixel"
-msgstr "Pixel (Beeldpunt)"
+msgstr "Beeldpunt"
 
 #: app/core/core-enums.c:171
 msgctxt "color-pick-mode"
@@ -11828,7 +11828,7 @@ msgstr "CIE xyY"
 #: app/core/core-enums.c:179
 msgctxt "color-pick-mode"
 msgid "CIE Yu'v'"
-msgstr "CIE Yu‘v’"
+msgstr "CIE Yu'v'"
 
 #: app/core/core-enums.c:209
 msgctxt "color-profile-policy"
@@ -11853,7 +11853,7 @@ msgstr "Converteren naar voorkeursprofiel RGB of grijswaarden (met standaard het
 #: app/core/core-enums.c:306
 msgctxt "convert-dither-type"
 msgid "None"
-msgstr "Niets selecteren"
+msgstr "Geen"
 
 # kleurbenadering
 #: app/core/core-enums.c:307
@@ -11997,12 +11997,12 @@ msgstr "Hardheid"
 #: app/core/core-enums.c:569
 msgctxt "dynamics-output-type"
 msgid "Force"
-msgstr "Forceer"
+msgstr "Kracht"
 
 #: app/core/core-enums.c:570
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
-msgstr "Verhouding"
+msgstr "Helling"
 
 #: app/core/core-enums.c:571
 msgctxt "dynamics-output-type"
@@ -12012,22 +12012,22 @@ msgstr "Tussenruimte"
 #: app/core/core-enums.c:572
 msgctxt "dynamics-output-type"
 msgid "Rate"
-msgstr "Lengte"
+msgstr "Snelheid"
 
 #: app/core/core-enums.c:573
 msgctxt "dynamics-output-type"
 msgid "Flow"
-msgstr "Vloeien"
+msgstr "Snelheid"
 
 #: app/core/core-enums.c:574
 msgctxt "dynamics-output-type"
 msgid "Jitter"
-msgstr "Spikkeleffect"
+msgstr "Spikkelen"
 
 #: app/core/core-enums.c:602
 msgctxt "custom-style"
 msgid "Solid color"
-msgstr "Effen kleur"
+msgstr "Dekkende kleur"
 
 #: app/core/core-enums.c:603
 msgctxt "custom-style"
@@ -12152,7 +12152,7 @@ msgstr "RGB"
 #: app/core/core-enums.c:859
 msgctxt "item-set"
 msgid "None"
-msgstr "Niets selecteren"
+msgstr "Geen"
 
 #: app/core/core-enums.c:860
 msgctxt "item-set"
@@ -12260,545 +12260,555 @@ msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "Perceptueel"
 
-#: app/core/core-enums.c:1300
+#: app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<ongeldig>>"
 
-#: app/core/core-enums.c:1301
+#: app/core/core-enums.c:1303
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Afbeelding schalen"
 
-#: app/core/core-enums.c:1302
+#: app/core/core-enums.c:1304
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Grootte afbeelding wijzigen"
 
-#: app/core/core-enums.c:1303
+#: app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Afbeelding spiegelen"
 
-#: app/core/core-enums.c:1304
+#: app/core/core-enums.c:1306
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Afbeelding draaien"
 
 # transformeren/transformatie (bezig)
-#: app/core/core-enums.c:1305
+#: app/core/core-enums.c:1307
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Afbeelding transformeren"
 
-#: app/core/core-enums.c:1306
+#: app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Afbeelding bijsnijden"
 
-#: app/core/core-enums.c:1307
+#: app/core/core-enums.c:1309
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Afbeelding omzetten"
 
-#: app/core/core-enums.c:1308
+#: app/core/core-enums.c:1310
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Item verwijderen"
 
-#: app/core/core-enums.c:1309 app/core/core-enums.c:1364
+#: app/core/core-enums.c:1311 app/core/core-enums.c:1367
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Item opnieuw sorteren"
 
-#: app/core/core-enums.c:1310
+#: app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Lagen samenvoegen"
 
-#: app/core/core-enums.c:1311
+#: app/core/core-enums.c:1313
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Paden samenvoegen"
 
-#: app/core/core-enums.c:1312
+#: app/core/core-enums.c:1314
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Snelmasker"
 
-#: app/core/core-enums.c:1313 app/core/core-enums.c:1354
+#: app/core/core-enums.c:1315 app/core/core-enums.c:1357
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Raster"
 
-#: app/core/core-enums.c:1314
+#: app/core/core-enums.c:1316
 msgctxt "undo-type"
 msgid "Colormap remapping"
 msgstr "Kleurenkaart herindelen"
 
-#: app/core/core-enums.c:1315 app/core/core-enums.c:1358
+#: app/core/core-enums.c:1317 app/core/core-enums.c:1361
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Hulplijn"
 
-#: app/core/core-enums.c:1316 app/core/core-enums.c:1359
+#: app/core/core-enums.c:1318 app/core/core-enums.c:1362
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Monsterpunt"
 
-#: app/core/core-enums.c:1317 app/core/core-enums.c:1360
+#: app/core/core-enums.c:1319 app/core/core-enums.c:1363
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Laag/kanaal"
 
-#: app/core/core-enums.c:1318 app/core/core-enums.c:1361
+#: app/core/core-enums.c:1320 app/core/core-enums.c:1364
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Aanpassing van laag/kanaal"
 
-#: app/core/core-enums.c:1319 app/core/core-enums.c:1363
+#: app/core/core-enums.c:1321 app/core/core-enums.c:1366
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Selectiemasker"
 
-#: app/core/core-enums.c:1320 app/core/core-enums.c:1367
+#: app/core/core-enums.c:1322 app/core/core-enums.c:1370
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Zichtbaarheid item"
 
-#: app/core/core-enums.c:1321
+#: app/core/core-enums.c:1323
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Inhoud vergrendelen/ontgrendelen"
 
-#: app/core/core-enums.c:1322 app/core/core-enums.c:1370
+#: app/core/core-enums.c:1324 app/core/core-enums.c:1373
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Positie vergrendelen/ontgrendelen"
 
-#: app/core/core-enums.c:1323 app/core/core-enums.c:1371
+#: app/core/core-enums.c:1325 app/core/core-enums.c:1374
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "Zichtbaarheid vergrendelen/ontgrendelen"
 
-#: app/core/core-enums.c:1324
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Eigenschappen item"
 
-#: app/core/core-enums.c:1325 app/core/core-enums.c:1366
+#: app/core/core-enums.c:1327 app/core/core-enums.c:1369
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Item verplaatsen"
 
-#: app/core/core-enums.c:1326
+#: app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Item schalen"
 
-#: app/core/core-enums.c:1327
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Grootte item wijzigen"
 
-#: app/core/core-enums.c:1328
+#: app/core/core-enums.c:1330
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Laag toevoegen"
 
-#: app/core/core-enums.c:1329
+#: app/core/core-enums.c:1331
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Alfakanaal toevoegen"
 
-#: app/core/core-enums.c:1330 app/core/core-enums.c:1388
+#: app/core/core-enums.c:1332 app/core/core-enums.c:1391
 msgctxt "undo-type"
 msgid "Add layer masks"
 msgstr "Laagmaskers toevoegen"
 
-#: app/core/core-enums.c:1331 app/core/core-enums.c:1390
+#: app/core/core-enums.c:1333 app/core/core-enums.c:1393
 msgctxt "undo-type"
 msgid "Apply layer masks"
 msgstr "Laagmaskers toepassen"
 
-#: app/core/core-enums.c:1332
+#: app/core/core-enums.c:1334
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Alfakanaal verwijderen"
 
-#: app/core/core-enums.c:1333
+#: app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Alfakanalen vergrendelen/ontgrendelen"
 
-#: app/core/core-enums.c:1334
+#: app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Laagdekking instellen"
 
-#: app/core/core-enums.c:1335
+#: app/core/core-enums.c:1337
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Laagmodus instellen"
 
-#: app/core/core-enums.c:1336
+#: app/core/core-enums.c:1338
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "Kanalen toevoegen"
 
-#: app/core/core-enums.c:1337 app/core/core-enums.c:1398
+#: app/core/core-enums.c:1339 app/core/core-enums.c:1401
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Zwevende selectie naar laag"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1340
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Zwevende selectie"
 
-#: app/core/core-enums.c:1339
+#: app/core/core-enums.c:1341
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zwevende selectie verankeren"
 
-#: app/core/core-enums.c:1340 app/core/gimp-edit.c:845
+#: app/core/core-enums.c:1342 app/core/gimp-edit.c:845
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Plakken"
 
-#: app/core/core-enums.c:1341 app/core/gimp-edit.c:1207
+#: app/core/core-enums.c:1343 app/core/gimp-edit.c:1207
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Knippen"
 
-#: app/core/core-enums.c:1342
+#: app/core/core-enums.c:1344
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Tekst"
 
-#: app/core/core-enums.c:1343
+#: app/core/core-enums.c:1345
 msgctxt "undo-type"
 msgid "Vector"
 msgstr "Vector"
 
-#: app/core/core-enums.c:1344 app/core/gimpdrawable-transform.c:718
+#: app/core/core-enums.c:1346 app/core/gimpdrawable-transform.c:718
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformeren"
 
-#: app/core/core-enums.c:1345 app/core/core-enums.c:1400
+#: app/core/core-enums.c:1347 app/core/core-enums.c:1403
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Tekenen"
 
 # aanhangen/vastmaken/bijvoegen
-#: app/core/core-enums.c:1346 app/core/core-enums.c:1403
+#: app/core/core-enums.c:1348 app/core/core-enums.c:1406
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Parasiet aankoppelen"
 
-#: app/core/core-enums.c:1347 app/core/core-enums.c:1404
+#: app/core/core-enums.c:1349 app/core/core-enums.c:1407
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Parasiet verwijderen"
 
-#: app/core/core-enums.c:1348
+#: app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Paden importeren"
 
-#: app/core/core-enums.c:1349
+#: app/core/core-enums.c:1351
+msgctxt "undo-type"
+msgid "Effects visibility"
+msgstr "Zichtbaarheid effecten"
+
+#: app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Plug-in"
 
-#: app/core/core-enums.c:1350
+#: app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Afbeeldingstype"
 
-#: app/core/core-enums.c:1351
+#: app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Bitdiepte afbeelding"
 
-#: app/core/core-enums.c:1352
+#: app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Afbeeldingsgrootte"
 
-#: app/core/core-enums.c:1353
+#: app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Resolutiewijziging"
 
-#: app/core/core-enums.c:1355
+#: app/core/core-enums.c:1358
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Metadata wijzigen"
 
-#: app/core/core-enums.c:1356
+#: app/core/core-enums.c:1359
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Geïndexeerd palet wijzigen"
 
-#: app/core/core-enums.c:1357
+#: app/core/core-enums.c:1360
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "Tonen/verbergen kleurprofiel"
 
-#: app/core/core-enums.c:1362
+#: app/core/core-enums.c:1365
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "Laag/kanaal-formaat"
 
-#: app/core/core-enums.c:1365
+#: app/core/core-enums.c:1368
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Object hernoemen"
 
-#: app/core/core-enums.c:1368
+#: app/core/core-enums.c:1371
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Kleurlabel object"
 
-#: app/core/core-enums.c:1369
+#: app/core/core-enums.c:1372
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Inhoud vergrendelen/ontgrendelen"
 
-#: app/core/core-enums.c:1372
+#: app/core/core-enums.c:1375
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Nieuwe laag"
 
-#: app/core/core-enums.c:1373
+#: app/core/core-enums.c:1376
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Laag verwijderen"
 
-#: app/core/core-enums.c:1374
+#: app/core/core-enums.c:1377
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Laagmodus instellen"
 
-#: app/core/core-enums.c:1375
+#: app/core/core-enums.c:1378
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Laagdekking instellen"
 
-#: app/core/core-enums.c:1376
+#: app/core/core-enums.c:1379
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Alfakanaal vergrendelen/ontgrendelen"
 
-#: app/core/core-enums.c:1377
+#: app/core/core-enums.c:1380
 msgctxt "undo-type"
 msgid "Link layer"
 msgstr "Laag koppelen"
 
-#: app/core/core-enums.c:1378
+#: app/core/core-enums.c:1381
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Wijzigen laaggrootte pauzeren"
 
-#: app/core/core-enums.c:1379
+#: app/core/core-enums.c:1382
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Wijzigen grootte laaggroepen hervatten"
 
-#: app/core/core-enums.c:1380
+#: app/core/core-enums.c:1383
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Wijzigen grootte laaggroepen stoppen"
 
-#: app/core/core-enums.c:1381
+#: app/core/core-enums.c:1384
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Hervatten groep laagmasker"
 
-#: app/core/core-enums.c:1382
+#: app/core/core-enums.c:1385
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Begin vervorming laaggroep"
 
-#: app/core/core-enums.c:1383
+#: app/core/core-enums.c:1386
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Einde vervorming laaggroep"
 
-#: app/core/core-enums.c:1384
+#: app/core/core-enums.c:1387
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Groeplaag omzetten"
 
-#: app/core/core-enums.c:1385
+#: app/core/core-enums.c:1388
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Tekstlaag"
 
-#: app/core/core-enums.c:1386
+#: app/core/core-enums.c:1389
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Tekstlaag omzetten"
 
-#: app/core/core-enums.c:1387
+#: app/core/core-enums.c:1390
 msgctxt "undo-type"
 msgid "Vector layer"
 msgstr "Vectorlaag"
 
-#: app/core/core-enums.c:1389
+#: app/core/core-enums.c:1392
 msgctxt "undo-type"
 msgid "Delete layer masks"
 msgstr "Laagmaskers verwijderen"
 
-#: app/core/core-enums.c:1391
+#: app/core/core-enums.c:1394
 msgctxt "undo-type"
 msgid "Show layer masks"
 msgstr "Laagmaskers tonen"
 
-#: app/core/core-enums.c:1392
+#: app/core/core-enums.c:1395
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Nieuw kanaal"
 
-#: app/core/core-enums.c:1393
+#: app/core/core-enums.c:1396
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Kanaal verwijderen"
 
-#: app/core/core-enums.c:1394
+#: app/core/core-enums.c:1397
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Kanaalkleur"
 
-#: app/core/core-enums.c:1395
+#: app/core/core-enums.c:1398
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Nieuw pad"
 
-#: app/core/core-enums.c:1396
+#: app/core/core-enums.c:1399
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Pad verwijderen"
 
-#: app/core/core-enums.c:1397
+#: app/core/core-enums.c:1400
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Aanpassing aan pad"
 
-#: app/core/core-enums.c:1399
+#: app/core/core-enums.c:1402
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Raster transformeren"
 
-#: app/core/core-enums.c:1401
+#: app/core/core-enums.c:1404
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Inktpot"
 
-#: app/core/core-enums.c:1402
+#: app/core/core-enums.c:1405
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Voorgrond selecteren"
 
-#: app/core/core-enums.c:1405
+#: app/core/core-enums.c:1408
 msgctxt "undo-type"
 msgid "Add effect"
 msgstr "Effect toevoegen"
 
-#: app/core/core-enums.c:1406
+#: app/core/core-enums.c:1409
 msgctxt "undo-type"
 msgid "Remove effect"
 msgstr "Effect verwijderen"
 
-#: app/core/core-enums.c:1407
+#: app/core/core-enums.c:1410
 msgctxt "undo-type"
 msgid "Reorder effect"
 msgstr "Effect herordenen"
 
-#: app/core/core-enums.c:1408
+#: app/core/core-enums.c:1411
 msgctxt "undo-type"
 msgid "Effect modification"
 msgstr "Effect aanpassen"
 
-#: app/core/core-enums.c:1409
+#: app/core/core-enums.c:1412
+msgctxt "undo-type"
+msgid "Effect visibility"
+msgstr "Zichtbaarheid effecten"
+
+#: app/core/core-enums.c:1413
 msgctxt "undo-type"
 msgid "Text, link or vector layer"
 msgstr "Tekst-, koppel- of vectorlaag"
 
-#: app/core/core-enums.c:1410
+#: app/core/core-enums.c:1414
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Kan niet ongedaan gemaakt worden"
 
-#: app/core/core-enums.c:1445
+#: app/core/core-enums.c:1449
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Minuscuul"
 
-#: app/core/core-enums.c:1446
+#: app/core/core-enums.c:1450
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Zeer klein"
 
-#: app/core/core-enums.c:1447
+#: app/core/core-enums.c:1451
 msgctxt "view-size"
 msgid "Small"
 msgstr "Klein"
 
-#: app/core/core-enums.c:1448
+#: app/core/core-enums.c:1452
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Medium"
 
-#: app/core/core-enums.c:1449
+#: app/core/core-enums.c:1453
 msgctxt "view-size"
 msgid "Large"
 msgstr "Groot"
 
-#: app/core/core-enums.c:1450
+#: app/core/core-enums.c:1454
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Zeer groot"
 
-#: app/core/core-enums.c:1451
+#: app/core/core-enums.c:1455
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Reusachtig"
 
-#: app/core/core-enums.c:1452
+#: app/core/core-enums.c:1456
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Enorm"
 
-#: app/core/core-enums.c:1453
+#: app/core/core-enums.c:1457
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gigantisch"
 
-#: app/core/core-enums.c:1481
+#: app/core/core-enums.c:1485
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Als lijst tonen"
 
-#: app/core/core-enums.c:1482
+#: app/core/core-enums.c:1486
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Als raster tonen"
 
-#: app/core/core-enums.c:1511
+#: app/core/core-enums.c:1515
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "Selectie op basis van gewone zoektekst"
 
-#: app/core/core-enums.c:1512
+#: app/core/core-enums.c:1516
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "Selectie op basis van zoeken met reguliere expressies"
 
-#: app/core/core-enums.c:1513
+#: app/core/core-enums.c:1517
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "Selectie door globaal patroon zoeken"
@@ -12877,7 +12887,7 @@ msgstr "Verwijderen van ‘%s’ mislukt: %s"
 #: app/core/gimp-data-factories.c:403 app/core/gimpcontext.c:706
 #: app/dialogs/preferences-dialog.c:3589 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
-msgstr "Penseelgedrag"
+msgstr "Gedrag"
 
 # Documentgeschiedenis/overzicht ‘ongedaan maken’
 # wissen/leegmaken
@@ -13333,7 +13343,7 @@ msgstr "Fatale leesfout in penseelbestand: ‘%s’: inconsistente parameters."
 
 #: app/core/gimpbuffer.c:106
 msgid "Buffer"
-msgstr "Buffers"
+msgstr "Buffer"
 
 #: app/core/gimpchannel-select.c:70
 msgctxt "undo-type"
@@ -13564,7 +13574,7 @@ msgstr "Patroon"
 #: app/tools/gimpgradientoptions.c:286 app/tools/gimpgradienttool.c:174
 #: app/tools/gimpgradienttool.c:872 app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
-msgstr "Kleurverloop"
+msgstr "Kleurverlopen"
 
 #: app/core/gimpcontext.c:734 app/core/gimpcontext.c:735
 #: app/core/gimppalette.c:137 app/widgets/gimpcolorselectorpalette.c:59
@@ -13670,7 +13680,7 @@ msgstr "Kon gegevens niet laden:\n"
 #: app/core/gimpdrawable.c:703 app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
-msgstr "Schaal"
+msgstr "Schalen"
 
 #: app/core/gimpdrawable-bucket-fill.c:92
 msgctxt "undo-type"
@@ -13804,7 +13814,7 @@ msgstr "Aangepaste stijl"
 #: app/tools/gimpbucketfilloptions.c:183 app/tools/gimpselectionoptions.c:91
 #: app/tools/gimptextoptions.c:178
 msgid "Antialiasing"
-msgstr "Antialiassen"
+msgstr "Randen glad maken"
 
 # zachte/vage/onscherpe randen
 #: app/core/gimpfilloptions.c:161 app/tools/gimpbucketfilloptions.c:193
@@ -14002,7 +14012,7 @@ msgid "Symmetry"
 msgstr "Symmetrie"
 
 #: app/core/gimpimage.c:2206 app/pdb/drawable-filter-cmds.c:661
-#: app/widgets/gimpdrawabletreeview-filters.c:976
+#: app/widgets/gimpdrawabletreeview-filters.c:1033
 msgid "Remove filter"
 msgstr "Filter verwijderen"
 
@@ -14392,7 +14402,7 @@ msgstr "Zichtbare lagen samenvoegen"
 #: app/core/gimpimage-merge.c:237
 msgctxt "undo-type"
 msgid "Flatten Image"
-msgstr "Alle lagen samenvoegen"
+msgstr "Afbeelding pletten"
 
 #: app/core/gimpimage-merge.c:266
 msgid "Cannot flatten an image without any visible layer."
@@ -14415,7 +14425,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "Kan niet naar een laaggroep samenvoegen."
 
 #: app/core/gimpimage-merge.c:362
-#: app/widgets/gimpdrawabletreeview-filters.c:950
+#: app/widgets/gimpdrawabletreeview-filters.c:1007
 msgid "The layer to merge down to is locked."
 msgstr "De samen te voegen laag is vergrendeld."
 
@@ -14483,7 +14493,12 @@ msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "Afbeelding schalen"
 
-#: app/core/gimpimage-undo-push.c:1198
+#: app/core/gimpimage-undo-push.c:431
+#: app/widgets/gimpdrawabletreeview-filters.c:778
+msgid "Filter visibility"
+msgstr "Zichtbaarheid filters"
+
+#: app/core/gimpimage-undo-push.c:1247
 #, c-format
 msgid "Can't undo %s"
 msgstr "Kan %s niet ongedaan maken"
@@ -14546,7 +14561,7 @@ msgstr "Kon miniatuurbestand ‘%s’ niet openen: %s"
 
 #: app/core/gimpitem.c:2015 app/core/gimpitem.c:2082
 #: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
-#: app/widgets/gimpdrawabletreeview-filters.c:774
+#: app/widgets/gimpdrawabletreeview-filters.c:831
 msgid "A selected layer's pixels are locked."
 msgstr "De pixels van een geselecteerde laag zijn vergrendeld."
 
@@ -15274,7 +15289,7 @@ msgstr "Penseelgedrag nabootsen"
 #: app/display/gimpstatusbar.c:2158 app/widgets/gimpimagepropview.c:407
 #: app/widgets/gimpsymmetryeditor.c:167 app/widgets/gimpsymmetryeditor.c:177
 msgid "None"
-msgstr "Niets selecteren"
+msgstr "Geen"
 
 #: app/core/gimpsymmetry.c:151
 msgid "Active"
@@ -15381,7 +15396,7 @@ msgstr "Interval op de Y-as (pixels)"
 
 #: app/core/gimpsymmetry-tiling.c:128
 msgid "Shift"
-msgstr "Shift"
+msgstr "Verschuiving"
 
 #: app/core/gimpsymmetry-tiling.c:129
 msgid "X-shift between lines (pixels)"
@@ -15448,7 +15463,7 @@ msgstr "Afbeeldingstype"
 
 #: app/core/gimptemplate.c:196 app/core/gimptemplate.c:203
 msgid "Precision"
-msgstr "Nauwkeurigheid"
+msgstr "Bitdiepte"
 
 #: app/core/gimptemplate.c:212 app/widgets/gimphistogrameditor.c:128
 msgid "Linear/Perceptual"
@@ -15537,16 +15552,16 @@ msgstr "Bestand met voorinstellingen gereedschappen is gecorrumpeerd."
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:258
+#: app/dialogs/about-dialog.c:264
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revisie %d)"
 
-#: app/dialogs/about-dialog.c:271
+#: app/dialogs/about-dialog.c:277
 msgid "About GIMP"
 msgstr "Over GIMP"
 
-#: app/dialogs/about-dialog.c:280
+#: app/dialogs/about-dialog.c:286
 msgid "Visit the GIMP website"
 msgstr "Bezoek de website van GIMP"
 
@@ -15554,7 +15569,7 @@ msgstr "Bezoek de website van GIMP"
 #  we’d prefer just the names, please no email adresses.
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:286
+#: app/dialogs/about-dialog.c:292
 msgid "translator-credits"
 msgstr "vertalers:\n"
 "Wing Tung Leung\n"
@@ -15574,34 +15589,34 @@ msgstr "vertalers:\n"
 "Dick Groskamp\n"
 "Meer info over GNOME-NL https://matrix.to/#/#nl:gnome.org"
 
-#: app/dialogs/about-dialog.c:347 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:360 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "_Hulp"
 
 # types/typen/soorten
-#: app/dialogs/about-dialog.c:549
+#: app/dialogs/about-dialog.c:553
 msgid "Update available!"
 msgstr "Update beschikbaar!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:579
+#: app/dialogs/about-dialog.c:583
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Download GIMP %s versie %d (uitgegeven op %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:589
+#: app/dialogs/about-dialog.c:593
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>opmerkingen bij deze versie</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:594
+#: app/dialogs/about-dialog.c:598
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Download GIMP %s (van %s)\n"
 
-#: app/dialogs/about-dialog.c:619 app/dialogs/about-dialog.c:642
+#: app/dialogs/about-dialog.c:623 app/dialogs/about-dialog.c:646
 msgid "Check for updates"
 msgstr "Controleren op nieuwe versie"
 
@@ -15609,7 +15624,7 @@ msgstr "Controleren op nieuwe versie"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:663
+#: app/dialogs/about-dialog.c:667
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Laatste controle was op %s om %s"
@@ -15618,16 +15633,16 @@ msgstr "Laatste controle was op %s om %s"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:669
+#: app/dialogs/about-dialog.c:673
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "Up-to-date vanaf %s om %s"
 
-#: app/dialogs/about-dialog.c:897
+#: app/dialogs/about-dialog.c:901
 msgid "GIMP is brought to you by"
 msgstr "GIMP is gemaakt door"
 
-#: app/dialogs/about-dialog.c:972
+#: app/dialogs/about-dialog.c:976
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -15635,51 +15650,67 @@ msgid ""
 msgstr "Dit is een ontwikkelversie\n"
 "commit %s"
 
-#: app/dialogs/about-dialog.c:1057
+#: app/dialogs/about-dialog.c:1084
 msgid "built from source"
 msgstr "gebouwd uit bron"
 
-#: app/dialogs/about-dialog.c:1067 app/dialogs/module-dialog.c:366
+#. Translators: build id, revision number
+#: app/dialogs/about-dialog.c:1087
+#, c-format
+msgid "%s revision %d"
+msgstr "%s revisie %d"
+
+#: app/dialogs/about-dialog.c:1094 app/dialogs/module-dialog.c:366
 msgid "Version:"
 msgstr "Versie:"
 
-#: app/dialogs/about-dialog.c:1069
+#: app/dialogs/about-dialog.c:1096
 msgid "OS:"
 msgstr "Besturingssysteem:"
 
-#: app/dialogs/about-dialog.c:1085
-#, c-format
-msgid "Memory: %s (%s free)\n"
-msgstr "Geheugen: %s (%s vrij)\n"
+#: app/dialogs/about-dialog.c:1098 app/dialogs/about-dialog.c:1129
+msgid "unknown"
+msgstr "onbekend"
 
-#: app/dialogs/about-dialog.c:1091 app/dialogs/about-dialog.c:1098
+#. Translators: total RAM, then how much of it is free
+#: app/dialogs/about-dialog.c:1115 app/dialogs/about-dialog.c:1122
+#: app/dialogs/about-dialog.c:1129
 msgid "Memory:"
 msgstr "Geheugen:"
 
-#: app/dialogs/about-dialog.c:1119
+#: app/dialogs/about-dialog.c:1116
 #, c-format
-msgid "Swap: %s free on partition\n"
-msgstr "Wisselgeheugen: %s vrij op partitie\n"
+msgid "%s (%s free)"
+msgstr "%s (%s vrij)"
 
-#: app/dialogs/about-dialog.c:1131
+#: app/dialogs/about-dialog.c:1151
+msgid "Swap:"
+msgstr "Wisselgeheugen:"
+
+#: app/dialogs/about-dialog.c:1152
+#, c-format
+msgid "%s free on partition"
+msgstr "%s vrij op partitie"
+
+#: app/dialogs/about-dialog.c:1162
 msgid "Library Versions:"
 msgstr "Versies bibliotheek:"
 
-#: app/dialogs/about-dialog.c:1243 app/dialogs/about-dialog.c:1303
+#: app/dialogs/about-dialog.c:1236 app/dialogs/about-dialog.c:1294
 msgid "Copy Version Information"
 msgstr "Versie-informatie kopiëren"
 
 # muisaanwijzer/pointer
-#: app/dialogs/about-dialog.c:1300
+#: app/dialogs/about-dialog.c:1291
 msgid "Version Information"
 msgstr "Versie-informatie"
 
-#: app/dialogs/about-dialog.c:1302
+#: app/dialogs/about-dialog.c:1293
 msgid "_Copy"
 msgstr "_Kopiëren"
 
 # muisaanwijzer/pointer
-#: app/dialogs/about-dialog.c:1359
+#: app/dialogs/about-dialog.c:1349
 msgid "Copied Version Information"
 msgstr "Versie-informatie gekopieerd"
 
@@ -15772,7 +15803,7 @@ msgstr "Afbeelding naar grijswaarden omzetten"
 # afdrukvoorbeeld/softproof/
 #: app/dialogs/color-profile-dialog.c:200
 msgid "Soft-Proof Profile"
-msgstr "Profiel afdrukvoorbeeld"
+msgstr "Renderintentie afdrukvoorbeeld"
 
 #: app/dialogs/color-profile-dialog.c:203
 msgid "Select Soft-Proof Profile"
@@ -15818,7 +15849,7 @@ msgstr "Doelprofiel selecteren"
 #: app/widgets/gimpwidgets-constructors.c:97
 msgctxt "profile"
 msgid "None"
-msgstr "Niets selecteren"
+msgstr "Geen"
 
 #: app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert the image to the built-in grayscale color profile?"
@@ -15910,7 +15941,7 @@ msgstr "Rasteren van tekst_lagen inschakelen"
 msgid "Dithering text layers will make them uneditable"
 msgstr "Rasteren van tekstlagen maakt ze onbewerkbaar"
 
-#: app/dialogs/convert-indexed-dialog.c:414 app/pdb/image-convert-cmds.c:164
+#: app/dialogs/convert-indexed-dialog.c:417 app/pdb/image-convert-cmds.c:164
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Kan niet omzetten naar een palet met meer dan 256 kleuren."
 
@@ -15992,7 +16023,7 @@ msgstr "Fouten"
 
 #: app/dialogs/dialogs.c:328
 msgid "Pointer"
-msgstr "Muisaanwijzer"
+msgstr "Aanwijzer"
 
 #: app/dialogs/dialogs.c:368
 msgid "History"
@@ -16009,7 +16040,7 @@ msgstr "Histogram"
 #. Selection Bounding Box
 #: app/dialogs/dialogs.c:396 app/display/gimpcursorview.c:274
 msgid "Selection"
-msgstr "Selecteren"
+msgstr "Selectie"
 
 #: app/dialogs/dialogs.c:396
 msgid "Selection Editor"
@@ -17117,7 +17148,7 @@ msgstr "_IPTC-data altijd exporteren indien beschikbaar"
 
 #: app/dialogs/preferences-dialog.c:1648
 msgid "Update metadata automatically"
-msgstr "Automatisch metagegevens bijwerken"
+msgstr "Automatisch metadata bijwerken"
 
 #: app/dialogs/preferences-dialog.c:1651
 msgid "Metadata can contain sensitive information."
@@ -17139,11 +17170,11 @@ msgstr "RAW-bestanden importeren"
 
 #: app/dialogs/preferences-dialog.c:1699
 msgid "Experimental Playground"
-msgstr "Experimentele afdeling"
+msgstr "Experimentele speelplaats"
 
 #: app/dialogs/preferences-dialog.c:1700
 msgid "Playground"
-msgstr "Experimentele afdeling"
+msgstr "Experimentele speelplaats"
 
 #: app/dialogs/preferences-dialog.c:1707
 msgid ""
@@ -17170,7 +17201,7 @@ msgstr "O_penCL gebruiken"
 #. Very unstable tools
 #: app/dialogs/preferences-dialog.c:1732
 msgid "Experimental"
-msgstr "Experimentele afdeling"
+msgstr "Experimentele speelplaats"
 
 # muisaanwijzer/pointer
 #: app/dialogs/preferences-dialog.c:1736
@@ -17251,7 +17282,7 @@ msgstr "Lagen _uitbreiden"
 #. Move Tool
 #: app/dialogs/preferences-dialog.c:1837
 msgid "Move Tool"
-msgstr "Verplaatsen"
+msgstr "Gereedschap Verplaatsen"
 
 #: app/dialogs/preferences-dialog.c:1841
 msgid "Set _layer or path as active"
@@ -17673,7 +17704,7 @@ msgstr "Alleen binnen actieve groepen samenvoegen"
 
 #: app/dialogs/preferences-dialog.c:2598
 msgid "Discard invisible layers"
-msgstr "Onzichtbare lagen verwerpen"
+msgstr "Onzichtbare lagen verwijderen"
 
 #. New Channel Dialog
 #: app/dialogs/preferences-dialog.c:2602
@@ -17837,7 +17868,7 @@ msgstr "G_eschiedenis wissen"
 
 #: app/dialogs/preferences-dialog.c:2847 app/dialogs/preferences-dialog.c:2848
 msgid "Display"
-msgstr "Beeldscherm"
+msgstr "Weergave"
 
 #. Transparency
 #: app/dialogs/preferences-dialog.c:2857
@@ -18125,7 +18156,7 @@ msgstr "_Links- of rechtshandige muisaanwijzer:"
 # tekenen vond ik net iets duidelijker
 #: app/dialogs/preferences-dialog.c:3420
 msgid "Paint Tools"
-msgstr "Tekenen"
+msgstr "Tekengereedschappen"
 
 #: app/dialogs/preferences-dialog.c:3424
 msgid "Show _brush outline"
@@ -18916,7 +18947,7 @@ msgstr "Klik op een item met een pijlpunt van %s om een rondleiding te krijgen."
 #: app/display/display-enums.c:89
 msgctxt "compass-orientation"
 msgid "Auto"
-msgstr "Auto"
+msgstr "Automatisch"
 
 #: app/display/display-enums.c:90
 msgctxt "compass-orientation"
@@ -18951,7 +18982,7 @@ msgstr "Regel van vijfden"
 #: app/display/display-enums.c:160
 msgctxt "guides-type"
 msgid "Golden sections"
-msgstr "Gulden snede"
+msgstr "Gulden snedes"
 
 #: app/display/display-enums.c:161
 msgctxt "guides-type"
@@ -18967,7 +18998,7 @@ msgstr "Aantal lijnen"
 #: app/display/display-enums.c:163
 msgctxt "guides-type"
 msgid "Line spacing"
-msgstr "Regelafstand"
+msgstr "Lijnafstand"
 
 #: app/display/display-enums.c:384
 msgctxt "rectangle-fixed-rule"
@@ -19027,7 +19058,7 @@ msgstr "Geen opdracht"
 #: app/display/display-enums.c:617
 msgctxt "modifier-action"
 msgid "Pan"
-msgstr "Verschuiven (hor.)"
+msgstr "Verplaatsen"
 
 #: app/display/display-enums.c:618
 msgctxt "modifier-action"
@@ -19098,7 +19129,7 @@ msgstr "Begrenzingsvak van de selectie"
 #. Width
 #: app/display/gimpcursorview.c:312
 msgid "W"
-msgstr "W"
+msgstr "B"
 
 #. Height
 #: app/display/gimpcursorview.c:319
@@ -19624,7 +19655,7 @@ msgstr "%s om de hele lijn te bewegen"
 
 #: app/display/gimptoolpath.c:281 app/tools/gimppathoptions.c:122
 msgid "Edit Mode"
-msgstr "Modus Bewerken"
+msgstr "Bewerkingsmodus"
 
 # veelhoek / polygon
 #: app/display/gimptoolpath.c:290 app/tools/gimppathoptions.c:130
@@ -20057,7 +20088,7 @@ msgstr "Geïndexeerd"
 #: app/gegl/gimp-gegl-enums.c:25
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
-msgstr "De kooi creëren of aanpassen"
+msgstr "Kooitransformatiegebied maken of aanpassen"
 
 #: app/gegl/gimp-gegl-enums.c:26
 msgctxt "cage-mode"
@@ -20070,7 +20101,7 @@ msgstr "De kooi vervormen\n"
 #: app/operations/operations-enums.c:27
 msgctxt "layer-color-space"
 msgid "Auto"
-msgstr "Auto"
+msgstr "Automatisch"
 
 #: app/operations/operations-enums.c:28
 msgctxt "layer-color-space"
@@ -20095,7 +20126,7 @@ msgstr "RGB (perceptueel)"
 #: app/operations/operations-enums.c:62
 msgctxt "layer-composite-mode"
 msgid "Auto"
-msgstr "Auto"
+msgstr "Automatisch"
 
 #: app/operations/operations-enums.c:63
 msgctxt "layer-composite-mode"
@@ -20455,12 +20486,12 @@ msgstr "Aftrekken"
 #: app/operations/operations-enums.c:258
 msgctxt "layer-mode"
 msgid "Darken only"
-msgstr "Enkel donkerder maken"
+msgstr "Enkel donkerder"
 
 #: app/operations/operations-enums.c:259
 msgctxt "layer-mode"
 msgid "Lighten only"
-msgstr "Enkel Lichter maken"
+msgstr "Enkel lichter maken"
 
 #: app/operations/operations-enums.c:260
 msgctxt "layer-mode"
@@ -20587,7 +20618,7 @@ msgstr "Kleur wissen"
 #: app/operations/operations-enums.c:287
 msgctxt "layer-mode"
 msgid "Erase"
-msgstr "Wissen"
+msgstr "Gummen"
 
 #: app/operations/operations-enums.c:288
 msgctxt "layer-mode"
@@ -20726,7 +20757,7 @@ msgstr "Lichtheid"
 #: app/operations/gimphuesaturationconfig.c:119
 #: app/operations/gimphuesaturationconfig.c:120
 msgid "Overlap"
-msgstr "Overlappen"
+msgstr "Overlapping"
 
 #: app/operations/gimplevelsconfig.c:129
 msgid "Linear"
@@ -20864,7 +20895,7 @@ msgstr "Grijstint kiezen op grond van"
 
 #: app/operations/gimpoperationhuesaturation.c:65
 msgid "Hue-Saturation"
-msgstr "Tint/Verzadiging"
+msgstr "Tint/verzadiging"
 
 #: app/operations/gimpoperationhuesaturation.c:67
 msgid "Adjust hue, saturation, and lightness"
@@ -20940,7 +20971,7 @@ msgstr "Hoge drempelwaarde"
 
 #: app/operations/gimpoperationthresholdalpha.c:78
 msgid "Threshold Alpha"
-msgstr "Alfadrempel"
+msgstr "Alfa-drempelwaarde"
 
 #: app/operations/gimpoperationthresholdalpha.c:81
 msgid ""
@@ -21023,7 +21054,7 @@ msgstr "Verfspuit"
 #: app/paint/gimpairbrushoptions.c:71
 msgctxt "airbrush-tool"
 msgid "Rate"
-msgstr "Lengte"
+msgstr "Snelheid"
 
 #: app/paint/gimpairbrushoptions.c:79
 msgid "Motion only"
@@ -21031,7 +21062,7 @@ msgstr "Enkel beweging"
 
 #: app/paint/gimpairbrushoptions.c:86
 msgid "Flow"
-msgstr "Vloeien"
+msgstr "Snelheid"
 
 #: app/paint/gimpbrushcore.c:383
 msgid "No brushes available for use with this tool."
@@ -21065,11 +21096,11 @@ msgstr "Bewerkingstype"
 #: app/paint/gimpconvolveoptions.c:77
 msgctxt "convolve-tool"
 msgid "Rate"
-msgstr "Lengte"
+msgstr "Snelheid"
 
 #: app/paint/gimpdodgeburn.c:67
 msgid "Dodge/Burn"
-msgstr "Doordrukken/Tegenhouden"
+msgstr "Doordrukken/tegenhouden"
 
 #: app/paint/gimpdodgeburnoptions.c:71
 msgid "Type"
@@ -21118,7 +21149,7 @@ msgstr "Hoek"
 #: app/paint/gimpinkoptions.c:100 app/widgets/gimpdynamicseditor.c:164
 #: app/widgets/gimpdynamicsoutputeditor.c:73
 msgid "Tilt"
-msgstr "Kantelen"
+msgstr "Helling"
 
 #. Blob shape widgets
 #: app/paint/gimpinkoptions.c:107 app/tools/gimpgradientoptions.c:96
@@ -21221,7 +21252,7 @@ msgstr "Tussenruimte"
 
 #: app/paint/gimppaintoptions.c:248
 msgid "Force"
-msgstr "Forceer"
+msgstr "Kracht"
 
 #: app/paint/gimppaintoptions.c:249
 msgid "Brush Force"
@@ -21415,7 +21446,7 @@ msgstr "Smeren"
 #: app/paint/gimpsmudgeoptions.c:72
 msgctxt "smudge-tool"
 msgid "Rate"
-msgstr "Lengte"
+msgstr "Snelheid"
 
 #: app/paint/gimpsmudgeoptions.c:73
 msgid "The strength of smudging"
@@ -21424,7 +21455,7 @@ msgstr "De smeersnelheid"
 #: app/paint/gimpsmudgeoptions.c:79
 msgctxt "smudge-tool"
 msgid "Flow"
-msgstr "Vloeien"
+msgstr "Snelheid"
 
 #: app/paint/gimpsmudgeoptions.c:80
 msgid "The amount of brush color to blend"
@@ -21453,7 +21484,7 @@ msgstr "Geregistreerd uitlijnen kan niet op meer dan één tekengebied. Selectee
 #: app/paint/gimpsourceoptions.c:102 app/tools/gimpcloneoptions-gui.c:301
 #: app/tools/gimphealtool.c:106
 msgid "Alignment"
-msgstr "Uitlijnen"
+msgstr "Uitlijning"
 
 #: app/paint/paint-enums.c:53
 msgctxt "perspective-clone-mode"
@@ -21468,7 +21499,7 @@ msgstr "Klonen met perspectief"
 #: app/paint/paint-enums.c:84
 msgctxt "source-align-mode"
 msgid "None"
-msgstr "Niets selecteren"
+msgstr "Geen"
 
 #: app/paint/paint-enums.c:85
 msgctxt "source-align-mode"
@@ -21701,7 +21732,7 @@ msgstr "Curves"
 #: app/pdb/drawable-color-cmds.c:331
 msgctxt "undo-type"
 msgid "Extract Component"
-msgstr "Extraheer component"
+msgstr "Component extraheren"
 
 #: app/pdb/drawable-color-cmds.c:372
 msgctxt "undo-type"
@@ -21711,12 +21742,12 @@ msgstr "Grijswaarden"
 #: app/pdb/drawable-color-cmds.c:546
 msgctxt "undo-type"
 msgid "Hue-Saturation"
-msgstr "Tint/Verzadiging"
+msgstr "Tint/verzadiging"
 
 #: app/pdb/drawable-color-cmds.c:581
 msgctxt "undo-type"
 msgid "Invert"
-msgstr "Omkeren"
+msgstr "Inverteren"
 
 #: app/pdb/drawable-color-cmds.c:649
 msgctxt "undo-type"
@@ -21726,7 +21757,7 @@ msgstr "Niveaus"
 #: app/pdb/drawable-color-cmds.c:737
 msgctxt "undo-type"
 msgid "Shadows-Highlights"
-msgstr "Schaduwen/Hooglichten"
+msgstr "Schaduwen/hoge lichten"
 
 #: app/pdb/drawable-color-cmds.c:777
 msgctxt "undo-type"
@@ -22711,7 +22742,7 @@ msgstr "Schaduwen"
 
 #: app/propgui/gimppropgui-shadows-highlights.c:78
 msgid "Highlights"
-msgstr "Hooglichten"
+msgstr "Hoge lichten"
 
 #: app/propgui/gimppropgui-shadows-highlights.c:94
 msgid "Common"
@@ -23559,7 +23590,7 @@ msgstr "Alles buiten de selectie dimmen"
 
 #: app/tools/gimpcropoptions.c:88 app/tools/gimprectangleselectoptions.c:87
 msgid "Highlight opacity"
-msgstr "Dekking hoge lichten"
+msgstr "Helderheid buiten selectie"
 
 #: app/tools/gimpcropoptions.c:89 app/tools/gimprectangleselectoptions.c:88
 msgid "How much to dim everything outside selection"
@@ -23861,7 +23892,7 @@ msgstr "Uitgeschakeld, omdat deze afbeelding afhankelijk is van een andere afbee
 #. TRANSLATORS: The %s will be replaced by the name of the
 #. * layer type.
 #: app/tools/gimpfiltertool.c:458
-#: app/widgets/gimpdrawabletreeview-filters.c:622
+#: app/widgets/gimpdrawabletreeview-filters.c:624
 #, c-format
 msgid "Disabled because filters cannot be merged on: %s."
 msgstr "Uitgeschakeld, omdat filters niet kunnen worden samengevoegd op: %s."
@@ -24012,7 +24043,7 @@ msgstr "Welke 'matting'-methode te gebruiken"
 #: app/tools/gimpforegroundselectoptions.c:132
 msgctxt "measurement"
 msgid "Levels"
-msgstr "Niveaus"
+msgstr "Kleurniveaus"
 
 # processors/processoren
 #: app/tools/gimpforegroundselectoptions.c:133
@@ -24029,7 +24060,7 @@ msgstr "Aantal niveaus om oplossing te vinden"
 
 #: app/tools/gimpforegroundselectoptions.c:146
 msgid "Iterations"
-msgstr "Iteraties"
+msgstr "Herhalingen"
 
 # processors/processoren
 #: app/tools/gimpforegroundselectoptions.c:147
@@ -24137,7 +24168,7 @@ msgstr "Toverstaf"
 #: app/tools/gimpgegltool.c:85 app/tools/gimpgegltool.c:302
 #: app/tools/gimpgegltool.c:304 app/tools/gimpoperationtool.c:132
 msgid "GEGL Operation"
-msgstr "GEGL Bewerking"
+msgstr "GEGL-bewerking"
 
 #: app/tools/gimpgegltool.c:86
 msgid "Run an arbitrary GEGL operation"
@@ -24465,7 +24496,7 @@ msgstr "Nieuw deel van selectielijn weergeven tijdens slepen van knooppunt"
 
 #: app/tools/gimpiscissorstool.c:292
 msgid "Scissors Select"
-msgstr "Schaar"
+msgstr "Schaar selectie"
 
 #: app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
@@ -24701,7 +24732,7 @@ msgstr "Gereedschap wisselen (%s)"
 
 #: app/tools/gimpmoveoptions.c:191
 msgid "Pick a layer or guide"
-msgstr "Kies een laag of hulplijn"
+msgstr "Een laag of hulplijn kiezen"
 
 #: app/tools/gimpmoveoptions.c:192
 msgid "Move the selected layers"
@@ -24709,7 +24740,7 @@ msgstr "De geselecteerde lagen verplaatsen"
 
 #: app/tools/gimpmoveoptions.c:196
 msgid "Pick a path"
-msgstr "Kies een pad"
+msgstr "Een pad kiezen"
 
 #: app/tools/gimpmoveoptions.c:197
 msgid "Move the active path"
@@ -24787,7 +24818,7 @@ msgstr "Raster tonen"
 #: app/tools/gimptransformgridoptions.c:574
 #: app/tools/gimptransformgridoptions.c:585
 msgid "Scale"
-msgstr "Schaal"
+msgstr "Schalen"
 
 #: app/tools/gimpnpointdeformationoptions.c:228
 msgid "Rigid (Rubber)"
@@ -25456,7 +25487,7 @@ msgstr "Lettergrootte"
 
 #: app/tools/gimptextoptions.c:185
 msgid "Hinting"
-msgstr "Hinting"
+msgstr "Hinten"
 
 #: app/tools/gimptextoptions.c:186
 msgid ""
@@ -25486,7 +25517,7 @@ msgstr "Inspringen van eerste regel"
 # rasterlijnafstand/spatiering
 #: app/tools/gimptextoptions.c:226
 msgid "Line spacing"
-msgstr "Regelafstand"
+msgstr "Lijnafstand"
 
 #: app/tools/gimptextoptions.c:227
 msgid "Adjust line spacing"
@@ -25503,7 +25534,7 @@ msgstr "Letterafstand aanpassen"
 
 #: app/tools/gimptextoptions.c:242
 msgid "Box"
-msgstr "Blok"
+msgstr "Vak"
 
 #: app/tools/gimptextoptions.c:243
 msgid ""
@@ -25857,7 +25888,7 @@ msgstr "Modus Transformeren"
 
 #: app/tools/gimptransform3doptions.c:85
 msgid "Unified interaction"
-msgstr "Geïntegreerde interactie"
+msgstr "Uniforme interactie"
 
 #: app/tools/gimptransform3doptions.c:86
 msgid "Combine all interaction modes"
@@ -25892,7 +25923,7 @@ msgstr "Lokaal frame (%s)"
 
 #: app/tools/gimptransform3dtool.c:114
 msgid "3D Transform"
-msgstr "3D-transformatie"
+msgstr "3D-Transformatie"
 
 #: app/tools/gimptransform3dtool.c:115
 msgid ""
@@ -25906,7 +25937,7 @@ msgstr "_3D-Transformatie"
 #: app/tools/gimptransform3dtool.c:139
 msgctxt "undo-type"
 msgid "3D Transform"
-msgstr "3D-transformatie"
+msgstr "3D-Transformatie"
 
 #: app/tools/gimptransform3dtool.c:140
 msgid "3D transformation"
@@ -25927,7 +25958,7 @@ msgstr "_Z:"
 
 #: app/tools/gimptransform3dtool.c:434
 msgid "Z"
-msgstr "U"
+msgstr "Z"
 
 #: app/tools/gimptransform3dtool.c:438
 msgid "Rotation axis order"
@@ -26063,7 +26094,7 @@ msgstr "Tussenruimte penseel"
 
 #: app/tools/gimpwarpoptions.c:128 app/tools/gimpwarpoptions.c:339
 msgid "Abyss policy"
-msgstr "Afsnijbeleid"
+msgstr "Randgedrag"
 
 #: app/tools/gimpwarpoptions.c:129
 msgid "Out-of-bounds sampling behavior"
@@ -26120,7 +26151,7 @@ msgstr "Aantal animatieframes"
 #. the stroke frame
 #: app/tools/gimpwarpoptions.c:350
 msgid "Stroke"
-msgstr "Penseelstreek"
+msgstr "Lijn"
 
 #. the animation frame
 #: app/tools/gimpwarpoptions.c:372
@@ -26247,7 +26278,7 @@ msgstr "Laag"
 #: app/tools/tools-enums.c:123
 msgctxt "transform-type"
 msgid "Selection"
-msgstr "Selecteren"
+msgstr "Selectie"
 
 #: app/tools/tools-enums.c:124
 msgctxt "transform-type"
@@ -26695,7 +26726,7 @@ msgstr "Enkel geïndexeerde afbeeldingen hebben een kleurenkaart."
 #: app/widgets/gimpcompressioncombobox.c:102
 msgctxt "compression"
 msgid "None"
-msgstr "Niets selecteren"
+msgstr "Geen"
 
 #: app/widgets/gimpcompressioncombobox.c:114
 msgctxt "compression"
@@ -26740,7 +26771,7 @@ msgstr "Staat:"
 #: app/widgets/gimpcontrollereditor.c:339
 #: app/widgets/gimpdeviceinfoeditor.c:391
 msgid "Event"
-msgstr "Gebeurtenis"
+msgstr "Actie"
 
 #: app/widgets/gimpcontrollereditor.c:364
 #: app/widgets/gimpdeviceinfoeditor.c:448
@@ -26782,7 +26813,7 @@ msgstr "Opdracht selecteren voor actie ‘%s’"
 
 #: app/widgets/gimpcontrollereditor.c:657
 msgid "Select Controller Event Action"
-msgstr "Actie selecteren bij gebeurtenis van invoerapparaat"
+msgstr "Actie selecteren bij controllergebeurtenis"
 
 #: app/widgets/gimpcontrollerinfo.c:110
 msgid "Input Controller"
@@ -27353,7 +27384,7 @@ msgstr "Aantal lopende asynchrone bewerkingen"
 #: app/widgets/gimpdashboard.c:740
 msgctxt "dashboard-variable"
 msgid "Tile"
-msgstr "Betegelen"
+msgstr "Tegel"
 
 #: app/widgets/gimpdashboard.c:741
 msgid "Total size of tile memory"
@@ -27697,7 +27728,7 @@ msgstr "Dit tabblad configureren"
 #. Auto button
 #: app/widgets/gimpdockwindow.c:409
 msgid "Auto"
-msgstr "Auto"
+msgstr "Automatisch"
 
 #: app/widgets/gimpdockwindow.c:420
 msgid ""
@@ -27721,38 +27752,38 @@ msgctxt "singular"
 msgid "New Layer"
 msgstr "Nieuwe laag"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:222
+#: app/widgets/gimpdrawabletreeview-filters.c:224
 msgid "Toggle the visibility of all filters."
 msgstr "_Zichtbaarheid van alle filters in- en uitschakelen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:238
+#: app/widgets/gimpdrawabletreeview-filters.c:240
 msgid "Edit the selected filter."
 msgstr "Het geselecteerde filter bewerken."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:254
+#: app/widgets/gimpdrawabletreeview-filters.c:256
 msgid "Raise filter one step up in the stack."
 msgstr "Dit filter één plaats hoger zetten in de stapel."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:269
+#: app/widgets/gimpdrawabletreeview-filters.c:271
 msgid "Lower filter one step down in the stack."
 msgstr "Dit filter één plaats lager zetten in de stapel."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:285
-#: app/widgets/gimpdrawabletreeview-filters.c:627
-#: app/widgets/gimpdrawabletreeview-filters.c:638
+#: app/widgets/gimpdrawabletreeview-filters.c:287
+#: app/widgets/gimpdrawabletreeview-filters.c:629
+#: app/widgets/gimpdrawabletreeview-filters.c:640
 msgid "Merge all active filters down."
 msgstr "Alle actieve filters omlaag plaatsen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:301
+#: app/widgets/gimpdrawabletreeview-filters.c:303
 msgid "Remove the selected filter."
 msgstr "Geselecteerd filter verwijderen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:617
+#: app/widgets/gimpdrawabletreeview-filters.c:619
 msgid "Disabled because filters cannot be merged on group layers."
 msgstr "Uitgeschakeld, omdat filters niet kunnen worden samengevoegd op groepslagen."
 
-#: app/widgets/gimpdrawabletreeview-filters.c:875
-#: app/widgets/gimpdrawabletreeview-filters.c:903
+#: app/widgets/gimpdrawabletreeview-filters.c:932
+#: app/widgets/gimpdrawabletreeview-filters.c:960
 msgid "Cannot reorder a filter that is being edited."
 msgstr "Kan een filter dat bewerkt wordt niet herschikken."
 
@@ -28405,12 +28436,12 @@ msgstr "Metadata zijn niet zichtbaar in GIMP-versies ouder dan 2.10."
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:340
+#: app/widgets/gimpsearchpopup.c:334
 msgid "menu"
 msgstr "menu"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:344
+#: app/widgets/gimpsearchpopup.c:338
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -29792,8 +29823,9 @@ msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Menu Geschiedenis"
 
-#~ msgid "Swap:"
-#~ msgstr "Wisselgeheugen:"
+#, c-format
+#~ msgid "Memory: %s (%s free)\n"
+#~ msgstr "Geheugen: %s (%s vrij)\n"
 
 #~ msgid "free"
 #~ msgstr "vrij"
