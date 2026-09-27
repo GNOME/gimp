@@ -45,6 +45,10 @@ struct _GimpGeglProcedure
   GimpObject         *default_settings;
 
   gchar              *menu_label;
+
+  /* TODO: Once we can serialize GimpDrawable, remove so that
+   * filters with aux nodes can be non-destructive */
+  gboolean            has_aux;
 };
 
 struct _GimpGeglProcedureClass
