@@ -256,7 +256,7 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_source\r\e[0K\n"
 # 5. FINISH .DMG AS COMPRESSED READ-ONLY
 DMG_ARTIFACT="gimp-${CUSTOM_GIMP_VERSION}-${ARCH}.dmg"
 printf "\e[0Ksection_start:`date +%s`:${ARCH}_making[collapsed=true]\r\e[0KCompressing %s\n" ${DMG_ARTIFACT}
-if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" ] && [ "$CI_PIPELINE_SOURCE" != 'merge_request_event' ]; then
+if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" = 'true' ]; then
   notarize()
   {
     printf "(INFO): submitting ${1##*${1%.*}} to Apple servers\n"
@@ -396,7 +396,7 @@ fi
 hdiutil detach "$DMG_MOUNT"
 hdiutil convert -verbose "temp_$ARCH.dmg" -format ULFO -o "$DMG_ARTIFACT"
 rm "temp_$ARCH.dmg"
-if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" ] && [ "$CI_PIPELINE_SOURCE" != 'merge_request_event' ]; then
+if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" = 'true' ]; then
   printf '(INFO): signing .dmg\n'
   codesign -s "${codesign_subject}" "$DMG_ARTIFACT"
 fi
@@ -404,7 +404,7 @@ printf "\e[0Ksection_end:`date +%s`:${ARCH}_making\r\e[0K\n"
 
 
 # 6.A NOTARIZE .DMG
-if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" ] && [ "$CI_PIPELINE_SOURCE" != 'merge_request_event' ]; then
+if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" = 'true' ]; then
   printf "\e[0Ksection_start:`date +%s`:${ARCH}_trust[collapsed=true]\r\e[0KNotarizing ${DMG_ARTIFACT}\n"
   notarize "${DMG_ARTIFACT}"
   printf "\e[0Ksection_end:`date +%s`:${ARCH}_notarize\r\e[0K\n"
@@ -423,7 +423,7 @@ printf "(INFO): ${DMG_ARTIFACT} SHA-512: $(echo $sha512 | cut -d ' ' -f 1)\n"
 if [ "$GIMP_RELEASE" ] && [ -z "$GIMP_IS_RC_GIT" ]; then
   echo $sha512 > ${DMG_ARTIFACT}.SHA512SUMS
 fi
-if [ -z "$GITLAB_CI" ] || [ -z "$CI_COMMIT_REF_PROTECTED" ] || [ "$CI_PIPELINE_SOURCE" = 'merge_request_event' ]; then
+if [ -z "$GITLAB_CI" ] || [ "$CI_COMMIT_REF_PROTECTED" = 'false' ]; then
   printf "(INFO): Suceeded. To test this build, whitelist it from the artifact with: \033[32mxattr -r -d com.apple.quarantine ./${BUNDLE_NAME}\033[0m\n"
 fi
 printf "\e[0Ksection_end:`date +%s`:${ARCH}_trust\r\e[0K\n"
@@ -433,7 +433,7 @@ if [ "$GITLAB_CI" ]; then
   output_dir='build/macos/dmg/_Output'
   mkdir -p $output_dir
   mv -f ${DMG_ARTIFACT}* $output_dir
-  if [ -z "$CI_COMMIT_REF_PROTECTED" ] || [ "$CI_PIPELINE_SOURCE" = 'merge_request_event' ]; then
+  if [ "$CI_COMMIT_REF_PROTECTED" = 'false' ]; then
     echo "See the instructions on how install at the 'Automatic Development Builds' section of https://www.gimp.org/downloads/devel/#automatic-builds" > $output_dir/IMPORTANT.txt
   fi
 fi
