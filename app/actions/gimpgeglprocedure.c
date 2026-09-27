@@ -231,7 +231,8 @@ gimp_gegl_procedure_get_sensitive (GimpProcedure  *procedure,
 
       sensitive = ! gimp_item_is_content_locked (item, NULL);
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
+          GIMP_GEGL_PROCEDURE (procedure)->has_aux)
         sensitive = FALSE;
     }
 
@@ -520,6 +521,7 @@ gimp_gegl_procedure_new (Gimp               *gimp,
 {
   GimpProcedure     *procedure;
   GimpGeglProcedure *gegl_procedure;
+  GeglNode          *node;
   GType              config_type;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -541,6 +543,12 @@ gimp_gegl_procedure_new (Gimp               *gimp,
 
   if (default_settings)
     gegl_procedure->default_settings = g_object_ref (default_settings);
+
+  /* TODO: Once we can serialize GimpDrawable, remove so that
+   * filters with aux nodes can be non-destructive */
+  node = gegl_node_new_child (NULL, "operation", operation, NULL);
+  gegl_procedure->has_aux = gegl_node_has_pad (node, "aux");
+  g_object_unref (node);
 
   gimp_object_set_name (GIMP_OBJECT (procedure), name);
   gimp_viewable_set_icon_name (GIMP_VIEWABLE (procedure), icon_name);
