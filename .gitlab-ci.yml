@@ -189,6 +189,7 @@ deps-debian-nonreloc:
     GIT_STRATEGY: none
   script:
     # Install deps
+    - echo "this is the var value _${CI_COMMIT_REF_PROTECTED}_"
     - echo "FROM debian:${DEB_VERSION}" > Dockerfile
     - echo "WORKDIR $CI_PROJECT_DIR" >> Dockerfile
     ## 'ca-certificates' and 'git' are NOT gimp deps, they are installed only to our Docker image work
