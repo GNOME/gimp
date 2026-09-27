@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-22 20:58+0000\n"
-"PO-Revision-Date: 2026-09-24 07:47+0800\n"
+"POT-Creation-Date: 2026-09-27 01:55+0000\n"
+"PO-Revision-Date: 2026-09-27 16:03+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -465,7 +465,7 @@ msgstr "错误控制台"
 msgid "File"
 msgstr "文件"
 
-#: app/actions/actions.c:171 app/widgets/gimpdrawabletreeview-filters.c:192
+#: app/actions/actions.c:171 app/widgets/gimpdrawabletreeview-filters.c:194
 msgid "Filters"
 msgstr "滤镜"
 
@@ -5094,7 +5094,7 @@ msgstr "无上次使用滤镜"
 #: app/actions/filters-commands.c:282 app/display/gimpdisplayshell-dnd.c:393
 #: app/tools/gimpfiltertool.c:334 app/tools/gimppainttool.c:355
 #: app/tools/gimptransformtool.c:739
-#: app/widgets/gimpdrawabletreeview-filters.c:767
+#: app/widgets/gimpdrawabletreeview-filters.c:824
 msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
 
@@ -6069,7 +6069,7 @@ msgid "Set Image Canvas Size"
 msgstr "设置图像画布大小"
 
 #: app/actions/image-commands.c:696 app/actions/image-commands.c:721
-#: app/actions/image-commands.c:1405
+#: app/actions/image-commands.c:1408
 msgid "Resizing"
 msgstr "改变大小"
 
@@ -6113,30 +6113,30 @@ msgstr "将图像转换为灰度（%s）"
 msgid "Converting to indexed colors"
 msgstr "转换为索引颜色"
 
-#: app/actions/image-commands.c:1271
+#: app/actions/image-commands.c:1274
 #, c-format
 msgid "Converting image to %s"
 msgstr "正在将图像转换为 %s"
 
-#: app/actions/image-commands.c:1334
+#: app/actions/image-commands.c:1337
 #, c-format
 msgid "Converting to '%s'"
 msgstr "正在转换为“%s”"
 
-#: app/actions/image-commands.c:1418
+#: app/actions/image-commands.c:1421
 msgid "Change Canvas Size"
 msgstr "修改画布大小"
 
-#: app/actions/image-commands.c:1467
+#: app/actions/image-commands.c:1470
 msgid "Change Print Size"
 msgstr "改变打印大小"
 
-#: app/actions/image-commands.c:1511
+#: app/actions/image-commands.c:1514
 msgid "Scale Image"
 msgstr "缩放图像"
 
 #. Scaling
-#: app/actions/image-commands.c:1520 app/actions/layers-commands.c:2696
+#: app/actions/image-commands.c:1523 app/actions/layers-commands.c:2696
 #: app/dialogs/preferences-dialog.c:1805 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -12155,543 +12155,553 @@ msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "感知"
 
-#: app/core/core-enums.c:1300
+#: app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<无效>>"
 
-#: app/core/core-enums.c:1301
+#: app/core/core-enums.c:1303
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "缩放图像"
 
-#: app/core/core-enums.c:1302
+#: app/core/core-enums.c:1304
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "改变图像大小"
 
-#: app/core/core-enums.c:1303
+#: app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "翻转图像"
 
-#: app/core/core-enums.c:1304
+#: app/core/core-enums.c:1306
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "旋转图像"
 
-#: app/core/core-enums.c:1305
+#: app/core/core-enums.c:1307
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "变换图像"
 
-#: app/core/core-enums.c:1306
+#: app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "剪裁图像"
 
-#: app/core/core-enums.c:1307
+#: app/core/core-enums.c:1309
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "转换图像"
 
-#: app/core/core-enums.c:1308
+#: app/core/core-enums.c:1310
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "移除项目"
 
-#: app/core/core-enums.c:1309 app/core/core-enums.c:1364
+#: app/core/core-enums.c:1311 app/core/core-enums.c:1367
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "重新排列项目"
 
-#: app/core/core-enums.c:1310
+#: app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "合并图层"
 
-#: app/core/core-enums.c:1311
+#: app/core/core-enums.c:1313
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "合并路径"
 
-#: app/core/core-enums.c:1312
+#: app/core/core-enums.c:1314
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "快速蒙板"
 
-#: app/core/core-enums.c:1313 app/core/core-enums.c:1354
+#: app/core/core-enums.c:1315 app/core/core-enums.c:1357
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "网格"
 
-#: app/core/core-enums.c:1314
+#: app/core/core-enums.c:1316
 msgctxt "undo-type"
 msgid "Colormap remapping"
 msgstr "颜色表重映射"
 
-#: app/core/core-enums.c:1315 app/core/core-enums.c:1358
+#: app/core/core-enums.c:1317 app/core/core-enums.c:1361
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "参考线"
 
-#: app/core/core-enums.c:1316 app/core/core-enums.c:1359
+#: app/core/core-enums.c:1318 app/core/core-enums.c:1362
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "采样点"
 
-#: app/core/core-enums.c:1317 app/core/core-enums.c:1360
+#: app/core/core-enums.c:1319 app/core/core-enums.c:1363
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "图层/通道"
 
-#: app/core/core-enums.c:1318 app/core/core-enums.c:1361
+#: app/core/core-enums.c:1320 app/core/core-enums.c:1364
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "图层/通道修改"
 
-#: app/core/core-enums.c:1319 app/core/core-enums.c:1363
+#: app/core/core-enums.c:1321 app/core/core-enums.c:1366
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "选区蒙板"
 
-#: app/core/core-enums.c:1320 app/core/core-enums.c:1367
+#: app/core/core-enums.c:1322 app/core/core-enums.c:1370
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "项目可见性"
 
-#: app/core/core-enums.c:1321
+#: app/core/core-enums.c:1323
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "锁定/解锁内容"
 
-#: app/core/core-enums.c:1322 app/core/core-enums.c:1370
+#: app/core/core-enums.c:1324 app/core/core-enums.c:1373
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "锁定/解锁位置"
 
-#: app/core/core-enums.c:1323 app/core/core-enums.c:1371
+#: app/core/core-enums.c:1325 app/core/core-enums.c:1374
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "锁定/解锁可见性"
 
-#: app/core/core-enums.c:1324
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "项目属性"
 
-#: app/core/core-enums.c:1325 app/core/core-enums.c:1366
+#: app/core/core-enums.c:1327 app/core/core-enums.c:1369
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "移动项目"
 
-#: app/core/core-enums.c:1326
+#: app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "缩放项目"
 
-#: app/core/core-enums.c:1327
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "更改项目大小"
 
-#: app/core/core-enums.c:1328
+#: app/core/core-enums.c:1330
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "添加图层"
 
-#: app/core/core-enums.c:1329
+#: app/core/core-enums.c:1331
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "添加透明通道"
 
-#: app/core/core-enums.c:1330 app/core/core-enums.c:1388
+#: app/core/core-enums.c:1332 app/core/core-enums.c:1391
 msgctxt "undo-type"
 msgid "Add layer masks"
 msgstr "添加图层蒙板"
 
-#: app/core/core-enums.c:1331 app/core/core-enums.c:1390
+#: app/core/core-enums.c:1333 app/core/core-enums.c:1393
 msgctxt "undo-type"
 msgid "Apply layer masks"
 msgstr "应用图层蒙板"
 
-#: app/core/core-enums.c:1332
+#: app/core/core-enums.c:1334
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "移除透明通道"
 
-#: app/core/core-enums.c:1333
+#: app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "锁定/解锁透明通道"
 
-#: app/core/core-enums.c:1334
+#: app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "设置图层不透明度"
 
-#: app/core/core-enums.c:1335
+#: app/core/core-enums.c:1337
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "设置图层模式"
 
-#: app/core/core-enums.c:1336
+#: app/core/core-enums.c:1338
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "添加通道"
 
-#: app/core/core-enums.c:1337 app/core/core-enums.c:1398
+#: app/core/core-enums.c:1339 app/core/core-enums.c:1401
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "浮动选区到图层"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1340
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "浮动选区"
 
-#: app/core/core-enums.c:1339
+#: app/core/core-enums.c:1341
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "固定浮动选区"
 
-#: app/core/core-enums.c:1340 app/core/gimp-edit.c:845
+#: app/core/core-enums.c:1342 app/core/gimp-edit.c:845
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "粘贴"
 
-#: app/core/core-enums.c:1341 app/core/gimp-edit.c:1207
+#: app/core/core-enums.c:1343 app/core/gimp-edit.c:1207
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "剪切"
 
-#: app/core/core-enums.c:1342
+#: app/core/core-enums.c:1344
 msgctxt "undo-type"
 msgid "Text"
 msgstr "文本"
 
-#: app/core/core-enums.c:1343
+#: app/core/core-enums.c:1345
 msgctxt "undo-type"
 msgid "Vector"
 msgstr "矢量"
 
-#: app/core/core-enums.c:1344 app/core/gimpdrawable-transform.c:718
+#: app/core/core-enums.c:1346 app/core/gimpdrawable-transform.c:718
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "变换"
 
-#: app/core/core-enums.c:1345 app/core/core-enums.c:1400
+#: app/core/core-enums.c:1347 app/core/core-enums.c:1403
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "绘画"
 
-#: app/core/core-enums.c:1346 app/core/core-enums.c:1403
+#: app/core/core-enums.c:1348 app/core/core-enums.c:1406
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "添加内嵌信息"
 
-#: app/core/core-enums.c:1347 app/core/core-enums.c:1404
+#: app/core/core-enums.c:1349 app/core/core-enums.c:1407
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "移除内嵌信息"
 
-#: app/core/core-enums.c:1348
+#: app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "导入路径"
 
-#: app/core/core-enums.c:1349
+#: app/core/core-enums.c:1351
+msgctxt "undo-type"
+msgid "Effects visibility"
+msgstr "特效可见性"
+
+#: app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "插件"
 
-#: app/core/core-enums.c:1350
+#: app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "图像类型"
 
-#: app/core/core-enums.c:1351
+#: app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "图像精度"
 
-#: app/core/core-enums.c:1352
+#: app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "图像大小"
 
-#: app/core/core-enums.c:1353
+#: app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "图像分辨率更改"
 
-#: app/core/core-enums.c:1355
+#: app/core/core-enums.c:1358
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "更改元数据"
 
-#: app/core/core-enums.c:1356
+#: app/core/core-enums.c:1359
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "更改索引色板"
 
-#: app/core/core-enums.c:1357
+#: app/core/core-enums.c:1360
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "隐藏/显示特性文件"
 
-#: app/core/core-enums.c:1362
+#: app/core/core-enums.c:1365
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "图层/通道格式"
 
-#: app/core/core-enums.c:1365
+#: app/core/core-enums.c:1368
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "重命名项目"
 
-#: app/core/core-enums.c:1368
+#: app/core/core-enums.c:1371
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "项目颜色标签"
 
-#: app/core/core-enums.c:1369
+#: app/core/core-enums.c:1372
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "锁定/解锁内容"
 
-#: app/core/core-enums.c:1372
+#: app/core/core-enums.c:1375
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "新建图层"
 
-#: app/core/core-enums.c:1373
+#: app/core/core-enums.c:1376
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "删除图层"
 
-#: app/core/core-enums.c:1374
+#: app/core/core-enums.c:1377
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "设置图层模式"
 
-#: app/core/core-enums.c:1375
+#: app/core/core-enums.c:1378
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "设置图层不透明度"
 
-#: app/core/core-enums.c:1376
+#: app/core/core-enums.c:1379
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "锁定/解锁透明通道"
 
-#: app/core/core-enums.c:1377
+#: app/core/core-enums.c:1380
 msgctxt "undo-type"
 msgid "Link layer"
 msgstr "链接图层"
 
-#: app/core/core-enums.c:1378
+#: app/core/core-enums.c:1381
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "暂停改变群组图层大小"
 
-#: app/core/core-enums.c:1379
+#: app/core/core-enums.c:1382
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "恢复改变群组图层大小"
 
-#: app/core/core-enums.c:1380
+#: app/core/core-enums.c:1383
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "停用群组图层蒙板"
 
-#: app/core/core-enums.c:1381
+#: app/core/core-enums.c:1384
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "恢复群组图层蒙板"
 
-#: app/core/core-enums.c:1382
+#: app/core/core-enums.c:1385
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "开始变换群组图层"
 
-#: app/core/core-enums.c:1383
+#: app/core/core-enums.c:1386
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "结束变换群组图层"
 
-#: app/core/core-enums.c:1384
+#: app/core/core-enums.c:1387
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "转换群组图层"
 
-#: app/core/core-enums.c:1385
+#: app/core/core-enums.c:1388
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "文本图层"
 
-#: app/core/core-enums.c:1386
+#: app/core/core-enums.c:1389
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "转换文本图层"
 
-#: app/core/core-enums.c:1387
+#: app/core/core-enums.c:1390
 msgctxt "undo-type"
 msgid "Vector layer"
 msgstr "矢量图层"
 
-#: app/core/core-enums.c:1389
+#: app/core/core-enums.c:1392
 msgctxt "undo-type"
 msgid "Delete layer masks"
 msgstr "删除图层蒙板"
 
-#: app/core/core-enums.c:1391
+#: app/core/core-enums.c:1394
 msgctxt "undo-type"
 msgid "Show layer masks"
 msgstr "显示图层蒙板"
 
-#: app/core/core-enums.c:1392
+#: app/core/core-enums.c:1395
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "新建通道"
 
-#: app/core/core-enums.c:1393
+#: app/core/core-enums.c:1396
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "删除通道"
 
-#: app/core/core-enums.c:1394
+#: app/core/core-enums.c:1397
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "通道颜色"
 
-#: app/core/core-enums.c:1395
+#: app/core/core-enums.c:1398
 msgctxt "undo-type"
 msgid "New path"
 msgstr "新建路径"
 
-#: app/core/core-enums.c:1396
+#: app/core/core-enums.c:1399
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "删除路径"
 
-#: app/core/core-enums.c:1397
+#: app/core/core-enums.c:1400
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "路径修改"
 
-#: app/core/core-enums.c:1399
+#: app/core/core-enums.c:1402
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "变换网格"
 
-#: app/core/core-enums.c:1401
+#: app/core/core-enums.c:1404
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "墨水"
 
-#: app/core/core-enums.c:1402
+#: app/core/core-enums.c:1405
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "选择前景"
 
-#: app/core/core-enums.c:1405
+#: app/core/core-enums.c:1408
 msgctxt "undo-type"
 msgid "Add effect"
 msgstr "添加特效"
 
-#: app/core/core-enums.c:1406
+#: app/core/core-enums.c:1409
 msgctxt "undo-type"
 msgid "Remove effect"
 msgstr "移除特效"
 
-#: app/core/core-enums.c:1407
+#: app/core/core-enums.c:1410
 msgctxt "undo-type"
 msgid "Reorder effect"
 msgstr "排序特效"
 
-#: app/core/core-enums.c:1408
+#: app/core/core-enums.c:1411
 msgctxt "undo-type"
 msgid "Effect modification"
 msgstr "特效修改"
 
-#: app/core/core-enums.c:1409
+#: app/core/core-enums.c:1412
+msgctxt "undo-type"
+msgid "Effect visibility"
+msgstr "特效可见性"
+
+#: app/core/core-enums.c:1413
 msgctxt "undo-type"
 msgid "Text, link or vector layer"
 msgstr "文本、链接或矢量图层"
 
-#: app/core/core-enums.c:1410
+#: app/core/core-enums.c:1414
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "不可撤消"
 
-#: app/core/core-enums.c:1445
+#: app/core/core-enums.c:1449
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "细小"
 
-#: app/core/core-enums.c:1446
+#: app/core/core-enums.c:1450
 msgctxt "view-size"
 msgid "Very small"
 msgstr "很小"
 
-#: app/core/core-enums.c:1447
+#: app/core/core-enums.c:1451
 msgctxt "view-size"
 msgid "Small"
 msgstr "小"
 
-#: app/core/core-enums.c:1448
+#: app/core/core-enums.c:1452
 msgctxt "view-size"
 msgid "Medium"
 msgstr "正常"
 
-#: app/core/core-enums.c:1449
+#: app/core/core-enums.c:1453
 msgctxt "view-size"
 msgid "Large"
 msgstr "大"
 
-#: app/core/core-enums.c:1450
+#: app/core/core-enums.c:1454
 msgctxt "view-size"
 msgid "Very large"
 msgstr "很大"
 
-#: app/core/core-enums.c:1451
+#: app/core/core-enums.c:1455
 msgctxt "view-size"
 msgid "Huge"
 msgstr "庞大"
 
-#: app/core/core-enums.c:1452
+#: app/core/core-enums.c:1456
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "巨大"
 
-#: app/core/core-enums.c:1453
+#: app/core/core-enums.c:1457
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "极大"
 
-#: app/core/core-enums.c:1481
+#: app/core/core-enums.c:1485
 msgctxt "view-type"
 msgid "View as list"
 msgstr "以列表方式查看"
 
-#: app/core/core-enums.c:1482
+#: app/core/core-enums.c:1486
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "以阵列方式查看"
 
-#: app/core/core-enums.c:1511
+#: app/core/core-enums.c:1515
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "通过基本文本搜索来选择"
 
-#: app/core/core-enums.c:1512
+#: app/core/core-enums.c:1516
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "通过正则表达式搜索来选择"
 
-#: app/core/core-enums.c:1513
+#: app/core/core-enums.c:1517
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "通过 glob 模式搜索来选择"
@@ -13897,7 +13907,7 @@ msgid "Symmetry"
 msgstr "对称"
 
 #: app/core/gimpimage.c:2206 app/pdb/drawable-filter-cmds.c:661
-#: app/widgets/gimpdrawabletreeview-filters.c:976
+#: app/widgets/gimpdrawabletreeview-filters.c:1033
 msgid "Remove filter"
 msgstr "移除滤镜"
 
@@ -14309,7 +14319,7 @@ msgid "Cannot merge down to a layer group."
 msgstr "无法向下合并到图层组。"
 
 #: app/core/gimpimage-merge.c:362
-#: app/widgets/gimpdrawabletreeview-filters.c:950
+#: app/widgets/gimpdrawabletreeview-filters.c:1007
 msgid "The layer to merge down to is locked."
 msgstr "要向下合并的目标图层已被锁定。"
 
@@ -14376,7 +14386,12 @@ msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "缩放图像"
 
-#: app/core/gimpimage-undo-push.c:1198
+#: app/core/gimpimage-undo-push.c:431
+#: app/widgets/gimpdrawabletreeview-filters.c:778
+msgid "Filter visibility"
+msgstr "滤镜可见性"
+
+#: app/core/gimpimage-undo-push.c:1247
 #, c-format
 msgid "Can't undo %s"
 msgstr "无法撤消 %s"
@@ -14434,7 +14449,7 @@ msgstr "无法打开缩略图“%s”：%s"
 
 #: app/core/gimpitem.c:2015 app/core/gimpitem.c:2082
 #: app/display/gimpdisplayshell-dnd.c:383 app/tools/gimptransformtool.c:730
-#: app/widgets/gimpdrawabletreeview-filters.c:774
+#: app/widgets/gimpdrawabletreeview-filters.c:831
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
 
@@ -15420,22 +15435,22 @@ msgstr "工具预设文件已损坏。"
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:258
+#: app/dialogs/about-dialog.c:264
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s（修订版本 %d）"
 
-#: app/dialogs/about-dialog.c:271
+#: app/dialogs/about-dialog.c:277
 msgid "About GIMP"
 msgstr "关于 GIMP"
 
-#: app/dialogs/about-dialog.c:280
+#: app/dialogs/about-dialog.c:286
 msgid "Visit the GIMP website"
 msgstr "访问 GIMP 网站"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:286
+#: app/dialogs/about-dialog.c:292
 msgid "translator-credits"
 msgstr ""
 "Yuheng Xie <elephant@linux.net.cn>, 2001-2004.\n"
@@ -15453,33 +15468,33 @@ msgstr ""
 "lumingzh <lumingzh@qq.com>, 2016-2026.\n"
 "驿窗 <classenu@163.com>, 2024."
 
-#: app/dialogs/about-dialog.c:347 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:360 app/widgets/gimpfiledialog.c:360
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: app/dialogs/about-dialog.c:549
+#: app/dialogs/about-dialog.c:553
 msgid "Update available!"
 msgstr "有更新可用！"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:579
+#: app/dialogs/about-dialog.c:583
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "下载 GIMP %s 修订版本 %d（发布于 %s）\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:589
+#: app/dialogs/about-dialog.c:593
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>发布注释</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:594
+#: app/dialogs/about-dialog.c:598
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "下载 GIMP %s（发布于 %s）\n"
 
-#: app/dialogs/about-dialog.c:619 app/dialogs/about-dialog.c:642
+#: app/dialogs/about-dialog.c:623 app/dialogs/about-dialog.c:646
 msgid "Check for updates"
 msgstr "检查更新"
 
@@ -15487,7 +15502,7 @@ msgstr "检查更新"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:663
+#: app/dialogs/about-dialog.c:667
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "上次检查于 %s 的 %s"
@@ -15496,16 +15511,16 @@ msgstr "上次检查于 %s 的 %s"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:669
+#: app/dialogs/about-dialog.c:673
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "已是最新 %s %s"
 
-#: app/dialogs/about-dialog.c:897
+#: app/dialogs/about-dialog.c:901
 msgid "GIMP is brought to you by"
 msgstr "GIMP 的提供者为"
 
-#: app/dialogs/about-dialog.c:972
+#: app/dialogs/about-dialog.c:976
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -15514,49 +15529,65 @@ msgstr ""
 "这是一个开发版本构建\n"
 "提交编号 %s"
 
-#: app/dialogs/about-dialog.c:1057
+#: app/dialogs/about-dialog.c:1084
 msgid "built from source"
 msgstr "从源代码构建"
 
-#: app/dialogs/about-dialog.c:1067 app/dialogs/module-dialog.c:366
+#. Translators: build id, revision number
+#: app/dialogs/about-dialog.c:1087
+#, c-format
+msgid "%s revision %d"
+msgstr "%s 修订版本 %d"
+
+#: app/dialogs/about-dialog.c:1094 app/dialogs/module-dialog.c:366
 msgid "Version:"
 msgstr "版本："
 
-#: app/dialogs/about-dialog.c:1069
+#: app/dialogs/about-dialog.c:1096
 msgid "OS:"
 msgstr "OS："
 
-#: app/dialogs/about-dialog.c:1085
-#, c-format
-msgid "Memory: %s (%s free)\n"
-msgstr "内存：%s（%s 空闲）\n"
+#: app/dialogs/about-dialog.c:1098 app/dialogs/about-dialog.c:1129
+msgid "unknown"
+msgstr "未知"
 
-#: app/dialogs/about-dialog.c:1091 app/dialogs/about-dialog.c:1098
+#. Translators: total RAM, then how much of it is free
+#: app/dialogs/about-dialog.c:1115 app/dialogs/about-dialog.c:1122
+#: app/dialogs/about-dialog.c:1129
 msgid "Memory:"
 msgstr "内存："
 
-#: app/dialogs/about-dialog.c:1119
+#: app/dialogs/about-dialog.c:1116
 #, c-format
-msgid "Swap: %s free on partition\n"
-msgstr "交换：磁盘上 %s 空闲\n"
+msgid "%s (%s free)"
+msgstr "%s（%s 空闲）"
 
-#: app/dialogs/about-dialog.c:1131
+#: app/dialogs/about-dialog.c:1151
+msgid "Swap:"
+msgstr "交换空间："
+
+#: app/dialogs/about-dialog.c:1152
+#, c-format
+msgid "%s free on partition"
+msgstr "分区上 %s 空闲"
+
+#: app/dialogs/about-dialog.c:1162
 msgid "Library Versions:"
 msgstr "共享库版本："
 
-#: app/dialogs/about-dialog.c:1243 app/dialogs/about-dialog.c:1303
+#: app/dialogs/about-dialog.c:1236 app/dialogs/about-dialog.c:1294
 msgid "Copy Version Information"
 msgstr "复制版本信息"
 
-#: app/dialogs/about-dialog.c:1300
+#: app/dialogs/about-dialog.c:1291
 msgid "Version Information"
 msgstr "版本信息"
 
-#: app/dialogs/about-dialog.c:1302
+#: app/dialogs/about-dialog.c:1293
 msgid "_Copy"
 msgstr "复制(_C)"
 
-#: app/dialogs/about-dialog.c:1359
+#: app/dialogs/about-dialog.c:1349
 msgid "Copied Version Information"
 msgstr "已复制版本信息"
 
@@ -15775,7 +15806,7 @@ msgstr "启用对文本图层的抖动(_L)"
 msgid "Dithering text layers will make them uneditable"
 msgstr "抖动文本图层将使它们不可编辑"
 
-#: app/dialogs/convert-indexed-dialog.c:414 app/pdb/image-convert-cmds.c:164
+#: app/dialogs/convert-indexed-dialog.c:417 app/pdb/image-convert-cmds.c:164
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "无法转换到多于 256 种颜色的色板。"
 
@@ -23643,7 +23674,7 @@ msgstr "已禁用，因为该滤镜依赖于另一幅图像。"
 #. TRANSLATORS: The %s will be replaced by the name of the
 #. * layer type.
 #: app/tools/gimpfiltertool.c:458
-#: app/widgets/gimpdrawabletreeview-filters.c:622
+#: app/widgets/gimpdrawabletreeview-filters.c:624
 #, c-format
 msgid "Disabled because filters cannot be merged on: %s."
 msgstr "已禁用，因为滤镜无法合并到：%s。"
@@ -27463,38 +27494,38 @@ msgctxt "singular"
 msgid "New Layer"
 msgstr "新建图层"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:222
+#: app/widgets/gimpdrawabletreeview-filters.c:224
 msgid "Toggle the visibility of all filters."
 msgstr "切换所有滤镜的可见性。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:238
+#: app/widgets/gimpdrawabletreeview-filters.c:240
 msgid "Edit the selected filter."
 msgstr "编辑选中滤镜。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:254
+#: app/widgets/gimpdrawabletreeview-filters.c:256
 msgid "Raise filter one step up in the stack."
 msgstr "在堆叠中将滤镜升高一步。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:269
+#: app/widgets/gimpdrawabletreeview-filters.c:271
 msgid "Lower filter one step down in the stack."
 msgstr "在堆叠中将滤镜降低一步。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:285
-#: app/widgets/gimpdrawabletreeview-filters.c:627
-#: app/widgets/gimpdrawabletreeview-filters.c:638
+#: app/widgets/gimpdrawabletreeview-filters.c:287
+#: app/widgets/gimpdrawabletreeview-filters.c:629
+#: app/widgets/gimpdrawabletreeview-filters.c:640
 msgid "Merge all active filters down."
 msgstr "向下合并所有活动滤镜。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:301
+#: app/widgets/gimpdrawabletreeview-filters.c:303
 msgid "Remove the selected filter."
 msgstr "移除选中滤镜。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:617
+#: app/widgets/gimpdrawabletreeview-filters.c:619
 msgid "Disabled because filters cannot be merged on group layers."
 msgstr "已禁用，因为滤镜无法合并到群组图层上。"
 
-#: app/widgets/gimpdrawabletreeview-filters.c:875
-#: app/widgets/gimpdrawabletreeview-filters.c:903
+#: app/widgets/gimpdrawabletreeview-filters.c:932
+#: app/widgets/gimpdrawabletreeview-filters.c:960
 msgid "Cannot reorder a filter that is being edited."
 msgstr "无法重新排列正在编辑的滤镜。"
 
@@ -28142,12 +28173,12 @@ msgstr "元数据在早于 2.10 版本的 GIMP 中不可见。"
 #. * it will be used within the generic "%s: %s" (also localized) string.
 #. * e.g.: "Menu: Filters > Generic"
 #.
-#: app/widgets/gimpsearchpopup.c:340
+#: app/widgets/gimpsearchpopup.c:334
 msgid "menu"
 msgstr "菜单"
 
 #. TRANSLATORS: generic "title: value" label which will be used in various ways.
-#: app/widgets/gimpsearchpopup.c:344
+#: app/widgets/gimpsearchpopup.c:338
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -29509,8 +29540,9 @@ msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "撤消历史菜单"
 
-#~ msgid "Swap:"
-#~ msgstr "交换空间："
+#, c-format
+#~ msgid "Memory: %s (%s free)\n"
+#~ msgstr "内存：%s（%s 空闲）\n"
 
 #~ msgid "Disabled because filters cannot be merged on vector layers."
 #~ msgstr "已禁用，因为滤镜无法合并到矢量图层上。"
