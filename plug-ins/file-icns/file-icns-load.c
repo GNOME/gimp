@@ -38,7 +38,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-IcnsResource * resource_load     (FILE         *file);
+IcnsResource * resource_load     (FILE         *file,
+                                  GError      **error);
 
 IcnsResource * resource_find     (GList        *resources,
                                   gchar        *type,
@@ -70,60 +71,63 @@ GimpImage *    icns_load         (IcnsResource *icns,
 /* Ported from Brion Vibber's icnsload.c code, under the GPL license, version 3
  * or any later version of the license */
 IcnsResource *
-resource_load (FILE *file)
+resource_load (FILE    *file,
+               GError **error)
 {
-  IcnsResource *res = NULL;
+  IcnsResource       *res = NULL;
+  IcnsResourceHeader  header;
 
-  if (file)
+  g_return_val_if_fail (file != NULL, NULL);
+
+
+  if (1 == fread (&header, sizeof (IcnsResourceHeader), 1, file))
     {
-      IcnsResourceHeader header;
+      gchar   type[5];
+      guint32 size;
+      gsize   allocation;
 
-      if (1 == fread (&header, sizeof (IcnsResourceHeader), 1, file))
+#ifndef _UCRT
+      strncpy (type, header.type, 4);
+#else
+      strncpy_s (type, 5, header.type, 4);
+#endif
+      type[4] = '\0';
+      size = GUINT32_FROM_BE (header.size);
+
+      if (! strncmp (header.type, "icns", 4) &&
+          size > sizeof (IcnsResourceHeader) &&
+          g_size_checked_add (&allocation, sizeof (IcnsResource), size))
         {
-          gchar   type[5];
-          guint32 size;
-          gsize   allocation;
-
+          res = (IcnsResource *) g_new (guchar, allocation);
 #ifndef _UCRT
-          strncpy (type, header.type, 4);
+          strncpy (res->type, header.type, 4);
 #else
-          strncpy_s (type, 5, header.type, 4);
+          strncpy_s (res->type, 5, header.type, 4);
 #endif
-          type[4] = '\0';
-          size = GUINT32_FROM_BE (header.size);
+          res->type[4] = '\0';
+          res->size = size;
+          res->cursor = sizeof (IcnsResourceHeader);
+          res->data = (guchar *) res + sizeof (IcnsResource);
+          fseek (file, 0, SEEK_SET);
 
-          if (! strncmp (header.type, "icns", 4) &&
-              size > sizeof (IcnsResourceHeader) &&
-              g_size_checked_add (&allocation, sizeof (IcnsResource), size))
+          if (size != fread (res->data, 1, res->size, file))
             {
-              res = (IcnsResource *) g_new (guchar, allocation);
-#ifndef _UCRT
-              strncpy (res->type, header.type, 4);
-#else
-              strncpy_s (res->type, 5, header.type, 4);
-#endif
-              res->type[4] = '\0';
-              res->size = size;
-              res->cursor = sizeof (IcnsResourceHeader);
-              res->data = (guchar *) res + sizeof (IcnsResource);
-              fseek (file, 0, SEEK_SET);
-
-              if (size != fread (res->data, 1, res->size, file))
-                {
-                  g_message ("** expected %d bytes\n", size);
-                  g_free (res);
-                  res = NULL;
-                }
+              g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Error reading data. Image may be corrupt."));
+              g_free (res);
+              res = NULL;
             }
         }
       else
         {
-          g_message (("** couldn't read icns header.\n"));
+          g_set_error (error, G_FILE_ERROR, 0,
+                       _("Invalid header. Possibly corrupt image."));
         }
     }
   else
     {
-      g_message (("** couldn't open file.\n"));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error reading file header."));
     }
   return res;
 }
@@ -645,15 +649,12 @@ icns_load_image (GFile        *file,
       return NULL;
     }
 
-  icns = resource_load (fp);
+  icns = resource_load (fp, error);
 
   fclose (fp);
 
   if (! icns)
-    {
-      g_message ("Invalid or corrupt icns resource file.");
-      return NULL;
-    }
+    return NULL;
 
   image = icns_load (icns, file);
 
@@ -698,14 +699,11 @@ icns_load_thumbnail_image (GFile   *file,
       return NULL;
     }
 
-  icns = resource_load (fp);
+  icns = resource_load (fp, error);
   fclose (fp);
 
   if (! icns)
-    {
-      g_message ("Invalid or corrupt icns resource file.");
-      return NULL;
-    }
+    return NULL;
 
   image = gimp_image_new (1024, 1024, GIMP_RGB);
 
@@ -766,7 +764,8 @@ icns_load_thumbnail_image (GFile   *file,
     }
   else
     {
-      g_message ("Invalid or corrupt icns resource file.");
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Invalid or corrupt icns resource file."));
       return NULL;
     }
 
