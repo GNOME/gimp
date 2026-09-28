@@ -714,6 +714,8 @@ load_image (GFile   *file,
       if (image)
         gimp_image_delete (image);
 
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Error reading data. Image may be corrupt."));
       return NULL;
     }
 
