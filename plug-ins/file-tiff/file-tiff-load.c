@@ -2061,6 +2061,7 @@ load_contiguous (TIFF         *tif,
   gdouble     one_row;
   guint32     y;
   gint        i;
+  gint        src_bpp;
   gboolean    needs_upscale = FALSE;
 
   g_debug ("%s", __func__);
@@ -2071,6 +2072,7 @@ load_contiguous (TIFF         *tif,
   tile_width = image_width;
 
   src_format = babl_format_n (type, spp);
+  src_bpp    = babl_format_get_bytes_per_pixel (src_format);
 
   /* consistency check */
   bytes_per_pixel = 0;
@@ -2081,14 +2083,13 @@ load_contiguous (TIFF         *tif,
     }
 
   g_debug ("bytes_per_pixel: %d, format: %d",
-           bytes_per_pixel,
-           babl_format_get_bytes_per_pixel (src_format));
+           bytes_per_pixel, src_bpp);
 
   if (TIFFIsTiled (tif))
     {
       gsize allocation;
       gint  n_components = babl_format_get_n_components (src_format);
-      gint  format_bpc   = babl_format_get_bytes_per_pixel (src_format);
+      gint  buf_bpp = MAX(bytes_per_pixel, src_bpp);
 
       TIFFGetField (tif, TIFFTAG_TILEWIDTH,  &tile_width);
       TIFFGetField (tif, TIFFTAG_TILELENGTH, &tile_height);
@@ -2097,7 +2098,7 @@ load_contiguous (TIFF         *tif,
        * the file might not match the format set in GIMP */
       if (! g_size_checked_mul (&allocation, tile_width, tile_height)  ||
           ! g_size_checked_mul (&allocation, allocation, n_components) ||
-          ! g_size_checked_mul (&allocation, allocation, format_bpc)   ||
+          ! g_size_checked_mul (&allocation, allocation, buf_bpp)      ||
           ! (buffer = g_try_malloc0 (allocation)))
         {
           g_message (_("There was not enough memory to complete the "
@@ -2190,7 +2191,7 @@ load_contiguous (TIFF         *tif,
           src_buf = gegl_buffer_linear_new_from_data (needs_upscale ? bw_buffer : buffer,
                                                       src_format,
                                                       GEGL_RECTANGLE (0, 0, cols, rows),
-                                                      tile_width * bytes_per_pixel,
+                                                      tile_width * src_bpp,
                                                       NULL, NULL);
 
           offset = 0;
@@ -2198,13 +2199,11 @@ load_contiguous (TIFF         *tif,
           for (i = 0; i <= extra; i++)
             {
               GeglBufferIterator *iter;
-              gint                src_bpp;
               gint                dest_bpp;
 
               if (! channel[i].format)
                 break;
 
-              src_bpp  = babl_format_get_bytes_per_pixel (src_format);
               dest_bpp = babl_format_get_bytes_per_pixel (channel[i].format);
 
               if (channel[i].drawable && channel[i].buffer)
@@ -2227,11 +2226,24 @@ load_contiguous (TIFF         *tif,
 
                       s += offset;
 
-                      while (length--)
+                      if (src_bpp >= dest_bpp)
                         {
-                          memcpy (d, s, dest_bpp);
-                          d += dest_bpp;
-                          s += src_bpp;
+                          while (length--)
+                            {
+                              memcpy (d, s, dest_bpp);
+                              d += dest_bpp;
+                              s += src_bpp;
+                            }
+                          }
+                      else
+                        {
+                          while (length--)
+                            {
+                              memset (d, 0, dest_bpp);
+                              memcpy (d, s, src_bpp);
+                              d += dest_bpp;
+                              s += src_bpp;
+                            }
                         }
                     }
                 }
