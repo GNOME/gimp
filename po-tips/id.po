@@ -8,17 +8,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-04-08 10:21+0000\n"
-"PO-Revision-Date: 2019-04-11 17:45+0700\n"
-"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
+"POT-Creation-Date: 2024-06-11 18:57+0000\n"
+"PO-Revision-Date: 2026-06-03 15:48+0700\n"
+"Last-Translator: Arvi Pratama <zycresth@gmail.com>\n"
 "Language-Team: INDONESIA <gnome@i15n.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.9\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: data/tips/gimp-tips.xml.in:18
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
@@ -27,7 +27,7 @@ msgstr ""
 "GIMP dengan cara menekan tombol F1 kapan saja. Hal ini juga berfungsi dalam "
 "menu."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: data/tips/gimp-tips.xml.in:24
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
@@ -37,7 +37,7 @@ msgstr ""
 "setumpuk slide atau filter, sehingga Anda dapat melihatnya sebagai gabungan "
 "isinya."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: data/tips/gimp-tips.xml.in:31
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -45,10 +45,10 @@ msgstr ""
 "Anda dapat melakukan banyak operasi lapisan dengan cara mengklik kanan label "
 "teks lapisan dalam dialog Lapisan."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: data/tips/gimp-tips.xml.in:37
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
-"xcf</tt>). This preserves the layers and many aspects of your work-in-"
+"Saving an image uses XCF, GIMP's native file format (file extension "
+"<tt>.xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
@@ -57,7 +57,7 @@ msgstr ""
 "pekerjaan Anda yang sedang berlangsung. Begitu proyek selesai, Anda dapat "
 "menyimpannya sebagai JPEG, PNG, GIF, dsb."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: data/tips/gimp-tips.xml.in:45
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -67,7 +67,7 @@ msgstr ""
 "beberapa kasus, Anda harus menggabungkan semua lapisan (Gambar→Ratakan "
 "Gambar) jika Anda ingin pengaya bekerja pada seluruh gambar."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: data/tips/gimp-tips.xml.in:52
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -77,7 +77,7 @@ msgstr ""
 "berarti lapisan ini tidak memiliki kanal-alfa. Anda dapat menambahkan kanal-"
 "alfa dengan menggunakan Lapisan→Transparansi→Tambah Kanal Alfa."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: data/tips/gimp-tips.xml.in:59
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -90,7 +90,7 @@ msgstr ""
 "(Lapisan→Transparansi→Tambahkan Kanal Alfa) atau meratakan gambar "
 "(Gambar→Ratakan Gambar)."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: data/tips/gimp-tips.xml.in:68
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -103,7 +103,7 @@ msgstr ""
 "dikonfigurasi untuk mengabaikan tombol <tt>Alt</tt> atau untuk menggunakan "
 "tombol <tt>Super</tt> (atau \"Windows logo\") sebagai gantinya."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: data/tips/gimp-tips.xml.in:82
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -113,7 +113,7 @@ msgstr ""
 "menyeret warna dari kotak alat atau dari palet warna lalu meletakkannya ke "
 "dalam gambar akan mengisi pilihan saat ini dengan warna tersebut."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: data/tips/gimp-tips.xml.in:89
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -122,7 +122,7 @@ msgstr ""
 "lainnya, Anda dapat menahan <tt>Tombol Spasi</tt> sementara Anda "
 "menggerakkan tetikus)."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: data/tips/gimp-tips.xml.in:95
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -132,7 +132,7 @@ msgstr ""
 "pilihan yang telah diseret akan mengikuti panduan. Anda dapat menghapus "
 "panduan dengan cara menyeretnya keluar dari gambar dengan alat Pindah."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: data/tips/gimp-tips.xml.in:102
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -140,30 +140,30 @@ msgstr ""
 "Anda dapat menyeret lapisan dari dialog Lapisan dan meletakkannya pada kotak "
 "alat. Hal ini akan membuat gambar baru yang hanya berisi lapisan tersebut."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: data/tips/gimp-tips.xml.in:108
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the &quot;New "
-"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
-"use the menus to do the same."
+"layer before doing other operations on the image. Click on the \"New Layer\" "
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
-"Pilihan mengambang harus ditambatkan pada lapisan baru atau pada lapisan "
-"yang terakhir aktif sebelum melakukan operasi lain pada gambar. Klik tombol "
-"&quot;Lapisan Baru&quot; atau &quot;Lapisan Jangkar&quot; dalam dialog "
-"Lapisan, atau gunakan menu untuk melakukan hal yang sama."
+"Seleksi mengambang harus ditambatkan ke lapisan baru atau ke lapisan aktif "
+"terakhir sebelum melakukan operasi lain pada citra. Klik tombol \"Lapisan "
+"Baru\" atau \"Tambatkan Lapisan\" pada dialog Lapisan, atau gunakan menu "
+"untuk melakukan hal yang sama."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: data/tips/gimp-tips.xml.in:116
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
-"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
-"be saved compressed. Of course loading compressed images works too."
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
+"<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
+"will be saved compressed. Of course loading compressed images works too."
 msgstr ""
 "GIMP mendukung kompresi gzip saat pengoperasian. Tambahkan saja <tt>.gz</tt> "
 "(atau <tt>.bz2</tt>, jika Anda sudah menginstal bzip2) ke nama berkas, dan "
 "gambar Anda akan disimpan sebagai berkas terkompresi. Tentu saja pemuatan "
 "gambar terkompresi juga berfungsi."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: data/tips/gimp-tips.xml.in:124
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -174,7 +174,7 @@ msgstr ""
 "Menggunakan <tt>Ctrl</tt> sebelum membuat pilihan akan mengurangi pilihan "
 "saat ini."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: data/tips/gimp-tips.xml.in:132
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -185,7 +185,7 @@ msgstr ""
 "ini. Bentuk yang lebih rumit dapat digambar dengan menggunakan alat Jalur "
 "atau dengan Filter→Render→Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: data/tips/gimp-tips.xml.in:139
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -195,7 +195,7 @@ msgstr ""
 "dengan setelan mereka saat ini. Anda dapat menggunakan Kuas cat dalam mode "
 "gradien atau bahkan alat Penghapus atau Semprot."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: data/tips/gimp-tips.xml.in:146
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -205,19 +205,19 @@ msgstr ""
 "Jalur. Dialog Jalur memungkinkan Anda bekerja pada berbagai jalur dan "
 "mengubahnya menjadi pilihan."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: data/tips/gimp-tips.xml.in:153
 msgid ""
-"You can use the paint tools to change the selection. Click on the &quot;"
-"Quick Mask&quot; button at the bottom left of an image window. Change your "
-"selection by painting in the image and click on the button again to convert "
-"it back to a normal selection."
+"You can use the paint tools to change the selection. Click on the \"Quick "
+"Mask\" button at the bottom left of an image window. Change your selection "
+"by painting in the image and click on the button again to convert it back to "
+"a normal selection."
 msgstr ""
-"Anda dapat menggunakan alat cat untuk mengubah pilihan. Klik tombol &quot;"
-"Masker Cepat&quot; di sebelah kiri bawah jendela gambar. Ubah pilihan Anda "
-"dengan cara menggambari dan klik lagi tombol tersebut untuk mengubahnya "
-"kembali ke pilihan normal."
+"Anda dapat menggunakan alat cat untuk mengubah seleksi. Klik tombol \"Topeng "
+"Cepat\" di kiri bawah jendela citra. Ubah seleksi Anda dengan mengecat pada "
+"citra dan klik tombol itu lagi untuk mengubahnya kembali menjadi seleksi "
+"normal."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: data/tips/gimp-tips.xml.in:161
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -229,26 +229,7 @@ msgstr ""
 "dialog Kanal, Anda dapat memindah visibilitas kanal baru ini atau "
 "mengubahnya menjadi pilihan."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
-msgid ""
-"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
-"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
-"selecting a menu item, and pressing the desired key combination. If &quot;"
-"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
-"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
-"shortcuts."
-msgstr ""
-"Setelah Anda mengaktifkan &quot;Pintasan Papan Tik Dinamis&quot; dalam "
-"dialog Preferensi, Anda dapat mengaktifkan kembali kunci pintasan. Lakukan "
-"hal tersebut dengan memunculkan menu, memilih item menu, dan menekan "
-"kombinasi tombol yang diinginkan. Jika &quot;Pintasan Simpan Papan Tik&quot; "
-"diaktifkan, maka kumpulan tombol tersebut akan disimpan saat Anda keluar "
-"dari GIMP. Anda mungkin harus menonaktifkan &quot;Pintasan Papan Tik "
-"Dinamis&quot; setelahnya, untuk mencegah pengaktifan/penonaktifan pintasan "
-"secara tidak disengaja."
-
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: data/tips/gimp-tips.xml.in:175
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -256,7 +237,7 @@ msgstr ""
 "Jika layar Anda terlalu ramai, Anda dapat menekan <tt>Tab</tt> dalam jendela "
 "gambar untuk memindah visibilitas kotak alat dan dialog lain."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: data/tips/gimp-tips.xml.in:182
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -265,7 +246,7 @@ msgstr ""
 "menyembunyikan semua  lapisan selain lapisan itu. <tt>Shift</tt>-dan "
 "mengklik lagi untuk menampilkan semua lapisan."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: data/tips/gimp-tips.xml.in:188
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -276,7 +257,7 @@ msgstr ""
 "masker lapisan dalam dialog Lapisan akan memindahkan tampilan masker secara "
 "langsung."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: data/tips/gimp-tips.xml.in:195
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -285,7 +266,7 @@ msgstr ""
 "lapisan dalam suatu gambar (jika manajer jendela Anda tidak menjebak tombol-"
 "tombol tersebut...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: data/tips/gimp-tips.xml.in:201
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -297,7 +278,7 @@ msgstr ""
 "mengklik alat tetes-mata akan menyetel warna latar belakang sebagai ganti "
 "warna latar depan."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: data/tips/gimp-tips.xml.in:209
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -305,14 +286,32 @@ msgstr ""
 "<tt>Ctrl</tt>-menyeret dengan alat Putar akan memaksa rotasi ke sudut 15 "
 "derajat."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: data/tips/gimp-tips.xml.in:215
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the &quot;Auto&quot; button in the Levels "
-"tool (Colors→Levels). If there are any color casts, you can correct them "
-"with the Curves tool (Colors→Curves)."
+"improve their tonal range with the \"Auto\" button in the Levels tool "
+"(Colors→Levels). If there are any color casts, you can correct them with the "
+"Curves tool (Colors→Curves)."
 msgstr ""
-"Jika beberapa foto hasil pemindaian Anda tampak kurang berwarna, Anda dapat "
-"meningkatkan kisaran warnanya dengan tombol &quot;Auto&quot; dalam alat "
-"Tingkatan (Warna→Tingkatan). Jika terdapat warna bias, Anda dapat "
-"mengoreksinya dengan alat Kurva (Warna→Kurva)."
+"Jika beberapa foto pindaian Anda terlihat kurang berwarna, Anda dapat dengan "
+"mudah meningkatkan rentang tonalnya dengan tombol \"Otomatis\" di alat "
+"Tingkatan (Warna→Tingkatan). Jika ada warna yang tidak wajar (color cast), "
+"Anda dapat memperbaikinya dengan alat Kurva (Warna→Kurva)."
+
+#~ msgid ""
+#~ "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the "
+#~ "Preferences dialog, you can reassign shortcut keys. Do so by bringing up "
+#~ "the menu, selecting a menu item, and pressing the desired key "
+#~ "combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key "
+#~ "bindings are saved when you exit GIMP. You should probably disable "
+#~ "&quot;Dynamic Keyboard Shortcuts&quot; afterwards, to prevent "
+#~ "accidentally assigning/reassigning shortcuts."
+#~ msgstr ""
+#~ "Setelah Anda mengaktifkan &quot;Pintasan Papan Tik Dinamis&quot; dalam "
+#~ "dialog Preferensi, Anda dapat mengaktifkan kembali kunci pintasan. "
+#~ "Lakukan hal tersebut dengan memunculkan menu, memilih item menu, dan "
+#~ "menekan kombinasi tombol yang diinginkan. Jika &quot;Pintasan Simpan "
+#~ "Papan Tik&quot; diaktifkan, maka kumpulan tombol tersebut akan disimpan "
+#~ "saat Anda keluar dari GIMP. Anda mungkin harus menonaktifkan "
+#~ "&quot;Pintasan Papan Tik Dinamis&quot; setelahnya, untuk mencegah "
+#~ "pengaktifan/penonaktifan pintasan secara tidak disengaja."
