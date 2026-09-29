@@ -212,8 +212,7 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Loads files in Zsoft PCX file format"),
-                                        "FIXME: write help for pcx_load",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Francisco Bustamante & Nick Lamb",
                                       "Nick Lamb <njl195@zepler.org.uk>",
@@ -246,8 +245,7 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Loads files in Zsoft DCX file format"),
-                                        "FIXME: write help for dcx_load",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Francisco Bustamante, Nick Lamb, Alex S.",
                                       "Alex S.",
@@ -282,8 +280,7 @@ pcx_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Exports files in ZSoft PCX file format"),
-                                        "FIXME: write help for pcx_export",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Francisco Bustamante & Nick Lamb",
                                       "Nick Lamb <njl195@zepler.org.uk>",

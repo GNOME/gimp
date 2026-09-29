@@ -130,9 +130,7 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Exports files in the GIMP brush "
                                           "file format"),
-                                        _("Exports files in the GIMP brush "
-                                          "file format"),
-                                        EXPORT_PROC);
+                                        NULL, EXPORT_PROC);
       gimp_procedure_set_attribution (procedure,
                                       "Tim Newsome, Jens Lautenbacher, "
                                       "Sven Neumann",

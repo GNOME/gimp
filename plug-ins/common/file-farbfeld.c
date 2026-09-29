@@ -137,11 +137,8 @@ farbfeld_create_procedure (GimpPlugIn  *plug_in,
                                      _("Farbfeld"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Load file in the Farbfeld file "
-                                          "format"),
-                                        _("Load file in the Farbfeld file "
-                                          "format"),
-                                        name);
+                                        _("Load file in the Farbfeld file format"),
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Alex S.",
                                       "Alex S.",
@@ -163,11 +160,8 @@ farbfeld_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Farbfeld"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Export image in the Farbfeld file "
-                                          "format"),
-                                        _("Export image in the Farbfeld file "
-                                          "format"),
-                                        name);
+                                        _("Export image in the Farbfeld file format"),
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Alex S.",
                                       "Alex S.",

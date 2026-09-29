@@ -103,8 +103,7 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         "A scheme interpreter for scripting "
                                         "GIMP operations",
-                                        "More help here later",
-                                        NULL);
+                                        NULL, NULL);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis",
                                       "Spencer Kimball & Peter Mattis",

@@ -214,8 +214,7 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                         "Loads only the first frame of a "
                                         "GIF image, to be "
                                         "used as a thumbnail",
-                                        "",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Sven Neumann",
                                       "Sven Neumann",
@@ -231,8 +230,7 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                         "Loads only the first frame of a "
                                         "Jeff's Image Format image, to be "
                                         "used as a thumbnail",
-                                        "",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Alx Sa",
                                       "Alx Sa",

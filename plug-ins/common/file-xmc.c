@@ -331,8 +331,7 @@ xmc_create_procedure (GimpPlugIn  *plug_in,
                                           "Cursor's animation sequence which "
                                           "nominal size is the closest of "
                                           "thumb-size to be used as a thumbnail"),
-                                        "",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Takeshi Matsuyama <tksmashiw@gmail.com>",
                                       "Takeshi Matsuyama",

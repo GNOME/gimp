@@ -328,9 +328,7 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         "Loads Photoshop-format metadata "
                                         "from other file formats.",
-                                        "Loads Photoshop-format metadata "
-                                        "from other file formats.",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "John Marshall",
                                       "John Marshall",
@@ -365,9 +363,7 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         "Exports Photoshop-format metadata "
                                         "to other file formats.",
-                                        "Exports Photoshop-format metadata "
-                                        "to other file formats.",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Frank Teklote",
                                       "Frank Teklote",
