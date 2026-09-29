@@ -265,7 +265,7 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                         _("Loads JPEG 2000 codestream."),
                                         _("Loads JPEG 2000 codestream. "
                                           "If the color space is set to "
-                                          "UNKNOWN (0), we will try to guess, "
+                                          "\"unknown\", we will try to guess, "
                                           "which is only possible for few "
                                           "spaces (such as grayscale). Most "
                                           "such calls will fail. You are rather "

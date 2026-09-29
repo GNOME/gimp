@@ -251,14 +251,12 @@ hot_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Find and fix pixels that may "
                                           "be unsafely bright"),
-                                        "hot scans an image for pixels that "
-                                        "will give unsave values of "
+                                        "This procedure scans an image for pixels that "
+                                        "will give unsafe values of "
                                         "chrominance or composite signal "
                                         "amplitude when encoded into an NTSC "
-                                        "or PAL signal. Three actions can be "
-                                        "performed on these 'hot' pixels. "
-                                        "(0) reduce luminance, "
-                                        "(1) reduce saturation, or (2) Blacken.",
+                                        "or PAL signal. Several actions can be "
+                                        "performed on these 'hot' pixels.",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Eric L. Hernes, Alan Wm Paeth",
