@@ -147,7 +147,7 @@ lic_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Special effects that nobody "
                                           "understands"),
-                                        "No help yet",
+                                        NULL,
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Tom Bech & Federico Mena Quintero",

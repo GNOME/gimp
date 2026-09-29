@@ -138,7 +138,7 @@ lighting_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Apply various lighting effects "
                                           "to an image"),
-                                        "No help yet",
+                                        NULL,
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Tom Bech & Federico Mena Quintero",

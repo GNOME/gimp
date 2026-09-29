@@ -243,7 +243,7 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Render fractal art"),
-                                        "No help yet.",
+                                        NULL,
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Daniel Cotting (cotting@multimania.com, "
