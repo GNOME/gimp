@@ -28,7 +28,6 @@
 #include "file-raw-utils.h"
 
 #define LOAD_THUMB_PROC   "file-libraw-load-thumb"
-#define FALLBACK_PRIORITY -100
 
 typedef struct _FileLibRaw      FileLibRaw;
 typedef struct _FileLibRawClass FileLibRawClass;
@@ -129,11 +128,9 @@ file_libraw_create_procedure (GimpPlugIn  *plug_in,
                                                 NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Load thumbnail from a raw image "
-                                        "via libraw",
-                                        "This plug-in loads a thumbnail "
-                                        "from a raw image",
-                                        name);
+                                        _("Load thumbnail from a raw image "
+                                          "via libraw"),
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Alx Sa",
                                       "Alx Sa",
@@ -181,8 +178,6 @@ file_libraw_create_procedure (GimpPlugIn  *plug_in,
                                               format->extensions);
           gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                           format->magic);
-          gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure),
-                                            FALLBACK_PRIORITY);
 
           gimp_load_procedure_set_handles_raw (GIMP_LOAD_PROCEDURE (procedure),
                                                TRUE);
