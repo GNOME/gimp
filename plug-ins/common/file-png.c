@@ -599,6 +599,8 @@ png_export (GimpProcedure        *procedure,
 
 struct read_error_data
 {
+  volatile GimpImage
+               *image;           /* Image */
   guchar       *pixel;           /* Pixel data */
   GeglBuffer   *buffer;          /* GEGL buffer for layer */
   const Babl   *file_format;
@@ -620,7 +622,7 @@ on_read_error (png_structp     png_ptr,
   gint                    end;
   gint                    num;
 
-  g_printerr (_("Error loading PNG file: %s\n"), error_msg);
+  g_message (_("Error loading PNG file: %s"), error_msg);
 
   /* Flush the current half-read row of tiles */
 
@@ -715,35 +717,35 @@ load_image (GFile        *file,
             gboolean     *is_apng,
             GError      **error)
 {
-  gint              i;                    /* Looping var */
-  gint              trns;                 /* Transparency present */
-  gint              bpp;                  /* Bytes per pixel */
-  gint              width;                /* image width */
-  gint              height;               /* image height */
-  gint              num_passes;           /* Number of interlace passes in file */
-  gint              pass;                 /* Current pass in file */
-  gint              tile_height;          /* Height of tile in GIMP */
-  gint              begin;                /* Beginning tile row */
-  gint              end;                  /* Ending tile row */
-  gint              num;                  /* Number of rows to load */
-  GimpImageBaseType image_type;           /* Type of image */
-  GimpPrecision     image_precision;      /* Precision of image */
-  GimpImageType     layer_type;           /* Type of drawable/layer */
-  GimpColorProfile *profile      = NULL;  /* Color profile */
-  gchar            *profile_name = NULL;  /* Profile's name */
-  FILE             *fp;                   /* File pointer */
-  volatile GimpImage *image      = NULL;  /* Image -- protected for setjmp() */
-  GimpLayer        *layer;                /* Layer */
-  GeglBuffer       *buffer;               /* GEGL buffer for layer */
-  const Babl       *file_format;          /* BABL format for layer */
-  png_structp       pp;                   /* PNG read pointer */
-  png_infop         info;                 /* PNG info pointers */
-  png_voidp         user_chunkp;          /* PNG unknown chunk pointer */
-  guchar          **pixels;               /* Pixel rows */
-  guchar           *pixel;                /* Pixel data */
-  guchar            alpha[256];           /* Index -> Alpha */
-  png_textp         text;
-  gint              num_texts;
+  gint                   i;                    /* Looping var */
+  gint                   trns;                 /* Transparency present */
+  gint                   bpp;                  /* Bytes per pixel */
+  gint                   width;                /* image width */
+  gint                   height;               /* image height */
+  gint                   num_passes;           /* Number of interlace passes in file */
+  gint                   pass;                 /* Current pass in file */
+  gint                   tile_height;          /* Height of tile in GIMP */
+  gint                   begin;                /* Beginning tile row */
+  gint                   end;                  /* Ending tile row */
+  gint                   num;                  /* Number of rows to load */
+  GimpImageBaseType      image_type;           /* Type of image */
+  GimpPrecision          image_precision;      /* Precision of image */
+  GimpImageType          layer_type;           /* Type of drawable/layer */
+  GimpColorProfile      *profile      = NULL;  /* Color profile */
+  gchar                 *profile_name = NULL;  /* Profile's name */
+  FILE                  *fp           = NULL;  /* File pointer */
+  volatile GimpImage    *image        = NULL;  /* Image -- protected for setjmp() */
+  GimpLayer             *layer;                /* Layer */
+  GeglBuffer            *buffer;               /* GEGL buffer for layer */
+  const Babl            *file_format;          /* BABL format for layer */
+  png_structp            pp           = NULL;  /* PNG read pointer */
+  png_infop              info         = NULL;  /* PNG info pointers */
+  png_voidp              user_chunkp;          /* PNG unknown chunk pointer */
+  guchar               **pixels       = NULL;  /* Pixel rows */
+  guchar                *pixel        = NULL;  /* Pixel data */
+  guchar                 alpha[256];           /* Index -> Alpha */
+  png_textp              text;
+  gint                   num_texts;
   struct read_error_data error_data;
 
   safe_to_copy_chunks = NULL;
@@ -766,15 +768,44 @@ load_image (GFile        *file,
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Error while reading '%s'. Could not create PNG header info structure."),
                    gimp_file_get_utf8_name (file));
+      png_destroy_read_struct (&pp, NULL, NULL);
       return NULL;
     }
 
   if (setjmp (png_jmpbuf (pp)))
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Error while reading '%s'. File corrupted?"),
-                   gimp_file_get_utf8_name (file));
-      return (GimpImage *) image;
+      struct read_error_data *crash_error_data = png_get_error_ptr (pp);
+      volatile GimpImage     *crash_image      = NULL;
+
+      if (crash_error_data)
+        crash_image = crash_error_data->image;
+
+      if (! crash_image)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error while reading '%s'. File corrupted?"),
+                       gimp_file_get_utf8_name (file));
+        }
+      else
+        { 
+          g_message (_("Error while reading '%s'. File corrupted?"),
+                     gimp_file_get_utf8_name (file));
+        }
+
+      if (fp)
+        fclose(fp);
+      if (crash_error_data)
+        g_free (crash_error_data->pixel);
+      g_free (pixels);
+      /* buffer has already been freed here */
+      if (safe_to_copy_chunks)
+        g_slist_free (safe_to_copy_chunks);
+
+      png_destroy_read_struct (&pp, &info, NULL);
+      free (pp);
+      free (info);
+
+      return (GimpImage *) crash_image;
     }
 
 #ifdef PNG_BENIGN_ERRORS_SUPPORTED
@@ -800,6 +831,9 @@ load_image (GFile        *file,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
                    gimp_file_get_utf8_name (file), g_strerror (errno));
+      png_destroy_read_struct (&pp, &info, NULL);
+      free (pp);
+      free (info);
       return NULL;
     }
 
@@ -1034,6 +1068,11 @@ load_image (GFile        *file,
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Unknown color model in PNG file '%s'."),
                    gimp_file_get_utf8_name (file));
+      png_destroy_read_struct (&pp, &info, NULL);
+      free (pp);
+      free (info);
+      if (fp)
+        fclose(fp);
       return NULL;
     }
 
@@ -1048,6 +1087,11 @@ load_image (GFile        *file,
                    _("Could not create new image for '%s': %s"),
                    gimp_file_get_utf8_name (file),
                    gimp_pdb_get_last_error (gimp_get_pdb ()));
+      png_destroy_read_struct (&pp, &info, NULL);
+      free (pp);
+      free (info);
+      if (fp)
+        fclose(fp);
       return NULL;
     }
 
@@ -1194,6 +1238,7 @@ load_image (GFile        *file,
     pixels[i] = pixel + width * bpp * i;
 
   /* Install our own error handler to handle incomplete PNG files better */
+  error_data.image       = image;
   error_data.buffer      = buffer;
   error_data.pixel       = pixel;
   error_data.file_format = file_format;
