@@ -145,10 +145,8 @@ lic_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Artistic");
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Special effects that nobody "
-                                          "understands"),
-                                        NULL,
-                                        name);
+                                        _("Line Integral Convolution (LIC) effects"),
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Tom Bech & Federico Mena Quintero",
                                       "Tom Bech & Federico Mena Quintero",
