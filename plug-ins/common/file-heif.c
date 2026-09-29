@@ -1047,6 +1047,9 @@ load_image (GFile                 *file,
   GimpPrecision             precision;
   gboolean                  load_linear;
   const char               *encoding;
+#if LIBHEIF_HAVE_VERSION (1, 19, 1)
+  heif_security_limits     *limits;
+#endif
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -1083,6 +1086,19 @@ load_image (GFile                 *file,
       g_object_unref (input);
       return NULL;
     }
+
+  /* Some HEIF files exceed libheif's default of 100
+   * properties in an 'ipco' box. Raise the limit to 360, matching
+   * the value used by KDE.
+   * See issue #16749.
+   */
+
+#if LIBHEIF_HAVE_VERSION (1, 19, 1)
+  limits = heif_context_get_security_limits (ctx);
+
+  if (limits != NULL)
+    limits->max_children_per_box = MAX (limits->max_children_per_box, 360);
+#endif
 
   err = heif_context_read_from_memory (ctx, file_buffer, file_size, NULL);
   if (err.code)
