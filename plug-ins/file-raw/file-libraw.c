@@ -27,40 +27,40 @@
 #include "file-raw-formats.h"
 #include "file-raw-utils.h"
 
-#define LOAD_THUMB_PROC "file-raw-fallback-load-thumb"
-#define FALLBACK_PRIORITY 100
+#define LOAD_THUMB_PROC   "file-libraw-load-thumb"
+#define FALLBACK_PRIORITY -100
 
-typedef struct _RawFallback      RawFallback;
-typedef struct _RawFallbackClass RawFallbackClass;
+typedef struct _FileLibRaw      FileLibRaw;
+typedef struct _FileLibRawClass FileLibRawClass;
 
-struct _RawFallback
+struct _FileLibRaw
 {
   GimpPlugIn      parent_instance;
 };
 
-struct _RawFallbackClass
+struct _FileLibRawClass
 {
   GimpPlugInClass parent_class;
 };
 
 
-#define RAWFALLBACK_TYPE  (rawfallback_get_type ())
-#define RAWFALLBACK(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), RAWFALLBACK_TYPE, RawFallback))
+#define FILELIBRAW_TYPE  (file_libraw_get_type ())
+#define FILELIBRAW(obj)  (G_TYPE_CHECK_INSTANCE_CAST ((obj), FILELIBRAW_TYPE, FileLibRaw))
 
-GType                   rawfallback_get_type         (void);
+GType                   file_libraw_get_type         (void);
 
-static GList          * rawfallback_init_procedures  (GimpPlugIn            *plug_in);
-static GimpProcedure  * rawfallback_create_procedure (GimpPlugIn            *plug_in,
+static GList          * file_libraw_init_procedures  (GimpPlugIn            *plug_in);
+static GimpProcedure  * file_libraw_create_procedure (GimpPlugIn            *plug_in,
                                                       const gchar           *name);
 
-static GimpValueArray * rawfallback_load             (GimpProcedure         *procedure,
+static GimpValueArray * file_libraw_load             (GimpProcedure         *procedure,
                                                       GimpRunMode            run_mode,
                                                       GFile                 *file,
                                                       GimpMetadata          *metadata,
                                                       GimpMetadataLoadFlags *flags,
                                                       GimpProcedureConfig   *config,
                                                       gpointer               run_data);
-static GimpValueArray * rawfallback_load_thumb       (GimpProcedure         *procedure,
+static GimpValueArray * file_libraw_load_thumb       (GimpProcedure         *procedure,
                                                       GFile                 *file,
                                                       gint                   size,
                                                       GimpProcedureConfig   *config,
@@ -74,29 +74,29 @@ static GimpImage      * load_thumbnail_image         (GFile                 *fil
                                                       GError               **error);
 
 
-G_DEFINE_TYPE (RawFallback, rawfallback, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (FileLibRaw, file_libraw, GIMP_TYPE_PLUG_IN)
 
-GIMP_MAIN (RAWFALLBACK_TYPE)
+GIMP_MAIN (FILELIBRAW_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
-rawfallback_class_init (RawFallbackClass *klass)
+file_libraw_class_init (FileLibRawClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  GimpPlugInClass *plug_in_class  = GIMP_PLUG_IN_CLASS (klass);
 
-  plug_in_class->init_procedures  = rawfallback_init_procedures;
-  plug_in_class->create_procedure = rawfallback_create_procedure;
+  plug_in_class->init_procedures  = file_libraw_init_procedures;
+  plug_in_class->create_procedure = file_libraw_create_procedure;
   plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
-rawfallback_init (RawFallback *raw_fallback)
+file_libraw_init (FileLibRaw *file_libraw)
 {
 }
 
 static GList *
-rawfallback_init_procedures (GimpPlugIn *plug_in)
+file_libraw_init_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -107,7 +107,7 @@ rawfallback_init_procedures (GimpPlugIn *plug_in)
       const FileFormat *format = &file_formats[i];
       gchar            *load_proc;
 
-      load_proc = g_strdup_printf (format->load_proc_format, "raw-fallback");
+      load_proc = g_strdup_printf (format->load_proc_format, "libraw");
 
       list = g_list_append (list, load_proc);
     }
@@ -116,8 +116,8 @@ rawfallback_init_procedures (GimpPlugIn *plug_in)
 }
 
 static GimpProcedure *
-rawfallback_create_procedure (GimpPlugIn  *plug_in,
-                              const gchar *name)
+file_libraw_create_procedure (GimpPlugIn  *plug_in,
+                         const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
@@ -125,7 +125,7 @@ rawfallback_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_thumbnail_procedure_new (plug_in, name,
                                                 GIMP_PDB_PROC_TYPE_PLUGIN,
-                                                rawfallback_load_thumb,
+                                                file_libraw_load_thumb,
                                                 NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
@@ -150,7 +150,7 @@ rawfallback_create_procedure (GimpPlugIn  *plug_in,
           gchar            *load_blurb;
           gchar            *load_help;
 
-          load_proc = g_strdup_printf (format->load_proc_format, "raw-fallback");
+          load_proc = g_strdup_printf (format->load_proc_format, "libraw");
 
           if (strcmp (name, load_proc))
             {
@@ -159,13 +159,13 @@ rawfallback_create_procedure (GimpPlugIn  *plug_in,
             }
 
           load_blurb = g_strdup_printf (format->load_blurb_format,
-                                        "raw-fallback");
+                                        "libraw");
           load_help  = g_strdup_printf (format->load_help_format,
-                                        "raw-fallback");
+                                        "libraw");
 
           procedure = gimp_load_procedure_new (plug_in, name,
                                                GIMP_PDB_PROC_TYPE_PLUGIN,
-                                               rawfallback_load,
+                                               file_libraw_load,
                                                (gpointer) format, NULL);
 
           gimp_procedure_set_documentation (procedure,
@@ -201,13 +201,13 @@ rawfallback_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-rawfallback_load (GimpProcedure         *procedure,
-                  GimpRunMode            run_mode,
-                  GFile                 *file,
-                  GimpMetadata          *metadata,
-                  GimpMetadataLoadFlags *flags,
-                  GimpProcedureConfig   *config,
-                  gpointer               run_data)
+file_libraw_load (GimpProcedure         *procedure,
+                 GimpRunMode             run_mode,
+                 GFile                  *file,
+                 GimpMetadata           *metadata,
+                 GimpMetadataLoadFlags  *flags,
+                 GimpProcedureConfig    *config,
+                 gpointer                run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
@@ -230,11 +230,11 @@ rawfallback_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-rawfallback_load_thumb (GimpProcedure       *procedure,
-                        GFile               *file,
-                        gint                 size,
-                        GimpProcedureConfig *config,
-                        gpointer             run_data)
+file_libraw_load_thumb (GimpProcedure       *procedure,
+                       GFile                *file,
+                       gint                  size,
+                       GimpProcedureConfig  *config,
+                       gpointer              run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
@@ -276,6 +276,8 @@ load_image (GFile        *file,
   raw_info = libraw_init (flags);
   if (raw_info == NULL)
     {
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Error reading data. Image may be corrupt."));
       libraw_close (raw_info);
       return NULL;
     }
@@ -283,6 +285,8 @@ load_image (GFile        *file,
   raw_error = libraw_open_file (raw_info, g_file_peek_path (file));
   if (raw_error != LIBRAW_SUCCESS)
     {
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Error reading data. Image may be corrupt."));
       libraw_close (raw_info);
       return NULL;
     }
@@ -290,6 +294,8 @@ load_image (GFile        *file,
   raw_error = libraw_unpack (raw_info);
   if (raw_error != LIBRAW_SUCCESS)
     {
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Error reading data. Image may be corrupt."));
       libraw_close (raw_info);
       return NULL;
     }
@@ -302,6 +308,8 @@ load_image (GFile        *file,
   raw_error = libraw_dcraw_process (raw_info);
   if (raw_error != LIBRAW_SUCCESS)
     {
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Error reading data. Image may be corrupt."));
       libraw_close (raw_info);
       return NULL;
     }
@@ -309,11 +317,7 @@ load_image (GFile        *file,
   image_data = libraw_dcraw_make_mem_image (raw_info, &raw_error);
   if (raw_error == LIBRAW_SUCCESS)
     {
-      if (image_data->type == LIBRAW_IMAGE_JPEG)
-        {
-          /* TODO: Save to temp file and pass to JPEG plug-in */
-        }
-      else if (image_data->type == LIBRAW_IMAGE_BITMAP)
+      if (image_data->type == LIBRAW_IMAGE_BITMAP)
         {
           GimpImageBaseType  image_type = GIMP_RGB;
           GimpImageType      layer_type = GIMP_RGB_IMAGE;
@@ -342,6 +346,8 @@ load_image (GFile        *file,
               if (image_data != NULL)
                 libraw_dcraw_clear_mem (image_data);
 
+              g_set_error (error, G_FILE_ERROR, 0,
+                           _("Error reading data. Image may be corrupt."));
               libraw_close (raw_info);
               return NULL;
             }
@@ -359,6 +365,8 @@ load_image (GFile        *file,
               if (image_data != NULL)
                 libraw_dcraw_clear_mem (image_data);
 
+              g_set_error (error, G_FILE_ERROR, 0,
+                           _("Error reading data. Image may be corrupt."));
               libraw_close (raw_info);
               return NULL;
             }
@@ -418,6 +426,8 @@ load_thumbnail_image (GFile   *file,
 
   if (raw_info == NULL)
     {
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Error reading data. Image may be corrupt."));
       libraw_close (raw_info);
       return NULL;
     }
@@ -425,6 +435,8 @@ load_thumbnail_image (GFile   *file,
   raw_error = libraw_open_file (raw_info, g_file_peek_path (file));
   if (raw_error != LIBRAW_SUCCESS)
     {
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Error reading data. Image may be corrupt."));
       libraw_close (raw_info);
       return NULL;
     }
@@ -432,6 +444,8 @@ load_thumbnail_image (GFile   *file,
   raw_error = libraw_unpack_thumb (raw_info);
   if (raw_error != LIBRAW_SUCCESS)
     {
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Error reading data. Image may be corrupt."));
       libraw_close (raw_info);
       return NULL;
     }
@@ -444,7 +458,40 @@ load_thumbnail_image (GFile   *file,
     {
       if (thumbnail->type == LIBRAW_IMAGE_JPEG)
         {
-          /* TODO: Save to temp file and pass to JPEG plug-in */
+          GFile          *temp_file      = NULL;
+          FILE           *fp;
+          GimpValueArray *return_vals    = NULL;
+          GimpProcedure  *procedure;
+
+          temp_file = gimp_temp_file ("jpeg");
+          fp        = g_fopen (g_file_peek_path (temp_file), "wb");
+
+          if (! fp)
+            {
+              g_set_error (error, G_FILE_ERROR, 0,
+                           _("Error reading data. Image may be corrupt."));
+              g_file_delete (temp_file, NULL, NULL);
+              g_object_unref (temp_file);
+              return NULL;
+            }
+
+          fwrite (thumbnail->data, sizeof (guchar), thumbnail->data_size, fp);
+          fclose (fp);
+
+          procedure   = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+                                                   "file-jpeg-load");
+          return_vals = gimp_procedure_run (procedure,
+                                            "run-mode", GIMP_RUN_NONINTERACTIVE,
+                                            "file",     temp_file,
+                                            NULL);
+
+         if (return_vals)
+           image =
+             g_value_get_object (gimp_value_array_index (return_vals, 1));
+
+          g_file_delete (temp_file, NULL, NULL);
+          g_object_unref (temp_file);
+          g_clear_pointer (&return_vals, gimp_value_array_unref);
         }
       else if (thumbnail->type == LIBRAW_IMAGE_BITMAP)
         {

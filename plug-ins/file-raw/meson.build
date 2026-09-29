@@ -8,7 +8,7 @@ file_raw_exes = [
 
 if libraw.found()
   file_raw_exes += {
-    'name': 'file-raw-fallback',
+    'name': 'file-libraw',
     'deps': [ libraw, ],
   }
 endif
