@@ -961,6 +961,7 @@ filters_actions_update (GimpActionGroup *group,
   gboolean      gray           = FALSE;
   gboolean      alpha          = FALSE;
   gboolean      supports_alpha = FALSE;
+  gboolean      is_group       = FALSE;
   gboolean      force_nde      = FALSE;
 
   image = action_data_get_image (data);
@@ -986,6 +987,9 @@ filters_actions_update (GimpActionGroup *group,
             item = GIMP_ITEM (drawable);
 
           writable = ! gimp_item_is_content_locked (item, NULL);
+
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+            is_group = TRUE;
 
           if (GIMP_IS_GROUP_LAYER (drawable)                    ||
               (gimp_item_is_rasterizable (GIMP_ITEM (drawable)) &&
