@@ -181,10 +181,8 @@ flame_create_procedure (GimpPlugIn  *plug_in,
                                     "<Image>/Filters/Render/Fractals");
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Create cosmic recursive fractal "
-                                          "flames"),
-                                        "Create cosmic recursive fractal flames",
-                                        name);
+                                        _("Create cosmic recursive fractal flames"),
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Scott Draves",
                                       "Scott Draves",

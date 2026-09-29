@@ -142,8 +142,7 @@ blinds_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Simulate an image painted on "
                                           "window blinds"),
-                                        NULL,
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Andy Thomas",
                                       "Andy Thomas",

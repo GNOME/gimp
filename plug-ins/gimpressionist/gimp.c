@@ -123,11 +123,8 @@ gimpressionist_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Artistic");
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Performs various artistic "
-                                          "operations"),
-                                        _("Performs various artistic operations "
-                                          "on an image"),
-                                        name);
+                                        _("Performs various artistic operations"),
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Vidar Madsen <vidar@prosalg.no>",
                                       "Vidar Madsen",

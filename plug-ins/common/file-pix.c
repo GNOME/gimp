@@ -175,9 +175,7 @@ pix_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Loads files of the Alias|Wavefront "
                                           "or Esm Software Pix file format"),
-                                        _("Loads files of the Alias|Wavefront "
-                                          "or Esm Software Pix file format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Michael Taylor",
                                       "Michael Taylor",
@@ -206,9 +204,7 @@ pix_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Export file in the Alias|Wavefront "
                                           "pix/matte file format"),
-                                        _("Export file in the Alias|Wavefront "
-                                          "pix/matte file format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Michael Taylor",
                                       "Michael Taylor",

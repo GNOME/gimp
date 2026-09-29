@@ -178,8 +178,7 @@ wmf_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files in the WMF file format",
-                                        "Loads files in the WMF file format",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Dom Lachowicz <cinamod@hotmail.com>",
                                       "Dom Lachowicz <cinamod@hotmail.com>",
@@ -205,8 +204,7 @@ wmf_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads a small preview from a WMF image",
-                                        "",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Dom Lachowicz <cinamod@hotmail.com>",
                                       "Dom Lachowicz <cinamod@hotmail.com>",

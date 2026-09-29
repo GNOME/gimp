@@ -343,8 +343,7 @@ mng_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads a preview from a MNG file",
-                                        "",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Alex S.",
                                       "Alex S.",

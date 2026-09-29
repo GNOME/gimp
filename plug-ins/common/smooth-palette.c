@@ -123,8 +123,7 @@ palette_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Derive a smooth color palette "
                                           "from the image"),
-                                        "help!",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Scott Draves",
                                       "Scott Draves",

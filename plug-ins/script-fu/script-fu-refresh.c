@@ -88,7 +88,7 @@ script_fu_register_refresh_procedure (GimpPlugIn *plug_in)
 
   gimp_procedure_set_documentation (procedure,
                                     _("Re-read all available Script-Fu scripts"),
-                                    "Re-read all available Script-Fu scripts",
+                                    NULL,
                                     "script-fu-refresh");
   gimp_procedure_set_attribution (procedure,
                                   "Spencer Kimball & Peter Mattis",

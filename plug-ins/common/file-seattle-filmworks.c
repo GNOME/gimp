@@ -161,9 +161,7 @@ seattle_filmworks_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Load file in the Seattle FilmWorks "
                                           "file format"),
-                                        _("Load file in the Seattle FilmWorks "
-                                          "file format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Alex S.",
                                       "Alex S.",

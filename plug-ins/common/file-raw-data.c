@@ -348,11 +348,8 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_menu_label (procedure, _("Raw image data"));
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Load raw images, specifying image "
-                                          "information"),
-                                        _("Load raw images, specifying image "
-                                          "information"),
-                                        name);
+                                        _("Load raw images, specifying image information"),
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "timecop, pg@futureware.at",
                                       "timecop, pg@futureware.at",
@@ -520,8 +517,7 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Load HRZ data as images",
-                                        NULL,
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Albert Cahalan",
                                       "Albert Cahalan",
@@ -542,8 +538,7 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Dump images to disk in raw format"),
-                                        _("Dump images to disk in raw format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Björn Kautler, Bjoern@Kautler.net",
                                       "Björn Kautler, Bjoern@Kautler.net",

@@ -129,8 +129,7 @@ webp_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads images in the WebP file format",
-                                        "Loads images in the WebP file format",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Nathan Osman, Ben Touchette",
                                       "(C) 2015-2016 Nathan Osman, "

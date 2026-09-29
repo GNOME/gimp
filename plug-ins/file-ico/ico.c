@@ -177,8 +177,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of Windows ICO file format",
-                                        "Loads files of Windows ICO file format",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>",
                                       "Christian Kreibich <christian@whoop.org>",
@@ -205,8 +204,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of Windows CUR file format",
-                                        "Loads files of Windows CUR file format",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "Nikc M.",
@@ -235,8 +233,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Loads files of Windows ANI file format"),
-                                        "Loads files of Windows ANI file format",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "James Huang, Alex S.",
@@ -262,8 +259,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads a preview from a Windows ICO or CUR files",
-                                        "",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Dom Lachowicz, Sven Neumann",
                                       "Sven Neumann <sven@gimp.org>",
@@ -277,8 +273,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Loads a preview from a Windows ANI files"),
-                                        "",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Dom Lachowicz, Sven Neumann, James Huang, "
                                       "Alex S.",
@@ -300,8 +295,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in Windows ICO file format",
-                                        "Exports files in Windows ICO file format",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>",
                                       "Christian Kreibich <christian@whoop.org>",
@@ -335,8 +329,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in Windows CUR file format",
-                                        "Exports files in Windows CUR file format",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "Nikc M.",
@@ -381,8 +374,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Exports files in Windows ANI file format"),
-                                        _("Exports files in Windows ANI file format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Christian Kreibich <christian@whoop.org>, "
                                       "James Huang, Alex S.",

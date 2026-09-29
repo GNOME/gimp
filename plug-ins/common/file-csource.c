@@ -124,9 +124,7 @@ csource_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Dump image data in RGB(A) format "
                                           "for C source"),
-                                        _("Dump image data in RGB(A) format "
-                                          "for C source"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Tim Janik",
                                       "Tim Janik",

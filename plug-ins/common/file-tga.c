@@ -263,8 +263,7 @@ tga_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of Targa file format",
-                                        "FIXME: write help for tga_load",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Raphael FRANCOIS, Gordon Matzigkeit",
                                       "Raphael FRANCOIS, Gordon Matzigkeit",
@@ -289,8 +288,7 @@ tga_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in the Targa file format",
-                                        "FIXME: write help for tga_export",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Raphael FRANCOIS, Gordon Matzigkeit",
                                       "Raphael FRANCOIS, Gordon Matzigkeit",

@@ -217,8 +217,7 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads JPEG 2000 images.",
-                                        "The JPEG 2000 image loader.",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Aurimas Juška",
                                       "Aurimas Juška, Florian Traverse",
@@ -312,8 +311,7 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Exports files in JPEG 2000 file format"),
-                                        _("Exports files in JPEG 2000 file format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Advance Software",
                                       "Advance Software",
@@ -400,8 +398,7 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Exports files in JPEG 2000 codestream format"),
-                                        _("Exports files in JPEG 2000 codestream format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Advance Software",
                                       "Advance Software",

@@ -131,8 +131,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Loads files in DDS image format"),
-                                        _("Loads files in DDS image format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Shawn Kirst",
                                       "Shawn Kirst",
@@ -173,8 +172,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Exports files in DDS image format"),
-                                        _("Exports files in DDS image format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Shawn Kirst",
                                       "Shawn Kirst",

@@ -277,8 +277,7 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Load file of the SunRaster file format"),
-                                        _("Load file of the SunRaster file format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner",
                                       "Peter Kirchgessner",

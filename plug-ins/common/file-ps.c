@@ -362,8 +362,7 @@ ps_create_procedure (GimpPlugIn  *plug_in,
 
           gimp_procedure_set_documentation (procedure,
                                             _("Load PostScript documents"),
-                                            _("Load PostScript documents"),
-                                            name);
+                                            NULL, name);
 
           gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
                                                _("PostScript"));
@@ -381,8 +380,7 @@ ps_create_procedure (GimpPlugIn  *plug_in,
 
           gimp_procedure_set_documentation (procedure,
                                             _("Load Encapsulated PostScript images"),
-                                            _("Load Encapsulated PostScript images"),
-                                            name);
+                                            NULL, name);
 
           gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
                                                _("Encapsulated PostScript"));
@@ -451,8 +449,7 @@ ps_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_documentation (procedure,
                                         _("Loads a small preview from a "
                                           "PostScript or PDF document"),
-                                        "",
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner <peter@kirchgessner.net>",
                                       "Peter Kirchgessner",

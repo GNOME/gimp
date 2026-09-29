@@ -130,8 +130,7 @@ wbmp_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Loads files of Wireless BMP file format"),
-                                        _("Loads files of Wireless BMP file format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Kevin Toyle",
                                       "Kevin Toyle",
@@ -152,8 +151,7 @@ wbmp_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_documentation (procedure,
                                         _("Loads files in Nokia Over The Air Bitmap file format"),
-                                        _("Loads files in Nokia Over The Air Bitmap file format"),
-                                        name);
+                                        NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Alx Sa",
                                       "Alx Sa",
