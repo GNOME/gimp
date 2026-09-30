@@ -290,7 +290,7 @@ for df in def_files:
          continue
 
    fun_def_pattern = re.compile("\\b(" + symbol_prefix + "_[a-z0-9_]*)\\s*\\(")
-   for filename in [os.path.relpath(os.path.join(root, f), os.path.join(src_root, directory)) for root, _, files in os.walk(os.path.join(src_root, directory)) for f in files]:
+   for filename in [os.path.relpath(os.path.join(root, f), os.path.join(src_root, directory)).replace(os.sep, '/') for root, _, files in os.walk(os.path.join(src_root, directory)) for f in files]:
       private_equivalent = special_cased[directory] if directory in special_cased else [ ]
       if filename.endswith('-private.h') or filename in private_equivalent:
          priv_header = os.path.join(src_root, directory, filename)
