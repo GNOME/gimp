@@ -1021,34 +1021,34 @@ load_image (GFile                 *file,
             GimpPDBStatusType     *status,
             GError               **error)
 {
-  GInputStream             *input;
-  goffset                   file_size;
-  guchar                   *file_buffer;
-  gsize                     bytes_read;
-  struct heif_context      *ctx;
-  struct heif_error         err;
-  struct heif_image_handle *handle  = NULL;
-  struct heif_image        *img     = NULL;
-  GimpColorProfile         *profile = NULL;
-  gint                      n_images;
-  heif_item_id              primary;
-  heif_item_id              selected_image;
-  gboolean                  has_alpha;
-  gint                      width;
-  gint                      height;
-  GimpImage                *image;
-  GimpLayer                *layer;
-  GeglBuffer               *buffer;
-  const Babl               *format;
-  const guint8             *data;
-  gint                      stride;
-  gint                      bit_depth = 8;
-  enum heif_chroma          chroma    = heif_chroma_interleaved_RGB;
-  GimpPrecision             precision;
-  gboolean                  load_linear;
-  const char               *encoding;
+  GInputStream                *input;
+  goffset                      file_size;
+  guchar                      *file_buffer;
+  gsize                        bytes_read;
+  struct heif_context         *ctx;
+  struct heif_error            err;
+  struct heif_image_handle    *handle  = NULL;
+  struct heif_image           *img     = NULL;
+  GimpColorProfile            *profile = NULL;
+  gint                         n_images;
+  heif_item_id                 primary;
+  heif_item_id                 selected_image;
+  gboolean                     has_alpha;
+  gint                         width;
+  gint                         height;
+  GimpImage                   *image;
+  GimpLayer                   *layer;
+  GeglBuffer                  *buffer;
+  const Babl                  *format;
+  const guint8                *data;
+  gint                         stride;
+  gint                         bit_depth = 8;
+  enum heif_chroma             chroma    = heif_chroma_interleaved_RGB;
+  GimpPrecision                precision;
+  gboolean                     load_linear;
+  const char                  *encoding;
 #if LIBHEIF_HAVE_VERSION (1, 19, 1)
-  heif_security_limits     *limits;
+  struct heif_security_limits *limits;
 #endif
 
   gimp_progress_init_printf (_("Opening '%s'"),
