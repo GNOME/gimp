@@ -213,6 +213,7 @@ parts:
       - libheif-plugin-j2kenc
       - libmng2
       - libmypaint-1.5-1
+      - libraw23t64
       - libwmf-0.2-7
       - libxmu6
       - mypaint-brushes
