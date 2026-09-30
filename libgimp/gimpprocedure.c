@@ -1229,10 +1229,11 @@ gimp_procedure_get_icon_pixbuf (GimpProcedure *procedure)
  * @help:    (nullable): The @procedure's help text.
  * @help_id: (nullable): The @procedure's help ID.
  *
- * Sets various documentation strings on @procedure:
+ * Sets various optional documentation strings on @procedure:
  *
  * * @blurb is used for instance as the @procedure's tooltip when represented in
- *   the UI such as a menu entry.
+ *   the UI such as a menu entry, or in "Search Actions" widget under
+ *   the main procedure's label.
  * * @help is a free-form text that's meant as additional documentation for
  *   developers of scripts and plug-ins. If the @blurb and the argument names
  *   and descriptions are enough for a quite self-explanatory procedure, you may
