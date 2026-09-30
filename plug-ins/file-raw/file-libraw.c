@@ -128,8 +128,7 @@ file_libraw_create_procedure (GimpPlugIn  *plug_in,
                                                 NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
-                                        _("Load thumbnail from a raw image "
-                                          "via libraw"),
+                                        _("Load thumbnail from a raw image"),
                                         NULL, name);
       gimp_procedure_set_attribution (procedure,
                                       "Alx Sa",

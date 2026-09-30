@@ -197,6 +197,7 @@ parts:
       - libmng-dev
       - libmypaint-dev
       - libqoi-dev
+      - libraw-dev
       - libwmf-dev
       - libxmu-dev
       - libxpm-dev #FIXME: https://github.com/ubuntu/gnome-sdk/issues/319
