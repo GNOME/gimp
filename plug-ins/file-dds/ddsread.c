@@ -229,18 +229,23 @@ read_dds (GFile                *file,
   /* If format search was successful, get info needed to parse the file */
   if (load_info.d3d9_format || load_info.dxgi_format)
     {
-      gint d3d9_bpp = 0;
-      gint dxgi_bpp = 0;
+      guint bpp_from_format = 0;
 
       load_info.read_info = get_format_read_info (load_info.d3d9_format,
                                                   load_info.dxgi_format);
 
       if (load_info.d3d9_format)
-        d3d9_bpp = get_bpp_d3d9 (load_info.d3d9_format);
+        bpp_from_format = get_bpp_d3d9 (load_info.d3d9_format);
       else if (load_info.dxgi_format)
-        dxgi_bpp = get_bpp_dxgi (load_info.dxgi_format);
+        bpp_from_format = get_bpp_dxgi (load_info.dxgi_format);
 
-      hdr.pixelfmt.bpp = MAX (MAX (hdr.pixelfmt.bpp, d3d9_bpp), dxgi_bpp);
+      if (hdr.pixelfmt.bpp != bpp_from_format)
+        {
+          g_printerr ("Unexpected bpp (%u) set to %u\n",
+                      hdr.pixelfmt.bpp, bpp_from_format);
+        }
+      /* Don't trust user set bpp, always use bpp from format. */
+      hdr.pixelfmt.bpp = bpp_from_format;
 
       /* Unset the FourCC flag as D3D formats will be handled as uncompressed */
       if ((load_info.fmt_flags & DDPF_FOURCC) && load_info.d3d9_format)
@@ -425,7 +430,7 @@ read_dds (GFile                *file,
           load_info.flags &= ~DDSD_LINEARSIZE;
         }
 
-      load_info.pitch = (hdr.width * hdr.pixelfmt.bpp + 7) >> 3;
+      load_info.pitch = ((gsize) hdr.width * hdr.pixelfmt.bpp + 7) >> 3;
 
       if (load_info.pitch != hdr.pitch_or_linsize)
         {
@@ -1000,6 +1005,8 @@ validate_dx10_header (dds_header_dx10_t  *dx10hdr,
                       dds_load_info_t    *load_info,
                       GError            **error)
 {
+  gint format_bpp;
+
   if ((dx10hdr->resourceDimension != D3D10_RESOURCE_DIMENSION_TEXTURE1D) &&
       (dx10hdr->resourceDimension != D3D10_RESOURCE_DIMENSION_TEXTURE2D) &&
       (dx10hdr->resourceDimension != D3D10_RESOURCE_DIMENSION_TEXTURE3D))
@@ -1049,6 +1056,22 @@ validate_dx10_header (dds_header_dx10_t  *dx10hdr,
     }
 
   load_info->dxgi_format = dx10hdr->dxgiFormat & 0xFF;
+
+  format_bpp = get_bpp_dxgi(load_info->dxgi_format);
+  if (format_bpp != load_info->bpp)
+    {
+      /* Some dds images may set bpp to 0 assuming it is implied based on format */
+      if (load_info->bpp == 0)
+        {
+          load_info->bpp = format_bpp;
+        }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid pixel format."));
+          return FALSE;
+        }
+    }
 
   return TRUE;
 }
