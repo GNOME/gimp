@@ -13,10 +13,10 @@ if libraw.found()
   }
 endif
 
-foreach plugin : file_raw_exes
+foreach raw_plugin : file_raw_exes
 
-  plugin_name = plugin.get('name')
-  plugin_deps = plugin.get('deps', [])
+  plugin_name = raw_plugin.get('name')
+  plugin_deps = raw_plugin.get('deps', [])
   plugin_sourcecode = [
     plugin_name +'.c',
     'file-raw-utils.c',
