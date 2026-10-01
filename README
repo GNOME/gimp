@@ -49,6 +49,10 @@ articles of particular interest for newcomers could be:
 * GIMP Coding Style: https://developer.gimp.org/core/coding_style/
 * Submit your first patch: https://developer.gimp.org/core/submit-patch/
 
+WARNING: no genAI-generated contents is allowed in any repository
+managed by the GIMP project (neither code nor text, images…). GIMP is a
+project for humans by humans.
+
 
 3. Discussion Channels
 ======================
