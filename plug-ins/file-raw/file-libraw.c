@@ -195,13 +195,13 @@ file_libraw_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static GimpValueArray *
-file_libraw_load (GimpProcedure         *procedure,
-                 GimpRunMode             run_mode,
-                 GFile                  *file,
-                 GimpMetadata           *metadata,
-                 GimpMetadataLoadFlags  *flags,
-                 GimpProcedureConfig    *config,
-                 gpointer                run_data)
+file_libraw_load (GimpProcedure          *procedure,
+                  GimpRunMode             run_mode,
+                  GFile                  *file,
+                  GimpMetadata           *metadata,
+                  GimpMetadataLoadFlags  *flags,
+                  GimpProcedureConfig    *config,
+                  gpointer                run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
@@ -224,11 +224,11 @@ file_libraw_load (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-file_libraw_load_thumb (GimpProcedure       *procedure,
-                       GFile                *file,
-                       gint                  size,
-                       GimpProcedureConfig  *config,
-                       gpointer              run_data)
+file_libraw_load_thumb (GimpProcedure        *procedure,
+                        GFile                *file,
+                        gint                  size,
+                        GimpProcedureConfig  *config,
+                        gpointer              run_data)
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
