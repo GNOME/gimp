@@ -38,6 +38,7 @@ option('aa',                type: 'feature', value: 'auto', description: 'AA plu
 option('alsa',              type: 'feature', value: 'auto', description: 'Alsa support in midi input controller')
 option('appdata-test',      type: 'feature', value: 'auto', description: 'Validate the appdata file')
 option('cairo-pdf',         type: 'feature', value: 'auto', description: 'Cairo-pdf support')
+option('camera-raw',        type: 'feature', value: 'auto', description: 'Fallback support for loading Camera RAW images')
 option('fits',              type: 'feature', value: 'auto', description: 'Support for loading/exporting FITS images')
 option('ghostscript',       type: 'feature', value: 'auto', description: 'Ghostscript support')
 option('gudev',             type: 'feature', value: 'auto', description: 'Gudev support')

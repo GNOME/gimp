@@ -38,6 +38,7 @@ ${MINGW_PACKAGE_PREFIX}-libjxl|vcpkg:libjxl
 ${MINGW_PACKAGE_PREFIX}-libmng
 ${MINGW_PACKAGE_PREFIX}-libmypaint|vcpkg:libmypaint
 ${MINGW_PACKAGE_PREFIX}-libpng|vcpkg:libpng
+${MINGW_PACKAGE_PREFIX}-libraw|vcpkg:libraw
 ${MINGW_PACKAGE_PREFIX}-librsvg|vcpkg:librsvg
 ${MINGW_PACKAGE_PREFIX}-libtiff|vcpkg:tiff
 ${MINGW_PACKAGE_PREFIX}-libwebp|vcpkg:libwebp

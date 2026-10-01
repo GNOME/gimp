@@ -248,6 +248,7 @@ deps-debian-nonreloc:
             libopenjp2-7-dev
             libpoppler-glib-dev
             libqoi-dev
+            libraw-dev
             librsvg2-dev
             libsuitesparse-dev
             libumfpack6

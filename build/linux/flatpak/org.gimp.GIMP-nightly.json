@@ -605,6 +605,27 @@
             ]
         },
         {
+            "name": "libraw",
+            "builddir": true,
+            "config-opts": [
+                "--disable-examples",
+                "--disable-static"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.libraw.org/data/LibRaw-0.22.2.tar.gz",
+                    "sha256": "de86b035655accff8d4010f1a221fdf50d353cb7b1422ba26f14a0db92612cfa",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 1709,
+                        "stable-only": true,
+                        "url-template": "https://www.libraw.org/data/LibRaw-$version.tar.gz"
+                    }
+                }
+            ]
+        },
+        {
             "//": "Originally taken from org.octave.Octave manifest",
             "name": "SuiteSparse",
             "sources": [
