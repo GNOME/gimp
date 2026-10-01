@@ -994,6 +994,16 @@ validate_header (dds_header_t  *hdr,
         }
     }
 
+  if (hdr->width  > GIMP_MAX_IMAGE_SIZE || hdr->width  == 0 ||
+      hdr->height > GIMP_MAX_IMAGE_SIZE || hdr->height == 0)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Invalid image dimensions (%d x %d). "
+                     "Image may be corrupt."),
+                   hdr->width, hdr->height);
+      return FALSE;
+    }
+
   return TRUE;
 }
 
