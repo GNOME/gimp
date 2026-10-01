@@ -1069,7 +1069,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-desaturate",              writable && !gray);
 
   SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
-  SET_SENSITIVE ("filters-edge",                    writable);
+  SET_SENSITIVE ("filters-edge",                    writable && !is_group);
   SET_SENSITIVE ("filters-hue-saturation",          writable && !gray);
   SET_SENSITIVE ("filters-long-shadow",             writable && alpha);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
@@ -1090,7 +1090,7 @@ filters_actions_update (GimpActionGroup *group,
     if (proc &&
         gimp_procedure_get_sensitive (proc, GIMP_OBJECT (image), &reason))
       {
-        gimp_action_group_set_action_sensitive (group, "filters-repeat", ! is_group, NULL);
+        gimp_action_group_set_action_sensitive (group, "filters-repeat", TRUE, NULL);
         gimp_action_group_set_action_sensitive (group, "filters-reshow", TRUE, NULL);
       }
     else
