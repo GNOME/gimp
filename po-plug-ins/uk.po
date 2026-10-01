@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-29 18:43+0000\n"
-"PO-Revision-Date: 2026-09-30 18:14+0300\n"
+"POT-Creation-Date: 2026-10-01 02:18+0000\n"
+"PO-Revision-Date: 2026-10-01 14:53+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 25.12.1\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:113
@@ -66,7 +66,7 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/common/busy-dialog.c:283 plug-ins/common/cml-explorer.c:1374
 #: plug-ins/common/cml-explorer.c:2143 plug-ins/common/cml-explorer.c:2340
 #: plug-ins/common/curve-bend.c:1893 plug-ins/common/curve-bend.c:1915
-#: plug-ins/common/file-gif-export.c:1229 plug-ins/common/file-heif.c:2489
+#: plug-ins/common/file-gif-export.c:1229 plug-ins/common/file-heif.c:2505
 #: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:840 plug-ins/common/qbist.c:888
 #: plug-ins/common/sphere-designer.c:2295
@@ -141,7 +141,7 @@ msgstr "Приклад додатка мовою JavaScript (GJS)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:98
 #: extensions/goat-exercises/goat-exercise-lua.lua:75
 #: extensions/goat-exercises/goat-exercise-py3.py:81
-#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
+#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2506
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:285 plug-ins/file-exr/file-exr.c:457
 #: plug-ins/file-psd/psd-load.c:6292 plug-ins/flame/flame.c:808
@@ -621,7 +621,8 @@ msgstr "Жалюзі"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:261
 #: plug-ins/file-psd/psd-image-res-load.c:1125
-#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-raw/file-libraw.c:386
+#: plug-ins/file-raw/file-libraw.c:499 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1679
 #: plug-ins/file-tiff/file-tiff-load.c:2769
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -1989,7 +1990,8 @@ msgstr "Перетворений шар"
 
 #: plug-ins/common/curve-bend.c:644
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:658
 msgid "Cannot operate on layers with masks."
@@ -2626,7 +2628,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:471
-#: plug-ins/common/file-heif.c:1051 plug-ins/common/file-jp2.c:1376
+#: plug-ins/common/file-heif.c:1054 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-mng.c:1058 plug-ins/common/file-pcx.c:479
 #: plug-ins/common/file-pcx.c:522 plug-ins/common/file-pdf-load.c:776
 #: plug-ins/common/file-pix.c:364 plug-ins/common/file-png.c:824
@@ -2734,7 +2736,8 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:125
 msgid "Dump image data in RGB(A) format for C source"
-msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr ""
+"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:134
 msgid "C-Source"
@@ -3046,6 +3049,11 @@ msgstr "Некоректні розмірності: %d x %d"
 #: plug-ins/common/file-drhalo.c:298 plug-ins/common/file-drhalo.c:304
 #: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:116
 #: plug-ins/file-jpeg/jpeg-load.c:137 plug-ins/file-jpeg/jpeg-load.c:735
+#: plug-ins/file-raw/file-libraw.c:274 plug-ins/file-raw/file-libraw.c:283
+#: plug-ins/file-raw/file-libraw.c:292 plug-ins/file-raw/file-libraw.c:306
+#: plug-ins/file-raw/file-libraw.c:344 plug-ins/file-raw/file-libraw.c:363
+#: plug-ins/file-raw/file-libraw.c:424 plug-ins/file-raw/file-libraw.c:433
+#: plug-ins/file-raw/file-libraw.c:442 plug-ins/file-raw/file-libraw.c:466
 #, c-format
 msgid "Error reading data. Image may be corrupt."
 msgstr "Не вдалося прочитати дані. Зображення може бути пошкоджено."
@@ -3840,7 +3848,8 @@ msgstr "Завантаження зображень AVCI"
 
 #: plug-ins/common/file-heif.c:504
 msgid "Load AVCI image - H.264 image encapsulated in HEIF"
-msgstr "Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
+msgstr ""
+"Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
 
 #: plug-ins/common/file-heif.c:536
 msgid "Exports HEJ2 images"
@@ -3850,58 +3859,58 @@ msgstr "Експортує зображення HEJ2"
 msgid "Save JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Збереження зображення JPEG 2000, яке вбудовано до HEIF (HEJ2)"
 
-#: plug-ins/common/file-heif.c:1091 plug-ins/common/file-heif.c:1124
-#: plug-ins/common/file-heif.c:1165 plug-ins/common/file-heif.c:1227
+#: plug-ins/common/file-heif.c:1107 plug-ins/common/file-heif.c:1140
+#: plug-ins/common/file-heif.c:1181 plug-ins/common/file-heif.c:1243
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Не вдалось завантажити зображення HEIF: %s"
 
-#: plug-ins/common/file-heif.c:1113
+#: plug-ins/common/file-heif.c:1129
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Не вдалось завантажити зображення HEIF: вхідний файл не містить придатних "
 "для читання зображень"
 
-#: plug-ins/common/file-heif.c:1349
+#: plug-ins/common/file-heif.c:1365
 msgid "image content"
 msgstr "вміст зображення"
 
-#: plug-ins/common/file-heif.c:1689
+#: plug-ins/common/file-heif.c:1705
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Експортуємо «%s» за допомогою кодувальника %s"
 
-#: plug-ins/common/file-heif.c:1737 plug-ins/common/file-heif.c:2130
+#: plug-ins/common/file-heif.c:1753 plug-ins/common/file-heif.c:2146
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Не вдалось закодувати зображення HEIF: %s"
 
-#: plug-ins/common/file-heif.c:2251
+#: plug-ins/common/file-heif.c:2267
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Не вдалось записати зображення HEIF: %s"
 
-#: plug-ins/common/file-heif.c:2340
+#: plug-ins/common/file-heif.c:2356
 msgid "primary"
 msgstr "основне"
 
-#: plug-ins/common/file-heif.c:2485
+#: plug-ins/common/file-heif.c:2501
 msgid "Load HEIF Image"
 msgstr "Завантажити зображення HEIF"
 
-#: plug-ins/common/file-heif.c:2499
+#: plug-ins/common/file-heif.c:2515
 msgid "Select Image"
 msgstr "Виберіть зображення"
 
-#: plug-ins/common/file-heif.c:2648 plug-ins/common/file-jpegxl.c:2016
+#: plug-ins/common/file-heif.c:2664 plug-ins/common/file-jpegxl.c:2016
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
-#: plug-ins/common/file-heif.c:2649
+#: plug-ins/common/file-heif.c:2665
 msgid "10 bit/channel"
 msgstr "10 біт/канал"
 
-#: plug-ins/common/file-heif.c:2650
+#: plug-ins/common/file-heif.c:2666
 msgid "12 bit/channel"
 msgstr "12 біт/канал"
 
@@ -5130,7 +5139,8 @@ msgstr "Зображення Alias Pix"
 
 #: plug-ins/common/file-pix.c:176
 msgid "Loads files of the Alias|Wavefront or Esm Software Pix file format"
-msgstr "Завантажує файли Alias|Wavefront або у форматі файлів Esm Software Pix"
+msgstr ""
+"Завантажує файли Alias|Wavefront або у форматі файлів Esm Software Pix"
 
 #: plug-ins/common/file-pix.c:205
 msgid "Export file in the Alias|Wavefront pix/matte file format"
@@ -5264,7 +5274,6 @@ msgstr "16 біт/кан GRAYA"
 
 #: plug-ins/common/file-png.c:625
 #, c-format
-#| msgid "Error loading PNG file: %s\n"
 msgid "Error loading PNG file: %s"
 msgstr "Помилка при завантаженні файла PNG: «%s»"
 
@@ -5350,11 +5359,13 @@ msgstr ""
 #: plug-ins/common/file-png.c:1950
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1959
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -6818,7 +6829,8 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:468
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr ""
+"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:475
 msgid "Retry without limits preventing to parse huge data?"
@@ -11327,6 +11339,11 @@ msgstr ""
 "Цей додаток завантажує мініатюру із зображення цифрового негатива за "
 "допомогою виклику darktable-cli."
 
+#: plug-ins/file-raw/file-libraw.c:131
+#| msgid "Loads a thumbnail from a JPEG image"
+msgid "Load thumbnail from a raw image"
+msgstr "Завантажити мініатюри з файла цифрового негатива"
+
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
 msgstr "Raw Canon"
@@ -13636,7 +13653,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -13741,7 +13759,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -14161,7 +14180,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3345
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3355
 msgid "Delete Gradient Flare"
@@ -16962,7 +16982,8 @@ msgstr "Включаючи _рамку вікна"
 
 #: plug-ins/screenshot/screenshot.c:212
 msgid "Title bar, window borders and shadow will be part of the image"
-msgstr "Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
+msgstr ""
+"Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
 
 #: plug-ins/screenshot/screenshot.c:221
 msgid "Selection d_elay"
@@ -17106,7 +17127,8 @@ msgstr "Альтернативне ото_чення фільтра"
 
 #: plug-ins/selection-to-path/selection-to-path.c:189
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:195
 msgid "Filter E_psilon"
