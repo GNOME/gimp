@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-29 18:43+0000\n"
-"PO-Revision-Date: 2026-09-30 09:38+0200\n"
+"POT-Creation-Date: 2026-10-01 02:18+0000\n"
+"PO-Revision-Date: 2026-10-01 10:13+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -70,7 +70,7 @@ msgstr "Plug-In Voorbeeld in C"
 #: plug-ins/common/busy-dialog.c:283 plug-ins/common/cml-explorer.c:1374
 #: plug-ins/common/cml-explorer.c:2143 plug-ins/common/cml-explorer.c:2340
 #: plug-ins/common/curve-bend.c:1893 plug-ins/common/curve-bend.c:1915
-#: plug-ins/common/file-gif-export.c:1229 plug-ins/common/file-heif.c:2489
+#: plug-ins/common/file-gif-export.c:1229 plug-ins/common/file-heif.c:2505
 #: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:840 plug-ins/common/qbist.c:888
 #: plug-ins/common/sphere-designer.c:2295
@@ -143,7 +143,7 @@ msgstr "Plug-in voorbeeld in Javascript (GJS)"
 #: extensions/goat-exercises/goat-exercise-gjs.js:98
 #: extensions/goat-exercises/goat-exercise-lua.lua:75
 #: extensions/goat-exercises/goat-exercise-py3.py:81
-#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
+#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2506
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:285 plug-ins/file-exr/file-exr.c:457
 #: plug-ins/file-psd/psd-load.c:6292 plug-ins/flame/flame.c:808
@@ -616,7 +616,8 @@ msgstr "Rolgordijnen"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:261
 #: plug-ins/file-psd/psd-image-res-load.c:1125
-#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-raw/file-libraw.c:386
+#: plug-ins/file-raw/file-libraw.c:499 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1679
 #: plug-ins/file-tiff/file-tiff-load.c:2769
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -2599,7 +2600,7 @@ msgstr "EOF of fout tijdens lezen afbeeldings-header"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:471
-#: plug-ins/common/file-heif.c:1051 plug-ins/common/file-jp2.c:1376
+#: plug-ins/common/file-heif.c:1054 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-mng.c:1058 plug-ins/common/file-pcx.c:479
 #: plug-ins/common/file-pcx.c:522 plug-ins/common/file-pdf-load.c:776
 #: plug-ins/common/file-pix.c:364 plug-ins/common/file-png.c:824
@@ -2999,6 +3000,11 @@ msgstr "Ongeldige afmetingen: %d x %d"
 #: plug-ins/common/file-drhalo.c:298 plug-ins/common/file-drhalo.c:304
 #: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:116
 #: plug-ins/file-jpeg/jpeg-load.c:137 plug-ins/file-jpeg/jpeg-load.c:735
+#: plug-ins/file-raw/file-libraw.c:274 plug-ins/file-raw/file-libraw.c:283
+#: plug-ins/file-raw/file-libraw.c:292 plug-ins/file-raw/file-libraw.c:306
+#: plug-ins/file-raw/file-libraw.c:344 plug-ins/file-raw/file-libraw.c:363
+#: plug-ins/file-raw/file-libraw.c:424 plug-ins/file-raw/file-libraw.c:433
+#: plug-ins/file-raw/file-libraw.c:442 plug-ins/file-raw/file-libraw.c:466
 #, c-format
 msgid "Error reading data. Image may be corrupt."
 msgstr "Fout bij het lezen van gegevens. Afbeelding kan beschadigd zijn."
@@ -3773,56 +3779,56 @@ msgstr "Exporteert afbeeldingen HEJ2"
 msgid "Save JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Slaat afbeeldingen JPEG 2000, ingekapseld in HEIF (HEJ2), op"
 
-#: plug-ins/common/file-heif.c:1091 plug-ins/common/file-heif.c:1124
-#: plug-ins/common/file-heif.c:1165 plug-ins/common/file-heif.c:1227
+#: plug-ins/common/file-heif.c:1107 plug-ins/common/file-heif.c:1140
+#: plug-ins/common/file-heif.c:1181 plug-ins/common/file-heif.c:1243
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Laden van afbeelding HEIF mislukte: %s"
 
-#: plug-ins/common/file-heif.c:1113
+#: plug-ins/common/file-heif.c:1129
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr "Laden van afbeelding HEIF mislukte: invoerbestand bevat geen leesbare afbeeldingen"
 
-#: plug-ins/common/file-heif.c:1349
+#: plug-ins/common/file-heif.c:1365
 msgid "image content"
 msgstr "beeldinhoud"
 
-#: plug-ins/common/file-heif.c:1689
+#: plug-ins/common/file-heif.c:1705
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Exporteren van ‘%s’ met encoder %s"
 
-#: plug-ins/common/file-heif.c:1737 plug-ins/common/file-heif.c:2130
+#: plug-ins/common/file-heif.c:1753 plug-ins/common/file-heif.c:2146
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Coderen van afbeelding HEIF mislukte: %s"
 
-#: plug-ins/common/file-heif.c:2251
+#: plug-ins/common/file-heif.c:2267
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Wegschrijven afbeelding HEIF mislukte: %s"
 
-#: plug-ins/common/file-heif.c:2340
+#: plug-ins/common/file-heif.c:2356
 msgid "primary"
 msgstr "primaire"
 
-#: plug-ins/common/file-heif.c:2485
+#: plug-ins/common/file-heif.c:2501
 msgid "Load HEIF Image"
 msgstr "Afbeelding HEIF laden"
 
-#: plug-ins/common/file-heif.c:2499
+#: plug-ins/common/file-heif.c:2515
 msgid "Select Image"
 msgstr "Kies afbeelding"
 
-#: plug-ins/common/file-heif.c:2648 plug-ins/common/file-jpegxl.c:2016
+#: plug-ins/common/file-heif.c:2664 plug-ins/common/file-jpegxl.c:2016
 msgid "8 bit/channel"
 msgstr "8 bit/kanaal"
 
-#: plug-ins/common/file-heif.c:2649
+#: plug-ins/common/file-heif.c:2665
 msgid "10 bit/channel"
 msgstr "10 bit/kanaal"
 
-#: plug-ins/common/file-heif.c:2650
+#: plug-ins/common/file-heif.c:2666
 msgid "12 bit/channel"
 msgstr "12 bit/kanaal"
 
@@ -10982,6 +10988,10 @@ msgstr "Laadt een miniatuurafbeelding uit een afbeelding raw via darktable"
 msgid ""
 "This plug-in loads a thumbnail from a raw image by calling darktable-cli."
 msgstr "Deze plug-in laadt een miniatuurafbeelding uit een afbeelding raw door darktable-cli te gebruiken."
+
+#: plug-ins/file-raw/file-libraw.c:131
+msgid "Load thumbnail from a raw image"
+msgstr "Miniatuurafbeelding laden uit een raw-afbeelding"
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
