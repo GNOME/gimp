@@ -38,7 +38,6 @@ libjxl|homebrew:jpeg-xl \
 libmng|homebrew:libmng \
 libmypaint|homebrew:libmypaint \
 libpng|homebrew:libpng \
-libraw|homebrew:libraw \
 librsvg|homebrew:librsvg \
 tiff|homebrew:libtiff \
 webp|homebrew:webp \
