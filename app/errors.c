@@ -320,10 +320,11 @@ gimp_eek (const gchar *reason,
           const gchar *message,
           gboolean     use_handler)
 {
-  GimpCoreConfig  *config        = the_errors_gimp->config;
 #if !defined(G_OS_WIN32) || !defined(GIMP_CONSOLE_COMPILATION)
   gboolean         eek_handled   = FALSE;
 #endif
+#ifndef GIMP_CONSOLE_COMPILATION
+  GimpCoreConfig  *config        = the_errors_gimp->config;
   GimpDebugPolicy  debug_policy;
 
   /* GIMP has 2 ways to handle termination signals and fatal errors: one
@@ -334,9 +335,11 @@ gimp_eek (const gchar *reason,
    * the session.
    * The GUI backtrace has priority if it is set.
    */
-  g_object_get (G_OBJECT (config),
-                "debug-policy", &debug_policy,
-                NULL);
+  /* Don't use g_object_get() on purpose because the object may have been
+   * locked before the process crashed.
+   */
+  debug_policy = config->debug_policy;
+#endif
 
   /* Let's just always output on stdout at least so that there is a
    * trace if the rest fails. */
