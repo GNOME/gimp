@@ -86,8 +86,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ximion/appstream/archive/refs/tags/v1.1.6.tar.gz",
-                    "sha256": "f9b79193d2620474bb48d0cd32abd76e002939fce3daa991a1b60642eecbb67f",
+                    "url": "https://github.com/ximion/appstream/archive/refs/tags/v1.2.1.tar.gz",
+                    "sha256": "2bc53d1d63ae28e7409a15747d4ae23a557409249461aab87a7947640402d1bd",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 10385,
@@ -227,8 +227,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.4.15.tar.gz",
-                    "sha256": "445ed5b0ea4d9cf98be3a4f219e419628b123b61dec65ccb743ab9b07fbebdaa",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v3.5.1.tar.gz",
+                    "sha256": "61559d6d0657f228f8dd5e3165ed6b74437b95e81849ad41c6d3493c0c144c1d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
