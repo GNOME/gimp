@@ -1078,7 +1078,8 @@ validate_dx10_header (dds_header_dx10_t  *dx10hdr,
       else
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Invalid pixel format."));
+                       _("Invalid bpp value %d for pixel format %d"),
+                       load_info->bpp, load_info->dxgi_format);
           return FALSE;
         }
     }
