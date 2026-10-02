@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-29 18:43+0000\n"
-"PO-Revision-Date: 2026-09-30 08:07+0800\n"
+"POT-Creation-Date: 2026-10-01 02:18+0000\n"
+"PO-Revision-Date: 2026-10-02 08:05+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -67,7 +67,7 @@ msgstr "C 语言插件示例"
 #: plug-ins/common/busy-dialog.c:283 plug-ins/common/cml-explorer.c:1374
 #: plug-ins/common/cml-explorer.c:2143 plug-ins/common/cml-explorer.c:2340
 #: plug-ins/common/curve-bend.c:1893 plug-ins/common/curve-bend.c:1915
-#: plug-ins/common/file-gif-export.c:1229 plug-ins/common/file-heif.c:2489
+#: plug-ins/common/file-gif-export.c:1229 plug-ins/common/file-heif.c:2505
 #: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:840 plug-ins/common/qbist.c:888
 #: plug-ins/common/sphere-designer.c:2295
@@ -141,7 +141,7 @@ msgstr "JavaScript（GJS）插件示例"
 #: extensions/goat-exercises/goat-exercise-gjs.js:98
 #: extensions/goat-exercises/goat-exercise-lua.lua:75
 #: extensions/goat-exercises/goat-exercise-py3.py:81
-#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
+#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2506
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:285 plug-ins/file-exr/file-exr.c:457
 #: plug-ins/file-psd/psd-load.c:6292 plug-ins/flame/flame.c:808
@@ -618,7 +618,8 @@ msgstr "百叶窗"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:261
 #: plug-ins/file-psd/psd-image-res-load.c:1125
-#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-raw/file-libraw.c:386
+#: plug-ins/file-raw/file-libraw.c:499 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1679
 #: plug-ins/file-tiff/file-tiff-load.c:2769
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -2586,7 +2587,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:471
-#: plug-ins/common/file-heif.c:1051 plug-ins/common/file-jp2.c:1376
+#: plug-ins/common/file-heif.c:1054 plug-ins/common/file-jp2.c:1376
 #: plug-ins/common/file-mng.c:1058 plug-ins/common/file-pcx.c:479
 #: plug-ins/common/file-pcx.c:522 plug-ins/common/file-pdf-load.c:776
 #: plug-ins/common/file-pix.c:364 plug-ins/common/file-png.c:824
@@ -2990,6 +2991,11 @@ msgstr "无效的尺寸：%d x %d"
 #: plug-ins/common/file-drhalo.c:298 plug-ins/common/file-drhalo.c:304
 #: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:116
 #: plug-ins/file-jpeg/jpeg-load.c:137 plug-ins/file-jpeg/jpeg-load.c:735
+#: plug-ins/file-raw/file-libraw.c:274 plug-ins/file-raw/file-libraw.c:283
+#: plug-ins/file-raw/file-libraw.c:292 plug-ins/file-raw/file-libraw.c:306
+#: plug-ins/file-raw/file-libraw.c:344 plug-ins/file-raw/file-libraw.c:363
+#: plug-ins/file-raw/file-libraw.c:424 plug-ins/file-raw/file-libraw.c:433
+#: plug-ins/file-raw/file-libraw.c:442 plug-ins/file-raw/file-libraw.c:466
 #, c-format
 msgid "Error reading data. Image may be corrupt."
 msgstr "读取数据时出错。图像可能已损坏。"
@@ -3762,56 +3768,56 @@ msgstr "导出 HEJ2 图像"
 msgid "Save JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "将 JPEG 2000 图像封装在 HEIF（HEJ2）中进行保存"
 
-#: plug-ins/common/file-heif.c:1091 plug-ins/common/file-heif.c:1124
-#: plug-ins/common/file-heif.c:1165 plug-ins/common/file-heif.c:1227
+#: plug-ins/common/file-heif.c:1107 plug-ins/common/file-heif.c:1140
+#: plug-ins/common/file-heif.c:1181 plug-ins/common/file-heif.c:1243
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "加载 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:1113
+#: plug-ins/common/file-heif.c:1129
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr "加载 HEIF 图像失败：输入的文件未包含可读取图像"
 
-#: plug-ins/common/file-heif.c:1349
+#: plug-ins/common/file-heif.c:1365
 msgid "image content"
 msgstr "图像内容"
 
-#: plug-ins/common/file-heif.c:1689
+#: plug-ins/common/file-heif.c:1705
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "正在使用 %2$s 编码器导出“%1$s”"
 
-#: plug-ins/common/file-heif.c:1737 plug-ins/common/file-heif.c:2130
+#: plug-ins/common/file-heif.c:1753 plug-ins/common/file-heif.c:2146
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "编码 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:2251
+#: plug-ins/common/file-heif.c:2267
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "写入 HEIF 图像失败：%s"
 
-#: plug-ins/common/file-heif.c:2340
+#: plug-ins/common/file-heif.c:2356
 msgid "primary"
 msgstr "主要"
 
-#: plug-ins/common/file-heif.c:2485
+#: plug-ins/common/file-heif.c:2501
 msgid "Load HEIF Image"
 msgstr "载入 HEIF 图像"
 
-#: plug-ins/common/file-heif.c:2499
+#: plug-ins/common/file-heif.c:2515
 msgid "Select Image"
 msgstr "选择图像"
 
-#: plug-ins/common/file-heif.c:2648 plug-ins/common/file-jpegxl.c:2016
+#: plug-ins/common/file-heif.c:2664 plug-ins/common/file-jpegxl.c:2016
 msgid "8 bit/channel"
 msgstr "8 位/通道"
 
-#: plug-ins/common/file-heif.c:2649
+#: plug-ins/common/file-heif.c:2665
 msgid "10 bit/channel"
 msgstr "10 位/通道"
 
-#: plug-ins/common/file-heif.c:2650
+#: plug-ins/common/file-heif.c:2666
 msgid "12 bit/channel"
 msgstr "12 位/通道"
 
@@ -11003,6 +11009,10 @@ msgstr "通过 darktable 从 Raw 图像加载缩略图"
 msgid ""
 "This plug-in loads a thumbnail from a raw image by calling darktable-cli."
 msgstr "该插件通过调用 darktable-cli 从 Raw 图像加载缩略图。"
+
+#: plug-ins/file-raw/file-libraw.c:131
+msgid "Load thumbnail from a raw image"
+msgstr "从 Raw 图像加载缩略图"
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
