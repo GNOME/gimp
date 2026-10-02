@@ -279,7 +279,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
         continue;
 
       /*  Fetch the buffer _after_ gimp_paint_core_get_paint_buffer() as it
-       *  may have expanded the drawable when "Expand Layers" is enabled.
+       *  may have expanded the drawable when "Expand layers" is enabled.
        */
       pickable_buffer = gimp_pickable_get_buffer (dest_pickable);
 

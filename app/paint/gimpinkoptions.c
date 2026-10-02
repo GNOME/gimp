@@ -73,7 +73,7 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SIZE,
                            "size",
                            _("Size"),
-                           _("Ink Blob Size"),
+                           _("Ink blob size"),
                            0.0, 200.0, 16.0,
                            GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_TILT_ANGLE,
@@ -112,13 +112,13 @@ gimp_ink_options_class_init (GimpInkOptionsClass *klass)
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BLOB_ASPECT,
                            "blob-aspect",
                            _("Aspect ratio"),
-                           _("Ink Blob Aspect Ratio"),
+                           _("Ink blob aspect ratio"),
                            1.0, 10.0, 1.0,
                            GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BLOB_ANGLE,
                            "blob-angle",
                            _("Angle"),
-                           _("Ink Blob Angle"),
+                           _("Ink blob angle"),
                            -G_PI, G_PI, 0.0,
                            GIMP_PARAM_STATIC_STRINGS);
 }

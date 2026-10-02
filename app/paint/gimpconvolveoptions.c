@@ -66,7 +66,7 @@ gimp_convolve_options_class_init (GimpConvolveOptionsClass *klass)
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_TYPE,
                          "type",
-                         _("Convolve Type"),
+                         _("Convolve type"),
                          NULL,
                          GIMP_TYPE_CONVOLVE_TYPE,
                          DEFAULT_CONVOLVE_TYPE,

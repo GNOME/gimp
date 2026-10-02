@@ -185,7 +185,7 @@ convert_precision_dialog_new (GimpImage                    *image,
                                    _("Linear light"),
                                    GIMP_TRC_LINEAR, NULL,
 
-                                   _("Non-Linear"),
+                                   _("Non-linear"),
                                    GIMP_TRC_NON_LINEAR, NULL,
 
                                    _("Perceptual (sRGB)"),

@@ -892,7 +892,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_widget_set_visible (outline_grid, TRUE);
 
   button = gimp_prop_enum_combo_box_new (config, "outline-direction", -1, -1);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (button), _("Outline Direction:"));
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (button), _("Outline direction"));
   gimp_grid_attach_aligned (GTK_GRID (outline_grid), 0, 0,
                             NULL, 0.0, 0.5,
                             button, 1);

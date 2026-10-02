@@ -108,7 +108,7 @@ gimp_gradient_options_class_init (GimpGradientOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
                             "supersample",
-                            _("Adaptive Supersampling"),
+                            _("Adaptive supersampling"),
                             NULL,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
@@ -296,7 +296,7 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   combo = gimp_prop_enum_combo_box_new (config, "gradient-blend-color-space",
                                         0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo),
-                                _("Blend Color Space"));
+                                _("Blend color space"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
 

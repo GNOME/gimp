@@ -91,14 +91,14 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_VIEW_ZOOM,
                            "viewzoom",
-                           _("View Zoom"),
+                           _("View zoom"),
                            NULL,
                            0.0001, G_MAXFLOAT, 1.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_VIEW_ROTATION,
                            "viewrotation",
-                           _("View Rotation"),
+                           _("View rotation"),
                            NULL,
                            -360.0, 360.0, 0.0,
                            GIMP_PARAM_STATIC_STRINGS);
@@ -112,7 +112,7 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OPAQUE,
                            "opaque",
-                           _("Base Opacity"),
+                           _("Base opacity"),
                            NULL,
                            0.0, 2.0, 1.0,
                            GIMP_PARAM_STATIC_STRINGS);

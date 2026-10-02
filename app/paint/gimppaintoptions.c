@@ -211,76 +211,76 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_SIZE,
                            "brush-size",
                            _("Size"),
-                           _("Brush Size"),
+                           _("Brush size"),
                            1.0, GIMP_BRUSH_MAX_SIZE, DEFAULT_BRUSH_SIZE,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
                            "brush-aspect-ratio",
-                           _("Aspect Ratio"),
-                           _("Brush Aspect Ratio"),
+                           _("Aspect ratio"),
+                           _("Brush aspect ratio"),
                            -20.0, 20.0, DEFAULT_BRUSH_ASPECT_RATIO,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_ANGLE,
                            "brush-angle",
                            _("Angle"),
-                           _("Brush Angle"),
+                           _("Brush angle"),
                            -180.0, 180.0, DEFAULT_BRUSH_ANGLE,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_SPACING,
                            "brush-spacing",
                            _("Spacing"),
-                           _("Brush Spacing"),
+                           _("Brush spacing"),
                            0.01, 50.0, DEFAULT_BRUSH_SPACING,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_HARDNESS,
                            "brush-hardness",
                            _("Hardness"),
-                           _("Brush Hardness"),
+                           _("Brush hardness"),
                            0.0, 1.0, DEFAULT_BRUSH_HARDNESS,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_FORCE,
                            "brush-force",
                            _("Force"),
-                           _("Brush Force"),
+                           _("Brush force"),
                            0.0, 1.0, DEFAULT_BRUSH_FORCE,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SIZE,
                             "brush-link-size",
-                            _("Link Size"),
+                            _("Link size"),
                             _("Link brush size to brush native"),
                             DEFAULT_BRUSH_LINK_SIZE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ASPECT_RATIO,
                             "brush-link-aspect-ratio",
-                            _("Link Aspect Ratio"),
+                            _("Link aspect ratio"),
                             _("Link brush aspect ratio to brush native"),
                             DEFAULT_BRUSH_LINK_ASPECT_RATIO,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ANGLE,
                             "brush-link-angle",
-                            _("Link Angle"),
+                            _("Link angle"),
                             _("Link brush angle to brush native"),
                             DEFAULT_BRUSH_LINK_ANGLE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SPACING,
                             "brush-link-spacing",
-                            _("Link Spacing"),
+                            _("Link spacing"),
                             _("Link brush spacing to brush native"),
                             DEFAULT_BRUSH_LINK_SPACING,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_HARDNESS,
                             "brush-link-hardness",
-                            _("Link Hardness"),
+                            _("Link hardness"),
                             _("Link brush hardness to brush native"),
                             DEFAULT_BRUSH_LINK_HARDNESS,
                             GIMP_PARAM_STATIC_STRINGS);
@@ -309,14 +309,14 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_JITTER,
                             "use-jitter",
-                            _("Apply Jitter"),
+                            _("Apply jitter"),
                             _("Scatter brush as you paint"),
                             DEFAULT_USE_JITTER,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPAND_USE,
                             "expand-use",
-                            _("Expand Layers"),
+                            _("Expand layers"),
                             _("Expand active layer as you paint"),
                             DEFAULT_EXPAND_USE,
                             GIMP_PARAM_STATIC_STRINGS);
@@ -330,7 +330,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_EXPAND_FILL_TYPE,
                          "expand-fill-type",
-                         _("Fill With"),
+                         _("Fill with"),
                          _("Fill layer with"),
                          GIMP_TYPE_FILL_TYPE,
                          DEFAULT_EXPAND_FILL_TYPE,
@@ -338,7 +338,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_EXPAND_MASK_FILL_TYPE,
                          "expand-mask-fill-type",
-                         _("Fill Mask With"),
+                         _("Fill mask with"),
                          _("Fill layer mask with"),
                          GIMP_TYPE_ADD_MASK_TYPE,
                          DEFAULT_EXPAND_MASK_FILL_TYPE,
@@ -390,7 +390,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                             GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_BLEND_COLOR_SPACE,
                          "gradient-blend-color-space",
-                         _("Blend Color Space"),
+                         _("Blend color space"),
                          _("Which color space to use when blending RGB gradient segments"),
                          GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
                          DEFAULT_GRADIENT_BLEND_SPACE,
