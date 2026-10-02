@@ -130,7 +130,7 @@ load_image (GFile        *file,
         g_object_unref (buffer);
 
       g_set_error (error, G_FILE_ERROR, 0,
-                   "%s. %s", _("Error reading data"), _("Image may be corrupt!"));
+                   _("Error reading data. Image may be corrupt."));
       return NULL;
     }
 
@@ -725,7 +725,7 @@ load_thumbnail_image (GFile         *file,
         gimp_image_delete (image);
 
       g_set_error (error, G_FILE_ERROR, 0,
-                   "%s. %s", _("Error reading data"), _("Image may be corrupt!"));
+                   _("Error reading data. Image may be corrupt."));
       return NULL;
     }
 

@@ -113,7 +113,7 @@ resource_load (FILE    *file,
           if (size != fread (res->data, 1, res->size, file))
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                           "%s. %s", _("Error reading data"), _("Image may be corrupt!"));
+                           _("Error reading data. Image may be corrupt."));
               g_free (res);
               res = NULL;
             }
