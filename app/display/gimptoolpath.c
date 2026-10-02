@@ -297,7 +297,7 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
 
   g_object_class_install_property (object_class, PROP_AUTO_CONNECT,
                                    g_param_spec_boolean ("auto-connect",
-                                                         _("Auto-Connect on Click"),
+                                                         _("Auto-connect on click"),
                                                          _("If checked, clicking on the end node in "
                                                            "Design mode will complete the path"),
                                                          TRUE,
