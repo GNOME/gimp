@@ -81,6 +81,98 @@
             ]
         },
         {
+            "//": "libappstream is only on the SDK, not on runtime since freedesktop-sdk 26.08: https://gitlab.com/freedesktop-sdk/freedesktop-sdk/-/issues/1906",
+            "name": "appstream",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/ximion/appstream/archive/refs/tags/v1.1.6.tar.gz",
+                    "sha256": "f9b79193d2620474bb48d0cd32abd76e002939fce3daa991a1b60642eecbb67f",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 10385,
+                        "stable-only": true,
+                        "url-template": "https://github.com/ximion/appstream/archive/refs/tags/v$version.tar.gz"
+                    }
+                }
+            ],
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dstemming=false",
+                "-Dsystemd=false",
+                "-Dcompose=false",
+                "-Dgir=false",
+                "-Dvapi=false",
+                "-Dapidocs=false",
+                "-Dinstall-docs=false",
+                "-Dman=false",
+                "-Dbash-completion=false"
+            ],
+            "cleanup": [
+                "/bin",
+                "/include",
+                "/lib/pkgconfig",
+                "/share"
+            ],
+            "modules": [
+                {
+                    "name": "libfyaml",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/pantoniou/libfyaml/releases/download/v0.9.6/libfyaml-0.9.6.tar.gz",
+                            "sha256": "a59cc3331e2eb903ec36933ad52a45888041cac31e44f553a00511131242c483",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 383614,
+                                "stable-only": true,
+                                "url-template": "https://github.com/pantoniou/libfyaml/releases/download/v$version/libfyaml-$version.tar.gz"
+                            }
+                        }
+                    ],
+                    "buildsystem": "cmake-ninja",
+                    "builddir": true,
+                    "config-opts": [
+                        "-DBUILD_TESTING=OFF",
+                        "-DENABLE_NETWORK=OFF"
+                    ],
+                    "cleanup": [
+                        "/bin",
+                        "/include",
+                        "/lib/cmake",
+                        "/lib/pkgconfig"
+                    ]
+                },
+                {
+                    "name": "libxmlb",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/hughsie/libxmlb/releases/download/0.3.29/libxmlb-0.3.29.tar.xz",
+                            "sha256": "448294be33bfae62f00fa66e506f1cae80237ce71b7ab6530aefa75005eeb08a",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 179028,
+                                "stable-only": true,
+                                "url-template": "https://github.com/hughsie/libxmlb/releases/download/$version/libxmlb-$version.tar.xz"
+                            }
+                        }
+                    ],
+                    "buildsystem": "meson",
+                    "config-opts": [
+                        "-Dcli=false",
+                        "-Dgtkdoc=false",
+                        "-Dintrospection=false",
+                        "-Dtests=false"
+                    ],
+                    "cleanup": [
+                        "/include",
+                        "/lib/pkgconfig"
+                    ]
+                }
+            ]
+        },
+        {
             "name": "gexiv2",
             "sources": [
                 {
