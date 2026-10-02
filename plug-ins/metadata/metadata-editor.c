@@ -4336,6 +4336,12 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
             {
               gint32 data = 0;
 
+              /* We need to use the uninterpreted string value to compare the data here */
+              g_free (value);
+              value = gexiv2_metadata_try_get_tag_string (metadata,
+                                                          default_metadata_tags[i].tag,
+                                                          NULL);
+
               if (! strcmp ("Exif.GPSInfo.GPSLatitudeRef",
                             default_metadata_tags[i].tag))
                 {
@@ -4367,39 +4373,14 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
               else if (! strcmp ("Exif.GPSInfo.GPSAltitudeRef",
                                  default_metadata_tags[i].tag))
                 {
-                  if (! strncmp ("A", value, 1))
-                    {
-                      data = 1;
-                    }
-                  else if (! strncmp ("B", value, 1))
-                    {
-                      data = 2;
-                    }
+                  /* Values in GUI are 1 (above) or 2 (below) */
+                  data = g_ascii_strtoll (value, NULL, 10) + 1;
 
                   gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
                 }
               else if (! strcmp ("Xmp.xmp.Rating", default_metadata_tags[i].tag))
                 {
-                  if (! strcmp ("1", value))
-                    {
-                      data = 1;
-                    }
-                  else if (! strcmp ("2", value))
-                    {
-                      data = 2;
-                    }
-                  else if (! strcmp ("3", value))
-                    {
-                      data = 3;
-                    }
-                  else if (! strcmp ("4", value))
-                    {
-                      data = 4;
-                    }
-                  else if (! strcmp ("5", value))
-                    {
-                      data = 5;
-                    }
+                  data = g_ascii_strtoll (value, NULL, 10);
 
                   gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
                 }
@@ -4420,98 +4401,23 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
               else if (! strcmp ("Xmp.photoshop.Urgency",
                                  default_metadata_tags[i].tag))
                 {
-                  if (! strcmp ("1", value))
-                    {
-                      data = 1;
-                    }
-                  else if (! strcmp ("2", value))
-                    {
-                      data = 2;
-                    }
-                  else if (! strcmp ("3", value))
-                    {
-                      data = 3;
-                    }
-                  else if (! strcmp ("4", value))
-                    {
-                      data = 4;
-                    }
-                  else if (! strcmp ("5", value))
-                    {
-                      data = 5;
-                    }
-                  else if (! strcmp ("6", value))
-                    {
-                      data = 6;
-                    }
-                  else if (! strcmp ("7", value))
-                    {
-                      data = 7;
-                    }
-                  else if (! strcmp ("8", value))
-                    {
-                      data = 8;
-                    }
+                  data = g_ascii_strtoll (value, NULL, 10);
 
                   gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
                 }
               else if (! strcmp ("Xmp.plus.MinorModelAgeDisclosure",
                                  default_metadata_tags[i].tag))
                 {
-                  if (! strcmp ("Age Unknown", value))
-                    {
-                      data = 0;
-                    }
-                  else if (! strcmp ("Age 25 or Over", value))
-                    {
-                      data = 1;
-                    }
-                  else if (! strcmp ("Age 24", value))
-                    {
-                      data = 2;
-                    }
-                  else if (! strcmp ("Age 23", value))
-                    {
-                      data = 3;
-                    }
-                  else if (! strcmp ("Age 22", value))
-                    {
-                      data = 4;
-                    }
-                  else if (! strcmp ("Age 21", value))
-                    {
-                      data = 5;
-                    }
-                  else if (! strcmp ("Age 20", value))
-                    {
-                      data = 6;
-                    }
-                  else if (! strcmp ("Age 19", value))
-                    {
-                      data = 7;
-                    }
-                  else if (! strcmp ("Age 18", value))
-                    {
-                      data = 8;
-                    }
-                  else if (! strcmp ("Age 17", value))
-                    {
-                      data = 9;
-                    }
-                  else if (! strcmp ("Age 16", value))
-                    {
-                      data = 10;
-                    }
-                  else if (! strcmp ("Age 15", value))
-                    {
-                      data = 11;
-                    }
-                  else if (! strcmp ("Age 14 or Under", value))
-                    {
-                      data = 12;
-                    }
+                  gint loop;
 
-                  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
+                  for (loop = 0; loop < n_minormodelagedisclosure; loop++)
+                    {
+                      if (! strcmp (minormodelagedisclosure[loop].data, value))
+                        {
+                          gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
+                          break;
+                        }
+                    }
                 }
               else if (! strcmp ("Xmp.plus.ModelReleaseStatus",
                                  default_metadata_tags[i].tag))
@@ -4521,13 +4427,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                   for (loop = 0; loop < n_modelreleasestatus; loop++)
                     {
                       if (! strcmp (modelreleasestatus[loop].data, value))
-                        {
-                          gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
-                          break;
-                        }
-
-                      if (! strcmp (gettext (modelreleasestatus[loop].display),
-                                    value))
                         {
                           gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
                           break;
@@ -4546,13 +4445,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                           gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
                           break;
                         }
-
-                      if (! strcmp (gettext (digitalsourcetype[loop].display),
-                                    value))
-                        {
-                          gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
-                          break;
-                        }
                     }
                 }
               else if (! strcmp ("Xmp.plus.PropertyReleaseStatus",
@@ -4563,13 +4455,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                   for (loop = 0; loop < n_propertyreleasestatus; loop++)
                     {
                       if (! strcmp (propertyreleasestatus[loop].data, value))
-                        {
-                          gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
-                          break;
-                        }
-
-                      if (! strcmp (gettext (propertyreleasestatus[loop].display),
-                                    value))
                         {
                           gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
                           break;
