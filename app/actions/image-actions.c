@@ -200,37 +200,37 @@ static const GimpRadioActionEntry image_convert_base_type_actions[] =
 static const GimpRadioActionEntry image_convert_precision_actions[] =
 {
   { "image-convert-u8", NULL,
-    NC_("image-convert-action", "8-bit integer"), NULL, { NULL },
+    NC_("image-convert-action", "8-bit Integer"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 8-bit integer"),
     GIMP_COMPONENT_TYPE_U8, GIMP_HELP_IMAGE_CONVERT_U8 },
 
   { "image-convert-u16", NULL,
-    NC_("image-convert-action", "16-bit integer"), NULL, { NULL },
+    NC_("image-convert-action", "16-bit Integer"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 16-bit integer"),
     GIMP_COMPONENT_TYPE_U16, GIMP_HELP_IMAGE_CONVERT_U16 },
 
   { "image-convert-u32", NULL,
-    NC_("image-convert-action", "32-bit integer"), NULL, { NULL },
+    NC_("image-convert-action", "32-bit Integer"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 32-bit integer"),
     GIMP_COMPONENT_TYPE_U32, GIMP_HELP_IMAGE_CONVERT_U32 },
 
   { "image-convert-half", NULL,
-    NC_("image-convert-action", "16-bit floating point"), NULL, { NULL },
+    NC_("image-convert-action", "16-bit Floating Point"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 16-bit floating point"),
     GIMP_COMPONENT_TYPE_HALF, GIMP_HELP_IMAGE_CONVERT_HALF },
 
   { "image-convert-float", NULL,
-    NC_("image-convert-action", "32-bit floating point"), NULL, { NULL },
+    NC_("image-convert-action", "32-bit Floating Point"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 32-bit floating point"),
     GIMP_COMPONENT_TYPE_FLOAT, GIMP_HELP_IMAGE_CONVERT_FLOAT },
 
   { "image-convert-double", NULL,
-    NC_("image-convert-action", "64-bit floating point"), NULL, { NULL },
+    NC_("image-convert-action", "64-bit Floating Point"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to 64-bit floating point"),
     GIMP_COMPONENT_TYPE_DOUBLE, GIMP_HELP_IMAGE_CONVERT_DOUBLE }
@@ -239,7 +239,7 @@ static const GimpRadioActionEntry image_convert_precision_actions[] =
 static const GimpRadioActionEntry image_convert_trc_actions[] =
 {
   { "image-convert-linear", NULL,
-    NC_("image-convert-action", "Linear light"), NULL, { NULL },
+    NC_("image-convert-action", "Linear Light"), NULL, { NULL },
     NC_("image-convert-action",
         "Convert the image to linear light"),
     GIMP_TRC_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA },
@@ -275,7 +275,7 @@ static const GimpEnumActionEntry image_flip_actions[] =
 static const GimpEnumActionEntry image_rotate_actions[] =
 {
   { "image-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
-    NC_("image-action", "Rotate 90° _clockwise"), NULL, { NULL },
+    NC_("image-action", "Rotate 90° _Clockwise"), NULL, { NULL },
     NC_("image-action", "Rotate the image 90 degrees to the right"),
     GIMP_ROTATE_DEGREES90, FALSE,
     GIMP_HELP_IMAGE_ROTATE_90 },
@@ -287,7 +287,7 @@ static const GimpEnumActionEntry image_rotate_actions[] =
     GIMP_HELP_IMAGE_ROTATE_180 },
 
   { "image-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
-    NC_("image-action", "Rotate 90° counter-clock_wise"), NULL, { NULL },
+    NC_("image-action", "Rotate 90° Counter-Clock_wise"), NULL, { NULL },
     NC_("image-action", "Rotate the image 90 degrees to the left"),
     GIMP_ROTATE_DEGREES270, FALSE,
     GIMP_HELP_IMAGE_ROTATE_270 }

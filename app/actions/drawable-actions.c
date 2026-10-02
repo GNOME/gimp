@@ -98,7 +98,7 @@ static const GimpEnumActionEntry drawable_flip_actions[] =
 static const GimpEnumActionEntry drawable_rotate_actions[] =
 {
   { "drawable-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
-    NC_("drawable-action", "Rotate 90° _clockwise"), NULL, { NULL },
+    NC_("drawable-action", "Rotate 90° _Clockwise"), NULL, { NULL },
     NC_("drawable-action", "Rotate drawable 90 degrees to the right"),
     GIMP_ROTATE_DEGREES90, FALSE,
     GIMP_HELP_LAYER_ROTATE_90 },
@@ -110,7 +110,7 @@ static const GimpEnumActionEntry drawable_rotate_actions[] =
     GIMP_HELP_LAYER_ROTATE_180 },
 
   { "drawable-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
-    NC_("drawable-action", "Rotate 90° counter-clock_wise"), NULL, { NULL },
+    NC_("drawable-action", "Rotate 90° Counter-Clock_wise"), NULL, { NULL },
     NC_("drawable-action", "Rotate drawable 90 degrees to the left"),
     GIMP_ROTATE_DEGREES270, FALSE,
     GIMP_HELP_LAYER_ROTATE_270 }
