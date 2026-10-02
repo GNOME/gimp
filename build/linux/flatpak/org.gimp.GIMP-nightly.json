@@ -81,7 +81,7 @@
             ]
         },
         {
-            "//": "libappstream is only on the SDK, not on runtime since freedesktop-sdk 26.08: https://gitlab.com/freedesktop-sdk/freedesktop-sdk/-/issues/1906",
+            "//": "libappstream is only on the SDK, not on runtime: https://gitlab.gnome.org/GNOME/gnome-build-meta/-/work_items/1305",
             "name": "appstream",
             "sources": [
                 {
