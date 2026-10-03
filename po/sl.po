@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-27 01:55+0000\n"
-"PO-Revision-Date: 2026-09-27 08:34+0200\n"
+"POT-Creation-Date: 2026-10-03 02:37+0000\n"
+"PO-Revision-Date: 2026-10-03 12:37+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2518,7 +2518,7 @@ msgstr "240 s"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1123 app/tools/gimptexttool.c:1870
+#: app/tools/gimppathtool.c:1127 app/tools/gimptexttool.c:1870
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -5095,25 +5095,25 @@ msgstr "Pokaži znova pogovorno okno nazadnje uporabljenega filtra"
 msgid "%s..."
 msgstr "%s ..."
 
-#: app/actions/filters-actions.c:1208
+#: app/actions/filters-actions.c:1204
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Ponovi »%s«"
 
-#: app/actions/filters-actions.c:1209
+#: app/actions/filters-actions.c:1205
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Ponovno po_kaži »%s«"
 
-#: app/actions/filters-actions.c:1247
+#: app/actions/filters-actions.c:1243
 msgid "Repeat Last"
 msgstr "Ponovi zadnjega"
 
-#: app/actions/filters-actions.c:1249
+#: app/actions/filters-actions.c:1245
 msgid "Re-Show Last"
 msgstr "Ponovno pokaži zadnjega"
 
-#: app/actions/filters-actions.c:1252 app/actions/filters-actions.c:1254
+#: app/actions/filters-actions.c:1248 app/actions/filters-actions.c:1250
 msgid "No last used filters"
 msgstr "Ni nazadnje uporabljenih filtrov"
 
@@ -5134,7 +5134,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Ponovno preišči nameščene pisave"
 
-#: app/actions/gimpgeglprocedure.c:348
+#: app/actions/gimpgeglprocedure.c:349
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
@@ -13345,7 +13345,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neveljaven niz UTF-8 v datoteki čopičev »%s«."
 
 #: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:167
-#: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:618
+#: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:635
 msgid "Unnamed"
 msgstr "Neimenovano"
 
@@ -19327,7 +19327,7 @@ msgstr "Krmari po prikazu slike"
 msgid "Drop image files here to open them"
 msgstr "Semkaj spustite datoteke slik, ki jih želite odpreti."
 
-#: app/display/gimpdisplayshell-callbacks.c:658
+#: app/display/gimpdisplayshell-callbacks.c:663
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -19814,153 +19814,164 @@ msgstr "Kliknite in povlecite, da premaknete črto."
 msgid "%s to move the whole line"
 msgstr "%s za premik cele črte"
 
-#: app/display/gimptoolpath.c:281 app/tools/gimppathoptions.c:122
+#: app/display/gimptoolpath.c:283 app/tools/gimppathoptions.c:123
 msgid "Edit Mode"
 msgstr "Urejevalni način"
 
-#: app/display/gimptoolpath.c:290 app/tools/gimppathoptions.c:130
+#: app/display/gimptoolpath.c:292 app/tools/gimppathoptions.c:131
 msgid "Polygonal"
 msgstr "večkotno"
 
-#: app/display/gimptoolpath.c:291 app/tools/gimppathoptions.c:131
+#: app/display/gimptoolpath.c:293 app/tools/gimppathoptions.c:132
 msgid "Restrict editing to polygons"
 msgstr "Omeji urejanje na večkotnike"
 
-#: app/display/gimptoolpath.c:550
+#: app/display/gimptoolpath.c:300 app/tools/gimppathoptions.c:138
+msgid "Auto-connect on click"
+msgstr "Samodejno poveži ob kliku"
+
+#: app/display/gimptoolpath.c:301 app/tools/gimppathoptions.c:139
+#, fuzzy
+msgid "If checked, clicking on the end node in Design mode will close the path"
+msgstr ""
+"Če je možnost potrjena, s klikom končnega vozlišča v načinu oblikovanja "
+"zaprete pot"
+
+#: app/display/gimptoolpath.c:567
 msgid "The selected path is locked."
 msgstr "Izbrana pot je zaklenjena."
 
-#: app/display/gimptoolpath.c:640
+#: app/display/gimptoolpath.c:657
 msgid "Add Stroke"
 msgstr "Dodaj potezo"
 
-#: app/display/gimptoolpath.c:664
+#: app/display/gimptoolpath.c:681
 msgid "Add Anchor"
 msgstr "Dodaj sidro"
 
-#: app/display/gimptoolpath.c:688 app/display/gimptoolpath.c:2073
-#: app/display/gimptoolpath.c:2115
+#: app/display/gimptoolpath.c:705 app/display/gimptoolpath.c:2091
+#: app/display/gimptoolpath.c:2133
 msgid "Insert Anchor"
 msgstr "Vstavi sidro"
 
-#: app/display/gimptoolpath.c:717
+#: app/display/gimptoolpath.c:734
 msgid "Drag Handle"
 msgstr "Povleci ročico"
 
-#: app/display/gimptoolpath.c:748
+#: app/display/gimptoolpath.c:765
 msgid "Drag Anchor"
 msgstr "Povleci sidro"
 
-#: app/display/gimptoolpath.c:766
+#: app/display/gimptoolpath.c:783
 msgid "Drag Anchors"
 msgstr "Povleci sidra"
 
-#: app/display/gimptoolpath.c:788
+#: app/display/gimptoolpath.c:805
 msgid "Drag Curve"
 msgstr "Povleci krivuljo"
 
-#: app/display/gimptoolpath.c:817
+#: app/display/gimptoolpath.c:834
 msgid "Connect Strokes"
 msgstr "Poveži poteze"
 
-#: app/display/gimptoolpath.c:849
+#: app/display/gimptoolpath.c:866
 msgid "Drag Path"
 msgstr "Povleci pot"
 
-#: app/display/gimptoolpath.c:860
+#: app/display/gimptoolpath.c:877
 msgid "Convert Edge"
 msgstr "Pretvori rob"
 
-#: app/display/gimptoolpath.c:891
+#: app/display/gimptoolpath.c:908
 msgid "Delete Anchor"
 msgstr "Izbriši sidro"
 
-#: app/display/gimptoolpath.c:914 app/display/gimptoolpath.c:2093
+#: app/display/gimptoolpath.c:931 app/display/gimptoolpath.c:2111
 msgid "Delete Segment"
 msgstr "Izbriši odsek"
 
-#: app/display/gimptoolpath.c:1166
+#: app/display/gimptoolpath.c:1183
 msgid "Move Anchors"
 msgstr "Premakni sidra"
 
-#: app/display/gimptoolpath.c:1601
+#: app/display/gimptoolpath.c:1619
 msgid "Click to pick path to edit"
 msgstr "Kliknite za izbor poti za urejanje"
 
-#: app/display/gimptoolpath.c:1605
+#: app/display/gimptoolpath.c:1623
 msgid "Click to create a new path"
 msgstr "Kliknite za ustvarjanje nove poti"
 
-#: app/display/gimptoolpath.c:1609
+#: app/display/gimptoolpath.c:1627
 msgid "Click to create a new component of the path"
 msgstr "Kliknite za ustvarjanje nove komponente poti"
 
-#: app/display/gimptoolpath.c:1613
+#: app/display/gimptoolpath.c:1631
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Kliknite ali kliknite in povlecite, da ustvarite novo sidro."
 
-#: app/display/gimptoolpath.c:1623 app/display/gimptoolpath.c:1630
+#: app/display/gimptoolpath.c:1641 app/display/gimptoolpath.c:1648
 msgid "Click-Drag to move the anchor around"
 msgstr "Kliknite in povlecite, da premaknete sidro."
 
-#: app/display/gimptoolpath.c:1634 app/display/gimptoolpath.c:1657
+#: app/display/gimptoolpath.c:1652 app/display/gimptoolpath.c:1675
 msgid "Click-Drag to move the anchors around"
 msgstr "Kliknite in povlecite, da premaknete sidra."
 
-#: app/display/gimptoolpath.c:1640
+#: app/display/gimptoolpath.c:1658
 msgid "Click-Drag to move the handle around"
 msgstr "Kliknite in povlecite, da premaknete ročico."
 
-#: app/display/gimptoolpath.c:1647
+#: app/display/gimptoolpath.c:1665
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Kliknite in povlecite, da premaknete ročice simetrično."
 
-#: app/display/gimptoolpath.c:1662
+#: app/display/gimptoolpath.c:1680
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Kliknite in povlecite, da spremenite obliko krivulje."
 
-#: app/display/gimptoolpath.c:1665
+#: app/display/gimptoolpath.c:1683
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: simetrično"
 
-#: app/display/gimptoolpath.c:1670
+#: app/display/gimptoolpath.c:1688
 msgid "Click-Drag to move the component around"
 msgstr "Kliknite in povlecite, da premaknete komponento."
 
-#: app/display/gimptoolpath.c:1678
+#: app/display/gimptoolpath.c:1696
 msgid "Click-Drag to move the path around"
 msgstr "Kliknite in povlecite, da premaknete pot."
 
-#: app/display/gimptoolpath.c:1682
+#: app/display/gimptoolpath.c:1700
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Kliknite in povlecite, da vstavite sidrišče v pot."
 
-#: app/display/gimptoolpath.c:1690
+#: app/display/gimptoolpath.c:1708
 msgid "Click to delete this anchor"
 msgstr "Kliknite, da izbrišete to sidro."
 
-#: app/display/gimptoolpath.c:1694
+#: app/display/gimptoolpath.c:1712
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Kliknite, da povežete to vozlišče z izbrano končno točko."
 
-#: app/display/gimptoolpath.c:1699
+#: app/display/gimptoolpath.c:1717
 msgid "Click to open up the path"
 msgstr "Kliknite, da odprete pot."
 
-#: app/display/gimptoolpath.c:1703
+#: app/display/gimptoolpath.c:1721
 msgid "Click to make this node angular"
 msgstr "Kliknite, da naredite to vozlišče kotno."
 
-#: app/display/gimptoolpath.c:1707
+#: app/display/gimptoolpath.c:1725
 msgid "Clicking here does nothing, try clicking on path elements."
 msgstr "Klik sem nima posledic, poskusite klikniti elemente poti."
 
-#: app/display/gimptoolpath.c:1915 app/display/gimptoolpath.c:2026
+#: app/display/gimptoolpath.c:1933 app/display/gimptoolpath.c:2044
 msgid "Delete Anchors"
 msgstr "Izbriši sidra"
 
-#: app/display/gimptoolpath.c:2055
+#: app/display/gimptoolpath.c:2073
 msgid "Shift start"
 msgstr "Zamakni začetek"
 
@@ -21799,7 +21810,7 @@ msgstr "V medpomnilniku ni poti"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Poti ni mogoče uvoziti iz »%s«: %s"
 
-#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:886
+#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:890
 msgid "Vector Layer"
 msgstr "Vektorska plast"
 
@@ -25246,15 +25257,15 @@ msgstr "Izbrani risani element nima alfa kanala."
 msgid "The selected layer's alpha channel is locked."
 msgstr "Kanal alfa izbrane plasti je zaklenjen."
 
-#: app/tools/gimppathoptions.c:138
+#: app/tools/gimppathoptions.c:147
 msgid "Enable Fill"
 msgstr "Omogoči polnjenje"
 
-#: app/tools/gimppathoptions.c:144
+#: app/tools/gimppathoptions.c:153
 msgid "Enable Stroke"
 msgstr "Omogoči potezo"
 
-#: app/tools/gimppathoptions.c:539
+#: app/tools/gimppathoptions.c:557
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -25268,12 +25279,12 @@ msgstr ""
 "%s  Presekaj"
 
 #. Create a selection from the current path
-#: app/tools/gimppathoptions.c:550
+#: app/tools/gimppathoptions.c:568
 msgid "Selection from Path"
 msgstr "Izbor iz poti"
 
-#: app/tools/gimppathoptions.c:560 app/tools/gimppathtool.c:765
-#: app/tools/gimppathtool.c:1092
+#: app/tools/gimppathoptions.c:578 app/tools/gimppathtool.c:769
+#: app/tools/gimppathtool.c:1096
 msgid "Create New Vector Layer"
 msgstr "Ustvari novo vektorsko plast"
 
@@ -25285,27 +25296,27 @@ msgstr "Orodje Poti: Ustvari in uredi poti"
 msgid "Pat_hs"
 msgstr "Po_ti"
 
-#: app/tools/gimppathtool.c:768
+#: app/tools/gimppathtool.c:772
 msgid "Create Vector Layer from Path"
 msgstr "Ustvari vektorsko plast iz poti"
 
-#: app/tools/gimppathtool.c:884
+#: app/tools/gimppathtool.c:888
 msgid "Add Vector Layer"
 msgstr "Dodaj vektorsko plast"
 
-#: app/tools/gimppathtool.c:1115 app/tools/gimppathtool.c:1118
+#: app/tools/gimppathtool.c:1119 app/tools/gimppathtool.c:1122
 msgid "Confirm Path Editing"
 msgstr "Potrdi urejanje poti"
 
-#: app/tools/gimppathtool.c:1122 app/tools/gimptexttool.c:1869
+#: app/tools/gimppathtool.c:1126 app/tools/gimptexttool.c:1869
 msgid "Create _New Layer"
 msgstr "Ustvari _novo plast"
 
-#: app/tools/gimppathtool.c:1124 app/tools/gimptexttool.c:1871
+#: app/tools/gimppathtool.c:1128 app/tools/gimptexttool.c:1871
 msgid "_Edit Anyway"
 msgstr "Vs_eeno uredi"
 
-#: app/tools/gimppathtool.c:1146
+#: app/tools/gimppathtool.c:1150
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
