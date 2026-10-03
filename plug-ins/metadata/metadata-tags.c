@@ -46,6 +46,8 @@ const metadata_tag default_metadata_tags[] =
   { "Xmp.photoshop.CaptionWriter",               MODE_SINGLE, IPTC_WRITER,        TAG_TYPE_XMP, GIMP_XMP_TEXT  },
   { "Xmp.xmp.Rating",                            MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
   { "Xmp.dc.subject",                            MODE_MULTI,  IPTC_KEYWORDS,      TAG_TYPE_XMP, GIMP_XMP_BAG   },
+  { "Xmp.iptc.AltTextAccessibility",             MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.ExtDescrAccessibility",            MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
   { "Xmp.xmpRights.Marked",                      MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
   { "Xmp.dc.rights",                             MODE_SINGLE, IPTC_COPYRIGHT,     TAG_TYPE_XMP, GIMP_XMP_TEXT  },
   { "Xmp.xmpRights.WebStatement",                MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },

@@ -496,9 +496,12 @@ static const me_widget_info description_tab_data[] =
   { 5, N_("Rating"),                  ME_WIDGET_COMBO,      "Xmp.xmp.Rating" },
   { 6, N_("Keywords"),                ME_WIDGET_TEXT,       "Xmp.dc.subject" },
   { 7, "",                            ME_WIDGET_SEPARATOR,  "" },
-  { 8, N_("Copyright Status"),        ME_WIDGET_COMBO,      "Xmp.xmpRights.Marked" },
-  { 9, N_("Copyright Notice"),        ME_WIDGET_ENTRY,      "Xmp.dc.rights" },
-  { 10, N_("Copyright URL"),          ME_WIDGET_ENTRY,      "Xmp.xmpRights.WebStatement" },
+  { 8, N_("Alt Text"),                ME_WIDGET_TEXT,       "Xmp.iptc.AltTextAccessibility" },
+  { 9, N_("Extended Description"),    ME_WIDGET_TEXT,       "Xmp.iptc.ExtDescrAccessibility" },
+  { 10, "",                           ME_WIDGET_SEPARATOR,  "" },
+  { 11, N_("Copyright Status"),       ME_WIDGET_COMBO,      "Xmp.xmpRights.Marked" },
+  { 12, N_("Copyright Notice"),       ME_WIDGET_ENTRY,      "Xmp.dc.rights" },
+  { 13, N_("Copyright URL"),          ME_WIDGET_ENTRY,      "Xmp.xmpRights.WebStatement" },
 };
 static const gint n_description_tab_data = G_N_ELEMENTS (description_tab_data);
 
