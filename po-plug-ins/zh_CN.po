@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-01 02:18+0000\n"
-"PO-Revision-Date: 2026-10-02 08:05+0800\n"
+"POT-Creation-Date: 2026-10-02 21:00+0000\n"
+"PO-Revision-Date: 2026-10-03 07:58+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -90,8 +90,8 @@ msgstr "C 语言插件示例"
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1193
 #: plug-ins/metadata/metadata-editor.c:1691
-#: plug-ins/metadata/metadata-editor.c:5583
-#: plug-ins/metadata/metadata-editor.c:5618 plug-ins/print/print.c:476
+#: plug-ins/metadata/metadata-editor.c:5468
+#: plug-ins/metadata/metadata-editor.c:5503 plug-ins/print/print.c:476
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -263,8 +263,8 @@ msgstr "水平样式(_H)"
 #: plug-ins/lighting/lighting-main.c:213 plug-ins/lighting/lighting-main.c:336
 #: plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454
 #: plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
-#: plug-ins/metadata/metadata-tags.c:211 plug-ins/metadata/metadata-tags.c:223
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:218 plug-ins/metadata/metadata-tags.c:230
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "None"
 msgstr "无"
 
@@ -665,11 +665,11 @@ msgstr "油漆桶的位大小"
 msgid "1"
 msgstr "1"
 
-#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:261
 msgid "2"
 msgstr "2"
 
-#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:261
 msgid "4"
 msgstr "4"
 
@@ -1770,11 +1770,11 @@ msgstr "贯穿尺度的 Retinex 分布"
 msgid "Uniform"
 msgstr "统一"
 
-#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:261
 msgid "Low"
 msgstr "低"
 
-#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:261
 msgid "High"
 msgstr "高"
 
@@ -4031,8 +4031,8 @@ msgid "xvYCC"
 msgstr "xvYCC"
 
 #: plug-ins/common/file-jp2.c:249 plug-ins/common/file-jp2.c:295
-#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
-#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:268 plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311 plug-ins/metadata/metadata-tags.c:318
 msgid "Unknown"
 msgstr "未知"
 
@@ -4880,7 +4880,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "导出图像为多页面 PDF"
 
 #: plug-ins/common/file-pdf-export.c:1034
-#: plug-ins/metadata/metadata-editor.c:5618
+#: plug-ins/metadata/metadata-editor.c:5503
 msgid "_Export"
 msgstr "导出(_E)"
 
@@ -9787,7 +9787,7 @@ msgstr "用于应保持透明测试覆盖的透明测试阈值"
 msgid "Loading: %s"
 msgstr "正在加载：%s"
 
-#: plug-ins/file-dds/ddsread.c:256
+#: plug-ins/file-dds/ddsread.c:261
 #, c-format
 msgid ""
 "Unsupported DDS pixel format:\n"
@@ -9796,83 +9796,93 @@ msgstr ""
 "不支持的 DDS 像素格式：\n"
 "bpp：%d，Rmask：%x，Gmask：%x，Bmask：%x，Amask：%x，flags：%u"
 
-#: plug-ins/file-dds/ddsread.c:405
+#: plug-ins/file-dds/ddsread.c:410
 #, c-format
 msgid "Image size is too big to handle."
 msgstr "图像尺寸太大无法处理。"
 
-#: plug-ins/file-dds/ddsread.c:518
+#: plug-ins/file-dds/ddsread.c:523
 #, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "无效或损坏的 DDS 头部信息。"
 
-#: plug-ins/file-dds/ddsread.c:530
+#: plug-ins/file-dds/ddsread.c:535
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "无法分配新图像。"
 
-#: plug-ins/file-dds/ddsread.c:546
+#: plug-ins/file-dds/ddsread.c:551
 #, c-format
 msgid "Error reading palette."
 msgstr "读取色板出错。"
 
-#: plug-ins/file-dds/ddsread.c:869
+#: plug-ins/file-dds/ddsread.c:874
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "无效的 DDS 格式魔法数字。"
 
-#: plug-ins/file-dds/ddsread.c:885
+#: plug-ins/file-dds/ddsread.c:890
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr "文件缺少预期的像素格式标签！图像可能无法正确解码。"
 
-#: plug-ins/file-dds/ddsread.c:920
+#: plug-ins/file-dds/ddsread.c:925
 #, c-format
 msgid "Invalid pixel format."
 msgstr "无效的像素格式。"
 
-#: plug-ins/file-dds/ddsread.c:949
+#: plug-ins/file-dds/ddsread.c:954
 #, c-format
 msgid "Unsupported format (FourCC hex: %08x)"
 msgstr "不支持的格式（四字符代码 hex：%08x）"
 
-#: plug-ins/file-dds/ddsread.c:953
+#: plug-ins/file-dds/ddsread.c:958
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
 msgstr "不支持的格式（四字符代码：%c%c%c%c，hex：%08x）"
 
-#: plug-ins/file-dds/ddsread.c:975
+#: plug-ins/file-dds/ddsread.c:980
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "用于 RGB 数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:986
+#: plug-ins/file-dds/ddsread.c:991
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "用于亮度数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:1008
+#: plug-ins/file-dds/ddsread.c:1001 plug-ins/file-faxg3/faxg3.c:569
+#, c-format
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr "无效的图像尺寸（%d x %d）。图像可能已损坏。"
+
+#: plug-ins/file-dds/ddsread.c:1025
 #, c-format
 msgid "Invalid DX10 header"
 msgstr "无效 DX10 头部信息"
 
-#: plug-ins/file-dds/ddsread.c:1046
+#: plug-ins/file-dds/ddsread.c:1063
 #, c-format
 msgid "Unsupported DXGI Format: %u"
 msgstr "不支持的 DXGI 格式：%u"
 
-#: plug-ins/file-dds/ddsread.c:1234 plug-ins/file-dds/ddsread.c:1299
-#: plug-ins/file-dds/ddsread.c:1319
+#: plug-ins/file-dds/ddsread.c:1081
+#, c-format
+msgid "Invalid bpp value %d for pixel format %d"
+msgstr "用于像素格式 %2$d 的无效 bpp 值 %1$d"
+
+#: plug-ins/file-dds/ddsread.c:1268 plug-ins/file-dds/ddsread.c:1333
+#: plug-ins/file-dds/ddsread.c:1353
 #, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "请求的数据超出文件大小。\n"
 
-#: plug-ins/file-dds/ddsread.c:1242 plug-ins/file-dds/ddsread.c:1326
+#: plug-ins/file-dds/ddsread.c:1276 plug-ins/file-dds/ddsread.c:1360
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "意料之外的文件尾。\n"
 
-#: plug-ins/file-dds/ddsread.c:1656
+#: plug-ins/file-dds/ddsread.c:1690
 msgid "Open DDS"
 msgstr "打开 DDS"
 
@@ -9952,11 +9962,6 @@ msgstr "G3 传真图像"
 #, c-format
 msgid "Could not create buffer to process image data."
 msgstr "无法创建缓冲区来处理图像数据。"
-
-#: plug-ins/file-faxg3/faxg3.c:569
-#, c-format
-msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
-msgstr "无效的图像尺寸（%d x %d）。图像可能已损坏。"
 
 #: plug-ins/file-faxg3/faxg3.c:579
 #, c-format
@@ -12877,7 +12882,7 @@ msgstr "网格类型："
 
 #: plug-ins/gfig/gfig-dialog.c:1426
 #: plug-ins/gradient-flare/gradient-flare.c:740
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "Normal"
 msgstr "正常"
 
@@ -16100,25 +16105,25 @@ msgstr ""
 msgid "Unrated"
 msgstr "未评级"
 
-#: plug-ins/metadata/metadata-editor.c:4679
+#: plug-ins/metadata/metadata-editor.c:4564
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "设置元数据标签“%s”失败：%s"
 
-#: plug-ins/metadata/metadata-editor.c:5580
+#: plug-ins/metadata/metadata-editor.c:5465
 msgid "Import Metadata File"
 msgstr "导入元数据文件"
 
-#: plug-ins/metadata/metadata-editor.c:5583
+#: plug-ins/metadata/metadata-editor.c:5468
 msgid "_Import"
 msgstr "导入(_I)"
 
-#: plug-ins/metadata/metadata-editor.c:5615
+#: plug-ins/metadata/metadata-editor.c:5500
 msgid "Export Metadata File"
 msgstr "导出元数据文件"
 
-#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:210
-#: plug-ins/metadata/metadata-tags.c:270 plug-ins/metadata/metadata-tags.c:287
+#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:217
+#: plug-ins/metadata/metadata-tags.c:277 plug-ins/metadata/metadata-tags.c:294
 msgid "Select a value"
 msgstr "选择一个值"
 
@@ -16127,204 +16132,228 @@ msgid "Original digital capture of a real life scene"
 msgstr "真实生活场景的原始数码捕获"
 
 #: plug-ins/metadata/metadata-tags.c:189
+msgid "Multi-frame computational capture sampled from real life"
+msgstr "从真实生活采样的多帧计算捕获"
+
+#: plug-ins/metadata/metadata-tags.c:190
 msgid "Digitized from a negative on film"
 msgstr "由电影负片数字化"
 
-#: plug-ins/metadata/metadata-tags.c:190
+#: plug-ins/metadata/metadata-tags.c:191
 msgid "Digitized from a positive on film"
 msgstr "由电影正片数字化"
 
-#: plug-ins/metadata/metadata-tags.c:191
+#: plug-ins/metadata/metadata-tags.c:192
 msgid "Digitized from a print on non-transparent medium"
 msgstr "由不透明媒介上打印的数字化"
 
-#: plug-ins/metadata/metadata-tags.c:192
-msgid "Original media with minor human edits"
-msgstr "带有微小人为编辑的原始多媒体"
-
 #: plug-ins/metadata/metadata-tags.c:193
-msgid "Composite of captured elements"
-msgstr "由捕获的元素合成"
-
-#: plug-ins/metadata/metadata-tags.c:194
-msgid "Algorithmically-enhanced media"
-msgstr "算法增强的多媒体"
+msgid "Edits by one or more humans using non-generative tools"
+msgstr "由一个或多个人使用非生成式工具编辑"
 
 #: plug-ins/metadata/metadata-tags.c:195
-msgid "Data-driven media"
-msgstr "数据驱动的多媒体"
+msgid "Edited using Generative AI"
+msgstr "使用生成式 AI 编辑"
 
 #: plug-ins/metadata/metadata-tags.c:196
-msgid "Digital art"
-msgstr "数字艺术"
+msgid "Algorithmically-altered media initiated by a human"
+msgstr "由人开始的算法修改多媒体"
 
 #: plug-ins/metadata/metadata-tags.c:197
-msgid "Virtual recording"
-msgstr "虚拟录制"
+msgid "Digital art created by a human using non-generative tools"
+msgstr "由人使用非生成式工具创建的数字艺术"
 
 #: plug-ins/metadata/metadata-tags.c:198
-msgid "Composite including synthetic elements"
-msgstr "包含人造元素的合成"
+msgid "Digital media representation of data"
+msgstr "数据的数字多媒体再现"
 
 #: plug-ins/metadata/metadata-tags.c:199
-msgid "Trained algorithmic media"
-msgstr "训练的算法媒体"
+msgid "Created using Generative AI"
+msgstr "使用生成式 AI 创建"
 
 #: plug-ins/metadata/metadata-tags.c:200
 msgid "Pure algorithmic media"
 msgstr "单纯的算法媒体"
 
 #: plug-ins/metadata/metadata-tags.c:201
-msgid "Created by software"
-msgstr "通过软件创建"
+msgid "A capture of the contents of the screen"
+msgstr "屏幕内容的捕获"
 
-#: plug-ins/metadata/metadata-tags.c:212 plug-ins/metadata/metadata-tags.c:224
+#: plug-ins/metadata/metadata-tags.c:202
+msgid "Virtual event recording"
+msgstr "虚拟事件录制"
+
+#: plug-ins/metadata/metadata-tags.c:203
+msgid "Composite of elements, which may or may not be generative AI"
+msgstr "可能是或不是生成式 AI 元素的合成"
+
+#: plug-ins/metadata/metadata-tags.c:204
+msgid "Composite of captured elements from real life"
+msgstr "来源于真实生活捕获元素的合成"
+
+#: plug-ins/metadata/metadata-tags.c:205
+msgid "Composite including generative AI elements"
+msgstr "包含生成式 AI 元素的合成"
+
+#: plug-ins/metadata/metadata-tags.c:206
+msgid "(Retired) Original media with minor human edits"
+msgstr "（已弃用）带有微小人为编辑的原始多媒体"
+
+#: plug-ins/metadata/metadata-tags.c:207
+msgid "(Retired) Created by software"
+msgstr "（已弃用）通过软件创建"
+
+#: plug-ins/metadata/metadata-tags.c:208
+msgid "(Retired) Digital art"
+msgstr "（已弃用）数字艺术"
+
+#: plug-ins/metadata/metadata-tags.c:219 plug-ins/metadata/metadata-tags.c:231
 msgid "Not Applicable"
 msgstr "不适用"
 
-#: plug-ins/metadata/metadata-tags.c:213
+#: plug-ins/metadata/metadata-tags.c:220
 msgid "Unlimited Model Releases"
 msgstr "无限制的模特发布"
 
-#: plug-ins/metadata/metadata-tags.c:214
+#: plug-ins/metadata/metadata-tags.c:221
 msgid "Limited or Incomplete Model Releases"
 msgstr "有限或不完全的模特发布"
 
-#: plug-ins/metadata/metadata-tags.c:225
+#: plug-ins/metadata/metadata-tags.c:232
 msgid "Unlimited Property Releases"
 msgstr "无限制的所有权发布"
 
-#: plug-ins/metadata/metadata-tags.c:226
+#: plug-ins/metadata/metadata-tags.c:233
 msgid "Limited or Incomplete Property Releases"
 msgstr "有限或不完全的所有权发布"
 
-#: plug-ins/metadata/metadata-tags.c:235
+#: plug-ins/metadata/metadata-tags.c:242
 msgid "Age Unknown"
 msgstr "未知年龄"
 
-#: plug-ins/metadata/metadata-tags.c:236
+#: plug-ins/metadata/metadata-tags.c:243
 msgid "Age 25 or Over"
 msgstr "25 岁或更大"
 
-#: plug-ins/metadata/metadata-tags.c:237
+#: plug-ins/metadata/metadata-tags.c:244
 msgid "Age 24"
 msgstr "24 岁"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:245
 msgid "Age 23"
 msgstr "23 岁"
 
-#: plug-ins/metadata/metadata-tags.c:239
+#: plug-ins/metadata/metadata-tags.c:246
 msgid "Age 22"
 msgstr "22 岁"
 
-#: plug-ins/metadata/metadata-tags.c:240
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age 21"
 msgstr "21 岁"
 
-#: plug-ins/metadata/metadata-tags.c:241
+#: plug-ins/metadata/metadata-tags.c:248
 msgid "Age 20"
 msgstr "20 岁"
 
-#: plug-ins/metadata/metadata-tags.c:242
+#: plug-ins/metadata/metadata-tags.c:249
 msgid "Age 19"
 msgstr "19 岁"
 
-#: plug-ins/metadata/metadata-tags.c:243
+#: plug-ins/metadata/metadata-tags.c:250
 msgid "Age 18"
 msgstr "18 岁"
 
-#: plug-ins/metadata/metadata-tags.c:244
+#: plug-ins/metadata/metadata-tags.c:251
 msgid "Age 17"
 msgstr "17 岁"
 
-#: plug-ins/metadata/metadata-tags.c:245
+#: plug-ins/metadata/metadata-tags.c:252
 msgid "Age 16"
 msgstr "16 岁"
 
-#: plug-ins/metadata/metadata-tags.c:246
+#: plug-ins/metadata/metadata-tags.c:253
 msgid "Age 15"
 msgstr "15 岁"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Age 14 or Under"
 msgstr "14 岁或更小"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "7"
 msgstr "7"
 
 #. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:262
+#: plug-ins/metadata/metadata-tags.c:269
 msgid "Copyrighted"
 msgstr "已有版权"
 
 #. TRUE
-#: plug-ins/metadata/metadata-tags.c:263
+#: plug-ins/metadata/metadata-tags.c:270
 msgid "Public Domain"
 msgstr "公共域"
 
-#: plug-ins/metadata/metadata-tags.c:271
+#: plug-ins/metadata/metadata-tags.c:278
 msgid "Work"
 msgstr "工作"
 
-#: plug-ins/metadata/metadata-tags.c:272
+#: plug-ins/metadata/metadata-tags.c:279
 msgid "Cell"
 msgstr "手机"
 
-#: plug-ins/metadata/metadata-tags.c:273
+#: plug-ins/metadata/metadata-tags.c:280
 msgid "Fax"
 msgstr "传真"
 
-#: plug-ins/metadata/metadata-tags.c:274
+#: plug-ins/metadata/metadata-tags.c:281
 msgid "Home"
 msgstr "家庭"
 
-#: plug-ins/metadata/metadata-tags.c:275
+#: plug-ins/metadata/metadata-tags.c:282
 msgid "Pager"
 msgstr "寻呼机"
 
-#: plug-ins/metadata/metadata-tags.c:288
+#: plug-ins/metadata/metadata-tags.c:295
 msgid "Male"
 msgstr "雄性"
 
-#: plug-ins/metadata/metadata-tags.c:289
+#: plug-ins/metadata/metadata-tags.c:296
 msgid "Female"
 msgstr "雌性"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Other"
 msgstr "其他"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "Above sea level"
 msgstr "海平面之上"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "Below sea level"
 msgstr "海平面之下"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "North"
 msgstr "北"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "South"
 msgstr "南"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:318
 msgid "East"
 msgstr "东"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:318
 msgid "West"
 msgstr "西"
 
@@ -16888,6 +16917,12 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#~ msgid "Data-driven media"
+#~ msgstr "数据驱动的多媒体"
+
+#~ msgid "Trained algorithmic media"
+#~ msgstr "训练的算法媒体"
 
 #~ msgid "Align visible layers"
 #~ msgstr "对齐可见图层"
