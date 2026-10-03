@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-10-03 02:37+0000\n"
-"PO-Revision-Date: 2026-10-03 12:37+0200\n"
+"PO-Revision-Date: 2026-10-03 22:37+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -19831,11 +19831,10 @@ msgid "Auto-connect on click"
 msgstr "Samodejno poveži ob kliku"
 
 #: app/display/gimptoolpath.c:301 app/tools/gimppathoptions.c:139
-#, fuzzy
 msgid "If checked, clicking on the end node in Design mode will close the path"
 msgstr ""
 "Če je možnost potrjena, s klikom končnega vozlišča v načinu oblikovanja "
-"zaprete pot"
+"sklenete pot"
 
 #: app/display/gimptoolpath.c:567
 msgid "The selected path is locked."
