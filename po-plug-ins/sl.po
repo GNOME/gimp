@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-01 02:18+0000\n"
-"PO-Revision-Date: 2026-10-01 17:10+0200\n"
+"POT-Creation-Date: 2026-10-02 19:51+0000\n"
+"PO-Revision-Date: 2026-10-03 12:44+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -267,8 +267,8 @@ msgstr "_Vodoravni slog"
 #: plug-ins/lighting/lighting-main.c:213 plug-ins/lighting/lighting-main.c:336
 #: plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454
 #: plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
-#: plug-ins/metadata/metadata-tags.c:211 plug-ins/metadata/metadata-tags.c:223
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:218 plug-ins/metadata/metadata-tags.c:230
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "None"
 msgstr "Brez"
 
@@ -670,11 +670,11 @@ msgstr "Biti za velikost vedra"
 msgid "1"
 msgstr "1"
 
-#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:261
 msgid "2"
 msgstr "2"
 
-#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:261
 msgid "4"
 msgstr "4"
 
@@ -1789,11 +1789,11 @@ msgstr "Porazdelitev Retinex po utežeh"
 msgid "Uniform"
 msgstr "konstantno"
 
-#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:261
 msgid "Low"
 msgstr "nizko"
 
-#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:261
 msgid "High"
 msgstr "visoko"
 
@@ -4098,8 +4098,8 @@ msgid "xvYCC"
 msgstr "xvYCC"
 
 #: plug-ins/common/file-jp2.c:249 plug-ins/common/file-jp2.c:295
-#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
-#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:268 plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311 plug-ins/metadata/metadata-tags.c:318
 msgid "Unknown"
 msgstr "Neznano"
 
@@ -9963,7 +9963,7 @@ msgstr ""
 msgid "Loading: %s"
 msgstr "Nalaganje: %s"
 
-#: plug-ins/file-dds/ddsread.c:256
+#: plug-ins/file-dds/ddsread.c:261
 #, c-format
 msgid ""
 "Unsupported DDS pixel format:\n"
@@ -9972,85 +9972,95 @@ msgstr ""
 "Nepodprta oblika slikovnih točk DDS:\n"
 "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, zastavice: %u"
 
-#: plug-ins/file-dds/ddsread.c:405
+#: plug-ins/file-dds/ddsread.c:410
 #, c-format
 msgid "Image size is too big to handle."
 msgstr "Slika je prevelika za obravnavo."
 
-#: plug-ins/file-dds/ddsread.c:518
+#: plug-ins/file-dds/ddsread.c:523
 #, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "Neveljavna ali okvarjena glava DDS."
 
-#: plug-ins/file-dds/ddsread.c:530
+#: plug-ins/file-dds/ddsread.c:535
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "Nove slike ni mogoče alocirati."
 
-#: plug-ins/file-dds/ddsread.c:546
+#: plug-ins/file-dds/ddsread.c:551
 #, c-format
 msgid "Error reading palette."
 msgstr "Napaka pri branju palete."
 
-#: plug-ins/file-dds/ddsread.c:869
+#: plug-ins/file-dds/ddsread.c:874
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Neveljavno magično število zapisa DDS."
 
-#: plug-ins/file-dds/ddsread.c:885
+#: plug-ins/file-dds/ddsread.c:890
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr ""
 "Datoteka nima pričakovanih zastavic v obliki slikovnih točk! Slika morda ne "
 "bo pravilno dekodirana."
 
-#: plug-ins/file-dds/ddsread.c:920
+#: plug-ins/file-dds/ddsread.c:925
 #, c-format
 msgid "Invalid pixel format."
 msgstr "Neveljavna oblika slikovnih točk."
 
-#: plug-ins/file-dds/ddsread.c:949
+#: plug-ins/file-dds/ddsread.c:954
 #, c-format
 msgid "Unsupported format (FourCC hex: %08x)"
 msgstr "Nepodprta vrsta zapisa (FourCC, šestn.: %08x)"
 
-#: plug-ins/file-dds/ddsread.c:953
+#: plug-ins/file-dds/ddsread.c:958
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
 msgstr "Nepodprta vrsta zapisa (FourCC: %c%c%c%c, šestn.: %08x)"
 
-#: plug-ins/file-dds/ddsread.c:975
+#: plug-ins/file-dds/ddsread.c:980
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Neveljavna vrednost bpp za podatke RGB: %d"
 
-#: plug-ins/file-dds/ddsread.c:986
+#: plug-ins/file-dds/ddsread.c:991
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Neveljavna vrednost bpp za podatke svetlosti: %d"
 
-#: plug-ins/file-dds/ddsread.c:1008
+#: plug-ins/file-dds/ddsread.c:1001 plug-ins/file-faxg3/faxg3.c:569
+#, c-format
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr "Neveljavne dimenzije slike (%dx%d). Slika je morda okvarjena."
+
+#: plug-ins/file-dds/ddsread.c:1025
 #, c-format
 msgid "Invalid DX10 header"
 msgstr "Neveljavna glava DX10"
 
-#: plug-ins/file-dds/ddsread.c:1046
+#: plug-ins/file-dds/ddsread.c:1063
 #, c-format
 msgid "Unsupported DXGI Format: %u"
 msgstr "Nepodprta zapis DXGI: %u"
 
-#: plug-ins/file-dds/ddsread.c:1234 plug-ins/file-dds/ddsread.c:1299
-#: plug-ins/file-dds/ddsread.c:1319
+#: plug-ins/file-dds/ddsread.c:1081
+#, c-format
+msgid "Invalid bpp value %d for pixel format %d"
+msgstr "Neveljavna vrednost bpp %d za obliko slik. točk %d"
+
+#: plug-ins/file-dds/ddsread.c:1268 plug-ins/file-dds/ddsread.c:1333
+#: plug-ins/file-dds/ddsread.c:1353
 #, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "Zahtevani podatki presegajo velikost datoteke.\n"
 
-#: plug-ins/file-dds/ddsread.c:1242 plug-ins/file-dds/ddsread.c:1326
+#: plug-ins/file-dds/ddsread.c:1276 plug-ins/file-dds/ddsread.c:1360
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Nepričakovan konec datoteke (EOF).\n"
 
-#: plug-ins/file-dds/ddsread.c:1656
+#: plug-ins/file-dds/ddsread.c:1690
 msgid "Open DDS"
 msgstr "Odpri DDS"
 
@@ -10130,11 +10140,6 @@ msgstr "Slika faksa G3"
 #, c-format
 msgid "Could not create buffer to process image data."
 msgstr "Ni mogoče ustvariti medpomnilnika za obdelavo podatkov slike."
-
-#: plug-ins/file-faxg3/faxg3.c:569
-#, c-format
-msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
-msgstr "Neveljavne dimenzije slike (%dx%d). Slika je morda okvarjena."
 
 #: plug-ins/file-faxg3/faxg3.c:579
 #, c-format
@@ -13149,7 +13154,7 @@ msgstr "Vrsta mreže:"
 
 #: plug-ins/gfig/gfig-dialog.c:1426
 #: plug-ins/gradient-flare/gradient-flare.c:740
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "Normal"
 msgstr "Navadna"
 
@@ -16409,8 +16414,8 @@ msgstr "_Uvozi"
 msgid "Export Metadata File"
 msgstr "Izvozi datoteko metapodatkov"
 
-#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:210
-#: plug-ins/metadata/metadata-tags.c:270 plug-ins/metadata/metadata-tags.c:287
+#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:217
+#: plug-ins/metadata/metadata-tags.c:277 plug-ins/metadata/metadata-tags.c:294
 msgid "Select a value"
 msgstr "Izberite vrednost"
 
@@ -16419,204 +16424,238 @@ msgid "Original digital capture of a real life scene"
 msgstr "Izvirni digitalni zajem prizora iz resničnega življenja"
 
 #: plug-ins/metadata/metadata-tags.c:189
+#, fuzzy
+msgid "Multi-frame computational capture sampled from real life"
+msgstr "Večsličični računalniški zajem, vzorčen iz realnega življenja"
+
+#: plug-ins/metadata/metadata-tags.c:190
 msgid "Digitized from a negative on film"
 msgstr "Digitalizirano iz filmskega negativa"
 
-#: plug-ins/metadata/metadata-tags.c:190
+#: plug-ins/metadata/metadata-tags.c:191
 msgid "Digitized from a positive on film"
 msgstr "Digitalizirano iz filmskega pozitiva"
 
-#: plug-ins/metadata/metadata-tags.c:191
+#: plug-ins/metadata/metadata-tags.c:192
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitalizirano s tiska na neprosojnem nosilcu"
 
-#: plug-ins/metadata/metadata-tags.c:192
-msgid "Original media with minor human edits"
-msgstr "Izvirni medij z manjšimi človeškimi popravki"
-
 #: plug-ins/metadata/metadata-tags.c:193
-msgid "Composite of captured elements"
-msgstr "Kompozit zajetih elementov"
-
-#: plug-ins/metadata/metadata-tags.c:194
-msgid "Algorithmically-enhanced media"
-msgstr "Algoritmično izboljšani medij"
+msgid "Edits by one or more humans using non-generative tools"
+msgstr "Urejanje ene ali več oseb z orodji, ki niso generativna"
 
 #: plug-ins/metadata/metadata-tags.c:195
-msgid "Data-driven media"
-msgstr "Medij, ki temelji na podatkih"
+msgid "Edited using Generative AI"
+msgstr "Urejeno z rabo generativne UI"
 
 #: plug-ins/metadata/metadata-tags.c:196
-msgid "Digital art"
-msgstr "Digitalna umetnost"
+#, fuzzy
+msgid "Algorithmically-altered media initiated by a human"
+msgstr "Algoritmično spremenjeni medij s človeško sprožitvijo"
 
 #: plug-ins/metadata/metadata-tags.c:197
-msgid "Virtual recording"
-msgstr "Navidezni posnetek"
+msgid "Digital art created by a human using non-generative tools"
+msgstr ""
+"Digitalna umetnost, ki jo je ustvaril človek brez rabe generativnih orodij"
 
 #: plug-ins/metadata/metadata-tags.c:198
-msgid "Composite including synthetic elements"
-msgstr "Kompozit, ki vključuje sintetične elemente"
+#, fuzzy
+msgid "Digital media representation of data"
+msgstr "Reprezentacija podatkov v digitalnih medijih"
 
 #: plug-ins/metadata/metadata-tags.c:199
-msgid "Trained algorithmic media"
-msgstr "Učeni algoritemski medij"
+msgid "Created using Generative AI"
+msgstr "Ustvarjeno z uporabo generativne UI"
 
 #: plug-ins/metadata/metadata-tags.c:200
 msgid "Pure algorithmic media"
 msgstr "Čisti algoritemski medij"
 
 #: plug-ins/metadata/metadata-tags.c:201
-msgid "Created by software"
-msgstr "Ustvarjeno s programjem"
+#, fuzzy
+msgid "A capture of the contents of the screen"
+msgstr "Zajem vsebine zaslona"
 
-#: plug-ins/metadata/metadata-tags.c:212 plug-ins/metadata/metadata-tags.c:224
+#: plug-ins/metadata/metadata-tags.c:202
+#, fuzzy
+msgid "Virtual event recording"
+msgstr "Navidezni posnetek dogodka"
+
+#: plug-ins/metadata/metadata-tags.c:203
+#, fuzzy
+msgid "Composite of elements, which may or may not be generative AI"
+msgstr "Kompozit, ki vključuje elemente, ki so lahko ali niso generativna UI"
+
+#: plug-ins/metadata/metadata-tags.c:204
+msgid "Composite of captured elements from real life"
+msgstr "Kompozit zajetih elementov iz resničnega življenja"
+
+#: plug-ins/metadata/metadata-tags.c:205
+msgid "Composite including generative AI elements"
+msgstr "Kompozit, ki vključuje elemente UI"
+
+#: plug-ins/metadata/metadata-tags.c:206
+#, fuzzy
+msgid "(Retired) Original media with minor human edits"
+msgstr "(Odstranjeno) Izvirni medij z manjšimi človeškimi popravki"
+
+#: plug-ins/metadata/metadata-tags.c:207
+#, fuzzy
+msgid "(Retired) Created by software"
+msgstr "(Odstranjeno) Ustvarjeno s programjem"
+
+#: plug-ins/metadata/metadata-tags.c:208
+#, fuzzy
+msgid "(Retired) Digital art"
+msgstr "(Odstranjeno) Digitalna umetnost"
+
+#: plug-ins/metadata/metadata-tags.c:219 plug-ins/metadata/metadata-tags.c:231
 msgid "Not Applicable"
 msgstr "Se ne uporabi"
 
-#: plug-ins/metadata/metadata-tags.c:213
+#: plug-ins/metadata/metadata-tags.c:220
 msgid "Unlimited Model Releases"
 msgstr "Neomejeno izdajanje modelov"
 
-#: plug-ins/metadata/metadata-tags.c:214
+#: plug-ins/metadata/metadata-tags.c:221
 msgid "Limited or Incomplete Model Releases"
 msgstr "Omejeno ali nepopolno izdajanje modelov"
 
-#: plug-ins/metadata/metadata-tags.c:225
+#: plug-ins/metadata/metadata-tags.c:232
 msgid "Unlimited Property Releases"
 msgstr "Neomejeno izdajanje lastnosti"
 
-#: plug-ins/metadata/metadata-tags.c:226
+#: plug-ins/metadata/metadata-tags.c:233
 msgid "Limited or Incomplete Property Releases"
 msgstr "Omejeno ali nepopolno izdajanje lastnosti"
 
-#: plug-ins/metadata/metadata-tags.c:235
+#: plug-ins/metadata/metadata-tags.c:242
 msgid "Age Unknown"
 msgstr "Starost ni znana"
 
-#: plug-ins/metadata/metadata-tags.c:236
+#: plug-ins/metadata/metadata-tags.c:243
 msgid "Age 25 or Over"
 msgstr "Starost 25 let ali več"
 
-#: plug-ins/metadata/metadata-tags.c:237
+#: plug-ins/metadata/metadata-tags.c:244
 msgid "Age 24"
 msgstr "Starost 24 let"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:245
 msgid "Age 23"
 msgstr "Starost 23 let"
 
-#: plug-ins/metadata/metadata-tags.c:239
+#: plug-ins/metadata/metadata-tags.c:246
 msgid "Age 22"
 msgstr "Starost 22 let"
 
-#: plug-ins/metadata/metadata-tags.c:240
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age 21"
 msgstr "Starost 21 let"
 
-#: plug-ins/metadata/metadata-tags.c:241
+#: plug-ins/metadata/metadata-tags.c:248
 msgid "Age 20"
 msgstr "Starost 20 let"
 
-#: plug-ins/metadata/metadata-tags.c:242
+#: plug-ins/metadata/metadata-tags.c:249
 msgid "Age 19"
 msgstr "Starost 19 let"
 
-#: plug-ins/metadata/metadata-tags.c:243
+#: plug-ins/metadata/metadata-tags.c:250
 msgid "Age 18"
 msgstr "Starost 18 let"
 
-#: plug-ins/metadata/metadata-tags.c:244
+#: plug-ins/metadata/metadata-tags.c:251
 msgid "Age 17"
 msgstr "Starost 17 let"
 
-#: plug-ins/metadata/metadata-tags.c:245
+#: plug-ins/metadata/metadata-tags.c:252
 msgid "Age 16"
 msgstr "Starost 16 let"
 
-#: plug-ins/metadata/metadata-tags.c:246
+#: plug-ins/metadata/metadata-tags.c:253
 msgid "Age 15"
 msgstr "Starost 15 let"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Age 14 or Under"
 msgstr "Starost 14 let ali manj"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "7"
 msgstr "7"
 
 #. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:262
+#: plug-ins/metadata/metadata-tags.c:269
 msgid "Copyrighted"
 msgstr "Avtorsko zaščiteno"
 
 #. TRUE
-#: plug-ins/metadata/metadata-tags.c:263
+#: plug-ins/metadata/metadata-tags.c:270
 msgid "Public Domain"
 msgstr "Javna last"
 
-#: plug-ins/metadata/metadata-tags.c:271
+#: plug-ins/metadata/metadata-tags.c:278
 msgid "Work"
 msgstr "Delo"
 
-#: plug-ins/metadata/metadata-tags.c:272
+#: plug-ins/metadata/metadata-tags.c:279
 msgid "Cell"
 msgstr "Mobilnik"
 
-#: plug-ins/metadata/metadata-tags.c:273
+#: plug-ins/metadata/metadata-tags.c:280
 msgid "Fax"
 msgstr "Faks"
 
-#: plug-ins/metadata/metadata-tags.c:274
+#: plug-ins/metadata/metadata-tags.c:281
 msgid "Home"
 msgstr "Domača številka"
 
-#: plug-ins/metadata/metadata-tags.c:275
+#: plug-ins/metadata/metadata-tags.c:282
 msgid "Pager"
 msgstr "Pozivnik"
 
-#: plug-ins/metadata/metadata-tags.c:288
+#: plug-ins/metadata/metadata-tags.c:295
 msgid "Male"
 msgstr "Moški"
 
-#: plug-ins/metadata/metadata-tags.c:289
+#: plug-ins/metadata/metadata-tags.c:296
 msgid "Female"
 msgstr "Ženska"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Other"
 msgstr "Drugo"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "Above sea level"
 msgstr "Nadmorska višina"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "Below sea level"
 msgstr "Pod morsko gladino"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "North"
 msgstr "Sever"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "South"
 msgstr "Jug"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:318
 msgid "East"
 msgstr "Vzhod"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:318
 msgid "West"
 msgstr "Zahod"
 
