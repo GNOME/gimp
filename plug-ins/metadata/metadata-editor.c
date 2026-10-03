@@ -1171,6 +1171,9 @@ metadata_editor_dialog (GimpImage            *image,
   gchar          *title;
   gchar          *name;
 
+  g_return_val_if_fail (XMP_LAST  == n_default_metadata_tags,    FALSE);
+  g_return_val_if_fail (IPTC_LAST == n_equivalent_metadata_tags, FALSE);
+
   g_object_get (config, "parent-handle", &parent_handle, NULL);
 
   metadata = GEXIV2_METADATA (g_metadata);

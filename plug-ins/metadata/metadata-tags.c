@@ -34,109 +34,106 @@
  * - an array of tags of the same type for seq and bag, where each line in
  *   the multi line edit will be one item in the array
  */
+/* Note: when adding a tag here you also need to add a value to the enum list
+ * in the exact same position! */
 const metadata_tag default_metadata_tags[] =
 {
   /* Description */
-  { "Xmp.dc.title",                              MODE_SINGLE, 16,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  0
-  { "Xmp.dc.creator",                            MODE_MULTI,  13,  TAG_TYPE_XMP, GIMP_XMP_SEQ   }, //  1
-  { "Xmp.dc.description",                        MODE_MULTI,  14,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  2
-  { "Xmp.dc.subject",                            MODE_MULTI,  15,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, //  3
-  { "Xmp.dc.rights",                             MODE_SINGLE, 17,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  4
-  { "Xmp.photoshop.AuthorsPosition",             MODE_SINGLE, 19,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  5
-  { "Xmp.photoshop.CaptionWriter",               MODE_SINGLE, 21,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  6
-  { "Xmp.xmp.Rating",                            MODE_COMBO,  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, //  7
-  { "Xmp.xmpRights.Marked",                      MODE_COMBO,  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, //  8
-  { "Xmp.xmpRights.WebStatement",                MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  9
+  { "Xmp.dc.title",                              MODE_SINGLE, IPTC_OBJECT,        TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.dc.creator",                            MODE_MULTI,  IPTC_BYLINE,        TAG_TYPE_XMP, GIMP_XMP_SEQ   },
+  { "Xmp.photoshop.AuthorsPosition",             MODE_SINGLE, IPTC_TITLE,         TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.dc.description",                        MODE_MULTI,  IPTC_CAPTION,       TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.photoshop.CaptionWriter",               MODE_SINGLE, IPTC_WRITER,        TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.xmp.Rating",                            MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.dc.subject",                            MODE_MULTI,  IPTC_KEYWORDS,      TAG_TYPE_XMP, GIMP_XMP_BAG   },
+  { "Xmp.xmpRights.Marked",                      MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.dc.rights",                             MODE_SINGLE, IPTC_COPYRIGHT,     TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.xmpRights.WebStatement",                MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
 
   /* IPTC */
-  { "Xmp.photoshop.DateCreated",                 MODE_SINGLE,  0,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 10
-  { "Xmp.photoshop.Headline",                    MODE_MULTI,   3,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 11
-  { "Xmp.photoshop.TransmissionReference",       MODE_SINGLE,  1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 12
-  { "Xmp.photoshop.Instructions",                MODE_MULTI,   2,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 13
-  { "Xmp.iptc.IntellectualGenre",                MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 14
-  { "Xmp.iptc.Scene",                            MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 15
-  { "Xmp.iptc.Location",                         MODE_SINGLE, 18,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 16
-  { "Xmp.iptc.CountryCode",                      MODE_SINGLE, 20,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 17
-  { "Xmp.iptc.SubjectCode",                      MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 18
-  { "Xmp.xmpRights.UsageTerms",                  MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 19
-  { "Xmp.photoshop.City",                        MODE_SINGLE,  5,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 20
-  { "Xmp.photoshop.State",                       MODE_SINGLE,  6,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 21
-  { "Xmp.photoshop.Country",                     MODE_SINGLE,  7,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 22
-  /* Xmp.photoshop.CaptionWriter here is a duplicate of #6 above. We keep it here to not have
-   * to renumber the tag references. It seems it is not used on the IPTC tab. */
-  { "Xmp.photoshop.CaptionWriter",               MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 23
-  { "Xmp.photoshop.Credit",                      MODE_SINGLE,  8,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 24
-  { "Xmp.photoshop.Source",                      MODE_SINGLE,  9,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 25
-  { "Xmp.photoshop.Urgency",                     MODE_COMBO,  11,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 26
+  { "Xmp.iptc.CiAdrExtadr",                      MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.CiAdrCity",                        MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.CiAdrRegion",                      MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.CiAdrPcode",                       MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.CiAdrCtry",                        MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.CiTelWork",                        MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.CiEmailWork",                      MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.CiUrlWork",                        MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.photoshop.DateCreated",                 MODE_SINGLE, IPTC_DATECREATED,   TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.IntellectualGenre",                MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.Scene",                            MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_BAG   },
+  { "Xmp.iptc.Location",                         MODE_SINGLE, IPTC_LOCATION,      TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.photoshop.City",                        MODE_SINGLE, IPTC_CITY,          TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.photoshop.State",                       MODE_SINGLE, IPTC_STATE,         TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.photoshop.Country",                     MODE_SINGLE, IPTC_COUNTRY,       TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.CountryCode",                      MODE_SINGLE, IPTC_COUNTRYCODE,   TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.photoshop.Urgency",                     MODE_COMBO,  IPTC_URGENCY,       TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.photoshop.Headline",                    MODE_MULTI,  IPTC_HEADLINE,      TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptc.SubjectCode",                      MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_BAG   },
+  { "Xmp.photoshop.TransmissionReference",       MODE_SINGLE, IPTC_REFERENCE,     TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.photoshop.Instructions",                MODE_MULTI,  IPTC_INSTRUCTIONS,  TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.photoshop.Credit",                      MODE_SINGLE, IPTC_CREDIT,        TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.photoshop.Source",                      MODE_SINGLE, IPTC_SOURCE,        TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.xmpRights.UsageTerms",                  MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
 
   /* IPTC Extension */
-  { "Xmp.iptcExt.PersonInImage",                 MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 27
-  { "Xmp.iptcExt.Sublocation",                   MODE_SINGLE, 12,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 28
-  { "Xmp.iptcExt.City",                          MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 29
-  { "Xmp.iptcExt.ProvinceState",                 MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 30
-  { "Xmp.iptcExt.CountryName",                   MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 31
-  { "Xmp.iptcExt.CountryCode",                   MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 32
-  { "Xmp.iptcExt.WorldRegion",                   MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 33
-  { "Xmp.iptcExt.LocationShown",                 MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 34
-  { "Xmp.iptcExt.OrganisationInImageName",       MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 35
-  { "Xmp.iptcExt.OrganisationInImageCode",       MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 36
-  { "Xmp.iptcExt.Event",                         MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 37
-  { "Xmp.iptcExt.RegistryId",                    MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 38
-  { "Xmp.iptcExt.ArtworkOrObject",               MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 39
-  { "Xmp.iptcExt.AddlModelInfo",                 MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 40
-  { "Xmp.iptcExt.ModelAge",                      MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 41
-  { "Xmp.iptcExt.MaxAvailWidth",                 MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 42
-  { "Xmp.iptcExt.MaxAvailHeight",                MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 43
-  { "Xmp.iptcExt.DigitalSourceType",             MODE_COMBO,  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 44
-  { "Xmp.plus.MinorModelAgeDisclosure",          MODE_COMBO,  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 45
-  { "Xmp.plus.ModelReleaseStatus",               MODE_COMBO,  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 46
-  { "Xmp.plus.ModelReleaseID",                   MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 47
-  { "Xmp.plus.ImageSupplierName",                MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 48
-  { "Xmp.plus.ImageSupplierID",                  MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 49
-  { "Xmp.plus.ImageSupplierImageID",             MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 50
-  { "Xmp.plus.ImageCreator",                     MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 51
-  { "Xmp.plus.CopyrightOwner",                   MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 52
-  { "Xmp.plus.Licensor",                         MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 53
-  { "Xmp.plus.PropertyReleaseStatus",            MODE_COMBO,  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 54
-  { "Xmp.plus.PropertyReleaseID",                MODE_LIST,   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 55
+  { "Xmp.iptcExt.PersonInImage",                 MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_BAG   },
+  { "Xmp.iptcExt.Sublocation",                   MODE_SINGLE, IPTC_SUBLOCATION,   TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.City",                          MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.ProvinceState",                 MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.CountryName",                   MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.CountryCode",                   MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.WorldRegion",                   MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.LocationShown",                 MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.iptcExt.OrganisationInImageName",       MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.iptcExt.OrganisationInImageCode",       MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.iptcExt.Event",                         MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.ArtworkOrObject",               MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.iptcExt.AddlModelInfo",                 MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.ModelAge",                      MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_BAG   },
+  { "Xmp.plus.MinorModelAgeDisclosure",          MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.plus.ModelReleaseStatus",               MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.plus.ModelReleaseID",                   MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.plus.ImageSupplierName",                MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.plus.ImageSupplierID",                  MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.plus.ImageSupplierImageID",             MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.RegistryId",                    MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.iptcExt.MaxAvailWidth",                 MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.MaxAvailHeight",                MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.iptcExt.DigitalSourceType",             MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.plus.ImageCreator",                     MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.plus.CopyrightOwner",                   MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.plus.Licensor",                         MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.plus.PropertyReleaseStatus",            MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.plus.PropertyReleaseID",                MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
 
   /* Categories */
-  { "Xmp.photoshop.Category",                    MODE_SINGLE,  4,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 56
-  { "Xmp.photoshop.SupplementalCategories",      MODE_MULTI,  10,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 57
+  { "Xmp.photoshop.Category",                    MODE_SINGLE, IPTC_CATEGORY,      TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.photoshop.SupplementalCategories",      MODE_MULTI,  IPTC_SUPCATEGORY,   TAG_TYPE_XMP, GIMP_XMP_BAG   },
 
   /* GPS */
-  { "Exif.GPSInfo.GPSLongitude",                 MODE_SINGLE, -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 58
-  { "Exif.GPSInfo.GPSLongitudeRef",              MODE_COMBO,  -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 59
-  { "Exif.GPSInfo.GPSLatitude",                  MODE_SINGLE, -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 60
-  { "Exif.GPSInfo.GPSLatitudeRef",               MODE_COMBO,  -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 61
-  { "Exif.GPSInfo.GPSAltitude",                  MODE_SINGLE, -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 62
-  { "Exif.GPSInfo.GPSAltitudeRef",               MODE_COMBO,  -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 63
+  { "Exif.GPSInfo.GPSLongitude",                 MODE_SINGLE, -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE },
+  { "Exif.GPSInfo.GPSLongitudeRef",              MODE_COMBO,  -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE },
+  { "Exif.GPSInfo.GPSLatitude",                  MODE_SINGLE, -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE },
+  { "Exif.GPSInfo.GPSLatitudeRef",               MODE_COMBO,  -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE },
+  { "Exif.GPSInfo.GPSAltitude",                  MODE_SINGLE, -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE },
+  { "Exif.GPSInfo.GPSAltitudeRef",               MODE_COMBO,  -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE },
 
   /* DICOM */
-  { "Xmp.DICOM.PatientName",                     MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 64
-  { "Xmp.DICOM.PatientID",                       MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 65
-  { "Xmp.DICOM.PatientDOB",                      MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 66
-  { "Xmp.DICOM.PatientSex",                      MODE_COMBO,  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 67
-  { "Xmp.DICOM.StudyID",                         MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 68
-  { "Xmp.DICOM.StudyPhysician",                  MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 69
-  { "Xmp.DICOM.StudyDateTime",                   MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 70
-  { "Xmp.DICOM.StudyDescription",                MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 71
-  { "Xmp.DICOM.SeriesNumber",                    MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 72
-  { "Xmp.DICOM.SeriesModality",                  MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 73
-  { "Xmp.DICOM.SeriesDateTime",                  MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 74
-  { "Xmp.DICOM.SeriesDescription",               MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 75
-  { "Xmp.DICOM.EquipmentInstitution",            MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 76
-  { "Xmp.DICOM.EquipmentManufacturer",           MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 77
-
-  /* IPTC */
-  { "Xmp.iptc.CiAdrExtadr",                      MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 78
-  { "Xmp.iptc.CiAdrCity",                        MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 79
-  { "Xmp.iptc.CiAdrRegion",                      MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 80
-  { "Xmp.iptc.CiAdrPcode",                       MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 81
-  { "Xmp.iptc.CiAdrCtry",                        MODE_SINGLE, -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 82
-  { "Xmp.iptc.CiTelWork",                        MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 83
-  { "Xmp.iptc.CiEmailWork",                      MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 84
-  { "Xmp.iptc.CiUrlWork",                        MODE_MULTI,  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }  // 85
+  { "Xmp.DICOM.PatientName",                     MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.PatientID",                       MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.PatientDOB",                      MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.PatientSex",                      MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.DICOM.StudyID",                         MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.StudyPhysician",                  MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.StudyDateTime",                   MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.StudyDescription",                MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.SeriesNumber",                    MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.SeriesModality",                  MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.SeriesDateTime",                  MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.SeriesDescription",               MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.EquipmentInstitution",            MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
+  { "Xmp.DICOM.EquipmentManufacturer",           MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
 
 };
 const gint n_default_metadata_tags = G_N_ELEMENTS (default_metadata_tags);
@@ -145,38 +142,42 @@ const gint n_default_metadata_tags = G_N_ELEMENTS (default_metadata_tags);
  * MODE_SINGLE - for iptc tags that can appear only once,
  * MODE_MULTI  - for iptc tags that are repeatable, i.e. can appear multiple times.
  */
+/* Note: when adding a tag here you also need to add a value to the enum list
+ * in the exact same position! */
 const iptc_tag_info equivalent_metadata_tags[] =
 {
-  { "Iptc.Application2.DateCreated",             MODE_SINGLE, 10, -1 }, //  0
-  { "Iptc.Application2.TransmissionReference",   MODE_SINGLE, 12, -1 }, //  1
-  { "Iptc.Application2.SpecialInstructions",     MODE_SINGLE, 13, -1 }, //  2
-  { "Iptc.Application2.Headline",                MODE_SINGLE, 11, -1 }, //  3
-  { "Iptc.Application2.Category",                MODE_SINGLE, 56, -1 }, //  4
-  { "Iptc.Application2.City",                    MODE_SINGLE, 20, -1 }, //  5
-  { "Iptc.Application2.ProvinceState",           MODE_SINGLE, 21, -1 }, //  6
-  { "Iptc.Application2.CountryName",             MODE_SINGLE, 22, -1 }, //  7
-  { "Iptc.Application2.Credit",                  MODE_SINGLE, 24, -1 }, //  8
-  { "Iptc.Application2.Source",                  MODE_SINGLE, 25, -1 }, //  9
-  { "Iptc.Application2.SuppCategory",            MODE_MULTI,  57, -1 }, // 10
-  { "Iptc.Application2.Urgency",                 MODE_COMBO,  26, -1 }, // 11
-  { "Iptc.Application2.SubLocation",             MODE_SINGLE, 28, -1 }, // 12
-  { "Iptc.Application2.Byline",                  MODE_SINGLE,  1,  0 }, // 13
-  { "Iptc.Application2.Caption",                 MODE_SINGLE,  2,  1 }, // 14
-  { "Iptc.Application2.Keywords",                MODE_MULTI,   3, -1 }, // 15
-  { "Iptc.Application2.ObjectName",              MODE_SINGLE,  0, -1 }, // 16
-  { "Iptc.Application2.Copyright",               MODE_SINGLE,  4,  2 }, // 17
-  { "Iptc.Application2.LocationName",            MODE_MULTI,  16, -1 }, // 18
-  { "Iptc.Application2.BylineTitle",             MODE_MULTI,   5, -1 }, // 19
-  { "Iptc.Application2.CountryCode",             MODE_SINGLE, 17, -1 }, // 20
-  { "Iptc.Application2.Writer",                  MODE_MULTI,   6, -1 }, // 21
+  { "Iptc.Application2.DateCreated",             MODE_SINGLE, XMP_IPTC_DATECREATED,   -1 },
+  { "Iptc.Application2.TransmissionReference",   MODE_SINGLE, XMP_IPTC_REFERENCE,     -1 },
+  { "Iptc.Application2.SpecialInstructions",     MODE_SINGLE, XMP_IPTC_INSTRUCTIONS,  -1 },
+  { "Iptc.Application2.Headline",                MODE_SINGLE, XMP_IPTC_HEADLINE,      -1 },
+  { "Iptc.Application2.Category",                MODE_SINGLE, XMP_CAT_CATEGORY,       -1 },
+  { "Iptc.Application2.City",                    MODE_SINGLE, XMP_IPTC_CITY,          -1 },
+  { "Iptc.Application2.ProvinceState",           MODE_SINGLE, XMP_IPTC_STATE,         -1 },
+  { "Iptc.Application2.CountryName",             MODE_SINGLE, XMP_IPTC_COUNTRY,       -1 },
+  { "Iptc.Application2.Credit",                  MODE_SINGLE, XMP_IPTC_CREDIT,        -1 },
+  { "Iptc.Application2.Source",                  MODE_SINGLE, XMP_IPTC_SOURCE,        -1 },
+  { "Iptc.Application2.SuppCategory",            MODE_MULTI,  XMP_CAT_SUPPLEMENTAL,   -1 },
+  { "Iptc.Application2.Urgency",                 MODE_COMBO,  XMP_IPTC_URGENCY,       -1 },
+  { "Iptc.Application2.SubLocation",             MODE_SINGLE, XMP_EXT_SUBLOCATION,    -1 },
+  { "Iptc.Application2.Byline",                  MODE_SINGLE, XMP_DESC_CREATOR,       EXIF_ARTIST },
+  { "Iptc.Application2.Caption",                 MODE_SINGLE, XMP_DESC_DESCRIPTION,   EXIF_DESCRIPTION },
+  { "Iptc.Application2.Keywords",                MODE_MULTI,  XMP_DESC_SUBJECT,       -1 },
+  { "Iptc.Application2.ObjectName",              MODE_SINGLE, XMP_DESC_TITLE,         -1 },
+  { "Iptc.Application2.Copyright",               MODE_SINGLE, XMP_DESC_RIGHTS,        EXIF_COPYRIGHT },
+  { "Iptc.Application2.LocationName",            MODE_MULTI,  XMP_IPTC_LOCATION,      -1 },
+  { "Iptc.Application2.BylineTitle",             MODE_MULTI,  XMP_DESC_POSITION,      -1 },
+  { "Iptc.Application2.CountryCode",             MODE_SINGLE, XMP_IPTC_COUNTRYCODE,   -1 },
+  { "Iptc.Application2.Writer",                  MODE_MULTI,  XMP_DESC_WRITER,        -1 },
 };
 const gint n_equivalent_metadata_tags = G_N_ELEMENTS (equivalent_metadata_tags);
 
+/* Note: when adding a tag here you also need to add a value to the enum list
+ * in the exact same position! */
 const exif_tag_info exif_equivalent_tags[] =
 {
-  { 1, "Exif.Image.Artist",           MODE_SINGLE}, //  0
-  { 2, "Exif.Image.ImageDescription", MODE_SINGLE}, //  1
-  { 4, "Exif.Image.Copyright",        MODE_SINGLE}, //  2
+  { XMP_DESC_CREATOR,     "Exif.Image.Artist",           MODE_SINGLE},
+  { XMP_DESC_DESCRIPTION, "Exif.Image.ImageDescription", MODE_SINGLE},
+  { XMP_DESC_RIGHTS,      "Exif.Image.Copyright",        MODE_SINGLE},
 };
 
 /* Digital Source Type Combobox Items
