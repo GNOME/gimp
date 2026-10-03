@@ -299,7 +299,7 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
                                    g_param_spec_boolean ("auto-connect",
                                                          _("Auto-connect on click"),
                                                          _("If checked, clicking on the end node in "
-                                                           "Design mode will complete the path"),
+                                                           "Design mode will close the path"),
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
