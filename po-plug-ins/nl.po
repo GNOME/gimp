@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-01 02:18+0000\n"
-"PO-Revision-Date: 2026-10-01 10:13+0200\n"
+"POT-Creation-Date: 2026-10-02 21:00+0000\n"
+"PO-Revision-Date: 2026-10-02 10:29+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -93,8 +93,8 @@ msgstr "Plug-In Voorbeeld in C"
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1193
 #: plug-ins/metadata/metadata-editor.c:1691
-#: plug-ins/metadata/metadata-editor.c:5583
-#: plug-ins/metadata/metadata-editor.c:5618 plug-ins/print/print.c:476
+#: plug-ins/metadata/metadata-editor.c:5468
+#: plug-ins/metadata/metadata-editor.c:5503 plug-ins/print/print.c:476
 msgid "_Cancel"
 msgstr "_Annuleren"
 
@@ -261,8 +261,8 @@ msgstr "_Horizontale stijl"
 #: plug-ins/lighting/lighting-main.c:213 plug-ins/lighting/lighting-main.c:336
 #: plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454
 #: plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
-#: plug-ins/metadata/metadata-tags.c:211 plug-ins/metadata/metadata-tags.c:223
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:218 plug-ins/metadata/metadata-tags.c:230
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "None"
 msgstr "Geen"
 
@@ -663,11 +663,11 @@ msgstr "Aantal bits voor emmergrootte"
 msgid "1"
 msgstr "1"
 
-#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:261
 msgid "2"
 msgstr "2"
 
-#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:261
 msgid "4"
 msgstr "4"
 
@@ -1781,11 +1781,11 @@ msgstr "Retinexverdeling via schalen"
 msgid "Uniform"
 msgstr "Uniform"
 
-#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:261
 msgid "Low"
 msgstr "Laag"
 
-#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:261
 msgid "High"
 msgstr "Hoog"
 
@@ -4036,8 +4036,8 @@ msgid "xvYCC"
 msgstr "xvYCC"
 
 #: plug-ins/common/file-jp2.c:249 plug-ins/common/file-jp2.c:295
-#: plug-ins/metadata/metadata-tags.c:261 plug-ins/metadata/metadata-tags.c:297
-#: plug-ins/metadata/metadata-tags.c:304 plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:268 plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311 plug-ins/metadata/metadata-tags.c:318
 msgid "Unknown"
 msgstr "Onbekend"
 
@@ -4883,7 +4883,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Afbeelding exporteren als PDF met meerdere pagina's"
 
 #: plug-ins/common/file-pdf-export.c:1034
-#: plug-ins/metadata/metadata-editor.c:5618
+#: plug-ins/metadata/metadata-editor.c:5503
 msgid "_Export"
 msgstr "_Exporteren"
 
@@ -9780,7 +9780,7 @@ msgstr "Drempelwaarde voor de alfatest waarvoor de dekking van de alfatest behou
 msgid "Loading: %s"
 msgstr "Bezig met laden: %s"
 
-#: plug-ins/file-dds/ddsread.c:256
+#: plug-ins/file-dds/ddsread.c:261
 #, c-format
 msgid ""
 "Unsupported DDS pixel format:\n"
@@ -9788,83 +9788,93 @@ msgid ""
 msgstr "Niet-ondersteund DDS pixel formaat:\n"
 "bpp: %d, Rmask: %x, Gmask: %x, Bmask: %x, Amask: %x, flags: %u"
 
-#: plug-ins/file-dds/ddsread.c:405
+#: plug-ins/file-dds/ddsread.c:410
 #, c-format
 msgid "Image size is too big to handle."
 msgstr "Afbeeldingsgrootte is te groot om af te handelen."
 
-#: plug-ins/file-dds/ddsread.c:518
+#: plug-ins/file-dds/ddsread.c:523
 #, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "Ongeldige of beschadigde DDS-header."
 
-#: plug-ins/file-dds/ddsread.c:530
+#: plug-ins/file-dds/ddsread.c:535
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "Kan geen nieuwe afbeelding aanmaken (geheugentekort)."
 
-#: plug-ins/file-dds/ddsread.c:546
+#: plug-ins/file-dds/ddsread.c:551
 #, c-format
 msgid "Error reading palette."
 msgstr "Fout bij het lezen kleurenpalet."
 
-#: plug-ins/file-dds/ddsread.c:869
+#: plug-ins/file-dds/ddsread.c:874
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Ongeldig magisch getal van DDS-indeling."
 
-#: plug-ins/file-dds/ddsread.c:885
+#: plug-ins/file-dds/ddsread.c:890
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr "In het bestand ontbreken verwachte vlaggen voor pixelindelingen! Afbeelding zou niet juist gedecodeerd kunnen worden."
 
-#: plug-ins/file-dds/ddsread.c:920
+#: plug-ins/file-dds/ddsread.c:925
 #, c-format
 msgid "Invalid pixel format."
 msgstr "Ongeldige pixelindeling."
 
-#: plug-ins/file-dds/ddsread.c:949
+#: plug-ins/file-dds/ddsread.c:954
 #, c-format
 msgid "Unsupported format (FourCC hex: %08x)"
 msgstr "Niet-ondersteunde indeling (FourCC hex: %08x)"
 
-#: plug-ins/file-dds/ddsread.c:953
+#: plug-ins/file-dds/ddsread.c:958
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
 msgstr "Niet-ondersteunde indeling (FourCC: %c%c%c%c, hex: %08x)"
 
-#: plug-ins/file-dds/ddsread.c:975
+#: plug-ins/file-dds/ddsread.c:980
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Ongeldige bpp waarde voor RGB data: %d"
 
-#: plug-ins/file-dds/ddsread.c:986
+#: plug-ins/file-dds/ddsread.c:991
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Ongeldige bpp waarde voor helderheid data: %d"
 
-#: plug-ins/file-dds/ddsread.c:1008
+#: plug-ins/file-dds/ddsread.c:1001 plug-ins/file-faxg3/faxg3.c:569
+#, c-format
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr "Ongeldige afmetingen afbeelding (%d x %d). Afbeelding kan beschadigd zijn."
+
+#: plug-ins/file-dds/ddsread.c:1025
 #, c-format
 msgid "Invalid DX10 header"
 msgstr "Ongeldige DX10-header"
 
-#: plug-ins/file-dds/ddsread.c:1046
+#: plug-ins/file-dds/ddsread.c:1063
 #, c-format
 msgid "Unsupported DXGI Format: %u"
 msgstr "Niet-ondersteunde DXGI-indeling: %u"
 
-#: plug-ins/file-dds/ddsread.c:1234 plug-ins/file-dds/ddsread.c:1299
-#: plug-ins/file-dds/ddsread.c:1319
+#: plug-ins/file-dds/ddsread.c:1081
+#, c-format
+msgid "Invalid bpp value %d for pixel format %d"
+msgstr "Ongeldige waarde bpp %d voor pixelformaat %d"
+
+#: plug-ins/file-dds/ddsread.c:1268 plug-ins/file-dds/ddsread.c:1333
+#: plug-ins/file-dds/ddsread.c:1353
 #, c-format
 msgid "Requested data exceeds size of file.\n"
-msgstr "Gegevensomvang groter dan de grootte van het bestaand.\n"
+msgstr "Gevraagde gegevens groter dan de grootte van het bestand.\n"
 
-#: plug-ins/file-dds/ddsread.c:1242 plug-ins/file-dds/ddsread.c:1326
+#: plug-ins/file-dds/ddsread.c:1276 plug-ins/file-dds/ddsread.c:1360
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Onverwacht bestandseinde.\n"
 
-#: plug-ins/file-dds/ddsread.c:1656
+#: plug-ins/file-dds/ddsread.c:1690
 msgid "Open DDS"
 msgstr "DDS openen"
 
@@ -9951,11 +9961,6 @@ msgstr "G3 fax-afbeelding"
 #, c-format
 msgid "Could not create buffer to process image data."
 msgstr "Kon geen buffergeheugen krijgen om gegevens te bewerken."
-
-#: plug-ins/file-faxg3/faxg3.c:569
-#, c-format
-msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
-msgstr "Ongeldige afmetingen afbeelding (%d x %d). Afbeelding kan beschadigd zijn."
 
 # afsluiten/sluiten
 #: plug-ins/file-faxg3/faxg3.c:579
@@ -12845,7 +12850,7 @@ msgstr "Rastertype:"
 
 #: plug-ins/gfig/gfig-dialog.c:1426
 #: plug-ins/gradient-flare/gradient-flare.c:740
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "Normal"
 msgstr "Normaal"
 
@@ -15658,7 +15663,7 @@ msgstr "Telefoonnummer(s)"
 # pm
 #: plug-ins/metadata/metadata-editor.c:514
 msgid "E-mail(s)"
-msgstr "Email(s)"
+msgstr "E-mail(s)"
 
 #: plug-ins/metadata/metadata-editor.c:515
 msgid "Website(s)"
@@ -15905,7 +15910,7 @@ msgstr "Soort tel. 2"
 
 #: plug-ins/metadata/metadata-editor.c:668
 msgid "Email Address"
-msgstr "Emailadres"
+msgstr "E-mailadres"
 
 #: plug-ins/metadata/metadata-editor.c:669
 msgid "Web Address"
@@ -16091,7 +16096,7 @@ msgid ""
 "Depending on the selected measurement type the value should be entered in "
 "meter (m) or feet (ft)\n"
 "Delete all text to remove the current value."
-msgstr "Voer hier GPS-waarde vor de hoogte in of bewerk die.\n"
+msgstr "Voer hier GPS-waarde voor de hoogte in of bewerk die.\n"
 "Een geldige waarde bestaat uit een getal:\n"
 "bijv. 100, of 12,24\n"
 "Afhankelijk van het geselecteerde type maateenheid zou de waarde moeten worden ingevoerd in meter (m) of feet (ft)\n"
@@ -16103,25 +16108,25 @@ msgstr "Voer hier GPS-waarde vor de hoogte in of bewerk die.\n"
 msgid "Unrated"
 msgstr "Geen"
 
-#: plug-ins/metadata/metadata-editor.c:4679
+#: plug-ins/metadata/metadata-editor.c:4564
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Kon metagegevens-tag niet instellen %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5580
+#: plug-ins/metadata/metadata-editor.c:5465
 msgid "Import Metadata File"
-msgstr "Metagegevens bestand importeren"
+msgstr "Bestand met metagegevens importeren"
 
-#: plug-ins/metadata/metadata-editor.c:5583
+#: plug-ins/metadata/metadata-editor.c:5468
 msgid "_Import"
 msgstr "_Importeren"
 
-#: plug-ins/metadata/metadata-editor.c:5615
+#: plug-ins/metadata/metadata-editor.c:5500
 msgid "Export Metadata File"
-msgstr "Metagegevensbestand exporteren"
+msgstr "Bestand met metagegevens exporteren"
 
-#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:210
-#: plug-ins/metadata/metadata-tags.c:270 plug-ins/metadata/metadata-tags.c:287
+#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:217
+#: plug-ins/metadata/metadata-tags.c:277 plug-ins/metadata/metadata-tags.c:294
 msgid "Select a value"
 msgstr "Kies een waarde"
 
@@ -16130,32 +16135,76 @@ msgid "Original digital capture of a real life scene"
 msgstr "Originele digitale opname"
 
 #: plug-ins/metadata/metadata-tags.c:189
+msgid "Multi-frame computational capture sampled from real life"
+msgstr "Multiframe berekende opname bemonsterd uit het echte leven"
+
+#: plug-ins/metadata/metadata-tags.c:190
 msgid "Digitized from a negative on film"
 msgstr "Gedigitaliseerd van een filmnegatief"
 
-#: plug-ins/metadata/metadata-tags.c:190
+#: plug-ins/metadata/metadata-tags.c:191
 msgid "Digitized from a positive on film"
 msgstr "Gedigitaliseerd van een filmpositief"
 
-#: plug-ins/metadata/metadata-tags.c:191
+#: plug-ins/metadata/metadata-tags.c:192
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Gedigitaliseerd van een afdruk op een niet-transparant medium"
 
-#: plug-ins/metadata/metadata-tags.c:192
-msgid "Original media with minor human edits"
-msgstr "Origineel beeld met kleine menselijke bewerkingen"
-
 #: plug-ins/metadata/metadata-tags.c:193
-msgid "Composite of captured elements"
-msgstr "Samenstelling met toegeëigende elementen"
-
-#: plug-ins/metadata/metadata-tags.c:194
-msgid "Algorithmically-enhanced media"
-msgstr "Met algoritmes verbeterde beelden"
+msgid "Edits by one or more humans using non-generative tools"
+msgstr "Bewerkingen door een of meer mensen met niet-generatieve programma's"
 
 #: plug-ins/metadata/metadata-tags.c:195
-msgid "Data-driven media"
-msgstr "Van data afgeleide beelden"
+msgid "Edited using Generative AI"
+msgstr "Bewerkt met generatieve AI"
+
+#: plug-ins/metadata/metadata-tags.c:196
+msgid "Algorithmically-altered media initiated by a human"
+msgstr "Algoritmisch veranderde media, geïnitieerd door een mens"
+
+#: plug-ins/metadata/metadata-tags.c:197
+msgid "Digital art created by a human using non-generative tools"
+msgstr "Digitale kunst, gemaakt door een mens met niet-generatieve programma's"
+
+#: plug-ins/metadata/metadata-tags.c:198
+msgid "Digital media representation of data"
+msgstr "Digitale media, weergave van gegevens"
+
+#: plug-ins/metadata/metadata-tags.c:199
+msgid "Created using Generative AI"
+msgstr "Gemaakt met generatieve AI"
+
+#: plug-ins/metadata/metadata-tags.c:200
+msgid "Pure algorithmic media"
+msgstr "Puur algoritmisch gecreëerd"
+
+#: plug-ins/metadata/metadata-tags.c:201
+msgid "A capture of the contents of the screen"
+msgstr "Een opname van de inhoud van het scherm"
+
+#: plug-ins/metadata/metadata-tags.c:202
+msgid "Virtual event recording"
+msgstr "Virtuele gebeurtenis opnemen"
+
+#: plug-ins/metadata/metadata-tags.c:203
+msgid "Composite of elements, which may or may not be generative AI"
+msgstr "Samenstelling van elementen, wat al dan niet generatieve AI zou kunnen zijn"
+
+#: plug-ins/metadata/metadata-tags.c:204
+msgid "Composite of captured elements from real life"
+msgstr "Samenstelling van vastgelegde elementen uit het echte leven"
+
+#: plug-ins/metadata/metadata-tags.c:205
+msgid "Composite including generative AI elements"
+msgstr "Samenstelling bevat elementen van generatieve AI"
+
+#: plug-ins/metadata/metadata-tags.c:206
+msgid "(Retired) Original media with minor human edits"
+msgstr "(Verouderd) Originele media met kleine menselijke bewerkingen"
+
+#: plug-ins/metadata/metadata-tags.c:207
+msgid "(Retired) Created by software"
+msgstr "(Verouderd) Gemaakt door software"
 
 # van iptc.org:
 # Digital Source Type
@@ -16164,182 +16213,162 @@ msgstr "Van data afgeleide beelden"
 # -    Digitised from a negative on film – from bw or colour negatives
 # -    etc.
 # pm
-#: plug-ins/metadata/metadata-tags.c:196
-msgid "Digital art"
-msgstr "Digitale kunst"
+#: plug-ins/metadata/metadata-tags.c:208
+msgid "(Retired) Digital art"
+msgstr "(Verouderd) Digitale kunst"
 
-#: plug-ins/metadata/metadata-tags.c:197
-msgid "Virtual recording"
-msgstr "Virtuele opname"
-
-#: plug-ins/metadata/metadata-tags.c:198
-msgid "Composite including synthetic elements"
-msgstr "Samengesteld met synthetische elementen"
-
-#: plug-ins/metadata/metadata-tags.c:199
-msgid "Trained algorithmic media"
-msgstr "Getrainde algoritme's"
-
-#: plug-ins/metadata/metadata-tags.c:200
-msgid "Pure algorithmic media"
-msgstr "Puur algoritmisch gecreëerd"
-
-#: plug-ins/metadata/metadata-tags.c:201
-msgid "Created by software"
-msgstr "Gemaakt met software"
-
-#: plug-ins/metadata/metadata-tags.c:212 plug-ins/metadata/metadata-tags.c:224
+#: plug-ins/metadata/metadata-tags.c:219 plug-ins/metadata/metadata-tags.c:231
 msgid "Not Applicable"
 msgstr "Niet van toepassing"
 
 # iptc.org:
 # A Model Release is a document granting the right to use an image of a person depicted.
 # pm
-#: plug-ins/metadata/metadata-tags.c:213
+#: plug-ins/metadata/metadata-tags.c:220
 msgid "Unlimited Model Releases"
 msgstr "Onbeperkt publicatierecht model"
 
-#: plug-ins/metadata/metadata-tags.c:214
+#: plug-ins/metadata/metadata-tags.c:221
 msgid "Limited or Incomplete Model Releases"
 msgstr "Beperkt of onvolledig publicatierecht model"
 
 # Property: eigendom
 # pm
-#: plug-ins/metadata/metadata-tags.c:225
+#: plug-ins/metadata/metadata-tags.c:232
 msgid "Unlimited Property Releases"
 msgstr "Onbeperkt eigendom uitgave"
 
-#: plug-ins/metadata/metadata-tags.c:226
+#: plug-ins/metadata/metadata-tags.c:233
 msgid "Limited or Incomplete Property Releases"
 msgstr "Beperkt of onvolledig eigendom uitgave"
 
-#: plug-ins/metadata/metadata-tags.c:235
+#: plug-ins/metadata/metadata-tags.c:242
 msgid "Age Unknown"
 msgstr "Leeftijd onbekend"
 
-#: plug-ins/metadata/metadata-tags.c:236
+#: plug-ins/metadata/metadata-tags.c:243
 msgid "Age 25 or Over"
 msgstr "25 jaar of ouder"
 
-#: plug-ins/metadata/metadata-tags.c:237
+#: plug-ins/metadata/metadata-tags.c:244
 msgid "Age 24"
 msgstr "24 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:245
 msgid "Age 23"
 msgstr "23 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:239
+#: plug-ins/metadata/metadata-tags.c:246
 msgid "Age 22"
 msgstr "22 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:240
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age 21"
 msgstr "21 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:241
+#: plug-ins/metadata/metadata-tags.c:248
 msgid "Age 20"
 msgstr "20 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:242
+#: plug-ins/metadata/metadata-tags.c:249
 msgid "Age 19"
 msgstr "19 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:243
+#: plug-ins/metadata/metadata-tags.c:250
 msgid "Age 18"
 msgstr "18 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:244
+#: plug-ins/metadata/metadata-tags.c:251
 msgid "Age 17"
 msgstr "17 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:245
+#: plug-ins/metadata/metadata-tags.c:252
 msgid "Age 16"
 msgstr "16 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:246
+#: plug-ins/metadata/metadata-tags.c:253
 msgid "Age 15"
 msgstr "15 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Age 14 or Under"
 msgstr "14 jaar of jonger"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:261
 msgid "7"
 msgstr "7"
 
 #. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:262
+#: plug-ins/metadata/metadata-tags.c:269
 msgid "Copyrighted"
 msgstr "Auteursrechtelijk beschermd"
 
 #. TRUE
-#: plug-ins/metadata/metadata-tags.c:263
+#: plug-ins/metadata/metadata-tags.c:270
 msgid "Public Domain"
 msgstr "Publiek domein"
 
-#: plug-ins/metadata/metadata-tags.c:271
+#: plug-ins/metadata/metadata-tags.c:278
 msgid "Work"
 msgstr "Werk"
 
-#: plug-ins/metadata/metadata-tags.c:272
+#: plug-ins/metadata/metadata-tags.c:279
 msgid "Cell"
 msgstr "Mobiele telefoon"
 
-#: plug-ins/metadata/metadata-tags.c:273
+#: plug-ins/metadata/metadata-tags.c:280
 msgid "Fax"
 msgstr "Fax"
 
-#: plug-ins/metadata/metadata-tags.c:274
+#: plug-ins/metadata/metadata-tags.c:281
 msgid "Home"
 msgstr "Thuis"
 
-#: plug-ins/metadata/metadata-tags.c:275
+#: plug-ins/metadata/metadata-tags.c:282
 msgid "Pager"
 msgstr "Pager"
 
-#: plug-ins/metadata/metadata-tags.c:288
+#: plug-ins/metadata/metadata-tags.c:295
 msgid "Male"
 msgstr "Man"
 
-#: plug-ins/metadata/metadata-tags.c:289
+#: plug-ins/metadata/metadata-tags.c:296
 msgid "Female"
 msgstr "Vrouw"
 
-#: plug-ins/metadata/metadata-tags.c:290
+#: plug-ins/metadata/metadata-tags.c:297
 msgid "Other"
 msgstr "Overige"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "Above sea level"
 msgstr "Boven zeeniveau"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "Below sea level"
 msgstr "Beneden zeeniveau"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "North"
 msgstr "Noord"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:311
 msgid "South"
 msgstr "Zuid"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:318
 msgid "East"
 msgstr "Oost"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:318
 msgid "West"
 msgstr "West"
 
@@ -16893,6 +16922,12 @@ msgstr "Scannen niet mogelijk omdat er geen TWAIN driver is gevonden"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Gegevens van scanner / camera worden overgebracht"
+
+#~ msgid "Data-driven media"
+#~ msgstr "Van data afgeleide beelden"
+
+#~ msgid "Trained algorithmic media"
+#~ msgstr "Getrainde algoritme's"
 
 #~ msgid "Align visible layers"
 #~ msgstr "Zichtbare lagen uitlijnen"
