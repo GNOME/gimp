@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-27 01:55+0000\n"
-"PO-Revision-Date: 2026-09-27 22:32+0300\n"
+"POT-Creation-Date: 2026-10-03 02:37+0000\n"
+"PO-Revision-Date: 2026-10-03 18:41+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>="
-"2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2"
+" && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 25.12.1\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
@@ -95,8 +95,7 @@ msgstr ""
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:59
 msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
-msgstr ""
-"Редагування сканованого гравірування у GIMP. Художня робота Liam (CC0)"
+msgstr "Редагування сканованого гравірування у GIMP. Художня робота Liam (CC0)"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:67 app/about.h:22
 msgid "GIMP"
@@ -123,8 +122,8 @@ msgstr "Створення зображень та редагування фот
 #: desktop/gimp.desktop.in.in:13
 msgid "GIMP;graphic;design;illustration;painting;"
 msgstr ""
-"GIMP;graphic;design;illustration;painting;гімп;ґімп;графіка;дизайн;ілюстрації"
-";малювання;"
+"GIMP;graphic;design;illustration;painting;гімп;ґімп;графіка;дизайн;ілюстрації;"
+"малювання;"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: app/about.h:29
@@ -2522,7 +2521,7 @@ msgstr "240 секунд"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1123 app/tools/gimptexttool.c:1870
+#: app/tools/gimppathtool.c:1127 app/tools/gimptexttool.c:1870
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -5100,25 +5099,25 @@ msgstr "Знову відкрити діалог останнього викор
 msgid "%s..."
 msgstr "%s…"
 
-#: app/actions/filters-actions.c:1208
+#: app/actions/filters-actions.c:1204
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Пов_торити \"%s\""
 
-#: app/actions/filters-actions.c:1209
+#: app/actions/filters-actions.c:1205
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "П_овторити з налаштуванням «%s»"
 
-#: app/actions/filters-actions.c:1247
+#: app/actions/filters-actions.c:1243
 msgid "Repeat Last"
 msgstr "Повторити останній"
 
-#: app/actions/filters-actions.c:1249
+#: app/actions/filters-actions.c:1245
 msgid "Re-Show Last"
 msgstr "Показати останній ще раз"
 
-#: app/actions/filters-actions.c:1252 app/actions/filters-actions.c:1254
+#: app/actions/filters-actions.c:1248 app/actions/filters-actions.c:1250
 msgid "No last used filters"
 msgstr "Немає останніх використаних фільтрів"
 
@@ -5139,10 +5138,9 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Повторно просканувати встановлені шрифти"
 
-#: app/actions/gimpgeglprocedure.c:348
+#: app/actions/gimpgeglprocedure.c:349
 #, c-format
-msgid ""
-"There are no last settings for '%s', showing the filter dialog instead."
+msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
 "Немає останніх параметрів «%s». Показуємо діалогове вікно фільтрування."
 
@@ -5562,8 +5560,7 @@ msgstr "Показати у програмі для _керування файл
 #: app/actions/gradients-actions.c:63
 msgctxt "gradients-action"
 msgid "Show gradient file location in the file manager"
-msgstr ""
-"Показати розташування файла градієнта у програмі для керування файлами"
+msgstr "Показати розташування файла градієнта у програмі для керування файлами"
 
 #: app/actions/gradients-actions.c:68
 msgctxt "gradients-action"
@@ -8766,8 +8763,7 @@ msgstr "З_берігати параметри інструментів до ш�
 #: app/actions/tool-preset-editor-actions.c:45
 msgctxt "tool-preset-editor-action"
 msgid "Save the active tool options to this tool preset"
-msgstr ""
-"Зберегти параметри активних інструментів до цього шаблону інструментів"
+msgstr "Зберегти параметри активних інструментів до цього шаблону інструментів"
 
 #: app/actions/tool-preset-editor-actions.c:51
 msgctxt "tool-preset-editor-action"
@@ -8840,8 +8836,7 @@ msgstr "З_берігати параметри інструментів до ш�
 #: app/actions/tool-presets-actions.c:71
 msgctxt "tool-presets-action"
 msgid "Save the active tool options to this tool preset"
-msgstr ""
-"Зберегти параметри активних інструментів до цього шаблону інструментів"
+msgstr "Зберегти параметри активних інструментів до цього шаблону інструментів"
 
 #: app/actions/tool-presets-actions.c:77
 msgctxt "tool-presets-action"
@@ -10846,8 +10841,7 @@ msgid ""
 msgstr "Якщо ввімкнено, кожна точка зображення відповідатиме точці екрану."
 
 #: app/config/gimprc-blurbs.h:119
-msgid ""
-"This is the distance in pixels where Guide and Grid snapping activates."
+msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
 "Відстань у точках, при наближенні на яку відбувається прилипання до "
 "напрямних чи сітки."
@@ -10862,8 +10856,7 @@ msgstr "Типово увімкнено прилипання до сітки у 
 
 #: app/config/gimprc-blurbs.h:129
 msgid "Snap to the canvas edges by default in new image windows."
-msgstr ""
-"Типово увімкнено прилипання до країв полотна у вікнах нових зображень."
+msgstr "Типово увімкнено прилипання до країв полотна у вікнах нових зображень."
 
 #: app/config/gimprc-blurbs.h:132
 msgid "Snap to the active path by default in new image windows."
@@ -11522,8 +11515,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:597
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
-msgstr ""
-"Встановлює типовий тип палітри для вікна «Перетворити на індексоване»."
+msgstr "Встановлює типовий тип палітри для вікна «Перетворити на індексоване»."
 
 #: app/config/gimprc-blurbs.h:600
 msgid ""
@@ -11767,12 +11759,10 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:739
 msgid "Show the current foreground and background colors in the toolbox."
-msgstr ""
-"Поміняти у панелі інструментів місцями кольори переднього плану та тла"
+msgstr "Поміняти у панелі інструментів місцями кольори переднього плану та тла"
 
 #: app/config/gimprc-blurbs.h:742
-msgid ""
-"Show the currently selected brush, pattern and gradient in the toolbox."
+msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 "Показувати активний пензель, текстуру та градієнт у панелі інструментів."
 
@@ -11853,8 +11843,7 @@ msgid "When enabled, uses OpenCL for some operations."
 msgstr "При увімкненні меню використовується OpenCL для деяких операцій."
 
 #: app/config/gimprc-blurbs.h:798
-msgid ""
-"There's a tradeoff between speed and quality of the zoomed-out display."
+msgid "There's a tradeoff between speed and quality of the zoomed-out display."
 msgstr "Це компроміс між швидкістю і якістю зменшеного перегляду."
 
 #: app/config/gimprc-blurbs.h:805
@@ -12689,8 +12678,6 @@ msgid "Import paths"
 msgstr "Імпортувати контур"
 
 #: app/core/core-enums.c:1351
-#| msgctxt "undo-type"
-#| msgid "Item visibility"
 msgctxt "undo-type"
 msgid "Effects visibility"
 msgstr "Видимість ефектів"
@@ -12911,8 +12898,6 @@ msgid "Effect modification"
 msgstr "Зміна ефекту"
 
 #: app/core/core-enums.c:1412
-#| msgctxt "undo-type"
-#| msgid "Item visibility"
 msgctxt "undo-type"
 msgid "Effect visibility"
 msgstr "Видимість ефекту"
@@ -13336,8 +13321,7 @@ msgstr ""
 #: app/core/gimp-utils.c:1901
 #, c-format
 msgid "This parser does not support imbricated lists."
-msgstr ""
-"У цьому засобі обробки не передбачено підтримки упорядкованих списків."
+msgstr "У цьому засобі обробки не передбачено підтримки упорядкованих списків."
 
 #: app/core/gimp-utils.c:1924
 #, c-format
@@ -13397,7 +13381,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Неправильний UTF-8 рядок у файлі пензля «%s»."
 
 #: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:167
-#: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:618
+#: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:635
 msgid "Unnamed"
 msgstr "Без назви"
 
@@ -13434,8 +13418,7 @@ msgstr ""
 #: app/core/gimpbrush-load.c:708
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
-msgstr ""
-"Критична помилка аналізу файла пензля: широкі пензлі не підтримуються."
+msgstr "Критична помилка аналізу файла пензля: широкі пензлі не підтримуються."
 
 #: app/core/gimpbrush-load.c:855
 msgid "Fatal parse error in brush file: File appears truncated: "
@@ -14151,8 +14134,7 @@ msgstr "Колір переднього плану."
 #: app/core/gimpgrid.c:143
 msgid ""
 "The background color of the grid; only used in double dashed line style."
-msgstr ""
-"Колір тла сітки; використовується лише для стилю \"Подвійний пунктир\""
+msgstr "Колір тла сітки; використовується лише для стилю \"Подвійний пунктир\""
 
 #: app/core/gimpgrid.c:150
 msgid "Spacing X"
@@ -14478,8 +14460,7 @@ msgstr ""
 "кольорів з відтінків сірого"
 
 #: app/core/gimpimage-color-profile.c:559
-msgid ""
-"ICC profile validation failed: Color profile is not for RGB color space"
+msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Перевірка профілю ICC не вдалася: колірний профіль не годиться для колірного "
 "простору RGB"
@@ -14732,8 +14713,6 @@ msgstr "Масштабувати зображення"
 
 #: app/core/gimpimage-undo-push.c:431
 #: app/widgets/gimpdrawabletreeview-filters.c:778
-#| msgctxt "undo-type"
-#| msgid "Item visibility"
 msgid "Filter visibility"
 msgstr "Видимість фільтра"
 
@@ -15361,8 +15340,7 @@ msgstr ""
 #: app/core/gimppattern-load.c:141
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
-msgstr ""
-"Неправильний заголовок даних у «%s»: занадто довга назва візерунка %lu"
+msgstr "Неправильний заголовок даних у «%s»: занадто довга назва візерунка %lu"
 
 #: app/core/gimppattern-load.c:154 app/core/gimppattern-load.c:192
 msgid "File appears truncated."
@@ -15895,7 +15873,6 @@ msgstr "зібрано з початкового коду"
 #. Translators: build id, revision number
 #: app/dialogs/about-dialog.c:1087
 #, c-format
-#| msgid "%s (revision %d)"
 msgid "%s revision %d"
 msgstr "%s, модифікація %d"
 
@@ -15908,8 +15885,6 @@ msgid "OS:"
 msgstr "ОС:"
 
 #: app/dialogs/about-dialog.c:1098 app/dialogs/about-dialog.c:1129
-#| msgctxt "matting-draw-mode"
-#| msgid "Draw unknown"
 msgid "unknown"
 msgstr "невідома"
 
@@ -15921,7 +15896,6 @@ msgstr "Пам’ять:"
 
 #: app/dialogs/about-dialog.c:1116
 #, c-format
-#| msgid "%s (%s)"
 msgid "%s (%s free)"
 msgstr "%s (%s вільні)"
 
@@ -15931,7 +15905,6 @@ msgstr "Резервна пам'ять:"
 
 #: app/dialogs/about-dialog.c:1152
 #, c-format
-#| msgid "Swap: %s free on partition\n"
 msgid "%s free on partition"
 msgstr "Вільні на розділі %s"
 
@@ -16589,8 +16562,7 @@ msgid "Reset Input Device Configuration"
 msgstr "Скинути налаштування пристрою введення"
 
 #: app/dialogs/input-devices-dialog.c:132
-msgid ""
-"Do you really want to reset all input devices to default configuration?"
+msgid "Do you really want to reset all input devices to default configuration?"
 msgstr ""
 "Ви дійсно бажаєте відновити типові налаштування для усіх пристроїв введення?"
 
@@ -16784,8 +16756,7 @@ msgstr "Рівень: %s, життя: %s"
 
 #: app/dialogs/lebl-dialog.c:150
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr ""
-"Вліво/Вправо - переміщення, Пробіл - постріл, 'p' - пауза, 'q' - вихід"
+msgstr "Вліво/Вправо - переміщення, Пробіл - постріл, 'p' - пауза, 'q' - вихід"
 
 #: app/dialogs/lebl-dialog.c:816
 msgid "Killer GEGLs from Outer Space"
@@ -16992,8 +16963,7 @@ msgid "Do you really want to reset all preferences to default values?"
 msgstr "Дійсно бажаєте повернутись до початкових значень усіх параметрів?"
 
 #: app/dialogs/preferences-dialog.c:305 app/dialogs/welcome-dialog.c:428
-msgid ""
-"You will have to restart GIMP for the following changes to take effect:"
+msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "Щоб зміни вступили в дію, необхідно перезапустити GIMP."
 
 #: app/dialogs/preferences-dialog.c:590
@@ -18409,8 +18379,7 @@ msgstr "Інтерфейс введення з вказівника:"
 
 #: app/dialogs/preferences-dialog.c:3467
 msgid "S_hare tool and tool options between input devices"
-msgstr ""
-"Сп_ільне використання інструментів і параметрів для пристроїв введення"
+msgstr "Сп_ільне використання інструментів і параметрів для пристроїв введення"
 
 #: app/dialogs/preferences-dialog.c:3471
 msgid "Configure E_xtended Input Devices..."
@@ -19400,7 +19369,7 @@ msgstr "Навігація на зображенні"
 msgid "Drop image files here to open them"
 msgstr "Перетягніть сюди зображення, які хочете відкрити"
 
-#: app/display/gimpdisplayshell-callbacks.c:658
+#: app/display/gimpdisplayshell-callbacks.c:663
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -19474,8 +19443,7 @@ msgstr[3] ""
 
 #: app/display/gimpdisplayshell-close.c:332
 #, c-format
-msgid ""
-"If you don't save the image, changes from the last minute will be lost."
+msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
@@ -19900,153 +19868,163 @@ msgstr "Натисніть та перетягніть, щоб пересуну�
 msgid "%s to move the whole line"
 msgstr "%s для зсуву усієї лінії"
 
-#: app/display/gimptoolpath.c:281 app/tools/gimppathoptions.c:122
+#: app/display/gimptoolpath.c:283 app/tools/gimppathoptions.c:123
 msgid "Edit Mode"
 msgstr "Тип дії"
 
-#: app/display/gimptoolpath.c:290 app/tools/gimppathoptions.c:130
+#: app/display/gimptoolpath.c:292 app/tools/gimppathoptions.c:131
 msgid "Polygonal"
 msgstr "Багатокутники"
 
-#: app/display/gimptoolpath.c:291 app/tools/gimppathoptions.c:131
+#: app/display/gimptoolpath.c:293 app/tools/gimppathoptions.c:132
 msgid "Restrict editing to polygons"
 msgstr "Створювати лише прямі та кути"
 
-#: app/display/gimptoolpath.c:550
+#: app/display/gimptoolpath.c:300 app/tools/gimppathoptions.c:138
+msgid "Auto-connect on click"
+msgstr "Автоматично з'єднувати у відповідь на клацання"
+
+#: app/display/gimptoolpath.c:301 app/tools/gimppathoptions.c:139
+msgid "If checked, clicking on the end node in Design mode will close the path"
+msgstr ""
+"Якщо позначено, клацання на кінцевому вузлі у режимі дизайну призведе до замик"
+"ання контуру"
+
+#: app/display/gimptoolpath.c:567
 msgid "The selected path is locked."
 msgstr "Позначений контур заблоковано від змін"
 
-#: app/display/gimptoolpath.c:640
+#: app/display/gimptoolpath.c:657
 msgid "Add Stroke"
 msgstr "Додавання контуру"
 
-#: app/display/gimptoolpath.c:664
+#: app/display/gimptoolpath.c:681
 msgid "Add Anchor"
 msgstr "Додавання вузла"
 
-#: app/display/gimptoolpath.c:688 app/display/gimptoolpath.c:2073
-#: app/display/gimptoolpath.c:2115
+#: app/display/gimptoolpath.c:705 app/display/gimptoolpath.c:2091
+#: app/display/gimptoolpath.c:2133
 msgid "Insert Anchor"
 msgstr "Вставка вузла"
 
-#: app/display/gimptoolpath.c:717
+#: app/display/gimptoolpath.c:734
 msgid "Drag Handle"
 msgstr "Перетягування важеля"
 
-#: app/display/gimptoolpath.c:748
+#: app/display/gimptoolpath.c:765
 msgid "Drag Anchor"
 msgstr "Перетягування вузла"
 
-#: app/display/gimptoolpath.c:766
+#: app/display/gimptoolpath.c:783
 msgid "Drag Anchors"
 msgstr "Перетягування вузлів"
 
-#: app/display/gimptoolpath.c:788
+#: app/display/gimptoolpath.c:805
 msgid "Drag Curve"
 msgstr "Перетягування кривої"
 
-#: app/display/gimptoolpath.c:817
+#: app/display/gimptoolpath.c:834
 msgid "Connect Strokes"
 msgstr "З'єднання контурів"
 
-#: app/display/gimptoolpath.c:849
+#: app/display/gimptoolpath.c:866
 msgid "Drag Path"
 msgstr "Перетягування контуру"
 
-#: app/display/gimptoolpath.c:860
+#: app/display/gimptoolpath.c:877
 msgid "Convert Edge"
 msgstr "Перетворення кута"
 
-#: app/display/gimptoolpath.c:891
+#: app/display/gimptoolpath.c:908
 msgid "Delete Anchor"
 msgstr "Вилучити вузол"
 
-#: app/display/gimptoolpath.c:914 app/display/gimptoolpath.c:2093
+#: app/display/gimptoolpath.c:931 app/display/gimptoolpath.c:2111
 msgid "Delete Segment"
 msgstr "Вилучити сегмент"
 
-#: app/display/gimptoolpath.c:1166
+#: app/display/gimptoolpath.c:1183
 msgid "Move Anchors"
 msgstr "Перенести вузол"
 
-#: app/display/gimptoolpath.c:1601
+#: app/display/gimptoolpath.c:1619
 msgid "Click to pick path to edit"
 msgstr "Натисніть, щоб вибрати контур для редагування"
 
-#: app/display/gimptoolpath.c:1605
+#: app/display/gimptoolpath.c:1623
 msgid "Click to create a new path"
 msgstr "Натисніть, щоб створити новий контур"
 
-#: app/display/gimptoolpath.c:1609
+#: app/display/gimptoolpath.c:1627
 msgid "Click to create a new component of the path"
 msgstr "Натисніть, щоб створити новий компонент контуру"
 
-#: app/display/gimptoolpath.c:1613
+#: app/display/gimptoolpath.c:1631
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Натисніть, або клацніть та перетягніть, щоб створити новий контур"
 
-#: app/display/gimptoolpath.c:1623 app/display/gimptoolpath.c:1630
+#: app/display/gimptoolpath.c:1641 app/display/gimptoolpath.c:1648
 msgid "Click-Drag to move the anchor around"
 msgstr "Натисніть та перетягніть, щоб перемістити вузол"
 
-#: app/display/gimptoolpath.c:1634 app/display/gimptoolpath.c:1657
+#: app/display/gimptoolpath.c:1652 app/display/gimptoolpath.c:1675
 msgid "Click-Drag to move the anchors around"
 msgstr "Натисніть та перетягніть, щоб перемістити вузли"
 
-#: app/display/gimptoolpath.c:1640
+#: app/display/gimptoolpath.c:1658
 msgid "Click-Drag to move the handle around"
 msgstr "Натисніть та перетягніть, щоб перемістити важіль"
 
-#: app/display/gimptoolpath.c:1647
+#: app/display/gimptoolpath.c:1665
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Натисніть та перетягніть, щоб перемістити важелі симетрично"
 
-#: app/display/gimptoolpath.c:1662
+#: app/display/gimptoolpath.c:1680
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Натисніть та перетягніть, щоб змінити фігуру кривої"
 
-#: app/display/gimptoolpath.c:1665
+#: app/display/gimptoolpath.c:1683
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: симетрично"
 
-#: app/display/gimptoolpath.c:1670
+#: app/display/gimptoolpath.c:1688
 msgid "Click-Drag to move the component around"
 msgstr "Натисніть та перетягніть, щоб перемістити компонент"
 
-#: app/display/gimptoolpath.c:1678
+#: app/display/gimptoolpath.c:1696
 msgid "Click-Drag to move the path around"
 msgstr "Натисніть та перетягніть, щоб перемістити контур"
 
-#: app/display/gimptoolpath.c:1682
+#: app/display/gimptoolpath.c:1700
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Натисніть, щоб вставити вузол у контур"
 
-#: app/display/gimptoolpath.c:1690
+#: app/display/gimptoolpath.c:1708
 msgid "Click to delete this anchor"
 msgstr "Натисніть, щоб вилучити цей вузол"
 
-#: app/display/gimptoolpath.c:1694
+#: app/display/gimptoolpath.c:1712
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Натисніть, щоб об'єднати цей вузол з позначеним кінцевим вузлом"
 
-#: app/display/gimptoolpath.c:1699
+#: app/display/gimptoolpath.c:1717
 msgid "Click to open up the path"
 msgstr "Натисніть, щоб розімкнути контур"
 
-#: app/display/gimptoolpath.c:1703
+#: app/display/gimptoolpath.c:1721
 msgid "Click to make this node angular"
 msgstr "Натисніть, щоб зробити цей вузол кутовим"
 
-#: app/display/gimptoolpath.c:1707
+#: app/display/gimptoolpath.c:1725
 msgid "Clicking here does nothing, try clicking on path elements."
 msgstr "Тут клацання не діє, спробуйте клацати елементи контуру."
 
-#: app/display/gimptoolpath.c:1915 app/display/gimptoolpath.c:2026
+#: app/display/gimptoolpath.c:1933 app/display/gimptoolpath.c:2044
 msgid "Delete Anchors"
 msgstr "Вилучити вузли"
 
-#: app/display/gimptoolpath.c:2055
+#: app/display/gimptoolpath.c:2073
 msgid "Shift start"
 msgstr "Початок зсуву"
 
@@ -21895,7 +21873,7 @@ msgstr "У буфері не знайдено контурів"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Не вдалось імпортувати з «%s»: %s"
 
-#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:886
+#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:890
 msgid "Vector Layer"
 msgstr "Векторний шар"
 
@@ -22111,8 +22089,7 @@ msgstr "Метод малювання «%s» не існує"
 
 #: app/pdb/gimppdb-utils.c:373
 #, c-format
-msgid ""
-"Item '%s' (%d) cannot be used because it has not been added to an image"
+msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
 "Об'єкт «%s» (%d) неможливо використовувати, бо його не додано до зображення"
 
@@ -22606,8 +22583,7 @@ msgstr "Неправильна назва змінної у файлі сере�
 #: app/plug-in/gimpinterpreterdb.c:366 app/plug-in/gimpinterpreterdb.c:463
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
-msgstr ""
-"Неправильне посилання на інтерпретатор у інтерпретованому файлі %s: %s"
+msgstr "Неправильне посилання на інтерпретатор у інтерпретованому файлі %s: %s"
 
 #: app/plug-in/gimpinterpreterdb.c:435
 #, c-format
@@ -23337,8 +23313,7 @@ msgstr "Вирівняти точки прив'язки цілей за етал
 
 #: app/tools/gimpalignoptions.c:508
 msgid "Align anchor points of targets on horizontal middle of reference"
-msgstr ""
-"Вирівняти точки прив'язки цілей за еталонною серединою за горизонталлю"
+msgstr "Вирівняти точки прив'язки цілей за еталонною серединою за горизонталлю"
 
 #: app/tools/gimpalignoptions.c:512
 msgid "Align anchor points of targets on bottom of reference"
@@ -24765,8 +24740,7 @@ msgid "Handle Transform"
 msgstr "Перетворення за точками"
 
 #: app/tools/gimphandletransformtool.c:112
-msgid ""
-"Handle Transform Tool: Deform the layer, selection or path with handles"
+msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
 "Перетворення за точками: деформуйте шар, позначену ділянку або контур на "
 "основі позначених опорних точок"
@@ -25177,8 +25151,7 @@ msgid "N-Point Deformation"
 msgstr "Деформація за N точками"
 
 #: app/tools/gimpnpointdeformationtool.c:159
-msgid ""
-"N-Point Deformation Tool: Rubber-like deformation of image using points"
+msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
 msgstr ""
 "Деформація за N точками: гумова деформація зображення на основі вказаних "
 "точок"
@@ -25364,15 +25337,15 @@ msgstr "У позначеному намальованому об'єкті не�
 msgid "The selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
-#: app/tools/gimppathoptions.c:138
+#: app/tools/gimppathoptions.c:147
 msgid "Enable Fill"
 msgstr "Увімкнути заповнення"
 
-#: app/tools/gimppathoptions.c:144
+#: app/tools/gimppathoptions.c:153
 msgid "Enable Stroke"
 msgstr "Увімкнути мазки"
 
-#: app/tools/gimppathoptions.c:539
+#: app/tools/gimppathoptions.c:557
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -25386,12 +25359,12 @@ msgstr ""
 "%s   перетнути"
 
 #. Create a selection from the current path
-#: app/tools/gimppathoptions.c:550
+#: app/tools/gimppathoptions.c:568
 msgid "Selection from Path"
 msgstr "Вибір з текстур"
 
-#: app/tools/gimppathoptions.c:560 app/tools/gimppathtool.c:765
-#: app/tools/gimppathtool.c:1092
+#: app/tools/gimppathoptions.c:578 app/tools/gimppathtool.c:769
+#: app/tools/gimppathtool.c:1096
 msgid "Create New Vector Layer"
 msgstr "Створити векторний шар"
 
@@ -25403,27 +25376,27 @@ msgstr "Контури: створення та редагування конт�
 msgid "Pat_hs"
 msgstr "Кон_тури"
 
-#: app/tools/gimppathtool.c:768
+#: app/tools/gimppathtool.c:772
 msgid "Create Vector Layer from Path"
 msgstr "Створити векторний шар з контуру"
 
-#: app/tools/gimppathtool.c:884
+#: app/tools/gimppathtool.c:888
 msgid "Add Vector Layer"
 msgstr "Додати векторний шар"
 
-#: app/tools/gimppathtool.c:1115 app/tools/gimppathtool.c:1118
+#: app/tools/gimppathtool.c:1119 app/tools/gimppathtool.c:1122
 msgid "Confirm Path Editing"
 msgstr "Підтвердження редагування контуру"
 
-#: app/tools/gimppathtool.c:1122 app/tools/gimptexttool.c:1869
+#: app/tools/gimppathtool.c:1126 app/tools/gimptexttool.c:1869
 msgid "Create _New Layer"
 msgstr "_Створити новий шар"
 
-#: app/tools/gimppathtool.c:1124 app/tools/gimptexttool.c:1871
+#: app/tools/gimppathtool.c:1128 app/tools/gimptexttool.c:1871
 msgid "_Edit Anyway"
 msgstr "_Редагувати попри це"
 
-#: app/tools/gimppathtool.c:1146
+#: app/tools/gimppathtool.c:1150
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
@@ -26767,8 +26740,7 @@ msgstr "_Перепризначити скорочення"
 #: app/widgets/gimpactionview.c:638
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr ""
-"Клавіші швидкого \"%s\" вже використані у пункті \"%s\" з меню \"%s\"."
+msgstr "Клавіші швидкого \"%s\" вже використані у пункті \"%s\" з меню \"%s\"."
 
 #: app/widgets/gimpactionview.c:642
 #, c-format
