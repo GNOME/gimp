@@ -108,6 +108,8 @@ const metadata_tag default_metadata_tags[] =
   { "Xmp.plus.Licensor",                         MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
   { "Xmp.plus.PropertyReleaseStatus",            MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
   { "Xmp.plus.PropertyReleaseID",                MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.plus.DataMining",                       MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE  },
+  { "Xmp.plus.OtherConstraints",                 MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT  },
 
   /* Categories */
   { "Xmp.photoshop.Category",                    MODE_SINGLE, IPTC_CATEGORY,      TAG_TYPE_XMP, GIMP_XMP_TEXT  },
@@ -257,6 +259,23 @@ const combobox_str_tag minormodelagedisclosure[] =
   { "http://ns.useplus.org/ldf/vocab/AG-U14", N_("Age 14 or Under") }
 };
 const gint n_minormodelagedisclosure = G_N_ELEMENTS (minormodelagedisclosure);
+
+/* DataMining items
+ * https://ns.useplus.org/LDF/ldf-XMPSpecification#DataMining
+ */
+const combobox_str_tag datamining[] =
+{
+  { "http://ns.useplus.org/ldf/vocab/DMI-UNSPECIFIED", N_("No prohibition defined")                                                           },
+  { "http://ns.useplus.org/ldf/vocab/DMI-ALLOWED", N_("Allowed")                                                                              },
+  { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-AIMLTRAINING", N_("Prohibited for AI/ML training")                                       },
+  { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-GENAIMLTRAINING", N_("Prohibited for Generative AI/ML training")                          },
+  { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-EXCEPTSEARCHENGINEINDEXING", N_("Prohibited except for search engine indexing")           },
+  { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED", N_("Prohibited")                                                                        },
+  { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-SEECONSTRAINT", N_("Prohibited, see Other Constraints property")                          },
+  { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-SEEEMBEDDEDRIGHTSEXPR", N_("(Unsupported) Prohibited, see Embedded Encoded Rights Expression property") },
+  { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-SEELINKEDRIGHTSEXPR", N_("(Unsupported) Prohibited, see Linked Encoded Rights Expression property")     },
+};
+const gint n_datamining = G_N_ELEMENTS (datamining);
 
 /* Urgency */
 const gchar *urgency[] =

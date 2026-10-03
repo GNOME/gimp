@@ -584,6 +584,8 @@ static const me_widget_info iptc_extension_tab_data[] =
   { 30, N_("Property Release Status"), ME_WIDGET_COMBO,     "Xmp.plus.PropertyReleaseStatus" },
   { 31, N_("Property Release Identifier"), ME_WIDGET_TREE_GRID, "Xmp.plus.PropertyReleaseID",
         "add_prop_rel_id_button",     "rem_prop_rel_id_button" },
+  { 32, N_("Data Mining"),             ME_WIDGET_COMBO,      "Xmp.plus.DataMining" },
+  { 33, N_("Other Constraints"),       ME_WIDGET_ENTRY,      "Xmp.plus.OtherConstraints" },
 };
 static const gint n_iptc_extension_tab_data = G_N_ELEMENTS (iptc_extension_tab_data);
 
@@ -2635,6 +2637,14 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   gtk_widget_get_size_request (combo_widget, &width, &height);
   gtk_widget_set_size_request (combo_widget, 180, height);
 
+  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.plus.DataMining");
+  for (i = 0; i < n_datamining; i++)
+    {
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
+                                      gettext (datamining[i].display));
+    }
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
+
   combo_widget = metadata_editor_get_widget (meta_info, "Xmp.DICOM.PatientSex");
   for (i = 0; i < n_dicom; i++)
     {
@@ -4467,6 +4477,20 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                         }
                     }
                 }
+              else if (! strcmp ("Xmp.plus.DataMining",
+                                 default_metadata_tags[i].tag))
+                {
+                  gint loop;
+
+                  for (loop = 0; loop < n_datamining; loop++)
+                    {
+                      if (! strcmp (datamining[loop].data, value))
+                        {
+                          gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
+                          break;
+                        }
+                    }
+                }
               else if (! strcmp ("Xmp.DICOM.PatientSex",
                                  default_metadata_tags[i].tag))
                 {
@@ -5448,6 +5472,21 @@ metadata_editor_write_callback (GtkWidget       *dialog,
                 {
                   set_tag_string (g_metadata, default_metadata_tags[i].tag,
                                   digitalsourcetype[value].data, FALSE);
+                }
+            }
+          else if (! strcmp ("Xmp.plus.DataMining",
+                             default_metadata_tags[i].tag))
+            {
+              if (value == 0)
+                {
+                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
+                                                 default_metadata_tags[i].tag,
+                                                 NULL);
+                }
+              else
+                {
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  datamining[value].data, FALSE);
                 }
             }
         }

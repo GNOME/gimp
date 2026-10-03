@@ -100,6 +100,8 @@ enum
   XMP_EXT_LICENSOR,
   XMP_EXT_PROPERTYRELSTATUS,
   XMP_EXT_PROPERTYRELID,
+  XMP_EXT_DATAMINING,
+  XMP_EXT_OTHERCONSTRAINTS,
 
   /* Categories tab */
   XMP_CAT_CATEGORY,
@@ -300,6 +302,12 @@ extern const gint             n_propertyreleasestatus;
  */
 extern const combobox_str_tag minormodelagedisclosure[];
 extern const gint             n_minormodelagedisclosure;
+
+/* DataMining items
+ * https://ns.useplus.org/LDF/ldf-XMPSpecification#DataMining
+ */
+extern const combobox_str_tag datamining[];
+extern const gint             n_datamining;
 
 /* Urgency */
 extern const gchar *urgency[];
