@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-27 01:55+0000\n"
-"PO-Revision-Date: 2026-09-27 10:39+0200\n"
+"POT-Creation-Date: 2026-10-03 02:37+0000\n"
+"PO-Revision-Date: 2026-10-03 10:51+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -2516,7 +2516,7 @@ msgstr "240 Seconden"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1123 app/tools/gimptexttool.c:1870
+#: app/tools/gimppathtool.c:1127 app/tools/gimptexttool.c:1870
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -5097,25 +5097,25 @@ msgstr "Het dialoogvenster van de laatst gebruikte plug-in opnieuw tonen"
 msgid "%s..."
 msgstr "%s..."
 
-#: app/actions/filters-actions.c:1208
+#: app/actions/filters-actions.c:1204
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "\"%s\" herhalen"
 
-#: app/actions/filters-actions.c:1209
+#: app/actions/filters-actions.c:1205
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Opni_euw tonen \"%s\""
 
-#: app/actions/filters-actions.c:1247
+#: app/actions/filters-actions.c:1243
 msgid "Repeat Last"
 msgstr "Laatste herhalen"
 
-#: app/actions/filters-actions.c:1249
+#: app/actions/filters-actions.c:1245
 msgid "Re-Show Last"
 msgstr "Laatste opnieuw tonen"
 
-#: app/actions/filters-actions.c:1252 app/actions/filters-actions.c:1254
+#: app/actions/filters-actions.c:1248 app/actions/filters-actions.c:1250
 msgid "No last used filters"
 msgstr "Geen laatst gebruikte filters"
 
@@ -5136,7 +5136,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Geïnstalleerde lettertypen opnieuw inlezen"
 
-#: app/actions/gimpgeglprocedure.c:348
+#: app/actions/gimpgeglprocedure.c:349
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr "Er zijn geen laatste instellingen voor ‘%s’, daarom wordt de filterdialoog getoond."
@@ -13190,7 +13190,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ongeldige UTF-8-tekenreeks in penseelbestand ‘%s’."
 
 #: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:167
-#: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:618
+#: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:635
 msgid "Unnamed"
 msgstr "Naamloos"
 
@@ -19163,7 +19163,7 @@ msgstr "Sleep hier afbeeldingen naar toe om ze te openen"
 
 # 2.10 is stable dus kan onvertaald blijven
 # pm
-#: app/display/gimpdisplayshell-callbacks.c:658
+#: app/display/gimpdisplayshell-callbacks.c:663
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -19653,155 +19653,163 @@ msgstr "Klikken en slepen om de lijn te verplaatsen"
 msgid "%s to move the whole line"
 msgstr "%s om de hele lijn te bewegen"
 
-#: app/display/gimptoolpath.c:281 app/tools/gimppathoptions.c:122
+#: app/display/gimptoolpath.c:283 app/tools/gimppathoptions.c:123
 msgid "Edit Mode"
 msgstr "Bewerkingsmodus"
 
 # veelhoek / polygon
-#: app/display/gimptoolpath.c:290 app/tools/gimppathoptions.c:130
+#: app/display/gimptoolpath.c:292 app/tools/gimppathoptions.c:131
 msgid "Polygonal"
 msgstr "Veelhoek"
 
 # veelhoeken/polygonen/polygonalen
-#: app/display/gimptoolpath.c:291 app/tools/gimppathoptions.c:131
+#: app/display/gimptoolpath.c:293 app/tools/gimppathoptions.c:132
 msgid "Restrict editing to polygons"
 msgstr "Bewerken beperken tot veelhoeken"
 
-#: app/display/gimptoolpath.c:550
+#: app/display/gimptoolpath.c:300 app/tools/gimppathoptions.c:138
+msgid "Auto-connect on click"
+msgstr "Automatisch verbinden bij klikken"
+
+#: app/display/gimptoolpath.c:301 app/tools/gimppathoptions.c:139
+msgid "If checked, clicking on the end node in Design mode will close the path"
+msgstr "Indien geselecteerd, zal klikken op de eindknoop in modus Ontwerpen het pad sluiten"
+
+#: app/display/gimptoolpath.c:567
 msgid "The selected path is locked."
 msgstr "Het geselecteerde pad is vergrendeld."
 
-#: app/display/gimptoolpath.c:640
+#: app/display/gimptoolpath.c:657
 msgid "Add Stroke"
 msgstr "Lijn toevoegen"
 
-#: app/display/gimptoolpath.c:664
+#: app/display/gimptoolpath.c:681
 msgid "Add Anchor"
 msgstr "Anker toevoegen"
 
-#: app/display/gimptoolpath.c:688 app/display/gimptoolpath.c:2073
-#: app/display/gimptoolpath.c:2115
+#: app/display/gimptoolpath.c:705 app/display/gimptoolpath.c:2091
+#: app/display/gimptoolpath.c:2133
 msgid "Insert Anchor"
 msgstr "Anker invoegen"
 
-#: app/display/gimptoolpath.c:717
+#: app/display/gimptoolpath.c:734
 msgid "Drag Handle"
 msgstr "Handvat slepen"
 
-#: app/display/gimptoolpath.c:748
+#: app/display/gimptoolpath.c:765
 msgid "Drag Anchor"
 msgstr "Anker slepen"
 
-#: app/display/gimptoolpath.c:766
+#: app/display/gimptoolpath.c:783
 msgid "Drag Anchors"
 msgstr "Ankers slepen"
 
-#: app/display/gimptoolpath.c:788
+#: app/display/gimptoolpath.c:805
 msgid "Drag Curve"
 msgstr "Curve slepen"
 
-#: app/display/gimptoolpath.c:817
+#: app/display/gimptoolpath.c:834
 msgid "Connect Strokes"
 msgstr "Lijnen verbinden"
 
-#: app/display/gimptoolpath.c:849
+#: app/display/gimptoolpath.c:866
 msgid "Drag Path"
 msgstr "Pad slepen"
 
-#: app/display/gimptoolpath.c:860
+#: app/display/gimptoolpath.c:877
 msgid "Convert Edge"
 msgstr "Rand omzetten"
 
-#: app/display/gimptoolpath.c:891
+#: app/display/gimptoolpath.c:908
 msgid "Delete Anchor"
 msgstr "Anker verwijderen"
 
-#: app/display/gimptoolpath.c:914 app/display/gimptoolpath.c:2093
+#: app/display/gimptoolpath.c:931 app/display/gimptoolpath.c:2111
 msgid "Delete Segment"
 msgstr "Segment verwijderen"
 
-#: app/display/gimptoolpath.c:1166
+#: app/display/gimptoolpath.c:1183
 msgid "Move Anchors"
 msgstr "Ankers verplaatsen"
 
-#: app/display/gimptoolpath.c:1601
+#: app/display/gimptoolpath.c:1619
 msgid "Click to pick path to edit"
 msgstr "Klikken om het te bewerken pad te kiezen"
 
-#: app/display/gimptoolpath.c:1605
+#: app/display/gimptoolpath.c:1623
 msgid "Click to create a new path"
 msgstr "Klikken om een nieuw pad aan te maken"
 
-#: app/display/gimptoolpath.c:1609
+#: app/display/gimptoolpath.c:1627
 msgid "Click to create a new component of the path"
 msgstr "Klikken en slepen om nieuwe padcomponent aan te maken"
 
-#: app/display/gimptoolpath.c:1613
+#: app/display/gimptoolpath.c:1631
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Klikken of klikken en slepen om een nieuw anker aan te maken"
 
-#: app/display/gimptoolpath.c:1623 app/display/gimptoolpath.c:1630
+#: app/display/gimptoolpath.c:1641 app/display/gimptoolpath.c:1648
 msgid "Click-Drag to move the anchor around"
 msgstr "Klikken en slepen om het anker te verplaatsen"
 
-#: app/display/gimptoolpath.c:1634 app/display/gimptoolpath.c:1657
+#: app/display/gimptoolpath.c:1652 app/display/gimptoolpath.c:1675
 msgid "Click-Drag to move the anchors around"
 msgstr "Klikken en slepen om de ankers te verplaatsen"
 
-#: app/display/gimptoolpath.c:1640
+#: app/display/gimptoolpath.c:1658
 msgid "Click-Drag to move the handle around"
 msgstr "Klikken en slepen om het handvat te verplaatsen"
 
-#: app/display/gimptoolpath.c:1647
+#: app/display/gimptoolpath.c:1665
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Klikken en slepen om de handvatten symmetrisch te verplaatsen"
 
-#: app/display/gimptoolpath.c:1662
+#: app/display/gimptoolpath.c:1680
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Klikken en slepen om de vorm van de curve te wijzigen"
 
-#: app/display/gimptoolpath.c:1665
+#: app/display/gimptoolpath.c:1683
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: symmetrisch"
 
-#: app/display/gimptoolpath.c:1670
+#: app/display/gimptoolpath.c:1688
 msgid "Click-Drag to move the component around"
 msgstr "Klikken en slepen om de component te verplaatsen"
 
-#: app/display/gimptoolpath.c:1678
+#: app/display/gimptoolpath.c:1696
 msgid "Click-Drag to move the path around"
 msgstr "Klikken en slepen om het pad te verplaatsen"
 
-#: app/display/gimptoolpath.c:1682
+#: app/display/gimptoolpath.c:1700
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Klikken en slepen om een anker op het pad in te voegen"
 
-#: app/display/gimptoolpath.c:1690
+#: app/display/gimptoolpath.c:1708
 msgid "Click to delete this anchor"
 msgstr "Klikken om dit anker te verwijderen"
 
-#: app/display/gimptoolpath.c:1694
+#: app/display/gimptoolpath.c:1712
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Klikken om dit anker met het geselecteerde eindpunt te verbinden"
 
-#: app/display/gimptoolpath.c:1699
+#: app/display/gimptoolpath.c:1717
 msgid "Click to open up the path"
 msgstr "Klikken om het pad te splitsen"
 
-#: app/display/gimptoolpath.c:1703
+#: app/display/gimptoolpath.c:1721
 msgid "Click to make this node angular"
 msgstr "Klikken om dit knooppunt hoekig te maken"
 
-#: app/display/gimptoolpath.c:1707
+#: app/display/gimptoolpath.c:1725
 msgid "Clicking here does nothing, try clicking on path elements."
 msgstr "Hier klikken doet niets, probeer op padelementen te klikken."
 
-#: app/display/gimptoolpath.c:1915 app/display/gimptoolpath.c:2026
+#: app/display/gimptoolpath.c:1933 app/display/gimptoolpath.c:2044
 msgid "Delete Anchors"
 msgstr "Ankers verwijderen"
 
-#: app/display/gimptoolpath.c:2055
+#: app/display/gimptoolpath.c:2073
 msgid "Shift start"
 msgstr "Begin verschuiving"
 
@@ -20781,7 +20789,7 @@ msgstr "Invoer vastzetten"
 
 #: app/operations/gimplevelsconfig.c:155
 msgid "Clamp input values before applying output mapping."
-msgstr "Invoerwaarden vastzetten vòòr ze op de uitvoer toe te passen."
+msgstr "Invoerwaarden vastzetten vóór ze op de uitvoer toe te passen."
 
 #: app/operations/gimplevelsconfig.c:166 app/operations/gimplevelsconfig.c:167
 msgid "Low Output"
@@ -20801,7 +20809,7 @@ msgstr "Finale uitvoerwaarden vastzetten."
 
 #: app/operations/gimplevelsconfig.c:884
 msgid "not a GIMP Levels file"
-msgstr "geen GIMP Niveausbestand"
+msgstr "geen GIMP Niveaus-bestand"
 
 #: app/operations/gimplevelsconfig.c:968 app/operations/gimplevelsconfig.c:1101
 #: app/operations/gimplevelsconfig.c:1104
@@ -21643,7 +21651,7 @@ msgstr "Geen paden gevonden in de buffer"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Kon paden niet importeren uit ‘%s’: %s"
 
-#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:886
+#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:890
 msgid "Vector Layer"
 msgstr "Vectorlaag"
 
@@ -22472,7 +22480,7 @@ msgstr "ongeldige waarde ‘%s’ voor pictogramtype"
 #: app/plug-in/plug-in-rc.c:606
 #, c-format
 msgid "invalid value '%ld' for icon type"
-msgstr "ongeldige waarde '%ld' voor pictogramtype"
+msgstr "ongeldige waarde ‘%ld’ voor pictogramtype"
 
 #: app/propgui/gimppropgui-channel-mixer.c:63
 msgid "Red Channel"
@@ -25016,15 +25024,15 @@ msgstr "Het geselecteerde tekenobject heeft geen alfakanaal."
 msgid "The selected layer's alpha channel is locked."
 msgstr "Het alfakanaal van een geselecteerde laag is vergrendeld."
 
-#: app/tools/gimppathoptions.c:138
+#: app/tools/gimppathoptions.c:147
 msgid "Enable Fill"
 msgstr "Vullen inschakelen"
 
-#: app/tools/gimppathoptions.c:144
+#: app/tools/gimppathoptions.c:153
 msgid "Enable Stroke"
 msgstr "Belijnen inschakelen"
 
-#: app/tools/gimppathoptions.c:539
+#: app/tools/gimppathoptions.c:557
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -25037,12 +25045,12 @@ msgstr "Pad naar Selectie\n"
 "%s  Doorsnede"
 
 #. Create a selection from the current path
-#: app/tools/gimppathoptions.c:550
+#: app/tools/gimppathoptions.c:568
 msgid "Selection from Path"
 msgstr "Selectie uit pad"
 
-#: app/tools/gimppathoptions.c:560 app/tools/gimppathtool.c:765
-#: app/tools/gimppathtool.c:1092
+#: app/tools/gimppathoptions.c:578 app/tools/gimppathtool.c:769
+#: app/tools/gimppathtool.c:1096
 msgid "Create New Vector Layer"
 msgstr "Nieuwe vectorlaag maken"
 
@@ -25054,27 +25062,27 @@ msgstr "Gereedschap Pad: paden aanmaken en bewerken"
 msgid "Pat_hs"
 msgstr "_Paden"
 
-#: app/tools/gimppathtool.c:768
+#: app/tools/gimppathtool.c:772
 msgid "Create Vector Layer from Path"
 msgstr "Vectorlaag uit pad maken"
 
-#: app/tools/gimppathtool.c:884
+#: app/tools/gimppathtool.c:888
 msgid "Add Vector Layer"
 msgstr "Vectorlaag toevoegen"
 
-#: app/tools/gimppathtool.c:1115 app/tools/gimppathtool.c:1118
+#: app/tools/gimppathtool.c:1119 app/tools/gimppathtool.c:1122
 msgid "Confirm Path Editing"
 msgstr "Bevestig bewerken van pad"
 
-#: app/tools/gimppathtool.c:1122 app/tools/gimptexttool.c:1869
+#: app/tools/gimppathtool.c:1126 app/tools/gimptexttool.c:1869
 msgid "Create _New Layer"
 msgstr "_Nieuwe laag aanmaken"
 
-#: app/tools/gimppathtool.c:1124 app/tools/gimptexttool.c:1871
+#: app/tools/gimppathtool.c:1128 app/tools/gimptexttool.c:1871
 msgid "_Edit Anyway"
 msgstr "Toch b_ewerken"
 
-#: app/tools/gimppathtool.c:1146
+#: app/tools/gimppathtool.c:1150
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
