@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-10-03 18:52+0000\n"
-"PO-Revision-Date: 2026-10-03 22:35+0200\n"
+"PO-Revision-Date: 2026-10-04 10:08+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -15929,10 +15929,8 @@ msgid "Keywords"
 msgstr "Ključne besede"
 
 #: plug-ins/metadata/metadata-editor.c:499
-#, fuzzy
-#| msgid "ALT Text"
 msgid "Alt Text"
-msgstr "Besedilo ALT"
+msgstr "Nadomestno besedilo (alt)"
 
 #: plug-ins/metadata/metadata-editor.c:500
 msgid "Extended Description"
@@ -16442,9 +16440,8 @@ msgid "Original digital capture of a real life scene"
 msgstr "Izvirni digitalni zajem prizora iz resničnega življenja"
 
 #: plug-ins/metadata/metadata-tags.c:194
-#, fuzzy
 msgid "Multi-frame computational capture sampled from real life"
-msgstr "Večsličični računalniški zajem, vzorčen iz realnega življenja"
+msgstr "Večslični računski zajem, vzorčen iz realnega življenja"
 
 #: plug-ins/metadata/metadata-tags.c:195
 msgid "Digitized from a negative on film"
@@ -16467,17 +16464,15 @@ msgid "Edited using Generative AI"
 msgstr "Urejeno z rabo generativne UI"
 
 #: plug-ins/metadata/metadata-tags.c:201
-#, fuzzy
 msgid "Algorithmically-altered media initiated by a human"
-msgstr "Algoritmično spremenjeni medij s človeško sprožitvijo"
+msgstr "Z algoritmom spremenjeni medij s človeškim proženjem"
 
 #: plug-ins/metadata/metadata-tags.c:202
 msgid "Digital art created by a human using non-generative tools"
 msgstr ""
-"Digitalna umetnost, ki jo je ustvaril človek brez rabe generativnih orodij"
+"Digitalna slika, ki jo je ustvaril človek brez rabe generativnih orodij"
 
 #: plug-ins/metadata/metadata-tags.c:203
-#, fuzzy
 msgid "Digital media representation of data"
 msgstr "Reprezentacija podatkov v digitalnih medijih"
 
@@ -16494,14 +16489,13 @@ msgid "A capture of the contents of the screen"
 msgstr "Zajem vsebine zaslona"
 
 #: plug-ins/metadata/metadata-tags.c:207
-#, fuzzy
 msgid "Virtual event recording"
 msgstr "Navidezni posnetek dogodka"
 
 #: plug-ins/metadata/metadata-tags.c:208
-#, fuzzy
 msgid "Composite of elements, which may or may not be generative AI"
-msgstr "Kompozit, ki vključuje elemente, ki so lahko ali niso generativna UI"
+msgstr ""
+"Kompozit, ki vključuje elemente, ki so lahko ali niso izdelek generativne UI"
 
 #: plug-ins/metadata/metadata-tags.c:209
 msgid "Composite of captured elements from real life"
@@ -16512,23 +16506,20 @@ msgid "Composite including generative AI elements"
 msgstr "Kompozit, ki vključuje elemente UI"
 
 #: plug-ins/metadata/metadata-tags.c:211
-#, fuzzy
 msgid "(Retired) Original media with minor human edits"
 msgstr "(Odstranjeno) Izvirni medij z manjšimi človeškimi popravki"
 
 #: plug-ins/metadata/metadata-tags.c:212
-#, fuzzy
 msgid "(Retired) Created by software"
 msgstr "(Odstranjeno) Ustvarjeno s programjem"
 
 #: plug-ins/metadata/metadata-tags.c:213
-#, fuzzy
 msgid "(Retired) Digital art"
-msgstr "(Odstranjeno) Digitalna umetnost"
+msgstr "(Odstranjeno) Digitalna slika"
 
 #: plug-ins/metadata/metadata-tags.c:224 plug-ins/metadata/metadata-tags.c:236
 msgid "Not Applicable"
-msgstr "Se ne uporabi"
+msgstr "Ni ustrezno"
 
 #: plug-ins/metadata/metadata-tags.c:225
 msgid "Unlimited Model Releases"
@@ -16628,18 +16619,15 @@ msgid "Prohibited, see Other Constraints property"
 msgstr "Prepovedano, glejte lastnost »Druge omejitve«"
 
 #: plug-ins/metadata/metadata-tags.c:275
-#, fuzzy
 msgid ""
 "(Unsupported) Prohibited, see Embedded Encoded Rights Expression property"
 msgstr ""
-"(Ni podprto) Prepovedano, glejte lastnost »Embedded Encoded Rights "
-"Expression«"
+"(Ni podprto) Prepovedano, glejte lastnost »Vdelani kodirani opis pravic«"
 
 #: plug-ins/metadata/metadata-tags.c:276
-#, fuzzy
 msgid "(Unsupported) Prohibited, see Linked Encoded Rights Expression property"
 msgstr ""
-"(Ni podprto) Prepovedano, glejte lastnost »Povezani kodirani izraz pravic«"
+"(Ni podprto) Prepovedano, glejte lastnost »Povezani kodirani opis pravic«"
 
 #: plug-ins/metadata/metadata-tags.c:283
 msgid "3"
