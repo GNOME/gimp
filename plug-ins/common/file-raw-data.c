@@ -1245,21 +1245,25 @@ raw_load_gray (RawGimpData *data,
 {
   guchar *in_raw = NULL;
   guchar *out_raw = NULL;
-  gint    in_size;
-  gint    out_size;
+  gsize   in_size;
+  gsize   out_size;
   guchar  pixel_mask_hi;
   guchar  pixel_mask_lo;
   guint   x;
   gint    i;
 
-  in_size  = width * height / (8 / bitspp);
-  out_size = width * height * 3;
+  if (! g_size_checked_mul (&in_size, width, height)  ||
+      ! g_size_checked_mul (&out_size, width, height) ||
+      ! g_size_checked_mul (&out_size, out_size, 3))
+    return FALSE;
 
-  in_raw = g_try_malloc (in_size);
+  in_size /= (8 / bitspp);
+
+  in_raw = g_try_malloc0 (in_size);
   if (! in_raw)
     return FALSE;
 
-  out_raw = g_try_malloc (out_size);
+  out_raw = g_try_malloc0 (out_size);
   if (! out_raw)
     return FALSE;
   memset (out_raw, 0, out_size);
@@ -2436,8 +2440,8 @@ preview_update (GimpPreviewArea *preview,
       {
         guint   in_size  = height * width / (8 / bitspp);
         guint   out_size = height * width * 3;
-        guchar *in_raw  = g_malloc0 (in_size);
-        guchar *out_raw = g_malloc0 (out_size);
+        guchar *in_raw   = g_malloc0 (in_size);
+        guchar *out_raw  = g_malloc0 (out_size);
         guchar  pixel_mask_hi;
         guchar  pixel_mask_lo;
         gint    i;
