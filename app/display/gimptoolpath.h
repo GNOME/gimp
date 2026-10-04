@@ -66,8 +66,12 @@ void             gimp_tool_path_get_popup_state (GimpToolPath     *tool_path,
                                                  gboolean         *on_handle,
                                                  gboolean         *on_curve);
 
+gboolean         gimp_tool_path_hover_over_path (GimpToolPath     *tool_path);
+
 void             gimp_tool_path_delete_anchor   (GimpToolPath     *tool_path);
 void             gimp_tool_path_shift_start     (GimpToolPath     *tool_path);
 void             gimp_tool_path_insert_anchor   (GimpToolPath     *tool_path);
 void             gimp_tool_path_delete_segment  (GimpToolPath     *tool_path);
 void             gimp_tool_path_reverse_stroke  (GimpToolPath     *tool_path);
+void             gimp_tool_path_select_rect     (GimpToolPath     *tool_path,
+                                                 GeglRectangle    *rect);

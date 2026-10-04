@@ -109,6 +109,8 @@ static void     gimp_path_tool_cursor_update      (GimpTool              *tool,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
 
+static void     gimp_path_tool_draw               (GimpDrawTool          *draw_tool);
+
 static void     gimp_path_tool_start              (GimpPathTool          *path_tool,
                                                    GimpDisplay           *display);
 static void     gimp_path_tool_halt               (GimpPathTool          *path_tool);
@@ -199,8 +201,9 @@ gimp_path_tool_register (GimpToolRegisterCallback callback,
 static void
 gimp_path_tool_class_init (GimpPathToolClass *klass)
 {
-  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   object_class->constructed  = gimp_path_tool_constructed;
   object_class->dispose      = gimp_path_tool_dispose;
@@ -212,6 +215,8 @@ gimp_path_tool_class_init (GimpPathToolClass *klass)
   tool_class->modifier_key   = gimp_path_tool_modifier_key;
   tool_class->cursor_update  = gimp_path_tool_cursor_update;
   tool_class->is_destructive = FALSE;
+
+  draw_tool_class->draw      = gimp_path_tool_draw;
 }
 
 static void
@@ -295,7 +300,8 @@ gimp_path_tool_button_press (GimpTool            *tool,
                              GimpButtonPressType  press_type,
                              GimpDisplay         *display)
 {
-  GimpPathTool *path_tool = GIMP_PATH_TOOL (tool);
+  GimpPathTool    *path_tool = GIMP_PATH_TOOL (tool);
+  GimpPathOptions *options   = GIMP_PATH_TOOL_GET_OPTIONS (tool);
 
   if (tool->display && display != tool->display)
     gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
@@ -314,6 +320,14 @@ gimp_path_tool_button_press (GimpTool            *tool,
     }
 
   gimp_tool_control_activate (tool->control);
+
+  /* Set starting point */
+  path_tool->selection_start_x = coords->x;
+  path_tool->selection_start_y = coords->y;
+  /* Don't show when we're over part of the path */
+  if (options->edit_mode == GIMP_PATH_MODE_EDIT &&
+      ! gimp_tool_path_hover_over_path (GIMP_TOOL_PATH (path_tool->widget)))
+    path_tool->active_selection = TRUE;
 }
 
 static void
@@ -325,6 +339,25 @@ gimp_path_tool_button_release (GimpTool              *tool,
                                GimpDisplay           *display)
 {
   GimpPathTool *path_tool = GIMP_PATH_TOOL (tool);
+
+  if (path_tool->active_selection == TRUE)
+    {
+      gint          x    = MIN (path_tool->selection_start_x,
+                                path_tool->cursor_x);
+      gint          y    = MIN (path_tool->selection_start_y,
+                                path_tool->cursor_y);
+      GeglRectangle area =
+        { x, y, ABS (path_tool->selection_start_x - path_tool->cursor_x),
+          ABS (path_tool->selection_start_y - path_tool->cursor_y) };
+
+      /* Clear selection rectangle */
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      path_tool->active_selection = FALSE;
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
+      gimp_tool_path_select_rect (GIMP_TOOL_PATH (path_tool->widget), &area);
+    }
 
   gimp_tool_control_halt (tool->control);
 
@@ -344,6 +377,14 @@ gimp_path_tool_motion (GimpTool         *tool,
                        GimpDisplay      *display)
 {
   GimpPathTool *path_tool = GIMP_PATH_TOOL (tool);
+
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  /* Update cursor */
+  path_tool->cursor_x = coords->x;
+  path_tool->cursor_y = coords->y;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   if (path_tool->grab_widget)
     {
@@ -430,6 +471,24 @@ gimp_path_tool_cursor_update (GimpTool         *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+static void
+gimp_path_tool_draw (GimpDrawTool *draw_tool)
+{
+  GimpPathTool *path_tool = GIMP_PATH_TOOL (draw_tool);
+
+  if (path_tool->active_selection)
+    {
+      gimp_draw_tool_add_rectangle (draw_tool,
+                                    FALSE,
+                                    MIN (path_tool->selection_start_x, path_tool->cursor_x),
+                                    MIN (path_tool->selection_start_y, path_tool->cursor_y),
+                                    ABS (path_tool->selection_start_x - path_tool->cursor_x),
+                                    ABS (path_tool->selection_start_y - path_tool->cursor_y));
+    }
+
+  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
 
 static void

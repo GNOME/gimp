@@ -2032,6 +2032,14 @@ gimp_tool_path_get_popup_state (GimpToolPath *tool_path,
 
 }
 
+gboolean
+gimp_tool_path_hover_over_path (GimpToolPath *tool_path)
+{
+  GimpToolPathPrivate *private = tool_path->private;
+
+  return (private->function != VECTORS_FINISHED);
+}
+
 void
 gimp_tool_path_delete_anchor (GimpToolPath *tool_path)
 {
@@ -2136,4 +2144,53 @@ gimp_tool_path_reverse_stroke (GimpToolPath *tool_path)
 
   gimp_tool_path_end_change (tool_path, TRUE);
   gimp_path_thaw (private->path);
+}
+
+void
+gimp_tool_path_select_rect (GimpToolPath  *tool_path,
+                            GeglRectangle *rect)
+{
+  GimpToolPathPrivate *private    = tool_path->private;
+  GimpStroke          *cur_stroke = NULL;
+
+  if (! private->path)
+    {
+      private->cur_position = -1;
+      private->cur_anchor   = NULL;
+      private->cur_stroke   = NULL;
+      return;
+    }
+
+  while ((cur_stroke = gimp_path_stroke_get_next (private->path,
+                                                  cur_stroke)))
+    {
+      GList *anchors;
+      GList *list;
+
+      /* anchor handles */
+      anchors = gimp_stroke_get_draw_anchors (cur_stroke);
+      for (list = anchors; list; list = g_list_next (list))
+        {
+          GimpAnchor *cur_anchor = list->data;
+
+          if (! cur_anchor->selected                           &&
+              (cur_anchor->position.x >= rect->x               &&
+               cur_anchor->position.x <= rect->x + rect->width &&
+               cur_anchor->position.y >= rect->y               &&
+               cur_anchor->position.y <= rect->y + rect->height))
+            {
+              private->sel_count++;
+              cur_anchor->selected = TRUE;
+            }
+        }
+      g_list_free (anchors);
+    }
+
+  if (private->sel_count > 1)
+    {
+      private->sel_anchor = NULL;
+      private->sel_stroke = NULL;
+    }
+
+  gimp_tool_path_changed (GIMP_TOOL_WIDGET (tool_path));
 }

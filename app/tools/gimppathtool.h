@@ -43,8 +43,14 @@ struct _GimpPathTool
   GimpImage       *current_image;
   GimpVectorLayer *current_vector_layer;
 
-  GimpPath        *path;           /*  the current Path data   */
-  GimpPathMode     saved_mode;     /*  used by modifier_key()  */
+  GimpPath        *path;              /* the current Path data   */
+  GimpPathMode     saved_mode;        /* used by modifier_key()  */
+
+  gboolean         active_selection;
+  gdouble          cursor_x;          /* Hold the cursor x position  */
+  gdouble          cursor_y;          /* Hold the cursor y position  */
+  gdouble          selection_start_x; /* Where the selection started */
+  gdouble          selection_start_y; /* Where the selection started */
 
   GimpToolWidget  *widget;
   GimpToolWidget  *grab_widget;
