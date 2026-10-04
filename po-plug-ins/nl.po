@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-02 21:00+0000\n"
-"PO-Revision-Date: 2026-10-02 10:29+0200\n"
+"POT-Creation-Date: 2026-10-03 18:52+0000\n"
+"PO-Revision-Date: 2026-10-04 12:00+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -91,10 +91,10 @@ msgstr "Plug-In Voorbeeld in C"
 #: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
-#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1193
-#: plug-ins/metadata/metadata-editor.c:1691
-#: plug-ins/metadata/metadata-editor.c:5468
-#: plug-ins/metadata/metadata-editor.c:5503 plug-ins/print/print.c:476
+#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1201
+#: plug-ins/metadata/metadata-editor.c:1699
+#: plug-ins/metadata/metadata-editor.c:5513
+#: plug-ins/metadata/metadata-editor.c:5548 plug-ins/print/print.c:476
 msgid "_Cancel"
 msgstr "_Annuleren"
 
@@ -261,8 +261,8 @@ msgstr "_Horizontale stijl"
 #: plug-ins/lighting/lighting-main.c:213 plug-ins/lighting/lighting-main.c:336
 #: plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454
 #: plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
-#: plug-ins/metadata/metadata-tags.c:218 plug-ins/metadata/metadata-tags.c:230
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:223 plug-ins/metadata/metadata-tags.c:235
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "None"
 msgstr "Geen"
 
@@ -663,11 +663,11 @@ msgstr "Aantal bits voor emmergrootte"
 msgid "1"
 msgstr "1"
 
-#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:283
 msgid "2"
 msgstr "2"
 
-#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:283
 msgid "4"
 msgstr "4"
 
@@ -1781,11 +1781,11 @@ msgstr "Retinexverdeling via schalen"
 msgid "Uniform"
 msgstr "Uniform"
 
-#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:283
 msgid "Low"
 msgstr "Laag"
 
-#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:283
 msgid "High"
 msgstr "Hoog"
 
@@ -4036,8 +4036,8 @@ msgid "xvYCC"
 msgstr "xvYCC"
 
 #: plug-ins/common/file-jp2.c:249 plug-ins/common/file-jp2.c:295
-#: plug-ins/metadata/metadata-tags.c:268 plug-ins/metadata/metadata-tags.c:304
-#: plug-ins/metadata/metadata-tags.c:311 plug-ins/metadata/metadata-tags.c:318
+#: plug-ins/metadata/metadata-tags.c:290 plug-ins/metadata/metadata-tags.c:326
+#: plug-ins/metadata/metadata-tags.c:333 plug-ins/metadata/metadata-tags.c:340
 msgid "Unknown"
 msgstr "Onbekend"
 
@@ -4883,7 +4883,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Afbeelding exporteren als PDF met meerdere pagina's"
 
 #: plug-ins/common/file-pdf-export.c:1034
-#: plug-ins/metadata/metadata-editor.c:5503
+#: plug-ins/metadata/metadata-editor.c:5548
 msgid "_Export"
 msgstr "_Exporteren"
 
@@ -8025,10 +8025,10 @@ msgid "Plug-in Browser"
 msgstr "Plug-inverkenner"
 
 #: plug-ins/common/plugin-browser.c:615 plug-ins/common/unit-editor.c:115
-#: plug-ins/metadata/metadata-editor.c:612
-#: plug-ins/metadata/metadata-editor.c:648
-#: plug-ins/metadata/metadata-editor.c:655
-#: plug-ins/metadata/metadata-editor.c:662
+#: plug-ins/metadata/metadata-editor.c:617
+#: plug-ins/metadata/metadata-editor.c:653
+#: plug-ins/metadata/metadata-editor.c:660
+#: plug-ins/metadata/metadata-editor.c:667
 msgid "Name"
 msgstr "Naam"
 
@@ -12850,7 +12850,7 @@ msgstr "Rastertype:"
 
 #: plug-ins/gfig/gfig-dialog.c:1426
 #: plug-ins/gradient-flare/gradient-flare.c:740
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "Normal"
 msgstr "Normaal"
 
@@ -15598,7 +15598,7 @@ msgstr "Maker van de titel"
 
 #. Description tab
 #: plug-ins/metadata/metadata-editor.c:494
-#: plug-ins/metadata/metadata-editor.c:1230
+#: plug-ins/metadata/metadata-editor.c:1238
 msgid "Description"
 msgstr "Omschrijving"
 
@@ -15615,199 +15615,207 @@ msgid "Keywords"
 msgstr "Sleutelwoorden"
 
 #: plug-ins/metadata/metadata-editor.c:499
+msgid "Alt Text"
+msgstr "ALT-tekst"
+
+#: plug-ins/metadata/metadata-editor.c:500
+msgid "Extended Description"
+msgstr "Uitgebreide beschrijving"
+
+#: plug-ins/metadata/metadata-editor.c:502
 msgid "Copyright Status"
 msgstr "Status auteursrecht"
 
-#: plug-ins/metadata/metadata-editor.c:500
-#: plug-ins/metadata/metadata-editor.c:629
+#: plug-ins/metadata/metadata-editor.c:503
+#: plug-ins/metadata/metadata-editor.c:634
 msgid "Copyright Notice"
 msgstr "Auteursrecht"
 
-#: plug-ins/metadata/metadata-editor.c:501
+#: plug-ins/metadata/metadata-editor.c:504
 msgid "Copyright URL"
 msgstr "URL auteursrecht"
 
-#: plug-ins/metadata/metadata-editor.c:507
+#: plug-ins/metadata/metadata-editor.c:510
 msgid "Address"
 msgstr "Adres"
 
-#: plug-ins/metadata/metadata-editor.c:508
-#: plug-ins/metadata/metadata-editor.c:523
-#: plug-ins/metadata/metadata-editor.c:544
-#: plug-ins/metadata/metadata-editor.c:602
+#: plug-ins/metadata/metadata-editor.c:511
+#: plug-ins/metadata/metadata-editor.c:526
+#: plug-ins/metadata/metadata-editor.c:547
+#: plug-ins/metadata/metadata-editor.c:607
 msgid "City"
 msgstr "Plaats"
 
-#: plug-ins/metadata/metadata-editor.c:509
-#: plug-ins/metadata/metadata-editor.c:524
-#: plug-ins/metadata/metadata-editor.c:545
+#: plug-ins/metadata/metadata-editor.c:512
+#: plug-ins/metadata/metadata-editor.c:527
+#: plug-ins/metadata/metadata-editor.c:548
 msgid "State / Province"
 msgstr "(Deel)staat / Provincie"
 
-#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:513
 msgid "Postal Code"
 msgstr "Postcode"
 
-#: plug-ins/metadata/metadata-editor.c:511
-#: plug-ins/metadata/metadata-editor.c:525
-#: plug-ins/metadata/metadata-editor.c:546
-#: plug-ins/metadata/metadata-editor.c:604
+#: plug-ins/metadata/metadata-editor.c:514
+#: plug-ins/metadata/metadata-editor.c:528
+#: plug-ins/metadata/metadata-editor.c:549
+#: plug-ins/metadata/metadata-editor.c:609
 msgid "Country"
 msgstr "Land"
 
-#: plug-ins/metadata/metadata-editor.c:513
+#: plug-ins/metadata/metadata-editor.c:516
 msgid "Phone(s)"
 msgstr "Telefoonnummer(s)"
 
 # Of is het nog steeds e-mail?
 # pm
-#: plug-ins/metadata/metadata-editor.c:514
+#: plug-ins/metadata/metadata-editor.c:517
 msgid "E-mail(s)"
 msgstr "E-mail(s)"
 
-#: plug-ins/metadata/metadata-editor.c:515
+#: plug-ins/metadata/metadata-editor.c:518
 msgid "Website(s)"
 msgstr "Website(s)"
 
-#: plug-ins/metadata/metadata-editor.c:517
+#: plug-ins/metadata/metadata-editor.c:520
 msgid "Creation Date"
 msgstr "Creatiedatum"
 
-#: plug-ins/metadata/metadata-editor.c:519
+#: plug-ins/metadata/metadata-editor.c:522
 msgid "Intellectual Genre"
 msgstr "Intellectueel genre"
 
-#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:523
 msgid "IPTC Scene Code"
 msgstr "IPTC Scènecode"
 
-#: plug-ins/metadata/metadata-editor.c:522
-#: plug-ins/metadata/metadata-editor.c:543
-#: plug-ins/metadata/metadata-editor.c:601
+#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:546
+#: plug-ins/metadata/metadata-editor.c:606
 msgid "Sublocation"
 msgstr "Locatie"
 
-#: plug-ins/metadata/metadata-editor.c:526
-#: plug-ins/metadata/metadata-editor.c:547
+#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:550
 msgid "Country ISO-Code"
 msgstr "ISO Landcode"
 
 # Belang?
 # pm
-#: plug-ins/metadata/metadata-editor.c:528
+#: plug-ins/metadata/metadata-editor.c:531
 msgid "Urgency"
 msgstr "Urgentie"
 
 # iptc.org:
 # The Title field should not be confused with the Headline field which is a short descriptive field about the content of an image.
 # pm
-#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:532
 msgid "Headline"
 msgstr "Beschrijving foto"
 
-#: plug-ins/metadata/metadata-editor.c:530
+#: plug-ins/metadata/metadata-editor.c:533
 msgid "IPTC Subject Code"
 msgstr "IPTC subjectcode"
 
-#: plug-ins/metadata/metadata-editor.c:532
+#: plug-ins/metadata/metadata-editor.c:535
 msgid "Job Identifier"
 msgstr "Taakomschrijving"
 
-#: plug-ins/metadata/metadata-editor.c:533
+#: plug-ins/metadata/metadata-editor.c:536
 msgid "Instructions"
 msgstr "Instructies"
 
 # Beter dan credits?
 # pm
-#: plug-ins/metadata/metadata-editor.c:534
+#: plug-ins/metadata/metadata-editor.c:537
 msgid "Credit Line"
 msgstr "Toeschrijving"
 
-#: plug-ins/metadata/metadata-editor.c:535
-#: plug-ins/metadata/metadata-editor.c:627
+#: plug-ins/metadata/metadata-editor.c:538
+#: plug-ins/metadata/metadata-editor.c:632
 msgid "Source"
 msgstr "Bron"
 
-#: plug-ins/metadata/metadata-editor.c:536
+#: plug-ins/metadata/metadata-editor.c:539
 msgid "Usage Terms"
 msgstr "Gebruiksvoorwaarden"
 
-#: plug-ins/metadata/metadata-editor.c:542
+#: plug-ins/metadata/metadata-editor.c:545
 msgid "Person Shown"
 msgstr "Afgebeeld persoon"
 
 # Continent?
 # pm
-#: plug-ins/metadata/metadata-editor.c:548
-#: plug-ins/metadata/metadata-editor.c:606
+#: plug-ins/metadata/metadata-editor.c:551
+#: plug-ins/metadata/metadata-editor.c:611
 msgid "World Region"
 msgstr "Regio"
 
-#: plug-ins/metadata/metadata-editor.c:549
+#: plug-ins/metadata/metadata-editor.c:552
 msgid "Location Shown"
 msgstr "Getoonde locatie"
 
-#: plug-ins/metadata/metadata-editor.c:551
+#: plug-ins/metadata/metadata-editor.c:554
 msgid "Featured Organization"
 msgstr "Organisatie"
 
-#: plug-ins/metadata/metadata-editor.c:553
+#: plug-ins/metadata/metadata-editor.c:556
 msgid "Organization Code"
 msgstr "Organisatie code"
 
-#: plug-ins/metadata/metadata-editor.c:555
+#: plug-ins/metadata/metadata-editor.c:558
 msgid "Event"
 msgstr "Actie"
 
-#: plug-ins/metadata/metadata-editor.c:556
+#: plug-ins/metadata/metadata-editor.c:559
 msgid "Artwork or Object"
 msgstr "Kunstwerk of object"
 
-#: plug-ins/metadata/metadata-editor.c:559
+#: plug-ins/metadata/metadata-editor.c:562
 msgid "Additional Model Info"
 msgstr "Extra modelinformatie"
 
-#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:563
 msgid "Model Age"
 msgstr "Leeftijd model"
 
-#: plug-ins/metadata/metadata-editor.c:561
+#: plug-ins/metadata/metadata-editor.c:564
 msgid "Minor Model Age Disclosure"
 msgstr "Leeftijd jongste model op foto"
 
 # A Model Release is a document granting the right to use an image of a person depicted.
 # pm
-#: plug-ins/metadata/metadata-editor.c:562
+#: plug-ins/metadata/metadata-editor.c:565
 msgid "Model Release Status"
 msgstr "Status publicatierecht afgebeeld persoon"
 
-#: plug-ins/metadata/metadata-editor.c:563
-#: plug-ins/metadata/metadata-editor.c:635
+#: plug-ins/metadata/metadata-editor.c:566
+#: plug-ins/metadata/metadata-editor.c:640
 msgid "Model Release Identifier"
 msgstr "Code afgebeeld persoon"
 
-#: plug-ins/metadata/metadata-editor.c:566
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Image Supplier Name"
 msgstr "Naam beeldleverancier"
 
-#: plug-ins/metadata/metadata-editor.c:567
+#: plug-ins/metadata/metadata-editor.c:570
 msgid "Image Supplier ID"
 msgstr "Code beeldleverancier"
 
 # ? - pm
-#: plug-ins/metadata/metadata-editor.c:568
+#: plug-ins/metadata/metadata-editor.c:571
 msgid "Supplier's Image ID"
 msgstr "Beeldcode aanbieder"
 
-#: plug-ins/metadata/metadata-editor.c:569
+#: plug-ins/metadata/metadata-editor.c:572
 msgid "Registry Entry"
 msgstr "Registernummer"
 
-#: plug-ins/metadata/metadata-editor.c:571
+#: plug-ins/metadata/metadata-editor.c:574
 msgid "Max. Available Width"
 msgstr "Max. beschikbare breedte"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:575
 msgid "Max. Available Height"
 msgstr "Max. beschikbare hoogte"
 
@@ -15818,53 +15826,62 @@ msgstr "Max. beschikbare hoogte"
 # -    Digitised from a negative on film – from bw or colour negatives
 # -    etc.
 # pm
-#: plug-ins/metadata/metadata-editor.c:573
+#: plug-ins/metadata/metadata-editor.c:576
 msgid "Digital Source Type"
 msgstr "Oorsprong digitale afbeelding"
 
-#: plug-ins/metadata/metadata-editor.c:575
+#: plug-ins/metadata/metadata-editor.c:578
 msgid "Image Creator"
 msgstr "Beeldproducent"
 
-#: plug-ins/metadata/metadata-editor.c:577
+#: plug-ins/metadata/metadata-editor.c:580
 msgid "Copyright Owner"
 msgstr "Auteursrechthebbende"
 
-#: plug-ins/metadata/metadata-editor.c:579
+#: plug-ins/metadata/metadata-editor.c:582
 msgid "Licensor"
 msgstr "Licentieverlener"
 
-#: plug-ins/metadata/metadata-editor.c:581
+#: plug-ins/metadata/metadata-editor.c:584
 msgid "Property Release Status"
 msgstr "Status publicatierecht"
 
-#: plug-ins/metadata/metadata-editor.c:582
+#: plug-ins/metadata/metadata-editor.c:585
 msgid "Property Release Identifier"
 msgstr "Nummer publicatierecht"
 
+#: plug-ins/metadata/metadata-editor.c:587
+msgid "Data Mining"
+msgstr "Datamining"
+
+# overige/andere
+#: plug-ins/metadata/metadata-editor.c:588
+msgid "Other Constraints"
+msgstr "Andere beperkingen"
+
 # Niet 'Staat', in NL betekent dat een land, in de VS een staat, in Duitsland een deelstaat, in Fr. een département
 # pm
-#: plug-ins/metadata/metadata-editor.c:603
+#: plug-ins/metadata/metadata-editor.c:608
 msgid "Province / State"
 msgstr "Provincie / Deelstaat"
 
-#: plug-ins/metadata/metadata-editor.c:605
+#: plug-ins/metadata/metadata-editor.c:610
 msgid "Country ISO Code"
 msgstr "ISO Landcode"
 
-#: plug-ins/metadata/metadata-editor.c:618
+#: plug-ins/metadata/metadata-editor.c:623
 msgid "Code"
 msgstr "Code"
 
-#: plug-ins/metadata/metadata-editor.c:624
+#: plug-ins/metadata/metadata-editor.c:629
 msgid "Title"
 msgstr "Titel"
 
-#: plug-ins/metadata/metadata-editor.c:625
+#: plug-ins/metadata/metadata-editor.c:630
 msgid "Date Created"
 msgstr "Creatiedatum"
 
-#: plug-ins/metadata/metadata-editor.c:626
+#: plug-ins/metadata/metadata-editor.c:631
 msgid "Creator"
 msgstr "Maker"
 
@@ -15873,209 +15890,209 @@ msgstr "Maker"
 # Inventory number issued by the Source, for example an accession number.
 # Catalogusnummer?
 # pm
-#: plug-ins/metadata/metadata-editor.c:628
+#: plug-ins/metadata/metadata-editor.c:633
 msgid "Source Inventory ID"
 msgstr "Catalogusnummer"
 
-#: plug-ins/metadata/metadata-editor.c:641
+#: plug-ins/metadata/metadata-editor.c:646
 msgid "Organization Identifier"
 msgstr "Organisatienummer"
 
-#: plug-ins/metadata/metadata-editor.c:642
+#: plug-ins/metadata/metadata-editor.c:647
 msgid "Item Identifier"
 msgstr "Objectnummer"
 
-#: plug-ins/metadata/metadata-editor.c:649
-#: plug-ins/metadata/metadata-editor.c:656
-#: plug-ins/metadata/metadata-editor.c:663
-#: plug-ins/metadata/metadata-editor.c:675
+#: plug-ins/metadata/metadata-editor.c:654
+#: plug-ins/metadata/metadata-editor.c:661
+#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:680
 msgid "Identifier"
 msgstr "Nummer"
 
-#: plug-ins/metadata/metadata-editor.c:664
+#: plug-ins/metadata/metadata-editor.c:669
 msgid "Phone Number 1"
 msgstr "Tel.nr 1"
 
-#: plug-ins/metadata/metadata-editor.c:665
+#: plug-ins/metadata/metadata-editor.c:670
 msgid "Phone Type 1"
 msgstr "Soort tel. 1"
 
-#: plug-ins/metadata/metadata-editor.c:666
+#: plug-ins/metadata/metadata-editor.c:671
 msgid "Phone Number 2"
 msgstr "Tel.nr 2"
 
-#: plug-ins/metadata/metadata-editor.c:667
+#: plug-ins/metadata/metadata-editor.c:672
 msgid "Phone Type 2"
 msgstr "Soort tel. 2"
 
-#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:673
 msgid "Email Address"
 msgstr "E-mailadres"
 
-#: plug-ins/metadata/metadata-editor.c:669
+#: plug-ins/metadata/metadata-editor.c:674
 msgid "Web Address"
 msgstr "Webadres"
 
-#: plug-ins/metadata/metadata-editor.c:682
+#: plug-ins/metadata/metadata-editor.c:687
 msgid "Category"
 msgstr "Categorie"
 
-#: plug-ins/metadata/metadata-editor.c:683
+#: plug-ins/metadata/metadata-editor.c:688
 msgid "Supplemental Category"
 msgstr "Extra categorie"
 
-#: plug-ins/metadata/metadata-editor.c:689
+#: plug-ins/metadata/metadata-editor.c:694
 msgid "Longitude"
 msgstr "Lengtegraad"
 
-#: plug-ins/metadata/metadata-editor.c:690
+#: plug-ins/metadata/metadata-editor.c:695
 msgid "Longitude Reference"
 msgstr "Referentie lengtegraad"
 
-#: plug-ins/metadata/metadata-editor.c:691
+#: plug-ins/metadata/metadata-editor.c:696
 msgid "Latitude"
 msgstr "Breedtegraad"
 
-#: plug-ins/metadata/metadata-editor.c:692
+#: plug-ins/metadata/metadata-editor.c:697
 msgid "Latitude Reference"
 msgstr "Referentie breedtegraad"
 
-#: plug-ins/metadata/metadata-editor.c:693
+#: plug-ins/metadata/metadata-editor.c:698
 msgid "Altitude"
 msgstr "Hoogte"
 
-#: plug-ins/metadata/metadata-editor.c:695
+#: plug-ins/metadata/metadata-editor.c:700
 msgid "Altitude Reference"
 msgstr "Referentiehoogte"
 
-#: plug-ins/metadata/metadata-editor.c:701
+#: plug-ins/metadata/metadata-editor.c:706
 msgid "Patient"
 msgstr "Patiënt"
 
-#: plug-ins/metadata/metadata-editor.c:702
+#: plug-ins/metadata/metadata-editor.c:707
 msgid "Patient ID"
 msgstr "Patiëntnummer"
 
-#: plug-ins/metadata/metadata-editor.c:703
+#: plug-ins/metadata/metadata-editor.c:708
 msgid "Date of Birth"
 msgstr "Geboortedatum"
 
-#: plug-ins/metadata/metadata-editor.c:705
+#: plug-ins/metadata/metadata-editor.c:710
 msgid "Patient Sex"
 msgstr "Geslacht patiënt"
 
-#: plug-ins/metadata/metadata-editor.c:707
+#: plug-ins/metadata/metadata-editor.c:712
 msgid "Study ID"
 msgstr "Studienummer"
 
-#: plug-ins/metadata/metadata-editor.c:708
+#: plug-ins/metadata/metadata-editor.c:713
 msgid "Referring Physician"
 msgstr "Behandelend arts"
 
-#: plug-ins/metadata/metadata-editor.c:709
+#: plug-ins/metadata/metadata-editor.c:714
 msgid "Study Date"
 msgstr "Studiedatum"
 
-#: plug-ins/metadata/metadata-editor.c:711
+#: plug-ins/metadata/metadata-editor.c:716
 msgid "Study Description"
 msgstr "Studiebeschrijving"
 
-#: plug-ins/metadata/metadata-editor.c:712
+#: plug-ins/metadata/metadata-editor.c:717
 msgid "Series Number"
 msgstr "Serienummer"
 
-#: plug-ins/metadata/metadata-editor.c:713
+#: plug-ins/metadata/metadata-editor.c:718
 msgid "Modality"
 msgstr "Modaliteit"
 
-#: plug-ins/metadata/metadata-editor.c:714
+#: plug-ins/metadata/metadata-editor.c:719
 msgid "Series Date"
 msgstr "Seriedatum"
 
-#: plug-ins/metadata/metadata-editor.c:716
+#: plug-ins/metadata/metadata-editor.c:721
 msgid "Series Description"
 msgstr "Seriebeschrijving"
 
 # Geen idee
 # pm
-#: plug-ins/metadata/metadata-editor.c:718
+#: plug-ins/metadata/metadata-editor.c:723
 msgid "Equipment Institution"
 msgstr "Fabrikant"
 
-#: plug-ins/metadata/metadata-editor.c:719
+#: plug-ins/metadata/metadata-editor.c:724
 msgid "Equipment Manufacturer"
 msgstr "Fabrikant"
 
-#: plug-ins/metadata/metadata-editor.c:763
+#: plug-ins/metadata/metadata-editor.c:768
 msgid "_Edit Metadata"
 msgstr "_Metagegevens bewerken"
 
-#: plug-ins/metadata/metadata-editor.c:767
+#: plug-ins/metadata/metadata-editor.c:772
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Metagegevens bewerken (IPTC, Exif, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:780
+#: plug-ins/metadata/metadata-editor.c:785
 msgid "Parent's window handle"
 msgstr "Handvat van omvattende venster"
 
-#: plug-ins/metadata/metadata-editor.c:781
+#: plug-ins/metadata/metadata-editor.c:786
 msgid ""
 "The opaque handle of the window to set this plug-in's dialog transient to"
 msgstr "Het dialoogvenster van deze plug-in instellen op de dekkende handgreep van dit venster"
 
-#: plug-ins/metadata/metadata-editor.c:1186
+#: plug-ins/metadata/metadata-editor.c:1194
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Metagegevens bewerker: %s"
 
-#: plug-ins/metadata/metadata-editor.c:1194
+#: plug-ins/metadata/metadata-editor.c:1202
 msgid "_Write Metadata"
 msgstr "Metagegevens _schrijven"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1236
+#: plug-ins/metadata/metadata-editor.c:1244
 #: plug-ins/metadata/metadata-viewer.c:310
 msgid "IPTC"
 msgstr "IPTC"
 
 # 'extensie' or 'uitbreiding'? (IOW, is Extension a name or a common noun?)
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1242
+#: plug-ins/metadata/metadata-editor.c:1250
 msgid "IPTC Extension"
 msgstr "IPTC Uitgebreid"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1348
+#: plug-ins/metadata/metadata-editor.c:1356
 msgid "Categories"
 msgstr "Categorieën"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1354
+#: plug-ins/metadata/metadata-editor.c:1362
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1365
+#: plug-ins/metadata/metadata-editor.c:1373
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1379
+#: plug-ins/metadata/metadata-editor.c:1387
 msgid "Import Metadata..."
 msgstr "Metagegevens importeren…"
 
-#: plug-ins/metadata/metadata-editor.c:1385
+#: plug-ins/metadata/metadata-editor.c:1393
 msgid "Export Metadata..."
 msgstr "Metagegevens exporteren…"
 
-#: plug-ins/metadata/metadata-editor.c:1687
+#: plug-ins/metadata/metadata-editor.c:1695
 msgid "Choose Date"
 msgstr "Kies datum"
 
-#: plug-ins/metadata/metadata-editor.c:1692
+#: plug-ins/metadata/metadata-editor.c:1700
 msgid "Set Date"
 msgstr "Datum instellen"
 
-#: plug-ins/metadata/metadata-editor.c:2429
+#: plug-ins/metadata/metadata-editor.c:2437
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16088,7 +16105,7 @@ msgstr "Voer hier GPS-waarde in of bewerk die.\n"
 "10deg 15' 20\", of 10° 15' 20\", of 10:15:20.45, of 10 15 20, of 10 15.30, of 10.45\n"
 "Wis alle tekst om de huidige waarde te verwijderen."
 
-#: plug-ins/metadata/metadata-editor.c:2435
+#: plug-ins/metadata/metadata-editor.c:2443
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16104,105 +16121,105 @@ msgstr "Voer hier GPS-waarde voor de hoogte in of bewerk die.\n"
 
 # Komt achter tekst "Waardering"
 # pm
-#: plug-ins/metadata/metadata-editor.c:2569
+#: plug-ins/metadata/metadata-editor.c:2577
 msgid "Unrated"
 msgstr "Geen"
 
-#: plug-ins/metadata/metadata-editor.c:4564
+#: plug-ins/metadata/metadata-editor.c:4594
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Kon metagegevens-tag niet instellen %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5465
+#: plug-ins/metadata/metadata-editor.c:5510
 msgid "Import Metadata File"
 msgstr "Bestand met metagegevens importeren"
 
-#: plug-ins/metadata/metadata-editor.c:5468
+#: plug-ins/metadata/metadata-editor.c:5513
 msgid "_Import"
 msgstr "_Importeren"
 
-#: plug-ins/metadata/metadata-editor.c:5500
+#: plug-ins/metadata/metadata-editor.c:5545
 msgid "Export Metadata File"
 msgstr "Bestand met metagegevens exporteren"
 
-#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:217
-#: plug-ins/metadata/metadata-tags.c:277 plug-ins/metadata/metadata-tags.c:294
+#: plug-ins/metadata/metadata-tags.c:192 plug-ins/metadata/metadata-tags.c:222
+#: plug-ins/metadata/metadata-tags.c:299 plug-ins/metadata/metadata-tags.c:316
 msgid "Select a value"
 msgstr "Kies een waarde"
 
-#: plug-ins/metadata/metadata-tags.c:188
+#: plug-ins/metadata/metadata-tags.c:193
 msgid "Original digital capture of a real life scene"
 msgstr "Originele digitale opname"
 
-#: plug-ins/metadata/metadata-tags.c:189
+#: plug-ins/metadata/metadata-tags.c:194
 msgid "Multi-frame computational capture sampled from real life"
 msgstr "Multiframe berekende opname bemonsterd uit het echte leven"
 
-#: plug-ins/metadata/metadata-tags.c:190
+#: plug-ins/metadata/metadata-tags.c:195
 msgid "Digitized from a negative on film"
 msgstr "Gedigitaliseerd van een filmnegatief"
 
-#: plug-ins/metadata/metadata-tags.c:191
+#: plug-ins/metadata/metadata-tags.c:196
 msgid "Digitized from a positive on film"
 msgstr "Gedigitaliseerd van een filmpositief"
 
-#: plug-ins/metadata/metadata-tags.c:192
+#: plug-ins/metadata/metadata-tags.c:197
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Gedigitaliseerd van een afdruk op een niet-transparant medium"
 
-#: plug-ins/metadata/metadata-tags.c:193
+#: plug-ins/metadata/metadata-tags.c:198
 msgid "Edits by one or more humans using non-generative tools"
 msgstr "Bewerkingen door een of meer mensen met niet-generatieve programma's"
 
-#: plug-ins/metadata/metadata-tags.c:195
+#: plug-ins/metadata/metadata-tags.c:200
 msgid "Edited using Generative AI"
 msgstr "Bewerkt met generatieve AI"
 
-#: plug-ins/metadata/metadata-tags.c:196
+#: plug-ins/metadata/metadata-tags.c:201
 msgid "Algorithmically-altered media initiated by a human"
 msgstr "Algoritmisch veranderde media, geïnitieerd door een mens"
 
-#: plug-ins/metadata/metadata-tags.c:197
+#: plug-ins/metadata/metadata-tags.c:202
 msgid "Digital art created by a human using non-generative tools"
 msgstr "Digitale kunst, gemaakt door een mens met niet-generatieve programma's"
 
-#: plug-ins/metadata/metadata-tags.c:198
+#: plug-ins/metadata/metadata-tags.c:203
 msgid "Digital media representation of data"
 msgstr "Digitale media, weergave van gegevens"
 
-#: plug-ins/metadata/metadata-tags.c:199
+#: plug-ins/metadata/metadata-tags.c:204
 msgid "Created using Generative AI"
 msgstr "Gemaakt met generatieve AI"
 
-#: plug-ins/metadata/metadata-tags.c:200
+#: plug-ins/metadata/metadata-tags.c:205
 msgid "Pure algorithmic media"
 msgstr "Puur algoritmisch gecreëerd"
 
-#: plug-ins/metadata/metadata-tags.c:201
+#: plug-ins/metadata/metadata-tags.c:206
 msgid "A capture of the contents of the screen"
 msgstr "Een opname van de inhoud van het scherm"
 
-#: plug-ins/metadata/metadata-tags.c:202
+#: plug-ins/metadata/metadata-tags.c:207
 msgid "Virtual event recording"
 msgstr "Virtuele gebeurtenis opnemen"
 
-#: plug-ins/metadata/metadata-tags.c:203
+#: plug-ins/metadata/metadata-tags.c:208
 msgid "Composite of elements, which may or may not be generative AI"
 msgstr "Samenstelling van elementen, wat al dan niet generatieve AI zou kunnen zijn"
 
-#: plug-ins/metadata/metadata-tags.c:204
+#: plug-ins/metadata/metadata-tags.c:209
 msgid "Composite of captured elements from real life"
 msgstr "Samenstelling van vastgelegde elementen uit het echte leven"
 
-#: plug-ins/metadata/metadata-tags.c:205
+#: plug-ins/metadata/metadata-tags.c:210
 msgid "Composite including generative AI elements"
 msgstr "Samenstelling bevat elementen van generatieve AI"
 
-#: plug-ins/metadata/metadata-tags.c:206
+#: plug-ins/metadata/metadata-tags.c:211
 msgid "(Retired) Original media with minor human edits"
 msgstr "(Verouderd) Originele media met kleine menselijke bewerkingen"
 
-#: plug-ins/metadata/metadata-tags.c:207
+#: plug-ins/metadata/metadata-tags.c:212
 msgid "(Retired) Created by software"
 msgstr "(Verouderd) Gemaakt door software"
 
@@ -16213,162 +16230,199 @@ msgstr "(Verouderd) Gemaakt door software"
 # -    Digitised from a negative on film – from bw or colour negatives
 # -    etc.
 # pm
-#: plug-ins/metadata/metadata-tags.c:208
+#: plug-ins/metadata/metadata-tags.c:213
 msgid "(Retired) Digital art"
 msgstr "(Verouderd) Digitale kunst"
 
-#: plug-ins/metadata/metadata-tags.c:219 plug-ins/metadata/metadata-tags.c:231
+#: plug-ins/metadata/metadata-tags.c:224 plug-ins/metadata/metadata-tags.c:236
 msgid "Not Applicable"
 msgstr "Niet van toepassing"
 
 # iptc.org:
 # A Model Release is a document granting the right to use an image of a person depicted.
 # pm
-#: plug-ins/metadata/metadata-tags.c:220
+#: plug-ins/metadata/metadata-tags.c:225
 msgid "Unlimited Model Releases"
 msgstr "Onbeperkt publicatierecht model"
 
-#: plug-ins/metadata/metadata-tags.c:221
+#: plug-ins/metadata/metadata-tags.c:226
 msgid "Limited or Incomplete Model Releases"
 msgstr "Beperkt of onvolledig publicatierecht model"
 
 # Property: eigendom
 # pm
-#: plug-ins/metadata/metadata-tags.c:232
+#: plug-ins/metadata/metadata-tags.c:237
 msgid "Unlimited Property Releases"
 msgstr "Onbeperkt eigendom uitgave"
 
-#: plug-ins/metadata/metadata-tags.c:233
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "Limited or Incomplete Property Releases"
 msgstr "Beperkt of onvolledig eigendom uitgave"
 
-#: plug-ins/metadata/metadata-tags.c:242
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age Unknown"
 msgstr "Leeftijd onbekend"
 
-#: plug-ins/metadata/metadata-tags.c:243
+#: plug-ins/metadata/metadata-tags.c:248
 msgid "Age 25 or Over"
 msgstr "25 jaar of ouder"
 
-#: plug-ins/metadata/metadata-tags.c:244
+#: plug-ins/metadata/metadata-tags.c:249
 msgid "Age 24"
 msgstr "24 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:245
+#: plug-ins/metadata/metadata-tags.c:250
 msgid "Age 23"
 msgstr "23 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:246
+#: plug-ins/metadata/metadata-tags.c:251
 msgid "Age 22"
 msgstr "22 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:252
 msgid "Age 21"
 msgstr "21 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:248
+#: plug-ins/metadata/metadata-tags.c:253
 msgid "Age 20"
 msgstr "20 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:249
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Age 19"
 msgstr "19 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:250
+#: plug-ins/metadata/metadata-tags.c:255
 msgid "Age 18"
 msgstr "18 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:251
+#: plug-ins/metadata/metadata-tags.c:256
 msgid "Age 17"
 msgstr "17 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:252
+#: plug-ins/metadata/metadata-tags.c:257
 msgid "Age 16"
 msgstr "16 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:253
+#: plug-ins/metadata/metadata-tags.c:258
 msgid "Age 15"
 msgstr "15 jaar"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:259
 msgid "Age 14 or Under"
 msgstr "14 jaar of jonger"
 
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:268
+msgid "No prohibition defined"
+msgstr "Geen verbod gedefinieerd"
+
+#: plug-ins/metadata/metadata-tags.c:269
+msgid "Allowed"
+msgstr "Toegestaan"
+
+#: plug-ins/metadata/metadata-tags.c:270
+msgid "Prohibited for AI/ML training"
+msgstr "Verboden voor AI/ML-training"
+
+#: plug-ins/metadata/metadata-tags.c:271
+msgid "Prohibited for Generative AI/ML training"
+msgstr "Verboden voor generatieve AI/ML-training"
+
+#: plug-ins/metadata/metadata-tags.c:272
+msgid "Prohibited except for search engine indexing"
+msgstr "Verboden, behalve voor indexeren van zoekmachines"
+
+#: plug-ins/metadata/metadata-tags.c:273
+msgid "Prohibited"
+msgstr "Verboden"
+
+#: plug-ins/metadata/metadata-tags.c:274
+msgid "Prohibited, see Other Constraints property"
+msgstr "Verboden, bekijk eigenschap Andere beperkingen"
+
+#: plug-ins/metadata/metadata-tags.c:275
+msgid ""
+"(Unsupported) Prohibited, see Embedded Encoded Rights Expression property"
+msgstr "(Niet ondersteund) Verboden, bekijk eigenschap Expressie ingebedde gecodeerde rechten (Embedded Encoded Rights Expression)"
+
+#: plug-ins/metadata/metadata-tags.c:276
+msgid "(Unsupported) Prohibited, see Linked Encoded Rights Expression property"
+msgstr "(Niet ondersteund) Verboden, bekijk eigenschap Expressie gekoppelde gecodeerde rechten (Linked Encoded Rights Expression)"
+
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "7"
 msgstr "7"
 
 #. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:269
+#: plug-ins/metadata/metadata-tags.c:291
 msgid "Copyrighted"
 msgstr "Auteursrechtelijk beschermd"
 
 #. TRUE
-#: plug-ins/metadata/metadata-tags.c:270
+#: plug-ins/metadata/metadata-tags.c:292
 msgid "Public Domain"
 msgstr "Publiek domein"
 
-#: plug-ins/metadata/metadata-tags.c:278
+#: plug-ins/metadata/metadata-tags.c:300
 msgid "Work"
 msgstr "Werk"
 
-#: plug-ins/metadata/metadata-tags.c:279
+#: plug-ins/metadata/metadata-tags.c:301
 msgid "Cell"
 msgstr "Mobiele telefoon"
 
-#: plug-ins/metadata/metadata-tags.c:280
+#: plug-ins/metadata/metadata-tags.c:302
 msgid "Fax"
 msgstr "Fax"
 
-#: plug-ins/metadata/metadata-tags.c:281
+#: plug-ins/metadata/metadata-tags.c:303
 msgid "Home"
 msgstr "Thuis"
 
-#: plug-ins/metadata/metadata-tags.c:282
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "Pager"
 msgstr "Pager"
 
-#: plug-ins/metadata/metadata-tags.c:295
+#: plug-ins/metadata/metadata-tags.c:317
 msgid "Male"
 msgstr "Man"
 
-#: plug-ins/metadata/metadata-tags.c:296
+#: plug-ins/metadata/metadata-tags.c:318
 msgid "Female"
 msgstr "Vrouw"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:319
 msgid "Other"
 msgstr "Overige"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:326
 msgid "Above sea level"
 msgstr "Boven zeeniveau"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:326
 msgid "Below sea level"
 msgstr "Beneden zeeniveau"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:333
 msgid "North"
 msgstr "Noord"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:333
 msgid "South"
 msgstr "Zuid"
 
-#: plug-ins/metadata/metadata-tags.c:318
+#: plug-ins/metadata/metadata-tags.c:340
 msgid "East"
 msgstr "Oost"
 
-#: plug-ins/metadata/metadata-tags.c:318
+#: plug-ins/metadata/metadata-tags.c:340
 msgid "West"
 msgstr "West"
 
@@ -16398,7 +16452,7 @@ msgstr "XMP"
 #: plug-ins/metadata/metadata-viewer.c:431
 #, c-format
 msgid "(%lu more character(s))"
-msgstr "(%lu meer karakters(s))"
+msgstr "(%lu meer teken(s))"
 
 #: plug-ins/metadata/metadata-viewer.c:650
 msgid " meter"
@@ -16419,7 +16473,7 @@ msgstr "E_zelsoor..."
 
 #: plug-ins/pagecurl/pagecurl.c:219
 msgid "Curl up one of the image corners"
-msgstr "Eén van de afbeeldingshoeken omkrullen"
+msgstr "Een van de afbeeldingshoeken omkrullen"
 
 #: plug-ins/pagecurl/pagecurl.c:229
 msgid "Foreground / background colors"
@@ -22157,10 +22211,6 @@ msgstr "Gegevens van scanner / camera worden overgebracht"
 
 #~ msgid "Deinterlace..."
 #~ msgstr "Deinterlace..."
-
-# overige/andere
-#~ msgid "Other options"
-#~ msgstr "Andere opties"
 
 #~ msgid "Color Exchange..."
 #~ msgstr "Bezig met kleurverwisseling..."
