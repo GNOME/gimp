@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-04 18:45+0000\n"
-"PO-Revision-Date: 2026-08-05 17:34+0200\n"
+"POT-Creation-Date: 2026-10-02 22:16+0000\n"
+"PO-Revision-Date: 2026-10-04 17:58+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -47,7 +47,7 @@ msgstr "Programtillegg-eksempel i C"
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
 #: plug-ins/gfig/gfig.c:213 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:491 plug-ins/imagemap/imap_main.c:264
+#: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:265
 #: plug-ins/lighting/lighting-main.c:777
 #: plug-ins/map-object/map-object-main.c:537 plug-ins/pagecurl/pagecurl.c:297
 #, c-format
@@ -59,18 +59,18 @@ msgid "Plug-In Example in C"
 msgstr "Programtillegg-eksempel i C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:182
-#: extensions/goat-exercises/goat-exercise-gjs.js:95
-#: extensions/goat-exercises/goat-exercise-lua.lua:72
-#: extensions/goat-exercises/goat-exercise-py3.py:78
+#: extensions/goat-exercises/goat-exercise-gjs.js:96
+#: extensions/goat-exercises/goat-exercise-lua.lua:73
+#: extensions/goat-exercises/goat-exercise-py3.py:79
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
 #: plug-ins/common/busy-dialog.c:283 plug-ins/common/cml-explorer.c:1374
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1892 plug-ins/common/curve-bend.c:1927
-#: plug-ins/common/file-gif-export.c:1213 plug-ins/common/file-heif.c:2489
-#: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/file-pdf-load.c:585
+#: plug-ins/common/file-gif-export.c:1229 plug-ins/common/file-heif.c:2505
+#: plug-ins/common/file-pdf-export.c:1052 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
 #: plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2658 plug-ins/common/unit-editor.c:459
+#: plug-ins/common/sphere-designer.c:2658 plug-ins/common/unit-editor.c:469
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:823
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1504
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1542
@@ -79,25 +79,25 @@ msgstr "Programtillegg-eksempel i C"
 #: plug-ins/gfig/gfig-dialog.c:349 plug-ins/gfig/gfig-dialog.c:773
 #: plug-ins/gfig/gfig-dialog.c:823 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/orientmap.c:528
-#: plug-ins/gimpressionist/presets.c:646 plug-ins/gimpressionist/sizemap.c:401
+#: plug-ins/gimpressionist/presets.c:654 plug-ins/gimpressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:3360
 #: plug-ins/gradient-flare/gradient-flare.c:3474
-#: plug-ins/ifs-compose/ifs-compose.c:913
-#: plug-ins/ifs-compose/ifs-compose.c:2608
-#: plug-ins/ifs-compose/ifs-compose.c:2645 plug-ins/imagemap/imap_browse.c:80
+#: plug-ins/ifs-compose/ifs-compose.c:914
+#: plug-ins/ifs-compose/ifs-compose.c:2615
+#: plug-ins/ifs-compose/ifs-compose.c:2652 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
 #: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1189
 #: plug-ins/metadata/metadata-editor.c:1692
-#: plug-ins/metadata/metadata-editor.c:5583
-#: plug-ins/metadata/metadata-editor.c:5618 plug-ins/print/print.c:458
+#: plug-ins/metadata/metadata-editor.c:5468
+#: plug-ins/metadata/metadata-editor.c:5503 plug-ins/print/print.c:476
 msgid "_Cancel"
 msgstr "_Avbryt"
 
 #: extensions/goat-exercises/goat-exercise-c.c:183
-#: extensions/goat-exercises/goat-exercise-gjs.js:96
-#: extensions/goat-exercises/goat-exercise-lua.lua:73
-#: extensions/goat-exercises/goat-exercise-py3.py:79
+#: extensions/goat-exercises/goat-exercise-gjs.js:97
+#: extensions/goat-exercises/goat-exercise-lua.lua:74
+#: extensions/goat-exercises/goat-exercise-py3.py:80
 #: extensions/goat-exercises/goat-exercise-vala.vala:74
 msgid "_Source"
 msgstr "_Kjelde"
@@ -111,10 +111,10 @@ msgstr "_Køyr"
 #. XXX We use printf-style string for sharing the localized
 #. string. You may just use recommended Python format() or
 #. any style you like in your plug-ins.
-#: extensions/goat-exercises/goat-exercise-c.c:203
-#: extensions/goat-exercises/goat-exercise-lua.lua:91
-#: extensions/goat-exercises/goat-exercise-py3.py:96
-#: extensions/goat-exercises/goat-exercise-vala.vala:90
+#: extensions/goat-exercises/goat-exercise-c.c:204
+#: extensions/goat-exercises/goat-exercise-lua.lua:92
+#: extensions/goat-exercises/goat-exercise-py3.py:97
+#: extensions/goat-exercises/goat-exercise-vala.vala:91
 #, c-format, python-format, lua-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
@@ -139,18 +139,18 @@ msgstr "Eksempel i JavaScript (GJS)"
 msgid "Plug-In Example in JavaScript (GJS)"
 msgstr "Programtillegg-eksempel i JavaScript (GJS)"
 
-#: extensions/goat-exercises/goat-exercise-gjs.js:97
-#: extensions/goat-exercises/goat-exercise-lua.lua:74
-#: extensions/goat-exercises/goat-exercise-py3.py:80
-#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2490
+#: extensions/goat-exercises/goat-exercise-gjs.js:98
+#: extensions/goat-exercises/goat-exercise-lua.lua:75
+#: extensions/goat-exercises/goat-exercise-py3.py:81
+#: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2506
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2659
-#: plug-ins/common/unit-editor.c:280 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:4064 plug-ins/flame/flame.c:824
+#: plug-ins/common/unit-editor.c:285 plug-ins/file-exr/file-exr.c:457
+#: plug-ins/file-psd/psd-load.c:4155 plug-ins/flame/flame.c:824
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
-#: plug-ins/gimpressionist/presets.c:647 plug-ins/gimpressionist/sizemap.c:402
+#: plug-ins/gimpressionist/presets.c:655 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3475
-#: plug-ins/ifs-compose/ifs-compose.c:914
+#: plug-ins/ifs-compose/ifs-compose.c:915
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
 msgstr "_OK"
@@ -182,12 +182,12 @@ msgid "Plug-In Example in Lua"
 msgstr "Programtillegg-eksempel i Lua"
 
 #. CANCEL, CLOSE, DELETE_EVENT
-#: extensions/goat-exercises/goat-exercise-lua.lua:175
+#: extensions/goat-exercises/goat-exercise-lua.lua:176
 msgid "Plug-In Example in _Lua"
 msgstr "Programtillegg-eksempel i _Lua"
 
-#: extensions/goat-exercises/goat-exercise-lua.lua:179
 #: extensions/goat-exercises/goat-exercise-lua.lua:180
+#: extensions/goat-exercises/goat-exercise-lua.lua:181
 msgid "Plug-in example in Lua"
 msgstr "Programtillegg-eksempel i Lua"
 
@@ -201,6 +201,7 @@ msgid "Plug-in example in Python 3"
 msgstr "Programtillegg-eksempel i Python 3"
 
 #: extensions/goat-exercises/goat-exercise-py3.py:59
+#, python-brace-format
 msgid "Procedure '{}' only works with one drawable."
 msgstr "Prosedyre '{}' verkar berre med eitt teikneelement."
 
@@ -262,7 +263,7 @@ msgstr "_Vassrett stil"
 
 #: plug-ins/common/align-layers.c:193 plug-ins/common/align-layers.c:215
 #: plug-ins/common/file-ps.c:430 plug-ins/common/file-ps.c:439
-#: plug-ins/file-dds/dds.c:198 plug-ins/file-tiff/file-tiff.c:140
+#: plug-ins/file-dds/dds.c:197 plug-ins/file-tiff/file-tiff.c:140
 #: plug-ins/fractal-explorer/fractal-explorer.c:345
 #: plug-ins/fractal-explorer/fractal-explorer.c:355
 #: plug-ins/fractal-explorer/fractal-explorer.c:365
@@ -337,7 +338,7 @@ msgstr "_Rutenett"
 
 #: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:741
 #: plug-ins/gfig/gfig-dialog.c:1352 plug-ins/gfig/gfig-menu.ui:31
-#: plug-ins/imagemap/imap_main.c:1590 plug-ins/imagemap/imap-menu.ui.in:189
+#: plug-ins/imagemap/imap_main.c:1603 plug-ins/imagemap/imap-menu.ui.in:189
 #: plug-ins/imagemap/imap-menu.ui.in:281
 msgid "Grid"
 msgstr "Rutenett"
@@ -430,20 +431,20 @@ msgstr "Førehandsvis ein GIMP lagbasert animasjon"
 msgid "Procedure '%s' only works in interactive mode."
 msgstr "Prosedyren «%s» verkar berre i interaktiv modus."
 
-#: plug-ins/common/animation-play.c:394 plug-ins/common/animation-play.c:945
-#: plug-ins/common/animation-play.c:1457
+#: plug-ins/common/animation-play.c:394 plug-ins/common/animation-play.c:952
+#: plug-ins/common/animation-play.c:1470
 msgid "Start playback"
 msgstr "Spel av"
 
-#: plug-ins/common/animation-play.c:395 plug-ins/common/animation-play.c:949
+#: plug-ins/common/animation-play.c:395 plug-ins/common/animation-play.c:956
 msgid "Step back to previous frame"
 msgstr "Gå bakover til førre ramme"
 
-#: plug-ins/common/animation-play.c:396 plug-ins/common/animation-play.c:952
+#: plug-ins/common/animation-play.c:396 plug-ins/common/animation-play.c:959
 msgid "Step to next frame"
 msgstr "Gå til neste ramme"
 
-#: plug-ins/common/animation-play.c:397 plug-ins/common/animation-play.c:955
+#: plug-ins/common/animation-play.c:397 plug-ins/common/animation-play.c:962
 msgid "Rewind the animation"
 msgstr "Spol animasjonen tilbake"
 
@@ -459,11 +460,11 @@ msgstr "Minskar animasjonsfarten"
 msgid "Reset the speed of the animation"
 msgstr "Tilbakestill animasjonsfarten"
 
-#: plug-ins/common/animation-play.c:409 plug-ins/common/animation-play.c:890
+#: plug-ins/common/animation-play.c:409 plug-ins/common/animation-play.c:897
 msgid "Detach the animation from the dialog window"
 msgstr "Fjern animasjonen frå dialogvindauget"
 
-#: plug-ins/common/animation-play.c:410 plug-ins/common/animation-play.c:888
+#: plug-ins/common/animation-play.c:410 plug-ins/common/animation-play.c:895
 msgid "Reload the image"
 msgstr "Last inn biletet på nytt"
 
@@ -473,7 +474,7 @@ msgstr "Avslutt"
 
 #. list is given in "fps" - frames per second
 #: plug-ins/common/animation-play.c:501 plug-ins/common/animation-play.c:559
-#: plug-ins/common/animation-play.c:865
+#: plug-ins/common/animation-play.c:872
 #, c-format
 msgid "%.1f %%"
 msgstr "%.1f %%"
@@ -486,64 +487,64 @@ msgstr "Spel av animasjonen:"
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:792 plug-ins/common/file-gif-export.c:221
+#: plug-ins/common/animation-play.c:799 plug-ins/common/file-gif-export.c:221
 msgid "Cumulative layers (combine)"
 msgstr "Kumulative lag (kombiner)"
 
-#: plug-ins/common/animation-play.c:797 plug-ins/common/file-gif-export.c:222
+#: plug-ins/common/animation-play.c:804 plug-ins/common/file-gif-export.c:222
 msgid "One frame per layer (replace)"
 msgstr "Éi ramme per lag (byt ut)"
 
 #. list is given in "fps" - frames per second
-#: plug-ins/common/animation-play.c:820
+#: plug-ins/common/animation-play.c:827
 #, c-format
 msgid "%d fps"
 msgstr "%d fps"
 
-#: plug-ins/common/animation-play.c:831
+#: plug-ins/common/animation-play.c:838
 msgid "Default framerate"
 msgstr "Standard rammefart"
 
-#: plug-ins/common/animation-play.c:851
+#: plug-ins/common/animation-play.c:858
 msgid "Playback speed"
 msgstr "Avspelingssfart"
 
 #. Zoom Options
-#: plug-ins/common/animation-play.c:881
+#: plug-ins/common/animation-play.c:888
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:679
 #: plug-ins/imagemap/imap-menu.ui.in:268
 msgid "Zoom"
 msgstr "Forstørr"
 
-#: plug-ins/common/animation-play.c:888
+#: plug-ins/common/animation-play.c:895
 msgid "Reload"
 msgstr "Last inn på nytt"
 
-#: plug-ins/common/animation-play.c:890
+#: plug-ins/common/animation-play.c:897
 msgid "Detach"
 msgstr "Løys"
 
-#: plug-ins/common/animation-play.c:893 plug-ins/imagemap/imap-menu.ui.in:209
+#: plug-ins/common/animation-play.c:900 plug-ins/imagemap/imap-menu.ui.in:209
 msgid "Help"
 msgstr "Hjelp"
 
-#: plug-ins/common/animation-play.c:948
+#: plug-ins/common/animation-play.c:955
 msgid "Step _back"
 msgstr "Gå _bakover"
 
-#: plug-ins/common/animation-play.c:951
+#: plug-ins/common/animation-play.c:958
 msgid "_Step"
 msgstr "_Steg"
 
-#: plug-ins/common/animation-play.c:1060
+#: plug-ins/common/animation-play.c:1073
 msgid "Memory could not be allocated to the frame container."
 msgstr "Klarte ikkje tildela minne til rammebehaldaren."
 
-#: plug-ins/common/animation-play.c:1131
+#: plug-ins/common/animation-play.c:1144
 msgid "Invalid image. Did you close it?"
 msgstr "Ugyldig bilete. Har du lukka det?"
 
-#: plug-ins/common/animation-play.c:1457
+#: plug-ins/common/animation-play.c:1470
 msgid "Stop playback"
 msgstr "Stopp avspelinga"
 
@@ -608,26 +609,26 @@ msgstr "Persienne"
 #.
 #: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1246
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
-#: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
+#: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:431
-#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-pcx.c:727
-#: plug-ins/common/file-pcx.c:735 plug-ins/common/file-pcx.c:743
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:436
+#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-pcx.c:729
+#: plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
-#: plug-ins/common/file-pnm.c:848 plug-ins/common/file-qoi.c:296
-#: plug-ins/common/file-raw-data.c:823 plug-ins/common/file-raw-data.c:2007
+#: plug-ins/common/file-pnm.c:850 plug-ins/common/file-qoi.c:296
+#: plug-ins/common/file-raw-data.c:834 plug-ins/common/file-raw-data.c:1964
 #: plug-ins/common/file-sunras.c:1061 plug-ins/common/file-tga.c:1103
 #: plug-ins/common/file-tim.c:403 plug-ins/common/file-tim.c:551
 #: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
 #: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:864
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
-#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:705
-#: plug-ins/file-jpeg/jpeg-load.c:252
+#: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
+#: plug-ins/file-jpeg/jpeg-load.c:254
 #: plug-ins/file-psd/psd-image-res-load.c:1103
-#: plug-ins/file-psd/psd-load.c:3239 plug-ins/file-sgi/sgi.c:456
-#: plug-ins/file-tiff/file-tiff-load.c:1587
-#: plug-ins/file-tiff/file-tiff-load.c:2441
+#: plug-ins/file-psd/psd-load.c:3330 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-tiff/file-tiff-load.c:1588
+#: plug-ins/file-tiff/file-tiff-load.c:2683
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
 #: plug-ins/gfig/gfig-dialog.c:1283 plug-ins/gimpressionist/general.c:147
 #: plug-ins/map-object/map-object-apply.c:241
@@ -1034,14 +1035,14 @@ msgstr "Tilfeldig frø"
 #. The Load button
 #: plug-ins/common/cml-explorer.c:1451 plug-ins/common/cml-explorer.c:2355
 #: plug-ins/common/curve-bend.c:1354 plug-ins/common/curve-bend.c:1893
-#: plug-ins/common/file-cel.c:993 plug-ins/common/qbist.c:840
+#: plug-ins/common/file-cel.c:989 plug-ins/common/qbist.c:840
 #: plug-ins/common/qbist.c:996 plug-ins/common/sphere-designer.c:2297
 #: plug-ins/common/sphere-designer.c:2707 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1235
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1505
-#: plug-ins/gfig/gfig-dialog.c:774 plug-ins/ifs-compose/ifs-compose.c:910
-#: plug-ins/ifs-compose/ifs-compose.c:2646 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/gfig/gfig-dialog.c:774 plug-ins/ifs-compose/ifs-compose.c:911
+#: plug-ins/ifs-compose/ifs-compose.c:2653 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
 #: plug-ins/lighting/lighting-ui.c:883
 msgid "_Open"
@@ -1050,15 +1051,15 @@ msgstr "_Opna"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1459 plug-ins/common/cml-explorer.c:2145
 #: plug-ins/common/curve-bend.c:1366 plug-ins/common/curve-bend.c:1928
-#: plug-ins/common/file-pdf-export.c:1050 plug-ins/common/qbist.c:882
+#: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/qbist.c:882
 #: plug-ins/common/qbist.c:1004 plug-ins/common/sphere-designer.c:2297
 #: plug-ins/common/sphere-designer.c:2715 plug-ins/flame/flame.c:619
 #: plug-ins/flame/flame.c:1243
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1543
 #: plug-ins/gfig/gfig-dialog.c:824 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:911
-#: plug-ins/ifs-compose/ifs-compose.c:2609 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:2616 plug-ins/imagemap/imap_file.c:129
 #: plug-ins/lighting/lighting-ui.c:486 plug-ins/lighting/lighting-ui.c:739
 msgid "_Save"
 msgstr "_Lagra"
@@ -1219,11 +1220,11 @@ msgstr "Mutasjonsavstand:"
 msgid "Graph of the Current Settings"
 msgstr "Graf for dei gjeldande innstillingane"
 
-#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:572
+#: plug-ins/common/cml-explorer.c:2012 plug-ins/common/plugin-browser.c:568
 #: plug-ins/common/procedure-browser.c:169
-#: plug-ins/filter-browser/filter-browser.c:740 plug-ins/gfig/gfig-dialog.c:350
+#: plug-ins/filter-browser/filter-browser.c:745 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1210 plug-ins/gfig/gfig-dialog.c:1355
-#: plug-ins/ifs-compose/ifs-compose.c:1213
+#: plug-ins/ifs-compose/ifs-compose.c:1214
 #: plug-ins/metadata/metadata-viewer.c:223
 msgid "_Close"
 msgstr "_Lukk"
@@ -1237,21 +1238,21 @@ msgid "Save CML Explorer Parameters"
 msgstr "Lagra parametrane for CML-utforskaren"
 
 #: plug-ins/common/cml-explorer.c:2210 plug-ins/common/curve-bend.c:755
-#: plug-ins/common/file-dicom.c:1582 plug-ins/common/file-farbfeld.c:372
+#: plug-ins/common/file-dicom.c:1579 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
-#: plug-ins/common/file-pcx.c:1218 plug-ins/common/file-pdf-export.c:683
-#: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1512
-#: plug-ins/common/file-raw-data.c:1541 plug-ins/common/file-sunras.c:616
-#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:736
-#: plug-ins/common/file-xmc.c:1270 plug-ins/common/sphere-designer.c:2208
-#: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:799
+#: plug-ins/common/file-pcx.c:1244 plug-ins/common/file-pdf-export.c:683
+#: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1532
+#: plug-ins/common/file-raw-data.c:1561 plug-ins/common/file-sunras.c:616
+#: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:768
+#: plug-ins/common/file-xmc.c:1288 plug-ins/common/sphere-designer.c:2208
+#: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
 #: plug-ins/file-icns/file-icns-export.c:442
-#: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1657
+#: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1595
 #: plug-ins/file-jpeg/jpeg-export.c:317 plug-ins/file-psd/psd-export.c:2450
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:585
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1406
-#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2468
+#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1708,7 +1709,7 @@ msgstr "Fann ingen lag for biletet %d"
 msgid "Composing"
 msgstr "Set saman kanalane"
 
-#: plug-ins/common/compose.c:1091 plug-ins/common/compose.c:1497
+#: plug-ins/common/compose.c:1091 plug-ins/common/compose.c:1492
 msgid "At least one image is needed to compose"
 msgstr "Du må ha minst eitt bilete for å kunna setja saman"
 
@@ -2004,24 +2005,24 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:191
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
-#: plug-ins/common/file-ps.c:1158 plug-ins/common/file-ps.c:3754
-#: plug-ins/common/file-psp.c:2804 plug-ins/common/file-psp.c:2854
+#: plug-ins/common/file-ps.c:1161 plug-ins/common/file-ps.c:3757
+#: plug-ins/common/file-psp.c:2805 plug-ins/common/file-psp.c:2855
 #: plug-ins/common/file-pvr.c:257 plug-ins/common/file-qoi.c:275
-#: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:799
-#: plug-ins/common/file-raw-data.c:1844
+#: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:810
+#: plug-ins/common/file-raw-data.c:1870
 #: plug-ins/common/file-seattle-filmworks.c:232
 #: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
-#: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:656
-#: plug-ins/common/file-xmc.c:895 plug-ins/common/file-xwd.c:465
+#: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:657
+#: plug-ins/common/file-xmc.c:905 plug-ins/common/file-xwd.c:465
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
-#: plug-ins/file-fits/fits.c:368 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:643
-#: plug-ins/file-icns/file-icns-load.c:696 plug-ins/file-ico/ico-load.c:759
-#: plug-ins/file-ico/ico-load.c:909 plug-ins/file-ico/ico-load.c:1129
-#: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:704
+#: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:440
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:647
+#: plug-ins/file-icns/file-icns-load.c:697 plug-ins/file-ico/ico-load.c:767
+#: plug-ins/file-ico/ico-load.c:947 plug-ins/file-ico/ico-load.c:1231
+#: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:706
 #: plug-ins/file-psd/psd-export.c:2456 plug-ins/file-psd/psd-load.c:190
 #: plug-ins/file-psd/psd-load.c:195 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:539
@@ -2100,7 +2101,7 @@ msgstr "Byt dei to kurvene"
 #. The Reset button
 #: plug-ins/common/curve-bend.c:1337 plug-ins/common/sphere-designer.c:2657
 #: plug-ins/common/tile-small.c:518 plug-ins/gimpressionist/preview.c:182
-#: plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:913
 msgid "_Reset"
 msgstr "_Tilbakestill"
 
@@ -2481,17 +2482,22 @@ msgstr "_Kvitnivå"
 msgid "White level"
 msgstr "Kvitnivå"
 
-#: plug-ins/common/despeckle.c:358 plug-ins/common/file-farbfeld.c:298
-#: plug-ins/common/file-pcx.c:719 plug-ins/file-bmp/bmp-load.c:800
+#: plug-ins/common/despeckle.c:358 plug-ins/common/file-dicom.c:1656
+#: plug-ins/common/file-farbfeld.c:298 plug-ins/common/file-pcx.c:721
+#: plug-ins/common/file-pcx.c:858 plug-ins/common/file-raw-data.c:1516
+#: plug-ins/common/file-xmc.c:704 plug-ins/common/file-xmc.c:1031
+#: plug-ins/file-bmp/bmp-load.c:800
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Biletet er for stort: breidd %d x høgd %d"
 
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-farbfeld.c:316
-#: plug-ins/common/web-browser.c:211 plug-ins/file-psd/psd-load.c:3618
-#: plug-ins/file-tiff/file-tiff-load.c:1944
-#: plug-ins/file-tiff/file-tiff-load.c:2038
-#: plug-ins/file-tiff/file-tiff-load.c:2226
+#: plug-ins/common/web-browser.c:211 plug-ins/file-fits/fits.c:499
+#: plug-ins/file-fits/fits.c:581 plug-ins/file-psd/psd-load.c:3709
+#: plug-ins/file-tiff/file-tiff-load.c:1945
+#: plug-ins/file-tiff/file-tiff-load.c:2045
+#: plug-ins/file-tiff/file-tiff-load.c:2067
+#: plug-ins/file-tiff/file-tiff-load.c:2243
 #, c-format
 msgid "There was not enough memory to complete the operation."
 msgstr "Det er ikkje nok minne til å fullføre operasjonen."
@@ -2554,7 +2560,7 @@ msgstr ""
 "Dette programtillegget brukar aalib for å lagra gråtonebilete som ASCII-"
 "kunst i mange tekstformat"
 
-#: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:221
+#: plug-ins/common/file-aa.c:164 plug-ins/file-dds/dds.c:220
 msgid "_Format"
 msgstr "_Format"
 
@@ -2615,25 +2621,25 @@ msgstr "EOF (filslutt) eller feil ved lesing av biletheading"
 #.
 #: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
-#: plug-ins/common/file-heif.c:1051 plug-ins/common/file-jp2.c:1379
+#: plug-ins/common/file-heif.c:1054 plug-ins/common/file-jp2.c:1379
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
 #: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
-#: plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:790
-#: plug-ins/common/file-raw-data.c:1836 plug-ins/common/file-sunras.c:427
+#: plug-ins/common/file-ps.c:1151 plug-ins/common/file-raw-data.c:801
+#: plug-ins/common/file-raw-data.c:1862 plug-ins/common/file-sunras.c:427
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
 #: plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618
-#: plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:646
+#: plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:647
 #: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
-#: plug-ins/file-icns/file-icns-load.c:635 plug-ins/file-ico/ico-load.c:751
-#: plug-ins/file-ico/ico-load.c:901 plug-ins/file-jpeg/jpeg-load.c:97
+#: plug-ins/file-icns/file-icns-load.c:639 plug-ins/file-ico/ico-load.c:759
+#: plug-ins/file-ico/ico-load.c:939 plug-ins/file-jpeg/jpeg-load.c:97
 #: plug-ins/file-psd/psd-load.c:203
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
-#: plug-ins/file-raw/file-darktable.c:467
-#: plug-ins/file-raw/file-rawtherapee.c:352 plug-ins/file-sgi/sgi.c:315
-#: plug-ins/file-tiff/file-tiff-load.c:304
+#: plug-ins/file-raw/file-darktable.c:470
+#: plug-ins/file-raw/file-rawtherapee.c:355 plug-ins/file-sgi/sgi.c:315
+#: plug-ins/file-tiff/file-tiff-load.c:305
 #, c-format
 msgid "Opening '%s'"
 msgstr "Opnar «%s».."
@@ -2699,18 +2705,18 @@ msgstr "«%s»: EOF eller feil ved lesing av palettdata"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
-#: plug-ins/common/file-gif-export.c:943 plug-ins/common/file-html-table.c:358
+#: plug-ins/common/file-gif-export.c:944 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1822 plug-ins/common/file-jpegxl.c:1389
-#: plug-ins/common/file-pcx.c:1101 plug-ins/common/file-pix.c:649
-#: plug-ins/common/file-png.c:1936 plug-ins/common/file-pnm.c:1632
-#: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
+#: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:649
+#: plug-ins/common/file-png.c:1936 plug-ins/common/file-pnm.c:1634
+#: plug-ins/common/file-ps.c:1375 plug-ins/common/file-qoi.c:350
 #: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:794
-#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:728
+#: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:760
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
-#: plug-ins/file-fits/fits.c:678 plug-ins/file-fli/fli-gimp.c:766
+#: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:775
 #: plug-ins/file-icns/file-icns-export.c:821
-#: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1645
+#: plug-ins/file-ico/ico-export.c:1366 plug-ins/file-ico/ico-export.c:1583
 #: plug-ins/file-jpeg/jpeg-export.c:272 plug-ins/file-psd/psd-export.c:2388
 #: plug-ins/file-sgi/sgi.c:631 plug-ins/file-tiff/file-tiff-export.c:1077
 #, c-format
@@ -2947,49 +2953,49 @@ msgstr ""
 msgid "'%s' is not a DICOM file."
 msgstr "«%s» er ikkje ei DICOM-fil."
 
-#: plug-ins/common/file-dicom.c:513
+#: plug-ins/common/file-dicom.c:509
 #, c-format
 msgid "'%s' has an incorrect value for field size. Possibly corrupt image."
 msgstr ""
 "«%s» har ein ugyldig verdi for feltstorleik. Kanskje biletet er øydelagt."
 
-#: plug-ins/common/file-dicom.c:574
+#: plug-ins/common/file-dicom.c:570
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "Overføringssyntaksen %s er ikkje støtta av GIMP."
 
-#: plug-ins/common/file-dicom.c:629
+#: plug-ins/common/file-dicom.c:625
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr "%s vert ikkje støtta av GIMP i kombinasjon med prøver per piksel: %d"
 
-#: plug-ins/common/file-dicom.c:712
+#: plug-ins/common/file-dicom.c:708
 #, c-format
 msgid "'%s' has a bpp of %d which GIMP cannot handle."
 msgstr "«%s» har ein bpp på %d som GIMP ikkje kan handsama."
 
-#: plug-ins/common/file-dicom.c:723 plug-ins/file-fits/fits.c:483
+#: plug-ins/common/file-dicom.c:719 plug-ins/file-fits/fits.c:484
 #, c-format
 msgid "'%s' has a larger image size (%d x %d) than GIMP can handle."
 msgstr ""
 "«%s» har ein storleik (%d × %d) som er større enn det GIMP kan handsama."
 
-#: plug-ins/common/file-dicom.c:734
+#: plug-ins/common/file-dicom.c:730
 #, c-format
 msgid "'%s' has samples per pixel of %d which GIMP cannot handle."
 msgstr "«%s» har %d prøver per piksel som GIMP ikkje kan handsama."
 
-#: plug-ins/common/file-dicom.c:745
+#: plug-ins/common/file-dicom.c:741
 #, c-format
 msgid "'%s' has not enough pixel data. Possibly corrupt image."
 msgstr "«%s» har ikkje nok pikseldata. Biletet er kanskje øydelagt."
 
-#: plug-ins/common/file-dicom.c:1547
+#: plug-ins/common/file-dicom.c:1544
 msgid "Cannot save images with alpha channel."
 msgstr "Kan ikkje lagra bilete som inneheld alfakanal."
 
-#: plug-ins/common/file-dicom.c:1566 plug-ins/common/file-ps.c:1367
-#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:673
+#: plug-ins/common/file-dicom.c:1563 plug-ins/common/file-ps.c:1370
+#: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:674
 #, c-format
 msgid "Cannot operate on unknown image types."
 msgstr "Kan ikkje arbeida med ukjende biletformat."
@@ -3196,7 +3202,7 @@ msgstr ""
 "Kan ikkje eksportera «%s». Konverter biletet til 8-bitars heiltalspresisjon "
 "sidan GIF-filformatet ikkje støttar høgare presisjon."
 
-#: plug-ins/common/file-gif-export.c:820
+#: plug-ins/common/file-gif-export.c:821
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3204,18 +3210,18 @@ msgstr ""
 "GIF-formatet godtek berre merknadar i 7-bit ASCII-kode. Ingen merknadar er "
 "lagra."
 
-#: plug-ins/common/file-gif-export.c:916
+#: plug-ins/common/file-gif-export.c:917
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Kan ikkje eksportera RGB-bilete. Konverter biletet til indeksert eller "
 "gråskala."
 
-#: plug-ins/common/file-gif-export.c:1136
+#: plug-ins/common/file-gif-export.c:1152
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Er lagt inn forseinkingar for å unngå unødig prosessorbelastning."
 
-#: plug-ins/common/file-gif-export.c:1208
+#: plug-ins/common/file-gif-export.c:1224
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3223,11 +3229,11 @@ msgstr ""
 "Biletet du prøver å eksportera som GIF inneheld lag som går utanfor kanten "
 "av biletet."
 
-#: plug-ins/common/file-gif-export.c:1214
+#: plug-ins/common/file-gif-export.c:1230
 msgid "Cr_op"
 msgstr "_Beskjer"
 
-#: plug-ins/common/file-gif-export.c:1225
+#: plug-ins/common/file-gif-export.c:1241
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -3235,7 +3241,7 @@ msgstr ""
 "Filformatet GIF tillét ikkje dette. Du må anten klippa alle laga til "
 "biletstorleiken eller la vera å eksportera dette biletet."
 
-#: plug-ins/common/file-gif-export.c:1283
+#: plug-ins/common/file-gif-export.c:1299
 msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
@@ -3243,15 +3249,15 @@ msgstr ""
 "GIF-formatet har berre støtte for 8 bitars presisjon.\n"
 "Biletet vert difor konvertert ved eksport, noko som kan endra pikselverdiane."
 
-#: plug-ins/common/file-gif-export.c:1351 plug-ins/common/file-mng.c:1645
+#: plug-ins/common/file-gif-export.c:1367 plug-ins/common/file-mng.c:1645
 msgid "milliseconds"
 msgstr "millisekund"
 
-#: plug-ins/common/file-gif-export.c:1386
+#: plug-ins/common/file-gif-export.c:1402
 msgid "Animated GIF"
 msgstr "Animert GIF"
 
-#: plug-ins/common/file-gif-export.c:1393
+#: plug-ins/common/file-gif-export.c:1409
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -3309,7 +3315,7 @@ msgstr "rammeinfo"
 msgid "local colormap"
 msgstr "lokalt fargekart"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:448
+#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:453
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr ""
@@ -3746,57 +3752,57 @@ msgstr "Eksporterer HEJ2-bilete"
 msgid "Save JPEG 2000 image encapsulated in HEIF (HEJ2)"
 msgstr "Lagra JPEG 2000-bilete innkapsla i HEIF (HEJ2)"
 
-#: plug-ins/common/file-heif.c:1091 plug-ins/common/file-heif.c:1124
-#: plug-ins/common/file-heif.c:1165 plug-ins/common/file-heif.c:1227
+#: plug-ins/common/file-heif.c:1107 plug-ins/common/file-heif.c:1140
+#: plug-ins/common/file-heif.c:1181 plug-ins/common/file-heif.c:1243
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Lastinga av HEIF-biletet mislukkast: %s"
 
-#: plug-ins/common/file-heif.c:1113
+#: plug-ins/common/file-heif.c:1129
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Innlastinga av HEIF-bilete feila: Fila inneheld ingen bilete som kan lesast"
 
-#: plug-ins/common/file-heif.c:1349
+#: plug-ins/common/file-heif.c:1365
 msgid "image content"
 msgstr "biletinnhald"
 
-#: plug-ins/common/file-heif.c:1689
+#: plug-ins/common/file-heif.c:1705
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Eksporterer «%s» med %s koding"
 
-#: plug-ins/common/file-heif.c:1737 plug-ins/common/file-heif.c:2130
+#: plug-ins/common/file-heif.c:1753 plug-ins/common/file-heif.c:2146
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodinga av HEIF-biletet mislukka: %s"
 
-#: plug-ins/common/file-heif.c:2251
+#: plug-ins/common/file-heif.c:2267
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Skrivinga av HEIF-biletet var mislukka: %s"
 
-#: plug-ins/common/file-heif.c:2340
+#: plug-ins/common/file-heif.c:2356
 msgid "primary"
 msgstr "primær"
 
-#: plug-ins/common/file-heif.c:2485
+#: plug-ins/common/file-heif.c:2501
 msgid "Load HEIF Image"
 msgstr "Last inn HEIF-bilete"
 
-#: plug-ins/common/file-heif.c:2499
+#: plug-ins/common/file-heif.c:2515
 msgid "Select Image"
 msgstr "Vel bilete"
 
-#: plug-ins/common/file-heif.c:2648 plug-ins/common/file-jpegxl.c:2018
+#: plug-ins/common/file-heif.c:2664 plug-ins/common/file-jpegxl.c:2018
 msgid "8 bit/channel"
 msgstr "8 bitar/kanal"
 
-#: plug-ins/common/file-heif.c:2649
+#: plug-ins/common/file-heif.c:2665
 msgid "10 bit/channel"
 msgstr "10 bitar/kanal"
 
-#: plug-ins/common/file-heif.c:2650
+#: plug-ins/common/file-heif.c:2666
 msgid "12 bit/channel"
 msgstr "12 bitar/kanal"
 
@@ -3967,7 +3973,7 @@ msgstr "Ugyldig eller manglande ILBM-bilete"
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM inneheld ingen biletedata ‒ truleg ei palettfil"
 
-#: plug-ins/common/file-iff.c:365 plug-ins/common/file-iff.c:384
+#: plug-ins/common/file-iff.c:370 plug-ins/common/file-iff.c:389
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "Ugyldig storleik på ILBM-fargekartet"
@@ -4327,17 +4333,19 @@ msgstr ""
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
-#: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:728
-#: plug-ins/common/file-raw-data.c:815
+#: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:730
+#: plug-ins/common/file-raw-data.c:826
 #: plug-ins/common/file-seattle-filmworks.c:244
-#: plug-ins/common/file-seattle-filmworks.c:287
-#: plug-ins/common/file-seattle-filmworks.c:300
-#: plug-ins/common/file-seattle-filmworks.c:361
-#: plug-ins/common/file-seattle-filmworks.c:381
-#: plug-ins/common/file-seattle-filmworks.c:393
-#: plug-ins/common/file-seattle-filmworks.c:404
-#: plug-ins/common/file-seattle-filmworks.c:544
-#: plug-ins/common/file-seattle-filmworks.c:552
+#: plug-ins/common/file-seattle-filmworks.c:285
+#: plug-ins/common/file-seattle-filmworks.c:295
+#: plug-ins/common/file-seattle-filmworks.c:308
+#: plug-ins/common/file-seattle-filmworks.c:330
+#: plug-ins/common/file-seattle-filmworks.c:379
+#: plug-ins/common/file-seattle-filmworks.c:399
+#: plug-ins/common/file-seattle-filmworks.c:411
+#: plug-ins/common/file-seattle-filmworks.c:422
+#: plug-ins/common/file-seattle-filmworks.c:562
+#: plug-ins/common/file-seattle-filmworks.c:570
 #, c-format
 msgid "Invalid file."
 msgstr "Ugyldig fil."
@@ -4515,7 +4523,7 @@ msgid "Load file in the Bohemia Interactive PAA file format"
 msgstr "Last inn fila i Bohemia interaktivt PAA-format"
 
 #: plug-ins/common/file-paa.c:233 plug-ins/common/file-paa.c:270
-#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:647
+#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:648
 #: plug-ins/common/file-pvr.c:311 plug-ins/common/file-pvr.c:354
 #: plug-ins/common/file-pvr.c:366 plug-ins/common/file-tim.c:363
 #: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
@@ -4532,7 +4540,8 @@ msgstr "Førebels ikkje støtta PAA-format: «%d»"
 #: plug-ins/common/file-paa.c:306 plug-ins/common/file-paa.c:348
 #: plug-ins/common/file-paa.c:360 plug-ins/common/file-tim.c:421
 #: plug-ins/common/file-tim.c:451 plug-ins/common/file-tim.c:498
-#: plug-ins/common/file-tim.c:573 plug-ins/common/file-tim.c:612
+#: plug-ins/common/file-tim.c:577 plug-ins/common/file-tim.c:644
+#: plug-ins/file-fli/fli-gimp.c:550 plug-ins/file-fli/fli-gimp.c:819
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "Klarte ikkje tildela minne."
@@ -4652,67 +4661,67 @@ msgstr "DCX-biletet i blandingsmodus er ikkje lasta inn"
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s: Klarte ikkje lasta inn alle DCX-bileta: %s\n"
 
-#: plug-ins/common/file-pcx.c:657
+#: plug-ins/common/file-pcx.c:658
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "«%s» er ikkje ei PCX-fil"
 
-#: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:464
+#: plug-ins/common/file-pcx.c:674 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
-#: plug-ins/file-psd/psd-load.c:625
+#: plug-ins/file-psd/psd-load.c:646
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ugyldig biletbreidd: %d"
 
-#: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:470
+#: plug-ins/common/file-pcx.c:681 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
-#: plug-ins/file-psd/psd-load.c:617
+#: plug-ins/file-psd/psd-load.c:638
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ugyldig bilethøgd: %d"
 
-#: plug-ins/common/file-pcx.c:690 plug-ins/common/file-pcx.c:859
+#: plug-ins/common/file-pcx.c:691 plug-ins/common/file-pcx.c:871
 #, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "Uvanleg PCX-variant, gir opp"
 
-#: plug-ins/common/file-pcx.c:703
+#: plug-ins/common/file-pcx.c:704
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Ugyldig tal for byte per linje i PCX-header"
 
-#: plug-ins/common/file-pcx.c:710
+#: plug-ins/common/file-pcx.c:711
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Oppløysinga utanfor grensene i XCX-header, brukar 72 × 72"
 
-#: plug-ins/common/file-pcx.c:884
+#: plug-ins/common/file-pcx.c:896
 msgid "Import from PCX"
 msgstr "Importer frå PCX"
 
-#: plug-ins/common/file-pcx.c:1169 plug-ins/common/file-pnm.c:1628
+#: plug-ins/common/file-pcx.c:1182 plug-ins/common/file-pnm.c:1630
 msgid "Cannot export images with alpha channel."
 msgstr "Kan ikkje eksportera bilete som inneheld alfakanal."
 
-#: plug-ins/common/file-pcx.c:1189
+#: plug-ins/common/file-pcx.c:1207
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Ugyldig X-forskyving: %d"
 
-#: plug-ins/common/file-pcx.c:1195
+#: plug-ins/common/file-pcx.c:1215
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Ugyldig Y-forskyving: %d"
 
-#: plug-ins/common/file-pcx.c:1201
+#: plug-ins/common/file-pcx.c:1223
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Høgre kant utanfor grensene (må vere mindre enn %d): %d"
 
-#: plug-ins/common/file-pcx.c:1208
+#: plug-ins/common/file-pcx.c:1232
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Nedre kant utanfor grensene (må vere mindre enn %d): %d"
 
-#: plug-ins/common/file-pcx.c:1284 plug-ins/common/file-qoi.c:369
+#: plug-ins/common/file-pcx.c:1314 plug-ins/common/file-qoi.c:369
 #: plug-ins/common/file-svg.c:803 plug-ins/common/file-svg.c:819
 #, c-format
 msgid "Writing to file '%s' failed: %s"
@@ -4847,48 +4856,48 @@ msgstr ""
 "manglande skriftene før eksport, elles kan det henda at utforminga ikkje "
 "vert sjåande rett ut."
 
-#: plug-ins/common/file-pdf-export.c:1032
+#: plug-ins/common/file-pdf-export.c:1033
 msgid "Export Image as Multi-Page PDF"
 msgstr "Eksporter biletet som PDF med fleire sider"
 
-#: plug-ins/common/file-pdf-export.c:1033
-#: plug-ins/metadata/metadata-editor.c:5619
+#: plug-ins/common/file-pdf-export.c:1034
+#: plug-ins/metadata/metadata-editor.c:5504
 msgid "_Export"
 msgstr "_Eksporter"
 
-#: plug-ins/common/file-pdf-export.c:1042
+#: plug-ins/common/file-pdf-export.c:1043
 msgid "Save to:"
 msgstr "Lagra til:"
 
-#: plug-ins/common/file-pdf-export.c:1046
+#: plug-ins/common/file-pdf-export.c:1047
 msgid "Browse..."
 msgstr "_Bla gjennom …"
 
-#: plug-ins/common/file-pdf-export.c:1047
+#: plug-ins/common/file-pdf-export.c:1048
 msgid "Multipage PDF export"
 msgstr "Eksport av fleirsidig PDF"
 
-#: plug-ins/common/file-pdf-export.c:1091
+#: plug-ins/common/file-pdf-export.c:1092
 msgid "Remove the selected pages"
 msgstr "Fjern dei markerte sidene"
 
-#: plug-ins/common/file-pdf-export.c:1105
+#: plug-ins/common/file-pdf-export.c:1106
 msgid "Add this image"
 msgstr "Legg til dette biletet"
 
-#: plug-ins/common/file-pdf-export.c:1201
-#: plug-ins/common/file-pdf-export.c:1274
-#: plug-ins/common/file-pdf-export.c:1372 plug-ins/common/file-ps.c:2233
-#: plug-ins/file-tiff/file-tiff-load.c:1589
+#: plug-ins/common/file-pdf-export.c:1202
+#: plug-ins/common/file-pdf-export.c:1275
+#: plug-ins/common/file-pdf-export.c:1373 plug-ins/common/file-ps.c:2236
+#: plug-ins/file-tiff/file-tiff-load.c:1590
 #, c-format
 msgid "Page %d"
 msgstr "Side %d"
 
-#: plug-ins/common/file-pdf-export.c:1241
+#: plug-ins/common/file-pdf-export.c:1242
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "FEIL. For å kunna lagra denne fila må ho innehalda minst eitt bilete!"
 
-#: plug-ins/common/file-pdf-export.c:1419 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-export.c:1420 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Kan ikkje handsama storleiken (anten breidd eller høgd) i biletet."
 
@@ -5328,71 +5337,77 @@ msgstr "Eksporterer filer i PFM-filformat"
 msgid "PFM export handles all images without transparency."
 msgstr "PFM-eksport handsamar alle bilete utan gjennomsikt."
 
-#: plug-ins/common/file-pnm.c:726 plug-ins/common/file-pnm.c:758
-#: plug-ins/common/file-pnm.c:767 plug-ins/common/file-pnm.c:782
-#: plug-ins/common/file-pnm.c:797 plug-ins/common/file-pnm.c:1003
-#: plug-ins/common/file-pnm.c:1105 plug-ins/common/file-pnm.c:1194
-#: plug-ins/common/file-pnm.c:1255
+#: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:116
+#: plug-ins/file-jpeg/jpeg-load.c:133 plug-ins/file-jpeg/jpeg-load.c:728
+#, c-format
+msgid "Error reading data. Image may be corrupt."
+msgstr "Feil ved innlesing av data. Kan vera feil i biletet."
+
+#: plug-ins/common/file-pnm.c:728 plug-ins/common/file-pnm.c:760
+#: plug-ins/common/file-pnm.c:769 plug-ins/common/file-pnm.c:784
+#: plug-ins/common/file-pnm.c:799 plug-ins/common/file-pnm.c:1005
+#: plug-ins/common/file-pnm.c:1107 plug-ins/common/file-pnm.c:1196
+#: plug-ins/common/file-pnm.c:1257
 msgid "Premature end of file."
 msgstr "Uventa filslutt."
 
-#: plug-ins/common/file-pnm.c:746
+#: plug-ins/common/file-pnm.c:748
 msgid "File not in a supported format."
 msgstr "Fila har eit ugyldig format."
 
-#: plug-ins/common/file-pnm.c:761
+#: plug-ins/common/file-pnm.c:763
 msgid "Invalid X resolution."
 msgstr "Ugyldig X-oppløysing."
 
-#: plug-ins/common/file-pnm.c:763 plug-ins/common/file-pnm.c:937
+#: plug-ins/common/file-pnm.c:765 plug-ins/common/file-pnm.c:939
 msgid "Image width is larger than GIMP can handle."
 msgstr "Biletet er breiare enn det GIMP kan handsama."
 
-#: plug-ins/common/file-pnm.c:770
+#: plug-ins/common/file-pnm.c:772
 msgid "Invalid Y resolution."
 msgstr "Ugyldig X-oppløysing."
 
-#: plug-ins/common/file-pnm.c:772
+#: plug-ins/common/file-pnm.c:774
 msgid "Image height is larger than GIMP can handle."
 msgstr "Biletet er høgare enn det GIMP kan handsama."
 
-#: plug-ins/common/file-pnm.c:786
+#: plug-ins/common/file-pnm.c:788
 msgid "Bogus scale factor."
 msgstr "Falsk skaleringsfaktor."
 
-#: plug-ins/common/file-pnm.c:788
+#: plug-ins/common/file-pnm.c:790
 msgid "Unsupported scale factor."
 msgstr "Ugyldig skaleringsfaktor."
 
-#: plug-ins/common/file-pnm.c:802 plug-ins/common/file-pnm.c:1080
+#: plug-ins/common/file-pnm.c:804 plug-ins/common/file-pnm.c:1082
 msgid "Unsupported maximum value."
 msgstr "Ugyldig maksimalverdi."
 
-#: plug-ins/common/file-pnm.c:931
+#: plug-ins/common/file-pnm.c:933
 msgid "PAM: Unsupported unofficial PNM variant."
 msgstr "PAM: Uoffisiell PNM-variant vert ikkje støtta."
 
-#: plug-ins/common/file-pnm.c:935
+#: plug-ins/common/file-pnm.c:937
 msgid "PAM: Premature end of file."
 msgstr "PAM: uventa filslutt."
 
-#: plug-ins/common/file-pnm.c:939
+#: plug-ins/common/file-pnm.c:941
 msgid "PAM: Invalid X resolution."
 msgstr "PAM: ugyldig X-oppløysing."
 
-#: plug-ins/common/file-pnm.c:941
+#: plug-ins/common/file-pnm.c:943
 msgid "PAM: Invalid Y resolution."
 msgstr "PAM: ugyldig Y-oppløysing."
 
-#: plug-ins/common/file-pnm.c:943
+#: plug-ins/common/file-pnm.c:945
 msgid "PAM: Invalid maximum value."
 msgstr "PAM: ugyldig maksimalverdi."
 
-#: plug-ins/common/file-pnm.c:945
+#: plug-ins/common/file-pnm.c:947
 msgid "PAM: Invalid depth."
 msgstr "PAM: ugyldig djupn."
 
-#: plug-ins/common/file-pnm.c:947
+#: plug-ins/common/file-pnm.c:949
 msgid "PAM: Unsupported tupltype."
 msgstr "PAM: tupl-type utan støtte."
 
@@ -5610,66 +5625,66 @@ msgid "Maximum size of preview. Set to 0 for no preview."
 msgstr ""
 "Største storleik på førehandsvisinga. Sett til 0 for inga førehandsvising."
 
-#: plug-ins/common/file-ps.c:1169
+#: plug-ins/common/file-ps.c:1172
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Klartr ikkje tolka Postscriptfila «%s»"
 
-#: plug-ins/common/file-ps.c:1255
+#: plug-ins/common/file-ps.c:1258
 msgid "Rendered EPS"
 msgstr "Teikna EPS"
 
-#: plug-ins/common/file-ps.c:1283
+#: plug-ins/common/file-ps.c:1286
 #, c-format
 msgid "%s-pages"
 msgstr "%s-sider"
 
-#: plug-ins/common/file-ps.c:1354
+#: plug-ins/common/file-ps.c:1357
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "PostScript-eksport kan ikkje handsama bilete med alfa-kanalar"
 
-#: plug-ins/common/file-ps.c:3842
+#: plug-ins/common/file-ps.c:3845
 msgid "Pages:"
 msgstr "Sider:"
 
-#: plug-ins/common/file-ps.c:3846
+#: plug-ins/common/file-ps.c:3849
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Sider som skal opnast (t.d. 1-4 eller 1,3,5-7)"
 
-#: plug-ins/common/file-ps.c:3852
+#: plug-ins/common/file-ps.c:3855
 msgid "Open as"
 msgstr "Opna som"
 
-#: plug-ins/common/file-ps.c:3940
+#: plug-ins/common/file-ps.c:3943
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
 "Skaler biletet til papirstorleiken utan å endra forholdet mellom sidene."
 
-#: plug-ins/common/file-ps.c:3946
+#: plug-ins/common/file-ps.c:3949
 msgid "Image Size"
 msgstr "Biletstorleik"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3963
+#: plug-ins/common/file-ps.c:3966
 msgid "_0"
 msgstr "_0"
 
-#: plug-ins/common/file-ps.c:3964
+#: plug-ins/common/file-ps.c:3967
 msgid "_90"
 msgstr "_90"
 
-#: plug-ins/common/file-ps.c:3965
+#: plug-ins/common/file-ps.c:3968
 msgid "_180"
 msgstr "_180"
 
-#: plug-ins/common/file-ps.c:3966
+#: plug-ins/common/file-ps.c:3969
 msgid "_270"
 msgstr "_270"
 
-#: plug-ins/common/file-ps.c:3973
+#: plug-ins/common/file-ps.c:3976
 msgid "Output"
 msgstr "Utdata"
 
@@ -5825,8 +5840,8 @@ msgid "Error creating layer"
 msgstr "Feil ved oppretting av laget"
 
 #: plug-ins/common/file-psp.c:2160 plug-ins/common/file-psp.c:2207
-#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2555
-#: plug-ins/common/file-psp.c:2573
+#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2559
+#: plug-ins/common/file-psp.c:2574
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "Feil ved lesinga av informasjonsdelen av kanalen"
@@ -5858,7 +5873,7 @@ msgid "Invalid selection chunk size"
 msgstr "Ugyldig storleik på utvalsdelen"
 
 #: plug-ins/common/file-psp.c:2489 plug-ins/common/file-psp.c:2513
-#: plug-ins/common/file-psp.c:2547 plug-ins/common/file-psp.c:2589
+#: plug-ins/common/file-psp.c:2547 plug-ins/common/file-psp.c:2590
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "Feil ved lesing av slutt på utvalet-delen"
@@ -5868,77 +5883,80 @@ msgstr "Feil ved lesing av slutt på utvalet-delen"
 msgid "Invalid selection sub-block %s, should be CHANNEL"
 msgstr "Ugyldig underblokk for laget %s, bør vera KANAL"
 
-#: plug-ins/common/file-psp.c:2614
+#: plug-ins/common/file-psp.c:2615
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "Feil ved lesing av den utvida blokkdelen i overskrifta"
 
-#: plug-ins/common/file-psp.c:2621
+#: plug-ins/common/file-psp.c:2622
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "Ugyldig utvida blokkdel i overskrifta"
 
-#: plug-ins/common/file-psp.c:2632
+#: plug-ins/common/file-psp.c:2633
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "Ugyldig utvida blokkdelstorleik"
 
-#: plug-ins/common/file-psp.c:2653
+#: plug-ins/common/file-psp.c:2654
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "Feil ved lesing av den utvida blokkrutenettdatya"
 
-#: plug-ins/common/file-psp.c:2681
+#: plug-ins/common/file-psp.c:2682
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "Feil ved lesing av dei utvida blokkhjelpelinjedataa"
 
-#: plug-ins/common/file-psp.c:2699
+#: plug-ins/common/file-psp.c:2700
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "Ugyldig hjelpelinjeretning"
 
-#: plug-ins/common/file-psp.c:2713
+#: plug-ins/common/file-psp.c:2714
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "Feil ved lesing av den utvida blokkdelen"
 
-#: plug-ins/common/file-psp.c:2739 plug-ins/common/file-psp.c:2751
-#: plug-ins/common/file-psp.c:2762
+#: plug-ins/common/file-psp.c:2740 plug-ins/common/file-psp.c:2752
+#: plug-ins/common/file-psp.c:2763
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "Feil ved lesing av fargeprofil-delen"
 
-#: plug-ins/common/file-psp.c:2815
+#: plug-ins/common/file-psp.c:2816 plug-ins/file-icns/file-icns-load.c:130
 #, c-format
 msgid "Error reading file header."
 msgstr "Feil ved lesing av fil-header."
 
-#: plug-ins/common/file-psp.c:2822
+#: plug-ins/common/file-psp.c:2823
 #, c-format
 msgid "Incorrect file signature."
 msgstr "Feil filsignatur."
 
-#: plug-ins/common/file-psp.c:2836
+#: plug-ins/common/file-psp.c:2837
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "Har ikkje støtte for PSP-filformatversjonen: %d.%d."
 
-#: plug-ins/common/file-psp.c:2856
+#: plug-ins/common/file-psp.c:2857 plug-ins/file-psd/psd-load.c:1307
+#: plug-ins/file-psd/psd-load.c:1341 plug-ins/file-psd/psd-load.c:1371
+#: plug-ins/file-psd/psd-load.c:1408
+#, c-format
 msgid "invalid block size"
 msgstr "ugyldig blokkstorleik"
 
-#: plug-ins/common/file-psp.c:2865
+#: plug-ins/common/file-psp.c:2866
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "Dupliser den generelle biletattributtblokka."
 
-#: plug-ins/common/file-psp.c:2893
+#: plug-ins/common/file-psp.c:2894
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "Manglar den generelle biletattributtblokka."
 
-#: plug-ins/common/file-psp.c:3018
+#: plug-ins/common/file-psp.c:3019
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "Eksporten er ikkje implementert ennå."
@@ -6223,7 +6241,7 @@ msgstr "Pal_ettfil"
 msgid "The file containing palette data"
 msgstr "Fila inneheld palettdata"
 
-#: plug-ins/common/file-raw-data.c:458 plug-ins/common/file-raw-data.c:2918
+#: plug-ins/common/file-raw-data.c:458 plug-ins/common/file-raw-data.c:2985
 msgid "Digital Elevation Model data"
 msgstr "Digital elevasjonsmodelldata"
 
@@ -6278,7 +6296,12 @@ msgstr "Planaroppsett"
 msgid "Raw Data"
 msgstr "Raw data"
 
-#: plug-ins/common/file-raw-data.c:645
+#: plug-ins/common/file-raw-data.c:623 plug-ins/file-psd/psd-util.c:199
+#, c-format
+msgid "Unexpected end of file"
+msgstr "Uventa filslutt"
+
+#: plug-ins/common/file-raw-data.c:656
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -6286,7 +6309,7 @@ msgstr ""
 "%d er ikkje ein gyldig prøveavstand. Gyldige verdiar er: 0 (automatisk "
 "gjenkjenning), 1 og 3."
 
-#: plug-ins/common/file-raw-data.c:658
+#: plug-ins/common/file-raw-data.c:669
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -6298,12 +6321,12 @@ msgstr ""
 "HGT-filer er: SRTM-1 og SRTM-3. Viss du kjenner varianten, køyr med argument "
 "1 eller 3."
 
-#: plug-ins/common/file-raw-data.c:1720
+#: plug-ins/common/file-raw-data.c:1746
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "Kan ikkje opna «%s» for stadfesting av storleiken: %s"
 
-#: plug-ins/common/file-raw-data.c:2809
+#: plug-ins/common/file-raw-data.c:2864
 msgid "Load Image from Raw Data"
 msgstr "Last biletet frå Raw Data"
 
@@ -6311,43 +6334,43 @@ msgstr "Last biletet frå Raw Data"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: plug-ins/common/file-raw-data.c:2912
+#: plug-ins/common/file-raw-data.c:2979
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Digital elevasjonsmodelldata (1 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:2915
+#: plug-ins/common/file-raw-data.c:2982
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Digital elevasjonsmodelldata (3 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:2922
+#: plug-ins/common/file-raw-data.c:2989
 msgid "Image"
 msgstr "Bilete"
 
-#: plug-ins/common/file-raw-data.c:2934
+#: plug-ins/common/file-raw-data.c:3001
 msgid "Palette"
 msgstr "Palett"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3016
+#: plug-ins/common/file-raw-data.c:3091
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Tilstøytande (%s)"
 
-#: plug-ins/common/file-raw-data.c:3018
+#: plug-ins/common/file-raw-data.c:3093
 msgid "_Contiguous"
 msgstr "_Tilstøytande"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3024
+#: plug-ins/common/file-raw-data.c:3099
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Planar (%s)"
 
-#: plug-ins/common/file-raw-data.c:3026
+#: plug-ins/common/file-raw-data.c:3101
 msgid "_Planar"
 msgstr "_Planar"
 
@@ -6360,18 +6383,18 @@ msgstr "Seattle FilmWorks bilete"
 msgid "Load file in the Seattle FilmWorks file format"
 msgstr "Last inn fila i Seattle FilmWorks-format"
 
-#: plug-ins/common/file-seattle-filmworks.c:346
+#: plug-ins/common/file-seattle-filmworks.c:364
 #, c-format
 msgid "Uncompressed SFW94A format is not yet supported."
 msgstr "Det er førebels ikkje støtte for SFW94A-format."
 
-#: plug-ins/common/file-seattle-filmworks.c:440
-#: plug-ins/common/file-seattle-filmworks.c:568
+#: plug-ins/common/file-seattle-filmworks.c:458
+#: plug-ins/common/file-seattle-filmworks.c:586
 #, c-format
 msgid "Unable to convert SFW image."
 msgstr "Fekk ikkje konvertert SFW-biletet."
 
-#: plug-ins/common/file-seattle-filmworks.c:515
+#: plug-ins/common/file-seattle-filmworks.c:533
 #, c-format
 msgid "Unsupported SFW format '%s'"
 msgstr "Har ikkje støtte for SFW-formatet «%s»"
@@ -6767,7 +6790,7 @@ msgstr "Ugyldig eller ustøtta type TIM-bilete: %d"
 msgid "Could not read palette from '%s'"
 msgstr "Kan ikkje lese paletten frå «%s»"
 
-#: plug-ins/common/file-tim.c:720
+#: plug-ins/common/file-tim.c:752
 #, c-format
 msgid ""
 "Unable to export '%s'.  The TIM file format does not support images that are "
@@ -6776,11 +6799,11 @@ msgstr ""
 "Kan ikkje eksportera «%s». TIM-formatet støttar ikkje bilete som er meir enn "
 "%d pikslar høge eller breie."
 
-#: plug-ins/common/file-tim.c:938
+#: plug-ins/common/file-tim.c:970
 msgid "Image Origin"
 msgstr "Biletopphav"
 
-#: plug-ins/common/file-tim.c:953
+#: plug-ins/common/file-tim.c:985
 msgid "Palette Origin"
 msgstr "Palettopphav"
 
@@ -7113,54 +7136,54 @@ msgstr ""
 "Kan ikkje setja lenkjepunktet!\n"
 "Du må arrangera laga slik at dei har eit felles skjeringspunkt."
 
-#: plug-ins/common/file-xmc.c:663
+#: plug-ins/common/file-xmc.c:664
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "«%s» er ein ugyldig X-markør."
 
-#: plug-ins/common/file-xmc.c:676
+#: plug-ins/common/file-xmc.c:677
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "Ramma %d i «%s» er for brei for X-markøren."
 
-#: plug-ins/common/file-xmc.c:684
+#: plug-ins/common/file-xmc.c:685
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Ramma %d i «%s» er for høg for X-markøren."
 
-#: plug-ins/common/file-xmc.c:955
+#: plug-ins/common/file-xmc.c:965
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "det er ingen bileteiningar i «%s»."
 
-#: plug-ins/common/file-xmc.c:996
+#: plug-ins/common/file-xmc.c:1006
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "«%s» er for brei for X-markøren."
 
-#: plug-ins/common/file-xmc.c:1005
+#: plug-ins/common/file-xmc.c:1015
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "«%s» er for høg for X-markøren."
 
-#: plug-ins/common/file-xmc.c:1069
+#: plug-ins/common/file-xmc.c:1087
 #, c-format
 msgid "A read error occurred."
 msgstr "Det oppstod ein lesefeil."
 
-#: plug-ins/common/file-xmc.c:1108
+#: plug-ins/common/file-xmc.c:1126
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Skriv inn X-koordinat for lenkjepunktet. Utgangspunktet er øvre, venstre "
 "hjørne."
 
-#: plug-ins/common/file-xmc.c:1119
+#: plug-ins/common/file-xmc.c:1137
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Skriv inn Y-koordinat for lenkjepunktet. Utgangspunktet er øvre, venstre "
 "hjørne."
 
-#: plug-ins/common/file-xmc.c:1131
+#: plug-ins/common/file-xmc.c:1149
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -7173,7 +7196,7 @@ msgstr ""
 "Ikkje merk av for denne dersom du har planar om å redigera markøren med "
 "andre program."
 
-#: plug-ins/common/file-xmc.c:1143
+#: plug-ins/common/file-xmc.c:1161
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -7193,28 +7216,28 @@ msgstr ""
 "«gtk-cursor-theme-size»."
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1257 plug-ins/file-webp/file-webp-export.c:203
+#: plug-ins/common/file-xmc.c:1275 plug-ins/file-webp/file-webp-export.c:203
 #: plug-ins/file-webp/file-webp-export.c:611
 #, c-format
 msgid "Saving '%s'"
 msgstr "Lagrar «%s»"
 
-#: plug-ins/common/file-xmc.c:1328
+#: plug-ins/common/file-xmc.c:1346
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "Ramma «%s» er for brei. Reduser til maksimalt %dpx."
 
-#: plug-ins/common/file-xmc.c:1338
+#: plug-ins/common/file-xmc.c:1356
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "Ramma «%s» er for høg. Reduser til maksimalt %dpx."
 
-#: plug-ins/common/file-xmc.c:1348
+#: plug-ins/common/file-xmc.c:1366
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Breidda og/eller høgda for ramma «%s» er null!"
 
-#: plug-ins/common/file-xmc.c:1390
+#: plug-ins/common/file-xmc.c:1408
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -7225,7 +7248,7 @@ msgstr ""
 "Prøv å endra plasseringa av lenkjepunktet, endra lagoppsettet eller lagra "
 "utan autobeskjering."
 
-#: plug-ins/common/file-xmc.c:1550
+#: plug-ins/common/file-xmc.c:1568
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -7238,7 +7261,7 @@ msgstr ""
 "markørar.\n"
 "Kan hende dette ikkje ser støtta i alle tilfella."
 
-#: plug-ins/common/file-xmc.c:1558
+#: plug-ins/common/file-xmc.c:1576
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -7250,7 +7273,7 @@ msgstr ""
 "Du kan endra dette med «Bytt storleik for alle rammene» i lagringsmenyen, "
 "eller bruka markøren som han er, utan GNOME-innstillingane."
 
-#: plug-ins/common/file-xmc.c:1841
+#: plug-ins/common/file-xmc.c:1859
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -7262,7 +7285,7 @@ msgstr ""
 "Me låste det til %dpx. Du bør kontrollera den eksporterte markøren."
 
 #. translators: the %i is *always* 8 here
-#: plug-ins/common/file-xmc.c:1938
+#: plug-ins/common/file-xmc.c:1956
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -7577,7 +7600,7 @@ msgstr ""
 "Ligg på \n"
 "filmen:"
 
-#: plug-ins/common/film.c:1042 plug-ins/common/unit-editor.c:460
+#: plug-ins/common/film.c:1042 plug-ins/common/unit-editor.c:470
 msgid "_Add"
 msgstr "_Legg til"
 
@@ -7774,7 +7797,7 @@ msgstr "Opprett _nytt lag"
 msgid "Create a new layer"
 msgstr "Opprett eitt nytt lag"
 
-#: plug-ins/common/hot.c:453 plug-ins/common/hot.c:659
+#: plug-ins/common/hot.c:467 plug-ins/common/hot.c:673
 msgid "Hot"
 msgstr "Heit"
 
@@ -8010,7 +8033,7 @@ msgstr ""
 "menyane."
 
 #: plug-ins/common/plugin-browser.c:370
-#: plug-ins/filter-browser/filter-browser.c:622
+#: plug-ins/filter-browser/filter-browser.c:627
 msgid "Searching by name"
 msgstr "Søkjar på namn"
 
@@ -8022,7 +8045,7 @@ msgstr[0] "%d programtillegg"
 msgstr[1] "%d programtillegg"
 
 #: plug-ins/common/plugin-browser.c:395
-#: plug-ins/filter-browser/filter-browser.c:689
+#: plug-ins/filter-browser/filter-browser.c:694
 msgid "No matches for your query"
 msgstr "Ingen treff på søket"
 
@@ -8033,16 +8056,16 @@ msgid_plural "%d plug-ins match your query"
 msgstr[0] "Fann %d programtillegg som passa spørringa"
 msgstr[1] "Fann %d programtillegg som passa spørringa"
 
-#: plug-ins/common/plugin-browser.c:543
-#: plug-ins/filter-browser/filter-browser.c:691
+#: plug-ins/common/plugin-browser.c:539
+#: plug-ins/filter-browser/filter-browser.c:696
 msgid "No matches"
 msgstr "Ingen treff"
 
-#: plug-ins/common/plugin-browser.c:568
+#: plug-ins/common/plugin-browser.c:564
 msgid "Plug-in Browser"
 msgstr "Lesar for programtillegg"
 
-#: plug-ins/common/plugin-browser.c:616 plug-ins/common/unit-editor.c:114
+#: plug-ins/common/plugin-browser.c:614 plug-ins/common/unit-editor.c:115
 #: plug-ins/metadata/metadata-editor.c:613
 #: plug-ins/metadata/metadata-editor.c:649
 #: plug-ins/metadata/metadata-editor.c:656
@@ -8050,23 +8073,23 @@ msgstr "Lesar for programtillegg"
 msgid "Name"
 msgstr "Namn"
 
-#: plug-ins/common/plugin-browser.c:624 plug-ins/common/plugin-browser.c:685
+#: plug-ins/common/plugin-browser.c:622 plug-ins/common/plugin-browser.c:683
 msgid "Menu Path"
 msgstr "Menysti"
 
-#: plug-ins/common/plugin-browser.c:632 plug-ins/common/plugin-browser.c:694
+#: plug-ins/common/plugin-browser.c:630 plug-ins/common/plugin-browser.c:692
 msgid "Image Types"
 msgstr "Bilettype"
 
-#: plug-ins/common/plugin-browser.c:642 plug-ins/common/plugin-browser.c:703
+#: plug-ins/common/plugin-browser.c:640 plug-ins/common/plugin-browser.c:701
 msgid "Installation Date"
 msgstr "Installasjonsdato"
 
-#: plug-ins/common/plugin-browser.c:664
+#: plug-ins/common/plugin-browser.c:662
 msgid "List View"
 msgstr "Listeform"
 
-#: plug-ins/common/plugin-browser.c:725
+#: plug-ins/common/plugin-browser.c:723
 msgid "Tree View"
 msgstr "Trevising"
 
@@ -8082,7 +8105,7 @@ msgstr "List prosedyrar som er tilgjengelege i PDB"
 msgid "Procedure Browser"
 msgstr "Prosedyrelesar"
 
-#: plug-ins/common/procedure-browser.c:184
+#: plug-ins/common/procedure-browser.c:186
 #, c-format
 msgid "Procedure %s allows only interactive invocation."
 msgstr "Prosedyre %s tillét berre interaktiv oppkalling."
@@ -8602,7 +8625,7 @@ msgstr "D_uplikat"
 #: plug-ins/fractal-explorer/fractal-explorer.c:887
 #: plug-ins/fractal-explorer/fractal-explorer.c:1369
 #: plug-ins/gimpressionist/orientmap.c:623
-#: plug-ins/gimpressionist/presets.c:1071 plug-ins/gimpressionist/sizemap.c:499
+#: plug-ins/gimpressionist/presets.c:1079 plug-ins/gimpressionist/sizemap.c:499
 #: plug-ins/gradient-flare/gradient-flare.c:3077
 #: plug-ins/gradient-flare/gradient-flare.c:3360
 msgid "_Delete"
@@ -8779,7 +8802,7 @@ msgstr "Små fliser"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:485 plug-ins/ifs-compose/ifs-compose.c:724
+#: plug-ins/common/tile-small.c:485 plug-ins/ifs-compose/ifs-compose.c:725
 msgid "Flip"
 msgstr "Spegelvend"
 
@@ -8806,7 +8829,7 @@ msgstr "_Kolonne:"
 #: plug-ins/common/tile-small.c:622
 #: plug-ins/fractal-explorer/fractal-explorer.c:1358
 #: plug-ins/gimpressionist/orientmap.c:527
-#: plug-ins/gimpressionist/presets.c:1064 plug-ins/gimpressionist/sizemap.c:400
+#: plug-ins/gimpressionist/presets.c:1072 plug-ins/gimpressionist/sizemap.c:400
 #: plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
 msgstr "_Bruk"
@@ -8819,11 +8842,11 @@ msgstr "_Dekkevne"
 msgid "Number of Segments"
 msgstr "Talet på segment"
 
-#: plug-ins/common/unit-editor.c:112
+#: plug-ins/common/unit-editor.c:113
 msgid "Saved"
 msgstr "Lagra"
 
-#: plug-ins/common/unit-editor.c:112
+#: plug-ins/common/unit-editor.c:113
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
@@ -8831,25 +8854,25 @@ msgstr ""
 "Dersom denne er avmerka, vil einingsdefinisjonen verta lagra når du "
 "avsluttar GIMP."
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:115
 msgid "The name to be used to identify this unit in the graphical interface"
 msgstr ""
 "Namnet som skal brukast for å identifisera ei eining i det grafiske "
 "grensesnittet"
 
-#: plug-ins/common/unit-editor.c:116
+#: plug-ins/common/unit-editor.c:117
 msgid "Factor"
 msgstr "Faktor"
 
-#: plug-ins/common/unit-editor.c:116
+#: plug-ins/common/unit-editor.c:117
 msgid "How many units make up an inch."
 msgstr "Kor mange einingar er det i ein Inch."
 
-#: plug-ins/common/unit-editor.c:117
+#: plug-ins/common/unit-editor.c:118
 msgid "Digits"
 msgstr "Siffer"
 
-#: plug-ins/common/unit-editor.c:117
+#: plug-ins/common/unit-editor.c:118
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
@@ -8859,11 +8882,11 @@ msgstr ""
 "kor mange desimalar som må til for å verta om lag like nøyaktig som ei "
 "\"inch\"-innskriving med to desimalar."
 
-#: plug-ins/common/unit-editor.c:122
+#: plug-ins/common/unit-editor.c:123
 msgid "Symbol"
 msgstr "Symbol"
 
-#: plug-ins/common/unit-editor.c:122
+#: plug-ins/common/unit-editor.c:123
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
@@ -8871,75 +8894,75 @@ msgstr ""
 "Symbolet for eininga dersom slikt finst (t.d. \"'\" for tommar). Elles vert "
 "avkortinga brukt."
 
-#: plug-ins/common/unit-editor.c:125
+#: plug-ins/common/unit-editor.c:126
 msgid "Abbreviation"
 msgstr "Forkorting"
 
-#: plug-ins/common/unit-editor.c:125
+#: plug-ins/common/unit-editor.c:126
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr "Forkorting for eininga, som t.d. «cm» for centimeter."
 
-#: plug-ins/common/unit-editor.c:170
+#: plug-ins/common/unit-editor.c:171
 msgid "U_nits"
 msgstr "Einingar"
 
-#: plug-ins/common/unit-editor.c:175
+#: plug-ins/common/unit-editor.c:179
 msgid "Create or alter units used in GIMP"
 msgstr "Opprett eller endra einingar brukte i GIMP"
 
-#: plug-ins/common/unit-editor.c:227 plug-ins/common/unit-editor.c:248
+#: plug-ins/common/unit-editor.c:231 plug-ins/common/unit-editor.c:253
 msgid "Unit Editor"
 msgstr "Einingshandsamar"
 
 #. destroy model automatically with view
 #. Put buttons in
-#: plug-ins/common/unit-editor.c:259
+#: plug-ins/common/unit-editor.c:264
 #: plug-ins/fractal-explorer/fractal-explorer.c:1347
-#: plug-ins/gimpressionist/presets.c:1077
+#: plug-ins/gimpressionist/presets.c:1085
 msgid "_Refresh"
 msgstr "_Oppdater"
 
-#: plug-ins/common/unit-editor.c:269
+#: plug-ins/common/unit-editor.c:274
 msgid "_Help"
 msgstr "_Hjelp"
 
-#: plug-ins/common/unit-editor.c:309
+#: plug-ins/common/unit-editor.c:314
 msgid "Create a new unit from scratch"
 msgstr "Lag ei ny eining frå grunnen av"
 
-#: plug-ins/common/unit-editor.c:316
+#: plug-ins/common/unit-editor.c:321
 msgid "Create a new unit using the currently selected unit as template"
 msgstr "Lag ny eining med den valde eininga som mal"
 
-#: plug-ins/common/unit-editor.c:455
+#: plug-ins/common/unit-editor.c:465
 msgid "Add a New Unit"
 msgstr "Legg til ei ny eining"
 
-#: plug-ins/common/unit-editor.c:484
+#: plug-ins/common/unit-editor.c:494
 msgid "_Name:"
 msgstr "_Namn:"
 
-#: plug-ins/common/unit-editor.c:496
+#: plug-ins/common/unit-editor.c:506
 msgid "_Factor:"
 msgstr "_Faktor:"
 
-#: plug-ins/common/unit-editor.c:507
+#: plug-ins/common/unit-editor.c:517
 msgid "_Digits:"
 msgstr "_Tal:"
 
-#: plug-ins/common/unit-editor.c:519
+#: plug-ins/common/unit-editor.c:529
 msgid "_Symbol:"
 msgstr "_Symbol:"
 
-#: plug-ins/common/unit-editor.c:531
+#: plug-ins/common/unit-editor.c:541
 msgid "_Abbreviation:"
 msgstr "_Forkorting:"
 
-#: plug-ins/common/unit-editor.c:566
+#: plug-ins/common/unit-editor.c:576
 msgid "Incomplete input"
 msgstr "Ufullstendig innskriving"
 
-#: plug-ins/common/unit-editor.c:569
+#: plug-ins/common/unit-editor.c:579
 msgid "Please fill in all text fields."
 msgstr "Fyll inn alle tekstfelta."
 
@@ -9593,307 +9616,307 @@ msgstr "Spegelvend biletet loddrett ved import"
 msgid "DDS"
 msgstr "DDS"
 
-#: plug-ins/file-dds/dds.c:174 plug-ins/file-dds/dds.c:175
+#: plug-ins/file-dds/dds.c:173 plug-ins/file-dds/dds.c:174
 msgid "Saves files in DDS image format"
 msgstr "Lagrar filer i DDS-format"
 
-#: plug-ins/file-dds/dds.c:196
+#: plug-ins/file-dds/dds.c:195
 msgid "Compressio_n"
 msgstr "_Komprimering"
 
-#: plug-ins/file-dds/dds.c:197
+#: plug-ins/file-dds/dds.c:196
 msgid "Compression format"
 msgstr "Kompressjonsformat"
 
-#: plug-ins/file-dds/dds.c:199
+#: plug-ins/file-dds/dds.c:198
 msgid "BC1 / DXT1"
 msgstr "BC1 / DXT1"
 
-#: plug-ins/file-dds/dds.c:200
+#: plug-ins/file-dds/dds.c:199
 msgid "BC2 / DXT3"
 msgstr "BC2 / DXT3"
 
-#: plug-ins/file-dds/dds.c:201
+#: plug-ins/file-dds/dds.c:200
 msgid "BC3 / DXT5"
 msgstr "BC3 / DXT5"
 
-#: plug-ins/file-dds/dds.c:202
+#: plug-ins/file-dds/dds.c:201
 msgid "BC3nm / DXT5nm"
 msgstr "BC3nm / DXT5nm"
 
-#: plug-ins/file-dds/dds.c:203
+#: plug-ins/file-dds/dds.c:202
 msgid "BC4 / ATI1 (3Dc+)"
 msgstr "BC4 / ATI1 (3Dc+)"
 
-#: plug-ins/file-dds/dds.c:204
+#: plug-ins/file-dds/dds.c:203
 msgid "BC5 / ATI2 (3Dc)"
 msgstr "BC5 / ATI2 (3Dc)"
 
-#: plug-ins/file-dds/dds.c:206
+#: plug-ins/file-dds/dds.c:205
 msgid "RXGB (DXT5)"
 msgstr "RXGB (DXT5)"
 
-#: plug-ins/file-dds/dds.c:207
+#: plug-ins/file-dds/dds.c:206
 msgid "Alpha Exponent (DXT5)"
 msgstr "Alfaeksponent (DXT5)"
 
-#: plug-ins/file-dds/dds.c:208
+#: plug-ins/file-dds/dds.c:207
 msgid "YCoCg (DXT5)"
 msgstr "YCoCg (DXT5)"
 
-#: plug-ins/file-dds/dds.c:209
+#: plug-ins/file-dds/dds.c:208
 msgid "YCoCg scaled (DXT5)"
 msgstr "YCoCg skalert (DXT5)"
 
-#: plug-ins/file-dds/dds.c:215
+#: plug-ins/file-dds/dds.c:214
 msgid "Use percept_ual error metric"
 msgstr "Bruk perseptuell feilmåling"
 
-#: plug-ins/file-dds/dds.c:216
+#: plug-ins/file-dds/dds.c:215
 msgid "Use a perceptual error metric during compression"
 msgstr "Bruk perseptuell feilmåling ved komprimeringa"
 
-#: plug-ins/file-dds/dds.c:222
+#: plug-ins/file-dds/dds.c:221
 msgid "Pixel format"
 msgstr "Pikselformat"
 
-#: plug-ins/file-dds/dds.c:223 plug-ins/file-dds/dds.c:286
-#: plug-ins/file-dds/dds.c:303 plug-ins/file-webp/file-webp.c:180
+#: plug-ins/file-dds/dds.c:222 plug-ins/file-dds/dds.c:285
+#: plug-ins/file-dds/dds.c:302 plug-ins/file-webp/file-webp.c:180
 #: plug-ins/gradient-flare/gradient-flare.c:2628
 msgid "Default"
 msgstr "Standard"
 
-#: plug-ins/file-dds/dds.c:224
+#: plug-ins/file-dds/dds.c:223
 msgid "RGB8"
 msgstr "RGB8"
 
-#: plug-ins/file-dds/dds.c:225
+#: plug-ins/file-dds/dds.c:224
 msgid "RGBA8"
 msgstr "RGBA8"
 
-#: plug-ins/file-dds/dds.c:226
+#: plug-ins/file-dds/dds.c:225
 msgid "BGR8"
 msgstr "BGR8"
 
-#: plug-ins/file-dds/dds.c:227
+#: plug-ins/file-dds/dds.c:226
 msgid "ABGR8"
 msgstr "ABGR8"
 
-#: plug-ins/file-dds/dds.c:228
+#: plug-ins/file-dds/dds.c:227
 msgid "R5G6B5"
 msgstr "R5G6B5"
 
-#: plug-ins/file-dds/dds.c:229
+#: plug-ins/file-dds/dds.c:228
 msgid "RGBA4"
 msgstr "RGBA4"
 
-#: plug-ins/file-dds/dds.c:230
+#: plug-ins/file-dds/dds.c:229
 msgid "RGB5A1"
 msgstr "RGB5A1"
 
-#: plug-ins/file-dds/dds.c:231
+#: plug-ins/file-dds/dds.c:230
 msgid "RGB10A2"
 msgstr "RGB10A2"
 
-#: plug-ins/file-dds/dds.c:232
+#: plug-ins/file-dds/dds.c:231
 msgid "R3G3B2"
 msgstr "R3G3B2"
 
-#: plug-ins/file-dds/dds.c:233
+#: plug-ins/file-dds/dds.c:232
 msgid "A8"
 msgstr "A8"
 
-#: plug-ins/file-dds/dds.c:234
+#: plug-ins/file-dds/dds.c:233
 msgid "L8"
 msgstr "L8"
 
-#: plug-ins/file-dds/dds.c:235
+#: plug-ins/file-dds/dds.c:234
 msgid "L8A8"
 msgstr "L8A8"
 
-#: plug-ins/file-dds/dds.c:236
+#: plug-ins/file-dds/dds.c:235
 msgid "AEXP"
 msgstr "AEXP"
 
-#: plug-ins/file-dds/dds.c:237
+#: plug-ins/file-dds/dds.c:236
 msgid "YCOCG"
 msgstr "YCOCG"
 
-#: plug-ins/file-dds/dds.c:243
+#: plug-ins/file-dds/dds.c:242
 msgid "Sav_e type"
 msgstr "_Lagringstype"
 
-#: plug-ins/file-dds/dds.c:244
+#: plug-ins/file-dds/dds.c:243
 msgid "How to save the image"
 msgstr "Korleis biletet skal lagrast"
 
-#: plug-ins/file-dds/dds.c:245
+#: plug-ins/file-dds/dds.c:244
 msgid "Selected layer"
 msgstr "Merkt lag"
 
-#: plug-ins/file-dds/dds.c:246
+#: plug-ins/file-dds/dds.c:245
 msgid "All visible layers"
 msgstr "Alle synlege lag"
 
-#: plug-ins/file-dds/dds.c:247
+#: plug-ins/file-dds/dds.c:246
 msgid "As cube map"
 msgstr "Som kubekart"
 
-#: plug-ins/file-dds/dds.c:248
+#: plug-ins/file-dds/dds.c:247
 msgid "As volume map"
 msgstr "Som volumkart"
 
-#: plug-ins/file-dds/dds.c:249
+#: plug-ins/file-dds/dds.c:248
 msgid "As texture array"
 msgstr "Som teksturmatrise"
 
-#: plug-ins/file-dds/dds.c:255
+#: plug-ins/file-dds/dds.c:254
 msgid "Flip image _vertically on export"
 msgstr "Spegelvend biletet _loddrett ved eksport"
 
-#: plug-ins/file-dds/dds.c:256
+#: plug-ins/file-dds/dds.c:255
 msgid "Flip the image vertically on export"
 msgstr "Spegelvend biletet loddrett ved eksport"
 
-#: plug-ins/file-dds/dds.c:261
+#: plug-ins/file-dds/dds.c:260
 msgid "Set _transparent color"
 msgstr "Set _gjennomsiktig farge"
 
-#: plug-ins/file-dds/dds.c:262
+#: plug-ins/file-dds/dds.c:261
 msgid "Make an indexed color transparent"
 msgstr "Gjer ein indeksert farge gjennomsiktig"
 
-#: plug-ins/file-dds/dds.c:267
+#: plug-ins/file-dds/dds.c:266
 msgid "Transparent inde_x"
 msgstr "Gjennomsiktig _indeks"
 
-#: plug-ins/file-dds/dds.c:268
+#: plug-ins/file-dds/dds.c:267
 msgid "Index of transparent color or -1 to disable (for indexed images only)."
 msgstr ""
 "Indeks med gjennomsiktig farge eller -1 for å slå av (berre for indekserte "
 "bilete)."
 
-#: plug-ins/file-dds/dds.c:274
+#: plug-ins/file-dds/dds.c:273
 msgid "_Mipmaps"
 msgstr "_Mipmaps"
 
-#: plug-ins/file-dds/dds.c:275
+#: plug-ins/file-dds/dds.c:274
 msgid "How to handle mipmaps"
 msgstr "Korleis handsama mipmaps"
 
-#: plug-ins/file-dds/dds.c:276
+#: plug-ins/file-dds/dds.c:275
 msgid "No mipmaps"
 msgstr "Ingen mipmaps"
 
-#: plug-ins/file-dds/dds.c:277
+#: plug-ins/file-dds/dds.c:276
 msgid "Generate mipmaps"
 msgstr "Generer mipmaps"
 
-#: plug-ins/file-dds/dds.c:278
+#: plug-ins/file-dds/dds.c:277
 msgid "Use existing mipmaps"
 msgstr "Bruk mipmaps som finst frå før"
 
-#: plug-ins/file-dds/dds.c:284
+#: plug-ins/file-dds/dds.c:283
 msgid "F_ilter"
 msgstr "_Filter"
 
-#: plug-ins/file-dds/dds.c:285
+#: plug-ins/file-dds/dds.c:284
 msgid "Filtering to use when generating mipmaps"
 msgstr "Filtrering som kan brukast for å laga mipmaps"
 
-#: plug-ins/file-dds/dds.c:287
+#: plug-ins/file-dds/dds.c:286
 msgid "Nearest"
 msgstr "Næraste"
 
-#: plug-ins/file-dds/dds.c:288 plug-ins/map-object/map-object-main.c:142
+#: plug-ins/file-dds/dds.c:287 plug-ins/map-object/map-object-main.c:142
 msgid "Box"
 msgstr "Boks"
 
-#: plug-ins/file-dds/dds.c:289
+#: plug-ins/file-dds/dds.c:288
 msgid "Triangle"
 msgstr "Triangel"
 
-#: plug-ins/file-dds/dds.c:290
+#: plug-ins/file-dds/dds.c:289
 msgid "Quadratic"
 msgstr "Kvadratisk"
 
-#: plug-ins/file-dds/dds.c:291
+#: plug-ins/file-dds/dds.c:290
 msgid "B-Spline"
 msgstr "B-Spline"
 
-#: plug-ins/file-dds/dds.c:292
+#: plug-ins/file-dds/dds.c:291
 msgid "Mitchell"
 msgstr "Mitchell"
 
-#: plug-ins/file-dds/dds.c:293
+#: plug-ins/file-dds/dds.c:292
 msgid "Catmull-Rom"
 msgstr "Catmull-Rom"
 
-#: plug-ins/file-dds/dds.c:294
+#: plug-ins/file-dds/dds.c:293
 msgid "Lanczos"
 msgstr "Lanczos"
 
-#: plug-ins/file-dds/dds.c:295
+#: plug-ins/file-dds/dds.c:294
 msgid "Kaiser"
 msgstr "Kaiser"
 
-#: plug-ins/file-dds/dds.c:301
+#: plug-ins/file-dds/dds.c:300
 msgid "_Wrap mode"
 msgstr "_Brytingsmodus"
 
-#: plug-ins/file-dds/dds.c:302
+#: plug-ins/file-dds/dds.c:301
 msgid "Wrap mode to use when generating mipmaps"
 msgstr "Brytingsmodus som kan brukast for å laga mipmaps"
 
-#: plug-ins/file-dds/dds.c:304
+#: plug-ins/file-dds/dds.c:303
 msgid "Mirror"
 msgstr "Spegel"
 
-#: plug-ins/file-dds/dds.c:305
+#: plug-ins/file-dds/dds.c:304
 msgid "Repeat"
 msgstr "Gjenta"
 
-#: plug-ins/file-dds/dds.c:306
+#: plug-ins/file-dds/dds.c:305
 msgid "Clamp"
 msgstr "Klem"
 
-#: plug-ins/file-dds/dds.c:312
+#: plug-ins/file-dds/dds.c:311
 msgid "Appl_y gamma correction"
 msgstr "_Bruk gammakorrigering"
 
-#: plug-ins/file-dds/dds.c:313
+#: plug-ins/file-dds/dds.c:312
 msgid "Use gamma correct mipmap filtering"
 msgstr "Bruk gamma-korrekt mipmap-filtrering"
 
-#: plug-ins/file-dds/dds.c:318
+#: plug-ins/file-dds/dds.c:317
 msgid "Use sRG_B colorspace"
 msgstr "Bruk _sRGB-fargerom"
 
-#: plug-ins/file-dds/dds.c:319
+#: plug-ins/file-dds/dds.c:318
 msgid "Use sRGB colorspace for gamma correction"
 msgstr "Bruk sRGB-fargerom for gammakorreksjon"
 
-#: plug-ins/file-dds/dds.c:324 plug-ins/flame/flame.c:204
+#: plug-ins/file-dds/dds.c:323 plug-ins/flame/flame.c:204
 msgid "_Gamma"
 msgstr "_Gamma"
 
-#: plug-ins/file-dds/dds.c:325
+#: plug-ins/file-dds/dds.c:324
 msgid "Gamma value to use for gamma correction (e.g. 2.2)"
 msgstr "Gammaverdi som skal brukast for gammakorreksjon (for eksempel 2.2)"
 
-#: plug-ins/file-dds/dds.c:330
+#: plug-ins/file-dds/dds.c:329
 msgid "Preserve al_pha test coverage"
 msgstr "Bevar _alfa-testdekning"
 
-#: plug-ins/file-dds/dds.c:331
+#: plug-ins/file-dds/dds.c:330
 msgid "Preserve alpha test coverage for alpha channel maps"
 msgstr "Bevar alfatestdekning for alfakanalkart"
 
-#: plug-ins/file-dds/dds.c:337
+#: plug-ins/file-dds/dds.c:336
 msgid "Alp_ha test threshold"
 msgstr "_Alfa-testgrense"
 
-#: plug-ins/file-dds/dds.c:338
+#: plug-ins/file-dds/dds.c:337
 msgid ""
 "Alpha test threshold value for which alpha test coverage should be preserved"
 msgstr "Alfatestterskelverdien som alfatestdekninga skal bevarast for"
@@ -9974,18 +9997,18 @@ msgstr "Ugyldig DX10-header"
 msgid "Unsupported DXGI Format: %u"
 msgstr "Ugyldig DXGI-format: %u"
 
-#: plug-ins/file-dds/ddsread.c:1226 plug-ins/file-dds/ddsread.c:1290
-#: plug-ins/file-dds/ddsread.c:1310
+#: plug-ins/file-dds/ddsread.c:1226 plug-ins/file-dds/ddsread.c:1291
+#: plug-ins/file-dds/ddsread.c:1311
 #, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "Dei førespurde dataa overstig filstorleiken.\n"
 
-#: plug-ins/file-dds/ddsread.c:1234 plug-ins/file-dds/ddsread.c:1316
+#: plug-ins/file-dds/ddsread.c:1234 plug-ins/file-dds/ddsread.c:1318
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "Uventa filslutt\n"
 
-#: plug-ins/file-dds/ddsread.c:1646
+#: plug-ins/file-dds/ddsread.c:1648
 msgid "Open DDS"
 msgstr "Opna DDS"
 
@@ -10111,29 +10134,29 @@ msgid ""
 msgstr ""
 "FITS-eksport kan handsama alle bilettypar unnateke bilete med alfakanalar."
 
-#: plug-ins/file-fits/fits.c:381
+#: plug-ins/file-fits/fits.c:382
 msgid "Error during opening of FITS file"
 msgstr "Feil ved opninga av FITS-fila"
 
-#: plug-ins/file-fits/fits.c:394 plug-ins/file-fits/fits.c:632
+#: plug-ins/file-fits/fits.c:395 plug-ins/file-fits/fits.c:633
 msgid "FITS file keeps no displayable images"
 msgstr "FITS-fila inneheld ingen bilete som kan visast"
 
-#: plug-ins/file-fits/fits.c:515
+#: plug-ins/file-fits/fits.c:513
 msgid "FITS HDU"
 msgstr "FITS HDU"
 
-#: plug-ins/file-fits/fits.c:662
+#: plug-ins/file-fits/fits.c:663
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS-eksport kan ikkje handsama bilete med alfakanalar"
 
-#: plug-ins/file-fits/fits.c:1030
+#: plug-ins/file-fits/fits.c:1031
 msgid "Open FITS File"
 msgstr "Opna FITS-fil"
 
 #: plug-ins/file-fli/fli.c:45 plug-ins/file-fli/fli.c:59
 #: plug-ins/file-fli/fli.c:75 plug-ins/file-fli/fli.c:924
-#: plug-ins/file-fli/fli.c:1244 plug-ins/file-fli/fli.c:1524
+#: plug-ins/file-fli/fli.c:1245 plug-ins/file-fli/fli.c:1526
 #, c-format
 msgid "Error reading from file."
 msgstr "Feil ved lesing frå fil."
@@ -10219,21 +10242,21 @@ msgstr "Feil ved skriving av svart. "
 #: plug-ins/file-fli/fli.c:1094 plug-ins/file-fli/fli.c:1108
 #: plug-ins/file-fli/fli.c:1123 plug-ins/file-fli/fli.c:1132
 #: plug-ins/file-fli/fli.c:1146 plug-ins/file-fli/fli.c:1156
-#: plug-ins/file-fli/fli.c:1300 plug-ins/file-fli/fli.c:1327
-#: plug-ins/file-fli/fli.c:1343 plug-ins/file-fli/fli.c:1375
-#: plug-ins/file-fli/fli.c:1385 plug-ins/file-fli/fli.c:1399
-#: plug-ins/file-fli/fli.c:1409
+#: plug-ins/file-fli/fli.c:1301 plug-ins/file-fli/fli.c:1328
+#: plug-ins/file-fli/fli.c:1344 plug-ins/file-fli/fli.c:1376
+#: plug-ins/file-fli/fli.c:1386 plug-ins/file-fli/fli.c:1400
+#: plug-ins/file-fli/fli.c:1410
 msgid "Error writing frame. "
 msgstr "Feil ved skriving av ramme. "
 
 #: plug-ins/file-fli/fli.c:992 plug-ins/file-fli/fli.c:1004
 #: plug-ins/file-fli/fli.c:1015 plug-ins/file-fli/fli.c:1034
-#: plug-ins/file-fli/fli.c:1186 plug-ins/file-fli/fli.c:1200
-#: plug-ins/file-fli/fli.c:1213 plug-ins/file-fli/fli.c:1226
-#: plug-ins/file-fli/fli.c:1245 plug-ins/file-fli/fli.c:1440
-#: plug-ins/file-fli/fli.c:1456 plug-ins/file-fli/fli.c:1475
-#: plug-ins/file-fli/fli.c:1490 plug-ins/file-fli/fli.c:1503
-#: plug-ins/file-fli/fli.c:1525
+#: plug-ins/file-fli/fli.c:1187 plug-ins/file-fli/fli.c:1201
+#: plug-ins/file-fli/fli.c:1214 plug-ins/file-fli/fli.c:1227
+#: plug-ins/file-fli/fli.c:1246 plug-ins/file-fli/fli.c:1442
+#: plug-ins/file-fli/fli.c:1458 plug-ins/file-fli/fli.c:1477
+#: plug-ins/file-fli/fli.c:1492 plug-ins/file-fli/fli.c:1505
+#: plug-ins/file-fli/fli.c:1527
 msgid "Error reading compressed data. "
 msgstr "Feil ved lesing av komprimerte data. "
 
@@ -10286,17 +10309,17 @@ msgstr "Eksporten byrjar frå denne ramma"
 msgid "End exporting with this frame (or -1 for all frames)"
 msgstr "Slutt eksporteringa med denne ramma (eller -1 for alle rammene)"
 
-#: plug-ins/file-fli/fli-gimp.c:568
+#: plug-ins/file-fli/fli-gimp.c:577
 #, c-format
 msgid "Frame %d (%ums)"
 msgstr "Ramme %d (%ums)"
 
-#: plug-ins/file-fli/fli-gimp.c:595
+#: plug-ins/file-fli/fli-gimp.c:604
 #, c-format
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Klarte ikkje lesa ramma %d. Kanskje feil animasjon.\n"
 
-#: plug-ins/file-fli/fli-gimp.c:927
+#: plug-ins/file-fli/fli-gimp.c:945
 msgid "Open FLIC Animation"
 msgstr "Opna FLIC-animasjon"
 
@@ -10362,21 +10385,31 @@ msgstr ""
 "× 24, 32 × 32, 36 × 36, 48 × 48, 64 × 64, 128 × 128, 256 × 256, 512 × 512 "
 "eller 1024 × 1024."
 
-#: plug-ins/file-icns/file-icns-load.c:547
+#: plug-ins/file-icns/file-icns-load.c:124
+#, c-format
+msgid "Invalid header. Possibly corrupt image."
+msgstr "Ugyldig header. Biletet er kanskje øydelagt."
+
+#: plug-ins/file-icns/file-icns-load.c:551
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr ""
 "Feil i forsøk på å opna den temporære %s fila «%s» for icns lasting: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:688 plug-ins/file-ico/ico-load.c:1121
-#: plug-ins/file-jpeg/jpeg-load.c:690 plug-ins/file-psd/psd-thumb-load.c:72
+#: plug-ins/file-icns/file-icns-load.c:689 plug-ins/file-jpeg/jpeg-load.c:692
+#: plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
-#: plug-ins/file-raw/file-darktable.c:620
-#: plug-ins/file-raw/file-rawtherapee.c:466
+#: plug-ins/file-raw/file-darktable.c:623
+#: plug-ins/file-raw/file-rawtherapee.c:469
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Opnar miniatyr for «%s»"
+
+#: plug-ins/file-icns/file-icns-load.c:768
+#, c-format
+msgid "Invalid or corrupt icns resource file."
+msgstr "Ugyldig eller øydelagt icns-resursfil."
 
 #: plug-ins/file-icns/file-icns.c:133
 msgid "Icns"
@@ -10468,18 +10501,18 @@ msgstr ""
 "Kalla opp ikkje-interaktivt med %d og %d koordinat for lenkjeområdet med eit "
 "bilete av %d ikon."
 
-#: plug-ins/file-ico/ico-load.c:228
+#: plug-ins/file-ico/ico-load.c:233
 #, c-format
 msgid "Could not read '%lu' bytes"
 msgstr "Klarte ikkje lesa «%lu» bytar"
 
-#: plug-ins/file-ico/ico-load.c:256
+#: plug-ins/file-ico/ico-load.c:261
 #, c-format
 msgid "Icon #%d has zero width or height"
 msgstr "Ikonet #%d har null breidd eller høgd"
 
-#: plug-ins/file-ico/ico-load.c:955 plug-ins/file-ico/ico-load.c:967
-#: plug-ins/file-ico/ico-load.c:995 plug-ins/file-ico/ico-load.c:1007
+#: plug-ins/file-ico/ico-load.c:993 plug-ins/file-ico/ico-load.c:1005
+#: plug-ins/file-ico/ico-load.c:1049 plug-ins/file-ico/ico-load.c:1061
 #, c-format
 msgid "Invalid ANI metadata"
 msgstr "Ugyldige ANI-metadata"
@@ -10533,11 +10566,11 @@ msgstr "Filstorleik utan metadata: ukjend"
 msgid "Enable preview to obtain the approximate file size."
 msgstr "Slå på førehandsvisinga for å finna omtrentleg filstorleik."
 
-#: plug-ins/file-jpeg/jpeg-load.c:241
+#: plug-ins/file-jpeg/jpeg-load.c:243
 msgid "JPEG preview"
 msgstr "JPEG førehandsvising"
 
-#: plug-ins/file-jpeg/jpeg-load.c:577
+#: plug-ins/file-jpeg/jpeg-load.c:579
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
@@ -10774,7 +10807,7 @@ msgstr ""
 "Photoshop har ikkje støtte for indekserte bilete med meir enn eitt lag. Laga "
 "vert difor fletta saman ved eksport."
 
-#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4103
+#: plug-ins/file-psd/psd-export.c:2970 plug-ins/file-psd/psd-load.c:4194
 msgid "Compatibility Notice"
 msgstr "Kompabilitetsnotis"
 
@@ -10815,104 +10848,111 @@ msgstr "Har ikkje støtte for filformatversjonen: %d"
 msgid "Too many channels in file: %d"
 msgstr "For mange kanalar i fila %d"
 
-#: plug-ins/file-psd/psd-load.c:634
+#: plug-ins/file-psd/psd-load.c:616 plug-ins/file-psd/psd-load.c:624
+#: plug-ins/file-psd/psd-load.c:631 plug-ins/file-psd/psd-load.c:3159
+#: plug-ins/file-psd/psd-load.c:3173 plug-ins/file-psd/psd-load.c:3186
+#, c-format
+msgid "Not enough channels: %d"
+msgstr "Ikkje nok kanalar: %d"
+
+#: plug-ins/file-psd/psd-load.c:655
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Ustøtta eller ugyldig biletstorleik: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:649 plug-ins/file-psd/psd-load.c:659
+#: plug-ins/file-psd/psd-load.c:670 plug-ins/file-psd/psd-load.c:680
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Har ikkje støtte for fargemodellen %s"
 
-#: plug-ins/file-psd/psd-load.c:686
+#: plug-ins/file-psd/psd-load.c:707
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Har ikkje støtte for bitdjupna %d"
 
-#: plug-ins/file-psd/psd-load.c:720 plug-ins/file-psd/psd-load.c:730
-#: plug-ins/file-psd/psd-load.c:981 plug-ins/file-psd/psd-load.c:1342
+#: plug-ins/file-psd/psd-load.c:741 plug-ins/file-psd/psd-load.c:751
+#: plug-ins/file-psd/psd-load.c:1002 plug-ins/file-psd/psd-load.c:1393
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Fila er øydelagt!"
 
-#: plug-ins/file-psd/psd-load.c:910
+#: plug-ins/file-psd/psd-load.c:931
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "For mange kanalar i laget %d"
 
-#: plug-ins/file-psd/psd-load.c:1017
+#: plug-ins/file-psd/psd-load.c:1038
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Laghøgda er ugyldig eller utan støtte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1026
+#: plug-ins/file-psd/psd-load.c:1047
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Lagbreidda er ugyldig eller utan støtte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1036
+#: plug-ins/file-psd/psd-load.c:1057
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Lagstorleiken er ugyldig eller utan støtte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1061
+#: plug-ins/file-psd/psd-load.c:1082
 #, c-format
 msgid "Unsupported or invalid mask info size."
 msgstr "Storleiken på maskeinfoen er ugyldig eller utan støtte."
 
-#: plug-ins/file-psd/psd-load.c:1244
+#: plug-ins/file-psd/psd-load.c:1265
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Lagmaskehøgda er ugyldig eller utan støtte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1253
+#: plug-ins/file-psd/psd-load.c:1274
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Lagmaskebreidda er ugyldig eller utan støtte: %d"
 
-#: plug-ins/file-psd/psd-load.c:1263
+#: plug-ins/file-psd/psd-load.c:1284
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Lagmaskestorleiken er ugyldig eller utan støtte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1875 plug-ins/file-psd/psd-load.c:3610
+#: plug-ins/file-psd/psd-load.c:1936 plug-ins/file-psd/psd-load.c:3701
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ustøtta eller ugyldig kanalstorleik"
 
-#: plug-ins/file-psd/psd-load.c:2252
+#: plug-ins/file-psd/psd-load.c:2319
 #, c-format
 msgid "Invalid channel dimensions %u x %u"
 msgstr "Ugyldig kanaldimensjon %u × %u"
 
-#: plug-ins/file-psd/psd-load.c:2320 plug-ins/file-psd/psd-load.c:3208
+#: plug-ins/file-psd/psd-load.c:2387 plug-ins/file-psd/psd-load.c:3299
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Har ikkje støtte for kompresjonsmodus %d"
 
-#: plug-ins/file-psd/psd-load.c:2937
+#: plug-ins/file-psd/psd-load.c:3004
 msgid "Inner Shadow"
 msgstr "Indre skugge"
 
-#: plug-ins/file-psd/psd-load.c:2938
+#: plug-ins/file-psd/psd-load.c:3005
 msgid "imported"
 msgstr "importer"
 
-#: plug-ins/file-psd/psd-load.c:3385
+#: plug-ins/file-psd/psd-load.c:3476
 msgid "Extra"
 msgstr "Ekstra"
 
-#: plug-ins/file-psd/psd-load.c:3687
+#: plug-ins/file-psd/psd-load.c:3778
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Klarte ikkje dekomprimera data"
 
-#: plug-ins/file-psd/psd-load.c:4080
+#: plug-ins/file-psd/psd-load.c:4171
 msgid "Duotone Import"
 msgstr "Duotone import"
 
-#: plug-ins/file-psd/psd-load.c:4081
+#: plug-ins/file-psd/psd-load.c:4172
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10922,18 +10962,13 @@ msgstr ""
 "Duotone fargeromsdata er lagra\n"
 "og kan brukast på nytt ved eksport."
 
-#: plug-ins/file-psd/psd-load.c:4104
+#: plug-ins/file-psd/psd-load.c:4195
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
 msgstr ""
 "Denne PSD-fila inneheld funksjonar som\n"
 "ennå ikkje er fullt ut støtta i GIMP:"
-
-#: plug-ins/file-psd/psd-util.c:199
-#, c-format
-msgid "Unexpected end of file"
-msgstr "Uventa filslutt"
 
 #: plug-ins/file-psd/psd.c:136 plug-ins/file-psd/psd.c:219
 #: plug-ins/file-psd/psd.c:221
@@ -11071,11 +11106,11 @@ msgid ""
 "Metadata fill layers are not supported and will show up as empty layers."
 msgstr "Har ikkje støtte for metadata-fyllaga og desse visast som tomme lag."
 
-#: plug-ins/file-raw/file-darktable.c:280
+#: plug-ins/file-raw/file-darktable.c:283
 msgid "Load thumbnail from a raw image via darktable"
 msgstr "Lastar inn ein miniatyr frå eit raw-bilete via darktable"
 
-#: plug-ins/file-raw/file-darktable.c:282
+#: plug-ins/file-raw/file-darktable.c:285
 msgid ""
 "This plug-in loads a thumbnail from a raw image by calling darktable-cli."
 msgstr ""
@@ -11203,6 +11238,11 @@ msgstr ""
 "\n"
 "Installer ein av dei for å lasta inn RAW-filer."
 
+#: plug-ins/file-sgi/sgi-lib.c:337 plug-ins/file-sgi/sgi.c:355
+#, c-format
+msgid "Invalid number of channels: %hu"
+msgstr "Ugyldig tal på kanalar: %hu"
+
 #: plug-ins/file-sgi/sgi.c:146 plug-ins/file-sgi/sgi.c:173
 msgid "Silicon Graphics IRIS image"
 msgstr "Silicon-Graphics-IRIS-bilete"
@@ -11257,11 +11297,6 @@ msgstr "Ugyldig breidd: %hu"
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Ugyldig høgd: %hu"
-
-#: plug-ins/file-sgi/sgi.c:355
-#, c-format
-msgid "Invalid number of channels: %hu"
-msgstr "Ugyldig tal på kanalar: %hu"
 
 #: plug-ins/file-sgi/sgi.c:640
 #, c-format
@@ -11436,17 +11471,17 @@ msgstr ""
 "Den tilordna profilen for utskriftssimuleringa er ikkje ein CMYK-profil.\n"
 "Denne profilen vert ikkje teke med i det eksporterte biletet."
 
-#: plug-ins/file-tiff/file-tiff-load.c:312
+#: plug-ins/file-tiff/file-tiff-load.c:313
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Ikkje eit TIFF-bilete, eller biletet er øydelagt."
 
-#: plug-ins/file-tiff/file-tiff-load.c:339
+#: plug-ins/file-tiff/file-tiff-load.c:340
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF «%s» inneheld ingen mapper"
 
-#: plug-ins/file-tiff/file-tiff-load.c:346
+#: plug-ins/file-tiff/file-tiff-load.c:347
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -11461,7 +11496,7 @@ msgstr[1] ""
 "TIFF «%s» tal på mapper etter heading mislukkast sjølv om det ser ut til å "
 "vera %d sider. Prøver å lasta fila med denne føresetnaden."
 
-#: plug-ins/file-tiff/file-tiff-load.c:477
+#: plug-ins/file-tiff/file-tiff-load.c:478
 msgid "Extra channels with unspecified data."
 msgstr "Ekstra kanal med uspesifiserte data."
 
@@ -11472,16 +11507,16 @@ msgstr "Ekstra kanal med uspesifiserte data."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:489
+#: plug-ins/file-tiff/file-tiff-load.c:490
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Uovereinsstemmande TIFF: Ekstra kanalar utan feltet \"ExtraSamples\"."
 
-#: plug-ins/file-tiff/file-tiff-load.c:586
+#: plug-ins/file-tiff/file-tiff-load.c:587
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Klarte ikkje lesa side %d av %d. Biletet kan vera øydelagt.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:615
+#: plug-ins/file-tiff/file-tiff-load.c:616
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -11490,7 +11525,7 @@ msgstr ""
 "Dette biletet har ein lineær fargeprofil, men denne vart ikkje sett på det "
 "første laget. Laga under lag nr. %d vert tolka som ikkje-lineære."
 
-#: plug-ins/file-tiff/file-tiff-load.c:623
+#: plug-ins/file-tiff/file-tiff-load.c:624
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -11500,33 +11535,33 @@ msgstr ""
 "fører til feil resultat, bør du vurdera å lasta inn kvart lag som eit "
 "separat bilete."
 
-#: plug-ins/file-tiff/file-tiff-load.c:635
+#: plug-ins/file-tiff/file-tiff-load.c:636
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "Mistenkeleg bitdjupn: %d for side %d. Biletet kan vera øydelagt."
 
-#: plug-ins/file-tiff/file-tiff-load.c:709
+#: plug-ins/file-tiff/file-tiff-load.c:710
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Har ikkje støtte for bitdjupna: %d for sida %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:724
+#: plug-ins/file-tiff/file-tiff-load.c:725
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Fekk ikkje tak i biletbreidda frå «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:732
+#: plug-ins/file-tiff/file-tiff-load.c:733
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Fekk ikkje tak i biletlengda frå «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:740
+#: plug-ins/file-tiff/file-tiff-load.c:741
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Ugyldig biletdimensjon (%u x %u) for side %d. Biletet kan vera øydelagt."
 
-#: plug-ins/file-tiff/file-tiff-load.c:761
+#: plug-ins/file-tiff/file-tiff-load.c:762
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -11535,7 +11570,7 @@ msgstr ""
 "Det var ikkje mogleg å få fotometrien frå «%s». Biletet er CCITT-komprimert, "
 "under forutsetjing av at min-er-kvit"
 
-#: plug-ins/file-tiff/file-tiff-load.c:768
+#: plug-ins/file-tiff/file-tiff-load.c:769
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -11544,7 +11579,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:800
+#: plug-ins/file-tiff/file-tiff-load.c:801
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -11552,7 +11587,7 @@ msgstr ""
 "Det er ikkje definert ein alfa-kanaltype for %s. Forutsett at alfa ikkje er "
 "premultiplisert"
 
-#: plug-ins/file-tiff/file-tiff-load.c:825
+#: plug-ins/file-tiff/file-tiff-load.c:826
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -11563,44 +11598,44 @@ msgstr ""
 "er ikkje sett medan det finst fleire kanaler. Om me reknar med at den første "
 "ekstra kanalen er ein alfa-kanal som ikkje har blitt premultiplisert."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1114
+#: plug-ins/file-tiff/file-tiff-load.c:1115
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Ugyldig eller ukjend komprimering %u. Set kompresjonen til null."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1172
+#: plug-ins/file-tiff/file-tiff-load.c:1173
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Klarte ikkje oppretta eit nytt bilete: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1359
+#: plug-ins/file-tiff/file-tiff-load.c:1360
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Ukjend oppløysingseining-type %d, går ut frå at det er dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1369
+#: plug-ins/file-tiff/file-tiff-load.c:1370
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Åtvaring: oppløysinga spesifisert utan einingstype, går ut frå dpi"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1377
+#: plug-ins/file-tiff/file-tiff-load.c:1378
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 "Åtvaring: manglar informasjon om y-oppløysinga, går ut at det er den same "
 "som x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1398
+#: plug-ins/file-tiff/file-tiff-load.c:1399
 msgid "Invalid image resolution info, using default"
 msgstr "Ugyldig info om biletoppløysing, brukar standard"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1460
+#: plug-ins/file-tiff/file-tiff-load.c:1461
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Klarte ikkje få fargekartet frå «%s»"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1469
+#: plug-ins/file-tiff/file-tiff-load.c:1470
 msgid ""
 "Indexed TIFFs with color maps larger than 256colors are not yet supported"
 msgstr ""
@@ -11611,22 +11646,22 @@ msgstr ""
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1559
+#: plug-ins/file-tiff/file-tiff-load.c:1560
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "Mistenkeleg tal på ekstra kanalar: %d. Mogleg øydelagt bilete."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1624
+#: plug-ins/file-tiff/file-tiff-load.c:1625
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1782
+#: plug-ins/file-tiff/file-tiff-load.c:1783
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "Klarte ikkje lesa data frå TIFF «%s». Mogleg feil i fila."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1818
-#: plug-ins/file-tiff/file-tiff-load.c:1862
+#: plug-ins/file-tiff/file-tiff-load.c:1819
+#: plug-ins/file-tiff/file-tiff-load.c:1863
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
@@ -11634,25 +11669,25 @@ msgstr ""
 "Feil i forsøk på å opna den temporære %s fila «%s» for å lasta inn tiff "
 "metadata: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1951
+#: plug-ins/file-tiff/file-tiff-load.c:1952
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: Inga støtte for biletformatet. Ingen RGBA-lastar tilgjengeleg"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2077
-#: plug-ins/file-tiff/file-tiff-load.c:2285
+#: plug-ins/file-tiff/file-tiff-load.c:2094
+#: plug-ins/file-tiff/file-tiff-load.c:2302
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "Lesinga av flisa feila. Kan vera feil i biletet i linje %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2086
-#: plug-ins/file-tiff/file-tiff-load.c:2294
+#: plug-ins/file-tiff/file-tiff-load.c:2103
+#: plug-ins/file-tiff/file-tiff-load.c:2311
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Klarte ikkje lesa skannelinja. Biletet kan vera øydelagt på linje %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2553
+#: plug-ins/file-tiff/file-tiff-load.c:2558
 #, c-format
 msgid ""
 "Invalid image dimensions (%u x %u) for Sketchbook layer %i. Image may be "
@@ -11661,27 +11696,27 @@ msgstr ""
 "Ugyldig biletstorleik (%u × %u) for Sketchbook-laget %i. Biletet kan vera "
 "øydelagt."
 
-#: plug-ins/file-tiff/file-tiff-load.c:3065
+#: plug-ins/file-tiff/file-tiff-load.c:3092
 msgid "Import from TIFF"
 msgstr "Importer frå TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3075
+#: plug-ins/file-tiff/file-tiff-load.c:3102
 msgid "_Show reduced images"
 msgstr "_Vis reduserte bilete"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3118
+#: plug-ins/file-tiff/file-tiff-load.c:3145
 msgid "Process extra channel as:"
 msgstr "Prosesser ekstra kanal som:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3121
+#: plug-ins/file-tiff/file-tiff-load.c:3148
 msgid "_Non-premultiplied alpha"
 msgstr "Ikkje-premultiplisert alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3122
+#: plug-ins/file-tiff/file-tiff-load.c:3149
 msgid "Pre_multiplied alpha"
 msgstr "_Premultiplisert alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3123
+#: plug-ins/file-tiff/file-tiff-load.c:3150
 msgid "Channe_l"
 msgstr "_Kanal"
 
@@ -11897,17 +11932,17 @@ msgstr "Lukkast ikkje å dekoda animert WebP-informasjon frå «%s»"
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "Lukkast ikkje å dekoda animert WebP-ramme frå «%s»"
 
-#: plug-ins/filter-browser/filter-browser.c:288
-#: plug-ins/filter-browser/filter-browser.c:330
+#: plug-ins/filter-browser/filter-browser.c:293
+#: plug-ins/filter-browser/filter-browser.c:335
 msgid "Allowed values:"
 msgstr "Tillatne verdiar:"
 
-#: plug-ins/filter-browser/filter-browser.c:433
+#: plug-ins/filter-browser/filter-browser.c:438
 #, c-format
 msgid "Operation name: %s"
 msgstr "Operasjonsnamn: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:446
+#: plug-ins/filter-browser/filter-browser.c:451
 #, c-format
 msgid "Categories: %s"
 msgstr "Kategoriar: %s"
@@ -11918,7 +11953,7 @@ msgstr "Kategoriar: %s"
 #.
 #. *    Scales
 #.
-#: plug-ins/filter-browser/filter-browser.c:476
+#: plug-ins/filter-browser/filter-browser.c:481
 #: plug-ins/gradient-flare/gradient-flare.c:2972
 #: plug-ins/gradient-flare/gradient-flare.c:3722
 #: plug-ins/gradient-flare/gradient-flare.c:3824
@@ -11926,66 +11961,66 @@ msgstr "Kategoriar: %s"
 msgid "Parameters"
 msgstr "Parameter"
 
-#: plug-ins/filter-browser/filter-browser.c:508
+#: plug-ins/filter-browser/filter-browser.c:513
 msgid "Additional Information"
 msgstr "Tilleggsinformasjon"
 
-#: plug-ins/filter-browser/filter-browser.c:514
+#: plug-ins/filter-browser/filter-browser.c:519
 #, c-format
 msgid "License: %s"
 msgstr "Lisens: %s"
 
-#: plug-ins/filter-browser/filter-browser.c:625
+#: plug-ins/filter-browser/filter-browser.c:630
 msgid "Searching by title"
 msgstr "Søkjer på tittel"
 
-#: plug-ins/filter-browser/filter-browser.c:628
+#: plug-ins/filter-browser/filter-browser.c:633
 msgid "Searching by description"
 msgstr "Søkjer på beskriving"
 
-#: plug-ins/filter-browser/filter-browser.c:631
+#: plug-ins/filter-browser/filter-browser.c:636
 msgid "Searching by category"
 msgstr "Søkjer på kategori"
 
-#: plug-ins/filter-browser/filter-browser.c:696
+#: plug-ins/filter-browser/filter-browser.c:701
 #, c-format
 msgid "%d filter matches your query"
 msgid_plural "%d filters match your query"
 msgstr[0] "%d filter passar spørjinga"
 msgstr[1] "%d filter passar spørjinga"
 
-#: plug-ins/filter-browser/filter-browser.c:702
+#: plug-ins/filter-browser/filter-browser.c:707
 #, c-format
 msgid "%d filter"
 msgid_plural "%d filters"
 msgstr[0] "%d filter"
 msgstr[1] "%d filter"
 
-#: plug-ins/filter-browser/filter-browser.c:734
+#: plug-ins/filter-browser/filter-browser.c:739
 msgid "GEGL Filter Browser"
 msgstr "GEGL Filter-lesar"
 
-#: plug-ins/filter-browser/filter-browser.c:751
+#: plug-ins/filter-browser/filter-browser.c:757
 msgid "by name"
 msgstr "etter namn"
 
-#: plug-ins/filter-browser/filter-browser.c:752
+#: plug-ins/filter-browser/filter-browser.c:758
 msgid "by title"
 msgstr "etter tittel"
 
-#: plug-ins/filter-browser/filter-browser.c:753
+#: plug-ins/filter-browser/filter-browser.c:759
 msgid "by description"
 msgstr "etter beskriving"
 
-#: plug-ins/filter-browser/filter-browser.c:845
+#: plug-ins/filter-browser/filter-browser.c:851
 msgid "_GEGL Filter Browser"
 msgstr "_GEGL Filter-lesar"
 
-#: plug-ins/filter-browser/filter-browser.c:850
+#: plug-ins/filter-browser/filter-browser.c:856
 msgid "Display information about available GEGL operations (i.e., filters)."
 msgstr "Vis informasjon om tilgjengelege GEGL-operasjonar (dvs. filter)."
 
-#: plug-ins/filter-browser/filter-browser.c:852
+#: plug-ins/filter-browser/filter-browser.c:858
 msgid ""
 "Shows a list of all GEGL operations, their details and what parameters they "
 "are configured with. The list contains operations provided by GEGL itself, "
@@ -12634,7 +12669,7 @@ msgid "Create line"
 msgstr "Lag linje"
 
 #: plug-ins/gfig/gfig-dialog.c:382 plug-ins/gfig/gfig-dialog.c:1429
-#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1607
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1620
 #: plug-ins/imagemap/imap-menu.ui.in:163 plug-ins/imagemap/imap-menu.ui.in:251
 msgid "Rectangle"
 msgstr "Rektangel"
@@ -12645,7 +12680,7 @@ msgstr "Lag rektangel"
 
 #: plug-ins/gfig/gfig-dialog.c:384 plug-ins/gfig/gfig-menu.ui:54
 #: plug-ins/gradient-flare/gradient-flare.c:4013
-#: plug-ins/imagemap/imap_main.c:1609 plug-ins/imagemap/imap-menu.ui.in:168
+#: plug-ins/imagemap/imap_main.c:1622 plug-ins/imagemap/imap-menu.ui.in:168
 #: plug-ins/imagemap/imap-menu.ui.in:256
 msgid "Circle"
 msgstr "Sirkel"
@@ -12672,7 +12707,7 @@ msgstr "Lag boge"
 
 #: plug-ins/gfig/gfig-dialog.c:390 plug-ins/gfig/gfig-menu.ui:69
 #: plug-ins/gradient-flare/gradient-flare.c:4030
-#: plug-ins/imagemap/imap_main.c:1611 plug-ins/imagemap/imap-menu.ui.in:173
+#: plug-ins/imagemap/imap_main.c:1624 plug-ins/imagemap/imap-menu.ui.in:173
 #: plug-ins/imagemap/imap-menu.ui.in:261
 msgid "Polygon"
 msgstr "Polygon"
@@ -12720,7 +12755,7 @@ msgstr "Flytt eit enkelt punkt"
 #: plug-ins/gfig/gfig-dialog.c:403 plug-ins/gfig/gfig-dialog.c:1286
 #: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1572 plug-ins/imagemap/imap-menu.ui.in:44
+#: plug-ins/imagemap/imap_main.c:1585 plug-ins/imagemap/imap-menu.ui.in:44
 #: plug-ins/imagemap/imap-menu.ui.in:322 plug-ins/imagemap/imap-menu.ui.in:359
 msgid "Copy"
 msgstr "Kopier"
@@ -12730,7 +12765,7 @@ msgid "Copy an object"
 msgstr "Kopier eit objekt"
 
 #: plug-ins/gfig/gfig-dialog.c:405 plug-ins/gfig/gfig-menu.ui:104
-#: plug-ins/ifs-compose/ifs-compose.c:959 plug-ins/ifs-compose/ifs-menus.ui:27
+#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:27
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "Fjern"
@@ -13038,11 +13073,11 @@ msgstr ""
 msgid "File"
 msgstr "Fil"
 
-#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1556
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1569
 msgid "Open"
 msgstr "Opna"
 
-#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1559
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1572
 #: plug-ins/imagemap/imap-menu.ui.in:9
 msgid "Save"
 msgstr "Lagra"
@@ -13056,8 +13091,8 @@ msgstr "Lukk"
 msgid "Edit"
 msgstr "Rediger"
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:961
-#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1565
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1578
 #: plug-ins/imagemap/imap-menu.ui.in:32
 msgid "Undo"
 msgstr "Angra"
@@ -13067,7 +13102,7 @@ msgstr "Angra"
 msgid "Clear"
 msgstr "Tøm"
 
-#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1562
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1575
 #: plug-ins/imagemap/imap-menu.ui.in:74
 msgid "Preferences"
 msgstr "Innstillingar"
@@ -13488,7 +13523,7 @@ msgid "Applies the paper as it is (without embossing it)"
 msgstr "Bruk papiret som det er, utan bossering (relieffverknad)"
 
 #. Scale
-#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:668
+#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:669
 msgid "Scale:"
 msgstr "Skalering:"
 
@@ -13545,39 +13580,39 @@ msgstr "Relativ dekkevne for penselstroka"
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Fekk ikkje lagra PPM-fila «%s»: %s"
 
-#: plug-ins/gimpressionist/presets.c:642
+#: plug-ins/gimpressionist/presets.c:650
 msgid "Save Current"
 msgstr "Lagra innstillingane"
 
-#: plug-ins/gimpressionist/presets.c:669
+#: plug-ins/gimpressionist/presets.c:677
 msgid "Description:"
 msgstr "Penselnamn:"
 
-#: plug-ins/gimpressionist/presets.c:897
+#: plug-ins/gimpressionist/presets.c:905
 msgid "Gimpressionist Defaults"
 msgstr "Førehandsinnstillingane for Gimpressionisten"
 
-#: plug-ins/gimpressionist/presets.c:1018
+#: plug-ins/gimpressionist/presets.c:1026
 msgid "_Presets"
 msgstr "_Førehandsinnstillingar"
 
-#: plug-ins/gimpressionist/presets.c:1033
+#: plug-ins/gimpressionist/presets.c:1041
 msgid "Save Current..."
 msgstr "Lagra gjeldande …"
 
-#: plug-ins/gimpressionist/presets.c:1041
+#: plug-ins/gimpressionist/presets.c:1049
 msgid "Save the current settings to the specified file"
 msgstr "Lagra dei brukte innstillingane til den spesifiserte fila"
 
-#: plug-ins/gimpressionist/presets.c:1069
+#: plug-ins/gimpressionist/presets.c:1077
 msgid "Reads the selected Preset into memory"
 msgstr "Les dei valde innstillingane til minnet"
 
-#: plug-ins/gimpressionist/presets.c:1075
+#: plug-ins/gimpressionist/presets.c:1083
 msgid "Deletes the selected Preset"
 msgstr "Visk ut dei valde innstillingane"
 
-#: plug-ins/gimpressionist/presets.c:1081
+#: plug-ins/gimpressionist/presets.c:1089
 msgid "Reread the folder of Presets"
 msgstr "Les inn mappa med førehandsinnstillingar på nytt"
 
@@ -14117,179 +14152,179 @@ msgstr ""
 "Parsefeil i «%s»:\n"
 "%s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:433
+#: plug-ins/ifs-compose/ifs-compose.c:434
 msgid "_IFS Fractal..."
 msgstr "_IFS Fraktal …"
 
-#: plug-ins/ifs-compose/ifs-compose.c:439
+#: plug-ins/ifs-compose/ifs-compose.c:440
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Opprett ein IFS-fraktal (Iterated Function System)"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:640
+#: plug-ins/ifs-compose/ifs-compose.c:641
 msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:654
+#: plug-ins/ifs-compose/ifs-compose.c:655
 msgid "Y:"
 msgstr "Y:"
 
 #. Angle
-#: plug-ins/ifs-compose/ifs-compose.c:682
+#: plug-ins/ifs-compose/ifs-compose.c:683
 msgid "Angle:"
 msgstr "Vinkel:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:696
+#: plug-ins/ifs-compose/ifs-compose.c:697
 msgid "Asymmetry:"
 msgstr "Asymmetri:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:710
+#: plug-ins/ifs-compose/ifs-compose.c:711
 msgid "Shear:"
 msgstr "Forskyv:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:755
+#: plug-ins/ifs-compose/ifs-compose.c:756
 msgid "Simple"
 msgstr "Enkel"
 
-#: plug-ins/ifs-compose/ifs-compose.c:764
+#: plug-ins/ifs-compose/ifs-compose.c:765
 msgid "IFS Fractal: Target"
 msgstr "IFS-fraktal: Mål"
 
-#: plug-ins/ifs-compose/ifs-compose.c:770
+#: plug-ins/ifs-compose/ifs-compose.c:771
 msgid "Scale hue by:"
 msgstr "Skaler kulør med:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:785
+#: plug-ins/ifs-compose/ifs-compose.c:786
 msgid "Scale value by:"
 msgstr "Skaler lysverdi med:"
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:802
+#: plug-ins/ifs-compose/ifs-compose.c:803
 msgid "Full"
 msgstr "Heile"
 
-#: plug-ins/ifs-compose/ifs-compose.c:809
+#: plug-ins/ifs-compose/ifs-compose.c:810
 msgid "IFS Fractal: Red"
 msgstr "IFS-fraktal: Raud"
 
-#: plug-ins/ifs-compose/ifs-compose.c:817
+#: plug-ins/ifs-compose/ifs-compose.c:818
 msgid "IFS Fractal: Green"
 msgstr "IFS-fraktal: Grøn"
 
-#: plug-ins/ifs-compose/ifs-compose.c:825
+#: plug-ins/ifs-compose/ifs-compose.c:826
 msgid "IFS Fractal: Blue"
 msgstr "IFS-fraktal: Blå"
 
-#: plug-ins/ifs-compose/ifs-compose.c:833
+#: plug-ins/ifs-compose/ifs-compose.c:834
 msgid "IFS Fractal: Black"
 msgstr "IFS-fraktal: Svart"
 
-#: plug-ins/ifs-compose/ifs-compose.c:906
+#: plug-ins/ifs-compose/ifs-compose.c:907
 msgid "IFS Fractal"
 msgstr "IFS-fraktal"
 
-#: plug-ins/ifs-compose/ifs-compose.c:950 plug-ins/ifs-compose/ifs-menus.ui:6
+#: plug-ins/ifs-compose/ifs-compose.c:951 plug-ins/ifs-compose/ifs-menus.ui:6
 #: plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Flytt"
 
-#: plug-ins/ifs-compose/ifs-compose.c:952 plug-ins/ifs-compose/ifs-menus.ui:11
+#: plug-ins/ifs-compose/ifs-compose.c:953 plug-ins/ifs-compose/ifs-menus.ui:11
 msgid "Rotate"
 msgstr "Roter"
 
-#: plug-ins/ifs-compose/ifs-compose.c:954 plug-ins/ifs-compose/ifs-menus.ui:16
+#: plug-ins/ifs-compose/ifs-compose.c:955 plug-ins/ifs-compose/ifs-menus.ui:16
 msgid "Stretch"
 msgstr "Strekk"
 
-#: plug-ins/ifs-compose/ifs-compose.c:957 plug-ins/ifs-compose/ifs-menus.ui:23
+#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:23
 msgid "New"
 msgstr "Ny"
 
-#: plug-ins/ifs-compose/ifs-compose.c:963 plug-ins/ifs-compose/ifs-menus.ui:35
-#: plug-ins/imagemap/imap_main.c:1567 plug-ins/imagemap/imap-menu.ui.in:36
+#: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35
+#: plug-ins/imagemap/imap_main.c:1580 plug-ins/imagemap/imap-menu.ui.in:36
 msgid "Redo"
 msgstr "Gjenopprett"
 
-#: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:39
+#: plug-ins/ifs-compose/ifs-compose.c:966 plug-ins/ifs-compose/ifs-menus.ui:39
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 #: plug-ins/imagemap/imap-menu.ui.in:58
 msgid "Select All"
 msgstr "Vel alle"
 
-#: plug-ins/ifs-compose/ifs-compose.c:967 plug-ins/ifs-compose/ifs-menus.ui:43
+#: plug-ins/ifs-compose/ifs-compose.c:968 plug-ins/ifs-compose/ifs-menus.ui:43
 msgid "Recompute Center"
 msgstr "Berekna senter på nytt"
 
-#: plug-ins/ifs-compose/ifs-compose.c:970 plug-ins/ifs-compose/ifs-menus.ui:49
+#: plug-ins/ifs-compose/ifs-compose.c:971 plug-ins/ifs-compose/ifs-menus.ui:49
 msgid "Render Options"
 msgstr "Teikneinnstillingar"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1029
+#: plug-ins/ifs-compose/ifs-compose.c:1030
 msgid "Spatial Transformation"
 msgstr "Romtransformasjon"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1035
+#: plug-ins/ifs-compose/ifs-compose.c:1036
 msgid "Color Transformation"
 msgstr "Fargetransformasjon"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1045
+#: plug-ins/ifs-compose/ifs-compose.c:1046
 msgid "Relative probability:"
 msgstr "Relativ slump:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1209
+#: plug-ins/ifs-compose/ifs-compose.c:1210
 msgid "IFS Fractal Render Options"
 msgstr "Innstillingar for IFS-fraktal"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1231
+#: plug-ins/ifs-compose/ifs-compose.c:1232
 msgid "Max. memory:"
 msgstr "Maks minne:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1244
+#: plug-ins/ifs-compose/ifs-compose.c:1245
 msgid "Iterations:"
 msgstr "Gjentakingar:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1259
+#: plug-ins/ifs-compose/ifs-compose.c:1260
 msgid "Subdivide:"
 msgstr "Vidaredeling:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1273
+#: plug-ins/ifs-compose/ifs-compose.c:1274
 msgid "Spot radius:"
 msgstr "Punktradius:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1347
+#: plug-ins/ifs-compose/ifs-compose.c:1354
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Lager IFS (%d/%d)"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1510
+#: plug-ins/ifs-compose/ifs-compose.c:1517
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformasjon %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2473
+#: plug-ins/ifs-compose/ifs-compose.c:2480
 msgid "Save failed"
 msgstr "Mislukka lagring"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2556
-#: plug-ins/ifs-compose/ifs-compose.c:2569
+#: plug-ins/ifs-compose/ifs-compose.c:2563
+#: plug-ins/ifs-compose/ifs-compose.c:2576
 msgid "Open failed"
 msgstr "Klarte ikkje opna"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2564
+#: plug-ins/ifs-compose/ifs-compose.c:2571
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Fila «%s» ser ikkje ut til å vera ei IFS-fraktal-fil."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2604
+#: plug-ins/ifs-compose/ifs-compose.c:2611
 msgid "Save as IFS Fractal file"
 msgstr "Lagra som IFS-fraktal-fil"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2641
+#: plug-ins/ifs-compose/ifs-compose.c:2648
 msgid "Open IFS Fractal file"
 msgstr "Opna IFS-fraktal-fil"
 
@@ -14338,7 +14373,7 @@ msgstr "Lag"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1570 plug-ins/imagemap/imap-menu.ui.in:40
+#: plug-ins/imagemap/imap_main.c:1583 plug-ins/imagemap/imap-menu.ui.in:40
 #: plug-ins/imagemap/imap-menu.ui.in:318 plug-ins/imagemap/imap-menu.ui.in:355
 msgid "Cut"
 msgstr "Klipp ut"
@@ -14485,7 +14520,7 @@ msgstr "Flytt til front"
 msgid "Move Up"
 msgstr "Flytt opp"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1574
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1587
 #: plug-ins/imagemap/imap-menu.ui.in:48 plug-ins/imagemap/imap-menu.ui.in:293
 msgid "Paste"
 msgstr "Lim inn"
@@ -14655,15 +14690,15 @@ msgstr "pikslar frå _venstre"
 msgid "pixels from _top"
 msgstr "pikslar _ovanfrå"
 
-#: plug-ins/imagemap/imap_main.c:221
+#: plug-ins/imagemap/imap_main.c:222
 msgid "_Image Map..."
 msgstr "_Biletkart …"
 
-#: plug-ins/imagemap/imap_main.c:225
+#: plug-ins/imagemap/imap_main.c:226
 msgid "Create a clickable imagemap"
 msgstr "Lag eit klikkbart biletkart"
 
-#: plug-ins/imagemap/imap_main.c:658 plug-ins/imagemap/imap_settings.c:180
+#: plug-ins/imagemap/imap_main.c:659 plug-ins/imagemap/imap_settings.c:180
 msgid "<Untitled>"
 msgstr "<Utan namn>"
 
@@ -14675,81 +14710,81 @@ msgstr "Nokre data er endra!"
 msgid "Do you really want to discard your changes?"
 msgstr "Vil du verkeleg forkasta desse endringane?"
 
-#: plug-ins/imagemap/imap_main.c:1068
+#: plug-ins/imagemap/imap_main.c:1074
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Fila «%s» er lagra."
 
-#: plug-ins/imagemap/imap_main.c:1072
+#: plug-ins/imagemap/imap_main.c:1078
 msgid "Couldn't save file:"
 msgstr "Klarte ikkje lagra fila:"
 
-#: plug-ins/imagemap/imap_main.c:1085
+#: plug-ins/imagemap/imap_main.c:1093
 msgid "Image size has changed."
 msgstr "Biletstorleiken er endra."
 
-#: plug-ins/imagemap/imap_main.c:1086
+#: plug-ins/imagemap/imap_main.c:1094
 msgid "Resize area's?"
 msgstr "Endra storleiken på areala?"
 
-#: plug-ins/imagemap/imap_main.c:1128
+#: plug-ins/imagemap/imap_main.c:1141
 msgid "Couldn't read file:"
 msgstr "Klarte ikkje lese fila:"
 
-#: plug-ins/imagemap/imap_main.c:1181
+#: plug-ins/imagemap/imap_main.c:1194
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_main.c:1577 plug-ins/imagemap/imap-menu.ui.in:105
+#: plug-ins/imagemap/imap_main.c:1590 plug-ins/imagemap/imap-menu.ui.in:105
 #: plug-ins/imagemap/imap-menu.ui.in:271
 msgid "Zoom In"
 msgstr "Forstørr"
 
-#: plug-ins/imagemap/imap_main.c:1579 plug-ins/imagemap/imap-menu.ui.in:109
+#: plug-ins/imagemap/imap_main.c:1592 plug-ins/imagemap/imap-menu.ui.in:109
 #: plug-ins/imagemap/imap-menu.ui.in:275
 msgid "Zoom Out"
 msgstr "Forminsk"
 
-#: plug-ins/imagemap/imap_main.c:1582
+#: plug-ins/imagemap/imap_main.c:1595
 msgid "Edit Map Info"
 msgstr "Rediger informasjonen i biletkartet"
 
-#: plug-ins/imagemap/imap_main.c:1585
+#: plug-ins/imagemap/imap_main.c:1598
 msgid "Move Area to Front"
 msgstr "Flytt området øvst"
 
-#: plug-ins/imagemap/imap_main.c:1587
+#: plug-ins/imagemap/imap_main.c:1600
 msgid "Move Area to Bottom"
 msgstr "Flytt områdetet nedst"
 
-#: plug-ins/imagemap/imap_main.c:1605 plug-ins/imagemap/imap-menu.ui.in:158
+#: plug-ins/imagemap/imap_main.c:1618 plug-ins/imagemap/imap-menu.ui.in:158
 #: plug-ins/imagemap/imap-menu.ui.in:246
 msgid "Arrow"
 msgstr "Pil"
 
-#: plug-ins/imagemap/imap_main.c:1605
+#: plug-ins/imagemap/imap_main.c:1618
 msgid "Select Existing Area"
 msgstr "Vel område som finst frå før"
 
-#: plug-ins/imagemap/imap_main.c:1607
+#: plug-ins/imagemap/imap_main.c:1620
 msgid "Define Rectangle area"
 msgstr "Definer rektangulært område"
 
-#: plug-ins/imagemap/imap_main.c:1609
+#: plug-ins/imagemap/imap_main.c:1622
 msgid "Define Circle/Oval area"
 msgstr "Definer sirkelforma område"
 
-#: plug-ins/imagemap/imap_main.c:1611
+#: plug-ins/imagemap/imap_main.c:1624
 msgid "Define Polygon area"
 msgstr "Definer mangekanta område"
 
-#: plug-ins/imagemap/imap_main.c:1614 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1627 plug-ins/imagemap/imap_menu.c:180
 #: plug-ins/imagemap/imap-menu.ui.in:302 plug-ins/imagemap/imap-menu.ui.in:339
 msgid "Edit Area Info..."
 msgstr "Rediger områdeinformasjon …"
 
-#: plug-ins/imagemap/imap_main.c:1614 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1627 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Rediger info for vald område"
 
@@ -16189,7 +16224,7 @@ msgstr "_Skriv metadata"
 
 #. IPTC tab
 #: plug-ins/metadata/metadata-editor.c:1232
-#: plug-ins/metadata/metadata-viewer.c:304
+#: plug-ins/metadata/metadata-viewer.c:306
 msgid "IPTC"
 msgstr "IPTC"
 
@@ -16264,20 +16299,20 @@ msgstr ""
 msgid "Unrated"
 msgstr "Ikkje rangert"
 
-#: plug-ins/metadata/metadata-editor.c:4680
+#: plug-ins/metadata/metadata-editor.c:4565
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Fekk ikkje sett metadatataggen %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5580
+#: plug-ins/metadata/metadata-editor.c:5465
 msgid "Import Metadata File"
 msgstr "Importer metadatafil"
 
-#: plug-ins/metadata/metadata-editor.c:5584
+#: plug-ins/metadata/metadata-editor.c:5469
 msgid "_Import"
 msgstr "_Importer"
 
-#: plug-ins/metadata/metadata-editor.c:5615
+#: plug-ins/metadata/metadata-editor.c:5500
 msgid "Export Metadata File"
 msgstr "Eksporter metadatafil"
 
@@ -16505,28 +16540,28 @@ msgstr "Vis metadata (EXIF, IPTC, XMP)"
 msgid "Metadata Viewer: %s"
 msgstr "Metadatalesar: %s"
 
-#: plug-ins/metadata/metadata-viewer.c:260
+#: plug-ins/metadata/metadata-viewer.c:262
 msgid "Exif"
 msgstr "Exif"
 
-#: plug-ins/metadata/metadata-viewer.c:282
+#: plug-ins/metadata/metadata-viewer.c:284
 msgid "XMP"
 msgstr "XMP"
 
-#: plug-ins/metadata/metadata-viewer.c:425
+#: plug-ins/metadata/metadata-viewer.c:427
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(%lu fleire tikn)"
 
-#: plug-ins/metadata/metadata-viewer.c:644
+#: plug-ins/metadata/metadata-viewer.c:646
 msgid " meter"
 msgstr " meter"
 
-#: plug-ins/metadata/metadata-viewer.c:645
+#: plug-ins/metadata/metadata-viewer.c:647
 msgid " feet"
 msgstr " fot"
 
-#: plug-ins/metadata/metadata-viewer.c:805
+#: plug-ins/metadata/metadata-viewer.c:807
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu fleire bytes)"
@@ -16659,35 +16694,35 @@ msgstr "Loddrett"
 msgid "Both"
 msgstr "Begge"
 
-#: plug-ins/print/print.c:166
+#: plug-ins/print/print.c:167
 msgid "_Print..."
 msgstr "_Skriv ut …"
 
-#: plug-ins/print/print.c:171
+#: plug-ins/print/print.c:172
 msgid "Print the image"
 msgstr "Skriv ut biletet"
 
-#: plug-ins/print/print.c:190
+#: plug-ins/print/print.c:191
 msgid "Page Set_up..."
 msgstr "Sideoppse_tt …"
 
-#: plug-ins/print/print.c:195
+#: plug-ins/print/print.c:196
 msgid "Adjust page size and orientation for printing"
 msgstr "Juster sidestorleiken og sideorienteringa for utskriving"
 
-#: plug-ins/print/print.c:326 plug-ins/print/print.c:456
+#: plug-ins/print/print.c:337 plug-ins/print/print.c:474
 msgid "Image Settings"
 msgstr "Biletinnstillingar"
 
-#: plug-ins/print/print.c:427
+#: plug-ins/print/print.c:441
 msgid "An error occurred while trying to print:"
 msgstr "Feil ved utskrift:"
 
-#: plug-ins/print/print.c:457
+#: plug-ins/print/print.c:475
 msgid "_Print"
 msgstr "_Skriv ut"
 
-#: plug-ins/print/print.c:474
+#: plug-ins/print/print.c:497
 msgid "Printing"
 msgstr "Skriv ut"
 
