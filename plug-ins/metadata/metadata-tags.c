@@ -267,7 +267,7 @@ const combobox_str_tag datamining[] =
 {
   { "http://ns.useplus.org/ldf/vocab/DMI-UNSPECIFIED", N_("No prohibition defined")                                                           },
   { "http://ns.useplus.org/ldf/vocab/DMI-ALLOWED", N_("Allowed")                                                                              },
-  { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-AIMLTRAINING", N_("Prohibited for AI/ML training")                                       },
+  { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-AIMLTRAINING", N_("Prohibited for AI/ML training")                                        },
   { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-GENAIMLTRAINING", N_("Prohibited for Generative AI/ML training")                          },
   { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED-EXCEPTSEARCHENGINEINDEXING", N_("Prohibited except for search engine indexing")           },
   { "http://ns.useplus.org/ldf/vocab/DMI-PROHIBITED", N_("Prohibited")                                                                        },
