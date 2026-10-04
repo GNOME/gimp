@@ -334,6 +334,22 @@ extern const gint             n_phone_types;
 extern const combobox_str_tag dicom[];
 extern const gint             n_dicom;
 
+/* Keep in sync with the values in combo_metadata! */
+enum
+{
+  COMBO_AGEDISC       = 0,
+  COMBO_MODELREL,
+  COMBO_SOURCETYPE,
+  COMBO_PROPREL,
+  COMBO_DATAMINING,
+  COMBO_DCMSEX,
+
+  COMBO_LAST
+};
+
+extern const combo_references combo_metadata[];
+extern const gint             n_combo_metadata;
+
 /* GPS Altitude Ref */
 extern const gchar *gpsaltref[];
 extern const gint   n_gpsaltref;
