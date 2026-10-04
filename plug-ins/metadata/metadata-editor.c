@@ -2464,7 +2464,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   GtkWidget *combo_widget;
   GtkWidget *entry_widget;
   GtkWidget *button_widget;
-  gint       width, height;
   gchar     *value;
   gint       i;
 
@@ -2603,57 +2602,19 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
-  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.plus.MinorModelAgeDisclosure");
-  for (i = 0; i < n_minormodelagedisclosure; i++)
+  /* Loop over all combos in combo_metadata */
+  for (i = 0; i < COMBO_LAST; i++)
     {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (minormodelagedisclosure[i].display));
-    }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
+      gint tag_index = combo_metadata[i].metadata_index;
 
-  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.plus.ModelReleaseStatus");
-  for (i = 0; i < n_modelreleasestatus; i++)
-    {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (modelreleasestatus[i].display));
+      combo_widget = metadata_editor_get_widget (meta_info, default_metadata_tags[tag_index].tag);
+      for (gint j = 0; j < combo_metadata[i].n_values; j++)
+        {
+          gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
+                                          gettext (combo_metadata[i].metadata_values[j].display));
+        }
+      gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
     }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
-  gtk_widget_get_size_request (combo_widget, &width, &height);
-  gtk_widget_set_size_request (combo_widget, 180, height);
-
-  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.iptcExt.DigitalSourceType");
-  for (i = 0; i < n_digitalsourcetype; i++)
-    {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (digitalsourcetype[i].display));
-    }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
-
-  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.plus.PropertyReleaseStatus");
-  for (i = 0; i < n_propertyreleasestatus; i++)
-    {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (propertyreleasestatus[i].display));
-    }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
-  gtk_widget_get_size_request (combo_widget, &width, &height);
-  gtk_widget_set_size_request (combo_widget, 180, height);
-
-  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.plus.DataMining");
-  for (i = 0; i < n_datamining; i++)
-    {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (datamining[i].display));
-    }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
-
-  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.DICOM.PatientSex");
-  for (i = 0; i < n_dicom; i++)
-    {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (dicom[i].display));
-    }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSLatitudeRef");
   for (i = 0; i < n_gpslatref; i++)
@@ -4426,93 +4387,19 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
 
                   gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
                 }
-              else if (! strcmp ("Xmp.plus.MinorModelAgeDisclosure",
-                                 default_metadata_tags[i].tag))
+              else if (default_metadata_tags[i].mode == MODE_COMBO &&
+                       default_metadata_tags[i].combo_index > -1)
                 {
-                  gint loop;
+                  gint ci = default_metadata_tags[i].combo_index;
 
-                  for (loop = 0; loop < n_minormodelagedisclosure; loop++)
+                  for (gint loop = 0; loop < combo_metadata[ci].n_values; loop++)
                     {
-                      if (! strcmp (minormodelagedisclosure[loop].data, value))
+                      if (! strcmp (combo_metadata[ci].metadata_values[loop].data, value))
                         {
                           gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
                           break;
                         }
                     }
-                }
-              else if (! strcmp ("Xmp.plus.ModelReleaseStatus",
-                                 default_metadata_tags[i].tag))
-                {
-                  gint loop;
-
-                  for (loop = 0; loop < n_modelreleasestatus; loop++)
-                    {
-                      if (! strcmp (modelreleasestatus[loop].data, value))
-                        {
-                          gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
-                          break;
-                        }
-                    }
-                }
-              else if (! strcmp ("Xmp.iptcExt.DigitalSourceType",
-                                 default_metadata_tags[i].tag))
-                {
-                  gint loop;
-
-                  for (loop = 0; loop < n_digitalsourcetype; loop++)
-                    {
-                      if (! strcmp (digitalsourcetype[loop].data, value))
-                        {
-                          gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
-                          break;
-                        }
-                    }
-                }
-              else if (! strcmp ("Xmp.plus.PropertyReleaseStatus",
-                                 default_metadata_tags[i].tag))
-                {
-                  gint loop;
-
-                  for (loop = 0; loop < n_propertyreleasestatus; loop++)
-                    {
-                      if (! strcmp (propertyreleasestatus[loop].data, value))
-                        {
-                          gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
-                          break;
-                        }
-                    }
-                }
-              else if (! strcmp ("Xmp.plus.DataMining",
-                                 default_metadata_tags[i].tag))
-                {
-                  gint loop;
-
-                  for (loop = 0; loop < n_datamining; loop++)
-                    {
-                      if (! strcmp (datamining[loop].data, value))
-                        {
-                          gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
-                          break;
-                        }
-                    }
-                }
-              else if (! strcmp ("Xmp.DICOM.PatientSex",
-                                 default_metadata_tags[i].tag))
-                {
-                  if (! strcmp ("male", value))
-                    {
-                      data = 1;
-                    }
-                  else if (! strcmp ("female", value))
-                    {
-                      data = 2;
-                    }
-                  else if (! strcmp ("other", value))
-                    {
-                      data = 3;
-                    }
-
-                  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
                 }
             }
           g_free (value);
@@ -5330,33 +5217,6 @@ metadata_editor_write_callback (GtkWidget       *dialog,
                   g_free (save);
                 }
             }
-          else if (! strcmp ("Xmp.DICOM.PatientSex",
-                             default_metadata_tags[i].tag))
-            {
-              switch (value)
-                {
-                case 0:
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                  break;
-
-                case 1:
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  "male", FALSE);
-                  break;
-
-                case 2:
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  "female", FALSE);
-                  break;
-
-                case 3:
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  "other", FALSE);
-                   break;
-                }
-            }
           else if (! strcmp ("Exif.GPSInfo.GPSLongitudeRef",
                              default_metadata_tags[i].tag))
             {
@@ -5423,9 +5283,11 @@ metadata_editor_write_callback (GtkWidget       *dialog,
                   break;
                 }
             }
-          else if (! strcmp ("Xmp.plus.ModelReleaseStatus",
-                             default_metadata_tags[i].tag))
+          else if (default_metadata_tags[i].mode == MODE_COMBO &&
+                   default_metadata_tags[i].combo_index > -1)
             {
+              gint ci = default_metadata_tags[i].combo_index;
+
               if (value == 0)
                 {
                   gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
@@ -5435,67 +5297,8 @@ metadata_editor_write_callback (GtkWidget       *dialog,
               else
                 {
                   set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  modelreleasestatus[value].data, FALSE);
-                }
-            }
-          else if (! strcmp ("Xmp.plus.PropertyReleaseStatus",
-                             default_metadata_tags[i].tag))
-            {
-              if (value == 0)
-                {
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                }
-              else
-                {
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  propertyreleasestatus[value].data, FALSE);
-                }
-            }
-          else if (! strcmp ("Xmp.plus.MinorModelAgeDisclosure",
-                             default_metadata_tags[i].tag))
-            {
-              if (value == 0)
-                {
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                }
-              else
-                {
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  minormodelagedisclosure[value].data, FALSE);
-                }
-            }
-          else if (! strcmp ("Xmp.iptcExt.DigitalSourceType",
-                             default_metadata_tags[i].tag))
-            {
-              if (value == 0)
-                {
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                }
-              else
-                {
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  digitalsourcetype[value].data, FALSE);
-                }
-            }
-          else if (! strcmp ("Xmp.plus.DataMining",
-                             default_metadata_tags[i].tag))
-            {
-              if (value == 0)
-                {
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                }
-              else
-                {
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  datamining[value].data, FALSE);
+                                  combo_metadata[ci].metadata_values[value].data,
+                                  FALSE);
                 }
             }
         }
