@@ -334,6 +334,22 @@ extern const gint             n_phone_types;
 extern const combobox_str_tag dicom[];
 extern const gint             n_dicom;
 
+/* GPS Altitude Ref */
+extern const combobox_str_tag  gpsaltref[];
+extern const gint              n_gpsaltref;
+
+/* GPS Latitude Ref */
+extern const combobox_str_tag  gpslatref[];
+extern const gint              n_gpslatref;
+
+/* GPS Longitude Ref */
+extern const combobox_str_tag  gpslngref[];
+extern const gint              n_gpslngref;
+
+/* GPS Measurement System */
+extern const gchar *gpsaltsys[];
+extern const gint   n_gpsaltsys;
+
 /* Keep in sync with the values in combo_metadata! */
 enum
 {
@@ -342,6 +358,9 @@ enum
   COMBO_SOURCETYPE,
   COMBO_PROPREL,
   COMBO_DATAMINING,
+  COMBO_GPSLONREF,
+  COMBO_GPSLATREF,
+  COMBO_GPSALTREF,
   COMBO_DCMSEX,
 
   COMBO_LAST
@@ -349,22 +368,6 @@ enum
 
 extern const combo_references combo_metadata[];
 extern const gint             n_combo_metadata;
-
-/* GPS Altitude Ref */
-extern const gchar *gpsaltref[];
-extern const gint   n_gpsaltref;
-
-/* GPS Latitude Ref */
-extern const gchar *gpslatref[];
-extern const gint   n_gpslatref;
-
-/* GPS Longitude Ref */
-extern const gchar *gpslngref[];
-extern const gint   n_gpslngref;
-
-/* GPS Measurement System */
-extern const gchar *gpsaltsys[];
-extern const gint   n_gpsaltsys;
 
 extern const TranslateTag creatorContactInfoTags[];
 extern const gint n_creatorContactInfoTags;

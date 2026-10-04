@@ -117,11 +117,11 @@ const metadata_tag default_metadata_tags[] =
 
   /* GPS */
   { "Exif.GPSInfo.GPSLongitude",            MODE_SINGLE, -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE, -1 },
-  { "Exif.GPSInfo.GPSLongitudeRef",         MODE_COMBO,  -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE, -1 },
+  { "Exif.GPSInfo.GPSLongitudeRef",         MODE_COMBO,  -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE, COMBO_GPSLONREF },
   { "Exif.GPSInfo.GPSLatitude",             MODE_SINGLE, -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE, -1 },
-  { "Exif.GPSInfo.GPSLatitudeRef",          MODE_COMBO,  -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE, -1 },
+  { "Exif.GPSInfo.GPSLatitudeRef",          MODE_COMBO,  -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE, COMBO_GPSLATREF },
   { "Exif.GPSInfo.GPSAltitude",             MODE_SINGLE, -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE, -1 },
-  { "Exif.GPSInfo.GPSAltitudeRef",          MODE_COMBO,  -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE, -1 },
+  { "Exif.GPSInfo.GPSAltitudeRef",          MODE_COMBO,  -1,                 TAG_TYPE_EXIF, GIMP_XMP_NONE, COMBO_GPSALTREF },
 
   /* DICOM */
   { "Xmp.DICOM.PatientName",                MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
@@ -320,36 +320,30 @@ const combobox_str_tag dicom[] =
 };
 const gint n_dicom = G_N_ELEMENTS (dicom);
 
-/* Array to reference all other combobox_str_tag structs */
-const combo_references combo_metadata[] =
-{
-  { XMP_EXT_AGEDISCLOSURE,      minormodelagedisclosure,  n_minormodelagedisclosure},
-  { XMP_EXT_MODELRELSTATUS,     modelreleasestatus,       n_modelreleasestatus},
-  { XMP_EXT_SOURCETYPE,         digitalsourcetype,        n_digitalsourcetype},
-  { XMP_EXT_PROPERTYRELSTATUS,  propertyreleasestatus,    n_propertyreleasestatus},
-  { XMP_EXT_DATAMINING,         datamining,               n_datamining},
-  { XMP_DCM_SEX,                dicom,                    n_dicom},
-};
-const gint n_combo_metadata = G_N_ELEMENTS (combo_metadata);
-
 /* GPS Altitude Ref */
-const gchar *gpsaltref[] =
+const combobox_str_tag gpsaltref[] =
 {
-  N_("Unknown"), N_("Above sea level"), N_("Below sea level")
+  { "",   N_("Unknown")         },
+  { "0",  N_("Above sea level") },
+  { "1",  N_("Below sea level") },
 };
 const gint n_gpsaltref = G_N_ELEMENTS (gpsaltref);
 
 /* GPS Latitude Ref */
-const gchar *gpslatref[] =
+const combobox_str_tag gpslatref[] =
 {
-  N_("Unknown"), N_("North"), N_("South")
+  { "",   N_("Unknown") },
+  { "N",  N_("North")   },
+  { "S",  N_("South")   },
 };
 const gint n_gpslatref = G_N_ELEMENTS (gpslatref);
 
 /* GPS Longitude Ref */
-const gchar *gpslngref[] =
+const combobox_str_tag gpslngref[] =
 {
-  N_("Unknown"), N_("East"), N_("West")
+  { "",   N_("Unknown") },
+  { "E",  N_("East")    },
+  { "W",  N_("West")    },
 };
 const gint n_gpslngref = G_N_ELEMENTS (gpslngref);
 
@@ -359,6 +353,21 @@ const gchar *gpsaltsys[] =
   "m", "ft"
 };
 const gint n_gpsaltsys = G_N_ELEMENTS (gpsaltsys);
+
+/* Array to reference all other combobox_str_tag structs */
+const combo_references combo_metadata[] =
+{
+  { XMP_EXT_AGEDISCLOSURE,      minormodelagedisclosure,  n_minormodelagedisclosure },
+  { XMP_EXT_MODELRELSTATUS,     modelreleasestatus,       n_modelreleasestatus      },
+  { XMP_EXT_SOURCETYPE,         digitalsourcetype,        n_digitalsourcetype       },
+  { XMP_EXT_PROPERTYRELSTATUS,  propertyreleasestatus,    n_propertyreleasestatus   },
+  { XMP_EXT_DATAMINING,         datamining,               n_datamining              },
+  { XMP_GPS_LONGREF,            gpslngref,                n_gpslngref               },
+  { XMP_GPS_LATREF,             gpslatref,                n_gpslatref               },
+  { XMP_GPS_ALTREF,             gpsaltref,                n_gpsaltref               },
+  { XMP_DCM_SEX,                dicom,                    n_dicom                   },
+};
+const gint n_combo_metadata = G_N_ELEMENTS (combo_metadata);
 
 const TranslateTag creatorContactInfoTags[] =
 {

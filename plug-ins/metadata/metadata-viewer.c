@@ -679,7 +679,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                         index = 0;
                       metadata_dialog_add_tag (store,
                                               "Exif.GPSInfo.GPSAltitudeRef",
-                                              gettext (gpsaltref[index]));
+                                              gettext (gpsaltref[index].display));
                       g_free (value);
                     }
                 }
