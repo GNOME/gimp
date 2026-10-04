@@ -2583,6 +2583,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                       display);
       g_free (display);
     }
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
+                                  _("Rejected"));
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
   combo_widget = metadata_editor_get_widget (meta_info, "Xmp.xmpRights.Marked");
@@ -4397,6 +4399,9 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
               else if (! strcmp ("Xmp.xmp.Rating", default_metadata_tags[i].tag))
                 {
                   data = g_ascii_strtoll (value, NULL, 10);
+                  /* Rejected (-1) is shown last in the list */
+                  if (data == -1)
+                    data = 6;
 
                   gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
                 }
@@ -5313,6 +5318,10 @@ metadata_editor_write_callback (GtkWidget       *dialog,
               else
                 {
                   gchar *save;
+
+                  /* Special handling for Rejected: last in list */
+                  if (value == 6)
+                    value = -1;
 
                   save = g_strdup_printf ("%d", value);
 
