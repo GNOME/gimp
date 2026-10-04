@@ -2616,30 +2616,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
       gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
     }
 
-  combo_widget = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSLatitudeRef");
-  for (i = 0; i < n_gpslatref; i++)
-    {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (gpslatref[i]));
-    }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
-
-  combo_widget = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSLongitudeRef");
-  for (i = 0; i < n_gpslngref; i++)
-    {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (gpslngref[i]));
-    }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
-
-  combo_widget = metadata_editor_get_widget (meta_info, "Exif.GPSInfo.GPSAltitudeRef");
-  for (i = 0; i < n_gpsaltref; i++)
-    {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (gpsaltref[i]));
-    }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
-
   combo_widget = metadata_editor_get_widget (meta_info, "GPSAltitudeSystem");
   for (i = 0; i < n_gpsaltsys; i++)
     {
@@ -4320,44 +4296,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
               value = gexiv2_metadata_try_get_tag_string (metadata,
                                                           default_metadata_tags[i].tag,
                                                           NULL);
-
-              if (! strcmp ("Exif.GPSInfo.GPSLatitudeRef",
-                            default_metadata_tags[i].tag))
-                {
-                  if (! strncmp ("N", value, 1))
-                    {
-                      data = 1;
-                    }
-                  else if (! strncmp ("S", value, 1))
-                    {
-                      data = 2;
-                    }
-
-                  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
-                }
-              else if (! strcmp ("Exif.GPSInfo.GPSLongitudeRef",
-                                 default_metadata_tags[i].tag))
-                {
-                  if (! strncmp ("E", value, 1))
-                    {
-                      data = 1;
-                    }
-                  else if (! strncmp ("W", value, 1))
-                    {
-                      data = 2;
-                    }
-
-                  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
-                }
-              else if (! strcmp ("Exif.GPSInfo.GPSAltitudeRef",
-                                 default_metadata_tags[i].tag))
-                {
-                  /* Values in GUI are 1 (above) or 2 (below) */
-                  data = g_ascii_strtoll (value, NULL, 10) + 1;
-
-                  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
-                }
-              else if (! strcmp ("Xmp.xmp.Rating", default_metadata_tags[i].tag))
+              if (! strcmp ("Xmp.xmp.Rating", default_metadata_tags[i].tag))
                 {
                   data = g_ascii_strtoll (value, NULL, 10);
                   /* Rejected (-1) is shown last in the list */
@@ -5215,72 +5154,6 @@ metadata_editor_write_callback (GtkWidget       *dialog,
                   set_tag_string (g_metadata, default_metadata_tags[i].tag,
                                   save, FALSE);
                   g_free (save);
-                }
-            }
-          else if (! strcmp ("Exif.GPSInfo.GPSLongitudeRef",
-                             default_metadata_tags[i].tag))
-            {
-              switch (value)
-                {
-                case 0:
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                  break;
-
-                case 1:
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  "E", FALSE);
-                  break;
-
-                case 2:
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  "W", FALSE);
-                  break;
-                }
-            }
-          else if (! strcmp ("Exif.GPSInfo.GPSLatitudeRef",
-                             default_metadata_tags[i].tag))
-            {
-              switch (value)
-                {
-                case 0:
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                  break;
-
-                case 1:
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  "N", FALSE);
-                  break;
-
-                case 2:
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  "S", FALSE);
-                  break;
-                }
-            }
-          else if (! strcmp ("Exif.GPSInfo.GPSAltitudeRef",
-                             default_metadata_tags[i].tag))
-            {
-              switch (value)
-                {
-                case 0:
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                  break;
-
-                case 1:
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  "0", FALSE);
-                  break;
-
-                case 2:
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  "1", FALSE);
-                  break;
                 }
             }
           else if (default_metadata_tags[i].mode == MODE_COMBO &&
