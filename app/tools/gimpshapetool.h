@@ -34,8 +34,11 @@ struct _GimpShapeTool
 {
   GimpTransformGridTool  parent_instance;
 
+  gboolean               drawing;
   gint                   start_x;
   gint                   start_y;
+  gint                   current_x;
+  gint                   current_y;
 };
 
 struct _GimpShapeToolClass

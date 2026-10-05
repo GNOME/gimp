@@ -20,6 +20,16 @@
 #include "core/gimptooloptions.h"
 
 
+typedef enum
+{
+  GIMP_SHAPE_MODE_LINE,
+  GIMP_SHAPE_MODE_RECTANGLE,
+  GIMP_SHAPE_MODE_ARC,
+
+  GIMP_SHAPE_MODE_LAST
+} GimpShapeMode;
+
+
 #define GIMP_TYPE_SHAPE_OPTIONS            (gimp_shape_options_get_type ())
 #define GIMP_SHAPE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SHAPE_OPTIONS, GimpShapeOptions))
 #define GIMP_SHAPE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SHAPE_OPTIONS, GimpShapeOptionsClass))
@@ -37,6 +47,8 @@ struct _GimpShapeOptions
 
   gint               shape_type;
   gboolean           rasterize_on_commit;
+
+  gboolean           enable_fill;
 };
 
 
