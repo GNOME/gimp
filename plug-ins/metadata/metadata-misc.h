@@ -44,7 +44,7 @@ typedef struct
   gint32        other_tag_index;
   gint32        tag_type;
   gint32        xmp_type;
-  gint32        combo_index;        /* Index into combo_references */
+  gint32        detail_index;       /* Index into arrays for tags needing more details */
 } metadata_tag;
 
 typedef struct
