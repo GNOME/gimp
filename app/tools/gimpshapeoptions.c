@@ -41,8 +41,9 @@
 enum
 {
   PROP_0,
+  PROP_SHAPE_TYPE,
   PROP_RASTERIZE_ON_COMMIT,
-  PROP_SHAPE_TYPE
+  PROP_ENABLE_FILL
 };
 
 
@@ -67,6 +68,15 @@ gimp_shape_options_class_init (GimpShapeOptionsClass *klass)
   object_class->set_property = gimp_move_options_set_property;
   object_class->get_property = gimp_move_options_get_property;
 
+  GIMP_CONFIG_PROP_INT (object_class, PROP_SHAPE_TYPE,
+                        "shape-type",
+                        "Shape",
+                        NULL,
+                        GIMP_SHAPE_MODE_LINE, GIMP_SHAPE_MODE_LAST,
+                        GIMP_SHAPE_MODE_LINE,
+                        GIMP_PARAM_STATIC_STRINGS |
+                        GIMP_CONFIG_PARAM_CONFIRM);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_RASTERIZE_ON_COMMIT,
                             "rasterize-on-commit",
                             "Merge down on commit",
@@ -74,14 +84,12 @@ gimp_shape_options_class_init (GimpShapeOptionsClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_SHAPE_TYPE,
-                        "shape-type",
-                        "Shape",
-                        NULL,
-                        0, 2, 0,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_CONFIRM);
-
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLE_FILL,
+                            "enable-fill",
+                            "Enable fill",
+                            NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -99,11 +107,14 @@ gimp_move_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_SHAPE_TYPE:
+      options->shape_type = g_value_get_int (value);
+      break;
     case PROP_RASTERIZE_ON_COMMIT:
       options->rasterize_on_commit = g_value_get_boolean (value);
       break;
-    case PROP_SHAPE_TYPE:
-      options->shape_type = g_value_get_int (value);
+    case PROP_ENABLE_FILL:
+      options->enable_fill = g_value_get_boolean (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -121,11 +132,14 @@ gimp_move_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_SHAPE_TYPE:
+      g_value_set_int (value, options->shape_type);
+      break;
     case PROP_RASTERIZE_ON_COMMIT:
       g_value_set_boolean (value, options->rasterize_on_commit);
       break;
-    case PROP_SHAPE_TYPE:
-      g_value_set_int (value, options->shape_type);
+    case PROP_ENABLE_FILL:
+      g_value_set_boolean (value, options->enable_fill);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -137,7 +151,6 @@ GtkWidget *
 gimp_shape_options_gui (GimpToolOptions *tool_options)
 {
   GObject          *config  = G_OBJECT (tool_options);
-  GimpContext      *context = GIMP_CONTEXT (tool_options);
   GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget        *button;
   GtkWidget        *label;
@@ -149,9 +162,9 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
 
-  combo_store = gimp_int_store_new (_("Rectangle"), 0,
-                                    _("Circle"),    1,
-                                    _("Triangle"),  2,
+  combo_store = gimp_int_store_new (_("Line"),      0,
+                                    _("Rectangle"), 1,
+                                    _("Circle"),    2,
                                     NULL);
 
   combo = gimp_prop_int_combo_box_new (config, "shape-type",
@@ -161,6 +174,10 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
   gtk_widget_set_visible (combo, TRUE);
 
   button = gimp_prop_check_button_new (config, "rasterize-on-commit", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+
+  button = gimp_prop_check_button_new (config, "enable-fill", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
