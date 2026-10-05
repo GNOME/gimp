@@ -2161,23 +2161,26 @@ swatchbooker_load_text (GMarkupParseContext *context,
           for (i = 0; values[i]; i++)
             true_values[i] = atof (values[i]);
 
-          /* No need for babl conversion for sRGB colors */
-          if (! strcmp (sbz_data->color_model, "srgb"))
-            src_format = babl_format_with_space ("R'G'B' float", NULL);
-          else if (! strcmp (sbz_data->color_model, "rgb"))
-            src_format = babl_format_with_space ("R'G'B' float", space);
-          else if (! strcmp (sbz_data->color_model, "gray"))
-            src_format = babl_format_with_space ("Y' float", space);
-          else if (! strcmp (sbz_data->color_model, "cmyk"))
-            src_format = babl_format_with_space ("CMYK float", space);
-          else if (! strcmp (sbz_data->color_model, "hsl"))
-            src_format = babl_format_with_space ("HSL float", space);
-          else if (! strcmp (sbz_data->color_model, "hsv"))
-            src_format = babl_format_with_space ("HSV float", space);
-          else if (! strcmp (sbz_data->color_model, "lab"))
-            src_format = babl_format_with_space ("CIE Lab float", space);
-          else if (! strcmp (sbz_data->color_model, "xyz"))
-            src_format = babl_format_with_space ("CIE XYZ float", space);
+          if (sbz_data->color_model)
+            {
+              /* No need for babl conversion for sRGB colors */
+              if (! strcmp (sbz_data->color_model, "srgb"))
+                src_format = babl_format_with_space ("R'G'B' float", NULL);
+              else if (! strcmp (sbz_data->color_model, "rgb"))
+                src_format = babl_format_with_space ("R'G'B' float", space);
+              else if (! strcmp (sbz_data->color_model, "gray"))
+                src_format = babl_format_with_space ("Y' float", space);
+              else if (! strcmp (sbz_data->color_model, "cmyk"))
+                src_format = babl_format_with_space ("CMYK float", space);
+              else if (! strcmp (sbz_data->color_model, "hsl"))
+                src_format = babl_format_with_space ("HSL float", space);
+              else if (! strcmp (sbz_data->color_model, "hsv"))
+                src_format = babl_format_with_space ("HSV float", space);
+              else if (! strcmp (sbz_data->color_model, "lab"))
+                src_format = babl_format_with_space ("CIE Lab float", space);
+              else if (! strcmp (sbz_data->color_model, "xyz"))
+                src_format = babl_format_with_space ("CIE XYZ float", space);
+            }
 
           if (src_format != NULL)
             {
