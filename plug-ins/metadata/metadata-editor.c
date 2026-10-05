@@ -4269,9 +4269,9 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                                           default_metadata_tags[i].tag,
                                                           NULL);
               if (default_metadata_tags[i].mode == MODE_COMBO &&
-                  default_metadata_tags[i].combo_index > -1)
+                  default_metadata_tags[i].detail_index > -1)
                 {
-                  gint ci = default_metadata_tags[i].combo_index;
+                  gint ci = default_metadata_tags[i].detail_index;
 
                   for (gint loop = 0; loop < combo_metadata[ci].n_values; loop++)
                     {
@@ -5027,9 +5027,9 @@ metadata_editor_write_callback (GtkWidget       *dialog,
           value = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
           if (default_metadata_tags[i].mode == MODE_COMBO &&
-              default_metadata_tags[i].combo_index > -1)
+              default_metadata_tags[i].detail_index > -1)
             {
-              gint ci = default_metadata_tags[i].combo_index;
+              gint ci = default_metadata_tags[i].detail_index;
 
               if (value == 0)
                 {
