@@ -294,175 +294,15 @@ hasModelReleaseTagData                          (metadata_editor      *meta_info
 gboolean
 hasPropertyReleaseTagData                       (metadata_editor      *meta_info);
 
-static void
-organisation_image_code_cell_edited_callback    (GtkCellRendererText  *cell,
+static void generic_cell_edited_callback        (GtkCellRendererText  *cell,
                                                  const gchar          *path_string,
                                                  const gchar          *new_text,
                                                  gpointer              data);
 
-static void
-organisation_image_name_cell_edited_callback    (GtkCellRendererText  *cell,
+static void phone_type_cell_edited_callback     (GtkCellRendererCombo *cell,
                                                  const gchar          *path_string,
                                                  const gchar          *new_text,
                                                  gpointer              data);
-
-static void
-prop_rel_id_cell_edited_callback                (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-loc_sho_sub_loc_cell_edited_callback            (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-loc_sho_city_cell_edited_callback               (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-loc_sho_state_prov_cell_edited_callback         (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-loc_sho_cntry_cell_edited_callback              (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-loc_sho_cntry_iso_cell_edited_callback          (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-reg_org_id_cell_edited_callback                 (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-reg_item_id_cell_edited_callback                (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-aoo_title_cell_edited_callback                  (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-aoo_copyright_notice_cell_edited_callback       (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-aoo_source_inv_cell_edited_callback             (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-aoo_source_cell_edited_callback                 (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-aoo_creator_cell_edited_callback                (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-aoo_date_creat_cell_edited_callback             (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-cr_owner_name_cell_edited_callback              (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-cr_owner_id_cell_edited_callback                (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-licensor_name_cell_edited_callback              (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-licensor_id_cell_edited_callback                (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-licensor_phone1_cell_edited_callback            (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-licensor_phone_type1_cell_edited_callback       (GtkCellRendererCombo *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-licensor_phone2_cell_edited_callback            (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-licensor_phone_type2_cell_edited_callback       (GtkCellRendererCombo *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-licensor_email_cell_edited_callback             (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-static void
-licensor_web_cell_edited_callback               (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data);
-
-void
-cell_edited_callback                            (GtkCellRendererText  *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data,
-                                                 int                   index);
-
-void
-cell_edited_callback_combo                      (GtkCellRendererCombo *cell,
-                                                 const gchar          *path_string,
-                                                 const gchar          *new_text,
-                                                 gpointer              data,
-                                                 int                   index);
 
 
 G_DEFINE_TYPE (Metadata, metadata, GIMP_TYPE_PLUG_IN)
@@ -1862,32 +1702,32 @@ hasCreatorTagData (metadata_editor *meta_info)
 
 /* CELL EDITED */
 
-void
-cell_edited_callback (GtkCellRendererText *cell,
-                      const gchar         *path_string,
-                      const gchar         *new_text,
-                      gpointer             data,
-                      int                  index)
+static void
+generic_cell_edited_callback (GtkCellRendererText *cell,
+                              const gchar         *path_string,
+                              const gchar         *new_text,
+                              gpointer             data)
 {
   GtkTreeModel *model;
   GtkTreePath  *path;
   GtkTreeIter   iter;
+  gint          column;
 
-  model = (GtkTreeModel *)data;
-  path = gtk_tree_path_new_from_string (path_string);
+  model  = (GtkTreeModel *) data;
+  path   = gtk_tree_path_new_from_string (path_string);
+  column = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (cell), "column"));
 
   gtk_tree_model_get_iter (model, &iter, path);
+  gtk_tree_path_free (path);
 
-  gtk_list_store_set (GTK_LIST_STORE (model), &iter, index,
+  gtk_list_store_set (GTK_LIST_STORE (model), &iter, column,
                       new_text, -1);
 }
 
-void
-cell_edited_callback_combo (GtkCellRendererCombo *cell,
-                            const gchar          *path_string,
-                            const gchar          *new_text,
-                            gpointer              data,
-                            int                   column)
+static void phone_type_cell_edited_callback (GtkCellRendererCombo *cell,
+                                             const gchar          *path_string,
+                                             const gchar          *new_text,
+                                             gpointer              data)
 {
   GtkWidget        *widget;
   GtkTreeModel     *treemodel;
@@ -1895,11 +1735,13 @@ cell_edited_callback_combo (GtkCellRendererCombo *cell,
   GtkTreeIter       iter;
   GtkTreePath      *path;
   GtkTreeSelection *selection;
+  gint              column;
 
-  widget = GTK_WIDGET (data);
+  widget    = GTK_WIDGET (data);
 
   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
   liststore = GTK_LIST_STORE (treemodel);
+  column    = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (cell), "column"));
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (widget));
 
@@ -1911,328 +1753,6 @@ cell_edited_callback_combo (GtkCellRendererCombo *cell,
       gtk_list_store_set (liststore, &iter, column, new_text, -1);
     }
 }
-
-static void
-licensor_name_cell_edited_callback (GtkCellRendererText *cell,
-                                    const gchar         *path_string,
-                                    const gchar         *new_text,
-                                    gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 0);
-}
-
-static void
-licensor_id_cell_edited_callback (GtkCellRendererText *cell,
-                                  const gchar         *path_string,
-                                  const gchar         *new_text,
-                                  gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 1);
-}
-
-static void
-licensor_phone1_cell_edited_callback (GtkCellRendererText *cell,
-                                      const gchar         *path_string,
-                                      const gchar         *new_text,
-                                      gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 2);
-}
-
-static void
-licensor_phone_type1_cell_edited_callback (GtkCellRendererCombo *cell,
-                                           const gchar          *path_string,
-                                           const gchar          *new_text,
-                                           gpointer              data)
-{
-  cell_edited_callback_combo (cell, path_string, new_text, data, 3);
-}
-
-static void
-licensor_phone2_cell_edited_callback (GtkCellRendererText *cell,
-                                      const gchar         *path_string,
-                                      const gchar         *new_text,
-                                      gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 4);
-}
-
-static void
-licensor_phone_type2_cell_edited_callback (GtkCellRendererCombo *cell,
-                                           const gchar          *path_string,
-                                           const gchar          *new_text,
-                                           gpointer              data)
-{
-  cell_edited_callback_combo (cell, path_string, new_text, data, 5);
-}
-
-static void
-licensor_email_cell_edited_callback (GtkCellRendererText *cell,
-                                     const gchar         *path_string,
-                                     const gchar         *new_text,
-                                     gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 6);
-}
-
-static void
-licensor_web_cell_edited_callback (GtkCellRendererText *cell,
-                                   const gchar         *path_string,
-                                   const gchar         *new_text,
-                                   gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 7);
-}
-
-static void
-cr_owner_name_cell_edited_callback (GtkCellRendererText *cell,
-                                    const gchar         *path_string,
-                                    const gchar         *new_text,
-                                    gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 0);
-}
-
-static void
-cr_owner_id_cell_edited_callback (GtkCellRendererText *cell,
-                                  const gchar         *path_string,
-                                  const gchar         *new_text,
-                                  gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 1);
-}
-
-static void
-img_cr8_name_cell_edited_callback (GtkCellRendererText *cell,
-                                   const gchar         *path_string,
-                                   const gchar         *new_text,
-                                   gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 0);
-}
-
-static void
-img_cr8_id_cell_edited_callback (GtkCellRendererText *cell,
-                                 const gchar         *path_string,
-                                 const gchar         *new_text,
-                                 gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 1);
-}
-
-static void
-aoo_copyright_notice_cell_edited_callback (GtkCellRendererText *cell,
-                                           const gchar         *path_string,
-                                           const gchar         *new_text,
-                                           gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 5);
-}
-
-static void
-aoo_source_inv_cell_edited_callback (GtkCellRendererText *cell,
-                                     const gchar         *path_string,
-                                     const gchar         *new_text,
-                                     gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 4);
-}
-
-static void
-aoo_source_cell_edited_callback (GtkCellRendererText *cell,
-                                 const gchar         *path_string,
-                                 const gchar         *new_text,
-                                 gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 3);
-}
-
-static void
-aoo_creator_cell_edited_callback (GtkCellRendererText *cell,
-                                  const gchar         *path_string,
-                                  const gchar         *new_text,
-                                  gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 2);
-}
-
-static void
-aoo_date_creat_cell_edited_callback (GtkCellRendererText *cell,
-                                     const gchar         *path_string,
-                                     const gchar         *new_text,
-                                     gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 1);
-}
-
-static void
-aoo_title_cell_edited_callback (GtkCellRendererText *cell,
-                                const gchar         *path_string,
-                                const gchar         *new_text,
-                                gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 0);
-}
-
-static void
-reg_org_id_cell_edited_callback (GtkCellRendererText *cell,
-                                 const gchar         *path_string,
-                                 const gchar         *new_text,
-                                 gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 0);
-}
-
-static void
-reg_item_id_cell_edited_callback (GtkCellRendererText *cell,
-                                  const gchar         *path_string,
-                                  const gchar         *new_text,
-                                  gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 1);
-}
-
-static void
-loc_sho_sub_loc_cell_edited_callback (GtkCellRendererText *cell,
-                                      const gchar         *path_string,
-                                      const gchar         *new_text,
-                                      gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 0);
-}
-
-static void
-loc_sho_city_cell_edited_callback (GtkCellRendererText *cell,
-                                   const gchar         *path_string,
-                                   const gchar         *new_text,
-                                   gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 1);
-}
-
-static void
-loc_sho_state_prov_cell_edited_callback (GtkCellRendererText *cell,
-    const gchar         *path_string,
-    const gchar         *new_text,
-    gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 2);
-}
-
-static void
-loc_sho_cntry_cell_edited_callback (GtkCellRendererText *cell,
-                                    const gchar         *path_string,
-                                    const gchar         *new_text,
-                                    gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 3);
-}
-
-static void
-loc_sho_cntry_iso_cell_edited_callback (GtkCellRendererText *cell,
-                                        const gchar         *path_string,
-                                        const gchar         *new_text,
-                                        gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 4);
-}
-
-static void
-loc_sho_wrld_reg_cell_edited_callback (GtkCellRendererText *cell,
-                                       const gchar         *path_string,
-                                       const gchar         *new_text,
-                                       gpointer             data)
-{
-  cell_edited_callback (cell, path_string, new_text, data, 5);
-}
-
-static void
-prop_rel_id_cell_edited_callback (GtkCellRendererText *cell,
-                                  const gchar         *path_string,
-                                  const gchar         *new_text,
-                                  gpointer             data)
-{
-  GtkTreeModel *model;
-  GtkTreePath  *path;
-  GtkTreeIter   iter;
-  gint          column;
-  model = (GtkTreeModel *)data;
-  path = gtk_tree_path_new_from_string (path_string);
-
-  column = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (cell), "column"));
-
-  gtk_tree_model_get_iter (model, &iter, path);
-
-  gtk_list_store_set (GTK_LIST_STORE (model), &iter, column,
-                      new_text, -1);
-}
-
-static void
-mod_rel_id_cell_edited_callback (GtkCellRendererText *cell,
-                                 const gchar         *path_string,
-                                 const gchar         *new_text,
-                                 gpointer             data)
-{
-  GtkTreeModel *model;
-  GtkTreePath  *path;
-  GtkTreeIter   iter;
-  gint          column;
-
-  model = (GtkTreeModel *)data;
-  path = gtk_tree_path_new_from_string (path_string);
-
-  column = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (cell), "column"));
-
-  gtk_tree_model_get_iter (model, &iter, path);
-
-  gtk_list_store_set (GTK_LIST_STORE (model), &iter, column,
-                      new_text, -1);
-}
-
-static void
-organisation_image_name_cell_edited_callback (GtkCellRendererText *cell,
-                                              const gchar         *path_string,
-                                              const gchar         *new_text,
-                                              gpointer             data)
-{
-  GtkTreeModel *model;
-  GtkTreePath  *path;
-  GtkTreeIter   iter;
-  gint          column;
-
-  model = (GtkTreeModel *)data;
-  path = gtk_tree_path_new_from_string (path_string);
-
-  column = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (cell), "column"));
-
-  gtk_tree_model_get_iter (model, &iter, path);
-
-  gtk_list_store_set (GTK_LIST_STORE (model), &iter, column,
-                      new_text, -1);
-}
-
-static void
-organisation_image_code_cell_edited_callback (GtkCellRendererText *cell,
-                                              const gchar         *path_string,
-                                              const gchar         *new_text,
-                                              gpointer             data)
-{
-  GtkTreeModel *model;
-  GtkTreePath  *path;
-  GtkTreeIter   iter;
-  gint          column;
-
-  model = (GtkTreeModel *)data;
-  path = gtk_tree_path_new_from_string (path_string);
-
-  column = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (cell), "column"));
-
-  gtk_tree_model_get_iter (model, &iter, path);
-
-  gtk_list_store_set (GTK_LIST_STORE (model), &iter, column,
-                      new_text, -1);
-}
-
 
 /* CELL / ROW REMOVE */
 
@@ -3103,7 +2623,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (loc_sho_sub_loc_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3124,7 +2644,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (loc_sho_city_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3145,7 +2665,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (loc_sho_state_prov_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3166,7 +2686,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (loc_sho_cntry_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3187,7 +2707,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (loc_sho_cntry_iso_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3208,7 +2728,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (loc_sho_wrld_reg_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3316,7 +2836,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (organisation_image_name_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3354,7 +2874,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (organisation_image_code_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3394,7 +2914,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (aoo_title_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3415,7 +2935,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (aoo_date_creat_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3436,7 +2956,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (aoo_creator_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3457,7 +2977,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (aoo_source_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3478,7 +2998,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (aoo_source_inv_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3499,7 +3019,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (aoo_copyright_notice_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3613,7 +3133,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (mod_rel_id_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3651,7 +3171,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 "editable", TRUE,
                                 NULL);
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (reg_org_id_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
                   g_object_set_data (G_OBJECT (renderer),
                                      "column",
@@ -3671,7 +3191,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (reg_item_id_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3759,7 +3279,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (img_cr8_name_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3780,7 +3300,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (img_cr8_id_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3856,7 +3376,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (cr_owner_name_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3877,7 +3397,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (cr_owner_id_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3969,7 +3489,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (licensor_name_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -3990,7 +3510,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (licensor_id_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -4011,7 +3531,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (licensor_phone1_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -4035,7 +3555,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (licensor_phone_type1_cell_edited_callback),
+                                    G_CALLBACK (phone_type_cell_edited_callback),
                                     widget);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -4056,7 +3576,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (licensor_phone2_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -4080,7 +3600,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (licensor_phone_type2_cell_edited_callback),
+                                    G_CALLBACK (phone_type_cell_edited_callback),
                                     widget);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -4101,7 +3621,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (licensor_email_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -4122,7 +3642,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (licensor_web_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
@@ -4237,7 +3757,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                                 NULL);
 
                   g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (prop_rel_id_cell_edited_callback),
+                                    G_CALLBACK (generic_cell_edited_callback),
                                     treemodel);
 
                   g_object_set_data (G_OBJECT (renderer),
