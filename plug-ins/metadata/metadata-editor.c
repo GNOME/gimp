@@ -172,6 +172,7 @@ static void     write_metadata_tag_multiple     (metadata_editor      *meta_info
                                                  const gchar          *header_tag,
                                                  gint                  n_columns,
                                                  const gchar         **column_tags,
+                                                 const gchar         **alt_column_tags,
                                                  const gint            special_handling[]);
 
 gboolean hasCreatorTagData                      (metadata_editor      *meta_info);
@@ -4467,10 +4468,14 @@ write_metadata_tag (metadata_editor *meta_info,
 }
 
 static void
-write_metadata_tag_multiple (metadata_editor *meta_info, GimpMetadata *metadata,
-                             GExiv2StructureType type, const gchar * header_tag,
-                             gint n_columns, const gchar **column_tags,
-                             const gint special_handling[])
+write_metadata_tag_multiple (metadata_editor      *meta_info,
+                             GimpMetadata         *metadata,
+                             GExiv2StructureType   type,
+                             const gchar          *header_tag,
+                             gint                  n_columns,
+                             const gchar         **column_tags,
+                             const gchar         **alt_column_tags,
+                             const gint            special_handling[])
 {
   GtkWidget     *list_widget;
   GtkTreeModel  *treemodel;
@@ -4489,8 +4494,16 @@ write_metadata_tag_multiple (metadata_editor *meta_info, GimpMetadata *metadata,
       for (item = 0; item < n_columns; item++)
         {
           g_snprintf (temp_tag, sizeof (temp_tag), "%s[%d]%s",
-                      header_tag, row, locationshown[item]);
+                      header_tag, row, column_tags[item]);
           gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata), temp_tag, NULL);
+
+          if (alt_column_tags)
+            {
+              /* We don't know which of the 2 versions was used, delete both */
+              g_snprintf (temp_tag, sizeof (temp_tag), "%s[%d]%s",
+                          header_tag, row, alt_column_tags[item]);
+              gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata), temp_tag, NULL);
+            }
         }
     }
 
@@ -4663,27 +4676,27 @@ metadata_editor_write_callback (GtkWidget       *dialog,
 
   write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
                                "Xmp.iptcExt.LocationShown",
-                               n_locationshown, locationshown_alternative, NULL);
+                               n_locationshown, locationshown_alternative, locationshown, NULL);
 
   write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
                                "Xmp.iptcExt.ArtworkOrObject",
-                               n_artworkorobject, artworkorobject_alternative, NULL);
+                               n_artworkorobject, artworkorobject_alternative, artworkorobject, NULL);
 
   write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
                                "Xmp.iptcExt.RegistryId",
-                               n_registryid, registryid_alternative, NULL);
+                               n_registryid, registryid_alternative, registryid, NULL);
 
   write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
                                "Xmp.plus.ImageCreator",
-                               n_imagecreator, imagecreator, NULL);
+                               n_imagecreator, imagecreator, NULL, NULL);
 
   write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
                                "Xmp.plus.CopyrightOwner",
-                               n_copyrightowner, copyrightowner, NULL);
+                               n_copyrightowner, copyrightowner, NULL, NULL);
 
   write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
                                "Xmp.plus.Licensor",
-                               n_licensor, licensor,
+                               n_licensor, licensor, NULL,
                                licensor_special_handling);
 
   /* DO CREATOR TAGS */
