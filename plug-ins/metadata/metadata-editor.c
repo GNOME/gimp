@@ -179,21 +179,8 @@ gboolean hasCreatorTagData                      (metadata_editor      *meta_info
 gboolean hasLocationCreationTagData             (metadata_editor      *meta_info);
 gboolean hasImageSupplierTagData                (metadata_editor      *meta_info);
 
-void on_date_button_clicked                     (GtkButton            *widget,
-                                                 GtkWidget            *entry_widget,
-                                                 gchar                *tag);
-
-void on_create_date_button_clicked              (GtkButton            *widget,
-                                                 gpointer              data);
-
-void on_patient_dob_date_button_clicked         (GtkButton            *widget,
-                                                 gpointer              data);
-
-void on_study_date_button_clicked               (GtkButton            *widget,
-                                                 gpointer              data);
-
-void on_series_date_button_clicked              (GtkButton            *widget,
-                                                 gpointer              data);
+static void on_date_button_clicked              (GtkButton            *widget,
+                                                 GtkWidget            *entry_widget);
 
 static void import_dialog_metadata              (metadata_editor      *args);
 static void export_dialog_metadata              (metadata_editor      *args);
@@ -1469,42 +1456,10 @@ free_tagdata(gchar **tagdata, gint rows, gint cols)
  * ==[ DATE CALLBACKS ]========================================================
  * ============================================================================
  */
-void
-on_create_date_button_clicked (GtkButton *widget,
-                               gpointer   data)
-{
-  on_date_button_clicked (widget, (GtkWidget*)data,
-                          "Xmp.photoshop.DateCreated");
-}
 
-void
-on_patient_dob_date_button_clicked (GtkButton *widget,
-                                    gpointer   data)
-{
-  on_date_button_clicked (widget, (GtkWidget*)data,
-                          "Xmp.DICOM.PatientDOB");
-}
-
-void
-on_study_date_button_clicked (GtkButton *widget,
-                              gpointer   data)
-{
-  on_date_button_clicked (widget, (GtkWidget*)data,
-                          "Xmp.DICOM.StudyDateTime");
-}
-
-void
-on_series_date_button_clicked (GtkButton *widget,
-                               gpointer   data)
-{
-  on_date_button_clicked (widget, (GtkWidget*)data,
-                          "Xmp.DICOM.SeriesDateTime");
-}
-
-void
+static void
 on_date_button_clicked (GtkButton *widget,
-                        GtkWidget *entry_widget,
-                        gchar     *tag)
+                        GtkWidget *entry_widget)
 {
   GtkWidget      *calendar_dialog;
   GtkWidget      *calendar_content_area;
@@ -3849,28 +3804,28 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   /* Set creation date */
   entry_widget = metadata_editor_get_widget (meta_info, "create_date_button");
   g_signal_connect (entry_widget, "clicked",
-                    G_CALLBACK (on_create_date_button_clicked),
+                    G_CALLBACK (on_date_button_clicked),
                     metadata_editor_get_widget (meta_info,
                                                 "Xmp.photoshop.DateCreated"));
 
   /* Set patient dob date */
   entry_widget = metadata_editor_get_widget (meta_info, "dob_date_button");
   g_signal_connect (entry_widget, "clicked",
-                    G_CALLBACK (on_patient_dob_date_button_clicked),
+                    G_CALLBACK (on_date_button_clicked),
                     metadata_editor_get_widget (meta_info,
                                                 "Xmp.DICOM.PatientDOB"));
 
   /* Set study date */
   entry_widget = metadata_editor_get_widget (meta_info, "study_date_button");
   g_signal_connect (entry_widget, "clicked",
-                    G_CALLBACK (on_study_date_button_clicked),
+                    G_CALLBACK (on_date_button_clicked),
                     metadata_editor_get_widget (meta_info,
                                                 "Xmp.DICOM.StudyDateTime"));
 
   /* Set series date */
   entry_widget = metadata_editor_get_widget (meta_info, "series_date_button");
   g_signal_connect (entry_widget, "clicked",
-                    G_CALLBACK (on_series_date_button_clicked),
+                    G_CALLBACK (on_date_button_clicked),
                     metadata_editor_get_widget (meta_info,
                                                 "Xmp.DICOM.SeriesDateTime"));
 }
