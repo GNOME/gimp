@@ -44,11 +44,11 @@ const metadata_tag default_metadata_tags[] =
   { "Xmp.photoshop.AuthorsPosition",        MODE_SINGLE, IPTC_TITLE,         TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.dc.description",                   MODE_MULTI,  IPTC_CAPTION,       TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.photoshop.CaptionWriter",          MODE_SINGLE, IPTC_WRITER,        TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
-  { "Xmp.xmp.Rating",                       MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
+  { "Xmp.xmp.Rating",                       MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, COMBO_RATING },
   { "Xmp.dc.subject",                       MODE_MULTI,  IPTC_KEYWORDS,      TAG_TYPE_XMP, GIMP_XMP_BAG,  -1  },
   { "Xmp.iptc.AltTextAccessibility",        MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.iptc.ExtDescrAccessibility",       MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
-  { "Xmp.xmpRights.Marked",                 MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
+  { "Xmp.xmpRights.Marked",                 MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, COMBO_MARKED },
   { "Xmp.dc.rights",                        MODE_SINGLE, IPTC_COPYRIGHT,     TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.xmpRights.WebStatement",           MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
 
@@ -69,7 +69,7 @@ const metadata_tag default_metadata_tags[] =
   { "Xmp.photoshop.State",                  MODE_SINGLE, IPTC_STATE,         TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.photoshop.Country",                MODE_SINGLE, IPTC_COUNTRY,       TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.iptc.CountryCode",                 MODE_SINGLE, IPTC_COUNTRYCODE,   TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
-  { "Xmp.photoshop.Urgency",                MODE_COMBO,  IPTC_URGENCY,       TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
+  { "Xmp.photoshop.Urgency",                MODE_COMBO,  IPTC_URGENCY,       TAG_TYPE_XMP, GIMP_XMP_NONE, COMBO_URGENCY },
   { "Xmp.photoshop.Headline",               MODE_MULTI,  IPTC_HEADLINE,      TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.iptc.SubjectCode",                 MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_BAG,  -1  },
   { "Xmp.photoshop.TransmissionReference",  MODE_SINGLE, IPTC_REFERENCE,     TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
@@ -277,19 +277,42 @@ const combobox_str_tag datamining[] =
 };
 const gint n_datamining = G_N_ELEMENTS (datamining);
 
-/* Urgency */
-const gchar *urgency[] =
+/* It feels a little weird to add the numbers as strings here,
+ * but the alternative is adding extra logic for very little gain.
+ */
+/* Rating */
+const combobox_str_tag rating[] =
 {
-  N_("None"), N_("High"), N_("2"), N_("3"), N_("4"), N_("Normal"), N_("6"), N_("7"), N_("Low")
+  { "",   N_("Unrated")  },
+  { "1",  N_("1")        },
+  { "2",  N_("2")        },
+  { "3",  N_("3")        },
+  { "4",  N_("4")        },
+  { "5",  N_("5")        },
+  { "-1", N_("Rejected") },
+};
+const gint n_rating = G_N_ELEMENTS (rating);
+
+/* Urgency */
+const combobox_str_tag urgency[] =
+{
+  { "",   N_("None")   },
+  { "1",  N_("High")   },
+  { "2",  N_("2")      },
+  { "3",  N_("3")      },
+  { "4",  N_("4")      },
+  { "5",  N_("Normal") },
+  { "6",  N_("6")      },
+  { "7",  N_("7")      },
+  { "8",  N_("Low")    },
 };
 const gint n_urgency = G_N_ELEMENTS (urgency);
-
 /* Marked */
-const combobox_int_tag marked[] =
+const combobox_str_tag marked[] =
 {
-  { -1,     N_("Unknown")       }, // DO NOT SAVE
-  {  TRUE,  N_("Copyrighted")   }, // TRUE
-  {  FALSE, N_("Public Domain") }, // FALSE
+  { "",      N_("Unknown")       },
+  { "True",  N_("Copyrighted")   },
+  { "False", N_("Public Domain") },
 };
 const gint n_marked = G_N_ELEMENTS (marked);
 
@@ -357,6 +380,9 @@ const gint n_gpsaltsys = G_N_ELEMENTS (gpsaltsys);
 /* Array to reference all other combobox_str_tag structs */
 const combo_references combo_metadata[] =
 {
+  { XMP_DESC_RATING,            rating,                   n_rating                  },
+  { XMP_DESC_MARKED,            marked,                   n_marked                  },
+  { XMP_IPTC_URGENCY,           urgency,                  n_urgency                 },
   { XMP_EXT_AGEDISCLOSURE,      minormodelagedisclosure,  n_minormodelagedisclosure },
   { XMP_EXT_MODELRELSTATUS,     modelreleasestatus,       n_modelreleasestatus      },
   { XMP_EXT_SOURCETYPE,         digitalsourcetype,        n_digitalsourcetype       },

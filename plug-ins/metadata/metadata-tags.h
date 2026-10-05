@@ -313,12 +313,16 @@ extern const gint             n_minormodelagedisclosure;
 extern const combobox_str_tag datamining[];
 extern const gint             n_datamining;
 
+/* Rating */
+extern const combobox_str_tag rating[];
+extern const gint             n_rating;
+
 /* Urgency */
-extern const gchar *urgency[];
-extern const gint   n_urgency;
+extern const combobox_str_tag urgency[];
+extern const gint             n_urgency;
 
 /* Marked */
-extern const combobox_int_tag marked[];
+extern const combobox_str_tag marked[];
 extern const gint             n_marked;
 
 /* Phone Types */
@@ -353,7 +357,10 @@ extern const gint   n_gpsaltsys;
 /* Keep in sync with the values in combo_metadata! */
 enum
 {
-  COMBO_AGEDISC       = 0,
+  COMBO_RATING        = 0,
+  COMBO_MARKED,
+  COMBO_URGENCY,
+  COMBO_AGEDISC,
   COMBO_MODELREL,
   COMBO_SOURCETYPE,
   COMBO_PROPREL,
