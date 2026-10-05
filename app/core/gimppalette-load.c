@@ -2232,7 +2232,10 @@ krita_load_start_element (GMarkupParseContext *context,
           gchar *lower_att_name = g_ascii_strdown (*attribute_names, -1);
 
           if (! strcmp (lower_att_name, "name"))
-            kpl_data->palette_name = g_strdup (*attribute_values);
+            {
+              g_free (kpl_data->palette_name);
+              kpl_data->palette_name = g_strdup (*attribute_values);
+            }
 
           attribute_names++;
           attribute_values++;
@@ -2248,7 +2251,7 @@ krita_load_start_element (GMarkupParseContext *context,
 
           if (! strcmp (lower_att_name, "name"))
             {
-              gimp_object_take_name (GIMP_OBJECT (kpl_data->palette_name),
+              gimp_object_take_name (GIMP_OBJECT (kpl_data->palette),
                                      g_strdup (*attribute_values));
             }
           else if (! strcmp (lower_att_name, "columns"))
