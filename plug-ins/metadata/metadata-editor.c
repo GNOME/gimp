@@ -2571,36 +2571,10 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                     meta_info);
 
   /* Setup Comboboxes */
-  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.xmp.Rating");
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                  _("Unrated"));
-  for (i = 1; i < 6; i++)
-    {
-      gchar *display = g_strdup_printf ("%d", i);
 
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      display);
-      g_free (display);
-    }
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                  _("Rejected"));
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
-
-  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.xmpRights.Marked");
-  for (i = 0; i < n_marked; i++)
-    {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (marked[i].display));
-    }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
-
-  combo_widget = metadata_editor_get_widget (meta_info, "Xmp.photoshop.Urgency");
-  for (i = 0; i < n_urgency; i++)
-    {
-      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gettext (urgency[i]));
-    }
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
+  /* FIXME: Eventually we should create a dedicated rating widget 
+   * for Xmp.xmp.Rating, but for now treat it as a regular combo.
+   */
 
   /* Loop over all combos in combo_metadata */
   for (i = 0; i < COMBO_LAST; i++)
@@ -4289,45 +4263,13 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
             }
           else if (default_metadata_tags[i].mode == MODE_COMBO)
             {
-              gint32 data = 0;
-
               /* We need to use the uninterpreted string value to compare the data here */
               g_free (value);
               value = gexiv2_metadata_try_get_tag_string (metadata,
                                                           default_metadata_tags[i].tag,
                                                           NULL);
-              if (! strcmp ("Xmp.xmp.Rating", default_metadata_tags[i].tag))
-                {
-                  data = g_ascii_strtoll (value, NULL, 10);
-                  /* Rejected (-1) is shown last in the list */
-                  if (data == -1)
-                    data = 6;
-
-                  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
-                }
-              else if (! strcmp ("Xmp.xmpRights.Marked",
-                                 default_metadata_tags[i].tag))
-                {
-                  if (! strcmp ("True", value))
-                    {
-                      data = 1;
-                    }
-                  else if (! strcmp ("False", value))
-                    {
-                      data = 2;
-                    }
-
-                  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
-                }
-              else if (! strcmp ("Xmp.photoshop.Urgency",
-                                 default_metadata_tags[i].tag))
-                {
-                  data = g_ascii_strtoll (value, NULL, 10);
-
-                  gtk_combo_box_set_active (GTK_COMBO_BOX (widget), data);
-                }
-              else if (default_metadata_tags[i].mode == MODE_COMBO &&
-                       default_metadata_tags[i].combo_index > -1)
+              if (default_metadata_tags[i].mode == MODE_COMBO &&
+                  default_metadata_tags[i].combo_index > -1)
                 {
                   gint ci = default_metadata_tags[i].combo_index;
 
@@ -5084,80 +5026,8 @@ metadata_editor_write_callback (GtkWidget       *dialog,
           combo = GTK_COMBO_BOX_TEXT (widget);
           value = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
-          if (! strcmp ("Xmp.photoshop.Urgency", default_metadata_tags[i].tag))
-            {
-              /* IPTC tab - Urgency */
-              if (value == 0)
-                {
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 "Iptc.Application2.Urgency",
-                                                 NULL);
-                }
-              else
-                {
-                  gchar *save;
-
-                  save = g_strdup_printf ("%d", value);
-
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  save, FALSE);
-                  set_tag_string (g_metadata, "Iptc.Application2.Urgency",
-                                  save, FALSE);
-                  g_free (save);
-                }
-            }
-          else if (! strcmp ("Xmp.xmpRights.Marked",
-                             default_metadata_tags[i].tag))
-            {
-              /* Description tab - Copyright Status */
-              if (value == 0)
-                {
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                }
-              else
-                {
-                  gchar *save_value;
-
-                  if (value == 1)
-                    save_value = g_strdup_printf ("%s", "True");
-                  else /* (value == 2) */
-                    save_value = g_strdup_printf ("%s", "False");
-
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  save_value, FALSE);
-                  g_free (save_value);
-                }
-            }
-          else if (! strcmp ("Xmp.xmp.Rating", default_metadata_tags[i].tag))
-            {
-              if (value == 0)
-                {
-                  gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                 default_metadata_tags[i].tag,
-                                                 NULL);
-                }
-              else
-                {
-                  gchar *save;
-
-                  /* Special handling for Rejected: last in list */
-                  if (value == 6)
-                    value = -1;
-
-                  save = g_strdup_printf ("%d", value);
-
-                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                                  save, FALSE);
-                  g_free (save);
-                }
-            }
-          else if (default_metadata_tags[i].mode == MODE_COMBO &&
-                   default_metadata_tags[i].combo_index > -1)
+          if (default_metadata_tags[i].mode == MODE_COMBO &&
+              default_metadata_tags[i].combo_index > -1)
             {
               gint ci = default_metadata_tags[i].combo_index;
 
@@ -5166,12 +5036,28 @@ metadata_editor_write_callback (GtkWidget       *dialog,
                   gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
                                                  default_metadata_tags[i].tag,
                                                  NULL);
+                  if (default_metadata_tags[i].other_tag_index > -1)
+                    {
+                      gint oti = default_metadata_tags[i].other_tag_index;
+
+                      gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
+                                                     equivalent_metadata_tags[oti].tag,
+                                                     NULL);
+                    }  
                 }
               else
                 {
                   set_tag_string (g_metadata, default_metadata_tags[i].tag,
                                   combo_metadata[ci].metadata_values[value].data,
                                   FALSE);
+                  if (default_metadata_tags[i].other_tag_index > -1)
+                    {
+                      gint oti = default_metadata_tags[i].other_tag_index;
+
+                      set_tag_string (g_metadata, equivalent_metadata_tags[oti].tag,
+                                      combo_metadata[ci].metadata_values[value].data,
+                                      FALSE);
+                    }  
                 }
             }
         }

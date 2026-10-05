@@ -70,12 +70,6 @@ typedef struct
 
 typedef struct
 {
-  gint32  data;
-  gchar  *display;
-} combobox_int_tag;
-
-typedef struct
-{
   gint32                  metadata_index;           /* Index in default_metadata_tags */
   const combobox_str_tag *metadata_values;          /* Points to array struct with values */
   const gint              n_values;                 /* Number of values in array */
