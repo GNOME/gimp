@@ -57,6 +57,7 @@ Core:
     markdown-formatted info to clipboard for pasting in reports.
   * Improve internal logics to determine if an item is "writable"
     regarding actions modifying item contents.
+  * "Reshow Filter" and "Reapply Filter" now work on group layers too.
 
 Tools:
 
@@ -79,6 +80,9 @@ Tools:
     further restricted to the absence of filters. Sample Merged, even of
     single layer images, should return the color after filters are
     applied.
+  * Path tool: new "Auto-connect on click" checkbox setting (ON by
+    default) allowing to decide whether to auto-connect, or not, when
+    clicking on the end node (instead allowing users to readjust it).
 
 Graphical User Interface:
 
@@ -258,6 +262,19 @@ Plug-Ins:
   * Various plug-ins are made transient to the calling core GIMP window.
   * Warn if "New Guides from Selection" lacks selection.
   * OpenRaster: import OpenRaster SVG layers.
+  * Better error reporting on various plug-ins.
+  * file-raw: new default, simpler, RAW developer plug-in. While using
+    dartkable, RawTherapee and other specialized RAW developer software
+    is still possible, GIMP will now ship with a simple plug-in too.
+  * Metadata:
+    - Update Digital Resource Type choices. Some choices were added, and
+      choices which are not recommended for usage anymore are moved to
+      the end of the list with the "(Retired)" prefix. Some choices also
+      got an edited label text.
+    - Add support for IPTC Accessibility tags.
+    - Add support for setting DataMining permissions.
+    - Add missing Rejected value for Rating.
+    - Various code cleanups and reorganization.
 
 API:
 
