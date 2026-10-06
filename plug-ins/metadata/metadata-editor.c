@@ -1421,6 +1421,7 @@ get_tags (GExiv2Metadata  *metadata,
       for (col = 0; col < items; col++)
         {
           gchar *value;
+          gchar *value_utf8 = NULL;
 
           g_snprintf ((gchar *) &tag, 512, "%s[%d]%s", header, row, (gchar *) tags[col]);
 
@@ -1428,8 +1429,12 @@ get_tags (GExiv2Metadata  *metadata,
 
           g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "get_tags tag: %s, value: %s", (gchar *) &tag, value);
 
-          if (_datarow && value)
-            _datarow[col] = strdup (value);
+          if (value)
+            value_utf8 = clean_xmp_string (value);
+
+          if (_datarow && value_utf8)
+            _datarow[col] = strdup (value_utf8);
+          g_free (value_utf8);
         }
     }
   return tagdata;
@@ -2550,1179 +2555,201 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
 
       if (default_metadata_tags[i].mode == MODE_LIST)
         {
-          /* Tab: IPTC Extension, Label: Location Shown */
-          if (! strcmp ("Xmp.iptcExt.LocationShown",
-                        default_metadata_tags[i].tag))
+          if (default_metadata_tags[i].detail_index > -1)
             {
-              GList             *rlist;
-              GList             *r;
-              GtkTreeViewColumn *column;
-              GtkCellRenderer   *renderer;
-              GtkTreeModel      *treemodel;
-              GtkListStore      *liststore;
-              GtkTreeIter        iter;
-              gint               counter;
-              gchar            **tagdata;
+              GtkTreeModel  *treemodel;
+              GtkListStore  *liststore;
+              gint           li = default_metadata_tags[i].detail_index;
+              gint           counter;
+              gchar        **tagdata = NULL;
 
               treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
               liststore = GTK_LIST_STORE (treemodel);
 
-              /* LOCATION SHOWN - SUB LOCATION */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LOC_SHO_SUB_LOC);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
+              for (gint loop = 0; loop < list_metadata[li].n_values; loop++)
                 {
-                  renderer = r->data;
+                  GtkTreeViewColumn *column;
+                  GtkCellRenderer   *renderer;
+                  GtkTreeModel      *phonemodel = NULL;
+                  GList             *rlist;
 
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LOC_SHO_SUB_LOC));
-                }
-
-              /* LOCATION SHOWN - CITY */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LOC_SHO_CITY);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LOC_SHO_CITY));
-                }
-
-              /* LOCATION SHOWN - STATE PROVINCE */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LOC_SHO_STATE_PROV);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LOC_SHO_STATE_PROV));
-                }
-
-              /* LOCATION SHOWN - COUNTRY */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LOC_SHO_CNTRY);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LOC_SHO_CNTRY));
-                }
-
-              /* LOCATION SHOWN - COUNTRY ISO */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LOC_SHO_CNTRY_ISO);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LOC_SHO_CNTRY_ISO));
-                }
-
-              /* LOCATION SHOWN - WORLD REGION */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LOC_SHO_CNTRY_WRLD_REG);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LOC_SHO_CNTRY_WRLD_REG));
-                }
-
-              /* Favor the most common form: /Iptc4xmpExt:* */
-              counter = count_tags (metadata, LOCATIONSHOWN_HEADER,
-                                    locationshown,
-                                    n_locationshown);
-
-              tagdata = get_tags (metadata, LOCATIONSHOWN_HEADER,
-                                  locationshown,
-                                  n_locationshown, counter);
-
-              if (counter == 0 || ! tagdata)
-                {
-                  /* Alternatively try: /iptcExt:* */
-                  counter = count_tags (metadata, LOCATIONSHOWN_HEADER,
-                                        locationshown_alternative,
-                                        n_locationshown);
-
-                  tagdata = get_tags (metadata, LOCATIONSHOWN_HEADER,
-                                      locationshown_alternative,
-                                      n_locationshown, counter);
-                }
-
-              if (counter > 0 && tagdata)
-                {
-                  gint item;
-
-                  for (item = 0; item < counter; item++)
+                  column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
+                                                     loop);
+                  rlist  = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
+                  for (GList *r = rlist; r; r = r->next)
                     {
-                      gchar **tagdatarow = (gchar **) tagdata[item];
+                      renderer = r->data;
 
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_LOC_SHO_SUB_LOC,        tagdatarow[0],
-                                          COL_LOC_SHO_CITY,           tagdatarow[1],
-                                          COL_LOC_SHO_STATE_PROV,     tagdatarow[2],
-                                          COL_LOC_SHO_CNTRY,          tagdatarow[3],
-                                          COL_LOC_SHO_CNTRY_ISO,      tagdatarow[4],
-                                          COL_LOC_SHO_CNTRY_WRLD_REG, tagdatarow[5],
-                                          -1);
-                    }
-                  free_tagdata(tagdata, counter, n_locationshown);
-
-                  if (counter == 1)
-                    {
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_LOC_SHO_SUB_LOC,        NULL,
-                                          COL_LOC_SHO_CITY,           NULL,
-                                          COL_LOC_SHO_STATE_PROV,     NULL,
-                                          COL_LOC_SHO_CNTRY,          NULL,
-                                          COL_LOC_SHO_CNTRY_ISO,      NULL,
-                                          COL_LOC_SHO_CNTRY_WRLD_REG, NULL,
-                                          -1);
-                    }
-                }
-              else
-                {
-                  gint item;
-
-                  for (item = 0; item < 2; item++)
-                    {
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_LOC_SHO_SUB_LOC,        NULL,
-                                          COL_LOC_SHO_CITY,           NULL,
-                                          COL_LOC_SHO_STATE_PROV,     NULL,
-                                          COL_LOC_SHO_CNTRY,          NULL,
-                                          COL_LOC_SHO_CNTRY_ISO,      NULL,
-                                          COL_LOC_SHO_CNTRY_WRLD_REG, NULL,
-                                          -1);
-                    }
-                }
-            }
-          /* Tab: IPTC Extension, Label: Featured Organization - Name */
-          else if (! strcmp ("Xmp.iptcExt.OrganisationInImageName",
-                             default_metadata_tags[i].tag))
-            {
-              GList             *rlist;
-              GList             *r;
-              GtkTreeViewColumn *column;
-              GtkCellRenderer   *renderer;
-              GtkTreeModel      *treemodel;
-              GtkListStore      *liststore;
-
-              treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
-              liststore = GTK_LIST_STORE (treemodel);
-
-              gtk_tree_selection_set_mode (gtk_tree_view_get_selection (GTK_TREE_VIEW (widget)),
-                                           GTK_SELECTION_SINGLE);
-
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget), 0);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_ORG_IMG_NAME));
-                }
-
-              add_to_store (value, liststore, COL_ORG_IMG_NAME);
-            }
-          /* Tab: IPTC Extension, Label: Featured Organization - Code */
-          else if (! strcmp ("Xmp.iptcExt.OrganisationInImageCode",
-                             default_metadata_tags[i].tag))
-            {
-              GList             *rlist;
-              GList             *r;
-              GtkTreeViewColumn *column;
-              GtkCellRenderer   *renderer;
-              GtkTreeModel      *treemodel;
-              GtkListStore      *liststore;
-
-              treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
-              liststore = GTK_LIST_STORE (treemodel);
-
-              gtk_tree_selection_set_mode (gtk_tree_view_get_selection (GTK_TREE_VIEW (widget)),
-                                           GTK_SELECTION_SINGLE);
-
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget), 0);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_ORG_IMG_CODE));
-                }
-
-              add_to_store (value, liststore, COL_ORG_IMG_CODE);
-            }
-          /* Tab: IPTC Extension, Label: Artwork or Object */
-          else if (! strcmp ("Xmp.iptcExt.ArtworkOrObject",
-                             default_metadata_tags[i].tag))
-            {
-              GList             *rlist;
-              GList             *r;
-              GtkTreeViewColumn *column;
-              GtkCellRenderer   *renderer;
-              GtkTreeModel      *treemodel;
-              GtkListStore      *liststore;
-              GtkTreeIter        iter;
-              gint               counter;
-              gchar            **tagdata;
-
-              treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
-              liststore = GTK_LIST_STORE (treemodel);
-
-              /* ARTWORK OR OBJECT - TITLE */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_AOO_TITLE);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_AOO_TITLE));
-                }
-
-              /* ARTWORK OR OBJECT - DATE CREATED */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_AOO_DATE_CREAT);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r != NULL; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_AOO_DATE_CREAT));
-                }
-
-              /* ARTWORK OR OBJECT - CREATOR */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_AOO_CREATOR);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r != NULL; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_AOO_CREATOR));
-                }
-
-              /* ARTWORK OR OBJECT - SOURCE */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_AOO_SOURCE);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_AOO_SOURCE));
-                }
-
-              /* ARTWORK OR OBJECT - SOURCE INVENTORY ID */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_AOO_SRC_INV_ID);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_AOO_SRC_INV_ID));
-                }
-
-              /* ARTWORK OR OBJECT - COPYRIGHT NOTICE */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_AOO_CR_NOT);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_AOO_CR_NOT));
-                }
-
-              counter = count_tags (metadata, ARTWORKOROBJECT_HEADER,
-                                    artworkorobject,
-                                    n_artworkorobject);
-
-              tagdata = get_tags (metadata, ARTWORKOROBJECT_HEADER,
-                                  artworkorobject,
-                                  n_artworkorobject, counter);
-
-              if (counter == 0 || ! tagdata)
-                {
-                  /* Alternatively try: /iptcExt:* */
-                  counter = count_tags (metadata, ARTWORKOROBJECT_HEADER,
-                                        artworkorobject_alternative,
-                                        n_artworkorobject);
-
-                  tagdata = get_tags (metadata, ARTWORKOROBJECT_HEADER,
-                                      artworkorobject_alternative,
-                                      n_artworkorobject, counter);
-                }
-
-
-              if (counter > 0 && tagdata)
-                {
-                  gint item;
-
-                  for (item = 0; item < counter; item++)
-                    {
-                      gchar **tagdatarow = (gchar **) tagdata[item];
-
-                      /* remove substring for language id in title field */
-                      remove_substring (tagdatarow[COL_AOO_TITLE], lang_default);
-                      if (strstr (tagdatarow[COL_AOO_TITLE], " "))
+                      if (list_metadata[li].cell_types == NULL ||
+                          list_metadata[li].cell_types[loop] != METADATA_PHONETYPE)
                         {
-                          remove_substring (tagdatarow[COL_AOO_TITLE], " ");
+                          g_object_set (renderer,
+                                        "editable", TRUE,
+                                        NULL);
+                          g_signal_connect (renderer, "edited",
+                                            G_CALLBACK (generic_cell_edited_callback),
+                                            treemodel);
                         }
-
-                      remove_substring (tagdatarow[COL_AOO_TITLE], bag_default);
-                      if (strstr (tagdatarow[COL_AOO_TITLE], " "))
+                      else
                         {
-                          remove_substring (tagdatarow[COL_AOO_TITLE], " ");
-                        }
-
-                      remove_substring (tagdatarow[COL_AOO_TITLE], seq_default);
-                      if (strstr (tagdatarow[COL_AOO_TITLE], " "))
-                        {
-                          remove_substring (tagdatarow[COL_AOO_TITLE], " ");
-                        }
-
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_AOO_TITLE,      tagdatarow[0],
-                                          COL_AOO_DATE_CREAT, tagdatarow[1],
-                                          COL_AOO_CREATOR,    tagdatarow[2],
-                                          COL_AOO_SOURCE,     tagdatarow[3],
-                                          COL_AOO_SRC_INV_ID, tagdatarow[4],
-                                          COL_AOO_CR_NOT,     tagdatarow[5],
-                                          -1);
-                    }
-                  free_tagdata(tagdata, counter, n_artworkorobject);
-                }
-              else
-                {
-                  gint item;
-
-                  for (item = 0; item < 2; item++)
-                    {
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_AOO_TITLE,      NULL,
-                                          COL_AOO_DATE_CREAT, NULL,
-                                          COL_AOO_CREATOR,    NULL,
-                                          COL_AOO_SOURCE,     NULL,
-                                          COL_AOO_SRC_INV_ID, NULL,
-                                          COL_AOO_CR_NOT,     NULL,
-                                          -1);
-                    }
-                }
-            }
-          /* Tab: IPTC Extension, Label: Model Release Identifier */
-          else if (! strcmp ("Xmp.plus.ModelReleaseID",
-                             default_metadata_tags[i].tag))
-            {
-              GList             *rlist;
-              GList             *r;
-              GtkTreeViewColumn *column;
-              GtkCellRenderer   *renderer;
-              GtkTreeModel      *treemodel;
-              GtkListStore      *liststore;
-
-              treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
-              liststore = GTK_LIST_STORE (treemodel);
-
-              gtk_tree_selection_set_mode (gtk_tree_view_get_selection (GTK_TREE_VIEW (widget)),
-                                           GTK_SELECTION_SINGLE);
-
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget), 0);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_PROP_REL_ID));
-                }
-
-              add_to_store (value, liststore, COL_MOD_REL_ID);
-            }
-          /* Tab: IPTC Extension, Label: Registry Entry */
-          else if (! strcmp ("Xmp.iptcExt.RegistryId",
-                             default_metadata_tags[i].tag))
-            {
-              GList             *rlist;
-              GList             *r;
-              GtkTreeViewColumn *column;
-              GtkCellRenderer   *renderer;
-              GtkTreeModel      *treemodel;
-              GtkListStore      *liststore;
-              GtkTreeIter        iter;
-              gint               counter;
-              gchar            **tagdata;
-
-              treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
-              liststore = GTK_LIST_STORE (treemodel);
-
-              /* REGISTRY - ORGANIZATION ID */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_REGISTRY_ORG_ID);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r != NULL; r = r->next)
-                {
-                  renderer = (GtkCellRenderer*) r->data;
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_REGISTRY_ORG_ID));
-                }
-
-              /* REGISTRY - ITEM ID */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_REGISTRY_ITEM_ID);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_REGISTRY_ITEM_ID));
-                }
-
-              counter = count_tags (metadata, REGISTRYID_HEADER,
-                                    registryid,
-                                    n_registryid);
-
-              tagdata = get_tags (metadata, REGISTRYID_HEADER,
-                                  registryid,
-                                  n_registryid, counter);
-
-              if (counter == 0 || ! tagdata)
-                {
-                  /* Alternatively try: /iptcExt:* */
-                  counter = count_tags (metadata, REGISTRYID_HEADER,
-                                        registryid_alternative,
-                                        n_registryid);
-
-                  tagdata = get_tags (metadata, REGISTRYID_HEADER,
-                                      registryid_alternative,
-                                      n_registryid, counter);
-                }
-
-              if (counter > 0 && tagdata)
-                {
-                  gint item;
-
-                  for (item = 0; item < counter; item++)
-                    {
-                      gchar **tagdatarow = (gchar **) tagdata[item];
-
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_REGISTRY_ORG_ID,  tagdatarow[0],
-                                          COL_REGISTRY_ITEM_ID, tagdatarow[1],
-                                          -1);
-                    }
-                  free_tagdata(tagdata, counter, n_registryid);
-                }
-              else
-                {
-                  gint item;
-
-                  for (item = 0; item < 2; item++)
-                    {
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_REGISTRY_ORG_ID,  NULL,
-                                          COL_REGISTRY_ITEM_ID, NULL,
-                                          -1);
-                    }
-                }
-            }
-          /* Tab: IPTC Extension, Label: Image Creator */
-          else if (! strcmp ("Xmp.plus.ImageCreator",
-                             default_metadata_tags[i].tag))
-            {
-              GList             *rlist;
-              GList             *r;
-              GtkTreeViewColumn *column;
-              GtkCellRenderer   *renderer;
-              GtkTreeModel      *treemodel;
-              GtkListStore      *liststore;
-              GtkTreeIter        iter;
-              gint               counter;
-              gchar            **tagdata;
-
-              treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
-              liststore = GTK_LIST_STORE (treemodel);
-
-              /* IMAGE CREATOR - NAME */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_IMG_CR8_NAME);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_IMG_CR8_NAME));
-                }
-
-              /* IMAGE CREATOR - ID */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_IMG_CR8_ID);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_IMG_CR8_ID));
-                }
-
-                counter = count_tags (metadata, IMAGECREATOR_HEADER,
-                                      imagecreator,
-                                      n_imagecreator);
-
-                tagdata = get_tags (metadata, IMAGECREATOR_HEADER,
-                                    imagecreator,
-                                    n_imagecreator, counter);
-
-                if (counter > 0 && tagdata)
-                  {
-                    gint item;
-
-                    for (item = 0; item < counter; item++)
-                      {
-                        gchar **tagdatarow = (gchar **) tagdata[item];
-
-                        gtk_list_store_append (liststore, &iter);
-                        gtk_list_store_set (liststore, &iter,
-                                            COL_IMG_CR8_NAME, tagdatarow[0],
-                                            COL_IMG_CR8_ID,   tagdatarow[1],
-                                            -1);
-                      }
-                    free_tagdata(tagdata, counter, n_imagecreator);
-                  }
-                else
-                  {
-                    gint item;
-
-                    for (item = 0; item < 2; item++)
-                      {
-                        gtk_list_store_append (liststore, &iter);
-                        gtk_list_store_set (liststore, &iter,
-                                            COL_IMG_CR8_NAME, NULL,
-                                            COL_IMG_CR8_ID,   NULL,
-                                            -1);
-                      }
-                  }
-            }
-          /* Tab: IPTC Extension, Label: Copyright Owner */
-          else if (! strcmp ("Xmp.plus.CopyrightOwner",
-                             default_metadata_tags[i].tag))
-            {
-              GList             *rlist;
-              GList             *r;
-              GtkTreeViewColumn *column;
-              GtkCellRenderer   *renderer;
-              GtkTreeModel      *treemodel;
-              GtkListStore      *liststore;
-              GtkTreeIter        iter;
-              gint               counter;
-              gchar            **tagdata;
-
-              treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
-              liststore = GTK_LIST_STORE (treemodel);
-
-              /* COPYRIGHT OWNER - NAME */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_CR_OWNER_NAME);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_CR_OWNER_NAME));
-                }
-
-              /* COPYRIGHT OWNER - ID */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_CR_OWNER_ID);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_CR_OWNER_ID));
-                }
-
-              counter = count_tags (metadata, COPYRIGHTOWNER_HEADER,
-                                    copyrightowner,
-                                    n_copyrightowner);
-
-              tagdata = get_tags (metadata, COPYRIGHTOWNER_HEADER,
-                                  copyrightowner,
-                                  n_copyrightowner, counter);
-
-              if (counter > 0 && tagdata)
-                {
-                  gint item;
-
-                  for (item = 0; item < counter; item++)
-                    {
-                      gchar **tagdatarow = (gchar **) tagdata[item];
-
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_CR_OWNER_NAME, tagdatarow[0],
-                                          COL_CR_OWNER_ID,   tagdatarow[1],
-                                          -1);
-                    }
-                  free_tagdata(tagdata, counter, n_copyrightowner);
-                }
-              else
-                {
-                  gint item;
-
-                  for (item = 0; item < 2; item++)
-                    {
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_CR_OWNER_NAME, NULL,
-                                          COL_CR_OWNER_ID,   NULL,
-                                          -1);
-                    }
-                }
-            }
-          /* Tab: IPTC Extension, Label: Licensor */
-          else if (! strcmp ("Xmp.plus.Licensor",
-                             default_metadata_tags[i].tag))
-            {
-              GList             *rlist;
-              GList             *r;
-              GtkTreeViewColumn *column;
-              GtkCellRenderer   *renderer;
-              GtkTreeModel      *treemodel;
-              GtkTreeModel      *phonemodel;
-              GtkListStore      *liststore;
-              GtkListStore      *phonestore;
-              GtkTreeIter        iter;
-              GtkTreeIter        phoneiter;
-              gint               counter;
-              gint               j;
-              gchar            **tagdata;
-
-              phonestore = gtk_list_store_new (1, G_TYPE_STRING);
-              gtk_list_store_append (phonestore, &phoneiter);
-              gtk_list_store_set (phonestore, &phoneiter, 0, "Unknown", -1);
-              for (j=1; j < n_phone_types; j++)
-                {
-                  gtk_list_store_append (phonestore, &phoneiter);
-                  gtk_list_store_set (phonestore, &phoneiter,
-                                      0, gettext (phone_types[j].display),
-                                      -1);
-                }
-              phonemodel = GTK_TREE_MODEL (phonestore);
-
-              treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
-              liststore = GTK_LIST_STORE (treemodel);
-
-              /* LICENSOR - NAME */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LICENSOR_NAME);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LICENSOR_NAME));
-                }
-
-              /* LICENSOR - ID */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LICENSOR_ID);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LICENSOR_ID));
-                }
-
-              /* LICENSOR - PHONE NUMBER 1 */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LICENSOR_PHONE1);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LICENSOR_PHONE1));
-                }
-
-              /* LICENSOR - PHONE TYPE 1 */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LICENSOR_PHONE_TYPE1);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable",    TRUE,
-                                "text-column", 0,
-                                "has-entry",   FALSE,
-                                "model",       phonemodel,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (phone_type_cell_edited_callback),
-                                    widget);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LICENSOR_PHONE_TYPE1));
-                }
-
-              /* LICENSOR - PHONE NUMBER 2 */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LICENSOR_PHONE2);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LICENSOR_PHONE2));
-                }
-
-              /* LICENSOR - PHONE TYPE 2 */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LICENSOR_PHONE_TYPE2);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable",    TRUE,
-                                "text-column", 0,
-                                "has-entry",   FALSE,
-                                "model",       phonemodel,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (phone_type_cell_edited_callback),
-                                    widget);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LICENSOR_PHONE_TYPE2));
-                }
-
-              /* LICENSOR - EMAIL */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LICENSOR_EMAIL);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LICENSOR_EMAIL));
-                }
-
-              /* LICENSOR - WEB ADDRESS */
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
-                                                 COL_LICENSOR_WEB);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_LICENSOR_WEB));
-                }
-
-              counter = count_tags (metadata, LICENSOR_HEADER,
-                                    licensor,
-                                    n_licensor);
-
-              tagdata = get_tags (metadata, LICENSOR_HEADER,
-                                  licensor,
-                                  n_licensor, counter);
-
-              if (counter > 0 && tagdata)
-                {
-                  gint item;
-
-                  for (item = 0; item < counter; item++)
-                    {
-                      gchar **tagdatarow = (gchar **) tagdata[item];
-                      gchar   *type1;
-                      gchar   *type2;
-                      gint    types;
-
-                      type1 = g_strdup (gettext (phone_types[0].display));
-                      type2 = g_strdup (gettext (phone_types[0].display));
-
-                      for (types = 0; types < n_phone_types; types++)
-                        {
-                          /* phone type 1 */
-                          if (tagdatarow[3] &&
-                              ! strcmp (tagdatarow[3],
-                                        phone_types[types].data))
+                          /* Set up Phone type render */
+                          if (phonemodel == NULL)
                             {
-                              g_free (type1);
-                              type1 = g_strdup (gettext (phone_types[types].display));
+                              GtkListStore *phonestore = NULL;
+                              GtkTreeIter   phoneiter;
+
+                              phonestore = gtk_list_store_new (1, G_TYPE_STRING);
+                              gtk_list_store_append (phonestore, &phoneiter);
+                              gtk_list_store_set (phonestore, &phoneiter, 0, "Unknown", -1);
+                              for (gint j = 1; j < n_phone_types; j++)
+                                {
+                                  gtk_list_store_append (phonestore, &phoneiter);
+                                  gtk_list_store_set (phonestore, &phoneiter,
+                                                      0, gettext (phone_types[j].display),
+                                                      -1);
+                                }
+                              phonemodel = GTK_TREE_MODEL (phonestore);
                             }
 
-                          /* phone type 2 */
-                          if (tagdatarow[5] &&
-                              ! strcmp (tagdatarow[5],
-                                        phone_types[types].data))
-                            {
-                              g_free (type2);
-                              type2 = g_strdup (gettext (phone_types[types].display));
-                            }
+                          g_object_set (renderer,
+                                        "editable",    TRUE,
+                                        "text-column", 0,
+                                        "has-entry",   FALSE,
+                                        "model",       phonemodel,
+                                        NULL);
+                          g_signal_connect (renderer, "edited",
+                                            G_CALLBACK (phone_type_cell_edited_callback),
+                                            widget);
                         }
 
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_LICENSOR_NAME,        tagdatarow[0],
-                                          COL_LICENSOR_ID,          tagdatarow[1],
-                                          COL_LICENSOR_PHONE1,      tagdatarow[2],
-                                          COL_LICENSOR_PHONE_TYPE1, type1,
-                                          COL_LICENSOR_PHONE2,      tagdatarow[4],
-                                          COL_LICENSOR_PHONE_TYPE2, type2,
-                                          COL_LICENSOR_EMAIL,       tagdatarow[6],
-                                          COL_LICENSOR_WEB,         tagdatarow[7],
-                                          -1);
-                      g_free (type1);
-                      g_free (type2);
+                      /* FIXME: Maybe this should be 1-based to be able to identify invalid values. */
+                      g_object_set_data (G_OBJECT (renderer),
+                                         "column",
+                                         GINT_TO_POINTER (loop));
                     }
-                  free_tagdata(tagdata, counter, n_licensor);
+                }
+
+              if (list_metadata[li].n_values > 1)
+                {
+                  /* Multi-column */
+                  /* Favor the most common form: /Iptc4xmpExt:* */
+                  counter = count_tags (metadata, default_metadata_tags[i].tag,
+                                        list_metadata[li].subtags,
+                                        list_metadata[li].n_values);
+
+                  tagdata = get_tags (metadata, default_metadata_tags[i].tag,
+                                      list_metadata[li].subtags,
+                                      list_metadata[li].n_values, counter);
+
+                  if ((counter == 0 || ! tagdata) && list_metadata[li].alt_subtags)
+                    {
+                      /* Alternatively try: /iptcExt:* */
+                      counter = count_tags (metadata, default_metadata_tags[i].tag,
+                                            list_metadata[li].alt_subtags,
+                                            list_metadata[li].n_values);
+
+                      tagdata = get_tags (metadata, default_metadata_tags[i].tag,
+                                          list_metadata[li].alt_subtags,
+                                          list_metadata[li].n_values, counter);
+                    }
+
+                  if (counter > 0 && tagdata)
+                    {
+                      for (gint item = 0; item < counter; item++)
+                        {
+                          GtkTreeIter   iter;
+                          gchar       **tagdatarow = (gchar **) tagdata[item];
+
+                          gtk_list_store_append (liststore, &iter);
+
+                          for (gint si = 0; si < list_metadata[li].n_values; si++)
+                            {
+                              if (list_metadata[li].cell_types == NULL ||
+                                  list_metadata[li].cell_types[si] != METADATA_PHONETYPE)
+                                {
+                                  gtk_list_store_set (liststore, &iter,
+                                                      si, tagdatarow[si],
+                                                      -1);
+                                }
+                              else
+                                {
+                                  gchar *phone_type = NULL;
+
+                                  if (tagdatarow[si] != NULL)
+                                    {
+                                      for (gint types = 0; types < n_phone_types; types++)
+                                        {
+                                          if (! strcmp (tagdatarow[si], phone_types[types].data))
+                                            {
+                                              phone_type = g_strdup (gettext (phone_types[types].display));
+                                              break;
+                                            }
+                                        }
+                                    }
+                                  if (tagdatarow[si] == NULL)
+                                    phone_type = g_strdup (gettext (phone_types[0].display));
+
+                                  gtk_list_store_set (liststore, &iter,
+                                                      si, phone_type,
+                                                      -1);
+                                  g_free (phone_type);
+                                }
+                            }
+                        }
+                      free_tagdata (tagdata, counter, list_metadata[li].n_values);
+
+                      /* Add row if less than 2 */
+                      if (counter == 1)
+                        {
+                          GtkTreeIter iter;
+
+                          gtk_list_store_append (liststore, &iter);
+
+                          for (gint si = 0; si < list_metadata[li].n_values; si++)
+                            {
+                              if (list_metadata[li].cell_types == NULL ||
+                                  list_metadata[li].cell_types[si] != METADATA_PHONETYPE)
+                                gtk_list_store_set (liststore, &iter,
+                                                    si, NULL,
+                                                    -1);
+                              else
+                                gtk_list_store_set (liststore, &iter,
+                                                    si, gettext (phone_types[0].display),
+                                                    -1);
+                            }
+                        }
+                    }
+                  else
+                    {
+                      /* 0 rows: add 2 rows */
+                      for (gint item = 0; item < 2; item++)
+                        {
+                          GtkTreeIter iter;
+
+                          gtk_list_store_append (liststore, &iter);
+
+                          for (gint si = 0; si < list_metadata[li].n_values; si++)
+                            {
+                              if (list_metadata[li].cell_types == NULL ||
+                                  list_metadata[li].cell_types[si] != METADATA_PHONETYPE)
+                                gtk_list_store_set (liststore, &iter,
+                                                    si, NULL,
+                                                    -1);
+                              else
+                                gtk_list_store_set (liststore, &iter,
+                                                    si, gettext (phone_types[0].display),
+                                                    -1);
+                            }
+                        }
+                    }
                 }
               else
                 {
-                  gint item;
-
-                  for (item = 0; item < 2; item++)
-                    {
-                      gtk_list_store_append (liststore, &iter);
-                      gtk_list_store_set (liststore, &iter,
-                                          COL_LICENSOR_NAME,        NULL,
-                                          COL_LICENSOR_ID,          NULL,
-                                          COL_LICENSOR_PHONE1,      NULL,
-                                          COL_LICENSOR_PHONE_TYPE1, gettext (phone_types[0].display),
-                                          COL_LICENSOR_PHONE2,      NULL,
-                                          COL_LICENSOR_PHONE_TYPE2, gettext (phone_types[0].display),
-                                          COL_LICENSOR_EMAIL,       NULL,
-                                          COL_LICENSOR_WEB,         NULL,
-                                          -1);
-                    }
+                  /* Single-column: one value per row */
+                  gtk_tree_selection_set_mode (gtk_tree_view_get_selection (GTK_TREE_VIEW (widget)),
+                                               GTK_SELECTION_SINGLE);
+                  add_to_store (value, liststore, 0);
                 }
-            }
-          /* Tab: IPTC Extension, Label: Property Release Identifier */
-          else if (! strcmp ("Xmp.plus.PropertyReleaseID",
-                              default_metadata_tags[i].tag))
-            {
-              GList             *rlist;
-              GList             *r;
-              GtkTreeViewColumn *column;
-              GtkCellRenderer   *renderer;
-              GtkTreeModel      *treemodel;
-              GtkListStore      *liststore;
-
-              treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
-              liststore = GTK_LIST_STORE (treemodel);
-
-              gtk_tree_selection_set_mode (gtk_tree_view_get_selection (GTK_TREE_VIEW (widget)),
-                                           GTK_SELECTION_SINGLE);
-
-              column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget), 0);
-              rlist = gtk_cell_layout_get_cells (GTK_CELL_LAYOUT (column));
-              for (r = rlist; r; r = r->next)
-                {
-                  renderer = r->data;
-
-                  g_object_set (renderer,
-                                "editable", TRUE,
-                                NULL);
-
-                  g_signal_connect (renderer, "edited",
-                                    G_CALLBACK (generic_cell_edited_callback),
-                                    treemodel);
-
-                  g_object_set_data (G_OBJECT (renderer),
-                                     "column",
-                                     GINT_TO_POINTER (COL_PROP_REL_ID));
-                }
-
-              add_to_store (value, liststore, COL_PROP_REL_ID);
             }
         }
 
@@ -3746,8 +2773,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
               value = gexiv2_metadata_try_get_tag_string (metadata,
                                                           default_metadata_tags[i].tag,
                                                           NULL);
-              if (default_metadata_tags[i].mode == MODE_COMBO &&
-                  default_metadata_tags[i].detail_index > -1)
+              if (default_metadata_tags[i].detail_index > -1)
                 {
                   gint ci = default_metadata_tags[i].detail_index;
 
