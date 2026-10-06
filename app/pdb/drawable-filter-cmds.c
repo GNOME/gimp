@@ -256,7 +256,13 @@ drawable_filter_set_visible_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_filter_set_active (GIMP_FILTER (filter), visible);
+      if (visible != gimp_filter_get_active (GIMP_FILTER (filter)))
+        {
+          if (gimp_item_is_attached (GIMP_ITEM (gimp_drawable_filter_get_drawable (filter))))
+            gimp_image_undo_push_filter_visibility_compressible (filter, context);
+
+          gimp_filter_set_active (GIMP_FILTER (filter), visible);
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,

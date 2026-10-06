@@ -121,25 +121,31 @@ gimp_drawable_filter_undo_constructed (GObject *object)
                                         GIMP_OBJECT (df_undo->filter));
     }
 
-  op = gimp_drawable_filter_get_operation (df_undo->filter);
-  gegl_node_get (op, "operation", &op_name, NULL);
-
-  df_undo->node = gegl_node_new ();
-  gegl_node_set (df_undo->node,"operation", op_name, NULL);
-
-  pspecs = gegl_operation_list_properties (op_name, &n_pspecs);
-  for (gint i = 0; i < n_pspecs; i++)
+  if (GIMP_UNDO (object)->undo_type != GIMP_UNDO_FILTER_VISIBILITY)
     {
-      GParamSpec *pspec = pspecs[i];
-      GValue      value = G_VALUE_INIT;
+      op = gimp_drawable_filter_get_operation (df_undo->filter);
+      gegl_node_get (op, "operation", &op_name, NULL);
 
-      g_value_init (&value, pspec->value_type);
-      gegl_node_get_property (op, pspec->name,
-                              &value);
+      df_undo->node = gegl_node_new ();
+      gegl_node_set (df_undo->node, "operation", op_name, NULL);
 
-      gegl_node_set_property (df_undo->node, pspec->name,
-                              &value);
-      g_value_unset (&value);
+      pspecs = gegl_operation_list_properties (op_name, &n_pspecs);
+      for (gint i = 0; i < n_pspecs; i++)
+        {
+          GParamSpec *pspec = pspecs[i];
+          GValue      value = G_VALUE_INIT;
+
+          g_value_init (&value, pspec->value_type);
+          gegl_node_get_property (op, pspec->name,
+                                  &value);
+
+          gegl_node_set_property (df_undo->node, pspec->name,
+                                  &value);
+          g_value_unset (&value);
+        }
+
+      g_free (pspecs);
+      g_free (op_name);
     }
 
   df_undo->active          = gimp_filter_get_active (GIMP_FILTER (df_undo->filter));
@@ -149,9 +155,6 @@ gimp_drawable_filter_undo_constructed (GObject *object)
   df_undo->composite_space = gimp_drawable_filter_get_composite_space (df_undo->filter);
   df_undo->composite_mode  = gimp_drawable_filter_get_composite_mode (df_undo->filter);
   df_undo->region          = gimp_drawable_filter_get_region (df_undo->filter);
-
-  g_free (pspecs);
-  g_free (op_name);
 }
 
 static void
@@ -388,7 +391,9 @@ gimp_drawable_filter_undo_can_compress_visibility (GimpImage *image,
 {
   GimpUndo      *undo;
   GimpUndoStack *undo_stack;
+  GList         *iter;
   gint           n_items;
+  gint           n_drawable_filters = 0;
 
   g_return_val_if_fail (image != NULL, NULL);
   g_return_val_if_fail (filter_list != NULL, NULL);
@@ -402,7 +407,11 @@ gimp_drawable_filter_undo_can_compress_visibility (GimpImage *image,
   undo_stack = GIMP_UNDO_STACK (undo);
   n_items    = gimp_container_get_n_children (undo_stack->undos);
 
-  if (n_items != g_list_length (filter_list))
+  for (iter = filter_list; iter; iter = g_list_next (iter))
+    if (GIMP_IS_DRAWABLE_FILTER (iter->data))
+      n_drawable_filters++;
+
+  if (n_items != n_drawable_filters)
     return NULL;
 
   for (gint i = 0; i < n_items; i++)

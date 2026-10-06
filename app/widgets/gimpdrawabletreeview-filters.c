@@ -755,7 +755,7 @@ gimp_drawable_filters_editor_visible_all_toggled (GtkWidget            *widget,
     {
       gimp_image_undo_group_start (image,
                                    GIMP_UNDO_GROUP_FILTER_VISIBILITY,
-                                   "Filters visibility");
+                                   NULL);
     }
 
   for (iter = list;

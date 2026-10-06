@@ -401,7 +401,7 @@ gimp_image_undo_push_filter_visibility (GimpImage          *image,
 
   return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_FILTER_UNDO,
                                GIMP_UNDO_FILTER_VISIBILITY, undo_desc,
-                               GIMP_DIRTY_DRAWABLE, "filter", filter, NULL);
+                               GIMP_DIRTY_ITEM_META, "filter", filter, NULL);
 }
 
 GimpUndo *
