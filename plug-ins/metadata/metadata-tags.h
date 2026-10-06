@@ -185,6 +185,9 @@ enum
   EXIF_LAST
 };
 
+/* FIXME: The below COL_* enums are still used in metadata-xml.
+ * We should use the same code for setting values there as in
+ * the editor and then remove these. */
 enum
 {
   COL_LICENSOR_NAME = 0,
@@ -387,6 +390,23 @@ extern const gint n_imageSupplierInfoTags;
 
 /* Plus and IPTC extension tags */
 
+/* Keep in sync with the values in list_metadata! */
+enum
+{
+  LIST_LOCATION        = 0,
+  LIST_ORGNAME,
+  LIST_ORGCODE,
+  LIST_OBJECT,
+  LIST_MODELID,
+  LIST_REGID,
+  LIST_CREATOR,
+  LIST_COPYRIGHT,
+  LIST_LICENSOR,
+  LIST_PROPID,
+
+  LIST_LAST
+};
+
 #define LICENSOR_HEADER "Xmp.plus.Licensor"
 extern const gchar *licensor[];
 extern const gint   n_licensor;
@@ -427,6 +447,8 @@ extern const gchar *locationcreated[];
 extern const gint   n_locationcreated;
 #endif
 
+extern const list_references list_metadata[];
+extern const gint            n_list_metadata;
 
 gchar * metadata_format_gps_longitude_latitude (const gdouble  value);
 gchar * metadata_format_gps_altitude           (const gdouble  value,

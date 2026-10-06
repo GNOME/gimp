@@ -86,28 +86,28 @@ const metadata_tag default_metadata_tags[] =
   { "Xmp.iptcExt.CountryName",              MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.iptcExt.CountryCode",              MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.iptcExt.WorldRegion",              MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
-  { "Xmp.iptcExt.LocationShown",            MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
-  { "Xmp.iptcExt.OrganisationInImageName",  MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
-  { "Xmp.iptcExt.OrganisationInImageCode",  MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
+  { "Xmp.iptcExt.LocationShown",            MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_LOCATION    },
+  { "Xmp.iptcExt.OrganisationInImageName",  MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_ORGNAME     },
+  { "Xmp.iptcExt.OrganisationInImageCode",  MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_ORGCODE     },
   { "Xmp.iptcExt.Event",                    MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
-  { "Xmp.iptcExt.ArtworkOrObject",          MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
+  { "Xmp.iptcExt.ArtworkOrObject",          MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_OBJECT      },
   { "Xmp.iptcExt.AddlModelInfo",            MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.iptcExt.ModelAge",                 MODE_MULTI,  -1,                 TAG_TYPE_XMP, GIMP_XMP_BAG,  -1  },
   { "Xmp.plus.MinorModelAgeDisclosure",     MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, COMBO_AGEDISC    },
   { "Xmp.plus.ModelReleaseStatus",          MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, COMBO_MODELREL   },
-  { "Xmp.plus.ModelReleaseID",              MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
+  { "Xmp.plus.ModelReleaseID",              MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_MODELID     },
   { "Xmp.plus.ImageSupplierName",           MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.plus.ImageSupplierID",             MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.plus.ImageSupplierImageID",        MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
-  { "Xmp.iptcExt.RegistryId",               MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
+  { "Xmp.iptcExt.RegistryId",               MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_REGID       },
   { "Xmp.iptcExt.MaxAvailWidth",            MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.iptcExt.MaxAvailHeight",           MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.iptcExt.DigitalSourceType",        MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, COMBO_SOURCETYPE },
-  { "Xmp.plus.ImageCreator",                MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
-  { "Xmp.plus.CopyrightOwner",              MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
-  { "Xmp.plus.Licensor",                    MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
+  { "Xmp.plus.ImageCreator",                MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_CREATOR     },
+  { "Xmp.plus.CopyrightOwner",              MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_COPYRIGHT   },
+  { "Xmp.plus.Licensor",                    MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_LICENSOR    },
   { "Xmp.plus.PropertyReleaseStatus",       MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, COMBO_PROPREL    },
-  { "Xmp.plus.PropertyReleaseID",           MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, -1  },
+  { "Xmp.plus.PropertyReleaseID",           MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_PROPID      },
   { "Xmp.plus.DataMining",                  MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, COMBO_DATAMINING },
   { "Xmp.plus.OtherConstraints",            MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
 
@@ -531,6 +531,21 @@ const gchar *locationshown_alternative[] =
   "/iptcExt:WorldRegion"
 };
 
+/* Array to reference all other list metadata arrays */
+const list_references list_metadata[] =
+{
+  { XMP_EXT_LOCATION,       locationshown,    locationshown_alternative,    n_locationshown,   NULL },
+  { XMP_EXT_ORGNAME,        NULL,             NULL,                         1,                 NULL },
+  { XMP_EXT_ORGCODE,        NULL,             NULL,                         1,                 NULL },
+  { XMP_EXT_OBJECT,         artworkorobject,  artworkorobject_alternative,  n_artworkorobject, NULL },
+  { XMP_EXT_MODELRELID,     NULL,             NULL,                         1,                 NULL },
+  { XMP_EXT_REGID,          registryid,       registryid_alternative,       n_registryid,      NULL },
+  { XMP_EXT_IMAGECREATOR,   imagecreator,     NULL,                         n_imagecreator,    NULL },
+  { XMP_EXT_COPYRIGHTOWNER, copyrightowner,   NULL,                         n_copyrightowner,  NULL },
+  { XMP_EXT_LICENSOR,       licensor,         NULL,                         n_licensor,        licensor_special_handling },
+  { XMP_EXT_PROPERTYRELID,  NULL,             NULL,                         1,                 NULL },
+};
+const gint n_list_metadata = G_N_ELEMENTS (list_metadata);
 
 #ifdef USE_TAGS
 const gchar *locationcreated[] =

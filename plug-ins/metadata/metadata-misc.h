@@ -77,6 +77,15 @@ typedef struct
 
 typedef struct
 {
+  gint32                  metadata_index;           /* Index in default_metadata_tags */
+  const gchar           **subtags;                  /* /Iptc4xmpExt version */
+  const gchar           **alt_subtags;              /* /iptcExt version */
+  const gint              n_values;                 /* Number of values in array */
+  const gint             *cell_types;               /* Array of cell renderer types */
+} list_references;
+
+typedef struct
+{
   gchar        *id;
   gchar        *tag;
   MetadataMode  mode;
