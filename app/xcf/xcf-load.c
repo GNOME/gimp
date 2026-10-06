@@ -717,14 +717,12 @@ xcf_load_image (Gimp     *gimp,
       const guint8             *data;
       GimpColorRenderingIntent  intent;
 
-      data   = (const guint8 *) gimp_parasite_get_data (parasite, &parasite_size);
-      intent = (GimpColorRenderingIntent) *data;
-
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (parasite));
-
+      data = (const guint8 *) gimp_parasite_get_data (parasite,
+                                                      &parasite_size);
       if (parasite_size == 1)
         {
+          intent = (GimpColorRenderingIntent) *data;
+
           if (intent != GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL            &&
               intent != GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC &&
               intent != GIMP_COLOR_RENDERING_INTENT_SATURATION            &&
@@ -746,6 +744,9 @@ xcf_load_image (Gimp     *gimp,
                         GIMP_MESSAGE_ERROR,
                         "Invalid simulation intent data");
         }
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_get_name (parasite));
     }
 
 
@@ -759,14 +760,12 @@ xcf_load_image (Gimp     *gimp,
       const guint8     *data;
       gboolean          bpc;
 
-      data = (const guint8 *) gimp_parasite_get_data (parasite, &parasite_size);
-      bpc  = *data ? TRUE : FALSE;
-
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_get_name (parasite));
-
+      data = (const guint8 *) gimp_parasite_get_data (parasite,
+                                                      &parasite_size);
       if (parasite_size == 1)
         {
+          bpc = *data ? TRUE : FALSE;
+
           gimp_image_set_simulation_bpc (image, bpc);
         }
       else
@@ -775,6 +774,9 @@ xcf_load_image (Gimp     *gimp,
                         GIMP_MESSAGE_ERROR,
                         "Invalid simulation bpc data");
         }
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_get_name (parasite));
     }
 
   /* check for a GimpGrid parasite */
