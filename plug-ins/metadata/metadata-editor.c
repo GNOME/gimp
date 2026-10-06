@@ -920,6 +920,8 @@ metadata_editor_create_tree_grid (const me_column_info *tree_info,
 
   tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
   gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tree), FALSE);
+  if (n_items == 1)
+    gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(tree), FALSE);
   gtk_tree_view_set_grid_lines (GTK_TREE_VIEW (tree), GTK_TREE_VIEW_GRID_LINES_BOTH);
   gtk_box_pack_start (GTK_BOX (tree_box), tree, TRUE, TRUE, 0);
   gtk_widget_set_visible (tree, TRUE);
