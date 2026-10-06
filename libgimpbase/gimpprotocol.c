@@ -2135,8 +2135,8 @@ _gp_params_read (GIOChannel  *channel,
 
         case GP_PARAM_TYPE_BYTES:
           {
-            guint32 data_len;
-            guint8* data;
+            guint32  data_len;
+            guint8  *data;
 
             if (! _gimp_wire_read_int32 (channel, &data_len, 1, user_data))
               goto cleanup;
