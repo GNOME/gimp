@@ -1540,6 +1540,46 @@ hasCreatorTagData (metadata_editor *meta_info)
   return has_data;
 }
 
+static void
+set_combined_tag_values (GExiv2Metadata     *metadata,
+                         metadata_editor    *meta_info,
+                         const TranslateTag *tag_table,
+                         gint                n_items)
+{
+
+  for (gint i = 0; i < n_items; i++)
+    {
+      GtkWidget *widget;
+      gchar     *value;
+
+      widget = metadata_editor_get_widget (meta_info, tag_table[i].id);
+
+      value = gexiv2_metadata_try_get_tag_interpreted_string (metadata,
+                                                              tag_table[i].tag,
+                                                              NULL);
+
+      if (value)
+        {
+          gchar *value_utf;
+
+          value_utf = clean_xmp_string (value);
+          g_free (value);
+
+          if (tag_table[i].mode == MODE_SINGLE)
+            {
+              gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
+            }
+          else if (tag_table[i].mode == MODE_MULTI)
+            {
+              GtkTextBuffer *buffer;
+              buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+              gtk_text_buffer_set_text (buffer, value_utf, -1);
+            }
+          g_free (value_utf);
+        }
+    }
+}
+
 /* ============================================================================
  * ==[ SET DIALOG METADATA ]===================================================
  * ============================================================================
@@ -1972,64 +2012,9 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   /* Set up text view heights */
 
   /* Set up lists */
-  for (i = 0; i < n_imageSupplierInfoTags; i++)
-    {
-      GtkWidget *widget;
 
-      widget = metadata_editor_get_widget (meta_info,
-                                           imageSupplierInfoTags[i].id);
-
-      value = gexiv2_metadata_try_get_tag_interpreted_string (metadata,
-                                                              imageSupplierInfoTags[i].tag,
-                                                              NULL);
-
-      if (value)
-        {
-          gchar *value_utf;
-
-          value_utf = clean_xmp_string (value);
-          g_free (value);
-
-          if (imageSupplierInfoTags[i].mode == MODE_SINGLE)
-            {
-              gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
-            }
-          else if (imageSupplierInfoTags[i].mode == MODE_MULTI)
-            {
-              GtkTextBuffer *buffer;
-
-              buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
-              gtk_text_buffer_set_text (buffer, value_utf, -1);
-            }
-          g_free (value_utf);
-        }
-    }
-
-  for (i = 0; i < n_locationCreationInfoTags; i++)
-    {
-      GtkWidget *widget;
-
-      widget = metadata_editor_get_widget (meta_info,
-                                           locationCreationInfoTags[i].id);
-
-      value = gexiv2_metadata_try_get_tag_interpreted_string (metadata,
-                                                              locationCreationInfoTags[i].tag,
-                                                              NULL);
-
-      if (value)
-        {
-          gchar *value_utf;
-
-          value_utf = clean_xmp_string (value);
-          g_free (value);
-
-          if (locationCreationInfoTags[i].mode == MODE_SINGLE)
-            {
-              gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
-            }
-          g_free (value_utf);
-        }
-    }
+  set_combined_tag_values (metadata, meta_info, imageSupplierInfoTags,    n_imageSupplierInfoTags);
+  set_combined_tag_values (metadata, meta_info, locationCreationInfoTags, n_locationCreationInfoTags);
 
   /* Set up tag data */
 
@@ -2681,36 +2666,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
    * different values. Due to a bug in the metadata-editor previously only
    * the short form was saved.
    */
-  for (i = 0; i < n_creatorContactInfoTags; i++)
-    {
-      GtkWidget *widget;
-
-      widget = metadata_editor_get_widget (meta_info, creatorContactInfoTags[i].id);
-
-      value = gexiv2_metadata_try_get_tag_interpreted_string (metadata,
-                                                              creatorContactInfoTags[i].tag,
-                                                              NULL);
-
-      if (value)
-        {
-          gchar *value_utf;
-
-          value_utf = clean_xmp_string (value);
-          g_free (value);
-
-          if (creatorContactInfoTags[i].mode == MODE_SINGLE)
-            {
-              gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
-            }
-          else if (creatorContactInfoTags[i].mode == MODE_MULTI)
-            {
-              GtkTextBuffer *buffer;
-              buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
-              gtk_text_buffer_set_text (buffer, value_utf, -1);
-            }
-          g_free (value_utf);
-        }
-    }
+  set_combined_tag_values (metadata, meta_info, creatorContactInfoTags, n_creatorContactInfoTags);
 
   /* Set creation date */
   entry_widget = metadata_editor_get_widget (meta_info, "create_date_button");
