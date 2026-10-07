@@ -345,6 +345,8 @@ gimp_cursor_view_constructed (GObject             *object)
   GimpCursorView *view = GIMP_CURSOR_VIEW (object);
   gint            content_spacing;
 
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
   gtk_widget_style_get (GTK_WIDGET (view),
                         "content-spacing", &content_spacing,
                         NULL);
