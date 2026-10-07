@@ -118,6 +118,14 @@ typedef struct
   gint      renderer_type;
 } me_column_info;
 
+typedef struct
+{
+  const me_column_info   *table_data;
+  const gint              n_columns;
+  const me_widget_info   *page_data;
+  const gint              page_index;
+} me_table_info;
+
 static GtkWidget * metadata_editor_create_page_grid (GtkWidget         *notebook,
                                                      const gchar       *tab_name);
 
@@ -133,6 +141,9 @@ static void     metadata_editor_create_tree_grid (const me_column_info *tree_inf
                                                   GtkWidget            *grid,
                                                   GtkListStore         *store,
                                                   metadata_editor      *meta_info);
+
+static void     metadata_editor_create_table     (const me_table_info  *table_data,
+                                                  GtkWidget            *grid);
 
 static gboolean metadata_editor_dialog           (GimpImage           *image,
                                                   GimpMetadata        *metadata,
@@ -509,6 +520,21 @@ static const me_column_info property_release_id_info[] =
 };
 static const gint n_property_release_id_info = G_N_ELEMENTS (property_release_id_info);
 
+static const me_table_info  table_info[] =
+{
+  { location_shown_info,        n_location_shown_info,        iptc_extension_tab_data, C_LOCATION_SHOWN },
+  { featured_organization_info, n_featured_organization_info, iptc_extension_tab_data, C_FEATURED_ORG },
+  { featured_organization_code_info, n_featured_organization_code_info, 
+                                                              iptc_extension_tab_data, C_FEATURED_ORG_CODE },
+  { artwork_object_info,        n_artwork_object_info,        iptc_extension_tab_data, C_ART_OBJECT },
+  { model_release_id_info,      n_model_release_id_info,      iptc_extension_tab_data, C_MODEL_RELEASE_ID },
+  { registry_entry_info,        n_registry_entry_info,        iptc_extension_tab_data, C_REGISTRY_ENTRY },
+  { image_creator_info,         n_image_creator_info,         iptc_extension_tab_data, C_IMAGE_CREATOR },
+  { copyright_owner_info,       n_copyright_owner_info,       iptc_extension_tab_data, C_COPYRIGHT_OWNER },
+  { licensor_info,              n_licensor_info,              iptc_extension_tab_data, C_LICENSOR },
+  { property_release_id_info,   n_property_release_id_info,   iptc_extension_tab_data, C_PROPERTY_RELEASE_ID },
+};
+static const gint n_table_info = G_N_ELEMENTS (table_info);
 
 static const me_widget_info categories_labels[] =
 {
@@ -985,6 +1011,36 @@ metadata_editor_create_tree_grid (const me_column_info *tree_info,
   g_hash_table_insert (meta_args.widgets, widget_info[grid_row].extra_id2, (gpointer) button);
 }
 
+#define MAX_ITEMS = 10;
+static void
+metadata_editor_create_table (const me_table_info *table_data,
+                              GtkWidget           *grid)
+{
+  GtkListStore *store;
+  GType         types[] =
+  {
+    G_TYPE_STRING,
+    G_TYPE_STRING,
+    G_TYPE_STRING,
+    G_TYPE_STRING,
+    G_TYPE_STRING,
+    G_TYPE_STRING,
+    G_TYPE_STRING,
+    G_TYPE_STRING,
+    G_TYPE_STRING,
+    G_TYPE_STRING,
+  };
+
+  g_return_if_fail (table_data->n_columns <= sizeof (types) / sizeof (GType));
+  g_return_if_fail (table_data->page_data[table_data->page_index].widget_type == ME_WIDGET_TREE_GRID);
+
+  /* FIXME meta_args is global, ugly */
+  store = gtk_list_store_newv (table_data->n_columns, types);
+  metadata_editor_create_tree_grid (table_data->table_data, table_data->n_columns,
+                                    table_data->page_index, table_data->page_data,
+                                    grid, store, &meta_args);
+}
+
 static gboolean
 metadata_editor_dialog (GimpImage            *image,
                         GimpMetadata         *g_metadata,
@@ -1001,7 +1057,6 @@ metadata_editor_dialog (GimpImage            *image,
   GtkWidget      *box;
   GtkWidget      *grid;
   GtkWidget      *widget;
-  GtkListStore   *store;
   GBytes         *parent_handle = NULL;
   gchar          *title;
   gchar          *name;
@@ -1081,105 +1136,9 @@ metadata_editor_dialog (GimpImage            *image,
 
   metadata_editor_create_widgets (iptc_extension_tab_data, n_iptc_extension_tab_data, grid, &meta_args);
 
-  store = gtk_list_store_new (n_location_shown_info,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING);
-
-  g_assert_cmpstr (iptc_extension_tab_data[C_LOCATION_SHOWN].id, ==, "Xmp.iptcExt.LocationShown");
-  metadata_editor_create_tree_grid (location_shown_info, n_location_shown_info,
-                                    C_LOCATION_SHOWN, iptc_extension_tab_data,
-                                    grid, store, &meta_args);
-
-  store = gtk_list_store_new (n_featured_organization_info,
-                              G_TYPE_STRING);
-
-  g_assert_cmpstr (iptc_extension_tab_data[C_FEATURED_ORG].id, ==, "Xmp.iptcExt.OrganisationInImageName");
-  metadata_editor_create_tree_grid (featured_organization_info, n_featured_organization_info,
-                                    C_FEATURED_ORG, iptc_extension_tab_data,
-                                    grid, store, &meta_args);
-
-  store = gtk_list_store_new (n_featured_organization_code_info,
-                              G_TYPE_STRING);
-
-  g_assert_cmpstr (iptc_extension_tab_data[C_FEATURED_ORG_CODE].id, ==, "Xmp.iptcExt.OrganisationInImageCode");
-  metadata_editor_create_tree_grid (featured_organization_code_info, n_featured_organization_code_info,
-                                    C_FEATURED_ORG_CODE, iptc_extension_tab_data,
-                                    grid, store, &meta_args);
-
-  store = gtk_list_store_new (n_artwork_object_info,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING);
-
-  g_assert_cmpstr (iptc_extension_tab_data[C_ART_OBJECT].id, ==, "Xmp.iptcExt.ArtworkOrObject");
-  metadata_editor_create_tree_grid (artwork_object_info, n_artwork_object_info,
-                                    C_ART_OBJECT, iptc_extension_tab_data,
-                                    grid, store, &meta_args);
-
-  store = gtk_list_store_new (n_model_release_id_info,
-                              G_TYPE_STRING);
-
-  g_assert_cmpstr (iptc_extension_tab_data[C_MODEL_RELEASE_ID].id, ==, "Xmp.plus.ModelReleaseID");
-  metadata_editor_create_tree_grid (model_release_id_info, n_model_release_id_info,
-                                    C_MODEL_RELEASE_ID, iptc_extension_tab_data,
-                                    grid, store, &meta_args);
-
-  store = gtk_list_store_new (n_registry_entry_info,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING);
-
-  g_assert_cmpstr (iptc_extension_tab_data[C_REGISTRY_ENTRY].id, ==, "Xmp.iptcExt.RegistryId");
-  metadata_editor_create_tree_grid (registry_entry_info, n_registry_entry_info,
-                                    C_REGISTRY_ENTRY, iptc_extension_tab_data,
-                                    grid, store, &meta_args);
-
-  store = gtk_list_store_new (n_image_creator_info,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING);
-
-  g_assert_cmpstr (iptc_extension_tab_data[C_IMAGE_CREATOR].id, ==, "Xmp.plus.ImageCreator");
-  metadata_editor_create_tree_grid (image_creator_info, n_image_creator_info,
-                                    C_IMAGE_CREATOR, iptc_extension_tab_data,
-                                    grid, store, &meta_args);
-
-  store = gtk_list_store_new (n_copyright_owner_info,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING);
-
-  g_assert_cmpstr (iptc_extension_tab_data[C_COPYRIGHT_OWNER].id, ==, "Xmp.plus.CopyrightOwner");
-  metadata_editor_create_tree_grid (copyright_owner_info, n_copyright_owner_info,
-                                    C_COPYRIGHT_OWNER, iptc_extension_tab_data,
-                                    grid, store, &meta_args);
-
-  store = gtk_list_store_new (n_licensor_info,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING);
-
-  g_assert_cmpstr (iptc_extension_tab_data[C_LICENSOR].id, ==, "Xmp.plus.Licensor");
-  metadata_editor_create_tree_grid (licensor_info, n_licensor_info,
-                                    C_LICENSOR, iptc_extension_tab_data,
-                                    grid, store, &meta_args);
-
-  store = gtk_list_store_new (n_property_release_id_info,
-                              G_TYPE_STRING);
-
-  g_assert_cmpstr (iptc_extension_tab_data[C_PROPERTY_RELEASE_ID].id, ==, "Xmp.plus.PropertyReleaseID");
-  metadata_editor_create_tree_grid (property_release_id_info, n_property_release_id_info,
-                                    C_PROPERTY_RELEASE_ID, iptc_extension_tab_data,
-                                    grid, store, &meta_args);
+  /* Create grids/tables for tags defined in table_info */
+  for (gint i = 0; i < n_table_info; i++)
+    metadata_editor_create_table ( &table_info[i], grid);
 
   /* Categories tab */
 
