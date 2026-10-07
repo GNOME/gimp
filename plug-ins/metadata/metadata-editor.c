@@ -187,8 +187,6 @@ static void     write_metadata_tag_multiple     (metadata_editor      *meta_info
                                                  const gint            special_handling[]);
 
 gboolean hasCreatorTagData                      (metadata_editor      *meta_info);
-gboolean hasLocationCreationTagData             (metadata_editor      *meta_info);
-gboolean hasImageSupplierTagData                (metadata_editor      *meta_info);
 
 static void on_date_button_clicked              (GtkButton            *widget,
                                                  GtkWidget            *entry_widget);
@@ -285,12 +283,6 @@ static void
 free_tagdata                                    (gchar               **tagdata,
                                                  gint                  rows,
                                                  gint                  cols);
-
-gboolean
-hasModelReleaseTagData                          (metadata_editor      *meta_info);
-
-gboolean
-hasPropertyReleaseTagData                       (metadata_editor      *meta_info);
 
 static void generic_cell_edited_callback        (GtkCellRendererText  *cell,
                                                  const gchar          *path_string,
@@ -1504,74 +1496,6 @@ on_date_button_clicked (GtkButton *widget,
  * ==[ SPECIAL TAGS HANDLERS ]=================================================
  * ============================================================================
  */
-
-gboolean
-hasImageSupplierTagData (metadata_editor *meta_info)
-{
-  gint loop;
-
-  for (loop = 0; loop < n_imageSupplierInfoTags; loop++)
-    {
-      GtkWidget   *object;
-      const gchar *text;
-
-      object = metadata_editor_get_widget (meta_info, imageSupplierInfoTags[loop].id);
-
-      if (imageSupplierInfoTags[loop].mode == MODE_SINGLE)
-        {
-          text = gtk_entry_get_text (GTK_ENTRY (object));
-
-          if (text && *text)
-            return TRUE;
-        }
-      else if (imageSupplierInfoTags[loop].mode == MODE_MULTI)
-        {
-          text = gtk_entry_get_text (GTK_ENTRY (object));
-
-          if (text && *text)
-            return TRUE;
-        }
-    }
-
-  return FALSE;
-}
-
-gboolean
-hasLocationCreationTagData (metadata_editor *meta_info)
-{
-  gint loop;
-
-  for (loop = 0; loop < n_locationCreationInfoTags; loop++)
-    {
-      GtkWidget   *widget;
-      const gchar *text;
-
-      widget = metadata_editor_get_widget (meta_info, locationCreationInfoTags[loop].id);
-
-      if (locationCreationInfoTags[loop].mode == MODE_SINGLE)
-        {
-          text = gtk_entry_get_text (GTK_ENTRY (widget));
-
-          if (text && *text)
-            return TRUE;
-        }
-    }
-
-  return FALSE;
-}
-
-gboolean
-hasModelReleaseTagData (metadata_editor *meta_info)
-{
-  return FALSE;
-}
-
-gboolean
-hasPropertyReleaseTagData (metadata_editor *meta_info)
-{
-  return FALSE;
-}
-
 
 gboolean
 hasCreatorTagData (metadata_editor *meta_info)
