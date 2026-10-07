@@ -38,6 +38,7 @@
 #include "path/gimpbezierstroke.h"
 #include "path/gimppath.h"
 #include "path/gimpvectorlayer.h"
+#include "path/gimpvectorlayeroptions.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpsizebox.h"
@@ -55,8 +56,10 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_SHAPE_TOOL_GET_OPTIONS(t)  (GIMP_SHAPE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define MAX_NUMBER_OF_POINTS 102
 
+
+#define GIMP_SHAPE_TOOL_GET_OPTIONS(t)  (GIMP_SHAPE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
 /*  local function prototypes  */
 static void             gimp_shape_tool_constructed    (GObject               *object);
@@ -98,7 +101,9 @@ static void             gimp_shape_tool_halt           (GimpShapeTool         *s
 
 static GimpPath *       gimp_shape_tool_create_path    (GimpShapeTool         *shape_tool,
                                                         GimpImage             *image);
-
+static void             gimp_shape_tool_update_polygon (GimpShapeTool         *shape_tool,
+                                                        gboolean               is_star);
+static gchar    *       gimp_shape_tool_get_name       (GimpShapeTool         *shape_tool);
 
 G_DEFINE_TYPE (GimpShapeTool, gimp_shape_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -154,13 +159,22 @@ gimp_shape_tool_init (GimpShapeTool *shape_tool)
 static void
 gimp_shape_tool_constructed (GObject *object)
 {
+  GimpShapeTool *shape_tool = GIMP_SHAPE_TOOL (object);
+
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  /* TODO: Get max value + 2 from number of sides property */
+  shape_tool->points = g_new (GimpVector2, MAX_NUMBER_OF_POINTS);
 }
 
 static void
 gimp_shape_tool_dispose (GObject *object)
 {
+  GimpShapeTool *shape_tool = GIMP_SHAPE_TOOL (object);
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
+
+  g_free (shape_tool->points);
 }
 
 static void
@@ -230,18 +244,27 @@ gimp_shape_tool_button_release (GimpTool              *tool,
     {
       GimpPath        *path         = NULL;
       GimpVectorLayer *vector_layer = NULL;
+      gchar           *path_name;
+      gchar           *undo_string;
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
       shape_tool->drawing = FALSE;
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
+      path_name   = gimp_shape_tool_get_name (shape_tool);
+      undo_string = g_strdup_printf (_("Add %s"), path_name);
+
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_DRAWABLE,
-                                   "Create shape");
+                                   undo_string);
+      g_free (path_name);
+      g_free (undo_string);
 
       path = gimp_shape_tool_create_path (shape_tool, image);
       if (path)
         {
+          GimpVectorLayerOptions *vector_options = NULL;
+
           vector_layer = gimp_vector_layer_new (image, path,
                                                 gimp_get_user_context (image->gimp));
           gimp_image_add_layer (image, GIMP_LAYER (vector_layer),
@@ -250,6 +273,12 @@ gimp_shape_tool_button_release (GimpTool              *tool,
           gimp_vector_layer_set (vector_layer, NULL,
                                  "enable-fill", options->enable_fill,
                                  NULL);
+
+          vector_options = gimp_vector_layer_get_options (vector_layer);
+          g_object_set (vector_options->stroke_options,
+                        "width", options->stroke_width,
+                        "unit",  options->stroke_unit,
+                        NULL);
 
           gimp_item_set_visible (GIMP_ITEM (vector_layer), TRUE, FALSE);
           gimp_vector_layer_refresh (vector_layer);
@@ -363,6 +392,18 @@ gimp_shape_tool_draw (GimpDrawTool *draw_tool)
                                   0, 2 * G_PI);
 
         }
+      else if (options->shape_type == GIMP_SHAPE_MODE_POLYGON ||
+               options->shape_type == GIMP_SHAPE_MODE_STAR)
+        {
+          gboolean is_star = (options->shape_type == GIMP_SHAPE_MODE_STAR);
+          gint     coeff   = (is_star) ? 2 : 1;
+
+          gimp_shape_tool_update_polygon (shape_tool, is_star);
+
+          gimp_draw_tool_add_lines (draw_tool, shape_tool->points,
+                                    (options->number_of_sides * coeff) + 1,
+                                    NULL, options->enable_fill);
+        }
     }
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
@@ -392,13 +433,17 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
   GimpPath         *path    = NULL;
   GimpShapeOptions *options = GIMP_SHAPE_TOOL_GET_OPTIONS (shape_tool);
   GimpCoords        next    = GIMP_COORDS_DEFAULT_VALUES;
+  gchar            *path_name;
+
+  path_name = gimp_shape_tool_get_name (shape_tool);
+
+  path = gimp_path_new (image, path_name);
+  gimp_image_add_path (image, path,
+                       GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  g_free (path_name);
 
   if (options->shape_type == GIMP_SHAPE_MODE_LINE)
     {
-      path = gimp_path_new (image, _("Line"));
-      gimp_image_add_path (image, path,
-                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
       next.x = shape_tool->start_x;
       next.y = shape_tool->start_y;
       stroke = gimp_bezier_stroke_new_moveto (&next);
@@ -412,10 +457,6 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
     }
   else if (options->shape_type == GIMP_SHAPE_MODE_RECTANGLE)
     {
-      path = gimp_path_new (image, _("Rectangle"));
-      gimp_image_add_path (image, path,
-                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
       next.x = shape_tool->start_x;
       next.y = shape_tool->start_y;
       stroke = gimp_bezier_stroke_new_moveto (&next);
@@ -439,10 +480,6 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
       gdouble rx = (shape_tool->start_x - shape_tool->current_x) / 2.0f;
       gdouble ry = (shape_tool->start_y - shape_tool->current_y) / 2.0f;
 
-      path = gimp_path_new (image, _("Circle"));
-      gimp_image_add_path (image, path,
-                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
       next.x = shape_tool->start_x - rx;
       next.y = shape_tool->start_y - ry;
 
@@ -450,6 +487,98 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
       gimp_path_stroke_add (path, stroke);
       g_object_unref (stroke);
     }
+  else if (options->shape_type == GIMP_SHAPE_MODE_POLYGON ||
+           options->shape_type == GIMP_SHAPE_MODE_STAR)
+    {
+      gint n_sides = options->number_of_sides;
+
+      if (options->shape_type == GIMP_SHAPE_MODE_STAR)
+        n_sides *= 2;
+
+      next.x = shape_tool->points[0].x;
+      next.y = shape_tool->points[0].y;
+      stroke = gimp_bezier_stroke_new_moveto (&next);
+
+      for (gint i = 1; i < n_sides; i++)
+        {
+          next.x = shape_tool->points[i].x;
+          next.y = shape_tool->points[i].y;
+          gimp_bezier_stroke_lineto (stroke, &next);
+        }
+
+      gimp_stroke_close (stroke);
+
+      gimp_path_stroke_add (path, stroke);
+      g_object_unref (stroke);
+    }
 
   return path;
+}
+
+static void
+gimp_shape_tool_update_polygon (GimpShapeTool *shape_tool,
+                                gboolean       is_star)
+{
+  GimpShapeOptions *options = GIMP_SHAPE_TOOL_GET_OPTIONS (shape_tool);
+
+  gint              coeff   = (is_star) ? 2 : 1;
+  gint              n_sides = options->number_of_sides * coeff;
+  gdouble           rx      = shape_tool->current_x - shape_tool->start_x;
+  gdouble           ry      = shape_tool->current_y - shape_tool->start_y;
+  gdouble           radius  = sqrt ((rx * rx) + (ry * ry));
+  gdouble           angle   = (2 * G_PI) / n_sides;
+  gdouble           offset  = atan2 (ry, rx);
+
+  for (gint i = 0; i <= n_sides; i++)
+    {
+      gdouble loop_angle = (i * angle) + offset;
+      gdouble new_x      = radius * cos (loop_angle);
+      gdouble new_y      = radius * sin (loop_angle);
+
+      if (is_star)
+        {
+          gdouble star_radius = radius * ((i % 2) + 1) / 2;
+
+          new_x  = star_radius * cos (loop_angle);
+          new_y  = star_radius * sin (loop_angle);
+        }
+
+      shape_tool->points[i].x = shape_tool->start_x + new_x;
+      shape_tool->points[i].y = shape_tool->start_y + new_y;
+    }
+}
+
+static gchar *
+gimp_shape_tool_get_name (GimpShapeTool *shape_tool)
+{
+  GimpShapeOptions *options    = GIMP_SHAPE_TOOL_GET_OPTIONS (shape_tool);
+  gchar            *shape_name = NULL;
+
+  switch (options->shape_type)
+    {
+      case GIMP_SHAPE_MODE_LINE:
+        shape_name = g_strdup (_("Line"));
+        break;
+
+      case GIMP_SHAPE_MODE_RECTANGLE:
+        shape_name = g_strdup (_("Rectangle"));
+        break;
+
+      case GIMP_SHAPE_MODE_ARC:
+        shape_name = g_strdup (_("Circle"));
+        break;
+
+      case GIMP_SHAPE_MODE_POLYGON:
+        shape_name = g_strdup (_("Polygon"));
+        break;
+
+      case GIMP_SHAPE_MODE_STAR:
+        shape_name = g_strdup (_("Star"));
+        break;
+
+      default:
+        break;
+    }
+
+  return shape_name;
 }
