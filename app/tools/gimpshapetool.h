@@ -39,6 +39,8 @@ struct _GimpShapeTool
   gint                   start_y;
   gint                   current_x;
   gint                   current_y;
+
+  GimpVector2           *points;
 };
 
 struct _GimpShapeToolClass

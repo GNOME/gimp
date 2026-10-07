@@ -25,6 +25,8 @@ typedef enum
   GIMP_SHAPE_MODE_LINE,
   GIMP_SHAPE_MODE_RECTANGLE,
   GIMP_SHAPE_MODE_ARC,
+  GIMP_SHAPE_MODE_POLYGON,
+  GIMP_SHAPE_MODE_STAR,
 
   GIMP_SHAPE_MODE_LAST
 } GimpShapeMode;
@@ -47,8 +49,12 @@ struct _GimpShapeOptions
 
   gint               shape_type;
   gboolean           rasterize_on_commit;
+  gint               number_of_sides;
 
   gboolean           enable_fill;
+
+  gdouble            stroke_width;
+  GimpUnit          *stroke_unit;
 };
 
 
