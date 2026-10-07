@@ -395,6 +395,13 @@ const combo_references combo_metadata[] =
 };
 const gint n_combo_metadata = G_N_ELEMENTS (combo_metadata);
 
+/* FIXME: What we maybe should do with these deprecated version of tags like
+ * Xmp.iptc.CiAdrExtadr is to change them all on loading to the modern versions
+ * before doing anything else and delete the deprecated versions.
+ * However, that will also require the tags in metadata_default_tags to
+ * be replaced with one Xmp.iptc.CreatorContactInfo tag of type list,
+ * or define a new type if we don't want to use a table/grid. */
+
 const TranslateTag creatorContactInfoTags[] =
 {
   { "Xmp.iptc.CiAdrExtadr", "Xmp.iptc.CreatorContactInfo/Iptc4xmpCore:CiAdrExtadr", MODE_MULTI,  -1,  TAG_TYPE_XMP },
