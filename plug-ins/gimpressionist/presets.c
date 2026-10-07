@@ -957,7 +957,7 @@ presets_list_select_preset (GtkTreeSelection *selection,
           g_free (selected_preset_orig_name);
           g_free (selected_preset_filename);
           selected_preset_orig_name = g_strdup (preset_name);
-          selected_preset_filename = g_strdup (selected_preset_filename);
+          selected_preset_filename = g_strdup (preset_filename);
         }
 
       read_description (preset_filename);
