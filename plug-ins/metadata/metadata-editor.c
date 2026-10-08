@@ -174,8 +174,7 @@ static gchar *  get_phonetype                   (gchar                *cur_value
 
 static void     write_metadata_tag              (metadata_editor      *meta_info,
                                                  GimpMetadata         *metadata,
-                                                 gchar                *tag,
-                                                 gint                  data_column);
+                                                 gchar                *tag);
 
 static void     write_metadata_tag_multiple     (metadata_editor      *meta_info,
                                                  GimpMetadata         *metadata,
@@ -2761,8 +2760,7 @@ get_phonetype (gchar *cur_value)
 static void
 write_metadata_tag (metadata_editor *meta_info,
                     GimpMetadata    *metadata,
-                    gchar           *tag,
-                    gint             data_column)
+                    gchar           *tag)
 {
   GtkWidget     *list_widget;
   GtkTreeModel  *treemodel;
@@ -2788,7 +2786,7 @@ write_metadata_tag (metadata_editor *meta_info,
       if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
         {
           gtk_tree_model_get (treemodel, &iter,
-                              data_column, &rc_data,
+                              0, &rc_data,
                               -1);
           if (rc_data && rc_data[0] != '\0')
             {
@@ -3000,49 +2998,48 @@ metadata_editor_write_callback (GtkWidget       *dialog,
 
   gimp_metadata_add_xmp_history (g_metadata, "metadata");
 
-  write_metadata_tag (meta_info, g_metadata,
-                      "Xmp.iptcExt.OrganisationInImageName",
-                      COL_ORG_IMG_NAME);
+  /* Start with writing the mode list (table/grid) metadata */
+  for (i = 0; i < n_list_metadata; i++)
+    {
+      gint tag_index = list_metadata[i].metadata_index;
 
-  write_metadata_tag (meta_info, g_metadata,
-                      "Xmp.iptcExt.OrganisationInImageCode",
-                      COL_ORG_IMG_CODE);
+      if (list_metadata[i].n_values == 1)
+        {
+          write_metadata_tag (meta_info, g_metadata,
+                              default_metadata_tags[tag_index].tag);
+        }
+      else
+        {
+          GExiv2StructureType   struct_type = GEXIV2_STRUCTURE_XA_BAG;
+          const gchar         **primary     = NULL;
+          const gchar         **secondary   = NULL;
 
-  write_metadata_tag (meta_info, g_metadata,
-                      "Xmp.plus.ModelReleaseID",
-                      COL_MOD_REL_ID);
+          /* FIXME For now we base whether to use type BAG or SEQ on whether 
+           * there is an alternative subtag defined. If we add more multi tags
+           * to the list this may have to be revised! */
+          if (list_metadata[i].alt_subtags == NULL)
+            {
+              struct_type = GEXIV2_STRUCTURE_XA_SEQ;
+              primary     = list_metadata[i].subtags;
+            }
+          else
+            {
+              /* We use the alt version to write to, since that is what exiv2 accepts,
+               * even though that is the less common version. */
+              primary   = list_metadata[i].alt_subtags;
+              secondary = list_metadata[i].subtags;
+            }
 
-  write_metadata_tag (meta_info, g_metadata,
-                      "Xmp.plus.PropertyReleaseID",
-                      COL_PROP_REL_ID);
+          write_metadata_tag_multiple (meta_info, g_metadata, struct_type,
+                                       default_metadata_tags[tag_index].tag,
+                                       list_metadata[i].n_values,
+                                       primary,
+                                       secondary,
+                                       list_metadata[i].cell_types);
+        }
+    }
 
-  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
-                               "Xmp.iptcExt.LocationShown",
-                               n_locationshown, locationshown_alternative, locationshown, NULL);
-
-  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
-                               "Xmp.iptcExt.ArtworkOrObject",
-                               n_artworkorobject, artworkorobject_alternative, artworkorobject, NULL);
-
-  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_BAG,
-                               "Xmp.iptcExt.RegistryId",
-                               n_registryid, registryid_alternative, registryid, NULL);
-
-  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
-                               "Xmp.plus.ImageCreator",
-                               n_imagecreator, imagecreator, NULL, NULL);
-
-  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
-                               "Xmp.plus.CopyrightOwner",
-                               n_copyrightowner, copyrightowner, NULL, NULL);
-
-  write_metadata_tag_multiple (meta_info, g_metadata, GEXIV2_STRUCTURE_XA_SEQ,
-                               "Xmp.plus.Licensor",
-                               n_licensor, licensor, NULL,
-                               licensor_special_handling);
-
-  /* DO CREATOR TAGS */
-
+  /* Special handling for Creator tags (IPTC tab) */
   if (hasCreatorTagData (meta_info))
     {
       for (i = 0; i < n_creatorContactInfoTags; i++)
@@ -3078,9 +3075,6 @@ metadata_editor_write_callback (GtkWidget       *dialog,
             }
         }
     }
-
-  /* DO SINGLE, MULTI AND COMBO TAGS */
-
   else
     {
       for (i = 0; i < n_creatorContactInfoTags; i++)
@@ -3097,8 +3091,6 @@ metadata_editor_write_callback (GtkWidget       *dialog,
     {
       GtkWidget *widget = metadata_editor_get_widget (meta_info,
                                                       default_metadata_tags[i].tag);
-
-      /* SINGLE TAGS */
 
       if (default_metadata_tags[i].mode == MODE_SINGLE)
         {
@@ -3253,8 +3245,6 @@ metadata_editor_write_callback (GtkWidget       *dialog,
             }
         }
 
-      /* MULTI TAGS */
-
       else if (default_metadata_tags[i].mode == MODE_MULTI)
         {
           GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
@@ -3368,10 +3358,10 @@ metadata_editor_write_callback (GtkWidget       *dialog,
         }
       else if (default_metadata_tags[i].mode == MODE_LIST)
         {
-          /* MIGHT DO SOMETHING HERE */
+          /* If there ever will be LIST tags that are not in
+           * list_metadata, they will need to be handled here.
+           */
         }
-
-      /* COMBO TAGS */
 
       else if (default_metadata_tags[i].mode == MODE_COMBO)
         {
