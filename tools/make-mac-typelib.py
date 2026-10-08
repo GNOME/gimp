@@ -44,7 +44,11 @@ def get_lib_path(p):
 
 text = Path(tmp_gir_path).read_text()
 text = re.sub(r'shared-library="([^"]+)"', lambda m: 'shared-library="' + ",".join(get_lib_path(p) for p in m.group(1).split(",")) + '"', text)
-Path(tmp_gir_path).write_text(text)
+#In 'nonreloc' mode this is the real build .gir, which
+#other targets (e.g. check-def-files) may be reading in parallel
+tmp_write_path = tmp_gir_path.with_name(f"{gir_name}.{mode}.tmp")
+tmp_write_path.write_text(text)
+os.replace(tmp_write_path, tmp_gir_path)
 
 output_typelib = typelib_path if mode not in ["in-build"] else tmp_gir_dir / typelib_name
 subprocess.run([compiler, f"--includedir={tmp_gir_dir}", f"--includedir={prefix}/share/gir-1.0/", str(tmp_gir_path), "-o", str(output_typelib)], check=True)
