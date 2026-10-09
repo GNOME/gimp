@@ -150,7 +150,7 @@ display_get_window_handle_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      handle = gimp_get_display_window_id (gimp, display);
+      handle = gimp_get_display_window_handle (gimp, display);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

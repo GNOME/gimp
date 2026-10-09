@@ -45,29 +45,29 @@ gimp_gui_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->gui.ungrab                 = NULL;
-  gimp->gui.set_busy               = NULL;
-  gimp->gui.unset_busy             = NULL;
-  gimp->gui.show_message           = NULL;
-  gimp->gui.help                   = NULL;
-  gimp->gui.get_program_class      = NULL;
-  gimp->gui.get_display_name       = NULL;
-  gimp->gui.get_user_time          = NULL;
-  gimp->gui.get_theme_dir          = NULL;
-  gimp->gui.get_icon_theme_dir     = NULL;
-  gimp->gui.display_get_window_id  = NULL;
-  gimp->gui.display_create         = NULL;
-  gimp->gui.display_delete         = NULL;
-  gimp->gui.displays_reconnect     = NULL;
-  gimp->gui.progress_new           = NULL;
-  gimp->gui.progress_free          = NULL;
-  gimp->gui.pdb_dialog_set         = NULL;
-  gimp->gui.pdb_dialog_close       = NULL;
-  gimp->gui.recent_list_add_file   = NULL;
-  gimp->gui.recent_list_load       = NULL;
-  gimp->gui.get_mount_operation    = NULL;
-  gimp->gui.query_profile_policy   = NULL;
-  gimp->gui.query_rotation_policy  = NULL;
+  gimp->gui.ungrab                    = NULL;
+  gimp->gui.set_busy                  = NULL;
+  gimp->gui.unset_busy                = NULL;
+  gimp->gui.show_message              = NULL;
+  gimp->gui.help                      = NULL;
+  gimp->gui.get_program_class         = NULL;
+  gimp->gui.get_display_name          = NULL;
+  gimp->gui.get_user_time             = NULL;
+  gimp->gui.get_theme_dir             = NULL;
+  gimp->gui.get_icon_theme_dir        = NULL;
+  gimp->gui.display_get_window_handle = NULL;
+  gimp->gui.display_create            = NULL;
+  gimp->gui.display_delete            = NULL;
+  gimp->gui.displays_reconnect        = NULL;
+  gimp->gui.progress_new              = NULL;
+  gimp->gui.progress_free             = NULL;
+  gimp->gui.pdb_dialog_set            = NULL;
+  gimp->gui.pdb_dialog_close          = NULL;
+  gimp->gui.recent_list_add_file      = NULL;
+  gimp->gui.recent_list_load          = NULL;
+  gimp->gui.get_mount_operation       = NULL;
+  gimp->gui.query_profile_policy      = NULL;
+  gimp->gui.query_rotation_policy     = NULL;
 }
 
 void
@@ -324,14 +324,14 @@ gimp_get_empty_display (Gimp *gimp)
 }
 
 GBytes *
-gimp_get_display_window_id (Gimp        *gimp,
-                            GimpDisplay *display)
+gimp_get_display_window_handle (Gimp        *gimp,
+                                GimpDisplay *display)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
 
-  if (gimp->gui.display_get_window_id)
-    return gimp->gui.display_get_window_id (display);
+  if (gimp->gui.display_get_window_handle)
+    return gimp->gui.display_get_window_handle (display);
 
   return NULL;
 }

@@ -32,35 +32,35 @@ enum
 };
 
 
-static void           gimp_sub_progress_iface_init    (GimpProgressInterface *iface);
+static void           gimp_sub_progress_iface_init        (GimpProgressInterface *iface);
 
-static void           gimp_sub_progress_finalize      (GObject             *object);
-static void           gimp_sub_progress_set_property  (GObject             *object,
-                                                       guint                property_id,
-                                                       const GValue        *value,
-                                                       GParamSpec          *pspec);
-static void           gimp_sub_progress_get_property  (GObject             *object,
-                                                       guint                property_id,
-                                                       GValue              *value,
-                                                       GParamSpec          *pspec);
+static void           gimp_sub_progress_finalize          (GObject             *object);
+static void           gimp_sub_progress_set_property      (GObject             *object,
+                                                           guint                property_id,
+                                                           const GValue        *value,
+                                                           GParamSpec          *pspec);
+static void           gimp_sub_progress_get_property      (GObject             *object,
+                                                           guint                property_id,
+                                                           GValue              *value,
+                                                           GParamSpec          *pspec);
 
-static GimpProgress * gimp_sub_progress_start         (GimpProgress        *progress,
-                                                       gboolean             cancellable,
-                                                       const gchar         *message);
-static void           gimp_sub_progress_end           (GimpProgress        *progress);
-static gboolean       gimp_sub_progress_is_active     (GimpProgress        *progress);
-static void           gimp_sub_progress_set_text      (GimpProgress        *progress,
-                                                       const gchar         *message);
-static void           gimp_sub_progress_set_value     (GimpProgress        *progress,
-                                                       gdouble              percentage);
-static gdouble        gimp_sub_progress_get_value     (GimpProgress        *progress);
-static void           gimp_sub_progress_pulse         (GimpProgress        *progress);
-static GBytes       * gimp_sub_progress_get_window_id (GimpProgress        *progress);
-static gboolean       gimp_sub_progress_message       (GimpProgress        *progress,
-                                                       Gimp                *gimp,
-                                                       GimpMessageSeverity  severity,
-                                                       const gchar         *domain,
-                                                       const gchar         *message);
+static GimpProgress * gimp_sub_progress_start             (GimpProgress        *progress,
+                                                           gboolean             cancellable,
+                                                           const gchar         *message);
+static void           gimp_sub_progress_end               (GimpProgress        *progress);
+static gboolean       gimp_sub_progress_is_active         (GimpProgress        *progress);
+static void           gimp_sub_progress_set_text          (GimpProgress        *progress,
+                                                           const gchar         *message);
+static void           gimp_sub_progress_set_value         (GimpProgress        *progress,
+                                                           gdouble              percentage);
+static gdouble        gimp_sub_progress_get_value         (GimpProgress        *progress);
+static void           gimp_sub_progress_pulse             (GimpProgress        *progress);
+static GBytes       * gimp_sub_progress_get_window_handle (GimpProgress        *progress);
+static gboolean       gimp_sub_progress_message           (GimpProgress        *progress,
+                                                           Gimp                *gimp,
+                                                           GimpMessageSeverity  severity,
+                                                           const gchar         *domain,
+                                                           const gchar         *message);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpSubProgress, gimp_sub_progress, G_TYPE_OBJECT,
@@ -108,15 +108,15 @@ gimp_sub_progress_finalize (GObject *object)
 static void
 gimp_sub_progress_iface_init (GimpProgressInterface *iface)
 {
-  iface->start         = gimp_sub_progress_start;
-  iface->end           = gimp_sub_progress_end;
-  iface->is_active     = gimp_sub_progress_is_active;
-  iface->set_text      = gimp_sub_progress_set_text;
-  iface->set_value     = gimp_sub_progress_set_value;
-  iface->get_value     = gimp_sub_progress_get_value;
-  iface->pulse         = gimp_sub_progress_pulse;
-  iface->get_window_id = gimp_sub_progress_get_window_id;
-  iface->message       = gimp_sub_progress_message;
+  iface->start             = gimp_sub_progress_start;
+  iface->end               = gimp_sub_progress_end;
+  iface->is_active         = gimp_sub_progress_is_active;
+  iface->set_text          = gimp_sub_progress_set_text;
+  iface->set_value         = gimp_sub_progress_set_value;
+  iface->get_value         = gimp_sub_progress_get_value;
+  iface->pulse             = gimp_sub_progress_pulse;
+  iface->get_window_handle = gimp_sub_progress_get_window_handle;
+  iface->message           = gimp_sub_progress_message;
 }
 
 static void
@@ -225,12 +225,12 @@ gimp_sub_progress_pulse (GimpProgress *progress)
 }
 
 static GBytes *
-gimp_sub_progress_get_window_id (GimpProgress *progress)
+gimp_sub_progress_get_window_handle (GimpProgress *progress)
 {
   GimpSubProgress *sub = GIMP_SUB_PROGRESS (progress);
 
   if (sub->progress)
-    return gimp_progress_get_window_id (sub->progress);
+    return gimp_progress_get_window_handle (sub->progress);
 
   return NULL;
 }

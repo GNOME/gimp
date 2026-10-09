@@ -100,10 +100,10 @@ gimp_display_shell_progress_pulse (GimpProgress *progress)
 }
 
 static GBytes *
-gimp_display_shell_progress_get_window_id (GimpProgress *progress)
+gimp_display_shell_progress_get_window_handle (GimpProgress *progress)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (progress);
-  GBytes           *handle   = NULL;
+  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (progress);
+  GBytes           *handle = NULL;
 
   if (shell->window_handle)
     handle = g_bytes_ref (shell->window_handle);
@@ -152,13 +152,13 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
 void
 gimp_display_shell_progress_iface_init (GimpProgressInterface *iface)
 {
-  iface->start         = gimp_display_shell_progress_start;
-  iface->end           = gimp_display_shell_progress_end;
-  iface->is_active     = gimp_display_shell_progress_is_active;
-  iface->set_text      = gimp_display_shell_progress_set_text;
-  iface->set_value     = gimp_display_shell_progress_set_value;
-  iface->get_value     = gimp_display_shell_progress_get_value;
-  iface->pulse         = gimp_display_shell_progress_pulse;
-  iface->get_window_id = gimp_display_shell_progress_get_window_id;
-  iface->message       = gimp_display_shell_progress_message;
+  iface->start             = gimp_display_shell_progress_start;
+  iface->end               = gimp_display_shell_progress_end;
+  iface->is_active         = gimp_display_shell_progress_is_active;
+  iface->set_text          = gimp_display_shell_progress_set_text;
+  iface->set_value         = gimp_display_shell_progress_set_value;
+  iface->get_value         = gimp_display_shell_progress_get_value;
+  iface->pulse             = gimp_display_shell_progress_pulse;
+  iface->get_window_handle = gimp_display_shell_progress_get_window_handle;
+  iface->message           = gimp_display_shell_progress_message;
 }

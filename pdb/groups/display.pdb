@@ -174,7 +174,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  handle = gimp_get_display_window_id (gimp, display);
+  handle = gimp_get_display_window_handle (gimp, display);
 }
 CODE
     );

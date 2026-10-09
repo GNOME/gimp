@@ -69,68 +69,68 @@ struct _GimpFileDialogState
 };
 
 
-static void     gimp_file_dialog_progress_iface_init     (GimpProgressInterface *iface);
+static void     gimp_file_dialog_progress_iface_init        (GimpProgressInterface *iface);
 
-static void     gimp_file_dialog_set_property            (GObject             *object,
-                                                          guint                property_id,
-                                                          const GValue        *value,
-                                                          GParamSpec          *pspec);
-static void     gimp_file_dialog_get_property            (GObject             *object,
-                                                          guint                property_id,
-                                                          GValue              *value,
-                                                          GParamSpec          *pspec);
-static void     gimp_file_dialog_constructed             (GObject             *object);
-static void     gimp_file_dialog_dispose                 (GObject             *object);
+static void     gimp_file_dialog_set_property               (GObject             *object,
+                                                             guint                property_id,
+                                                             const GValue        *value,
+                                                             GParamSpec          *pspec);
+static void     gimp_file_dialog_get_property               (GObject             *object,
+                                                             guint                property_id,
+                                                             GValue              *value,
+                                                             GParamSpec          *pspec);
+static void     gimp_file_dialog_constructed                (GObject             *object);
+static void     gimp_file_dialog_dispose                    (GObject             *object);
 
-static gboolean gimp_file_dialog_delete_event            (GtkWidget           *widget,
-                                                          GdkEventAny         *event);
-static void     gimp_file_dialog_response                (GtkDialog           *dialog,
-                                                          gint                 response_id);
+static gboolean gimp_file_dialog_delete_event               (GtkWidget           *widget,
+                                                             GdkEventAny         *event);
+static void     gimp_file_dialog_response                   (GtkDialog           *dialog,
+                                                             gint                 response_id);
 #ifdef G_OS_WIN32
-static void     gimp_file_dialog_realize                 (GimpFileDialog      *dialog,
-                                                          gpointer             data);
+static void     gimp_file_dialog_realize                    (GimpFileDialog      *dialog,
+                                                             gpointer             data);
 #endif
-static GFile  * gimp_file_dialog_real_get_default_folder (GimpFileDialog      *dialog);
-static void     gimp_file_dialog_real_save_state         (GimpFileDialog      *dialog,
-                                                          const gchar         *state_name);
-static void     gimp_file_dialog_real_load_state         (GimpFileDialog      *dialog,
-                                                          const gchar         *state_name);
+static GFile  * gimp_file_dialog_real_get_default_folder    (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_real_save_state            (GimpFileDialog      *dialog,
+                                                             const gchar         *state_name);
+static void     gimp_file_dialog_real_load_state            (GimpFileDialog      *dialog,
+                                                             const gchar         *state_name);
 
 static GimpProgress *
-                gimp_file_dialog_progress_start          (GimpProgress        *progress,
-                                                          gboolean             cancellable,
-                                                          const gchar         *message);
-static void     gimp_file_dialog_progress_end            (GimpProgress        *progress);
-static gboolean gimp_file_dialog_progress_is_active      (GimpProgress        *progress);
-static void     gimp_file_dialog_progress_set_text       (GimpProgress        *progress,
-                                                          const gchar         *message);
-static void     gimp_file_dialog_progress_set_value      (GimpProgress        *progress,
-                                                          gdouble              percentage);
-static gdouble  gimp_file_dialog_progress_get_value      (GimpProgress        *progress);
-static void     gimp_file_dialog_progress_pulse          (GimpProgress        *progress);
-static GBytes * gimp_file_dialog_progress_get_window_id  (GimpProgress        *progress);
+                gimp_file_dialog_progress_start             (GimpProgress        *progress,
+                                                             gboolean             cancellable,
+                                                             const gchar         *message);
+static void     gimp_file_dialog_progress_end               (GimpProgress        *progress);
+static gboolean gimp_file_dialog_progress_is_active         (GimpProgress        *progress);
+static void     gimp_file_dialog_progress_set_text          (GimpProgress        *progress,
+                                                             const gchar         *message);
+static void     gimp_file_dialog_progress_set_value         (GimpProgress        *progress,
+                                                             gdouble              percentage);
+static gdouble  gimp_file_dialog_progress_get_value         (GimpProgress        *progress);
+static void     gimp_file_dialog_progress_pulse             (GimpProgress        *progress);
+static GBytes * gimp_file_dialog_progress_get_window_handle (GimpProgress        *progress);
 
-static void     gimp_file_dialog_add_user_dir            (GimpFileDialog      *dialog,
-                                                          GUserDirectory       directory);
-static void     gimp_file_dialog_add_preview             (GimpFileDialog      *dialog);
-static void     gimp_file_dialog_add_proc_selection      (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_add_user_dir               (GimpFileDialog      *dialog,
+                                                             GUserDirectory       directory);
+static void     gimp_file_dialog_add_preview                (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_add_proc_selection         (GimpFileDialog      *dialog);
 
-static void     gimp_file_dialog_selection_changed       (GtkFileChooser      *chooser,
-                                                          GimpFileDialog      *dialog);
-static void     gimp_file_dialog_update_preview          (GtkFileChooser      *chooser,
-                                                          GimpFileDialog      *dialog);
+static void     gimp_file_dialog_selection_changed          (GtkFileChooser      *chooser,
+                                                             GimpFileDialog      *dialog);
+static void     gimp_file_dialog_update_preview             (GtkFileChooser      *chooser,
+                                                             GimpFileDialog      *dialog);
 
-static void     gimp_file_dialog_proc_changed            (GimpFileProcView    *view,
-                                                          GimpFileDialog      *dialog);
+static void     gimp_file_dialog_proc_changed               (GimpFileProcView    *view,
+                                                             GimpFileDialog      *dialog);
 
-static void     gimp_file_dialog_help_func               (const gchar         *help_id,
-                                                          gpointer             help_data);
+static void     gimp_file_dialog_help_func                  (const gchar         *help_id,
+                                                             gpointer             help_data);
 
 static GimpFileDialogState
-              * gimp_file_dialog_get_state               (GimpFileDialog      *dialog);
-static void     gimp_file_dialog_set_state               (GimpFileDialog      *dialog,
-                                                          GimpFileDialogState *state);
-static void     gimp_file_dialog_state_destroy           (GimpFileDialogState *state);
+              * gimp_file_dialog_get_state                  (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_set_state                  (GimpFileDialog      *dialog,
+                                                             GimpFileDialogState *state);
+static void     gimp_file_dialog_state_destroy              (GimpFileDialogState *state);
 
 
 
@@ -239,14 +239,14 @@ gimp_file_dialog_init (GimpFileDialog *dialog)
 static void
 gimp_file_dialog_progress_iface_init (GimpProgressInterface *iface)
 {
-  iface->start         = gimp_file_dialog_progress_start;
-  iface->end           = gimp_file_dialog_progress_end;
-  iface->is_active     = gimp_file_dialog_progress_is_active;
-  iface->set_text      = gimp_file_dialog_progress_set_text;
-  iface->set_value     = gimp_file_dialog_progress_set_value;
-  iface->get_value     = gimp_file_dialog_progress_get_value;
-  iface->pulse         = gimp_file_dialog_progress_pulse;
-  iface->get_window_id = gimp_file_dialog_progress_get_window_id;
+  iface->start             = gimp_file_dialog_progress_start;
+  iface->end               = gimp_file_dialog_progress_end;
+  iface->is_active         = gimp_file_dialog_progress_is_active;
+  iface->set_text          = gimp_file_dialog_progress_set_text;
+  iface->set_value         = gimp_file_dialog_progress_set_value;
+  iface->get_value         = gimp_file_dialog_progress_get_value;
+  iface->pulse             = gimp_file_dialog_progress_pulse;
+  iface->get_window_handle = gimp_file_dialog_progress_get_window_handle;
 }
 
 static void
@@ -599,7 +599,7 @@ gimp_file_dialog_progress_pulse (GimpProgress *progress)
 }
 
 static GBytes *
-gimp_file_dialog_progress_get_window_id (GimpProgress *progress)
+gimp_file_dialog_progress_get_window_handle (GimpProgress *progress)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 

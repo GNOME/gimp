@@ -81,46 +81,46 @@ struct _GimpDisplayImplPrivate
 
 /*  local function prototypes  */
 
-static void     gimp_display_progress_iface_init  (GimpProgressInterface *iface);
+static void     gimp_display_progress_iface_init        (GimpProgressInterface *iface);
 
-static void     gimp_display_set_property           (GObject             *object,
-                                                     guint                property_id,
-                                                     const GValue        *value,
-                                                     GParamSpec          *pspec);
-static void     gimp_display_get_property           (GObject             *object,
-                                                     guint                property_id,
-                                                     GValue              *value,
-                                                     GParamSpec          *pspec);
+static void     gimp_display_set_property               (GObject             *object,
+                                                         guint                property_id,
+                                                         const GValue        *value,
+                                                         GParamSpec          *pspec);
+static void     gimp_display_get_property               (GObject             *object,
+                                                         guint                property_id,
+                                                         GValue              *value,
+                                                         GParamSpec          *pspec);
 
-static gboolean gimp_display_impl_present           (GimpDisplay         *display);
-static gboolean gimp_display_impl_grab_focus        (GimpDisplay         *display);
+static gboolean gimp_display_impl_present               (GimpDisplay         *display);
+static gboolean gimp_display_impl_grab_focus            (GimpDisplay         *display);
 
-static GimpProgress * gimp_display_progress_start   (GimpProgress        *progress,
-                                                     gboolean             cancellable,
-                                                     const gchar         *message);
-static void     gimp_display_progress_end           (GimpProgress        *progress);
-static gboolean gimp_display_progress_is_active     (GimpProgress        *progress);
-static void     gimp_display_progress_set_text      (GimpProgress        *progress,
-                                                     const gchar         *message);
-static void     gimp_display_progress_set_value     (GimpProgress        *progress,
-                                                     gdouble              percentage);
-static gdouble  gimp_display_progress_get_value     (GimpProgress        *progress);
-static void     gimp_display_progress_pulse         (GimpProgress        *progress);
-static GBytes * gimp_display_progress_get_window_id (GimpProgress        *progress);
-static gboolean gimp_display_progress_message       (GimpProgress        *progress,
-                                                     Gimp                *gimp,
-                                                     GimpMessageSeverity  severity,
-                                                     const gchar         *domain,
-                                                     const gchar         *message);
-static void     gimp_display_progress_canceled      (GimpProgress        *progress,
-                                                     GimpDisplay         *display);
+static GimpProgress * gimp_display_progress_start       (GimpProgress        *progress,
+                                                         gboolean             cancellable,
+                                                         const gchar         *message);
+static void     gimp_display_progress_end               (GimpProgress        *progress);
+static gboolean gimp_display_progress_is_active         (GimpProgress        *progress);
+static void     gimp_display_progress_set_text          (GimpProgress        *progress,
+                                                         const gchar         *message);
+static void     gimp_display_progress_set_value         (GimpProgress        *progress,
+                                                         gdouble              percentage);
+static gdouble  gimp_display_progress_get_value         (GimpProgress        *progress);
+static void     gimp_display_progress_pulse             (GimpProgress        *progress);
+static GBytes * gimp_display_progress_get_window_handle (GimpProgress        *progress);
+static gboolean gimp_display_progress_message           (GimpProgress        *progress,
+                                                         Gimp                *gimp,
+                                                         GimpMessageSeverity  severity,
+                                                         const gchar         *domain,
+                                                         const gchar         *message);
+static void     gimp_display_progress_canceled          (GimpProgress        *progress,
+                                                         GimpDisplay         *display);
 
-static void     gimp_display_flush_update_region    (GimpDisplay         *display);
-static void     gimp_display_paint_area             (GimpDisplay         *display,
-                                                     gint                 x,
-                                                     gint                 y,
-                                                     gint                 w,
-                                                     gint                 h);
+static void     gimp_display_flush_update_region        (GimpDisplay         *display);
+static void     gimp_display_paint_area                 (GimpDisplay         *display,
+                                                         gint                 x,
+                                                         gint                 y,
+                                                         gint                 w,
+                                                         gint                 h);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayImpl, gimp_display_impl, GIMP_TYPE_DISPLAY,
@@ -165,15 +165,15 @@ gimp_display_impl_init (GimpDisplayImpl *display)
 static void
 gimp_display_progress_iface_init (GimpProgressInterface *iface)
 {
-  iface->start         = gimp_display_progress_start;
-  iface->end           = gimp_display_progress_end;
-  iface->is_active     = gimp_display_progress_is_active;
-  iface->set_text      = gimp_display_progress_set_text;
-  iface->set_value     = gimp_display_progress_set_value;
-  iface->get_value     = gimp_display_progress_get_value;
-  iface->pulse         = gimp_display_progress_pulse;
-  iface->get_window_id = gimp_display_progress_get_window_id;
-  iface->message       = gimp_display_progress_message;
+  iface->start             = gimp_display_progress_start;
+  iface->end               = gimp_display_progress_end;
+  iface->is_active         = gimp_display_progress_is_active;
+  iface->set_text          = gimp_display_progress_set_text;
+  iface->set_value         = gimp_display_progress_set_value;
+  iface->get_value         = gimp_display_progress_get_value;
+  iface->pulse             = gimp_display_progress_pulse;
+  iface->get_window_handle = gimp_display_progress_get_window_handle;
+  iface->message           = gimp_display_progress_message;
 }
 
 static void
@@ -320,12 +320,12 @@ gimp_display_progress_pulse (GimpProgress *progress)
 }
 
 static GBytes *
-gimp_display_progress_get_window_id (GimpProgress *progress)
+gimp_display_progress_get_window_handle (GimpProgress *progress)
 {
   GimpDisplayImpl *display = GIMP_DISPLAY_IMPL (progress);
 
   if (display->priv->shell)
-    return gimp_progress_get_window_id (GIMP_PROGRESS (display->priv->shell));
+    return gimp_progress_get_window_handle (GIMP_PROGRESS (display->priv->shell));
 
   return NULL;
 }

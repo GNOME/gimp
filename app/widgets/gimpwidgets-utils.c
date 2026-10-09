@@ -2662,7 +2662,7 @@ gimp_window_transient_on_mapped (GtkWidget    *window,
 {
   GBytes *handle;
 
-  handle = gimp_progress_get_window_id (progress);
+  handle = gimp_progress_get_window_handle (progress);
 
   if (handle == NULL)
     return FALSE;

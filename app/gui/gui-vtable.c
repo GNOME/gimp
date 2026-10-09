@@ -120,85 +120,85 @@
 
 /*  local function prototypes  */
 
-static void           gui_ungrab                 (Gimp                *gimp);
+static void           gui_ungrab                    (Gimp                *gimp);
 
-static void           gui_set_busy               (Gimp                *gimp);
-static void           gui_unset_busy             (Gimp                *gimp);
+static void           gui_set_busy                  (Gimp                *gimp);
+static void           gui_unset_busy                (Gimp                *gimp);
 
-static void           gui_help                   (Gimp                *gimp,
-                                                  GimpProgress        *progress,
-                                                  const gchar         *help_domain,
-                                                  const gchar         *help_id);
-static const gchar  * gui_get_program_class      (Gimp                *gimp);
-static gchar        * gui_get_display_name       (Gimp                *gimp,
-                                                  gint                 display_id,
-                                                  GObject            **monitor,
-                                                  gint                *monitor_number);
-static guint32        gui_get_user_time          (Gimp                *gimp);
-static GFile        * gui_get_theme_dir          (Gimp                *gimp);
-static GFile        * gui_get_icon_theme_dir     (Gimp                *gimp);
-static GimpObject   * gui_get_window_strategy    (Gimp                *gimp);
-static GimpDisplay  * gui_get_empty_display      (Gimp                *gimp);
-static GBytes       * gui_display_get_window_id  (GimpDisplay         *display);
-static GimpDisplay  * gui_display_create         (Gimp                *gimp,
-                                                  GimpImage           *image,
-                                                  GimpUnit            *unit,
-                                                  gdouble              scale,
-                                                  GObject             *monitor);
-static void           gui_display_delete         (GimpDisplay         *display);
-static void           gui_displays_reconnect     (Gimp                *gimp,
-                                                  GimpImage           *old_image,
-                                                  GimpImage           *new_image);
-static gboolean       gui_wait                   (Gimp                *gimp,
-                                                  GimpWaitable        *waitable,
-                                                  const gchar         *message);
-static GimpProgress * gui_new_progress           (Gimp                *gimp,
-                                                  GimpDisplay         *display);
-static void           gui_free_progress          (Gimp                *gimp,
-                                                  GimpProgress        *progress);
-static gboolean       gui_pdb_dialog_new         (Gimp                *gimp,
-                                                  GimpContext         *context,
-                                                  GimpProgress        *progress,
-                                                  GType                object_type,
-                                                  GBytes              *parent_handle,
-                                                  const gchar         *title,
-                                                  const gchar         *callback_name,
-                                                  GimpObject          *object,
-                                                  va_list              args);
-static gboolean       gui_pdb_dialog_set         (Gimp                *gimp,
-                                                  GType                contents_type,
-                                                  const gchar         *callback_name,
-                                                  GimpObject          *object,
-                                                  va_list              args);
-static gboolean       gui_pdb_dialog_close       (Gimp                *gimp,
-                                                  GType                contents_type,
-                                                  const gchar         *callback_name);
-static gboolean       gui_recent_list_add_file   (Gimp                *gimp,
-                                                  GFile               *file,
-                                                  const gchar         *mime_type);
-static void           gui_recent_list_load       (Gimp                *gimp);
+static void           gui_help                      (Gimp                *gimp,
+                                                     GimpProgress        *progress,
+                                                     const gchar         *help_domain,
+                                                     const gchar         *help_id);
+static const gchar  * gui_get_program_class         (Gimp                *gimp);
+static gchar        * gui_get_display_name          (Gimp                *gimp,
+                                                     gint                 display_id,
+                                                     GObject            **monitor,
+                                                     gint                *monitor_number);
+static guint32        gui_get_user_time             (Gimp                *gimp);
+static GFile        * gui_get_theme_dir             (Gimp                *gimp);
+static GFile        * gui_get_icon_theme_dir        (Gimp                *gimp);
+static GimpObject   * gui_get_window_strategy       (Gimp                *gimp);
+static GimpDisplay  * gui_get_empty_display         (Gimp                *gimp);
+static GBytes       * gui_display_get_window_handle (GimpDisplay         *display);
+static GimpDisplay  * gui_display_create            (Gimp                *gimp,
+                                                     GimpImage           *image,
+                                                     GimpUnit            *unit,
+                                                     gdouble              scale,
+                                                     GObject             *monitor);
+static void           gui_display_delete            (GimpDisplay         *display);
+static void           gui_displays_reconnect        (Gimp                *gimp,
+                                                     GimpImage           *old_image,
+                                                     GimpImage           *new_image);
+static gboolean       gui_wait                      (Gimp                *gimp,
+                                                     GimpWaitable        *waitable,
+                                                     const gchar         *message);
+static GimpProgress * gui_new_progress              (Gimp                *gimp,
+                                                     GimpDisplay         *display);
+static void           gui_free_progress             (Gimp                *gimp,
+                                                     GimpProgress        *progress);
+static gboolean       gui_pdb_dialog_new            (Gimp                *gimp,
+                                                     GimpContext         *context,
+                                                     GimpProgress        *progress,
+                                                     GType                object_type,
+                                                     GBytes              *parent_handle,
+                                                     const gchar         *title,
+                                                     const gchar         *callback_name,
+                                                     GimpObject          *object,
+                                                     va_list              args);
+static gboolean       gui_pdb_dialog_set            (Gimp                *gimp,
+                                                     GType                contents_type,
+                                                     const gchar         *callback_name,
+                                                     GimpObject          *object,
+                                                     va_list              args);
+static gboolean       gui_pdb_dialog_close          (Gimp                *gimp,
+                                                     GType                contents_type,
+                                                     const gchar         *callback_name);
+static gboolean       gui_recent_list_add_file      (Gimp                *gimp,
+                                                     GFile               *file,
+                                                     const gchar         *mime_type);
+static void           gui_recent_list_load          (Gimp                *gimp);
 
 static GMountOperation
-                    * gui_get_mount_operation    (Gimp                *gimp,
-                                                  GimpProgress        *progress);
+                    * gui_get_mount_operation       (Gimp                *gimp,
+                                                     GimpProgress        *progress);
 
 static GimpColorProfilePolicy
-                      gui_query_profile_policy   (Gimp                *gimp,
-                                                  GimpImage           *image,
-                                                  GimpContext         *context,
-                                                  GimpColorProfile   **dest_profile,
-                                                  GimpColorRenderingIntent *intent,
-                                                  gboolean            *bpc,
-                                                  gboolean            *dont_ask);
+                      gui_query_profile_policy      (Gimp                *gimp,
+                                                     GimpImage           *image,
+                                                     GimpContext         *context,
+                                                     GimpColorProfile   **dest_profile,
+                                                     GimpColorRenderingIntent *intent,
+                                                     gboolean            *bpc,
+                                                     gboolean            *dont_ask);
 static GimpMetadataRotationPolicy
-                      gui_query_rotation_policy  (Gimp                *gimp,
-                                                  GimpImage           *image,
-                                                  GimpContext         *context,
-                                                  gboolean            *dont_ask);
+                      gui_query_rotation_policy     (Gimp                *gimp,
+                                                     GimpImage           *image,
+                                                     GimpContext         *context,
+                                                     gboolean            *dont_ask);
 
-static void           gui_inhibit                (Gimp                *gimp);
-static void           gui_image_disconnect       (GimpImage           *image,
-                                                  Gimp                *gimp);
+static void           gui_inhibit                   (Gimp                *gimp);
+static void           gui_image_disconnect          (GimpImage           *image,
+                                                     Gimp                *gimp);
 
 
 /*  public functions  */
@@ -208,33 +208,33 @@ gui_vtable_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->gui.ungrab                 = gui_ungrab;
-  gimp->gui.set_busy               = gui_set_busy;
-  gimp->gui.unset_busy             = gui_unset_busy;
-  gimp->gui.show_message           = gui_message;
-  gimp->gui.help                   = gui_help;
-  gimp->gui.get_program_class      = gui_get_program_class;
-  gimp->gui.get_display_name       = gui_get_display_name;
-  gimp->gui.get_user_time          = gui_get_user_time;
-  gimp->gui.get_theme_dir          = gui_get_theme_dir;
-  gimp->gui.get_icon_theme_dir     = gui_get_icon_theme_dir;
-  gimp->gui.get_window_strategy    = gui_get_window_strategy;
-  gimp->gui.get_empty_display      = gui_get_empty_display;
-  gimp->gui.display_get_window_id  = gui_display_get_window_id;
-  gimp->gui.display_create         = gui_display_create;
-  gimp->gui.display_delete         = gui_display_delete;
-  gimp->gui.displays_reconnect     = gui_displays_reconnect;
-  gimp->gui.wait                   = gui_wait;
-  gimp->gui.progress_new           = gui_new_progress;
-  gimp->gui.progress_free          = gui_free_progress;
-  gimp->gui.pdb_dialog_new         = gui_pdb_dialog_new;
-  gimp->gui.pdb_dialog_set         = gui_pdb_dialog_set;
-  gimp->gui.pdb_dialog_close       = gui_pdb_dialog_close;
-  gimp->gui.recent_list_add_file   = gui_recent_list_add_file;
-  gimp->gui.recent_list_load       = gui_recent_list_load;
-  gimp->gui.get_mount_operation    = gui_get_mount_operation;
-  gimp->gui.query_profile_policy   = gui_query_profile_policy;
-  gimp->gui.query_rotation_policy  = gui_query_rotation_policy;
+  gimp->gui.ungrab                    = gui_ungrab;
+  gimp->gui.set_busy                  = gui_set_busy;
+  gimp->gui.unset_busy                = gui_unset_busy;
+  gimp->gui.show_message              = gui_message;
+  gimp->gui.help                      = gui_help;
+  gimp->gui.get_program_class         = gui_get_program_class;
+  gimp->gui.get_display_name          = gui_get_display_name;
+  gimp->gui.get_user_time             = gui_get_user_time;
+  gimp->gui.get_theme_dir             = gui_get_theme_dir;
+  gimp->gui.get_icon_theme_dir        = gui_get_icon_theme_dir;
+  gimp->gui.get_window_strategy       = gui_get_window_strategy;
+  gimp->gui.get_empty_display         = gui_get_empty_display;
+  gimp->gui.display_get_window_handle = gui_display_get_window_handle;
+  gimp->gui.display_create            = gui_display_create;
+  gimp->gui.display_delete            = gui_display_delete;
+  gimp->gui.displays_reconnect        = gui_displays_reconnect;
+  gimp->gui.wait                      = gui_wait;
+  gimp->gui.progress_new              = gui_new_progress;
+  gimp->gui.progress_free             = gui_free_progress;
+  gimp->gui.pdb_dialog_new            = gui_pdb_dialog_new;
+  gimp->gui.pdb_dialog_set            = gui_pdb_dialog_set;
+  gimp->gui.pdb_dialog_close          = gui_pdb_dialog_close;
+  gimp->gui.recent_list_add_file      = gui_recent_list_add_file;
+  gimp->gui.recent_list_load          = gui_recent_list_load;
+  gimp->gui.get_mount_operation       = gui_get_mount_operation;
+  gimp->gui.query_profile_policy      = gui_query_profile_policy;
+  gimp->gui.query_rotation_policy     = gui_query_rotation_policy;
 }
 
 
@@ -383,16 +383,13 @@ gui_get_empty_display (Gimp *gimp)
 }
 
 static GBytes *
-gui_display_get_window_id (GimpDisplay *display)
+gui_display_get_window_handle (GimpDisplay *display)
 {
   GimpDisplay      *disp  = GIMP_DISPLAY (display);
   GimpDisplayShell *shell = gimp_display_get_shell (disp);
 
   if (shell)
-    {
-      if (shell)
-        return g_bytes_ref (shell->window_handle);
-    }
+    return gimp_progress_get_window_handle (GIMP_PROGRESS (shell));
 
   return NULL;
 }
