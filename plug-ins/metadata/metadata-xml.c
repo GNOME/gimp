@@ -335,7 +335,6 @@ get_tag_ui_list (metadata_editor *args, gchar *name, MetadataMode mode)
   GtkTreeIter    iter;
   GString       *xmldata;
   gint           number_of_rows;
-  gint           row;
   gint           has_data;
   gchar         *tagdata[MAX_TAG_ROWS][MAX_TAG_COLS];
 
@@ -348,189 +347,41 @@ get_tag_ui_list (metadata_editor *args, gchar *name, MetadataMode mode)
   treemodel = GTK_TREE_MODEL (liststore);
   number_of_rows =
     gtk_tree_model_iter_n_children(GTK_TREE_MODEL(liststore), NULL);
-
-  for (row = 0; row < number_of_rows; row++)
+  
+  if (number_of_rows > MAX_TAG_ROWS)
     {
-      if (gtk_tree_model_iter_nth_child(treemodel, &iter, NULL, row))
+      g_warning (_("Too many rows for tag %s: limiting export to %d rows"),
+                 name, MAX_TAG_ROWS);
+      number_of_rows = MAX_TAG_ROWS;
+    }
+
+  for (gint list_index = 0; list_index < LIST_LAST; list_index++)
+    {
+      if (! strcmp (name, default_metadata_tags[list_metadata[list_index].metadata_index].tag))
         {
-          if (!strcmp (LICENSOR_HEADER, name))
+          for (gint row = 0; row < number_of_rows; row++)
             {
-              gtk_tree_model_get (treemodel, &iter,
-                                  COL_LICENSOR_NAME, &tagdata[row][0],
-                                  COL_LICENSOR_ID, &tagdata[row][1],
-                                  COL_LICENSOR_PHONE1, &tagdata[row][2],
-                                  COL_LICENSOR_PHONE_TYPE1, &tagdata[row][3],
-                                  COL_LICENSOR_PHONE2, &tagdata[row][4],
-                                  COL_LICENSOR_PHONE_TYPE2, &tagdata[row][5],
-                                  COL_LICENSOR_EMAIL, &tagdata[row][6],
-                                  COL_LICENSOR_WEB, &tagdata[row][7],
-                                  -1);
+              gboolean row_has_data;
 
-              if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0) ||
-                  (tagdata[row][1] != NULL && strlen(tagdata[row][1]) > 0) ||
-                  (tagdata[row][2] != NULL && strlen(tagdata[row][2]) > 0) ||
-                  (tagdata[row][3] != NULL && strlen(tagdata[row][3]) > 0) ||
-                  (tagdata[row][4] != NULL && strlen(tagdata[row][4]) > 0) ||
-                  (tagdata[row][5] != NULL && strlen(tagdata[row][5]) > 0) ||
-                  (tagdata[row][6] != NULL && strlen(tagdata[row][6]) > 0) ||
-                  (tagdata[row][7] != NULL && strlen(tagdata[row][7]) > 0))
+              row_has_data = FALSE;
+              if (gtk_tree_model_iter_nth_child(treemodel, &iter, NULL, row))
                 {
-
-                  has_data = TRUE;
-
-                  get_list_elements (xmldata, 8, tagdata[row]);
+                  for (gint col = 0; col < list_metadata[list_index].n_values; col++)
+                    {
+                      gtk_tree_model_get (treemodel, &iter,
+                                          col, &tagdata[row][col],
+                                          -1);
+                      if (! row_has_data && tagdata[row][col] != NULL && strlen(tagdata[row][col]) > 0)
+                        {
+                          row_has_data = TRUE;
+                          has_data     = TRUE;
+                        }
+                    }
+                  if (has_data)
+                    get_list_elements (xmldata, list_metadata[list_index].n_values, tagdata[row]);
                 }
             }
-          else if (!strcmp (COPYRIGHTOWNER_HEADER, name))
-            {
-              gtk_tree_model_get (treemodel, &iter,
-                                  COL_CR_OWNER_NAME, &tagdata[row][0],
-                                  COL_CR_OWNER_ID, &tagdata[row][1],
-                                  -1);
-
-              if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0) ||
-                  (tagdata[row][1] != NULL && strlen(tagdata[row][1]) > 0))
-                {
-                  has_data = TRUE;
-
-                  g_string_append (xmldata, "\t\t\t<list-element>\n");
-                  g_string_append (xmldata, "\t\t\t\t<element>");
-                  g_string_append (xmldata, tagdata[row][0]);
-                  g_string_append (xmldata, "</element>\n");
-                  g_string_append (xmldata, "\t\t\t\t<element>");
-                  g_string_append (xmldata, tagdata[row][1]);
-                  g_string_append (xmldata, "</element>\n");
-                  g_string_append (xmldata, "\t\t\t</list-element>\n");
-                }
-            }
-          else if (!strcmp (IMAGECREATOR_HEADER, name))
-            {
-              gtk_tree_model_get (treemodel, &iter,
-                                  COL_IMG_CR8_NAME, &tagdata[row][0],
-                                  COL_IMG_CR8_ID, &tagdata[row][1],
-                                  -1);
-
-              if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0) ||
-                  (tagdata[row][1] != NULL && strlen(tagdata[row][1]) > 0))
-                {
-                  has_data = TRUE;
-
-                  get_list_elements (xmldata, 2, tagdata[row]);
-                }
-            }
-          else if (!strcmp (ARTWORKOROBJECT_HEADER, name))
-            {
-              gtk_tree_model_get (treemodel, &iter,
-                                  COL_AOO_TITLE, &tagdata[row][0],
-                                  COL_AOO_DATE_CREAT, &tagdata[row][1],
-                                  COL_AOO_CREATOR, &tagdata[row][2],
-                                  COL_AOO_SOURCE, &tagdata[row][3],
-                                  COL_AOO_SRC_INV_ID, &tagdata[row][4],
-                                  COL_AOO_CR_NOT, &tagdata[row][5],
-                                  -1);
-
-              if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0) ||
-                  (tagdata[row][1] != NULL && strlen(tagdata[row][1]) > 0) ||
-                  (tagdata[row][2] != NULL && strlen(tagdata[row][2]) > 0) ||
-                  (tagdata[row][3] != NULL && strlen(tagdata[row][3]) > 0) ||
-                  (tagdata[row][4] != NULL && strlen(tagdata[row][4]) > 0) ||
-                  (tagdata[row][5] != NULL && strlen(tagdata[row][5]) > 0))
-                {
-                  has_data = TRUE;
-
-                  get_list_elements (xmldata, 6, tagdata[row]);
-                }
-            }
-          else if (!strcmp (REGISTRYID_HEADER, name))
-            {
-              gtk_tree_model_get (treemodel, &iter,
-                                  COL_REGISTRY_ORG_ID, &tagdata[row][0],
-                                  COL_REGISTRY_ITEM_ID, &tagdata[row][1],
-                                  -1);
-
-              if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0) ||
-                  (tagdata[row][1] != NULL && strlen(tagdata[row][1]) > 0))
-                {
-                  has_data = TRUE;
-
-                  get_list_elements (xmldata, 2, tagdata[row]);
-                }
-            }
-          else if (!strcmp (LOCATIONSHOWN_HEADER, name))
-            {
-              gtk_tree_model_get (treemodel, &iter,
-                                  COL_LOC_SHO_SUB_LOC, &tagdata[row][0],
-                                  COL_LOC_SHO_CITY, &tagdata[row][1],
-                                  COL_LOC_SHO_STATE_PROV, &tagdata[row][2],
-                                  COL_LOC_SHO_CNTRY, &tagdata[row][3],
-                                  COL_LOC_SHO_CNTRY_ISO, &tagdata[row][4],
-                                  COL_LOC_SHO_CNTRY_WRLD_REG, &tagdata[row][5],
-                                  -1);
-
-              if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0) ||
-                  (tagdata[row][1] != NULL && strlen(tagdata[row][1]) > 0) ||
-                  (tagdata[row][2] != NULL && strlen(tagdata[row][2]) > 0) ||
-                  (tagdata[row][3] != NULL && strlen(tagdata[row][3]) > 0) ||
-                  (tagdata[row][4] != NULL && strlen(tagdata[row][4]) > 0) ||
-                  (tagdata[row][5] != NULL && strlen(tagdata[row][5]) > 0))
-                {
-                  has_data = TRUE;
-
-                  get_list_elements (xmldata, 6, tagdata[row]);
-                }
-            }
-          else if (!strcmp ("Xmp.iptcExt.OrganisationInImageName", name))
-            {
-              gtk_tree_model_get (treemodel, &iter,
-                                  COL_ORG_IMG_NAME, &tagdata[row][0],
-                                  -1);
-
-              if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0))
-                {
-                  has_data = TRUE;
-
-                  get_list_elements (xmldata, 1, tagdata[row]);
-                }
-            }
-          else if (!strcmp ("Xmp.iptcExt.OrganisationInImageCode", name))
-            {
-              gtk_tree_model_get (treemodel, &iter,
-                                  COL_ORG_IMG_CODE, &tagdata[row][0],
-                                  -1);
-
-              if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0))
-                {
-                  has_data = TRUE;
-
-                  get_list_elements (xmldata, 1, tagdata[row]);
-                }
-            }
-          else if (!strcmp ("Xmp.plus.PropertyReleaseID", name))
-            {
-              gtk_tree_model_get (treemodel, &iter,
-                                  COL_PROP_REL_ID, &tagdata[row][0],
-                                  -1);
-
-              if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0))
-                {
-                  has_data = TRUE;
-
-                  get_list_elements (xmldata, 1, tagdata[row]);
-                }
-            }
-          else if (!strcmp ("Xmp.plus.ModelReleaseID", name))
-            {
-              gtk_tree_model_get (treemodel, &iter,
-                                  COL_MOD_REL_ID, &tagdata[row][0],
-                                  -1);
-
-              if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0))
-                {
-                  has_data = TRUE;
-
-                  get_list_elements (xmldata, 1, tagdata[row]);
-                }
-            }
+          break;
         }
     }
 
