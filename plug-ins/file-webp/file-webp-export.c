@@ -143,6 +143,7 @@ save_layer (GFile         *file,
   WebPPicture       picture     = { 0, };
   guchar           *buffer      = NULL;
   gint              w, h;
+  gsize             pixel_size;
   gboolean          has_alpha;
   const gchar      *encoding;
   const Babl       *format;
@@ -270,9 +271,12 @@ save_layer (GFile         *file,
       picture.progress_hook = webp_file_progress;
 
       /* Attempt to allocate a buffer of the appropriate size */
-      buffer = g_try_malloc (w * h * bpp);
-      if (! buffer)
-        break;
+      if (! g_size_checked_mul (&pixel_size, w, h)            ||
+          ! g_size_checked_mul (&pixel_size, pixel_size, bpp) ||
+          ! (buffer = g_try_malloc0 (pixel_size)))
+        {
+          break;
+        }
 
       /* Read the region into the buffer */
       gegl_buffer_get (geglbuffer, &extent, 1.0, format, buffer,
@@ -527,7 +531,7 @@ save_animation (GFile         *file,
   gboolean               status      = TRUE;
   FILE                  *outfile     = NULL;
   guchar                *buffer      = NULL;
-  gint                   buffer_size = 0;
+  gsize                  buffer_size = 0;
   gint                   w, h;
   gint                   bpp;
   gboolean               has_alpha;
@@ -658,6 +662,7 @@ save_animation (GFile         *file,
           GimpDrawable     *drawable = list->data;
           gint              delay;
           gboolean          needs_combine;
+          gsize             frame_size = 0;
 
           delay         = get_layer_delay (GIMP_LAYER (drawable));
           needs_combine = get_layer_needs_combine (GIMP_LAYER (drawable));
@@ -681,14 +686,14 @@ save_animation (GFile         *file,
             }
 
           format = babl_format_with_space (encoding, space);
-          bpp = babl_format_get_bytes_per_pixel (format);
+          bpp    = babl_format_get_bytes_per_pixel (format);
 
           /* fix layers to avoid offset errors */
           gimp_layer_resize_to_image_size (GIMP_LAYER (drawable));
 
           /* Retrieve the buffer for the layer */
           geglbuffer = gimp_drawable_get_buffer (drawable);
-          extent = *gegl_buffer_get_extent (geglbuffer);
+          extent     = *gegl_buffer_get_extent (geglbuffer);
           w = extent.width;
           h = extent.height;
 
@@ -703,10 +708,18 @@ save_animation (GFile         *file,
                 }
             }
 
-          /* Attempt to allocate a buffer of the appropriate size */
-          if (! buffer || buffer_size < w * h * bpp)
+          if (! g_size_checked_mul (&frame_size, w, h) ||
+              ! g_size_checked_mul (&frame_size, frame_size, bpp))
             {
-              buffer = g_try_realloc (buffer, w * h * bpp);
+              g_printerr ("Buffer error: 'buffer null'\n");
+              status = FALSE;
+              break;
+            }
+
+          /* Attempt to allocate a buffer of the appropriate size */
+          if (! buffer || buffer_size < frame_size)
+            {
+              buffer = g_try_realloc (buffer, frame_size);
 
               if (! buffer)
                 {
@@ -716,7 +729,7 @@ save_animation (GFile         *file,
                 }
               else
                 {
-                  buffer_size = w * h * bpp;
+                  buffer_size = frame_size;
                 }
             }
 
@@ -731,10 +744,10 @@ save_animation (GFile         *file,
                * remaining values */
               WebPConfigPreset (&webp_config, preset, quality);
 
-              webp_config.lossless       = FALSE;
-              webp_config.method         = 6;  /* better quality */
-              webp_config.alpha_quality  = alpha_quality;
-              webp_config.use_sharp_yuv  = use_sharp_yuv ? 1 : 0;
+              webp_config.lossless      = FALSE;
+              webp_config.method        = 6;  /* better quality */
+              webp_config.alpha_quality = alpha_quality;
+              webp_config.use_sharp_yuv = use_sharp_yuv ? 1 : 0;
             }
           webp_config.exact = 1;
 
@@ -742,12 +755,12 @@ save_animation (GFile         *file,
 
           /* Prepare the WebP structure */
           WebPPictureInit (&picture);
-          picture.use_argb      = 1;
-          picture.argb_stride   = w * bpp;
-          picture.width         = w;
-          picture.height        = h;
-          picture.custom_ptr    = &mw;
-          picture.writer        = WebPMemoryWrite;
+          picture.use_argb    = 1;
+          picture.argb_stride = w * bpp;
+          picture.width       = w;
+          picture.height      = h;
+          picture.custom_ptr  = &mw;
+          picture.writer      = WebPMemoryWrite;
 
           if (i == 0 || ! needs_combine)
             {
