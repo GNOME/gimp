@@ -67,6 +67,22 @@ const MetadataModeConversion metadata_mode_conversion[] =
   { MODE_LIST,   "list"   },
 };
 
+static gboolean export_ignore_tag               (gchar   *tag);
+
+static void     export_write_tag_header         (GString *xmldata,
+                                                 gchar   *tag_category,
+                                                 gchar   *tag,
+                                                 gchar   *mode);
+
+static void     export_write_tag_footer         (GString *xmldata,
+                                                 gchar   *tag_category);
+
+static void     export_write_string_value       (GString *xmldata,
+                                                 gchar   *value_utf8);
+
+static void     export_write_int_value          (GString *xmldata,
+                                                 gint     value);
+
 /* ============================================================================
  * ==[ METADATA IMPORT TEMPLATE ]==============================================
  * ============================================================================
@@ -116,6 +132,49 @@ export_ignore_tag (gchar *tag)
   return strcmp (tag, "Xmp.photoshop.DateCreated")     == 0 ||
          strcmp (tag, "Iptc.Application2.DateCreated") == 0 ;
 }
+
+void
+export_write_tag_header (GString *xmldata,
+                         gchar   *tag_category,
+                         gchar   *tag,
+                         gchar   *mode)
+{
+  g_string_append (xmldata, "\t<");
+  g_string_append (xmldata, tag_category);
+  g_string_append (xmldata, "-tag>\n");
+  g_string_append (xmldata, "\t\t<tag-name>");
+  g_string_append (xmldata, tag);
+  g_string_append (xmldata, "</tag-name>\n");
+  g_string_append (xmldata, "\t\t<tag-mode>");
+  g_string_append (xmldata, mode);
+  g_string_append (xmldata, "</tag-mode>\n");
+}
+
+void
+export_write_tag_footer (GString *xmldata,
+                         gchar   *tag_category)
+{
+  g_string_append (xmldata, "\t</");
+  g_string_append (xmldata, tag_category);
+  g_string_append (xmldata, "-tag>\n");
+}
+
+void
+export_write_string_value (GString *xmldata,
+                           gchar   *value_utf8)
+{
+  g_string_append (xmldata, "\t\t<tag-value>");
+  g_string_append (xmldata, value_utf8);
+  g_string_append (xmldata, "</tag-value>\n");
+}
+
+void
+export_write_int_value (GString *xmldata,
+                        gint     value)
+{
+  g_string_append (xmldata, "\t\t<tag-value>");
+  g_string_append_printf (xmldata, "%d", value);
+  g_string_append (xmldata, "</tag-value>\n");
 }
 
 void
@@ -139,14 +198,7 @@ export_file_metadata (metadata_editor *args)
   for (i = 0; i < n_equivalent_metadata_tags; i++)
     {
       int index = equivalent_metadata_tags[i].default_tag_index;
-      g_string_append (xmldata, "\t<iptc-tag>\n");
-      g_string_append (xmldata, "\t\t<tag-name>");
-      g_string_append (xmldata, equivalent_metadata_tags[i].tag);
-      g_string_append (xmldata, "</tag-name>\n");
-      g_string_append (xmldata, "\t\t<tag-mode>");
-      g_string_append (xmldata, metadata_mode_conversion[equivalent_metadata_tags[i].mode].mode_string);
-      g_string_append (xmldata, "</tag-mode>\n");
-      g_string_append (xmldata, "\t\t<tag-value>");
+
       if (export_ignore_tag (equivalent_metadata_tags[i].tag))
         continue;
 
@@ -163,7 +215,13 @@ export_file_metadata (metadata_editor *args)
               gchar *value_utf;
 
               value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
-              g_string_append (xmldata, value_utf);
+              if (strlen(value_utf) > 0)
+                {
+                  export_write_tag_header (xmldata, "iptc", equivalent_metadata_tags[i].tag,
+                            metadata_mode_conversion[equivalent_metadata_tags[i].mode].mode_string);
+                  export_write_string_value (xmldata, value_utf);
+                  export_write_tag_footer (xmldata, "iptc");
+                  }
               g_free (value_utf);
             }
         }
@@ -171,15 +229,18 @@ export_file_metadata (metadata_editor *args)
         {
           gint data = get_tag_ui_combo (args, default_metadata_tags[index].tag,
                                          default_metadata_tags[index].mode);
-          g_string_append_printf (xmldata, "%d", data);
+          if (data > 0)
+            {
+              export_write_tag_header (xmldata, "iptc", equivalent_metadata_tags[i].tag,
+                        metadata_mode_conversion[equivalent_metadata_tags[i].mode].mode_string);
+              export_write_int_value (xmldata, data);
+              export_write_tag_footer (xmldata, "iptc");
+            }
         }
       else if (default_metadata_tags[i].mode == MODE_LIST)
         {
             /* No IPTC lists elements at this point */
         }
-
-      g_string_append (xmldata, "</tag-value>\n");
-      g_string_append (xmldata, "\t</iptc-tag>\n");
     }
 
   /* HANDLE XMP */
@@ -188,66 +249,59 @@ export_file_metadata (metadata_editor *args)
       if (export_ignore_tag (default_metadata_tags[i].tag))
         continue;
 
-      g_string_append (xmldata, "\t<xmp-tag>\n");
-      g_string_append (xmldata, "\t\t<tag-name>");
-      g_string_append (xmldata, default_metadata_tags[i].tag);
-      g_string_append (xmldata, "</tag-name>\n");
-      g_string_append (xmldata, "\t\t<tag-mode>");
-      g_string_append (xmldata, metadata_mode_conversion[default_metadata_tags[i].mode].mode_string);
-      g_string_append (xmldata, "</tag-mode>\n");
-
       if (default_metadata_tags[i].mode == MODE_SINGLE ||
           default_metadata_tags[i].mode == MODE_MULTI)
         {
           const gchar *value;
 
-          g_string_append (xmldata, "\t\t<tag-value>");
           value = get_tag_ui_text (args, default_metadata_tags[i].tag,
                                    default_metadata_tags[i].mode);
 
           if (value)
             {
-              gchar   *value_utf;
+              gchar *value_utf = NULL;
 
               value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
-              g_string_append (xmldata, value_utf);
+              if (strlen(value_utf) > 0)
+                {
+                  export_write_tag_header (xmldata, "xmp", default_metadata_tags[i].tag,
+                                           metadata_mode_conversion[default_metadata_tags[i].mode].mode_string);
+                  export_write_string_value (xmldata, value_utf);
+                  export_write_tag_footer (xmldata, "xmp");
+                }
               g_free (value_utf);
             }
-
-          g_string_append (xmldata, "</tag-value>\n");
         }
       else if (default_metadata_tags[i].mode == MODE_COMBO)
         {
           gint data;
 
-          g_string_append (xmldata, "\t\t<tag-value>");
-
           data = get_tag_ui_combo (args, default_metadata_tags[i].tag,
                                          default_metadata_tags[i].mode);
-          g_string_append_printf (xmldata, "%d", data);
-
-          g_string_append (xmldata, "</tag-value>\n");
+          if (data > 0)
+            {
+              export_write_tag_header (xmldata, "xmp", default_metadata_tags[i].tag,
+                                       metadata_mode_conversion[default_metadata_tags[i].mode].mode_string);
+              export_write_int_value (xmldata, data);
+              export_write_tag_footer (xmldata, "xmp");
+            }
         }
       else if (default_metadata_tags[i].mode == MODE_LIST)
         {
-          gchar *data;
-
-          g_string_append (xmldata, "\t\t<tag-list-value>\n");
+          gchar *data = NULL;
 
           data = get_tag_ui_list (args, default_metadata_tags[i].tag,
                                         default_metadata_tags[i].mode);
 
           if (data)
             {
-              g_string_append (xmldata, data);
-              g_free(data);
+              export_write_tag_header (xmldata, "xmp", default_metadata_tags[i].tag,
+                                       metadata_mode_conversion[default_metadata_tags[i].mode].mode_string);
+              export_write_string_value (xmldata, data);
+              export_write_tag_footer (xmldata, "xmp");
             }
-
-          g_string_append (xmldata, "\t\t</tag-list-value>\n");
+          g_free(data);
         }
-
-      g_string_append (xmldata, "\t</xmp-tag>\n");
-
     }
 
   g_string_append (xmldata, "</gimp-metadata>\n");
@@ -272,4 +326,3 @@ export_file_metadata (metadata_editor *args)
       g_string_free(xmldata, TRUE);
     }
 }
-
