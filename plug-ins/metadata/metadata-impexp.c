@@ -104,6 +104,20 @@ import_file_metadata(metadata_editor *args)
  * ==[ METADATA EXPORT TEMPLATE ]==============================================
  * ============================================================================
  */
+
+gboolean
+export_ignore_tag (gchar *tag)
+{
+  /* Eventually we may want to add handling a list of items,
+   * but for now, just block Date Created:
+   * It doesn't make sense to me to overwrite the date an image
+   * was created with a template. */
+
+  return strcmp (tag, "Xmp.photoshop.DateCreated")     == 0 ||
+         strcmp (tag, "Iptc.Application2.DateCreated") == 0 ;
+}
+}
+
 void
 export_file_metadata (metadata_editor *args)
 {
@@ -133,6 +147,8 @@ export_file_metadata (metadata_editor *args)
       g_string_append (xmldata, metadata_mode_conversion[equivalent_metadata_tags[i].mode].mode_string);
       g_string_append (xmldata, "</tag-mode>\n");
       g_string_append (xmldata, "\t\t<tag-value>");
+      if (export_ignore_tag (equivalent_metadata_tags[i].tag))
+        continue;
 
       if (default_metadata_tags[index].mode == MODE_SINGLE ||
           default_metadata_tags[index].mode == MODE_MULTI)
@@ -169,6 +185,9 @@ export_file_metadata (metadata_editor *args)
   /* HANDLE XMP */
   for (i = 0; i < n_default_metadata_tags; i++)
     {
+      if (export_ignore_tag (default_metadata_tags[i].tag))
+        continue;
+
       g_string_append (xmldata, "\t<xmp-tag>\n");
       g_string_append (xmldata, "\t\t<tag-name>");
       g_string_append (xmldata, default_metadata_tags[i].tag);
