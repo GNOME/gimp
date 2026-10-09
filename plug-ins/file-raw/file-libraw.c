@@ -21,12 +21,14 @@
 #include <libraw.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
 #include "file-raw-formats.h"
 #include "file-raw-utils.h"
 
+#define PLUG_IN_BINARY    "file-libraw"
 #define LOAD_THUMB_PROC   "file-libraw-load-thumb"
 
 typedef struct _FileLibRaw      FileLibRaw;
@@ -67,10 +69,15 @@ static GimpValueArray * file_libraw_load_thumb       (GimpProcedure         *pro
 
 static GimpImage      * load_image                   (GFile                 *file,
                                                       GimpRunMode            run_mode,
+                                                      GimpProcedureConfig   *config,
                                                       GError               **error);
 static GimpImage      * load_thumbnail_image         (GFile                 *file,
                                                       gint                   thumb_size,
                                                       GError               **error);
+
+
+static gboolean         load_dialog                  (GimpProcedure         *procedure,
+                                                      GObject               *config);
 
 
 G_DEFINE_TYPE (FileLibRaw, file_libraw, GIMP_TYPE_PLUG_IN)
@@ -116,7 +123,7 @@ file_libraw_init_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 file_libraw_create_procedure (GimpPlugIn  *plug_in,
-                         const gchar *name)
+                              const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
@@ -171,6 +178,27 @@ file_libraw_create_procedure (GimpPlugIn  *plug_in,
                                           "Alx Sa",
                                           "2026");
 
+          /* The list of demosaicing algorithms is hardcoded in libraw,
+           * and there doesn't even seem to be any enum values in the C
+           * API.
+           */
+          gimp_procedure_add_choice_argument (procedure, "demosaicing",
+                                              _("Demosaicing"),
+                                              _("Interpolation method to reconstruct a matrix of colored pixels"
+                                                " from raw sensor data"),
+                                              gimp_choice_new_with_values ("auto",         -1, _("Automatic"),    NULL,
+                                                                           "linear",       0,  _("Linear"),       NULL,
+                                                                           "vng",          1,  _("VNG"),          NULL,
+                                                                           "ppg",          2,  _("PPG"),          NULL,
+                                                                           "ahd",          3,  _("AHD"),          NULL,
+                                                                           "dcb",          4,  _("DCB"),          NULL,
+                                                                           "dht",          11, _("DHT"),          NULL,
+                                                                           "modified-ahd", 12, _("Modified AHD"), NULL,
+                                                                           NULL),
+                                              "auto", G_PARAM_READWRITE);
+
+          gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                               format->file_type);
           gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                               format->mime_type);
           gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
@@ -203,22 +231,25 @@ file_libraw_load (GimpProcedure          *procedure,
                   GimpProcedureConfig    *config,
                   gpointer                run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
-  GError         *error = NULL;
+  GimpValueArray    *return_vals;
+  GimpImage         *image;
+  GError            *error  = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
-  image = load_image (file, run_mode, &error);
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      gimp_ui_init (PLUG_IN_BINARY);
+      if (! load_dialog (procedure, G_OBJECT (config)))
+        status = GIMP_PDB_CANCEL;
+    }
 
-  if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
-                                             error);
+  if (status == GIMP_PDB_SUCCESS &&
+      (image = load_image (file, run_mode, config, &error)) == NULL)
+    status = GIMP_PDB_EXECUTION_ERROR;
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
-                                                  NULL);
-
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  return_vals = gimp_procedure_new_return_values (procedure, status, error);
+  if (status == GIMP_PDB_SUCCESS)
+    GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -257,15 +288,17 @@ file_libraw_load_thumb (GimpProcedure        *procedure,
 }
 
 static GimpImage *
-load_image (GFile        *file,
-            GimpRunMode   run_mode,
-            GError      **error)
+load_image (GFile                *file,
+            GimpRunMode           run_mode,
+            GimpProcedureConfig  *config,
+            GError              **error)
 {
-  GimpImage                *image     = NULL;
+  GimpImage                *image       = NULL;
   libraw_data_t            *raw_info;
   libraw_processed_image_t *image_data;
-  guint                     flags     = LIBRAW_OPTIONS_NO_DATAERR_CALLBACK;
-  gint                      raw_error = 0;
+  guint                     flags       = LIBRAW_OPTIONS_NO_DATAERR_CALLBACK;
+  gint                      raw_error   = 0;
+  gint                      demosaicing = -1;
 
   raw_info = libraw_init (flags);
   if (raw_info == NULL)
@@ -293,6 +326,9 @@ load_image (GFile        *file,
       libraw_close (raw_info);
       return NULL;
     }
+
+  demosaicing = gimp_procedure_config_get_choice_id (config, "demosaicing");
+  libraw_set_demosaic (raw_info, demosaicing);
 
   /* Ensure image is imported as 16 bpc */
   raw_info->params.output_bps    = 16;
@@ -516,4 +552,27 @@ load_thumbnail_image (GFile   *file,
   libraw_close (raw_info);
 
   return image;
+}
+
+static gboolean
+load_dialog (GimpProcedure *procedure,
+             GObject       *config)
+{
+  GtkWidget *dialog;
+  gchar     *title;
+  gboolean   run;
+
+  /* TRANSLATORS: the "%s" will be the name of a RAW format, e.g. "Raw Canon". */
+  title = g_strdup_printf (_("Develop: %s"),
+                           gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure)));
+  dialog = gimp_procedure_dialog_new (procedure, GIMP_PROCEDURE_CONFIG (config), title);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "demosaicing", NULL);
+
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
+  g_free (title);
+
+  return run;
 }
