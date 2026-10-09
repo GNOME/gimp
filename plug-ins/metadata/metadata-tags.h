@@ -185,89 +185,6 @@ enum
   EXIF_LAST
 };
 
-/* FIXME: The below COL_* enums are still used in metadata-xml.
- * We should use the same code for setting values there as in
- * the editor and then remove these. */
-enum
-{
-  COL_LICENSOR_NAME = 0,
-  COL_LICENSOR_ID,
-  COL_LICENSOR_PHONE1,
-  COL_LICENSOR_PHONE_TYPE1,
-  COL_LICENSOR_PHONE2,
-  COL_LICENSOR_PHONE_TYPE2,
-  COL_LICENSOR_EMAIL,
-  COL_LICENSOR_WEB,
-  COL_LICENSOR_NUM_COLS
-};
-
-enum
-{
-  COL_CR_OWNER_NAME = 0,
-  COL_CR_OWNER_ID,
-  COL_CR_OWNER_NUM_COLS
-};
-
-enum
-{
-  COL_IMG_CR8_NAME = 0,
-  COL_IMG_CR8_ID,
-  COL_IMG_CR8_NUM_COLS
-};
-
-enum
-{
-  COL_AOO_TITLE = 0,
-  COL_AOO_DATE_CREAT,
-  COL_AOO_CREATOR,
-  COL_AOO_SOURCE,
-  COL_AOO_SRC_INV_ID,
-  COL_AOO_CR_NOT,
-  COL_AOO_NUM_COLS
-};
-
-enum
-{
-  COL_REGISTRY_ORG_ID = 0,
-  COL_REGISTRY_ITEM_ID,
-  COL_REGISTRY_NUM_COLS
-};
-
-enum
-{
-  COL_LOC_SHO_SUB_LOC = 0,
-  COL_LOC_SHO_CITY,
-  COL_LOC_SHO_STATE_PROV,
-  COL_LOC_SHO_CNTRY,
-  COL_LOC_SHO_CNTRY_ISO,
-  COL_LOC_SHO_CNTRY_WRLD_REG,
-  COL_LOC_SHO_NUM_COLS
-};
-
-enum
-{
-  COL_ORG_IMG_CODE = 0,
-  ORG_IMG_CODE_REL_NUM_COLS
-};
-
-enum
-{
-  COL_ORG_IMG_NAME = 0,
-  ORG_IMG_NAME_REL_NUM_COLS
-};
-
-enum
-{
-  COL_MOD_REL_ID = 0,
-  MOD_REL_NUM_COLS
-};
-
-enum
-{
-  COL_PROP_REL_ID = 0,
-  PROP_REL_NUM_COLS
-};
-
 enum METADATA_SPECIAL_PROCESSING
 {
   METADATA_NONE = 0,
@@ -407,42 +324,34 @@ enum
   LIST_LAST
 };
 
-#define LICENSOR_HEADER "Xmp.plus.Licensor"
 extern const gchar *licensor[];
 extern const gint   n_licensor;
 extern const gint   licensor_special_handling[];
 
 #ifdef USE_TAGS
-#define IMAGESUPPLIER_HEADER "Xmp.plus.ImageSupplier"
 extern const gchar *imagesupplier[];
 extern const gint   n_imagesupplier;
 #endif
 
-#define IMAGECREATOR_HEADER "Xmp.plus.ImageCreator"
 extern const gchar *imagecreator[];
 extern const gint   n_imagecreator;
 
-#define COPYRIGHTOWNER_HEADER "Xmp.plus.CopyrightOwner"
 extern const gchar *copyrightowner[];
 extern const gint   n_copyrightowner;
 
-#define REGISTRYID_HEADER "Xmp.iptcExt.RegistryId"
 extern const gchar *registryid[];
 extern const gchar *registryid_alternative[];
 extern const gint   n_registryid;
 
-#define ARTWORKOROBJECT_HEADER "Xmp.iptcExt.ArtworkOrObject"
 extern const gchar *artworkorobject[];
 extern const gchar *artworkorobject_alternative[];
 extern const gint   n_artworkorobject;
 
-#define LOCATIONSHOWN_HEADER "Xmp.iptcExt.LocationShown"
 extern const gchar *locationshown[];
 extern const gchar *locationshown_alternative[];
 extern const gint   n_locationshown;
 
 #ifdef USE_TAGS
-#define LOCATIONCREATED_HEADER "Xmp.iptcExt.LocationCreated"
 extern const gchar *locationcreated[];
 extern const gint   n_locationcreated;
 #endif
