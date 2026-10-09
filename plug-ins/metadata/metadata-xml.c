@@ -47,15 +47,35 @@ gchar *str_tag_value;
 gchar *str_tag_name;
 gchar *str_tag_mode;
 gchar *str_element;
-gchar *list_tag_data[256][256];
+
 gint row_count = 0;
 gint item_count = 0;
+
+#define MAX_TAG_ROWS 250          /* Maximum # of rows in list (struct) tags */
+#define MAX_TAG_COLS  25          /* Maximum # of columns/fields in the tag struct */
+
+gchar **list_tag_data = NULL;
 
 
 static void get_list_elements                        (GString   *xmldata,
                                                       int        element_count,
                                                       gchar    **rowtagdata);
 
+
+static void
+free_list_strings (gint n_rows, gint n_cols)
+{
+  for (gint row = 0; row < n_rows; row++)
+    {
+      for (gint col = 0; col < n_cols; col++)
+        {
+          gchar **datarow = (gchar **) list_tag_data[row];
+
+          g_free (datarow[col]);
+          datarow[col] = NULL;
+        }
+    }
+}
 
 void
 xml_parser_start_element (GMarkupParseContext  *context,
@@ -101,11 +121,25 @@ xml_parser_start_element (GMarkupParseContext  *context,
     {
       listelement = TRUE;
       row_count += 1;
+
+      if (row_count > MAX_TAG_ROWS)
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("Metadata import: too many rows for tag '%s'"),
+                      str_tag_name);
+        }
     }
   else if (strcmp (element_name, "element") == 0)
     {
       element = TRUE;
       item_count += 1;
+
+      if (item_count > MAX_TAG_COLS)
+        {
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("Metadata import: too many columns for tag '%s'"),
+                      str_tag_name);
+        }
     }
 }
 
@@ -205,10 +239,7 @@ set_tag_ui (metadata_editor *args,
     {
       GtkTreeModel  *treemodel;
       GtkListStore  *liststore;
-      GtkTreeIter    iter;
       gint           number_of_rows;
-      gint           row;
-      gint           item;
 
       liststore = GTK_LIST_STORE(gtk_tree_view_get_model((GtkTreeView *)widget));
       treemodel = GTK_TREE_MODEL (liststore);
@@ -216,333 +247,28 @@ set_tag_ui (metadata_editor *args,
         gtk_tree_model_iter_n_children(GTK_TREE_MODEL(liststore), NULL);
 
       /* Clear all current values */
-      for (row = number_of_rows; row > -1; row--)
+      for (gint row = number_of_rows; row > -1; row--)
         {
+          GtkTreeIter iter;
+
           if (gtk_tree_model_iter_nth_child(treemodel, &iter, NULL, row))
             {
               gtk_list_store_remove(liststore, &iter);
             }
         }
       /* Add new values values */
-      if (!strcmp (LICENSOR_HEADER, name))
+      for (gint list_index = 0; list_index < LIST_LAST; list_index++)
         {
-          for (row = 1; row < row_count+1; row++)
+          if (! strcmp (name, default_metadata_tags[list_metadata[list_index].metadata_index].tag))
             {
-              gtk_list_store_append (liststore, &iter);
-              gtk_list_store_set (liststore, &iter,
-                                  COL_LICENSOR_NAME, list_tag_data[row][1],
-                                  COL_LICENSOR_ID, list_tag_data[row][2],
-                                  COL_LICENSOR_PHONE1, list_tag_data[row][3],
-                                  COL_LICENSOR_PHONE_TYPE1, list_tag_data[row][4],
-                                  COL_LICENSOR_PHONE2, list_tag_data[row][5],
-                                  COL_LICENSOR_PHONE_TYPE2, list_tag_data[row][6],
-                                  COL_LICENSOR_EMAIL, list_tag_data[row][7],
-                                  COL_LICENSOR_WEB, list_tag_data[row][8],
-                                  -1);
-              for (item = 1; item < n_licensor + 1; item++)
-                {
-                  if (list_tag_data[row][item])
-                    {
-                      if (list_tag_data[row][item])
-                        g_free(list_tag_data[row][item]);
-                    }
-                }
-            }
+              metadata_editor_set_list_tag_values (liststore, list_tag_data, row_count, list_index);
 
-          if (row_count < 2)
-            {
-              for (row = 0; row < 2 - row_count; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_LICENSOR_NAME, NULL,
-                                      COL_LICENSOR_ID, NULL,
-                                      COL_LICENSOR_PHONE1, NULL,
-                                      COL_LICENSOR_PHONE_TYPE1, NULL,
-                                      COL_LICENSOR_PHONE2, NULL,
-                                      COL_LICENSOR_PHONE_TYPE2, NULL,
-                                      COL_LICENSOR_EMAIL, NULL,
-                                      COL_LICENSOR_WEB, NULL,
-                                      -1);
-                }
-            }
-        }
-      else if (!strcmp (IMAGECREATOR_HEADER, name))
-        {
-          for (row = 1; row < row_count+1; row++)
-            {
-              gtk_list_store_append (liststore, &iter);
-              gtk_list_store_set (liststore, &iter,
-                                  COL_IMG_CR8_NAME, list_tag_data[row][1],
-                                  COL_IMG_CR8_ID, list_tag_data[row][2],
-                                  -1);
-              for (item = 1; item < n_imagecreator + 1; item++)
-                {
-                  if (list_tag_data[row][item])
-                    {
-                      if (list_tag_data[row][item])
-                        g_free(list_tag_data[row][item]);
-                    }
-                }
-            }
+              if (row_count < 2)
+                metadata_editor_add_empty_rows (liststore, 2 - row_count, list_index);
 
-          if (row_count < 2)
-            {
-              for (row = 0; row < 2 - row_count; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_IMG_CR8_NAME, NULL,
-                                      COL_IMG_CR8_ID, NULL,
-                                      -1);
-                }
-            }
-        }
-      else if (!strcmp (ARTWORKOROBJECT_HEADER, name))
-        {
-          for (row = 1; row < row_count+1; row++)
-            {
-              gtk_list_store_append (liststore, &iter);
-              gtk_list_store_set (liststore, &iter,
-                                  COL_AOO_TITLE, list_tag_data[row][1],
-                                  COL_AOO_DATE_CREAT, list_tag_data[row][2],
-                                  COL_AOO_CREATOR, list_tag_data[row][3],
-                                  COL_AOO_SOURCE, list_tag_data[row][4],
-                                  COL_AOO_SRC_INV_ID, list_tag_data[row][5],
-                                  COL_AOO_CR_NOT, list_tag_data[row][6],
-                                  -1);
-              for (item = 1; item < n_artworkorobject + 1; item++)
-                {
-                  if (list_tag_data[row][item])
-                    {
-                      if (list_tag_data[row][item])
-                        g_free(list_tag_data[row][item]);
-                    }
-                }
-            }
+              free_list_strings (row_count, list_metadata[list_index].n_values);
 
-          if (row_count < 2)
-            {
-              for (row = 0; row < 2 - row_count; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_AOO_TITLE, NULL,
-                                      COL_AOO_DATE_CREAT, NULL,
-                                      COL_AOO_CREATOR, NULL,
-                                      COL_AOO_SOURCE, NULL,
-                                      COL_AOO_SRC_INV_ID, NULL,
-                                      COL_AOO_CR_NOT, NULL,
-                                      -1);
-                }
-            }
-        }
-      else if (!strcmp (REGISTRYID_HEADER, name))
-        {
-          for (row = 1; row < row_count+1; row++)
-            {
-              gtk_list_store_append (liststore, &iter);
-              gtk_list_store_set (liststore, &iter,
-                                  COL_REGISTRY_ORG_ID, list_tag_data[row][1],
-                                  COL_REGISTRY_ITEM_ID, list_tag_data[row][2],
-                                  -1);
-              for (item = 1; item < n_registryid + 1; item++)
-                {
-                  if (list_tag_data[row][item])
-                    {
-                      if (list_tag_data[row][item])
-                        g_free(list_tag_data[row][item]);
-                    }
-                }
-            }
-
-          if (row_count < 2)
-            {
-              for (row = 0; row < 2 - row_count; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_REGISTRY_ORG_ID, NULL,
-                                      COL_REGISTRY_ITEM_ID, NULL,
-                                      -1);
-                }
-            }
-        }
-      else if (!strcmp (COPYRIGHTOWNER_HEADER, name))
-        {
-          if (row_count > 0)
-            {
-              for (row = 1; row < row_count+1; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_CR_OWNER_NAME, list_tag_data[row][1],
-                                      COL_CR_OWNER_ID, list_tag_data[row][2],
-                                      -1);
-                  for (item = 1; item < n_copyrightowner + 1; item++)
-                    {
-                      if (list_tag_data[row][item])
-                        {
-                          if (list_tag_data[row][item])
-                            g_free(list_tag_data[row][item]);
-                        }
-                    }
-                }
-            }
-
-          if (row_count < 2)
-            {
-              for (row = 0; row < 2 - row_count; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_CR_OWNER_NAME, NULL,
-                                      COL_CR_OWNER_ID, NULL,
-                                      -1);
-                }
-            }
-        }
-      else if (!strcmp (LOCATIONSHOWN_HEADER, name))
-        {
-          for (row = 1; row < row_count+1; row++)
-            {
-              gtk_list_store_append (liststore, &iter);
-              gtk_list_store_set (liststore, &iter,
-                                  COL_LOC_SHO_SUB_LOC, list_tag_data[row][1],
-                                  COL_LOC_SHO_CITY, list_tag_data[row][2],
-                                  COL_LOC_SHO_STATE_PROV, list_tag_data[row][3],
-                                  COL_LOC_SHO_CNTRY, list_tag_data[row][4],
-                                  COL_LOC_SHO_CNTRY_ISO, list_tag_data[row][5],
-                                  COL_LOC_SHO_CNTRY_WRLD_REG, list_tag_data[row][6],
-                                  -1);
-              for (item = 1; item < n_locationshown + 1; item++)
-                {
-                  if (list_tag_data[row][item])
-                    {
-                      if (list_tag_data[row][item])
-                        g_free(list_tag_data[row][item]);
-                    }
-                }
-            }
-
-          if (row_count < 2)
-            {
-              for (row = 0; row < 2 - row_count; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_LOC_SHO_SUB_LOC, NULL,
-                                      COL_LOC_SHO_CITY, NULL,
-                                      COL_LOC_SHO_STATE_PROV, NULL,
-                                      COL_LOC_SHO_CNTRY, NULL,
-                                      COL_LOC_SHO_CNTRY_ISO, NULL,
-                                      COL_LOC_SHO_CNTRY_WRLD_REG, NULL,
-                                      -1);
-                }
-            }
-        }
-      else if (!strcmp ("Xmp.iptcExt.OrganisationInImageName", name))
-        {
-          for (row = 1; row < row_count+1; row++)
-            {
-              gtk_list_store_append (liststore, &iter);
-              gtk_list_store_set (liststore, &iter,
-                                  COL_ORG_IMG_NAME, list_tag_data[row][1],
-                                  -1);
-              if (list_tag_data[row][1])
-                {
-                   if (list_tag_data[row][1])
-                     g_free(list_tag_data[row][1]);
-                }
-            }
-
-          if (row_count < 2)
-            {
-              for (row = 0; row < 2 - row_count; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_ORG_IMG_NAME, NULL,
-                                      -1);
-                }
-            }
-        }
-      else if (!strcmp ("Xmp.iptcExt.OrganisationInImageCode", name))
-        {
-          for (row = 1; row < row_count+1; row++)
-            {
-              gtk_list_store_append (liststore, &iter);
-              gtk_list_store_set (liststore, &iter,
-                                  COL_ORG_IMG_CODE, list_tag_data[row][1],
-                                  -1);
-              if (list_tag_data[row][1])
-                {
-                   if (list_tag_data[row][1])
-                     g_free(list_tag_data[row][1]);
-                }
-            }
-
-          if (row_count < 2)
-            {
-              for (row = 0; row < 2 - row_count; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_ORG_IMG_CODE, NULL,
-                                      -1);
-                }
-            }
-        }
-      else if (!strcmp ("Xmp.plus.PropertyReleaseID", name))
-        {
-          for (row = 1; row < row_count+1; row++)
-            {
-              gtk_list_store_append (liststore, &iter);
-              gtk_list_store_set (liststore, &iter,
-                                  COL_PROP_REL_ID, list_tag_data[row][1],
-                                  -1);
-              if (list_tag_data[row][1])
-                {
-                   if (list_tag_data[row][1])
-                     g_free(list_tag_data[row][1]);
-                }
-            }
-
-          if (row_count < 2)
-            {
-              for (row = 0; row < 2 - row_count; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_PROP_REL_ID, NULL,
-                                      -1);
-                }
-            }
-        }
-      else if (!strcmp ("Xmp.plus.ModelReleaseID", name))
-        {
-          for (row = 1; row < row_count+1; row++)
-            {
-              gtk_list_store_append (liststore, &iter);
-              gtk_list_store_set (liststore, &iter,
-                                  COL_MOD_REL_ID, list_tag_data[row][1],
-                                  -1);
-              if (list_tag_data[row][1])
-                {
-                   if (list_tag_data[row][1])
-                     g_free(list_tag_data[row][1]);
-                }
-            }
-
-          if (row_count < 2)
-            {
-              for (row = 0; row < 2 - row_count; row++)
-                {
-                  gtk_list_store_append (liststore, &iter);
-                  gtk_list_store_set (liststore, &iter,
-                                      COL_MOD_REL_ID, NULL,
-                                      -1);
-                }
+              break; /* Found it, no need to look further */
             }
         }
     }
@@ -611,7 +337,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, MetadataMode mode)
   gint           number_of_rows;
   gint           row;
   gint           has_data;
-  gchar         *tagdata[256][256];
+  gchar         *tagdata[MAX_TAG_ROWS][MAX_TAG_COLS];
 
   has_data = FALSE;
   xmldata = g_string_new ("");
@@ -942,8 +668,10 @@ xml_parser_end_element (GMarkupParseContext  *context,
     }
   else if (strcmp (element_name, "element") == 0)
     {
+      gchar ** datarow = (gchar **) list_tag_data[row_count-1];
+
       element = FALSE;
-      list_tag_data[row_count][item_count] = g_strdup(str_element);
+      datarow[item_count-1] = g_strdup(str_element);
     }
 }
 
@@ -963,7 +691,15 @@ xml_parser_parse_file (GimpXmlParser  *parser,
   if (!io)
     return FALSE;
 
+  list_tag_data = g_new0 (gchar *, MAX_TAG_ROWS);
+  for (gint i = 0; i < MAX_TAG_ROWS; i++)
+    list_tag_data[i] = g_malloc0 (sizeof (gchar *) * MAX_TAG_COLS);
+
   success = xml_parser_parse_io_channel (parser, io, error);
+
+  for (gint i = 0; i < MAX_TAG_ROWS; i++)
+    g_free (list_tag_data[i]);
+  g_free (list_tag_data);
 
   g_io_channel_unref (io);
 
@@ -1134,4 +870,3 @@ xml_parser_parse_io_channel (GimpXmlParser  *parser,
         }
     }
 }
-

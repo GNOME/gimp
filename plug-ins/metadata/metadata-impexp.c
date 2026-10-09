@@ -91,7 +91,7 @@ import_file_metadata(metadata_editor *args)
       xml_parser = xml_parser_new (&xml_markup_parser, args);
       if (! xml_parser_parse_file (xml_parser, args->filename, &error))
         {
-          g_warning ("Error parsing xml: %s.", error? error->message: "");
+          g_warning (_("Error parsing xml: %s."), error? error->message: "");
           g_clear_error (&error);
         }
       xml_parser_free (xml_parser);
@@ -243,7 +243,7 @@ export_file_metadata (metadata_editor *args)
        * path, etc.). */
       if (! g_file_set_contents (args->filename, xmldata->str, xmldata->len, &error))
         {
-          g_warning ("Error saving file: %s.", error? error->message: "");
+          g_warning (_("Error saving file: %s."), error? error->message: "");
           g_clear_error (&error);
         }
     }
