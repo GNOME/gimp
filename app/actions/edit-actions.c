@@ -111,8 +111,17 @@ static const GimpActionEntry edit_actions[] =
     edit_copy_visible_cmd_callback,
     GIMP_HELP_EDIT_COPY_VISIBLE },
 
+  /* XXX: "Paste as New Image" is in 2 menus (File > Create and Edit >
+   * Paste as). Unfortunately the same short label variant won't work
+   * well in both context so we use the long variant inside the "Paste
+   * as" submenu.
+   * Maybe in the future, a better property that a single "short label"
+   * per action could be conceptualized. Like "contextual labels" (we
+   * could have several, to handle several concepts).
+   */
   { "edit-paste-as-new-image", GIMP_ICON_EDIT_PASTE_AS_NEW,
     NC_("edit-action", "Paste as _New Image"),
+    /* TRANSLATORS: variant of "Paste as _New Image" when inside "Crea_te" menu. */
     NC_("edit-action", "From _Clipboard"),
     { "<primary><shift>V", "<shift>Paste", NULL },
     NC_("edit-action", "Create a new image from the content of the clipboard"),
@@ -167,27 +176,39 @@ static const GimpEnumActionEntry edit_paste_actions[] =
     GIMP_HELP_EDIT_PASTE_IN_PLACE },
 
   { "edit-paste-merged", GIMP_ICON_EDIT_PASTE,
-    NC_("edit-action", "_Paste as Single Layer"), NULL, { NULL },
+    NC_("edit-action", "Paste as _Single Layer"),
+    /* TRANSLATORS: variant of "Paste as _Single Layer" when inside "Paste _as" menu. */
+    NC_("edit-action", "_Single Layer"),
+    { NULL },
     NC_("edit-action", "Paste the content of the clipboard as a single layer"),
     GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING, FALSE,
     GIMP_HELP_EDIT_PASTE },
 
   { "edit-paste-merged-in-place", GIMP_ICON_EDIT_PASTE,
-    NC_("edit-action", "Paste as Single Layer In P_lace"), NULL, { NULL },
+    NC_("edit-action", "Paste as Single Layer In P_lace"),
+    /* TRANSLATORS: variant of "Paste as Single Layer in P_lace" when inside "Paste _as" menu. */
+    NC_("edit-action", "Single Layer In P_lace"),
+    { NULL },
     NC_("edit-action",
         "Paste the content of the clipboard at its original position as a single layer"),
     GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE, FALSE,
     GIMP_HELP_EDIT_PASTE_IN_PLACE },
 
   { "edit-paste-into", GIMP_ICON_EDIT_PASTE_INTO,
-    NC_("edit-action", "Paste as Floating Data _Into Selection"), NULL, { NULL },
+    NC_("edit-action", "Paste as Floating Data _Into Selection"),
+    /* TRANSLATORS: variant of "Paste as Floating Data _Into Selection" when inside "Paste _as" menu. */
+    NC_("edit-action", "Floating Data _Into Selection"),
+    { NULL },
     NC_("edit-action",
         "Paste the content of the clipboard into the current selection"),
     GIMP_PASTE_TYPE_FLOATING_INTO, FALSE,
     GIMP_HELP_EDIT_PASTE_INTO },
 
   { "edit-paste-into-in-place", GIMP_ICON_EDIT_PASTE_INTO,
-    NC_("edit-action", "Paste as Floating Data Int_o Selection In Place"), NULL, { NULL },
+    NC_("edit-action", "Paste as Floating Data Int_o Selection in Place"),
+    /* TRANSLATORS: variant of "Paste as Floating Data Int_o Selection in Place" when inside "Paste _as" menu. */
+    NC_("edit-action", "Floating Data Int_o Selection in Place"),
+    { NULL },
     NC_("edit-action",
         "Paste the content of the clipboard into the current selection "
         "at its original position"),
@@ -195,13 +216,19 @@ static const GimpEnumActionEntry edit_paste_actions[] =
     GIMP_HELP_EDIT_PASTE_INTO_IN_PLACE },
 
   { "edit-paste-float", GIMP_ICON_EDIT_PASTE,
-    NC_("edit-action", "Paste as _Floating Data"), NULL, { NULL },
+    NC_("edit-action", "Paste as _Floating Data"),
+    /* TRANSLATORS: variant of "Paste as _Floating Data" when inside "Paste _as" menu. */
+    NC_("edit-action", "_Floating Data"),
+    { NULL },
     NC_("edit-action", "Paste the content of the clipboard as Floating Data"),
     GIMP_PASTE_TYPE_FLOATING, FALSE,
     GIMP_HELP_EDIT_PASTE_FLOAT },
 
   { "edit-paste-float-in-place", GIMP_ICON_EDIT_PASTE,
-    NC_("edit-action", "Paste as Floa_ting Data In Place"), NULL, { NULL },
+    NC_("edit-action", "Paste as Floa_ting Data in Place"),
+    /* TRANSLATORS: variant of "Paste as Floa_ting Data in Place" when inside "Paste _as" menu. */
+    NC_("edit-action", "Floa_ting Data in Place"),
+    { NULL },
     NC_("edit-action", "Paste the content of the clipboard as Floating Data at its original position"),
     GIMP_PASTE_TYPE_FLOATING_IN_PLACE, FALSE,
     GIMP_HELP_EDIT_PASTE_FLOAT_IN_PLACE }
