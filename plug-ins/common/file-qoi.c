@@ -321,6 +321,7 @@ export_image (GFile         *file,
   const Babl *format;
   qoi_desc    desc;
   void       *pixels = NULL;
+  gsize       pixel_size;
   gboolean    has_alpha;
   gint        success;
 
@@ -352,7 +353,15 @@ export_image (GFile         *file,
 
   format = babl_format (has_alpha ? "R'G'B'A u8" : "R'G'B' u8");
 
-  pixels = (guchar *) g_malloc (desc.width * desc.height * desc.channels);
+  if (! g_size_checked_mul (&pixel_size, desc.width, desc.height)   ||
+      ! g_size_checked_mul (&pixel_size, pixel_size, desc.channels) ||
+      ! (pixels = (guchar *) g_try_malloc0 (pixel_size)))
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Writing to file '%s' failed: %s"),
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      return FALSE;
+    }
 
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, desc.width, desc.height),
                    1.0, format, pixels,
