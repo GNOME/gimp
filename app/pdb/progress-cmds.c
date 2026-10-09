@@ -36,8 +36,11 @@
 #include "plug-in/gimppluginmanager.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
+
+#include "gimp-intl.h"
 
 
 static GimpValueArray *
@@ -65,7 +68,11 @@ progress_init_invoker (GimpProcedure         *procedure,
             gimp_plug_in_progress_start (plug_in, message, gdisplay);
         }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
+                       _("The plug-in is closing."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -95,7 +102,11 @@ progress_update_invoker (GimpProcedure         *procedure,
             gimp_plug_in_progress_set_value (plug_in, percentage);
         }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
+                       _("The plug-in is closing."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -119,7 +130,11 @@ progress_pulse_invoker (GimpProcedure         *procedure,
         gimp_plug_in_progress_pulse (plug_in);
     }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
+                   _("The plug-in is closing."));
+      success = FALSE;
+    }
 
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
@@ -148,7 +163,11 @@ progress_set_text_invoker (GimpProcedure         *procedure,
             gimp_plug_in_progress_set_text (plug_in, message);
         }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
+                       _("The plug-in is closing."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -173,7 +192,11 @@ progress_end_invoker (GimpProcedure         *procedure,
       gimp_plug_in_progress_end (plug_in, proc_frame);
     }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
+                   _("The plug-in is closing."));
+      success = FALSE;
+    }
 
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
@@ -199,7 +222,11 @@ progress_get_window_handle_invoker (GimpProcedure         *procedure,
         handle = gimp_plug_in_progress_get_window_id (plug_in);
     }
   else
-    success = FALSE;
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
+                   _("The plug-in is closing."));
+      success = FALSE;
+    }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
@@ -228,9 +255,15 @@ progress_install_invoker (GimpProcedure         *procedure,
       GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
-        success = gimp_plug_in_progress_install (plug_in, progress_callback);
+        {
+          success = gimp_plug_in_progress_install (plug_in, progress_callback);
+        }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
+                       _("The plug-in is closing."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -255,9 +288,15 @@ progress_uninstall_invoker (GimpProcedure         *procedure,
       GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
-        success = gimp_plug_in_progress_uninstall (plug_in, progress_callback);
+        {
+          success = gimp_plug_in_progress_uninstall (plug_in, progress_callback);
+        }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
+                       _("The plug-in is closing."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -282,9 +321,15 @@ progress_cancel_invoker (GimpProcedure         *procedure,
       GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
-        success = gimp_plug_in_progress_cancel (plug_in, progress_callback);
+        {
+          success = gimp_plug_in_progress_cancel (plug_in, progress_callback);
+        }
       else
-        success = FALSE;
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_CANCELLED,
+                       _("The plug-in is closing."));
+          success = FALSE;
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
