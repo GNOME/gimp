@@ -20,6 +20,15 @@
 #ifndef __METADATA_EDITOR_H__
 #define __METADATA_EDITOR_H__
 
+void        metadata_editor_set_list_tag_values (GtkListStore        *liststore,
+                                                 gchar              **tagdata,
+                                                 gint                 n_items,
+                                                 gint                 list_index);
+
+void        metadata_editor_add_empty_rows      (GtkListStore        *liststore,
+                                                 gint                 count,
+                                                 gint                 list_index);
+
 void        metadata_editor_write_callback      (GtkWidget           *dialog,
                                                  metadata_editor     *meta_info,
                                                  GimpImage           *image);

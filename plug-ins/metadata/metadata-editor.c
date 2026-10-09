@@ -1189,6 +1189,87 @@ metadata_editor_dialog (GimpImage            *image,
   return TRUE;
 }
 
+void
+metadata_editor_set_list_tag_values (GtkListStore  *liststore,
+                                     gchar        **tagdata,
+                                     gint           n_items,
+                                     gint           list_index)
+{
+  g_return_if_fail (tagdata != NULL && n_items > 0);
+  g_return_if_fail (list_index >= 0 && list_index < n_list_metadata);
+
+  for (gint item = 0; item < n_items; item++)
+    {
+      GtkTreeIter   iter;
+      gchar       **tagdatarow = (gchar **) tagdata[item];
+
+      gtk_list_store_append (liststore, &iter);
+
+      for (gint si = 0; si < list_metadata[list_index].n_values; si++)
+        {
+          if (list_metadata[list_index].cell_types == NULL ||
+              list_metadata[list_index].cell_types[si] != METADATA_PHONETYPE)
+            {
+              gtk_list_store_set (liststore, &iter,
+                                  si, tagdatarow[si],
+                                  -1);
+            }
+          else
+            {
+              gchar *phone_type = NULL;
+
+              if (tagdatarow[si] != NULL)
+                {
+                  for (gint types = 0; types < n_phone_types; types++)
+                    {
+                      if (! strcmp (tagdatarow[si], phone_types[types].data))
+                        {
+                          phone_type = g_strdup (gettext (phone_types[types].display));
+                          break;
+                        }
+                    }
+                }
+              if (tagdatarow[si] == NULL)
+                phone_type = g_strdup (gettext (phone_types[0].display));
+
+              gtk_list_store_set (liststore, &iter,
+                                  si, phone_type,
+                                  -1);
+              g_free (phone_type);
+            }
+        }
+    }
+}
+
+void
+metadata_editor_add_empty_rows (GtkListStore  *liststore,
+                                gint           count,
+                                gint           list_index)
+{
+  g_return_if_fail (list_index >= 0 && list_index < n_list_metadata);
+
+  for (gint item = 0; item < count; item++)
+    {
+      GtkTreeIter iter;
+
+      gtk_list_store_append (liststore, &iter);
+
+      for (gint si = 0; si < list_metadata[list_index].n_values; si++)
+        {
+          if (list_metadata[list_index].cell_types == NULL ||
+              list_metadata[list_index].cell_types[si] != METADATA_PHONETYPE)
+            gtk_list_store_set (liststore, &iter,
+                                si, NULL,
+                                -1);
+          else
+            gtk_list_store_set (liststore, &iter,
+                                si, gettext (phone_types[0].display),
+                                -1);
+        }
+    }
+}
+
+
 /* ============================================================================
  * ==[                   ]=====================================================
  * ==[ PRIVATE FUNCTIONS ]=====================================================
@@ -2522,92 +2603,19 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
 
                   if (counter > 0 && tagdata)
                     {
-                      for (gint item = 0; item < counter; item++)
-                        {
-                          GtkTreeIter   iter;
-                          gchar       **tagdatarow = (gchar **) tagdata[item];
+                      metadata_editor_set_list_tag_values (liststore, tagdata, counter, li);
 
-                          gtk_list_store_append (liststore, &iter);
-
-                          for (gint si = 0; si < list_metadata[li].n_values; si++)
-                            {
-                              if (list_metadata[li].cell_types == NULL ||
-                                  list_metadata[li].cell_types[si] != METADATA_PHONETYPE)
-                                {
-                                  gtk_list_store_set (liststore, &iter,
-                                                      si, tagdatarow[si],
-                                                      -1);
-                                }
-                              else
-                                {
-                                  gchar *phone_type = NULL;
-
-                                  if (tagdatarow[si] != NULL)
-                                    {
-                                      for (gint types = 0; types < n_phone_types; types++)
-                                        {
-                                          if (! strcmp (tagdatarow[si], phone_types[types].data))
-                                            {
-                                              phone_type = g_strdup (gettext (phone_types[types].display));
-                                              break;
-                                            }
-                                        }
-                                    }
-                                  if (tagdatarow[si] == NULL)
-                                    phone_type = g_strdup (gettext (phone_types[0].display));
-
-                                  gtk_list_store_set (liststore, &iter,
-                                                      si, phone_type,
-                                                      -1);
-                                  g_free (phone_type);
-                                }
-                            }
-                        }
                       free_tagdata (tagdata, counter, list_metadata[li].n_values);
 
                       /* Add row if less than 2 */
+                      /* FIXME: Some tags cannot have more than one row, add checks! */
                       if (counter == 1)
-                        {
-                          GtkTreeIter iter;
-
-                          gtk_list_store_append (liststore, &iter);
-
-                          for (gint si = 0; si < list_metadata[li].n_values; si++)
-                            {
-                              if (list_metadata[li].cell_types == NULL ||
-                                  list_metadata[li].cell_types[si] != METADATA_PHONETYPE)
-                                gtk_list_store_set (liststore, &iter,
-                                                    si, NULL,
-                                                    -1);
-                              else
-                                gtk_list_store_set (liststore, &iter,
-                                                    si, gettext (phone_types[0].display),
-                                                    -1);
-                            }
-                        }
+                        metadata_editor_add_empty_rows (liststore, 1, li);
                     }
                   else
                     {
                       /* 0 rows: add 2 rows */
-                      for (gint item = 0; item < 2; item++)
-                        {
-                          GtkTreeIter iter;
-
-                          gtk_list_store_append (liststore, &iter);
-
-                          for (gint si = 0; si < list_metadata[li].n_values; si++)
-                            {
-                              if (list_metadata[li].cell_types == NULL ||
-                                  list_metadata[li].cell_types[si] != METADATA_PHONETYPE)
-                                gtk_list_store_set (liststore, &iter,
-                                                    si, NULL,
-                                                    -1);
-                              else
-                                gtk_list_store_set (liststore, &iter,
-                                                    si, gettext (phone_types[0].display),
-                                                    -1);
-                            }
-                        }
+                      metadata_editor_add_empty_rows (liststore, 2, li);
                     }
                 }
               else
