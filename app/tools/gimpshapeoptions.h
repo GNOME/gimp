@@ -22,13 +22,21 @@
 
 typedef enum
 {
-  GIMP_SHAPE_MODE_LINE,
-  GIMP_SHAPE_MODE_RECTANGLE,
-  GIMP_SHAPE_MODE_ARC,
-  GIMP_SHAPE_MODE_POLYGON,
-  GIMP_SHAPE_MODE_STAR,
+  GIMP_SHAPE_TYPE_LINE,
+  GIMP_SHAPE_TYPE_RECTANGLE,
+  GIMP_SHAPE_TYPE_ARC,
+  GIMP_SHAPE_TYPE_POLYGON,
+  GIMP_SHAPE_TYPE_STAR,
+  GIMP_SHAPE_TYPE_SPIRAL,
 
-  GIMP_SHAPE_MODE_LAST
+  GIMP_SHAPE_TYPE_LAST
+} GimpShapeType;
+
+typedef enum
+{
+  GIMP_SHAPE_MODE_FILL_STROKE,
+  GIMP_SHAPE_MODE_FILL_ONLY,
+  GIMP_SHAPE_MODE_STROKE_ONLY,
 } GimpShapeMode;
 
 
@@ -47,14 +55,29 @@ struct _GimpShapeOptions
 {
   GimpToolOptions    parent_instance;
 
-  gint               shape_type;
-  gboolean           rasterize_on_commit;
+  GimpShapeType      shape_type;
+  GimpShapeMode      shape_mode;
+  gboolean           draw_on_layers;
+
   gint               number_of_sides;
 
-  gboolean           enable_fill;
+  GimpFillOptions   *fill_options;
+  GimpCustomStyle    fill_style;
+  GeglColor         *fill_foreground;
+  GimpPattern       *fill_pattern;
+  gboolean           fill_antialias;
 
+  GimpStrokeOptions *stroke_options;
+  GimpCustomStyle    stroke_style;
+  GeglColor         *stroke_foreground;
+  GimpPattern       *stroke_pattern;
+  gboolean           stroke_antialias;
   gdouble            stroke_width;
   GimpUnit          *stroke_unit;
+  GimpCapStyle       stroke_cap_style;
+  GimpJoinStyle      stroke_join_style;
+  gdouble            stroke_miter_limit;
+  gdouble            stroke_dash_offset;
 };
 
 
