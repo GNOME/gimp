@@ -214,6 +214,17 @@ file_libraw_create_procedure (GimpPlugIn  *plug_in,
                                                                            NULL),
                                               "ahd", G_PARAM_READWRITE);
 
+          /* Settings only for DCB demosaicing. */
+          gimp_procedure_add_boolean_argument (procedure, "dcb-enhance",
+                                              _("DCB color enhance"),
+                                              _("Turns on DCB color enhance mode"),
+                                               TRUE, G_PARAM_READWRITE);
+          gimp_procedure_add_int_argument (procedure, "dcb-iterations",
+                                           _("DCB iterations"),
+                                           _("Number of DCB correction passes"),
+                                           /* XXX unsure what would be an acceptable max iteration number! */
+                                           0, 10, 0, G_PARAM_READWRITE);
+
           gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
                                                format->file_type);
           gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
@@ -330,12 +341,20 @@ load_image (GFile                *file,
             GimpProcedureConfig  *config,
             GError              **error)
 {
-  GimpImage                *image       = NULL;
+  GimpImage                *image                 = NULL;
   libraw_processed_image_t *image_data;
-  gint                      raw_error   = 0;
-  gint                      demosaicing = 3;
-  gint                      denoising   = 0;
+  gint                      raw_error             = 0;
+  gint                      demosaicing           = 3;
+  gint                      denoising             = 0;
+  gboolean                  dcb_enhance           = 0;
+  gboolean                  dcb_iterations        = 0;
   gboolean                  enable_interpolation = TRUE;
+
+  g_object_get (config,
+                "enable-interpolation", &enable_interpolation,
+                "dcb-enhance",          &dcb_enhance,
+                "dcb-iterations",       &dcb_iterations,
+                NULL);
 
   raw_error = libraw_unpack (raw_info);
   if (raw_error != LIBRAW_SUCCESS)
@@ -353,6 +372,9 @@ load_image (GFile                *file,
 
   demosaicing = gimp_procedure_config_get_choice_id (config, "demosaicing");
   libraw_set_demosaic (raw_info, demosaicing);
+
+  raw_info->params.dcb_iterations = dcb_iterations;
+  raw_info->params.dcb_enhance_fl = dcb_enhance ? 1 : 0;
 
   /* Ensure image is imported as 16 bpc */
   raw_info->params.output_bps    = 16;
@@ -578,9 +600,11 @@ load_dialog (GimpProcedure *procedure,
              GObject       *config,
              libraw_data_t *raw_info)
 {
-  GtkWidget *dialog;
-  gchar     *title;
-  gboolean   run;
+  GtkWidget      *dialog;
+  gchar          *title;
+  GimpValueArray *values;
+  GValue          value = G_VALUE_INIT;
+  gboolean        run;
 
   /* TRANSLATORS: the "%s" will be the name of a RAW format, e.g. "Raw Canon". */
   title = g_strdup_printf (_("Develop: %s"),
@@ -590,7 +614,8 @@ load_dialog (GimpProcedure *procedure,
                                     GTK_TYPE_COMBO_BOX);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                   "interpolation-step",
-                                  "noise-reduction", "demosaicing", NULL);
+                                  "noise-reduction", "demosaicing",
+                                  "dcb-enhance", "dcb-iterations", NULL);
   gimp_procedure_dialog_fill_expander (GIMP_PROCEDURE_DIALOG (dialog), "interpolation-expander",
                                        "enable-interpolation", FALSE, "interpolation-step");
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
@@ -627,6 +652,17 @@ load_dialog (GimpProcedure *procedure,
           gimp_choice_set_sensitive (choice, "ppg", FALSE);
         }
     }
+
+  values = gimp_value_array_new (1);
+  g_value_init (&value, G_TYPE_STRING);
+  g_value_set_string (&value, "dcb");
+  gimp_value_array_append (values, &value);
+  g_value_unset (&value);
+  gimp_procedure_dialog_set_sensitive_if_in (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "dcb-enhance", NULL, "demosaicing", values, TRUE);
+  gimp_procedure_dialog_set_sensitive_if_in (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "dcb-iterations", NULL, "demosaicing",
+                                             gimp_value_array_ref (values), TRUE);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
