@@ -40,6 +40,8 @@ struct _GimpShapeTool
   gint                   current_x;
   gint                   current_y;
 
+  gboolean               fixed_ratio;
+
   GimpVector2           *points;
 };
 

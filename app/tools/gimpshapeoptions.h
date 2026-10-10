@@ -32,13 +32,6 @@ typedef enum
   GIMP_SHAPE_TYPE_LAST
 } GimpShapeType;
 
-typedef enum
-{
-  GIMP_SHAPE_MODE_FILL_STROKE,
-  GIMP_SHAPE_MODE_FILL_ONLY,
-  GIMP_SHAPE_MODE_STROKE_ONLY,
-} GimpShapeMode;
-
 
 #define GIMP_TYPE_SHAPE_OPTIONS            (gimp_shape_options_get_type ())
 #define GIMP_SHAPE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SHAPE_OPTIONS, GimpShapeOptions))
@@ -56,17 +49,20 @@ struct _GimpShapeOptions
   GimpToolOptions    parent_instance;
 
   GimpShapeType      shape_type;
-  GimpShapeMode      shape_mode;
   gboolean           draw_on_layers;
+  gboolean           fixed_aspect_ratio;
 
   gint               number_of_sides;
+  gint               spiral_direction;
 
+  gboolean           enable_fill;
   GimpFillOptions   *fill_options;
   GimpCustomStyle    fill_style;
   GeglColor         *fill_foreground;
   GimpPattern       *fill_pattern;
   gboolean           fill_antialias;
 
+  gboolean           enable_stroke;
   GimpStrokeOptions *stroke_options;
   GimpCustomStyle    stroke_style;
   GeglColor         *stroke_foreground;
@@ -78,6 +74,12 @@ struct _GimpShapeOptions
   GimpJoinStyle      stroke_join_style;
   gdouble            stroke_miter_limit;
   gdouble            stroke_dash_offset;
+
+  GtkWidget         *fixed_aspect_button;
+  GtkWidget         *n_sides_button;
+  GtkWidget         *n_sides_label;
+  GtkWidget         *spiral_direction_combo;
+  GtkWidget         *spiral_direction_label;
 };
 
 
