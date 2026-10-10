@@ -310,7 +310,7 @@ get_list_elements (GString *xmldata, int element_count, gchar **rowtagdata)
 {
   gint list_idx;
 
-  g_string_append (xmldata, "\t\t\t<list-element>\n");
+  g_string_append (xmldata, "\n\t\t\t<list-element>\n");
 
   for (list_idx = 0; list_idx < element_count; list_idx++)
     {
@@ -323,7 +323,7 @@ get_list_elements (GString *xmldata, int element_count, gchar **rowtagdata)
 
       g_string_append (xmldata, "</element>\n");
     }
-  g_string_append (xmldata, "\t\t\t</list-element>\n");
+  g_string_append (xmldata, "\t\t\t</list-element>\n\t\t");
 }
 
 gchar *
