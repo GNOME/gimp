@@ -36,6 +36,7 @@
 #include "core/gimppattern.h"
 #include "core/gimpstrokeoptions.h"
 
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpstrokeeditor.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -49,13 +50,16 @@ enum
 {
   PROP_0,
   PROP_SHAPE_TYPE,
-  PROP_SHAPE_MODE,
   PROP_DRAW_ON_LAYERS,
+  PROP_FIXED_ASPECT_RATIO,
   PROP_NUMBER_OF_SIDES,
+  PROP_SPIRAL_DIRECTION,
+  PROP_ENABLE_FILL,
   PROP_FILL_STYLE,
   PROP_FILL_FOREGROUND,
   PROP_FILL_PATTERN,
   PROP_FILL_ANTIALIAS,
+  PROP_ENABLE_STROKE,
   PROP_STROKE_STYLE,
   PROP_STROKE_FOREGROUND,
   PROP_STROKE_PATTERN,
@@ -91,9 +95,7 @@ static void   gimp_shape_options_get_property           (GObject             *ob
                                                          GValue              *value,
                                                          GParamSpec          *pspec);
 
-static void   gimp_shape_options_shape_type_notify      (GimpShapeOptions    *options,
-                                                         GParamSpec          *pspec,
-                                                         GtkWidget           *spinbutton);
+static void   gimp_shape_options_shape_type_notify      (GimpShapeOptions    *options);
 static void   gimp_shape_options_fill_style_notify      (GimpShapeOptions    *options);
 
 G_DEFINE_TYPE_WITH_CODE (GimpShapeOptions, gimp_shape_options,
@@ -125,16 +127,6 @@ gimp_shape_options_class_init (GimpShapeOptionsClass *klass)
                         GIMP_PARAM_STATIC_STRINGS |
                         GIMP_CONFIG_PARAM_CONFIRM);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_SHAPE_MODE,
-                        "shape-mode",
-                        _("Mode"),
-                        NULL,
-                        GIMP_SHAPE_MODE_FILL_STROKE,
-                        GIMP_SHAPE_MODE_STROKE_ONLY,
-                        GIMP_SHAPE_MODE_FILL_STROKE,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_CONFIRM);
-
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DRAW_ON_LAYERS,
                             "draw-on-layers",
                             _("Draw directly on selected rasters"),
@@ -144,14 +136,34 @@ gimp_shape_options_class_init (GimpShapeOptionsClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FIXED_ASPECT_RATIO,
+                            "fixed-aspect-ratio",
+                            _("Fixed aspect ratio"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_INT (object_class, PROP_NUMBER_OF_SIDES,
                         "number-of-sides",
                         _("Number of sides"),
-                        _("For polygons, this determines how many "
-                          "sides the shape will have."),
-                        3, 50, 3,
+                        NULL,
+                        3, 20, 3,
                         GIMP_PARAM_STATIC_STRINGS |
                         GIMP_CONFIG_PARAM_CONFIRM);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_SPIRAL_DIRECTION,
+                        "spiral-direction",
+                        _("Spiral Direction"),
+                        NULL,
+                        -1, 1, 1,
+                        GIMP_PARAM_STATIC_STRINGS |
+                        GIMP_CONFIG_PARAM_CONFIRM);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLE_FILL,
+                            "enable-fill",
+                            _("Fill Style"), NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_STYLE,
                          "fill-custom-style",
@@ -175,6 +187,12 @@ gimp_shape_options_class_init (GimpShapeOptionsClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_ANTIALIAS,
                             "fill-antialias",
                             NULL, NULL,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLE_STROKE,
+                            "enable-stroke",
+                            _("Stroke Style"), NULL,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -287,16 +305,23 @@ gimp_shape_options_set_property (GObject      *object,
     case PROP_SHAPE_TYPE:
       options->shape_type = g_value_get_int (value);
       break;
-    case PROP_SHAPE_MODE:
-      options->shape_mode = g_value_get_int (value);
-      break;
     case PROP_DRAW_ON_LAYERS:
       options->draw_on_layers = g_value_get_boolean (value);
       break;
+    case PROP_FIXED_ASPECT_RATIO:
+      options->fixed_aspect_ratio = g_value_get_boolean (value);
+      break;
+
     case PROP_NUMBER_OF_SIDES:
       options->number_of_sides = g_value_get_int (value);
       break;
+    case PROP_SPIRAL_DIRECTION:
+      options->spiral_direction = g_value_get_int (value);
+      break;
 
+    case PROP_ENABLE_FILL:
+      options->enable_fill = g_value_get_boolean (value);
+      break;
     case PROP_FILL_STYLE:
       options->fill_style = g_value_get_enum (value);
       break;
@@ -310,6 +335,9 @@ gimp_shape_options_set_property (GObject      *object,
       options->fill_antialias = g_value_get_boolean (value);
       break;
 
+    case PROP_ENABLE_STROKE:
+      options->enable_stroke = g_value_get_boolean (value);
+      break;
     case PROP_STROKE_STYLE:
       options->stroke_style = g_value_get_enum (value);
       break;
@@ -360,16 +388,23 @@ gimp_shape_options_get_property (GObject    *object,
     case PROP_SHAPE_TYPE:
       g_value_set_int (value, options->shape_type);
       break;
-    case PROP_SHAPE_MODE:
-      g_value_set_int (value, options->shape_mode);
-      break;
     case PROP_DRAW_ON_LAYERS:
       g_value_set_boolean (value, options->draw_on_layers);
       break;
+    case PROP_FIXED_ASPECT_RATIO:
+      g_value_set_boolean (value, options->fixed_aspect_ratio);
+      break;
+
     case PROP_NUMBER_OF_SIDES:
       g_value_set_int (value, options->number_of_sides);
       break;
+    case PROP_SPIRAL_DIRECTION:
+      g_value_set_int (value, options->spiral_direction);
+      break;
 
+    case PROP_ENABLE_FILL:
+      g_value_set_boolean (value, options->enable_fill);
+      break;
     case PROP_FILL_STYLE:
       g_value_set_enum (value, options->fill_style);
       break;
@@ -383,6 +418,9 @@ gimp_shape_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->fill_antialias);
       break;
 
+    case PROP_ENABLE_STROKE:
+      g_value_set_boolean (value, options->enable_stroke);
+      break;
     case PROP_STROKE_STYLE:
       g_value_set_enum (value, options->stroke_style);
       break;
@@ -497,15 +535,22 @@ gimp_shape_options_deserialize_property (GimpConfig *object,
 }
 
 static void
-gimp_shape_options_shape_type_notify (GimpShapeOptions *options,
-                                      GParamSpec       *pspec,
-                                      GtkWidget        *spinbutton)
+gimp_shape_options_shape_type_notify (GimpShapeOptions *options)
 {
-  gboolean needs_sides = (options->shape_type == GIMP_SHAPE_TYPE_POLYGON ||
-                          options->shape_type == GIMP_SHAPE_TYPE_STAR    ||
-                          options->shape_type == GIMP_SHAPE_TYPE_SPIRAL);
+  gboolean needs_fixed     = (options->shape_type == GIMP_SHAPE_TYPE_RECTANGLE);
+  gboolean needs_direction = (options->shape_type == GIMP_SHAPE_TYPE_SPIRAL);
+  gboolean needs_sides     = (options->shape_type == GIMP_SHAPE_TYPE_POLYGON ||
+                              options->shape_type == GIMP_SHAPE_TYPE_STAR    ||
+                              options->shape_type == GIMP_SHAPE_TYPE_SPIRAL);
 
-  gtk_widget_set_sensitive (spinbutton, needs_sides);
+  gtk_widget_set_sensitive (options->fixed_aspect_button, needs_fixed);
+  gtk_widget_set_sensitive (options->n_sides_button, needs_sides);
+
+  gtk_widget_set_sensitive (options->spiral_direction_combo, needs_direction);
+  gtk_widget_set_opacity (options->spiral_direction_combo,
+                          needs_direction ? 1.0 : 0.0);
+  gtk_widget_set_opacity (options->spiral_direction_label,
+                          needs_direction ? 1.0 : 0.0);
 }
 
 static void
@@ -541,12 +586,8 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *stroke_editor;
   GtkWidget        *button;
   GtkWidget        *label;
-  GtkWidget        *scale;
   GtkWidget        *combo;
   GtkListStore     *combo_store;
-  GtkSizeGroup     *size_group;
-
-  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
@@ -572,51 +613,62 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
                                        GIMP_INT_STORE (combo_store));
 
   gtk_grid_attach (GTK_GRID (grid), combo, 1, 0, 1, 1);
-  gtk_size_group_add_widget (size_group, combo);
   gtk_widget_set_visible (combo, TRUE);
 
-  /* Shape mode */
-  label = gtk_label_new (_("Mode"));
-  gtk_widget_set_halign (label, GTK_ALIGN_START);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
-  gtk_widget_set_visible (label, TRUE);
-
-  combo_store = gimp_int_store_new (_("Fill and Stroke"), GIMP_SHAPE_MODE_FILL_STROKE,
-                                    _("Fill"),            GIMP_SHAPE_MODE_FILL_ONLY,
-                                    _("Stroke"),          GIMP_SHAPE_MODE_STROKE_ONLY,
-                                    NULL);
-
-  combo = gimp_prop_int_combo_box_new (config, "shape-mode",
-                                       GIMP_INT_STORE (combo_store));
-
-  gtk_grid_attach (GTK_GRID (grid), combo, 1, 1, 1, 1);
-  gtk_size_group_add_widget (size_group, combo);
-  gtk_widget_set_visible (combo, TRUE);
-
-  label = gtk_label_new (_("Sides"));
-  gtk_widget_set_halign (label, GTK_ALIGN_START);
-  gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
-  gtk_widget_set_visible (label, TRUE);
-
-  scale = gimp_prop_spin_button_new (config, "number-of-sides", 1, 5, 0);
-  gtk_grid_attach (GTK_GRID (grid), scale, 1, 2, 1, 1);
-  gtk_size_group_add_widget (size_group, scale);
-  gtk_widget_set_visible (scale, TRUE);
-
-  g_object_unref (size_group);
-
-  g_signal_connect_object (config, "notify::shape-type",
-                           G_CALLBACK (gimp_shape_options_shape_type_notify),
-                           scale, 0);
-  gimp_shape_options_shape_type_notify (options, NULL, scale);
-
+  /* Draw directly on layers */
   button = gimp_prop_check_button_new (config, "draw-on-layers", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
-  /* Fill settings */
-  frame = gimp_frame_new (_("Fill"));
+  /* Keep aspect ratio fixed */
+  options->fixed_aspect_button =
+    gimp_prop_check_button_new (config, "fixed-aspect-ratio", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), options->fixed_aspect_button, FALSE,
+                      FALSE, 0);
+  gtk_widget_set_visible (options->fixed_aspect_button, TRUE);
 
+  /* Per-shape options */
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_set_visible (grid, TRUE);
+
+  options->n_sides_label = gtk_label_new (_("Sides"));
+  gtk_widget_set_halign (options->n_sides_label, GTK_ALIGN_START);
+  gtk_grid_attach (GTK_GRID (grid), options->n_sides_label, 0, 0, 1, 1);
+  gtk_widget_set_visible (options->n_sides_label, TRUE);
+
+  options->n_sides_button = gimp_prop_spin_button_new (config,
+                                                       "number-of-sides", 1, 5,
+                                                       0);
+  gtk_grid_attach (GTK_GRID (grid), options->n_sides_button, 1, 0, 1, 1);
+  gtk_widget_set_visible (options->n_sides_button, TRUE);
+
+  options->spiral_direction_label = gtk_label_new (_("Direction"));
+  gtk_widget_set_halign (options->spiral_direction_label, GTK_ALIGN_START);
+  gtk_grid_attach (GTK_GRID (grid), options->spiral_direction_label, 0, 1, 1,
+                   1);
+  gtk_widget_set_visible (options->spiral_direction_label, TRUE);
+
+  combo_store = gimp_int_store_new (_("Clockwise"),         1,
+                                    _("Counter-clockwise"), -1,
+                                    NULL);
+
+  options->spiral_direction_combo =
+    gimp_prop_int_combo_box_new (config, "spiral-direction",
+                                 GIMP_INT_STORE (combo_store));
+
+  gtk_grid_attach (GTK_GRID (grid), options->spiral_direction_combo, 1, 1, 1,
+                   1);
+  gtk_widget_set_visible (options->spiral_direction_combo, TRUE);
+
+  g_signal_connect_object (config, "notify::shape-type",
+                           G_CALLBACK (gimp_shape_options_shape_type_notify),
+                           NULL, 0);
+  gimp_shape_options_shape_type_notify (options);
+
+  /* Fill settings */
   options->fill_options = gimp_fill_options_new (GIMP_CONTEXT (options)->gimp,
                                                  NULL, FALSE);
 
@@ -633,16 +685,16 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
                                       TRUE, TRUE);
   gtk_widget_set_visible (fill_editor, TRUE);
 
+  frame = gimp_prop_expanding_frame_new (config, "enable-fill", NULL,
+                                         fill_editor, NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), fill_editor);
   gtk_widget_set_visible (frame, TRUE);
 
   /* Stroke settings */
-  frame = gimp_frame_new (_("Stroke"));
-
-    options->stroke_options =
-      gimp_stroke_options_new (GIMP_CONTEXT (options)->gimp,
-                               NULL, FALSE);
+  options->stroke_options =
+    gimp_stroke_options_new (GIMP_CONTEXT (options)->gimp,
+                             NULL, FALSE);
 
 #define STROKE_BIND(a)                                 \
   g_object_bind_property (options, "stroke-" #a,       \
@@ -663,17 +715,19 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
                                           TRUE, TRUE);
   gtk_widget_set_visible (stroke_editor, TRUE);
 
+  frame = gimp_prop_expanding_frame_new (config, "enable-stroke", NULL,
+                                         stroke_editor, NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
   gtk_widget_set_visible (frame, TRUE);
 
   /* Update fill and stroke styles */
   g_signal_connect_object (config, "notify::fill-custom-style",
                            G_CALLBACK (gimp_shape_options_fill_style_notify),
-                           scale, 0);
+                           NULL, 0);
   g_signal_connect_object (config, "notify::stroke-custom-style",
                            G_CALLBACK (gimp_shape_options_fill_style_notify),
-                           scale, 0);
+                           NULL, 0);
   gimp_shape_options_fill_style_notify (options);
 
   return vbox;

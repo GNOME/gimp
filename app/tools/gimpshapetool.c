@@ -44,6 +44,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpsizebox.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -58,56 +59,63 @@
 #include "gimp-intl.h"
 
 
-#define MAX_NUMBER_OF_POINTS 102
+#define MAX_NUMBER_OF_POINTS 42
 
 
 #define GIMP_SHAPE_TOOL_GET_OPTIONS(t)  (GIMP_SHAPE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
 /*  local function prototypes  */
-static void             gimp_shape_tool_constructed    (GObject               *object);
-static void             gimp_shape_tool_dispose        (GObject               *object);
+static void             gimp_shape_tool_constructed     (GObject               *object);
+static void             gimp_shape_tool_dispose         (GObject               *object);
 
-static void             gimp_shape_tool_control        (GimpTool              *tool,
-                                                        GimpToolAction         action,
-                                                        GimpDisplay           *display);
-static void             gimp_shape_tool_button_press   (GimpTool              *tool,
-                                                        const GimpCoords      *coords,
-                                                        guint32                time,
-                                                        GdkModifierType        state,
-                                                        GimpButtonPressType    press_type,
-                                                        GimpDisplay           *display);
-static void             gimp_shape_tool_button_release (GimpTool              *tool,
-                                                        const GimpCoords      *coords,
-                                                        guint32                time,
-                                                        GdkModifierType        state,
-                                                        GimpButtonReleaseType  release_type,
-                                                        GimpDisplay           *display);
-static void             gimp_shape_tool_motion         (GimpTool              *tool,
-                                                        const GimpCoords      *coords,
-                                                        guint32                time,
-                                                        GdkModifierType        state,
-                                                        GimpDisplay           *display);
+static void             gimp_shape_tool_control         (GimpTool              *tool,
+                                                         GimpToolAction         action,
+                                                         GimpDisplay           *display);
+static void             gimp_shape_tool_button_press    (GimpTool              *tool,
+                                                         const GimpCoords      *coords,
+                                                         guint32                time,
+                                                         GdkModifierType        state,
+                                                         GimpButtonPressType    press_type,
+                                                         GimpDisplay           *display);
+static void             gimp_shape_tool_button_release  (GimpTool              *tool,
+                                                         const GimpCoords      *coords,
+                                                         guint32                time,
+                                                         GdkModifierType        state,
+                                                         GimpButtonReleaseType  release_type,
+                                                         GimpDisplay           *display);
+static void             gimp_shape_tool_motion          (GimpTool              *tool,
+                                                         const GimpCoords      *coords,
+                                                         guint32                time,
+                                                         GdkModifierType        state,
+                                                         GimpDisplay           *display);
 
-static void             gimp_shape_tool_oper_update    (GimpTool              *tool,
-                                                        const GimpCoords      *coords,
-                                                        GdkModifierType        state,
-                                                        gboolean               proximity,
-                                                        GimpDisplay           *display);
-static void             gimp_shape_tool_cursor_update  (GimpTool              *tool,
-                                                        const GimpCoords      *coords,
-                                                        GdkModifierType        state,
-                                                        GimpDisplay           *display);
+static void             gimp_shape_tool_modifier_key    (GimpTool              *tool,
+                                                         GdkModifierType        key,
+                                                         gboolean               press,
+                                                         GdkModifierType        state,
+                                                         GimpDisplay           *display);
+static void             gimp_shape_tool_oper_update     (GimpTool              *tool,
+                                                         const GimpCoords      *coords,
+                                                         GdkModifierType        state,
+                                                         gboolean               proximity,
+                                                         GimpDisplay           *display);
+static void             gimp_shape_tool_cursor_update   (GimpTool              *tool,
+                                                         const GimpCoords      *coords,
+                                                         GdkModifierType        state,
+                                                         GimpDisplay           *display);
 
-static void             gimp_shape_tool_draw           (GimpDrawTool          *draw_tool);
-static void             gimp_shape_tool_halt           (GimpShapeTool         *shape_tool);
+static void             gimp_shape_tool_draw            (GimpDrawTool          *draw_tool);
+static void             gimp_shape_tool_halt            (GimpShapeTool         *shape_tool);
 
-static GimpPath    *    gimp_shape_tool_create_path    (GimpShapeTool         *shape_tool,
-                                                        GimpImage             *image);
-static GimpVector2 *    gimp_shape_tool_create_spiral  (GimpShapeTool         *shape_tool,
-                                                        gsize                 *total);
-static void             gimp_shape_tool_update_polygon (GimpShapeTool         *shape_tool,
-                                                        gboolean               is_star);
-static gchar       *    gimp_shape_tool_get_name       (GimpShapeTool         *shape_tool);
+static GimpPath    *    gimp_shape_tool_create_path     (GimpShapeTool         *shape_tool,
+                                                         GimpImage             *image);
+static GimpVector2 *    gimp_shape_tool_create_spiral   (GimpShapeTool         *shape_tool,
+                                                         gsize                 *total);
+static void             gimp_shape_tool_update_polygon  (GimpShapeTool         *shape_tool,
+                                                         gboolean               is_star);
+static gchar       *    gimp_shape_tool_get_name        (GimpShapeTool         *shape_tool);
+static gboolean         gimp_shape_tool_check_drawables (GimpShapeTool         *shape_tool,
+                                                         GList                 *drawables);
 
 G_DEFINE_TYPE (GimpShapeTool, gimp_shape_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -145,6 +153,7 @@ gimp_shape_tool_class_init (GimpShapeToolClass *klass)
   tool_class->button_press   = gimp_shape_tool_button_press;
   tool_class->button_release = gimp_shape_tool_button_release;
   tool_class->motion         = gimp_shape_tool_motion;
+  tool_class->modifier_key   = gimp_shape_tool_modifier_key;
   tool_class->oper_update    = gimp_shape_tool_oper_update;
   tool_class->cursor_update  = gimp_shape_tool_cursor_update;
   tool_class->is_destructive = FALSE;
@@ -157,7 +166,8 @@ gimp_shape_tool_init (GimpShapeTool *shape_tool)
 {
   GimpTool *tool = GIMP_TOOL (shape_tool);
 
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_MOVE);
+  gimp_tool_control_set_tool_cursor (tool->control,
+                                     GIMP_TOOL_CURSOR_POLYGON_SELECT);
 }
 
 static void
@@ -227,9 +237,10 @@ gimp_shape_tool_button_press (GimpTool            *tool,
   gimp_tool_control_activate (tool->control);
 
   /* Set starting point */
-  shape_tool->start_x = coords->x;
-  shape_tool->start_y = coords->y;
-  shape_tool->drawing = TRUE;
+  shape_tool->start_x     = coords->x;
+  shape_tool->start_y     = coords->y;
+  shape_tool->drawing     = TRUE;
+  shape_tool->fixed_ratio = FALSE;
 }
 
 static void
@@ -246,15 +257,9 @@ gimp_shape_tool_button_release (GimpTool              *tool,
 
   if (shape_tool->drawing == TRUE)
     {
-      GimpPath        *path         = NULL;
-      GimpVectorLayer *vector_layer = NULL;
-      gchar           *path_name;
-      gchar           *undo_string;
-      gboolean         can_draw_on_rasters;
-
-      /* If user wants us to draw on rasters, but no rasters are selected,
-       * then we create a vector layer regardless */
-      can_draw_on_rasters = options->draw_on_layers;
+      GimpPath *path = NULL;
+      gchar    *path_name;
+      gchar    *undo_string;
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
       shape_tool->drawing = FALSE;
@@ -272,36 +277,41 @@ gimp_shape_tool_button_release (GimpTool              *tool,
       path = gimp_shape_tool_create_path (shape_tool, image);
       if (path)
         {
-          if (can_draw_on_rasters)
+          gboolean can_draw = FALSE;
+
+          /* If user wants us to draw on rasters, but no rasters are selected,
+           * then we create a vector layer regardless */
+          if (options->draw_on_layers)
             {
               GList *drawables = gimp_image_get_selected_drawables (image);
 
-              if (options->shape_mode != GIMP_SHAPE_MODE_STROKE_ONLY)
-                gimp_item_fill (GIMP_ITEM (path), drawables,
-                                options->fill_options,
-                                TRUE, NULL, NULL);
+              can_draw = gimp_shape_tool_check_drawables (shape_tool,
+                                                          drawables);
 
-              if (options->shape_mode != GIMP_SHAPE_MODE_FILL_ONLY)
-                gimp_item_stroke (GIMP_ITEM (path), drawables,
-                                  gimp_get_user_context (image->gimp),
-                                  options->stroke_options,
-                                  NULL, TRUE,
-                                  NULL, NULL);
+              if (can_draw)
+                {
+                  if (options->enable_fill)
+                    can_draw = gimp_item_fill (GIMP_ITEM (path), drawables,
+                                               options->fill_options,
+                                               TRUE, NULL, NULL);
 
+                  if (options->enable_stroke)
+                    can_draw = gimp_item_stroke (GIMP_ITEM (path), drawables,
+                                                 gimp_get_user_context (image->gimp),
+                                                 options->stroke_options,
+                                                 NULL, TRUE,
+                                                 NULL, NULL);
+
+                  gimp_image_flush (image);
+                  gimp_image_remove_path (image, path, TRUE, NULL);
+                }
               g_list_free (drawables);
-              gimp_image_flush (image);
-              gimp_image_remove_path (image, path, TRUE, NULL);
             }
-          else
-            {
-              GimpVectorLayerOptions *vector_options = NULL;
-              gboolean                enable_fill;
-              gboolean                enable_stroke;
 
-              enable_fill =
-                (options->shape_mode != GIMP_SHAPE_MODE_STROKE_ONLY);
-              enable_stroke =
-                (options->shape_mode != GIMP_SHAPE_MODE_FILL_ONLY);
+          if (! options->draw_on_layers || ! can_draw)
+            {
+              GimpVectorLayer        *vector_layer   = NULL;
+              GimpVectorLayerOptions *vector_options = NULL;
 
               vector_layer = gimp_vector_layer_new (image, path,
                                                     gimp_get_user_context (image->gimp));
@@ -309,8 +319,8 @@ gimp_shape_tool_button_release (GimpTool              *tool,
                                     GIMP_IMAGE_ACTIVE_PARENT,
                                     -1, TRUE);
               gimp_vector_layer_set (vector_layer, NULL,
-                                     "enable-fill",   enable_fill,
-                                     "enable-stroke", enable_stroke,
+                                     "enable-fill",   options->enable_fill,
+                                     "enable-stroke", options->enable_stroke,
                                      NULL);
 
               vector_options = gimp_vector_layer_get_options (vector_layer);
@@ -320,32 +330,10 @@ gimp_shape_tool_button_release (GimpTool              *tool,
                             NULL);
               gimp_item_set_visible (GIMP_ITEM (vector_layer), TRUE, FALSE);
               gimp_vector_layer_refresh (vector_layer);
+
+              gimp_image_flush (image);
             }
         }
-
-      /* TODO: Possible use stroke/fill rather than making a vector layer */
-      /*if (vector_layer            &&
-          options->draw_on_layers &&
-          ! gimp_rasterizable_is_rasterized (GIMP_RASTERIZABLE (vector_layer)))
-        {
-          GList *layers = NULL;
-
-          gimp_rasterizable_rasterize (GIMP_RASTERIZABLE (vector_layer),
-                                       FALSE);
-
-          layers = g_list_prepend (NULL, GIMP_LAYER (vector_layer));
-          gimp_image_merge_down (image, layers,
-                                 gimp_get_user_context (image->gimp),
-                                 GIMP_EXPAND_AS_NECESSARY,
-                                 NULL, NULL, NULL);
-
-          gimp_image_remove_path (image, path, TRUE, NULL);
-          path = NULL;
-        }*/
-
-      if (vector_layer)
-        gimp_image_flush (image);
-
       gimp_image_undo_group_end (image);
     }
 
@@ -371,6 +359,15 @@ gimp_shape_tool_motion (GimpTool         *tool,
 }
 
 static void
+gimp_shape_tool_modifier_key (GimpTool        *tool,
+                              GdkModifierType  key,
+                              gboolean         press,
+                              GdkModifierType  state,
+                              GimpDisplay     *display)
+{
+}
+
+static void
 gimp_shape_tool_oper_update (GimpTool         *tool,
                              const GimpCoords *coords,
                              GdkModifierType   state,
@@ -386,7 +383,7 @@ gimp_shape_tool_cursor_update (GimpTool         *tool,
                                GimpDisplay      *display)
 {
   GimpCursorType      cursor      = GIMP_CURSOR_MOUSE;
-  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_MOVE;
+  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_POLYGON_SELECT;
   GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
   gimp_tool_control_set_cursor          (tool->control, cursor);
@@ -401,11 +398,13 @@ gimp_shape_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpShapeTool    *shape_tool  = GIMP_SHAPE_TOOL (draw_tool);
   GimpShapeOptions *options     = GIMP_SHAPE_TOOL_GET_OPTIONS (shape_tool);
-  gboolean          enable_fill = FALSE;
 
   if (shape_tool->drawing)
     {
-      enable_fill = (options->shape_mode != GIMP_SHAPE_MODE_STROKE_ONLY);
+      gsize x      = MIN (shape_tool->start_x, shape_tool->current_x);
+      gsize y      = MIN (shape_tool->start_y, shape_tool->current_y);
+      gsize width  = ABS (shape_tool->start_x - shape_tool->current_x);
+      gsize height = ABS (shape_tool->start_y - shape_tool->current_y);
 
       if (options->shape_type == GIMP_SHAPE_TYPE_LINE)
         {
@@ -415,22 +414,24 @@ gimp_shape_tool_draw (GimpDrawTool *draw_tool)
         }
       else if (options->shape_type == GIMP_SHAPE_TYPE_RECTANGLE)
         {
-          gimp_draw_tool_add_rectangle (draw_tool, enable_fill,
-                                        MIN (shape_tool->start_x, shape_tool->current_x),
-                                        MIN (shape_tool->start_y, shape_tool->current_y),
-                                        ABS (shape_tool->start_x - shape_tool->current_x),
-                                        ABS (shape_tool->start_y - shape_tool->current_y));
+          if (options->fixed_aspect_ratio)
+            {
+              width  = MAX (width, height);
+              height = width;
+
+              if (shape_tool->current_x < shape_tool->start_x)
+                x = shape_tool->start_x - width;
+              if (shape_tool->current_y < shape_tool->start_y)
+                y = shape_tool->start_y - width;
+            }
+
+          gimp_draw_tool_add_rectangle (draw_tool, options->enable_fill,
+                                        x, y, width, height);
         }
       else if (options->shape_type == GIMP_SHAPE_TYPE_ARC)
         {
-          /* Since we can't use negative width/height to flip the circle, we
-           * swap the start and current x,y coordinates based on where we're
-           * dragging the circle */
-          gimp_draw_tool_add_arc (draw_tool, enable_fill,
-                                  MIN (shape_tool->start_x, shape_tool->current_x),
-                                  MIN (shape_tool->start_y, shape_tool->current_y),
-                                  ABS (shape_tool->start_x - shape_tool->current_x),
-                                  ABS (shape_tool->start_y - shape_tool->current_y),
+          gimp_draw_tool_add_arc (draw_tool, options->enable_fill,
+                                  x, y, width, height,
                                   0, 2 * G_PI);
 
         }
@@ -444,7 +445,7 @@ gimp_shape_tool_draw (GimpDrawTool *draw_tool)
 
           gimp_draw_tool_add_lines (draw_tool, shape_tool->points,
                                     (options->number_of_sides * coeff) + 1,
-                                    NULL, enable_fill);
+                                    NULL, options->enable_fill);
         }
       else if (options->shape_type == GIMP_SHAPE_TYPE_SPIRAL)
         {
@@ -453,12 +454,11 @@ gimp_shape_tool_draw (GimpDrawTool *draw_tool)
 
           spiral_points = gimp_shape_tool_create_spiral (shape_tool, &n);
 
-          gimp_draw_tool_add_lines (draw_tool, spiral_points, n, NULL, enable_fill);
+          gimp_draw_tool_add_lines (draw_tool, spiral_points, n, NULL,
+                                    options->enable_fill);
           g_free (spiral_points);
         }
-
     }
-
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
 
@@ -510,14 +510,32 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
     }
   else if (options->shape_type == GIMP_SHAPE_TYPE_RECTANGLE)
     {
+      gdouble width  = shape_tool->current_x;
+      gdouble height = shape_tool->current_y;
+
       next.x = shape_tool->start_x;
       next.y = shape_tool->start_y;
       stroke = gimp_bezier_stroke_new_moveto (&next);
 
-      next.x = shape_tool->current_x;
+      if (options->fixed_aspect_ratio)
+        {
+          gdouble max_x      = shape_tool->start_x - shape_tool->current_x;
+          gdouble max_y      = shape_tool->start_y - shape_tool->current_y;
+          gdouble max_length = MAX (ABS (max_x), ABS (max_y));
+
+          width  = (shape_tool->current_x > shape_tool->start_x) ? max_length :
+                                                                  -max_length;
+          height = (shape_tool->current_y > shape_tool->start_y) ? max_length :
+                                                                 -max_length;
+
+          width  = shape_tool->start_x + width;
+          height = shape_tool->start_y + height;
+        }
+
+      next.x = width;
       gimp_bezier_stroke_lineto (stroke, &next);
 
-      next.y = shape_tool->current_y;
+      next.y = height;
       gimp_bezier_stroke_lineto (stroke, &next);
 
       next.x = shape_tool->start_x;
@@ -532,9 +550,11 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
     {
       gdouble rx = (shape_tool->start_x - shape_tool->current_x) / 2.0f;
       gdouble ry = (shape_tool->start_y - shape_tool->current_y) / 2.0f;
+      gdouble x  = shape_tool->start_x - rx;
+      gdouble y  = shape_tool->start_y - ry;
 
-      next.x = shape_tool->start_x - rx;
-      next.y = shape_tool->start_y - ry;
+      next.x = x;
+      next.y = y;
 
       stroke = gimp_bezier_stroke_new_ellipse (&next, ABS (rx), ABS (ry), 0.0);
       gimp_path_stroke_add (path, stroke);
@@ -596,7 +616,7 @@ gimp_shape_tool_create_spiral (GimpShapeTool *shape_tool,
 {
   GimpVector2      *points  = NULL;
   GimpShapeOptions *options = GIMP_SHAPE_TOOL_GET_OPTIONS (shape_tool);
-  gint              dir     = 1;
+  gint              dir     = options->spiral_direction;
   gdouble           rx      = shape_tool->current_x - shape_tool->start_x;
   gdouble           ry      = shape_tool->current_y - shape_tool->start_y;
   gdouble           radius  = sqrt ((rx * rx) + (ry * ry));
@@ -606,9 +626,6 @@ gimp_shape_tool_create_spiral (GimpShapeTool *shape_tool,
 
   *total = (options->number_of_sides * 180) + (dir * RINT (offset / angle));
   points = g_new (GimpVector2, *total);
-
-  if (offset < 0)
-    offset += 2.0 * G_PI;
 
   spiral = radius / (options->number_of_sides * 2 * G_PI + offset);
 
@@ -698,4 +715,29 @@ gimp_shape_tool_get_name (GimpShapeTool *shape_tool)
     }
 
   return shape_name;
+}
+
+static gboolean
+gimp_shape_tool_check_drawables (GimpShapeTool *shape_tool,
+                                 GList         *drawables)
+{
+  GList *iter;
+
+  /* Check if at least one layer is a valid raster */
+  for (iter = drawables; iter; iter = iter->next)
+    {
+      if (gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
+        continue;
+
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+        continue;
+
+      if (GIMP_IS_RASTERIZABLE (iter->data) &&
+          ! gimp_rasterizable_is_rasterized (iter->data))
+        continue;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
