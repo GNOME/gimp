@@ -5517,7 +5517,7 @@ import_dialog_metadata (metadata_editor *args)
   gint                  res;
 
   file_dialog = gtk_file_chooser_native_new (_("Import Metadata File"),
-                                             NULL,
+                                             GTK_WINDOW (args->dialog),
                                              GTK_FILE_CHOOSER_ACTION_OPEN,
                                              _("_Import"),_("_Cancel"));
 
@@ -5531,11 +5531,7 @@ import_dialog_metadata (metadata_editor *args)
 
       if (filename)
         {
-          if (args->filename)
-            {
-              g_free (args->filename);
-            }
-
+          g_free (args->filename);
           args->filename = g_strdup (filename);
           import_file_metadata (args);
         }
@@ -5552,7 +5548,7 @@ export_dialog_metadata (metadata_editor *args)
   gint                  res;
 
   file_dialog = gtk_file_chooser_native_new (_("Export Metadata File"),
-                                             NULL,
+                                             GTK_WINDOW (args->dialog),
                                              GTK_FILE_CHOOSER_ACTION_SAVE,
                                              _("_Export"), _("_Cancel"));
 
@@ -5579,11 +5575,7 @@ export_dialog_metadata (metadata_editor *args)
 
       if (filename)
         {
-          if (args->filename)
-            {
-              g_free (args->filename);
-            }
-
+          g_free (args->filename);
           args->filename = g_strdup (filename);
           export_file_metadata (args);
         }
