@@ -442,6 +442,16 @@ bundle(OPT_PREFIX, "include/brotli", "--dest", "include")
 
 ### Test if all bundled .pc, libs and headers are fine
 print(f"Testing if GIMP SDK works")
+####First we check if any hardcoded .pc or header would be passed to gimptool
+build_prefixes = [str(prefix).lower() for prefix in (OPT_PREFIX, GIMP_PREFIX)]
+abs_include = re.compile(r'^\s*#\s*include\s*[<"]/', re.MULTILINE)
+for sdk_file in list((GIMP_DISTRIB / "include").rglob("*")) + list((GIMP_DISTRIB / "lib/pkgconfig").glob("*.pc")):
+  if sdk_file.is_file():
+    sdk_content = sdk_file.read_text(errors="ignore").lower()
+    if any(prefix in sdk_content for prefix in build_prefixes) or abs_include.search(sdk_content):
+      print(f"\033[31m(ERROR)\033[0m: GIMP SDK file {sdk_file.relative_to(GIMP_DISTRIB)} hardcodes {OPT_PREFIX} or {GIMP_PREFIX}")
+      sys.exit(1)
+####Then we check if any hardcoding is still passed to gimptool at runtime
 clean_tests_env = os.environ.copy()
 clean_tests_env.pop("PKG_CONFIG_PATH", None)
 clean_tests_path = Path(BUILD_DIR) / "tools/gimptool-tests"
