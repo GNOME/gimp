@@ -577,6 +577,19 @@ printf "\nif [ \"\$1\" = '--gimptool' ]; then\n  shift\n  exec \"\$APPDIR\"/usr/
 
 ### Test if all bundled .pc, libs and headers are fine
 printf "(INFO): testing if GIMP SDK works\n"
+####First we check if any hardcoded .pc or header would be passed to gimptool
+build_prefixes="$GIMP_PREFIX"
+unix_style_prefix="(^|[[:space:]=<\"']|-[IL])$UNIX_PREFIX(/|[[:space:]]|\$)"
+abs_include='^[[:space:]]*#[[:space:]]*include[[:space:]]*[<"]/'
+{ find "$USR_DIR/include" -type f; find "$USR_DIR/${LIB_DIR}/${LIB_SUBDIR}pkgconfig" "$USR_DIR/share/pkgconfig" -type f -name '*.pc'; } 2>/dev/null | while IFS= read -r sdk_file; do
+  if grep -q -F -e "$build_prefixes" "$sdk_file" ||
+     grep -v -E -e '^[[:space:]]*(/?\*|//)' "$sdk_file" | grep -q -E -e "$unix_style_prefix" ||
+     grep -q -E -e "$abs_include" "$sdk_file"; then
+    printf "\033[31m(ERROR)\033[0m: GIMP SDK file ${sdk_file#"$APP_DIR"/} hardcodes ${UNIX_PREFIX} or ${GIMP_PREFIX}\n"
+    exit 1
+  fi
+done || exit 1
+####Then we check if any hardcoding is still passed to gimptool at runtime
 clean_tests_path="$BUILD_DIR/tools/gimptool-tests"
 cd "$clean_tests_path"
 for gimpsdk_test in "--build-noui:c-hello-world" "--build:c-hello-world-ui" "--build-geglop:gimp-tutorial-meta-op.so"; do
