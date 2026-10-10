@@ -342,7 +342,6 @@ load_image (GFile                *file,
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Error reading data. Image may be corrupt."));
-      libraw_close (raw_info);
       return NULL;
     }
 
@@ -365,7 +364,6 @@ load_image (GFile                *file,
     {
       g_set_error (error, G_FILE_ERROR, 0,
                    _("Error reading data. Image may be corrupt."));
-      libraw_close (raw_info);
       return NULL;
     }
 
@@ -403,7 +401,6 @@ load_image (GFile                *file,
 
               g_set_error (error, G_FILE_ERROR, 0,
                            _("Error reading data. Image may be corrupt."));
-              libraw_close (raw_info);
               return NULL;
             }
 
@@ -422,7 +419,6 @@ load_image (GFile                *file,
 
               g_set_error (error, G_FILE_ERROR, 0,
                            _("Error reading data. Image may be corrupt."));
-              libraw_close (raw_info);
               return NULL;
             }
 
@@ -460,8 +456,6 @@ load_image (GFile                *file,
 
   if (image_data != NULL)
     libraw_dcraw_clear_mem (image_data);
-
-  libraw_close (raw_info);
 
   return image;
 }
