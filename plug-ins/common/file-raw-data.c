@@ -43,6 +43,10 @@
 #define lseek _lseek
 #endif
 
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
@@ -603,7 +607,7 @@ raw_load (GimpProcedure         *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      preview_fd = g_open (g_file_peek_path (file), O_RDONLY, 0);
+      preview_fd = g_open (g_file_peek_path (file), O_RDONLY | _O_BINARY, 0);
       if (preview_fd < 0)
         {
           g_set_error (&error,
@@ -1426,7 +1430,7 @@ raw_load_palette (RawGimpData    *data,
 
   if (palette_file)
     {
-      fd = g_open (g_file_peek_path (palette_file), O_RDONLY, 0);
+      fd = g_open (g_file_peek_path (palette_file), O_RDONLY | _O_BINARY, 0);
 
       if (! fd)
         return FALSE;
@@ -2510,7 +2514,7 @@ preview_update (GimpPreviewArea *preview,
               {
                 gint fd;
 
-                fd = g_open (g_file_peek_path (palette_file), O_RDONLY, 0);
+                fd = g_open (g_file_peek_path (palette_file), O_RDONLY | _O_BINARY, 0);
 
                 lseek (fd, palette_offset, SEEK_SET);
                 read (fd, preview_cmap,
