@@ -439,6 +439,15 @@ link_path = Path(f"{GIMP_DISTRIB}/lib/libzstd.dylib")
 link_path.symlink_to(os.path.relpath(Path(f"{GIMP_DISTRIB}/lib/libzstd.1.dylib"), link_path.parent))
 bundle(OPT_PREFIX, "lib/glib-2.0", "--dest", "lib")
 bundle(OPT_PREFIX, "include/brotli", "--dest", "include")
+#### Some ports hardcode their prefix on #include (e.g. gi18n.h -> MacPorts libintl.h)
+prefixed_include = re.compile(rf'(#\s*include\s*[<"]){re.escape(str(OPT_PREFIX))}/include/([^>"]+)')
+for h_file in (GIMP_DISTRIB / "include").rglob("*.h"):
+  h_content = h_file.read_text(errors="surrogateescape")
+  for h_name in set(m.group(2) for m in prefixed_include.finditer(h_content)):
+    if not (GIMP_DISTRIB / f"include/{h_name}").exists():
+      bundle(OPT_PREFIX, f"include/{h_name}", "--dest", str(Path("include") / Path(h_name).parent))
+  if prefixed_include.search(h_content):
+    h_file.write_text(prefixed_include.sub(r'\1\2', h_content), errors="surrogateescape")
 
 ### Test if all bundled .pc, libs and headers are fine
 print(f"Testing if GIMP SDK works")
