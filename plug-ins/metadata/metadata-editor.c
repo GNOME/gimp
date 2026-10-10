@@ -302,9 +302,6 @@ DEFINE_STD_SET_I18N
 
 static int last_gpsaltsys_sel;
 
-gboolean gimpmetadata;
-gboolean force_write;
-
 static const gchar *lang_default = "lang=\"x-default\"";
 static const gchar *seq_default = "type=\"Seq\"";
 static const gchar *bag_default = "type=\"Bag\"";

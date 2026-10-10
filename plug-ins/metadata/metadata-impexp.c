@@ -35,12 +35,13 @@
 #include "metadata-impexp.h"
 #include "metadata-editor.h"
 
-extern gboolean gimpmetadata;
 extern gboolean xmptag;
 extern gboolean iptctag;
 extern gboolean tagvalue;
 extern gboolean tagname;
+#ifdef _ENABLE_FORCE_WRITE_
 extern gboolean force_write;
+#endif
 extern gchar *str_tag_value;
 extern gchar *str_tag_name;
 
@@ -94,7 +95,6 @@ import_file_metadata(metadata_editor *args)
   GError         *error = NULL;
   FILE           *file;
 
-  gimpmetadata = FALSE;
   xmptag = FALSE;
   iptctag = FALSE;
   tagvalue = FALSE;
@@ -183,6 +183,7 @@ export_file_metadata (metadata_editor *args)
   GString *xmldata;
   gint     i;
 
+#ifdef _ENABLE_FORCE_WRITE_
   if (force_write == TRUE)
     {
       /* Save fields in case of updates */
@@ -190,10 +191,12 @@ export_file_metadata (metadata_editor *args)
       /* Fetch a fresh copy of the metadata */
       args->metadata = GEXIV2_METADATA (gimp_image_get_metadata (args->image));
     }
+#endif
 
   xmldata = g_string_new ("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                           "<gimp-metadata>\n");
 
+#ifdef _ENABLE_IPTC_TAG_
   /* HANDLE IPTC */
   for (i = 0; i < n_equivalent_metadata_tags; i++)
     {
@@ -242,6 +245,7 @@ export_file_metadata (metadata_editor *args)
             /* No IPTC lists elements at this point */
         }
     }
+#endif
 
   /* HANDLE XMP */
   for (i = 0; i < n_default_metadata_tags; i++)
