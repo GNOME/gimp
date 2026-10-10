@@ -68,6 +68,7 @@ static GimpValueArray * file_libraw_load_thumb       (GimpProcedure         *pro
                                                       gpointer               run_data);
 
 static GimpImage      * load_image                   (GFile                 *file,
+                                                      libraw_data_t         *raw_info,
                                                       GimpRunMode            run_mode,
                                                       GimpProcedureConfig   *config,
                                                       GError               **error);
@@ -77,7 +78,8 @@ static GimpImage      * load_thumbnail_image         (GFile                 *fil
 
 
 static gboolean         load_dialog                  (GimpProcedure         *procedure,
-                                                      GObject               *config);
+                                                      GObject               *config,
+                                                      libraw_data_t         *raw_info);
 
 
 G_DEFINE_TYPE (FileLibRaw, file_libraw, GIMP_TYPE_PLUG_IN)
@@ -248,23 +250,42 @@ file_libraw_load (GimpProcedure          *procedure,
 {
   GimpValueArray    *return_vals;
   GimpImage         *image;
+  libraw_data_t     *raw_info;
   GError            *error  = NULL;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  raw_info = libraw_init (LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);
+  if (raw_info == NULL)
+    {
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("Error initializing LibRaw."));
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
+  else if (libraw_open_file (raw_info, g_file_peek_path (file)) != LIBRAW_SUCCESS)
+    {
+      g_set_error (&error, G_FILE_ERROR, 0,
+                   _("Error reading data. Image may be corrupt."));
+      status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status == GIMP_PDB_SUCCESS && run_mode == GIMP_RUN_INTERACTIVE)
     {
       gimp_ui_init (PLUG_IN_BINARY);
-      if (! load_dialog (procedure, G_OBJECT (config)))
+      if (! load_dialog (procedure, G_OBJECT (config), raw_info))
         status = GIMP_PDB_CANCEL;
     }
 
   if (status == GIMP_PDB_SUCCESS &&
-      (image = load_image (file, run_mode, config, &error)) == NULL)
+      (image = load_image (file, raw_info,
+                           run_mode, config, &error)) == NULL)
     status = GIMP_PDB_EXECUTION_ERROR;
 
   return_vals = gimp_procedure_new_return_values (procedure, status, error);
   if (status == GIMP_PDB_SUCCESS)
     GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  if (raw_info != NULL)
+    libraw_close (raw_info);
 
   return return_vals;
 }
@@ -304,40 +325,17 @@ file_libraw_load_thumb (GimpProcedure        *procedure,
 
 static GimpImage *
 load_image (GFile                *file,
+            libraw_data_t        *raw_info,
             GimpRunMode           run_mode,
             GimpProcedureConfig  *config,
             GError              **error)
 {
   GimpImage                *image       = NULL;
-  libraw_data_t            *raw_info;
   libraw_processed_image_t *image_data;
-  guint                     flags       = LIBRAW_OPTIONS_NO_DATAERR_CALLBACK;
   gint                      raw_error   = 0;
   gint                      demosaicing = 3;
   gint                      denoising   = 0;
   gboolean                  enable_interpolation = TRUE;
-
-  g_object_get (config,
-                "enable-interpolation", &enable_interpolation,
-                NULL);
-
-  raw_info = libraw_init (flags);
-  if (raw_info == NULL)
-    {
-      g_set_error (error, G_FILE_ERROR, 0,
-                   _("Error reading data. Image may be corrupt."));
-      libraw_close (raw_info);
-      return NULL;
-    }
-
-  raw_error = libraw_open_file (raw_info, g_file_peek_path (file));
-  if (raw_error != LIBRAW_SUCCESS)
-    {
-      g_set_error (error, G_FILE_ERROR, 0,
-                   _("Error reading data. Image may be corrupt."));
-      libraw_close (raw_info);
-      return NULL;
-    }
 
   raw_error = libraw_unpack (raw_info);
   if (raw_error != LIBRAW_SUCCESS)
@@ -583,7 +581,8 @@ load_thumbnail_image (GFile   *file,
 
 static gboolean
 load_dialog (GimpProcedure *procedure,
-             GObject       *config)
+             GObject       *config,
+             libraw_data_t *raw_info)
 {
   GtkWidget *dialog;
   gchar     *title;
@@ -602,6 +601,38 @@ load_dialog (GimpProcedure *procedure,
                                        "enable-interpolation", FALSE, "interpolation-step");
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "interpolation-expander", NULL);
+
+  /* The whole logic under comes from reading LibRaw::dcraw_process()
+   * code. This is unfortunately not cleanly documented and there are no
+   * programmatic ways to actually verify if some settings should be
+   * disabled or not. This means that this code could become wrong if
+   * upstream implementation changes so we have to keep it in sync. :-(
+   */
+  if (raw_info->idata.filters == 0)
+    {
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "interpolation-expander", FALSE, NULL, NULL, FALSE);
+    }
+  else if (raw_info->idata.filters <= 1000 || raw_info->idata.colors != 3)
+    {
+      /* Note: there is actually another case where noise reduction should
+       * be disabled, based on a computation of "real_colors" but I wanted
+       * to avoid duplicating a big piece of code including some hardcoded
+       * 16*16 integer matrix. So let's accept that in some edge case,
+       * this setting will be available while not doing anything.
+       */
+      gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "noise-reduction", FALSE, NULL, NULL, FALSE);
+      if (raw_info->idata.filters <= 1000)
+        {
+          GParamSpec *pspec;
+          GimpChoice *choice;
+
+          pspec  = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "demosaicing");
+          choice = gimp_param_spec_choice_get_choice (pspec);
+          gimp_choice_set_sensitive (choice, "ppg", FALSE);
+        }
+    }
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
