@@ -178,16 +178,31 @@ file_libraw_create_procedure (GimpPlugIn  *plug_in,
                                           "Alx Sa",
                                           "2026");
 
-          /* The list of demosaicing algorithms is hardcoded in libraw,
-           * and there doesn't even seem to be any enum values in the C
-           * API.
+          gimp_procedure_add_boolean_argument (procedure, "enable-interpolation",
+                                               _("Enable interpolation"),
+                                               _("Enable denoising and demosaicing steps"),
+                                               TRUE,
+                                               G_PARAM_READWRITE);
+
+          /* The list of denoising and demosaicing algorithms are
+           * hardcoded in libraw, and there doesn't even seem to be any
+           * enum values in the C API.
            */
+
+          gimp_procedure_add_choice_argument (procedure, "noise-reduction",
+                                              _("Noise reduction"),
+                                              _("Controls FBDD (Fake Before Demosaicing Denoising) noise reduction before demosaic"),
+                                              gimp_choice_new_with_values ("disabled",   0, _("Disabled"),             NULL,
+                                                                           "light-fbdd", 1, _("Light FBDD reduction"), NULL,
+                                                                           "full-fbdd",  2, _("Full FBDD reduction"),  NULL,
+                                                                           NULL),
+                                              "disabled", G_PARAM_READWRITE);
+
           gimp_procedure_add_choice_argument (procedure, "demosaicing",
                                               _("Demosaicing"),
                                               _("Interpolation method to reconstruct a matrix of colored pixels"
                                                 " from raw sensor data"),
-                                              gimp_choice_new_with_values ("auto",         -1, _("Automatic"),    NULL,
-                                                                           "linear",       0,  _("Linear"),       NULL,
+                                              gimp_choice_new_with_values ("linear",       0,  _("Linear"),       NULL,
                                                                            "vng",          1,  _("VNG"),          NULL,
                                                                            "ppg",          2,  _("PPG"),          NULL,
                                                                            "ahd",          3,  _("AHD"),          NULL,
@@ -195,7 +210,7 @@ file_libraw_create_procedure (GimpPlugIn  *plug_in,
                                                                            "dht",          11, _("DHT"),          NULL,
                                                                            "modified-ahd", 12, _("Modified AHD"), NULL,
                                                                            NULL),
-                                              "auto", G_PARAM_READWRITE);
+                                              "ahd", G_PARAM_READWRITE);
 
           gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
                                                format->file_type);
@@ -298,7 +313,13 @@ load_image (GFile                *file,
   libraw_processed_image_t *image_data;
   guint                     flags       = LIBRAW_OPTIONS_NO_DATAERR_CALLBACK;
   gint                      raw_error   = 0;
-  gint                      demosaicing = -1;
+  gint                      demosaicing = 3;
+  gint                      denoising   = 0;
+  gboolean                  enable_interpolation = TRUE;
+
+  g_object_get (config,
+                "enable-interpolation", &enable_interpolation,
+                NULL);
 
   raw_info = libraw_init (flags);
   if (raw_info == NULL)
@@ -326,6 +347,12 @@ load_image (GFile                *file,
       libraw_close (raw_info);
       return NULL;
     }
+
+  /* Just disable the full interpolation step altogether. */
+  raw_info->params.no_interpolation = enable_interpolation ? 0 : 1;
+
+  denoising = gimp_procedure_config_get_choice_id (config, "noise-reduction");
+  libraw_set_fbdd_noiserd (raw_info, denoising);
 
   demosaicing = gimp_procedure_config_get_choice_id (config, "demosaicing");
   libraw_set_demosaic (raw_info, demosaicing);
@@ -566,8 +593,15 @@ load_dialog (GimpProcedure *procedure,
   title = g_strdup_printf (_("Develop: %s"),
                            gimp_file_procedure_get_format_name (GIMP_FILE_PROCEDURE (procedure)));
   dialog = gimp_procedure_dialog_new (procedure, GIMP_PROCEDURE_CONFIG (config), title);
+  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog), "noise-reduction",
+                                    GTK_TYPE_COMBO_BOX);
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "interpolation-step",
+                                  "noise-reduction", "demosaicing", NULL);
+  gimp_procedure_dialog_fill_expander (GIMP_PROCEDURE_DIALOG (dialog), "interpolation-expander",
+                                       "enable-interpolation", FALSE, "interpolation-step");
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "demosaicing", NULL);
+                              "interpolation-expander", NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
