@@ -584,7 +584,7 @@ gimp-snap:
       variables: *exe_msix_vars
   parallel:
     matrix:
-      - RUNNER: [windows-aarch64, win32-ps]
+      - RUNNER: [win32-ps]
   tags:
     - $RUNNER
   variables:
@@ -670,7 +670,7 @@ gimp-win:
       variables: *dmg_vars
   parallel:
     matrix:
-      - ARCH: [arm64, x86_64]
+      - ARCH: [arm64]
   tags:
     - macos
     - marathon
