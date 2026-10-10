@@ -5558,8 +5558,19 @@ export_dialog_metadata (metadata_editor *args)
 
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_dialog),
                                                   TRUE);
-  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (file_dialog),
-                                 args->filename);
+
+  if (g_file_test (args->filename, G_FILE_TEST_EXISTS))
+    {
+      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (file_dialog),
+                                     args->filename);
+    }
+  else
+    {
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (file_dialog),
+                                           g_get_home_dir ());
+      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (file_dialog),
+                                         DEFAULT_TEMPLATE_FILE);
+    }
 
   res = gtk_native_dialog_run (GTK_NATIVE_DIALOG (file_dialog));
   if (res == GTK_RESPONSE_ACCEPT)
