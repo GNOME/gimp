@@ -129,7 +129,7 @@ gimp_shape_options_class_init (GimpShapeOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DRAW_ON_LAYERS,
                             "draw-on-layers",
-                            _("Draw directly on selected rasters"),
+                            _("Draw directly on selected layers"),
                             _("If checked, shapes will be drawn directly "
                               "on any selected raster item instead of as "
                               "a vector layer"),
@@ -161,7 +161,7 @@ gimp_shape_options_class_init (GimpShapeOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLE_FILL,
                             "enable-fill",
-                            _("Fill Style"), NULL,
+                            _("Fill"), NULL,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -192,7 +192,7 @@ gimp_shape_options_class_init (GimpShapeOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLE_STROKE,
                             "enable-stroke",
-                            _("Stroke Style"), NULL,
+                            _("Stroke"), NULL,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -537,7 +537,8 @@ gimp_shape_options_deserialize_property (GimpConfig *object,
 static void
 gimp_shape_options_shape_type_notify (GimpShapeOptions *options)
 {
-  gboolean needs_fixed     = (options->shape_type == GIMP_SHAPE_TYPE_RECTANGLE);
+  gboolean needs_fixed     = (options->shape_type == GIMP_SHAPE_TYPE_RECTANGLE ||
+                              options->shape_type == GIMP_SHAPE_TYPE_ARC);
   gboolean needs_direction = (options->shape_type == GIMP_SHAPE_TYPE_SPIRAL);
   gboolean needs_sides     = (options->shape_type == GIMP_SHAPE_TYPE_POLYGON ||
                               options->shape_type == GIMP_SHAPE_TYPE_STAR    ||
@@ -547,10 +548,6 @@ gimp_shape_options_shape_type_notify (GimpShapeOptions *options)
   gtk_widget_set_sensitive (options->n_sides_button, needs_sides);
 
   gtk_widget_set_sensitive (options->spiral_direction_combo, needs_direction);
-  gtk_widget_set_opacity (options->spiral_direction_combo,
-                          needs_direction ? 1.0 : 0.0);
-  gtk_widget_set_opacity (options->spiral_direction_label,
-                          needs_direction ? 1.0 : 0.0);
 }
 
 static void

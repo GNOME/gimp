@@ -129,6 +129,7 @@ gimp_shape_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_SHAPE_TOOL,
                 GIMP_TYPE_SHAPE_OPTIONS,
                 gimp_shape_options_gui,
+                GIMP_CONTEXT_PROP_MASK_FOREGROUND |
                 GIMP_CONTEXT_PROP_MASK_BACKGROUND,
                 "gimp-shape-tool",
                 _("Shape"),
@@ -237,10 +238,11 @@ gimp_shape_tool_button_press (GimpTool            *tool,
   gimp_tool_control_activate (tool->control);
 
   /* Set starting point */
-  shape_tool->start_x     = coords->x;
-  shape_tool->start_y     = coords->y;
-  shape_tool->drawing     = TRUE;
-  shape_tool->fixed_ratio = FALSE;
+  shape_tool->start_x   = coords->x;
+  shape_tool->start_y   = coords->y;
+  shape_tool->current_x = coords->x;
+  shape_tool->current_y = coords->y;
+  shape_tool->drawing   = TRUE;
 }
 
 static void
@@ -295,7 +297,10 @@ gimp_shape_tool_button_release (GimpTool              *tool,
                                                options->fill_options,
                                                TRUE, NULL, NULL);
 
-                  if (options->enable_stroke)
+                  /* Since this action is destructive and does not leave behind
+                   * an editable path or vector, we'll force at least a stroke
+                   * if both fill and stroke are turned off */
+                  if (options->enable_stroke || ! options->enable_fill)
                     can_draw = gimp_item_stroke (GIMP_ITEM (path), drawables,
                                                  gimp_get_user_context (image->gimp),
                                                  options->stroke_options,
@@ -430,6 +435,17 @@ gimp_shape_tool_draw (GimpDrawTool *draw_tool)
         }
       else if (options->shape_type == GIMP_SHAPE_TYPE_ARC)
         {
+          if (options->fixed_aspect_ratio)
+            {
+              width  = MAX (width, height);
+              height = width;
+
+              if (shape_tool->current_x < shape_tool->start_x)
+                x = shape_tool->start_x - width;
+              if (shape_tool->current_y < shape_tool->start_y)
+                y = shape_tool->start_y - width;
+            }
+
           gimp_draw_tool_add_arc (draw_tool, options->enable_fill,
                                   x, y, width, height,
                                   0, 2 * G_PI);
@@ -552,6 +568,17 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
       gdouble ry = (shape_tool->start_y - shape_tool->current_y) / 2.0f;
       gdouble x  = shape_tool->start_x - rx;
       gdouble y  = shape_tool->start_y - ry;
+
+      if (options->fixed_aspect_ratio)
+        {
+          gdouble max_length = MAX (ABS (rx), ABS (ry));
+
+          rx = (rx > 0) ? max_length : -max_length;
+          ry = (ry > 0) ? max_length : -max_length;
+
+          x  = shape_tool->start_x - rx;
+          y  = shape_tool->start_y - ry;
+        }
 
       next.x = x;
       next.y = y;
