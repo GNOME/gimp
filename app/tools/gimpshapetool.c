@@ -694,7 +694,7 @@ gimp_shape_tool_update_polygon (GimpShapeTool *shape_tool,
 
       if (is_star)
         {
-          gdouble star_radius = radius * ((i % 2) + 1) / 2;
+          gdouble star_radius = radius * (((i + 1) % 2) + 1) / 2;
 
           new_x  = star_radius * cos (loop_angle);
           new_y  = star_radius * sin (loop_angle);
