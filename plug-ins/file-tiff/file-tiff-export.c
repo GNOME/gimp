@@ -170,10 +170,11 @@ save_layer (TIFF        *tif,
   GList            *channels;
   gushort           extra;
   GeglBuffer      **channel_buffers = NULL;
-  int               base_channels;
-  int               bytes_per_sample;
-  int               base_bytesperrow;
-  int               final_bytesperrow;
+  gint              base_channels;
+  gint              bytes_per_sample;
+  gsize             base_bytesperrow;
+  gsize             final_bytesperrow;
+  gsize             bytesperrow_alloc;
 
   g_object_get (config,
                 "gimp-comment",            &config_comment,
@@ -780,11 +781,21 @@ save_layer (TIFF        *tif,
   base_channels    = babl_format_get_n_components (format);
   bytes_per_sample = bitspersample / 8;
 
-  base_bytesperrow  = cols * base_channels  * bytes_per_sample;
-  final_bytesperrow = cols * samplesperpixel * bytes_per_sample;
-
-  src  = g_new (guchar, base_bytesperrow * tile_height);
-  data = g_new (guchar, final_bytesperrow);
+  if (! g_size_checked_mul (&base_bytesperrow, cols, base_channels)    ||
+      ! g_size_checked_mul (&base_bytesperrow, base_bytesperrow,
+                            bytes_per_sample) ||
+      ! g_size_checked_mul (&final_bytesperrow, cols, samplesperpixel) ||
+      ! g_size_checked_mul (&final_bytesperrow, final_bytesperrow,
+                            bytes_per_sample)                          ||
+      ! g_size_checked_mul (&bytesperrow_alloc, base_bytesperrow,
+                            tile_height)                               ||
+      ! (src = g_try_new0 (guchar, bytesperrow_alloc))                 ||
+      ! (data = g_try_new0 (guchar, final_bytesperrow)))
+    {
+      g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Memory could not be allocated."));
+      goto out;
+    }
 
   /* Now write the TIFF data. */
   for (y = 0; y < rows; y = yend)
