@@ -332,6 +332,9 @@ if not (GIMP_DISTRIB / "lib/pkgconfig/libcurl.pc").exists():
   text = exiv2_pc.read_text()
   new_text = text.replace("libcurl, ","").replace(" libcurl","")
   exiv2_pc.write_text(new_text)
+#FIXME: TEMPORARY, reproduce MacPorts glib2 libintl.patch to test the hardcoded SDK check
+for gi18n_h in (GIMP_DISTRIB / "include/glib-2.0/glib").glob("gi18n*.h"):
+  gi18n_h.write_text(gi18n_h.read_text().replace("#include <libintl.h>", f"#include <{Path(MSYSTEM_PREFIX).as_posix()}/include/libintl.h>"))
 
 ### Test if all bundled .pc, libs and headers are fine
 print(f"Testing if GIMP SDK works")

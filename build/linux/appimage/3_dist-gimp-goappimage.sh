@@ -575,6 +575,8 @@ bund_usr "$UNIX_PREFIX" "lib/glib-2.0"
 bund_usr "$UNIX_PREFIX" "include/brotli"
 wipe_usr include/glob.h
 printf "\nif [ \"\$1\" = '--gimptool' ]; then\n  shift\n  exec \"\$APPDIR\"/usr/bin/gimptool-$GIMP_APP_VERSION \"\$@\"\nfi" >> "$APP_DIR/AppRun"
+#FIXME: TEMPORARY, reproduce MacPorts glib2 libintl.patch to test the hardcoded SDK check
+sed -i "s|#include <libintl.h>|#include <${UNIX_PREFIX}/include/libintl.h>|" "$USR_DIR/include/glib-2.0/glib/gi18n.h" "$USR_DIR/include/glib-2.0/glib/gi18n-lib.h"
 
 ### Test if all bundled .pc, libs and headers are fine
 printf "(INFO): testing if GIMP SDK works\n"
