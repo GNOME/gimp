@@ -976,8 +976,8 @@ issue-bot:
   stage: analysis
   image: registry.gitlab.com/gitlab-org/distribution/issue-bot:latest
   variables:
-    ISSUE_BOT_API_TOKEN: $WILBER_BOT
     GIT_STRATEGY: none
+    ISSUE_BOT_API_TOKEN: $WILBER_BOT
   script:
     - LATEST_API_TOKEN=20270330
     - printf "(INFO) Token expire date is $(date -d "$LATEST_API_TOKEN" +"%x")\n"
