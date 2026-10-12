@@ -1,0 +1,30 @@
+From 89c163fa096d752731a37051abe9ad4d034ec8cb Mon Sep 17 00:00:00 2001
+From: Alfred Wingate <parona@protonmail.com>
+Date: Tue, 1 Sep 2026 14:33:25 +0300
+Subject: [PATCH] Include previously implicit header
+
+* Needed for std::mktime which previously worked via implicit headers.
+  Libcxx-23 has pruned these so its needed explicitly now.
+
+Backport of https://github.com/Exiv2/exiv2/pull/9473 to v0.28.9.
+
+Signed-off-by: Alfred Wingate <parona@protonmail.com>
+---
+ src/value.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/value.cpp b/src/value.cpp
+index d80d66f..49d553b 100644
+--- a/src/value.cpp
++++ b/src/value.cpp
+@@ -9,6 +9,7 @@
+ #include "types.hpp"
+ 
+ // + standard includes
++#include <ctime>
+ #include <sstream>
+ 
+ // *****************************************************************************
+-- 
+2.55.0
+
