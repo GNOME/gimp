@@ -170,8 +170,6 @@ static void     set_tag_string                  (GimpMetadata         *metadata,
                                                  const gchar          *value,
                                                  gboolean              clear_tag);
 
-static gchar *  get_phonetype                   (gchar                *cur_value);
-
 static void     write_metadata_tag              (metadata_editor      *meta_info,
                                                  GimpMetadata         *metadata,
                                                  gchar                *tag);
@@ -183,7 +181,7 @@ static void     write_metadata_tag_multiple     (metadata_editor      *meta_info
                                                  gint                  n_columns,
                                                  const gchar         **column_tags,
                                                  const gchar         **alt_column_tags,
-                                                 const gint            special_handling[]);
+                                                 const list_combo     *special_handling);
 
 gboolean hasCreatorTagData                      (metadata_editor      *meta_info);
 
@@ -288,7 +286,7 @@ static void generic_cell_edited_callback        (GtkCellRendererText  *cell,
                                                  const gchar          *new_text,
                                                  gpointer              data);
 
-static void phone_type_cell_edited_callback     (GtkCellRendererCombo *cell,
+static void combo_type_cell_edited_callback     (GtkCellRendererCombo *cell,
                                                  const gchar          *path_string,
                                                  const gchar          *new_text,
                                                  gpointer              data);
@@ -1204,8 +1202,8 @@ metadata_editor_set_list_tag_values (GtkListStore  *liststore,
 
       for (gint si = 0; si < list_metadata[list_index].n_values; si++)
         {
-          if (list_metadata[list_index].cell_types == NULL ||
-              list_metadata[list_index].cell_types[si] != METADATA_PHONETYPE)
+          if (list_metadata[list_index].render_types == NULL ||
+              list_metadata[list_index].render_types[si].render_type != METADATA_COMBO)
             {
               gtk_list_store_set (liststore, &iter,
                                   si, tagdatarow[si],
@@ -1213,26 +1211,26 @@ metadata_editor_set_list_tag_values (GtkListStore  *liststore,
             }
           else
             {
-              gchar *phone_type = NULL;
+              gchar *combo_type = NULL;
 
               if (tagdatarow[si] != NULL)
                 {
-                  for (gint types = 0; types < n_phone_types; types++)
+                  for (gint types = 0; types < list_metadata[list_index].render_types[si].n_values; types++)
                     {
-                      if (! strcmp (tagdatarow[si], phone_types[types].data))
+                      if (! strcmp (tagdatarow[si], list_metadata[list_index].render_types[si].metadata_values[types].data))
                         {
-                          phone_type = g_strdup (gettext (phone_types[types].display));
+                          combo_type = g_strdup (gettext (list_metadata[list_index].render_types[si].metadata_values[types].display));
                           break;
                         }
                     }
                 }
               if (tagdatarow[si] == NULL)
-                phone_type = g_strdup (gettext (phone_types[0].display));
+                combo_type = g_strdup (gettext (list_metadata[list_index].render_types[si].metadata_values[0].display));
 
               gtk_list_store_set (liststore, &iter,
-                                  si, phone_type,
+                                  si, combo_type,
                                   -1);
-              g_free (phone_type);
+              g_free (combo_type);
             }
         }
     }
@@ -1253,14 +1251,14 @@ metadata_editor_add_empty_rows (GtkListStore  *liststore,
 
       for (gint si = 0; si < list_metadata[list_index].n_values; si++)
         {
-          if (list_metadata[list_index].cell_types == NULL ||
-              list_metadata[list_index].cell_types[si] != METADATA_PHONETYPE)
+          if (list_metadata[list_index].render_types == NULL ||
+              list_metadata[list_index].render_types[si].render_type != METADATA_COMBO)
             gtk_list_store_set (liststore, &iter,
                                 si, NULL,
                                 -1);
           else
             gtk_list_store_set (liststore, &iter,
-                                si, gettext (phone_types[0].display),
+                                si, gettext (list_metadata[list_index].render_types[si].metadata_values[0].display),
                                 -1);
         }
     }
@@ -1686,7 +1684,7 @@ generic_cell_edited_callback (GtkCellRendererText *cell,
                       new_text, -1);
 }
 
-static void phone_type_cell_edited_callback (GtkCellRendererCombo *cell,
+static void combo_type_cell_edited_callback (GtkCellRendererCombo *cell,
                                              const gchar          *path_string,
                                              const gchar          *new_text,
                                              gpointer              data)
@@ -2515,7 +2513,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                 {
                   GtkTreeViewColumn *column;
                   GtkCellRenderer   *renderer;
-                  GtkTreeModel      *phonemodel = NULL;
+                  GtkTreeModel      *combomodel = NULL;
                   GList             *rlist;
 
                   column = gtk_tree_view_get_column (GTK_TREE_VIEW (widget),
@@ -2525,8 +2523,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                     {
                       renderer = r->data;
 
-                      if (list_metadata[li].cell_types == NULL ||
-                          list_metadata[li].cell_types[loop] != METADATA_PHONETYPE)
+                      if (list_metadata[li].render_types == NULL ||
+                          list_metadata[li].render_types[loop].render_type != METADATA_COMBO)
                         {
                           g_object_set (renderer,
                                         "editable", TRUE,
@@ -2537,33 +2535,33 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                         }
                       else
                         {
-                          /* Set up Phone type render */
-                          if (phonemodel == NULL)
+                          /* Set up Phone type (or in the future other combo) render */
+                          if (combomodel == NULL)
                             {
-                              GtkListStore *phonestore = NULL;
-                              GtkTreeIter   phoneiter;
+                              GtkListStore *combostore = NULL;
+                              GtkTreeIter   comboiter;
 
-                              phonestore = gtk_list_store_new (1, G_TYPE_STRING);
-                              gtk_list_store_append (phonestore, &phoneiter);
-                              gtk_list_store_set (phonestore, &phoneiter, 0, "Unknown", -1);
-                              for (gint j = 1; j < n_phone_types; j++)
+                              combostore = gtk_list_store_new (1, G_TYPE_STRING);
+                              gtk_list_store_append (combostore, &comboiter);
+                              gtk_list_store_set (combostore, &comboiter, 0, _("Unknown"), -1);
+                              for (gint j = 1; j < list_metadata[li].render_types[loop].n_values; j++)
                                 {
-                                  gtk_list_store_append (phonestore, &phoneiter);
-                                  gtk_list_store_set (phonestore, &phoneiter,
-                                                      0, gettext (phone_types[j].display),
+                                  gtk_list_store_append (combostore, &comboiter);
+                                  gtk_list_store_set (combostore, &comboiter,
+                                                      0, gettext (list_metadata[li].render_types[loop].metadata_values[j].display),
                                                       -1);
                                 }
-                              phonemodel = GTK_TREE_MODEL (phonestore);
+                              combomodel = GTK_TREE_MODEL (combostore);
                             }
 
                           g_object_set (renderer,
                                         "editable",    TRUE,
                                         "text-column", 0,
                                         "has-entry",   FALSE,
-                                        "model",       phonemodel,
+                                        "model",       combomodel,
                                         NULL);
                           g_signal_connect (renderer, "edited",
-                                            G_CALLBACK (phone_type_cell_edited_callback),
+                                            G_CALLBACK (combo_type_cell_edited_callback),
                                             widget);
                         }
 
@@ -2737,29 +2735,33 @@ set_tag_string (GimpMetadata *metadata,
     }
 }
 
-static gchar *
-get_phonetype (gchar *cur_value)
+gchar *
+metadata_editor_get_list_combo_value (gchar                  *cur_ui_value,
+                                      const combobox_str_tag *combo_values,
+                                      gint                    n_values,
+                                      gboolean                return_default)
 {
-  gchar *phone_type_value = NULL;
+  gchar *combo_value = NULL;
   gint   types;
 
-  if (cur_value != NULL)
+  if (cur_ui_value != NULL)
     {
-      for (types = 0; types < n_phone_types; types++)
+      for (types = 0; types < n_values; types++)
         {
-          if (! strcmp (cur_value, gettext (phone_types[types].display)))
+          if (! strcmp (cur_ui_value, gettext (combo_values[types].display)))
             {
-              phone_type_value = strdup (phone_types[types].data);
-              break;
+              if (types != 0 || return_default)
+                {
+                  combo_value = strdup (combo_values[types].data);
+                  break;
+                }
             }
         }
-      g_free (cur_value);
     }
-  if (! phone_type_value)
-    phone_type_value = strdup (phone_types[0].data);
-  cur_value = phone_type_value;
+  if (! combo_value && return_default)
+    combo_value = strdup (combo_values[0].data);
 
-  return phone_type_value;
+  return combo_value;
 }
 
 static void
@@ -2820,7 +2822,7 @@ write_metadata_tag_multiple (metadata_editor      *meta_info,
                              gint                  n_columns,
                              const gchar         **column_tags,
                              const gchar         **alt_column_tags,
-                             const gint            special_handling[])
+                             const list_combo     *special_handling)
 {
   GtkWidget     *list_widget;
   GtkTreeModel  *treemodel;
@@ -2887,10 +2889,19 @@ write_metadata_tag_multiple (metadata_editor      *meta_info,
                           header_tag, counter, column_tags[col]);
 
               if (special_handling)
-                switch(special_handling[col])
+                switch (special_handling[col].render_type)
                   {
-                  case METADATA_PHONETYPE:
-                    tag_data = get_phonetype (tag_data);
+                  case METADATA_COMBO:
+                    {
+                      gchar *tag_val = NULL;
+
+                      tag_val = metadata_editor_get_list_combo_value (tag_data,
+                                                                      special_handling[col].metadata_values,
+                                                                      special_handling[col].n_values,
+                                                                      TRUE);
+                      g_free (tag_data);
+                      tag_data = tag_val;
+                    }
                     break;
                   }
 
@@ -2990,13 +3001,146 @@ set_gps_longitude_latitude (GimpMetadata *metadata,
     }
 }
 
+/* Note: returned string needs to be freed by caller ONLY for MODE_MULTI! */
+gchar *
+metadata_editor_get_value (metadata_editor *args,
+                           gint             tag_index)
+{
+  GtkWidget    *widget = GTK_WIDGET (metadata_editor_get_widget (args, default_metadata_tags[tag_index].tag));
+  MetadataMode  mode   = default_metadata_tags[tag_index].mode;
+
+  if (mode == MODE_SINGLE)
+    {
+      GtkEntry *entry = GTK_ENTRY (widget);
+      return gtk_entry_get_text (entry);
+    }
+  else if (mode == MODE_MULTI)
+    {
+      GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
+      GtkTextBuffer *buffer;
+      GtkTextIter    start;
+      GtkTextIter    end;
+
+      buffer = gtk_text_view_get_buffer (text_view);
+      gtk_text_buffer_get_start_iter (buffer, &start);
+      gtk_text_buffer_get_end_iter (buffer, &end);
+
+      return gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
+    }
+  else if (mode == MODE_COMBO)
+    {
+      GtkComboBoxText *combo = GTK_COMBO_BOX_TEXT (widget);
+      gint             ival  = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+      const gchar     *value = NULL;
+
+      if (default_metadata_tags[tag_index].detail_index > -1)
+        {
+          gint ci = default_metadata_tags[tag_index].detail_index;
+
+          if (ival > 0)
+            value = combo_metadata[ci].metadata_values[ival].data;
+        }
+
+      return value;
+    }
+
+  return NULL;
+}
+
+void
+metadata_editor_set_values (metadata_editor  *args,
+                           gint               tag_index,
+                           gchar            **values,
+                           gint               n_rows)
+{
+  GtkWidget *widget = GTK_WIDGET (metadata_editor_get_widget (args, default_metadata_tags[tag_index].tag));
+  gint       mode   = default_metadata_tags[tag_index].mode;
+
+  if (mode == MODE_LIST)
+    {
+      GtkTreeModel  *treemodel;
+      GtkListStore  *liststore;
+      gint           number_of_rows;
+      gint           list_index = default_metadata_tags[tag_index].detail_index;
+
+      liststore = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (widget)));
+      treemodel = GTK_TREE_MODEL (liststore);
+      number_of_rows =
+        gtk_tree_model_iter_n_children (GTK_TREE_MODEL (liststore), NULL);
+
+      /* Clear all current values */
+      for (gint row = number_of_rows; row > -1; row--)
+        {
+          GtkTreeIter iter;
+
+          if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
+            {
+              gtk_list_store_remove (liststore, &iter);
+            }
+        }
+      /* Add new values values */
+      metadata_editor_set_list_tag_values (liststore, values, n_rows, list_index);
+
+      if (n_rows < 2)
+        metadata_editor_add_empty_rows (liststore, 2 - n_rows, list_index);
+    }
+}
+
+void
+metadata_editor_set_value (metadata_editor *args,
+                           gint             tag_index,
+                           gchar           *value,
+                           gboolean         int_value)
+{
+  GtkWidget *widget = GTK_WIDGET (metadata_editor_get_widget (args, default_metadata_tags[tag_index].tag));
+  gint       mode   = default_metadata_tags[tag_index].mode;
+
+  if (mode == MODE_SINGLE)
+    {
+      GtkEntry *entry_widget = GTK_ENTRY (widget);
+      
+      gtk_entry_set_text (entry_widget, value);
+    }
+  else if (mode == MODE_MULTI)
+    {
+      GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
+      GtkTextBuffer *buffer    = gtk_text_view_get_buffer (text_view);
+
+      gtk_text_buffer_set_text (buffer, value, -1);
+    }
+  else if (mode == MODE_COMBO)
+    {
+      if (int_value)
+        {
+          gint32 int_value = atoi (value);
+
+          gtk_combo_box_set_active (GTK_COMBO_BOX (widget), int_value);
+        }
+      else
+        {
+          if (default_metadata_tags[tag_index].detail_index > -1)
+            {
+              gint ci = default_metadata_tags[tag_index].detail_index;
+
+              for (gint loop = 0; loop < combo_metadata[ci].n_values; loop++)
+                {
+                  if (! strcmp (combo_metadata[ci].metadata_values[loop].data, value))
+                    {
+                      gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
+                      break;
+                    }
+                }
+            }
+        }
+    }
+}
+
 void
 metadata_editor_write_callback (GtkWidget       *dialog,
                                 metadata_editor *meta_info,
                                 GimpImage       *image)
 {
   GimpMetadata  *g_metadata;
-  gint           max_elements;
   gint           i = 0;
 
   g_metadata = gimp_image_get_metadata (image);
@@ -3040,7 +3184,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
                                        list_metadata[i].n_values,
                                        primary,
                                        secondary,
-                                       list_metadata[i].cell_types);
+                                       list_metadata[i].render_types);
         }
     }
 
@@ -3090,9 +3234,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
         }
     }
 
-  max_elements = n_default_metadata_tags;
-
-  for (i = 0; i < max_elements; i++)
+  for (i = 0; i < n_default_metadata_tags; i++)
     {
       GtkWidget *widget = metadata_editor_get_widget (meta_info,
                                                       default_metadata_tags[i].tag);
@@ -3258,7 +3400,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
           GtkTextIter    end;
           gchar         *text;
           gint           index;
-          GError    *error = NULL;
+          GError        *error     = NULL;
 
           buffer = gtk_text_view_get_buffer (text_view);
           gtk_text_buffer_get_start_iter (buffer, &start);
@@ -3376,8 +3518,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
           combo = GTK_COMBO_BOX_TEXT (widget);
           value = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
-          if (default_metadata_tags[i].mode == MODE_COMBO &&
-              default_metadata_tags[i].detail_index > -1)
+          if (default_metadata_tags[i].detail_index > -1)
             {
               gint ci = default_metadata_tags[i].detail_index;
 

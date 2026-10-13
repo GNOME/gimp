@@ -48,6 +48,7 @@ gchar *str_element;
 
 gint row_count = 0;
 gint item_count = 0;
+gint metadata_xml_version = -1;
 
 #define MAX_TAG_ROWS 250          /* Maximum # of rows in list (struct) tags */
 #define MAX_TAG_COLS  25          /* Maximum # of columns/fields in the tag struct */
@@ -55,10 +56,9 @@ gint item_count = 0;
 gchar **list_tag_data = NULL;
 
 
-static void get_list_elements                        (GString   *xmldata,
-                                                      int        element_count,
-                                                      gchar    **rowtagdata);
-
+static void get_list_elements                        (GString         *xmldata,
+                                                      int              element_count,
+                                                      gchar          **rowtagdata);
 
 static void
 free_list_strings (gint n_rows, gint n_cols)
@@ -85,7 +85,31 @@ xml_parser_start_element (GMarkupParseContext  *context,
 {
   if (strcmp (element_name, "gimp-metadata") == 0)
     {
+      if (attribute_names != NULL)
+        {
+          const gchar *attrib = attribute_names[0];
+          gint   i      = -1;
+
+          while (attrib)
+            {
+              i++;
+              if (strcmp (attrib, "version") == 0)
+                {
+                  if (attribute_values[i] != NULL)
+                    {
+                      gchar *end;
+
+                      metadata_xml_version = strtol (attribute_values[i], &end, 10);
+                    }
+                  break;
+                }
+              attrib = attribute_names[i + 1];
+            }
+        }
       gimpmetadata = TRUE;
+
+      if (metadata_xml_version < METADATA_XML_VERSION)
+        gimp_message (_("Older version metadata template found. Not all data will be set correctly!"));
     }
   else if (strcmp (element_name, "iptc-tag") == 0)
     {
@@ -154,7 +178,11 @@ xml_parser_data (GMarkupParseContext *context,
         g_free (str_tag_value);
 
       if (text)
-        str_tag_value = g_strdup (text);
+        {
+          str_tag_value = g_locale_to_utf8 (text, -1, NULL, NULL, NULL);
+          if (! str_tag_value)
+            str_tag_value = g_strconcat ("", NULL);
+        }
       else
         str_tag_value = g_strconcat ("", NULL);
     }
@@ -184,123 +212,14 @@ xml_parser_data (GMarkupParseContext *context,
         g_free (str_element);
 
       if (text)
-        str_element = g_strdup (text);
+        {
+          str_element = g_locale_to_utf8 (text, -1, NULL, NULL, NULL);
+          if (! str_element)
+            str_element = g_strconcat ("", NULL);
+        }
       else
         str_element = g_strconcat ("", NULL);
     }
-}
-
-void
-set_tag_ui (metadata_editor *args,
-            gint             index,
-            gchar           *name,
-            gchar           *value,
-            MetadataMode     mode)
-{
-  GtkWidget *widget = NULL;
-
-  widget = GTK_WIDGET (metadata_editor_get_widget (args, str_tag_name));
-
-  if (mode == MODE_SINGLE)
-    {
-      GtkEntry *entry_widget;
-      gchar    *value_utf;
-
-      value_utf = g_locale_to_utf8 (str_tag_value, -1, NULL, NULL, NULL);
-      entry_widget = GTK_ENTRY (widget);
-      gtk_entry_set_text (entry_widget, value_utf);
-      g_free (value_utf);
-    }
-  else if (mode == MODE_MULTI)
-    {
-      GtkTextView   *text_view;
-      GtkTextBuffer *buffer;
-      gchar         *value_utf;
-
-      value_utf = g_locale_to_utf8 (str_tag_value, -1, NULL, NULL, NULL);
-      text_view = GTK_TEXT_VIEW (widget);
-      buffer = gtk_text_view_get_buffer (text_view);
-      gtk_text_buffer_set_text (buffer, value_utf, -1);
-      g_free (value_utf);
-    }
-  else if (mode == MODE_COMBO)
-    {
-      gint32  value;
-      gchar  *value_utf;
-
-      value_utf = g_locale_to_utf8 (str_tag_value, -1, NULL, NULL, NULL);
-      value = atoi(value_utf);
-      gtk_combo_box_set_active (GTK_COMBO_BOX(widget), value);
-      g_free (value_utf);
-    }
-  else if (mode == MODE_LIST)
-    {
-      GtkTreeModel  *treemodel;
-      GtkListStore  *liststore;
-      gint           number_of_rows;
-
-      liststore = GTK_LIST_STORE(gtk_tree_view_get_model((GtkTreeView *)widget));
-      treemodel = GTK_TREE_MODEL (liststore);
-      number_of_rows =
-        gtk_tree_model_iter_n_children(GTK_TREE_MODEL(liststore), NULL);
-
-      /* Clear all current values */
-      for (gint row = number_of_rows; row > -1; row--)
-        {
-          GtkTreeIter iter;
-
-          if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
-            {
-              gtk_list_store_remove (liststore, &iter);
-            }
-        }
-      /* Add new values values */
-      for (gint list_index = 0; list_index < LIST_LAST; list_index++)
-        {
-          if (! strcmp (name, default_metadata_tags[list_metadata[list_index].metadata_index].tag))
-            {
-              metadata_editor_set_list_tag_values (liststore, list_tag_data, row_count, list_index);
-
-              if (row_count < 2)
-                metadata_editor_add_empty_rows (liststore, 2 - row_count, list_index);
-
-              free_list_strings (row_count, list_metadata[list_index].n_values);
-
-              break; /* Found it, no need to look further */
-            }
-        }
-    }
-}
-
-const gchar *
-get_tag_ui_text (metadata_editor *args,
-                 gchar           *name,
-                 MetadataMode     mode)
-{
-  GtkWidget *widget = NULL;
-
-  widget = metadata_editor_get_widget (args, name);
-
-  if (mode == MODE_SINGLE)
-    {
-      GtkEntry *entry = GTK_ENTRY (widget);
-      return gtk_entry_get_text (entry);
-    }
-  else if (mode == MODE_MULTI)
-    {
-      GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
-      GtkTextBuffer *buffer;
-      GtkTextIter    start;
-      GtkTextIter    end;
-
-      buffer = gtk_text_view_get_buffer (text_view);
-      gtk_text_buffer_get_start_iter (buffer, &start);
-      gtk_text_buffer_get_end_iter (buffer, &end);
-
-      return gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
-    }
-
-  return NULL;
 }
 
 static void
@@ -321,13 +240,16 @@ get_list_elements (GString *xmldata, int element_count, gchar **rowtagdata)
 
       g_string_append (xmldata, "</element>\n");
     }
-  g_string_append (xmldata, "\t\t\t</list-element>\n\t\t");
+  g_string_append (xmldata, "\t\t\t</list-element>");
 }
 
 gchar *
-get_tag_ui_list (metadata_editor *args, gchar *name, MetadataMode mode)
+get_list_values (metadata_editor *args,
+                 gint             tag_index)
 {
-  GtkWidget     *widget = NULL;
+  const gchar   *name       = default_metadata_tags[tag_index].tag;
+  gint           list_index = default_metadata_tags[tag_index].detail_index;
+  GtkWidget     *widget     = NULL;
   GtkTreeModel  *treemodel;
   GtkListStore  *liststore;
   GtkTreeIter    iter;
@@ -336,15 +258,16 @@ get_tag_ui_list (metadata_editor *args, gchar *name, MetadataMode mode)
   gint           has_data;
   gchar         *tagdata[MAX_TAG_ROWS][MAX_TAG_COLS];
 
+  g_return_val_if_fail (list_index >= 0 && list_index < n_list_metadata, NULL);
+
   has_data = FALSE;
-  xmldata = g_string_new ("");
+  xmldata  = g_string_new ("");
+  widget   = metadata_editor_get_widget (args, name);
 
-  widget = metadata_editor_get_widget (args, name);
-
-  liststore = GTK_LIST_STORE(gtk_tree_view_get_model((GtkTreeView *)widget));
+  liststore = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (widget)));
   treemodel = GTK_TREE_MODEL (liststore);
   number_of_rows =
-    gtk_tree_model_iter_n_children(GTK_TREE_MODEL(liststore), NULL);
+    gtk_tree_model_iter_n_children (treemodel, NULL);
   
   if (number_of_rows > MAX_TAG_ROWS)
     {
@@ -353,39 +276,68 @@ get_tag_ui_list (metadata_editor *args, gchar *name, MetadataMode mode)
       number_of_rows = MAX_TAG_ROWS;
     }
 
-  for (gint list_index = 0; list_index < LIST_LAST; list_index++)
+  for (gint row = 0; row < number_of_rows; row++)
     {
-      if (! strcmp (name, default_metadata_tags[list_metadata[list_index].metadata_index].tag))
-        {
-          for (gint row = 0; row < number_of_rows; row++)
-            {
-              gboolean row_has_data;
+      gboolean row_has_data;
 
-              row_has_data = FALSE;
-              if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
+      row_has_data = FALSE;
+      if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
+        {
+          for (gint col = 0; col < list_metadata[list_index].n_values; col++)
+            {
+              gtk_tree_model_get (treemodel, &iter,
+                                  col, &tagdata[row][col],
+                                  -1);
+              if (tagdata[row][col] != NULL && strlen (tagdata[row][col]) > 0)
                 {
-                  for (gint col = 0; col < list_metadata[list_index].n_values; col++)
+                  if (list_metadata[list_index].render_types != NULL)
                     {
-                      gtk_tree_model_get (treemodel, &iter,
-                                          col, &tagdata[row][col],
-                                          -1);
-                      if (! row_has_data && tagdata[row][col] != NULL && strlen(tagdata[row][col]) > 0)
+                      if (list_metadata[list_index].render_types[col].render_type == METADATA_COMBO)
+                        {
+                          gchar *val;
+
+                          val = metadata_editor_get_list_combo_value (tagdata[row][col],
+                                                                      list_metadata[list_index].render_types[col].metadata_values,
+                                                                      list_metadata[list_index].render_types[col].n_values,
+                                                                      FALSE);
+                          if (val)
+                            {
+                              row_has_data = TRUE;
+                              has_data     = TRUE;
+                              g_free (tagdata[row][col]);
+                              tagdata[row][col] = val;
+                              /* No break here: we need to replace all combo values */
+                            }
+                          else
+                            {
+                              /* Explicitly set to NULL because other fields may contain data */
+                              g_free (tagdata[row][col]);
+                              tagdata[row][col] = NULL;
+                            }
+                        }
+                      else
                         {
                           row_has_data = TRUE;
                           has_data     = TRUE;
                         }
                     }
-                  if (has_data)
-                    get_list_elements (xmldata, list_metadata[list_index].n_values, tagdata[row]);
+                  else
+                    {
+                      row_has_data = TRUE;
+                      has_data     = TRUE;
+                    }
                 }
             }
-          break;
+          if (row_has_data)
+            get_list_elements (xmldata, list_metadata[list_index].n_values, tagdata[row]);
         }
     }
-
+  
   if (has_data == TRUE)
     {
       gchar *xml;
+
+      g_string_append (xmldata, "\n\t\t");
 
       xml = g_strdup (xmldata->str);
       g_string_free (xmldata, TRUE);
@@ -395,12 +347,6 @@ get_tag_ui_list (metadata_editor *args, gchar *name, MetadataMode mode)
   g_string_free (xmldata, TRUE);
 
   return NULL;
-}
-
-gint
-get_tag_ui_combo (metadata_editor *args, gchar *name, MetadataMode mode)
-{
-  return gtk_combo_box_get_active (GTK_COMBO_BOX(metadata_editor_get_widget (args, name)));
 }
 
 void
@@ -421,23 +367,6 @@ xml_parser_end_element (GMarkupParseContext  *context,
   else if (strcmp (element_name, "iptc-tag") == 0)
     {
       iptctag = FALSE;
-#ifdef _ENABLE_IPTC_TAG_
-      if (str_tag_name && str_tag_value)
-        {
-          /* make sure to only allow supported tags */
-          for (i = 0; i < n_equivalent_metadata_tags; i++)
-            {
-              if (strcmp (equivalent_metadata_tags[i].tag, str_tag_name) == 0)
-                {
-#ifdef _SET_IPTC_TAG_
-                  set_tag_ui (args, i, str_tag_name, str_tag_value,
-                              equivalent_metadata_tags[i].mode);
-#endif
-                  break;
-                }
-            }
-        }
-#endif
     }
   else if (strcmp (element_name, "xmp-tag") == 0)
     {
@@ -451,8 +380,8 @@ xml_parser_end_element (GMarkupParseContext  *context,
                 {
                   if (strcmp (default_metadata_tags[i].tag, str_tag_name) == 0)
                     {
-                      set_tag_ui (args, i, str_tag_name, str_tag_value,
-                                  default_metadata_tags[i].mode);
+                      metadata_editor_set_value (args, i, str_tag_value,
+                                                 metadata_xml_version < 2);
                       break;
                     }
                 }
@@ -468,8 +397,13 @@ xml_parser_end_element (GMarkupParseContext  *context,
                 {
                   if (strcmp (default_metadata_tags[i].tag, str_tag_name) == 0)
                     {
-                      set_tag_ui (args, i, str_tag_name, str_tag_value,
-                                       default_metadata_tags[i].mode);
+                      if (default_metadata_tags[i].detail_index >= 0)
+                        {
+                          gint ci = default_metadata_tags[i].detail_index;
+
+                          metadata_editor_set_values (args, i, list_tag_data, row_count);
+                          free_list_strings (row_count, list_metadata[ci].n_values);
+                        }
                       break;
                     }
                 }

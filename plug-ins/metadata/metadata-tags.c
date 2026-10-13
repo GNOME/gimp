@@ -448,17 +448,18 @@ const gchar *licensor[] =
 };
 const gint n_licensor = G_N_ELEMENTS (licensor);
 
-const gint licensor_special_handling[] =
+const list_combo licensor_list[] =
 {
-  METADATA_NONE,
-  METADATA_NONE,
-  METADATA_NONE,
-  METADATA_PHONETYPE,
-  METADATA_NONE,
-  METADATA_PHONETYPE,
-  METADATA_NONE,
-  METADATA_NONE
+  { METADATA_NONE,  NULL,        0 },
+  { METADATA_NONE,  NULL,        0 },
+  { METADATA_NONE,  NULL,        0 },
+  { METADATA_COMBO, phone_types, n_phone_types},
+  { METADATA_NONE,  NULL,        0 },
+  { METADATA_COMBO, phone_types, n_phone_types},
+  { METADATA_NONE,  NULL,        0 },
+  { METADATA_NONE,  NULL,        0 },
 };
+const gint n_licensor_list = G_N_ELEMENTS (licensor_list);
 
 #ifdef USE_TAGS
 const gchar *imagesupplier[] =
@@ -549,7 +550,7 @@ const list_references list_metadata[] =
   { XMP_EXT_REGID,          registryid,       registryid_alternative,       n_registryid,      NULL },
   { XMP_EXT_IMAGECREATOR,   imagecreator,     NULL,                         n_imagecreator,    NULL },
   { XMP_EXT_COPYRIGHTOWNER, copyrightowner,   NULL,                         n_copyrightowner,  NULL },
-  { XMP_EXT_LICENSOR,       licensor,         NULL,                         n_licensor,        licensor_special_handling },
+  { XMP_EXT_LICENSOR,       licensor,         NULL,                         n_licensor,        licensor_list },
   { XMP_EXT_PROPERTYRELID,  NULL,             NULL,                         1,                 NULL },
 };
 const gint n_list_metadata = G_N_ELEMENTS (list_metadata);

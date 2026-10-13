@@ -20,20 +20,38 @@
 #ifndef __METADATA_EDITOR_H__
 #define __METADATA_EDITOR_H__
 
-void        metadata_editor_set_list_tag_values (GtkListStore        *liststore,
-                                                 gchar              **tagdata,
-                                                 gint                 n_items,
-                                                 gint                 list_index);
+void          metadata_editor_set_list_tag_values  (GtkListStore           *liststore,
+                                                    gchar                 **tagdata,
+                                                    gint                    n_items,
+                                                    gint                    list_index);
 
-void        metadata_editor_add_empty_rows      (GtkListStore        *liststore,
-                                                 gint                 count,
-                                                 gint                 list_index);
+void          metadata_editor_add_empty_rows       (GtkListStore           *liststore,
+                                                    gint                    count,
+                                                    gint                    list_index);
 
-void        metadata_editor_write_callback      (GtkWidget           *dialog,
-                                                 metadata_editor     *meta_info,
-                                                 GimpImage           *image);
+void          metadata_editor_write_callback       (GtkWidget              *dialog,
+                                                    metadata_editor        *meta_info,
+                                                    GimpImage              *image);
 
-GtkWidget * metadata_editor_get_widget          (metadata_editor     *meta_info,
-                                                 const gchar         *name);
+GtkWidget   * metadata_editor_get_widget           (metadata_editor        *meta_info,
+                                                    const gchar            *name);
+
+gchar       * metadata_editor_get_value            (metadata_editor        *args,
+                                                    gint                    tag_index);
+
+gchar       * metadata_editor_get_list_combo_value (gchar                  *cur_ui_value,
+                                                    const combobox_str_tag *combo_values,
+                                                    gint                    n_values,
+                                                    gboolean                return_default);
+
+void          metadata_editor_set_value            (metadata_editor        *args,
+                                                    gint                    tag_index,
+                                                    gchar                  *value,
+                                                    gboolean                int_value);
+
+void          metadata_editor_set_values           (metadata_editor        *args,
+                                                    gint                    tag_index,
+                                                    gchar                 **values,
+                                                    gint                    n_rows);
 
 #endif /* __METADATA_EDITOR_H__ */

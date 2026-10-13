@@ -77,11 +77,18 @@ typedef struct
 
 typedef struct
 {
+  const gint              render_type;
+  const combobox_str_tag *metadata_values;          /* Points to array struct with values */
+  const gint              n_values;                 /* Number of values in array */
+} list_combo;
+
+typedef struct
+{
   const gint              metadata_index;           /* Index in default_metadata_tags */
   const gchar           **subtags;                  /* /Iptc4xmpExt version */
   const gchar           **alt_subtags;              /* /iptcExt version */
   const gint              n_values;                 /* Number of values in array */
-  const gint             *cell_types;               /* Array of cell renderer types */
+  const list_combo       *render_types;             /* Array of cell renderer types */
 } list_references;
 
 typedef struct

@@ -79,8 +79,8 @@ static void     export_write_tag_footer         (GString *xmldata,
 static void     export_write_string_value       (GString *xmldata,
                                                  gchar   *value_utf8);
 
-static void     export_write_int_value          (GString *xmldata,
-                                                 gint     value);
+static void     export_write_list_value         (GString *xmldata,
+                                                 gchar   *value_utf8);
 
 /* ============================================================================
  * ==[ METADATA IMPORT TEMPLATE ]==============================================
@@ -167,87 +167,46 @@ export_write_string_value (GString *xmldata,
 }
 
 void
-export_write_int_value (GString *xmldata,
-                        gint     value)
+export_write_list_value (GString *xmldata,
+                         gchar   *value_utf8)
 {
-  g_string_append (xmldata, "\t\t<tag-value>");
-  g_string_append_printf (xmldata, "%d", value);
-  g_string_append (xmldata, "</tag-value>\n");
+  g_string_append (xmldata, "\t\t<tag-list-value>");
+  g_string_append (xmldata, value_utf8);
+  g_string_append (xmldata, "</tag-list-value>\n");
 }
 
+/* FIXME: Items that still need improving for export (and import):
+ * - GPS tags are written as literal string, not converted.
+ *   Because we allow to choose between m and ft this could cause
+ *   issues, but GPS is less likely to be used in a template.
+ * - Date and DateTime fields (e.g. in DICOM) are also written as
+ *   literal string instead of conversion to internal format.
+ *   Also less likely to be used, so we'll wait until we have
+ *   other date(time) fields that need handling.
+ */
 void
 export_file_metadata (metadata_editor *args)
 {
-  GString *xmldata;
-  gint     i;
+  GString    *xmldata = NULL;
+  gint        i;
 
-  xmldata = g_string_new ("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-                          "<gimp-metadata>\n");
+  xmldata = g_string_new ("");
+  g_string_printf (xmldata, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                            "<gimp-metadata version=\"%d\">\n",
+                            METADATA_XML_VERSION);
 
-#ifdef _ENABLE_IPTC_TAG_
-  /* HANDLE IPTC */
-  for (i = 0; i < n_equivalent_metadata_tags; i++)
-    {
-      int index = equivalent_metadata_tags[i].default_tag_index;
-
-      if (export_ignore_tag (equivalent_metadata_tags[i].tag))
-        continue;
-
-      if (default_metadata_tags[index].mode == MODE_SINGLE ||
-          default_metadata_tags[index].mode == MODE_MULTI)
-        {
-          const gchar *value;
-
-          value = get_tag_ui_text (args, default_metadata_tags[index].tag,
-                                   default_metadata_tags[index].mode);
-
-          if (value)
-            {
-              gchar *value_utf;
-
-              value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
-              if (strlen (value_utf) > 0)
-                {
-                  export_write_tag_header (xmldata, "iptc", equivalent_metadata_tags[i].tag,
-                            metadata_mode_conversion[equivalent_metadata_tags[i].mode].mode_string);
-                  export_write_string_value (xmldata, value_utf);
-                  export_write_tag_footer (xmldata, "iptc");
-                  }
-              g_free (value_utf);
-            }
-        }
-      else if (default_metadata_tags[index].mode == MODE_COMBO)
-        {
-          gint data = get_tag_ui_combo (args, default_metadata_tags[index].tag,
-                                         default_metadata_tags[index].mode);
-          if (data > 0)
-            {
-              export_write_tag_header (xmldata, "iptc", equivalent_metadata_tags[i].tag,
-                        metadata_mode_conversion[equivalent_metadata_tags[i].mode].mode_string);
-              export_write_int_value (xmldata, data);
-              export_write_tag_footer (xmldata, "iptc");
-            }
-        }
-      else if (default_metadata_tags[i].mode == MODE_LIST)
-        {
-            /* No IPTC lists elements at this point */
-        }
-    }
-#endif
-
-  /* HANDLE XMP */
   for (i = 0; i < n_default_metadata_tags; i++)
     {
       if (export_ignore_tag (default_metadata_tags[i].tag))
         continue;
 
       if (default_metadata_tags[i].mode == MODE_SINGLE ||
-          default_metadata_tags[i].mode == MODE_MULTI)
+          default_metadata_tags[i].mode == MODE_MULTI  ||
+          default_metadata_tags[i].mode == MODE_COMBO)
         {
-          const gchar *value;
+          gchar *value;
 
-          value = get_tag_ui_text (args, default_metadata_tags[i].tag,
-                                   default_metadata_tags[i].mode);
+          value = metadata_editor_get_value (args, i);
 
           if (value)
             {
@@ -262,34 +221,21 @@ export_file_metadata (metadata_editor *args)
                   export_write_tag_footer (xmldata, "xmp");
                 }
               g_free (value_utf);
-            }
-        }
-      else if (default_metadata_tags[i].mode == MODE_COMBO)
-        {
-          gint data;
-
-          data = get_tag_ui_combo (args, default_metadata_tags[i].tag,
-                                         default_metadata_tags[i].mode);
-          if (data > 0)
-            {
-              export_write_tag_header (xmldata, "xmp", default_metadata_tags[i].tag,
-                                       metadata_mode_conversion[default_metadata_tags[i].mode].mode_string);
-              export_write_int_value (xmldata, data);
-              export_write_tag_footer (xmldata, "xmp");
+              if (default_metadata_tags[i].mode == MODE_MULTI)
+                g_free (value);
             }
         }
       else if (default_metadata_tags[i].mode == MODE_LIST)
         {
           gchar *data = NULL;
 
-          data = get_tag_ui_list (args, default_metadata_tags[i].tag,
-                                        default_metadata_tags[i].mode);
+          data = get_list_values (args, i);
 
           if (data)
             {
               export_write_tag_header (xmldata, "xmp", default_metadata_tags[i].tag,
                                        metadata_mode_conversion[default_metadata_tags[i].mode].mode_string);
-              export_write_string_value (xmldata, data);
+              export_write_list_value (xmldata, data);
               export_write_tag_footer (xmldata, "xmp");
             }
           g_free (data);

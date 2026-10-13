@@ -22,6 +22,8 @@
 
 #include "metadata-misc.h"
 
+#define METADATA_XML_VERSION    2          /* Version of the exported metadata XML */
+
 struct _GimpXmlParser
 {
   GMarkupParseContext *context;
@@ -44,27 +46,9 @@ xml_parser_data                              (GMarkupParseContext  *context,
                                               gpointer              user_data,
                                               GError              **error);
 
-void
-set_tag_ui                                   (metadata_editor      *args,
-                                              gint                  index,
-                                              gchar                *name,
-                                              gchar                *value,
-                                              MetadataMode          mode);
-
-const gchar *
-get_tag_ui_text                              (metadata_editor      *args,
-                                              gchar                *name,
-                                              MetadataMode          mode);
-
 gchar *
-get_tag_ui_list                              (metadata_editor      *args,
-                                              gchar                *name,
-                                              MetadataMode          mode);
-
-gint
-get_tag_ui_combo                             (metadata_editor      *args,
-                                              gchar                *name,
-                                              MetadataMode          mode);
+get_list_values                              (metadata_editor      *args,
+                                              gint                  tag_index);
 
 void
 xml_parser_end_element                       (GMarkupParseContext  *context,
