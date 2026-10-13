@@ -155,42 +155,42 @@ xml_parser_data (GMarkupParseContext *context,
   if (tagvalue)
     {
       if (str_tag_value)
-        g_free(str_tag_value);
+        g_free (str_tag_value);
 
       if (text)
-        str_tag_value = g_strdup(text);
+        str_tag_value = g_strdup (text);
       else
-        str_tag_value = g_strconcat("", NULL);
+        str_tag_value = g_strconcat ("", NULL);
     }
   else if (tagname)
     {
       if (str_tag_name)
-        g_free(str_tag_name);
+        g_free (str_tag_name);
 
       if (text)
-        str_tag_name = g_strdup(text);
+        str_tag_name = g_strdup (text);
       else
-        str_tag_name = g_strconcat("", NULL);
+        str_tag_name = g_strconcat ("", NULL);
     }
   else if (tagmode)
     {
       if (str_tag_mode)
-        g_free(str_tag_mode);
+        g_free (str_tag_mode);
 
       if (text)
-        str_tag_mode = g_strdup(text);
+        str_tag_mode = g_strdup (text);
       else
-        str_tag_mode = g_strconcat("", NULL);
+        str_tag_mode = g_strconcat ("", NULL);
     }
   else if (element)
     {
       if (str_element)
-        g_free(str_element);
+        g_free (str_element);
 
       if (text)
-        str_element = g_strdup(text);
+        str_element = g_strdup (text);
       else
-        str_element = g_strconcat("", NULL);
+        str_element = g_strconcat ("", NULL);
     }
 }
 
@@ -253,9 +253,9 @@ set_tag_ui (metadata_editor *args,
         {
           GtkTreeIter iter;
 
-          if (gtk_tree_model_iter_nth_child(treemodel, &iter, NULL, row))
+          if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
             {
-              gtk_list_store_remove(liststore, &iter);
+              gtk_list_store_remove (liststore, &iter);
             }
         }
       /* Add new values values */
@@ -318,7 +318,7 @@ get_list_elements (GString *xmldata, int element_count, gchar **rowtagdata)
     {
       g_string_append (xmldata, "\t\t\t\t<element>");
 
-      if (rowtagdata && rowtagdata[list_idx] && strlen(rowtagdata[list_idx]) > 0)
+      if (rowtagdata && rowtagdata[list_idx] && strlen (rowtagdata[list_idx]) > 0)
         {
           g_string_append (xmldata, rowtagdata[list_idx]);
         }
@@ -366,7 +366,7 @@ get_tag_ui_list (metadata_editor *args, gchar *name, MetadataMode mode)
               gboolean row_has_data;
 
               row_has_data = FALSE;
-              if (gtk_tree_model_iter_nth_child(treemodel, &iter, NULL, row))
+              if (gtk_tree_model_iter_nth_child (treemodel, &iter, NULL, row))
                 {
                   for (gint col = 0; col < list_metadata[list_index].n_values; col++)
                     {
@@ -392,11 +392,11 @@ get_tag_ui_list (metadata_editor *args, gchar *name, MetadataMode mode)
       gchar *xml;
 
       xml = g_strdup (xmldata->str);
-      g_string_free(xmldata, TRUE);
+      g_string_free (xmldata, TRUE);
       return xml;
     }
 
-  g_string_free(xmldata, TRUE);
+  g_string_free (xmldata, TRUE);
 
   return NULL;
 }
@@ -431,7 +431,7 @@ xml_parser_end_element (GMarkupParseContext  *context,
           /* make sure to only allow supported tags */
           for (i = 0; i < n_equivalent_metadata_tags; i++)
             {
-              if (strcmp(equivalent_metadata_tags[i].tag, str_tag_name) == 0)
+              if (strcmp (equivalent_metadata_tags[i].tag, str_tag_name) == 0)
                 {
 #ifdef _SET_IPTC_TAG_
                   set_tag_ui (args, i, str_tag_name, str_tag_value,
@@ -459,7 +459,7 @@ xml_parser_end_element (GMarkupParseContext  *context,
               /* make sure to only allow supported tags */
               for (i = 0; i < n_default_metadata_tags; i++)
                 {
-                  if (strcmp(default_metadata_tags[i].tag, str_tag_name) == 0)
+                  if (strcmp (default_metadata_tags[i].tag, str_tag_name) == 0)
                     {
                       set_tag_ui (args, i, str_tag_name, str_tag_value,
                                   default_metadata_tags[i].mode);
@@ -482,7 +482,7 @@ xml_parser_end_element (GMarkupParseContext  *context,
               /* make sure to only allow supported tags */
               for (i = 0; i < n_default_metadata_tags; i++)
                 {
-                  if (strcmp(default_metadata_tags[i].tag, str_tag_name) == 0)
+                  if (strcmp (default_metadata_tags[i].tag, str_tag_name) == 0)
                     {
                       set_tag_ui (args, i, str_tag_name, str_tag_value,
                                        default_metadata_tags[i].mode);
@@ -526,7 +526,7 @@ xml_parser_end_element (GMarkupParseContext  *context,
       gchar ** datarow = (gchar **) list_tag_data[row_count-1];
 
       element = FALSE;
-      datarow[item_count-1] = g_strdup(str_element);
+      datarow[item_count-1] = g_strdup (str_element);
     }
 }
 

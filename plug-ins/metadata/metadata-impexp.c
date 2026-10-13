@@ -89,7 +89,7 @@ static void     export_write_int_value          (GString *xmldata,
  * ============================================================================
  */
 void
-import_file_metadata(metadata_editor *args)
+import_file_metadata (metadata_editor *args)
 {
   GimpXmlParser  *xml_parser;
   GError         *error = NULL;
@@ -218,7 +218,7 @@ export_file_metadata (metadata_editor *args)
               gchar *value_utf;
 
               value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
-              if (strlen(value_utf) > 0)
+              if (strlen (value_utf) > 0)
                 {
                   export_write_tag_header (xmldata, "iptc", equivalent_metadata_tags[i].tag,
                             metadata_mode_conversion[equivalent_metadata_tags[i].mode].mode_string);
@@ -266,7 +266,7 @@ export_file_metadata (metadata_editor *args)
               gchar *value_utf = NULL;
 
               value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
-              if (strlen(value_utf) > 0)
+              if (strlen (value_utf) > 0)
                 {
                   export_write_tag_header (xmldata, "xmp", default_metadata_tags[i].tag,
                                            metadata_mode_conversion[default_metadata_tags[i].mode].mode_string);
@@ -304,7 +304,7 @@ export_file_metadata (metadata_editor *args)
               export_write_string_value (xmldata, data);
               export_write_tag_footer (xmldata, "xmp");
             }
-          g_free(data);
+          g_free (data);
         }
     }
 
@@ -327,6 +327,6 @@ export_file_metadata (metadata_editor *args)
 
   if (xmldata)
     {
-      g_string_free(xmldata, TRUE);
+      g_string_free (xmldata, TRUE);
     }
 }

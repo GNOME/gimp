@@ -761,7 +761,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             GtkWidget *entry;
 
             entry = gtk_entry_new ();
-            gtk_widget_set_hexpand(GTK_WIDGET (entry), TRUE);
+            gtk_widget_set_hexpand (GTK_WIDGET (entry), TRUE);
             gtk_widget_set_margin_end (entry, 5);
             gtk_grid_attach (GTK_GRID (grid), entry,
                              1, widget_info[i].index,
@@ -778,7 +778,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             GtkWidget *scrolled_window;
 
             scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-            gtk_widget_set_hexpand(GTK_WIDGET (scrolled_window), TRUE);
+            gtk_widget_set_hexpand (GTK_WIDGET (scrolled_window), TRUE);
             gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                             GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
             gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -786,7 +786,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_widget_set_margin_end (scrolled_window, 5);
             gtk_widget_set_visible (scrolled_window, TRUE);
 
-            textview = gtk_text_view_new();
+            textview = gtk_text_view_new ();
             gtk_container_add (GTK_CONTAINER (scrolled_window), textview);
             gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (textview), GTK_WRAP_WORD);
             gtk_text_view_set_left_margin (GTK_TEXT_VIEW (textview), 6);
@@ -805,7 +805,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             GtkWidget *combo;
 
             combo = gtk_combo_box_text_new ();
-            gtk_widget_set_hexpand(GTK_WIDGET (combo), TRUE);
+            gtk_widget_set_hexpand (GTK_WIDGET (combo), TRUE);
             gtk_widget_set_margin_end (combo, 5);
             gtk_widget_set_can_focus (combo, FALSE);
             gtk_grid_attach (GTK_GRID (grid), combo,
@@ -824,14 +824,14 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             /* A date_entry and a button in one grid cell using a box as parent */
 
             date_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-            gtk_widget_set_hexpand(GTK_WIDGET (date_box), TRUE);
+            gtk_widget_set_hexpand (GTK_WIDGET (date_box), TRUE);
             gtk_grid_attach (GTK_GRID (grid), date_box,
                              1, widget_info[i].index,
                              1, 1);
             gtk_widget_set_visible (date_box, TRUE);
 
             date_entry = gtk_entry_new ();
-            gtk_widget_set_hexpand(GTK_WIDGET (date_entry), TRUE);
+            gtk_widget_set_hexpand (GTK_WIDGET (date_entry), TRUE);
             gtk_box_pack_start (GTK_BOX (date_box), date_entry, TRUE, TRUE, 0);
             gtk_widget_set_visible (date_entry, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].id,
@@ -859,7 +859,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
              * If needed, you can change size manually after creation. */
 
             ec_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-            gtk_widget_set_hexpand(GTK_WIDGET (ec_box), TRUE);
+            gtk_widget_set_hexpand (GTK_WIDGET (ec_box), TRUE);
             gtk_widget_set_margin_end (ec_box, 5);
             gtk_grid_attach (GTK_GRID (grid), ec_box,
                              1, widget_info[i].index,
@@ -867,7 +867,7 @@ metadata_editor_create_widgets (const me_widget_info *widget_info,
             gtk_widget_set_visible (ec_box, TRUE);
 
             ec_entry = gtk_entry_new ();
-            gtk_widget_set_hexpand(GTK_WIDGET (ec_entry), TRUE);
+            gtk_widget_set_hexpand (GTK_WIDGET (ec_entry), TRUE);
             gtk_box_pack_start (GTK_BOX (ec_box), ec_entry, TRUE, TRUE, 0);
             gtk_widget_set_visible (ec_entry, TRUE);
             g_hash_table_insert (meta_info->widgets, widget_info[i].id,
@@ -925,7 +925,7 @@ metadata_editor_create_tree_grid (const me_column_info *tree_info,
   GtkWidget *button_box, *button;
 
   tree_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_widget_set_hexpand(GTK_WIDGET (tree_box), TRUE);
+  gtk_widget_set_hexpand (GTK_WIDGET (tree_box), TRUE);
   gtk_widget_set_margin_end (tree_box, 5);
   gtk_widget_set_visible (tree_box, TRUE);
   gtk_grid_attach (GTK_GRID (grid), tree_box,
@@ -935,7 +935,7 @@ metadata_editor_create_tree_grid (const me_column_info *tree_info,
   tree = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
   gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tree), FALSE);
   if (n_items == 1)
-    gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(tree), FALSE);
+    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree), FALSE);
   gtk_tree_view_set_grid_lines (GTK_TREE_VIEW (tree), GTK_TREE_VIEW_GRID_LINES_BOTH);
   gtk_box_pack_start (GTK_BOX (tree_box), tree, TRUE, TRUE, 0);
   gtk_widget_set_visible (tree, TRUE);
@@ -1076,7 +1076,7 @@ metadata_editor_dialog (GimpImage            *image,
                             NULL);
   g_free (title);
 
-  gtk_widget_set_size_request(dialog, 650, 500);
+  gtk_widget_set_size_request (dialog, 650, 500);
 
   meta_args.dialog = dialog;
 
@@ -1350,7 +1350,7 @@ split_metadata_string (gchar *value)
 
   for (item = 0; split[item]; item++)
     {
-      split[item] = g_strstrip(split[item]);
+      split[item] = g_strstrip (split[item]);
     }
 
   return split;
@@ -1381,7 +1381,7 @@ add_to_store (gchar *value, GtkListStore *liststore, gint store_column)
                                       -1);
                 }
             }
-          g_strfreev(strings);
+          g_strfreev (strings);
         }
     }
 
@@ -1469,7 +1469,7 @@ get_tags (GExiv2Metadata  *metadata,
 }
 
 static void
-free_tagdata(gchar **tagdata, gint rows, gint cols)
+free_tagdata (gchar **tagdata, gint rows, gint cols)
 {
   gint    row, col;
   gchar **tagdatarow;
