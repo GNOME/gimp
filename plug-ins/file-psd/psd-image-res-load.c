@@ -482,8 +482,8 @@ load_thumbnail_resource (PSDimageres   *res_a,
     }
 
   /* Process image resource blocks */
-  if (res_a->id == PSD_THUMB_RES
-      || res_a->id == PSD_THUMB_RES2)
+  if (res_a->id == PSD_THUMB_RES ||
+      res_a->id == PSD_THUMB_RES2)
     {
       /* Load thumbnails from standard file load */
       load_resource_1033 (res_a, image, file, input, error);
@@ -1048,14 +1048,14 @@ load_resource_1033 (const PSDimageres  *res_a,
       psd_set_error (error);
       return -1;
     }
-  thumb_info.format = GINT32_FROM_BE (thumb_info.format);
-  thumb_info.width = GINT32_FROM_BE (thumb_info.width);
-  thumb_info.height = GINT32_FROM_BE (thumb_info.height);
-  thumb_info.widthbytes = GINT32_FROM_BE (thumb_info.widthbytes);
-  thumb_info.size = GINT32_FROM_BE (thumb_info.size);
+  thumb_info.format         = GINT32_FROM_BE (thumb_info.format);
+  thumb_info.width          = GINT32_FROM_BE (thumb_info.width);
+  thumb_info.height         = GINT32_FROM_BE (thumb_info.height);
+  thumb_info.widthbytes     = GINT32_FROM_BE (thumb_info.widthbytes);
+  thumb_info.size           = GINT32_FROM_BE (thumb_info.size);
   thumb_info.compressedsize = GINT32_FROM_BE (thumb_info.compressedsize);
-  thumb_info.bitspixel = GINT16_FROM_BE (thumb_info.bitspixel);
-  thumb_info.planes = GINT16_FROM_BE (thumb_info.planes);
+  thumb_info.bitspixel      = GINT16_FROM_BE (thumb_info.bitspixel);
+  thumb_info.planes         = GINT16_FROM_BE (thumb_info.planes);
 
   IFDBG(2) g_debug ("\nThumbnail:\n"
                     "\tFormat: %d\n"
@@ -1091,10 +1091,14 @@ load_resource_1033 (const PSDimageres  *res_a,
   /* Step 3: read file parameters with jpeg_read_header() */
   jpeg_read_header (&cinfo, TRUE);
 
-  /* Step 4: set parameters for decompression */
+  /* PSD Thumbs are always in RGB according to specification */
+  if (cinfo.output_components != 3)
+    {
+      IFDBG(1) g_debug ("Unknown thumbnail format %d", cinfo.output_components);
+      return -1;
+    }
 
-
-  /* Step 5: Start decompressor */
+  /* Step 4: Start decompressor */
   jpeg_start_decompress (&cinfo);
 
   /* temporary buffers */
@@ -1131,7 +1135,7 @@ load_resource_1033 (const PSDimageres  *res_a,
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   format = babl_format ("R'G'B' u8");
 
-  /* Step 6: while (scan lines remain to be read) */
+  /* Step 5: while (scan lines remain to be read) */
   /*           jpeg_read_scanlines(...); */
   while (cinfo.output_scanline < cinfo.output_height)
     {
@@ -1143,11 +1147,23 @@ load_resource_1033 (const PSDimageres  *res_a,
     {
       guchar *dst = rgb_buf;
       guchar *src = buf;
+      gsize   dimensions;
+      guchar  r, g, b;
 
-      for (i = 0; i < gegl_buffer_get_width (buffer) * gegl_buffer_get_height (buffer); ++i)
+      if (! g_size_checked_mul (&dimensions, gegl_buffer_get_width (buffer),
+                                gegl_buffer_get_height (buffer)))
         {
-          guchar r, g, b;
+          psd_set_error (error);
+          jpeg_destroy_decompress (&cinfo);
+          fclose (f);
 
+          g_free (rgb_buf);
+          g_free (buf);
+          return -1;
+        }
+
+      for (i = 0; i < dimensions; ++i)
+        {
           r = *(src++);
           g = *(src++);
           b = *(src++);
