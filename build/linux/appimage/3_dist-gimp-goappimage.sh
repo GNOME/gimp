@@ -406,6 +406,10 @@ bund_usr "$UNIX_PREFIX" "bin/python*"
 bund_usr "$UNIX_PREFIX" "lib/python*"
 wipe_usr ${LIB_DIR}/*.pyc
 conf_app PYTHONDONTWRITEBYTECODE "1" --no-expand
+##### Python wheels support. See: #16860
+for lib in libpthread.so.0 libdl.so.2 librt.so.1 libutil.so.1 libanl.so.1; do
+  bund_usr "$UNIX_PREFIX" "lib/$lib"
+done
 #### JavaScript plug-ins support
 bund_usr "$UNIX_PREFIX" "bin/gjs*"
 bund_usr "$UNIX_PREFIX" "lib/gjs/girepository-*/Gjs*.typelib" --dest "${LIB_DIR}/${LIB_SUBDIR}girepository-1.0"
@@ -440,6 +444,12 @@ exec_list=$(find "$USR_DIR/bin" "$USR_DIR/$LIB_DIR" ! -iname "*.so*" -type f -ex
 for exec in $exec_list; do
   if ! echo "$exec" | grep -q 'ELF'; then
     patchelf --set-interpreter "./$LD_LINUX" "$exec" >/dev/null 2>&1 || continue
+  fi
+done
+### FIXME: Set DR_RPATH since it applies to shared modules, unlike DR_RUNPATH
+for exec in $exec_list; do
+  if ! echo "$exec" | grep -q 'ELF' && echo "${exec##*/}" | grep -q '^python'; then
+    patchelf --force-rpath --set-rpath "$(patchelf --print-rpath "$exec")" "$exec"
   fi
 done
 ### FIXME: resource:// protocol seems broken on Debian 13. Remove this when update to Debian 14(?). See: #15552
