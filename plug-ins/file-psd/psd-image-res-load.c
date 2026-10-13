@@ -471,8 +471,8 @@ load_thumbnail_resource (PSDimageres   *res_a,
                          GInputStream  *input,
                          GError       **error)
 {
-  gint  rtn = 0;
-  gint  pad;
+  gint rtn = 0;
+  gint pad;
 
   /* Set file position to start of image resource data block */
   if (! psd_seek (input, res_a->data_start, G_SEEK_SET, error))
@@ -1091,10 +1091,11 @@ load_resource_1033 (const PSDimageres  *res_a,
   /* Step 3: read file parameters with jpeg_read_header() */
   jpeg_read_header (&cinfo, TRUE);
 
-  /* PSD Thumbs are always in RGB according to specification */
+  /* PSD Thumbnails are always in RGB according to specification */
   if (cinfo.output_components != 3)
     {
-      IFDBG(1) g_debug ("Unknown thumbnail format %d", cinfo.output_components);
+      IFDBG(1) g_debug ("Unknown thumbnail format %d",
+                        cinfo.output_components);
       return -1;
     }
 
