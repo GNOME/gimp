@@ -351,7 +351,7 @@ fi
     --options runtime --timestamp ${PYTHON_SIGN_CONSTRAINT} "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/lib/Python.framework/Versions/${PYTHON_VERSION}/Python"
 
   printf '(INFO): signing MacOS/ executables called by GIMP\n'
-  find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/python3" "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/xdg-email" | while read -r bin; do
+  find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS/python3" | while read -r bin; do
     if [ -f "$bin" ]; then
       printf "(INFO): signing $bin\n"
       PYTHON_BIN_ENTITLEMENT=''
@@ -366,7 +366,7 @@ fi
 
   printf '(INFO): signing MacOS/ executables related to gegl\n'
   find "$DMG_MOUNT/$BUNDLE_NAME.app/Contents/MacOS" -type f -perm +111 \
-    ! -name "gimp*" ! -name "gimp-console*" ! -name "gimp-debug-tool*" ! -name "gimp-test-clipboard*" ! -name "gimptool*" ! -name "gimp-script-fu-interpreter*" ! -name "python*" ! -name "xdg-email" | while read -r bin; do
+    ! -name "gimp*" ! -name "gimp-console*" ! -name "gimp-debug-tool*" ! -name "gimp-test-clipboard*" ! -name "gimptool*" ! -name "gimp-script-fu-interpreter*" ! -name "python*" | while read -r bin; do
     if [ ! -L "$bin" ]; then
       printf "(INFO): signing $bin\n"
       codesign -s "${codesign_subject}" \
