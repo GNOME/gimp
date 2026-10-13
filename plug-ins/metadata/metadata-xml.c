@@ -32,10 +32,6 @@
 #include "metadata-tags.h"
 #include "metadata-editor.h"
 
-#ifdef _ENABLE_FORCE_WRITE_
-gboolean force_write = FALSE;
-#endif
-
 gboolean gimpmetadata = FALSE;
 gboolean xmptag;
 gboolean iptctag;
@@ -437,12 +433,6 @@ xml_parser_end_element (GMarkupParseContext  *context,
                   set_tag_ui (args, i, str_tag_name, str_tag_value,
                               equivalent_metadata_tags[i].mode);
 #endif
-#ifdef _ENABLE_FORCE_WRITE_
-                  if (force_write == TRUE)
-                    gexiv2_metadata_set_tag_string (args->metadata,
-                                                    str_tag_name,
-                                                    str_tag_value);
-#endif
                   break;
                 }
             }
@@ -463,12 +453,6 @@ xml_parser_end_element (GMarkupParseContext  *context,
                     {
                       set_tag_ui (args, i, str_tag_name, str_tag_value,
                                   default_metadata_tags[i].mode);
-#ifdef _ENABLE_FORCE_WRITE_
-                      if (force_write == TRUE)
-                        gexiv2_metadata_set_tag_string (args->metadata,
-                                                        str_tag_name,
-                                                        str_tag_value);
-#endif
                       break;
                     }
                 }
@@ -486,12 +470,6 @@ xml_parser_end_element (GMarkupParseContext  *context,
                     {
                       set_tag_ui (args, i, str_tag_name, str_tag_value,
                                        default_metadata_tags[i].mode);
-#ifdef _ENABLE_FORCE_WRITE_
-                      if (force_write == TRUE)
-                        gexiv2_metadata_set_tag_string (args->metadata,
-                                                        str_tag_name,
-                                                        str_tag_value);
-#endif
                       break;
                     }
                 }

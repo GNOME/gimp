@@ -39,9 +39,7 @@ extern gboolean xmptag;
 extern gboolean iptctag;
 extern gboolean tagvalue;
 extern gboolean tagname;
-#ifdef _ENABLE_FORCE_WRITE_
-extern gboolean force_write;
-#endif
+
 extern gchar *str_tag_value;
 extern gchar *str_tag_name;
 
@@ -182,16 +180,6 @@ export_file_metadata (metadata_editor *args)
 {
   GString *xmldata;
   gint     i;
-
-#ifdef _ENABLE_FORCE_WRITE_
-  if (force_write == TRUE)
-    {
-      /* Save fields in case of updates */
-      metadata_editor_write_callback (args->dialog, args, args->image);
-      /* Fetch a fresh copy of the metadata */
-      args->metadata = GEXIV2_METADATA (gimp_image_get_metadata (args->image));
-    }
-#endif
 
   xmldata = g_string_new ("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                           "<gimp-metadata>\n");
