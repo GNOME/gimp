@@ -265,7 +265,7 @@ if [ "$GITLAB_CI" ] && [ "$CI_COMMIT_REF_PROTECTED" = 'true' ]; then
       NOTARY_IN="gimp-app-notarize-${ARCH}.zip"
       ditto -c -k --keepParent "$1" "$NOTARY_IN"
     fi
-    NOTARY_OUT="$(xcrun notarytool submit "$NOTARY_IN" --apple-id ${notarization_login} --team-id ${notarization_teamid} --password ${notarization_password} --wait 2>&1)"
+    NOTARY_OUT="$(xcrun notarytool submit "$NOTARY_IN" --apple-id ${notarization_login} --team-id ${notarization_teamid} --password ${notarization_password} --wait 2>&1)" || true
     if echo "$1" | grep -q '.app'; then
       rm -f "$NOTARY_IN"
     fi
