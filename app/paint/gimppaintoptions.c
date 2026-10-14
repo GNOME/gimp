@@ -972,7 +972,6 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
                              gdouble           pixel_dist)
 {
   GimpFadeOptions *fade_options;
-  gdouble          z        = -1.0;
   gdouble          fade_out =  0.0;
   gdouble          unit_factor;
   gdouble          pos;
@@ -1013,22 +1012,37 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
   else
     pos = DYNAMIC_MAX_VALUE;
 
-  /*  for no repeat, set pos close to 1.0 after the first chunk  */
-  if (fade_options->fade_repeat == GIMP_REPEAT_NONE && pos >= DYNAMIC_MAX_VALUE)
-    pos = DYNAMIC_MAX_VALUE - 0.0000001;
+  if (pos > DYNAMIC_MAX_VALUE)
+    switch (fade_options->fade_repeat)
+    {
+      case GIMP_REPEAT_NONE: /* extend */
+        pos = DYNAMIC_MAX_VALUE;
 
-  if (((gint) pos & 1) &&
-      fade_options->fade_repeat != GIMP_REPEAT_SAWTOOTH)
-    pos = DYNAMIC_MAX_VALUE - (pos - (gint) pos);
-  else
-    pos = pos - (gint) pos;
+      break;
+      case GIMP_REPEAT_TRUNCATE:
+        pos = DYNAMIC_MIN_VALUE;
 
-  z = pos;
+      break;
+      case GIMP_REPEAT_TRIANGULAR:
+        if ((gint) pos & 1)
+          pos = DYNAMIC_MAX_VALUE - (pos - (gint) pos);
+        else
+          pos = pos - (gint) pos;
+
+      break;
+      case GIMP_REPEAT_SAWTOOTH:
+        pos = pos - (gint) pos;
+
+      break;
+      default:
+        g_warn_if_reached();
+        pos = DYNAMIC_MAX_VALUE;
+    }
 
   if (fade_options->fade_reverse)
-    z = 1.0 - z;
+    pos = DYNAMIC_MAX_VALUE - pos;
 
-  return z;    /*  ln (1/255)  */
+  return pos;
 }
 
 gdouble
