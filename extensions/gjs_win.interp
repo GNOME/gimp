@@ -1,0 +1,5 @@
+gjs=gjs.exe
+gjs-console=gjs.exe
+/usr/bin/gjs=gjs.exe
+/usr/bin/gjs-console=gjs.exe
+:JavaScript:E::js::gjs:
