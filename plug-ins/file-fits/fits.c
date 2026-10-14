@@ -730,6 +730,7 @@ export_fits (GFile        *file,
   void          *data   = NULL;
   GeglBuffer    *buffer;
   const Babl    *format, *type;
+  gsize          base_alloc;
 
   buffer = gimp_drawable_get_buffer (drawable);
 
@@ -821,14 +822,28 @@ export_fits (GFile        *file,
   channelnum = babl_format_get_n_components (format);
 
   /* allocate a buffer for retrieving information from the pixel region  */
+  if (! g_size_checked_mul (&base_alloc, width, height) ||
+      ! g_size_checked_mul (&base_alloc, base_alloc, channelnum))
+    return FALSE;
+
   if (export_type == TFLOAT)
-    data = (gfloat *) g_malloc (width * height * sizeof (gfloat) * channelnum);
+    {
+      if (! g_size_checked_mul (&base_alloc, base_alloc, sizeof (gfloat)) ||
+          ! (data = (gfloat *) g_try_malloc0 (base_alloc)))
+        return FALSE;
+    }
   else if (export_type == TDOUBLE)
-    data = (gdouble *) g_malloc (width * height * sizeof (gdouble) *
-                                 channelnum);
+    {
+      if (! g_size_checked_mul (&base_alloc, base_alloc, sizeof (gdouble)) ||
+          ! (data = (gdouble *) g_try_malloc0 (base_alloc)))
+        return FALSE;
+    }
   else
-    data = (guchar *) g_malloc (width * height * sizeof (guchar *) *
-                                (bitpix / 8) * channelnum);
+    {
+      if (! g_size_checked_mul (&base_alloc, base_alloc, (bitpix / 8)) ||
+          ! (data = (guchar *) g_try_malloc0 (base_alloc)))
+        return FALSE;
+    }
 
   /* CFITSIO can't overwrite files unless you start the filename
    * with a "!". Instead, we'll try to open the existing file
@@ -917,6 +932,7 @@ export_fits (GFile        *file,
       if (fits_write_img (fptr, export_type, 1, nelements, data, &status))
         {
           show_fits_errors (status);
+          g_free (data);
           return FALSE;
         }
     }
@@ -925,10 +941,10 @@ export_fits (GFile        *file,
       glong       fpixel[3]     = {1, 1, 1};
       gdouble    *rgb_data;
       gdouble    *rgb_output;
+      gsize       rgb_alloc;
       const Babl *rgb_format;
       const Babl *output_format = babl_format ("Y' double");
       const Babl *converted_format;
-
 
       rgb_format = (channelnum == 3) ? babl_format ("R'G'B' double") :
                                        babl_format ("R'G'B'A double");
@@ -939,9 +955,16 @@ export_fits (GFile        *file,
                                           babl_component ("Y'"),
                                           NULL);
 
-      rgb_data = (gdouble *) g_malloc (width * height * sizeof (gdouble) *
-                                       channelnum);
-      rgb_output = (gdouble *) g_malloc (width * height * sizeof (gdouble));
+      if (! g_size_checked_mul (&rgb_alloc, width, height)                ||
+          ! g_size_checked_mul (&rgb_alloc, rgb_alloc, sizeof (gdouble)) ||
+          ! (rgb_output = (gdouble *) g_try_malloc0 (rgb_alloc))          ||
+          ! g_size_checked_mul (&rgb_alloc, rgb_alloc, channelnum)       ||
+          ! (rgb_data = (gdouble *) g_try_malloc0 (rgb_alloc)))
+        {
+          g_free (data);
+          return FALSE;
+        }
+
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
                        rgb_format, rgb_data,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
@@ -951,6 +974,7 @@ export_fits (GFile        *file,
           gint  offset           = 0;
           gint  src_offset       = 0;
           void *converted_output = NULL;
+          gsize alloc            = 0;
 
           for (gint i = 0; i < height - 1; i++)
             {
@@ -964,16 +988,51 @@ export_fits (GFile        *file,
               offset     += width;
             }
 
+          if (! g_size_checked_mul (&alloc, width, height))
+            {
+              g_free (data);
+              g_free (rgb_data);
+              g_free (rgb_output);
+
+              return FALSE;
+            }
+
           if (export_type == TFLOAT)
-            converted_output = (gfloat *) g_malloc (width * height *
-                                                    sizeof (gfloat));
+            {
+              if (! g_size_checked_mul (&alloc, alloc, sizeof (gfloat)) ||
+                  ! (converted_output = (gfloat *) g_try_malloc0 (alloc)))
+                {
+                  g_free (data);
+                  g_free (rgb_data);
+                  g_free (rgb_output);
+
+                  return FALSE;
+                }
+            }
           else if (export_type == TDOUBLE)
-            converted_output = (gdouble *) g_malloc (width * height *
-                                                     sizeof (gdouble));
+            {
+              if (! g_size_checked_mul (&alloc, alloc, sizeof (gdouble)) ||
+                  ! (converted_output = (gdouble *) g_try_malloc0 (alloc)))
+                {
+                  g_free (data);
+                  g_free (rgb_data);
+                  g_free (rgb_output);
+
+                  return FALSE;
+                }
+            }
           else
-            converted_output = (guchar *) g_malloc (width * height    *
-                                                    sizeof (guchar *) *
-                                                    (bitpix / 8));
+            {
+              if (! g_size_checked_mul (&alloc, alloc, (bitpix / 8)) ||
+                  ! (converted_output = (guchar *) g_try_malloc0 (alloc)))
+                {
+                  g_free (data);
+                  g_free (rgb_data);
+                  g_free (rgb_output);
+
+                  return FALSE;
+                }
+            }
 
           babl_process (babl_fish (output_format, converted_format),
                         rgb_output, converted_output, nelements);
@@ -982,6 +1041,7 @@ export_fits (GFile        *file,
                               converted_output, &status))
             {
               show_fits_errors (status);
+              g_free (data);
               return FALSE;
             }
           fpixel[2]++;
@@ -992,7 +1052,6 @@ export_fits (GFile        *file,
       g_free (rgb_data);
       g_free (rgb_output);
     }
-
   g_free (data);
 
   g_object_unref (buffer);
