@@ -21,6 +21,7 @@ ${MINGW_PACKAGE_PREFIX}-freetype|vcpkg:freetype
 ${MINGW_PACKAGE_PREFIX}-gdk-pixbuf2|vcpkg:gdk-pixbuf[introspection,others]
 ${MINGW_PACKAGE_PREFIX}-gexiv2|vcpkg:gexiv2
 ${MINGW_PACKAGE_PREFIX}-ghostscript
+${MINGW_PACKAGE_PREFIX}-gjs
 ${MINGW_PACKAGE_PREFIX}-glib2|vcpkg:glib
 ${MINGW_PACKAGE_PREFIX}-glib-networking|vcpkg:glib-networking
 ${MINGW_PACKAGE_PREFIX}-gobject-introspection-runtime|vcpkg:gobject-introspection[cairo]

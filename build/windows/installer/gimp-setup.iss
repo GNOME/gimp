@@ -113,6 +113,7 @@
 #define DEPS_ARCHS="depsARM64"
 #define PY_ARCHS="pyARM64"
 #define LUA_ARCHS="luaARM64"
+#define JS_ARCHS="jsARM64"
 #endif
 #if !Defined(ARM64_BUNDLE) && Defined(X64_BUNDLE)
 #define ARCHS_ALLOWED="x64os"
@@ -121,6 +122,7 @@
 #define DEPS_ARCHS="depsX64"
 #define PY_ARCHS="pyX64"
 #define LUA_ARCHS="luaX64"
+#define JS_ARCHS="jsX64"
 #endif
 #if Defined(ARM64_BUNDLE) && Defined(X64_BUNDLE)
 #define ARCHS_ALLOWED="x64compatible"
@@ -129,9 +131,10 @@
 #define DEPS_ARCHS="depsARM64 or depsX64"
 #define PY_ARCHS="pyARM64 or pyX64"
 #define LUA_ARCHS="luaARM64 or luaX64"
+#define JS_ARCHS="jsARM64 or jsX64"
 #endif
 
-;Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, NOCOMPRESSION, NOFILES, DEVEL_WARNING
+;Optional Build-time params: DEBUG_SYMBOLS, LUA, PYTHON, JAVASCRIPT, NOCOMPRESSION, NOFILES, DEVEL_WARNING
 
 ;Optional Run-time params: /configoverride= /disablecheckupdate=false|true /debugresume=0|1 /resumeinstall=0|1|2
 
@@ -331,6 +334,15 @@ Name: pyARM64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: 
 Name: pyX64; Description: "{cm:ComponentsPython}"; Types: full custom; Check: CheckArch('x64')
 #endif
 #endif
+;JavaScript plug-ins support
+#ifdef JAVASCRIPT
+#ifdef ARM64_BUNDLE
+Name: jsARM64; Description: "{cm:ComponentsJavaScript}"; Types: full custom; Check: CheckArch('arm64')
+#endif
+#ifdef X64_BUNDLE
+Name: jsX64; Description: "{cm:ComponentsJavaScript}"; Types: full custom; Check: CheckArch('x64')
+#endif
+#endif
 ;Locales
 Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
 #include ASSETS_DIR + "\base_po-cmp.list"
@@ -358,7 +370,7 @@ Source: "{#ASSETS_DIR}\installsplash_bottom.bmp"; Flags: dontcopy
 #define COMMON_FLAGS="recursesubdirs restartreplace uninsrestartdelete ignoreversion"
 
 ;Required arch-neutral files (compact install)
-#define OPTIONAL_EXT="*.pdb,*.lua,*.py"
+#define OPTIONAL_EXT="*.pdb,*.lua,*.py,*.js"
 Source: "{#MAIN_BUNDLE}\etc\gimp\*"; DestDir: "{app}\etc\gimp"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\default.env"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gimp-script-fu-interpreter*.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#GIMP_ARCHS}; Flags: {#COMMON_FLAGS}
@@ -380,13 +392,17 @@ Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\environ\py*.env"; Des
 Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\pygimp*.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#PY_ARCHS}; Flags: {#COMMON_FLAGS}
 Source: "{#MAIN_BUNDLE}\*.py"; DestDir: "{app}"; Components: {#PY_ARCHS}; Flags: {#COMMON_FLAGS}
 #endif
+#ifdef JAVASCRIPT
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters\gjs*.interp"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\interpreters"; Components: {#JS_ARCHS}; Flags: {#COMMON_FLAGS}
+Source: "{#MAIN_BUNDLE}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}\*.js"; DestDir: "{app}\lib\gimp\{#GIMP_PKGCONFIG_VERSION}"; Components: {#JS_ARCHS}; Flags: {#COMMON_FLAGS}
+#endif
 Source: "{#MAIN_BUNDLE}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: dontcopy {#COMMON_FLAGS}
 #include ASSETS_DIR + "\base_po-files.list"
 Source: "{#MAIN_BUNDLE}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: {#COMMON_FLAGS}
 
 
-#define OPTIONAL_DLL="libgs*.dll,lua*.dll,corelgilua*.dll,gluas.dll,libpython*.dll"
-#define OPTIONAL_EXE="file-ps.exe,lua*.exe,python*.exe"
+#define OPTIONAL_DLL="libgs*.dll,lua*.dll,corelgilua*.dll,gluas.dll,libpython*.dll,libgjs*.dll,mozjs*.dll"
+#define OPTIONAL_EXE="file-ps.exe,lua*.exe,python*.exe,gjs*.exe"
 
 #define FindHandle
 #define FindResult
@@ -415,7 +431,7 @@ Source: "{#BUNDLE}\lib\gimp\*.exe"; DestDir: "{app}\lib\gimp"; Excludes: "{#OPTI
 Source: "{#BUNDLE}\lib\girepository-1.0\Gimp*.typelib"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 Source: "{#BUNDLE}\bin\*"; DestDir: "{app}\bin"; Excludes: "libgimp*.dll,gimp*.exe,*.pdb,{#OPTIONAL_DLL},{#OPTIONAL_EXE}"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
-Source: "{#BUNDLE}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.pdb,*.a,*.pc,lua,gluas.dll,python{#PYTHON_VERSION}"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\*"; DestDir: "{app}\lib"; Excludes: "gimp,Gimp*.typelib,*.pdb,*.a,*.pc,lua,gluas.dll,python{#PYTHON_VERSION},gjs"; Components: deps{#COMPONENT}; Flags: {#COMMON_FLAGS}
 
 ; Optional arch-specific components (full installation)
 #if defined(DEBUG_SYMBOLS)
@@ -440,6 +456,13 @@ Source: "{#BUNDLE}\lib\gluas.dll"; DestDir: "{app}\lib"; Components: lua{#COMPON
 Source: "{#BUNDLE}\bin\libpython*.dll"; DestDir: "{app}\bin"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS}
 Source: "{#BUNDLE}\bin\python*.exe"; DestDir: "{app}\bin"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS}
 Source: "{#BUNDLE}\lib\python{#PYTHON_VERSION}\*"; DestDir: "{app}\lib\python{#PYTHON_VERSION}"; Excludes: "*.pdb,*.py"; Components: py{#COMPONENT}; Flags: {#COMMON_FLAGS} createallsubdirs
+#endif
+
+#ifdef JAVASCRIPT
+Source: "{#BUNDLE}\bin\libgjs*.dll"; DestDir: "{app}\bin"; Components: js{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\mozjs*.dll"; DestDir: "{app}\bin"; Components: js{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\bin\gjs*.exe"; DestDir: "{app}\bin"; Components: js{#COMPONENT}; Flags: {#COMMON_FLAGS}
+Source: "{#BUNDLE}\lib\gjs\*"; DestDir: "{app}\lib\gjs"; Components: js{#COMPONENT}; Flags: {#COMMON_FLAGS}
 #endif
 
 #undef BUNDLE
@@ -1682,7 +1705,7 @@ var i,j: Integer;
 begin
   DebugMsg('ComponentsListOnClick','');
 
-  Components := ['Gimp','Deps','Debug','Dev','Ghostscript','Lua','Python','Translations','MyPaint'];
+  Components := ['Gimp','Deps','Debug','Dev','Ghostscript','Lua','Python','JavaScript','Translations','MyPaint'];
   ComponentDesc := '';
 
   for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do

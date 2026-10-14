@@ -41,7 +41,6 @@ Invoke-Expression ((Get-Content .gitlab-ci.yml | Select-String 'win_environ\[' -
 Write-Output "$([char]27)[0Ksection_start:$(Get-Date -UFormat %s -Millisecond 0):gimp_build[collapsed=true]$([char]13)$([char]27)[0KBuilding GIMP"
 if (-not (Test-Path _build-$(@($env:VCPKG_DEFAULT_HOST_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1)\build.ninja -Type Leaf))
   {
-    #FIXME: There is no GJS for Windows. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/5891
     meson setup _build-$(@($env:VCPKG_DEFAULT_HOST_TRIPLET,$env:MSYSTEM_PREFIX) | ?{$_} | select -First 1) -Dprefix="$GIMP_PREFIX" $NON_RELOCATABLE_OPTION `
                 $PKGCONF_RELOCATABLE_OPTION $WARN_AS_ERROR_ON_CI $INSTALLER_OPTION $STORE_OPTION `
                 -Denable-default-bin=enabled -Dbuild-id='org.gimp.GIMP_official';

@@ -201,6 +201,12 @@ clean(GIMP_DISTRIB, "lib/python*/*tkinter*")
 clean(GIMP_DISTRIB, "lib/python*/imath*")
 #####Needed for internet connection on python. See: https://gitlab.gnome.org/GNOME/gimp/-/issues/14722
 bundle(MSYSTEM_PREFIX, "etc/ssl/cert.pem")
+#### JavaScript support
+#####gjs-console.exe is needed for plug-ins error output if `gimp*.exe` is run from console
+bundle(MSYSTEM_PREFIX, "bin/gjs-console.exe")
+#####gjs.exe is needed to run plug-ins silently if `gimp*.exe` is run from shortcut
+bundle(MSYSTEM_PREFIX, "bin/gjs.exe")
+bundle(MSYSTEM_PREFIX, "lib/gjs/girepository-*/GjsPrivate*.typelib")
 #### FIXME: luajit crashes at startup: See: https://gitlab.gnome.org/GNOME/gimp/-/issues/11597
 #bundle(MSYSTEM_PREFIX, "bin/luajit.exe")
 #bundle(MSYSTEM_PREFIX, "lib/lua")
