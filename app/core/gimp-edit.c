@@ -952,9 +952,16 @@ gimp_edit_paste (GimpImage     *image,
       g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
       g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)), NULL);
       g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (iter->data)) == image, NULL);
-      g_return_val_if_fail (drawables_type == G_TYPE_NONE || G_OBJECT_TYPE (iter->data) == drawables_type, NULL);
+      g_return_val_if_fail (drawables_type == G_TYPE_NONE ||
+                            g_type_is_a (G_OBJECT_TYPE (iter->data), drawables_type), NULL);
 
-      drawables_type = G_OBJECT_TYPE (iter->data);
+      if (drawables_type == G_TYPE_NONE)
+        {
+          if (GIMP_IS_CHANNEL (iter->data))
+            drawables_type = GIMP_TYPE_CHANNEL;
+          else
+            drawables_type = GIMP_TYPE_LAYER;
+        }
 
       /* Currently we can only paste to channels (named channels, layer
        * masks, selection, etc.) as floating.
