@@ -2794,6 +2794,7 @@ xcf_load_layer_props (XcfInfo    *info,
           {
             GimpLayer *group;
             gboolean   is_selected_layer;
+            gboolean   is_linked_layer;
 
             /* We're going to delete *layer, Don't leave its pointers
              * in @info.  After that, we'll restore them back with the
@@ -2802,6 +2803,10 @@ xcf_load_layer_props (XcfInfo    *info,
             is_selected_layer = (g_list_find (info->selected_layers, *layer ) != NULL);
             if (is_selected_layer)
               info->selected_layers = g_list_remove (info->selected_layers, *layer);
+
+            is_linked_layer = (g_list_find (info->linked_layers, *layer ) != NULL);
+            if (is_linked_layer)
+              info->linked_layers = g_list_remove (info->linked_layers, *layer);
 
             if (*layer == info->floating_sel)
               info->floating_sel = NULL;
@@ -2817,6 +2822,8 @@ xcf_load_layer_props (XcfInfo    *info,
 
             if (is_selected_layer)
               info->selected_layers = g_list_prepend (info->selected_layers, *layer);
+            if (is_linked_layer)
+              info->linked_layers = g_list_prepend (info->linked_layers, *layer);
 
             /* Don't restore info->floating_sel because group layers
              * can't be floating selections
@@ -3063,6 +3070,7 @@ xcf_load_channel_props (XcfInfo      *info,
                   info->selected_channels = g_list_delete_link (info->selected_channels, iter);
                   break;
                 }
+            info->linked_channels = g_list_remove (info->linked_channels, channel);
 
             mask =
               gimp_selection_new (image,
@@ -4141,6 +4149,7 @@ xcf_load_layer (XcfInfo    *info,
 
  error:
   info->selected_layers = g_list_remove (info->selected_layers, layer);
+  info->linked_layers   = g_list_remove (info->linked_layers, layer);
 
   if (info->floating_sel == layer)
     info->floating_sel = NULL;
@@ -4287,6 +4296,7 @@ xcf_load_channel (XcfInfo   *info,
             info->selected_channels = g_list_delete_link (info->selected_channels, iter);
             break;
           }
+      info->linked_channels = g_list_remove (info->linked_channels, channel);
 
       if (info->floating_sel_drawable == GIMP_DRAWABLE (channel))
         info->floating_sel_drawable = NULL;
@@ -4949,6 +4959,7 @@ xcf_load_layer_mask (XcfInfo   *info,
         info->selected_channels = g_list_delete_link (info->selected_channels, iter);
         break;
       }
+  info->linked_channels = g_list_remove (info->linked_channels, layer_mask);
 
   if (info->floating_sel_drawable == GIMP_DRAWABLE (layer_mask))
     info->floating_sel_drawable = NULL;
