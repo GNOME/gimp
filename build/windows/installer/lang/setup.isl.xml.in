@@ -136,6 +136,14 @@
       <value>Allows you to use GIMP plugins written in Lua scripting language.</value>
     </config>
     <!-- Components -->
+    <config name="ComponentsJavaScript">
+      <value>JavaScript scripting</value>
+    </config>
+    <!-- Components -->
+    <config name="ComponentsJavaScriptDescription">
+      <value>Allows you to use GIMP plugins written in JavaScript scripting language.</value>
+    </config>
+    <!-- Components -->
     <config name="ComponentsMyPaint">
       <value>MyPaint brushes</value>
     </config>
