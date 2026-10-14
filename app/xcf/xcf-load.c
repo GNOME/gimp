@@ -3623,7 +3623,12 @@ xcf_load_path_props (XcfInfo    *info,
           return TRUE;
 
         case PROP_SELECTED_PATH:
-          info->selected_paths = g_list_prepend (info->selected_paths, *path);
+          if (g_list_index (info->selected_paths, *path) < 0)
+            info->selected_paths = g_list_prepend (info->selected_paths, *path);
+          else
+            gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+                                  GIMP_MESSAGE_WARNING,
+                                  "Invalid duplicate selected path detected");
           break;
 
         case PROP_VISIBLE:
@@ -4654,6 +4659,8 @@ xcf_load_path (XcfInfo   *info,
 error:
 
   xcf_seek_pos (info, base + plength, NULL);
+  if (info->selected_paths)
+    info->selected_paths = g_list_remove (info->selected_paths, path);
   g_clear_object (&path);
 
   return NULL;
