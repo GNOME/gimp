@@ -58,6 +58,11 @@ Core:
   * Improve internal logics to determine if an item is "writable"
     regarding actions modifying item contents.
   * "Reshow Filter" and "Reapply Filter" now work on group layers too.
+  * Add DPI information when copying image to clipboard when compiled
+    with gdk-pixbuf 2.36 with backend supporting "x-dpi" and "y-dpi"
+    settings (which unfortunately right now means disabling glycin until
+    it gets support).
+  * Text layers are not rasterized anymore over matrix transformations.
 
 Tools:
 
@@ -126,6 +131,10 @@ Graphical User Interface:
     - More theme fixes related to GIMP over KDE Breeze.
   * The "Default" and "System" themes, as well as "Default" and "Legacy"
     icon themes' names are now shown localized.
+  * Add short variant labels for "Paste as […]" actions, when displayed
+    under the submenu "Edit > Paste as".
+  * Store the localized path of menu models to show action's paths
+    properly localized in the Action Search.
 
 Plug-Ins:
 
@@ -386,3 +395,4 @@ Build:
   * The build test for .def file got enhance to also test the
     introspected API (looking for API which failed to be introspected;
     and when it is skipped on purpose, make sure we added a reason why).
+  * Add support to localizing plugins on GIMP SDK for macOS.
