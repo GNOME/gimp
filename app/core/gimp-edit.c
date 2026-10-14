@@ -271,12 +271,20 @@ gimp_edit_copy (GimpImage     *image,
         {
           GList *all_items;
 
-          all_items = gimp_image_get_layer_iter (clip_image);
+          all_items = gimp_image_get_layer_list (clip_image);
 
           for (iter = all_items; iter; iter = g_list_next (iter))
             {
               gint item_x;
               gint item_y;
+
+              if (GIMP_IS_GROUP_LAYER (iter->data))
+                /* Various destructive actions won't do a thing to a
+                 * group layer anyway; except for gimp_item_resize()
+                 * which will resize children layers outside the
+                 * selection (and will therefore break the loop).
+                 */
+                continue;
 
               gimp_item_get_offset (GIMP_ITEM (iter->data), &item_x, &item_y);
 
@@ -296,6 +304,7 @@ gimp_edit_copy (GimpImage     *image,
                                 selection_bounds.width, selection_bounds.height,
                                 item_x - selection_bounds.x, item_y - selection_bounds.y);
             }
+          g_list_free (all_items);
 
           /* We need to store the original offsets before the image was
            * resized, in order to move it into the correct location for
