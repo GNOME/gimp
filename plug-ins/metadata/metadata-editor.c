@@ -183,7 +183,10 @@ static void     write_metadata_tag_multiple     (metadata_editor      *meta_info
                                                  const gchar         **alt_column_tags,
                                                  const list_combo     *special_handling);
 
-gboolean hasCreatorTagData                      (metadata_editor      *meta_info);
+static void write_info_tag_alternates           (metadata_editor      *meta_info,
+                                                 GimpMetadata         *g_metadata,
+                                                 const TranslateTag   *info_tags,
+                                                 gint                  n_items);
 
 static void on_date_button_clicked              (GtkButton            *widget,
                                                  GtkWidget            *entry_widget);
@@ -1572,24 +1575,29 @@ on_date_button_clicked (GtkButton *widget,
  * ============================================================================
  */
 
-gboolean
-hasCreatorTagData (metadata_editor *meta_info)
+static void
+write_info_tag_alternates (metadata_editor    *meta_info,
+                           GimpMetadata       *g_metadata,
+                           const TranslateTag *info_tags,
+                           gint                n_items)
 {
   gboolean has_data = FALSE;
-  gint     loop;
 
-  for (loop = 0; loop < n_creatorContactInfoTags; loop++)
+  for (gint loop = 0; loop < n_items; loop++)
     {
       GtkWidget *widget;
 
-      widget = metadata_editor_get_widget (meta_info, creatorContactInfoTags[loop].id);
+      widget = metadata_editor_get_widget (meta_info, info_tags[loop].id);
 
       if (GTK_IS_ENTRY (widget))
         {
           const gchar *text = gtk_entry_get_text (GTK_ENTRY (widget));
 
           if (text && *text)
-            has_data = TRUE;
+            {
+              has_data = TRUE;
+              break;
+            }
         }
       else if (GTK_IS_TEXT_VIEW (widget))
         {
@@ -1605,14 +1613,61 @@ hasCreatorTagData (metadata_editor *meta_info)
           text = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
 
           if (text && *text)
-            has_data = TRUE;
+            {
+              has_data = TRUE;
+              g_free (text);
+              break;
+            }
 
-          if (text)
-            g_free (text);
+          g_free (text);
         }
     }
 
-  return has_data;
+  if (has_data)
+    {
+      for (gint i = 0; i < n_items; i++)
+        {
+          GtkWidget *widget = metadata_editor_get_widget (meta_info,
+                                                          info_tags[i].id);
+
+          if (info_tags[i].mode == MODE_SINGLE)
+            {
+              GtkEntry *entry = GTK_ENTRY (widget);
+
+              set_tag_string (g_metadata, info_tags[i].tag,
+                              gtk_entry_get_text (entry), FALSE);
+            }
+          else if (info_tags[i].mode == MODE_MULTI)
+            {
+              GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
+              GtkTextBuffer *buffer;
+              GtkTextIter    start;
+              GtkTextIter    end;
+              gchar         *text;
+
+              buffer = gtk_text_view_get_buffer (text_view);
+              gtk_text_buffer_get_start_iter (buffer, &start);
+              gtk_text_buffer_get_end_iter (buffer, &end);
+
+              text = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
+
+              set_tag_string (g_metadata, info_tags[i].tag,
+                              text, FALSE);
+
+              g_free (text);
+            }
+        }
+    }
+  else
+    {
+      for (gint i = 0; i < n_items; i++)
+        {
+          gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
+                                         info_tags[i].tag,
+                                         NULL);
+        }
+    }
+
 }
 
 static void
@@ -2083,13 +2138,6 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   g_signal_connect (G_OBJECT (combo_widget), "changed",
                     G_CALLBACK (gpsaltsys_combo_callback),
                     meta_info);
-
-  /* Set up text view heights */
-
-  /* Set up lists */
-
-  set_combined_tag_values (metadata, meta_info, imageSupplierInfoTags,    n_imageSupplierInfoTags);
-  set_combined_tag_values (metadata, meta_info, locationCreationInfoTags, n_locationCreationInfoTags);
 
   /* Set up tag data */
 
@@ -2668,7 +2716,9 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
    * different values. Due to a bug in the metadata-editor previously only
    * the short form was saved.
    */
-  set_combined_tag_values (metadata, meta_info, creatorContactInfoTags, n_creatorContactInfoTags);
+  set_combined_tag_values (metadata, meta_info, creatorContactInfoTags,   n_creatorContactInfoTags);
+  set_combined_tag_values (metadata, meta_info, imageSupplierInfoTags,    n_imageSupplierInfoTags);
+  set_combined_tag_values (metadata, meta_info, locationCreationInfoTags, n_locationCreationInfoTags);
 
   /* Set creation date */
   entry_widget = metadata_editor_get_widget (meta_info, "create_date_button");
@@ -3012,7 +3062,7 @@ metadata_editor_get_value (metadata_editor *args,
   if (mode == MODE_SINGLE)
     {
       GtkEntry *entry = GTK_ENTRY (widget);
-      return gtk_entry_get_text (entry);
+      return (gchar *) gtk_entry_get_text (entry);
     }
   else if (mode == MODE_MULTI)
     {
@@ -3041,7 +3091,7 @@ metadata_editor_get_value (metadata_editor *args,
             value = combo_metadata[ci].metadata_values[ival].data;
         }
 
-      return value;
+      return (gchar *) value;
     }
 
   return NULL;
@@ -3188,51 +3238,10 @@ metadata_editor_write_callback (GtkWidget       *dialog,
         }
     }
 
-  /* Special handling for Creator tags (IPTC tab) */
-  if (hasCreatorTagData (meta_info))
-    {
-      for (i = 0; i < n_creatorContactInfoTags; i++)
-        {
-          GtkWidget *widget = metadata_editor_get_widget (meta_info,
-                                                          creatorContactInfoTags[i].id);
-
-          if (creatorContactInfoTags[i].mode == MODE_SINGLE)
-            {
-              GtkEntry *entry = GTK_ENTRY (widget);
-
-              set_tag_string (g_metadata, creatorContactInfoTags[i].tag,
-                              gtk_entry_get_text (entry), FALSE);
-            }
-          else if (creatorContactInfoTags[i].mode == MODE_MULTI)
-            {
-              GtkTextView   *text_view = GTK_TEXT_VIEW (widget);
-              GtkTextBuffer *buffer;
-              GtkTextIter    start;
-              GtkTextIter    end;
-              gchar         *text;
-
-              buffer = gtk_text_view_get_buffer (text_view);
-              gtk_text_buffer_get_start_iter (buffer, &start);
-              gtk_text_buffer_get_end_iter (buffer, &end);
-
-              text = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
-
-              set_tag_string (g_metadata, creatorContactInfoTags[i].tag,
-                              text, FALSE);
-
-              g_free (text);
-            }
-        }
-    }
-  else
-    {
-      for (i = 0; i < n_creatorContactInfoTags; i++)
-        {
-          gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (g_metadata),
-                                         creatorContactInfoTags[i].tag,
-                                         NULL);
-        }
-    }
+  /* Special handling for certain single/multi tags */
+  write_info_tag_alternates (meta_info, g_metadata, creatorContactInfoTags,   n_creatorContactInfoTags);
+  write_info_tag_alternates (meta_info, g_metadata, locationCreationInfoTags, n_locationCreationInfoTags);
+  write_info_tag_alternates (meta_info, g_metadata, imageSupplierInfoTags,    n_imageSupplierInfoTags);
 
   for (i = 0; i < n_default_metadata_tags; i++)
     {
