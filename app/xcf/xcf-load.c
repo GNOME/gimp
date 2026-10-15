@@ -5349,7 +5349,7 @@ xcf_load_parasite (XcfInfo *info)
       return NULL;
     }
 
-  data = g_new (gchar, size);
+  data      = g_new (gchar, size);
   size_read = xcf_read_int8 (info, data, size);
 
   if (size_read != size)
@@ -5360,7 +5360,12 @@ xcf_load_parasite (XcfInfo *info)
     }
   else
     {
-      parasite = gimp_parasite_new (name, flags, size, data);
+      /* Ensure the parasite_data is NULL-terminated */
+      GString *parasite_data = g_string_new_len (data, size);
+
+      parasite = gimp_parasite_new (name, flags, parasite_data->len + 1,
+                                    parasite_data->str);
+      g_string_free (parasite_data, FALSE);
     }
 
   g_free (name);
