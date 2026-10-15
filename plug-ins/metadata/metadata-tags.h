@@ -98,8 +98,7 @@ enum
   XMP_EXT_AGEDISCLOSURE,
   XMP_EXT_MODELRELSTATUS,
   XMP_EXT_MODELRELID,
-  XMP_EXT_SUPPLIERNAME,
-  XMP_EXT_SUPPLIERID,
+  XMP_EXT_SUPPLIER,
   XMP_EXT_SUPPLIERIMAGEID,
   XMP_EXT_REGID,
   XMP_EXT_MAXWIDTH,
@@ -301,6 +300,7 @@ extern const gint n_creatorContactInfoTags;
 
 extern const TranslateTag locationCreationInfoTags[];
 extern const gint n_locationCreationInfoTags;
+extern const TranslateTag AltLocCreationInfoTags[];
 
 extern const TranslateTag imageSupplierInfoTags[];
 extern const gint n_imageSupplierInfoTags;
@@ -315,6 +315,7 @@ enum
   LIST_ORGCODE,
   LIST_OBJECT,
   LIST_MODELID,
+  LIST_SUPPLIER,
   LIST_REGID,
   LIST_CREATOR,
   LIST_COPYRIGHT,

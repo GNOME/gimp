@@ -96,8 +96,7 @@ const metadata_tag default_metadata_tags[] =
   { "Xmp.plus.MinorModelAgeDisclosure",     MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, COMBO_AGEDISC    },
   { "Xmp.plus.ModelReleaseStatus",          MODE_COMBO,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, COMBO_MODELREL   },
   { "Xmp.plus.ModelReleaseID",              MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_MODELID     },
-  { "Xmp.plus.ImageSupplierName",           MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
-  { "Xmp.plus.ImageSupplierID",             MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
+  { "Xmp.plus.ImageSupplier",               MODE_LIST ,  -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_SUPPLIER    },
   { "Xmp.plus.ImageSupplierImageID",        MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
   { "Xmp.iptcExt.RegistryId",               MODE_LIST,   -1,                 TAG_TYPE_XMP, GIMP_XMP_NONE, LIST_REGID       },
   { "Xmp.iptcExt.MaxAvailWidth",            MODE_SINGLE, -1,                 TAG_TYPE_XMP, GIMP_XMP_TEXT, -1  },
@@ -425,6 +424,15 @@ const TranslateTag locationCreationInfoTags[] =
   { "Xmp.iptcExt.WorldRegion",   "Xmp.iptcExt.LocationCreated[1]/Iptc4xmpExt:WorldRegion",   MODE_SINGLE, -1,  TAG_TYPE_XMP }
 };
 const gint n_locationCreationInfoTags = G_N_ELEMENTS (locationCreationInfoTags);
+const TranslateTag AltLocCreationInfoTags[] =
+{
+  { "Xmp.iptcExt.Sublocation",   "Xmp.iptcExt.LocationCreated[1]/iptcExt:Sublocation",   MODE_SINGLE, -1,  TAG_TYPE_XMP },
+  { "Xmp.iptcExt.City",          "Xmp.iptcExt.LocationCreated[1]/iptcExt:City",          MODE_SINGLE, -1,  TAG_TYPE_XMP },
+  { "Xmp.iptcExt.ProvinceState", "Xmp.iptcExt.LocationCreated[1]/iptcExt:ProvinceState", MODE_SINGLE, -1,  TAG_TYPE_XMP },
+  { "Xmp.iptcExt.CountryName",   "Xmp.iptcExt.LocationCreated[1]/iptcExt:CountryName",   MODE_SINGLE, -1,  TAG_TYPE_XMP },
+  { "Xmp.iptcExt.CountryCode",   "Xmp.iptcExt.LocationCreated[1]/iptcExt:CountryCode",   MODE_SINGLE, -1,  TAG_TYPE_XMP },
+  { "Xmp.iptcExt.WorldRegion",   "Xmp.iptcExt.LocationCreated[1]/iptcExt:WorldRegion",   MODE_SINGLE, -1,  TAG_TYPE_XMP }
+};
 
 const TranslateTag imageSupplierInfoTags[] =
 {
@@ -461,14 +469,12 @@ const list_combo licensor_list[] =
 };
 const gint n_licensor_list = G_N_ELEMENTS (licensor_list);
 
-#ifdef USE_TAGS
 const gchar *imagesupplier[] =
 {
   "/plus:ImageSupplierName",
   "/plus:ImageSupplierID"
 };
 const gint n_imagesupplier = G_N_ELEMENTS (imagesupplier);
-#endif
 
 const gchar *imagecreator[] =
 {
@@ -547,6 +553,7 @@ const list_references list_metadata[] =
   { XMP_EXT_ORGCODE,        NULL,             NULL,                         1,                 NULL },
   { XMP_EXT_OBJECT,         artworkorobject,  artworkorobject_alternative,  n_artworkorobject, NULL },
   { XMP_EXT_MODELRELID,     NULL,             NULL,                         1,                 NULL },
+  { XMP_EXT_SUPPLIER,       imagesupplier,    NULL,                         n_imagesupplier,   NULL },
   { XMP_EXT_REGID,          registryid,       registryid_alternative,       n_registryid,      NULL },
   { XMP_EXT_IMAGECREATOR,   imagecreator,     NULL,                         n_imagecreator,    NULL },
   { XMP_EXT_COPYRIGHTOWNER, copyrightowner,   NULL,                         n_copyrightowner,  NULL },

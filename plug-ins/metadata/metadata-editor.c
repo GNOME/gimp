@@ -150,8 +150,7 @@ static gboolean metadata_editor_dialog           (GimpImage           *image,
                                                   GimpProcedureConfig *config,
                                                   GError             **error);
 
-static void metadata_dialog_editor_set_metadata  (GExiv2Metadata      *metadata,
-                                                  metadata_editor     *meta_info);
+static void metadata_dialog_editor_set_metadata  (metadata_editor     *meta_info);
 
 static void gpsaltsys_combo_callback            (GtkComboBoxText      *combo,
                                                  gpointer              data);
@@ -188,6 +187,18 @@ static void write_info_tag_alternates           (metadata_editor      *meta_info
                                                  const TranslateTag   *info_tags,
                                                  gint                  n_items);
 
+static void replace_deprecated_info_tags        (GimpMetadata         *metadata,
+                                                 const TranslateTag   *info_tags,
+                                                 gint                  n_items);
+
+static void convert_deprecated_tags             (GimpMetadata         *metadata);
+
+static void remove_deprecated_info_tags         (GimpMetadata         *metadata,
+                                                 const TranslateTag   *info_tags,
+                                                 gint                  n_items);
+
+static void remove_deprecated_tags              (GimpMetadata         *metadata);
+
 static void on_date_button_clicked              (GtkButton            *widget,
                                                  GtkWidget            *entry_widget);
 
@@ -199,6 +210,12 @@ property_release_id_remove_callback             (GtkWidget            *widget,
                                                  gpointer              data);
 static void
 property_release_id_add_callback                (GtkWidget            *widget,
+                                                 gpointer              data);
+static void
+image_supplier_remove_callback                  (GtkWidget            *widget,
+                                                 gpointer              data);
+static void
+image_supplier_add_callback                     (GtkWidget            *widget,
                                                  gpointer              data);
 static void
 model_release_id_remove_callback                (GtkWidget            *widget,
@@ -394,26 +411,26 @@ static const me_widget_info iptc_extension_tab_data[] =
   { 17, N_("Model Release Identifier"),   ME_WIDGET_TREE_GRID, "Xmp.plus.ModelReleaseID",
         "add_model_rel_id_button",    "rem_model_rel_id_button" },
   { 18, "",                           ME_WIDGET_SEPARATOR,  "" },
-  { 19, N_("Image Supplier Name"),    ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierName" },
-  { 20, N_("Image Supplier ID"),      ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierID" },
-  { 21, N_("Supplier's Image ID"),    ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierImageID" },
-  { 22, N_("Registry Entry"),         ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.RegistryId",
+  { 19, N_("Image Supplier"),         ME_WIDGET_TREE_GRID,  "Xmp.plus.ImageSupplier",
+        "add_image_supplier_button",    "rem_image_supplier_button" },
+  { 20, N_("Supplier's Image ID"),    ME_WIDGET_ENTRY,      "Xmp.plus.ImageSupplierImageID" },
+  { 21, N_("Registry Entry"),         ME_WIDGET_TREE_GRID,  "Xmp.iptcExt.RegistryId",
         "add_reg_entry_button",       "rem_reg_entry_button" },
-  { 23, N_("Max. Available Width"),   ME_WIDGET_ENTRY,      "Xmp.iptcExt.MaxAvailWidth" },
-  { 24, N_("Max. Available Height"),  ME_WIDGET_ENTRY,      "Xmp.iptcExt.MaxAvailHeight" },
-  { 25, N_("Digital Source Type"),    ME_WIDGET_COMBO,      "Xmp.iptcExt.DigitalSourceType" },
-  { 26, "",                           ME_WIDGET_SEPARATOR,  "" },
-  { 27, N_("Image Creator"),          ME_WIDGET_TREE_GRID,  "Xmp.plus.ImageCreator",
+  { 22, N_("Max. Available Width"),   ME_WIDGET_ENTRY,      "Xmp.iptcExt.MaxAvailWidth" },
+  { 23, N_("Max. Available Height"),  ME_WIDGET_ENTRY,      "Xmp.iptcExt.MaxAvailHeight" },
+  { 24, N_("Digital Source Type"),    ME_WIDGET_COMBO,      "Xmp.iptcExt.DigitalSourceType" },
+  { 25, "",                           ME_WIDGET_SEPARATOR,  "" },
+  { 26, N_("Image Creator"),          ME_WIDGET_TREE_GRID,  "Xmp.plus.ImageCreator",
         "add_image_creator_button",   "rem_image_creator_button" },
-  { 28, N_("Copyright Owner"),        ME_WIDGET_TREE_GRID,  "Xmp.plus.CopyrightOwner",
+  { 27, N_("Copyright Owner"),        ME_WIDGET_TREE_GRID,  "Xmp.plus.CopyrightOwner",
         "add_copyright_own_button",   "rem_copyright_own_button" },
-  { 29, N_("Licensor"),               ME_WIDGET_TREE_GRID,  "Xmp.plus.Licensor",
+  { 28, N_("Licensor"),               ME_WIDGET_TREE_GRID,  "Xmp.plus.Licensor",
         "add_licensor_button",        "rem_licensor_button" },
-  { 30, N_("Property Release Status"), ME_WIDGET_COMBO,     "Xmp.plus.PropertyReleaseStatus" },
-  { 31, N_("Property Release Identifier"), ME_WIDGET_TREE_GRID, "Xmp.plus.PropertyReleaseID",
+  { 29, N_("Property Release Status"), ME_WIDGET_COMBO,     "Xmp.plus.PropertyReleaseStatus" },
+  { 30, N_("Property Release Identifier"), ME_WIDGET_TREE_GRID, "Xmp.plus.PropertyReleaseID",
         "add_prop_rel_id_button",     "rem_prop_rel_id_button" },
-  { 32, N_("Data Mining"),             ME_WIDGET_COMBO,      "Xmp.plus.DataMining" },
-  { 33, N_("Other Constraints"),       ME_WIDGET_ENTRY,      "Xmp.plus.OtherConstraints" },
+  { 31, N_("Data Mining"),             ME_WIDGET_COMBO,      "Xmp.plus.DataMining" },
+  { 32, N_("Other Constraints"),       ME_WIDGET_ENTRY,      "Xmp.plus.OtherConstraints" },
 };
 static const gint n_iptc_extension_tab_data = G_N_ELEMENTS (iptc_extension_tab_data);
 
@@ -423,11 +440,12 @@ static const gint n_iptc_extension_tab_data = G_N_ELEMENTS (iptc_extension_tab_d
 #define C_FEATURED_ORG_CODE    9
 #define C_ART_OBJECT          11
 #define C_MODEL_RELEASE_ID    17
-#define C_REGISTRY_ENTRY      22
-#define C_IMAGE_CREATOR       27
-#define C_COPYRIGHT_OWNER     28
-#define C_LICENSOR            29
-#define C_PROPERTY_RELEASE_ID 31
+#define C_IMAGE_SUPPLIER      19
+#define C_REGISTRY_ENTRY      21
+#define C_IMAGE_CREATOR       26
+#define C_COPYRIGHT_OWNER     27
+#define C_LICENSOR            28
+#define C_PROPERTY_RELEASE_ID 30
 
 static const me_column_info location_shown_info[] =
 {
@@ -468,6 +486,13 @@ static const me_column_info model_release_id_info[] =
   { N_("Model Release Identifier"),   ME_RENDER_TEXT },
 };
 static const gint n_model_release_id_info = G_N_ELEMENTS (model_release_id_info);
+
+static const me_column_info image_supplier_info[] =
+{
+  { N_("Name"),                       ME_RENDER_TEXT },
+  { N_("Identifier"),                 ME_RENDER_TEXT },
+};
+static const gint n_image_supplier_info = G_N_ELEMENTS (image_supplier_info);
 
 static const me_column_info registry_entry_info[] =
 {
@@ -517,6 +542,7 @@ static const me_table_info  table_info[] =
                                                               iptc_extension_tab_data, C_FEATURED_ORG_CODE },
   { artwork_object_info,        n_artwork_object_info,        iptc_extension_tab_data, C_ART_OBJECT },
   { model_release_id_info,      n_model_release_id_info,      iptc_extension_tab_data, C_MODEL_RELEASE_ID },
+  { image_supplier_info,        n_image_supplier_info,        iptc_extension_tab_data, C_IMAGE_SUPPLIER },
   { registry_entry_info,        n_registry_entry_info,        iptc_extension_tab_data, C_REGISTRY_ENTRY },
   { image_creator_info,         n_image_creator_info,         iptc_extension_tab_data, C_IMAGE_CREATOR },
   { copyright_owner_info,       n_copyright_owner_info,       iptc_extension_tab_data, C_COPYRIGHT_OWNER },
@@ -1036,7 +1062,6 @@ metadata_editor_dialog (GimpImage            *image,
                         GimpProcedureConfig  *config,
                         GError              **error)
 {
-  GExiv2Metadata *metadata;
   GtkWidget      *dialog;
   GtkWidget      *content_area;
   GtkWidget      *metadata_vbox;
@@ -1055,14 +1080,12 @@ metadata_editor_dialog (GimpImage            *image,
 
   g_object_get (config, "parent-handle", &parent_handle, NULL);
 
-  metadata = GEXIV2_METADATA (g_metadata);
-
   meta_args.image    = image;
   /* Default filename used for import/export */
   meta_args.filename = g_strconcat (g_get_home_dir (), "/", DEFAULT_TEMPLATE_FILE,
                                     NULL);
   meta_args.widgets  = g_hash_table_new (g_str_hash, g_str_equal);
-  meta_args.metadata = metadata;
+  meta_args.metadata = g_metadata;
 
   name = gimp_image_get_name (image);
   title = g_strdup_printf (_("Metadata Editor: %s"), name);
@@ -1175,7 +1198,7 @@ metadata_editor_dialog (GimpImage            *image,
                             G_CALLBACK (export_dialog_metadata), &meta_args);
   /* Add signals, combobox choices, and actual metadata */
 
-  metadata_dialog_editor_set_metadata (metadata, &meta_args);
+  metadata_dialog_editor_set_metadata (&meta_args);
 
   if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
@@ -1710,6 +1733,78 @@ set_combined_tag_values (GExiv2Metadata     *metadata,
     }
 }
 
+static void
+replace_deprecated_info_tags (GimpMetadata       *metadata,
+                              const TranslateTag *info_tags,
+                              gint                n_items)
+{
+  for (gint i = 0; i < n_items; i++)
+    {
+      gchar *value;
+      gchar *newtag;
+
+      value = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
+                                                              info_tags[i].id,
+                                                              NULL);
+      newtag = gexiv2_metadata_try_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
+                                                               info_tags[i].tag,
+                                                               NULL);
+
+      if (value)
+        {
+          if (! newtag)
+            set_tag_string (metadata, info_tags[i].tag,
+                            value, FALSE);
+          g_free (value);
+
+          gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata),
+                                         info_tags[i].id, NULL);
+        }
+      g_free (newtag);
+    }
+}
+
+static void
+convert_deprecated_tags (GimpMetadata *metadata)
+{
+  /* For now hardcoded deprecated tags that we convert to their more
+   * accepted version.
+   * If found we copy it to the new version and then delete the old.
+   * If the new version already has a value, we ignore the old value
+   * and delete it.
+   */
+  replace_deprecated_info_tags (metadata, creatorContactInfoTags,   n_creatorContactInfoTags);
+  replace_deprecated_info_tags (metadata, locationCreationInfoTags, n_locationCreationInfoTags);
+  replace_deprecated_info_tags (metadata, imageSupplierInfoTags,    n_imageSupplierInfoTags);
+}
+
+static void
+remove_deprecated_info_tags (GimpMetadata       *metadata,
+                             const TranslateTag *info_tags,
+                             gint                n_items)
+{
+  for (gint i = 0; i < n_items; i++)
+    {
+      gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata),
+                                     info_tags[i].id, NULL);
+    }
+}
+
+static void
+remove_deprecated_tags (GimpMetadata *metadata)
+{
+  remove_deprecated_info_tags (metadata, creatorContactInfoTags,   n_creatorContactInfoTags);
+  remove_deprecated_info_tags (metadata, locationCreationInfoTags, n_locationCreationInfoTags);
+  remove_deprecated_info_tags (metadata, imageSupplierInfoTags,    n_imageSupplierInfoTags);
+
+  for (gint i = 0; i < n_locationCreationInfoTags; i++)
+    { /* Hack: remove Xmp.iptcExt.LocationCreated[1]/iptcExt:*
+       * This is more or less the reverse of what we do above. */
+      gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata),
+                                     AltLocCreationInfoTags[i].tag, NULL);
+    }
+}
+
 /* ============================================================================
  * ==[ SET DIALOG METADATA ]===================================================
  * ============================================================================
@@ -1816,6 +1911,13 @@ property_release_id_remove_callback (GtkWidget *widget,
 }
 
 static void
+image_supplier_remove_callback (GtkWidget *widget,
+                                gpointer   data)
+{
+  list_row_remove_callback (widget, data, "Xmp.plus.ImageSupplier");
+}
+
+static void
 model_release_id_remove_callback (GtkWidget *widget,
                                   gpointer   data)
 {
@@ -1903,6 +2005,13 @@ property_release_id_add_callback (GtkWidget *widget,
                                   gpointer   data)
 {
   list_row_add_callback (widget, data, "Xmp.plus.PropertyReleaseID");
+}
+
+static void
+image_supplier_add_callback (GtkWidget *widget,
+                             gpointer   data)
+{
+  list_row_add_callback (widget, data, "Xmp.plus.ImageSupplier");
 }
 
 static void
@@ -1994,14 +2103,14 @@ enum
 /* Set dialog display settings and data */
 
 static void
-metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
-                                     metadata_editor *meta_info)
+metadata_dialog_editor_set_metadata (metadata_editor *meta_info)
 {
-  GtkWidget *combo_widget;
-  GtkWidget *entry_widget;
-  GtkWidget *button_widget;
-  gchar     *value;
-  gint       i;
+  GExiv2Metadata  *metadata = GEXIV2_METADATA (meta_info->metadata);
+  GtkWidget       *combo_widget;
+  GtkWidget       *entry_widget;
+  GtkWidget       *button_widget;
+  gchar           *value;
+  gint             i;
 
   gint32 numele = n_default_metadata_tags;
 
@@ -2086,6 +2195,26 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
                     G_CALLBACK (shown_location_remove_callback),
                     meta_info);
 
+  button_widget = metadata_editor_get_widget (meta_info, "add_image_supplier_button");
+  g_signal_connect (G_OBJECT (button_widget), "clicked",
+                    G_CALLBACK (image_supplier_add_callback),
+                    meta_info);
+
+  button_widget = metadata_editor_get_widget (meta_info, "rem_image_supplier_button");
+  g_signal_connect (G_OBJECT (button_widget), "clicked",
+                    G_CALLBACK (image_supplier_remove_callback),
+                    meta_info);
+
+  button_widget = metadata_editor_get_widget (meta_info, "add_image_supplier_button");
+  g_signal_connect (G_OBJECT (button_widget), "clicked",
+                    G_CALLBACK (image_supplier_add_callback),
+                    meta_info);
+
+  button_widget = metadata_editor_get_widget (meta_info, "rem_image_supplier_button");
+  g_signal_connect (G_OBJECT (button_widget), "clicked",
+                    G_CALLBACK (image_supplier_remove_callback),
+                    meta_info);
+
   button_widget = metadata_editor_get_widget (meta_info, "add_model_rel_id_button");
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (model_release_id_add_callback),
@@ -2105,6 +2234,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
   g_signal_connect (G_OBJECT (button_widget), "clicked",
                     G_CALLBACK (property_release_id_remove_callback),
                     meta_info);
+
+  convert_deprecated_tags (meta_info->metadata);
 
   /* Setup Comboboxes */
 
@@ -2717,8 +2848,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata  *metadata,
    * the short form was saved.
    */
   set_combined_tag_values (metadata, meta_info, creatorContactInfoTags,   n_creatorContactInfoTags);
-  set_combined_tag_values (metadata, meta_info, imageSupplierInfoTags,    n_imageSupplierInfoTags);
   set_combined_tag_values (metadata, meta_info, locationCreationInfoTags, n_locationCreationInfoTags);
+  set_combined_tag_values (metadata, meta_info, AltLocCreationInfoTags,   n_locationCreationInfoTags);
 
   /* Set creation date */
   entry_widget = metadata_editor_get_widget (meta_info, "create_date_button");
@@ -3241,7 +3372,6 @@ metadata_editor_write_callback (GtkWidget       *dialog,
   /* Special handling for certain single/multi tags */
   write_info_tag_alternates (meta_info, g_metadata, creatorContactInfoTags,   n_creatorContactInfoTags);
   write_info_tag_alternates (meta_info, g_metadata, locationCreationInfoTags, n_locationCreationInfoTags);
-  write_info_tag_alternates (meta_info, g_metadata, imageSupplierInfoTags,    n_imageSupplierInfoTags);
 
   for (i = 0; i < n_default_metadata_tags; i++)
     {
@@ -3563,6 +3693,7 @@ metadata_editor_write_callback (GtkWidget       *dialog,
         }
     }
 
+  remove_deprecated_tags (g_metadata);
   gimp_image_set_metadata (image, g_metadata);
 }
 
