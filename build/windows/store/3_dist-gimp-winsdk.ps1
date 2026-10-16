@@ -223,6 +223,36 @@ foreach ($bundle in $supported_archs)
         exit 1
       }
 
+    ## Get translations from merged appdata (for AppxManifest and MS Store listings)
+    ## NOTE: All the maintenance process is done only in 'iso_639_custom.xml' file
+    $xmlObject = New-Object XML
+    $xmlObject.Load("$PWD\build\windows\installer\lang\iso_639_custom.xml")
+    $ms_codes = @{ '' = 'en-US' }
+    $xmlObject.iso_639_entries.iso_639_entry | Foreach-Object { $ms_codes[$_.dl_code -replace '_','-' -replace '@latin','-Latn' -replace '@','-'] = $_.ms_code }
+    ### Get developer name, name, summary and description paragraphs ('p1', 'p2' etc) of each language
+    $xmlObject = New-Object XML
+    $xmlObject.Load("$(Resolve-Path $build_dir)\desktop\org.gimp.GIMP.appdata.xml")
+    $msix_langs = [ordered]@{}
+    $p_count = 0
+    foreach ($node in $xmlObject.component.SelectNodes('developer_name | name | summary | description/p'))
+      {
+        #(Write xml:lang like the $ms_codes keys. If not found, drop its script: newer gettext writes e.g. 'zh-Hans-CN' for zh_CN.po)
+        $lang = $node.GetAttribute('xml:lang') -replace '_','-' -replace '@latin','-Latn' -replace '@','-' | Foreach-Object { if ($ms_codes.Contains($_)) { $ms_codes[$_] } else { $ms_codes[$_ -replace '-[a-z]{4}(?=-|$)',''] } }
+        if ($lang)
+          {
+            #(Organize paragraphs of description)
+            $field = $node.LocalName
+            if ($field -eq 'p')
+              {
+                if ($lang -eq 'en-US') { $p_count++ }
+                $field = "p$p_count"
+              }
+            #(Skip languages not supported by MS Store, which have empty ms_code)
+            if (-not $msix_langs[$lang]) { $msix_langs[$lang] = @{} }
+            $msix_langs[$lang][$field] = ($node.InnerText).Trim() -replace '\s*\r?\n\s*', ' '
+          }
+      }
+
     ## 3.1. CONFIGURE MANIFEST
     Write-Output "(INFO): configuring AppxManifest.xml for $msix_arch"
     Copy-Item build\windows\store\AppxManifest.xml $msix_arch
@@ -257,23 +287,43 @@ foreach ($bundle in $supported_archs)
         $mutex_suffix="-$GIMP_MUTEX_VERSION"
       }
     conf_manifest '@MUTEX_SUFFIX@' "$mutex_suffix"
+    ### List languages with translated Description (see section 3.2)
+    $manifest_langs = $msix_langs.Keys | Where-Object { $_ -ne 'en-US' -and $msix_langs[$_].name } | Sort-Object
+    conf_manifest '@LANGUAGES@' (($manifest_langs | Foreach-Object {'<Resource Language="' + $_ + '" />'}) -join ' ')
     ### List supported filetypes
     $file_types = Get-Content "$build_dir\plug-ins\file_associations.list" | Foreach-Object {"              <uap:FileType>." + $_} |
                   Foreach-Object {$_ +  "</uap:FileType>"}                 | Where-Object {$_ -notmatch 'xcf'}
     (Get-Content $msix_arch\AppxManifest.xml) | Foreach-Object {$_ -replace "@FILE_TYPES@","$file_types"}  |
     Set-Content $msix_arch\AppxManifest.xml
 
-    ## 3.2. CREATE ICON ASSETS
+    ## 3.2. CREATE ASSETS (ICONS AND LANGS)
     Write-Output "(INFO): generating resources*.pri from $icons_path"
     ### Copy pre-generated icons to msix_arch\Assets
     New-Item $msix_arch\Assets -ItemType Directory | Out-Null
     Copy-Item "$icons_path\*.png" $msix_arch\Assets\ -Recurse
+    ### Generate temp .resw files with the translated Description to msix_arch\Strings
+    foreach ($lang in @('en-US') + @($manifest_langs))
+      {
+        New-Item $msix_arch\Strings\lang-$lang -ItemType Directory | Out-Null
+        Set-Content $msix_arch\Strings\lang-$lang\Resources.resw -Encoding UTF8 -Value (
+          '<?xml version="1.0" encoding="utf-8"?>',
+          '<root>',
+          '  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>',
+          '  <resheader name="version"><value>2.0</value></resheader>',
+          '  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>',
+          '  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>',
+          "  <data name=`"Description`" xml:space=`"preserve`"><value>$([Security.SecurityElement]::Escape($msix_langs[$lang].name))</value></data>",
+          '</root>')
+      }
     ### Generate temp priconfig.xml then resources*.pri
     Set-Location $msix_arch
     makepri createconfig /cf priconfig.xml /dq lang-en-US /pv 10.0.0 | Out-File ..\winsdk.log; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+    #(Translations need to be on the main resources.pri since we don't make resource packages)
+    (Get-Content priconfig.xml -Raw) -replace '<autoResourcePackage qualifier="Language"\s*/>','' | Set-Content priconfig.xml -Encoding UTF8
     Set-Location ..\
     makepri new /pr $msix_arch /cf $msix_arch\priconfig.xml /of $msix_arch | Out-File winsdk.log -Append; if ("$LASTEXITCODE" -gt '0') { exit 1 }
     Remove-Item $msix_arch\priconfig.xml
+    Remove-Item $msix_arch\Strings -Recurse
     Write-Output "$([char]27)[0Ksection_end:$(Get-Date -UFormat %s -Millisecond 0):${msix_arch}_source$([char]13)$([char]27)[0K"
 
 
@@ -502,11 +552,12 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
     msstore publish $OUTPUT_DIR\$MSIX_ARTIFACT -id $env:PRODUCT_ID -nc; if ("$LASTEXITCODE" -gt '0') { exit 1 }
 
     ## Update submission info (if PS6 or up. Check the section 1 of this script)
+    $msix_langs | ConvertTo-Json -Depth 3 | Set-Content "$env:TMP\gimp-msix-langs.json" -Encoding UTF8
     $env:GIMP_VERSION="$GIMP_VERSION"
     pwsh -Command `
       {
         $jsonObject = msstore submission get $env:PRODUCT_ID | ConvertFrom-Json -AsHashtable; if ("$LASTEXITCODE" -gt '0') { exit 1 }
-        ###Get changelog from Linux appdata
+        ###Get changelog and others from Linux appdata
         $xmlObject = New-Object XML
         $xmlObject.Load("$PWD\desktop\org.gimp.GIMP.appdata.xml.in.in")
         if ($xmlObject.component.releases.release[0].version -ne ("$env:GIMP_VERSION".ToLower() -replace '-','~'))
@@ -515,14 +566,48 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
             Write-Host "(WARNING): appdata does not match main meson file. Submission info can't be updated." -ForegroundColor yellow
             exit 1
           }
-        $jsonObject."Listings"."en-us"."BaseListing".'ShortDescription' = ($xmlObject.component.summary).Trim()
-        $jsonObject."Listings"."en-us"."BaseListing".'Description' = ($xmlObject.component.description.SelectNodes(".//p") | ForEach-Object { ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' ' } ) -join "`n`n"
-        $jsonObject."Listings"."en-us"."BaseListing".'Description' += "`n`n(NOTE: for Windows 11 users, like on the .exe installer package, some app data is preserved/persistent on %AppData%/GIMP even after updates and uninstall, this allows preserving your plugins, custom brushes, etc)"
+        $msix_langs = Get-Content "$env:TMP\gimp-msix-langs.json" -Raw -Encoding UTF8 | ConvertFrom-Json -AsHashtable
+        $p_count = @($msix_langs['en-US'].Keys -match '^p[0-9]+$').Count
+        $listings = @{}
+        foreach ($lang in $msix_langs.Keys)
+          {
+            $texts = $msix_langs[$lang]
+            if (-not (@($texts.Keys) -match '^(summary|p[0-9]+)$'))
+              {
+                continue
+              }
+            $listings[$lang.ToLower()] = @{
+              DevStudio = if ($texts.developer_name) { $texts.developer_name } else { $msix_langs['en-US'].developer_name }
+              ShortDescription = if ($texts.summary) { $texts.summary } else { $msix_langs['en-US'].summary }
+              Description = ((1..$p_count | ForEach-Object { if ($texts["p$_"]) { $texts["p$_"] } else { $msix_langs['en-US']["p$_"] } }) -join "`n`n") +
+                            "`n`n(NOTE: for Windows 11 users, like on the .exe installer package, some app data is preserved/persistent on %AppData%/GIMP even after updates and uninstall, this allows preserving your plugins, custom brushes, etc)"
+            }
+          }
         #NOTE: Submission API does not allow more than 1500 chars on ReleaseNotes so we skip some <p> or <li> when needed
-        $jsonObject."Listings"."en-us"."BaseListing".'ReleaseNotes' = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | ForEach-Object -Begin {$len=0} -Process { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; $formatted = if ($_.Name -eq 'li') { "- $text" } else { $text }; if (($len + $formatted.Length + 1) -lt 1490) { $len += $formatted.Length + 1; $formatted } }) -join "`n"
-        ###Send submission info
-        msstore submission updateMetadata $env:PRODUCT_ID ($jsonObject | ConvertTo-Json -Depth 100); if ("$LASTEXITCODE" -gt '0') { exit 1 }
+        $release_notes = ($xmlObject.component.releases.release[0].description.SelectNodes(".//p | .//li") | Where-Object { -not $_.HasAttribute('xml:lang') } | ForEach-Object -Begin {$len=0} -Process { $text = ($_.InnerText).Trim() -replace '\s*\r?\n\s*', ' '; $formatted = if ($_.Name -eq 'li') { "- $text" } else { $text }; if (($len + $formatted.Length + 1) -lt 1490) { $len += $formatted.Length + 1; $formatted } }) -join "`n"
+        foreach ($lang in $listings.Keys)
+          {
+            if (-not $jsonObject."Listings".ContainsKey($lang))
+              {
+                #New listings are copied from the en-us one
+                $jsonObject."Listings".$lang = $jsonObject."Listings"."en-us" | ConvertTo-Json -Depth 100 | ConvertFrom-Json -AsHashtable
+                #The API does not copy the images yet. See: https://github.com/microsoft/msstore-cli/issues/78
+                $new_listings += @($lang)
+              }
+            $jsonObject."Listings".$lang."BaseListing".'DevStudio' = $listings.$lang.DevStudio
+            $jsonObject."Listings".$lang."BaseListing".'ShortDescription' = $listings.$lang.ShortDescription
+            $jsonObject."Listings".$lang."BaseListing".'Description' = $listings.$lang.Description
+            $jsonObject."Listings".$lang."BaseListing".'ReleaseNotes' = $release_notes
+          }
+        ###Send submission info (from file since it can exceed the command line length limit)
+        $jsonObject | ConvertTo-Json -Depth 100 | Set-Content "$env:TMP\gimp-msix-submission.json" -Encoding UTF8
+        msstore submission updateMetadata $env:PRODUCT_ID --payload "$env:TMP\gimp-msix-submission.json"; if ("$LASTEXITCODE" -gt '0') { exit 1 }
+        if ($new_listings)
+          {
+            Write-Host "(WARNING): New listings created for: $($new_listings -join ', '). Please, add their screenshots and logos manually on Partner Center." -ForegroundColor yellow
+          }
       }
+    Remove-Item "$env:TMP\gimp-msix-langs.json", "$env:TMP\gimp-msix-submission.json" -ErrorAction SilentlyContinue
 
     ## Start certification then publishing
     msstore submission publish $env:PRODUCT_ID; if ("$LASTEXITCODE" -gt '0') { exit 1 }
