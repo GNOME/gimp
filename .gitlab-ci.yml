@@ -646,6 +646,8 @@ gimp-win:
       - _build-*/plug-ins/file_associations.list
       - _build-*/build/windows/installer/
       - _build-*/build/windows/store/
+      # Needed by dist-store-weekly only
+      - _build-*/desktop/org.gimp.GIMP.appdata.xml
     expire_in: *mid_expire
 
 

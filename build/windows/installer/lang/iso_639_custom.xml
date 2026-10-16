@@ -3,6 +3,7 @@
 <!--
 This file gives a list of some languages in the ISO 639
 standard, and is used to generate lists to our .iss script
+and to localize our .msix (AppxManifest and MS Store listing)
 
 To fill data for a new entry:
 
@@ -12,7 +13,9 @@ To fill data for a new entry:
    $ LANGUAGE=$DL_CODE gettext iso_639_3 "$ENGLISH_NAME"
    E.g. for Bengali, you would run:
    $ LANGUAGE=bn gettext iso_639_3 "Bengali"
-3. Finally for inno_code, check: https://github.com/jrsoftware/issrc/tree/main/Files/Languages/
+3. For inno_code, check: https://github.com/jrsoftware/issrc/tree/main/Files/Languages/
+4. Finally for ms_code, check (leave it empty if the language is not listed):
+   https://learn.microsoft.com/windows/apps/publish/publish-your-app/msix/app-package-requirements#supported-languages
 -->
 
 <!DOCTYPE iso_639_entries [
@@ -21,6 +24,7 @@ To fill data for a new entry:
 	<!ATTLIST iso_639_entry
 		dl_code		CDATA	#REQUIRED
 		inno_code	CDATA	#REQUIRED
+		ms_code 	CDATA	#REQUIRED
 		name			CDATA	#REQUIRED
 	>
 ]>
@@ -29,341 +33,426 @@ To fill data for a new entry:
 	<iso_639_entry
 		dl_code="am"
 		inno_code=""
+		ms_code="am"
 		name="አማርኛ" />
 	<iso_639_entry
 		dl_code="ar"
 		inno_code=""
+		ms_code="ar"
 		name="اَلْعَرَبِيَّةُ" />
 	<iso_639_entry
 		dl_code="ast"
 		inno_code=""
+		ms_code=""
 		name="Asturianu" />
 	<iso_639_entry
 		dl_code="az"
 		inno_code=""
+		ms_code="az-Latn"
 		name="Azərbaycan dili" />
 	<iso_639_entry
 		dl_code="be"
 		inno_code="Languages\\Unofficial\\Belarusian.isl"
+		ms_code="be"
 		name="беларуская мова" />
 	<iso_639_entry
 		dl_code="bg"
 		inno_code="Languages\\Bulgarian.isl"
+		ms_code="bg"
 		name="български език" />
 	<iso_639_entry
 		dl_code="bn"
 		inno_code="Languages\\Unofficial\\Bengali.islu"
+		ms_code="bn"
 		name="বাংলা" />
 	<iso_639_entry
 		dl_code="br"
 		inno_code=""
+		ms_code=""
 		name="Brezhoneg" />
 	<iso_639_entry
 		dl_code="bs"
 		inno_code=""
+		ms_code="bs-Latn"
 		name="Bosanski" />
 	<iso_639_entry
 		dl_code="ca"
 		inno_code="Languages\\Catalan.isl"
+		ms_code="ca"
 		name="Català" />
 	<iso_639_entry
 		dl_code="ca@valencia"
 		inno_code=""
+		ms_code="ca-ES-valencia"
 		name="Valencià" />
 	<iso_639_entry
 		dl_code="ckb"
 		inno_code=""
+		ms_code="ku-Arab"
 		name="کوردی" />
 	<iso_639_entry
 		dl_code="cs"
 		inno_code="Languages\\Czech.isl"
+		ms_code="cs"
 		name="Čeština" />
 	<iso_639_entry
 		dl_code="csb"
 		inno_code=""
+		ms_code=""
 		name="Kaszëbsczi" />
 	<iso_639_entry
 		dl_code="da"
 		inno_code="Languages\\Danish.isl"
+		ms_code="da"
 		name="Dansk" />
 	<iso_639_entry
 		dl_code="de"
 		inno_code="Languages\\German.isl"
+		ms_code="de"
 		name="Deutsch" />
 	<iso_639_entry
 		dl_code="dz"
 		inno_code=""
+		ms_code=""
 		name="རྫོང་ཁ་" />
 	<iso_639_entry
 		dl_code="el"
 		inno_code="Languages\\Unofficial\\Greek.isl"
+		ms_code="el"
 		name="Ελληνικά" />
 	<iso_639_entry
 		dl_code="en_CA"
 		inno_code=""
+		ms_code="en-CA"
 		name="English (Canada)" />
 	<iso_639_entry
 		dl_code="en_GB"
 		inno_code="Languages\\Unofficial\\EnglishBritish.isl"
+		ms_code="en-GB"
 		name="English (United Kingdom)" />
 	<iso_639_entry
 		dl_code="eo"
 		inno_code="Languages\\Unofficial\\Esperanto.isl"
+		ms_code=""
 		name="Esperanto" />
 	<iso_639_entry
 		dl_code="es"
 		inno_code="Languages\\Spanish.isl"
+		ms_code="es"
 		name="Español" />
 	<iso_639_entry
 		dl_code="et"
 		inno_code=""
+		ms_code="et"
 		name="Eesti keel" />
 	<iso_639_entry
 		dl_code="eu"
 		inno_code="Languages\\Unofficial\\Basque.isl"
+		ms_code="eu"
 		name="Euskara" />
 	<iso_639_entry
 		dl_code="fa"
 		inno_code=""
+		ms_code="fa"
 		name="فارسی" />
 	<iso_639_entry
 		dl_code="fi"
 		inno_code="Languages\\Finnish.isl"
+		ms_code="fi"
 		name="Suomi" />
 	<iso_639_entry
 		dl_code="fr"
 		inno_code="Languages\\French.isl"
+		ms_code="fr"
 		name="Français" />
 	<iso_639_entry
 		dl_code="ga"
 		inno_code=""
+		ms_code="ga"
 		name="Gaeilge" />
 	<iso_639_entry
 		dl_code="gd"
 		inno_code=""
+		ms_code="gd-Latn"
 		name="Gàidhlig" />
 	<iso_639_entry
 		dl_code="gl"
 		inno_code="Languages\\Unofficial\\Galician.isl"
+		ms_code="gl"
 		name="Galego" />
 	<iso_639_entry
 		dl_code="gu"
 		inno_code=""
+		ms_code="gu"
 		name="ગુજરાતી" />
 	<iso_639_entry
 		dl_code="he"
 		inno_code="Languages\\Hebrew.isl"
+		ms_code="he"
 		name="עִבְֿרִית" />
 	<iso_639_entry
 		dl_code="hi"
 		inno_code=""
+		ms_code="hi"
 		name="हिन्दी" />
 	<iso_639_entry
 		dl_code="hr"
 		inno_code=""
+		ms_code="hr"
 		name="Hrvatski" />
 	<iso_639_entry
 		dl_code="hu"
 		inno_code="Languages\\Hungarian.isl"
+		ms_code="hu"
 		name="Magyar nyelv" />
 	<iso_639_entry
 		dl_code="id"
 		inno_code="Languages\\Unofficial\\Indonesian.isl"
+		ms_code="id"
 		name="Bahasa Indonesia" />
 	<iso_639_entry
 		dl_code="is"
 		inno_code="Languages\\Icelandic.isl"
+		ms_code="is"
 		name="Íslenska" />
 	<iso_639_entry
 		dl_code="it"
 		inno_code="Languages\\Italian.isl"
+		ms_code="it"
 		name="Italiano" />
 	<iso_639_entry
 		dl_code="ja"
 		inno_code="Languages\\Japanese.isl"
+		ms_code="ja"
 		name="日本語" />
 	<iso_639_entry
 		dl_code="ka"
 		inno_code="Languages\\Unofficial\\Georgian.isl"
+		ms_code="ka"
 		name="ქართული ენა" />
 	<iso_639_entry
 		dl_code="kab"
 		inno_code="Default.isl,{#ASSETS_DIR}\\lang\\kab.isl"
+		ms_code=""
 		name="Taqbaylit" />
 	<iso_639_entry
 		dl_code="kk"
 		inno_code="Languages\\Unofficial\\Kazakh.islu"
+		ms_code="kk"
 		name="Qazaq" />
 	<iso_639_entry
 		dl_code="km"
 		inno_code=""
+		ms_code="km"
 		name="ភាសាខ្មែរ" />
 	<iso_639_entry
 		dl_code="kn"
 		inno_code=""
+		ms_code="kn"
 		name="ಕನ್ನಡ" />
 	<iso_639_entry
 		dl_code="ko"
 		inno_code="Languages\\Korean.isl"
+		ms_code="ko"
 		name="한국어" />
 	<iso_639_entry
 		dl_code="kw"
 		inno_code=""
+		ms_code=""
 		name="Kernewek" />
 	<iso_639_entry
 		dl_code="ky"
 		inno_code=""
+		ms_code="ky-Cyrl"
 		name="Кыргыз тили" />
 	<iso_639_entry
 		dl_code="lt"
 		inno_code="Languages\\Lithuanian.isl"
+		ms_code="lt"
 		name="Lietuvių kalba" />
 	<iso_639_entry
 		dl_code="lv"
 		inno_code="Languages\\Unofficial\\Latvian.isl"
+		ms_code="lv"
 		name="Latviešu valoda" />
 	<iso_639_entry
 		dl_code="mk"
 		inno_code=""
+		ms_code="mk"
 		name="македонски" />
 	<iso_639_entry
 		dl_code="ml"
 		inno_code=""
+		ms_code="ml"
 		name="മലയാളം" />
 	<iso_639_entry
 		dl_code="mr"
 		inno_code="Languages\\Unofficial\\Marathi.islu"
+		ms_code="mr"
 		name="मराठी" />
 	<iso_639_entry
 		dl_code="ms"
 		inno_code="Languages\\Unofficial\\Malaysian.isl"
+		ms_code="ms"
 		name="Bahasa Melayu" />
 	<iso_639_entry
 		dl_code="my"
 		inno_code=""
+		ms_code=""
 		name="မြန်မာဘာသာ" />
 	<iso_639_entry
 		dl_code="nb"
 		inno_code=""
+		ms_code="nb"
 		name="Bokmål" />
 	<iso_639_entry
 		dl_code="nds"
 		inno_code=""
+		ms_code=""
 		name="Plattdütsch" />
 	<iso_639_entry
 		dl_code="ne"
 		inno_code=""
+		ms_code="ne"
 		name="नेपाली" />
 	<iso_639_entry
 		dl_code="nl"
 		inno_code="Languages\\Dutch.isl"
+		ms_code="nl"
 		name="Nederlands" />
 	<iso_639_entry
 		dl_code="nn"
 		inno_code="Languages\\Norwegian.isl"
+		ms_code="nn"
 		name="Nynorsk" />
 	<iso_639_entry
 		dl_code="oc"
 		inno_code=""
+		ms_code=""
 		name="Occitan" />
 	<iso_639_entry
 		dl_code="pa"
 		inno_code=""
+		ms_code="pa"
 		name="ਪੰਜਾਬੀ" />
 	<iso_639_entry
 		dl_code="pl"
 		inno_code="Languages\\Polish.isl"
+		ms_code="pl"
 		name="Polski" />
 	<iso_639_entry
 		dl_code="pt"
 		inno_code="Languages\\Portuguese.isl"
+		ms_code="pt"
 		name="Português (Portugal)" />
 	<iso_639_entry
 		dl_code="pt_BR"
 		inno_code="Languages\\BrazilianPortuguese.isl"
+		ms_code="pt-BR"
 		name="Português (Brasil)" />
 	<iso_639_entry
 		dl_code="ro"
 		inno_code="Languages\\Unofficial\\Romanian.isl"
+		ms_code="ro"
 		name="Românește" />
 	<iso_639_entry
 		dl_code="ru"
 		inno_code="Languages\\Russian.isl"
+		ms_code="ru"
 		name="Pусский язык" />
 	<iso_639_entry
 		dl_code="rw"
 		inno_code=""
+		ms_code="rw"
 		name="Ikinyarwanda" />
 	<iso_639_entry
 		dl_code="sk"
 		inno_code="Languages\\Slovak.isl"
+		ms_code="sk"
 		name="Slovenčina (sk)" />
 	<iso_639_entry
 		dl_code="si"
 		inno_code=""
+		ms_code="si"
 		name="සිංහල" />
 	<iso_639_entry
 		dl_code="sl"
 		inno_code="Languages\\Slovenian.isl"
+		ms_code="sl"
 		name="Slovenščina (sl)" />
 	<iso_639_entry
 		dl_code="sr"
 		inno_code="Languages\\Unofficial\\SerbianCyrillic.isl"
+		ms_code="sr-Cyrl"
 		name="Cрпски језик" />
 	<iso_639_entry
 		dl_code="sr@latin"
 		inno_code=""
+		ms_code="sr-Latn"
 		name="Cрпски језик (latin)" />
 	<iso_639_entry
 		dl_code="sv"
 		inno_code="Languages\\Swedish.isl"
+		ms_code="sv"
 		name="Svenska" />
 	<iso_639_entry
 		dl_code="ta"
 		inno_code="Languages\\Tamil.isl"
+		ms_code="ta"
 		name="தமிழ்" />
 	<iso_639_entry
 		dl_code="te"
 		inno_code=""
+		ms_code="te"
 		name="తెలుగు" />
 	<iso_639_entry
 		dl_code="th"
 		inno_code="Languages\\Thai.isl"
+		ms_code="th"
 		name="ภาษาไทย" />
 	<iso_639_entry
 		dl_code="tr"
 		inno_code="Languages\\Turkish.isl"
+		ms_code="tr"
 		name="Türkçe" />
 	<iso_639_entry
 		dl_code="tt"
 		inno_code=""
+		ms_code="tt-Latn"
 		name="татар теле" />
 	<iso_639_entry
 		dl_code="uk"
 		inno_code="Languages\\Ukrainian.isl"
+		ms_code="uk"
 		name="українська мова" />
 	<iso_639_entry
 		dl_code="vi"
 		inno_code="Languages\\Unofficial\\Vietnamese.isl"
+		ms_code="vi"
 		name="Tiếng Việt" />
 	<iso_639_entry
 		dl_code="xh"
 		inno_code=""
+		ms_code="xh"
 		name="IsiXhosa" />
 	<iso_639_entry
 		dl_code="yi"
 		inno_code=""
+		ms_code=""
 		name="יידיש" />
 	<iso_639_entry
 		dl_code="zh_CN"
 		inno_code="Languages\\ChineseSimplified.isl"
+		ms_code="zh-Hans"
 		name="簡體中文" />
 	<iso_639_entry
 		dl_code="zh_HK"
 		inno_code=""
+		ms_code="zh-Hant-HK"
 		name="香港中文" />
 	<iso_639_entry
 		dl_code="zh_TW"
 		inno_code="Languages\\ChineseTraditional.isl"
+		ms_code="zh-Hant"
 		name="繁體中文" />
 </iso_639_entries>
