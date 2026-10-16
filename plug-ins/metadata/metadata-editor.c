@@ -169,6 +169,10 @@ static void     set_tag_string                  (GimpMetadata         *metadata,
                                                  const gchar          *value,
                                                  gboolean              clear_tag);
 
+static gboolean set_gps_longitude_latitude      (GimpMetadata         *metadata,
+                                                 const gchar          *tag,
+                                                 const gchar          *value);
+
 static void     write_metadata_tag              (metadata_editor      *meta_info,
                                                  GimpMetadata         *metadata,
                                                  gchar                *tag);
@@ -3098,7 +3102,7 @@ write_metadata_tag_multiple (metadata_editor      *meta_info,
     }
 }
 
-static void
+static gboolean
 set_gps_longitude_latitude (GimpMetadata *metadata,
                             const gchar  *tag,
                             const gchar  *value)
@@ -3180,6 +3184,8 @@ set_gps_longitude_latitude (GimpMetadata *metadata,
       gexiv2_metadata_try_clear_tag (GEXIV2_METADATA (metadata), tag, NULL);
       g_log (ME_LOG_DOMAIN, G_LOG_LEVEL_INFO, "Removed tag %s (no value).", tag);
     }
+
+  return ! remove_val;
 }
 
 /* Note: returned string needs to be freed by caller ONLY for MODE_MULTI! */
@@ -3384,36 +3390,133 @@ metadata_editor_write_callback (GtkWidget       *dialog,
           gchar    *value_entry = g_strdup (gtk_entry_get_text (entry));
 
           if (! strcmp ("Exif.GPSInfo.GPSLongitude",
-                        default_metadata_tags[i].tag) ||
-              ! strcmp ("Exif.GPSInfo.GPSLatitude",
                         default_metadata_tags[i].tag))
             {
-              set_gps_longitude_latitude (g_metadata,
-                                          default_metadata_tags[i].tag,
-                                          value_entry);
+              gboolean   valid;
+              gint       combo_idx;
+              GtkWidget *combo_widget;
+              gchar      alt_str[256];
+
+              valid = set_gps_longitude_latitude (g_metadata,
+                                                  default_metadata_tags[i].tag,
+                                                  value_entry);
+
+              combo_widget = metadata_editor_get_widget (meta_info,
+                                                         default_metadata_tags[XMP_GPS_LONGREF].tag);
+              combo_idx = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_widget));
+              if (valid && combo_idx <= 0)
+                {
+                  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 1);
+                  g_snprintf (alt_str, sizeof (alt_str),
+                              _("GPS Longitude Reference not set. Selected choice: %s"), _(gpslngref[1].display));
+                  gimp_message (alt_str);
+                }
+              else if (! valid && combo_idx > 0)
+                {
+                  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
+                }
+            }
+          else if (! strcmp ("Exif.GPSInfo.GPSLatitude",
+                             default_metadata_tags[i].tag))
+            {
+              gboolean   valid;
+              gint       combo_idx;
+              GtkWidget *combo_widget;
+              gchar      alt_str[256];
+
+              valid = set_gps_longitude_latitude (g_metadata,
+                                                  default_metadata_tags[i].tag,
+                                                  value_entry);
+
+              combo_widget = metadata_editor_get_widget (meta_info,
+                                                         default_metadata_tags[XMP_GPS_LATREF].tag);
+              combo_idx = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_widget));
+              if (valid && combo_idx <= 0)
+                {
+                  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 1);
+                  g_snprintf (alt_str, sizeof (alt_str),
+                              _("GPS Latitude Reference not set. Selected choice: %s"), _(gpslatref[1].display));
+                  gimp_message (alt_str);
+                }
+              else if (! valid && combo_idx > 0)
+                {
+                  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
+                }
             }
           else if (! strcmp ("Exif.GPSInfo.GPSAltitude",
                              default_metadata_tags[i].tag))
             {
               GtkWidget *combo_widget;
-              gchar      alt_str[256];
-              gdouble    alt_d;
-              gint       msr;
+              const gchar *text;
+              gchar        alt_str[256];
+              gdouble      alt_d = 0.0;
+              gint         msr;
+              gboolean     valid;
+              gboolean     negative = FALSE;
+              gint         combo_idx;
 
+              /* Are we using m or ft? */
               combo_widget = metadata_editor_get_widget (meta_info,
                                                          "GPSAltitudeSystem");
               msr = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_widget));
 
-              alt_d = atof (gtk_entry_get_text (entry));
-              if (msr == 1)
-                alt_d = (alt_d * 12 * 2.54);
-              else
-                alt_d *= 100.f;
+              combo_widget = metadata_editor_get_widget (meta_info,
+                                                         default_metadata_tags[XMP_GPS_ALTREF].tag);
 
-              g_snprintf (alt_str, sizeof (alt_str), "%d/100", (gint) alt_d);
+              text = gtk_entry_get_text (entry);
+              valid = strlen (text) > 0;
 
-              set_tag_string (g_metadata, default_metadata_tags[i].tag,
-                              alt_str, FALSE);
+              if (valid)
+                {
+
+                  alt_d = atof (text);
+                  if (msr == 1)
+                    alt_d = (alt_d * 12 * 2.54);
+                  else
+                    alt_d *= 100.f;
+
+                  if (alt_d < 0.0)
+                    {
+                      negative = TRUE;
+                      alt_d = fabs (alt_d);
+
+                      combo_idx = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_widget));
+                      if (combo_idx == 1)
+                        {
+                          gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 2);
+                          g_snprintf (alt_str, sizeof (alt_str),
+                                      _("GPS Altitude Reference inconsistent with negative value. Changed choice to: %s"),
+                                      _(gpsaltref[2].display));
+                          gimp_message (alt_str);
+                        }
+                    }
+
+                  g_snprintf (alt_str, sizeof (alt_str), "%d/100", (gint) alt_d);
+
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  alt_str, FALSE);
+              }
+            else
+              {
+                  set_tag_string (g_metadata, default_metadata_tags[i].tag,
+                                  NULL, FALSE);
+              }
+
+              combo_idx = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_widget));
+              if (valid && combo_idx <= 0)
+                {
+                  gint choice = (negative ? 2 : 1);
+
+                  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), choice);
+                  g_snprintf (alt_str, sizeof (alt_str),
+                              _("GPS Altitude Reference not set. Selected choice: %s"),
+                              _(gpsaltref[choice].display));
+                  gimp_message (alt_str);
+                }
+              else if (! valid && combo_idx > 0)
+                {
+                  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
+                }
             }
           else
             {
