@@ -2475,7 +2475,7 @@ gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
 {
   GimpDashboardPrivate       *priv          = dashboard->priv;
   VariableData               *variable_data = &priv->variables[variable];
-  PROCESS_MEMORY_COUNTERS_EX  pmc           = {};
+  PROCESS_MEMORY_COUNTERS     pmc           = {};
 
   variable_data->available = FALSE;
 
@@ -2488,7 +2488,8 @@ gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
     }
 
   variable_data->available  = TRUE;
-  variable_data->value.size = pmc.PrivateUsage;
+  /* PrivateUsage includes reserved but unused memory so we use WorkingSetSize, see #7346 */
+  variable_data->value.size = pmc.WorkingSetSize;
 }
 
 static void
