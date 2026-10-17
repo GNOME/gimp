@@ -1179,7 +1179,7 @@ gimp_clipboard_wait_for_curve (Gimp *gimp)
  */
 #if GDK_PIXBUF_CHECK_VERSION(2, 36, 0)
 static gboolean
-gimp_clipboard_png_saver_supports_dpi (void)
+gimp_clipboard_saver_supports_dpi (const gchar *format_name)
 {
   GSList   *formats;
   GSList   *l;
@@ -1190,7 +1190,7 @@ gimp_clipboard_png_saver_supports_dpi (void)
     {
       GdkPixbufFormat *format = l->data;
 
-      if (strcmp (gdk_pixbuf_format_get_name (format), "png") == 0)
+      if (strcmp (gdk_pixbuf_format_get_name (format), format_name) == 0)
         {
           G_GNUC_BEGIN_IGNORE_DEPRECATIONS
           supported = gdk_pixbuf_format_is_save_option_supported (format, "x-dpi") &&
@@ -1212,8 +1212,11 @@ gimp_clipboard_send_pixbuf (GtkSelectionData *data,
                             gdouble           res_y,
                             gboolean          verbose)
 {
-  gchar x_dpi_str[16];
-  gchar y_dpi_str[16];
+  GdkAtom      target      = gtk_selection_data_get_target (data);
+  const gchar *format      = NULL;
+  const gchar *compression = NULL;
+  gchar        x_dpi_str[16];
+  gchar        y_dpi_str[16];
 
   g_snprintf (x_dpi_str, sizeof (x_dpi_str), "%d", ROUND (res_x));
   g_snprintf (y_dpi_str, sizeof (y_dpi_str), "%d", ROUND (res_y));
@@ -1225,24 +1228,35 @@ gimp_clipboard_send_pixbuf (GtkSelectionData *data,
    * or considers DPI options set via gdk_pixbuf_set_option. To support pasting
    * PNGs to other apps that support reading DPI information from PNG images
    * we need to rely on lower-level functions that allow setting these props.
+   * On macOS, other apps read images from the pasteboard as TIFF instead.
    */
-  if (gtk_selection_data_get_target (data) ==
-      gdk_atom_intern_static_string ("image/png"))
+  if (target == gdk_atom_intern_static_string ("image/png"))
+    {
+      format      = "png";
+      compression = "2";
+    }
+  else if (target == gdk_atom_intern_static_string ("image/tiff"))
+    {
+      format      = "tiff";
+      compression = "1"; /* COMPRESSION_NONE, libtiff's default */
+    }
+
+  if (format)
     {
       gchar    *buffer      = NULL;
       gsize     buffer_size = 0;
       gboolean  saved;
 
 #if GDK_PIXBUF_CHECK_VERSION(2, 36, 0)
-      if (gimp_clipboard_png_saver_supports_dpi ())
+      if (gimp_clipboard_saver_supports_dpi (format))
         {
           if (verbose)
-            g_printerr ("clipboard: setting x-dpi=%s y-dpi=%s on PNG clipboard data\n",
-                        x_dpi_str, y_dpi_str);
+            g_printerr ("clipboard: setting x-dpi=%s y-dpi=%s on %s clipboard data\n",
+                        x_dpi_str, y_dpi_str, format);
 
           saved = gdk_pixbuf_save_to_buffer (pixbuf, &buffer, &buffer_size,
-                                             "png", NULL,
-                                             "compression", "2",
+                                             format, NULL,
+                                             "compression", compression,
                                              "x-dpi", x_dpi_str,
                                              "y-dpi", y_dpi_str,
                                              NULL);
@@ -1251,14 +1265,13 @@ gimp_clipboard_send_pixbuf (GtkSelectionData *data,
 #endif
         {
           saved = gdk_pixbuf_save_to_buffer (pixbuf, &buffer, &buffer_size,
-                                             "png", NULL,
-                                             "compression", "2",
+                                             format, NULL,
+                                             "compression", compression,
                                              NULL);
         }
       if (saved)
         {
-          gtk_selection_data_set (data,
-                                  gdk_atom_intern_static_string ("image/png"),
+          gtk_selection_data_set (data, target,
                                   8, (guchar *) buffer, buffer_size);
         }
 
