@@ -99,6 +99,9 @@ static void        draw_page                (GtkPrintOperation *print,
 
 static GtkWidget * create_custom_widget     (GtkPrintOperation *operation,
                                              PrintData         *data);
+static void        custom_widget_apply      (GtkPrintOperation *operation,
+                                             GtkWidget         *widget,
+                                             PrintData         *data);
 
 #ifndef EMBED_PAGE_SETUP
 static gchar     * print_temp_proc_name     (GimpImage         *image);
@@ -289,6 +292,7 @@ print_image (GimpImage *image,
   data.use_full_page   = FALSE;
   data.draw_crop_marks = FALSE;
   data.operation       = operation;
+  data.layout_gui      = NULL;
   data.has_layout_gui  = FALSE;
 
   gimp_image_get_resolution (image, &data.xres, &data.yres);
@@ -333,6 +337,9 @@ print_image (GimpImage *image,
       g_signal_connect (operation, "create-custom-widget",
                         G_CALLBACK (create_custom_widget),
                         &data);
+      g_signal_connect (operation, "custom-widget-apply",
+                        G_CALLBACK (custom_widget_apply),
+                        &data);
 
       gtk_print_operation_set_custom_tab_label (operation, _("Image Settings"));
 
@@ -367,6 +374,7 @@ print_image (GimpImage *image,
 #endif
 
   g_object_unref (operation);
+  g_clear_object (&data.layout_gui);
 
   if (gimp_item_is_valid (GIMP_ITEM (layer)))
     gimp_item_delete (GIMP_ITEM (layer));
@@ -475,14 +483,26 @@ begin_print (GtkPrintOperation *operation,
 {
   if (! data->has_layout_gui)
     {
-      GtkWidget *dialog, *layout_gui;
-      layout_gui = print_page_layout_gui (data, PRINT_PROC_NAME);
+      GtkWidget *dialog;
+
+      /* the Flatpak print portal doesn't even ask for the widget */
+      if (! data->layout_gui)
+        data->layout_gui = g_object_ref_sink (print_page_layout_gui (data, PRINT_PROC_NAME));
+
+#ifdef G_OS_WIN32
+      /* honor the page settings chosen in the Windows 11 UnifiedPrintDialog */
+      gtk_print_operation_set_default_page_setup (operation,
+                                                  gtk_print_context_get_page_setup (context));
+#endif
+
       dialog     = gtk_dialog_new_with_buttons (_("Image Settings"), NULL, 0,
                                                 _("_Print"), GTK_RESPONSE_ACCEPT,
                                                 _("_Cancel"), GTK_RESPONSE_REJECT, NULL);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                          layout_gui, TRUE, TRUE, 0);
+                          data->layout_gui, TRUE, TRUE, 0);
       gtk_widget_show_all (dialog);
+
+      data->has_layout_gui = TRUE;
 
 #ifdef PLATFORM_OSX
       gimp_widget_set_title_bar_theme (dialog);
@@ -549,7 +569,21 @@ static GtkWidget *
 create_custom_widget (GtkPrintOperation *operation,
                       PrintData         *data)
 {
-  return print_page_layout_gui (data, PRINT_PROC_NAME);
+  /* keep a reference, the print dialog might never use the widget
+     (e.g. Win11 UnifiedPrintDialog). See: #7299 */
+  data->layout_gui = print_page_layout_gui (data, PRINT_PROC_NAME);
+  g_object_ref_sink (data->layout_gui);
+
+  return data->layout_gui;
+}
+
+static void
+custom_widget_apply (GtkPrintOperation *operation,
+                     GtkWidget         *widget,
+                     PrintData         *data)
+{
+  /* only emitted if the print dialog actually showed the custom widget */
+  data->has_layout_gui = TRUE;
 }
 
 #ifndef EMBED_PAGE_SETUP
