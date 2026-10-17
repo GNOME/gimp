@@ -1060,7 +1060,8 @@ gimp_display_shell_scale_get_screen_resolution (GimpDisplayShell *shell,
                                                 gdouble          *xres,
                                                 gdouble          *yres)
 {
-  GimpImage *image = gimp_display_get_image (shell->display);
+  GimpImage *image        = gimp_display_get_image (shell->display);
+  gint       scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (shell));
   gdouble    x;
   gdouble    y;
 
@@ -1073,6 +1074,11 @@ gimp_display_shell_scale_get_screen_resolution (GimpDisplayShell *shell,
       x = shell->monitor_xres;
       y = shell->monitor_yres;
     }
+
+  /* both resolutions above are in device pixels, but the canvas
+     works with logical/scaled pixels. See: #12153 */
+  x /= scale_factor;
+  y /= scale_factor;
 
   if (xres) *xres = x;
   if (yres) *yres = y;

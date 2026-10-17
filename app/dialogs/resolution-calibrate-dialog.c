@@ -34,6 +34,7 @@ static gdouble    calibrate_xres  = 1.0;
 static gdouble    calibrate_yres  = 1.0;
 static gint       ruler_width     = 1;
 static gint       ruler_height    = 1;
+static gint       scale_factor    = 1;
 
 
 /**
@@ -84,6 +85,9 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
 
   ruler_width  = workarea.width  - 300 - (workarea.width  % 100);
   ruler_height = workarea.height - 300 - (workarea.height % 100);
+
+  /* the resolution is in device pixels, not logical/scaled ones. See: #12153 */
+  scale_factor = gtk_widget_get_scale_factor (dialog);
 
   grid = gtk_grid_new ();
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
@@ -143,12 +147,12 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
                            FALSE,
                            FALSE,
                            _("_Horizontal:"),
-                           ruler_width,
+                           ruler_width * scale_factor,
                            calibrate_xres,
                            1, GIMP_MAX_IMAGE_SIZE,
                            0, 0,
                            _("_Vertical:"),
-                           ruler_height,
+                           ruler_height * scale_factor,
                            calibrate_yres,
                            1, GIMP_MAX_IMAGE_SIZE,
                            0, 0);
@@ -172,8 +176,8 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
         x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 0);
         y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 1);
 
-        calibrate_xres = (gdouble) ruler_width  * calibrate_xres / x;
-        calibrate_yres = (gdouble) ruler_height * calibrate_yres / y;
+        calibrate_xres = (gdouble) ruler_width  * scale_factor * calibrate_xres / x;
+        calibrate_yres = (gdouble) ruler_height * scale_factor * calibrate_yres / y;
 
         chain_button = GIMP_COORDINATES_CHAINBUTTON (resolution_entry);
 
