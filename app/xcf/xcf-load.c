@@ -5363,7 +5363,7 @@ xcf_load_parasite (XcfInfo *info)
       /* Ensure the parasite_data is NULL-terminated */
       GString *parasite_data = g_string_new_len (data, size);
 
-      parasite = gimp_parasite_new (name, flags, parasite_data->len + 1,
+      parasite = gimp_parasite_new (name, flags, parasite_data->len,
                                     parasite_data->str);
       g_string_free (parasite_data, FALSE);
     }
