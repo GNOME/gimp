@@ -38,7 +38,13 @@ print_page_setup_dialog (GtkPrintOperation *operation)
 
   setup = gtk_print_operation_get_default_page_setup (operation);
 
-  settings = gtk_print_settings_new ();
+  /* use the last print settings, so the page setup is done for
+     the last selected printer instead of the default one. See: #527 */
+  settings = gtk_print_operation_get_print_settings (operation);
+  if (settings)
+    g_object_ref (settings);
+  else
+    settings = gtk_print_settings_new ();
   setup = gtk_print_run_page_setup_dialog (NULL, setup, settings);
   g_object_unref (settings);
 

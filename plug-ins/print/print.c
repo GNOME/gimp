@@ -394,11 +394,17 @@ page_setup (GimpImage *image)
   GtkPrintOperation *operation;
   GimpProcedure     *procedure;
   GimpValueArray    *return_vals;
+  PrintData          data = { 0, };
   gchar             *name;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
   operation = gtk_print_operation_new ();
+
+  /* use the last print settings. See: #527 */
+  data.image     = image;
+  data.operation = operation;
+  print_settings_load (&data);
 
   print_page_setup_load (operation, image);
   print_page_setup_dialog (operation);
