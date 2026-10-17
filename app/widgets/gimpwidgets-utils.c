@@ -836,6 +836,12 @@ gimp_get_monitor_resolution (GdkMonitor *monitor,
   size_pixels.width  = CGDisplayPixelsWide (kCGDirectMainDisplay);
   size_pixels.height = CGDisplayPixelsHigh (kCGDirectMainDisplay);
 #endif
+
+  /* the size above is in logical/scaled pixels, but the resolution
+     must be in device pixels. See: #12153 */
+  size_pixels.width  *= gdk_monitor_get_scale_factor (monitor);
+  size_pixels.height *= gdk_monitor_get_scale_factor (monitor);
+
   /*
    * From xdpyinfo.c:
    *

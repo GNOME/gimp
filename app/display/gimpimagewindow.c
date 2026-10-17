@@ -849,6 +849,7 @@ gimp_image_window_configure_event (GtkWidget         *widget,
           GimpDisplayShell *shell = list->data;
 
           gimp_display_shell_render_set_scale (shell, scale_factor);
+          gimp_display_shell_scale_update (shell);
           gimp_display_shell_expose_full (shell);
         }
     }
