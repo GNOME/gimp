@@ -23,9 +23,11 @@
 #include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
+#define COBJMACROS
 #include <windows.h>
 #include <windef.h>
 #include <winbase.h>
+#include <shobjidl.h>
 #include <gdk/gdkwin32.h>
 #endif
 
@@ -402,6 +404,9 @@ gimp_image_window_realize (GtkWidget *widget,
          Windows won't minimize the window when clicking on taskbar icon. See: #13477 */
       SetWindowLongPtrW (hwnd, GWL_STYLE,
                          GetWindowLongPtrW (hwnd, GWL_STYLE) | WS_MINIMIZEBOX);
+      /* Windows treats the maximized CSD window as fullscreen, so an
+         autohidden taskbar can't be revealed with the mouse. See: #12688. */
+      SetPropW (hwnd, L"NonRudeHWND", (HANDLE) TRUE);
     }
 }
 
@@ -416,6 +421,18 @@ gimp_image_window_csd_filter (GdkXEvent *xevent,
   if (msg->message == WM_STYLECHANGING && msg->wParam == GWL_STYLE)
     {
       ((STYLESTRUCT *) msg->lParam)->styleNew |= WS_MINIMIZEBOX;
+    }
+  /* see: #12688 */
+  else if (msg->message == WM_WINDOWPOSCHANGING)
+    {
+      if (gdk_window_get_state (data) & GDK_WINDOW_STATE_FULLSCREEN)
+        RemovePropW (msg->hwnd, L"NonRudeHWND");
+      else
+        SetPropW (msg->hwnd, L"NonRudeHWND", (HANDLE) TRUE);
+    }
+  else if (msg->message == WM_NCDESTROY)
+    {
+      RemovePropW (msg->hwnd, L"NonRudeHWND");
     }
 
   return GDK_FILTER_CONTINUE;
@@ -924,6 +941,31 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
       gimp_image_window_suspend_keep_pos (window);
       gimp_display_shell_appearance_update (shell);
       gimp_image_window_resume_keep_pos (window);
+
+#ifdef G_OS_WIN32
+      /* since we set NonRudeHWND with the merged title bar, tell the shell when
+         we are fullscreen so the autohidden taskbar stays hidden. See: #12688. */
+      if (gtk_window_get_titlebar (GTK_WINDOW (window)))
+        {
+          HWND           hwnd    = gdk_win32_window_get_handle (gtk_widget_get_window (widget));
+          HRESULT        init_hr = CoInitializeEx (NULL, COINIT_APARTMENTTHREADED);
+          ITaskbarList2 *taskbar = NULL;
+
+          if (SUCCEEDED (CoCreateInstance (&CLSID_TaskbarList, NULL,
+                                           CLSCTX_INPROC_SERVER,
+                                           &IID_ITaskbarList2,
+                                           (void **) &taskbar)))
+            {
+              if (SUCCEEDED (ITaskbarList2_HrInit (taskbar)))
+                ITaskbarList2_MarkFullscreenWindow (taskbar, hwnd, fullscreen);
+
+              ITaskbarList2_Release (taskbar);
+            }
+
+          if (SUCCEEDED (init_hr))
+            CoUninitialize ();
+        }
+#endif
 
       /* When using CSD (for example in Wayland), our title bar stays visible
        * when going fullscreen by default. There is no getter for it and it's
