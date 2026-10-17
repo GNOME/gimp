@@ -449,9 +449,10 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
 
   gimp_image_undo_group_end (image);
 
-  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+  if (release_type == GIMP_BUTTON_RELEASE_CANCEL ||
+      (edit_select->cuml_x == 0 && edit_select->cuml_y == 0))
     {
-      /* Operation cancelled - undo the undo-group! */
+      /* Operation cancelled or no movement - undo the undo-group! */
       gimp_image_undo (image);
     }
 
