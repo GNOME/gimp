@@ -26,6 +26,7 @@
 #include <windows.h>
 #include <windef.h>
 #include <winbase.h>
+#include <gdk/gdkwin32.h>
 #endif
 
 #ifdef PLATFORM_OSX
@@ -198,6 +199,10 @@ static void      gimp_image_window_style_updated       (GtkWidget           *wid
 
 #ifdef G_OS_WIN32
 static void      gimp_image_window_realize             (GtkWidget           *widget,
+                                                        gpointer             data);
+static GdkFilterReturn
+                 gimp_image_window_csd_filter          (GdkXEvent           *xevent,
+                                                        GdkEvent            *event,
                                                         gpointer             data);
 #endif
 
@@ -385,6 +390,35 @@ gimp_image_window_realize (GtkWidget *widget,
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (widget);
 
   gimp_window_set_title_bar_theme (private->gimp, widget);
+
+  if (gtk_window_get_titlebar (GTK_WINDOW (widget)))
+    {
+      GdkWindow *window = gtk_widget_get_window (widget);
+      HWND       hwnd   = gdk_win32_window_get_handle (window);
+
+      gdk_window_add_filter (window, gimp_image_window_csd_filter, window);
+
+      /* with CSD (merged title bar), GDK keeps removing WS_MINIMIZEBOX, so
+         Windows won't minimize the window when clicking on taskbar icon. See: #13477 */
+      SetWindowLongPtrW (hwnd, GWL_STYLE,
+                         GetWindowLongPtrW (hwnd, GWL_STYLE) | WS_MINIMIZEBOX);
+    }
+}
+
+static GdkFilterReturn
+gimp_image_window_csd_filter (GdkXEvent *xevent,
+                              GdkEvent  *event,
+                              gpointer   data)
+{
+  MSG *msg = (MSG *) xevent;
+
+  /* see: #13477 */
+  if (msg->message == WM_STYLECHANGING && msg->wParam == GWL_STYLE)
+    {
+      ((STYLESTRUCT *) msg->lParam)->styleNew |= WS_MINIMIZEBOX;
+    }
+
+  return GDK_FILTER_CONTINUE;
 }
 #endif
 
