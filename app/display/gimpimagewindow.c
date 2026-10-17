@@ -492,6 +492,27 @@ gimp_image_window_constructed (GObject *object)
           gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), private->menubar);
           gtk_widget_set_visible (headerbar, TRUE);
 
+#ifdef G_OS_WIN32
+          {
+            BOOL drop_shadow = TRUE;
+
+            /* respect the system-wide option to hide window shadows. See: #14450 */
+            if (SystemParametersInfoW (SPI_GETDROPSHADOW, 0, &drop_shadow, 0) &&
+                ! drop_shadow)
+              {
+                GtkCssProvider *css = gtk_css_provider_new ();
+
+                gtk_css_provider_load_from_data (css,
+                                                 "decoration { box-shadow: none; }",
+                                                 -1, NULL);
+                gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (window)),
+                                                GTK_STYLE_PROVIDER (css),
+                                                GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+                g_object_unref (css);
+              }
+          }
+#endif
+
           /* XXX There are competing propositions on how the title should be
            * aligned. GTK is trying to center it (relatively to the window) as
            * much as it can. But some people seem to thing it should be centered
