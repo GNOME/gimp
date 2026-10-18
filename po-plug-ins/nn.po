@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-02 21:00+0000\n"
-"PO-Revision-Date: 2026-10-04 17:50+0200\n"
+"POT-Creation-Date: 2026-10-04 15:59+0000\n"
+"PO-Revision-Date: 2026-10-13 19:29+0200\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -87,10 +87,10 @@ msgstr "Programtillegg-eksempel i C"
 #: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
-#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1193
-#: plug-ins/metadata/metadata-editor.c:1691
-#: plug-ins/metadata/metadata-editor.c:5468
-#: plug-ins/metadata/metadata-editor.c:5503 plug-ins/print/print.c:476
+#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1201
+#: plug-ins/metadata/metadata-editor.c:1699
+#: plug-ins/metadata/metadata-editor.c:5522
+#: plug-ins/metadata/metadata-editor.c:5557 plug-ins/print/print.c:476
 msgid "_Cancel"
 msgstr "_Avbryt"
 
@@ -266,8 +266,8 @@ msgstr "_Vassrett stil"
 #: plug-ins/lighting/lighting-main.c:213 plug-ins/lighting/lighting-main.c:336
 #: plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454
 #: plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
-#: plug-ins/metadata/metadata-tags.c:218 plug-ins/metadata/metadata-tags.c:230
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:223 plug-ins/metadata/metadata-tags.c:235
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "None"
 msgstr "Ingen"
 
@@ -404,7 +404,7 @@ msgstr "Deoptimer animasjonen"
 
 #: plug-ins/common/animation-optimize.c:530
 msgid "Removing animation background"
-msgstr "Fjerner animasjonsbakgrunnen"
+msgstr "Fjernar animasjonsbakgrunnen"
 
 #: plug-ins/common/animation-optimize.c:533
 msgid "Finding animation background"
@@ -670,11 +670,11 @@ msgstr "Bitar for bøttestorleik"
 msgid "1"
 msgstr "1"
 
-#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:283
 msgid "2"
 msgstr "2"
 
-#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:283
 msgid "4"
 msgstr "4"
 
@@ -1789,11 +1789,11 @@ msgstr "Retinex-fordeling gjennom skalaar"
 msgid "Uniform"
 msgstr "Einsarta"
 
-#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:283
 msgid "Low"
 msgstr "Låg"
 
-#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:283
 msgid "High"
 msgstr "Høg"
 
@@ -2514,7 +2514,7 @@ msgstr "_Fjern striper …"
 
 #: plug-ins/common/destripe.c:129
 msgid "Remove vertical stripe artifacts from the image"
-msgstr "Fjerner loddrette støystriper frå biletet"
+msgstr "Fjernar loddrette støystriper frå biletet"
 
 #: plug-ins/common/destripe.c:131
 msgid "This plug-in tries to remove vertical stripes from an image."
@@ -2544,7 +2544,7 @@ msgstr "Fjernar stripene"
 
 #: plug-ins/common/destripe.c:459
 msgid "Destripe"
-msgstr "Fjerner striper"
+msgstr "Fjernar striper"
 
 #: plug-ins/common/file-aa.c:133 plug-ins/common/file-aa.c:135
 msgid "ASCII art"
@@ -4101,8 +4101,8 @@ msgid "xvYCC"
 msgstr "xvYCC"
 
 #: plug-ins/common/file-jp2.c:249 plug-ins/common/file-jp2.c:295
-#: plug-ins/metadata/metadata-tags.c:268 plug-ins/metadata/metadata-tags.c:304
-#: plug-ins/metadata/metadata-tags.c:311 plug-ins/metadata/metadata-tags.c:318
+#: plug-ins/metadata/metadata-tags.c:290 plug-ins/metadata/metadata-tags.c:326
+#: plug-ins/metadata/metadata-tags.c:333 plug-ins/metadata/metadata-tags.c:340
 msgid "Unknown"
 msgstr "Ukjend"
 
@@ -4974,7 +4974,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Eksporter biletet som PDF med fleire sider"
 
 #: plug-ins/common/file-pdf-export.c:1034
-#: plug-ins/metadata/metadata-editor.c:5503
+#: plug-ins/metadata/metadata-editor.c:5557
 msgid "_Export"
 msgstr "_Eksporter"
 
@@ -7629,7 +7629,7 @@ msgstr "Skrifttype for tala"
 
 #: plug-ins/common/film.c:223
 msgid "_Number color"
-msgstr "Talet på _fargar"
+msgstr "_Talfarge"
 
 #: plug-ins/common/film.c:224
 msgid "Color for numbers"
@@ -7934,7 +7934,7 @@ msgstr "Opprett eitt nytt lag"
 
 #: plug-ins/common/hot.c:465 plug-ins/common/hot.c:671
 msgid "Hot"
-msgstr "Heit"
+msgstr "TV-filter"
 
 #: plug-ins/common/jigsaw.c:468
 msgid "_Jigsaw..."
@@ -8201,10 +8201,10 @@ msgid "Plug-in Browser"
 msgstr "Lesar for programtillegg"
 
 #: plug-ins/common/plugin-browser.c:615 plug-ins/common/unit-editor.c:115
-#: plug-ins/metadata/metadata-editor.c:612
-#: plug-ins/metadata/metadata-editor.c:648
-#: plug-ins/metadata/metadata-editor.c:655
-#: plug-ins/metadata/metadata-editor.c:662
+#: plug-ins/metadata/metadata-editor.c:617
+#: plug-ins/metadata/metadata-editor.c:653
+#: plug-ins/metadata/metadata-editor.c:660
+#: plug-ins/metadata/metadata-editor.c:667
 msgid "Name"
 msgstr "Namn"
 
@@ -13151,7 +13151,7 @@ msgstr "Nett-type:"
 
 #: plug-ins/gfig/gfig-dialog.c:1426
 #: plug-ins/gradient-flare/gradient-flare.c:740
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "Normal"
 msgstr "Normal"
 
@@ -15906,7 +15906,7 @@ msgstr "Forfattaren sin tittel"
 
 #. Description tab
 #: plug-ins/metadata/metadata-editor.c:494
-#: plug-ins/metadata/metadata-editor.c:1230
+#: plug-ins/metadata/metadata-editor.c:1238
 msgid "Description"
 msgstr "Beskriving"
 
@@ -15923,438 +15923,454 @@ msgid "Keywords"
 msgstr "Nøkkelord"
 
 #: plug-ins/metadata/metadata-editor.c:499
+msgid "Alt Text"
+msgstr "Alternativ tekst"
+
+#: plug-ins/metadata/metadata-editor.c:500
+msgid "Extended Description"
+msgstr "Utvida beskriving"
+
+#: plug-ins/metadata/metadata-editor.c:502
 msgid "Copyright Status"
 msgstr "Status for opphavsrett"
 
-#: plug-ins/metadata/metadata-editor.c:500
-#: plug-ins/metadata/metadata-editor.c:629
+#: plug-ins/metadata/metadata-editor.c:503
+#: plug-ins/metadata/metadata-editor.c:634
 msgid "Copyright Notice"
 msgstr "Merknadar om opphavsrett"
 
-#: plug-ins/metadata/metadata-editor.c:501
+#: plug-ins/metadata/metadata-editor.c:504
 msgid "Copyright URL"
 msgstr "Nettadresse for opphavsrett"
 
-#: plug-ins/metadata/metadata-editor.c:507
+#: plug-ins/metadata/metadata-editor.c:510
 msgid "Address"
 msgstr "Adresse"
 
-#: plug-ins/metadata/metadata-editor.c:508
-#: plug-ins/metadata/metadata-editor.c:523
-#: plug-ins/metadata/metadata-editor.c:544
-#: plug-ins/metadata/metadata-editor.c:602
+#: plug-ins/metadata/metadata-editor.c:511
+#: plug-ins/metadata/metadata-editor.c:526
+#: plug-ins/metadata/metadata-editor.c:547
+#: plug-ins/metadata/metadata-editor.c:607
 msgid "City"
 msgstr "By"
 
-#: plug-ins/metadata/metadata-editor.c:509
-#: plug-ins/metadata/metadata-editor.c:524
-#: plug-ins/metadata/metadata-editor.c:545
+#: plug-ins/metadata/metadata-editor.c:512
+#: plug-ins/metadata/metadata-editor.c:527
+#: plug-ins/metadata/metadata-editor.c:548
 msgid "State / Province"
 msgstr "Delstat/region"
 
-#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:513
 msgid "Postal Code"
 msgstr "Postkode"
 
-#: plug-ins/metadata/metadata-editor.c:511
-#: plug-ins/metadata/metadata-editor.c:525
-#: plug-ins/metadata/metadata-editor.c:546
-#: plug-ins/metadata/metadata-editor.c:604
+#: plug-ins/metadata/metadata-editor.c:514
+#: plug-ins/metadata/metadata-editor.c:528
+#: plug-ins/metadata/metadata-editor.c:549
+#: plug-ins/metadata/metadata-editor.c:609
 msgid "Country"
 msgstr "Land"
 
-#: plug-ins/metadata/metadata-editor.c:513
+#: plug-ins/metadata/metadata-editor.c:516
 msgid "Phone(s)"
 msgstr "Telefon(ar)"
 
-#: plug-ins/metadata/metadata-editor.c:514
+#: plug-ins/metadata/metadata-editor.c:517
 msgid "E-mail(s)"
 msgstr "E-post(ar)"
 
-#: plug-ins/metadata/metadata-editor.c:515
+#: plug-ins/metadata/metadata-editor.c:518
 msgid "Website(s)"
 msgstr "Nettside(r)"
 
-#: plug-ins/metadata/metadata-editor.c:517
+#: plug-ins/metadata/metadata-editor.c:520
 msgid "Creation Date"
 msgstr "Skapingsdato"
 
-#: plug-ins/metadata/metadata-editor.c:519
+#: plug-ins/metadata/metadata-editor.c:522
 msgid "Intellectual Genre"
 msgstr "Intellektuell sjanger"
 
-#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:523
 msgid "IPTC Scene Code"
 msgstr "IPTC-scenekode"
 
-#: plug-ins/metadata/metadata-editor.c:522
-#: plug-ins/metadata/metadata-editor.c:543
-#: plug-ins/metadata/metadata-editor.c:601
+#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:546
+#: plug-ins/metadata/metadata-editor.c:606
 msgid "Sublocation"
 msgstr "Underplassering"
 
-#: plug-ins/metadata/metadata-editor.c:526
-#: plug-ins/metadata/metadata-editor.c:547
+#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:550
 msgid "Country ISO-Code"
 msgstr "ISO-kode for landet"
 
-#: plug-ins/metadata/metadata-editor.c:528
+#: plug-ins/metadata/metadata-editor.c:531
 msgid "Urgency"
 msgstr "Nødvendig"
 
-#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:532
 msgid "Headline"
 msgstr "Overskrift"
 
-#: plug-ins/metadata/metadata-editor.c:530
+#: plug-ins/metadata/metadata-editor.c:533
 msgid "IPTC Subject Code"
 msgstr "IPTC subjektkode"
 
-#: plug-ins/metadata/metadata-editor.c:532
+#: plug-ins/metadata/metadata-editor.c:535
 msgid "Job Identifier"
 msgstr "Jobbidentifikator"
 
-#: plug-ins/metadata/metadata-editor.c:533
+#: plug-ins/metadata/metadata-editor.c:536
 msgid "Instructions"
 msgstr "Instruksjonar"
 
-#: plug-ins/metadata/metadata-editor.c:534
+#: plug-ins/metadata/metadata-editor.c:537
 msgid "Credit Line"
 msgstr "Kredittlinje"
 
-#: plug-ins/metadata/metadata-editor.c:535
-#: plug-ins/metadata/metadata-editor.c:627
+#: plug-ins/metadata/metadata-editor.c:538
+#: plug-ins/metadata/metadata-editor.c:632
 msgid "Source"
 msgstr "Kjelde"
 
-#: plug-ins/metadata/metadata-editor.c:536
+#: plug-ins/metadata/metadata-editor.c:539
 msgid "Usage Terms"
 msgstr "Bruksvilkår"
 
-#: plug-ins/metadata/metadata-editor.c:542
+#: plug-ins/metadata/metadata-editor.c:545
 msgid "Person Shown"
 msgstr "Vist person"
 
-#: plug-ins/metadata/metadata-editor.c:548
-#: plug-ins/metadata/metadata-editor.c:606
+#: plug-ins/metadata/metadata-editor.c:551
+#: plug-ins/metadata/metadata-editor.c:611
 msgid "World Region"
 msgstr "Verdsregion"
 
-#: plug-ins/metadata/metadata-editor.c:549
+#: plug-ins/metadata/metadata-editor.c:552
 msgid "Location Shown"
 msgstr "Vist plassering"
 
-#: plug-ins/metadata/metadata-editor.c:551
+#: plug-ins/metadata/metadata-editor.c:554
 msgid "Featured Organization"
 msgstr "Organisasjon"
 
-#: plug-ins/metadata/metadata-editor.c:553
+#: plug-ins/metadata/metadata-editor.c:556
 msgid "Organization Code"
 msgstr "Organisasjonskode"
 
-#: plug-ins/metadata/metadata-editor.c:555
+#: plug-ins/metadata/metadata-editor.c:558
 msgid "Event"
 msgstr "Hending"
 
-#: plug-ins/metadata/metadata-editor.c:556
+#: plug-ins/metadata/metadata-editor.c:559
 msgid "Artwork or Object"
 msgstr "Kunstverk eller objekt"
 
-#: plug-ins/metadata/metadata-editor.c:559
+#: plug-ins/metadata/metadata-editor.c:562
 msgid "Additional Model Info"
 msgstr "Ytterlegare informasjon om modellen"
 
-#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:563
 msgid "Model Age"
 msgstr "Modellalder"
 
-#: plug-ins/metadata/metadata-editor.c:561
+#: plug-ins/metadata/metadata-editor.c:564
 msgid "Minor Model Age Disclosure"
 msgstr "Opplysning om aldersgrensene for mindreårige modellar"
 
-#: plug-ins/metadata/metadata-editor.c:562
+#: plug-ins/metadata/metadata-editor.c:565
 msgid "Model Release Status"
 msgstr "Modellutgjevingsstatus"
 
-#: plug-ins/metadata/metadata-editor.c:563
-#: plug-ins/metadata/metadata-editor.c:635
+#: plug-ins/metadata/metadata-editor.c:566
+#: plug-ins/metadata/metadata-editor.c:640
 msgid "Model Release Identifier"
 msgstr "Identifikator for modellutgjeving"
 
-#: plug-ins/metadata/metadata-editor.c:566
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Image Supplier Name"
 msgstr "Namn på bileteleverandøren"
 
-#: plug-ins/metadata/metadata-editor.c:567
+#: plug-ins/metadata/metadata-editor.c:570
 msgid "Image Supplier ID"
 msgstr "Biletleverandør-ID"
 
-#: plug-ins/metadata/metadata-editor.c:568
+#: plug-ins/metadata/metadata-editor.c:571
 msgid "Supplier's Image ID"
 msgstr "Leverandøren sin bilet-ID"
 
-#: plug-ins/metadata/metadata-editor.c:569
+#: plug-ins/metadata/metadata-editor.c:572
 msgid "Registry Entry"
 msgstr "Registeroppføring"
 
-#: plug-ins/metadata/metadata-editor.c:571
+#: plug-ins/metadata/metadata-editor.c:574
 msgid "Max. Available Width"
 msgstr "Høgaste tilgjengelege breidd"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:575
 msgid "Max. Available Height"
 msgstr "Største tilgjengelege høgd"
 
-#: plug-ins/metadata/metadata-editor.c:573
+#: plug-ins/metadata/metadata-editor.c:576
 msgid "Digital Source Type"
 msgstr "Type digital kjelde"
 
-#: plug-ins/metadata/metadata-editor.c:575
+#: plug-ins/metadata/metadata-editor.c:578
 msgid "Image Creator"
 msgstr "Biletet laga av"
 
-#: plug-ins/metadata/metadata-editor.c:577
+#: plug-ins/metadata/metadata-editor.c:580
 msgid "Copyright Owner"
 msgstr "Eigar av opphavsrett"
 
-#: plug-ins/metadata/metadata-editor.c:579
+#: plug-ins/metadata/metadata-editor.c:582
 msgid "Licensor"
 msgstr "Lisensinnehavar"
 
-#: plug-ins/metadata/metadata-editor.c:581
+#: plug-ins/metadata/metadata-editor.c:584
 msgid "Property Release Status"
 msgstr "Status for frigjeving av eigedelar"
 
-#: plug-ins/metadata/metadata-editor.c:582
+#: plug-ins/metadata/metadata-editor.c:585
 msgid "Property Release Identifier"
 msgstr "Identifikator for eigedomsfrigjeving"
 
-#: plug-ins/metadata/metadata-editor.c:603
+#: plug-ins/metadata/metadata-editor.c:587
+msgid "Data Mining"
+msgstr "Datagraving"
+
+#: plug-ins/metadata/metadata-editor.c:588
+msgid "Other Constraints"
+msgstr "Andre avgrensingar"
+
+#: plug-ins/metadata/metadata-editor.c:608
 msgid "Province / State"
 msgstr "Delstat/region"
 
-#: plug-ins/metadata/metadata-editor.c:605
+#: plug-ins/metadata/metadata-editor.c:610
 msgid "Country ISO Code"
 msgstr "ISO-kode for land"
 
-#: plug-ins/metadata/metadata-editor.c:618
+#: plug-ins/metadata/metadata-editor.c:623
 msgid "Code"
 msgstr "Kode"
 
-#: plug-ins/metadata/metadata-editor.c:624
+#: plug-ins/metadata/metadata-editor.c:629
 msgid "Title"
 msgstr "Tittel"
 
-#: plug-ins/metadata/metadata-editor.c:625
+#: plug-ins/metadata/metadata-editor.c:630
 msgid "Date Created"
 msgstr "Dato laga"
 
-#: plug-ins/metadata/metadata-editor.c:626
+#: plug-ins/metadata/metadata-editor.c:631
 msgid "Creator"
 msgstr "Laga av"
 
-#: plug-ins/metadata/metadata-editor.c:628
+#: plug-ins/metadata/metadata-editor.c:633
 msgid "Source Inventory ID"
 msgstr "Kjeldeinventar-ID"
 
-#: plug-ins/metadata/metadata-editor.c:641
+#: plug-ins/metadata/metadata-editor.c:646
 msgid "Organization Identifier"
 msgstr "Organisasjon-identifikator"
 
-#: plug-ins/metadata/metadata-editor.c:642
+#: plug-ins/metadata/metadata-editor.c:647
 msgid "Item Identifier"
 msgstr "Element-identifikator"
 
-#: plug-ins/metadata/metadata-editor.c:649
-#: plug-ins/metadata/metadata-editor.c:656
-#: plug-ins/metadata/metadata-editor.c:663
-#: plug-ins/metadata/metadata-editor.c:675
+#: plug-ins/metadata/metadata-editor.c:654
+#: plug-ins/metadata/metadata-editor.c:661
+#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:680
 msgid "Identifier"
 msgstr "Identifikator"
 
-#: plug-ins/metadata/metadata-editor.c:664
+#: plug-ins/metadata/metadata-editor.c:669
 msgid "Phone Number 1"
 msgstr "Telefonnummer 1"
 
-#: plug-ins/metadata/metadata-editor.c:665
+#: plug-ins/metadata/metadata-editor.c:670
 msgid "Phone Type 1"
 msgstr "Telefontype 1"
 
-#: plug-ins/metadata/metadata-editor.c:666
+#: plug-ins/metadata/metadata-editor.c:671
 msgid "Phone Number 2"
 msgstr "Telefonnummer 2"
 
-#: plug-ins/metadata/metadata-editor.c:667
+#: plug-ins/metadata/metadata-editor.c:672
 msgid "Phone Type 2"
 msgstr "Telefon type 2"
 
-#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:673
 msgid "Email Address"
 msgstr "E-postadresse"
 
-#: plug-ins/metadata/metadata-editor.c:669
+#: plug-ins/metadata/metadata-editor.c:674
 msgid "Web Address"
 msgstr "Nettadresse"
 
-#: plug-ins/metadata/metadata-editor.c:682
+#: plug-ins/metadata/metadata-editor.c:687
 msgid "Category"
 msgstr "Kategori"
 
-#: plug-ins/metadata/metadata-editor.c:683
+#: plug-ins/metadata/metadata-editor.c:688
 msgid "Supplemental Category"
 msgstr "Supplerande kategori"
 
-#: plug-ins/metadata/metadata-editor.c:689
+#: plug-ins/metadata/metadata-editor.c:694
 msgid "Longitude"
 msgstr "Lengdegrad"
 
-#: plug-ins/metadata/metadata-editor.c:690
+#: plug-ins/metadata/metadata-editor.c:695
 msgid "Longitude Reference"
 msgstr "Lengdegradsreferanse"
 
-#: plug-ins/metadata/metadata-editor.c:691
+#: plug-ins/metadata/metadata-editor.c:696
 msgid "Latitude"
 msgstr "Breiddegrad"
 
-#: plug-ins/metadata/metadata-editor.c:692
+#: plug-ins/metadata/metadata-editor.c:697
 msgid "Latitude Reference"
 msgstr "Referanse til breiddegrad"
 
-#: plug-ins/metadata/metadata-editor.c:693
+#: plug-ins/metadata/metadata-editor.c:698
 msgid "Altitude"
 msgstr "Høgd"
 
-#: plug-ins/metadata/metadata-editor.c:695
+#: plug-ins/metadata/metadata-editor.c:700
 msgid "Altitude Reference"
 msgstr "Høgdereferanse"
 
-#: plug-ins/metadata/metadata-editor.c:701
+#: plug-ins/metadata/metadata-editor.c:706
 msgid "Patient"
 msgstr "Pasient"
 
-#: plug-ins/metadata/metadata-editor.c:702
+#: plug-ins/metadata/metadata-editor.c:707
 msgid "Patient ID"
 msgstr "Pasient-ID"
 
-#: plug-ins/metadata/metadata-editor.c:703
+#: plug-ins/metadata/metadata-editor.c:708
 msgid "Date of Birth"
 msgstr "Fødselsdato"
 
-#: plug-ins/metadata/metadata-editor.c:705
+#: plug-ins/metadata/metadata-editor.c:710
 msgid "Patient Sex"
 msgstr "Pasientkjønn"
 
-#: plug-ins/metadata/metadata-editor.c:707
+#: plug-ins/metadata/metadata-editor.c:712
 msgid "Study ID"
 msgstr "Studie-ID"
 
-#: plug-ins/metadata/metadata-editor.c:708
+#: plug-ins/metadata/metadata-editor.c:713
 msgid "Referring Physician"
 msgstr "Tilvisande lege"
 
-#: plug-ins/metadata/metadata-editor.c:709
+#: plug-ins/metadata/metadata-editor.c:714
 msgid "Study Date"
 msgstr "Studiedato"
 
-#: plug-ins/metadata/metadata-editor.c:711
+#: plug-ins/metadata/metadata-editor.c:716
 msgid "Study Description"
 msgstr "Studiebeskriving"
 
-#: plug-ins/metadata/metadata-editor.c:712
+#: plug-ins/metadata/metadata-editor.c:717
 msgid "Series Number"
 msgstr "Serienummer"
 
-#: plug-ins/metadata/metadata-editor.c:713
+#: plug-ins/metadata/metadata-editor.c:718
 msgid "Modality"
 msgstr "Modalitet"
 
-#: plug-ins/metadata/metadata-editor.c:714
+#: plug-ins/metadata/metadata-editor.c:719
 msgid "Series Date"
 msgstr "Seriedato"
 
-#: plug-ins/metadata/metadata-editor.c:716
+#: plug-ins/metadata/metadata-editor.c:721
 msgid "Series Description"
 msgstr "Seriebeskriving"
 
-#: plug-ins/metadata/metadata-editor.c:718
+#: plug-ins/metadata/metadata-editor.c:723
 msgid "Equipment Institution"
 msgstr "Utstyrsinstitusjon"
 
-#: plug-ins/metadata/metadata-editor.c:719
+#: plug-ins/metadata/metadata-editor.c:724
 msgid "Equipment Manufacturer"
 msgstr "Utsttyrsprodusent"
 
-#: plug-ins/metadata/metadata-editor.c:763
+#: plug-ins/metadata/metadata-editor.c:768
 msgid "_Edit Metadata"
 msgstr "_Rediger metadata"
 
-#: plug-ins/metadata/metadata-editor.c:767
+#: plug-ins/metadata/metadata-editor.c:772
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Rediger metadata (EXIF, IPTC, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:780
+#: plug-ins/metadata/metadata-editor.c:785
 msgid "Parent's window handle"
 msgstr "Overordna vindaugehandtak"
 
-#: plug-ins/metadata/metadata-editor.c:781
+#: plug-ins/metadata/metadata-editor.c:786
 msgid ""
 "The opaque handle of the window to set this plug-in's dialog transient to"
 msgstr ""
 "Det ugjennomsiktige handtaket på vindauget for å setja dette "
 "programtillegget sitt dialogvindauget forbigåande til"
 
-#: plug-ins/metadata/metadata-editor.c:1186
+#: plug-ins/metadata/metadata-editor.c:1194
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Metadataredigering: %s"
 
-#: plug-ins/metadata/metadata-editor.c:1194
+#: plug-ins/metadata/metadata-editor.c:1202
 msgid "_Write Metadata"
 msgstr "_Skriv metadata"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1236
+#: plug-ins/metadata/metadata-editor.c:1244
 #: plug-ins/metadata/metadata-viewer.c:310
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1242
+#: plug-ins/metadata/metadata-editor.c:1250
 msgid "IPTC Extension"
 msgstr "IPTC-utviding"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1348
+#: plug-ins/metadata/metadata-editor.c:1356
 msgid "Categories"
 msgstr "Kategoriar"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1354
+#: plug-ins/metadata/metadata-editor.c:1362
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1365
+#: plug-ins/metadata/metadata-editor.c:1373
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1379
+#: plug-ins/metadata/metadata-editor.c:1387
 msgid "Import Metadata..."
 msgstr "Importer metadata …"
 
-#: plug-ins/metadata/metadata-editor.c:1385
+#: plug-ins/metadata/metadata-editor.c:1393
 msgid "Export Metadata..."
 msgstr "Eksporter metadata …"
 
-#: plug-ins/metadata/metadata-editor.c:1687
+#: plug-ins/metadata/metadata-editor.c:1695
 msgid "Choose Date"
 msgstr "Vel dato"
 
-#: plug-ins/metadata/metadata-editor.c:1692
+#: plug-ins/metadata/metadata-editor.c:1700
 msgid "Set Date"
 msgstr "Set dato"
 
-#: plug-ins/metadata/metadata-editor.c:2429
+#: plug-ins/metadata/metadata-editor.c:2437
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16370,7 +16386,7 @@ msgstr ""
 "15.30 eller 10.45\n"
 "Slett all tekst for å fjerna gjeldande verdi."
 
-#: plug-ins/metadata/metadata-editor.c:2435
+#: plug-ins/metadata/metadata-editor.c:2443
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16385,261 +16401,304 @@ msgstr ""
 "Avhengig av måleeining, skriv verdien i meter (m) eller fot (ft)\n"
 "Slett all tekst for å fjerna gjeldande verdi."
 
-#: plug-ins/metadata/metadata-editor.c:2569
+#: plug-ins/metadata/metadata-editor.c:2577
 msgid "Unrated"
 msgstr "Ikkje rangert"
 
-#: plug-ins/metadata/metadata-editor.c:4564
+#: plug-ins/metadata/metadata-editor.c:2587
+msgid "Rejected"
+msgstr "Avvist"
+
+#: plug-ins/metadata/metadata-editor.c:4599
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Fekk ikkje sett metadatataggen %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5465
+#: plug-ins/metadata/metadata-editor.c:5519
 msgid "Import Metadata File"
 msgstr "Importer metadatafil"
 
-#: plug-ins/metadata/metadata-editor.c:5468
+#: plug-ins/metadata/metadata-editor.c:5522
 msgid "_Import"
 msgstr "_Importer"
 
-#: plug-ins/metadata/metadata-editor.c:5500
+#: plug-ins/metadata/metadata-editor.c:5554
 msgid "Export Metadata File"
 msgstr "Eksporter metadatafil"
 
-#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:217
-#: plug-ins/metadata/metadata-tags.c:277 plug-ins/metadata/metadata-tags.c:294
+#: plug-ins/metadata/metadata-tags.c:192 plug-ins/metadata/metadata-tags.c:222
+#: plug-ins/metadata/metadata-tags.c:299 plug-ins/metadata/metadata-tags.c:316
 msgid "Select a value"
 msgstr "Vel ein verdi"
 
-#: plug-ins/metadata/metadata-tags.c:188
+#: plug-ins/metadata/metadata-tags.c:193
 msgid "Original digital capture of a real life scene"
 msgstr "Original digital fangst av ein scene frå det verkelege livet"
 
-#: plug-ins/metadata/metadata-tags.c:189
+#: plug-ins/metadata/metadata-tags.c:194
 msgid "Multi-frame computational capture sampled from real life"
 msgstr "Multi-ramme datahandsamingsfangst henta frå det verkelege livet"
 
-#: plug-ins/metadata/metadata-tags.c:190
+#: plug-ins/metadata/metadata-tags.c:195
 msgid "Digitized from a negative on film"
 msgstr "Digitalisert frå negativfilm"
 
-#: plug-ins/metadata/metadata-tags.c:191
+#: plug-ins/metadata/metadata-tags.c:196
 msgid "Digitized from a positive on film"
 msgstr "Digitalisert frå positivfilm"
 
-#: plug-ins/metadata/metadata-tags.c:192
+#: plug-ins/metadata/metadata-tags.c:197
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitalisert frå ei utskrift på ikkje-gjennomsiktig medium"
 
-#: plug-ins/metadata/metadata-tags.c:193
+#: plug-ins/metadata/metadata-tags.c:198
 msgid "Edits by one or more humans using non-generative tools"
 msgstr ""
 "Redigeringar gjort av eitt eller fleire menneske med ikkje-regenerative "
 "verktøy"
 
-#: plug-ins/metadata/metadata-tags.c:195
+#: plug-ins/metadata/metadata-tags.c:200
 msgid "Edited using Generative AI"
 msgstr "Redigert med regenerativ KI"
 
-#: plug-ins/metadata/metadata-tags.c:196
+#: plug-ins/metadata/metadata-tags.c:201
 msgid "Algorithmically-altered media initiated by a human"
 msgstr "Algoritmisk-endra media utført av eit menneske"
 
-#: plug-ins/metadata/metadata-tags.c:197
+#: plug-ins/metadata/metadata-tags.c:202
 msgid "Digital art created by a human using non-generative tools"
 msgstr "Digital kunst laga av eit menneske med ikkje-regenerative verktøy"
 
-#: plug-ins/metadata/metadata-tags.c:198
+#: plug-ins/metadata/metadata-tags.c:203
 msgid "Digital media representation of data"
 msgstr "Digital mediapresentasjon av data"
 
-#: plug-ins/metadata/metadata-tags.c:199
+#: plug-ins/metadata/metadata-tags.c:204
 msgid "Created using Generative AI"
 msgstr "Laga med regenerativ KI"
 
-#: plug-ins/metadata/metadata-tags.c:200
+#: plug-ins/metadata/metadata-tags.c:205
 msgid "Pure algorithmic media"
 msgstr "Reine algoritmiske media"
 
-#: plug-ins/metadata/metadata-tags.c:201
+#: plug-ins/metadata/metadata-tags.c:206
 msgid "A capture of the contents of the screen"
 msgstr "Eit bilete av innhaldet på skjermen"
 
-#: plug-ins/metadata/metadata-tags.c:202
+#: plug-ins/metadata/metadata-tags.c:207
 msgid "Virtual event recording"
 msgstr "Opptak av virtuell hending"
 
-#: plug-ins/metadata/metadata-tags.c:203
+#: plug-ins/metadata/metadata-tags.c:208
 msgid "Composite of elements, which may or may not be generative AI"
 msgstr "Sett saman av element som kan vera generativ KI eller ikkje"
 
-#: plug-ins/metadata/metadata-tags.c:204
+#: plug-ins/metadata/metadata-tags.c:209
 msgid "Composite of captured elements from real life"
 msgstr "Samansett av innhenta element frå det verkelege livet"
 
-#: plug-ins/metadata/metadata-tags.c:205
+#: plug-ins/metadata/metadata-tags.c:210
 msgid "Composite including generative AI elements"
 msgstr "Samansetjinga inneheld generative KI-element"
 
-#: plug-ins/metadata/metadata-tags.c:206
+#: plug-ins/metadata/metadata-tags.c:211
 msgid "(Retired) Original media with minor human edits"
 msgstr "(Forelda) Opphavleg media med små redigeringar av menneske"
 
-#: plug-ins/metadata/metadata-tags.c:207
+#: plug-ins/metadata/metadata-tags.c:212
 msgid "(Retired) Created by software"
 msgstr "(Forelda) Laga med dataprogram"
 
-#: plug-ins/metadata/metadata-tags.c:208
+#: plug-ins/metadata/metadata-tags.c:213
 msgid "(Retired) Digital art"
 msgstr "(Forelda) Digital kunst"
 
-#: plug-ins/metadata/metadata-tags.c:219 plug-ins/metadata/metadata-tags.c:231
+#: plug-ins/metadata/metadata-tags.c:224 plug-ins/metadata/metadata-tags.c:236
 msgid "Not Applicable"
 msgstr "Ikke aktuelt"
 
-#: plug-ins/metadata/metadata-tags.c:220
+#: plug-ins/metadata/metadata-tags.c:225
 msgid "Unlimited Model Releases"
 msgstr "Uavgrensa modellutgjevingar"
 
-#: plug-ins/metadata/metadata-tags.c:221
+#: plug-ins/metadata/metadata-tags.c:226
 msgid "Limited or Incomplete Model Releases"
 msgstr "Avgrensa eller ufullstendige modellutgjevingar"
 
-#: plug-ins/metadata/metadata-tags.c:232
+#: plug-ins/metadata/metadata-tags.c:237
 msgid "Unlimited Property Releases"
 msgstr "Uavgrensa eigenskapsutgjevnadar"
 
-#: plug-ins/metadata/metadata-tags.c:233
+#: plug-ins/metadata/metadata-tags.c:238
 msgid "Limited or Incomplete Property Releases"
 msgstr "Avgrensa eller ufullstendige utgjevnadar"
 
-#: plug-ins/metadata/metadata-tags.c:242
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age Unknown"
 msgstr "Alder ukjend"
 
-#: plug-ins/metadata/metadata-tags.c:243
+#: plug-ins/metadata/metadata-tags.c:248
 msgid "Age 25 or Over"
 msgstr "Alder 25 eller over"
 
-#: plug-ins/metadata/metadata-tags.c:244
+#: plug-ins/metadata/metadata-tags.c:249
 msgid "Age 24"
 msgstr "Alder 24"
 
-#: plug-ins/metadata/metadata-tags.c:245
+#: plug-ins/metadata/metadata-tags.c:250
 msgid "Age 23"
 msgstr "Alder 23"
 
-#: plug-ins/metadata/metadata-tags.c:246
+#: plug-ins/metadata/metadata-tags.c:251
 msgid "Age 22"
 msgstr "Alder 22"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:252
 msgid "Age 21"
 msgstr "Alder 21"
 
-#: plug-ins/metadata/metadata-tags.c:248
+#: plug-ins/metadata/metadata-tags.c:253
 msgid "Age 20"
 msgstr "Alder 20"
 
-#: plug-ins/metadata/metadata-tags.c:249
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Age 19"
 msgstr "Alder 19"
 
-#: plug-ins/metadata/metadata-tags.c:250
+#: plug-ins/metadata/metadata-tags.c:255
 msgid "Age 18"
 msgstr "Alder 18"
 
-#: plug-ins/metadata/metadata-tags.c:251
+#: plug-ins/metadata/metadata-tags.c:256
 msgid "Age 17"
 msgstr "Alder 17"
 
-#: plug-ins/metadata/metadata-tags.c:252
+#: plug-ins/metadata/metadata-tags.c:257
 msgid "Age 16"
 msgstr "Alder 16"
 
-#: plug-ins/metadata/metadata-tags.c:253
+#: plug-ins/metadata/metadata-tags.c:258
 msgid "Age 15"
 msgstr "Alder 15"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:259
 msgid "Age 14 or Under"
 msgstr "Alder 14 eller yngre"
 
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:268
+msgid "No prohibition defined"
+msgstr "Det er ikkje definert noko forbod"
+
+#: plug-ins/metadata/metadata-tags.c:269
+msgid "Allowed"
+msgstr "Tillate"
+
+#: plug-ins/metadata/metadata-tags.c:270
+msgid "Prohibited for AI/ML training"
+msgstr "Forbode for KI- og ML-øvingar"
+
+#: plug-ins/metadata/metadata-tags.c:271
+msgid "Prohibited for Generative AI/ML training"
+msgstr "Forbode for generative KI- og ML-øvingar"
+
+#: plug-ins/metadata/metadata-tags.c:272
+msgid "Prohibited except for search engine indexing"
+msgstr "Forbode med unnatak for søkjemotorindeksering"
+
+#: plug-ins/metadata/metadata-tags.c:273
+msgid "Prohibited"
+msgstr "Forbode"
+
+#: plug-ins/metadata/metadata-tags.c:274
+msgid "Prohibited, see Other Constraints property"
+msgstr "Forbode, sjå eigenskapen «Andre avgrensingar»"
+
+#: plug-ins/metadata/metadata-tags.c:275
+msgid ""
+"(Unsupported) Prohibited, see Embedded Encoded Rights Expression property"
+msgstr ""
+"(Ikkje støtta) Forbode, sjå eigenskapen for innebygd koda uttrykk for rettar"
+
+#: plug-ins/metadata/metadata-tags.c:276
+msgid "(Unsupported) Prohibited, see Linked Encoded Rights Expression property"
+msgstr ""
+"(Ikkje støtta) Forbode, sjå eigenskapen for lenkja koda uttrykk for rettar"
+
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:283
 msgid "7"
 msgstr "7"
 
 #. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:269
+#: plug-ins/metadata/metadata-tags.c:291
 msgid "Copyrighted"
 msgstr "Har opphavsrett"
 
 #. TRUE
-#: plug-ins/metadata/metadata-tags.c:270
+#: plug-ins/metadata/metadata-tags.c:292
 msgid "Public Domain"
 msgstr "Offentleg eigedom"
 
-#: plug-ins/metadata/metadata-tags.c:278
+#: plug-ins/metadata/metadata-tags.c:300
 msgid "Work"
 msgstr "Arbeid"
 
-#: plug-ins/metadata/metadata-tags.c:279
+#: plug-ins/metadata/metadata-tags.c:301
 msgid "Cell"
 msgstr "Celle"
 
-#: plug-ins/metadata/metadata-tags.c:280
+#: plug-ins/metadata/metadata-tags.c:302
 msgid "Fax"
 msgstr "Faks"
 
-#: plug-ins/metadata/metadata-tags.c:281
+#: plug-ins/metadata/metadata-tags.c:303
 msgid "Home"
 msgstr "Heim"
 
-#: plug-ins/metadata/metadata-tags.c:282
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "Pager"
 msgstr "Sider"
 
-#: plug-ins/metadata/metadata-tags.c:295
+#: plug-ins/metadata/metadata-tags.c:317
 msgid "Male"
 msgstr "Male"
 
-#: plug-ins/metadata/metadata-tags.c:296
+#: plug-ins/metadata/metadata-tags.c:318
 msgid "Female"
 msgstr "Female"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:319
 msgid "Other"
 msgstr "Anna"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:326
 msgid "Above sea level"
 msgstr "Over havoverflata"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:326
 msgid "Below sea level"
 msgstr "Under havoverflata"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:333
 msgid "North"
 msgstr "Nord"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:333
 msgid "South"
 msgstr "Sør"
 
-#: plug-ins/metadata/metadata-tags.c:318
+#: plug-ins/metadata/metadata-tags.c:340
 msgid "East"
 msgstr "Aust"
 
-#: plug-ins/metadata/metadata-tags.c:318
+#: plug-ins/metadata/metadata-tags.c:340
 msgid "West"
 msgstr "Vest"
 
@@ -18843,9 +18902,6 @@ msgstr "Overfører data frå skannar/kamera"
 
 #~ msgid "Po_larization:"
 #~ msgstr "Po_larisasjon:"
-
-#~ msgid "Other Options"
-#~ msgstr "Andre innstillingar"
 
 #~ msgid "_X displacement"
 #~ msgstr "_X-forskyving"
