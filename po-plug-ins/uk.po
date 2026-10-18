@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-02 21:00+0000\n"
-"PO-Revision-Date: 2026-10-03 18:49+0300\n"
+"POT-Creation-Date: 2026-10-17 22:17+0000\n"
+"PO-Revision-Date: 2026-10-18 22:20+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 25.12.1\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:113
@@ -87,10 +87,10 @@ msgstr "Приклад додатка мовою C"
 #: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
 #: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
-#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1193
-#: plug-ins/metadata/metadata-editor.c:1691
-#: plug-ins/metadata/metadata-editor.c:5468
-#: plug-ins/metadata/metadata-editor.c:5503 plug-ins/print/print.c:476
+#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1102
+#: plug-ins/metadata/metadata-editor.c:1558
+#: plug-ins/metadata/metadata-editor.c:3818
+#: plug-ins/metadata/metadata-editor.c:3849 plug-ins/print/print.c:500
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -264,8 +264,8 @@ msgstr "_Горизонтальний стиль"
 #: plug-ins/lighting/lighting-main.c:213 plug-ins/lighting/lighting-main.c:336
 #: plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454
 #: plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
-#: plug-ins/metadata/metadata-tags.c:218 plug-ins/metadata/metadata-tags.c:230
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:222 plug-ins/metadata/metadata-tags.c:234
+#: plug-ins/metadata/metadata-tags.c:298
 msgid "None"
 msgstr "Немає"
 
@@ -611,7 +611,7 @@ msgstr "Жалюзі"
 #: plug-ins/common/file-pcx.c:734 plug-ins/common/file-pcx.c:742
 #: plug-ins/common/file-pix.c:427 plug-ins/common/file-png.c:1127
 #: plug-ins/common/file-pnm.c:850 plug-ins/common/file-qoi.c:296
-#: plug-ins/common/file-raw-data.c:829 plug-ins/common/file-raw-data.c:1959
+#: plug-ins/common/file-raw-data.c:833 plug-ins/common/file-raw-data.c:1967
 #: plug-ins/common/file-sunras.c:1060 plug-ins/common/file-tga.c:1101
 #: plug-ins/common/file-tim.c:403 plug-ins/common/file-tim.c:551
 #: plug-ins/common/file-wbmp.c:396 plug-ins/common/file-wbmp.c:473
@@ -620,9 +620,9 @@ msgstr "Жалюзі"
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:261
-#: plug-ins/file-psd/psd-image-res-load.c:1125
-#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-raw/file-libraw.c:386
-#: plug-ins/file-raw/file-libraw.c:499 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-image-res-load.c:1130
+#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-raw/file-libraw.c:465
+#: plug-ins/file-raw/file-libraw.c:576 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1679
 #: plug-ins/file-tiff/file-tiff-load.c:2769
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -666,15 +666,17 @@ msgstr "_Розмір відра"
 msgid "Bits for bucket size"
 msgstr "Біти для розміру відра"
 
-#: plug-ins/common/border-average.c:151
+#: plug-ins/common/border-average.c:151 plug-ins/metadata/metadata-tags.c:286
 msgid "1"
 msgstr "1"
 
-#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:287
+#: plug-ins/metadata/metadata-tags.c:300
 msgid "2"
 msgstr "2"
 
-#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:289
+#: plug-ins/metadata/metadata-tags.c:302
 msgid "4"
 msgstr "4"
 
@@ -1239,16 +1241,16 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-dicom.c:1579 plug-ins/common/file-farbfeld.c:366
 #: plug-ins/common/file-mng.c:1279 plug-ins/common/file-mng.c:1629
 #: plug-ins/common/file-pcx.c:1240 plug-ins/common/file-pdf-export.c:683
-#: plug-ins/common/file-png.c:1993 plug-ins/common/file-raw-data.c:1527
-#: plug-ins/common/file-raw-data.c:1556 plug-ins/common/file-sunras.c:615
+#: plug-ins/common/file-png.c:1993 plug-ins/common/file-raw-data.c:1535
+#: plug-ins/common/file-raw-data.c:1564 plug-ins/common/file-sunras.c:615
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-tim.c:768
 #: plug-ins/common/file-xmc.c:1287 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:301 plug-ins/file-fli/fli-gimp.c:823
 #: plug-ins/file-icns/file-icns-export.c:442 plug-ins/file-ico/ani-export.c:167
 #: plug-ins/file-ico/ico-export.c:1277 plug-ins/file-jpeg/jpeg-export.c:319
 #: plug-ins/file-psd/psd-export.c:2534 plug-ins/file-psd/psd-export.c:2702
-#: plug-ins/file-tiff/file-tiff-export.c:1101
-#: plug-ins/file-tiff/file-tiff-export.c:1222 plug-ins/flame/flame.c:584
+#: plug-ins/file-tiff/file-tiff-export.c:1112
+#: plug-ins/file-tiff/file-tiff-export.c:1233 plug-ins/flame/flame.c:584
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396
 #: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
 #: plug-ins/lighting/lighting-ui.c:796
@@ -1793,11 +1795,11 @@ msgstr "Ретінекс-розподіл шкалами"
 msgid "Uniform"
 msgstr "Рівномірний"
 
-#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:306
 msgid "Low"
 msgstr "Низький"
 
-#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:299
 msgid "High"
 msgstr "Високий"
 
@@ -1990,7 +1992,8 @@ msgstr "Перетворений шар"
 
 #: plug-ins/common/curve-bend.c:644
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:658
 msgid "Cannot operate on layers with masks."
@@ -2011,8 +2014,8 @@ msgstr "Неможливо виконувати дії з порожнім ви�
 #: plug-ins/common/file-png.c:1417 plug-ins/common/file-ps.c:1158
 #: plug-ins/common/file-ps.c:3756 plug-ins/common/file-psp.c:2845
 #: plug-ins/common/file-psp.c:2895 plug-ins/common/file-pvr.c:257
-#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:606
-#: plug-ins/common/file-raw-data.c:805 plug-ins/common/file-raw-data.c:1865
+#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:610
+#: plug-ins/common/file-raw-data.c:809 plug-ins/common/file-raw-data.c:1873
 #: plug-ins/common/file-seattle-filmworks.c:230
 #: plug-ins/common/file-sunras.c:434 plug-ins/common/file-svg.c:775
 #: plug-ins/common/file-tga.c:425 plug-ins/common/file-tim.c:277
@@ -2386,7 +2389,7 @@ msgstr "_Перекриття"
 msgid "Overlap"
 msgstr "Перекриття"
 
-#: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:374
+#: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:378
 msgid "O_ffset"
 msgstr "_Зсув"
 
@@ -2490,7 +2493,7 @@ msgstr "Рівень білого"
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-dicom.c:1656
 #: plug-ins/common/file-farbfeld.c:292 plug-ins/common/file-mng.c:1120
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:855
-#: plug-ins/common/file-raw-data.c:1511 plug-ins/common/file-xmc.c:703
+#: plug-ins/common/file-raw-data.c:1519 plug-ins/common/file-xmc.c:703
 #: plug-ins/common/file-xmc.c:1030 plug-ins/file-bmp/bmp-load.c:800
 #: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
 #, c-format
@@ -2525,7 +2528,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Цей додаток намагається вилучити вертикальні смуги з зображення."
 
 #: plug-ins/common/destripe.c:140 plug-ins/common/file-html-table.c:199
-#: plug-ins/common/file-ps.c:521 plug-ins/common/file-raw-data.c:364
+#: plug-ins/common/file-ps.c:521 plug-ins/common/file-raw-data.c:368
 #: plug-ins/common/smooth-palette.c:133 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Ширина"
@@ -2632,7 +2635,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-pcx.c:522 plug-ins/common/file-pdf-load.c:776
 #: plug-ins/common/file-pix.c:364 plug-ins/common/file-png.c:824
 #: plug-ins/common/file-pnm.c:688 plug-ins/common/file-ps.c:1148
-#: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1857
+#: plug-ins/common/file-raw-data.c:800 plug-ins/common/file-raw-data.c:1865
 #: plug-ins/common/file-sunras.c:426 plug-ins/common/file-tga.c:417
 #: plug-ins/common/file-wbmp.c:240 plug-ins/common/file-wbmp.c:319
 #: plug-ins/common/file-wmf.c:616 plug-ins/common/file-xbm.c:721
@@ -2715,7 +2718,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-jp2.c:1819 plug-ins/common/file-jpegxl.c:1387
 #: plug-ins/common/file-pcx.c:1110 plug-ins/common/file-pix.c:645
 #: plug-ins/common/file-png.c:1985 plug-ins/common/file-pnm.c:1634
-#: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
+#: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:351
 #: plug-ins/common/file-sunras.c:606 plug-ins/common/file-svg.c:813
 #: plug-ins/common/file-tga.c:1215 plug-ins/common/file-tim.c:760
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
@@ -2724,7 +2727,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/file-icns/file-icns-export.c:821 plug-ins/file-ico/ani-export.c:159
 #: plug-ins/file-ico/ico-export.c:1265 plug-ins/file-jpeg/jpeg-export.c:274
 #: plug-ins/file-psd/psd-export.c:2472 plug-ins/file-sgi/sgi.c:631
-#: plug-ins/file-tiff/file-tiff-export.c:1091
+#: plug-ins/file-tiff/file-tiff-export.c:1102
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Експортування «%s»"
@@ -2735,7 +2738,8 @@ msgstr "Програма на C"
 
 #: plug-ins/common/file-csource.c:125
 msgid "Dump image data in RGB(A) format for C source"
-msgstr "Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
+msgstr ""
+"Створити дамп даних зображення у форматі RGB(A) для початкового коду C"
 
 #: plug-ins/common/file-csource.c:134
 msgid "C-Source"
@@ -3047,11 +3051,11 @@ msgstr "Некоректні розмірності: %d x %d"
 #: plug-ins/common/file-drhalo.c:298 plug-ins/common/file-drhalo.c:304
 #: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:116
 #: plug-ins/file-jpeg/jpeg-load.c:137 plug-ins/file-jpeg/jpeg-load.c:735
-#: plug-ins/file-raw/file-libraw.c:274 plug-ins/file-raw/file-libraw.c:283
-#: plug-ins/file-raw/file-libraw.c:292 plug-ins/file-raw/file-libraw.c:306
-#: plug-ins/file-raw/file-libraw.c:344 plug-ins/file-raw/file-libraw.c:363
-#: plug-ins/file-raw/file-libraw.c:424 plug-ins/file-raw/file-libraw.c:433
-#: plug-ins/file-raw/file-libraw.c:442 plug-ins/file-raw/file-libraw.c:466
+#: plug-ins/file-raw/file-libraw.c:278 plug-ins/file-raw/file-libraw.c:363
+#: plug-ins/file-raw/file-libraw.c:388 plug-ins/file-raw/file-libraw.c:425
+#: plug-ins/file-raw/file-libraw.c:443 plug-ins/file-raw/file-libraw.c:501
+#: plug-ins/file-raw/file-libraw.c:510 plug-ins/file-raw/file-libraw.c:519
+#: plug-ins/file-raw/file-libraw.c:543
 #, c-format
 msgid "Error reading data. Image may be corrupt."
 msgstr "Не вдалося прочитати дані. Зображення може бути пошкоджено."
@@ -3846,7 +3850,8 @@ msgstr "Завантаження зображень AVCI"
 
 #: plug-ins/common/file-heif.c:504
 msgid "Load AVCI image - H.264 image encapsulated in HEIF"
-msgstr "Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
+msgstr ""
+"Завантаження зображення AVCI — зображення H.264, яке вбудовано до HEIF"
 
 #: plug-ins/common/file-heif.c:536
 msgid "Exports HEJ2 images"
@@ -3958,7 +3963,7 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Ширина кожної комірки. Може бути числом чи відсотком."
 
 #: plug-ins/common/file-html-table.c:206 plug-ins/common/file-ps.c:528
-#: plug-ins/common/file-raw-data.c:369 plug-ins/common/smooth-palette.c:139
+#: plug-ins/common/file-raw-data.c:373 plug-ins/common/smooth-palette.c:139
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "_Висота"
@@ -4125,8 +4130,9 @@ msgid "xvYCC"
 msgstr "xvYCC"
 
 #: plug-ins/common/file-jp2.c:249 plug-ins/common/file-jp2.c:295
-#: plug-ins/metadata/metadata-tags.c:268 plug-ins/metadata/metadata-tags.c:304
-#: plug-ins/metadata/metadata-tags.c:311 plug-ins/metadata/metadata-tags.c:318
+#: plug-ins/metadata/metadata-editor.c:2729
+#: plug-ins/metadata/metadata-tags.c:312 plug-ins/metadata/metadata-tags.c:348
+#: plug-ins/metadata/metadata-tags.c:357 plug-ins/metadata/metadata-tags.c:366
 msgid "Unknown"
 msgstr "Невідомо"
 
@@ -4261,19 +4267,19 @@ msgstr "Непідтримуваний JPEG 2000%s «%s» з %d компонен
 
 #: plug-ins/common/file-jp2.c:1298 plug-ins/file-jpeg/jpeg-export.c:940
 #: plug-ins/file-psd/psd-export.c:3022
-#: plug-ins/file-tiff/file-tiff-export.c:1391
+#: plug-ins/file-tiff/file-tiff-export.c:1402
 msgid "No soft-proofing profile"
 msgstr "Немає профілю для проби кольорів"
 
 #: plug-ins/common/file-jp2.c:1306 plug-ins/common/file-jpegxl.c:2033
 #: plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:3030
-#: plug-ins/file-tiff/file-tiff-export.c:1400
+#: plug-ins/file-tiff/file-tiff-export.c:1411
 msgid "Name of the color profile used for CMYK export."
 msgstr "Назва профілю кольорів, який використано для експортування CMYK."
 
 #: plug-ins/common/file-jp2.c:1317 plug-ins/common/file-jpegxl.c:2052
 #: plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:3041
-#: plug-ins/file-tiff/file-tiff-export.c:1422
+#: plug-ins/file-tiff/file-tiff-export.c:1433
 #, c-format
 msgid "Profile: %s"
 msgstr "Профіль: %s"
@@ -4449,7 +4455,7 @@ msgstr ""
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
 #: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:730
-#: plug-ins/common/file-raw-data.c:821
+#: plug-ins/common/file-raw-data.c:825
 #: plug-ins/common/file-seattle-filmworks.c:242
 #: plug-ins/common/file-seattle-filmworks.c:283
 #: plug-ins/common/file-seattle-filmworks.c:293
@@ -4680,6 +4686,7 @@ msgstr "Непідтримуваний у поточній версії форм
 #: plug-ins/common/file-tim.c:577 plug-ins/common/file-tim.c:644
 #: plug-ins/file-cin/cineon-lib.c:169 plug-ins/file-cin/dpx-lib.c:280
 #: plug-ins/file-fli/fli-gimp.c:557 plug-ins/file-fli/fli-gimp.c:834
+#: plug-ins/file-tiff/file-tiff-export.c:796
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "Не вдалося розподілити пам'ять."
@@ -4865,8 +4872,9 @@ msgstr "Права межа знаходиться за припустимими
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Нижня межа знаходиться за припустимими межами (має бути < %d): %d"
 
-#: plug-ins/common/file-pcx.c:1310 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:822 plug-ins/common/file-svg.c:838
+#: plug-ins/common/file-pcx.c:1310 plug-ins/common/file-qoi.c:361
+#: plug-ins/common/file-qoi.c:378 plug-ins/common/file-svg.c:822
+#: plug-ins/common/file-svg.c:838
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
@@ -5004,7 +5012,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Експортувати зображення як багатосторінковий PDF"
 
 #: plug-ins/common/file-pdf-export.c:1034
-#: plug-ins/metadata/metadata-editor.c:5503
+#: plug-ins/metadata/metadata-editor.c:3849
 msgid "_Export"
 msgstr "_Експорт"
 
@@ -5136,7 +5144,8 @@ msgstr "Зображення Alias Pix"
 
 #: plug-ins/common/file-pix.c:176
 msgid "Loads files of the Alias|Wavefront or Esm Software Pix file format"
-msgstr "Завантажує файли Alias|Wavefront або у форматі файлів Esm Software Pix"
+msgstr ""
+"Завантажує файли Alias|Wavefront або у форматі файлів Esm Software Pix"
 
 #: plug-ins/common/file-pix.c:205
 msgid "Export file in the Alias|Wavefront pix/matte file format"
@@ -5355,11 +5364,13 @@ msgstr ""
 #: plug-ins/common/file-png.c:1950
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
 #: plug-ins/common/file-png.c:1959
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
@@ -6231,208 +6242,208 @@ msgstr "Експортувати зображення у форматі QOI (Qui
 msgid "Failed to read QOI file"
 msgstr "Не вдалося прочитати файл QOI"
 
-#: plug-ins/common/file-raw-data.c:348 plug-ins/common/file-raw-data.c:537
+#: plug-ins/common/file-raw-data.c:352 plug-ins/common/file-raw-data.c:541
 msgid "Raw image data"
 msgstr "Raw Image Data"
 
-#: plug-ins/common/file-raw-data.c:351
+#: plug-ins/common/file-raw-data.c:355
 msgid "Load raw images, specifying image information"
 msgstr ""
 "Завантажити зображення цифрових негативів із визначенням даних зображення"
 
-#: plug-ins/common/file-raw-data.c:365
+#: plug-ins/common/file-raw-data.c:369
 msgid "Image width in number of pixels"
 msgstr "Ширина зображення у кількості пікселях"
 
-#: plug-ins/common/file-raw-data.c:370
+#: plug-ins/common/file-raw-data.c:374
 msgid "Image height in number of pixels"
 msgstr "Висота зображення у кількості пікселях"
 
-#: plug-ins/common/file-raw-data.c:375
+#: plug-ins/common/file-raw-data.c:379
 msgid "Offset to beginning of image in raw data"
 msgstr "Зсув початку зображення у необроблених даних"
 
-#: plug-ins/common/file-raw-data.c:380
+#: plug-ins/common/file-raw-data.c:384
 msgid "Pi_xel format"
 msgstr "_Формат у пікселях"
 
-#: plug-ins/common/file-raw-data.c:381
+#: plug-ins/common/file-raw-data.c:385
 msgid "The layout of pixel data, such as components and their order"
 msgstr "Компонування даних пікселів, зокрема компоненти та їхній порядок"
 
-#: plug-ins/common/file-raw-data.c:382
+#: plug-ins/common/file-raw-data.c:386
 msgid "RGB 8-bit"
 msgstr "RGB, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:383
+#: plug-ins/common/file-raw-data.c:387
 msgid "RGB 16-bit"
 msgstr "RGB, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:384
+#: plug-ins/common/file-raw-data.c:388
 msgid "RGB 32-bit"
 msgstr "RGB, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:385
+#: plug-ins/common/file-raw-data.c:389
 msgid "RGBA 8-bit"
 msgstr "RGBA, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:386
+#: plug-ins/common/file-raw-data.c:390
 msgid "RGBA 16-bit"
 msgstr "RGBA, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:387
+#: plug-ins/common/file-raw-data.c:391
 msgid "RGBA 32-bit"
 msgstr "RGBA, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:388
+#: plug-ins/common/file-raw-data.c:392
 msgid "RGB565"
 msgstr "RGB565"
 
-#: plug-ins/common/file-raw-data.c:389
+#: plug-ins/common/file-raw-data.c:393
 msgid "BGR565"
 msgstr "BGR565"
 
-#: plug-ins/common/file-raw-data.c:390
+#: plug-ins/common/file-raw-data.c:394
 msgid "B&W 1 bit"
 msgstr "Чорно-біле, 1 біт"
 
-#: plug-ins/common/file-raw-data.c:391
+#: plug-ins/common/file-raw-data.c:395
 msgid "Grayscale 2-bit"
 msgstr "Градації сірого, 2 біт"
 
-#: plug-ins/common/file-raw-data.c:392
+#: plug-ins/common/file-raw-data.c:396
 msgid "Grayscale 4-bit"
 msgstr "Градації сірого, 4 біт"
 
-#: plug-ins/common/file-raw-data.c:393
+#: plug-ins/common/file-raw-data.c:397
 msgid "Grayscale 8-bit"
 msgstr "Градації сірого, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:394
+#: plug-ins/common/file-raw-data.c:398
 msgid "Grayscale 16-bit"
 msgstr "Градації сірого, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:395
+#: plug-ins/common/file-raw-data.c:399
 msgid "Grayscale 32-bit"
 msgstr "Градації сірого, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:396
+#: plug-ins/common/file-raw-data.c:400
 msgid "Grayscale-Alpha 8-bit"
 msgstr "Градації сірого + альфа, 8 біт"
 
-#: plug-ins/common/file-raw-data.c:397
+#: plug-ins/common/file-raw-data.c:401
 msgid "Grayscale-Alpha 16-bit"
 msgstr "Градації сірого + альфа, 16 біт"
 
-#: plug-ins/common/file-raw-data.c:398
+#: plug-ins/common/file-raw-data.c:402
 msgid "Grayscale-Alpha 32-bit"
 msgstr "Градації сірого + альфа, 32 біт"
 
-#: plug-ins/common/file-raw-data.c:399
+#: plug-ins/common/file-raw-data.c:403
 msgid "Indexed"
 msgstr "Індексований"
 
-#: plug-ins/common/file-raw-data.c:400
+#: plug-ins/common/file-raw-data.c:404
 msgid "Indexed Alpha"
 msgstr "Індексоване з альфа-каналом"
 
-#: plug-ins/common/file-raw-data.c:404
+#: plug-ins/common/file-raw-data.c:408
 msgid "_Data type"
 msgstr "Т_ип даних"
 
-#: plug-ins/common/file-raw-data.c:405
+#: plug-ins/common/file-raw-data.c:409
 msgid "Data type used to represent pixel values"
 msgstr "Тип даних, який використано для представлення значень пікселів"
 
-#: plug-ins/common/file-raw-data.c:406
+#: plug-ins/common/file-raw-data.c:410
 msgid "Unsigned Integer"
 msgstr "Додатне ціле число"
 
-#: plug-ins/common/file-raw-data.c:407
+#: plug-ins/common/file-raw-data.c:411
 msgid "Signed Integer"
 msgstr "Ціле зі знаком"
 
-#: plug-ins/common/file-raw-data.c:408
+#: plug-ins/common/file-raw-data.c:412
 msgid "Floating Point"
 msgstr "З рухомою крапкою"
 
-#: plug-ins/common/file-raw-data.c:412
+#: plug-ins/common/file-raw-data.c:416
 msgid "_Endianness"
 msgstr "По_рядок байтів"
 
-#: plug-ins/common/file-raw-data.c:413
+#: plug-ins/common/file-raw-data.c:417
 msgid "Order of sequences of bytes"
 msgstr "Порядок послідовностей байтів"
 
-#: plug-ins/common/file-raw-data.c:414
+#: plug-ins/common/file-raw-data.c:418
 msgid "Little Endian"
 msgstr "Прямий порядок"
 
-#: plug-ins/common/file-raw-data.c:415
+#: plug-ins/common/file-raw-data.c:419
 msgid "Big Endian"
 msgstr "Зворотний порядок"
 
-#: plug-ins/common/file-raw-data.c:419
+#: plug-ins/common/file-raw-data.c:423
 msgid "Planar confi_guration"
 msgstr "Пло_щинна конфігурація"
 
-#: plug-ins/common/file-raw-data.c:420 plug-ins/common/file-raw-data.c:559
+#: plug-ins/common/file-raw-data.c:424 plug-ins/common/file-raw-data.c:563
 msgid "How color pixel data are stored"
 msgstr "Як зберігаються дані кольорових пікселів"
 
-#: plug-ins/common/file-raw-data.c:421 plug-ins/common/file-raw-data.c:560
+#: plug-ins/common/file-raw-data.c:425 plug-ins/common/file-raw-data.c:564
 msgid "Contiguous"
 msgstr "Неперервний"
 
-#: plug-ins/common/file-raw-data.c:422 plug-ins/common/file-raw-data.c:561
+#: plug-ins/common/file-raw-data.c:426 plug-ins/common/file-raw-data.c:565
 msgid "Planar"
 msgstr "Планарний"
 
-#: plug-ins/common/file-raw-data.c:429 plug-ins/common/file-raw-data.c:490
+#: plug-ins/common/file-raw-data.c:433 plug-ins/common/file-raw-data.c:494
 msgid "Palette Offse_t"
 msgstr "Зс_ув палітри"
 
-#: plug-ins/common/file-raw-data.c:430 plug-ins/common/file-raw-data.c:491
+#: plug-ins/common/file-raw-data.c:434 plug-ins/common/file-raw-data.c:495
 msgid "Offset to beginning of data in the palette file"
 msgstr "Зсув початку даних у файлі палітри"
 
-#: plug-ins/common/file-raw-data.c:435 plug-ins/common/file-raw-data.c:496
-#: plug-ins/common/file-raw-data.c:566
+#: plug-ins/common/file-raw-data.c:439 plug-ins/common/file-raw-data.c:500
+#: plug-ins/common/file-raw-data.c:570
 msgid "Palette's la_yout"
 msgstr "_Компонування палітри"
 
-#: plug-ins/common/file-raw-data.c:436 plug-ins/common/file-raw-data.c:497
-#: plug-ins/common/file-raw-data.c:567
+#: plug-ins/common/file-raw-data.c:440 plug-ins/common/file-raw-data.c:501
+#: plug-ins/common/file-raw-data.c:571
 msgid "The layout for the palette's color channels"
 msgstr "Компонування для каналів кольорів палітри"
 
-#: plug-ins/common/file-raw-data.c:437 plug-ins/common/file-raw-data.c:498
-#: plug-ins/common/file-raw-data.c:568
+#: plug-ins/common/file-raw-data.c:441 plug-ins/common/file-raw-data.c:502
+#: plug-ins/common/file-raw-data.c:572
 msgid "R, G, B (normal)"
 msgstr "R, G, B (звичайний)"
 
-#: plug-ins/common/file-raw-data.c:438 plug-ins/common/file-raw-data.c:499
-#: plug-ins/common/file-raw-data.c:569
+#: plug-ins/common/file-raw-data.c:442 plug-ins/common/file-raw-data.c:503
+#: plug-ins/common/file-raw-data.c:573
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (у стилі BMP)"
 
-#: plug-ins/common/file-raw-data.c:442 plug-ins/common/file-raw-data.c:503
+#: plug-ins/common/file-raw-data.c:446 plug-ins/common/file-raw-data.c:507
 msgid "_Palette File"
 msgstr "Файл _палітри"
 
-#: plug-ins/common/file-raw-data.c:443 plug-ins/common/file-raw-data.c:504
+#: plug-ins/common/file-raw-data.c:447 plug-ins/common/file-raw-data.c:508
 msgid "The file containing palette data"
 msgstr "Файл, що містить дані палітри"
 
-#: plug-ins/common/file-raw-data.c:455 plug-ins/common/file-raw-data.c:2980
+#: plug-ins/common/file-raw-data.c:459 plug-ins/common/file-raw-data.c:2988
 msgid "Digital Elevation Model data"
 msgstr "Дані цифрової моделі рельєфу"
 
-#: plug-ins/common/file-raw-data.c:458
+#: plug-ins/common/file-raw-data.c:462
 msgid "Load HGT data as images"
 msgstr "Завантажити дані HGT як зображення"
 
-#: plug-ins/common/file-raw-data.c:459
+#: plug-ins/common/file-raw-data.c:463
 msgid ""
 "Load Digital Elevation Model data in HGT format from the Shuttle Radar "
 "Topography Mission as images. Though the output image will be RGB, all "
@@ -6447,44 +6458,44 @@ msgstr ""
 "кольорові на другому кроці, наприклад, за допомогою додатка «Мапа "
 "градієнтів»."
 
-#: plug-ins/common/file-raw-data.c:479
+#: plug-ins/common/file-raw-data.c:483
 msgid "Sa_mple spacing"
 msgstr "_Інтервал дискретизації"
 
-#: plug-ins/common/file-raw-data.c:480
+#: plug-ins/common/file-raw-data.c:484
 msgid "The sample spacing of the data."
 msgstr "Інтервал дискретизації даних."
 
-#: plug-ins/common/file-raw-data.c:481
+#: plug-ins/common/file-raw-data.c:485
 msgid "Auto-Detect"
 msgstr "Автоматичне визначення"
 
-#: plug-ins/common/file-raw-data.c:482
+#: plug-ins/common/file-raw-data.c:486
 msgid "SRTM-1 (1 arc second)"
 msgstr "SRTM-1 (1 кутова сек)"
 
-#: plug-ins/common/file-raw-data.c:483
+#: plug-ins/common/file-raw-data.c:487
 msgid "SRTM-3 (3 arc seconds)"
 msgstr "SRTM-3 (3 кутові сек)"
 
-#: plug-ins/common/file-raw-data.c:540
+#: plug-ins/common/file-raw-data.c:544
 msgid "Dump images to disk in raw format"
 msgstr "Створити дамп зображень на диску у форматі цифрових негативів"
 
-#: plug-ins/common/file-raw-data.c:558
+#: plug-ins/common/file-raw-data.c:562
 msgid "Planar configuration"
 msgstr "Площинна конфігурація"
 
-#: plug-ins/common/file-raw-data.c:575
+#: plug-ins/common/file-raw-data.c:579
 msgid "Raw Data"
 msgstr "Необроблені дані"
 
-#: plug-ins/common/file-raw-data.c:618 plug-ins/file-psd/psd-util.c:316
+#: plug-ins/common/file-raw-data.c:622 plug-ins/file-psd/psd-util.c:316
 #, c-format
 msgid "Unexpected end of file"
 msgstr "Передчасне закінчення файлу"
 
-#: plug-ins/common/file-raw-data.c:651
+#: plug-ins/common/file-raw-data.c:655
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -6492,7 +6503,7 @@ msgstr ""
 "%d не є правильним простором вибірки. Допустимі значення: 0 "
 "(автовизначення), 1 і 3."
 
-#: plug-ins/common/file-raw-data.c:664
+#: plug-ins/common/file-raw-data.c:668
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -6504,12 +6515,12 @@ msgstr ""
 "файли HGT: SRTM-1 і SRTM-3. Якщо вам відомий варіант, запустіть з аргументом "
 "1 або 3."
 
-#: plug-ins/common/file-raw-data.c:1741
+#: plug-ins/common/file-raw-data.c:1749
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "Не вдається відкрити файл «%s» для перевірки розміру: %s"
 
-#: plug-ins/common/file-raw-data.c:2859
+#: plug-ins/common/file-raw-data.c:2867
 msgid "Load Image from Raw Data"
 msgstr "Завантаження зображення з Raw-даних"
 
@@ -6517,43 +6528,43 @@ msgstr "Завантаження зображення з Raw-даних"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: plug-ins/common/file-raw-data.c:2974
+#: plug-ins/common/file-raw-data.c:2982
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Дані цифрової моделі рельєфу (1 кутова сек)"
 
-#: plug-ins/common/file-raw-data.c:2977
+#: plug-ins/common/file-raw-data.c:2985
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Дані цифрової моделі рельєфу (3 кутові сек)"
 
-#: plug-ins/common/file-raw-data.c:2984
+#: plug-ins/common/file-raw-data.c:2992
 msgid "Image"
 msgstr "Зображення"
 
-#: plug-ins/common/file-raw-data.c:2996
+#: plug-ins/common/file-raw-data.c:3004
 msgid "Palette"
 msgstr "Палітра"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3086
+#: plug-ins/common/file-raw-data.c:3094
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Неперервний (%s)"
 
-#: plug-ins/common/file-raw-data.c:3088
+#: plug-ins/common/file-raw-data.c:3096
 msgid "_Contiguous"
 msgstr "_Неперервний"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3094
+#: plug-ins/common/file-raw-data.c:3102
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Планарний (%s)"
 
-#: plug-ins/common/file-raw-data.c:3096
+#: plug-ins/common/file-raw-data.c:3104
 msgid "_Planar"
 msgstr "_Планарний"
 
@@ -6823,7 +6834,8 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:468
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr ""
+"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:475
 msgid "Retry without limits preventing to parse huge data?"
@@ -7426,8 +7438,8 @@ msgstr ""
 "анімації та послідовності, яка базується на значенні «gtk-cursor-theme-size»."
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1274 plug-ins/file-webp/file-webp-export.c:203
-#: plug-ins/file-webp/file-webp-export.c:611
+#: plug-ins/common/file-xmc.c:1274 plug-ins/file-webp/file-webp-export.c:204
+#: plug-ins/file-webp/file-webp-export.c:615
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження «%s»"
@@ -8280,10 +8292,11 @@ msgid "Plug-in Browser"
 msgstr "Огляд доповнень"
 
 #: plug-ins/common/plugin-browser.c:615 plug-ins/common/unit-editor.c:115
-#: plug-ins/metadata/metadata-editor.c:612
-#: plug-ins/metadata/metadata-editor.c:648
-#: plug-ins/metadata/metadata-editor.c:655
-#: plug-ins/metadata/metadata-editor.c:662
+#: plug-ins/metadata/metadata-editor.c:467
+#: plug-ins/metadata/metadata-editor.c:496
+#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:517
+#: plug-ins/metadata/metadata-editor.c:524
 msgid "Name"
 msgstr "Назва"
 
@@ -8590,13 +8603,13 @@ msgstr "Гладка палітра"
 
 #: plug-ins/common/smooth-palette.c:496 plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:287
+#: plug-ins/print/print-page-layout.c:286
 msgid "_Width:"
 msgstr "_Ширина:"
 
 #: plug-ins/common/smooth-palette.c:501 plug-ins/imagemap/imap_cmd_guides.c:183
 #: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:289
+#: plug-ins/print/print-page-layout.c:288
 msgid "_Height:"
 msgstr "_Висота:"
 
@@ -10138,7 +10151,6 @@ msgstr "Непідтримуваний формат DXGI: %u"
 
 #: plug-ins/file-dds/ddsread.c:1081
 #, c-format
-#| msgid "Invalid bpp value for RGB data: %d"
 msgid "Invalid bpp value %d for pixel format %d"
 msgstr "Некоректне значення бітів на піксель %d для піксельного формату %d"
 
@@ -10291,7 +10303,7 @@ msgstr "FITS HDU"
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "Зображення з альфа-каналами не можна експортувати як FITS"
 
-#: plug-ins/file-fits/fits.c:1031
+#: plug-ins/file-fits/fits.c:1090
 msgid "Open FITS File"
 msgstr "Відкриття файла FITS"
 
@@ -11338,9 +11350,119 @@ msgstr ""
 "Цей додаток завантажує мініатюру із зображення цифрового негатива за "
 "допомогою виклику darktable-cli."
 
-#: plug-ins/file-raw/file-libraw.c:131
+#: plug-ins/file-raw/file-libraw.c:140
 msgid "Load thumbnail from a raw image"
 msgstr "Завантажити мініатюри з файла цифрового негатива"
+
+#: plug-ins/file-raw/file-libraw.c:184
+#| msgid "Enable _antialiasing"
+msgid "Enable interpolation"
+msgstr "Увімкнути інтерполяцію"
+
+#: plug-ins/file-raw/file-libraw.c:185
+msgid "Enable denoising and demosaicing steps"
+msgstr "Увімкнути кроки усування шуму і мозаїчності"
+
+#: plug-ins/file-raw/file-libraw.c:195
+#| msgid "Direction"
+msgid "Noise reduction"
+msgstr "Зменшення шумності"
+
+#: plug-ins/file-raw/file-libraw.c:196
+msgid ""
+"Controls FBDD (Fake Before Demosaicing Denoising) noise reduction before "
+"demosaic"
+msgstr ""
+"Керує усуванням шуму FBDD (Fake Before Demosaicing Denoising) до усування моз"
+"аїчності"
+
+#: plug-ins/file-raw/file-libraw.c:197
+#| msgid "Tileable"
+msgid "Disabled"
+msgstr "Вимкнено"
+
+#: plug-ins/file-raw/file-libraw.c:198
+#| msgid "Light direction X"
+msgid "Light FBDD reduction"
+msgstr "Зведення світла FBDD"
+
+#: plug-ins/file-raw/file-libraw.c:199
+msgid "Full FBDD reduction"
+msgstr "Повне зведення FBDD"
+
+#: plug-ins/file-raw/file-libraw.c:204
+msgid "Demosaicing"
+msgstr "Усунення мозаїчності"
+
+#: plug-ins/file-raw/file-libraw.c:205
+msgid ""
+"Interpolation method to reconstruct a matrix of colored pixels from raw "
+"sensor data"
+msgstr ""
+"Спосіб інтерполяції для відтворення матриці кольорових пікселів з необроблени"
+"х даних датчика"
+
+#: plug-ins/file-raw/file-libraw.c:207 plug-ins/flame/flame.c:903
+#: plug-ins/lighting/lighting-main.c:176
+msgid "Linear"
+msgstr "Лінійний"
+
+#: plug-ins/file-raw/file-libraw.c:208
+#| msgid "MNG"
+msgid "VNG"
+msgstr "VNG"
+
+#: plug-ins/file-raw/file-libraw.c:209
+#| msgid "PNG"
+msgid "PPG"
+msgstr "PPG"
+
+#: plug-ins/file-raw/file-libraw.c:210
+msgid "AHD"
+msgstr "AHD"
+
+#: plug-ins/file-raw/file-libraw.c:211
+msgid "DCB"
+msgstr "DCB"
+
+#: plug-ins/file-raw/file-libraw.c:212
+msgid "DHT"
+msgstr "DHT"
+
+#: plug-ins/file-raw/file-libraw.c:213
+msgid "Modified AHD"
+msgstr "Змінений AHD"
+
+#: plug-ins/file-raw/file-libraw.c:219
+#| msgid "Color space"
+msgid "DCB color enhance"
+msgstr "Підсилення кольорів DCB"
+
+#: plug-ins/file-raw/file-libraw.c:220
+msgid "Turns on DCB color enhance mode"
+msgstr "Вмикає режим удосконалення кольорів DCB"
+
+#: plug-ins/file-raw/file-libraw.c:223
+#| msgid "I_terations"
+msgid "DCB iterations"
+msgstr "Ітерації DCB"
+
+#: plug-ins/file-raw/file-libraw.c:224
+#| msgid "_Number of resolutions"
+msgid "Number of DCB correction passes"
+msgstr "Кількість проходів виправлення DCB"
+
+#: plug-ins/file-raw/file-libraw.c:272
+#, c-format
+#| msgid "Error writing black. "
+msgid "Error initializing LibRaw."
+msgstr "Помилка під час спроби ініціалізувати LibRaw."
+
+#. TRANSLATORS: the "%s" will be the name of a RAW format, e.g. "Raw Canon".
+#: plug-ins/file-raw/file-libraw.c:610
+#, c-format
+msgid "Develop: %s"
+msgstr "Проявлення: %s"
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -11697,7 +11819,7 @@ msgstr ""
 "Під час спроби експортування декількох шарів не було позначено пункт "
 "«Зберегти шари»."
 
-#: plug-ins/file-tiff/file-tiff-export.c:516
+#: plug-ins/file-tiff/file-tiff-export.c:517
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -11705,11 +11827,11 @@ msgstr ""
 "За допомогою \"CCITT Group 4\" або \"CCITT Group 3\" можна стискати тільки "
 "монохромні зображення."
 
-#: plug-ins/file-tiff/file-tiff-export.c:530
+#: plug-ins/file-tiff/file-tiff-export.c:531
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Індексовані зображення не можна стиснути за допомогою \"JPEG\"."
 
-#: plug-ins/file-tiff/file-tiff-export.c:589
+#: plug-ins/file-tiff/file-tiff-export.c:590
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -11717,17 +11839,17 @@ msgstr ""
 "Формат TIFF підтримує лише 7-бітні ASCII\n"
 "коментарі. Коментар не збережено."
 
-#: plug-ins/file-tiff/file-tiff-export.c:866
+#: plug-ins/file-tiff/file-tiff-export.c:877
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Не вдалося записати рядок сканування %d"
 
-#: plug-ins/file-tiff/file-tiff-export.c:1247
+#: plug-ins/file-tiff/file-tiff-export.c:1258
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Записування сторінок із різною бітовою глибиною є доволі дивною дією."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1370
+#: plug-ins/file-tiff/file-tiff-export.c:1381
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
@@ -11735,7 +11857,7 @@ msgstr ""
 "Попередження: перевищено максимальний розмір файлів TIFF. Повторіть спробу у "
 "форматі BigTIFF, виберіть інший алгоритм стискання або скасуйте дію."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1427
+#: plug-ins/file-tiff/file-tiff-export.c:1438
 #, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
@@ -12200,13 +12322,13 @@ msgstr "ознака кінця списку"
 msgid "unknown error"
 msgstr "невідома помилка"
 
-#: plug-ins/file-webp/file-webp-export.c:213
-#: plug-ins/file-webp/file-webp-export.c:621
+#: plug-ins/file-webp/file-webp-export.c:214
+#: plug-ins/file-webp/file-webp-export.c:625
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Не вдається відкрити «%s» для запису: %s"
 
-#: plug-ins/file-webp/file-webp-export.c:307
+#: plug-ins/file-webp/file-webp-export.c:311
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Помилка WebP: «%s»"
@@ -12403,10 +12525,6 @@ msgstr "Пере_мішати"
 #: plug-ins/flame/flame.c:901
 msgid "Same"
 msgstr "Залишити попередні"
-
-#: plug-ins/flame/flame.c:903 plug-ins/lighting/lighting-main.c:176
-msgid "Linear"
-msgstr "Лінійний"
 
 #: plug-ins/flame/flame.c:904 plug-ins/lighting/lighting-main.c:178
 msgid "Sinusoidal"
@@ -13272,7 +13390,7 @@ msgstr "Тип сітки:"
 
 #: plug-ins/gfig/gfig-dialog.c:1426
 #: plug-ins/gradient-flare/gradient-flare.c:740
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:303
 msgid "Normal"
 msgstr "Звичайна"
 
@@ -13651,7 +13769,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -13756,7 +13875,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -14176,7 +14296,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3345
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3355
 msgid "Delete Gradient Flare"
@@ -15621,7 +15742,7 @@ msgstr "Параметри світла"
 
 #: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:500
 #: plug-ins/map-object/map-object-ui.c:714
-#: plug-ins/print/print-page-layout.c:385
+#: plug-ins/print/print-page-layout.c:384
 msgid "Position"
 msgstr "Позиція"
 
@@ -15998,7 +16119,7 @@ msgstr "Коефіцієнт відбиття"
 
 #: plug-ins/map-object/map-object-ui.c:774
 #: plug-ins/map-object/map-object-ui.c:874
-#: plug-ins/print/print-page-layout.c:254
+#: plug-ins/print/print-page-layout.c:253
 msgid "Size"
 msgstr "Розмір"
 
@@ -16010,469 +16131,483 @@ msgstr "Спроектувати на площину паралелепіпед�
 msgid "Images for the Cap Faces"
 msgstr "Зображення для основного циліндра"
 
-#: plug-ins/metadata/metadata-editor.c:491
+#: plug-ins/metadata/metadata-editor.c:340
 msgid "Document Title"
 msgstr "Назва документа"
 
-#: plug-ins/metadata/metadata-editor.c:492
+#: plug-ins/metadata/metadata-editor.c:341
 msgid "Author"
 msgstr "Автор"
 
-#: plug-ins/metadata/metadata-editor.c:493
+#: plug-ins/metadata/metadata-editor.c:342
 msgid "Author Title"
 msgstr "Авторська назва"
 
 #. Description tab
-#: plug-ins/metadata/metadata-editor.c:494
-#: plug-ins/metadata/metadata-editor.c:1230
+#: plug-ins/metadata/metadata-editor.c:343
+#: plug-ins/metadata/metadata-editor.c:1139
 msgid "Description"
 msgstr "Опис"
 
-#: plug-ins/metadata/metadata-editor.c:495
+#: plug-ins/metadata/metadata-editor.c:344
 msgid "Description Writer"
 msgstr "Автор опису"
 
-#: plug-ins/metadata/metadata-editor.c:496
+#: plug-ins/metadata/metadata-editor.c:345
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: plug-ins/metadata/metadata-editor.c:497
+#: plug-ins/metadata/metadata-editor.c:346
 msgid "Keywords"
 msgstr "Ключові слова"
 
-#: plug-ins/metadata/metadata-editor.c:499
+#: plug-ins/metadata/metadata-editor.c:348
+msgid "Alt Text"
+msgstr "Альтернативний текст"
+
+#: plug-ins/metadata/metadata-editor.c:349
+msgid "Extended Description"
+msgstr "Розширений опис"
+
+#: plug-ins/metadata/metadata-editor.c:351
 msgid "Copyright Status"
 msgstr "Авторські права"
 
-#: plug-ins/metadata/metadata-editor.c:500
-#: plug-ins/metadata/metadata-editor.c:629
+#: plug-ins/metadata/metadata-editor.c:352
+#: plug-ins/metadata/metadata-editor.c:484
 msgid "Copyright Notice"
 msgstr "Зауваження щодо авторських прав"
 
-#: plug-ins/metadata/metadata-editor.c:501
+#: plug-ins/metadata/metadata-editor.c:353
 msgid "Copyright URL"
 msgstr "URL авторських прав"
 
-#: plug-ins/metadata/metadata-editor.c:507
+#: plug-ins/metadata/metadata-editor.c:359
 msgid "Address"
 msgstr "Адреса"
 
-#: plug-ins/metadata/metadata-editor.c:508
-#: plug-ins/metadata/metadata-editor.c:523
-#: plug-ins/metadata/metadata-editor.c:544
-#: plug-ins/metadata/metadata-editor.c:602
+#: plug-ins/metadata/metadata-editor.c:360
+#: plug-ins/metadata/metadata-editor.c:375
+#: plug-ins/metadata/metadata-editor.c:396
+#: plug-ins/metadata/metadata-editor.c:457
 msgid "City"
 msgstr "Місто"
 
-#: plug-ins/metadata/metadata-editor.c:509
-#: plug-ins/metadata/metadata-editor.c:524
-#: plug-ins/metadata/metadata-editor.c:545
+#: plug-ins/metadata/metadata-editor.c:361
+#: plug-ins/metadata/metadata-editor.c:376
+#: plug-ins/metadata/metadata-editor.c:397
 msgid "State / Province"
 msgstr "Штат / провінція"
 
-#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:362
 msgid "Postal Code"
 msgstr "Поштовий індекс"
 
-#: plug-ins/metadata/metadata-editor.c:511
-#: plug-ins/metadata/metadata-editor.c:525
-#: plug-ins/metadata/metadata-editor.c:546
-#: plug-ins/metadata/metadata-editor.c:604
+#: plug-ins/metadata/metadata-editor.c:363
+#: plug-ins/metadata/metadata-editor.c:377
+#: plug-ins/metadata/metadata-editor.c:398
+#: plug-ins/metadata/metadata-editor.c:459
 msgid "Country"
 msgstr "Країна"
 
-#: plug-ins/metadata/metadata-editor.c:513
+#: plug-ins/metadata/metadata-editor.c:365
 msgid "Phone(s)"
 msgstr "Телефон(и)"
 
-#: plug-ins/metadata/metadata-editor.c:514
+#: plug-ins/metadata/metadata-editor.c:366
 msgid "E-mail(s)"
 msgstr "Ел. адреса(и)"
 
-#: plug-ins/metadata/metadata-editor.c:515
+#: plug-ins/metadata/metadata-editor.c:367
 msgid "Website(s)"
 msgstr "Сайт(и)"
 
-#: plug-ins/metadata/metadata-editor.c:517
+#: plug-ins/metadata/metadata-editor.c:369
 msgid "Creation Date"
 msgstr "Дата створення"
 
-#: plug-ins/metadata/metadata-editor.c:519
+#: plug-ins/metadata/metadata-editor.c:371
 msgid "Intellectual Genre"
 msgstr "Інтелектуальний жанр"
 
-#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:372
 msgid "IPTC Scene Code"
 msgstr "Код сцени IPTC"
 
-#: plug-ins/metadata/metadata-editor.c:522
-#: plug-ins/metadata/metadata-editor.c:543
-#: plug-ins/metadata/metadata-editor.c:601
+#: plug-ins/metadata/metadata-editor.c:374
+#: plug-ins/metadata/metadata-editor.c:395
+#: plug-ins/metadata/metadata-editor.c:456
 msgid "Sublocation"
 msgstr "Підрозділ"
 
-#: plug-ins/metadata/metadata-editor.c:526
-#: plug-ins/metadata/metadata-editor.c:547
+#: plug-ins/metadata/metadata-editor.c:378
+#: plug-ins/metadata/metadata-editor.c:399
 msgid "Country ISO-Code"
 msgstr "ISO-код країни"
 
-#: plug-ins/metadata/metadata-editor.c:528
+#: plug-ins/metadata/metadata-editor.c:380
 msgid "Urgency"
 msgstr "Терміновість"
 
-#: plug-ins/metadata/metadata-editor.c:529
+#: plug-ins/metadata/metadata-editor.c:381
 msgid "Headline"
 msgstr "Заголовок"
 
-#: plug-ins/metadata/metadata-editor.c:530
+#: plug-ins/metadata/metadata-editor.c:382
 msgid "IPTC Subject Code"
 msgstr "IPTC-код теми"
 
-#: plug-ins/metadata/metadata-editor.c:532
+#: plug-ins/metadata/metadata-editor.c:384
 msgid "Job Identifier"
 msgstr "Ідентифікатор роботи"
 
-#: plug-ins/metadata/metadata-editor.c:533
+#: plug-ins/metadata/metadata-editor.c:385
 msgid "Instructions"
 msgstr "Інструкції"
 
-#: plug-ins/metadata/metadata-editor.c:534
+#: plug-ins/metadata/metadata-editor.c:386
 msgid "Credit Line"
 msgstr "Рядок подяк"
 
-#: plug-ins/metadata/metadata-editor.c:535
-#: plug-ins/metadata/metadata-editor.c:627
+#: plug-ins/metadata/metadata-editor.c:387
+#: plug-ins/metadata/metadata-editor.c:482
 msgid "Source"
 msgstr "Джерело"
 
-#: plug-ins/metadata/metadata-editor.c:536
+#: plug-ins/metadata/metadata-editor.c:388
 msgid "Usage Terms"
 msgstr "Умови використання"
 
-#: plug-ins/metadata/metadata-editor.c:542
+#: plug-ins/metadata/metadata-editor.c:394
 msgid "Person Shown"
 msgstr "Хто зображений"
 
-#: plug-ins/metadata/metadata-editor.c:548
-#: plug-ins/metadata/metadata-editor.c:606
+#: plug-ins/metadata/metadata-editor.c:400
+#: plug-ins/metadata/metadata-editor.c:461
 msgid "World Region"
 msgstr "Частина світу"
 
-#: plug-ins/metadata/metadata-editor.c:549
+#: plug-ins/metadata/metadata-editor.c:401
 msgid "Location Shown"
 msgstr "Зображене місце"
 
-#: plug-ins/metadata/metadata-editor.c:551
+#: plug-ins/metadata/metadata-editor.c:403
 msgid "Featured Organization"
 msgstr "Рекомендована організація"
 
-#: plug-ins/metadata/metadata-editor.c:553
+#: plug-ins/metadata/metadata-editor.c:405
 msgid "Organization Code"
 msgstr "Код організації"
 
-#: plug-ins/metadata/metadata-editor.c:555
+#: plug-ins/metadata/metadata-editor.c:407
 msgid "Event"
 msgstr "Подія"
 
-#: plug-ins/metadata/metadata-editor.c:556
+#: plug-ins/metadata/metadata-editor.c:408
 msgid "Artwork or Object"
 msgstr "Твір мистецтва або об'єкт"
 
-#: plug-ins/metadata/metadata-editor.c:559
+#: plug-ins/metadata/metadata-editor.c:411
 msgid "Additional Model Info"
 msgstr "Додаткові дані про модель"
 
-#: plug-ins/metadata/metadata-editor.c:560
+#: plug-ins/metadata/metadata-editor.c:412
 msgid "Model Age"
 msgstr "Вік моделі"
 
-#: plug-ins/metadata/metadata-editor.c:561
+#: plug-ins/metadata/metadata-editor.c:413
 msgid "Minor Model Age Disclosure"
 msgstr "Найменший вік моделі"
 
-#: plug-ins/metadata/metadata-editor.c:562
+#: plug-ins/metadata/metadata-editor.c:414
 msgid "Model Release Status"
 msgstr "Статус релізу моделі"
 
-#: plug-ins/metadata/metadata-editor.c:563
-#: plug-ins/metadata/metadata-editor.c:635
+#: plug-ins/metadata/metadata-editor.c:415
+#: plug-ins/metadata/metadata-editor.c:490
 msgid "Model Release Identifier"
 msgstr "Ідентифікатор релізу моделі"
 
-#: plug-ins/metadata/metadata-editor.c:566
-msgid "Image Supplier Name"
-msgstr "Ім'я постачальника зображення"
+#: plug-ins/metadata/metadata-editor.c:418
+#| msgid "Image Supplier ID"
+msgid "Image Supplier"
+msgstr "Постачальника зображення"
 
-#: plug-ins/metadata/metadata-editor.c:567
-msgid "Image Supplier ID"
-msgstr "Ідентифікатор постачальника зображення"
-
-#: plug-ins/metadata/metadata-editor.c:568
+#: plug-ins/metadata/metadata-editor.c:420
 msgid "Supplier's Image ID"
 msgstr "Ідентифікатор зображення від постачальника"
 
-#: plug-ins/metadata/metadata-editor.c:569
+#: plug-ins/metadata/metadata-editor.c:421
 msgid "Registry Entry"
 msgstr "Запис в реєстрі"
 
-#: plug-ins/metadata/metadata-editor.c:571
+#: plug-ins/metadata/metadata-editor.c:423
 msgid "Max. Available Width"
 msgstr "Найбільша доступна ширина"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:424
 msgid "Max. Available Height"
 msgstr "Найбільша доступна висота"
 
-#: plug-ins/metadata/metadata-editor.c:573
+#: plug-ins/metadata/metadata-editor.c:425
 msgid "Digital Source Type"
 msgstr "Тип цифрового джерела"
 
-#: plug-ins/metadata/metadata-editor.c:575
+#: plug-ins/metadata/metadata-editor.c:427
 msgid "Image Creator"
 msgstr "Розробник зображення"
 
-#: plug-ins/metadata/metadata-editor.c:577
+#: plug-ins/metadata/metadata-editor.c:429
 msgid "Copyright Owner"
 msgstr "Правовласник"
 
-#: plug-ins/metadata/metadata-editor.c:579
+#: plug-ins/metadata/metadata-editor.c:431
 msgid "Licensor"
 msgstr "Ліцензіар"
 
-#: plug-ins/metadata/metadata-editor.c:581
+#: plug-ins/metadata/metadata-editor.c:433
 msgid "Property Release Status"
 msgstr "Статус релізу власника"
 
-#: plug-ins/metadata/metadata-editor.c:582
+#: plug-ins/metadata/metadata-editor.c:434
 msgid "Property Release Identifier"
 msgstr "Ідентифікатор релізу власника"
 
-#: plug-ins/metadata/metadata-editor.c:603
+#: plug-ins/metadata/metadata-editor.c:436
+msgid "Data Mining"
+msgstr "Інтелектуальний аналіз даних"
+
+#: plug-ins/metadata/metadata-editor.c:437
+msgid "Other Constraints"
+msgstr "Інші обмеження"
+
+#: plug-ins/metadata/metadata-editor.c:458
 msgid "Province / State"
 msgstr "Провінція / штат"
 
-#: plug-ins/metadata/metadata-editor.c:605
+#: plug-ins/metadata/metadata-editor.c:460
 msgid "Country ISO Code"
 msgstr "ISO-код країни"
 
-#: plug-ins/metadata/metadata-editor.c:618
+#: plug-ins/metadata/metadata-editor.c:473
 msgid "Code"
 msgstr "Код"
 
-#: plug-ins/metadata/metadata-editor.c:624
+#: plug-ins/metadata/metadata-editor.c:479
 msgid "Title"
 msgstr "Назва"
 
-#: plug-ins/metadata/metadata-editor.c:625
+#: plug-ins/metadata/metadata-editor.c:480
 msgid "Date Created"
 msgstr "Дата створення"
 
-#: plug-ins/metadata/metadata-editor.c:626
+#: plug-ins/metadata/metadata-editor.c:481
 msgid "Creator"
 msgstr "Розробник"
 
-#: plug-ins/metadata/metadata-editor.c:628
+#: plug-ins/metadata/metadata-editor.c:483
 msgid "Source Inventory ID"
 msgstr "Ідентифікатор опису джерела"
 
-#: plug-ins/metadata/metadata-editor.c:641
-msgid "Organization Identifier"
-msgstr "Ідентифікатор організації"
-
-#: plug-ins/metadata/metadata-editor.c:642
-msgid "Item Identifier"
-msgstr "Ідентифікатор елемента"
-
-#: plug-ins/metadata/metadata-editor.c:649
-#: plug-ins/metadata/metadata-editor.c:656
-#: plug-ins/metadata/metadata-editor.c:663
-#: plug-ins/metadata/metadata-editor.c:675
+#: plug-ins/metadata/metadata-editor.c:497
+#: plug-ins/metadata/metadata-editor.c:511
+#: plug-ins/metadata/metadata-editor.c:518
+#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:537
 msgid "Identifier"
 msgstr "Ідентифікатор"
 
-#: plug-ins/metadata/metadata-editor.c:664
+#: plug-ins/metadata/metadata-editor.c:503
+msgid "Organization Identifier"
+msgstr "Ідентифікатор організації"
+
+#: plug-ins/metadata/metadata-editor.c:504
+msgid "Item Identifier"
+msgstr "Ідентифікатор елемента"
+
+#: plug-ins/metadata/metadata-editor.c:526
 msgid "Phone Number 1"
 msgstr "Номер телефону 1"
 
-#: plug-ins/metadata/metadata-editor.c:665
+#: plug-ins/metadata/metadata-editor.c:527
 msgid "Phone Type 1"
 msgstr "Тип телефону 1"
 
-#: plug-ins/metadata/metadata-editor.c:666
+#: plug-ins/metadata/metadata-editor.c:528
 msgid "Phone Number 2"
 msgstr "Номер телефону 2"
 
-#: plug-ins/metadata/metadata-editor.c:667
+#: plug-ins/metadata/metadata-editor.c:529
 msgid "Phone Type 2"
 msgstr "Тип телефону 2"
 
-#: plug-ins/metadata/metadata-editor.c:668
+#: plug-ins/metadata/metadata-editor.c:530
 msgid "Email Address"
 msgstr "Електронна адреса"
 
-#: plug-ins/metadata/metadata-editor.c:669
+#: plug-ins/metadata/metadata-editor.c:531
 msgid "Web Address"
 msgstr "Адреса сайту"
 
-#: plug-ins/metadata/metadata-editor.c:682
+#: plug-ins/metadata/metadata-editor.c:560
 msgid "Category"
 msgstr "Категорія"
 
-#: plug-ins/metadata/metadata-editor.c:683
+#: plug-ins/metadata/metadata-editor.c:561
 msgid "Supplemental Category"
 msgstr "Додаткова категорія"
 
-#: plug-ins/metadata/metadata-editor.c:689
+#: plug-ins/metadata/metadata-editor.c:567
 msgid "Longitude"
 msgstr "Довгота"
 
-#: plug-ins/metadata/metadata-editor.c:690
+#: plug-ins/metadata/metadata-editor.c:568
 msgid "Longitude Reference"
 msgstr "Відлік довготи"
 
-#: plug-ins/metadata/metadata-editor.c:691
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Latitude"
 msgstr "Широта"
 
-#: plug-ins/metadata/metadata-editor.c:692
+#: plug-ins/metadata/metadata-editor.c:570
 msgid "Latitude Reference"
 msgstr "Відлік широти"
 
-#: plug-ins/metadata/metadata-editor.c:693
+#: plug-ins/metadata/metadata-editor.c:571
 msgid "Altitude"
 msgstr "Висота"
 
-#: plug-ins/metadata/metadata-editor.c:695
+#: plug-ins/metadata/metadata-editor.c:573
 msgid "Altitude Reference"
 msgstr "Відлік висоти"
 
-#: plug-ins/metadata/metadata-editor.c:701
+#: plug-ins/metadata/metadata-editor.c:579
 msgid "Patient"
 msgstr "Пацієнт"
 
-#: plug-ins/metadata/metadata-editor.c:702
+#: plug-ins/metadata/metadata-editor.c:580
 msgid "Patient ID"
 msgstr "Ідентифікатор пацієнта"
 
-#: plug-ins/metadata/metadata-editor.c:703
+#: plug-ins/metadata/metadata-editor.c:581
 msgid "Date of Birth"
 msgstr "Дата народження"
 
-#: plug-ins/metadata/metadata-editor.c:705
+#: plug-ins/metadata/metadata-editor.c:583
 msgid "Patient Sex"
 msgstr "Стать пацієнта"
 
-#: plug-ins/metadata/metadata-editor.c:707
+#: plug-ins/metadata/metadata-editor.c:585
 msgid "Study ID"
 msgstr "Ідентифікатор дослідження"
 
-#: plug-ins/metadata/metadata-editor.c:708
+#: plug-ins/metadata/metadata-editor.c:586
 msgid "Referring Physician"
 msgstr "Звернення до лікаря"
 
-#: plug-ins/metadata/metadata-editor.c:709
+#: plug-ins/metadata/metadata-editor.c:587
 msgid "Study Date"
 msgstr "Дата дослідження"
 
-#: plug-ins/metadata/metadata-editor.c:711
+#: plug-ins/metadata/metadata-editor.c:589
 msgid "Study Description"
 msgstr "Опис дослідження"
 
-#: plug-ins/metadata/metadata-editor.c:712
+#: plug-ins/metadata/metadata-editor.c:590
 msgid "Series Number"
 msgstr "Число в серії"
 
-#: plug-ins/metadata/metadata-editor.c:713
+#: plug-ins/metadata/metadata-editor.c:591
 msgid "Modality"
 msgstr "Модальність"
 
-#: plug-ins/metadata/metadata-editor.c:714
+#: plug-ins/metadata/metadata-editor.c:592
 msgid "Series Date"
 msgstr "Дата серії"
 
-#: plug-ins/metadata/metadata-editor.c:716
+#: plug-ins/metadata/metadata-editor.c:594
 msgid "Series Description"
 msgstr "Опис серії"
 
-#: plug-ins/metadata/metadata-editor.c:718
+#: plug-ins/metadata/metadata-editor.c:596
 msgid "Equipment Institution"
 msgstr "Розташування обладнання"
 
-#: plug-ins/metadata/metadata-editor.c:719
+#: plug-ins/metadata/metadata-editor.c:597
 msgid "Equipment Manufacturer"
 msgstr "Виробник обладнання"
 
-#: plug-ins/metadata/metadata-editor.c:763
+#: plug-ins/metadata/metadata-editor.c:641
 msgid "_Edit Metadata"
 msgstr "З_мінити метадані"
 
-#: plug-ins/metadata/metadata-editor.c:767
+#: plug-ins/metadata/metadata-editor.c:645
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Редагування метаданих (IPTC, EXIF, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:780
+#: plug-ins/metadata/metadata-editor.c:658
 msgid "Parent's window handle"
 msgstr "Елемент керування батьківським вікном"
 
-#: plug-ins/metadata/metadata-editor.c:781
+#: plug-ins/metadata/metadata-editor.c:659
 msgid ""
 "The opaque handle of the window to set this plug-in's dialog transient to"
 msgstr ""
 "Непрозорий елемент керування вікна для встановлення вікна, для якого "
 "перехідним є вікно цього додатка"
 
-#: plug-ins/metadata/metadata-editor.c:1186
+#: plug-ins/metadata/metadata-editor.c:1095
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Редактор метаданих: %s"
 
-#: plug-ins/metadata/metadata-editor.c:1194
+#: plug-ins/metadata/metadata-editor.c:1103
 msgid "_Write Metadata"
 msgstr "За_писати метадані"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1236
+#: plug-ins/metadata/metadata-editor.c:1145
 #: plug-ins/metadata/metadata-viewer.c:310
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1242
+#: plug-ins/metadata/metadata-editor.c:1151
 msgid "IPTC Extension"
 msgstr "Розширення IPTC"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1348
+#: plug-ins/metadata/metadata-editor.c:1161
 msgid "Categories"
 msgstr "Категорії"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1354
+#: plug-ins/metadata/metadata-editor.c:1167
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1365
+#: plug-ins/metadata/metadata-editor.c:1178
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1379
+#: plug-ins/metadata/metadata-editor.c:1192
 msgid "Import Metadata..."
 msgstr "Імпортувати метадані…"
 
-#: plug-ins/metadata/metadata-editor.c:1385
+#: plug-ins/metadata/metadata-editor.c:1198
 msgid "Export Metadata..."
 msgstr "Експортувати метадані…"
 
-#: plug-ins/metadata/metadata-editor.c:1687
+#: plug-ins/metadata/metadata-editor.c:1554
 msgid "Choose Date"
 msgstr "Виберіть дату"
 
-#: plug-ins/metadata/metadata-editor.c:1692
+#: plug-ins/metadata/metadata-editor.c:1559
 msgid "Set Date"
 msgstr "Задайте дату"
 
-#: plug-ins/metadata/metadata-editor.c:2429
+#: plug-ins/metadata/metadata-editor.c:2086
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16488,7 +16623,7 @@ msgstr ""
 "15.30, або 10.45\n"
 "Вилучіть увесь текст, щоб вилучити поточне значення."
 
-#: plug-ins/metadata/metadata-editor.c:2435
+#: plug-ins/metadata/metadata-editor.c:2092
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16504,276 +16639,350 @@ msgstr ""
 "або футах (фут)\n"
 "Щоб вилучити поточне значення, витріть увесь текст."
 
-#: plug-ins/metadata/metadata-editor.c:2569
-msgid "Unrated"
-msgstr "Без рейтингу"
-
-#: plug-ins/metadata/metadata-editor.c:4564
+#: plug-ins/metadata/metadata-editor.c:2897
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Не вдалося встановити мітку метаданих %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5465
+#: plug-ins/metadata/metadata-editor.c:3411
+#, c-format
+msgid "GPS Longitude Reference not set. Selected choice: %s"
+msgstr "Не встановлено відліку довготи GPS. Вибране: %s"
+
+#: plug-ins/metadata/metadata-editor.c:3438
+#, c-format
+msgid "GPS Latitude Reference not set. Selected choice: %s"
+msgstr "Не встановлено відліку широти GPS. Вибране: %s"
+
+#: plug-ins/metadata/metadata-editor.c:3488
+#, c-format
+msgid ""
+"GPS Altitude Reference inconsistent with negative value. Changed choice to: "
+"%s"
+msgstr ""
+"Відлік рівня висоти GPS несумісний із від'ємним значенням. Змінено: %s"
+
+#: plug-ins/metadata/metadata-editor.c:3512
+#, c-format
+msgid "GPS Altitude Reference not set. Selected choice: %s"
+msgstr "Не встановлено рівня відліку висоти GPS. Вибране: %s"
+
+#: plug-ins/metadata/metadata-editor.c:3815
 msgid "Import Metadata File"
 msgstr "Імпорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-editor.c:5468
+#: plug-ins/metadata/metadata-editor.c:3818
 msgid "_Import"
 msgstr "_Імпортувати"
 
-#: plug-ins/metadata/metadata-editor.c:5500
+#: plug-ins/metadata/metadata-editor.c:3846
 msgid "Export Metadata File"
 msgstr "Експорт файлу метаданих"
 
-#: plug-ins/metadata/metadata-tags.c:187 plug-ins/metadata/metadata-tags.c:217
-#: plug-ins/metadata/metadata-tags.c:277 plug-ins/metadata/metadata-tags.c:294
+#: plug-ins/metadata/metadata-impexp.c:108
+#, c-format
+#| msgid "Error writing icns: %s"
+msgid "Error parsing xml: %s."
+msgstr "Помилка під час спроби обробити xml: %s."
+
+#: plug-ins/metadata/metadata-impexp.c:257
+#, c-format
+#| msgid "Error loading PNG file: %s"
+msgid "Error saving file: %s."
+msgstr "Помилка під час спроби зберегти файл: %s"
+
+#: plug-ins/metadata/metadata-tags.c:191 plug-ins/metadata/metadata-tags.c:221
+#: plug-ins/metadata/metadata-tags.c:321 plug-ins/metadata/metadata-tags.c:338
 msgid "Select a value"
 msgstr "Виберіть значення"
 
-#: plug-ins/metadata/metadata-tags.c:188
+#: plug-ins/metadata/metadata-tags.c:192
 msgid "Original digital capture of a real life scene"
 msgstr "Оригінальний цифровий знімок реальної сцени"
 
-#: plug-ins/metadata/metadata-tags.c:189
+#: plug-ins/metadata/metadata-tags.c:193
 msgid "Multi-frame computational capture sampled from real life"
 msgstr "Багатокадрове обчислювальне знімання на основі природних зображень"
 
-#: plug-ins/metadata/metadata-tags.c:190
+#: plug-ins/metadata/metadata-tags.c:194
 msgid "Digitized from a negative on film"
 msgstr "Оцифровано з плівкового негативу"
 
-#: plug-ins/metadata/metadata-tags.c:191
+#: plug-ins/metadata/metadata-tags.c:195
 msgid "Digitized from a positive on film"
 msgstr "Оцифровано з плівкового позитиву"
 
-#: plug-ins/metadata/metadata-tags.c:192
+#: plug-ins/metadata/metadata-tags.c:196
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Оцифровано з друкованого на непрозорому носії"
 
-#: plug-ins/metadata/metadata-tags.c:193
+#: plug-ins/metadata/metadata-tags.c:197
 msgid "Edits by one or more humans using non-generative tools"
 msgstr ""
-"Редагування однією людиною або декількома людьми з використанням негенеративни"
-"х інструментів"
+"Редагування однією людиною або декількома людьми з використанням "
+"негенеративних інструментів"
 
-#: plug-ins/metadata/metadata-tags.c:195
+#: plug-ins/metadata/metadata-tags.c:199
 msgid "Edited using Generative AI"
 msgstr "Редаговано генеративним ШІ"
 
-#: plug-ins/metadata/metadata-tags.c:196
-#| msgid "Algorithmically-enhanced media"
+#: plug-ins/metadata/metadata-tags.c:200
 msgid "Algorithmically-altered media initiated by a human"
 msgstr ""
 "Алгоритмічно змінені мультимедійні дані започатковані діяльністю людини"
 
-#: plug-ins/metadata/metadata-tags.c:197
+#: plug-ins/metadata/metadata-tags.c:201
 msgid "Digital art created by a human using non-generative tools"
 msgstr ""
-"Цифровий художній твір, створений людиною з використанням негенеративних інстр"
-"ументів"
+"Цифровий художній твір, створений людиною з використанням негенеративних "
+"інструментів"
 
-#: plug-ins/metadata/metadata-tags.c:198
-#| msgid "Digital Elevation Model data"
+#: plug-ins/metadata/metadata-tags.c:202
 msgid "Digital media representation of data"
 msgstr "Відтворення даних у цифровому мультимедійному форматі"
 
-#: plug-ins/metadata/metadata-tags.c:199
+#: plug-ins/metadata/metadata-tags.c:203
 msgid "Created using Generative AI"
 msgstr "Створено з використанням генеративного ШІ"
 
-#: plug-ins/metadata/metadata-tags.c:200
+#: plug-ins/metadata/metadata-tags.c:204
 msgid "Pure algorithmic media"
 msgstr "Мультимедійні дані, створені лише на основі алгоритмів"
 
-#: plug-ins/metadata/metadata-tags.c:201
-#| msgid "Change the exponent of the strength"
+#: plug-ins/metadata/metadata-tags.c:205
 msgid "A capture of the contents of the screen"
 msgstr "Результат створення знімка екрана"
 
-#: plug-ins/metadata/metadata-tags.c:202
-#| msgid "Virtual recording"
+#: plug-ins/metadata/metadata-tags.c:206
 msgid "Virtual event recording"
 msgstr "Запис віртуальної події"
 
-#: plug-ins/metadata/metadata-tags.c:203
+#: plug-ins/metadata/metadata-tags.c:207
 msgid "Composite of elements, which may or may not be generative AI"
 msgstr ""
-"Композиція елементів, які можуть бути результатом роботи генеративного ШІ, а м"
-"ожуть і не бути ним"
+"Композиція елементів, які можуть бути результатом роботи генеративного ШІ, а "
+"можуть і не бути ним"
 
-#: plug-ins/metadata/metadata-tags.c:204
-#| msgid "Composite of captured elements"
+#: plug-ins/metadata/metadata-tags.c:208
 msgid "Composite of captured elements from real life"
 msgstr "Композиція зі знятих елементів природного життя"
 
-#: plug-ins/metadata/metadata-tags.c:205
-#| msgid "Composite including synthetic elements"
+#: plug-ins/metadata/metadata-tags.c:209
 msgid "Composite including generative AI elements"
 msgstr "Композиція із включенням елементів, породжених генеративним ШІ"
 
-#: plug-ins/metadata/metadata-tags.c:206
-#| msgid "Original media with minor human edits"
+#: plug-ins/metadata/metadata-tags.c:210
 msgid "(Retired) Original media with minor human edits"
 msgstr ""
 "(Застаріле) Початкові мультимедійні дані із незначними редагуваннями людиною"
 
-#: plug-ins/metadata/metadata-tags.c:207
-#| msgid "Created by software"
+#: plug-ins/metadata/metadata-tags.c:211
 msgid "(Retired) Created by software"
 msgstr "(Застаріле) Створено програмою"
 
-#: plug-ins/metadata/metadata-tags.c:208
-#| msgid "Digital art"
+#: plug-ins/metadata/metadata-tags.c:212
 msgid "(Retired) Digital art"
 msgstr "(Застаріле) Цифрове мистецтво"
 
-#: plug-ins/metadata/metadata-tags.c:219 plug-ins/metadata/metadata-tags.c:231
+#: plug-ins/metadata/metadata-tags.c:223 plug-ins/metadata/metadata-tags.c:235
 msgid "Not Applicable"
 msgstr "Не застосовується"
 
-#: plug-ins/metadata/metadata-tags.c:220
+#: plug-ins/metadata/metadata-tags.c:224
 msgid "Unlimited Model Releases"
 msgstr "Необмежений реліз моделі"
 
-#: plug-ins/metadata/metadata-tags.c:221
+#: plug-ins/metadata/metadata-tags.c:225
 msgid "Limited or Incomplete Model Releases"
 msgstr "Обмежений або не повний реліз моделі"
 
-#: plug-ins/metadata/metadata-tags.c:232
+#: plug-ins/metadata/metadata-tags.c:236
 msgid "Unlimited Property Releases"
 msgstr "Необмежений реліз власника"
 
-#: plug-ins/metadata/metadata-tags.c:233
+#: plug-ins/metadata/metadata-tags.c:237
 msgid "Limited or Incomplete Property Releases"
 msgstr "Обмежений або не повний реліз власника"
 
-#: plug-ins/metadata/metadata-tags.c:242
+#: plug-ins/metadata/metadata-tags.c:246
 msgid "Age Unknown"
 msgstr "Вік невідомий"
 
-#: plug-ins/metadata/metadata-tags.c:243
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age 25 or Over"
 msgstr "25 років або більше"
 
-#: plug-ins/metadata/metadata-tags.c:244
+#: plug-ins/metadata/metadata-tags.c:248
 msgid "Age 24"
 msgstr "24 роки"
 
-#: plug-ins/metadata/metadata-tags.c:245
+#: plug-ins/metadata/metadata-tags.c:249
 msgid "Age 23"
 msgstr "23 роки"
 
-#: plug-ins/metadata/metadata-tags.c:246
+#: plug-ins/metadata/metadata-tags.c:250
 msgid "Age 22"
 msgstr "22 роки"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:251
 msgid "Age 21"
 msgstr "21 рік"
 
-#: plug-ins/metadata/metadata-tags.c:248
+#: plug-ins/metadata/metadata-tags.c:252
 msgid "Age 20"
 msgstr "20 років"
 
-#: plug-ins/metadata/metadata-tags.c:249
+#: plug-ins/metadata/metadata-tags.c:253
 msgid "Age 19"
 msgstr "19 років"
 
-#: plug-ins/metadata/metadata-tags.c:250
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Age 18"
 msgstr "18 років"
 
-#: plug-ins/metadata/metadata-tags.c:251
+#: plug-ins/metadata/metadata-tags.c:255
 msgid "Age 17"
 msgstr "17 років"
 
-#: plug-ins/metadata/metadata-tags.c:252
+#: plug-ins/metadata/metadata-tags.c:256
 msgid "Age 16"
 msgstr "16 років"
 
-#: plug-ins/metadata/metadata-tags.c:253
+#: plug-ins/metadata/metadata-tags.c:257
 msgid "Age 15"
 msgstr "15 років"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:258
 msgid "Age 14 or Under"
 msgstr "14 років або менше"
 
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:267
+msgid "No prohibition defined"
+msgstr "Не визначено заборон"
+
+#: plug-ins/metadata/metadata-tags.c:268
+msgid "Allowed"
+msgstr "Дозволено"
+
+#: plug-ins/metadata/metadata-tags.c:269
+msgid "Prohibited for AI/ML training"
+msgstr "Заборонено для навчання ШІ/ММ"
+
+#: plug-ins/metadata/metadata-tags.c:270
+msgid "Prohibited for Generative AI/ML training"
+msgstr "Заборонено для навчання генеративного ШІ/ММ"
+
+#: plug-ins/metadata/metadata-tags.c:271
+msgid "Prohibited except for search engine indexing"
+msgstr "Заборонено, окрім індексування пошуковим рушієм"
+
+#: plug-ins/metadata/metadata-tags.c:272
+msgid "Prohibited"
+msgstr "Заборонено"
+
+#: plug-ins/metadata/metadata-tags.c:273
+msgid "Prohibited, see Other Constraints property"
+msgstr "Заборонено, див. властивість «Інші обмеження»"
+
+#: plug-ins/metadata/metadata-tags.c:274
+msgid ""
+"(Unsupported) Prohibited, see Embedded Encoded Rights Expression property"
+msgstr ""
+"(Непідтримуване) Заборонено, див. властивість «Вбудований вираз закодованих "
+"прав»"
+
+#: plug-ins/metadata/metadata-tags.c:275
+msgid ""
+"(Unsupported) Prohibited, see Linked Encoded Rights Expression property"
+msgstr ""
+"(Непідтримуване) Заборонено, див. властивість «Пов'язаний вираз закодованих "
+"прав»"
+
+#: plug-ins/metadata/metadata-tags.c:285
+msgid "Unrated"
+msgstr "Без рейтингу"
+
+#: plug-ins/metadata/metadata-tags.c:288 plug-ins/metadata/metadata-tags.c:301
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:290
+msgid "5"
+msgstr "5"
+
+#: plug-ins/metadata/metadata-tags.c:291
+msgid "Rejected"
+msgstr "Відкинуто"
+
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:261
+#: plug-ins/metadata/metadata-tags.c:305
 msgid "7"
 msgstr "7"
 
-#. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:269
+#: plug-ins/metadata/metadata-tags.c:313
 msgid "Copyrighted"
 msgstr "Захищено авторським правом"
 
-#. TRUE
-#: plug-ins/metadata/metadata-tags.c:270
+#: plug-ins/metadata/metadata-tags.c:314
 msgid "Public Domain"
 msgstr "Суспільне надбання"
 
-#: plug-ins/metadata/metadata-tags.c:278
+#: plug-ins/metadata/metadata-tags.c:322
 msgid "Work"
 msgstr "Робочий"
 
-#: plug-ins/metadata/metadata-tags.c:279
+#: plug-ins/metadata/metadata-tags.c:323
 msgid "Cell"
 msgstr "Мобільний"
 
-#: plug-ins/metadata/metadata-tags.c:280
+#: plug-ins/metadata/metadata-tags.c:324
 msgid "Fax"
 msgstr "Факс"
 
-#: plug-ins/metadata/metadata-tags.c:281
+#: plug-ins/metadata/metadata-tags.c:325
 msgid "Home"
 msgstr "Домашній"
 
-#: plug-ins/metadata/metadata-tags.c:282
+#: plug-ins/metadata/metadata-tags.c:326
 msgid "Pager"
 msgstr "Пейджер"
 
-#: plug-ins/metadata/metadata-tags.c:295
+#: plug-ins/metadata/metadata-tags.c:339
 msgid "Male"
 msgstr "Чоловік"
 
-#: plug-ins/metadata/metadata-tags.c:296
+#: plug-ins/metadata/metadata-tags.c:340
 msgid "Female"
 msgstr "Жінка"
 
-#: plug-ins/metadata/metadata-tags.c:297
+#: plug-ins/metadata/metadata-tags.c:341
 msgid "Other"
 msgstr "Інше"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:349
 msgid "Above sea level"
 msgstr "Над рівнем моря"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:350
 msgid "Below sea level"
 msgstr "Під рівнем моря"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:358
 msgid "North"
 msgstr "Північ"
 
-#: plug-ins/metadata/metadata-tags.c:311
+#: plug-ins/metadata/metadata-tags.c:359
 msgid "South"
 msgstr "Південь"
 
-#: plug-ins/metadata/metadata-tags.c:318
+#: plug-ins/metadata/metadata-tags.c:367
 msgid "East"
 msgstr "Схід"
 
-#: plug-ins/metadata/metadata-tags.c:318
+#: plug-ins/metadata/metadata-tags.c:368
 msgid "West"
 msgstr "Захід"
 
@@ -16815,6 +17024,28 @@ msgstr " футів"
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu більше байт)"
+
+#: plug-ins/metadata/metadata-xml.c:112
+msgid ""
+"Older version metadata template found. Not all data will be set correctly!"
+msgstr ""
+"Виявлено шаблон метаданих застарілої версії. Належним чином буде встановлено "
+"не усі дані!"
+
+#: plug-ins/metadata/metadata-xml.c:150
+#, c-format
+msgid "Metadata import: too many rows for tag '%s'"
+msgstr "Імпортування метаданих: забагато рядків для мітки «%s»"
+
+#: plug-ins/metadata/metadata-xml.c:162
+#, c-format
+msgid "Metadata import: too many columns for tag '%s'"
+msgstr "Імпортування метаданих: забагато стовпчиків для мітки «%s»"
+
+#: plug-ins/metadata/metadata-xml.c:274
+#, c-format
+msgid "Too many rows for tag %s: limiting export to %d rows"
+msgstr "Забагато рядків для мітки %s: експортування обмежено %d рядками"
 
 #: plug-ins/pagecurl/pagecurl.c:215
 msgid "_Pagecurl..."
@@ -16889,90 +17120,90 @@ msgstr "Ігнорувати _поля сторінки"
 msgid "_Draw Crop Marks"
 msgstr "Надрукувати _мітки під обрізку"
 
-#: plug-ins/print/print-page-layout.c:308
+#: plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
 msgstr "точок/%a"
 
-#: plug-ins/print/print-page-layout.c:329
+#: plug-ins/print/print-page-layout.c:328
 msgid "_X resolution:"
 msgstr "Роздільна здатність вздовж _X:"
 
-#: plug-ins/print/print-page-layout.c:333
+#: plug-ins/print/print-page-layout.c:332
 msgid "_Y resolution:"
 msgstr "Роздільна здатність вздовж _Y:"
 
-#: plug-ins/print/print-page-layout.c:336
+#: plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "За_вантажити початкові параметри"
 
-#: plug-ins/print/print-page-layout.c:411
+#: plug-ins/print/print-page-layout.c:410
 msgid "_Left:"
 msgstr "_Ліворуч:"
 
-#: plug-ins/print/print-page-layout.c:432
+#: plug-ins/print/print-page-layout.c:431
 msgid "_Right:"
 msgstr "_Праворуч:"
 
-#: plug-ins/print/print-page-layout.c:448
+#: plug-ins/print/print-page-layout.c:447
 msgid "_Top:"
 msgstr "_Верх:"
 
-#: plug-ins/print/print-page-layout.c:469
+#: plug-ins/print/print-page-layout.c:468
 msgid "_Bottom:"
 msgstr "_Низ:"
 
-#: plug-ins/print/print-page-layout.c:490
+#: plug-ins/print/print-page-layout.c:489
 msgid "C_enter:"
 msgstr "Ц_ентр:"
 
 #. if and how to center the image on the page
-#: plug-ins/print/print-page-layout.c:497
+#: plug-ins/print/print-page-layout.c:496
 msgctxt "center-mode"
 msgid "None"
 msgstr "Немає"
 
-#: plug-ins/print/print-page-layout.c:498
+#: plug-ins/print/print-page-layout.c:497
 msgid "Horizontally"
 msgstr "Горизонтально"
 
-#: plug-ins/print/print-page-layout.c:499
+#: plug-ins/print/print-page-layout.c:498
 msgid "Vertically"
 msgstr "Вертикально"
 
-#: plug-ins/print/print-page-layout.c:500
+#: plug-ins/print/print-page-layout.c:499
 msgid "Both"
 msgstr "Обидва"
 
-#: plug-ins/print/print.c:167
+#: plug-ins/print/print.c:170
 msgid "_Print..."
 msgstr "Д_рук..."
 
-#: plug-ins/print/print.c:172
+#: plug-ins/print/print.c:175
 msgid "Print the image"
 msgstr "Надрукувати зображення"
 
-#: plug-ins/print/print.c:191
+#: plug-ins/print/print.c:194
 msgid "Page Set_up..."
 msgstr "_Попередній перегляд…"
 
-#: plug-ins/print/print.c:196
+#: plug-ins/print/print.c:199
 msgid "Adjust page size and orientation for printing"
 msgstr "Скоригувати розмір та орієнтацію сторінки для друку"
 
-#: plug-ins/print/print.c:337 plug-ins/print/print.c:474
+#: plug-ins/print/print.c:344 plug-ins/print/print.c:498
 msgid "Image Settings"
 msgstr "Параметри зображення"
 
-#: plug-ins/print/print.c:441
+#: plug-ins/print/print.c:455
 msgid "An error occurred while trying to print:"
 msgstr "При друкуванні виникла помилка:"
 
-#: plug-ins/print/print.c:475
+#: plug-ins/print/print.c:499
 msgid "_Print"
 msgstr "_Надрукувати"
 
-#: plug-ins/print/print.c:497
+#: plug-ins/print/print.c:523
 msgid "Printing"
 msgstr "Друк"
 
@@ -17018,7 +17249,8 @@ msgstr "Включаючи _рамку вікна"
 
 #: plug-ins/screenshot/screenshot.c:212
 msgid "Title bar, window borders and shadow will be part of the image"
-msgstr "Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
+msgstr ""
+"Смужка заголовка, рамки вікна та тінь вікна будуть частиною зображення"
 
 #: plug-ins/screenshot/screenshot.c:221
 msgid "Selection d_elay"
@@ -17162,7 +17394,8 @@ msgstr "Альтернативне ото_чення фільтра"
 
 #: plug-ins/selection-to-path/selection-to-path.c:189
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path.c:195
 msgid "Filter E_psilon"
@@ -17362,6 +17595,9 @@ msgstr "Не знайдено драйвера TWAIN. Не можна скори
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "Image Supplier Name"
+#~ msgstr "Ім'я постачальника зображення"
 
 #~ msgid "Data-driven media"
 #~ msgstr "Мультимедійні дані на основі числових даних"
@@ -18680,9 +18916,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Tile source image: useful for infinite planes"
 #~ msgstr "Розрізати початкове зображення: корисно для безмежних площин"
-
-#~ msgid "Enable _antialiasing"
-#~ msgstr "Увімкнути _згладжування"
 
 #~ msgid "Enable/disable jagged edges removal (antialiasing)"
 #~ msgstr "Увімкнути/вимкнути усунення нерівних країв (згладжування)"
