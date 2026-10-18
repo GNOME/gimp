@@ -735,6 +735,19 @@ doCaptureMagnificationAPI_callback (HWND            hwnd,
   returnedSrcheader = srcheader;
 }
 
+static gboolean
+isCaptureBlack (const guchar *bytes,
+                gsize         size)
+{
+  gsize i;
+
+  for (i = 0; i < size; i++)
+    if (bytes[i])
+      return FALSE;
+
+  return TRUE;
+}
+
 static BOOL
 isWindowIsAboveCaptureRegion (HWND hwndWindow,
                               RECT rectCapture)
@@ -830,6 +843,18 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
 
   if (!MagSetWindowSource (hwndMag, round4Rect) || !capBytes)
     {
+      DestroyWindow (hwndHost);
+      MagUninitialize ();
+      return FALSE;
+    }
+
+  /* on Windows 11 with HDR displays, the magnifier returns a black image.
+     In this case, return FALSE so the window is captured with BitBlt. See #16144. */
+  if (isCaptureBlack (capBytes, returnedSrcheader.cbSize / 4 * 3))
+    {
+      free (capBytes);
+      capBytes = NULL;
+
       DestroyWindow (hwndHost);
       MagUninitialize ();
       return FALSE;
