@@ -109,8 +109,6 @@ static void             gimp_shape_tool_halt            (GimpShapeTool         *
 
 static GimpPath    *    gimp_shape_tool_create_path     (GimpShapeTool         *shape_tool,
                                                          GimpImage             *image);
-static GimpVector2 *    gimp_shape_tool_create_spiral   (GimpShapeTool         *shape_tool,
-                                                         gsize                 *total);
 static void             gimp_shape_tool_update_polygon  (GimpShapeTool         *shape_tool,
                                                          gboolean               is_star);
 static gchar       *    gimp_shape_tool_get_name        (GimpShapeTool         *shape_tool);
@@ -387,9 +385,9 @@ gimp_shape_tool_cursor_update (GimpTool         *tool,
                                GdkModifierType   state,
                                GimpDisplay      *display)
 {
-  GimpCursorType      cursor      = GIMP_CURSOR_MOUSE;
-  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_POLYGON_SELECT;
-  GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
+  GimpCursorType     cursor      = GIMP_CURSOR_MOUSE;
+  GimpToolCursorType tool_cursor = GIMP_TOOL_CURSOR_POLYGON_SELECT;
+  GimpCursorModifier modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
   gimp_tool_control_set_cursor          (tool->control, cursor);
   gimp_tool_control_set_tool_cursor     (tool->control, tool_cursor);
@@ -401,15 +399,15 @@ gimp_shape_tool_cursor_update (GimpTool         *tool,
 static void
 gimp_shape_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpShapeTool    *shape_tool  = GIMP_SHAPE_TOOL (draw_tool);
-  GimpShapeOptions *options     = GIMP_SHAPE_TOOL_GET_OPTIONS (shape_tool);
+  GimpShapeTool    *shape_tool = GIMP_SHAPE_TOOL (draw_tool);
+  GimpShapeOptions *options    = GIMP_SHAPE_TOOL_GET_OPTIONS (shape_tool);
 
   if (shape_tool->drawing)
     {
-      gsize x      = MIN (shape_tool->start_x, shape_tool->current_x);
-      gsize y      = MIN (shape_tool->start_y, shape_tool->current_y);
-      gsize width  = ABS (shape_tool->start_x - shape_tool->current_x);
-      gsize height = ABS (shape_tool->start_y - shape_tool->current_y);
+      gint x      = MIN (shape_tool->start_x, shape_tool->current_x);
+      gint y      = MIN (shape_tool->start_y, shape_tool->current_y);
+      gint width  = ABS (shape_tool->start_x - shape_tool->current_x);
+      gint height = ABS (shape_tool->start_y - shape_tool->current_y);
 
       if (options->shape_type == GIMP_SHAPE_TYPE_LINE)
         {
@@ -465,14 +463,29 @@ gimp_shape_tool_draw (GimpDrawTool *draw_tool)
         }
       else if (options->shape_type == GIMP_SHAPE_TYPE_SPIRAL)
         {
-          GimpVector2 *spiral_points;
-          gsize        n;
+          gdouble radius  = sqrt ((width * width) + (height * height));
+          gint    dir     = options->spiral_direction;
+          gdouble y_shift = 0;
+          gdouble radius_i;
+          gint    total   = (options->number_of_sides * 2);
 
-          spiral_points = gimp_shape_tool_create_spiral (shape_tool, &n);
+          radius_i = radius / total;
+          radius   = radius_i;
+          for (gint i = 0; i < total; i++)
+            {
+              y_shift = (radius / 2);
+              if (dir == -1)
+                y_shift -= (radius_i / 2);
 
-          gimp_draw_tool_add_lines (draw_tool, spiral_points, n, NULL,
-                                    options->enable_fill);
-          g_free (spiral_points);
+              gimp_draw_tool_add_arc (draw_tool, options->enable_fill,
+                                      shape_tool->start_x - (radius / 2),
+                                      shape_tool->start_y - y_shift,
+                                      radius, radius,
+                                      G_PI / 2, G_PI * dir);
+              dir *= -1;
+
+              radius += radius_i;
+            }
         }
     }
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
@@ -613,63 +626,42 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
     }
   else if (options->shape_type == GIMP_SHAPE_TYPE_SPIRAL)
     {
-      GimpVector2 *spiral_points;
-      gsize        n;
+      GimpCoords end      = GIMP_COORDS_DEFAULT_VALUES;
+      gint       n        = options->number_of_sides * 2;
+      gdouble    rx       = (shape_tool->start_x - shape_tool->current_x);
+      gdouble    ry       = (shape_tool->start_y - shape_tool->current_y);
+      gdouble    radius   = sqrt ((rx * rx) + (ry * ry));
+      gdouble    radius_i = radius / n;
+      gdouble    angle    = 90;
+      gdouble    dir      = options->spiral_direction * -1;
+      gdouble    y_shift;
 
-      spiral_points = gimp_shape_tool_create_spiral (shape_tool, &n);
-
-      next.x = spiral_points[0].x;
-      next.y = spiral_points[0].y;
+      next.x = shape_tool->start_x;
+      next.y = shape_tool->start_y;
       stroke = gimp_bezier_stroke_new_moveto (&next);
 
-      for (gint i = 1; i < n; i++)
+      angle *= dir;
+      radius = radius_i;
+      end.x  = next.x;
+      for (gint i = 0; i <= n; i++)
         {
-          next.x = spiral_points[i].x;
-          next.y = spiral_points[i].y;
-          gimp_bezier_stroke_lineto (stroke, &next);
+          y_shift = (radius / 2) - (radius_i / 2);
+          end.y   = next.y - (y_shift * dir);
+
+          gimp_bezier_stroke_arcto (stroke, radius / 4, radius / 4,
+                                    gimp_deg_to_rad (angle), FALSE, TRUE,
+                                    &end);
+
+          dir    *= -1;
+          angle  *= dir;
+          radius += radius_i;
         }
 
       gimp_path_stroke_add (path, stroke);
       g_object_unref (stroke);
-      g_free (spiral_points);
     }
 
   return path;
-}
-
-static GimpVector2 *
-gimp_shape_tool_create_spiral (GimpShapeTool *shape_tool,
-                               gsize         *total)
-{
-  GimpVector2      *points  = NULL;
-  GimpShapeOptions *options = GIMP_SHAPE_TOOL_GET_OPTIONS (shape_tool);
-  gint              dir     = options->spiral_direction;
-  gdouble           rx      = shape_tool->current_x - shape_tool->start_x;
-  gdouble           ry      = shape_tool->current_y - shape_tool->start_y;
-  gdouble           radius  = sqrt ((rx * rx) + (ry * ry));
-  gdouble           offset  = atan2 (ry, rx);
-  const gdouble     angle   = (2.0 * G_PI) / 180.0;
-  gdouble           spiral;
-
-  *total = (options->number_of_sides * 180) + (dir * RINT (offset / angle));
-  points = g_new (GimpVector2, *total);
-
-  spiral = radius / (options->number_of_sides * 2 * G_PI + offset);
-
-  for (gint i = 0; i < *total; i++)
-    {
-      gdouble loop_angle = (i * angle);
-      gdouble new_x;
-      gdouble new_y;
-
-      new_x = spiral * loop_angle * cos (loop_angle) * dir;
-      new_y = spiral * loop_angle * sin (loop_angle);
-
-      points[i].x = shape_tool->start_x + new_x;
-      points[i].y = shape_tool->start_y + new_y;
-    }
-
-  return points;
 }
 
 static void
