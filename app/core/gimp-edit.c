@@ -518,13 +518,13 @@ gimp_edit_paste_get_tagged_layers (GimpImage         *image,
               /*  when pasting as floating selection, get rid of the layer mask,
                *  and make sure the layer has the right format
                */
-              if (gimp_layer_get_mask (iter->data))
-                gimp_layer_apply_mask (iter->data, GIMP_MASK_DISCARD, FALSE);
+              if (gimp_layer_get_mask (layer))
+                gimp_layer_apply_mask (layer, GIMP_MASK_DISCARD, FALSE);
 
-              if (gimp_drawable_get_format (GIMP_DRAWABLE (iter->data)) !=
+              if (gimp_drawable_get_format (GIMP_DRAWABLE (layer)) !=
                   floating_format)
                 {
-                  gimp_drawable_convert_type (GIMP_DRAWABLE (iter->data), image,
+                  gimp_drawable_convert_type (GIMP_DRAWABLE (layer), image,
                                               base_type, precision,
                                               TRUE, NULL, NULL,
                                               GEGL_DITHER_NONE, GEGL_DITHER_NONE,
