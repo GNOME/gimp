@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-02 17:50+0000\n"
-"PO-Revision-Date: 2026-08-03 09:45+0300\n"
+"POT-Creation-Date: 2026-10-14 13:34+0000\n"
+"PO-Revision-Date: 2026-10-18 21:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -41,14 +41,6 @@ msgid "Development version"
 msgstr "Розроблювана версія"
 
 #: build/windows/installer/lang/setup.isl.xml.in:27
-#| msgid ""
-#| "This is a development version of GIMP where some features may not be "
-#| "finished, or it may be unstable.%nThis version of GIMP is not intended "
-#| "for day-to-day work as it may be unstable, and you could lose your work."
-#| "%nIf you encounter any problems, first verify that they haven't already "
-#| "been fixed in GIT before you contact the developers or report it in GIMP "
-#| "gitlab:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to "
-#| "continue with installation anyway?"
 msgid ""
 "This is a development version of GIMP where some features may not be "
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
@@ -62,8 +54,7 @@ msgstr ""
 "для щоденного використання, оскільки через нестабільність можлива втрата "
 "напрацювань.%nЯкщо ви зіткнетеся з проблемами, перш за все перевірте, чи їх "
 "не виправлено в GIT, а вже потім зверніться до розробників за допомогою "
-"gitlab:%n_https://www.gimp.org/bugs%n%nБажаєте продовжити "
-"встановлення?"
+"gitlab:%n_https://www.gimp.org/bugs%n%nБажаєте продовжити встановлення?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
 #: build/windows/installer/lang/setup.isl.xml.in:43
@@ -189,30 +180,42 @@ msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr "Надає змогу використовувати у GIMP додатки, написані мовою Lua."
 
 #: build/windows/installer/lang/setup.isl.xml.in:140
+#| msgid "Lua scripting"
+msgid "JavaScript scripting"
+msgstr "Сценарії на JavaScript"
+
+#: build/windows/installer/lang/setup.isl.xml.in:144
+#| msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgid ""
+"Allows you to use GIMP plugins written in JavaScript scripting language."
+msgstr ""
+"Надає змогу використовувати у GIMP додатки, написані мовою JavaScript."
+
+#: build/windows/installer/lang/setup.isl.xml.in:148
 msgid "MyPaint brushes"
 msgstr "Пензлі MyPaint"
 
-#: build/windows/installer/lang/setup.isl.xml.in:144
+#: build/windows/installer/lang/setup.isl.xml.in:152
 msgid "Install the default set of MyPaint brushes"
 msgstr "Встановити стандартний набір пензлів MyPaint"
 
-#: build/windows/installer/lang/setup.isl.xml.in:148
+#: build/windows/installer/lang/setup.isl.xml.in:156
 msgid "PostScript support"
 msgstr "Підтримка PostScript"
 
-#: build/windows/installer/lang/setup.isl.xml.in:152
+#: build/windows/installer/lang/setup.isl.xml.in:160
 msgid "Allow GIMP to load PostScript files"
 msgstr "Дозволяє GIMP завантажувати файли PostScript"
 
-#: build/windows/installer/lang/setup.isl.xml.in:157
+#: build/windows/installer/lang/setup.isl.xml.in:165
 msgid "Additional icons:"
 msgstr "Додаткові піктограми:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:161
+#: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Create a &desktop icon"
 msgstr "Створити &значок на стільниці"
 
-#: build/windows/installer/lang/setup.isl.xml.in:166
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -220,47 +223,47 @@ msgstr ""
 "Під час оновлення середовища GIMP в %1 трапилась помилка. Якщо трапляються "
 "помилки під час запуску доповнень, спробуйте вилучити і перевстановити GIMP."
 
-#: build/windows/installer/lang/setup.isl.xml.in:170
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Error extracting temporary data."
 msgstr "Помилка видобування тимчасових даних."
 
-#: build/windows/installer/lang/setup.isl.xml.in:174
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Error updating Python interpreter info."
 msgstr "Помилка оновлення даних про інтерпретатор Python."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:186
 msgid "Trying to create Restore Point..."
 msgstr "Спроба створити точку відновлення…"
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Cleaning up old files..."
 msgstr "Вилучаємо застарілі файли…"
 
-#: build/windows/installer/lang/setup.isl.xml.in:187
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Пам'ятайте: GIMP - вільна програма.%n%nВідвідайте"
 
-#: build/windows/installer/lang/setup.isl.xml.in:191
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "for free updates."
 msgstr ", щоб отримати вільні оновлення."
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Налаштування середовища для Python-розширень GIMP..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:198
+#: build/windows/installer/lang/setup.isl.xml.in:206
 msgid "Setting up GIMP environment..."
 msgstr "Налаштування середовища GIMP..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:211
 msgid "Launch GIMP"
 msgstr "Запустити GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:208
+#: build/windows/installer/lang/setup.isl.xml.in:216
 msgid "Removing add-on"
 msgstr "Вилучення додатка"
 
-#: build/windows/installer/lang/setup.isl.xml.in:213
+#: build/windows/installer/lang/setup.isl.xml.in:221
 msgid ""
 "Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
 "custom brushes)?%n%nA copy will be made on Desktop."
@@ -268,7 +271,7 @@ msgstr ""
 "Хочете вилучити ваші особисті файли GIMP (наприклад параметри, набори "
 "інструментів нетипові пензлі)?%n%nНа стільниці буде створено копію."
 
-#: build/windows/installer/lang/setup.isl.xml.in:217
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Internal error (%1)."
 msgstr "Внутрішня помилка (%1)."
 
