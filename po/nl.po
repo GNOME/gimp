@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-03 02:37+0000\n"
-"PO-Revision-Date: 2026-10-03 10:51+0200\n"
+"POT-Creation-Date: 2026-10-17 22:18+0000\n"
+"PO-Revision-Date: 2026-10-18 12:15+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -496,7 +496,7 @@ msgstr "Bewerker gereedschapsvoorinstellingen"
 msgid "Help"
 msgstr "Hulp"
 
-#: app/actions/actions.c:192 app/core/gimpimage.c:635
+#: app/actions/actions.c:192 app/core/gimpimage.c:636
 msgid "Image"
 msgstr "Afbeelding"
 
@@ -2507,7 +2507,7 @@ msgstr "240 Seconden"
 #: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:223
 #: app/dialogs/preferences-dialog.c:608 app/dialogs/preferences-dialog.c:1181
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:149
-#: app/dialogs/resize-dialog.c:228 app/dialogs/resolution-calibrate-dialog.c:73
+#: app/dialogs/resize-dialog.c:228 app/dialogs/resolution-calibrate-dialog.c:74
 #: app/dialogs/scale-dialog.c:138 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
 #: app/dialogs/path-export-dialog.c:83 app/dialogs/path-import-dialog.c:93
@@ -2516,7 +2516,7 @@ msgstr "240 Seconden"
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1127 app/tools/gimptexttool.c:1870
+#: app/tools/gimppathtool.c:1127 app/tools/gimptexttool.c:1941
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
@@ -2587,7 +2587,7 @@ msgstr "Geef een beschrijving van het markeerpunt"
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
 #: app/dialogs/welcome-dialog.c:1257 app/display/gimpdisplayshell-dnd.c:707
-#: app/display/gimpimagewindow.c:2395 app/widgets/gimplayertreeview.c:864
+#: app/display/gimpimagewindow.c:2493 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -2599,7 +2599,7 @@ msgstr "Openen van ‘%s’ is mislukt:\n"
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2570
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2571
 #: app/core/gimppalette.c:647 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -3761,202 +3761,239 @@ msgctxt "edit-action"
 msgid "Copy what is visible in the selected region"
 msgstr "Alles dat zichtbaar is in het geselecteerde gebied kopiëren"
 
-#: app/actions/edit-actions.c:115
+#: app/actions/edit-actions.c:123
 msgctxt "edit-action"
 msgid "Paste as _New Image"
 msgstr "Plakken als _Nieuwe afbeelding"
 
-#: app/actions/edit-actions.c:116
+#. TRANSLATORS: variant of "Paste as _New Image" when inside "Crea_te" menu.
+#: app/actions/edit-actions.c:125
 msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "Van _klembord"
 
-#: app/actions/edit-actions.c:118
+#: app/actions/edit-actions.c:127
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "Een nieuwe afbeelding aanmaken met de inhoud van het klembord"
 
-#: app/actions/edit-actions.c:123
+#: app/actions/edit-actions.c:132
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "Benoemd _knippen..."
 
-#: app/actions/edit-actions.c:124
+#: app/actions/edit-actions.c:133
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
 msgstr "Selectie naar een benoemde buffer verplaatsen"
 
-#: app/actions/edit-actions.c:129
+#: app/actions/edit-actions.c:138
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "Benoemd k_opiëren..."
 
-#: app/actions/edit-actions.c:130
+#: app/actions/edit-actions.c:139
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "Selectie naar een benoemde buffer kopiëren"
 
 #. GIMP_ICON_COPY_VISIBLE,
-#: app/actions/edit-actions.c:135
+#: app/actions/edit-actions.c:144
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "Zicht_bare benoemd kopiëren..."
 
-#: app/actions/edit-actions.c:137
+#: app/actions/edit-actions.c:146
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
 msgstr "Alles dat zichtbaar is in het geselecteerde gebied kopiëren"
 
-#: app/actions/edit-actions.c:142
+#: app/actions/edit-actions.c:151
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "Benoemd _plakken..."
 
-#: app/actions/edit-actions.c:143
+#: app/actions/edit-actions.c:152
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
 msgstr "De inhoud van een benoemde buffer plakken"
 
 # wissen
-#: app/actions/edit-actions.c:148
+#: app/actions/edit-actions.c:157
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "_Wissen"
 
-#: app/actions/edit-actions.c:149
+#: app/actions/edit-actions.c:158
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr "Selectie wissen"
 
-#: app/actions/edit-actions.c:157
+#: app/actions/edit-actions.c:166
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "_Plakken"
 
-#: app/actions/edit-actions.c:158
+#: app/actions/edit-actions.c:167
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
 msgstr "De inhoud van het klembord plakken"
 
-#: app/actions/edit-actions.c:163
+#: app/actions/edit-actions.c:172
 msgctxt "edit-action"
 msgid "Paste In P_lace"
 msgstr "Plakken op zelfde p_lek als origineel"
 
-#: app/actions/edit-actions.c:165
+#: app/actions/edit-actions.c:174
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard at its original position"
 msgstr "De inhoud van het klembord op oorspronkelijke positie plakken"
 
-#: app/actions/edit-actions.c:170
+#: app/actions/edit-actions.c:179
 msgctxt "edit-action"
-msgid "_Paste as Single Layer"
-msgstr "Buffer plakken als _een enkele laag"
+msgid "Paste as _Single Layer"
+msgstr "Plakken als _enkele laag"
 
-#: app/actions/edit-actions.c:171
+#. TRANSLATORS: variant of "Paste as _Single Layer" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:181
+msgctxt "edit-action"
+msgid "_Single Layer"
+msgstr "_Enkele laag"
+
+#: app/actions/edit-actions.c:183
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as a single layer"
 msgstr "De inhoud van het klembord plakken als een enkele laag"
 
-#: app/actions/edit-actions.c:176
+#: app/actions/edit-actions.c:188
 msgctxt "edit-action"
 msgid "Paste as Single Layer In P_lace"
-msgstr "Als nieuwe laag plakken op zelfde p_lek"
+msgstr "Als enkele laag plakken op zelfde p_lek"
 
-#: app/actions/edit-actions.c:178
+#. TRANSLATORS: variant of "Paste as Single Layer in P_lace" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:190
+msgctxt "edit-action"
+msgid "Single Layer In P_lace"
+msgstr "Enkele laag op zelfde p_lek"
+
+#: app/actions/edit-actions.c:193
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard at its original position as a single layer"
 msgstr "De inhoud van het klembord op oorspronkelijke positie plakken als een enkele laag"
 
-#: app/actions/edit-actions.c:183
+#: app/actions/edit-actions.c:198
 msgctxt "edit-action"
 msgid "Paste as Floating Data _Into Selection"
 msgstr "Plakken _in zwevende selectie"
 
-#: app/actions/edit-actions.c:185
+#. TRANSLATORS: variant of "Paste as Floating Data _Into Selection" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:200
+msgctxt "edit-action"
+msgid "Floating Data _Into Selection"
+msgstr "Als zwevend _in selectie"
+
+#: app/actions/edit-actions.c:203
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "De inhoud van het klembord in de huidige selectie plakken"
 
-#: app/actions/edit-actions.c:190
+#: app/actions/edit-actions.c:208
 msgctxt "edit-action"
-msgid "Paste as Floating Data Int_o Selection In Place"
+msgid "Paste as Floating Data Int_o Selection in Place"
 msgstr "Plakken _op de positie van de selectie als zwevend"
 
-#: app/actions/edit-actions.c:192
+#. TRANSLATORS: variant of "Paste as Floating Data Int_o Selection in Place" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:210
+msgctxt "edit-action"
+msgid "Floating Data Int_o Selection in Place"
+msgstr "Als zwevend _op de positie van de selectie "
+
+#: app/actions/edit-actions.c:213
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
 "original position"
 msgstr "De inhoud van het klembord in de huidige selectie op oorspronkelijke positie plakken"
 
-#: app/actions/edit-actions.c:198
+#: app/actions/edit-actions.c:219
 msgctxt "edit-action"
 msgid "Paste as _Floating Data"
 msgstr "Plakken als _zwevende selectie"
 
-#: app/actions/edit-actions.c:199
+#. TRANSLATORS: variant of "Paste as _Floating Data" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:221
+msgctxt "edit-action"
+msgid "_Floating Data"
+msgstr "_Zwevende selectie"
+
+#: app/actions/edit-actions.c:223
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as Floating Data"
 msgstr "De inhoud van het klembord plakken als zwevende selectie"
 
-#: app/actions/edit-actions.c:204
+#: app/actions/edit-actions.c:228
 msgctxt "edit-action"
-msgid "Paste as Floa_ting Data In Place"
-msgstr "Plakken _op dezelfde positie als zwevende selectie"
+msgid "Paste as Floa_ting Data in Place"
+msgstr "Plakken op dezelfde posi_tie als zwevende selectie"
 
-#: app/actions/edit-actions.c:205
+#. TRANSLATORS: variant of "Paste as Floa_ting Data in Place" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:230
+msgctxt "edit-action"
+msgid "Floa_ting Data in Place"
+msgstr "Zwevende selectie op dezelfde positie"
+
+#: app/actions/edit-actions.c:232
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard as Floating Data at its original position"
 msgstr "De inhoud van het klembord op oorspronkelijke positie plakken als zwevende selectie"
 
-#: app/actions/edit-actions.c:213
+#: app/actions/edit-actions.c:240
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Vullen met _VG-kleur"
 
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:241
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "De selectie vullen met de voorgrondkleur"
 
-#: app/actions/edit-actions.c:219
+#: app/actions/edit-actions.c:246
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Vullen met _AG-kleur"
 
-#: app/actions/edit-actions.c:220
+#: app/actions/edit-actions.c:247
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "De selectie vullen met de achtergrondkleur"
 
-#: app/actions/edit-actions.c:225
+#: app/actions/edit-actions.c:252
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Met pa_troon vullen"
 
-#: app/actions/edit-actions.c:226
+#: app/actions/edit-actions.c:253
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "De selectie vullen met het huidige patroon"
 
-#: app/actions/edit-actions.c:327 app/actions/edit-actions.c:329
+#: app/actions/edit-actions.c:354 app/actions/edit-actions.c:356
 #, c-format
 msgid "_Undo %s"
 msgstr "%s _ongedaan maken"
 
-#: app/actions/edit-actions.c:333 app/actions/edit-actions.c:335
+#: app/actions/edit-actions.c:360 app/actions/edit-actions.c:362
 #, c-format
 msgid "_Redo %s"
 msgstr "%s op_nieuw uitvoeren"
 
-#: app/actions/edit-actions.c:346
+#: app/actions/edit-actions.c:373
 msgid "_Undo"
 msgstr "_Ongedaan maken"
 
-#: app/actions/edit-actions.c:347
+#: app/actions/edit-actions.c:374
 msgid "_Redo"
 msgstr "Op_nieuw uitvoeren"
 
@@ -10341,7 +10378,7 @@ msgstr "Weergave openen"
 #: app/dialogs/input-devices-dialog.c:67 app/dialogs/item-options-dialog.c:148
 #: app/dialogs/keyboard-shortcuts-dialog.c:66
 #: app/dialogs/preferences-dialog.c:1182 app/dialogs/print-size-dialog.c:124
-#: app/dialogs/resolution-calibrate-dialog.c:74
+#: app/dialogs/resolution-calibrate-dialog.c:75
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
@@ -12462,12 +12499,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zwevende selectie verankeren"
 
-#: app/core/core-enums.c:1342 app/core/gimp-edit.c:845
+#: app/core/core-enums.c:1342 app/core/gimp-edit.c:854
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Plakken"
 
-#: app/core/core-enums.c:1343 app/core/gimp-edit.c:1207
+#: app/core/core-enums.c:1343 app/core/gimp-edit.c:1223
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Knippen"
@@ -12482,7 +12519,7 @@ msgctxt "undo-type"
 msgid "Vector"
 msgstr "Vector"
 
-#: app/core/core-enums.c:1346 app/core/gimpdrawable-transform.c:718
+#: app/core/core-enums.c:1346 app/core/gimpdrawable-transform.c:719
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformeren"
@@ -12924,11 +12961,11 @@ msgstr "Kan niet knippen omdat het geselecteerde gebied leeg is."
 msgid "Cannot copy because the selected region is empty."
 msgstr "Kan niet kopiëren omdat het geselecteerde gebied leeg is."
 
-#: app/core/gimp-edit.c:615 app/core/gimpimage-new.c:584
+#: app/core/gimp-edit.c:624 app/core/gimpimage-new.c:584
 msgid "Pasted Layer"
 msgstr "Geplakte laag"
 
-#: app/core/gimp-edit.c:1224
+#: app/core/gimp-edit.c:1240
 msgid "Global Buffer"
 msgstr "Algemene buffer"
 
@@ -13412,7 +13449,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Kanaal draaien"
 
-#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1050
+#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1084
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Kanaal transformeren"
@@ -13662,7 +13699,7 @@ msgstr "Fout bij het laden van ‘%s’"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:361 app/file-data/file-data-gex.c:511
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:405
+#: app/xcf/xcf.c:406
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Kon ‘%s’ niet openen om te lezen: "
@@ -13748,22 +13785,22 @@ msgstr "Verschuiving tekengebied"
 msgid "Not enough points to stroke"
 msgstr "Niet genoeg punten om te belijnen"
 
-#: app/core/gimpdrawable-transform.c:805 app/tools/gimpfliptool.c:139
+#: app/core/gimpdrawable-transform.c:806 app/tools/gimpfliptool.c:139
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Spiegelen"
 
-#: app/core/gimpdrawable-transform.c:888 app/tools/gimprotatetool.c:131
+#: app/core/gimpdrawable-transform.c:889 app/tools/gimprotatetool.c:131
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Draaien"
 
-#: app/core/gimpdrawable-transform.c:1048 app/core/gimplayer.c:472
+#: app/core/gimpdrawable-transform.c:1082 app/core/gimplayer.c:472
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Laag transformeren"
 
-#: app/core/gimpdrawable-transform.c:1062
+#: app/core/gimpdrawable-transform.c:1096
 msgid "Transformation"
 msgstr "Transformatie"
 
@@ -14007,200 +14044,205 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Laaggroep transformeren"
 
-#: app/core/gimpimage.c:723 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:724 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "Symmetrie"
 
-#: app/core/gimpimage.c:2206 app/pdb/drawable-filter-cmds.c:661
+#: app/core/gimpimage.c:2207 app/pdb/drawable-filter-cmds.c:667
 #: app/widgets/gimpdrawabletreeview-filters.c:1033
 msgid "Remove filter"
 msgstr "Filter verwijderen"
 
-#: app/core/gimpimage.c:2815
+#: app/core/gimpimage.c:2816
 msgid " (exported)"
 msgstr " (geëxporteerd)"
 
-#: app/core/gimpimage.c:2819
+#: app/core/gimpimage.c:2820
 msgid " (overwritten)"
 msgstr " (overschreven)"
 
-#: app/core/gimpimage.c:2828
+#: app/core/gimpimage.c:2829
 msgid " (imported)"
 msgstr " (geïmporteerd)"
 
-#: app/core/gimpimage.c:3076 app/core/gimpimage.c:3090
-#: app/core/gimpimage.c:3133
+#: app/core/gimpimage.c:3077 app/core/gimpimage.c:3091
+#: app/core/gimpimage.c:3134
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Laagmodus ‘%s’ is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3158 app/core/gimpimage.c:3272
+#: app/core/gimpimage.c:3159 app/core/gimpimage.c:3299
 #, c-format
 msgid "Channel effects were saved in %s"
 msgstr "Kanaaleffecten werden opgeslagen in %s"
 
-#: app/core/gimpimage.c:3167
+#: app/core/gimpimage.c:3168
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Laaggroepen toegevoegd in %s"
 
-#: app/core/gimpimage.c:3174
+#: app/core/gimpimage.c:3175
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maskers op laaggroepen zijn toegevoegd in %s"
 
-#: app/core/gimpimage.c:3181
+#: app/core/gimpimage.c:3182
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Positie vergrendelen op laaggroepen werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:3188
+#: app/core/gimpimage.c:3189
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Alfakanaal vergrendelen op laaggroepen werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:3196 app/core/gimpimage.c:3264
+#: app/core/gimpimage.c:3197 app/core/gimpimage.c:3291
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Vergrendelen van zichtbaarheid is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3207
+#: app/core/gimpimage.c:3208
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Weergave van de tekst in de tekstlaag is veranderd in %s"
 
-#: app/core/gimpimage.c:3215
+#: app/core/gimpimage.c:3216
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Laageffecten toegevoegd in %s"
 
-#: app/core/gimpimage.c:3227
+#: app/core/gimpimage.c:3228
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Een nieuwe perceptuele mengruimte werd toegevoegd %s"
 
-#: app/core/gimpimage.c:3241
+#: app/core/gimpimage.c:3242
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "Vectorlagen werden toegevoegd %s"
 
-#: app/core/gimpimage.c:3249
+#: app/core/gimpimage.c:3250
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "Koppelingslagen werden toegevoegd in %s"
 
-#: app/core/gimpimage.c:3281
+#: app/core/gimpimage.c:3274
+#, c-format
+msgid "Transformed text layers were added in %s"
+msgstr "Getransformeerde lagen werden toegevoegd in %s"
+
+#: app/core/gimpimage.c:3308
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Selectie van meerdere paden is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3293
+#: app/core/gimpimage.c:3320
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Ondersteuning van kleurlabels in een pad toegevoegd in %s"
 
-#: app/core/gimpimage.c:3300
+#: app/core/gimpimage.c:3327
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Positie vergrendelen op paden werd toegevoegd in %s"
 
-#: app/core/gimpimage.c:3314
+#: app/core/gimpimage.c:3341
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Ondersteuning van grotere bitdiepte in %s"
 
-#: app/core/gimpimage.c:3322
+#: app/core/gimpimage.c:3349
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Fout tijdens coderen van afbeeldingen met grote bitdiepte hersteld in %s"
 
-#: app/core/gimpimage.c:3330
+#: app/core/gimpimage.c:3357
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Interne zlib-compressie toegevoegd in %s"
 
-#: app/core/gimpimage.c:3347
+#: app/core/gimpimage.c:3374
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Ondersteuning van afbeeldingen groter dan 4 GB toegevoegd in %s"
 
-#: app/core/gimpimage.c:3354
+#: app/core/gimpimage.c:3381
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Selectie van meerdere lagen is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3371
+#: app/core/gimpimage.c:3398
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Hulplijnen buiten het canvas toegevoegd in %s"
 
-#: app/core/gimpimage.c:3382
+#: app/core/gimpimage.c:3409
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Item instellen en patroon zoeken in itemnaam zijn toegevoegd in %s"
 
-#: app/core/gimpimage.c:3388
+#: app/core/gimpimage.c:3415
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Selectie van meerdere kanalen is toegevoegd in %s"
 
-#: app/core/gimpimage.c:3519
+#: app/core/gimpimage.c:3550
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Afbeeldingsresolutie wijzigen"
 
-#: app/core/gimpimage.c:3571
+#: app/core/gimpimage.c:3602
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Afbeeldingseenheid wijzigen"
 
-#: app/core/gimpimage.c:4618
+#: app/core/gimpimage.c:4649
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "'gimp-commentaar' parasietvalidatie faalde: commentaar bevat ongeldige UTF-8 tekens"
 
-#: app/core/gimpimage.c:4680
+#: app/core/gimpimage.c:4711
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Parasiet aan afbeelding koppelen"
 
-#: app/core/gimpimage.c:4725
+#: app/core/gimpimage.c:4756
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Parasiet uit afbeelding verwijderen"
 
-#: app/core/gimpimage.c:5698
+#: app/core/gimpimage.c:5729
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Laag toevoegen"
 
-#: app/core/gimpimage.c:5758 app/core/gimpimage.c:5789
+#: app/core/gimpimage.c:5789 app/core/gimpimage.c:5820
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Laag verwijderen"
 
-#: app/core/gimpimage.c:5783
+#: app/core/gimpimage.c:5814
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Zwevende selectie verwijderen"
 
-#: app/core/gimpimage.c:5946
+#: app/core/gimpimage.c:5977
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanaal toevoegen"
 
-#: app/core/gimpimage.c:5976 app/core/gimpimage.c:6004
+#: app/core/gimpimage.c:6007 app/core/gimpimage.c:6035
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanaal verwijderen"
 
-#: app/core/gimpimage.c:6066
+#: app/core/gimpimage.c:6097
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Pad toevoegen"
 
-#: app/core/gimpimage.c:6101 app/core/gimpimage.c:6109
+#: app/core/gimpimage.c:6132 app/core/gimpimage.c:6140
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Pad verwijderen"
@@ -16114,11 +16156,11 @@ msgstr "Openen van ‘%s’ mislukt."
 #: app/display/gimpcursorview.c:240 app/display/gimpcursorview.c:259
 #: app/display/gimpcursorview.c:265 app/display/gimpcursorview.c:286
 #: app/display/gimpcursorview.c:292 app/display/gimpcursorview.c:308
-#: app/display/gimpcursorview.c:315 app/display/gimpcursorview.c:738
-#: app/display/gimpcursorview.c:740 app/display/gimpcursorview.c:742
-#: app/display/gimpcursorview.c:744 app/display/gimpcursorview.c:824
-#: app/display/gimpcursorview.c:825 app/display/gimpcursorview.c:826
-#: app/display/gimpcursorview.c:827 app/widgets/gimphistogrameditor.c:820
+#: app/display/gimpcursorview.c:315 app/display/gimpcursorview.c:740
+#: app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744
+#: app/display/gimpcursorview.c:746 app/display/gimpcursorview.c:826
+#: app/display/gimpcursorview.c:827 app/display/gimpcursorview.c:828
+#: app/display/gimpcursorview.c:829 app/widgets/gimphistogrameditor.c:820
 msgid "n/a"
 msgstr "niet beschikbaar"
 
@@ -18603,19 +18645,19 @@ msgstr "Sjabloon schalen naar %.2f ppi"
 msgid "Set image to %.2f ppi"
 msgstr "Afbeelding instellen op %.2f ppi"
 
-#: app/dialogs/resolution-calibrate-dialog.c:67
+#: app/dialogs/resolution-calibrate-dialog.c:68
 msgid "Calibrate Monitor Resolution"
 msgstr "Beeldschermresolutie kalibreren"
 
-#: app/dialogs/resolution-calibrate-dialog.c:120
+#: app/dialogs/resolution-calibrate-dialog.c:124
 msgid "Measure the rulers and enter their lengths:"
 msgstr "Meet de lengte van de linialen en voer de getallen in:"
 
-#: app/dialogs/resolution-calibrate-dialog.c:145
+#: app/dialogs/resolution-calibrate-dialog.c:149
 msgid "_Horizontal:"
 msgstr "Hori_zontaal:"
 
-#: app/dialogs/resolution-calibrate-dialog.c:150
+#: app/dialogs/resolution-calibrate-dialog.c:154
 msgid "_Vertical:"
 msgstr "_Verticaal:"
 
@@ -22262,6 +22304,15 @@ msgstr "Padlijn uitbreiden"
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Gegevenslabel ‘%s’ is geen bekende naam"
 
+#: app/pdb/progress-cmds.c:73 app/pdb/progress-cmds.c:107
+#: app/pdb/progress-cmds.c:135 app/pdb/progress-cmds.c:168
+#: app/pdb/progress-cmds.c:197 app/pdb/progress-cmds.c:227
+#: app/pdb/progress-cmds.c:264 app/pdb/progress-cmds.c:297
+#: app/pdb/progress-cmds.c:330
+#, c-format
+msgid "The plug-in is closing."
+msgstr "De plug-in sluit af."
+
 #: app/pdb/rasterizable-cmds.c:65
 #, c-format
 msgid "This item has already been rasterized."
@@ -22874,7 +22925,7 @@ msgstr "Voor de GIMP pixelquiz moet\n"
 msgid "Some fonts failed to load:%s"
 msgstr "Sommige lettertypen konden niet worden geladen:%s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1742
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1813
 msgid "Add Text Layer"
 msgstr "Tekstlaag toevoegen"
 
@@ -22886,43 +22937,43 @@ msgstr "Ongeldige opmaak in tekst parasiet"
 msgid "Empty text parasite"
 msgstr "Lege tekstparasiet"
 
-#: app/text/gimptextlayer.c:177
+#: app/text/gimptextlayer.c:178
 msgid "Text Layer"
 msgstr "Tekstlaag"
 
-#: app/text/gimptextlayer.c:189
+#: app/text/gimptextlayer.c:188
 msgid "Rename Text Layer"
 msgstr "Tekstlaag hernoemen"
 
-#: app/text/gimptextlayer.c:190 app/tools/gimptexttool.c:1307
+#: app/text/gimptextlayer.c:189 app/tools/gimptexttool.c:1352
 msgid "Move Text Layer"
 msgstr "Tekstlaag verplaatsen"
 
-#: app/text/gimptextlayer.c:191
+#: app/text/gimptextlayer.c:190
 msgid "Scale Text Layer"
 msgstr "Tekstlaag schalen"
 
-#: app/text/gimptextlayer.c:192
+#: app/text/gimptextlayer.c:191
 msgid "Resize Text Layer"
 msgstr "Grootte tekstlaag wijzigen"
 
-#: app/text/gimptextlayer.c:193
+#: app/text/gimptextlayer.c:192
 msgid "Flip Text Layer"
 msgstr "Tekstlaag spiegelen"
 
-#: app/text/gimptextlayer.c:194
+#: app/text/gimptextlayer.c:193
 msgid "Rotate Text Layer"
 msgstr "Tekstlaag draaien"
 
-#: app/text/gimptextlayer.c:195
+#: app/text/gimptextlayer.c:194
 msgid "Transform Text Layer"
 msgstr "Tekstlaag transformeren"
 
-#: app/text/gimptextlayer.c:833 app/text/gimptextlayer.c:974
+#: app/text/gimptextlayer.c:832 app/text/gimptextlayer.c:973
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Tekstfunctionaliteit ontbreekt, omdat er geen lettertypes zijn."
 
-#: app/text/gimptextlayer.c:1189
+#: app/text/gimptextlayer.c:1188
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -22941,7 +22992,7 @@ msgstr "Problemen bij het parsen van de tekstparasiet voor laag ‘%s’:\n"
 "\n"
 "Sommige teksteigenschappen zouden verkeerd kunnen zijn. Tenzij u de tekstlaag zou willen bewerken, hoeft u zich daar geen zorgen om te maken."
 
-#: app/text/gimptextlayout.c:707
+#: app/text/gimptextlayout.c:776
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -23782,42 +23833,42 @@ msgstr "%s om lichter te maken"
 msgid "Type  (%s)"
 msgstr "Type (%s)"
 
-#: app/tools/gimpeditselectiontool.c:401 app/tools/gimpeditselectiontool.c:597
+#: app/tools/gimpeditselectiontool.c:401 app/tools/gimpeditselectiontool.c:598
 msgid "Move: "
 msgstr "Verplaatsen: "
 
-#: app/tools/gimpeditselectiontool.c:1044
-#: app/tools/gimpeditselectiontool.c:1406
+#: app/tools/gimpeditselectiontool.c:1045
+#: app/tools/gimpeditselectiontool.c:1407
 msgid "Move Floating Selection"
 msgstr "Zwevende selectie verplaatsen"
 
-#: app/tools/gimpeditselectiontool.c:1290 app/tools/gimpmovetool.c:294
+#: app/tools/gimpeditselectiontool.c:1291 app/tools/gimpmovetool.c:294
 msgid "There are no paths to move."
 msgstr "Er zijn geen paden om te verplaatsen."
 
-#: app/tools/gimpeditselectiontool.c:1298
+#: app/tools/gimpeditselectiontool.c:1299
 msgid "A selected path's position is locked."
 msgstr "De positie van een geselecteerd pad is vergrendeld."
 
-#: app/tools/gimpeditselectiontool.c:1311 app/tools/gimpmovetool.c:339
+#: app/tools/gimpeditselectiontool.c:1312 app/tools/gimpmovetool.c:339
 msgid "There is no layer to move."
 msgstr "Er is geen laag om te verplaatsen."
 
-#: app/tools/gimpeditselectiontool.c:1320
-#: app/tools/gimpeditselectiontool.c:1347 app/tools/gimpmovetool.c:348
+#: app/tools/gimpeditselectiontool.c:1321
+#: app/tools/gimpeditselectiontool.c:1348 app/tools/gimpmovetool.c:348
 msgid "The selected layer's position is locked."
 msgstr "De positie van een geselecteerde laag is vergrendeld."
 
-#: app/tools/gimpeditselectiontool.c:1325 app/tools/gimpgradienttool.c:294
+#: app/tools/gimpeditselectiontool.c:1326 app/tools/gimpgradienttool.c:294
 #: app/tools/gimpmovetool.c:350
 msgid "The selected layer's pixels are locked."
 msgstr "De beeldpunten van de actieve lagen zijn vergrendeld."
 
-#: app/tools/gimpeditselectiontool.c:1336
+#: app/tools/gimpeditselectiontool.c:1337
 msgid "A selected channel's position is locked."
 msgstr "De positie van een geselecteerd kanaal is vergrendeld."
 
-#: app/tools/gimpeditselectiontool.c:1358 app/tools/gimpmovetool.c:367
+#: app/tools/gimpeditselectiontool.c:1359 app/tools/gimpmovetool.c:367
 msgid "A selected layer's position is locked."
 msgstr "De positie van een geselecteerde laag is vergrendeld."
 
@@ -25074,11 +25125,11 @@ msgstr "Vectorlaag toevoegen"
 msgid "Confirm Path Editing"
 msgstr "Bevestig bewerken van pad"
 
-#: app/tools/gimppathtool.c:1126 app/tools/gimptexttool.c:1869
+#: app/tools/gimppathtool.c:1126 app/tools/gimptexttool.c:1940
 msgid "Create _New Layer"
 msgstr "_Nieuwe laag aanmaken"
 
-#: app/tools/gimppathtool.c:1128 app/tools/gimptexttool.c:1871
+#: app/tools/gimppathtool.c:1128 app/tools/gimptexttool.c:1942
 msgid "_Edit Anyway"
 msgstr "Toch b_ewerken"
 
@@ -25614,58 +25665,58 @@ msgstr "Vak:"
 msgid "Language:"
 msgstr "Taal:"
 
-#: app/tools/gimptexttool.c:224
+#: app/tools/gimptexttool.c:225
 msgid "Text"
 msgstr "Tekst"
 
-#: app/tools/gimptexttool.c:225
+#: app/tools/gimptexttool.c:226
 msgid "Text Tool: Create or edit text layers"
 msgstr "Tekst: tekstlagen aanmaken of bewerken"
 
-#: app/tools/gimptexttool.c:226
+#: app/tools/gimptexttool.c:227
 msgid "Te_xt"
 msgstr "T_ekst"
 
-#: app/tools/gimptexttool.c:1109
+#: app/tools/gimptexttool.c:1154
 msgid "Fonts are still loading"
 msgstr "Lettertypen worden geladen"
 
 # Tool niet meevertaald
-#: app/tools/gimptexttool.c:1120
+#: app/tools/gimptexttool.c:1165
 msgid "Text box: "
 msgstr "Tekstvak: "
 
-#: app/tools/gimptexttool.c:1277
+#: app/tools/gimptexttool.c:1322
 msgid "Reshape Text Layer"
 msgstr "Tekstlaag hervormen"
 
-#: app/tools/gimptexttool.c:1862 app/tools/gimptexttool.c:1865
+#: app/tools/gimptexttool.c:1933 app/tools/gimptexttool.c:1936
 msgid "Confirm Text Editing"
 msgstr "Tekstbewerken bevestigen"
 
-#: app/tools/gimptexttool.c:1893
+#: app/tools/gimptexttool.c:1964
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
 msgstr "De tekstlaag die u koos werd gerasteriseerd. Bewerken van zijn tekst zal alle wijzigingen ongedaan maken."
 
-#: app/tools/gimptexttool.c:2513
+#: app/tools/gimptexttool.c:2584
 msgid "Text is required."
 msgstr "Tekst is vereist."
 
-#: app/tools/gimptexttool.c:2516
+#: app/tools/gimptexttool.c:2587
 msgid "No image."
 msgstr "Geen afbeelding."
 
-#: app/tools/gimptexttool.c:2519
+#: app/tools/gimptexttool.c:2590
 msgid "No layer."
 msgstr "Geen laag."
 
-#: app/tools/gimptexttool.c:2530
+#: app/tools/gimptexttool.c:2601
 msgid "Exactly one path must be selected."
 msgstr "U moet precies één pad selecteren."
 
-#: app/tools/gimptexttool-editor.c:1492
+#: app/tools/gimptexttool-editor.c:1532
 msgid "GIMP Text Editor"
 msgstr "GIMP-tekstbewerker"
 
@@ -27474,17 +27525,17 @@ msgid "Select fields"
 msgstr "Velden selecteren"
 
 #. Translators: "N/A" is an abbreviation for "not available"
-#: app/widgets/gimpdashboard.c:3331
+#: app/widgets/gimpdashboard.c:3332
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-#: app/widgets/gimpdashboard.c:3340 app/widgets/gimpdashboard.c:4348
+#: app/widgets/gimpdashboard.c:3341 app/widgets/gimpdashboard.c:4349
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Ja"
 
-#: app/widgets/gimpdashboard.c:3341 app/widgets/gimpdashboard.c:4349
+#: app/widgets/gimpdashboard.c:3342 app/widgets/gimpdashboard.c:4350
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Geen"
@@ -27493,7 +27544,7 @@ msgstr "Geen"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: app/widgets/gimpdashboard.c:3425
+#: app/widgets/gimpdashboard.c:3426
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -27504,16 +27555,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: app/widgets/gimpdashboard.c:4338
+#: app/widgets/gimpdashboard.c:4339
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: app/widgets/gimpdashboard.c:4416
+#: app/widgets/gimpdashboard.c:4417
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-#: app/widgets/gimpdashboard.c:4794
+#: app/widgets/gimpdashboard.c:4795
 msgid "Resolving symbol information..."
 msgstr "Verwerken symboolinformatie..."
 
@@ -28951,12 +29002,12 @@ msgstr "%s (probeer %s, %s, %s)"
 #. * (e.g. a checkbox settings) displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1481
+#: app/widgets/gimpwidgets-utils.c:1487
 #, c-format
 msgid "Switch \"%s\" ON"
 msgstr "Schakel ‘%s’ IN"
 
-#: app/widgets/gimpwidgets-utils.c:1483
+#: app/widgets/gimpwidgets-utils.c:1489
 #, c-format
 msgid "Switch \"%s\" OFF"
 msgstr "Schakel ‘%s’ UIT"
@@ -28966,7 +29017,7 @@ msgstr "Schakel ‘%s’ UIT"
 #. * multi-choice settings displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1502
+#: app/widgets/gimpwidgets-utils.c:1508
 #, c-format
 msgid "Select \"%s\""
 msgstr "‘%s’ selecteren"
@@ -28974,27 +29025,27 @@ msgstr "‘%s’ selecteren"
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1533
+#: app/widgets/gimpwidgets-utils.c:1539
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "Activeer het gereedschap ‘%s’"
 
-#: app/widgets/gimpwidgets-utils.c:2132
+#: app/widgets/gimpwidgets-utils.c:2138
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Ingebouwde grijswaarden (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2139
+#: app/widgets/gimpwidgets-utils.c:2145
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Ingebouwd RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2159
+#: app/widgets/gimpwidgets-utils.c:2165
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Preferente grijswaarden (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2168
+#: app/widgets/gimpwidgets-utils.c:2174
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Preferent RGB (%s)"
@@ -29089,40 +29140,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Status & omschrijving"
 
-#: app/xcf/xcf.c:127 app/xcf/xcf.c:182
+#: app/xcf/xcf.c:128 app/xcf/xcf.c:183
 msgid "GIMP XCF image"
 msgstr "GIMP XCF-afbeelding"
 
-#: app/xcf/xcf.c:258 app/xcf/xcf.c:316
+#: app/xcf/xcf.c:259 app/xcf/xcf.c:317
 msgid "Memory Stream"
 msgstr "Geheugenstroom"
 
-#: app/xcf/xcf.c:261
+#: app/xcf/xcf.c:262
 #, c-format
 msgid "Opening '%s'"
 msgstr "Openen van ‘%s’"
 
-#: app/xcf/xcf.c:280
+#: app/xcf/xcf.c:281
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-fout: niet ondersteunde XCF-bestandsversie %d tegengekomen"
 
-#: app/xcf/xcf.c:339
+#: app/xcf/xcf.c:340
 #, c-format
 msgid "Saving '%s'"
 msgstr "Opslaan van ‘%s’"
 
-#: app/xcf/xcf.c:347
+#: app/xcf/xcf.c:348
 #, c-format
 msgid "Closing '%s'"
 msgstr "Sluiten ‘%s’"
 
-#: app/xcf/xcf.c:365
+#: app/xcf/xcf.c:366
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Fout bij schrijven naar ‘%s’: "
 
-#: app/xcf/xcf.c:453
+#: app/xcf/xcf.c:454
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Fout tijdens aanmaken ‘%s’: "
@@ -29131,7 +29182,7 @@ msgstr "Fout tijdens aanmaken ‘%s’: "
 msgid "Invalid image mode and precision combination."
 msgstr "Ongeldige combinatie afbeeldingsmodus en bitdiepte."
 
-#: app/xcf/xcf-load.c:900
+#: app/xcf/xcf-load.c:902
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -29139,14 +29190,14 @@ msgid ""
 msgstr "Corrupt eparasiet ‘exif-data’ ontdekt.\n"
 "Exif-gegevens konden niet worden gemigreerd: %s"
 
-#: app/xcf/xcf-load.c:939
+#: app/xcf/xcf-load.c:941
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
 msgstr "Corrupt eparasiet ‘gimp-metadata’ ontdekt.\n"
 "XMP-gegevens konden niet worden gemigreerd."
 
-#: app/xcf/xcf-load.c:963
+#: app/xcf/xcf-load.c:965
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -29156,31 +29207,31 @@ msgid ""
 msgstr "Corrupte XMP-metadata, opgeslagen door een oudere versie van GIMP, kon niet worden omgezet en zal worden genegeerd.\n"
 "Als u niet weet wat XMP is, heeft u het heel waarschijnlijk niet nodig. Gerapporteerde fout: %s."
 
-#: app/xcf/xcf-load.c:1501
+#: app/xcf/xcf-load.c:1503
 msgid "Linked Layers"
 msgstr "Gekoppelde lagen"
 
-#: app/xcf/xcf-load.c:1511
+#: app/xcf/xcf-load.c:1513
 msgid "Linked Channels"
 msgstr "Gekoppelde kanalen"
 
-#: app/xcf/xcf-load.c:1536
+#: app/xcf/xcf-load.c:1538
 msgid "Linked Paths"
 msgstr "Gekoppelde paden"
 
-#: app/xcf/xcf-load.c:1584
+#: app/xcf/xcf-load.c:1586
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Dit XCF-bestand is corrupt!  Ik heb er zoveel mogelijk van geladen, maar het is niet compleet."
 
-#: app/xcf/xcf-load.c:1611
+#: app/xcf/xcf-load.c:1613
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "Dit XCF-bestand is corrupt!  Ik kon er zelfs geen gedeeltelijke afbeeldingsgegevens van redden."
 
-#: app/xcf/xcf-load.c:1829
+#: app/xcf/xcf-load.c:1831
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -29189,21 +29240,21 @@ msgstr "XCF waarschuwing: versie 0 van de XCF-bestandsindeling\n"
 "sloeg geïndexeerde kleurkaarten niet correct op.\n"
 "Vervangen van de kaart met grijswaarden."
 
-#: app/xcf/xcf-load.c:2660
+#: app/xcf/xcf-load.c:2662
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
 "to a raster layer."
 msgstr "XCF waarschuwing: ongeldige link in XCF-bestand. De gekoppelde laag ‘%s’ is gedowngraded naar een rasterlaag."
 
-#: app/xcf/xcf-load.c:2680
+#: app/xcf/xcf-load.c:2682
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
 "is downgraded to a raster layer."
 msgstr "XCF waarschuwing: cirkelverwijzing gedetecteerd in XCF-bestand. De gekoppelde laag ‘%s’ is gedowngraded naar een rasterlaag."
 
-#: app/xcf/xcf-load.c:3411
+#: app/xcf/xcf-load.c:3421
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29213,7 +29264,7 @@ msgid ""
 msgstr "XCF waarschuwing: versie %s van filter ‘%s’ heeft geen eigenschap %s. De eigenschap werd genegeerd en het filter zou niet juist kunnen renderen.\n"
 "Dit zou niet voor moeten komen. U zou het probleem moeten rapporteren bij de ontwikkelaars van het filter."
 
-#: app/xcf/xcf-load.c:4353
+#: app/xcf/xcf-load.c:4370
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
