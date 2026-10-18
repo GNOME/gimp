@@ -743,6 +743,10 @@ main (int    argc,
   /* Enable Anti-Aliasing*/
   g_setenv ("PANGOCAIRO_BACKEND", "fc", TRUE);
 
+  /* always use the native IME input method. Otherwise, GTK picks a
+     locale-specific one (e.g. Cedilla) which breaks Alt codes. See: #13445 */
+  g_setenv ("GTK_IM_MODULE", "ime", FALSE);
+
   /* Reduce risks */
   SetDllDirectoryW (L"");
 
