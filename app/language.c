@@ -42,6 +42,7 @@
 
 
 static gchar * language_get_system_lang_id (void);
+static void    language_set_fontconfig_lang (const gchar *language);
 
 
 const gchar *
@@ -50,6 +51,7 @@ language_init (const gchar  *language,
 {
   static gchar *actual_language = NULL;
   static gchar *system_langstr  = NULL;
+  gchar        *system_language = NULL;
 
   if (actual_language != NULL)
     {
@@ -769,6 +771,30 @@ language_init (const gchar  *language,
   if (! language || strlen (language) == 0)
     {
       actual_language = language_get_system_lang_id ();
+
+#ifdef PLATFORM_OSX
+      /* needed when launched from macOS Finder, since it sets no env var */
+      if (! g_getenv ("LANGUAGE")    && ! g_getenv ("LC_ALL") &&
+          ! g_getenv ("LC_MESSAGES") && ! g_getenv ("LANG"))
+        @autoreleasepool
+          {
+            NSString *identifier = [[NSLocale preferredLanguages] firstObject];
+
+            if (identifier)
+              {
+                NSLocale *locale  = [NSLocale localeWithLocaleIdentifier:identifier];
+                NSString *country = locale.countryCode;
+
+                /* fontconfig tells Chinese variants apart by region, not script */
+                if (! country && [locale.languageCode isEqualToString:@"zh"])
+                  country = [locale.scriptCode isEqualToString:@"Hant"] ? @"TW" : @"CN";
+
+                system_language = g_strconcat (locale.languageCode.UTF8String,
+                                               country ? "_" : "", country ? country.UTF8String : "",
+                                               NULL);
+              }
+          }
+#endif
     }
   else
     {
@@ -797,6 +823,10 @@ language_init (const gchar  *language,
      GIMP app menu are from GTK (see: build/macos/2_bundle-gimp-uni_base.py) */
   language_set_macos_menu_bar_lang (language);
 #endif
+
+  /* localize the font names (when supported by them) consistently. See: #4999 */
+  language_set_fontconfig_lang (system_language ? system_language : language);
+  g_free (system_language);
 
   return actual_language;
 }
@@ -931,3 +961,17 @@ language_set_macos_menu_bar_lang (const gchar *language)
   CFPreferencesAppSynchronize (kCFPreferencesCurrentApplication);
 }
 #endif
+
+static void
+language_set_fontconfig_lang (const gchar *language)
+{
+  const gchar *lang = (language && *language) ? language : g_get_language_names ()[0];
+
+  if (g_getenv ("FC_LANG"))
+    return;
+
+  /* this is needed on Linux and macOS for the non-System langs, since
+     we only set LANG on Windows, and on macOS for the System lang too */
+  if (lang && strlen (lang) > 0)
+    g_setenv ("FC_LANG", lang, FALSE);
+}
