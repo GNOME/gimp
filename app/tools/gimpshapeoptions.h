@@ -75,6 +75,8 @@ struct _GimpShapeOptions
   gdouble            stroke_miter_limit;
   gdouble            stroke_dash_offset;
 
+  GtkWidget         *fill_editor;
+  GtkWidget         *fill_frame;
   GtkWidget         *fixed_aspect_button;
   GtkWidget         *n_sides_button;
   GtkWidget         *n_sides_label;

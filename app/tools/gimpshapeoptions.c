@@ -543,11 +543,16 @@ gimp_shape_options_shape_type_notify (GimpShapeOptions *options)
   gboolean needs_sides     = (options->shape_type == GIMP_SHAPE_TYPE_POLYGON ||
                               options->shape_type == GIMP_SHAPE_TYPE_STAR    ||
                               options->shape_type == GIMP_SHAPE_TYPE_SPIRAL);
+  gboolean needs_fill      = (options->shape_type == GIMP_SHAPE_TYPE_LINE ||
+                              options->shape_type == GIMP_SHAPE_TYPE_SPIRAL);
 
   gtk_widget_set_sensitive (options->fixed_aspect_button, needs_fixed);
   gtk_widget_set_sensitive (options->n_sides_button, needs_sides);
 
   gtk_widget_set_sensitive (options->spiral_direction_combo, needs_direction);
+
+  gtk_widget_set_sensitive (options->fill_editor, ! needs_fill);
+  gtk_widget_set_sensitive (options->fill_frame, ! needs_fill);
 }
 
 static void
@@ -579,7 +584,6 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget        *grid;
   GtkWidget        *frame;
-  GtkWidget        *fill_editor;
   GtkWidget        *stroke_editor;
   GtkWidget        *button;
   GtkWidget        *label;
@@ -663,7 +667,6 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
   g_signal_connect_object (config, "notify::shape-type",
                            G_CALLBACK (gimp_shape_options_shape_type_notify),
                            NULL, 0);
-  gimp_shape_options_shape_type_notify (options);
 
   /* Fill settings */
   options->fill_options = gimp_fill_options_new (GIMP_CONTEXT (options)->gimp,
@@ -678,15 +681,16 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
   FILL_BIND (pattern);
   FILL_BIND (antialias);
 
-  fill_editor = gimp_fill_editor_new (options->fill_options,
-                                      TRUE, TRUE);
-  gtk_widget_set_visible (fill_editor, TRUE);
+  options->fill_editor = gimp_fill_editor_new (options->fill_options,
+                                               TRUE, TRUE);
+  gtk_widget_set_visible (options->fill_editor, TRUE);
 
-  frame = gimp_prop_expanding_frame_new (config, "enable-fill", NULL,
-                                         fill_editor, NULL);
+  options->fill_frame =
+    gimp_prop_expanding_frame_new (config, "enable-fill", NULL,
+                                   options->fill_editor, NULL);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_set_visible (frame, TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), options->fill_frame, FALSE, FALSE, 0);
+  gtk_widget_set_visible (options->fill_frame, TRUE);
 
   /* Stroke settings */
   options->stroke_options =
@@ -725,6 +729,8 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
   g_signal_connect_object (config, "notify::stroke-custom-style",
                            G_CALLBACK (gimp_shape_options_fill_style_notify),
                            NULL, 0);
+
+  gimp_shape_options_shape_type_notify (options);
   gimp_shape_options_fill_style_notify (options);
 
   return vbox;

@@ -109,6 +109,7 @@ static void             gimp_shape_tool_halt            (GimpShapeTool         *
 
 static GimpPath    *    gimp_shape_tool_create_path     (GimpShapeTool         *shape_tool,
                                                          GimpImage             *image);
+static GimpStroke  *    gimp_shape_tool_create_spiral   (GimpShapeTool         *shape_tool);
 static void             gimp_shape_tool_update_polygon  (GimpShapeTool         *shape_tool,
                                                          gboolean               is_star);
 static gchar       *    gimp_shape_tool_get_name        (GimpShapeTool         *shape_tool);
@@ -145,19 +146,19 @@ gimp_shape_tool_class_init (GimpShapeToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructed  = gimp_shape_tool_constructed;
-  object_class->dispose      = gimp_shape_tool_dispose;
+  object_class->constructed          = gimp_shape_tool_constructed;
+  object_class->dispose              = gimp_shape_tool_dispose;
 
-  tool_class->control        = gimp_shape_tool_control;
-  tool_class->button_press   = gimp_shape_tool_button_press;
-  tool_class->button_release = gimp_shape_tool_button_release;
-  tool_class->motion         = gimp_shape_tool_motion;
-  tool_class->modifier_key   = gimp_shape_tool_modifier_key;
-  tool_class->oper_update    = gimp_shape_tool_oper_update;
-  tool_class->cursor_update  = gimp_shape_tool_cursor_update;
-  tool_class->is_destructive = FALSE;
+  tool_class->control                = gimp_shape_tool_control;
+  tool_class->button_press           = gimp_shape_tool_button_press;
+  tool_class->button_release         = gimp_shape_tool_button_release;
+  tool_class->motion                 = gimp_shape_tool_motion;
+  tool_class->modifier_key           = gimp_shape_tool_modifier_key;
+  tool_class->oper_update            = gimp_shape_tool_oper_update;
+  tool_class->cursor_update          = gimp_shape_tool_cursor_update;
+  tool_class->is_destructive         = FALSE;
 
-  draw_tool_class->draw      = gimp_shape_tool_draw;
+  draw_tool_class->draw              = gimp_shape_tool_draw;
 }
 
 static void
@@ -260,6 +261,11 @@ gimp_shape_tool_button_release (GimpTool              *tool,
       GimpPath *path = NULL;
       gchar    *path_name;
       gchar    *undo_string;
+      gboolean  block_fill;
+
+      /* For now, line and spiral shapes are stroke-only */
+      block_fill = (options->shape_type == GIMP_SHAPE_TYPE_LINE ||
+                    options->shape_type == GIMP_SHAPE_TYPE_SPIRAL);
 
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
       shape_tool->drawing = FALSE;
@@ -290,7 +296,7 @@ gimp_shape_tool_button_release (GimpTool              *tool,
 
               if (can_draw)
                 {
-                  if (options->enable_fill)
+                  if (options->enable_fill && ! block_fill)
                     can_draw = gimp_item_fill (GIMP_ITEM (path), drawables,
                                                options->fill_options,
                                                TRUE, NULL, NULL);
@@ -322,7 +328,7 @@ gimp_shape_tool_button_release (GimpTool              *tool,
                                     GIMP_IMAGE_ACTIVE_PARENT,
                                     -1, TRUE);
               gimp_vector_layer_set (vector_layer, NULL,
-                                     "enable-fill",   options->enable_fill,
+                                     "enable-fill",   (options->enable_fill && ! block_fill),
                                      "enable-stroke", options->enable_stroke,
                                      NULL);
 
@@ -463,29 +469,19 @@ gimp_shape_tool_draw (GimpDrawTool *draw_tool)
         }
       else if (options->shape_type == GIMP_SHAPE_TYPE_SPIRAL)
         {
-          gdouble radius  = sqrt ((width * width) + (height * height));
-          gint    dir     = options->spiral_direction;
-          gdouble y_shift = 0;
-          gdouble radius_i;
-          gint    total   = (options->number_of_sides * 2);
+          GimpStroke *stroke;
+          GArray     *coords;
+          gboolean    closed;
 
-          radius_i = radius / total;
-          radius   = radius_i;
-          for (gint i = 0; i < total; i++)
-            {
-              y_shift = (radius / 2);
-              if (dir == -1)
-                y_shift -= (radius_i / 2);
+          stroke = gimp_shape_tool_create_spiral (shape_tool);
+          coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
 
-              gimp_draw_tool_add_arc (draw_tool, options->enable_fill,
-                                      shape_tool->start_x - (radius / 2),
-                                      shape_tool->start_y - y_shift,
-                                      radius, radius,
-                                      G_PI / 2, G_PI * dir);
-              dir *= -1;
-
-              radius += radius_i;
-            }
+          gimp_draw_tool_add_strokes (draw_tool,
+                                      &g_array_index (coords,
+                                                      GimpCoords, 0),
+                                      coords->len, NULL, FALSE);
+          g_object_unref (stroke);
+          g_array_free (coords, TRUE);
         }
     }
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
@@ -626,42 +622,61 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
     }
   else if (options->shape_type == GIMP_SHAPE_TYPE_SPIRAL)
     {
-      GimpCoords end      = GIMP_COORDS_DEFAULT_VALUES;
-      gint       n        = options->number_of_sides * 2;
-      gdouble    rx       = (shape_tool->start_x - shape_tool->current_x);
-      gdouble    ry       = (shape_tool->start_y - shape_tool->current_y);
-      gdouble    radius   = sqrt ((rx * rx) + (ry * ry));
-      gdouble    radius_i = radius / n;
-      gdouble    angle    = 90;
-      gdouble    dir      = options->spiral_direction * -1;
-      gdouble    y_shift;
-
-      next.x = shape_tool->start_x;
-      next.y = shape_tool->start_y;
-      stroke = gimp_bezier_stroke_new_moveto (&next);
-
-      angle *= dir;
-      radius = radius_i;
-      end.x  = next.x;
-      for (gint i = 0; i <= n; i++)
-        {
-          y_shift = (radius / 2) - (radius_i / 2);
-          end.y   = next.y - (y_shift * dir);
-
-          gimp_bezier_stroke_arcto (stroke, radius / 4, radius / 4,
-                                    gimp_deg_to_rad (angle), FALSE, TRUE,
-                                    &end);
-
-          dir    *= -1;
-          angle  *= dir;
-          radius += radius_i;
-        }
+      stroke = gimp_shape_tool_create_spiral (shape_tool);
 
       gimp_path_stroke_add (path, stroke);
       g_object_unref (stroke);
     }
 
   return path;
+}
+
+static GimpStroke *
+gimp_shape_tool_create_spiral (GimpShapeTool *shape_tool)
+{
+  GimpStroke       *stroke   = NULL;
+  GimpShapeOptions *options  = GIMP_SHAPE_TOOL_GET_OPTIONS (shape_tool);
+  GimpCoords        next     = GIMP_COORDS_DEFAULT_VALUES;
+  GimpCoords        end      = GIMP_COORDS_DEFAULT_VALUES;
+  gint              n        = options->number_of_sides * 2;
+  gdouble           rx       = (shape_tool->start_x - shape_tool->current_x);
+  gdouble           ry       = (shape_tool->start_y - shape_tool->current_y);
+  gdouble           radius   = sqrt ((rx * rx) + (ry * ry));
+  gdouble           radius_i = radius / n;
+  gdouble           angle    = 90;
+  gdouble           dir      = options->spiral_direction * -1;
+  gdouble           y_shift;
+
+  next.x = shape_tool->start_x;
+  next.y = shape_tool->start_y;
+  stroke = gimp_bezier_stroke_new_moveto (&next);
+
+  angle *= dir;
+  radius = radius_i;
+  end.x  = shape_tool->start_x;
+  for (gint i = 0; i <= n; i++)
+    {
+      y_shift = (radius / 2) - (radius_i / 2);
+      end.y   = shape_tool->start_y - (y_shift * dir);
+
+      gimp_bezier_stroke_arcto (stroke, radius / 4, radius / 4,
+                                gimp_rad_to_deg (angle), FALSE, TRUE,
+                                &end);
+
+      dir    *= -1;
+      angle  *= dir;
+      radius += radius_i;
+
+    }
+
+  /* Rotate */
+  angle = atan2 (shape_tool->current_y - shape_tool->start_y,
+                 shape_tool->current_x - shape_tool->start_x);
+  angle -= (G_PI) / 2;
+  gimp_stroke_rotate (stroke, shape_tool->start_x,
+                      shape_tool->start_y, gimp_rad_to_deg (angle));
+
+  return stroke;
 }
 
 static void
