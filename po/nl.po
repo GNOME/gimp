@@ -33,7 +33,7 @@ msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-10-17 22:18+0000\n"
-"PO-Revision-Date: 2026-10-18 12:15+0200\n"
+"PO-Revision-Date: 2026-10-19 14:37+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -19960,12 +19960,12 @@ msgstr "Uploaden afbeelding (%s van %s)"
 #: app/file/file-remote.c:476
 #, c-format
 msgid "Downloaded %s of image data"
-msgstr "%s beelddata gedownload"
+msgstr "%s afbeeldingsgegevens gedownload"
 
 #: app/file/file-remote.c:480
 #, c-format
 msgid "Uploaded %s of image data"
-msgstr "%s beelddata geüpload"
+msgstr "%s afbeeldingsgegevens geüpload"
 
 #: app/file/file-save.c:115
 msgid "Failed to get file information"
