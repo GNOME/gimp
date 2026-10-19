@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-04-16 15:15+0000\n"
-"PO-Revision-Date: 2026-05-22 22:50+0300\n"
+"POT-Creation-Date: 2026-09-29 16:11+0000\n"
+"PO-Revision-Date: 2026-10-19 22:49+0300\n"
 "Last-Translator: Aurimas Černius <aurimas.cernius@mailo.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -19,61 +19,13 @@ msgstr ""
 "(n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 3.9\n"
 
-#: plug-ins/script-fu/script-fu.c:119
+#: plug-ins/script-fu/script-fu.c:118
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _konsolė"
 
-#: plug-ins/script-fu/script-fu.c:124
+#: plug-ins/script-fu/script-fu.c:123
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktyvi konsolė Script-Fu kūrimui"
-
-#: plug-ins/script-fu/script-fu.c:317
-msgid "_GIMP Online"
-msgstr "_GIMP internete"
-
-#: plug-ins/script-fu/script-fu.c:318
-msgid "_User Manual"
-msgstr "_Naudotojo žinynas"
-
-#: plug-ins/script-fu/script-fu.c:321
-msgid "_Script-Fu"
-msgstr "_Script-Fu"
-
-#: plug-ins/script-fu/script-fu.c:323
-msgid "_Test"
-msgstr "_Testas"
-
-#: plug-ins/script-fu/script-fu.c:326
-msgid "_Buttons"
-msgstr "_Mygtukai"
-
-#: plug-ins/script-fu/script-fu.c:328
-msgid "_Logos"
-msgstr "_Logotipai"
-
-#: plug-ins/script-fu/script-fu.c:330
-msgid "_Patterns"
-msgstr "_Raštai"
-
-#: plug-ins/script-fu/script-fu.c:333
-msgid "_Web Page Themes"
-msgstr "_Tinklalapių temos"
-
-#: plug-ins/script-fu/script-fu.c:335
-msgid "_Alien Glow"
-msgstr "_Ateivių švytėjimas"
-
-#: plug-ins/script-fu/script-fu.c:337
-msgid "_Beveled Pattern"
-msgstr "_Nuožulnaus krašto raštas"
-
-#: plug-ins/script-fu/script-fu.c:339
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
-
-#: plug-ins/script-fu/script-fu.c:342
-msgid "Alpha to _Logo"
-msgstr "Alfa į _logotipą"
 
 #: plug-ins/script-fu/script-fu-eval.c:52
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
@@ -93,34 +45,34 @@ msgid "C_lear"
 msgstr "Iš_valyti"
 
 #: plug-ins/script-fu/console/script-fu-console.c:126
-#: plug-ins/script-fu/console/script-fu-console.c:324
+#: plug-ins/script-fu/console/script-fu-console.c:315
 msgid "_Close"
 msgstr "_Užverti"
 
-#: plug-ins/script-fu/console/script-fu-console.c:187
+#: plug-ins/script-fu/console/script-fu-console.c:189
 msgid "_Browse..."
 msgstr "_Naršyti..."
 
-#: plug-ins/script-fu/console/script-fu-console.c:246
+#: plug-ins/script-fu/console/script-fu-console.c:248
 msgid "Save Script-Fu Console Output"
 msgstr "Išsaugoti Script-Fu konsolės išvestį"
 
-#: plug-ins/script-fu/console/script-fu-console.c:250
+#: plug-ins/script-fu/console/script-fu-console.c:251
 #: plug-ins/script-fu/server/script-fu-server.c:968
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
 msgid "_Cancel"
 msgstr "_Atsisakyti"
 
-#: plug-ins/script-fu/console/script-fu-console.c:293
+#: plug-ins/script-fu/console/script-fu-console.c:284
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nepavyko atverti „%s“ rašymui: %s"
 
-#: plug-ins/script-fu/console/script-fu-console.c:319
+#: plug-ins/script-fu/console/script-fu-console.c:310
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu procedūrų naršyklė"
 
-#: plug-ins/script-fu/console/script-fu-console.c:323
+#: plug-ins/script-fu/console/script-fu-console.c:314
 msgid "_Apply"
 msgstr "Prit_aikyti"
 
@@ -168,45 +120,45 @@ msgstr "_Paleisti serverį..."
 msgid "Server for remote Script-Fu operation"
 msgstr "Serveris nuotoliniam Script-Fu valdymui"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:140
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:141
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu negali apdoroti dviejų scenarijų tuo pačiu metu."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:142
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:143
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Jūs jau vykdote scenarijų „%s“."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:166
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Reset"
 msgstr "_Atstatyti"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:169
 msgid "_OK"
 msgstr "_Gerai"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:222
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:273
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:274
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu spalvos pasirinkimas"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:405
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:396
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu failų pasirinkimas"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:408
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu aplankų pasirinkimas"
 
 #. Log to stdout.  Later to Gimp.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:817
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:811
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Klaida vykdant %s:"
@@ -241,35 +193,35 @@ msgstr "_Dirbti kopijoje"
 msgid "_Keep bump layer"
 msgstr "_Palikti nelygumų sluoksnį"
 
-#: plug-ins/script-fu/scripts/addborder.scm:121
+#: plug-ins/script-fu/scripts/addborder.scm:128
 msgid "Border Layer"
 msgstr "Rėmelio sluoksnis"
 
-#: plug-ins/script-fu/scripts/addborder.scm:174
+#: plug-ins/script-fu/scripts/addborder.scm:182
 msgid "Add _Border..."
 msgstr "Pridėti _rėmelį..."
 
-#: plug-ins/script-fu/scripts/addborder.scm:175
+#: plug-ins/script-fu/scripts/addborder.scm:183
 msgid "Add a border around an image"
 msgstr "Pridėti apie paveikslėlį rėmelį"
 
-#: plug-ins/script-fu/scripts/addborder.scm:181
+#: plug-ins/script-fu/scripts/addborder.scm:189
 msgid "Border X size"
 msgstr "Rėmelio X dydis"
 
-#: plug-ins/script-fu/scripts/addborder.scm:182
+#: plug-ins/script-fu/scripts/addborder.scm:190
 msgid "Border Y size"
 msgstr "Rėmelio Y dydis"
 
-#: plug-ins/script-fu/scripts/addborder.scm:183
+#: plug-ins/script-fu/scripts/addborder.scm:191
 msgid "Border color"
 msgstr "Rėmelio spalva"
 
-#: plug-ins/script-fu/scripts/addborder.scm:184
+#: plug-ins/script-fu/scripts/addborder.scm:192
 msgid "Delta value on color"
 msgstr "Spalvos delta reikšmė"
 
-#: plug-ins/script-fu/scripts/addborder.scm:185
+#: plug-ins/script-fu/scripts/addborder.scm:193
 #: plug-ins/script-fu/scripts/drop-shadow.scm:182
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:210
 msgid "Allow resizing"
@@ -747,87 +699,53 @@ msgstr "Dirbti kopijoje"
 msgid "Flatten image"
 msgstr "Suploti paveikslėlį"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:63
+#: plug-ins/script-fu/scripts/gimp-online.scm:59
 msgid "_Using Paths"
 msgstr "Kontūrų na_udojimas"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:64
-#: plug-ins/script-fu/scripts/gimp-online.scm:75
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:97
-#: plug-ins/script-fu/scripts/gimp-online.scm:108
-#: plug-ins/script-fu/scripts/gimp-online.scm:119
-#: plug-ins/script-fu/scripts/gimp-online.scm:130
-#: plug-ins/script-fu/scripts/gimp-online.scm:141
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:60
+#: plug-ins/script-fu/scripts/gimp-online.scm:71
+#: plug-ins/script-fu/scripts/gimp-online.scm:82
+#: plug-ins/script-fu/scripts/gimp-online.scm:93
+#: plug-ins/script-fu/scripts/gimp-online.scm:104
+#: plug-ins/script-fu/scripts/gimp-online.scm:115
+#: plug-ins/script-fu/scripts/gimp-online.scm:126
+#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:147
 msgid "Bookmark to the user manual"
 msgstr "Naudotojo žinyno žymelė"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:74
+#: plug-ins/script-fu/scripts/gimp-online.scm:70
 msgid "_Preparing your Images for the Web"
 msgstr "_Paveikslėlių paruošimas žiniatinkliui"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:81
 msgid "_Working with Digital Camera Photos"
 msgstr "_Darbas su skaitmeninių fotoaparatų nuotraukomis"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:96
+#: plug-ins/script-fu/scripts/gimp-online.scm:92
 msgid "Create, Open and Save _Files"
 msgstr "Kaip kurti, atverti ir išsaugoti _failus"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:107
+#: plug-ins/script-fu/scripts/gimp-online.scm:103
 msgid "_Basic Concepts"
 msgstr "_Pagrindiniai principai"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:118
+#: plug-ins/script-fu/scripts/gimp-online.scm:114
 msgid "How to Use _Dialogs"
 msgstr "Kaip naudoti _dialogus"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:129
+#: plug-ins/script-fu/scripts/gimp-online.scm:125
 msgid "Drawing _Simple Objects"
 msgstr "Paprastų _objektų piešimas"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:140
+#: plug-ins/script-fu/scripts/gimp-online.scm:136
 msgid "_Create and Use Selections"
 msgstr "_Kurti ir naudoti žymėjimus"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:146
 msgid "_Table of Contents"
 msgstr "_Turinys"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:184
-msgid "_Main Web Site"
-msgstr "_Pagrindinė žiniatinklio svetainė"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:185
-#: plug-ins/script-fu/scripts/gimp-online.scm:196
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "Bookmark to the GIMP web site"
-msgstr "GIMP žiniatinklio svetainės žymelė"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:195
-msgid "_Developer Web Site"
-msgstr "Žiniatinklio s_vetainė kūrėjams"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:206
-msgid "_Roadmaps"
-msgstr "_Planai"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:207
-msgid "Bookmark to the roadmaps of GIMP"
-msgstr "GIMP planų žymelė"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "_Bug Reports and Feature Requests"
-msgstr "Pranešimai apie _klaidas bei savybių prašymai"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:218
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "GIMP klaidų registro žymelė"
-
-#: plug-ins/script-fu/scripts/gimp-online.scm:228
-msgid "_User Manual Web Site"
-msgstr "_Naudotojo žinyno žiniatinklio svetainė"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:73
 msgid "Custom _Gradient..."
@@ -857,11 +775,48 @@ msgstr "Aukštis"
 msgid "Gradient reverse"
 msgstr "Atvirkštinis gradientas"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:60
+msgid "New Guides from Rule..."
+msgstr "Naujos gairės iš taisyklės..."
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:61
+msgid "Add guides based on a selected composition rule"
+msgstr "Pridėti gaires pagal pažymėtą kompozicijos taisyklę"
+
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "R_ule"
+msgstr "_Taisyklė"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "Center lines"
+msgstr "Centruoti linijas"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:68
+msgid "Rule of thirds"
+msgstr "Trečdalių taisyklė"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:69
+msgid "Rule of fifths"
+msgstr "Penktadalių taisyklė"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:70
+msgid "Golden sections"
+msgstr "Auksinės skiltys"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:27
+msgid ""
+"No selection to base guides on.\n"
+"Make a selection first!"
+msgstr ""
+"Nėra žymėjimo, pagal kurį kurti gaires.\n"
+"Pirma pasirinkite!"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "New Guides from _Selection"
 msgstr "Naujos gairės iš _pažymėjimo"
 
-#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:34
 msgid "Create four guides around the bounding box of the current selection"
 msgstr "Sukurti keturias gaires apie dabartinį žymėjimą talpinančią dėžutę"
 
@@ -1519,6 +1474,66 @@ msgstr "Metamo šešėlio X poslinkis"
 #: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Drop shadow Y offset"
 msgstr "Metamo šešėlio Y poslinkis"
+
+#~ msgid "_GIMP Online"
+#~ msgstr "_GIMP internete"
+
+#~ msgid "_User Manual"
+#~ msgstr "_Naudotojo žinynas"
+
+#~ msgid "_Script-Fu"
+#~ msgstr "_Script-Fu"
+
+#~ msgid "_Test"
+#~ msgstr "_Testas"
+
+#~ msgid "_Buttons"
+#~ msgstr "_Mygtukai"
+
+#~ msgid "_Logos"
+#~ msgstr "_Logotipai"
+
+#~ msgid "_Patterns"
+#~ msgstr "_Raštai"
+
+#~ msgid "_Web Page Themes"
+#~ msgstr "_Tinklalapių temos"
+
+#~ msgid "_Alien Glow"
+#~ msgstr "_Ateivių švytėjimas"
+
+#~ msgid "_Beveled Pattern"
+#~ msgstr "_Nuožulnaus krašto raštas"
+
+#~ msgid "_Classic.Gimp.Org"
+#~ msgstr "_Classic.Gimp.Org"
+
+#~ msgid "Alpha to _Logo"
+#~ msgstr "Alfa į _logotipą"
+
+#~ msgid "_Main Web Site"
+#~ msgstr "_Pagrindinė žiniatinklio svetainė"
+
+#~ msgid "Bookmark to the GIMP web site"
+#~ msgstr "GIMP žiniatinklio svetainės žymelė"
+
+#~ msgid "_Developer Web Site"
+#~ msgstr "Žiniatinklio s_vetainė kūrėjams"
+
+#~ msgid "_Roadmaps"
+#~ msgstr "_Planai"
+
+#~ msgid "Bookmark to the roadmaps of GIMP"
+#~ msgstr "GIMP planų žymelė"
+
+#~ msgid "_Bug Reports and Feature Requests"
+#~ msgstr "Pranešimai apie _klaidas bei savybių prašymai"
+
+#~ msgid "Bookmark to the bug tracker of GIMP"
+#~ msgstr "GIMP klaidų registro žymelė"
+
+#~ msgid "_User Manual Web Site"
+#~ msgstr "_Naudotojo žinyno žiniatinklio svetainė"
 
 #~ msgid "_Refresh Scripts"
 #~ msgstr "_Atnaujinti scenarijus"
