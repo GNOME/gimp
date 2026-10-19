@@ -15,7 +15,7 @@ msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-10-17 22:17+0000\n"
-"PO-Revision-Date: 2026-10-18 11:50+0200\n"
+"PO-Revision-Date: 2026-10-19 14:34+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -5285,7 +5285,7 @@ msgstr "ASCII"
 #: plug-ins/common/file-pnm.c:384 plug-ins/common/file-pnm.c:427
 #: plug-ins/common/file-pnm.c:470 plug-ins/common/file-pnm.c:514
 msgid "Raw"
-msgstr "Ruwe beelddata"
+msgstr "Ruwe afbeeldingsgegevens"
 
 #: plug-ins/common/file-pnm.c:399
 msgid "PBM"
@@ -6048,7 +6048,7 @@ msgstr "Kan de PVR texture niet decoderen"
 #: plug-ins/common/file-pvr.c:511
 #, c-format
 msgid "Incomplete PVR codebook data."
-msgstr "Ovolldige gegevens PVR codeboek."
+msgstr "Onvolledige gegevens PVR codeboek."
 
 #: plug-ins/common/file-pvr.c:563
 #, c-format
@@ -6092,11 +6092,11 @@ msgstr "Kon QOI bestand niet lezen"
 
 #: plug-ins/common/file-raw-data.c:352 plug-ins/common/file-raw-data.c:541
 msgid "Raw image data"
-msgstr "Ruwe beelddata"
+msgstr "Ruwe afbeeldingsgegevens"
 
 #: plug-ins/common/file-raw-data.c:355
 msgid "Load raw images, specifying image information"
-msgstr "Ruwe beelddata inladen met opgave van de afbeeldingsinformatie"
+msgstr "Ruwe afbeeldingsgegevens laden met opgave van de afbeeldingsinformatie"
 
 #: plug-ins/common/file-raw-data.c:369
 msgid "Image width in number of pixels"
@@ -6108,7 +6108,7 @@ msgstr "Afbeelding hoogte in aantal beeldpunten"
 
 #: plug-ins/common/file-raw-data.c:379
 msgid "Offset to beginning of image in raw data"
-msgstr "Beginpunt van de ruwe data van de afbeelding"
+msgstr "Verschuiving tot begin van de afbeelding in de ruwe gegevens"
 
 #: plug-ins/common/file-raw-data.c:384
 msgid "Pi_xel format"
@@ -6200,7 +6200,7 @@ msgstr "_Datatype"
 
 #: plug-ins/common/file-raw-data.c:409
 msgid "Data type used to represent pixel values"
-msgstr "Datatype om de pixelwaarden mee weer te geven"
+msgstr "Gegevenstype om de pixelwaarden mee weer te geven"
 
 #: plug-ins/common/file-raw-data.c:410
 msgid "Unsigned Integer"
@@ -6249,21 +6249,21 @@ msgstr "Planair"
 
 #: plug-ins/common/file-raw-data.c:433 plug-ins/common/file-raw-data.c:494
 msgid "Palette Offse_t"
-msgstr "Palet-positie"
+msgstr "Palet verschuiving"
 
 #: plug-ins/common/file-raw-data.c:434 plug-ins/common/file-raw-data.c:495
 msgid "Offset to beginning of data in the palette file"
-msgstr "Beginpunt van de data in het palet-bestand"
+msgstr "Beginpunt van de gegevens in het paletbestand"
 
 #: plug-ins/common/file-raw-data.c:439 plug-ins/common/file-raw-data.c:500
 #: plug-ins/common/file-raw-data.c:570
 msgid "Palette's la_yout"
-msgstr "Layout van het palet"
+msgstr "Lay-out van het palet"
 
 #: plug-ins/common/file-raw-data.c:440 plug-ins/common/file-raw-data.c:501
 #: plug-ins/common/file-raw-data.c:571
 msgid "The layout for the palette's color channels"
-msgstr "De layout de kleurkanalen van het palet"
+msgstr "De lay-out de kleurkanalen van het palet"
 
 #: plug-ins/common/file-raw-data.c:441 plug-ins/common/file-raw-data.c:502
 #: plug-ins/common/file-raw-data.c:572
@@ -6322,7 +6322,7 @@ msgstr "SRTM-3 (3 boogseconden)"
 
 #: plug-ins/common/file-raw-data.c:544
 msgid "Dump images to disk in raw format"
-msgstr "Afbeeldingen neerzetten op schijf in indeling raw"
+msgstr "Afbeeldingen neerzetten op schijf in ruwe indeling"
 
 #: plug-ins/common/file-raw-data.c:562
 msgid "Planar configuration"
@@ -6330,7 +6330,7 @@ msgstr "Vlakke configuratie"
 
 #: plug-ins/common/file-raw-data.c:579
 msgid "Raw Data"
-msgstr "Gegevens raw"
+msgstr "Ruwe gegevens"
 
 #: plug-ins/common/file-raw-data.c:622 plug-ins/file-psd/psd-util.c:316
 #, c-format
