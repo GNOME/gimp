@@ -547,9 +547,14 @@ gimp_shape_options_shape_type_notify (GimpShapeOptions *options)
                               options->shape_type == GIMP_SHAPE_TYPE_SPIRAL);
 
   gtk_widget_set_sensitive (options->fixed_aspect_button, needs_fixed);
+  gtk_widget_set_visible (options->fixed_aspect_button, needs_fixed);
+
   gtk_widget_set_sensitive (options->n_sides_button, needs_sides);
+  gtk_widget_set_visible (options->n_sides_button, needs_sides);
 
   gtk_widget_set_sensitive (options->spiral_direction_combo, needs_direction);
+  gtk_widget_set_visible (options->spiral_direction_combo, needs_direction);
+  gtk_widget_set_visible (options->spiral_direction_label, needs_direction);
 
   gtk_widget_set_sensitive (options->fill_editor, ! needs_fill);
   gtk_widget_set_sensitive (options->fill_frame, ! needs_fill);
