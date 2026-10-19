@@ -37,6 +37,14 @@
 
 #include "text/gimptextlayer.h"
 
+/* The opacity threshold over which we don't consider a pixel to be
+ * visible.
+ * After trying an initial higher value, we decided to go with a near
+ * epsilon-ish value. Even a low alpha is still visible on canvas and it
+ * doesn't make sense UX-wise to not be able to pick the pixel.
+ */
+#define GIMP_PICK_OPACITY_THRESHOLD 0.001
+
 
 GimpLayer *
 gimp_image_pick_layer (GimpImage *image,
@@ -57,7 +65,7 @@ gimp_image_pick_layer (GimpImage *image,
     {
       gimp_item_get_offset (GIMP_ITEM (previously_picked), &off_x, &off_y);
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (previously_picked),
-                                        x - off_x, y - off_y) <= 0.25)
+                                        x - off_x, y - off_y) <= GIMP_PICK_OPACITY_THRESHOLD)
         previously_picked = NULL;
       else
         tries++;
@@ -82,7 +90,7 @@ gimp_image_pick_layer (GimpImage *image,
           gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
           if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
-                                            x - off_x, y - off_y) > 0.25)
+                                            x - off_x, y - off_y) > GIMP_PICK_OPACITY_THRESHOLD)
             {
               g_list_free (all_layers);
 
