@@ -551,6 +551,7 @@ gimp_shape_options_shape_type_notify (GimpShapeOptions *options)
 
   gtk_widget_set_sensitive (options->n_sides_button, needs_sides);
   gtk_widget_set_visible (options->n_sides_button, needs_sides);
+  gtk_widget_set_visible (options->n_sides_label, needs_sides);
 
   gtk_widget_set_sensitive (options->spiral_direction_combo, needs_direction);
   gtk_widget_set_visible (options->spiral_direction_combo, needs_direction);
