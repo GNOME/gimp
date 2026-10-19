@@ -52,6 +52,7 @@ enum
   PROP_SHAPE_TYPE,
   PROP_DRAW_ON_LAYERS,
   PROP_FIXED_ASPECT_RATIO,
+  PROP_EXPAND_FROM_CENTER,
   PROP_NUMBER_OF_SIDES,
   PROP_SPIRAL_DIRECTION,
   PROP_ENABLE_FILL,
@@ -139,8 +140,13 @@ gimp_shape_options_class_init (GimpShapeOptionsClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FIXED_ASPECT_RATIO,
                             "fixed-aspect-ratio",
                             _("Fixed aspect ratio"),
-                            NULL,
-                            FALSE,
+                            NULL, FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPAND_FROM_CENTER,
+                            "expand-from-center",
+                            _("Expand from center"),
+                            NULL, FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_NUMBER_OF_SIDES,
@@ -308,10 +314,13 @@ gimp_shape_options_set_property (GObject      *object,
     case PROP_DRAW_ON_LAYERS:
       options->draw_on_layers = g_value_get_boolean (value);
       break;
+
     case PROP_FIXED_ASPECT_RATIO:
       options->fixed_aspect_ratio = g_value_get_boolean (value);
       break;
-
+    case PROP_EXPAND_FROM_CENTER:
+      options->expand_from_center = g_value_get_boolean (value);
+      break;
     case PROP_NUMBER_OF_SIDES:
       options->number_of_sides = g_value_get_int (value);
       break;
@@ -391,10 +400,13 @@ gimp_shape_options_get_property (GObject    *object,
     case PROP_DRAW_ON_LAYERS:
       g_value_set_boolean (value, options->draw_on_layers);
       break;
+
     case PROP_FIXED_ASPECT_RATIO:
       g_value_set_boolean (value, options->fixed_aspect_ratio);
       break;
-
+    case PROP_EXPAND_FROM_CENTER:
+      g_value_set_boolean (value, options->expand_from_center);
+      break;
     case PROP_NUMBER_OF_SIDES:
       g_value_set_int (value, options->number_of_sides);
       break;
@@ -546,8 +558,15 @@ gimp_shape_options_shape_type_notify (GimpShapeOptions *options)
   gboolean needs_fill      = (options->shape_type == GIMP_SHAPE_TYPE_LINE ||
                               options->shape_type == GIMP_SHAPE_TYPE_SPIRAL);
 
+  /* Line is the only one without some specific settings (yet) */
+  gtk_widget_set_visible (options->settings_frame,
+                          ! (options->shape_type == GIMP_SHAPE_TYPE_LINE));
+
   gtk_widget_set_sensitive (options->fixed_aspect_button, needs_fixed);
   gtk_widget_set_visible (options->fixed_aspect_button, needs_fixed);
+
+  gtk_widget_set_sensitive (options->expand_from_center_button, needs_fixed);
+  gtk_widget_set_visible (options->expand_from_center_button, needs_fixed);
 
   gtk_widget_set_sensitive (options->n_sides_button, needs_sides);
   gtk_widget_set_visible (options->n_sides_button, needs_sides);
@@ -590,6 +609,7 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget        *grid;
   GtkWidget        *frame;
+  GtkWidget        *settings_vbox;
   GtkWidget        *stroke_editor;
   GtkWidget        *button;
   GtkWidget        *label;
@@ -627,18 +647,32 @@ gimp_shape_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
+  options->settings_frame = gimp_frame_new (_("Shape specific settings"));
+  gtk_box_pack_start (GTK_BOX (vbox), options->settings_frame, FALSE, FALSE,
+                      0);
+  gtk_widget_set_visible (options->settings_frame, TRUE);
+
+  settings_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (options->settings_frame), settings_vbox);
+  gtk_widget_set_visible (settings_vbox, TRUE);
+
   /* Keep aspect ratio fixed */
   options->fixed_aspect_button =
     gimp_prop_check_button_new (config, "fixed-aspect-ratio", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), options->fixed_aspect_button, FALSE,
-                      FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (settings_vbox), options->fixed_aspect_button,
+                      FALSE, FALSE, 0);
   gtk_widget_set_visible (options->fixed_aspect_button, TRUE);
 
-  /* Per-shape options */
+  options->expand_from_center_button =
+    gimp_prop_check_button_new (config, "expand-from-center", NULL);
+  gtk_box_pack_start (GTK_BOX (settings_vbox),
+                      options->expand_from_center_button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (options->expand_from_center_button, TRUE);
+
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (settings_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_set_visible (grid, TRUE);
 
   options->n_sides_label = gtk_label_new (_("Sides"));

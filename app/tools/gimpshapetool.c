@@ -131,7 +131,7 @@ gimp_shape_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_CONTEXT_PROP_MASK_FOREGROUND |
                 GIMP_CONTEXT_PROP_MASK_BACKGROUND,
                 "gimp-shape-tool",
-                _("Shape Maker"),
+                _("Shape Creator"),
                 _("Shape Tool: Create vector and raster shapes"),
                 N_("Sh_ape"), NULL,
                 NULL, GIMP_HELP_TOOL_SHAPE,
@@ -434,6 +434,12 @@ gimp_shape_tool_draw (GimpDrawTool *draw_tool)
                 y = shape_tool->start_y - width;
             }
 
+          if (options->expand_from_center)
+            {
+              x = shape_tool->start_x - (width / 2);
+              y = shape_tool->start_y - (height / 2);
+            }
+
           gimp_draw_tool_add_rectangle (draw_tool, options->enable_fill,
                                         x, y, width, height);
         }
@@ -448,6 +454,12 @@ gimp_shape_tool_draw (GimpDrawTool *draw_tool)
                 x = shape_tool->start_x - width;
               if (shape_tool->current_y < shape_tool->start_y)
                 y = shape_tool->start_y - width;
+            }
+
+          if (options->expand_from_center)
+            {
+              x = shape_tool->start_x - (width / 2);
+              y = shape_tool->start_y - (height / 2);
             }
 
           gimp_draw_tool_add_arc (draw_tool, options->enable_fill,
@@ -537,10 +549,8 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
     {
       gdouble width  = shape_tool->current_x;
       gdouble height = shape_tool->current_y;
-
-      next.x = shape_tool->start_x;
-      next.y = shape_tool->start_y;
-      stroke = gimp_bezier_stroke_new_moveto (&next);
+      gdouble x      = shape_tool->start_x;
+      gdouble y      = shape_tool->start_y;
 
       if (options->fixed_aspect_ratio)
         {
@@ -557,13 +567,28 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
           height = shape_tool->start_y + height;
         }
 
+      if (options->expand_from_center)
+        {
+          gdouble rx = ABS ((width - x) / 2);
+          gdouble ry = ABS ((height - y) / 2);
+
+          x      = shape_tool->start_x - rx;
+          y      = shape_tool->start_y - ry;
+          width  = x + (rx * 2);
+          height = y + (ry * 2);
+        }
+
+      next.x = x;
+      next.y = y;
+      stroke = gimp_bezier_stroke_new_moveto (&next);
+
       next.x = width;
       gimp_bezier_stroke_lineto (stroke, &next);
 
       next.y = height;
       gimp_bezier_stroke_lineto (stroke, &next);
 
-      next.x = shape_tool->start_x;
+      next.x = x;
       gimp_bezier_stroke_lineto (stroke, &next);
 
       gimp_stroke_close (stroke);
@@ -587,6 +612,12 @@ gimp_shape_tool_create_path (GimpShapeTool *shape_tool,
 
           x  = shape_tool->start_x - rx;
           y  = shape_tool->start_y - ry;
+        }
+
+      if (options->expand_from_center)
+        {
+          x = shape_tool->start_x;
+          y = shape_tool->start_y;
         }
 
       next.x = x;

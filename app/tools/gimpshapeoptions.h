@@ -51,6 +51,7 @@ struct _GimpShapeOptions
   GimpShapeType      shape_type;
   gboolean           draw_on_layers;
   gboolean           fixed_aspect_ratio;
+  gboolean           expand_from_center;
 
   gint               number_of_sides;
   gint               spiral_direction;
@@ -75,9 +76,11 @@ struct _GimpShapeOptions
   gdouble            stroke_miter_limit;
   gdouble            stroke_dash_offset;
 
+  GtkWidget         *settings_frame;
   GtkWidget         *fill_editor;
   GtkWidget         *fill_frame;
   GtkWidget         *fixed_aspect_button;
+  GtkWidget         *expand_from_center_button;
   GtkWidget         *n_sides_button;
   GtkWidget         *n_sides_label;
   GtkWidget         *spiral_direction_combo;
