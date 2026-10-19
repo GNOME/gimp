@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-03-17 12:56+0000\n"
-"PO-Revision-Date: 2026-05-22 23:05+0300\n"
+"POT-Creation-Date: 2026-10-14 13:38+0000\n"
+"PO-Revision-Date: 2026-10-19 22:32+0300\n"
 "Last-Translator: Aurimas Černius <aurimas.cernius@mailo.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -47,15 +47,14 @@ msgid ""
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
-"installation anyway?"
+"www.gimp.org/bugs%n%nDo you wish to continue with installation anyway?"
 msgstr ""
 "Tai GIMP kuriama versija, kur kai kurios galimybės gali būti nebaigtos ar "
 "nestabilios.%nŠi GIMP versija nėra skirta kasdieniam darbui, kadangi ji gali "
 "būti nestabili ir Jūs galite prarasti savo darbą.%nJei susidursite su bet "
 "kokiomis problemomis, pirma patikrinkite, ar jos jau nepataisytos GIT prieš "
 "susisiekiant su kūrėjais ar pranešant apie tai GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nAr vis tiek norite tęsti įdiegimą?"
+"www.gimp.org/bugs%n%nAr vis tiek norite tęsti įdiegimą?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
 #: build/windows/installer/lang/setup.isl.xml.in:43
@@ -181,30 +180,39 @@ msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr "Leidžia GIMP naudoti įskiepius, parašytus Lua skriptų kalba."
 
 #: build/windows/installer/lang/setup.isl.xml.in:140
+msgid "JavaScript scripting"
+msgstr "JavaScript scenarijai"
+
+#: build/windows/installer/lang/setup.isl.xml.in:144
+msgid ""
+"Allows you to use GIMP plugins written in JavaScript scripting language."
+msgstr "Leidžia GIMP naudoti įskiepius, parašytus JavaScript scenarijų kalba."
+
+#: build/windows/installer/lang/setup.isl.xml.in:148
 msgid "MyPaint brushes"
 msgstr "MyPaint teptukai"
 
-#: build/windows/installer/lang/setup.isl.xml.in:144
+#: build/windows/installer/lang/setup.isl.xml.in:152
 msgid "Install the default set of MyPaint brushes"
 msgstr "Įdiegti numatytą MyPaint teptukų rinkinį"
 
-#: build/windows/installer/lang/setup.isl.xml.in:148
+#: build/windows/installer/lang/setup.isl.xml.in:156
 msgid "PostScript support"
 msgstr "PostSricpt palaikymas"
 
-#: build/windows/installer/lang/setup.isl.xml.in:152
+#: build/windows/installer/lang/setup.isl.xml.in:160
 msgid "Allow GIMP to load PostScript files"
 msgstr "Leisti GIMP įkelti PostScript failus"
 
-#: build/windows/installer/lang/setup.isl.xml.in:157
+#: build/windows/installer/lang/setup.isl.xml.in:165
 msgid "Additional icons:"
 msgstr "Papildomos piktogramos:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:161
+#: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Create a &desktop icon"
 msgstr "Sukurti &darbalaukio piktogramą"
 
-#: build/windows/installer/lang/setup.isl.xml.in:166
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -212,47 +220,47 @@ msgstr ""
 "Iškilo problema atnaujinant GIMP aplinką - %1. Jei iškils klaidos įkeliant "
 "įskiepius, bandykite išdiegti ir iš naujo įdiegti GIMP."
 
-#: build/windows/installer/lang/setup.isl.xml.in:170
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Error extracting temporary data."
 msgstr "Klaida išskleidžiant laikinus duomenis."
 
-#: build/windows/installer/lang/setup.isl.xml.in:174
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Error updating Python interpreter info."
 msgstr "Klaida atnaujinant Python interpretatoriaus informaciją."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:186
 msgid "Trying to create Restore Point..."
 msgstr "Bandoma sukurti atstatymo tašką..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Cleaning up old files..."
 msgstr "Valomi seni failai..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:187
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Atsiminkite: GIMP yra laisva programinė įranga.%n%nPrašome aplankyti"
 
-#: build/windows/installer/lang/setup.isl.xml.in:191
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "for free updates."
 msgstr "ieškant nemokamų atnaujinimų."
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Nustatoma GIMP Python plėtinio aplinka..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:198
+#: build/windows/installer/lang/setup.isl.xml.in:206
 msgid "Setting up GIMP environment..."
 msgstr "Nustatoma GIMP aplinka..."
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:211
 msgid "Launch GIMP"
 msgstr "Paleidžiama GIMP"
 
-#: build/windows/installer/lang/setup.isl.xml.in:208
+#: build/windows/installer/lang/setup.isl.xml.in:216
 msgid "Removing add-on"
 msgstr "Šalinami papildiniai"
 
-#: build/windows/installer/lang/setup.isl.xml.in:213
+#: build/windows/installer/lang/setup.isl.xml.in:221
 msgid ""
 "Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
 "custom brushes)?%n%nA copy will be made on Desktop."
@@ -261,7 +269,7 @@ msgstr ""
 "pradines vertes, pasirinktinius teptukus)?%n%nBus sukurta kopija "
 "darbastalyje."
 
-#: build/windows/installer/lang/setup.isl.xml.in:217
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Internal error (%1)."
 msgstr "Vidinė klaida (%1)"
 
