@@ -409,8 +409,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/caolanm/libwmf/archive/refs/tags/v0.2.16.tar.gz",
-                    "sha512": "f6c48e557b9cb69910fc106db2fa497c44c0e5fc5088f353abdc981746db5a5015a4ee0749f0ec713da3d0275a1f5f9e27e93430d26b9cacb574cd28928e1714",
+                    "url": "https://github.com/caolanm/libwmf/archive/refs/tags/v0.2.17.tar.gz",
+                    "sha512": "758f62abf36d6993124b064eb1ec4295b0f571c02945861375474b93a1d68b4f298d64d295c836f4c34fc882192995845021ae69bb16d1e8e88630b7de4a5f08",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 230209,
