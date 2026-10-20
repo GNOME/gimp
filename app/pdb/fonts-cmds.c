@@ -38,8 +38,11 @@
 #include "text/gimpfontfactory.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
+
+#include "gimp-intl.h"
 
 
 static GimpValueArray *
@@ -72,7 +75,12 @@ fonts_get_custom_configs_invoker (GimpProcedure         *procedure,
   gchar **dirs = NULL;
 
   if (! gimp_data_factory_data_wait (gimp->font_factory))
-    success = FALSE;
+    {
+      success = FALSE;
+      g_set_error_literal (error, GIMP_PDB_ERROR,
+                           GIMP_PDB_ERROR_INTERNAL_ERROR,
+                           _("Failed waiting for the loading of fonts."));
+    }
 
   if (success)
     {
@@ -134,7 +142,12 @@ fonts_get_list_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (! gimp_data_factory_data_wait (gimp->font_factory))
-        success = FALSE;
+        {
+          success = FALSE;
+          g_set_error_literal (error, GIMP_PDB_ERROR,
+                               GIMP_PDB_ERROR_INTERNAL_ERROR,
+                               _("Failed waiting for the loading of fonts."));
+        }
 
       if (success)
         font_list = (GimpFont **) gimp_container_get_filtered_array (gimp_data_factory_get_container (gimp->font_factory),
