@@ -75,7 +75,6 @@ static void       gimp_font_factory_data_init       (GimpDataFactory *factory,
 static void       gimp_font_factory_data_refresh    (GimpDataFactory *factory,
                                                      GimpContext     *context);
 static void       gimp_font_factory_data_save       (GimpDataFactory *factory);
-static void       gimp_font_factory_data_cancel     (GimpDataFactory *factory);
 static GimpData * gimp_font_factory_data_duplicate  (GimpDataFactory *factory,
                                                      GimpData        *data);
 static gboolean   gimp_font_factory_data_delete     (GimpDataFactory *factory,
@@ -117,7 +116,6 @@ gimp_font_factory_class_init (GimpFontFactoryClass *klass)
   factory_class->data_init      = gimp_font_factory_data_init;
   factory_class->data_refresh   = gimp_font_factory_data_refresh;
   factory_class->data_save      = gimp_font_factory_data_save;
-  factory_class->data_cancel    = gimp_font_factory_data_cancel;
   factory_class->data_duplicate = gimp_font_factory_data_duplicate;
   factory_class->data_delete    = gimp_font_factory_data_delete;
 }
@@ -157,21 +155,6 @@ gimp_font_factory_data_save (GimpDataFactory *factory)
 
   /* Reinit the library with defaults. */
   FcInitReinitialize ();
-}
-
-static void
-gimp_font_factory_data_cancel (GimpDataFactory *factory)
-{
-  GimpAsyncSet *async_set = gimp_data_factory_get_async_set (factory);
-
-  /* we can't really cancel font loading, so we just clear the async set and
-   * return without waiting for loading to finish.  we also cancel the async
-   * set beforehand, as a way to signal to
-   * gimp_font_factory_load_async_callback() that loading was canceled and the
-   * factory might be dead, and that it should just do nothing.
-   */
-  gimp_cancelable_cancel (GIMP_CANCELABLE (async_set));
-  gimp_async_set_clear (async_set);
 }
 
 static GimpData *
@@ -275,9 +258,7 @@ gimp_font_factory_load_async_callback (GimpAsync       *async,
 {
   GimpContainer *container;
 
-  /* the operation was canceled and the factory might be dead (see
-   * gimp_font_factory_data_cancel()).  bail.
-   */
+  /* The operation was canceled and the factory might be dead. Bail. */
   if (gimp_async_is_canceled (async))
     return;
 
