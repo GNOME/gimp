@@ -689,6 +689,7 @@ radiobutton:focus, radiobutton:focus radio {
 
 check {
   background-clip: padding-box;
+  color:           @fg-color;
   margin:          0px 4px;
   min-width:       14px;
   min-height:      14px;
@@ -704,6 +705,11 @@ radio {
   color:            @fg-color;
   min-width:        14px;
   min-height:       14px;
+}
+
+/* Prevent system theme from adding background to unchecked widgets */
+check:not(:checked), radio:not(:checked) {
+  -gtk-icon-source: none;
 }
 
 /* Add padding for selection option radio buttons with icons */
