@@ -63,6 +63,10 @@ Core:
     settings (which unfortunately right now means disabling glycin until
     it gets support).
   * Text layers are not rasterized anymore over matrix transformations.
+  * "None (truncate)" option for the "Repeat" setting of Fade Options
+    got an implementation.
+  * Alpha threshold for pixel picking (Move tool or Alt + Middle-click)
+    has been lowered to near 0.
 
 Tools:
 
@@ -396,3 +400,4 @@ Build:
     introspected API (looking for API which failed to be introspected;
     and when it is skipped on purpose, make sure we added a reason why).
   * Add support to localizing plugins on GIMP SDK for macOS.
+  * GIMP page on MS Store is now localized.
