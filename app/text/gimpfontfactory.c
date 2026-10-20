@@ -95,7 +95,8 @@ static void       gimp_font_factory_recursive_check_fontdir
                                                      GHashTable      *loaded_fonts,
                                                      GString         *error_details);
 
-static int        gimp_font_factory_load_names      (GimpFontFactory *container);
+static int        gimp_font_factory_load_names      (GimpFontFactory *container,
+                                                     GimpAsync       *async);
 static void       gimp_font_factory_load_aliases    (GimpContainer   *container,
                                                      PangoContext    *context);
 
@@ -233,7 +234,7 @@ gimp_font_factory_load_async (GimpAsync       *async,
 {
   if (FcConfigBuildFonts (NULL))
     {
-      gimp_async_finish (async, GINT_TO_POINTER (gimp_font_factory_load_names (factory)));
+      gimp_async_finish (async, GINT_TO_POINTER (gimp_font_factory_load_names (factory, async)));
     }
   else
     {
@@ -773,7 +774,8 @@ gimp_font_factory_load_aliases (GimpContainer *container,
 }
 
 static gint
-gimp_font_factory_load_names (GimpFontFactory *factory)
+gimp_font_factory_load_names (GimpFontFactory *factory,
+                              GimpAsync       *async)
 {
   GimpContainer *container;
   FcObjectSet   *os;
@@ -790,6 +792,9 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
   gint           i;
   gint           num_fonts_in_current_config = 0;
   gint           n_loaded_fonts              = 0;
+
+  if (gimp_async_is_canceled (async))
+    return 0;
 
   container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
 
@@ -1144,11 +1149,14 @@ gimp_font_factory_load_names (GimpFontFactory *factory)
       pango_font_description_free (pfd);
       g_free (newname);
       num_fonts_in_current_config++;
+
+      if (gimp_async_is_canceled (async))
+        break;
     }
 
 #undef MAX_NUM_FONTS_PER_CONFIG
 
-  if (num_fonts_in_current_config > 0)
+  if (num_fonts_in_current_config > 0 && ! gimp_async_is_canceled (async))
     {
       xml_bold_italic_variant_and_global = g_string_append (xml_bold_italic_variant_and_global, xml_italic_variant->str);
       xml_bold_italic_variant_and_global = g_string_append (xml_bold_italic_variant_and_global, xml_bold_variant->str);
