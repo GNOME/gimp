@@ -754,9 +754,9 @@ gimp_container_remove (GimpContainer *container,
 
   if (n_children == container->priv->n_children)
     {
-      g_warning ("%s: GimpContainer::remove() implementation did not "
+      g_warning ("%s: GimpContainer::remove() implementation for %s did not "
                  "chain up. Please report this at https://www.gimp.org/bugs/",
-                 G_STRFUNC);
+                 G_STRFUNC, g_type_name (G_TYPE_FROM_INSTANCE (container)));
 
       container->priv->n_children--;
     }
