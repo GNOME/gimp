@@ -57,10 +57,13 @@
 #include "text/gimpfont.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
 #include "gimppdb-utils.h"
 #include "gimppdbcontext.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
+
+#include "gimp-intl.h"
 
 
 static GimpValueArray *
@@ -2061,13 +2064,27 @@ context_get_font_invoker (GimpProcedure         *procedure,
                           const GimpValueArray  *args,
                           GError               **error)
 {
+  gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpFont *font = NULL;
 
-  font = gimp_context_get_font (context);
+  if (! gimp_data_factory_data_wait (gimp->font_factory))
+    {
+      success = FALSE;
+      g_set_error_literal (error, GIMP_PDB_ERROR,
+                           GIMP_PDB_ERROR_INTERNAL_ERROR,
+                           _("Failed waiting for the loading of fonts."));
+    }
+  else
+    {
+      font = gimp_context_get_font (context);
+    }
 
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_object (gimp_value_array_index (return_vals, 1), font);
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_object (gimp_value_array_index (return_vals, 1), font);
 
   return return_vals;
 }

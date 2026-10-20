@@ -2263,7 +2263,17 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  font = gimp_context_get_font (context);
+  if (! gimp_data_factory_data_wait (gimp->font_factory))
+    {
+      success = FALSE;
+      g_set_error_literal (error, GIMP_PDB_ERROR,
+                           GIMP_PDB_ERROR_INTERNAL_ERROR,
+                           _("Failed waiting for the loading of fonts."));
+    }
+  else
+    {
+      font = gimp_context_get_font (context);
+    }
 }
 CODE
     );
@@ -3625,8 +3635,10 @@ CODE
               "plug-in/gimpplugin.h"
               "plug-in/gimpplugin-context.h"
               "plug-in/gimppluginmanager.h"
+              "gimp-intl.h"
               "gimppdb-utils.h"
-              "gimppdbcontext.h");
+              "gimppdbcontext.h"
+              "gimppdberror.h");
 
 @procs = qw(context_push context_pop context_set_defaults
             context_list_paint_methods
