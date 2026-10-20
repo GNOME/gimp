@@ -144,18 +144,9 @@ gimp_font_factory_data_refresh (GimpDataFactory *factory,
 static void
 gimp_font_factory_data_save (GimpDataFactory *factory)
 {
-  /*  this is not "saving" but this functions is called at the right
-   *  time at exit to reset the config
+  /* Font factory has no data saving. This empty method implementation
+   * shortcuts the generic saving.
    */
-
-  /* if font loading is in progress in another thread, do nothing.  calling
-   * FcInitReinitialize() while loading takes place is unsafe.
-   */
-  if (! gimp_async_set_is_empty (gimp_data_factory_get_async_set (factory)))
-    return;
-
-  /* Reinit the library with defaults. */
-  FcInitReinitialize ();
 }
 
 static GimpData *
