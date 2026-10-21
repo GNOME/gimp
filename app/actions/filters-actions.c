@@ -1224,6 +1224,9 @@ filters_actions_gegl_paths_added (GimpExtensionManager *manager,
                                   GimpActionGroup      *group)
 {
   filters_actions_generate_actions (group, FALSE, TRUE);
+
+  /* Making sure the new actions have correct sensitivity. */
+  gimp_action_group_update (group, group->gimp);
 }
 
 static void
