@@ -32,9 +32,9 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-17 22:18+0000\n"
-"PO-Revision-Date: 2026-10-19 14:37+0200\n"
-"Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
+"POT-Creation-Date: 2026-10-20 18:29+0000\n"
+"PO-Revision-Date: 2026-10-21 10:20+0200\n"
+"Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -215,7 +215,7 @@ msgstr "%s versie %s wordt gebruikt"
 #. This must be localized with the system language itself, before we
 #. * apply any other language.
 #.
-#: app/language.c:69
+#: app/language.c:71
 msgid "System Language"
 msgstr "Systeemtaal"
 
@@ -22920,7 +22920,7 @@ msgid ""
 msgstr "Voor de GIMP pixelquiz moet\n"
 "je psyche een danig beetje afwijken."
 
-#: app/text/gimpfontfactory.c:525
+#: app/text/gimpfontfactory.c:498
 #, c-format
 msgid "Some fonts failed to load:%s"
 msgstr "Sommige lettertypen konden niet worden geladen:%s"
@@ -23515,15 +23515,19 @@ msgstr "K_lonen"
 msgid "Click to clone"
 msgstr "Klik om te klonen"
 
-#: app/tools/gimpclonetool.c:92 app/tools/gimpclonetool.c:97
+#: app/tools/gimpclonetool.c:92 app/tools/gimpclonetool.c:96
 #, c-format
 msgid "%s to set a new clone source"
 msgstr "%s om een nieuwe kloonbron in te stellen"
 
-#. Translators: the translation of "Click" must be the first word
-#: app/tools/gimpclonetool.c:96
+#: app/tools/gimpclonetool.c:95
 msgid "Click to set a new clone source"
 msgstr "Klik om een nieuwe kloonbron in te stellen"
+
+#: app/tools/gimpclonetool.c:97
+#, c-format
+msgid "%s-click to set a new clone source"
+msgstr "%s-klik om een nieuwe kloonbron in te stellen"
 
 #: app/tools/gimpcoloroptions.c:71
 msgid "Use merged color value from all composited visible layers"
@@ -24508,15 +24512,19 @@ msgstr "_Repareren"
 msgid "Click to heal"
 msgstr "Klik om te repareren"
 
-#: app/tools/gimphealtool.c:80 app/tools/gimphealtool.c:85
+#: app/tools/gimphealtool.c:80 app/tools/gimphealtool.c:84
 #, c-format
 msgid "%s to set a new heal source"
 msgstr "%s om een nieuwe reparatiebron in te stellen"
 
-#. Translators: the translation of "Click" must be the first word
-#: app/tools/gimphealtool.c:84
+#: app/tools/gimphealtool.c:83
 msgid "Click to set a new heal source"
 msgstr "Klik om een nieuwe reparatiebron in te stellen"
+
+#: app/tools/gimphealtool.c:85
+#, c-format
+msgid "%s-click to set a new heal source"
+msgstr "%s-klik om een nieuwe reparatiebron in te stellen"
 
 #: app/tools/gimphistogramoptions.c:64
 msgid "Histogram Scale"
