@@ -9,1149 +9,1009 @@
 # Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2008-2011.
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2018
 # sicklylife <translation@sicklylife.jp>, 2020.
+# YOSHIDA Shigeto <shigep640509@gmail.com>, 2025-2026.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp trunk\n"
+"Project-Id-Version: gimp-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-06-08 09:15+0000\n"
-"PO-Revision-Date: 2020-06-08 00:00+0900\n"
-"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
-"Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
+"POT-Creation-Date: 2026-09-29 16:11+0000\n"
+"PO-Revision-Date: 2026-10-21 07:00+0900\n"
+"Last-Translator: YOSHIDA Shigeto <shigep640509@gmail.com>\n"
+"Language-Team: Japanese <https://l10n.gnome.org/teams/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Bookmarks: 465,278,170,-1,-1,-1,-1,-1,-1,-1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Bookmarks: 465,278,170,-1,-1,-1,-1,-1,-1,-1\n"
+"X-Generator: Poedit 3.10\n"
 
-#: ../plug-ins/script-fu/script-fu.c:138
+#: plug-ins/script-fu/script-fu.c:118
 msgid "Script-Fu _Console"
 msgstr "Script-Fu コンソール(_C)"
 
-#: ../plug-ins/script-fu/script-fu.c:143
+#: plug-ins/script-fu/script-fu.c:123
 msgid "Interactive console for Script-Fu development"
-msgstr "Script-Fu 開発のための対話的コンソールです"
+msgstr "Script-Fu 開発のための対話型コンソールです"
 
-#: ../plug-ins/script-fu/script-fu.c:190
-msgid "_Start Server..."
-msgstr "サーバースタート(_S)..."
-
-#: ../plug-ins/script-fu/script-fu.c:195
-msgid "Server for remote Script-Fu operation"
-msgstr "Script-Fu をリモート操作するためのサーバーを開始します"
-
-#: ../plug-ins/script-fu/script-fu.c:394
-msgid "_GIMP Online"
-msgstr "GIMP 関連のウェブサイト(_G)"
-
-#: ../plug-ins/script-fu/script-fu.c:395
-msgid "_User Manual"
-msgstr "ユーザーマニュアル(_U)"
-
-#: ../plug-ins/script-fu/script-fu.c:398
-msgid "_Script-Fu"
-msgstr "Script-Fu(_S)"
-
-#: ../plug-ins/script-fu/script-fu.c:400
-msgid "_Test"
-msgstr "テスト(_T)"
-
-#: ../plug-ins/script-fu/script-fu.c:403
-msgid "_Buttons"
-msgstr "ボタン(_B)"
-
-#: ../plug-ins/script-fu/script-fu.c:405
-msgid "_Logos"
-msgstr "ロゴ(_L)"
-
-#: ../plug-ins/script-fu/script-fu.c:407
-msgid "_Patterns"
-msgstr "パターン(_P)"
-
-#: ../plug-ins/script-fu/script-fu.c:410
-msgid "_Web Page Themes"
-msgstr "Web ページテーマ(_W)"
-
-#: ../plug-ins/script-fu/script-fu.c:412
-msgid "_Alien Glow"
-msgstr "エイリアン発光(_A)"
-
-#: ../plug-ins/script-fu/script-fu.c:414
-msgid "_Beveled Pattern"
-msgstr "ベベルパターン(_B)"
-
-#: ../plug-ins/script-fu/script-fu.c:416
-msgid "_Classic.Gimp.Org"
-msgstr "クラシック Gimp.Org(_C)"
-
-# これまでは「透明度をロゴに(_L)」
-# この表記では機能が連想しにくいと感じたため「ロゴ効果(_L)」に変更した
-#: ../plug-ins/script-fu/script-fu.c:419
-msgid "Alpha to _Logo"
-msgstr "ロゴ効果(_L)"
-
-#: ../plug-ins/script-fu/script-fu.c:425
-msgid "_Refresh Scripts"
-msgstr "スクリプトを再読み込み(_R)"
-
-#: ../plug-ins/script-fu/script-fu.c:430
-msgid "Re-read all available Script-Fu scripts"
-msgstr "使用可能なスクリプトをディスクから再読み込みします"
-
-#: ../plug-ins/script-fu/script-fu.c:456
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"すべての Script-Fu ダイアログボックスを閉じてから \"スクリプトの再読み込み\" "
-"を再試行してください。 (Script-Fu のダイアログボックスが開いているときは、"
-"「スクリプトの再読み込み」は実行出来ません。)"
-
-#: ../plug-ins/script-fu/script-fu-console.c:110
-#: ../plug-ins/script-fu/script-fu-console.c:177
-msgid "Script-Fu Console"
-msgstr "Script-Fu コンソール"
-
-#: ../plug-ins/script-fu/script-fu-console.c:115
-#: ../plug-ins/script-fu/script-fu-console.c:281
-msgid "_Save"
-msgstr "保存(_S)"
-
-#: ../plug-ins/script-fu/script-fu-console.c:116
-msgid "C_lear"
-msgstr "クリア(_L)"
-
-#: ../plug-ins/script-fu/script-fu-console.c:117
-#: ../plug-ins/script-fu/script-fu-console.c:359
-msgid "_Close"
-msgstr "閉じる(_C)"
-
-#: ../plug-ins/script-fu/script-fu-console.c:173
-msgid "Welcome to TinyScheme"
-msgstr "Welcome to TinyScheme"
-
-#: ../plug-ins/script-fu/script-fu-console.c:179
-msgid "Interactive Scheme Development"
-msgstr "Interactive Scheme Development"
-
-#: ../plug-ins/script-fu/script-fu-console.c:215
-msgid "_Browse..."
-msgstr "参照(_B)..."
-
-#: ../plug-ins/script-fu/script-fu-console.c:276
-msgid "Save Script-Fu Console Output"
-msgstr "Script-Fu コンソールの出力を保存"
-
-#: ../plug-ins/script-fu/script-fu-console.c:280
-#: ../plug-ins/script-fu/script-fu-interface.c:238
-#: ../plug-ins/script-fu/script-fu-server.c:834
-msgid "_Cancel"
-msgstr "キャンセル(_C)"
-
-#: ../plug-ins/script-fu/script-fu-console.c:325
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "ファイル '%s' を書き込み用で開けませんでした： %s"
-
-#: ../plug-ins/script-fu/script-fu-console.c:354
-msgid "Script-Fu Procedure Browser"
-msgstr "Script-Fu プロシージャブラウザー"
-
-#: ../plug-ins/script-fu/script-fu-console.c:358
-msgid "_Apply"
-msgstr "適用(_A)"
-
-#: ../plug-ins/script-fu/script-fu-eval.c:53
+#: plug-ins/script-fu/script-fu-eval.c:52
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
-msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "Script-Fu は２つのスクリプトを同時に実行できません。"
+#: plug-ins/script-fu/console/script-fu-console.c:119
+msgid "Script Console"
+msgstr "Script-Fu コンソール"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:204
+#: plug-ins/script-fu/console/script-fu-console.c:124
+#: plug-ins/script-fu/console/script-fu-console.c:251
+msgid "_Save"
+msgstr "保存(_S)"
+
+#: plug-ins/script-fu/console/script-fu-console.c:125
+msgid "C_lear"
+msgstr "クリア(_L)"
+
+#: plug-ins/script-fu/console/script-fu-console.c:126
+#: plug-ins/script-fu/console/script-fu-console.c:315
+msgid "_Close"
+msgstr "閉じる(_C)"
+
+#: plug-ins/script-fu/console/script-fu-console.c:189
+msgid "_Browse..."
+msgstr "参照(_B)..."
+
+#: plug-ins/script-fu/console/script-fu-console.c:248
+msgid "Save Script-Fu Console Output"
+msgstr "Script-Fu コンソールの出力を保存"
+
+#: plug-ins/script-fu/console/script-fu-console.c:251
+#: plug-ins/script-fu/server/script-fu-server.c:968
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:168
+msgid "_Cancel"
+msgstr "キャンセル(_C)"
+
+#: plug-ins/script-fu/console/script-fu-console.c:284
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "ファイル '%s' を書き込み用で開けませんでした: %s"
+
+#: plug-ins/script-fu/console/script-fu-console.c:310
+msgid "Script-Fu Procedure Browser"
+msgstr "Script-Fu プロシージャブラウザー"
+
+#: plug-ins/script-fu/console/script-fu-console.c:314
+msgid "_Apply"
+msgstr "適用(_A)"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:89
+msgid "Welcome to TinyScheme"
+msgstr "Welcome to TinyScheme"
+
+#: plug-ins/script-fu/console/script-fu-console-total.c:93
+msgid "Scripting GIMP in the Scheme language"
+msgstr "Scheme 言語で GIMP をスクリプト化すること"
+
+#: plug-ins/script-fu/server/script-fu-server.c:964
+msgid "Script-Fu Server Options"
+msgstr "Script-Fu サーバーオプション"
+
+#: plug-ins/script-fu/server/script-fu-server.c:969
+msgid "_Start Server"
+msgstr "サーバースタート(_S)"
+
+#: plug-ins/script-fu/server/script-fu-server.c:1002
+msgid "Listen on IP:"
+msgstr "待ち受け IP:"
+
+#: plug-ins/script-fu/server/script-fu-server.c:1009
+msgid "Server port:"
+msgstr "サーバーポート:"
+
+#: plug-ins/script-fu/server/script-fu-server.c:1015
+msgid "Server logfile:"
+msgstr "サーバーログファイル:"
+
+#: plug-ins/script-fu/server/script-fu-server.c:1028
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+"127.0.0.1 以外の IP アドレス (特に 0.0.0.0) での待ち受けは、悪意ある人物に"
+"よって、このマシン上で任意のコードをリモートから実行される危険性があります。"
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:91
+msgid "_Start Server..."
+msgstr "サーバースタート(_S)..."
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:96
+msgid "Server for remote Script-Fu operation"
+msgstr "Script-Fu をリモート操作するためのサーバーを開始します"
+
+# 半角数字に統一
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:141
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Script-Fu は 2 つのスクリプトを同時に実行できません。"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:143
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "すでに \"%s\" スクリプトを実行中です。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:230
-#, c-format
-msgid "Script-Fu: %s"
-msgstr "Script-Fu: %s"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:167
 msgid "_Reset"
 msgstr "リセット(_R)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:239
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:169
 msgid "_OK"
 msgstr "OK(_O)"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:293
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:223
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:343
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:274
 msgid "Script-Fu Color Selection"
 msgstr "色の選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:396
 msgid "Script-Fu File Selection"
 msgstr "ファイルの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:399
 msgid "Script-Fu Folder Selection"
 msgstr "フォルダーの選択 (Script-Fu)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
-msgid "Script-Fu Font Selection"
-msgstr "フォントの選択 (Script-Fu)"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:483
-msgid "Script-Fu Palette Selection"
-msgstr "パレットの選択 (Script-Fu)"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:492
-msgid "Script-Fu Pattern Selection"
-msgstr "パターンの選択 (Script-Fu)"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:501
-msgid "Script-Fu Gradient Selection"
-msgstr "グラデーションの選択 (Script-Fu)"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:510
-msgid "Script-Fu Brush Selection"
-msgstr "ブラシの選択 (Script-Fu)"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:888
+#. Log to stdout.  Later to Gimp.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:811
 #, c-format
 msgid "Error while executing %s:"
 msgstr "%s の実行中にエラーが発生しました。"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:148
-msgid "Too few arguments to 'script-fu-register' call"
-msgstr "'script-fu-register' を呼ぶための引数が不足しています。"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:647
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:541
 #, c-format
 msgid "Error while loading %s:"
 msgstr "%s の読み込み中にエラーが発生しました。"
 
-#: ../plug-ins/script-fu/script-fu-server.c:830
-msgid "Script-Fu Server Options"
-msgstr "Script-Fu サーバーオプション"
-
-#: ../plug-ins/script-fu/script-fu-server.c:835
-msgid "_Start Server"
-msgstr "サーバースタート(_S)"
-
-#: ../plug-ins/script-fu/script-fu-server.c:868
-msgid "Listen on IP:"
-msgstr "待ち受け IP:"
-
-#: ../plug-ins/script-fu/script-fu-server.c:875
-msgid "Server port:"
-msgstr "サーバーポート:"
-
-#: ../plug-ins/script-fu/script-fu-server.c:881
-msgid "Server logfile:"
-msgstr "サーバーログファイル:"
-
-#: ../plug-ins/script-fu/script-fu-server.c:894
-msgid ""
-"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
-"allow attackers to remotely execute arbitrary code on this machine."
-msgstr ""
-"127.0.0.1 以外の IP アドレス (特に 0.0.0.0) での待ち受けは、悪意ある人物"
-"によって、このマシン上で任意のコードをリモートから実行される危険性があり"
-"ます。"
-
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:72
 msgid "Bumpmap"
 msgstr "バンプマップ"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:199
 msgid "Add B_evel..."
 msgstr "ベベルの追加(_E)..."
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:200
 msgid "Add a beveled border to an image"
 msgstr "選択範囲の境界にベベルを施します。"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:197
-msgid "Thickness"
-msgstr "厚さ"
+#. v3 >>> additional argument
+#: plug-ins/script-fu/scripts/add-bevel.scm:206
+msgid "_Thickness"
+msgstr "厚さ(_T)"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:198
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
-#: ../plug-ins/script-fu/scripts/slide.scm:257
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
-msgid "Work on copy"
-msgstr "コピーで作業する"
+#: plug-ins/script-fu/scripts/add-bevel.scm:207
+msgid "_Work on copy"
+msgstr "コピーで作業する(_W)"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:199
-msgid "Keep bump layer"
-msgstr "バンプレイヤーを残す"
+#: plug-ins/script-fu/scripts/add-bevel.scm:208
+msgid "_Keep bump layer"
+msgstr "バンプレイヤーを残す(_K)"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:108
+#: plug-ins/script-fu/scripts/addborder.scm:128
 msgid "Border Layer"
 msgstr "枠のレイヤー"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:162
+#: plug-ins/script-fu/scripts/addborder.scm:182
 msgid "Add _Border..."
 msgstr "枠の追加(_B)..."
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:163
+#: plug-ins/script-fu/scripts/addborder.scm:183
 msgid "Add a border around an image"
 msgstr "画像の境界に指定色の枠取りを追加します"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:170
+#: plug-ins/script-fu/scripts/addborder.scm:189
 msgid "Border X size"
-msgstr "枠 X サイズ"
+msgstr "枠の太さ 横方向"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:171
+#: plug-ins/script-fu/scripts/addborder.scm:190
 msgid "Border Y size"
-msgstr "枠 Y サイズ"
+msgstr "枠の太さ 縦方向"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:172
+#: plug-ins/script-fu/scripts/addborder.scm:191
 msgid "Border color"
 msgstr "枠の色"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:173
+#: plug-ins/script-fu/scripts/addborder.scm:192
 msgid "Delta value on color"
-msgstr "色のデフォルト値"
+msgstr "色のデルタ値"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: plug-ins/script-fu/scripts/addborder.scm:193
+#: plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:210
+msgid "Allow resizing"
+msgstr "サイズ変更を許可"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:202
 msgid "Frame"
 msgstr "画面"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+#: plug-ins/script-fu/scripts/blend-anim.scm:218
 msgid "Blend Animation needs at least three source layers"
 msgstr "アニメーションには、少なくとも 3 枚のレイヤーが必要です"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+#: plug-ins/script-fu/scripts/blend-anim.scm:224
 msgid "_Blend..."
 msgstr "ブレンド(_B)..."
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+#: plug-ins/script-fu/scripts/blend-anim.scm:225
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
 msgstr "表示切り替えアニメーションのフレームになる中間レイヤーを生成します。"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+#: plug-ins/script-fu/scripts/blend-anim.scm:231
 msgid "Intermediate frames"
 msgstr "中間生成フレーム"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+#: plug-ins/script-fu/scripts/blend-anim.scm:232
 msgid "Max. blur radius"
 msgstr "最大ぼかし半径"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+#: plug-ins/script-fu/scripts/blend-anim.scm:233
 msgid "Looped"
 msgstr "ループ化"
 
 #. --- false form of "if-1"
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:217
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:220
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"「焼き付け」スクリプトの実行には、 2 枚のレイヤーが必要です。\n"
-"（前面のレイヤーには透明部分がなければいけません。）"
+"[焼き付け] スクリプトの実行には、 2 枚のレイヤーが必要です。\n"
+"(前面のレイヤーには透明部分がなければいけません。)"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:227
 msgid "B_urn-In..."
 msgstr "焼き付け(_U)..."
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:225
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:228
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
-msgstr "「焼き付け」アニメーションのフレームになる中間レイヤーを生成します。"
+msgstr "[焼き付け] アニメーションのフレームになる中間レイヤーを生成します。"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Glow color"
 msgstr "発光色"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Fadeout"
 msgstr "フェイドアウト"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "Fadeout width"
 msgstr "フェイドアウトの幅"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Corona width"
 msgstr "コロナの幅"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:236
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "After glow"
 msgstr "発光の残像"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:237
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Add glowing"
 msgstr "発光を追加"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:238
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:240
 msgid "Prepare for GIF"
-msgstr "GIF向けに下準備する"
+msgstr "GIF 向けに下準備する"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:239
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:241
 msgid "Speed (pixels/frame)"
 msgstr "速さ (ピクセル/フレーム)"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:176
+#: plug-ins/script-fu/scripts/carve-it.scm:207
 msgid "Carved Surface"
 msgstr "彫刻の表面"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:177
+#: plug-ins/script-fu/scripts/carve-it.scm:208
 msgid "Bevel Shadow"
 msgstr "べベルのシャドウ"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:178
+#: plug-ins/script-fu/scripts/carve-it.scm:209
 msgid "Bevel Highlight"
 msgstr "ベベルのハイライト"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:179
+#: plug-ins/script-fu/scripts/carve-it.scm:210
 msgid "Cast Shadow"
 msgstr "投影"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:180
+#: plug-ins/script-fu/scripts/carve-it.scm:211
 msgid "Inset"
 msgstr "インセット"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:192
+#: plug-ins/script-fu/scripts/carve-it.scm:223
 msgid "Stencil C_arve..."
 msgstr "ステンシル彫刻(_A)..."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:193
+#: plug-ins/script-fu/scripts/carve-it.scm:224
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
+"指定された描画対象をステンシルとして使用し、指定された画像から彫り出します。"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:200
-msgid "Image to carve"
-msgstr "彫刻化する画像"
+#: plug-ins/script-fu/scripts/carve-it.scm:230
+msgid "Mask image"
+msgstr "画像をマスク"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:201
+#: plug-ins/script-fu/scripts/carve-it.scm:231
+msgid "Mask drawable"
+msgstr "描画対象をマスク"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:232
 msgid "Carve white areas"
 msgstr "白い部分を彫刻化する"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:93
+#: plug-ins/script-fu/scripts/chrome-it.scm:153
 msgid "Background"
 msgstr "背景"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:94
+#: plug-ins/script-fu/scripts/chrome-it.scm:154
 msgid "Layer 1"
 msgstr "レイヤー 1"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:95
+#: plug-ins/script-fu/scripts/chrome-it.scm:155
 msgid "Layer 2"
 msgstr "レイヤー 2"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:96
+#: plug-ins/script-fu/scripts/chrome-it.scm:156
 msgid "Layer 3"
 msgstr "レイヤー 3"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:97
+#: plug-ins/script-fu/scripts/chrome-it.scm:157
 msgid "Drop Shadow"
 msgstr "ドロップシャドウ"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:217
+#: plug-ins/script-fu/scripts/chrome-it.scm:299
 msgid "Chrome"
 msgstr "クローム"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:218
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+#: plug-ins/script-fu/scripts/chrome-it.scm:300
+#: plug-ins/script-fu/scripts/xach-effect.scm:69
 msgid "Highlight"
 msgstr "ハイライト"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:232
+#: plug-ins/script-fu/scripts/chrome-it.scm:320
 msgid "Stencil C_hrome..."
 msgstr "ステンシルクローム(_H)..."
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:233
+#: plug-ins/script-fu/scripts/chrome-it.scm:321
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
-"選択範囲 (または不透明部分) の内容を基にクロームメタルの表面のような効果が施"
-"された画像を生成します。"
+"選択範囲または不透明部分の内容を基にクロームメタルの表面のような\n"
+"効果が施された画像を生成します。"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:240
+#: plug-ins/script-fu/scripts/chrome-it.scm:327
 msgid "Chrome saturation"
 msgstr "クローム色相"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
+#: plug-ins/script-fu/scripts/chrome-it.scm:328
 msgid "Chrome lightness"
 msgstr "クローム明度"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:242
+#: plug-ins/script-fu/scripts/chrome-it.scm:329
 msgid "Chrome factor"
 msgstr "クローム率"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:243
+#: plug-ins/script-fu/scripts/chrome-it.scm:330
 msgid "Environment map"
 msgstr "環境マップ"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
+#: plug-ins/script-fu/scripts/chrome-it.scm:333
 msgid "Highlight balance"
 msgstr "ハイライトバランス"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:247
+#: plug-ins/script-fu/scripts/chrome-it.scm:334
 msgid "Chrome balance"
 msgstr "クロームバランス"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:248
+#: plug-ins/script-fu/scripts/chrome-it.scm:335
 msgid "Chrome white areas"
 msgstr "白い部分をクローム化"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:74
+#: plug-ins/script-fu/scripts/circuit.scm:72
 msgid "Effect layer"
 msgstr "エフェクトレイヤー"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:127
+#: plug-ins/script-fu/scripts/circuit.scm:135
 msgid "_Circuit..."
 msgstr "回路(_C)..."
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:128
+#: plug-ins/script-fu/scripts/circuit.scm:136
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
-"選択範囲 (または不透明部分) にプリント基板のようなテクスチャを描画します。"
+"選択範囲 (または不透明部分) にプリント基板のような\n"
+"テクスチャを描画します。"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:135
+#: plug-ins/script-fu/scripts/circuit.scm:142
 msgid "Oilify mask size"
 msgstr "油絵化マスクサイズ"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:136
+#: plug-ins/script-fu/scripts/circuit.scm:143
 msgid "Circuit seed"
 msgstr "回路種"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:137
+#: plug-ins/script-fu/scripts/circuit.scm:144
 msgid "No background (only for separate layer)"
-msgstr "背景なし（レイヤーを分けるだけ）"
+msgstr "背景なし(レイヤーを分けるだけ)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:138
-#: ../plug-ins/script-fu/scripts/lava.scm:129
-#: ../plug-ins/script-fu/scripts/predator.scm:132
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+#: plug-ins/script-fu/scripts/circuit.scm:145
+#: plug-ins/script-fu/scripts/lava.scm:144
+#: plug-ins/script-fu/scripts/xach-effect.scm:139
 msgid "Keep selection"
 msgstr "選択範囲を残す"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:139
-#: ../plug-ins/script-fu/scripts/lava.scm:130
-#: ../plug-ins/script-fu/scripts/predator.scm:133
+#: plug-ins/script-fu/scripts/circuit.scm:146
+#: plug-ins/script-fu/scripts/lava.scm:145
 msgid "Separate layer"
 msgstr "レイヤーに分ける"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:52
+#: plug-ins/script-fu/scripts/clothify.scm:65
 msgid "_Clothify..."
 msgstr "覆布化(_C)..."
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:53
+#: plug-ins/script-fu/scripts/clothify.scm:66
 msgid "Add a cloth-like texture to the selected region (or alpha)"
 msgstr ""
-"布の表面のようなテクスチャで選択範囲 (または不透明部分) を塗りつぶします。"
+"布の表面のようなテクスチャーで選択範囲 (または不透明部分) を塗りつぶします。"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:60
+#: plug-ins/script-fu/scripts/clothify.scm:72
 msgid "Blur X"
 msgstr "ぼかし X"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:61
+#: plug-ins/script-fu/scripts/clothify.scm:73
 msgid "Blur Y"
 msgstr "ぼかし Y"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:62
+#: plug-ins/script-fu/scripts/clothify.scm:74
 msgid "Azimuth"
 msgstr "方向"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:63
+#: plug-ins/script-fu/scripts/clothify.scm:75
 msgid "Elevation"
 msgstr "高度"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:64
+#: plug-ins/script-fu/scripts/clothify.scm:76
 msgid "Depth"
 msgstr "深さ"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:36
+#: plug-ins/script-fu/scripts/coffee.scm:41
 msgid "Stain"
 msgstr "染み"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:82
-msgid "_Coffee Stain..."
-msgstr "コーヒーの染み(_C)..."
+#: plug-ins/script-fu/scripts/coffee.scm:132
+msgid "_Stain..."
+msgstr "染み(_S)..."
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:83
-msgid "Add realistic looking coffee stains to the image"
-msgstr ""
-"コーヒーをこぼしたときに出来る染みのようなオブジェクトを画像に付加します"
+#: plug-ins/script-fu/scripts/coffee.scm:133
+msgid "Add layers of stain or blotch marks"
+msgstr "汚れや染みの跡のレイヤーを追加します"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:90
-msgid "Stains"
-msgstr "染みの数"
+#: plug-ins/script-fu/scripts/coffee.scm:139
+msgid "Number of stains to add"
+msgstr "追加する染みの数"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:91
+#: plug-ins/script-fu/scripts/coffee.scm:140
 msgid "Darken only"
 msgstr "ダーク色"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-msgid "_Difference Clouds..."
-msgstr "差分ソリッドノイズ(_D)..."
+#: plug-ins/script-fu/scripts/coffee.scm:141
+msgid "Gradient to color stains"
+msgstr "染みに使用するグラデーション"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
+#: plug-ins/script-fu/scripts/difference-clouds.scm:82
+msgid "_Difference Clouds"
+msgstr "差分ソリッドノイズ(_D)"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:83
 msgid "Solid noise applied with Difference layer mode"
 msgstr ""
-"ソリッドノイズが適用された「差の絶対値」モードのレイヤーを対象のレイヤーと結"
+"ソリッドノイズが適用された [差の絶対値] モードのレイヤーを対象のレイヤーと結"
 "合します"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
+#: plug-ins/script-fu/scripts/difference-clouds.scm:89
+msgid "Random Seed"
+msgstr "ランダム種"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:90
+msgid "Levels"
+msgstr "段階"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:91
+msgid "Tileable"
+msgstr "タイル状"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:92
+msgid "Turbulent"
+msgstr "乱流状"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:93
+msgid "X"
+msgstr "X"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:94
+msgid "Y"
+msgstr "Y"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:112
 msgid "_Distort..."
 msgstr "選択範囲を歪める(_D)..."
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
+#: plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "Distress the selection"
 msgstr "現在の選択範囲を歪ませます"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-msgid "_Threshold (bigger 1<-->254 smaller)"
-msgstr "しきい値 (大 1<-->254 小)(_T)"
+#: plug-ins/script-fu/scripts/distress-selection.scm:119
+msgid "_Threshold"
+msgstr "しきい値(_T)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+#: plug-ins/script-fu/scripts/distress-selection.scm:120
 msgid "_Spread"
 msgstr "拡散度(_S)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+#: plug-ins/script-fu/scripts/distress-selection.scm:121
 msgid "_Granularity (1 is low)"
 msgstr "粒状度 (1 が最低)(_G)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
+#: plug-ins/script-fu/scripts/distress-selection.scm:122
 msgid "S_mooth"
 msgstr "滑らかさ(_M)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
+#: plug-ins/script-fu/scripts/distress-selection.scm:123
 msgid "Smooth hor_izontally"
 msgstr "水平方向を滑らかに(_I)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
+#: plug-ins/script-fu/scripts/distress-selection.scm:124
 msgid "Smooth _vertically"
 msgstr "垂直方向を滑らかに(_V)"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+#: plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
 msgstr "ドロップシャドウ (レガシー)(_D)..."
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+#: plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "選択範囲(または不透明部分)にドロップシャドウを付加します"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+#: plug-ins/script-fu/scripts/drop-shadow.scm:177
 msgid "Offset X"
 msgstr "オフセット X"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset Y"
 msgstr "オフセット Y"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#: plug-ins/script-fu/scripts/round-corners.scm:145
 msgid "Blur radius"
 msgstr "ぼかし半径"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Color"
 msgstr "色"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+#: plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:208
 msgid "Opacity"
 msgstr "不透明度"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
-msgid "Allow resizing"
-msgstr "画像サイズ変更可"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "_Erase Every Nth Row..."
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
-msgid "Erase every nth row or column"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows/cols"
-msgstr "行/列"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Rows"
-msgstr "行"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
-msgid "Columns"
-msgstr "列"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase/fill"
-msgstr "消す/塗りつぶす"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Erase"
-msgstr "消す"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
-msgid "Fill with BG"
-msgstr "背景色で塗りつぶす"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
-msgid "_Erase Every Other Row..."
-msgstr "一行おきに消す(_E)..."
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
-msgid "Erase every other row or column"
-msgstr ""
-"画像中のピクセルを 1 行おき(または 1 列おき)に消去して縞模様の効果を与えま"
-"す。"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even/odd"
-msgstr "偶数/奇数"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Even"
-msgstr "偶数"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
-msgid "Odd"
-msgstr "奇数"
-
-#: ../plug-ins/script-fu/scripts/font-map.scm:152
+#: plug-ins/script-fu/scripts/font-map.scm:165
 msgid "Render _Font Map..."
 msgstr "フォントサンプル描画(_F)..."
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:153
+#: plug-ins/script-fu/scripts/font-map.scm:166
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr "条件に適合したフォントのサンプル画像を生成します。"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:158
+#: plug-ins/script-fu/scripts/font-map.scm:169
 msgid "_Text"
 msgstr "表示テキスト(_T)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:159
+#: plug-ins/script-fu/scripts/font-map.scm:170
 msgid "Use font _name as text"
-msgstr "表示テキストにフォント名を使う(_N)"
+msgstr "表示テキストにフォント名を使用(_N)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:160
+#: plug-ins/script-fu/scripts/font-map.scm:171
 msgid "_Labels"
 msgstr "ラベル(_L)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:172
 msgid "_Filter (regexp)"
 msgstr "フィルター (正規表現)(_F)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "Font _size (pixels)"
-msgstr "フォントサイズ (ピクセル)(_S)"
+msgstr "フォントサイズ(ピクセル)(_S)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:163
+#: plug-ins/script-fu/scripts/font-map.scm:174
 msgid "_Border (pixels)"
-msgstr "枠の大きさ (ピクセル)(_B)"
+msgstr "枠の大きさ(ピクセル)(_B)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "_Color scheme"
-msgstr "描画色/背景色 (_C)"
+msgstr "描画色/背景色(_C)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Black on white"
 msgstr "白地に黒"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:175
 msgid "Active colors"
 msgstr "アクティブな色"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:142
 msgid "_Fuzzy Border..."
 msgstr "ファジー縁取り(_F)..."
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:143
 msgid "Add a jagged, fuzzy border to an image"
-msgstr "ギザギザとしたあいまいな縁取りを画像に加えます。"
+msgstr "画像にギザギザとしたあいまいな縁取りを加えます。"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
-#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
+#: plug-ins/script-fu/scripts/old-photo.scm:106
 msgid "Border size"
 msgstr "枠の大きさ"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:151
 msgid "Blur border"
 msgstr "枠をぼかす"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:152
 msgid "Granularity (1 is Low)"
 msgstr "粒状度 (1 が最低)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:153
 msgid "Add shadow"
 msgstr "影を付ける"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:162
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:154
 msgid "Shadow weight (%)"
 msgstr "影の幅 (%)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:164
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: plug-ins/script-fu/scripts/old-photo.scm:112
+#: plug-ins/script-fu/scripts/round-corners.scm:147
+#: plug-ins/script-fu/scripts/slide.scm:270
+#: plug-ins/script-fu/scripts/spinning-globe.scm:127
+msgid "Work on copy"
+msgstr "コピーで作業する"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:156
 msgid "Flatten image"
 msgstr "画像を統合する"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
-msgid "Using _Paths"
-msgstr "パスを使う (英語)(_P)"
+#: plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "_Using Paths"
+msgstr "パスを使う (英語)(_U)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:60
+#: plug-ins/script-fu/scripts/gimp-online.scm:71
+#: plug-ins/script-fu/scripts/gimp-online.scm:82
+#: plug-ins/script-fu/scripts/gimp-online.scm:93
+#: plug-ins/script-fu/scripts/gimp-online.scm:104
+#: plug-ins/script-fu/scripts/gimp-online.scm:115
+#: plug-ins/script-fu/scripts/gimp-online.scm:126
+#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:147
 msgid "Bookmark to the user manual"
 msgstr "ユーザーマニュアルへのブックマーク"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/gimp-online.scm:70
 msgid "_Preparing your Images for the Web"
 msgstr "ウェブ用画像を作成するには (英語)(_P)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:81
 msgid "_Working with Digital Camera Photos"
 msgstr "デジカメ画像を修正する (英語)(_W)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/gimp-online.scm:92
 msgid "Create, Open and Save _Files"
 msgstr "ファイルを開く・作成・保存 (英語)(_F)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/gimp-online.scm:103
 msgid "_Basic Concepts"
 msgstr "基本コンセプト (英語)(_B)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/gimp-online.scm:114
 msgid "How to Use _Dialogs"
 msgstr "ダイアログの使い方 (英語)(_D)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:125
 msgid "Drawing _Simple Objects"
-msgstr "シンプルなオブジェクトを描く (英語)(_S)"
+msgstr "単純なオブジェクトを描く (英語)(_S)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
-msgid "Create and Use _Selections"
-msgstr "選択範囲の作成と使用 (英語)(_S)"
+#: plug-ins/script-fu/scripts/gimp-online.scm:136
+msgid "_Create and Use Selections"
+msgstr "選択範囲の作成と使用 (英語)(_C)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
-msgid "_Main Web Site"
-msgstr "メインのウェブサイト (英語)(_M)"
+#: plug-ins/script-fu/scripts/gimp-online.scm:146
+msgid "_Table of Contents"
+msgstr "コンテンツ一覧(_T)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "GIMP ウェブサイトへのブックマーク"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
-msgid "_Developer Web Site"
-msgstr "開発者用ウェブサイト (英語)(_D)"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
-msgid "_Roadmap"
-msgstr "ロードマップ(_R)"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "GIMP のロードマップへのブックマーク"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
-msgid "_Wiki"
-msgstr "ウィキ(_W)"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "GIMP のウィキへのブックマーク"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
-msgid "_Bug Reports and Feature Requests"
-msgstr "バグ報告と機能の要望(_B)"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "GIMP のバグトラッカーへのブックマーク"
-
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
-msgid "_User Manual Web Site"
-msgstr "ユーザーマニュアル (英語)(_U)"
-
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+#: plug-ins/script-fu/scripts/gradient-example.scm:73
 msgid "Custom _Gradient..."
 msgstr "カスタムグラデーション(_G)..."
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: plug-ins/script-fu/scripts/gradient-example.scm:74
 msgid "Create an image filled with an example of the current gradient"
 msgstr "アクティブなグラデーションのサンプル画像を生成します。"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:75
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+#: plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:137
+#: plug-ins/script-fu/scripts/mkbrush.scm:191
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Width"
 msgstr "幅"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:76
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:197
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#: plug-ins/script-fu/scripts/gradient-example.scm:78
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:138
+#: plug-ins/script-fu/scripts/mkbrush.scm:192
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Height"
 msgstr "高さ"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/gradient-example.scm:79
 msgid "Gradient reverse"
 msgstr "グラデーションの反転"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:84
-msgid "_Grid..."
-msgstr "グリッド(_G)..."
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:60
+msgid "New Guides from Rule..."
+msgstr "分割法に基づく新規ガイド..."
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:61
+msgid "Add guides based on a selected composition rule"
+msgstr "選択した分割法に基づいてガイドを追加します"
+
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "R_ule"
+msgstr "分割法(_U)"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:67
+msgid "Center lines"
+msgstr "中央線"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:68
+msgid "Rule of thirds"
+msgstr "三分割法"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:69
+msgid "Rule of fifths"
+msgstr "五分割法"
+
+#: plug-ins/script-fu/scripts/guides-from-rule.scm:70
+msgid "Golden sections"
+msgstr "黄金分割"
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:27
 msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
-msgstr "選択範囲の境界に隣接する位置にガイドを挿入します"
+"No selection to base guides on.\n"
+"Make a selection first!"
+msgstr ""
+"ガイドの基準になる選択肢がありません。\n"
+"まず分割法を選択してください。"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:92
-msgid "X divisions"
-msgstr "X 分割数"
-
-#: ../plug-ins/script-fu/scripts/grid-system.scm:93
-msgid "Y divisions"
-msgstr "Y 分割数"
-
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "New Guides from _Selection"
 msgstr "選択範囲から新規ガイド(_S)"
 
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
-#, fuzzy
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:34
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "現在の選択範囲の角を丸めます"
+msgstr ""
+"現在の選択範囲のバウンディングボックスの周囲に 4 本のガイドを作成します。"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:30
 msgid "New Guide (by _Percent)..."
-msgstr "新規ガイド (パーセントで)(_P)..."
+msgstr "新規ガイド (%)(_P)..."
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:31
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr "位置を比率 (パーセント) で指定してガイドを挿入します"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#. doesn't matter how many drawables are selected
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "_Direction"
 msgstr "方向(_D)"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Horizontal"
 msgstr "水平"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:38
+#: plug-ins/script-fu/scripts/guides-new.scm:33
 msgid "Vertical"
 msgstr "垂直"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:39
 msgid "_Position (in %)"
 msgstr "位置 (パーセントで指定)(_P)"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:26
 msgid "New _Guide..."
 msgstr "新規ガイド(_G)..."
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "位置をピクセルで指定してガイドを挿入します"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:34
 msgid "_Position"
 msgstr "位置(_P)"
 
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
 msgstr "すべてのガイドを削除(_R)"
 
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
 msgstr "すべてのガイドを画像から削除します"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:117
+#. else
+#: plug-ins/script-fu/scripts/lava.scm:127
+msgid "Lava works with exactly one selected layer"
+msgstr "溶岩は選択されたレイヤーがちょうど 1 枚の場合のみ動作します。"
+
+#: plug-ins/script-fu/scripts/lava.scm:133
 msgid "_Lava..."
 msgstr "溶岩(_L)..."
 
-#: ../plug-ins/script-fu/scripts/lava.scm:118
+#: plug-ins/script-fu/scripts/lava.scm:134
 msgid "Fill the current selection with lava"
-msgstr "選択範囲に「溶岩」を描画します"
+msgstr "選択範囲に [溶岩] を描画します"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:125
+#: plug-ins/script-fu/scripts/lava.scm:140
 msgid "Seed"
 msgstr "種"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:126
+#: plug-ins/script-fu/scripts/lava.scm:141
 msgid "Size"
 msgstr "サイズ"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:127
+#: plug-ins/script-fu/scripts/lava.scm:142
 msgid "Roughness"
 msgstr "荒さ"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: plug-ins/script-fu/scripts/lava.scm:143
 msgid "Gradient"
 msgstr "グラデーション"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:131
+#: plug-ins/script-fu/scripts/lava.scm:146
 msgid "Use current gradient"
 msgstr "現在のグラデーションを使う"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:108
+#: plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Line _Nova..."
 msgstr "集中線(_N)..."
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:109
+#: plug-ins/script-fu/scripts/line-nova.scm:118
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
 msgstr "レイヤーの中央から光が放射されている様子を描画色で描きます。"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:116
-msgid "Number of lines"
-msgstr "線数"
+#: plug-ins/script-fu/scripts/line-nova.scm:124
+msgid "_Number of lines"
+msgstr "線数(_N)"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:117
-msgid "Sharpness (degrees)"
-msgstr "鋭さ (角度)"
+#: plug-ins/script-fu/scripts/line-nova.scm:125
+msgid "S_harpness (degrees)"
+msgstr "鋭さ (角度)(_H)"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:118
-msgid "Offset radius"
-msgstr "オフセット半径"
+#: plug-ins/script-fu/scripts/line-nova.scm:126
+msgid "O_ffset radius"
+msgstr "オフセット半径(_F)"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:119
-msgid "Randomness"
-msgstr "複雑度"
+#: plug-ins/script-fu/scripts/line-nova.scm:127
+msgid "Ran_domness"
+msgstr "複雑度(_D)"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+#: plug-ins/script-fu/scripts/mkbrush.scm:64
 msgid "_Rectangular..."
 msgstr "矩形(_R)..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+#: plug-ins/script-fu/scripts/mkbrush.scm:65
 msgid "Create a rectangular brush"
 msgstr "矩形ブラシを生成します"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+#: plug-ins/script-fu/scripts/mkbrush.scm:68
+#: plug-ins/script-fu/scripts/mkbrush.scm:136
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:257
 msgid "Name"
 msgstr "名前"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:143
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:198
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:268
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:193
+#: plug-ins/script-fu/scripts/mkbrush.scm:261
 msgid "Spacing"
 msgstr "間隔"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:133
+#: plug-ins/script-fu/scripts/mkbrush.scm:132
 msgid "Re_ctangular, Feathered..."
 msgstr "ぼかされた矩形(_C)..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:134
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Create a rectangular brush with feathered edges"
 msgstr "輪郭がぼけた矩形ブラシを生成します"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:142
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:267
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:260
 msgid "Feathering"
 msgstr "ぼかし"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:189
+#: plug-ins/script-fu/scripts/mkbrush.scm:186
 msgid "_Elliptical..."
 msgstr "楕円形(_E)..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:187
 msgid "Create an elliptical brush"
 msgstr "楕円ブラシを生成します"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:258
+#: plug-ins/script-fu/scripts/mkbrush.scm:253
 msgid "Elli_ptical, Feathered..."
 msgstr "ぼかされた楕円形(_P)..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:259
+#: plug-ins/script-fu/scripts/mkbrush.scm:254
 msgid "Create an elliptical brush with feathered edges"
 msgstr "輪郭がぼけた楕円ぼかしを生成します"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+#: plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "_Old Photo..."
 msgstr "古い写真(_O)..."
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+#: plug-ins/script-fu/scripts/old-photo.scm:99
 msgid "Make an image look like an old photo"
-msgstr "古い写真のような、色褪せた効果を画像に与えます"
+msgstr "画像に古い写真のような色褪せた効果を加えます"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+#: plug-ins/script-fu/scripts/old-photo.scm:105
 msgid "Defocus"
 msgstr "ピンぼけ"
 
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
 #. and the 'minimum' value.
-#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+#: plug-ins/script-fu/scripts/old-photo.scm:110
 msgid "Sepia"
 msgstr "セピア色"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+#: plug-ins/script-fu/scripts/old-photo.scm:111
 msgid "Mottle"
 msgstr "まだら状"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:226
-msgid "Folder for the output file"
-msgstr "出力先のフォルダー"
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm:227
-msgid ""
-"The name of the file to create (if a file with this name already exist, it "
-"will be replaced)"
-msgstr "ファイル名 (ファイルが存在するときは上書き)"
-
-#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:162
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "入力された名前はファイル名として適していません。"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:237
+#: plug-ins/script-fu/scripts/palette-export.scm:164
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1159,7 +1019,28 @@ msgstr ""
 "名前に使われているすべての文字がスペース、またはファイル名として表示されない"
 "文字です。"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:265
+#. Side effect.
+#. Tell the user the mangled path, might be different than user entered.
+#. The user should not need to search for the file.
+#: plug-ins/script-fu/scripts/palette-export.scm:199
+msgid "Exported palette to file: "
+msgstr "ファイルにエクスポートされたパレット: "
+
+#: plug-ins/script-fu/scripts/palette-export.scm:287
+msgid "Folder for the output file"
+msgstr "出力先のフォルダー"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:288
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr "ファイル名 (ファイルが存在するときは上書き)"
+
+#: plug-ins/script-fu/scripts/palette-export.scm:317
+msgid "_CSS stylesheet..."
+msgstr "CSS スタイルシート(_C)..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:318
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1167,455 +1048,590 @@ msgstr ""
 "選択しているパレットを CSS スタイルシート (色のエントリー名をクラス名、色をそ"
 "のカラー属性) としてエクスポートします"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:291
+#: plug-ins/script-fu/scripts/palette-export.scm:338
+msgid "P_HP dictionary..."
+msgstr "PHP ディクショナリー(_H)..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:339
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr ""
 "選択しているパレットを PHP ディクショナリー (name => color) としてエクスポー"
 "トします"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:323
+#: plug-ins/script-fu/scripts/palette-export.scm:363
+msgid "_Python dictionary..."
+msgstr "Python ディクショナリー(_P)..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:364
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr ""
 "選択しているパレットを Python ディクショナリー (name: color) としてエクスポー"
 "トします"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:352
+#: plug-ins/script-fu/scripts/palette-export.scm:385
+msgid "_Text file..."
+msgstr "テキストファイル(_T)..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:386
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr ""
-"選択しているパレットをテキストファイルにエクスポート (16 進数で表した 色の値"
-"のみを 1 色につき1 行書き出し) します"
+"選択しているパレットをテキストファイルにエクスポート (16進数で表した 色の値の"
+"みを 1 色につき 1 行書き出し) します"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:399
-msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+#: plug-ins/script-fu/scripts/palette-export.scm:425
+msgid "J_ava map..."
+msgstr "Java マップ(_A)..."
+
+#: plug-ins/script-fu/scripts/palette-export.scm:426
+msgid "Export the active palette as a java.util.Hashtable&lt;String,Color&gt;"
 msgstr ""
-"選択しているパレットを Java ハッシュテーブル (java.util.Hashtable<String, "
-"Color>) としてエクスポートします"
+"アクティブなパレットを java.util.Hashtable&lt;String,Color&gt; として書き出し"
+"ます"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:59
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:45
 msgid "There is no image data in the clipboard to paste."
 msgstr "クリップボードには貼り付けられる画像データがありません。"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
-msgid "New _Brush..."
-msgstr "新しいブラシ(_B)..."
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+msgid "Paste as New _Brush..."
+msgstr "新しいブラシとして貼り付け(_B)..."
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:66
 msgid "Paste the clipboard contents into a new brush"
 msgstr "クリップボードの内容を新しいブラシファイルに変換します"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
 msgid "_Brush name"
 msgstr "ブラシ名(_B)"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:69
+msgid "My Brush"
+msgstr "My Brush"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 msgid "_File name"
 msgstr "ファイル名(_F)"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+msgid "mybrush"
+msgstr "mybrush"
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
 msgid "_Spacing"
 msgstr "間隔(_S)"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
-msgid "New _Pattern..."
-msgstr "新しいパターン(_P)..."
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste as New _Pattern..."
+msgstr "新しいパターンとして貼り付け(_P)..."
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "クリップボードの内容を新しいパターンファイルに変換します"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
 msgid "_Pattern name"
 msgstr "パターン名(_P)"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:55
+msgid "My Pattern"
+msgstr "My Pattern"
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+msgid "mypattern"
+msgstr "mypattern"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:196
 msgid "_Perspective..."
 msgstr "遠近法(_P)..."
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "Add a perspective shadow to the selected region (or alpha)"
 msgstr "選択範囲 (または不透明部分) に遠近法変換されたシャドウを付加します。"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:203
 msgid "Angle"
 msgstr "角度"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:204
 msgid "Relative distance of horizon"
 msgstr "地平線の相対的な距離"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:205
 msgid "Relative length of shadow"
 msgstr "影の相対的な長さ"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:209
 msgid "Interpolation"
 msgstr "補間"
 
-#: ../plug-ins/script-fu/scripts/predator.scm:121
-msgid "_Predator..."
-msgstr "プレデター(_P)..."
-
-#: ../plug-ins/script-fu/scripts/predator.scm:122
-msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr ""
-"選択範囲 (または不透明部分) に「プレデター」の赤外線スコープを透して見たよう"
-"な効果を与えます。"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:129
-msgid "Edge amount"
-msgstr "エッジ量"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:130
-msgid "Pixelize"
-msgstr "ピクセル化"
-
-#: ../plug-ins/script-fu/scripts/predator.scm:131
-msgid "Pixel amount"
-msgstr "ピクセル量"
-
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+#: plug-ins/script-fu/scripts/reverse-layers.scm:41
 msgid "Reverse Layer _Order"
 msgstr "レイヤー順序の反転(_O)"
 
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+#: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse the order of layers in the image"
 msgstr "レイヤーの重なり順序を逆順に並べ替えます。"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:83
 msgid "_Rippling..."
 msgstr "波紋(_R)..."
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:84
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
-"波打つ水面を透して見た画像を表現したアニメーション (アニメーションフレーム用"
-"の複数のレイヤーを持つ画像) を生成します"
+"波打つ水面を透して見た画像を表現したアニメーション\n"
+"(アニメーションフレーム用の複数レイヤーを持つ画像) を生成します"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
-msgid "Rippling strength"
-msgstr "波状強度"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:90
+msgid "Ri_ppling strength"
+msgstr "波状強度(_P)"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
-msgid "Number of frames"
-msgstr "フレーム数"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:91
+msgid "_Number of frames"
+msgstr "フレーム数(_N)"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
-msgid "Edge behavior"
-msgstr "縁の処理"
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
+msgid "Edge _behavior"
+msgstr "縁の処理(_B)"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Wrap"
 msgstr "折り返す"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Smear"
 msgstr "こする"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:92
 msgid "Black"
 msgstr "黒くする"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: plug-ins/script-fu/scripts/round-corners.scm:134
 msgid "_Round Corners..."
 msgstr "角丸め(_R)..."
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: plug-ins/script-fu/scripts/round-corners.scm:135
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
-"現在の画像を基に、角が丸められた画像を生成します (背景にドロップシャドウを追"
-"加することもできます)"
+"現在の画像を基に、角が丸められた画像を生成します\n"
+" (背景にドロップシャドウを追加することもできます)"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Edge radius"
 msgstr "縁どり半径"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Add drop-shadow"
-msgstr "影を落す"
+msgstr "影を落とす"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Shadow X offset"
 msgstr "影 X オフセット"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Shadow Y offset"
 msgstr "影 Y オフセット"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: plug-ins/script-fu/scripts/round-corners.scm:146
 msgid "Add background"
 msgstr "背景追加"
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
 msgstr "カラーマップの変更(_T)..."
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr "現在のカラーマップを指定のパレット (カラーマップ) に置き換えます"
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:60
 msgid "Palette"
 msgstr "指定するパレット: "
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+#: plug-ins/script-fu/scripts/selection-round.scm:143
 msgid "Rounded R_ectangle..."
 msgstr "角を丸める(_E)..."
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+#: plug-ins/script-fu/scripts/selection-round.scm:144
 msgid "Round the corners of the current selection"
 msgstr "現在の選択範囲の角を丸めます"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+#: plug-ins/script-fu/scripts/selection-round.scm:150
 msgid "R_adius (%)"
 msgstr "半径 (%)(_A)"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+#: plug-ins/script-fu/scripts/selection-round.scm:151
 msgid "Co_ncave"
 msgstr "凹ませる(_N)"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
-msgid "To _Brush..."
-msgstr "ブラシへ(_B)..."
-
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
-msgid "Convert a selection to a brush"
-msgstr "現在の選択範囲をブラシに変換します"
-
-#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
-msgid "To _Image"
-msgstr "画像へ(_I)"
-
-#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
-msgid "Convert a selection to an image"
-msgstr "現在の選択範囲から新しい画像を生成します。"
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
-msgid "To _Pattern..."
-msgstr "パターンへ(_P)..."
-
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
-msgid "Convert a selection to a pattern"
-msgstr "現在の選択範囲をパターンに変換します"
-
-#: ../plug-ins/script-fu/scripts/slide.scm:245
+#: plug-ins/script-fu/scripts/slide.scm:259
 msgid "_Slide..."
 msgstr "スライド(_S)..."
 
-#: ../plug-ins/script-fu/scripts/slide.scm:246
+#: plug-ins/script-fu/scripts/slide.scm:260
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr ""
 "元画像にスライドフィルムのような画像 (フレーム、フィルム縁の穴、ラベル) を加"
 "えます。"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:253
+#: plug-ins/script-fu/scripts/slide.scm:266
 msgid "Text"
 msgstr "文字"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:254
+#: plug-ins/script-fu/scripts/slide.scm:267
 msgid "Number"
 msgstr "数"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:255
+#: plug-ins/script-fu/scripts/slide.scm:268
 msgid "Font"
 msgstr "フォント"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:256
+#: plug-ins/script-fu/scripts/slide.scm:269
 msgid "Font color"
 msgstr "フォント色"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+#: plug-ins/script-fu/scripts/spinning-globe.scm:116
 msgid "_Spinning Globe..."
 msgstr "回転する球体(_S)..."
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:117
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
-"アクティブな画像がマップされた球が回転しているアニメーション (アニメーション"
-"用レイヤー) を生成します。"
+"アクティブな画像がマップされた球が回転しているアニメーション \n"
+"(アニメーション用レイヤー) を生成します。"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+#: plug-ins/script-fu/scripts/spinning-globe.scm:123
 msgid "Frames"
 msgstr "コマ数"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:124
 msgid "Turn from left to right"
 msgstr "左から右に回転"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:125
 msgid "Transparent background"
 msgstr "透過背景"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:126
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "n 色にインデックス化 (0 = RGB のまま)"
 
-#: ../plug-ins/script-fu/scripts/test-sphere.scm:272
-msgid "_Sphere..."
-msgstr "球体(_S)..."
+#. Translator: this means "in the Scheme programming language" aka ScriptFu.
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:154
+msgid "Plug-In Example in _Scheme"
+msgstr "Scheme 言語によるプラグイン例(_S)"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+#: plug-ins/script-fu/scripts/test-sphere-v3.scm:155
+msgid "Plug-in example in Scheme"
+msgstr "Sheme 言語で開発したプラグインの作成例です"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:77
 msgid "_Tileable Blur..."
 msgstr "タイル化可能ぼかし(_T)..."
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+#: plug-ins/script-fu/scripts/tileblur.scm:78
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr "継目なしで画像が並べられるように画像境界部分をぼかします。"
+msgstr "継ぎ目なしで画像が並べられるように画像境界部分をぼかします。"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:76
-msgid "Radius"
-msgstr "半径"
+#: plug-ins/script-fu/scripts/tileblur.scm:84
+msgid "Ra_dius"
+msgstr "半径(_D)"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:77
-msgid "Blur vertically"
-msgstr "垂直ぼかし"
+#: plug-ins/script-fu/scripts/tileblur.scm:85
+msgid "Blur _vertically"
+msgstr "垂直ぼかし(_V)"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:78
-msgid "Blur horizontally"
-msgstr "水平ぼかし"
+#: plug-ins/script-fu/scripts/tileblur.scm:86
+msgid "Blur _horizontally"
+msgstr "水平ぼかし(_H)"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
-msgid "Blur type"
-msgstr "ぼかしタイプ"
+#: plug-ins/script-fu/scripts/tileblur.scm:87
+msgid "Blur _type"
+msgstr "ぼかしタイプ(_T)"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:87
 msgid "IIR"
 msgstr "IIR"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:87
 msgid "RLE"
 msgstr "RLE"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:103
 msgid "Mask size"
-msgstr "マスクサイズ"
+msgstr "マスクの大きさ"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:104
 msgid "Mask opacity"
-msgstr "マスク不透明度"
+msgstr "マスクの不透明度"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+#: plug-ins/script-fu/scripts/waves-anim.scm:116
 msgid "_Waves..."
 msgstr "波(_W)..."
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+#: plug-ins/script-fu/scripts/waves-anim.scm:117
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
-"水面に小石を投げ入れたときにできる波紋を透して見た画像を表現したアニメーショ"
-"ン (アニメーションフレーム用の複数のレイヤーを持つ画像) を生成します。"
+"水面に小石を投げ入れたときにできる波紋を透して見た画像を表現した\n"
+"アニメーション (アニメーションフレーム用の複数レイヤーを持つ画像)\n"
+"を生成します。"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+#: plug-ins/script-fu/scripts/waves-anim.scm:123
 msgid "Amplitude"
 msgstr "強さ"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+#: plug-ins/script-fu/scripts/waves-anim.scm:124
 msgid "Wavelength"
 msgstr "波長"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+#: plug-ins/script-fu/scripts/waves-anim.scm:125
+msgid "Number of frames"
+msgstr "フレーム数"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:126
 msgid "Invert direction"
 msgstr "方向を反転"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:397
+#: plug-ins/script-fu/scripts/weave.scm:425
 msgid "_Weave..."
 msgstr "織物(_W)..."
 
-#: ../plug-ins/script-fu/scripts/weave.scm:398
+#: plug-ins/script-fu/scripts/weave.scm:426
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"織物が描かれたレイヤーを生成します (オーバーレイや乗算モードで重ねたりバンプ"
-"マップフィルターのマップ画像として使用すると効果的です)"
+"織物が描かれたレイヤーを生成します (オーバーレイや乗算モードで重ねたり\n"
+"バンプマップフィルターのマップ画像として使用すると効果的です)"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:405
+#: plug-ins/script-fu/scripts/weave.scm:432
 msgid "Ribbon width"
 msgstr "帯幅"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:406
+#: plug-ins/script-fu/scripts/weave.scm:433
 msgid "Ribbon spacing"
 msgstr "帯間隔"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:407
+#: plug-ins/script-fu/scripts/weave.scm:434
 msgid "Shadow darkness"
 msgstr "影の暗さ"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:408
+#: plug-ins/script-fu/scripts/weave.scm:435
 msgid "Shadow depth"
 msgstr "影の深さ"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:409
+#: plug-ins/script-fu/scripts/weave.scm:436
 msgid "Thread length"
 msgstr "糸の長さ"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:410
+#: plug-ins/script-fu/scripts/weave.scm:437
 msgid "Thread density"
 msgstr "糸密度"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:411
+#: plug-ins/script-fu/scripts/weave.scm:438
 msgid "Thread intensity"
 msgstr "糸強度"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+#: plug-ins/script-fu/scripts/xach-effect.scm:90
 msgid "Shadow"
 msgstr "影"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+#: plug-ins/script-fu/scripts/xach-effect.scm:123
 msgid "_Xach-Effect..."
 msgstr "Xach 効果(_X)..."
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+#: plug-ins/script-fu/scripts/xach-effect.scm:124
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "選択範囲 (または不透明部分) に半透明でやや立体的な効果を与えます"
+msgstr "選択範囲 (または不透明部分) に半透明でやや立体的な効果を加えます"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+#: plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight X offset"
-msgstr "ハイライト X オフセット"
+msgstr "ハイライト X 方向オフセット"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+#: plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight Y offset"
-msgstr "ハイライト Y オフセット"
+msgstr "ハイライト Y 方向オフセット"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+#: plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight color"
 msgstr "ハイライト色"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+#: plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Highlight opacity"
 msgstr "ハイライト不透明度"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+#: plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow color"
 msgstr "ドロップシャドウ色"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+#: plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow opacity"
 msgstr "ドロップシャドウ不透明度"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+#: plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow blur radius"
 msgstr "ドロップシャドウぼかし半径"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+#: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow X offset"
-msgstr "ドロップシャドウ X オフセット"
+msgstr "ドロップシャドウ X 方向オフセット"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+#: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Drop shadow Y offset"
-msgstr "ドロップシャドウ Y オフセット"
+msgstr "ドロップシャドウ Y 方向オフセット"
+
+#~ msgid "_Refresh Scripts"
+#~ msgstr "スクリプトを再読み込み(_R)"
+
+#~ msgid "Re-read all available Script-Fu scripts"
+#~ msgstr "使用可能なスクリプトをディスクから再読み込みします"
+
+#~ msgid ""
+#~ "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is "
+#~ "open.  Please close all Script-Fu windows and try again."
+#~ msgstr ""
+#~ "すべての Script-Fu ダイアログボックスを閉じてから \"スクリプトの再読み込み"
+#~ "\" を再試行してください。 (Script-Fu のダイアログボックスが開いているとき"
+#~ "は、「スクリプトの再読み込み」は実行出来ません。)"
+
+#~ msgid "Interactive Scheme Development"
+#~ msgstr "Interactive Scheme Development"
+
+#, c-format
+#~ msgid "Script-Fu: %s"
+#~ msgstr "Script-Fu: %s"
+
+#~ msgid "Script-Fu Font Selection"
+#~ msgstr "フォントの選択 (Script-Fu)"
+
+#~ msgid "Script-Fu Palette Selection"
+#~ msgstr "パレットの選択 (Script-Fu)"
+
+#~ msgid "Script-Fu Pattern Selection"
+#~ msgstr "パターンの選択 (Script-Fu)"
+
+#~ msgid "Script-Fu Gradient Selection"
+#~ msgstr "グラデーションの選択 (Script-Fu)"
+
+#~ msgid "Script-Fu Brush Selection"
+#~ msgstr "ブラシの選択 (Script-Fu)"
+
+#~ msgid "Too few arguments to 'script-fu-register' call"
+#~ msgstr "'script-fu-register' を呼ぶための引数が不足しています。"
+
+#~ msgid "Image to carve"
+#~ msgstr "彫刻化する画像"
+
+#~ msgid "Add realistic looking coffee stains to the image"
+#~ msgstr ""
+#~ "コーヒーをこぼしたときに出来る染みのようなオブジェクトを画像に付加します"
+
+#~ msgid "Stains"
+#~ msgstr "染みの数"
+
+#~ msgid "_Threshold (bigger 1<-->254 smaller)"
+#~ msgstr "しきい値 (大 1<-->254 小)(_T)"
+
+#~ msgid "Rows/cols"
+#~ msgstr "行/列"
+
+#~ msgid "Rows"
+#~ msgstr "行"
+
+#~ msgid "Columns"
+#~ msgstr "列"
+
+#~ msgid "Erase/fill"
+#~ msgstr "消す/塗りつぶす"
+
+#~ msgid "Erase"
+#~ msgstr "消す"
+
+#~ msgid "Fill with BG"
+#~ msgstr "背景色で塗りつぶす"
+
+#~ msgid "_Erase Every Other Row..."
+#~ msgstr "一行おきに消す(_E)..."
+
+#~ msgid "Erase every other row or column"
+#~ msgstr ""
+#~ "画像中のピクセルを 1 行おき(または 1 列おき)に消去して縞模様の効果を与えま"
+#~ "す。"
+
+#~ msgid "Even/odd"
+#~ msgstr "偶数/奇数"
+
+#~ msgid "Even"
+#~ msgstr "偶数"
+
+#~ msgid "Odd"
+#~ msgstr "奇数"
+
+#~ msgid "_Wiki"
+#~ msgstr "ウィキ(_W)"
+
+#~ msgid "Bookmark to the wiki of GIMP"
+#~ msgstr "GIMP のウィキへのブックマーク"
+
+#~ msgid "_Grid..."
+#~ msgstr "グリッド(_G)..."
+
+#~ msgid ""
+#~ "Draw a grid as specified by the lists of X and Y locations using the "
+#~ "current brush"
+#~ msgstr "選択範囲の境界に隣接する位置にガイドを挿入します"
+
+#~ msgid "X divisions"
+#~ msgstr "X 分割数"
+
+#~ msgid "Y divisions"
+#~ msgstr "Y 分割数"
+
+#~ msgid "_Predator..."
+#~ msgstr "プレデター(_P)..."
+
+#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
+#~ msgstr ""
+#~ "選択範囲 (または不透明部分) に「プレデター」の赤外線スコープを透して見たよ"
+#~ "うな効果を与えます。"
+
+#~ msgid "Edge amount"
+#~ msgstr "エッジ量"
+
+#~ msgid "Pixelize"
+#~ msgstr "ピクセル化"
+
+#~ msgid "Pixel amount"
+#~ msgstr "ピクセル量"
+
+#~ msgid "To _Brush..."
+#~ msgstr "ブラシへ(_B)..."
+
+#~ msgid "Convert a selection to a brush"
+#~ msgstr "現在の選択範囲をブラシに変換します"
+
+#~ msgid "To _Image"
+#~ msgstr "画像へ(_I)"
+
+#~ msgid "Convert a selection to an image"
+#~ msgstr "現在の選択範囲から新しい画像を生成します。"
+
+#~ msgid "To _Pattern..."
+#~ msgstr "パターンへ(_P)..."
+
+#~ msgid "Convert a selection to a pattern"
+#~ msgstr "現在の選択範囲をパターンに変換します"
+
+#~ msgid "_Sphere..."
+#~ msgstr "球体(_S)..."
 
 #~ msgid "_Console"
 #~ msgstr "Script-Fu コンソール(_C)"
@@ -1696,12 +1712,6 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgid "Pencil"
 #~ msgstr "鉛筆"
 
-#~ msgid "Brush"
-#~ msgstr "ブラシ"
-
-#~ msgid "Airbrush"
-#~ msgstr "エアブラシ"
-
 #~ msgid "Color method"
 #~ msgstr "色の塗り方"
 
@@ -1740,9 +1750,6 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr ""
 #~ "3D アウトラインロゴ ([ファイル] → [画像の生成] → [ロゴ] → [3D アウトライ"
 #~ "ン]) と同じ効果を選択範囲 (または不透明部分) に適用します。"
-
-#~ msgid "Pattern"
-#~ msgstr "パターン"
 
 #~ msgid "Shadow blur radius"
 #~ msgstr "影ぼかし半径"
@@ -2178,9 +2185,6 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgid "Image width"
 #~ msgstr "画像幅"
 
-#~ msgid "Random seed"
-#~ msgstr "ランダム種"
-
 #~ msgid "Scale X"
 #~ msgstr "X 拡大縮小"
 
@@ -2376,9 +2380,6 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgid "Render _Map..."
 #~ msgstr "地図(_M)..."
 
-#~ msgid "Tile"
-#~ msgstr "タイル状"
-
 #~ msgid "Create a State Of The Art chromed logo"
 #~ msgstr "最新式 (\"State-Of-The-Art\") のクロームのロゴを生成します"
 
@@ -2410,9 +2411,6 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Create an image filled with a swirly pattern"
 #~ msgstr "渦巻きのパターン用画像を生成します。"
-
-#~ msgid "Number of times to whirl"
-#~ msgstr "回転数"
 
 #~ msgid "Quarter size"
 #~ msgstr "1/4 サイズ"
@@ -2456,9 +2454,6 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #~ msgid "Fill angle"
 #~ msgstr "充てん角度"
-
-#~ msgid "Text C_ircle..."
-#~ msgstr "文字円(_I)..."
 
 #~ msgid ""
 #~ "Create a textured logo with highlights, shadows, and a mosaic background"
