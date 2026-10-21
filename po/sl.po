@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-17 22:18+0000\n"
-"PO-Revision-Date: 2026-10-18 16:02+0200\n"
+"POT-Creation-Date: 2026-10-21 17:23+0000\n"
+"PO-Revision-Date: 2026-10-21 19:52+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -221,7 +221,7 @@ msgstr "uporablja %s različice %s"
 #. This must be localized with the system language itself, before we
 #. * apply any other language.
 #.
-#: app/language.c:69
+#: app/language.c:71
 msgid "System Language"
 msgstr "Sistemski jezik"
 
@@ -13110,7 +13110,7 @@ msgstr "Prilepljena plast"
 msgid "Global Buffer"
 msgstr "Splošni medpomnilnik"
 
-#: app/core/gimpextension.c:283
+#: app/core/gimpextension.c:284
 #, c-format
 msgid ""
 "Invalid AppStream metadata: failed to find default screenshot for extension "
@@ -13119,38 +13119,38 @@ msgstr ""
 "Neveljavni metapodatki AppStream: ni bilo mogoče najti privzetega posnetka "
 "zaslona za razširitev »%s«"
 
-#: app/core/gimpextension.c:309
+#: app/core/gimpextension.c:310
 #, c-format
 msgid "Invalid AppStream metadata: Error loading image: \"%s\""
 msgstr "Neveljavni metapodatki AppStream: napaka pri nalaganju slike: »%s«"
 
-#: app/core/gimpextension.c:436
+#: app/core/gimpextension.c:437
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
 "AppData razširitve mora biti vrste »addon«, namesto tega je najden »%s«."
 
-#: app/core/gimpextension.c:452
+#: app/core/gimpextension.c:453
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "AppData razširitve mora razširiti »org.gimp.GIMP«."
 
-#: app/core/gimpextension.c:466
+#: app/core/gimpextension.c:467
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr "ID AppData razširitve (»%s«) in mapa (»%s«) morata biti enaka."
 
-#: app/core/gimpextension.c:494
+#: app/core/gimpextension.c:495
 #, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr "AppData razširitve mora oglaševati različico v oznaki <release>."
 
-#: app/core/gimpextension.c:520
+#: app/core/gimpextension.c:521
 #, c-format
 msgid "Unsupported <relation> \"%s\" (type %s)."
 msgstr "Nepodprta <relation> »%s« (vrsta %s)."
 
-#: app/core/gimpextension.c:535
+#: app/core/gimpextension.c:536
 #, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
@@ -13159,37 +13159,37 @@ msgstr ""
 "<requires><id>org.gimp.GIMP </id></requires> za primerjavo različic je "
 "obvezna."
 
-#: app/core/gimpextension.c:831
+#: app/core/gimpextension.c:847
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "»%s« ni relativna pot."
 
-#: app/core/gimpextension.c:847
+#: app/core/gimpextension.c:863
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "»%s« ni veljaven podrejeni predmet razširitve."
 
-#: app/core/gimpextension.c:863
+#: app/core/gimpextension.c:879
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "»%s« ni mapa."
 
-#: app/core/gimpextension.c:877
+#: app/core/gimpextension.c:893
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "»%s« ni veljavna datoteka."
 
-#: app/core/gimpextensionmanager.c:841
+#: app/core/gimpextensionmanager.c:865
 #, c-format
 msgid "System extensions cannot be uninstalled."
 msgstr "Sistemskih razširitev ni mogoče odnamestiti."
 
-#: app/core/gimpextensionmanager.c:1052
+#: app/core/gimpextensionmanager.c:1112
 #, c-format
 msgid "Skipping extension '%s': %s\n"
 msgstr "Preskočitev razširitve »%s«: %s\n"
 
-#: app/core/gimpextensionmanager.c:1060
+#: app/core/gimpextensionmanager.c:1120
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "Preskakovanje neznane datoteke »%s« v mapi razširitev.\n"
@@ -23116,7 +23116,7 @@ msgstr ""
 "Priznam, bil sem že vegi,\n"
 "dihal češnje, tofu in bicikel."
 
-#: app/text/gimpfontfactory.c:525
+#: app/text/gimpfontfactory.c:498
 #, c-format
 msgid "Some fonts failed to load:%s"
 msgstr "Nekaterih pisav ni mogoče naložiti: %s"
@@ -23739,15 +23739,19 @@ msgstr "_Kloniraj"
 msgid "Click to clone"
 msgstr "Kliknite za kloniranje"
 
-#: app/tools/gimpclonetool.c:92 app/tools/gimpclonetool.c:97
+#: app/tools/gimpclonetool.c:92 app/tools/gimpclonetool.c:96
 #, c-format
 msgid "%s to set a new clone source"
 msgstr "%s za določitev novega vira kloniranja"
 
-#. Translators: the translation of "Click" must be the first word
-#: app/tools/gimpclonetool.c:96
+#: app/tools/gimpclonetool.c:95
 msgid "Click to set a new clone source"
 msgstr "Kliknite za določitev novega vira kloniranja"
+
+#: app/tools/gimpclonetool.c:97
+#, c-format
+msgid "%s-click to set a new clone source"
+msgstr "%s – kliknite, da nastavite nov vir klona"
 
 #: app/tools/gimpcoloroptions.c:71
 msgid "Use merged color value from all composited visible layers"
@@ -24746,15 +24750,19 @@ msgstr "Za_celi"
 msgid "Click to heal"
 msgstr "Kliknite za celjenje"
 
-#: app/tools/gimphealtool.c:80 app/tools/gimphealtool.c:85
+#: app/tools/gimphealtool.c:80 app/tools/gimphealtool.c:84
 #, c-format
 msgid "%s to set a new heal source"
 msgstr "%s za nastavitev novega vira celjenja"
 
-#. Translators: the translation of "Click" must be the first word
-#: app/tools/gimphealtool.c:84
+#: app/tools/gimphealtool.c:83
 msgid "Click to set a new heal source"
 msgstr "Klikni za ustvarjanje novega vira celjenja."
+
+#: app/tools/gimphealtool.c:85
+#, c-format
+msgid "%s-click to set a new heal source"
+msgstr "%s – kliknite, da nastavite nov vir zdravljenja"
 
 #: app/tools/gimphistogramoptions.c:64
 msgid "Histogram Scale"
