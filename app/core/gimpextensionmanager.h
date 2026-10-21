@@ -50,6 +50,8 @@ struct _GimpExtensionManagerClass
                                              gboolean              is_system_ext);
   void              (* extension_removed)   (GimpExtensionManager *manager,
                                              gchar                *extension_id);
+  void              (* gegl_path_added)     (GimpExtensionManager *manager,
+                                             GFile                *directory);
 };
 
 

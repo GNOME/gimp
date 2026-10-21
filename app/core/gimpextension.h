@@ -77,6 +77,7 @@ GList         * gimp_extension_get_tool_preset_paths   (GimpExtension  *extensio
 GList         * gimp_extension_get_splash_paths        (GimpExtension  *extension);
 GList         * gimp_extension_get_theme_paths         (GimpExtension  *extension);
 GList         * gimp_extension_get_plug_in_paths       (GimpExtension  *extension);
+GList         * gimp_extension_get_gegl_paths          (GimpExtension  *extension);
 
 gint            gimp_extension_cmp                     (GimpExtension  *extension1,
                                                         GimpExtension  *extension2);

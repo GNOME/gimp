@@ -63,6 +63,7 @@ struct _GimpExtensionPrivate
   GList    *tool_preset_paths;
   GList    *splash_paths;
   GList    *theme_paths;
+  GList    *gegl_paths;
 
   /* Extension metadata: plug-in entry points. */
   GList    *plug_in_paths;
@@ -618,6 +619,13 @@ gimp_extension_run (GimpExtension  *extension,
     }
   if (! (*error))
     {
+      value = g_hash_table_lookup (metadata, "GIMP::gegl-path");
+      extension->p->gegl_paths = gimp_extension_validate_paths (extension,
+                                                                value, TRUE,
+                                                                error);
+    }
+  if (! (*error))
+    {
       value = g_hash_table_lookup (metadata, "GIMP::splash-path");
       extension->p->splash_paths = gimp_extension_validate_paths (extension,
                                                                   value, TRUE,
@@ -710,6 +718,12 @@ gimp_extension_get_plug_in_paths (GimpExtension *extension)
   return extension->p->plug_in_paths;
 }
 
+GList *
+gimp_extension_get_gegl_paths (GimpExtension *extension)
+{
+  return extension->p->gegl_paths;
+}
+
 /**
  * @extension1: a #GimpExtension.
  * @extension2: another #GimpExtension.
@@ -764,6 +778,8 @@ gimp_extension_clean (GimpExtension  *extension)
   extension->p->tool_preset_paths = NULL;
   g_list_free_full (extension->p->plug_in_paths, g_object_unref);
   extension->p->plug_in_paths = NULL;
+  g_list_free_full (extension->p->gegl_paths, g_object_unref);
+  extension->p->gegl_paths = NULL;
   g_list_free_full (extension->p->splash_paths, g_object_unref);
   extension->p->splash_paths = NULL;
   g_list_free_full (extension->p->theme_paths, g_object_unref);

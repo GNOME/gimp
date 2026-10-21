@@ -57,6 +57,7 @@ enum
   PROP_TOOL_PRESET_PATHS,
   PROP_SPLASH_PATHS,
   PROP_THEME_PATHS,
+  PROP_GEGL_PATHS,
   PROP_PLUG_IN_EXTENSIONS,
 };
 
@@ -64,6 +65,7 @@ enum
 {
   EXTENSION_INSTALLED,
   EXTENSION_REMOVED,
+  GEGL_PATH_ADDED,
   LAST_SIGNAL
 };
 
@@ -91,6 +93,7 @@ struct _GimpExtensionManagerPrivate
   GList      *tool_preset_paths;
   GList      *splash_paths;
   GList      *theme_paths;
+  GList      *gegl_paths;
   GList      *plug_in_extensions;
 };
 
@@ -188,6 +191,10 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                                    g_param_spec_pointer ("theme-paths",
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_GEGL_PATHS,
+                                   g_param_spec_pointer ("gegl-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_PLUG_IN_EXTENSIONS,
                                    g_param_spec_pointer ("plug-in-extensions",
                                                          NULL, NULL,
@@ -211,6 +218,14 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
+  signals[GEGL_PATH_ADDED] =
+    g_signal_new ("gegl-path-added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpExtensionManagerClass, gegl_path_added),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_FILE);
 }
 
 static void
@@ -436,6 +451,8 @@ gimp_extension_manager_finalize (GObject *object)
   manager->p->tool_preset_paths = NULL;
   g_list_free_full (manager->p->plug_in_extensions, g_object_unref);
   manager->p->plug_in_extensions = NULL;
+  g_list_free_full (manager->p->gegl_paths, g_object_unref);
+  manager->p->gegl_paths = NULL;
   g_list_free_full (manager->p->splash_paths, g_object_unref);
   manager->p->splash_paths = NULL;
   g_list_free_full (manager->p->theme_paths, g_object_unref);
@@ -497,6 +514,10 @@ gimp_extension_manager_set_property (GObject      *object,
       g_list_free_full (manager->p->plug_in_extensions, g_object_unref);
       manager->p->plug_in_extensions = g_value_get_pointer (value);
       break;
+    case PROP_GEGL_PATHS:
+      g_list_free_full (manager->p->gegl_paths, g_object_unref);
+      manager->p->gegl_paths = g_value_get_pointer (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -546,6 +567,9 @@ gimp_extension_manager_get_property (GObject      *object,
       break;
     case PROP_PLUG_IN_EXTENSIONS:
       g_value_set_pointer (value, manager->p->plug_in_extensions);
+      break;
+    case PROP_GEGL_PATHS:
+      g_value_set_pointer (value, manager->p->gegl_paths);
       break;
 
     default:
@@ -934,7 +958,9 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
   GList         *tool_preset_paths   = NULL;
   GList         *splash_paths        = NULL;
   GList         *theme_paths         = NULL;
+  GList         *gegl_paths          = NULL;
   GList         *plug_in_extensions  = NULL;
+  GList         *removed_paths       = NULL;
 
   g_hash_table_iter_init (&iter, manager->p->running_extensions);
   while (g_hash_table_iter_next (&iter, &key, &value))
@@ -980,7 +1006,38 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
 
       if (gimp_extension_get_plug_in_paths (extension))
         plug_in_extensions = g_list_prepend (plug_in_extensions, g_object_ref (extension));
+
+      new_paths = g_list_copy_deep (gimp_extension_get_gegl_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      gegl_paths = g_list_concat (gegl_paths, new_paths);
     }
+
+  /* GEGL operations have already be loaded in app_libs_init(). Adding
+   * here the extension filters.
+   * Note that this only works for loading operations. We cannot disable
+   * loaded operations later on, even when disabling the corresponding
+   * extension.
+   */
+  for (GList *iter = gegl_paths; iter; iter = iter->next)
+    {
+      if (g_list_find_custom (manager->p->gegl_paths, iter->data,
+                              (GCompareFunc) gimp_file_compare))
+        {
+          /* GEGL does not like when we try to add a same path twice! */
+          removed_paths = g_list_prepend (removed_paths, iter->data);
+        }
+      else
+        {
+          gegl_load_module_directory (g_file_peek_path (iter->data));
+          g_signal_emit (manager, signals[GEGL_PATH_ADDED], 0, iter->data);
+        }
+    }
+  for (GList *iter = removed_paths; iter; iter = iter->next)
+    gegl_paths = g_list_remove (gegl_paths, iter->data);
+
+  gegl_paths = g_list_concat (g_list_copy_deep (manager->p->gegl_paths,
+                                                (GCopyFunc) g_object_ref, NULL),
+                              gegl_paths);
 
   g_object_set (manager,
                 "brush-paths",         brush_paths,
@@ -993,7 +1050,10 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
                 "plug-in-extensions",  plug_in_extensions,
                 "splash-paths",        splash_paths,
                 "theme-paths",         theme_paths,
+                "gegl-paths",          gegl_paths,
                 NULL);
+
+  g_list_free_full (removed_paths, g_object_unref);
 }
 
 static void
