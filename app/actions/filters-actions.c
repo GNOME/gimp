@@ -27,10 +27,13 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "core/gimp.h"
 #include "core/gimp-filter-history.h"
 #include "core/gimpimage.h"
 #include "core/gimpgrouplayer.h"
 #include "core/gimplayermask.h"
+
+#include "menus/filters-menu.h"
 
 #include "pdb/gimpprocedure.h"
 
@@ -50,12 +53,19 @@
 
 /*  local function prototypes  */
 
-static void     filters_actions_set_tooltips    (GimpActionGroup             *group,
-                                                 const GimpStringActionEntry *entries,
-                                                 gint                         n_entries);
-static void     filters_actions_history_changed (Gimp                        *gimp,
-                                                 GimpActionGroup             *group);
-static gboolean filters_is_non_interactive      (const gchar                 *action_name);
+static void     filters_actions_set_tooltips     (GimpActionGroup             *group,
+                                                  const GimpStringActionEntry *entries,
+                                                  gint                         n_entries);
+static void     filters_actions_history_changed  (Gimp                        *gimp,
+                                                  GimpActionGroup             *group);
+static void     filters_actions_gegl_paths_added (GimpExtensionManager        *manager,
+                                                  GList                       *directories,
+                                                  GimpActionGroup             *group);
+
+static void     filters_actions_generate_actions (GimpActionGroup             *group,
+                                                  gboolean                     first_setup,
+                                                  gboolean                     new_actions);
+static gboolean filters_is_non_interactive       (const gchar                 *action_name);
 
 
 /*  private variables  */
@@ -754,10 +764,6 @@ filters_actions_setup (GimpActionGroup *group)
   static gboolean           first_setup = TRUE;
   GimpProcedureActionEntry *entries;
   gint                      n_entries;
-  gint                      i;
-  GList                    *op_classes;
-  GList                    *iter;
-  GStrvBuilder             *gegl_actions;
 
   gimp_action_group_add_string_actions (group, "filters-action",
                                         filters_actions,
@@ -795,121 +801,7 @@ filters_actions_setup (GimpActionGroup *group)
       actions_filter_set_aux ("filters-bump-map");
     }
 
-  gegl_actions = g_strv_builder_new ();
-  op_classes   = gimp_gegl_get_op_classes (TRUE);
-
-  for (iter = op_classes; iter; iter = iter->next)
-    {
-      GeglOperationClass    *op_class = GEGL_OPERATION_CLASS (iter->data);
-      GimpStringActionEntry  entry   = { 0, };
-      gchar                 *formatted_op_name;
-      gchar                 *action_name;
-      const gchar           *title;
-      const gchar           *op_name;
-      gchar                 *label;
-
-      if (filters_actions_gegl_op_blocklisted (op_class->name))
-        continue;
-
-      formatted_op_name = g_strdup (op_class->name);
-      gimp_make_valid_action_name (formatted_op_name);
-      action_name = g_strdup_printf ("filters-%s", formatted_op_name);
-      i           = 2;
-      while (gimp_action_group_get_action (group, action_name) != NULL)
-        {
-          /* In the off-chance that after formatting to a valid action name, 2
-           * operations end up generating the same action name. Typically we
-           * don't want a third-party operation called "my-op" to have the same
-           * action name than "my_op" (which is to say that one will be
-           * overridden by the other).
-           */
-          g_free (action_name);
-          action_name = g_strdup_printf ("filters-%s-%d", formatted_op_name, i++);
-        }
-
-      title   = gegl_operation_class_get_key (op_class, "title");
-      op_name = op_class->name;
-
-      if (g_str_has_prefix (op_name, "gegl:"))
-        op_name += strlen ("gegl:");
-
-      if (title)
-        label = g_strdup_printf ("%s (%s)", title, op_name);
-      else
-        label = g_strdup (op_name);
-
-      entry.name      = action_name;
-      entry.icon_name = GIMP_ICON_GEGL;
-      entry.label     = label;
-      entry.tooltip   = gegl_operation_class_get_key (op_class, "description");
-      entry.value     = op_class->name;
-      entry.help_id   = GIMP_HELP_TOOL_GEGL;
-
-      if (gegl_operation_class_get_key (op_class, "gimp:menu-path") &&
-          g_str_has_prefix (op_class->name, "gegl:"))
-        /* We automatically create an help ID from the operation name
-         * for all core GEGL operations with a menu path key.
-         */
-        entry.help_id = formatted_op_name;
-
-      gimp_action_group_add_string_actions (group, "filters-action",
-                                            &entry, 1,
-                                            filters_apply_interactive_cmd_callback);
-
-      if (gegl_operation_class_get_key (op_class, "gimp:menu-label"))
-        {
-          GimpAction *action;
-
-          action = gimp_action_group_get_action (group, action_name);
-
-          gimp_action_set_short_label (action,
-                                       gegl_operation_class_get_key (op_class,
-                                                                     "gimp:menu-label"));
-        }
-      else if (title)
-        {
-          GimpAction *action;
-          /* TRANSLATORS: %s is the title of a GEGL operation (filter), after
-           * which we append "..." as the standardized labelling to indicate
-           * that this action raises a dialog.
-           */
-          gchar      *short_label = g_strdup_printf (_("%s..."), title);
-
-          action = gimp_action_group_get_action (group, action_name);
-          gimp_action_set_short_label (action, short_label);
-          g_free (short_label);
-        }
-
-      /* Identify third-party filters based on operations with an
-       * auxiliary pad in first setup because of slowness on Windows.
-       * See #14781.
-       */
-      if (first_setup)
-        {
-          GeglNode *node = gegl_node_new ();
-
-          gegl_node_set (node,
-                         "operation", op_class->name,
-                         NULL);
-
-          if (gegl_node_has_pad (node, "aux"))
-            actions_filter_set_aux (action_name);
-
-          g_clear_object (&node);
-        }
-      g_strv_builder_add (gegl_actions, action_name);
-
-      g_free (label);
-      g_free (action_name);
-      g_free (formatted_op_name);
-    }
-
-  g_object_set_data_full (G_OBJECT (group),
-                          "filters-group-generated-gegl-actions",
-                          g_strv_builder_end (gegl_actions),
-                          (GDestroyNotify) g_strfreev);
-  g_strv_builder_unref (gegl_actions);
-  g_list_free (op_classes);
+  filters_actions_generate_actions (group, first_setup, FALSE);
 
   gimp_action_group_add_enum_actions (group, "filters-action",
                                       filters_repeat_actions,
@@ -920,7 +812,7 @@ filters_actions_setup (GimpActionGroup *group)
 
   entries = g_new0 (GimpProcedureActionEntry, n_entries);
 
-  for (i = 0; i < n_entries; i++)
+  for (gint i = 0; i < n_entries; i++)
     {
       entries[i].name        = g_strdup_printf ("filters-recent-%02d", i + 1);
       entries[i].icon_name   = NULL;
@@ -933,7 +825,7 @@ filters_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_procedure_actions (group, entries, n_entries,
                                            filters_history_cmd_callback);
 
-  for (i = 0; i < n_entries; i++)
+  for (gint i = 0; i < n_entries; i++)
     {
       gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
       g_free ((gchar *) entries[i].name);
@@ -946,6 +838,10 @@ filters_actions_setup (GimpActionGroup *group)
                            group, 0);
 
   filters_actions_history_changed (group->gimp, group);
+
+  g_signal_connect_object (group->gimp->extension_manager, "gegl-paths-added",
+                           G_CALLBACK (filters_actions_gegl_paths_added),
+                           group, 0);
 
   first_setup = FALSE;
 }
@@ -1320,6 +1216,168 @@ filters_actions_history_changed (Gimp            *gimp,
                     "procedure", NULL,
                     NULL);
     }
+}
+
+static void
+filters_actions_gegl_paths_added (GimpExtensionManager *manager,
+                                  GList                *directories,
+                                  GimpActionGroup      *group)
+{
+  filters_actions_generate_actions (group, FALSE, TRUE);
+}
+
+static void
+filters_actions_generate_actions (GimpActionGroup *group,
+                                  gboolean         first_setup,
+                                  gboolean         new_actions)
+{
+  GimpUIManager *manager = NULL;
+  GList         *op_classes;
+  GList         *iter;
+  GStrvBuilder  *gegl_actions;
+  const gchar  **prev_actions;
+
+  if (new_actions)
+    {
+      for (iter = gimp_ui_managers_from_name ("<Image>"); iter; iter = iter->next)
+        {
+          if (gimp_ui_manager_get_action_group (iter->data, "filters") == group)
+            {
+              manager = iter->data;
+              break;
+            }
+        }
+    }
+
+  gegl_actions = g_strv_builder_new ();
+  prev_actions = g_object_get_data (G_OBJECT (group),
+                                    "filters-group-generated-gegl-actions");
+  if (prev_actions != NULL)
+    g_strv_builder_addv (gegl_actions, prev_actions);
+
+  op_classes   = gimp_gegl_get_op_classes (TRUE);
+
+  for (iter = op_classes; iter; iter = iter->next)
+    {
+      GeglOperationClass    *op_class = GEGL_OPERATION_CLASS (iter->data);
+      GimpStringActionEntry  entry    = { 0, };
+      GimpAction            *dup_action;
+      gchar                 *formatted_op_name;
+      gchar                 *action_name;
+      const gchar           *title;
+      const gchar           *op_name;
+      gchar                 *label;
+      gboolean               ignore   = FALSE;
+      gint                   i        = 2;
+
+      if (filters_actions_gegl_op_blocklisted (op_class->name))
+        continue;
+
+      formatted_op_name = g_strdup (op_class->name);
+      gimp_make_valid_action_name (formatted_op_name);
+      action_name = g_strdup_printf ("filters-%s", formatted_op_name);
+      while ((dup_action = gimp_action_group_get_action (group, action_name)) != NULL)
+        {
+          GimpStringAction *string_action = GIMP_STRING_ACTION (dup_action);
+
+          g_free (action_name);
+          if (g_strcmp0 (string_action->value, op_class->name) == 0)
+            {
+              ignore = TRUE;
+              break;
+            }
+
+          action_name = g_strdup_printf ("filters-%s-%d", formatted_op_name, i++);
+        }
+      if (ignore)
+        continue;
+
+      title   = gegl_operation_class_get_key (op_class, "title");
+      op_name = op_class->name;
+
+      if (g_str_has_prefix (op_name, "gegl:"))
+        op_name += strlen ("gegl:");
+
+      if (title)
+        label = g_strdup_printf ("%s (%s)", title, op_name);
+      else
+        label = g_strdup (op_name);
+
+      entry.name      = action_name;
+      entry.icon_name = GIMP_ICON_GEGL;
+      entry.label     = label;
+      entry.tooltip   = gegl_operation_class_get_key (op_class, "description");
+      entry.value     = op_class->name;
+      entry.help_id   = GIMP_HELP_TOOL_GEGL;
+
+      if (gegl_operation_class_get_key (op_class, "gimp:menu-path") &&
+          g_str_has_prefix (op_class->name, "gegl:"))
+        /* We automatically create an help ID from the operation name
+         * for all core GEGL operations with a menu path key.
+         */
+        entry.help_id = formatted_op_name;
+
+      gimp_action_group_add_string_actions (group, "filters-action",
+                                            &entry, 1,
+                                            filters_apply_interactive_cmd_callback);
+
+      if (gegl_operation_class_get_key (op_class, "gimp:menu-label"))
+        {
+          GimpAction *action;
+
+          action = gimp_action_group_get_action (group, action_name);
+
+          gimp_action_set_short_label (action,
+                                       gegl_operation_class_get_key (op_class,
+                                                                     "gimp:menu-label"));
+        }
+      else if (title)
+        {
+          GimpAction *action;
+          /* TRANSLATORS: %s is the title of a GEGL operation (filter), after
+           * which we append "..." as the standardized labelling to indicate
+           * that this action raises a dialog.
+           */
+          gchar      *short_label = g_strdup_printf (_("%s..."), title);
+
+          action = gimp_action_group_get_action (group, action_name);
+          gimp_action_set_short_label (action, short_label);
+          g_free (short_label);
+        }
+
+      /* Identify third-party filters based on operations with an
+       * auxiliary pad in first setup because of slowness on Windows.
+       * See #14781.
+       */
+      if (first_setup || new_actions)
+        {
+          GeglNode *node = gegl_node_new ();
+
+          gegl_node_set (node,
+                         "operation", op_class->name,
+                         NULL);
+
+          if (gegl_node_has_pad (node, "aux"))
+            actions_filter_set_aux (action_name);
+
+          if (new_actions && manager != NULL)
+            filters_menu_add_action (manager, action_name);
+
+          g_clear_object (&node);
+        }
+      g_strv_builder_add (gegl_actions, action_name);
+
+      g_free (label);
+      g_free (action_name);
+      g_free (formatted_op_name);
+    }
+
+  g_object_set_data_full (G_OBJECT (group),
+                          "filters-group-generated-gegl-actions",
+                          g_strv_builder_end (gegl_actions),
+                          (GDestroyNotify) g_strfreev);
+  g_strv_builder_unref (gegl_actions);
+  g_list_free (op_classes);
 }
 
 static gboolean

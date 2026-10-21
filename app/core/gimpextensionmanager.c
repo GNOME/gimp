@@ -65,7 +65,7 @@ enum
 {
   EXTENSION_INSTALLED,
   EXTENSION_REMOVED,
-  GEGL_PATH_ADDED,
+  GEGL_PATHS_ADDED,
   LAST_SIGNAL
 };
 
@@ -218,14 +218,14 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
-  signals[GEGL_PATH_ADDED] =
-    g_signal_new ("gegl-path-added",
+  signals[GEGL_PATHS_ADDED] =
+    g_signal_new ("gegl-paths-added",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpExtensionManagerClass, gegl_path_added),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  G_TYPE_FILE);
+                  G_TYPE_POINTER);
 }
 
 static void
@@ -1022,18 +1022,16 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
     {
       if (g_list_find_custom (manager->p->gegl_paths, iter->data,
                               (GCompareFunc) gimp_file_compare))
-        {
-          /* GEGL does not like when we try to add a same path twice! */
-          removed_paths = g_list_prepend (removed_paths, iter->data);
-        }
+        /* GEGL does not like when we try to add a same path twice! */
+        removed_paths = g_list_prepend (removed_paths, iter->data);
       else
-        {
-          gegl_load_module_directory (g_file_peek_path (iter->data));
-          g_signal_emit (manager, signals[GEGL_PATH_ADDED], 0, iter->data);
-        }
+        gegl_load_module_directory (g_file_peek_path (iter->data));
     }
   for (GList *iter = removed_paths; iter; iter = iter->next)
     gegl_paths = g_list_remove (gegl_paths, iter->data);
+
+  if (gegl_paths != NULL)
+    g_signal_emit (manager, signals[GEGL_PATHS_ADDED], 0, gegl_paths);
 
   gegl_paths = g_list_concat (g_list_copy_deep (manager->p->gegl_paths,
                                                 (GCopyFunc) g_object_ref, NULL),

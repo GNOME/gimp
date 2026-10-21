@@ -43,12 +43,11 @@ filters_menu_setup (GimpUIManager *manager,
 {
   GimpActionGroup  *group;
   gchar           **gegl_actions;
-  gint              i;
 
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  for (i = 0; i < gimp_filter_history_size (manager->gimp); i++)
+  for (gint i = 0; i < gimp_filter_history_size (manager->gimp); i++)
     {
       gchar *action_name;
 
@@ -65,56 +64,67 @@ filters_menu_setup (GimpUIManager *manager,
 
   g_return_if_fail (gegl_actions != NULL);
 
-  for (i = 0; i < g_strv_length (gegl_actions); i++)
+  for (gint i = 0; i < g_strv_length (gegl_actions); i++)
+    filters_menu_add_action (manager, gegl_actions[i]);
+}
+
+void
+filters_menu_add_action (GimpUIManager *manager,
+                         const gchar   *action_name)
+{
+  GimpActionGroup *group;
+  GimpAction      *action;
+  gchar           *path;
+  gchar           *root;
+  const gchar     *op_name;
+
+  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (action_name != NULL);
+
+  group   = gimp_ui_manager_get_action_group (manager, "filters");
+  action  = gimp_action_group_get_action (group, action_name);
+  op_name = (const gchar *) GIMP_STRING_ACTION (action)->value;
+  path    = (gchar *) gegl_operation_get_key (op_name, "gimp:menu-path");
+
+  if (path == NULL)
+    return;
+
+  path = g_strdup (path);
+  root = strstr (path, "/");
+
+  if (root == NULL || root == path)
     {
-      GimpAction  *action;
-      gchar       *path;
-      gchar       *root;
-      const gchar *op_name;
+      g_printerr ("GEGL operation \"%s\" attempted to register a menu item "
+                  "with an invalid value for key \"gimp:menu-path\": \"%s\"\n"
+                  "Expected format is \"<MenuName>/menu/submenu.\n",
+                  action_name, path);
+    }
+  else
+    {
+      GList *managers;
 
-      action  = gimp_action_group_get_action (group, gegl_actions[i]);
-      op_name = (const gchar *) GIMP_STRING_ACTION (action)->value;
-      path    = (gchar *) gegl_operation_get_key (op_name, "gimp:menu-path");
+      *root    = '\0';
+      managers = gimp_ui_managers_from_name (path);
 
-      if (path == NULL)
-        continue;
-
-      path = g_strdup (path);
-      root = strstr (path, "/");
-
-      if (root == NULL || root == path)
+      if (managers == NULL)
         {
-          g_printerr ("GEGL operation \"%s\" attempted to register a menu item "
-                      "with an invalid value for key \"gimp:menu-path\": \"%s\"\n"
-                      "Expected format is \"<MenuName>/menu/submenu.\n",
-                      gegl_actions[i], path);
+          g_printerr ("GEGL operation \"%s\" attempted to register an item in "
+                      "the invalid menu \"%s\": use either \"<Image>\", "
+                      "\"<Layers>\", \"<Channels>\", \"<Paths>\", "
+                      "\"<Colormap>\", \"<Brushes>\", \"<Dynamics>\", "
+                      "\"<MyPaintBrushes>\", \"<Gradients>\", \"<Palettes>\", "
+                      "\"<Patterns>\", \"<ToolPresets>\", \"<Fonts>\" "
+                      "\"<Buffers>\" or \"<QuickMask>\".\n",
+                      action_name, path);
         }
       else
         {
-          GList *managers;
+          *root = '/';
 
-          *root    = '\0';
-          managers = gimp_ui_managers_from_name (path);
-
-          if (managers == NULL)
-            {
-              g_printerr ("GEGL operation \"%s\" attempted to register an item in "
-                          "the invalid menu \"%s\": use either \"<Image>\", "
-                          "\"<Layers>\", \"<Channels>\", \"<Paths>\", "
-                          "\"<Colormap>\", \"<Brushes>\", \"<Dynamics>\", "
-                          "\"<MyPaintBrushes>\", \"<Gradients>\", \"<Palettes>\", "
-                          "\"<Patterns>\", \"<ToolPresets>\", \"<Fonts>\" "
-                          "\"<Buffers>\" or \"<QuickMask>\".\n",
-                          gegl_actions[i], path);
-            }
-          else
-            {
-              *root = '/';
-
-              for (GList *m = managers; m; m = m->next)
-                gimp_ui_manager_add_ui (m->data, root, gegl_actions[i], FALSE);
-            }
+          for (GList *m = managers; m; m = m->next)
+            gimp_ui_manager_add_ui (m->data, root, action_name, FALSE);
         }
-      g_free (path);
     }
+
+  g_free (path);
 }

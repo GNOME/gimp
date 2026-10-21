@@ -18,5 +18,7 @@
 #pragma once
 
 
-void   filters_menu_setup (GimpUIManager *manager,
-                           const gchar   *ui_path);
+void   filters_menu_setup      (GimpUIManager *manager,
+                                const gchar   *ui_path);
+void   filters_menu_add_action (GimpUIManager *manager,
+                                const gchar   *action_name);
