@@ -67,6 +67,7 @@ Core:
     got an implementation.
   * Alpha threshold for pixel picking (Move tool or Alt + Middle-click)
     has been lowered to near 0.
+  * GIMP Extensions can now ship GEGL operations (filters).
 
 Tools:
 
