@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-21 17:23+0000\n"
-"PO-Revision-Date: 2026-10-21 19:52+0200\n"
+"POT-Creation-Date: 2026-10-22 04:51+0000\n"
+"PO-Revision-Date: 2026-10-22 08:37+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -4453,706 +4453,706 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/filters-actions.c:66
+#: app/actions/filters-actions.c:76
 msgctxt "filters-action"
 msgid "_Antialias"
 msgstr "_Zgladi robove"
 
-#: app/actions/filters-actions.c:71
+#: app/actions/filters-actions.c:81
 msgctxt "filters-action"
 msgid "_Color Enhance"
 msgstr "_Barvno izboljšaj"
 
-#: app/actions/filters-actions.c:76
+#: app/actions/filters-actions.c:86
 msgctxt "filters-action"
 msgid "L_inear Invert"
 msgstr "Preobrni l_inearno"
 
-#: app/actions/filters-actions.c:81
+#: app/actions/filters-actions.c:91
 msgctxt "filters-action"
 msgid "In_vert"
 msgstr "Preo_brni"
 
-#: app/actions/filters-actions.c:86
+#: app/actions/filters-actions.c:96
 msgctxt "filters-action"
 msgid "_Value Invert"
 msgstr "Preobrni _vrednosti"
 
-#: app/actions/filters-actions.c:91
+#: app/actions/filters-actions.c:101
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
 msgstr "Ra_ztegni kontrast HSV"
 
-#: app/actions/filters-actions.c:99
+#: app/actions/filters-actions.c:109
 msgctxt "filters-action"
 msgid "_Dilate"
 msgstr "Ra_zlij"
 
-#: app/actions/filters-actions.c:100
+#: app/actions/filters-actions.c:110
 msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Povečaj svetlejša območja slike"
 
-#: app/actions/filters-actions.c:115
+#: app/actions/filters-actions.c:125
 msgctxt "filters-action"
 msgid "_Erode"
 msgstr "_Razjedi"
 
-#: app/actions/filters-actions.c:116
+#: app/actions/filters-actions.c:126
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Povečaj temnejša območja slike"
 
-#: app/actions/filters-actions.c:134
+#: app/actions/filters-actions.c:144
 msgctxt "filters-action"
 msgid "_Alien Map..."
 msgstr "Poslikaj _napis …"
 
-#: app/actions/filters-actions.c:139
+#: app/actions/filters-actions.c:149
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
 msgstr "_Uveljavi platno ..."
 
-#: app/actions/filters-actions.c:144
+#: app/actions/filters-actions.c:154
 msgctxt "filters-action"
 msgid "Apply _Lens..."
 msgstr "Uveljavi _objektiv ..."
 
-#: app/actions/filters-actions.c:149
+#: app/actions/filters-actions.c:159
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
 msgstr "_Bayerjeva matrika …"
 
-#: app/actions/filters-actions.c:154
+#: app/actions/filters-actions.c:164
 msgctxt "filters-action"
 msgid "_Bloom..."
 msgstr "_Razcvet …"
 
-#: app/actions/filters-actions.c:159
+#: app/actions/filters-actions.c:169
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "_Svetlost-kontrast ..."
 
-#: app/actions/filters-actions.c:164
+#: app/actions/filters-actions.c:174
 msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "_Poslikaj odtis …"
 
-#: app/actions/filters-actions.c:169
+#: app/actions/filters-actions.c:179
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "_Barva v sivino ..."
 
-#: app/actions/filters-actions.c:174
+#: app/actions/filters-actions.c:184
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "S_trip ..."
 
-#: app/actions/filters-actions.c:179
+#: app/actions/filters-actions.c:189
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "Mešalec _kanalov …"
 
-#: app/actions/filters-actions.c:184
+#: app/actions/filters-actions.c:194
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "_Šahovnica …"
 
-#: app/actions/filters-actions.c:189
+#: app/actions/filters-actions.c:199
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "_Uravnavanje barv ..."
 
-#: app/actions/filters-actions.c:194
+#: app/actions/filters-actions.c:204
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "_Izbemnjava barv ..."
 
-#: app/actions/filters-actions.c:199
+#: app/actions/filters-actions.c:209
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "Pre_barvaj ..."
 
-#: app/actions/filters-actions.c:204
+#: app/actions/filters-actions.c:214
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "St_resanje …"
 
-#: app/actions/filters-actions.c:209
+#: app/actions/filters-actions.c:219
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "_Zasukaj barve ..."
 
-#: app/actions/filters-actions.c:214
+#: app/actions/filters-actions.c:224
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "Barvna t_emperatura ..."
 
-#: app/actions/filters-actions.c:219
+#: app/actions/filters-actions.c:229
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "Barva v _alfo ..."
 
-#: app/actions/filters-actions.c:224
+#: app/actions/filters-actions.c:234
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "_Izvleci komponento ..."
 
-#: app/actions/filters-actions.c:229
+#: app/actions/filters-actions.c:239
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "_Konvolucijska matrika …"
 
-#: app/actions/filters-actions.c:234
+#: app/actions/filters-actions.c:244
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "_Kubizem ..."
 
-#: app/actions/filters-actions.c:239
+#: app/actions/filters-actions.c:249
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "_Krivulje ..."
 
-#: app/actions/filters-actions.c:244
+#: app/actions/filters-actions.c:254
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "_Razpleti …"
 
-#: app/actions/filters-actions.c:249
+#: app/actions/filters-actions.c:259
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "_Zmanjšaj nasičenost …"
 
-#: app/actions/filters-actions.c:254
+#: app/actions/filters-actions.c:264
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
 msgstr "Razlika _Gaussovih zabrisanosti ..."
 
-#: app/actions/filters-actions.c:259
+#: app/actions/filters-actions.c:269
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
 msgstr "Vzorci l_oma …"
 
-#: app/actions/filters-actions.c:264
+#: app/actions/filters-actions.c:274
 msgctxt "filters-action"
 msgid "_Displace..."
 msgstr "Za_makni …"
 
-#: app/actions/filters-actions.c:269
+#: app/actions/filters-actions.c:279
 msgctxt "filters-action"
 msgid "Distance _Map..."
 msgstr "_Zemljevid oddaljenosti …"
 
-#: app/actions/filters-actions.c:274
+#: app/actions/filters-actions.c:284
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "Vrzi sen_co …"
 
-#: app/actions/filters-actions.c:279
+#: app/actions/filters-actions.c:289
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "_Rob …"
 
-#: app/actions/filters-actions.c:284
+#: app/actions/filters-actions.c:294
 msgctxt "filters-action"
 msgid "_Laplace..."
 msgstr "_Laplace …"
 
-#: app/actions/filters-actions.c:289
+#: app/actions/filters-actions.c:299
 msgctxt "filters-action"
 msgid "_Neon..."
 msgstr "_Neon ..."
 
-#: app/actions/filters-actions.c:294
+#: app/actions/filters-actions.c:304
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Sobel..."
 
-#: app/actions/filters-actions.c:299
+#: app/actions/filters-actions.c:309
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "_Reliefno okrasi …"
 
-#: app/actions/filters-actions.c:304
+#: app/actions/filters-actions.c:314
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "V_graviraj …"
 
-#: app/actions/filters-actions.c:309
+#: app/actions/filters-actions.c:319
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Osvet_litev …"
 
-#: app/actions/filters-actions.c:314
+#: app/actions/filters-actions.c:324
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Fattal et al. 2002 ..."
 
-#: app/actions/filters-actions.c:319
+#: app/actions/filters-actions.c:329
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "_Zabrisanost ostrine ..."
 
-#: app/actions/filters-actions.c:324
+#: app/actions/filters-actions.c:334
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "_Sledenje fraktala …"
 
-#: app/actions/filters-actions.c:329
+#: app/actions/filters-actions.c:339
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "_Gaussova zabrisanost ..."
 
-#: app/actions/filters-actions.c:334
+#: app/actions/filters-actions.c:344
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Selektivno Gaussovo zabrisanje …"
 
-#: app/actions/filters-actions.c:339
+#: app/actions/filters-actions.c:349
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
 msgstr "Grafikon _GEGL ..."
 
-#: app/actions/filters-actions.c:344
+#: app/actions/filters-actions.c:354
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Mreža …"
 
-#: app/actions/filters-actions.c:349
+#: app/actions/filters-actions.c:359
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "_Visoki prehod …"
 
-#: app/actions/filters-actions.c:354
+#: app/actions/filters-actions.c:364
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "Obarvanost in _kroma …"
 
-#: app/actions/filters-actions.c:359
+#: app/actions/filters-actions.c:369
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "Obarvanost-_nasičenost ..."
 
-#: app/actions/filters-actions.c:364
+#: app/actions/filters-actions.c:374
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Iluzija …"
 
-#: app/actions/filters-actions.c:369
+#: app/actions/filters-actions.c:379
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "Prel_iv slike ..."
 
-#: app/actions/filters-actions.c:374
+#: app/actions/filters-actions.c:384
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Kalejdoskop ..."
 
-#: app/actions/filters-actions.c:379
+#: app/actions/filters-actions.c:389
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
 msgstr "Zabrisanost _objektiva ..."
 
-#: app/actions/filters-actions.c:384
+#: app/actions/filters-actions.c:394
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "_Popačenje leč ..."
 
-#: app/actions/filters-actions.c:389
+#: app/actions/filters-actions.c:399
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "_Odblesk objektiva …"
 
-#: app/actions/filters-actions.c:394
+#: app/actions/filters-actions.c:404
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "_Ravni ..."
 
-#: app/actions/filters-actions.c:399
+#: app/actions/filters-actions.c:409
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "_Linearna sinusoida …"
 
-#: app/actions/filters-actions.c:404
+#: app/actions/filters-actions.c:414
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "_Majhen planet …"
 
-#: app/actions/filters-actions.c:409
+#: app/actions/filters-actions.c:419
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "Vrzi sen_co …"
 
-#: app/actions/filters-actions.c:414
+#: app/actions/filters-actions.c:424
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006 ..."
 
-#: app/actions/filters-actions.c:419
+#: app/actions/filters-actions.c:429
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Blodnjak …"
 
-#: app/actions/filters-actions.c:424
+#: app/actions/filters-actions.c:434
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "Zabrisanost srednje _ukrivljenosti ..."
 
-#: app/actions/filters-actions.c:429
+#: app/actions/filters-actions.c:439
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "Zabrisanost _mediane ..."
 
-#: app/actions/filters-actions.c:434
+#: app/actions/filters-actions.c:444
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Mono mešalec ..."
 
-#: app/actions/filters-actions.c:439
+#: app/actions/filters-actions.c:449
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mozaik ..."
 
-#: app/actions/filters-actions.c:444
+#: app/actions/filters-actions.c:454
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Krožna zabrisanost v gibanju …"
 
-#: app/actions/filters-actions.c:449
+#: app/actions/filters-actions.c:459
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Linearna zabrisanost v gibanju …"
 
-#: app/actions/filters-actions.c:454
+#: app/actions/filters-actions.c:464
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Zabrisanost v gibanju s približevanjem ..."
 
-#: app/actions/filters-actions.c:459
+#: app/actions/filters-actions.c:469
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Celični šum …"
 
-#: app/actions/filters-actions.c:464
+#: app/actions/filters-actions.c:474
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "_Časopisni tisk …"
 
-#: app/actions/filters-actions.c:469
+#: app/actions/filters-actions.c:479
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "Šum _CIE Ich …"
 
-#: app/actions/filters-actions.c:474
+#: app/actions/filters-actions.c:484
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "Šum HS_V ..."
 
-#: app/actions/filters-actions.c:479
+#: app/actions/filters-actions.c:489
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Vrženo ..."
 
-#: app/actions/filters-actions.c:484
+#: app/actions/filters-actions.c:494
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "Šum _Perlin …"
 
-#: app/actions/filters-actions.c:489
+#: app/actions/filters-actions.c:499
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Naberi ..."
 
-#: app/actions/filters-actions.c:494
+#: app/actions/filters-actions.c:504
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Šum R_GB ..."
 
-#: app/actions/filters-actions.c:499
+#: app/actions/filters-actions.c:509
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "R_edukcija šuma ..."
 
-#: app/actions/filters-actions.c:504
+#: app/actions/filters-actions.c:514
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "Šum _simpleks ..."
 
-#: app/actions/filters-actions.c:509
+#: app/actions/filters-actions.c:519
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Nerazločno ..."
 
-#: app/actions/filters-actions.c:514
+#: app/actions/filters-actions.c:524
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Enakomeren šum …"
 
-#: app/actions/filters-actions.c:519
+#: app/actions/filters-actions.c:529
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Raz_širi …"
 
-#: app/actions/filters-actions.c:524
+#: app/actions/filters-actions.c:534
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "_Poslikaj navadno …"
 
-#: app/actions/filters-actions.c:529
+#: app/actions/filters-actions.c:539
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "_Zamik ..."
 
-#: app/actions/filters-actions.c:534
+#: app/actions/filters-actions.c:544
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Na_olji …"
 
-#: app/actions/filters-actions.c:539
+#: app/actions/filters-actions.c:549
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Panoramska projekcija ..."
 
-#: app/actions/filters-actions.c:544
+#: app/actions/filters-actions.c:554
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopiraj ..."
 
-#: app/actions/filters-actions.c:549
+#: app/actions/filters-actions.c:559
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pikseliziraj ..."
 
-#: app/actions/filters-actions.c:554
+#: app/actions/filters-actions.c:564
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plazma …"
 
-#: app/actions/filters-actions.c:559
+#: app/actions/filters-actions.c:569
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "P_olarne koordinate ..."
 
-#: app/actions/filters-actions.c:564
+#: app/actions/filters-actions.c:574
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posteriziraj …"
 
-#: app/actions/filters-actions.c:569
+#: app/actions/filters-actions.c:579
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "_Rekurzivno preoblikovanje …"
 
-#: app/actions/filters-actions.c:574
+#: app/actions/filters-actions.c:584
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Odstrani _rdeče oči …"
 
-#: app/actions/filters-actions.c:579
+#: app/actions/filters-actions.c:589
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005 ..."
 
-#: app/actions/filters-actions.c:584
+#: app/actions/filters-actions.c:594
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "Pore_ži RGB ..."
 
-#: app/actions/filters-actions.c:589
+#: app/actions/filters-actions.c:599
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Valovanje ..."
 
-#: app/actions/filters-actions.c:594
+#: app/actions/filters-actions.c:604
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "Nasi_čenost …"
 
-#: app/actions/filters-actions.c:599
+#: app/actions/filters-actions.c:609
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Napol splošči ..."
 
-#: app/actions/filters-actions.c:604
+#: app/actions/filters-actions.c:614
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepija …"
 
-#: app/actions/filters-actions.c:609
+#: app/actions/filters-actions.c:619
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "Sen_ce-svetli toni …"
 
-#: app/actions/filters-actions.c:614
+#: app/actions/filters-actions.c:624
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Zamakni …"
 
-#: app/actions/filters-actions.c:619
+#: app/actions/filters-actions.c:629
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus …"
 
-#: app/actions/filters-actions.c:624
+#: app/actions/filters-actions.c:634
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_Enostavno linearno iterativno grozdenje ..."
 
-#: app/actions/filters-actions.c:629
+#: app/actions/filters-actions.c:639
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Simetrično najbližji sosed ..."
 
-#: app/actions/filters-actions.c:634
+#: app/actions/filters-actions.c:644
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Mehko žarenje ..."
 
-#: app/actions/filters-actions.c:639
+#: app/actions/filters-actions.c:649
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "_Kockaj ..."
 
-#: app/actions/filters-actions.c:644
+#: app/actions/filters-actions.c:654
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "S_pirala …"
 
-#: app/actions/filters-actions.c:649
+#: app/actions/filters-actions.c:659
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Raztegni kontrast ..."
 
-#: app/actions/filters-actions.c:654
+#: app/actions/filters-actions.c:664
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Stres ..."
 
-#: app/actions/filters-actions.c:659
+#: app/actions/filters-actions.c:669
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "_Super_nova …"
 
-#: app/actions/filters-actions.c:664
+#: app/actions/filters-actions.c:674
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Prag ..."
 
-#: app/actions/filters-actions.c:669
+#: app/actions/filters-actions.c:679
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Prag alfe ..."
 
-#: app/actions/filters-actions.c:674
+#: app/actions/filters-actions.c:684
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "Tlakovanje s _steklom …"
 
-#: app/actions/filters-actions.c:679
+#: app/actions/filters-actions.c:689
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "Tlakuj kot _papir …"
 
-#: app/actions/filters-actions.c:684
+#: app/actions/filters-actions.c:694
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Tlakuj neopazno …"
 
-#: app/actions/filters-actions.c:689
+#: app/actions/filters-actions.c:699
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Izostri (maska ne_ostrine) ..."
 
-#: app/actions/filters-actions.c:694
+#: app/actions/filters-actions.c:704
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Raz_širi vrednost …"
 
-#: app/actions/filters-actions.c:699
+#: app/actions/filters-actions.c:709
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "_Spremenljiva zabrisanost ..."
 
-#: app/actions/filters-actions.c:704
+#: app/actions/filters-actions.c:714
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "Degradacija _videa ..."
 
-#: app/actions/filters-actions.c:709
+#: app/actions/filters-actions.c:719
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vinjetiranje …"
 
-#: app/actions/filters-actions.c:714
+#: app/actions/filters-actions.c:724
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Vodene slikovne točke ..."
 
-#: app/actions/filters-actions.c:719
+#: app/actions/filters-actions.c:729
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Valovanje …"
 
-#: app/actions/filters-actions.c:724
+#: app/actions/filters-actions.c:734
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Vrtinči in odščipni …"
 
-#: app/actions/filters-actions.c:729
+#: app/actions/filters-actions.c:739
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "V_eter …"
 
-#: app/actions/filters-actions.c:737
+#: app/actions/filters-actions.c:747
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "Po_novi zadnje"
 
-#: app/actions/filters-actions.c:739
+#: app/actions/filters-actions.c:749
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Ponovno poženi nazadnje uporabljen filter z enakimi nastavitvami"
 
-#: app/actions/filters-actions.c:744
+#: app/actions/filters-actions.c:754
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "Ponovno pokaži _zadnje"
 
-#: app/actions/filters-actions.c:745
+#: app/actions/filters-actions.c:755
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Pokaži znova pogovorno okno nazadnje uporabljenega filtra"
+
+#: app/actions/filters-actions.c:1100
+#, c-format
+msgid "Re_peat \"%s\""
+msgstr "_Ponovi »%s«"
+
+#: app/actions/filters-actions.c:1101
+#, c-format
+msgid "R_e-Show \"%s\""
+msgstr "Ponovno po_kaži »%s«"
+
+#: app/actions/filters-actions.c:1139
+msgid "Repeat Last"
+msgstr "Ponovi zadnjega"
+
+#: app/actions/filters-actions.c:1141
+msgid "Re-Show Last"
+msgstr "Ponovno pokaži zadnjega"
+
+#: app/actions/filters-actions.c:1144 app/actions/filters-actions.c:1146
+msgid "No last used filters"
+msgstr "Ni nazadnje uporabljenih filtrov"
 
 #. TRANSLATORS: %s is the title of a GEGL operation (filter), after
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:876
+#: app/actions/filters-actions.c:1344
 #, c-format
 msgid "%s..."
 msgstr "%s ..."
-
-#: app/actions/filters-actions.c:1204
-#, c-format
-msgid "Re_peat \"%s\""
-msgstr "_Ponovi »%s«"
-
-#: app/actions/filters-actions.c:1205
-#, c-format
-msgid "R_e-Show \"%s\""
-msgstr "Ponovno po_kaži »%s«"
-
-#: app/actions/filters-actions.c:1243
-msgid "Repeat Last"
-msgstr "Ponovi zadnjega"
-
-#: app/actions/filters-actions.c:1245
-msgid "Re-Show Last"
-msgstr "Ponovno pokaži zadnjega"
-
-#: app/actions/filters-actions.c:1248 app/actions/filters-actions.c:1250
-msgid "No last used filters"
-msgstr "Ni nazadnje uporabljenih filtrov"
 
 #: app/actions/filters-commands.c:282 app/display/gimpdisplayshell-dnd.c:393
 #: app/tools/gimpfiltertool.c:334 app/tools/gimppainttool.c:355
@@ -5640,7 +5640,7 @@ msgstr "Uredi ta preliv"
 msgid "Save '%s' as POV-Ray"
 msgstr "Shrani »%s« kot žarek POV"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:902
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:903
 msgctxt "help-action"
 msgid "_Help"
 msgstr "Po_moč"
@@ -10393,7 +10393,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Preklopi na predhodnjo sliko"
 
-#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:891
+#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:892
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "Po_ložaj zavihkov"
@@ -11859,7 +11859,7 @@ msgstr "Največje število dejanj, shranjenih v zgodovini."
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
 #: app/core/gimp-units.c:185 app/gui/session.c:309 app/menus/shortcuts-rc.c:148
-#: app/plug-in/plug-in-rc.c:257 app/tools/gimp-tools.c:504
+#: app/plug-in/plug-in-rc.c:257 app/tools/gimp-tools.c:506
 msgid "fatal parse error"
 msgstr "usodna razčlenitvena napaka"
 
@@ -13184,12 +13184,12 @@ msgstr "»%s« ni veljavna datoteka."
 msgid "System extensions cannot be uninstalled."
 msgstr "Sistemskih razširitev ni mogoče odnamestiti."
 
-#: app/core/gimpextensionmanager.c:1112
+#: app/core/gimpextensionmanager.c:1110
 #, c-format
 msgid "Skipping extension '%s': %s\n"
 msgstr "Preskočitev razširitve »%s«: %s\n"
 
-#: app/core/gimpextensionmanager.c:1120
+#: app/core/gimpextensionmanager.c:1118
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "Preskakovanje neznane datoteke »%s« v mapi razširitev.\n"
@@ -18843,7 +18843,8 @@ msgstr "Izberite slog poteze"
 msgid "_Stroke"
 msgstr "_Poteza"
 
-#: app/dialogs/stroke-dialog.c:174
+#: app/dialogs/stroke-dialog.c:174 app/tools/gimpshapeoptions.c:631
+#: app/tools/gimpshapetool.c:755
 msgid "Line"
 msgstr "Črta"
 
@@ -21366,8 +21367,10 @@ msgid "Tilt"
 msgstr "Nagni"
 
 #. Blob shape widgets
+#. Shape Type
 #: app/paint/gimpinkoptions.c:107 app/tools/gimpgradientoptions.c:96
 #: app/tools/gimpgradientoptions.c:305 app/tools/gimpinkoptions-gui.c:99
+#: app/tools/gimpshapeoptions.c:124 app/tools/gimpshapeoptions.c:626
 msgid "Shape"
 msgstr "Oblika"
 
@@ -21902,6 +21905,10 @@ msgstr "Slog poteze"
 #: app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
 msgstr "Združi maske"
+
+#: app/pdb/context-cmds.c:2118 app/pdb/fonts-cmds.c:82 app/pdb/fonts-cmds.c:149
+msgid "Failed waiting for the loading of fonts."
+msgstr "Čakanje nalaganja pisav je spodletelo."
 
 #: app/pdb/drawable-cmds.c:655
 msgid "Add filter"
@@ -22797,7 +22804,7 @@ msgstr "Po_nastavi obseg"
 msgid "Preserve _luminosity"
 msgstr "Ohrani _svetilnost"
 
-#: app/propgui/gimppropgui-color-rotate.c:124
+#: app/propgui/gimppropgui-color-rotate.c:124 app/tools/gimpshapeoptions.c:695
 msgid "Clockwise"
 msgstr "V smeri ur. kaz."
 
@@ -24924,8 +24931,8 @@ msgstr "Samodejno spremeni velikost okna"
 msgid "Resize image window to accommodate new zoom level"
 msgstr "Prilagodi velikost okna novi ravni povečave"
 
-#: app/tools/gimpmagnifyoptions.c:92 app/tools/gimptransformoptions.c:97
-#: app/widgets/gimpdynamicseditor.c:163
+#: app/tools/gimpmagnifyoptions.c:92 app/tools/gimpshapeoptions.c:689
+#: app/tools/gimptransformoptions.c:97 app/widgets/gimpdynamicseditor.c:163
 #: app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
 msgstr "Smer"
@@ -25484,7 +25491,7 @@ msgstr "Fiksna višina po meri"
 msgid "Unit of fixed width, height or size"
 msgstr "Enota fiksne širine, višine ali velikosti"
 
-#: app/tools/gimprectangleoptions.c:296
+#: app/tools/gimprectangleoptions.c:296 app/tools/gimpshapeoptions.c:148
 msgid "Expand from center"
 msgstr "Razširi iz središča"
 
@@ -25714,6 +25721,88 @@ msgstr "Ni mogoče odštevati od praznega izbora."
 #, c-format
 msgid "Cannot intersect with an empty selection."
 msgstr "Ni mogoče presekati s praznim izborom."
+
+#: app/tools/gimpshapeoptions.c:133
+msgid "Draw directly on selected layers"
+msgstr "Risajte neposredno na izbrane plasti"
+
+#: app/tools/gimpshapeoptions.c:134
+msgid ""
+"If checked, shapes will be drawn directly on any selected raster item "
+"instead of as a vector layer"
+msgstr ""
+"Če je ta možnost izbrana, se bodo liki narisali neposredno na poljubni "
+"izbrani rastrski element, namesto da bi bile prikazani kot vektorska plast"
+
+#: app/tools/gimpshapeoptions.c:142
+msgid "Fixed aspect ratio"
+msgstr "Nespremenljivo razmerje stranic"
+
+#: app/tools/gimpshapeoptions.c:154
+msgid "Number of sides"
+msgstr "Število stranic"
+
+#: app/tools/gimpshapeoptions.c:162
+msgid "Spiral Direction"
+msgstr "Smer spirale"
+
+#: app/tools/gimpshapeoptions.c:170
+msgid "Fill"
+msgstr "Polnilo"
+
+#. the stroke frame
+#: app/tools/gimpshapeoptions.c:201 app/tools/gimpwarpoptions.c:350
+msgid "Stroke"
+msgstr "Poteza"
+
+#: app/tools/gimpshapeoptions.c:632 app/tools/gimpshapetool.c:759
+msgid "Rectangle"
+msgstr "Pravokotnik"
+
+#: app/tools/gimpshapeoptions.c:633 app/tools/gimpshapetool.c:763
+msgid "Ellipse"
+msgstr "Elipsa"
+
+#: app/tools/gimpshapeoptions.c:634 app/tools/gimpshapetool.c:767
+msgid "Polygon"
+msgstr "Mnogokotnik"
+
+#: app/tools/gimpshapeoptions.c:635 app/tools/gimpshapetool.c:771
+msgid "Star"
+msgstr "Zvezda"
+
+#: app/tools/gimpshapeoptions.c:636 app/tools/gimpshapetool.c:775
+msgid "Spiral"
+msgstr "Spirala"
+
+#: app/tools/gimpshapeoptions.c:650
+msgid "Shape specific settings"
+msgstr "Nastavitve za posamezen lik"
+
+#: app/tools/gimpshapeoptions.c:678
+msgid "Sides"
+msgstr "Stranice"
+
+#: app/tools/gimpshapeoptions.c:696
+msgid "Counter-clockwise"
+msgstr "Nasprotno smeri urinega kazalca"
+
+#: app/tools/gimpshapetool.c:134
+msgid "Shape Creator"
+msgstr "Oblikovalec likov"
+
+#: app/tools/gimpshapetool.c:135
+msgid "Shape Tool: Create vector and raster shapes"
+msgstr "Orodje za like: ustvarjanje vektorskih in rastrskih likov"
+
+#: app/tools/gimpshapetool.c:136
+msgid "Sh_ape"
+msgstr "_Lik"
+
+#: app/tools/gimpshapetool.c:276
+#, c-format
+msgid "Add %s"
+msgstr "Dodaj %s"
 
 #: app/tools/gimpsheartool.c:91 app/tools/gimptransformgridoptions.c:578
 #: app/tools/gimptransformgridoptions.c:587
@@ -26453,11 +26542,6 @@ msgstr "Sličice"
 #: app/tools/gimpwarpoptions.c:172
 msgid "Number of animation frames"
 msgstr "Število sličic animacije"
-
-#. the stroke frame
-#: app/tools/gimpwarpoptions.c:350
-msgid "Stroke"
-msgstr "Poteza"
 
 #. the animation frame
 #: app/tools/gimpwarpoptions.c:372
@@ -29878,147 +29962,147 @@ msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "Orodja _barvanja"
 
-#: menus/image-menu.ui.in.in:645
+#: menus/image-menu.ui.in.in:646
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "Orodja preo_blikovanja"
 
-#: menus/image-menu.ui.in.in:684
+#: menus/image-menu.ui.in.in:685
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "_Filtri"
 
-#: menus/image-menu.ui.in.in:689
+#: menus/image-menu.ui.in.in:690
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Nedavno uporabljeno"
 
-#: menus/image-menu.ui.in.in:698
+#: menus/image-menu.ui.in.in:699
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "Za_briši"
 
-#: menus/image-menu.ui.in.in:713
+#: menus/image-menu.ui.in.in:714
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "_Izboljšaj"
 
-#: menus/image-menu.ui.in.in:723
+#: menus/image-menu.ui.in.in:724
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "Popa_čenja"
 
-#: menus/image-menu.ui.in.in:742
+#: menus/image-menu.ui.in.in:743
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Svetloba in sence"
 
-#: menus/image-menu.ui.in.in:757
+#: menus/image-menu.ui.in.in:758
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "Šu_m"
 
-#: menus/image-menu.ui.in.in:767
+#: menus/image-menu.ui.in.in:768
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "_Razpoznava robov"
 
-#: menus/image-menu.ui.in.in:776
+#: menus/image-menu.ui.in.in:777
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "Sp_lošno"
 
-#: menus/image-menu.ui.in.in:787
+#: menus/image-menu.ui.in.in:788
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "Zdru_ži"
 
-#: menus/image-menu.ui.in.in:790
+#: menus/image-menu.ui.in.in:791
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Umetniško"
 
-#: menus/image-menu.ui.in.in:802
+#: menus/image-menu.ui.in.in:803
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "O_krasitev"
 
-#: menus/image-menu.ui.in.in:805
+#: menus/image-menu.ui.in.in:806
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "Pres_likaj "
 
-#: menus/image-menu.ui.in.in:817
+#: menus/image-menu.ui.in.in:818
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Upodobi"
 
-#: menus/image-menu.ui.in.in:820
+#: menus/image-menu.ui.in.in:821
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fraktali"
 
-#: menus/image-menu.ui.in.in:823
+#: menus/image-menu.ui.in.in:824
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_Šum"
 
-#: menus/image-menu.ui.in.in:831
+#: menus/image-menu.ui.in.in:832
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Vzorec"
 
-#: menus/image-menu.ui.in.in:844
+#: menus/image-menu.ui.in.in:845
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "S_plet"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:851
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "An_imacija"
 
-#: menus/image-menu.ui.in.in:853
+#: menus/image-menu.ui.in.in:854
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "Raz_voj"
 
-#: menus/image-menu.ui.in.in:855
+#: menus/image-menu.ui.in.in:856
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "Pri_meri vstavkov"
 
-#: menus/image-menu.ui.in.in:858
+#: menus/image-menu.ui.in.in:859
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:861
+#: menus/image-menu.ui.in.in:862
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Skript-Fu"
 
-#: menus/image-menu.ui.in.in:868
+#: menus/image-menu.ui.in.in:869
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Okna"
 
-#: menus/image-menu.ui.in.in:871
+#: menus/image-menu.ui.in.in:872
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Nedavno zaprta sidrišča"
 
-#: menus/image-menu.ui.in.in:875
+#: menus/image-menu.ui.in.in:876
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Sidranju prilagojena okna"
 
-#: menus/image-menu.ui.in.in:907
+#: menus/image-menu.ui.in.in:908
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "_Uporabniški vodnik"
 
-#: menus/image-menu.ui.in.in:926
+#: menus/image-menu.ui.in.in:927
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP na spletu"
