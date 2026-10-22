@@ -80,6 +80,7 @@ fi
 
 # Publish GIMP snap on Snap Store
 # (the credentials are stored on SNAPCRAFT_STORE_CREDENTIALS protected var)
+# generated with: snapcraft export-login --snaps=gimp --acls=package_access,package_push,package_release --expires=<date_in_iso> -
 if [ "$CI_COMMIT_TAG" = "$(git describe --all | sed 's|tags/||')" ] && [ "$NAME" = 'gimp' ] && { [ "$TRACK" = 'preview' ] || [ "$TRACK" = 'latest' ]; }; then
   printf "\e[0Ksection_start:`date +%s`:${SNAP}_submission[collapsed=true]\r\e[0KPublishing ${SNAP} to Snap Store\n"
   snapcraft upload --release=$TRACK/stable $output_dir/${SNAP}
