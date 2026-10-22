@@ -57,6 +57,7 @@ enum
   PROP_TOOL_PRESET_PATHS,
   PROP_SPLASH_PATHS,
   PROP_THEME_PATHS,
+  PROP_ICON_THEME_PATHS,
   PROP_GEGL_PATHS,
   PROP_PLUG_IN_EXTENSIONS,
 };
@@ -93,6 +94,7 @@ struct _GimpExtensionManagerPrivate
   GList      *tool_preset_paths;
   GList      *splash_paths;
   GList      *theme_paths;
+  GList      *icon_theme_paths;
   GList      *gegl_paths;
   GList      *plug_in_extensions;
 };
@@ -189,6 +191,10 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                                                          GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_THEME_PATHS,
                                    g_param_spec_pointer ("theme-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_ICON_THEME_PATHS,
+                                   g_param_spec_pointer ("icon-theme-paths",
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_GEGL_PATHS,
@@ -457,6 +463,8 @@ gimp_extension_manager_finalize (GObject *object)
   manager->p->splash_paths = NULL;
   g_list_free_full (manager->p->theme_paths, g_object_unref);
   manager->p->theme_paths = NULL;
+  g_list_free_full (manager->p->icon_theme_paths, g_object_unref);
+  manager->p->icon_theme_paths = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -509,6 +517,10 @@ gimp_extension_manager_set_property (GObject      *object,
     case PROP_THEME_PATHS:
       g_list_free_full (manager->p->theme_paths, g_object_unref);
       manager->p->theme_paths = g_value_get_pointer (value);
+      break;
+    case PROP_ICON_THEME_PATHS:
+      g_list_free_full (manager->p->icon_theme_paths, g_object_unref);
+      manager->p->icon_theme_paths = g_value_get_pointer (value);
       break;
     case PROP_PLUG_IN_EXTENSIONS:
       g_list_free_full (manager->p->plug_in_extensions, g_object_unref);
@@ -564,6 +576,9 @@ gimp_extension_manager_get_property (GObject      *object,
       break;
     case PROP_THEME_PATHS:
       g_value_set_pointer (value, manager->p->theme_paths);
+      break;
+    case PROP_ICON_THEME_PATHS:
+      g_value_set_pointer (value, manager->p->icon_theme_paths);
       break;
     case PROP_PLUG_IN_EXTENSIONS:
       g_value_set_pointer (value, manager->p->plug_in_extensions);
@@ -958,6 +973,7 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
   GList         *tool_preset_paths   = NULL;
   GList         *splash_paths        = NULL;
   GList         *theme_paths         = NULL;
+  GList         *icon_theme_paths    = NULL;
   GList         *gegl_paths          = NULL;
   GList         *plug_in_extensions  = NULL;
   GList         *removed_paths       = NULL;
@@ -1004,6 +1020,10 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
                                     (GCopyFunc) g_object_ref, NULL);
       theme_paths = g_list_concat (theme_paths, new_paths);
 
+      new_paths = g_list_copy_deep (gimp_extension_get_icon_theme_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      icon_theme_paths = g_list_concat (icon_theme_paths, new_paths);
+
       if (gimp_extension_get_plug_in_paths (extension))
         plug_in_extensions = g_list_prepend (plug_in_extensions, g_object_ref (extension));
 
@@ -1048,6 +1068,7 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
                 "plug-in-extensions",  plug_in_extensions,
                 "splash-paths",        splash_paths,
                 "theme-paths",         theme_paths,
+                "icon-theme-paths",    icon_theme_paths,
                 "gegl-paths",          gegl_paths,
                 NULL);
 

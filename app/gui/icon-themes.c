@@ -47,6 +47,9 @@ static void     icons_list_icons_foreach  (gpointer       key,
                                            gpointer       data);
 static gint     icons_name_compare        (const void    *p1,
                                            const void    *p2);
+static void     icons_paths_notify        (GimpExtensionManager  *manager,
+                                           GParamSpec            *pspec,
+                                           Gimp                  *gimp);
 static void     icons_theme_change_notify (GimpGuiConfig *config,
                                            GParamSpec    *pspec,
                                            Gimp          *gimp);
@@ -64,94 +67,11 @@ icon_themes_init (Gimp *gimp)
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
-  icon_themes_hash = g_hash_table_new_full (g_str_hash,
-                                            g_str_equal,
-                                            g_free,
-                                            g_object_unref);
-
-  if (config->icon_theme_path)
-    {
-      GList *path;
-      GList *list;
-
-      path = gimp_config_path_expand_to_files (config->icon_theme_path, NULL);
-
-      for (list = path; list; list = g_list_next (list))
-        {
-          GFile           *dir = list->data;
-          GFileEnumerator *enumerator;
-
-          enumerator =
-            g_file_enumerate_children (dir,
-                                       G_FILE_ATTRIBUTE_STANDARD_NAME ","
-                                       G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
-                                       G_FILE_ATTRIBUTE_STANDARD_TYPE,
-                                       G_FILE_QUERY_INFO_NONE,
-                                       NULL, NULL);
-
-          if (enumerator)
-            {
-              GFileInfo *info;
-
-              while ((info = g_file_enumerator_next_file (enumerator,
-                                                          NULL, NULL)))
-                {
-                  if (! g_file_info_get_attribute_boolean (info, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN) &&
-                      g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE) == G_FILE_TYPE_DIRECTORY)
-                    {
-                      GFile *file;
-                      GFile *index_theme;
-
-                      file = g_file_enumerator_get_child (enumerator, info);
-
-                      /* make sure there is a hicolor/index.theme file */
-                      index_theme = g_file_get_child (file, "index.theme");
-
-                      if (g_file_query_exists (index_theme, NULL))
-                        {
-                          const gchar *name;
-                          gchar       *basename;
-
-                          name     = gimp_file_get_utf8_name (file);
-                          basename = g_path_get_basename (name);
-
-                          if (strcmp ("hicolor", basename))
-                            {
-                              if (g_hash_table_contains (icon_themes_hash, basename))
-                                {
-                                  g_printerr ("Skipping duplicate icon theme \"%s\": '%s'\n",
-                                              basename, name);
-                                  g_free (basename);
-                                }
-                              else
-                                {
-                                  if (gimp->be_verbose)
-                                    g_print ("Adding icon theme '%s' (%s)\n",
-                                             basename, name);
-
-                                  g_hash_table_insert (icon_themes_hash, basename,
-                                                       g_object_ref (file));
-                                }
-                            }
-                          else
-                            {
-                              g_free (basename);
-                            }
-                        }
-
-                      g_object_unref (index_theme);
-                      g_object_unref (file);
-                    }
-
-                  g_object_unref (info);
-                }
-
-              g_object_unref (enumerator);
-            }
-        }
-
-      g_list_free_full (path, (GDestroyNotify) g_object_unref);
-    }
+  /* Check for icon theme extensions. */
+  icons_paths_notify (gimp->extension_manager, NULL, gimp);
+  g_signal_connect (gimp->extension_manager, "notify::icon-theme-paths",
+                    G_CALLBACK (icons_paths_notify),
+                    gimp);
 
   g_signal_connect (config, "notify::icon-theme",
                     G_CALLBACK (icons_theme_change_notify),
@@ -353,6 +273,113 @@ icons_name_compare (const void *p1,
                     const void *p2)
 {
   return strcmp (* (char **) p1, * (char **) p2);
+}
+
+static void
+icons_paths_notify (GimpExtensionManager *manager,
+                    GParamSpec           *pspec,
+                    Gimp                 *gimp)
+{
+  GimpGuiConfig *config;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (icon_themes_hash)
+    g_hash_table_remove_all (icon_themes_hash);
+  else
+    icon_themes_hash = g_hash_table_new_full (g_str_hash,
+                                              g_str_equal,
+                                              g_free,
+                                              g_object_unref);
+
+  config = GIMP_GUI_CONFIG (gimp->config);
+  if (config->icon_theme_path)
+    {
+      GList *path;
+      GList *list;
+
+      g_object_get (gimp->extension_manager,
+                    "icon-theme-paths", &path,
+                    NULL);
+      path = g_list_copy_deep (path, (GCopyFunc) g_object_ref, NULL);
+      path = g_list_concat (path, gimp_config_path_expand_to_files (config->icon_theme_path, NULL));
+
+      for (list = path; list; list = g_list_next (list))
+        {
+          GFile           *dir = list->data;
+          GFileEnumerator *enumerator;
+
+          enumerator =
+            g_file_enumerate_children (dir,
+                                       G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                       G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                       G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                       G_FILE_QUERY_INFO_NONE,
+                                       NULL, NULL);
+
+          if (enumerator)
+            {
+              GFileInfo *info;
+
+              while ((info = g_file_enumerator_next_file (enumerator,
+                                                          NULL, NULL)))
+                {
+                  if (! g_file_info_get_attribute_boolean (info, G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN) &&
+                      g_file_info_get_attribute_uint32 (info, G_FILE_ATTRIBUTE_STANDARD_TYPE) == G_FILE_TYPE_DIRECTORY)
+                    {
+                      GFile *file;
+                      GFile *index_theme;
+
+                      file = g_file_enumerator_get_child (enumerator, info);
+
+                      /* make sure there is an index.theme file */
+                      index_theme = g_file_get_child (file, "index.theme");
+
+                      if (g_file_query_exists (index_theme, NULL))
+                        {
+                          const gchar *name;
+                          gchar       *basename;
+
+                          name     = gimp_file_get_utf8_name (file);
+                          basename = g_path_get_basename (name);
+
+                          if (strcmp ("hicolor", basename))
+                            {
+                              if (g_hash_table_contains (icon_themes_hash, basename))
+                                {
+                                  g_printerr ("Skipping duplicate icon theme \"%s\": '%s'\n",
+                                              basename, name);
+                                  g_free (basename);
+                                }
+                              else
+                                {
+                                  if (gimp->be_verbose)
+                                    g_print ("Adding icon theme '%s' (%s)\n",
+                                             basename, name);
+
+                                  g_hash_table_insert (icon_themes_hash, basename,
+                                                       g_object_ref (file));
+                                }
+                            }
+                          else
+                            {
+                              g_free (basename);
+                            }
+                        }
+
+                      g_object_unref (index_theme);
+                      g_object_unref (file);
+                    }
+
+                  g_object_unref (info);
+                }
+
+              g_object_unref (enumerator);
+            }
+        }
+
+      g_list_free_full (path, (GDestroyNotify) g_object_unref);
+    }
 }
 
 static void
