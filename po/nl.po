@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-20 18:29+0000\n"
-"PO-Revision-Date: 2026-10-21 10:20+0200\n"
+"POT-Creation-Date: 2026-10-22 04:51+0000\n"
+"PO-Revision-Date: 2026-10-22 09:18+0200\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -4453,708 +4453,708 @@ msgstr "Teruggaan naar ‘%s’ is mislukt:\n"
 "\n"
 "%s"
 
-#: app/actions/filters-actions.c:66
+#: app/actions/filters-actions.c:76
 msgctxt "filters-action"
 msgid "_Antialias"
 msgstr "Randen _glad maken"
 
-#: app/actions/filters-actions.c:71
+#: app/actions/filters-actions.c:81
 msgctxt "filters-action"
 msgid "_Color Enhance"
 msgstr "Kle_urverbetering"
 
-#: app/actions/filters-actions.c:76
+#: app/actions/filters-actions.c:86
 msgctxt "filters-action"
 msgid "L_inear Invert"
 msgstr "L_ineair omkeren"
 
-#: app/actions/filters-actions.c:81
+#: app/actions/filters-actions.c:91
 msgctxt "filters-action"
 msgid "In_vert"
 msgstr "_Omkeren"
 
-#: app/actions/filters-actions.c:86
+#: app/actions/filters-actions.c:96
 msgctxt "filters-action"
 msgid "_Value Invert"
 msgstr "Omkeren op _waarde"
 
-#: app/actions/filters-actions.c:91
+#: app/actions/filters-actions.c:101
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
 msgstr "Contra_st uitrekken HSV"
 
-#: app/actions/filters-actions.c:99
+#: app/actions/filters-actions.c:109
 msgctxt "filters-action"
 msgid "_Dilate"
 msgstr "Lichtere _delen lichter maken"
 
-#: app/actions/filters-actions.c:100
+#: app/actions/filters-actions.c:110
 msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Lichtere delen van het beeld groter maken"
 
-#: app/actions/filters-actions.c:115
+#: app/actions/filters-actions.c:125
 msgctxt "filters-action"
 msgid "_Erode"
 msgstr "Donkere delen donkerder _maken"
 
-#: app/actions/filters-actions.c:116
+#: app/actions/filters-actions.c:126
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Donkere delen van het beeld groter maken"
 
-#: app/actions/filters-actions.c:134
+#: app/actions/filters-actions.c:144
 msgctxt "filters-action"
 msgid "_Alien Map..."
 msgstr "Kleurversc_huivingen..."
 
-#: app/actions/filters-actions.c:139
+#: app/actions/filters-actions.c:149
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
 msgstr "C_anvas toepassen..."
 
-#: app/actions/filters-actions.c:144
+#: app/actions/filters-actions.c:154
 msgctxt "filters-action"
 msgid "Apply _Lens..."
 msgstr "_Objectief toepassen..."
 
-#: app/actions/filters-actions.c:149
+#: app/actions/filters-actions.c:159
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
 msgstr "_Bayermatrix..."
 
-#: app/actions/filters-actions.c:154
+#: app/actions/filters-actions.c:164
 msgctxt "filters-action"
 msgid "_Bloom..."
 msgstr "_Bloeien..."
 
-#: app/actions/filters-actions.c:159
+#: app/actions/filters-actions.c:169
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "_Helderheid/contrast..."
 
-#: app/actions/filters-actions.c:164
+#: app/actions/filters-actions.c:174
 msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "O_neffenheden aanbrengen..."
 
-#: app/actions/filters-actions.c:169
+#: app/actions/filters-actions.c:179
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "Kleur naar _grijs..."
 
-#: app/actions/filters-actions.c:174
+#: app/actions/filters-actions.c:184
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "Ca_rtoon..."
 
-#: app/actions/filters-actions.c:179
+#: app/actions/filters-actions.c:189
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "Kanalen_mixer..."
 
-#: app/actions/filters-actions.c:184
+#: app/actions/filters-actions.c:194
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "S_chaakbord..."
 
-#: app/actions/filters-actions.c:189
+#: app/actions/filters-actions.c:199
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "_Kleurbalans..."
 
-#: app/actions/filters-actions.c:194
+#: app/actions/filters-actions.c:204
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "Kleuruit_wisseling..."
 
-#: app/actions/filters-actions.c:199
+#: app/actions/filters-actions.c:209
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "_Verkleuren..."
 
-#: app/actions/filters-actions.c:204
+#: app/actions/filters-actions.c:214
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "_Rasteren..."
 
-#: app/actions/filters-actions.c:209
+#: app/actions/filters-actions.c:219
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "Kleuren r_oteren..."
 
-#: app/actions/filters-actions.c:214
+#: app/actions/filters-actions.c:224
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "Kleurt_emperatuur..."
 
-#: app/actions/filters-actions.c:219
+#: app/actions/filters-actions.c:229
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "Kleur naar _alfa..."
 
-#: app/actions/filters-actions.c:224
+#: app/actions/filters-actions.c:234
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "Extr_aheer component..."
 
-#: app/actions/filters-actions.c:229
+#: app/actions/filters-actions.c:239
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "Convolutiematri_x..."
 
-#: app/actions/filters-actions.c:234
+#: app/actions/filters-actions.c:244
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "_Kubisme..."
 
-#: app/actions/filters-actions.c:239
+#: app/actions/filters-actions.c:249
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "_Curves…"
 
-#: app/actions/filters-actions.c:244
+#: app/actions/filters-actions.c:254
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "O_ntvlechten..."
 
-#: app/actions/filters-actions.c:249
+#: app/actions/filters-actions.c:259
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "Naar _grijswaarden..."
 
-#: app/actions/filters-actions.c:254
+#: app/actions/filters-actions.c:264
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
 msgstr "Ga_ussiaanse verschillen..."
 
-#: app/actions/filters-actions.c:259
+#: app/actions/filters-actions.c:269
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
 msgstr "D_iffractiepatronen..."
 
-#: app/actions/filters-actions.c:264
+#: app/actions/filters-actions.c:274
 msgctxt "filters-action"
 msgid "_Displace..."
 msgstr "Ver_plaatsen..."
 
-#: app/actions/filters-actions.c:269
+#: app/actions/filters-actions.c:279
 msgctxt "filters-action"
 msgid "Distance _Map..."
 msgstr "Afstands_kaart..."
 
-#: app/actions/filters-actions.c:274
+#: app/actions/filters-actions.c:284
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "_Slagschaduw..."
 
-#: app/actions/filters-actions.c:279
+#: app/actions/filters-actions.c:289
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "_Rand..."
 
-#: app/actions/filters-actions.c:284
+#: app/actions/filters-actions.c:294
 msgctxt "filters-action"
 msgid "_Laplace..."
 msgstr "_Laplace..."
 
-#: app/actions/filters-actions.c:289
+#: app/actions/filters-actions.c:299
 msgctxt "filters-action"
 msgid "_Neon..."
 msgstr "_Neon..."
 
-#: app/actions/filters-actions.c:294
+#: app/actions/filters-actions.c:304
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Sobel..."
 
-#: app/actions/filters-actions.c:299
+#: app/actions/filters-actions.c:309
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "Di_epte..."
 
-#: app/actions/filters-actions.c:304
+#: app/actions/filters-actions.c:314
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "_Graveren..."
 
-#: app/actions/filters-actions.c:309
+#: app/actions/filters-actions.c:319
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Belichting..."
 
-#: app/actions/filters-actions.c:314
+#: app/actions/filters-actions.c:324
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Fattal et al. 2002…"
 
-#: app/actions/filters-actions.c:319
+#: app/actions/filters-actions.c:329
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "_Focus vervaging…"
 
-#: app/actions/filters-actions.c:324
+#: app/actions/filters-actions.c:334
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "F_ractalsporen…"
 
-#: app/actions/filters-actions.c:329
+#: app/actions/filters-actions.c:339
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "_Gaussiaanse vervaging..."
 
-#: app/actions/filters-actions.c:334
+#: app/actions/filters-actions.c:344
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Selectieve Gaussiaanse vervaging..."
 
-#: app/actions/filters-actions.c:339
+#: app/actions/filters-actions.c:349
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
 msgstr "_GEGL-Grafiek..."
 
-#: app/actions/filters-actions.c:344
+#: app/actions/filters-actions.c:354
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Raster..."
 
-#: app/actions/filters-actions.c:349
+#: app/actions/filters-actions.c:359
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "Hoog_doorlaatfilter..."
 
-#: app/actions/filters-actions.c:354
+#: app/actions/filters-actions.c:364
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "Tint/_Chroma..."
 
-#: app/actions/filters-actions.c:359
+#: app/actions/filters-actions.c:369
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "Tint/Ver_zadiging..."
 
-#: app/actions/filters-actions.c:364
+#: app/actions/filters-actions.c:374
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Illusie..."
 
-#: app/actions/filters-actions.c:369
+#: app/actions/filters-actions.c:379
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "Beeld_verloop..."
 
-#: app/actions/filters-actions.c:374
+#: app/actions/filters-actions.c:384
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Caleidoscoop..."
 
-#: app/actions/filters-actions.c:379
+#: app/actions/filters-actions.c:389
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
 msgstr "Le_ns Vervaging..."
 
-#: app/actions/filters-actions.c:384
+#: app/actions/filters-actions.c:394
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "Le_nsvervorming..."
 
-#: app/actions/filters-actions.c:389
+#: app/actions/filters-actions.c:399
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "Lens_schittering..."
 
-#: app/actions/filters-actions.c:394
+#: app/actions/filters-actions.c:404
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "_Niveaus..."
 
-#: app/actions/filters-actions.c:399
+#: app/actions/filters-actions.c:409
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "_Lineaire sinusoïde..."
 
-#: app/actions/filters-actions.c:404
+#: app/actions/filters-actions.c:414
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "K_leine Planeet..."
 
-#: app/actions/filters-actions.c:409
+#: app/actions/filters-actions.c:419
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "_Lange schaduw..."
 
-#: app/actions/filters-actions.c:414
+#: app/actions/filters-actions.c:424
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006..."
 
-#: app/actions/filters-actions.c:419
+#: app/actions/filters-actions.c:429
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Doolhof..."
 
-#: app/actions/filters-actions.c:424
+#: app/actions/filters-actions.c:434
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "_Mediaanvervaging..."
 
-#: app/actions/filters-actions.c:429
+#: app/actions/filters-actions.c:439
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "Me_diaanvervaging..."
 
-#: app/actions/filters-actions.c:434
+#: app/actions/filters-actions.c:444
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Monochrome mixer..."
 
-#: app/actions/filters-actions.c:439
+#: app/actions/filters-actions.c:449
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "Mo_zaïek..."
 
-#: app/actions/filters-actions.c:444
+#: app/actions/filters-actions.c:454
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Circulaire bewegingsvervaging..."
 
-#: app/actions/filters-actions.c:449
+#: app/actions/filters-actions.c:459
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Lineaire bewegingsvervaging..."
 
-#: app/actions/filters-actions.c:454
+#: app/actions/filters-actions.c:464
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Zoomvervaging..."
 
-#: app/actions/filters-actions.c:459
+#: app/actions/filters-actions.c:469
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Celruis..."
 
-#: app/actions/filters-actions.c:464
+#: app/actions/filters-actions.c:474
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "Kra_ntendruk..."
 
-#: app/actions/filters-actions.c:469
+#: app/actions/filters-actions.c:479
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "_CIE lch-ruis..."
 
-#: app/actions/filters-actions.c:474
+#: app/actions/filters-actions.c:484
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "HS_V-ruis..."
 
-#: app/actions/filters-actions.c:479
+#: app/actions/filters-actions.c:489
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "Goo_ien..."
 
-#: app/actions/filters-actions.c:484
+#: app/actions/filters-actions.c:494
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "Perli_nruis..."
 
 # Waar zit die Pick...?
 # pm
-#: app/actions/filters-actions.c:489
+#: app/actions/filters-actions.c:499
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Pik..."
 
-#: app/actions/filters-actions.c:494
+#: app/actions/filters-actions.c:504
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB-ruis..."
 
-#: app/actions/filters-actions.c:499
+#: app/actions/filters-actions.c:509
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "Ruisv_ermindering..."
 
-#: app/actions/filters-actions.c:504
+#: app/actions/filters-actions.c:514
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "Simple_x ruis..."
 
-#: app/actions/filters-actions.c:509
+#: app/actions/filters-actions.c:519
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "Bedoe_zelen..."
 
-#: app/actions/filters-actions.c:514
+#: app/actions/filters-actions.c:524
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Solide ruis..."
 
-#: app/actions/filters-actions.c:519
+#: app/actions/filters-actions.c:529
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Ve_rspreiden..."
 
-#: app/actions/filters-actions.c:524
+#: app/actions/filters-actions.c:534
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "_Normaal Afbeelden..."
 
-#: app/actions/filters-actions.c:529
+#: app/actions/filters-actions.c:539
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "Ver_schuiving..."
 
-#: app/actions/filters-actions.c:534
+#: app/actions/filters-actions.c:544
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Olie_verven..."
 
-#: app/actions/filters-actions.c:539
+#: app/actions/filters-actions.c:549
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Panoramaprojectie..."
 
-#: app/actions/filters-actions.c:544
+#: app/actions/filters-actions.c:554
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopie..."
 
-#: app/actions/filters-actions.c:549
+#: app/actions/filters-actions.c:559
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "Verpi_xelen..."
 
-#: app/actions/filters-actions.c:554
+#: app/actions/filters-actions.c:564
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma..."
 
-#: app/actions/filters-actions.c:559
+#: app/actions/filters-actions.c:569
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "P_oolcoördinaten..."
 
-#: app/actions/filters-actions.c:564
+#: app/actions/filters-actions.c:574
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterkleuren..."
 
-#: app/actions/filters-actions.c:569
+#: app/actions/filters-actions.c:579
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "Omgekee_rde transformatie..."
 
-#: app/actions/filters-actions.c:574
+#: app/actions/filters-actions.c:584
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Rode ogen verwijderen..."
 
-#: app/actions/filters-actions.c:579
+#: app/actions/filters-actions.c:589
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005..."
 
-#: app/actions/filters-actions.c:584
+#: app/actions/filters-actions.c:594
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "RGB _knippen..."
 
-#: app/actions/filters-actions.c:589
+#: app/actions/filters-actions.c:599
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Rimpeling..."
 
-#: app/actions/filters-actions.c:594
+#: app/actions/filters-actions.c:604
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Verzadiging..."
 
-#: app/actions/filters-actions.c:599
+#: app/actions/filters-actions.c:609
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Semi-vlak maken..."
 
-#: app/actions/filters-actions.c:604
+#: app/actions/filters-actions.c:614
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia..."
 
-#: app/actions/filters-actions.c:609
+#: app/actions/filters-actions.c:619
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "Sc_haduwen/hoge lichten..."
 
-#: app/actions/filters-actions.c:614
+#: app/actions/filters-actions.c:624
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "Versc_huiving..."
 
-#: app/actions/filters-actions.c:619
+#: app/actions/filters-actions.c:629
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "Sinus_oïde..."
 
-#: app/actions/filters-actions.c:624
+#: app/actions/filters-actions.c:634
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "Lineair _clusteren..."
 
-#: app/actions/filters-actions.c:629
+#: app/actions/filters-actions.c:639
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symmetrisch naaste buur..."
 
-#: app/actions/filters-actions.c:634
+#: app/actions/filters-actions.c:644
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Zachte gloed..."
 
-#: app/actions/filters-actions.c:639
+#: app/actions/filters-actions.c:649
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "_Bolprojectie..."
 
-#: app/actions/filters-actions.c:644
+#: app/actions/filters-actions.c:654
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "S_piraal..."
 
-#: app/actions/filters-actions.c:649
+#: app/actions/filters-actions.c:659
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "Contrast _uitrekken..."
 
-#: app/actions/filters-actions.c:654
+#: app/actions/filters-actions.c:664
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Stress..."
 
-#: app/actions/filters-actions.c:659
+#: app/actions/filters-actions.c:669
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nova..."
 
-#: app/actions/filters-actions.c:664
+#: app/actions/filters-actions.c:674
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Drempelwaarde..."
 
-#: app/actions/filters-actions.c:669
+#: app/actions/filters-actions.c:679
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "Alfa_drempel..."
 
-#: app/actions/filters-actions.c:674
+#: app/actions/filters-actions.c:684
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Glazen tegel..."
 
-#: app/actions/filters-actions.c:679
+#: app/actions/filters-actions.c:689
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Papieren tegel..."
 
-#: app/actions/filters-actions.c:684
+#: app/actions/filters-actions.c:694
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Naadloos tegelen..."
 
-#: app/actions/filters-actions.c:689
+#: app/actions/filters-actions.c:699
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Verscherpen (_Onscherp masker)..."
 
-#: app/actions/filters-actions.c:694
+#: app/actions/filters-actions.c:704
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Waarde_doorgifte..."
 
-#: app/actions/filters-actions.c:699
+#: app/actions/filters-actions.c:709
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "_Variabele vervaging..."
 
-#: app/actions/filters-actions.c:704
+#: app/actions/filters-actions.c:714
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "V_ideodegradatie..."
 
-#: app/actions/filters-actions.c:709
+#: app/actions/filters-actions.c:719
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vignettering..."
 
-#: app/actions/filters-actions.c:714
+#: app/actions/filters-actions.c:724
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Waterpixels..."
 
-#: app/actions/filters-actions.c:719
+#: app/actions/filters-actions.c:729
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Golven..."
 
-#: app/actions/filters-actions.c:724
+#: app/actions/filters-actions.c:734
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "Golven en _indrukken..."
 
-#: app/actions/filters-actions.c:729
+#: app/actions/filters-actions.c:739
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "W_ind..."
 
-#: app/actions/filters-actions.c:737
+#: app/actions/filters-actions.c:747
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "Laatste _herhalen"
 
-#: app/actions/filters-actions.c:739
+#: app/actions/filters-actions.c:749
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "De laatst gebruikte plug-in opnieuw uitvoeren met dezelfde instellingen"
 
-#: app/actions/filters-actions.c:744
+#: app/actions/filters-actions.c:754
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "Laatste _opnieuw tonen"
 
-#: app/actions/filters-actions.c:745
+#: app/actions/filters-actions.c:755
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Het dialoogvenster van de laatst gebruikte plug-in opnieuw tonen"
+
+#: app/actions/filters-actions.c:1100
+#, c-format
+msgid "Re_peat \"%s\""
+msgstr "\"%s\" herhalen"
+
+#: app/actions/filters-actions.c:1101
+#, c-format
+msgid "R_e-Show \"%s\""
+msgstr "Opni_euw tonen \"%s\""
+
+#: app/actions/filters-actions.c:1139
+msgid "Repeat Last"
+msgstr "Laatste herhalen"
+
+#: app/actions/filters-actions.c:1141
+msgid "Re-Show Last"
+msgstr "Laatste opnieuw tonen"
+
+#: app/actions/filters-actions.c:1144 app/actions/filters-actions.c:1146
+msgid "No last used filters"
+msgstr "Geen laatst gebruikte filters"
 
 #. TRANSLATORS: %s is the title of a GEGL operation (filter), after
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:876
+#: app/actions/filters-actions.c:1344
 #, c-format
 msgid "%s..."
 msgstr "%s..."
-
-#: app/actions/filters-actions.c:1204
-#, c-format
-msgid "Re_peat \"%s\""
-msgstr "\"%s\" herhalen"
-
-#: app/actions/filters-actions.c:1205
-#, c-format
-msgid "R_e-Show \"%s\""
-msgstr "Opni_euw tonen \"%s\""
-
-#: app/actions/filters-actions.c:1243
-msgid "Repeat Last"
-msgstr "Laatste herhalen"
-
-#: app/actions/filters-actions.c:1245
-msgid "Re-Show Last"
-msgstr "Laatste opnieuw tonen"
-
-#: app/actions/filters-actions.c:1248 app/actions/filters-actions.c:1250
-msgid "No last used filters"
-msgstr "Geen laatst gebruikte filters"
 
 #: app/actions/filters-commands.c:282 app/display/gimpdisplayshell-dnd.c:393
 #: app/tools/gimpfiltertool.c:334 app/tools/gimppainttool.c:355
@@ -5643,7 +5643,7 @@ msgstr "Dit kleurverloop bewerken"
 msgid "Save '%s' as POV-Ray"
 msgstr "‘%s’ opslaan als POV-Ray"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:902
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:903
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_Hulp"
@@ -10427,7 +10427,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Wisselen naar vorige afbeelding"
 
-#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:891
+#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:892
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "Positie van _tabbladen"
@@ -11711,7 +11711,7 @@ msgstr "Maximaal aantal handelingen opgeslagen in geheugen."
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
 #: app/core/gimp-units.c:185 app/gui/session.c:309 app/menus/shortcuts-rc.c:148
-#: app/plug-in/plug-in-rc.c:257 app/tools/gimp-tools.c:504
+#: app/plug-in/plug-in-rc.c:257 app/tools/gimp-tools.c:506
 msgid "fatal parse error"
 msgstr "fatale verwerkingsfout"
 
@@ -12969,81 +12969,81 @@ msgstr "Geplakte laag"
 msgid "Global Buffer"
 msgstr "Algemene buffer"
 
-#: app/core/gimpextension.c:283
+#: app/core/gimpextension.c:284
 #, c-format
 msgid ""
 "Invalid AppStream metadata: failed to find default screenshot for extension "
 "\"%s\""
 msgstr "Ongeldige metadata AppStream: standaard schermafdruk zoeken voor extensie \"%s\" mislukt"
 
-#: app/core/gimpextension.c:309
+#: app/core/gimpextension.c:310
 #, c-format
 msgid "Invalid AppStream metadata: Error loading image: \"%s\""
 msgstr "Ongeldige metadata AppStream: Fout bij laden van afbeelding: \"%s\""
 
-#: app/core/gimpextension.c:436
+#: app/core/gimpextension.c:437
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr "Extensie AppData moet van het type \"addon\" zijn, \"%s\" daarentegen gevonden."
 
-#: app/core/gimpextension.c:452
+#: app/core/gimpextension.c:453
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "Extensie AppData moet volgen op \"org.gimp.GIMP\"."
 
-#: app/core/gimpextension.c:466
+#: app/core/gimpextension.c:467
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr "Extensie AppData id (\"%s\") en map (\"%s\") moeten hetzelfde zijn."
 
-#: app/core/gimpextension.c:494
+#: app/core/gimpextension.c:495
 #, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr "Extensie AppData moet een versie tonen in een <release> label."
 
-#: app/core/gimpextension.c:520
+#: app/core/gimpextension.c:521
 #, c-format
 msgid "Unsupported <relation> \"%s\" (type %s)."
 msgstr "Niet ondersteunde <relation> \"%s\" (type %s)."
 
-#: app/core/gimpextension.c:535
+#: app/core/gimpextension.c:536
 #, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
 "mandatory."
 msgstr "<requires><id>org.gimp.GIMP</id></requires> voor versievergelijking is vereist."
 
-#: app/core/gimpextension.c:831
+#: app/core/gimpextension.c:847
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "‘%s’ is geen relatief pad."
 
-#: app/core/gimpextension.c:847
+#: app/core/gimpextension.c:863
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "‘%s’ is geen afstammeling van de extensie."
 
-#: app/core/gimpextension.c:863
+#: app/core/gimpextension.c:879
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "‘%s’ is geen map."
 
-#: app/core/gimpextension.c:877
+#: app/core/gimpextension.c:893
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "‘%s’ is geen geldig bestand."
 
-#: app/core/gimpextensionmanager.c:841
+#: app/core/gimpextensionmanager.c:865
 #, c-format
 msgid "System extensions cannot be uninstalled."
 msgstr "Systeemuitbreidingen kunnen niet worden gedeïnstalleerd."
 
-#: app/core/gimpextensionmanager.c:1052
+#: app/core/gimpextensionmanager.c:1110
 #, c-format
 msgid "Skipping extension '%s': %s\n"
 msgstr "Extensie overgeslagen ‘%s’: %s\n"
 
-#: app/core/gimpextensionmanager.c:1060
+#: app/core/gimpextensionmanager.c:1118
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "Onbekend bestand ‘%s’ in uitbreidingsmap overgeslagen.\n"
@@ -18683,7 +18683,8 @@ msgstr "Kies stijl van belijning"
 msgid "_Stroke"
 msgstr "_Lijn"
 
-#: app/dialogs/stroke-dialog.c:174
+#: app/dialogs/stroke-dialog.c:174 app/tools/gimpshapeoptions.c:631
+#: app/tools/gimpshapetool.c:755
 msgid "Line"
 msgstr "Lijn"
 
@@ -21202,8 +21203,10 @@ msgid "Tilt"
 msgstr "Helling"
 
 #. Blob shape widgets
+#. Shape Type
 #: app/paint/gimpinkoptions.c:107 app/tools/gimpgradientoptions.c:96
 #: app/tools/gimpgradientoptions.c:305 app/tools/gimpinkoptions-gui.c:99
+#: app/tools/gimpshapeoptions.c:124 app/tools/gimpshapeoptions.c:626
 msgid "Shape"
 msgstr "Vorm"
 
@@ -21745,6 +21748,10 @@ msgstr "Lijnstijl"
 #: app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
 msgstr "Maskers combineren"
+
+#: app/pdb/context-cmds.c:2118 app/pdb/fonts-cmds.c:82 app/pdb/fonts-cmds.c:149
+msgid "Failed waiting for the loading of fonts."
+msgstr "Wachten op laden van lettertypen mislukt."
 
 #: app/pdb/drawable-cmds.c:655
 msgid "Add filter"
@@ -22598,7 +22605,7 @@ msgstr "B_ereik herstellen"
 msgid "Preserve _luminosity"
 msgstr "_Helderheid behouden"
 
-#: app/propgui/gimppropgui-color-rotate.c:124
+#: app/propgui/gimppropgui-color-rotate.c:124 app/tools/gimpshapeoptions.c:695
 msgid "Clockwise"
 msgstr "Met de klok mee"
 
@@ -24686,8 +24693,8 @@ msgstr "Venster automatisch aanpassen"
 msgid "Resize image window to accommodate new zoom level"
 msgstr "Grootte afbeeldingsvenster aanpassen aan nieuw zoomniveau"
 
-#: app/tools/gimpmagnifyoptions.c:92 app/tools/gimptransformoptions.c:97
-#: app/widgets/gimpdynamicseditor.c:163
+#: app/tools/gimpmagnifyoptions.c:92 app/tools/gimpshapeoptions.c:689
+#: app/tools/gimptransformoptions.c:97 app/widgets/gimpdynamicseditor.c:163
 #: app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
 msgstr "Richting"
@@ -25247,7 +25254,7 @@ msgstr "Aangepaste vaste hoogte"
 msgid "Unit of fixed width, height or size"
 msgstr "Maateenheid van vaste breedte, hoogte of grootte"
 
-#: app/tools/gimprectangleoptions.c:296
+#: app/tools/gimprectangleoptions.c:296 app/tools/gimpshapeoptions.c:148
 msgid "Expand from center"
 msgstr "Uitbreiden vanuit het midden"
 
@@ -25476,6 +25483,87 @@ msgstr "Kan niet aftrekken van een lege selectie."
 #, c-format
 msgid "Cannot intersect with an empty selection."
 msgstr "Kan geen doorsnede maken met lege selectie."
+
+#: app/tools/gimpshapeoptions.c:133
+msgid "Draw directly on selected layers"
+msgstr "Direct op geselecteerde lagen tekenen"
+
+#: app/tools/gimpshapeoptions.c:134
+msgid ""
+"If checked, shapes will be drawn directly on any selected raster item "
+"instead of as a vector layer"
+msgstr "Indien geselecteerd zullen vormen direct worden getekend op een geselecteerd rasteritem, in plaats van als een vectorlaag"
+
+#: app/tools/gimpshapeoptions.c:142
+msgid "Fixed aspect ratio"
+msgstr "Vaste verhouding"
+
+#: app/tools/gimpshapeoptions.c:154
+msgid "Number of sides"
+msgstr "Aantal zijden"
+
+#: app/tools/gimpshapeoptions.c:162
+msgid "Spiral Direction"
+msgstr "Richting spiraal"
+
+#: app/tools/gimpshapeoptions.c:170
+msgid "Fill"
+msgstr "Vullen"
+
+#. the stroke frame
+#: app/tools/gimpshapeoptions.c:201 app/tools/gimpwarpoptions.c:350
+msgid "Stroke"
+msgstr "Lijn"
+
+#: app/tools/gimpshapeoptions.c:632 app/tools/gimpshapetool.c:759
+msgid "Rectangle"
+msgstr "Rechthoek"
+
+#: app/tools/gimpshapeoptions.c:633 app/tools/gimpshapetool.c:763
+msgid "Ellipse"
+msgstr "Ellips"
+
+# veelhoek / polygon
+#: app/tools/gimpshapeoptions.c:634 app/tools/gimpshapetool.c:767
+msgid "Polygon"
+msgstr "Veelhoek"
+
+#: app/tools/gimpshapeoptions.c:635 app/tools/gimpshapetool.c:771
+msgid "Star"
+msgstr "Ster"
+
+#: app/tools/gimpshapeoptions.c:636 app/tools/gimpshapetool.c:775
+msgid "Spiral"
+msgstr "Spiraal"
+
+#: app/tools/gimpshapeoptions.c:650
+msgid "Shape specific settings"
+msgstr "Vormspecifieke instellingen"
+
+#: app/tools/gimpshapeoptions.c:678
+msgid "Sides"
+msgstr "Zijden"
+
+#: app/tools/gimpshapeoptions.c:696
+msgid "Counter-clockwise"
+msgstr "Tegen de klok in"
+
+#: app/tools/gimpshapetool.c:134
+msgid "Shape Creator"
+msgstr "Vorm maken"
+
+#: app/tools/gimpshapetool.c:135
+msgid "Shape Tool: Create vector and raster shapes"
+msgstr "Gereedschap Vorm: Vector- en rastervormen maken"
+
+#: app/tools/gimpshapetool.c:136
+msgid "Sh_ape"
+msgstr "V_orm"
+
+#: app/tools/gimpshapetool.c:276
+#, c-format
+msgid "Add %s"
+msgstr "Toevoegen %s"
 
 #: app/tools/gimpsheartool.c:91 app/tools/gimptransformgridoptions.c:578
 #: app/tools/gimptransformgridoptions.c:587
@@ -26214,11 +26302,6 @@ msgstr "Frames"
 #: app/tools/gimpwarpoptions.c:172
 msgid "Number of animation frames"
 msgstr "Aantal animatieframes"
-
-#. the stroke frame
-#: app/tools/gimpwarpoptions.c:350
-msgid "Stroke"
-msgstr "Lijn"
 
 #. the animation frame
 #: app/tools/gimpwarpoptions.c:372
@@ -29624,151 +29707,151 @@ msgstr "T_ekenen"
 # Transformatie/transformeren
 # is niet consequent met ‘tekenen’ of ‘schilderen’
 # maar het is hier mooier dan Transformeren
-#: menus/image-menu.ui.in.in:645
+#: menus/image-menu.ui.in.in:646
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "_Transformeren"
 
 # de F was nog ongebruikt
-#: menus/image-menu.ui.in.in:684
+#: menus/image-menu.ui.in.in:685
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "_Filters"
 
-#: menus/image-menu.ui.in.in:689
+#: menus/image-menu.ui.in.in:690
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Onlangs gebr_uikt"
 
-#: menus/image-menu.ui.in.in:698
+#: menus/image-menu.ui.in.in:699
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "_Vervagen"
 
 # verbeteren/versterken/verscherpen
-#: menus/image-menu.ui.in.in:713
+#: menus/image-menu.ui.in.in:714
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "Ver_beteren"
 
-#: menus/image-menu.ui.in.in:723
+#: menus/image-menu.ui.in.in:724
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "Vervor_men"
 
-#: menus/image-menu.ui.in.in:742
+#: menus/image-menu.ui.in.in:743
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Licht en schaduw"
 
-#: menus/image-menu.ui.in.in:757
+#: menus/image-menu.ui.in.in:758
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "_Ruis"
 
-#: menus/image-menu.ui.in.in:767
+#: menus/image-menu.ui.in.in:768
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "R_anden"
 
-#: menus/image-menu.ui.in.in:776
+#: menus/image-menu.ui.in.in:777
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Generiek"
 
-#: menus/image-menu.ui.in.in:787
+#: menus/image-menu.ui.in.in:788
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "C_ombineren"
 
-#: menus/image-menu.ui.in.in:790
+#: menus/image-menu.ui.in.in:791
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Artistiek"
 
-#: menus/image-menu.ui.in.in:802
+#: menus/image-menu.ui.in.in:803
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "_Decoreren"
 
-#: menus/image-menu.ui.in.in:805
+#: menus/image-menu.ui.in.in:806
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "_Projecties"
 
 # betere vertaling?
-#: menus/image-menu.ui.in.in:817
+#: menus/image-menu.ui.in.in:818
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "Gene_reren"
 
-#: menus/image-menu.ui.in.in:820
+#: menus/image-menu.ui.in.in:821
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fractals"
 
-#: menus/image-menu.ui.in.in:823
+#: menus/image-menu.ui.in.in:824
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "_Ruis"
 
-#: menus/image-menu.ui.in.in:831
+#: menus/image-menu.ui.in.in:832
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Patroon"
 
-#: menus/image-menu.ui.in.in:844
+#: menus/image-menu.ui.in.in:845
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "We_b"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:851
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "Ani_meren"
 
-#: menus/image-menu.ui.in.in:853
+#: menus/image-menu.ui.in.in:854
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "Ontwikkeling"
 
-#: menus/image-menu.ui.in.in:855
+#: menus/image-menu.ui.in.in:856
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "Plug-in _Voorbeelden"
 
-#: menus/image-menu.ui.in.in:858
+#: menus/image-menu.ui.in.in:859
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:861
+#: menus/image-menu.ui.in.in:862
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:868
+#: menus/image-menu.ui.in.in:869
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Vensters"
 
-#: menus/image-menu.ui.in.in:871
+#: menus/image-menu.ui.in.in:872
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Onlangs gesloten dokken"
 
 # Dokbaar/aanlegbaar/aankoppelbaar
-#: menus/image-menu.ui.in.in:875
+#: menus/image-menu.ui.in.in:876
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Dokbare vensters"
 
-#: menus/image-menu.ui.in.in:907
+#: menus/image-menu.ui.in.in:908
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "Gebruikers_handleiding"
 
-#: menus/image-menu.ui.in.in:926
+#: menus/image-menu.ui.in.in:927
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP online"
