@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP windows installer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-12-28 11:26+0000\n"
-"PO-Revision-Date: 2026-03-13 08:00+0300\n"
+"POT-Creation-Date: 2026-10-14 13:34+0000\n"
+"PO-Revision-Date: 2026-10-22 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -34,8 +34,8 @@ msgid ""
 "You are trying to directly downgrade from GIMP %1 to %2.%n%nPlease remove "
 "GIMP yourself before installing this version."
 msgstr ""
-"GIMP %1 sürümünden %2 sürümüne doğrudan sürüm düşürmeye çalışıyorsunuz.%n%n"
-"Bu sürümü kurmadan önce GIMPʼi kendiniz kaldırın."
+"GIMP %1 sürümünden %2 sürümüne doğrudan sürüm düşürmeye çalışıyorsunuz."
+"%n%nBu sürümü kurmadan önce GIMPʼi kendiniz kaldırın."
 
 #: build/windows/installer/lang/setup.isl.xml.in:22
 msgid "Development version"
@@ -48,16 +48,14 @@ msgid ""
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
-"installation anyway?"
+"www.gimp.org/bugs%n%nDo you wish to continue with installation anyway?"
 msgstr ""
 "Bu, GIMP'in bazı özelliklerinin bitmemiş ya da kararsız olabileceği bir "
 "geliştirme sürümüdür.%nGIMP'in bu sürümü kararsız olabileceğinden günlük "
 "işlere yönelik değildir ve işinizi yitirebilirsiniz.%nEğer herhangi bir "
 "sorunla karşılaşırsanız, geliştiricilere başvurmadan ya da GIMP gitlab'e "
 "bildirmeden önce sorunun GIT'te çözülmediğinden emin olun:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nYine de kurulumu sürdürmek istiyor "
-"musunuz?"
+"www.gimp.org/bugs%n%nYine de kurulumu sürdürmek istiyor musunuz?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
 #: build/windows/installer/lang/setup.isl.xml.in:43
@@ -183,32 +181,30 @@ msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr "Lua betik dilinde yazılmış GIMP eklentilerini kullanmanızı sağlar."
 
 #: build/windows/installer/lang/setup.isl.xml.in:140
+msgid "JavaScript scripting"
+msgstr "JavaScript betikleri"
+
+#: build/windows/installer/lang/setup.isl.xml.in:144
+msgid ""
+"Allows you to use GIMP plugins written in JavaScript scripting language."
+msgstr ""
+"JavaScript betik dilinde yazılmış GIMP eklentilerini kullanmanızı sağlar."
+
+#: build/windows/installer/lang/setup.isl.xml.in:148
 msgid "MyPaint brushes"
 msgstr "MyPaint fırçaları"
 
-#: build/windows/installer/lang/setup.isl.xml.in:144
+#: build/windows/installer/lang/setup.isl.xml.in:152
 msgid "Install the default set of MyPaint brushes"
 msgstr "MyPaint fırçalarının öntanımlı takımını kur"
 
-#: build/windows/installer/lang/setup.isl.xml.in:148
+#: build/windows/installer/lang/setup.isl.xml.in:156
 msgid "PostScript support"
 msgstr "PostScript desteği"
 
-#: build/windows/installer/lang/setup.isl.xml.in:152
+#: build/windows/installer/lang/setup.isl.xml.in:160
 msgid "Allow GIMP to load PostScript files"
 msgstr "GIMP'in PostScript dosyalarını yüklemesini sağla"
-
-#: build/windows/installer/lang/setup.isl.xml.in:156
-msgid "Support for 32-bit plug-ins"
-msgstr "32-bit eklentiler için destek"
-
-#: build/windows/installer/lang/setup.isl.xml.in:160
-msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
-"support."
-msgstr ""
-"32-bit eklentileri kullanmak için gerekli dosyaları içer.%nTWAIN desteği "
-"için gereklidir."
 
 #: build/windows/installer/lang/setup.isl.xml.in:165
 msgid "Additional icons:"
@@ -279,3 +275,13 @@ msgstr ""
 #: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Internal error (%1)."
 msgstr "İç hata (%1)."
+
+#~ msgid "Support for 32-bit plug-ins"
+#~ msgstr "32-bit eklentiler için destek"
+
+#~ msgid ""
+#~ "Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
+#~ "support."
+#~ msgstr ""
+#~ "32-bit eklentileri kullanmak için gerekli dosyaları içer.%nTWAIN desteği "
+#~ "için gereklidir."
