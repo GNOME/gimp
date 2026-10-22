@@ -634,6 +634,7 @@
           <item><attribute name="action">app.tools-airbrush</attribute></item>
           <item><attribute name="action">app.tools-ink</attribute></item>
           <item><attribute name="action">app.tools-mypaint-brush</attribute></item>
+          <item><attribute name="action">app.tools-shape</attribute></item>
           <item><attribute name="action">app.tools-clone</attribute></item>
           <item><attribute name="action">app.tools-heal</attribute></item>
           <item><attribute name="action">app.tools-perspective-clone</attribute></item>
