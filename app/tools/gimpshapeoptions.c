@@ -73,31 +73,31 @@ enum
   PROP_STROKE_DASH_OFFSET
 };
 
-static void      gimp_shape_options_config_iface_init   (GimpConfigInterface *config_iface);
-static gboolean  gimp_shape_options_serialize_property  (GimpConfig          *config,
-                                                         guint                property_id,
-                                                         const GValue        *value,
-                                                         GParamSpec          *pspec,
-                                                         GimpConfigWriter    *writer);
+static void      gimp_shape_options_config_iface_init    (GimpConfigInterface *config_iface);
+static gboolean  gimp_shape_options_serialize_property   (GimpConfig          *config,
+                                                          guint                property_id,
+                                                          const GValue        *value,
+                                                          GParamSpec          *pspec,
+                                                          GimpConfigWriter    *writer);
 static gboolean  gimp_shape_options_deserialize_property (GimpConfig          *config,
-                                                         guint                property_id,
-                                                         GValue              *value,
-                                                         GParamSpec          *pspec,
-                                                         GScanner            *scanner,
-                                                         GTokenType          *expected);
+                                                          guint                property_id,
+                                                          GValue              *value,
+                                                          GParamSpec          *pspec,
+                                                          GScanner            *scanner,
+                                                          GTokenType          *expected);
 
-static void   gimp_shape_options_finalize               (GObject             *object);
-static void   gimp_shape_options_set_property           (GObject             *object,
-                                                         guint                property_id,
-                                                         const GValue        *value,
-                                                         GParamSpec          *pspec);
-static void   gimp_shape_options_get_property           (GObject             *object,
-                                                         guint                property_id,
-                                                         GValue              *value,
-                                                         GParamSpec          *pspec);
+static void      gimp_shape_options_finalize             (GObject             *object);
+static void      gimp_shape_options_set_property         (GObject             *object,
+                                                          guint                property_id,
+                                                          const GValue        *value,
+                                                          GParamSpec          *pspec);
+static void      gimp_shape_options_get_property         (GObject             *object,
+                                                          guint                property_id,
+                                                          GValue              *value,
+                                                          GParamSpec          *pspec);
 
-static void   gimp_shape_options_shape_type_notify      (GimpShapeOptions    *options);
-static void   gimp_shape_options_fill_style_notify      (GimpShapeOptions    *options);
+static void      gimp_shape_options_shape_type_notify    (GimpShapeOptions    *options);
+static void      gimp_shape_options_fill_style_notify    (GimpShapeOptions    *options);
 
 G_DEFINE_TYPE_WITH_CODE (GimpShapeOptions, gimp_shape_options,
                          GIMP_TYPE_TOOL_OPTIONS,
