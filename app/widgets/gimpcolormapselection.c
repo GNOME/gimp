@@ -196,22 +196,22 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
   gtk_container_add (GTK_CONTAINER (frame), selection->view);
   gtk_widget_set_visible (selection->view, TRUE);
 
-  g_signal_connect (selection->view, "draw",
-                    G_CALLBACK (gimp_colormap_selection_preview_draw),
-                    selection);
+  g_signal_connect_object (selection->view, "draw",
+                           G_CALLBACK (gimp_colormap_selection_preview_draw),
+                           selection, 0);
 
-  g_signal_connect (selection->view, "entry-clicked",
-                    G_CALLBACK (gimp_colormap_selection_entry_clicked),
-                    selection);
-  g_signal_connect (selection->view, "entry-selected",
-                    G_CALLBACK (gimp_colormap_selection_entry_selected),
-                    selection);
-  g_signal_connect (selection->view, "entry-activated",
-                    G_CALLBACK (gimp_colormap_selection_entry_activated),
-                    selection);
-  g_signal_connect (selection->view, "color-dropped",
-                    G_CALLBACK (gimp_colormap_selection_color_dropped),
-                    selection);
+  g_signal_connect_object (selection->view, "entry-clicked",
+                           G_CALLBACK (gimp_colormap_selection_entry_clicked),
+                           selection, 0);
+  g_signal_connect_object (selection->view, "entry-selected",
+                           G_CALLBACK (gimp_colormap_selection_entry_selected),
+                           selection, 0);
+  g_signal_connect_object (selection->view, "entry-activated",
+                           G_CALLBACK (gimp_colormap_selection_entry_activated),
+                           selection, 0);
+  g_signal_connect_object (selection->view, "color-dropped",
+                           G_CALLBACK (gimp_colormap_selection_color_dropped),
+                           selection, 0);
 
   /* Bottom horizontal box for additional widgets. */
   selection->right_vbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
@@ -239,9 +239,9 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
                             _("Color index:"), 0.0, 0.5,
                             selection->index_spinbutton, 1);
 
-  g_signal_connect (selection->index_adjustment, "value-changed",
-                    G_CALLBACK (gimp_colormap_adjustment_changed),
-                    selection);
+  g_signal_connect_object (selection->index_adjustment, "value-changed",
+                           G_CALLBACK (gimp_colormap_adjustment_changed),
+                           selection, 0);
 
   selection->color_entry = gimp_color_hex_entry_new ();
   gtk_widget_set_halign (selection->color_entry, GTK_ALIGN_START);
@@ -249,9 +249,9 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
                             _("HTML notation (sRGB):"), 0.0, 0.5,
                             selection->color_entry, 1);
 
-  g_signal_connect (selection->color_entry, "color-changed",
-                    G_CALLBACK (gimp_colormap_hex_entry_changed),
-                    selection);
+  g_signal_connect_object (selection->color_entry, "color-changed",
+                           G_CALLBACK (gimp_colormap_hex_entry_changed),
+                           selection, 0);
 }
 
 static void
@@ -694,7 +694,8 @@ gimp_colormap_hex_entry_changed (GimpColorHexEntry     *entry,
 {
   GimpImage *image = gimp_context_get_image (selection->context);
 
-  if (image)
+  if (image &&
+      gimp_image_get_base_type (image) == GIMP_INDEXED)
     {
       GeglColor *color;
 

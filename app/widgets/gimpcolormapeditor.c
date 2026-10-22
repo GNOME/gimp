@@ -188,21 +188,21 @@ gimp_colormap_editor_set_context (GimpDocked  *docked,
       gtk_box_pack_start (GTK_BOX (editor), editor->selection, TRUE, TRUE, 0);
       gtk_widget_set_visible (editor->selection, TRUE);
 
-      g_signal_connect_swapped (editor->selection, "color-clicked",
-                                G_CALLBACK (gimp_colormap_editor_color_clicked),
-                                editor);
-      g_signal_connect_swapped (editor->selection, "color-activated",
-                                G_CALLBACK (gimp_colormap_editor_edit_color),
-                                editor);
-      g_signal_connect (editor->selection, "button-press-event",
-                        G_CALLBACK (gimp_colormap_editor_entry_button_press),
-                        editor);
-      g_signal_connect (editor->selection, "popup-menu",
-                        G_CALLBACK (gimp_colormap_editor_entry_popup),
-                        editor);
-      g_signal_connect (editor->selection, "notify::index",
-                        G_CALLBACK (gimp_colormap_editor_notify_index),
-                        editor);
+      g_signal_connect_object (editor->selection, "color-clicked",
+                               G_CALLBACK (gimp_colormap_editor_color_clicked),
+                               editor, G_CONNECT_SWAPPED);
+      g_signal_connect_object (editor->selection, "color-activated",
+                               G_CALLBACK (gimp_colormap_editor_edit_color),
+                               editor, G_CONNECT_SWAPPED);
+      g_signal_connect_object (editor->selection, "button-press-event",
+                               G_CALLBACK (gimp_colormap_editor_entry_button_press),
+                               editor, 0);
+      g_signal_connect_object (editor->selection, "popup-menu",
+                               G_CALLBACK (gimp_colormap_editor_entry_popup),
+                               editor, 0);
+      g_signal_connect_object (editor->selection, "notify::index",
+                               G_CALLBACK (gimp_colormap_editor_notify_index),
+                               editor, 0);
     }
 }
 
@@ -261,9 +261,9 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
                         G_CALLBACK (gtk_widget_destroyed),
                         &editor->color_dialog);
 
-      g_signal_connect (editor->color_dialog, "update",
-                        G_CALLBACK (gimp_colormap_editor_color_update),
-                        editor);
+      g_signal_connect_object (editor->color_dialog, "update",
+                               G_CALLBACK (gimp_colormap_editor_color_update),
+                               editor, 0);
     }
   else
     {
