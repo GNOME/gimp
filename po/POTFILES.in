@@ -534,6 +534,8 @@ app/tools/gimpseamlesscloneoptions.c
 app/tools/gimpseamlessclonetool.c
 app/tools/gimpselectionoptions.c
 app/tools/gimpselectiontool.c
+app/tools/gimpshapeoptions.c
+app/tools/gimpshapetool.c
 app/tools/gimpsheartool.c
 app/tools/gimpsmudgetool.c
 app/tools/gimptextoptions.c
