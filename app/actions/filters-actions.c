@@ -53,19 +53,21 @@
 
 /*  local function prototypes  */
 
-static void     filters_actions_set_tooltips     (GimpActionGroup             *group,
-                                                  const GimpStringActionEntry *entries,
-                                                  gint                         n_entries);
-static void     filters_actions_history_changed  (Gimp                        *gimp,
-                                                  GimpActionGroup             *group);
-static void     filters_actions_gegl_paths_added (GimpExtensionManager        *manager,
-                                                  GList                       *directories,
-                                                  GimpActionGroup             *group);
+static void              filters_actions_set_tooltips      (GimpActionGroup             *group,
+                                                            const GimpStringActionEntry *entries,
+                                                            gint                         n_entries);
+static GimpUIManager   * filters_actions_get_ui_manager    (GimpActionGroup             *group);
+static GimpActionGroup * filters_actions_get_plug_in_group (GimpActionGroup             *group);
+static void              filters_actions_history_changed   (Gimp                        *gimp,
+                                                            GimpActionGroup             *group);
+static void              filters_actions_gegl_paths_added  (GimpExtensionManager        *manager,
+                                                            GList                       *directories,
+                                                            GimpActionGroup             *group);
 
-static void     filters_actions_generate_actions (GimpActionGroup             *group,
-                                                  gboolean                     first_setup,
-                                                  gboolean                     new_actions);
-static gboolean filters_is_non_interactive       (const gchar                 *action_name);
+static void              filters_actions_generate_actions  (GimpActionGroup             *group,
+                                                            gboolean                     first_setup,
+                                                            gboolean                     new_actions);
+static gboolean          filters_is_non_interactive        (const gchar                 *action_name);
 
 
 /*  private variables  */
@@ -1034,6 +1036,9 @@ filters_actions_gegl_op_blocklisted (const gchar *operation_name)
   return FALSE;
 }
 
+
+/* Private functions */
+
 static void
 filters_actions_set_tooltips (GimpActionGroup             *group,
                               const GimpStringActionEntry *entries,
@@ -1054,8 +1059,8 @@ filters_actions_set_tooltips (GimpActionGroup             *group,
     }
 }
 
-static GimpActionGroup *
-filters_actions_get_plug_in_group (GimpActionGroup *group)
+static GimpUIManager *
+filters_actions_get_ui_manager (GimpActionGroup *group)
 {
   GList *list;
 
@@ -1067,8 +1072,20 @@ filters_actions_get_plug_in_group (GimpActionGroup *group)
 
       /* if this is our UI manager */
       if (gimp_ui_manager_get_action_group (manager, "filters") == group)
-        return gimp_ui_manager_get_action_group (manager, "plug-in");
+        return manager;
     }
+
+  /* this happens during initial UI manager construction */
+  return NULL;
+}
+
+static GimpActionGroup *
+filters_actions_get_plug_in_group (GimpActionGroup *group)
+{
+  GimpUIManager *manager = filters_actions_get_ui_manager (group);
+
+  if (manager != NULL)
+    return gimp_ui_manager_get_action_group (manager, "plug-in");
 
   /* this happens during initial UI manager construction */
   return NULL;
@@ -1241,16 +1258,7 @@ filters_actions_generate_actions (GimpActionGroup *group,
   const gchar  **prev_actions;
 
   if (new_actions)
-    {
-      for (iter = gimp_ui_managers_from_name ("<Image>"); iter; iter = iter->next)
-        {
-          if (gimp_ui_manager_get_action_group (iter->data, "filters") == group)
-            {
-              manager = iter->data;
-              break;
-            }
-        }
-    }
+    manager = filters_actions_get_ui_manager (group);
 
   gegl_actions = g_strv_builder_new ();
   prev_actions = g_object_get_data (G_OBJECT (group),
