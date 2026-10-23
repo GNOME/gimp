@@ -40,6 +40,7 @@
 #include "ifs-compose.h"
 
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 
 #define RESPONSE_RESET           1
@@ -2448,6 +2449,12 @@ ifscompose_message_dialog (GtkMessageType  type,
     gtk_window_set_title (GTK_WINDOW (dialog), title);
 
   gtk_window_set_role (GTK_WINDOW (dialog), "ifscompose-message");
+
+#ifdef G_OS_WIN32
+  gtk_widget_realize (dialog);
+  gimp_widget_set_title_bar_theme (dialog);
+#endif
+
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
 }

@@ -29,6 +29,7 @@
 #include "imap_main.h"
 
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 
 static void
@@ -180,5 +181,11 @@ do_file_error_dialog (const char *error,
    g_signal_connect_swapped (dialog, "response",
                              G_CALLBACK (gtk_widget_destroy),
                              dialog);
+
+#ifdef G_OS_WIN32
+   gtk_widget_realize (dialog);
+   gimp_widget_set_title_bar_theme (dialog);
+#endif
+
    gtk_dialog_run (GTK_DIALOG (dialog));
 }

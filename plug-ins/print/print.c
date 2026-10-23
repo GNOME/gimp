@@ -457,7 +457,8 @@ print_show_error (const gchar *message)
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                             "%s", message);
 
-#ifdef PLATFORM_OSX
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+  gtk_widget_realize (dialog);
   gimp_widget_set_title_bar_theme (dialog);
 #endif
 
@@ -504,7 +505,7 @@ begin_print (GtkPrintOperation *operation,
 
       data->has_layout_gui = TRUE;
 
-#ifdef PLATFORM_OSX
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
       gimp_widget_set_title_bar_theme (dialog);
 #endif
 

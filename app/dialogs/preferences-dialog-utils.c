@@ -31,6 +31,7 @@
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-constructors.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "preferences-dialog-utils.h"
 
@@ -442,6 +443,11 @@ prefs_message (GtkWidget      *dialog,
                                            GTK_DIALOG_DESTROY_WITH_PARENT : 0,
                                            type, GTK_BUTTONS_OK,
                                            "%s", message);
+
+#ifdef G_OS_WIN32
+  gtk_widget_realize (message_dialog);
+  gimp_window_set_title_bar_theme (NULL, message_dialog);
+#endif
 
   gtk_dialog_run (GTK_DIALOG (message_dialog));
 
