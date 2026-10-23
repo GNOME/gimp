@@ -170,7 +170,7 @@ do_file_error_dialog (const char *error,
    GtkWidget *dialog;
 
    dialog = gtk_message_dialog_new_with_markup
-     (NULL,
+     (GTK_WINDOW (get_dialog ()),
       GTK_DIALOG_DESTROY_WITH_PARENT,
       GTK_MESSAGE_ERROR,
       GTK_BUTTONS_CLOSE,
