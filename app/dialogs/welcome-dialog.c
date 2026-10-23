@@ -684,6 +684,9 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
                       _("Large"));
   gtk_scale_add_mark (GTK_SCALE (scale), 3.0, GTK_POS_BOTTOM,
                       _("Huge"));
+  g_signal_connect (scale, "draw",
+                    G_CALLBACK (prefs_scale_marks_draw),
+                    NULL);
   gtk_range_set_value (GTK_RANGE (scale),
                        (gdouble) GIMP_GUI_CONFIG (object)->custom_icon_size);
   g_signal_connect (G_OBJECT (scale), "value-changed",
@@ -714,6 +717,9 @@ welcome_dialog_create_personalize_page (Gimp       *gimp,
                       _("150%"));
   gtk_scale_add_mark (GTK_SCALE (scale), 200.0, GTK_POS_BOTTOM,
                       _("200%"));
+  g_signal_connect (scale, "draw",
+                    G_CALLBACK (prefs_scale_marks_draw),
+                    NULL);
   gtk_range_set_value (GTK_RANGE (scale),
                        (gdouble) GIMP_GUI_CONFIG (object)->font_relative_size * 100.0);
   g_signal_connect (G_OBJECT (scale), "value-changed",

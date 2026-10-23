@@ -593,6 +593,23 @@ prefs_icon_size_value_changed (GtkRange      *range,
                                      range);
 }
 
+/* GtkScale drops its mark layouts when their style is recomputed (e.g.
+   right after a theme change on macOS) and then renders a NULL layout.
+   Measuring the marks first recomputes their style and recreates the layouts. */
+gboolean
+prefs_scale_marks_draw (GtkWidget *scale,
+                        cairo_t   *cr,
+                        gpointer   data)
+{
+  gint minimum;
+  gint natural;
+
+  GTK_WIDGET_GET_CLASS (scale)->get_preferred_width (scale,
+                                                     &minimum, &natural);
+
+  return FALSE;
+}
+
 void
 prefs_gui_config_notify_icon_size (GObject    *config,
                                    GParamSpec *pspec,

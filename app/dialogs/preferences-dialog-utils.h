@@ -154,3 +154,6 @@ void        prefs_gui_config_notify_icon_size (GObject        *config,
                                                GtkRange       *range);
 void        prefs_icon_size_value_changed     (GtkRange       *range,
                                                GimpGuiConfig  *config);
+gboolean    prefs_scale_marks_draw            (GtkWidget      *scale,
+                                               cairo_t        *cr,
+                                               gpointer        data);
