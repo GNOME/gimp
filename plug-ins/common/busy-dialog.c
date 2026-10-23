@@ -316,9 +316,21 @@ busy_dialog (gint         read_fd,
 
   gimp_window_set_transient (GTK_WINDOW (window));
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
   gtk_widget_realize (window);
+#endif
+
+#ifdef G_OS_WIN32
   gimp_widget_set_title_bar_theme (window);
+#endif
+
+#ifdef PLATFORM_OSX
+  /* since `window` is not created with gimp_dialog_new, drop minimize manually */
+  gdk_window_set_functions (gtk_widget_get_window (window),
+                            GDK_FUNC_RESIZE |
+                            GDK_FUNC_MOVE   |
+                            GDK_FUNC_CLOSE  |
+                            GDK_FUNC_MAXIMIZE);
 #endif
 
   gtk_window_present (GTK_WINDOW (window));

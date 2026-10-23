@@ -444,9 +444,21 @@ prefs_message (GtkWidget      *dialog,
                                            type, GTK_BUTTONS_OK,
                                            "%s", message);
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
   gtk_widget_realize (message_dialog);
+#endif
+
+#ifdef G_OS_WIN32
   gimp_window_set_title_bar_theme (NULL, message_dialog);
+#endif
+
+#ifdef PLATFORM_OSX
+  /* since `message_dialog` is not created with gimp_dialog_new, drop minimize manually */
+  gdk_window_set_functions (gtk_widget_get_window (message_dialog),
+                            GDK_FUNC_RESIZE |
+                            GDK_FUNC_MOVE   |
+                            GDK_FUNC_CLOSE  |
+                            GDK_FUNC_MAXIMIZE);
 #endif
 
   gtk_dialog_run (GTK_DIALOG (message_dialog));
