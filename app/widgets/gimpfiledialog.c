@@ -26,6 +26,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "widgets-types.h"
 
@@ -437,7 +438,8 @@ static void
 gimp_file_dialog_realize (GimpFileDialog *dialog,
                           gpointer        data)
 {
-  gimp_window_set_title_bar_theme (dialog->gimp, GTK_WIDGET (dialog));
+  gimp_widget_set_title_bar_theme (GTK_WIDGET (dialog),
+                                   gimp_gui_is_dark (dialog->gimp));
 }
 #endif
 

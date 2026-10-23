@@ -48,7 +48,8 @@ void  gimp_widget_set_bound_property  (GtkWidget             *widget,
                                        GObject               *config,
                                        const gchar           *property_name);
 
-void  gimp_widget_set_title_bar_theme (GtkWidget             *dialog);
+void  gimp_widget_set_title_bar_theme (GtkWidget             *widget,
+                                       gint                   use_dark_mode);
 
 void  gimp_widget_set_auto_transient  (GtkWidget             *dialog);
 

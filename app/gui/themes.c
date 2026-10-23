@@ -31,6 +31,8 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "gui-types.h"
 
@@ -1027,7 +1029,7 @@ themes_set_title_bar (Gimp *gimp)
     {
       GtkWidget *window = GTK_WIDGET (windows->data);
 
-      gimp_window_set_title_bar_theme (gimp, window);
+      gimp_widget_set_title_bar_theme (window, gimp_gui_is_dark (gimp));
     }
 
   if (windows)

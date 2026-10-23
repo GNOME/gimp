@@ -327,7 +327,7 @@ print_image (GimpImage *image,
       printwindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       gimp_window_set_transient (GTK_WINDOW (printwindow));
       gtk_widget_set_visible (printwindow, TRUE);
-      gimp_widget_set_title_bar_theme (printwindow);
+      gimp_widget_set_title_bar_theme (printwindow, -1);
 #endif
 
       g_signal_connect_swapped (operation, "end-print",
@@ -459,7 +459,7 @@ print_show_error (const gchar *message)
 
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (dialog);
-  gimp_widget_set_title_bar_theme (dialog);
+  gimp_widget_set_title_bar_theme (dialog, -1);
 #endif
 
   gtk_dialog_run (GTK_DIALOG (dialog));
@@ -506,7 +506,7 @@ begin_print (GtkPrintOperation *operation,
       data->has_layout_gui = TRUE;
 
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
-      gimp_widget_set_title_bar_theme (dialog);
+      gimp_widget_set_title_bar_theme (dialog, -1);
 #endif
 
       if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)

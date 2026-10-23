@@ -41,6 +41,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "display-types.h"
 
@@ -391,7 +392,7 @@ gimp_image_window_realize (GtkWidget *widget,
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (widget);
 
-  gimp_window_set_title_bar_theme (private->gimp, widget);
+  gimp_widget_set_title_bar_theme (widget, gimp_gui_is_dark (private->gimp));
 
   if (gtk_window_get_titlebar (GTK_WINDOW (widget)))
     {

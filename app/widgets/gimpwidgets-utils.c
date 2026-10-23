@@ -26,12 +26,7 @@
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_WIN32
-#include <dwmapi.h>
 #include <gdk/gdkwin32.h>
-
-#ifndef DWMWA_USE_IMMERSIVE_DARK_MODE
-#define DWMWA_USE_IMMERSIVE_DARK_MODE 20
-#endif
 #endif
 
 #ifdef GDK_WINDOWING_X11
@@ -2756,67 +2751,23 @@ gimp_window_set_transient_cb (GtkWidget   *window,
 }
 
 #if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
-void
-gimp_window_set_title_bar_theme (Gimp      *gimp,
-                                 GtkWidget *dialog)
+gboolean
+gimp_gui_is_dark (Gimp *gimp)
 {
-#ifdef G_OS_WIN32
-  HWND           hwnd;
-#endif
-  GdkWindow     *window        = NULL;
-  gboolean       use_dark_mode = FALSE;
+  GimpGuiConfig *config;
 
-  window = gtk_widget_get_window (GTK_WIDGET (dialog));
-  if (window)
-    {
-      if (gimp)
-        {
-          GimpGuiConfig *config;
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-          config = GIMP_GUI_CONFIG (gimp->config);
-          if (config->theme_scheme == GIMP_THEME_SYSTEM)
+  config = GIMP_GUI_CONFIG (gimp->config);
+
+  if (config->theme_scheme == GIMP_THEME_SYSTEM)
 #ifdef G_OS_WIN32
-            use_dark_mode = gimp_is_win32_system_theme_dark ();
+    return gimp_is_win32_system_theme_dark ();
 #elif defined(PLATFORM_OSX)
-            use_dark_mode = themes_macos_is_dark_mode_active ();
+    return themes_macos_is_dark_mode_active ();
 #endif
-          else
-            use_dark_mode = (config->theme_scheme != GIMP_THEME_LIGHT);
-        }
-      else
-        {
-          GtkStyleContext *style;
-          GdkRGBA         *color = NULL;
 
-          /* Workaround if we don't have access to GimpGuiConfig.
-           * If the background color is below the threshold, then we're
-           * likely in dark mode.
-           */
-          style = gtk_widget_get_style_context (dialog);
-          gtk_style_context_get (style, gtk_style_context_get_state (style),
-                                 GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
-                                 NULL);
-          if (color)
-            {
-              if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
-                use_dark_mode = TRUE;
-
-              gdk_rgba_free (color);
-            }
-        }
-
-#ifdef G_OS_WIN32
-        hwnd = (HWND) gdk_win32_window_get_handle (window);
-        DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
-                               &use_dark_mode, sizeof (use_dark_mode));
-#elif defined(PLATFORM_OSX)
-        /* Unlike the Windows codepath this is only needed by app/gui/gui.c and app/gui/themes.c*/
-        if (use_dark_mode)
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
-        else
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
-#endif
-    }
+  return config->theme_scheme != GIMP_THEME_LIGHT;
 }
 #endif
 
