@@ -811,7 +811,7 @@ do_data_changed_dialog (void (*continue_cb)(gpointer),
 
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (dialog);
-  gimp_widget_set_title_bar_theme (dialog);
+  gimp_widget_set_title_bar_theme (dialog, -1);
 #endif
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
@@ -1095,7 +1095,7 @@ do_image_size_changed_dialog (void)
 
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (dialog);
-  gimp_widget_set_title_bar_theme (dialog);
+  gimp_widget_set_title_bar_theme (dialog, -1);
 #endif
 
    if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_YES)
@@ -1663,7 +1663,7 @@ dialog (GimpImap *imap)
 
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (imap->dlg);
-  gimp_widget_set_title_bar_theme (imap->dlg);
+  gimp_widget_set_title_bar_theme (imap->dlg, -1);
 #endif
 
   gtk_widget_set_visible (imap->dlg, TRUE);

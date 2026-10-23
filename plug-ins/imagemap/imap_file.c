@@ -187,7 +187,7 @@ do_file_error_dialog (const char *error,
 #endif
 
 #ifdef G_OS_WIN32
-   gimp_widget_set_title_bar_theme (dialog);
+   gimp_widget_set_title_bar_theme (dialog, -1);
 #endif
 
 #ifdef PLATFORM_OSX

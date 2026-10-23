@@ -398,7 +398,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
 
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (GTK_WIDGET (self->window));
-  gimp_widget_set_title_bar_theme (GTK_WIDGET (self->window));
+  gimp_widget_set_title_bar_theme (GTK_WIDGET (self->window), -1);
 #endif
 
   gtk_widget_set_visible (GTK_WIDGET (self->window), TRUE);
@@ -580,7 +580,7 @@ new_unit_dialog (GtkWindow *main_window,
 
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
           gtk_widget_realize (msg);
-          gimp_widget_set_title_bar_theme (msg);
+          gimp_widget_set_title_bar_theme (msg, -1);
 #endif
 
           gtk_dialog_run (GTK_DIALOG (msg));

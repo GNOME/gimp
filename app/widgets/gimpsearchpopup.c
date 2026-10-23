@@ -581,8 +581,8 @@ gimp_search_popup_realize (GimpSearchPopup *search_popup,
    * toggling the visibility of the GdkWindow causes odd
    * behavior. Instead, we change the opacity on launch to
    * refresh the titlebar theme */
-  gimp_window_set_title_bar_theme (search_popup->priv->gimp,
-                                   GTK_WIDGET (search_popup));
+  gimp_widget_set_title_bar_theme (GTK_WIDGET (search_popup),
+                                   gimp_gui_is_dark (search_popup->priv->gimp));
 
   gtk_widget_set_opacity (GTK_WIDGET (search_popup), 0);
   gtk_widget_set_opacity (GTK_WIDGET (search_popup), 1);

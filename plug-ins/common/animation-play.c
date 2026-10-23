@@ -732,7 +732,7 @@ refresh_dialog (gchar *imagename)
 
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
       gtk_widget_realize (window);
-      gimp_widget_set_title_bar_theme (window);
+      gimp_widget_set_title_bar_theme (window, -1);
 #endif
 
       gtk_widget_set_visible (window, TRUE);
@@ -987,7 +987,7 @@ build_dialog (GimpPlay *play,
 
 #ifdef G_OS_WIN32
   gtk_widget_realize (window);
-  gimp_widget_set_title_bar_theme (window);
+  gimp_widget_set_title_bar_theme (window, -1);
 #endif
 
   gtk_widget_set_visible (window, TRUE);

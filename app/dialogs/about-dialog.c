@@ -366,7 +366,7 @@ about_dialog_realize (GtkWidget *widget,
                       GimpAboutDialog *dialog)
 {
 #ifdef G_OS_WIN32
-  gimp_window_set_title_bar_theme (dialog->gimp, widget);
+  gimp_widget_set_title_bar_theme (widget, gimp_gui_is_dark (dialog->gimp));
 #endif
 
 #ifdef PLATFORM_OSX

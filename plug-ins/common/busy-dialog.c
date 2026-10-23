@@ -321,7 +321,7 @@ busy_dialog (gint         read_fd,
 #endif
 
 #ifdef G_OS_WIN32
-  gimp_widget_set_title_bar_theme (window);
+  gimp_widget_set_title_bar_theme (window, -1);
 #endif
 
 #ifdef PLATFORM_OSX

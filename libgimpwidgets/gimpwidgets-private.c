@@ -328,53 +328,63 @@ gimp_widget_set_bound_property (GtkWidget   *widget,
 
 /**
  * gimp_widget_set_title_bar_theme:
- * @dialog:
+ * @widget:        a realized dialog or window.
+ * @use_dark_mode: %TRUE or %FALSE to force a dark or light title bar, or
+ *                 -1 to guess it from the @widget background color.
  *
- * An implementation of gimp_window_set_title_bar_theme () that can be used
- * in core plug-ins without making it publicly available. It will no-op when
+ * Makes the title bar of @widget follow the GIMP theme. It will no-op when
  * called on platforms besides Windows and macOS.
  *
  */
 void
-gimp_widget_set_title_bar_theme (GtkWidget *dialog)
+gimp_widget_set_title_bar_theme (GtkWidget *widget,
+                                 gint       use_dark_mode)
 {
 #if defined (G_OS_WIN32) || \
     (defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
 #ifdef G_OS_WIN32
-  HWND           hwnd;
+  HWND       hwnd;
 #endif
-  GdkWindow     *window        = NULL;
-  gboolean       use_dark_mode = FALSE;
+  GdkWindow *window;
 
-  window = gtk_widget_get_window (GTK_WIDGET (dialog));
-  if (window)
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  window = gtk_widget_get_window (widget);
+  if (! window)
+    return;
+
+  if (use_dark_mode < 0)
     {
+      /* fallback if we don't have access to GimpGuiConfig */
       GtkStyleContext *style;
       GdkRGBA         *color = NULL;
+      use_dark_mode          = FALSE;
 
-      style = gtk_widget_get_style_context (dialog);
+      style = gtk_widget_get_style_context (widget);
       gtk_style_context_get (style, gtk_style_context_get_state (style),
                              GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
                              NULL);
       if (color)
         {
+          /* if the bg color is below the threshold, then we're likely in dark mode */
           if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
             use_dark_mode = TRUE;
 
           gdk_rgba_free (color);
         }
+    }
 
 #ifdef G_OS_WIN32
-        hwnd = (HWND) gdk_win32_window_get_handle (window);
-        DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
-                               &use_dark_mode, sizeof (use_dark_mode));
+  hwnd = (HWND) gdk_win32_window_get_handle (window);
+  DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
+                         &use_dark_mode, sizeof (use_dark_mode));
+  UpdateWindow (hwnd);
 #elif defined(PLATFORM_OSX)
-        if (use_dark_mode)
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
-        else
-          [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+  if (use_dark_mode)
+    [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
+  else
+    [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
 #endif
-    }
 #endif
 }
 

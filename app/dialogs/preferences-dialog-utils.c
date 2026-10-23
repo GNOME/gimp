@@ -23,6 +23,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "dialogs-types.h"
 
@@ -449,7 +450,7 @@ prefs_message (GtkWidget      *dialog,
 #endif
 
 #ifdef G_OS_WIN32
-  gimp_window_set_title_bar_theme (NULL, message_dialog);
+  gimp_widget_set_title_bar_theme (message_dialog, -1);
 #endif
 
 #ifdef PLATFORM_OSX

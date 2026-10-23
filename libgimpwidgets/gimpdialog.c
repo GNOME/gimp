@@ -35,15 +35,6 @@
 
 #include "libgimp/libgimp-intl.h"
 
-#ifdef G_OS_WIN32
-#include <dwmapi.h>
-#include <gdk/gdkwin32.h>
-
-#ifndef DWMWA_USE_IMMERSIVE_DARK_MODE
-#define DWMWA_USE_IMMERSIVE_DARK_MODE 20
-#endif
-#endif
-
 #ifdef PLATFORM_OSX
 #import <AppKit/AppKit.h>
 #endif
@@ -102,7 +93,7 @@ static void       gimp_dialog_response            (GtkDialog    *dialog,
                                                    gint          response_id);
 
 #if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
-static void       gimp_dialog_set_title_bar_theme (GtkWidget    *dialog);
+static void       gimp_dialog_realize             (GtkWidget    *dialog);
 #endif
 
 #ifdef PLATFORM_OSX
@@ -182,7 +173,7 @@ gimp_dialog_init (GimpDialog *dialog)
 
 #if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
   g_signal_connect (GTK_WIDGET (dialog), "realize",
-                    G_CALLBACK (gimp_dialog_set_title_bar_theme),
+                    G_CALLBACK (gimp_dialog_realize),
                     NULL);
 #endif
 
@@ -709,7 +700,7 @@ gimp_dialog_run (GimpDialog *dialog)
   gtk_window_present (GTK_WINDOW (dialog));
 
 #if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
-  gimp_dialog_set_title_bar_theme (GTK_WIDGET (dialog));
+  gimp_widget_set_title_bar_theme (GTK_WIDGET (dialog), -1);
 #endif
 
   response_handler = g_signal_connect (dialog, "response",
@@ -808,49 +799,10 @@ gimp_dialogs_show_help_button (gboolean  show)
 }
 
 #if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
-void
-gimp_dialog_set_title_bar_theme (GtkWidget *dialog)
+static void
+gimp_dialog_realize (GtkWidget *dialog)
 {
-  gboolean         use_dark_mode = FALSE;
-#ifdef G_OS_WIN32
-  HWND             hwnd;
-  GdkWindow       *window        = NULL;
-#endif
-
-  GtkStyleContext *style;
-  GdkRGBA         *color = NULL;
-
-  /* Workaround since we don't have access to GimpGuiConfig.
-   * If the background color is below the threshold, then we're
-   * likely in dark mode.
-   */
-  style = gtk_widget_get_style_context (GTK_WIDGET (dialog));
-  gtk_style_context_get (style, gtk_style_context_get_state (style),
-                         GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
-                         NULL);
-  if (color)
-    {
-      if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
-        use_dark_mode = TRUE;
-
-      gdk_rgba_free (color);
-    }
-
-#ifdef G_OS_WIN32
-  window = gtk_widget_get_window (GTK_WIDGET (dialog));
-  if (window)
-    {
-      hwnd = (HWND) gdk_win32_window_get_handle (window);
-      DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
-                             &use_dark_mode, sizeof (use_dark_mode));
-      UpdateWindow (hwnd);
-    }
-#elif defined(PLATFORM_OSX)
-  if (use_dark_mode)
-    [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
-  else
-    [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
-#endif
+  gimp_widget_set_title_bar_theme (dialog, -1);
 }
 #endif
 

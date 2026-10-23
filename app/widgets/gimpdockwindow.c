@@ -34,6 +34,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "widgets-types.h"
 
@@ -789,8 +790,8 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
       config = GIMP_GUI_CONFIG (gimp->config);
 
 #ifdef G_OS_WIN32
-      gimp_window_set_title_bar_theme (dock_window->p->context->gimp,
-                                       GTK_WIDGET (dock_window));
+      gimp_widget_set_title_bar_theme (GTK_WIDGET (dock_window),
+                                       gimp_gui_is_dark (gimp));
 #endif
 
       if (config->dock_window_hint == GIMP_WINDOW_HINT_UTILITY)
