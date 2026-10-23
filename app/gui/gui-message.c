@@ -21,6 +21,9 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#ifdef G_OS_WIN32
+#include <gdk/gdkwin32.h>
+#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -89,6 +92,10 @@ static GtkWidget * global_critical_dialog   (void);
 
 static void        gui_message_reset_errors (GObject             *object,
                                              gpointer             user_data);
+
+#ifdef G_OS_WIN32
+static gboolean    gui_message_focus_idle   (gpointer             data);
+#endif
 
 
 static GMutex mutex;
@@ -413,11 +420,32 @@ gui_message_error_dialog (Gimp                *gimp,
                              domain, message);
       gtk_window_present (GTK_WINDOW (dialog));
 
+#ifdef G_OS_WIN32
+      /* the message is often raised while the image window is handling
+         an event, so the dialog appears unfocused. Focus it once that is done */
+      g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                       gui_message_focus_idle,
+                       g_object_ref (dialog), g_object_unref);
+#endif
+
       return TRUE;
     }
 
   return FALSE;
 }
+
+#ifdef G_OS_WIN32
+static gboolean
+gui_message_focus_idle (gpointer data)
+{
+  GdkWindow *window = gtk_widget_get_window (GTK_WIDGET (data));
+
+  if (window && gtk_widget_get_mapped (GTK_WIDGET (data)))
+    SetForegroundWindow ((HWND) gdk_win32_window_get_handle (window));
+
+  return G_SOURCE_REMOVE;
+}
+#endif
 
 static void
 gui_message_console (GimpMessageSeverity  severity,
