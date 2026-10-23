@@ -2495,7 +2495,8 @@ ifsfile_save_response (GtkNativeDialog *dialog,
                              gimp_filename_to_utf8 (filename),
                              g_strerror (errno));
 
-          ifscompose_message_dialog (GTK_MESSAGE_ERROR, NULL,
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR,
+                                     GTK_WINDOW (gtk_widget_get_toplevel (ifsDesign->area)),
                                      _("Save failed"), message);
 
           g_free (message);
@@ -2578,7 +2579,8 @@ ifsfile_load_response (GtkNativeDialog *dialog,
 
       if (! g_file_get_contents (filename, &buffer, NULL, &error))
         {
-          ifscompose_message_dialog (GTK_MESSAGE_ERROR, NULL,
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR,
+                                     GTK_WINDOW (gtk_widget_get_toplevel (ifsDesign->area)),
                                      _("Open failed"), error->message);
           g_error_free (error);
           g_free (filename);
@@ -2591,7 +2593,8 @@ ifsfile_load_response (GtkNativeDialog *dialog,
                                               "an IFS Fractal file."),
                                             gimp_filename_to_utf8 (filename));
 
-          ifscompose_message_dialog (GTK_MESSAGE_ERROR, NULL,
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR,
+                                     GTK_WINDOW (gtk_widget_get_toplevel (ifsDesign->area)),
                                      _("Open failed"), message);
           g_free (filename);
           g_free (message);
