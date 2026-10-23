@@ -58,6 +58,15 @@ do_about_dialog (GSimpleAction *action,
                          G_CALLBACK (gtk_widget_destroyed),
                          &dialog);
 
+#ifdef PLATFORM_OSX
+       /* since `dialog` is not created with gimp_dialog_new, drop minimize manually */
+       gtk_widget_realize (dialog);
+       gdk_window_set_functions (gtk_widget_get_window (dialog),
+                                 GDK_FUNC_RESIZE |
+                                 GDK_FUNC_MOVE   |
+                                 GDK_FUNC_CLOSE  |
+                                 GDK_FUNC_MAXIMIZE);
+#endif
      }
 
    gtk_window_present (GTK_WINDOW (dialog));
