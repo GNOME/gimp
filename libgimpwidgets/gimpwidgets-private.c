@@ -379,6 +379,41 @@ gimp_widget_set_title_bar_theme (GtkWidget *widget,
   DwmSetWindowAttribute (hwnd, DWMWA_USE_IMMERSIVE_DARK_MODE,
                          &use_dark_mode, sizeof (use_dark_mode));
   UpdateWindow (hwnd);
+
+  /* make context menus (right click) of the title bar follow the GIMP theme too */
+  {
+    typedef int  (WINAPI *SetPreferredAppModeFunc) (int mode);
+    typedef void (WINAPI *FlushMenuThemesFunc)     (void);
+
+    static SetPreferredAppModeFunc set_preferred_app_mode = NULL;
+    static FlushMenuThemesFunc     flush_menu_themes      = NULL;
+    static gboolean                initialized            = FALSE;
+
+    if (! initialized)
+      {
+        HMODULE uxtheme = LoadLibraryExW (L"uxtheme.dll", NULL,
+                                          LOAD_LIBRARY_SEARCH_SYSTEM32);
+
+        if (uxtheme)
+          {
+            set_preferred_app_mode =
+              (SetPreferredAppModeFunc) (void *) GetProcAddress (uxtheme,
+                                                                 MAKEINTRESOURCEA (135));
+            flush_menu_themes =
+              (FlushMenuThemesFunc) (void *) GetProcAddress (uxtheme,
+                                                             MAKEINTRESOURCEA (136));
+          }
+        initialized = TRUE;
+      }
+
+    if (set_preferred_app_mode && flush_menu_themes)
+      {
+        /* 2 = ForceDark, 3 = ForceLight */
+        set_preferred_app_mode (use_dark_mode ? 2 : 3);
+        /* otherwise menus keep the old theme when it changes at runtime */
+        flush_menu_themes ();
+      }
+  }
 #elif defined(PLATFORM_OSX)
   if (use_dark_mode)
     [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
