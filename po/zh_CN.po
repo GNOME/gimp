@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-18 15:00+0000\n"
-"PO-Revision-Date: 2026-10-19 09:14+0800\n"
+"POT-Creation-Date: 2026-10-22 15:27+0000\n"
+"PO-Revision-Date: 2026-10-23 08:40+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -4427,706 +4427,706 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/filters-actions.c:66
+#: app/actions/filters-actions.c:78
 msgctxt "filters-action"
 msgid "_Antialias"
 msgstr "抗锯齿(_A)"
 
-#: app/actions/filters-actions.c:71
+#: app/actions/filters-actions.c:83
 msgctxt "filters-action"
 msgid "_Color Enhance"
 msgstr "色彩增强(_C)"
 
-#: app/actions/filters-actions.c:76
+#: app/actions/filters-actions.c:88
 msgctxt "filters-action"
 msgid "L_inear Invert"
 msgstr "线性反转(_I)"
 
-#: app/actions/filters-actions.c:81
+#: app/actions/filters-actions.c:93
 msgctxt "filters-action"
 msgid "In_vert"
 msgstr "反相(_V)"
 
-#: app/actions/filters-actions.c:86
+#: app/actions/filters-actions.c:98
 msgctxt "filters-action"
 msgid "_Value Invert"
 msgstr "明度反转(_V)"
 
-#: app/actions/filters-actions.c:91
+#: app/actions/filters-actions.c:103
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
 msgstr "拉伸对比度 HSV(_S)"
 
-#: app/actions/filters-actions.c:99
+#: app/actions/filters-actions.c:111
 msgctxt "filters-action"
 msgid "_Dilate"
 msgstr "膨胀(_D)"
 
-#: app/actions/filters-actions.c:100
+#: app/actions/filters-actions.c:112
 msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "增长图像的较亮区域"
 
-#: app/actions/filters-actions.c:115
+#: app/actions/filters-actions.c:127
 msgctxt "filters-action"
 msgid "_Erode"
 msgstr "腐蚀(_E)"
 
-#: app/actions/filters-actions.c:116
+#: app/actions/filters-actions.c:128
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "增长图像的较暗区域"
 
-#: app/actions/filters-actions.c:134
+#: app/actions/filters-actions.c:146
 msgctxt "filters-action"
 msgid "_Alien Map..."
 msgstr "奇异映射(_A)…"
 
-#: app/actions/filters-actions.c:139
+#: app/actions/filters-actions.c:151
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
 msgstr "应用画布(_A)…"
 
-#: app/actions/filters-actions.c:144
+#: app/actions/filters-actions.c:156
 msgctxt "filters-action"
 msgid "Apply _Lens..."
 msgstr "应用镜头(_L)…"
 
-#: app/actions/filters-actions.c:149
+#: app/actions/filters-actions.c:161
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
 msgstr "拜耳矩阵(_B)…"
 
-#: app/actions/filters-actions.c:154
+#: app/actions/filters-actions.c:166
 msgctxt "filters-action"
 msgid "_Bloom..."
 msgstr "光晕(_B)…"
 
-#: app/actions/filters-actions.c:159
+#: app/actions/filters-actions.c:171
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "亮度-对比度(_R)…"
 
-#: app/actions/filters-actions.c:164
+#: app/actions/filters-actions.c:176
 msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "凹凸映射(_B)…"
 
-#: app/actions/filters-actions.c:169
+#: app/actions/filters-actions.c:181
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "彩色到灰度(_C)…"
 
-#: app/actions/filters-actions.c:174
+#: app/actions/filters-actions.c:186
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "卡通(_R)…"
 
-#: app/actions/filters-actions.c:179
+#: app/actions/filters-actions.c:191
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "通道混合器(_C)…"
 
-#: app/actions/filters-actions.c:184
+#: app/actions/filters-actions.c:196
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "棋盘(_C)…"
 
-#: app/actions/filters-actions.c:189
+#: app/actions/filters-actions.c:201
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "色彩平衡(_B)…"
 
-#: app/actions/filters-actions.c:194
+#: app/actions/filters-actions.c:206
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "颜色交换(_C)…"
 
-#: app/actions/filters-actions.c:199
+#: app/actions/filters-actions.c:211
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "单色化(_Z)…"
 
-#: app/actions/filters-actions.c:204
+#: app/actions/filters-actions.c:216
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "抖动(_R)…"
 
-#: app/actions/filters-actions.c:209
+#: app/actions/filters-actions.c:221
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "旋转颜色(_R)…"
 
-#: app/actions/filters-actions.c:214
+#: app/actions/filters-actions.c:226
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "色温(_E)…"
 
-#: app/actions/filters-actions.c:219
+#: app/actions/filters-actions.c:231
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "颜色到透明(_A)…"
 
-#: app/actions/filters-actions.c:224
+#: app/actions/filters-actions.c:236
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "提取分量(_E)…"
 
-#: app/actions/filters-actions.c:229
+#: app/actions/filters-actions.c:241
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "卷积矩阵(_C)…"
 
-#: app/actions/filters-actions.c:234
+#: app/actions/filters-actions.c:246
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "立体主义(_C)…"
 
-#: app/actions/filters-actions.c:239
+#: app/actions/filters-actions.c:251
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "曲线(_C)…"
 
-#: app/actions/filters-actions.c:244
+#: app/actions/filters-actions.c:256
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "反交错(_D)…"
 
-#: app/actions/filters-actions.c:249
+#: app/actions/filters-actions.c:261
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "去色(_D)…"
 
-#: app/actions/filters-actions.c:254
+#: app/actions/filters-actions.c:266
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
 msgstr "高斯差分(_G)…"
 
-#: app/actions/filters-actions.c:259
+#: app/actions/filters-actions.c:271
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
 msgstr "衍射图案(_I)…"
 
-#: app/actions/filters-actions.c:264
+#: app/actions/filters-actions.c:276
 msgctxt "filters-action"
 msgid "_Displace..."
 msgstr "置换(_D)…"
 
-#: app/actions/filters-actions.c:269
+#: app/actions/filters-actions.c:281
 msgctxt "filters-action"
 msgid "Distance _Map..."
 msgstr "距离映射(_M)…"
 
-#: app/actions/filters-actions.c:274
+#: app/actions/filters-actions.c:286
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "投影(_D)…"
 
-#: app/actions/filters-actions.c:279
+#: app/actions/filters-actions.c:291
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "边缘(_E)…"
 
-#: app/actions/filters-actions.c:284
+#: app/actions/filters-actions.c:296
 msgctxt "filters-action"
 msgid "_Laplace..."
 msgstr "拉普拉斯(_L)…"
 
-#: app/actions/filters-actions.c:289
+#: app/actions/filters-actions.c:301
 msgctxt "filters-action"
 msgid "_Neon..."
 msgstr "霓虹(_N)…"
 
-#: app/actions/filters-actions.c:294
+#: app/actions/filters-actions.c:306
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "索贝尔(_S)…"
 
-#: app/actions/filters-actions.c:299
+#: app/actions/filters-actions.c:311
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "浮雕(_E)…"
 
-#: app/actions/filters-actions.c:304
+#: app/actions/filters-actions.c:316
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "雕刻(_G)…"
 
-#: app/actions/filters-actions.c:309
+#: app/actions/filters-actions.c:321
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "曝光(_X)…"
 
-#: app/actions/filters-actions.c:314
+#: app/actions/filters-actions.c:326
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Fattal et al. 2002..."
 
-#: app/actions/filters-actions.c:319
+#: app/actions/filters-actions.c:331
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "对焦模糊(_F)…"
 
-#: app/actions/filters-actions.c:324
+#: app/actions/filters-actions.c:336
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "分形追踪(_F)…"
 
-#: app/actions/filters-actions.c:329
+#: app/actions/filters-actions.c:341
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "高斯模糊(_G)…"
 
-#: app/actions/filters-actions.c:334
+#: app/actions/filters-actions.c:346
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "选择性高斯模糊(_S)…"
 
-#: app/actions/filters-actions.c:339
+#: app/actions/filters-actions.c:351
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
 msgstr "_GEGL 图表…"
 
-#: app/actions/filters-actions.c:344
+#: app/actions/filters-actions.c:356
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "网格(_G)…"
 
-#: app/actions/filters-actions.c:349
+#: app/actions/filters-actions.c:361
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "高通滤波(_H)…"
 
-#: app/actions/filters-actions.c:354
+#: app/actions/filters-actions.c:366
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "色相-彩度(_C)…"
 
-#: app/actions/filters-actions.c:359
+#: app/actions/filters-actions.c:371
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "色相-饱和度(_S)…"
 
-#: app/actions/filters-actions.c:364
+#: app/actions/filters-actions.c:376
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "幻象(_I)…"
 
-#: app/actions/filters-actions.c:369
+#: app/actions/filters-actions.c:381
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "图像渐变(_I)…"
 
-#: app/actions/filters-actions.c:374
+#: app/actions/filters-actions.c:386
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "万花筒(_K)…"
 
-#: app/actions/filters-actions.c:379
+#: app/actions/filters-actions.c:391
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
 msgstr "镜头模糊(_N)…"
 
-#: app/actions/filters-actions.c:384
+#: app/actions/filters-actions.c:396
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "镜头畸变(_N)…"
 
-#: app/actions/filters-actions.c:389
+#: app/actions/filters-actions.c:401
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "镜头光晕(_F)…"
 
-#: app/actions/filters-actions.c:394
+#: app/actions/filters-actions.c:406
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "色阶(_L)…"
 
-#: app/actions/filters-actions.c:399
+#: app/actions/filters-actions.c:411
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "线性正弦曲线(_L)…"
 
-#: app/actions/filters-actions.c:404
+#: app/actions/filters-actions.c:416
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "小行星(_L)…"
 
-#: app/actions/filters-actions.c:409
+#: app/actions/filters-actions.c:421
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "长阴影(_L)…"
 
-#: app/actions/filters-actions.c:414
+#: app/actions/filters-actions.c:426
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006..."
 
-#: app/actions/filters-actions.c:419
+#: app/actions/filters-actions.c:431
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "迷宫(_M)…"
 
-#: app/actions/filters-actions.c:424
+#: app/actions/filters-actions.c:436
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "均值曲率模糊(_U)…"
 
-#: app/actions/filters-actions.c:429
+#: app/actions/filters-actions.c:441
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "中值模糊(_M)…"
 
-#: app/actions/filters-actions.c:434
+#: app/actions/filters-actions.c:446
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "单色混合器(_M)…"
 
-#: app/actions/filters-actions.c:439
+#: app/actions/filters-actions.c:451
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "马赛克(_M)…"
 
-#: app/actions/filters-actions.c:444
+#: app/actions/filters-actions.c:456
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "圆周运动模糊(_C)…"
 
-#: app/actions/filters-actions.c:449
+#: app/actions/filters-actions.c:461
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "线性运动模糊(_L)…"
 
-#: app/actions/filters-actions.c:454
+#: app/actions/filters-actions.c:466
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "缩放运动模糊(_Z)…"
 
-#: app/actions/filters-actions.c:459
+#: app/actions/filters-actions.c:471
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "单元噪点(_C)…"
 
-#: app/actions/filters-actions.c:464
+#: app/actions/filters-actions.c:476
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "报纸(_N)…"
 
-#: app/actions/filters-actions.c:469
+#: app/actions/filters-actions.c:481
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "CIE lch 噪点(_C)…"
 
-#: app/actions/filters-actions.c:474
+#: app/actions/filters-actions.c:486
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "HSV 噪点(_V)…"
 
-#: app/actions/filters-actions.c:479
+#: app/actions/filters-actions.c:491
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "投掷(_H)…"
 
-#: app/actions/filters-actions.c:484
+#: app/actions/filters-actions.c:496
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "柏林噪点(_N)…"
 
-#: app/actions/filters-actions.c:489
+#: app/actions/filters-actions.c:501
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "拾取(_P)…"
 
-#: app/actions/filters-actions.c:494
+#: app/actions/filters-actions.c:506
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB 噪点…"
 
-#: app/actions/filters-actions.c:499
+#: app/actions/filters-actions.c:511
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "降噪(_E)…"
 
-#: app/actions/filters-actions.c:504
+#: app/actions/filters-actions.c:516
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "单一噪点(_S)…"
 
-#: app/actions/filters-actions.c:509
+#: app/actions/filters-actions.c:521
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "模糊(_S)…"
 
-#: app/actions/filters-actions.c:514
+#: app/actions/filters-actions.c:526
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "固态噪点(_S)…"
 
-#: app/actions/filters-actions.c:519
+#: app/actions/filters-actions.c:531
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "散布(_R)…"
 
-#: app/actions/filters-actions.c:524
+#: app/actions/filters-actions.c:536
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "法线贴图(_N)…"
 
-#: app/actions/filters-actions.c:529
+#: app/actions/filters-actions.c:541
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "偏移(_O)…"
 
-#: app/actions/filters-actions.c:534
+#: app/actions/filters-actions.c:546
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "油画(_F)…"
 
-#: app/actions/filters-actions.c:539
+#: app/actions/filters-actions.c:551
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "全景投影(_P)…"
 
-#: app/actions/filters-actions.c:544
+#: app/actions/filters-actions.c:556
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "影印(_P)…"
 
-#: app/actions/filters-actions.c:549
+#: app/actions/filters-actions.c:561
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "像素化(_P)…"
 
-#: app/actions/filters-actions.c:554
+#: app/actions/filters-actions.c:566
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "等离子(_P)…"
 
-#: app/actions/filters-actions.c:559
+#: app/actions/filters-actions.c:571
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "极坐标(_O)…"
 
-#: app/actions/filters-actions.c:564
+#: app/actions/filters-actions.c:576
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "色相分离(_P)…"
 
-#: app/actions/filters-actions.c:569
+#: app/actions/filters-actions.c:581
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "递归变换(_R)…"
 
-#: app/actions/filters-actions.c:574
+#: app/actions/filters-actions.c:586
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "去除红眼(_R)…"
 
-#: app/actions/filters-actions.c:579
+#: app/actions/filters-actions.c:591
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005..."
 
-#: app/actions/filters-actions.c:584
+#: app/actions/filters-actions.c:596
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "RGB 片段(_C)…"
 
-#: app/actions/filters-actions.c:589
+#: app/actions/filters-actions.c:601
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "波纹(_R)…"
 
-#: app/actions/filters-actions.c:594
+#: app/actions/filters-actions.c:606
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "饱和度(_U)…"
 
-#: app/actions/filters-actions.c:599
+#: app/actions/filters-actions.c:611
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "半平整(_S)…"
 
-#: app/actions/filters-actions.c:604
+#: app/actions/filters-actions.c:616
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "深褐色(_S)…"
 
-#: app/actions/filters-actions.c:609
+#: app/actions/filters-actions.c:621
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "阴影-高光(_H)…"
 
-#: app/actions/filters-actions.c:614
+#: app/actions/filters-actions.c:626
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "位移(_S)…"
 
-#: app/actions/filters-actions.c:619
+#: app/actions/filters-actions.c:631
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "弯曲(_S)…"
 
-#: app/actions/filters-actions.c:624
+#: app/actions/filters-actions.c:636
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "简单线性迭代聚类(_S)…"
 
-#: app/actions/filters-actions.c:629
+#: app/actions/filters-actions.c:641
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "对称的最近相邻(_S)…"
 
-#: app/actions/filters-actions.c:634
+#: app/actions/filters-actions.c:646
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "柔光(_S)…"
 
-#: app/actions/filters-actions.c:639
+#: app/actions/filters-actions.c:651
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "球面化(_Z)…"
 
-#: app/actions/filters-actions.c:644
+#: app/actions/filters-actions.c:656
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "螺旋(_P)…"
 
-#: app/actions/filters-actions.c:649
+#: app/actions/filters-actions.c:661
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "拉伸对比度(_S)…"
 
-#: app/actions/filters-actions.c:654
+#: app/actions/filters-actions.c:666
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "Stress(_S)…"
 
-#: app/actions/filters-actions.c:659
+#: app/actions/filters-actions.c:671
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "超新星(_N)…"
 
-#: app/actions/filters-actions.c:664
+#: app/actions/filters-actions.c:676
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "阈值(_T)…"
 
-#: app/actions/filters-actions.c:669
+#: app/actions/filters-actions.c:681
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "临界透明(_T)…"
 
-#: app/actions/filters-actions.c:674
+#: app/actions/filters-actions.c:686
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "玻璃平铺(_G)…"
 
-#: app/actions/filters-actions.c:679
+#: app/actions/filters-actions.c:691
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "纸片平铺(_P)…"
 
-#: app/actions/filters-actions.c:684
+#: app/actions/filters-actions.c:696
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "无缝平铺(_T)…"
 
-#: app/actions/filters-actions.c:689
+#: app/actions/filters-actions.c:701
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "锐化(虚光蒙板)(_U)…"
 
-#: app/actions/filters-actions.c:694
+#: app/actions/filters-actions.c:706
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "明度增殖(_V)…"
 
-#: app/actions/filters-actions.c:699
+#: app/actions/filters-actions.c:711
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "变量模糊(_V)…"
 
-#: app/actions/filters-actions.c:704
+#: app/actions/filters-actions.c:716
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "视频劣化(_D)…"
 
-#: app/actions/filters-actions.c:709
+#: app/actions/filters-actions.c:721
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "晕影(_V)…"
 
-#: app/actions/filters-actions.c:714
+#: app/actions/filters-actions.c:726
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "水像素(_W)…"
 
-#: app/actions/filters-actions.c:719
+#: app/actions/filters-actions.c:731
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "水波(_W)…"
 
-#: app/actions/filters-actions.c:724
+#: app/actions/filters-actions.c:736
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "旋转和挤压(_H)…"
 
-#: app/actions/filters-actions.c:729
+#: app/actions/filters-actions.c:741
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "风(_I)…"
 
-#: app/actions/filters-actions.c:737
+#: app/actions/filters-actions.c:749
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "重复上次操作(_P)"
 
-#: app/actions/filters-actions.c:739
+#: app/actions/filters-actions.c:751
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "用同样的设置重新运行上次使用的滤镜"
 
-#: app/actions/filters-actions.c:744
+#: app/actions/filters-actions.c:756
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "显示上次操作(_E)"
 
-#: app/actions/filters-actions.c:745
+#: app/actions/filters-actions.c:757
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "再次显示上次使用的滤镜对话框"
+
+#: app/actions/filters-actions.c:1117
+#, c-format
+msgid "Re_peat \"%s\""
+msgstr "重复“%s”(_P)"
+
+#: app/actions/filters-actions.c:1118
+#, c-format
+msgid "R_e-Show \"%s\""
+msgstr "重新显示“%s”(_E)"
+
+#: app/actions/filters-actions.c:1156
+msgid "Repeat Last"
+msgstr "重复上次操作"
+
+#: app/actions/filters-actions.c:1158
+msgid "Re-Show Last"
+msgstr "显示上次操作"
+
+#: app/actions/filters-actions.c:1161 app/actions/filters-actions.c:1163
+msgid "No last used filters"
+msgstr "无上次使用滤镜"
 
 #. TRANSLATORS: %s is the title of a GEGL operation (filter), after
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:876
+#: app/actions/filters-actions.c:1352
 #, c-format
 msgid "%s..."
 msgstr "%s…"
-
-#: app/actions/filters-actions.c:1204
-#, c-format
-msgid "Re_peat \"%s\""
-msgstr "重复“%s”(_P)"
-
-#: app/actions/filters-actions.c:1205
-#, c-format
-msgid "R_e-Show \"%s\""
-msgstr "重新显示“%s”(_E)"
-
-#: app/actions/filters-actions.c:1243
-msgid "Repeat Last"
-msgstr "重复上次操作"
-
-#: app/actions/filters-actions.c:1245
-msgid "Re-Show Last"
-msgstr "显示上次操作"
-
-#: app/actions/filters-actions.c:1248 app/actions/filters-actions.c:1250
-msgid "No last used filters"
-msgstr "无上次使用滤镜"
 
 #: app/actions/filters-commands.c:282 app/display/gimpdisplayshell-dnd.c:393
 #: app/tools/gimpfiltertool.c:334 app/tools/gimppainttool.c:355
@@ -5605,7 +5605,7 @@ msgstr "编辑该渐变"
 msgid "Save '%s' as POV-Ray"
 msgstr "将“%s”保存为 POV-Ray"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:902
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:903
 msgctxt "help-action"
 msgid "_Help"
 msgstr "帮助(_H)"
@@ -10297,7 +10297,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "切换到上一个图像"
 
-#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:891
+#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:892
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "标签页位置(_T)"
@@ -11615,7 +11615,7 @@ msgstr "历史中保存操作的最大数量。"
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
 #: app/core/gimp-units.c:185 app/gui/session.c:309 app/menus/shortcuts-rc.c:148
-#: app/plug-in/plug-in-rc.c:257 app/tools/gimp-tools.c:504
+#: app/plug-in/plug-in-rc.c:257 app/tools/gimp-tools.c:506
 msgid "fatal parse error"
 msgstr "严重解析错误"
 
@@ -12859,81 +12859,81 @@ msgstr "被粘贴的图层"
 msgid "Global Buffer"
 msgstr "全局缓冲区"
 
-#: app/core/gimpextension.c:283
+#: app/core/gimpextension.c:285
 #, c-format
 msgid ""
 "Invalid AppStream metadata: failed to find default screenshot for extension "
 "\"%s\""
 msgstr "无效的 AppStream 元数据：查找扩展“%s”的默认截图失败"
 
-#: app/core/gimpextension.c:309
+#: app/core/gimpextension.c:311
 #, c-format
 msgid "Invalid AppStream metadata: Error loading image: \"%s\""
 msgstr "无效的 AppStream 元数据：加载图像时出错：“%s”"
 
-#: app/core/gimpextension.c:436
+#: app/core/gimpextension.c:438
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr "扩展应用数据必须为“组件”类型，但发现了“%s”。"
 
-#: app/core/gimpextension.c:452
+#: app/core/gimpextension.c:454
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "扩展应用数据必须扩展“org.gimp.GIMP”。"
 
-#: app/core/gimpextension.c:466
+#: app/core/gimpextension.c:468
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr "扩展应用数据 ID（“%s”）和目录（“%s”）必须相同。"
 
-#: app/core/gimpextension.c:494
+#: app/core/gimpextension.c:496
 #, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr "扩展的应用数据必须在 <release> 标签中标明版本。"
 
-#: app/core/gimpextension.c:520
+#: app/core/gimpextension.c:522
 #, c-format
 msgid "Unsupported <relation> \"%s\" (type %s)."
 msgstr "不支持的 <relation> “%s”（%s 类型）。"
 
-#: app/core/gimpextension.c:535
+#: app/core/gimpextension.c:537
 #, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
 "mandatory."
 msgstr "<requires><id>org.gimp.GIMP</id></requires> 为了版本对比是强制性的。"
 
-#: app/core/gimpextension.c:831
+#: app/core/gimpextension.c:863
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "“%s”不是一个相关路径。"
 
-#: app/core/gimpextension.c:847
+#: app/core/gimpextension.c:879
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "“%s”不是该扩展的子项。"
 
-#: app/core/gimpextension.c:863
+#: app/core/gimpextension.c:895
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "“%s”不是目录。"
 
-#: app/core/gimpextension.c:877
+#: app/core/gimpextension.c:909
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "“%s”不是有效文件。"
 
-#: app/core/gimpextensionmanager.c:841
+#: app/core/gimpextensionmanager.c:880
 #, c-format
 msgid "System extensions cannot be uninstalled."
 msgstr "系统扩展不能被卸载。"
 
-#: app/core/gimpextensionmanager.c:1052
+#: app/core/gimpextensionmanager.c:1131
 #, c-format
 msgid "Skipping extension '%s': %s\n"
 msgstr "跳过扩展“%s”：%s\n"
 
-#: app/core/gimpextensionmanager.c:1060
+#: app/core/gimpextensionmanager.c:1139
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "跳过扩展目录中的未知文件“%s”。\n"
@@ -18504,7 +18504,8 @@ msgstr "选择笔触样式"
 msgid "_Stroke"
 msgstr "描边(_S)"
 
-#: app/dialogs/stroke-dialog.c:174
+#: app/dialogs/stroke-dialog.c:174 app/tools/gimpshapeoptions.c:631
+#: app/tools/gimpshapetool.c:755
 msgid "Line"
 msgstr "直线"
 
@@ -20985,8 +20986,10 @@ msgid "Tilt"
 msgstr "倾斜"
 
 #. Blob shape widgets
+#. Shape Type
 #: app/paint/gimpinkoptions.c:107 app/tools/gimpgradientoptions.c:96
 #: app/tools/gimpgradientoptions.c:305 app/tools/gimpinkoptions-gui.c:99
+#: app/tools/gimpshapeoptions.c:124 app/tools/gimpshapeoptions.c:626
 msgid "Shape"
 msgstr "形状"
 
@@ -21519,6 +21522,10 @@ msgstr "描边样式"
 #: app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
 msgstr "组合蒙板"
+
+#: app/pdb/context-cmds.c:2118 app/pdb/fonts-cmds.c:82 app/pdb/fonts-cmds.c:149
+msgid "Failed waiting for the loading of fonts."
+msgstr "等待加载字体已失败。"
 
 #: app/pdb/drawable-cmds.c:655
 msgid "Add filter"
@@ -22389,7 +22396,7 @@ msgstr "重置范围(_E)"
 msgid "Preserve _luminosity"
 msgstr "保持明度(_L)"
 
-#: app/propgui/gimppropgui-color-rotate.c:124
+#: app/propgui/gimppropgui-color-rotate.c:124 app/tools/gimpshapeoptions.c:695
 msgid "Clockwise"
 msgstr "顺时针"
 
@@ -22708,7 +22715,7 @@ msgstr ""
 "我能吞下玻璃\n"
 "而不伤身体。"
 
-#: app/text/gimpfontfactory.c:525
+#: app/text/gimpfontfactory.c:498
 #, c-format
 msgid "Some fonts failed to load:%s"
 msgstr "有些字体加载失败：%s"
@@ -23301,15 +23308,19 @@ msgstr "克隆(_C)"
 msgid "Click to clone"
 msgstr "单击以克隆"
 
-#: app/tools/gimpclonetool.c:92 app/tools/gimpclonetool.c:97
+#: app/tools/gimpclonetool.c:92 app/tools/gimpclonetool.c:96
 #, c-format
 msgid "%s to set a new clone source"
 msgstr "%s 以设定新的克隆源"
 
-#. Translators: the translation of "Click" must be the first word
-#: app/tools/gimpclonetool.c:96
+#: app/tools/gimpclonetool.c:95
 msgid "Click to set a new clone source"
 msgstr "单击以设定新的克隆源"
+
+#: app/tools/gimpclonetool.c:97
+#, c-format
+msgid "%s-click to set a new clone source"
+msgstr "%s-单击以设定新的克隆源"
 
 #: app/tools/gimpcoloroptions.c:71
 msgid "Use merged color value from all composited visible layers"
@@ -24286,15 +24297,19 @@ msgstr "修复(_H)"
 msgid "Click to heal"
 msgstr "单击以修复"
 
-#: app/tools/gimphealtool.c:80 app/tools/gimphealtool.c:85
+#: app/tools/gimphealtool.c:80 app/tools/gimphealtool.c:84
 #, c-format
 msgid "%s to set a new heal source"
 msgstr "%s 可设定新的修复源"
 
-#. Translators: the translation of "Click" must be the first word
-#: app/tools/gimphealtool.c:84
+#: app/tools/gimphealtool.c:83
 msgid "Click to set a new heal source"
 msgstr "单击可设定新的修复源"
+
+#: app/tools/gimphealtool.c:85
+#, c-format
+msgid "%s-click to set a new heal source"
+msgstr "%s-单击可设定新的修复源"
 
 #: app/tools/gimphistogramoptions.c:64
 msgid "Histogram Scale"
@@ -24456,8 +24471,8 @@ msgstr "自动改变窗口大小"
 msgid "Resize image window to accommodate new zoom level"
 msgstr "改变图像窗口大小以适应新的缩放级别"
 
-#: app/tools/gimpmagnifyoptions.c:92 app/tools/gimptransformoptions.c:97
-#: app/widgets/gimpdynamicseditor.c:163
+#: app/tools/gimpmagnifyoptions.c:92 app/tools/gimpshapeoptions.c:689
+#: app/tools/gimptransformoptions.c:97 app/widgets/gimpdynamicseditor.c:163
 #: app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
 msgstr "方向"
@@ -25010,7 +25025,7 @@ msgstr "自定义固定高度"
 msgid "Unit of fixed width, height or size"
 msgstr "固定宽度、高度或大小的单位"
 
-#: app/tools/gimprectangleoptions.c:296
+#: app/tools/gimprectangleoptions.c:296 app/tools/gimpshapeoptions.c:148
 msgid "Expand from center"
 msgstr "从中心扩展"
 
@@ -25238,6 +25253,86 @@ msgstr "无法从空白选区中减去。"
 #, c-format
 msgid "Cannot intersect with an empty selection."
 msgstr "无法与空白选区相交。"
+
+#: app/tools/gimpshapeoptions.c:133
+msgid "Draw directly on selected layers"
+msgstr "直接在选中图层上绘制"
+
+#: app/tools/gimpshapeoptions.c:134
+msgid ""
+"If checked, shapes will be drawn directly on any selected raster item "
+"instead of as a vector layer"
+msgstr "如果勾选，形状将直接绘制在任何选中的栅格项目上而不是绘制为矢量图层"
+
+#: app/tools/gimpshapeoptions.c:142
+msgid "Fixed aspect ratio"
+msgstr "固定宽高比"
+
+#: app/tools/gimpshapeoptions.c:154
+msgid "Number of sides"
+msgstr "边的数量"
+
+#: app/tools/gimpshapeoptions.c:162
+msgid "Spiral Direction"
+msgstr "螺旋方向"
+
+#: app/tools/gimpshapeoptions.c:170
+msgid "Fill"
+msgstr "填充"
+
+#. the stroke frame
+#: app/tools/gimpshapeoptions.c:201 app/tools/gimpwarpoptions.c:350
+msgid "Stroke"
+msgstr "描边"
+
+#: app/tools/gimpshapeoptions.c:632 app/tools/gimpshapetool.c:759
+msgid "Rectangle"
+msgstr "矩形"
+
+#: app/tools/gimpshapeoptions.c:633 app/tools/gimpshapetool.c:763
+msgid "Ellipse"
+msgstr "椭圆"
+
+#: app/tools/gimpshapeoptions.c:634 app/tools/gimpshapetool.c:767
+msgid "Polygon"
+msgstr "多边形"
+
+#: app/tools/gimpshapeoptions.c:635 app/tools/gimpshapetool.c:771
+msgid "Star"
+msgstr "星形"
+
+#: app/tools/gimpshapeoptions.c:636 app/tools/gimpshapetool.c:775
+msgid "Spiral"
+msgstr "螺旋"
+
+#: app/tools/gimpshapeoptions.c:650
+msgid "Shape specific settings"
+msgstr "形状特定设置"
+
+#: app/tools/gimpshapeoptions.c:678
+msgid "Sides"
+msgstr "边数"
+
+#: app/tools/gimpshapeoptions.c:696
+msgid "Counter-clockwise"
+msgstr "逆时针"
+
+#: app/tools/gimpshapetool.c:134
+msgid "Shape Creator"
+msgstr "形状创建器"
+
+#: app/tools/gimpshapetool.c:135
+msgid "Shape Tool: Create vector and raster shapes"
+msgstr "形状工具：创建矢量或栅格形状"
+
+#: app/tools/gimpshapetool.c:136
+msgid "Sh_ape"
+msgstr "形状(_A)"
+
+#: app/tools/gimpshapetool.c:276
+#, c-format
+msgid "Add %s"
+msgstr "添加 %s"
 
 #: app/tools/gimpsheartool.c:91 app/tools/gimptransformgridoptions.c:578
 #: app/tools/gimptransformgridoptions.c:587
@@ -25967,11 +26062,6 @@ msgstr "帧"
 #: app/tools/gimpwarpoptions.c:172
 msgid "Number of animation frames"
 msgstr "动画帧数"
-
-#. the stroke frame
-#: app/tools/gimpwarpoptions.c:350
-msgid "Stroke"
-msgstr "笔触"
 
 #. the animation frame
 #: app/tools/gimpwarpoptions.c:372
@@ -29339,147 +29429,147 @@ msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "绘画工具(_P)"
 
-#: menus/image-menu.ui.in.in:645
+#: menus/image-menu.ui.in.in:646
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "变换工具(_T)"
 
-#: menus/image-menu.ui.in.in:684
+#: menus/image-menu.ui.in.in:685
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "滤镜(_R)"
 
-#: menus/image-menu.ui.in.in:689
+#: menus/image-menu.ui.in.in:690
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "最近使用"
 
-#: menus/image-menu.ui.in.in:698
+#: menus/image-menu.ui.in.in:699
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "模糊(_B)"
 
-#: menus/image-menu.ui.in.in:713
+#: menus/image-menu.ui.in.in:714
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "增强(_H)"
 
-#: menus/image-menu.ui.in.in:723
+#: menus/image-menu.ui.in.in:724
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "扭曲(_D)"
 
-#: menus/image-menu.ui.in.in:742
+#: menus/image-menu.ui.in.in:743
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "光照和阴影(_L)"
 
-#: menus/image-menu.ui.in.in:757
+#: menus/image-menu.ui.in.in:758
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "噪点(_N)"
 
-#: menus/image-menu.ui.in.in:767
+#: menus/image-menu.ui.in.in:768
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "边缘检测(_T)"
 
-#: menus/image-menu.ui.in.in:776
+#: menus/image-menu.ui.in.in:777
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "常规(_G)"
 
-#: menus/image-menu.ui.in.in:787
+#: menus/image-menu.ui.in.in:788
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "合成(_O)"
 
-#: menus/image-menu.ui.in.in:790
+#: menus/image-menu.ui.in.in:791
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "艺术(_A)"
 
-#: menus/image-menu.ui.in.in:802
+#: menus/image-menu.ui.in.in:803
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "装饰(_D)"
 
-#: menus/image-menu.ui.in.in:805
+#: menus/image-menu.ui.in.in:806
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "映射(_M)"
 
-#: menus/image-menu.ui.in.in:817
+#: menus/image-menu.ui.in.in:818
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "渲染(_R)"
 
-#: menus/image-menu.ui.in.in:820
+#: menus/image-menu.ui.in.in:821
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "分形(_F)"
 
-#: menus/image-menu.ui.in.in:823
+#: menus/image-menu.ui.in.in:824
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "噪点(_O)"
 
-#: menus/image-menu.ui.in.in:831
+#: menus/image-menu.ui.in.in:832
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "图案(_P)"
 
-#: menus/image-menu.ui.in.in:844
+#: menus/image-menu.ui.in.in:845
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "网络(_W)"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:851
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "动画(_I)"
 
-#: menus/image-menu.ui.in.in:853
+#: menus/image-menu.ui.in.in:854
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "开发(_V)"
 
-#: menus/image-menu.ui.in.in:855
+#: menus/image-menu.ui.in.in:856
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "插件示例(_E)"
 
-#: menus/image-menu.ui.in.in:858
+#: menus/image-menu.ui.in.in:859
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:861
+#: menus/image-menu.ui.in.in:862
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:868
+#: menus/image-menu.ui.in.in:869
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "窗口(_W)"
 
-#: menus/image-menu.ui.in.in:871
+#: menus/image-menu.ui.in.in:872
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "最近关闭的停靠(_R)"
 
-#: menus/image-menu.ui.in.in:875
+#: menus/image-menu.ui.in.in:876
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "可停靠对话框(_D)"
 
-#: menus/image-menu.ui.in.in:907
+#: menus/image-menu.ui.in.in:908
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "用户手册(_U)"
 
-#: menus/image-menu.ui.in.in:926
+#: menus/image-menu.ui.in.in:927
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "GIMP 在线(_G)"
