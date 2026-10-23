@@ -791,7 +791,21 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
   idle_help->query_dialog = GTK_DIALOG (dialog);
 
   if (idle_help->progress)
-    gimp_window_set_transient_for (GTK_WINDOW (dialog), idle_help->progress);
+    {
+      gimp_window_set_transient_for (GTK_WINDOW (dialog), idle_help->progress);
+    }
+  else if (gtk_grab_get_current ())
+    {
+      /* Help requested from a transient dialog: keep the query on top of it. See: #16445 */
+      GtkWidget *parent = gtk_widget_get_toplevel (gtk_grab_get_current ());
+
+      if (GTK_IS_WINDOW (parent))
+        {
+          gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
+          /* needed to have focus */
+          gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
+        }
+    }
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("The GIMP user manual is not installed "
