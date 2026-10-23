@@ -24,6 +24,7 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 
 #define PLUG_IN_PROC   "plug-in-busy-dialog"
@@ -314,6 +315,12 @@ busy_dialog (gint         read_fd,
   gtk_widget_set_visible (box, TRUE);
 
   gimp_window_set_transient (GTK_WINDOW (window));
+
+#ifdef G_OS_WIN32
+  gtk_widget_realize (window);
+  gimp_widget_set_title_bar_theme (window);
+#endif
+
   gtk_window_present (GTK_WINDOW (window));
 
   gtk_main ();

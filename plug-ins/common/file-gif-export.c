@@ -34,6 +34,7 @@
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 
 #define EXPORT_PROC    "file-gif-export"
@@ -1243,6 +1244,11 @@ bad_bounds_dialog (void)
                                               "whether to crop all of the "
                                               "layers to the image borders, "
                                               "or cancel this export."));
+
+#ifdef G_OS_WIN32
+  gtk_widget_realize (dialog);
+  gimp_widget_set_title_bar_theme (dialog);
+#endif
 
   gtk_widget_set_visible (dialog, TRUE);
 

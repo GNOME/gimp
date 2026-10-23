@@ -43,6 +43,7 @@
 
 #include "libgimpbase/gimpversion-private.h"
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 
 #define COMPOSE_PROC          "plug-in-compose"
@@ -1490,6 +1491,11 @@ check_response (GtkWidget *dialog,
                                         GTK_MESSAGE_ERROR,
                                         GTK_BUTTONS_CLOSE,
                                         _("At least one image is needed to compose"));
+
+#ifdef G_OS_WIN32
+            gtk_widget_realize (d);
+            gimp_widget_set_title_bar_theme (d);
+#endif
 
             gtk_dialog_run (GTK_DIALOG (d));
             gtk_widget_destroy (d);
