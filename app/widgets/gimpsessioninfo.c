@@ -25,6 +25,10 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef PLATFORM_OSX
+#include <AppKit/AppKit.h>
+#endif
+
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -690,6 +694,24 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
 
   info->p->x += rect.x;
   info->p->y += rect.y;
+
+#ifdef PLATFORM_OSX
+  /* a window which doesn't fit the work area (e.g. saved while fullscreen or
+     before the Dock grew) is computed wrongly. Let's do it ourselves. See: #13203 */
+  if (info->p->width > 0 && info->p->height > 0)
+    {
+      NSRect content_rect;
+
+      content_rect = [NSWindow contentRectForFrameRect:NSMakeRect (0, 0, work_rect.width, work_rect.height)
+        styleMask:NSWindowStyleMaskTitled |
+        NSWindowStyleMaskClosable         |
+        NSWindowStyleMaskMiniaturizable   |
+        NSWindowStyleMaskResizable];
+
+      info->p->width  = MIN (info->p->width,  (gint) content_rect.size.width);
+      info->p->height = MIN (info->p->height, (gint) content_rect.size.height);
+    }
+#endif
 
   if (gimp_session_info_get_remember_size (info) &&
       info->p->width  > 0 &&
