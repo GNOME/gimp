@@ -839,6 +839,11 @@ gimp_window_transient_on_mapped (GtkWidget   *window,
              * extension/persistent plug-in (e.g. old-style script-fu) */
             for (NSWindow *win in [NSApp windows])
               {
+                /* native file choosers are managed by gimpwidgets-private.c, and
+                   the ones already closed must not be shown again */
+                if ([win isKindOfClass:[NSSavePanel class]])
+                  continue;
+
                 if (not_gimp)
                   {
                     /* gimp main window is not active, hide dialog */

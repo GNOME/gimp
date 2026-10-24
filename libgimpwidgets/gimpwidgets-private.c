@@ -91,6 +91,93 @@ gimp_widgets_dialog_realize_quartz (GtkWidget *widget)
 
   g_signal_chain_from_overridden_handler (widget);
 }
+
+/* the native file chooser panel currently shown, if any. It is tracked from
+   the key notification so we do not need to cycle [NSApp windows] again */
+static NSWindow *native_window = nil;
+
+static BOOL
+gimp_widgets_native_window_visible (void)
+{
+  return native_window && [native_window isVisible];
+}
+
+static void
+gimp_widgets_init_native_window_level (void)
+{
+  /* GtkFileChooserNative creates a plain NSSavePanel/NSOpenPanel at the normal
+     window level, which gets hidden by gimp_widget_set_auto_transient().
+     So raise it above the floating dialogs while GIMP is active */
+  NSNotificationCenter *center     = [NSNotificationCenter defaultCenter];
+  __block NSWindow     *main_saved = nil;
+  __block NSWindow     *key_saved  = nil;
+
+  /* native file chooser is shown, keep it above the dialogs */
+  [center addObserverForName:NSWindowDidBecomeKeyNotification
+          object:nil
+          queue:[NSOperationQueue mainQueue]
+          usingBlock:^(NSNotification * _Nonnull note) {
+    NSWindow *window = [note object];
+
+    if ([window isKindOfClass:[NSSavePanel class]])
+      {
+        if (window != native_window)
+          {
+            [native_window release];
+            native_window = [window retain];
+          }
+        [window setLevel:NSModalPanelWindowLevel];
+      }
+  }];
+
+  /* gimp main window is not active, save last focused window/dialog */
+  [center addObserverForName:NSApplicationWillResignActiveNotification
+          object:nil
+          queue:[NSOperationQueue mainQueue]
+          usingBlock:^(NSNotification * _Nonnull note) {
+    [main_saved release];
+    [key_saved release];
+    main_saved = [[NSApp mainWindow] retain];
+    key_saved  = [[NSApp keyWindow] retain];
+
+    if (gimp_widgets_native_window_visible ())
+      [native_window setLevel:NSNormalWindowLevel];
+  }];
+
+  /* gimp main window is active, show dialog focused or not */
+  [center addObserverForName:NSApplicationDidBecomeActiveNotification
+          object:nil
+          queue:[NSOperationQueue mainQueue]
+          usingBlock:^(NSNotification * _Nonnull note) {
+    dispatch_async (dispatch_get_main_queue (), ^{
+      /* show main window */
+      if (main_saved && [main_saved isVisible] && ! [main_saved isMiniaturized])
+        [main_saved orderFront:nil];
+
+      if (gimp_widgets_native_window_visible ())
+        {
+          /* show native window */
+          [native_window setLevel:NSModalPanelWindowLevel];
+
+          /* focus main window or native window */
+          if (key_saved && key_saved != native_window &&
+              [key_saved isVisible] && ! [key_saved isMiniaturized])
+            [key_saved makeKeyWindow];
+          else
+            [native_window makeKeyAndOrderFront:nil];
+        }
+      else if (key_saved && [key_saved isVisible] && ! [key_saved isMiniaturized])
+        {
+          [key_saved makeKeyWindow];
+        }
+
+      [main_saved release];
+      main_saved = nil;
+      [key_saved release];
+      key_saved = nil;
+    });
+  }];
+}
 #endif
 
 static void
@@ -253,6 +340,9 @@ gimp_widgets_init (GimpHelpFunc           standard_help_func,
   /* fix invisible title bar on macOS */
   g_signal_override_class_handler ("realize", GTK_TYPE_DIALOG,
                                    G_CALLBACK (gimp_widgets_dialog_realize_quartz));
+
+  /* fix hidden native window on macOS */
+  gimp_widgets_init_native_window_level ();
 #endif
 
   gimp_widgets_initialized = TRUE;
@@ -503,7 +593,8 @@ gimp_widget_set_auto_transient (GtkWidget *dialog)
                              usingBlock:^(NSNotification * _Nonnull note) {
         dispatch_async(dispatch_get_main_queue(), ^{
           NSWindow *key_window = [NSApp keyWindow];
-          if ([NSApp isActive] && key_window != parent_window && key_window != dialog_window)
+          if ([NSApp isActive] && key_window != parent_window && key_window != dialog_window
+              && ! gimp_widgets_native_window_visible ())
             [dialog_window orderOut:nil];
         });
       }];
@@ -532,7 +623,7 @@ gimp_widget_set_auto_transient (GtkWidget *dialog)
 
           if (focus_saved == parent_window)
             [parent_window makeKeyWindow];
-          else
+          else if (! gimp_widgets_native_window_visible ())
             [dialog_window makeKeyAndOrderFront:nil];
         });
       }];
