@@ -767,7 +767,7 @@ gfig_load_action (GSimpleAction *action,
 
       dialog =
         gtk_file_chooser_native_new (_("Load Gfig Object Collection"),
-                                     NULL,
+                                     GTK_WINDOW (GIMP_GFIG (user_data)->top_level_dlg),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
                                      _("_Open"), _("_Cancel"));
 
@@ -806,7 +806,7 @@ gfig_save_action (GSimpleAction *action,
 
       dialog =
         gtk_file_chooser_native_new (_("Save Gfig Drawing"),
-                                     NULL,
+                                     GTK_WINDOW (GIMP_GFIG (user_data)->top_level_dlg),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
                                      _("_Save"), _("_Cancel"));
 

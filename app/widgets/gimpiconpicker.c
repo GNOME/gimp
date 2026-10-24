@@ -479,7 +479,7 @@ gimp_icon_picker_menu_from_file (GtkWidget      *widget,
   GtkFileFilter        *filter;
 
   dialog = gtk_file_chooser_native_new (_("Load Icon Image"),
-                                        NULL,
+                                        GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (picker))),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
                                         _("_Open"), _("_Cancel"));
 

@@ -92,7 +92,8 @@ error_console_save_cmd_callback (GimpAction *action,
     }
 
   console->file_dialog =
-    gtk_file_chooser_native_new (_("Save Error Log to File"), NULL,
+    gtk_file_chooser_native_new (_("Save Error Log to File"),
+                                 GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (console))),
                                  GTK_FILE_CHOOSER_ACTION_SAVE,
                                  _("_Save"), _("_Cancel"));
 

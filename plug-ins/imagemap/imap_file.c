@@ -69,7 +69,7 @@ do_file_open_dialog (GSimpleAction *action,
     {
       dialog =
         gtk_file_chooser_native_new (_("Load Image Map"),
-                                     NULL,
+                                     GTK_WINDOW (get_dialog ()),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
                                      _("_Open"), _("_Cancel"));
 
@@ -125,7 +125,7 @@ do_file_save_as_dialog (GSimpleAction *action,
       gchar *filename;
 
       dialog = gtk_file_chooser_native_new (_("Save Image Map"),
-                                            NULL,
+                                            GTK_WINDOW (get_dialog ()),
                                             GTK_FILE_CHOOSER_ACTION_SAVE,
                                             _("_Save"), _("_Cancel"));
 

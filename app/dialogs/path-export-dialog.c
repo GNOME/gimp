@@ -79,7 +79,8 @@ path_export_dialog_new (GimpImage              *image,
   private->user_data   = user_data;
 
   dialog = gtk_file_chooser_native_new (_("Export Paths to SVG"),
-                                        NULL, GTK_FILE_CHOOSER_ACTION_SAVE,
+                                        GTK_WINDOW (gtk_widget_get_toplevel (parent)),
+                                        GTK_FILE_CHOOSER_ACTION_SAVE,
                                         _("_Save"), _("_Cancel"));
 
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),

@@ -2631,7 +2631,7 @@ ifs_compose_save (void)
     {
       dialog =
         gtk_file_chooser_native_new (_("Save as IFS Fractal file"),
-                                     NULL,
+                                     GTK_WINDOW (ifs->dialog),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
                                      _("_Save"), _("_Cancel"));
 
@@ -2655,7 +2655,7 @@ ifs_compose_load (void)
     {
       dialog =
         gtk_file_chooser_native_new (_("Open IFS Fractal file"),
-                                     NULL,
+                                     GTK_WINDOW (ifs->dialog),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
                                      _("_Open"), _("_Cancel"));
 

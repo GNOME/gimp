@@ -436,8 +436,9 @@ static void
 gimp_file_entry_browse_clicked (GtkWidget     *widget,
                                 GimpFileEntry *entry)
 {
-  gchar *utf8;
-  gchar *filename;
+  GtkWidget *toplevel;
+  gchar     *utf8;
+  gchar     *filename;
 
   utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
@@ -475,6 +476,11 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
                                    filename);
 
   g_free (filename);
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (entry));
+  if (gtk_widget_is_toplevel (toplevel))
+    gtk_native_dialog_set_transient_for (GTK_NATIVE_DIALOG (entry->file_dialog),
+                                         GTK_WINDOW (toplevel));
 
   gtk_native_dialog_show (GTK_NATIVE_DIALOG (entry->file_dialog));
 }
