@@ -33,7 +33,7 @@
 #include <Carbon/Carbon.h>  /* For virtual key codes ... */
 #include <ApplicationServices/ApplicationServices.h>
 #endif
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= 140000 /* SCScreenshotManager */
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 140000 /* SCScreenshotManager (checked at runtime) */
 #import <ScreenCaptureKit/ScreenCaptureKit.h>
 #endif
 
@@ -182,12 +182,6 @@
 - (void)pickColor:(NSEvent *)event
 {
   CGImageRef                     root_image_ref;
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= 140000 /* SCScreenshotManager */
-  __block CGImageRef             captured_image;
-  dispatch_semaphore_t           semaphore;
-  __block SCContentFilter       *monitor_size;
-  __block SCStreamConfiguration *monitor_config;
-#endif
   CFDataRef                      pixel_data;
   const guchar                  *data;
   guchar                         temp_rgb[3];
@@ -218,60 +212,70 @@
 
   root_image_ref = nil;
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= 140000 /* SCScreenshotManager */
-  /* ScreenCaptureKit is asyncronous */
-  captured_image  = nil;
-  semaphore       = dispatch_semaphore_create(0);
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 140000 /* SCScreenshotManager */
+  if (@available(macOS 14.0, *))
+    {
+      __block CGImageRef             captured_image;
+      dispatch_semaphore_t           semaphore;
+      __block SCContentFilter       *monitor_size;
+      __block SCStreamConfiguration *monitor_config;
 
-  [SCShareableContent getShareableContentWithCompletionHandler:^(SCShareableContent *monitor_content, NSError *monitor_error) {
-    if (monitor_error == nil && monitor_content != nil)
-      {
-        /* find the monitor that contains the rect.origin where the user clicked */
-        SCDisplay *target_monitor = monitor_content.displays.firstObject;
-        for (SCDisplay *monitor in monitor_content.displays)
+      /* ScreenCaptureKit is asyncronous */
+      captured_image  = nil;
+      semaphore       = dispatch_semaphore_create(0);
+
+      [SCShareableContent getShareableContentWithCompletionHandler:^(SCShareableContent *monitor_content, NSError *monitor_error) {
+        if (monitor_error == nil && monitor_content != nil)
           {
-            if (CGRectContainsPoint (monitor.frame, rect.origin))
+            /* find the monitor that contains the rect.origin where the user clicked */
+            SCDisplay *target_monitor = monitor_content.displays.firstObject;
+            for (SCDisplay *monitor in monitor_content.displays)
               {
-                target_monitor = monitor;
-                break;
+                if (CGRectContainsPoint (monitor.frame, rect.origin))
+                  {
+                    target_monitor = monitor;
+                    break;
+                  }
               }
+
+            /* get the whole monitor, without scaling or anti-aliasing effects */
+            monitor_size   = [[SCContentFilter alloc] initWithDisplay:target_monitor excludingWindows:@[]];
+            monitor_config = [[SCStreamConfiguration alloc] init];
+            monitor_config.scalesToFit = NO;
+
+            /* take the actual "screenshot" on the monitor */
+            [SCScreenshotManager captureImageWithFilter:monitor_size configuration:monitor_config
+             completionHandler:^(CGImageRef captured_monitor, NSError *captured_error) {
+              if (captured_error == nil && captured_monitor != NULL)
+                {
+                  CGRect captured_crop = CGRectMake (rect.origin.x - target_monitor.frame.origin.x,
+                                                     rect.origin.y - target_monitor.frame.origin.y,
+                                                     rect.size.width, rect.size.height);
+                  captured_image = CGImageCreateWithImageInRect (captured_monitor, captured_crop);
+                }
+              dispatch_semaphore_signal (semaphore);
+            }];
+
+            [monitor_size release];
+            [monitor_config release];
           }
+        else
+          {
+            dispatch_semaphore_signal (semaphore);
+          }
+      }];
 
-        /* get the whole monitor, without scaling or anti-aliasing effects */
-        monitor_size   = [[SCContentFilter alloc] initWithDisplay:target_monitor excludingWindows:@[]];
-        monitor_config = [[SCStreamConfiguration alloc] init];
-        monitor_config.scalesToFit = NO;
-
-        /* take the actual "screenshot" on the monitor */
-        [SCScreenshotManager captureImageWithFilter:monitor_size configuration:monitor_config
-         completionHandler:^(CGImageRef captured_monitor, NSError *captured_error) {
-          if (captured_error == nil && captured_monitor != NULL)
-            {
-              CGRect captured_crop = CGRectMake (rect.origin.x - target_monitor.frame.origin.x,
-                                                 rect.origin.y - target_monitor.frame.origin.y,
-                                                 rect.size.width, rect.size.height);
-              captured_image = CGImageCreateWithImageInRect (captured_monitor, captured_crop);
-            }
-          dispatch_semaphore_signal (semaphore);
-        }];
-
-        [monitor_size release];
-        [monitor_config release];
-      }
-    else
-      {
-        dispatch_semaphore_signal (semaphore);
-      }
-  }];
-
-  dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC));
-  root_image_ref = captured_image;
-
-#else
-  root_image_ref = CGWindowListCreateImage (rect,
-                                            kCGWindowListOptionOnScreenOnly,
-                                            kCGNullWindowID,
-                                            kCGWindowImageDefault);
+      dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC));
+      root_image_ref = captured_image;
+    }
+#endif
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 140000
+  /* deprecated in macOS 14 and obsoleted in macOS 15 by ScreenCaptureKit */
+  if (! @available(macOS 14.0, *))
+    root_image_ref = CGWindowListCreateImage (rect,
+                                              kCGWindowListOptionOnScreenOnly,
+                                              kCGNullWindowID,
+                                              kCGWindowImageDefault);
 #endif
   if (root_image_ref == NULL)
     {
@@ -558,16 +562,19 @@ _gimp_pick_button_quartz_pick (GimpPickButton *button)
 
   pool = [[NSAutoreleasePool alloc] init];
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= 140000 /* SCScreenshotManager */
-  /* Needed for ScreenCaptureKit which is asyncronous */
-  if (!CGPreflightScreenCaptureAccess())
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 140000 /* SCScreenshotManager */
+  if (@available(macOS 14.0, *))
     {
-      CGRequestScreenCaptureAccess();
-      g_message ("Could not capture colors via ScreenCaptureKit API. Pleave give the needed permissions");
-      [NSApp deactivate];
+      /* Needed for ScreenCaptureKit which is asyncronous */
+      if (!CGPreflightScreenCaptureAccess())
+        {
+          CGRequestScreenCaptureAccess();
+          g_message ("Could not capture colors via ScreenCaptureKit API. Pleave give the needed permissions");
+          [NSApp deactivate];
 
-      [pool release];
-      return;
+          [pool release];
+          return;
+        }
     }
 #endif
 
