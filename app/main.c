@@ -32,6 +32,7 @@
 #include <locale.h>
 
 #ifdef PLATFORM_OSX
+#include <AvailabilityMacros.h>
 #include <objc/runtime.h>
 #include <xlocale.h>
 #endif
@@ -533,6 +534,7 @@ gimp_macos_setenv (const char * progname)
 static void
 setlocale_lc_numeric (void)
 {
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 /* imp_implementationWithBlock */
   typedef void * (* SvgDocumentFunc) (id, SEL);
 
   Class           glyph_class;
@@ -568,6 +570,7 @@ setlocale_lc_numeric (void)
 
   method_setImplementation (glyph_method,
                             imp_implementationWithBlock (glyph_method_custom));
+#endif
 }
 #endif /* PLATFORM_OSX */
 

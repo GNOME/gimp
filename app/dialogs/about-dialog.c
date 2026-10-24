@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #ifdef PLATFORM_OSX
+#include <AvailabilityMacros.h>
 #import <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
 #endif /* PLATFORM_OSX */

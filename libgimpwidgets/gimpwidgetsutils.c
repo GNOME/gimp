@@ -47,6 +47,7 @@
 #include <CoreServices/CoreServices.h>
 #endif
 #ifdef PLATFORM_OSX
+#include <AvailabilityMacros.h>
 #import <Cocoa/Cocoa.h>
 #endif
 
@@ -609,7 +610,11 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
       {
         CFDataRef data;
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101200 /* CGColorSpaceCopyICCData */
         data = CGColorSpaceCopyICCData (space);
+#else
+        data = CGColorSpaceCopyICCProfile (space);
+#endif
 
         if (data)
           {
@@ -1255,7 +1260,7 @@ gimp_widget_animation_enabled (void)
                 "gtk-enable-animations", &animation_enabled,
                 NULL);
 
-#ifdef PLATFORM_OSX
+#if defined (PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101200 /* accessibilityDisplayShouldReduceMotion */
   /* The MacOS setting is TRUE if the user wants animations turned off, so
    * we invert it to match the format of the other platforms */
   animation_enabled =

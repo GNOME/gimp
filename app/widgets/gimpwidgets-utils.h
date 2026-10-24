@@ -21,6 +21,11 @@
 #ifndef __APP_GIMP_WIDGETS_UTILS_H__
 #define __APP_GIMP_WIDGETS_UTILS_H__
 
+#ifdef PLATFORM_OSX
+/* Needed for MAC_OS_X_VERSION_MIN_REQUIRED check below */
+#include <AvailabilityMacros.h>
+#endif
+
 
 GtkWidget       * gimp_menu_item_get_image         (GtkMenuItem          *item);
 void              gimp_menu_item_set_image         (GtkMenuItem          *item,
@@ -172,7 +177,7 @@ gboolean          gimp_is_win32_system_theme_dark      (void);
 #ifdef PLATFORM_OSX
 gboolean          themes_macos_is_dark_mode_active     (void);
 #endif
-#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
 gchar           * themes_get_system_accent_color       (gboolean           prefer_dark);
 #endif
 

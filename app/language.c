@@ -783,14 +783,14 @@ language_init (const gchar  *language,
             if (identifier)
               {
                 NSLocale *locale  = [NSLocale localeWithLocaleIdentifier:identifier];
-                NSString *country = locale.countryCode;
+                NSString *country = [locale objectForKey:NSLocaleCountryCode];
 
                 /* fontconfig tells Chinese variants apart by region, not script */
-                if (! country && [locale.languageCode isEqualToString:@"zh"])
-                  country = [locale.scriptCode isEqualToString:@"Hant"] ? @"TW" : @"CN";
+                if (! country && [[locale objectForKey:NSLocaleLanguageCode] isEqualToString:@"zh"])
+                  country = [[locale objectForKey:NSLocaleScriptCode] isEqualToString:@"Hant"] ? @"TW" : @"CN";
 
-                system_language = g_strconcat (locale.languageCode.UTF8String,
-                                               country ? "_" : "", country ? country.UTF8String : "",
+                system_language = g_strconcat ([[locale objectForKey:NSLocaleLanguageCode] UTF8String],
+                                               country ? "_" : "", country ? [country UTF8String] : "",
                                                NULL);
               }
           }
