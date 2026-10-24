@@ -35,6 +35,7 @@
 #endif
 
 #ifdef PLATFORM_OSX
+#include <AvailabilityMacros.h>
 #import <AppKit/AppKit.h>
 #endif
 

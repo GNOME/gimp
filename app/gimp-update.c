@@ -25,6 +25,7 @@
 #include <stdio.h>
 
 #ifdef PLATFORM_OSX
+#include <AvailabilityMacros.h>
 #import <Foundation/Foundation.h>
 #endif /* PLATFORM_OSX */
 
@@ -59,7 +60,7 @@ static void          gimp_check_updates_process      (const gchar      *source,
                                                       gchar            *file_contents,
                                                       gsize             file_length,
                                                       GimpCoreConfig   *config);
-#ifndef PLATFORM_OSX
+#if !defined(PLATFORM_OSX) || MAC_OS_X_VERSION_MIN_REQUIRED < 1090 /* NSURLSession */
 static void          gimp_check_updates_callback     (GObject          *source,
                                                       GAsyncResult     *result,
                                                       gpointer          user_data);
@@ -70,7 +71,7 @@ static void          gimp_update_about_dialog        (GimpCoreConfig   *config,
 
 static const gchar * gimp_get_version_url            (void);
 
-#ifdef PLATFORM_OSX
+#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 1090 /* NSURLSession */
 static gint          gimp_check_updates_process_idle (gpointer          data);
 #endif
 
@@ -393,7 +394,7 @@ gimp_check_updates_process (const gchar    *source,
   g_free (file_contents);
 }
 
-#ifndef PLATFORM_OSX
+#if !defined(PLATFORM_OSX) || MAC_OS_X_VERSION_MIN_REQUIRED < 1090 /* NSURLSession */
 static void
 gimp_check_updates_callback (GObject      *source,
                              GAsyncResult *result,
@@ -484,7 +485,7 @@ gimp_get_version_url (void)
 #endif
 }
 
-#ifdef PLATFORM_OSX
+#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 1090 /* NSURLSession */
 typedef struct _GimpCheckUpdatesData
 {
   const gchar    *gimp_versions;
@@ -603,7 +604,7 @@ gimp_update_auto_check (GimpCoreConfig *config,
 void
 gimp_update_check (GimpCoreConfig *config)
 {
-#ifdef PLATFORM_OSX
+#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 1090 /* NSURLSession */
   const gchar         *gimp_versions;
   NSMutableURLRequest *request;
   NSURLSession        *session;

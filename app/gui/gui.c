@@ -95,6 +95,7 @@
 #endif
 
 #ifdef GDK_WINDOWING_QUARTZ
+#include <AvailabilityMacros.h>
 #import <AppKit/AppKit.h>
 #include <gdk/quartz/gdkquartz-cocoa-access.h>
 
@@ -283,11 +284,13 @@ gui_init (Gimp         *gimp,
   if ([NSWindow respondsToSelector:@selector(setAllowsAutomaticWindowTabbing:)])
     [NSWindow setAllowsAutomaticWindowTabbing:NO];
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 /* preferredScrollerStyle */
   /* respect the macOS "Show scroll bars: Always" system preference. See: #16291 */
   if ([NSScroller preferredScrollerStyle] == NSScrollerStyleLegacy)
     g_object_set (gtk_settings_get_default (),
                   "gtk-overlay-scrolling", FALSE,
                   NULL);
+#endif
 
   /* standard macOS shortcuts (handled by the OS) */
   gdk_event_handler_set (gui_macos_event_handler, NULL, NULL);

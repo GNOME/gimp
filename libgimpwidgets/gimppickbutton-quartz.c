@@ -28,11 +28,12 @@
 #include "gimppickbutton-quartz.h"
 
 #ifdef GDK_WINDOWING_QUARTZ
+#include <AvailabilityMacros.h>
 #import <AppKit/AppKit.h>
 #include <Carbon/Carbon.h>  /* For virtual key codes ... */
 #include <ApplicationServices/ApplicationServices.h>
 #endif
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= 120300
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 140000 /* SCScreenshotManager */
 #import <ScreenCaptureKit/ScreenCaptureKit.h>
 #endif
 
@@ -181,7 +182,7 @@
 - (void)pickColor:(NSEvent *)event
 {
   CGImageRef                     root_image_ref;
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= 120300
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 140000 /* SCScreenshotManager */
   __block CGImageRef             captured_image;
   dispatch_semaphore_t           semaphore;
   __block SCContentFilter       *monitor_size;
@@ -208,12 +209,16 @@
   point = event.locationInWindow;
   rect = NSMakeRect (point.x, point.y,
                      1, 1);
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 /* convertRectToScreen */
   rect = [self.window convertRectToScreen:rect];
+#else
+  rect.origin = [self.window convertBaseToScreen:rect.origin];
+#endif
   rect.origin.y = [[[NSScreen screens] objectAtIndex:0] frame].size.height - rect.origin.y;
 
   root_image_ref = nil;
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= 120300
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 140000 /* SCScreenshotManager */
   /* ScreenCaptureKit is asyncronous */
   captured_image  = nil;
   semaphore       = dispatch_semaphore_create(0);
@@ -282,7 +287,11 @@
     {
       CFDataRef icc_data = NULL;
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101200 /* CGColorSpaceCopyICCData */
       icc_data = CGColorSpaceCopyICCData (color_space);
+#else
+      icc_data = CGColorSpaceCopyICCProfile (color_space);
+#endif
       if (icc_data)
         {
           UInt8 *buffer = g_malloc (CFDataGetLength (icc_data));
@@ -549,7 +558,7 @@ _gimp_pick_button_quartz_pick (GimpPickButton *button)
 
   pool = [[NSAutoreleasePool alloc] init];
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= 120300
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 140000 /* SCScreenshotManager */
   /* Needed for ScreenCaptureKit which is asyncronous */
   if (!CGPreflightScreenCaptureAccess())
     {

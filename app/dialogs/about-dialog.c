@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #ifdef PLATFORM_OSX
+#include <AvailabilityMacros.h>
 #import <AppKit/AppKit.h>
 #include <Foundation/Foundation.h>
 #endif /* PLATFORM_OSX */
@@ -1037,7 +1038,7 @@ about_dialog_debug_info (void)
   if (! os_name)
     {
       gchar *name    = g_get_os_info (G_OS_INFO_KEY_NAME);
-#ifndef PLATFORM_OSX
+#if !defined(PLATFORM_OSX) || MAC_OS_X_VERSION_MIN_REQUIRED < 101000 /* operatingSystemVersion */
       gchar *version = g_get_os_info (G_OS_INFO_KEY_VERSION_ID);
 #else
       /* glib doesn't fill G_OS_INFO_KEY_VERSION_* on macOS */

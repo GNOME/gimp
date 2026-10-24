@@ -26,6 +26,7 @@
 #include <string.h>
 
 #ifdef PLATFORM_OSX
+#include <AvailabilityMacros.h>
 #import <Foundation/Foundation.h>
 #endif
 
@@ -77,7 +78,7 @@ static void       file_remote_mount_file_cancel  (GimpProgress    *progress,
 
 static GFile    * file_remote_get_temp_file      (Gimp            *gimp,
                                                   GFile           *file);
-#ifdef PLATFORM_OSX
+#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 1090 /* NSURLSession */
 static void       file_remote_download_cancel    (GimpProgress         *progress,
                                                   NSURLSessionDataTask *task);
 #endif
@@ -277,7 +278,7 @@ file_remote_get_temp_file (Gimp  *gimp,
   return temp_file;
 }
 
-#ifdef PLATFORM_OSX
+#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 1090 /* NSURLSession */
 static void
 file_remote_download_cancel (GimpProgress         *progress,
                              NSURLSessionDataTask *task)
@@ -298,7 +299,7 @@ file_remote_copy_file (Gimp            *gimp,
   gboolean        success;
   GError         *my_error = NULL;
 
-#ifdef PLATFORM_OSX
+#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 1090 /* NSURLSession */
   /* GIO has no working http(s) GVfs backend on macOS, which is the
      same issue that used to break the update check (see: app/gimp-update.c) */
   if (mode == DOWNLOAD)
