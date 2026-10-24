@@ -227,8 +227,12 @@
       [SCShareableContent getShareableContentWithCompletionHandler:^(SCShareableContent *monitor_content, NSError *monitor_error) {
         if (monitor_error == nil && monitor_content != nil)
           {
+            SCDisplay        *target_monitor;
+            CGDisplayModeRef  monitor_mode;
+            CGFloat           monitor_scale = 1.0;
+
             /* find the monitor that contains the rect.origin where the user clicked */
-            SCDisplay *target_monitor = monitor_content.displays.firstObject;
+            target_monitor = monitor_content.displays.firstObject;
             for (SCDisplay *monitor in monitor_content.displays)
               {
                 if (CGRectContainsPoint (monitor.frame, rect.origin))
@@ -238,19 +242,31 @@
                   }
               }
 
-            /* get the whole monitor, without scaling or anti-aliasing effects */
+            /* first, get the whole monitor, without scaling or anti-aliasing effects */
             monitor_size   = [[SCContentFilter alloc] initWithDisplay:target_monitor excludingWindows:@[]];
             monitor_config = [[SCStreamConfiguration alloc] init];
             monitor_config.scalesToFit = NO;
+            /* hide cursor from the capture, otherwise colors are inaccurate */
+            monitor_config.showsCursor = NO;
+            /* take screen scaling into account, otherwise colors are offset */
+            monitor_mode = CGDisplayCopyDisplayMode (target_monitor.displayID);
+            if (monitor_mode)
+              {
+                monitor_config.width  = CGDisplayModeGetPixelWidth (monitor_mode);
+                monitor_config.height = CGDisplayModeGetPixelHeight (monitor_mode);
+                monitor_scale         = (CGFloat) CGDisplayModeGetPixelWidth (monitor_mode) /
+                                        target_monitor.frame.size.width;
+                CFRelease (monitor_mode);
+              }
 
             /* take the actual "screenshot" on the monitor */
             [SCScreenshotManager captureImageWithFilter:monitor_size configuration:monitor_config
              completionHandler:^(CGImageRef captured_monitor, NSError *captured_error) {
               if (captured_error == nil && captured_monitor != NULL)
                 {
-                  CGRect captured_crop = CGRectMake (rect.origin.x - target_monitor.frame.origin.x,
-                                                     rect.origin.y - target_monitor.frame.origin.y,
-                                                     rect.size.width, rect.size.height);
+                  CGRect captured_crop = CGRectMake ((rect.origin.x - target_monitor.frame.origin.x) * monitor_scale,
+                                                     (rect.origin.y - target_monitor.frame.origin.y) * monitor_scale,
+                                                     rect.size.width  * monitor_scale, rect.size.height * monitor_scale);
                   captured_image = CGImageCreateWithImageInRect (captured_monitor, captured_crop);
                 }
               dispatch_semaphore_signal (semaphore);
