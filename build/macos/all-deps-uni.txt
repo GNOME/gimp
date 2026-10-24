@@ -23,6 +23,7 @@ freetype|homebrew:freetype \
 gdk-pixbuf2 +quartz -x11|homebrew:gdk-pixbuf \
 gexiv2|homebrew:gexiv2 \
 ghostscript -x11|homebrew:ghostscript \
+#gjs depends on x11
 glib2 +quartz -x11 -dbus|homebrew:glib \
 glib-networking|homebrew:glib-networking \
 graphviz -x11|homebrew:graphviz \

@@ -303,6 +303,9 @@ link_path = Path(f"{GIMP_DISTRIB}/lib/Python.framework/Versions/{PYTHON_VERSION}
 link_path.unlink(missing_ok=True)
 link_path.parent.mkdir(parents=True, exist_ok=True)
 link_path.symlink_to(os.path.relpath(real_path, link_path.parent))
+#### JavaScript support
+#bundle(OPT_PREFIX, "bin/gjs", "--dest", "MacOS")
+#bundle(OPT_PREFIX, "lib/gjs/girepository-*/GjsPrivate*.typelib", "--dest", "lib/girepository-1.0")
 #### lua is buggy, and hard to bundle due to LUA_*PATH etc (see AppImage script)
 #if os.path.exists(OPT_PREFIX / "bin/port"):
   #bundle(OPT_PREFIX, "bin/luajit", "--dest", "MacOS")
