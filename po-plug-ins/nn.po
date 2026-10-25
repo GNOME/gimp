@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-04 15:59+0000\n"
-"PO-Revision-Date: 2026-10-13 19:29+0200\n"
+"POT-Creation-Date: 2026-10-24 19:38+0000\n"
+"PO-Revision-Date: 2026-10-25 19:23+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -32,7 +32,7 @@ msgstr "Programtillegg-eksempel i C"
 
 #: extensions/goat-exercises/goat-exercise-c.c:148 plug-ins/common/blinds.c:199
 #: plug-ins/common/border-average.c:197 plug-ins/common/checkerboard.c:173
-#: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:586
+#: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:587
 #: plug-ins/common/contrast-retinex.c:247 plug-ins/common/crop-zealous.c:149
 #: plug-ins/common/curve-bend.c:625 plug-ins/common/decompose.c:385
 #: plug-ins/common/depth-merge.c:291 plug-ins/common/despeckle.c:235
@@ -47,7 +47,7 @@ msgstr "Programtillegg-eksempel i C"
 #: plug-ins/flame/flame.c:295 plug-ins/fractal-explorer/fractal-explorer.c:427
 #: plug-ins/gfig/gfig.c:213 plug-ins/gimpressionist/gimp.c:181
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:265
+#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:265
 #: plug-ins/lighting/lighting-main.c:777
 #: plug-ins/map-object/map-object-main.c:537 plug-ins/pagecurl/pagecurl.c:297
 #, c-format
@@ -63,10 +63,10 @@ msgstr "Programtillegg-eksempel i C"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:283 plug-ins/common/cml-explorer.c:1374
+#: plug-ins/common/busy-dialog.c:284 plug-ins/common/cml-explorer.c:1374
 #: plug-ins/common/cml-explorer.c:2143 plug-ins/common/cml-explorer.c:2340
 #: plug-ins/common/curve-bend.c:1893 plug-ins/common/curve-bend.c:1915
-#: plug-ins/common/file-gif-export.c:1229 plug-ins/common/file-heif.c:2505
+#: plug-ins/common/file-gif-export.c:1230 plug-ins/common/file-heif.c:2505
 #: plug-ins/common/file-pdf-export.c:1051 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:840 plug-ins/common/qbist.c:888
 #: plug-ins/common/sphere-designer.c:2295
@@ -82,15 +82,15 @@ msgstr "Programtillegg-eksempel i C"
 #: plug-ins/gimpressionist/presets.c:654 plug-ins/gimpressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:3360
 #: plug-ins/gradient-flare/gradient-flare.c:3474
-#: plug-ins/ifs-compose/ifs-compose.c:914
-#: plug-ins/ifs-compose/ifs-compose.c:2614
-#: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
-#: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
-#: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:737
-#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1201
-#: plug-ins/metadata/metadata-editor.c:1699
-#: plug-ins/metadata/metadata-editor.c:5522
-#: plug-ins/metadata/metadata-editor.c:5557 plug-ins/print/print.c:476
+#: plug-ins/ifs-compose/ifs-compose.c:915
+#: plug-ins/ifs-compose/ifs-compose.c:2636
+#: plug-ins/ifs-compose/ifs-compose.c:2660 plug-ins/imagemap/imap_browse.c:79
+#: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:74
+#: plug-ins/imagemap/imap_file.c:130 plug-ins/lighting/lighting-ui.c:737
+#: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1102
+#: plug-ins/metadata/metadata-editor.c:1558
+#: plug-ins/metadata/metadata-editor.c:3818
+#: plug-ins/metadata/metadata-editor.c:3849 plug-ins/print/print.c:501
 msgid "_Cancel"
 msgstr "_Avbryt"
 
@@ -150,7 +150,7 @@ msgstr "Programtillegg-eksempel i JavaScript (GJS)"
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:655 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3475
-#: plug-ins/ifs-compose/ifs-compose.c:915
+#: plug-ins/ifs-compose/ifs-compose.c:916
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
 msgstr "_OK"
@@ -266,8 +266,8 @@ msgstr "_Vassrett stil"
 #: plug-ins/lighting/lighting-main.c:213 plug-ins/lighting/lighting-main.c:336
 #: plug-ins/lighting/lighting-main.c:395 plug-ins/lighting/lighting-main.c:454
 #: plug-ins/lighting/lighting-main.c:513 plug-ins/lighting/lighting-main.c:572
-#: plug-ins/metadata/metadata-tags.c:223 plug-ins/metadata/metadata-tags.c:235
-#: plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/metadata/metadata-tags.c:222 plug-ins/metadata/metadata-tags.c:234
+#: plug-ins/metadata/metadata-tags.c:298
 msgid "None"
 msgstr "Ingen"
 
@@ -483,11 +483,11 @@ msgstr "Spel av animasjonen:"
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:798 plug-ins/common/file-gif-export.c:221
+#: plug-ins/common/animation-play.c:798 plug-ins/common/file-gif-export.c:222
 msgid "Cumulative layers (combine)"
 msgstr "Kumulative lag (kombiner)"
 
-#: plug-ins/common/animation-play.c:803 plug-ins/common/file-gif-export.c:222
+#: plug-ins/common/animation-play.c:803 plug-ins/common/file-gif-export.c:223
 msgid "One frame per layer (replace)"
 msgstr "Éi ramme per lag (byt ut)"
 
@@ -603,7 +603,7 @@ msgstr "Persienne"
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:259 plug-ins/common/compose.c:1246
+#: plug-ins/common/blinds.c:259 plug-ins/common/compose.c:1247
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-drhalo.c:237 plug-ins/common/file-farbfeld.c:301
@@ -613,7 +613,7 @@ msgstr "Persienne"
 #: plug-ins/common/file-pcx.c:734 plug-ins/common/file-pcx.c:742
 #: plug-ins/common/file-pix.c:427 plug-ins/common/file-png.c:1127
 #: plug-ins/common/file-pnm.c:850 plug-ins/common/file-qoi.c:296
-#: plug-ins/common/file-raw-data.c:829 plug-ins/common/file-raw-data.c:1959
+#: plug-ins/common/file-raw-data.c:833 plug-ins/common/file-raw-data.c:1967
 #: plug-ins/common/file-sunras.c:1060 plug-ins/common/file-tga.c:1101
 #: plug-ins/common/file-tim.c:403 plug-ins/common/file-tim.c:551
 #: plug-ins/common/file-wbmp.c:396 plug-ins/common/file-wbmp.c:473
@@ -622,9 +622,9 @@ msgstr "Persienne"
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:261
-#: plug-ins/file-psd/psd-image-res-load.c:1125
-#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-raw/file-libraw.c:386
-#: plug-ins/file-raw/file-libraw.c:499 plug-ins/file-sgi/sgi.c:456
+#: plug-ins/file-psd/psd-image-res-load.c:1130
+#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-raw/file-libraw.c:465
+#: plug-ins/file-raw/file-libraw.c:576 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1679
 #: plug-ins/file-tiff/file-tiff-load.c:2769
 #: plug-ins/file-webp/file-webp-load.c:159 plug-ins/gfig/gfig-dialog.c:554
@@ -666,15 +666,17 @@ msgstr "_Bøttestorleik"
 msgid "Bits for bucket size"
 msgstr "Bitar for bøttestorleik"
 
-#: plug-ins/common/border-average.c:151
+#: plug-ins/common/border-average.c:151 plug-ins/metadata/metadata-tags.c:286
 msgid "1"
 msgstr "1"
 
-#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/common/border-average.c:152 plug-ins/metadata/metadata-tags.c:287
+#: plug-ins/metadata/metadata-tags.c:300
 msgid "2"
 msgstr "2"
 
-#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/common/border-average.c:153 plug-ins/metadata/metadata-tags.c:289
+#: plug-ins/metadata/metadata-tags.c:302
 msgid "4"
 msgstr "4"
 
@@ -719,16 +721,16 @@ msgstr "Kantbreidd"
 msgid "Number of Colors"
 msgstr "Talet på fargar"
 
-#: plug-ins/common/busy-dialog.c:259 plug-ins/common/busy-dialog.c:275
+#: plug-ins/common/busy-dialog.c:260 plug-ins/common/busy-dialog.c:276
 msgid "Please Wait"
 msgstr "Vent litt"
 
 #. the title label
-#: plug-ins/common/busy-dialog.c:303
+#: plug-ins/common/busy-dialog.c:304
 msgid "Please wait for the operation to complete"
 msgstr "Vent til operasjonen er fullført"
 
-#: plug-ins/common/busy-dialog.c:364
+#: plug-ins/common/busy-dialog.c:383
 msgid "Canceling..."
 msgstr "Avbryt …"
 
@@ -1039,9 +1041,9 @@ msgstr "Tilfeldig frø"
 #: plug-ins/flame/flame.c:1219
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:784
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1491
-#: plug-ins/gfig/gfig-dialog.c:772 plug-ins/ifs-compose/ifs-compose.c:911
-#: plug-ins/ifs-compose/ifs-compose.c:2638 plug-ins/imagemap/imap_browse.c:79
-#: plug-ins/imagemap/imap_file.c:73 plug-ins/lighting/lighting-ui.c:492
+#: plug-ins/gfig/gfig-dialog.c:772 plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:2660 plug-ins/imagemap/imap_browse.c:79
+#: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
 #: plug-ins/lighting/lighting-ui.c:869
 msgid "_Open"
 msgstr "_Opna"
@@ -1056,8 +1058,8 @@ msgstr "_Opna"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:792
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1515
 #: plug-ins/gfig/gfig-dialog.c:811 plug-ins/gimpressionist/brush.c:269
-#: plug-ins/ifs-compose/ifs-compose.c:912
-#: plug-ins/ifs-compose/ifs-compose.c:2614 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/ifs-compose/ifs-compose.c:913
+#: plug-ins/ifs-compose/ifs-compose.c:2636 plug-ins/imagemap/imap_file.c:130
 #: plug-ins/lighting/lighting-ui.c:486 plug-ins/lighting/lighting-ui.c:737
 msgid "_Save"
 msgstr "_Lagra"
@@ -1222,7 +1224,7 @@ msgstr "Graf for dei gjeldande innstillingane"
 #: plug-ins/common/procedure-browser.c:169
 #: plug-ins/filter-browser/filter-browser.c:745 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1189 plug-ins/gfig/gfig-dialog.c:1334
-#: plug-ins/ifs-compose/ifs-compose.c:1214
+#: plug-ins/ifs-compose/ifs-compose.c:1215
 #: plug-ins/metadata/metadata-viewer.c:227
 msgid "_Close"
 msgstr "_Lukk"
@@ -1239,18 +1241,18 @@ msgstr "Lagra parametrane for CML-utforskaren"
 #: plug-ins/common/file-dicom.c:1579 plug-ins/common/file-farbfeld.c:366
 #: plug-ins/common/file-mng.c:1279 plug-ins/common/file-mng.c:1629
 #: plug-ins/common/file-pcx.c:1240 plug-ins/common/file-pdf-export.c:683
-#: plug-ins/common/file-png.c:1993 plug-ins/common/file-raw-data.c:1527
-#: plug-ins/common/file-raw-data.c:1556 plug-ins/common/file-sunras.c:615
+#: plug-ins/common/file-png.c:1993 plug-ins/common/file-raw-data.c:1535
+#: plug-ins/common/file-raw-data.c:1564 plug-ins/common/file-sunras.c:615
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-tim.c:768
 #: plug-ins/common/file-xmc.c:1287 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:301 plug-ins/file-fli/fli-gimp.c:823
 #: plug-ins/file-icns/file-icns-export.c:442 plug-ins/file-ico/ani-export.c:167
 #: plug-ins/file-ico/ico-export.c:1277 plug-ins/file-jpeg/jpeg-export.c:319
 #: plug-ins/file-psd/psd-export.c:2534 plug-ins/file-psd/psd-export.c:2702
-#: plug-ins/file-tiff/file-tiff-export.c:1101
-#: plug-ins/file-tiff/file-tiff-export.c:1222 plug-ins/flame/flame.c:584
+#: plug-ins/file-tiff/file-tiff-export.c:1112
+#: plug-ins/file-tiff/file-tiff-export.c:1233 plug-ins/flame/flame.c:584
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396
-#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
+#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2494
 #: plug-ins/lighting/lighting-ui.c:796
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1390,280 +1392,280 @@ msgstr "Ordner fargekartet på nytt"
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
 #.
-#: plug-ins/common/compose.c:209
+#: plug-ins/common/compose.c:210
 msgid "_Red:"
 msgstr "_Raud:"
 
-#: plug-ins/common/compose.c:210
+#: plug-ins/common/compose.c:211
 msgid "_Green:"
 msgstr "_Grøn:"
 
-#: plug-ins/common/compose.c:211
+#: plug-ins/common/compose.c:212
 msgid "_Blue:"
 msgstr "_Blå:"
 
-#: plug-ins/common/compose.c:212
+#: plug-ins/common/compose.c:213
 msgid "_Alpha:"
 msgstr "_Alfa:"
 
-#: plug-ins/common/compose.c:214 plug-ins/common/compose.c:218
+#: plug-ins/common/compose.c:215 plug-ins/common/compose.c:219
 msgid "_Hue:"
 msgstr "_Kulør:"
 
-#: plug-ins/common/compose.c:215 plug-ins/common/compose.c:219
+#: plug-ins/common/compose.c:216 plug-ins/common/compose.c:220
 msgid "_Saturation:"
 msgstr "_Metning:"
 
-#: plug-ins/common/compose.c:216
+#: plug-ins/common/compose.c:217
 msgid "_Value:"
 msgstr "_Lysverdi:"
 
-#: plug-ins/common/compose.c:220
+#: plug-ins/common/compose.c:221
 msgid "_Lightness:"
 msgstr "_Lysverdi:"
 
-#: plug-ins/common/compose.c:222
+#: plug-ins/common/compose.c:223
 msgid "_Cyan:"
 msgstr "_Cyanblå:"
 
-#: plug-ins/common/compose.c:223
+#: plug-ins/common/compose.c:224
 msgid "_Magenta:"
 msgstr "_Magentaraud:"
 
-#: plug-ins/common/compose.c:224
+#: plug-ins/common/compose.c:225
 msgid "_Yellow:"
 msgstr "_Gul:"
 
-#: plug-ins/common/compose.c:225
+#: plug-ins/common/compose.c:226
 msgid "_Black:"
 msgstr "_Svart:"
 
-#: plug-ins/common/compose.c:227
+#: plug-ins/common/compose.c:228
 msgid "_L:"
 msgstr "_L:"
 
-#: plug-ins/common/compose.c:228
+#: plug-ins/common/compose.c:229
 msgid "_A:"
 msgstr "_A:"
 
-#: plug-ins/common/compose.c:229
+#: plug-ins/common/compose.c:230
 msgid "_B:"
 msgstr "_B:"
 
-#: plug-ins/common/compose.c:231
+#: plug-ins/common/compose.c:232
 msgid "_L"
 msgstr "_L"
 
-#: plug-ins/common/compose.c:232
+#: plug-ins/common/compose.c:233
 msgid "_C"
 msgstr "_C"
 
-#: plug-ins/common/compose.c:233
+#: plug-ins/common/compose.c:234
 msgid "_H"
 msgstr "_H"
 
-#: plug-ins/common/compose.c:235
+#: plug-ins/common/compose.c:236
 msgid "_Luma y470:"
 msgstr "Luminans _y470:"
 
-#: plug-ins/common/compose.c:236
+#: plug-ins/common/compose.c:237
 msgid "_Blueness cb470:"
 msgstr "Blå_cb470:"
 
-#: plug-ins/common/compose.c:237
+#: plug-ins/common/compose.c:238
 msgid "_Redness cr470:"
 msgstr "Raud_cr470:"
 
-#: plug-ins/common/compose.c:239
+#: plug-ins/common/compose.c:240
 msgid "_Luma y709:"
 msgstr "Luminans_y709:"
 
-#: plug-ins/common/compose.c:240
+#: plug-ins/common/compose.c:241
 msgid "_Blueness cb709:"
 msgstr "Blå_cb709:"
 
-#: plug-ins/common/compose.c:241
+#: plug-ins/common/compose.c:242
 msgid "_Redness cr709:"
 msgstr "Raud_cr709:"
 
-#: plug-ins/common/compose.c:247 plug-ins/common/compose.c:441
-#: plug-ins/common/compose.c:504 plug-ins/common/decompose.c:192
+#: plug-ins/common/compose.c:248 plug-ins/common/compose.c:442
+#: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:192
 #: plug-ins/common/decompose.c:299 plug-ins/common/file-heif.c:317
 #: plug-ins/common/file-heif.c:438
 msgid "RGB"
 msgstr "RGB"
 
-#: plug-ins/common/compose.c:254 plug-ins/common/compose.c:442
-#: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:193
+#: plug-ins/common/compose.c:255 plug-ins/common/compose.c:443
+#: plug-ins/common/compose.c:506 plug-ins/common/decompose.c:193
 #: plug-ins/common/decompose.c:300
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:262 plug-ins/common/compose.c:443
-#: plug-ins/common/compose.c:506 plug-ins/common/decompose.c:200
+#: plug-ins/common/compose.c:263 plug-ins/common/compose.c:444
+#: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:200
 #: plug-ins/common/decompose.c:302
 msgid "HSV"
 msgstr "HSV"
 
-#: plug-ins/common/compose.c:269 plug-ins/common/compose.c:444
-#: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:205
+#: plug-ins/common/compose.c:270 plug-ins/common/compose.c:445
+#: plug-ins/common/compose.c:508 plug-ins/common/decompose.c:205
 #: plug-ins/common/decompose.c:303
 msgid "HSL"
 msgstr "HSL"
 
-#: plug-ins/common/compose.c:276 plug-ins/common/compose.c:445
-#: plug-ins/common/compose.c:508 plug-ins/common/decompose.c:210
+#: plug-ins/common/compose.c:277 plug-ins/common/compose.c:446
+#: plug-ins/common/compose.c:509 plug-ins/common/decompose.c:210
 #: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2.c:248
 #: plug-ins/common/file-jp2.c:294
 msgid "CMYK"
 msgstr "CMYK"
 
-#: plug-ins/common/compose.c:284 plug-ins/common/compose.c:446
-#: plug-ins/common/compose.c:509 plug-ins/common/decompose.c:216
+#: plug-ins/common/compose.c:285 plug-ins/common/compose.c:447
+#: plug-ins/common/compose.c:510 plug-ins/common/decompose.c:216
 #: plug-ins/common/decompose.c:305
 msgid "LAB"
 msgstr "LAB"
 
-#: plug-ins/common/compose.c:291 plug-ins/common/compose.c:447
-#: plug-ins/common/compose.c:510 plug-ins/common/decompose.c:218
+#: plug-ins/common/compose.c:292 plug-ins/common/compose.c:448
+#: plug-ins/common/compose.c:511 plug-ins/common/decompose.c:218
 #: plug-ins/common/decompose.c:306
 msgid "LCH"
 msgstr "LCH"
 
-#: plug-ins/common/compose.c:298
+#: plug-ins/common/compose.c:299
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: plug-ins/common/compose.c:305
+#: plug-ins/common/compose.c:306
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: plug-ins/common/compose.c:312
+#: plug-ins/common/compose.c:313
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: plug-ins/common/compose.c:319
+#: plug-ins/common/compose.c:320
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
-#: plug-ins/common/compose.c:381
+#: plug-ins/common/compose.c:382
 msgid "What to compose: "
 msgstr "Kva som skal setjast saman: "
 
-#: plug-ins/common/compose.c:406
+#: plug-ins/common/compose.c:407
 msgid "C_ompose..."
 msgstr "_Sett saman …"
 
-#: plug-ins/common/compose.c:410
+#: plug-ins/common/compose.c:411
 msgid "Create an image using multiple gray images as color channels"
 msgstr "Lagar eit bilete ved å bruka fleire bilete i gråtone som fargekanalar"
 
-#: plug-ins/common/compose.c:412
+#: plug-ins/common/compose.c:413
 msgid "This function creates a new image from multiple gray images"
 msgstr ""
 "Denne funksjonen lagar eit nytt bilete ved å bruka fleire bilete i gråtone"
 
-#: plug-ins/common/compose.c:421
+#: plug-ins/common/compose.c:422
 msgid "Image 2"
 msgstr "Bilete 2"
 
-#: plug-ins/common/compose.c:422
+#: plug-ins/common/compose.c:423
 msgid "Second input image"
 msgstr "Det andre inndatabiletet"
 
-#: plug-ins/common/compose.c:427
+#: plug-ins/common/compose.c:428
 msgid "Image 3"
 msgstr "Bilete 3"
 
-#: plug-ins/common/compose.c:428
+#: plug-ins/common/compose.c:429
 msgid "Third input image"
 msgstr "Tredje inndatabilete"
 
-#: plug-ins/common/compose.c:433
+#: plug-ins/common/compose.c:434
 msgid "Image 4"
 msgstr "Bilete 4"
 
-#: plug-ins/common/compose.c:434
+#: plug-ins/common/compose.c:435
 msgid "Fourth input image"
 msgstr "Fjerde inndatabilete"
 
-#: plug-ins/common/compose.c:439 plug-ins/common/compose.c:502
+#: plug-ins/common/compose.c:440 plug-ins/common/compose.c:503
 #: plug-ins/common/decompose.c:297
 msgid "Color _model"
 msgstr "_Fargemodell"
 
-#: plug-ins/common/compose.c:448 plug-ins/common/compose.c:511
+#: plug-ins/common/compose.c:449 plug-ins/common/compose.c:512
 #: plug-ins/common/decompose.c:307
 msgid "YCbCr ITU R470"
 msgstr "YCbCr ITU R470"
 
-#: plug-ins/common/compose.c:449 plug-ins/common/compose.c:512
+#: plug-ins/common/compose.c:450 plug-ins/common/compose.c:513
 #: plug-ins/common/decompose.c:308
 msgid "YCbCr ITU R709"
 msgstr "YCbCr ITU R709"
 
-#: plug-ins/common/compose.c:450 plug-ins/common/compose.c:513
+#: plug-ins/common/compose.c:451 plug-ins/common/compose.c:514
 #: plug-ins/common/decompose.c:309
 msgid "YCbCr ITU R470 256"
 msgstr "YCbCr ITU R470 256"
 
-#: plug-ins/common/compose.c:451 plug-ins/common/compose.c:514
+#: plug-ins/common/compose.c:452 plug-ins/common/compose.c:515
 #: plug-ins/common/decompose.c:310
 msgid "YCbCr ITU R709 256"
 msgstr "YCbCr ITU R709 256"
 
-#: plug-ins/common/compose.c:457 plug-ins/common/compose.c:520
+#: plug-ins/common/compose.c:458 plug-ins/common/compose.c:521
 #: plug-ins/common/smooth-palette.c:157
 msgid "New image"
 msgstr "Nytt bilete"
 
-#: plug-ins/common/compose.c:458 plug-ins/common/compose.c:521
+#: plug-ins/common/compose.c:459 plug-ins/common/compose.c:522
 #: plug-ins/common/smooth-palette.c:158
 msgid "Output image"
 msgstr "Utdatabiletet"
 
-#: plug-ins/common/compose.c:473
+#: plug-ins/common/compose.c:474
 msgid "Compose an image from multiple drawables of gray images"
 msgstr "Komponer eit bilete frå fleire teikneelement av grå bilete"
 
-#: plug-ins/common/compose.c:475
+#: plug-ins/common/compose.c:476
 msgid ""
 "This function creates a new image from multiple drawables of gray images"
 msgstr "Funksjonen komponer eit bilete frå fleire teikneelement av grå bilete"
 
-#: plug-ins/common/compose.c:484
+#: plug-ins/common/compose.c:485
 msgid "Drawable 2"
 msgstr "Teikneelement 2"
 
-#: plug-ins/common/compose.c:485
+#: plug-ins/common/compose.c:486
 msgid "Second input drawable"
 msgstr "Det andre inndata teikneelementet"
 
-#: plug-ins/common/compose.c:490
+#: plug-ins/common/compose.c:491
 msgid "Drawable 3"
 msgstr "Teikneelement 3"
 
-#: plug-ins/common/compose.c:491
+#: plug-ins/common/compose.c:492
 msgid "Third input drawable"
 msgstr "Det tredje inndata teikneelementet"
 
-#: plug-ins/common/compose.c:496
+#: plug-ins/common/compose.c:497
 msgid "Drawable 4"
 msgstr "Teikneelement 4"
 
-#: plug-ins/common/compose.c:497
+#: plug-ins/common/compose.c:498
 msgid "Fourth input drawable"
 msgstr "Det fjerde inndata teikneelementet"
 
-#: plug-ins/common/compose.c:537
+#: plug-ins/common/compose.c:538
 msgid "R_ecompose"
 msgstr "Sett saman på nytt"
 
-#: plug-ins/common/compose.c:541
+#: plug-ins/common/compose.c:542
 msgid "Recompose an image that was previously decomposed"
 msgstr "Set saman igjen eit tidlegare separert bilete"
 
-#: plug-ins/common/compose.c:543
+#: plug-ins/common/compose.c:544
 msgid ""
 "This function recombines the grayscale layers produced by Decompose into a "
 "single RGB or RGBA layer, and replaces the originally decomposed layer with "
@@ -1673,7 +1675,7 @@ msgstr ""
 "enkelt RGB- eller RGBA-lag og erstattar det opphavlege separerte laget med "
 "resultatet."
 
-#: plug-ins/common/compose.c:606
+#: plug-ins/common/compose.c:607
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
@@ -1681,62 +1683,62 @@ msgstr ""
 "Du kan bruka «Set saman på nytt» berre når det gjeldande biletet er laga ved "
 "hjelp av «Separer»."
 
-#: plug-ins/common/compose.c:649
+#: plug-ins/common/compose.c:650
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr ""
 "Feil ved skanning av «separer-data» sin parasitt: Fann ikkje mange nok lag"
 
-#: plug-ins/common/compose.c:664
+#: plug-ins/common/compose.c:665
 #, c-format
 msgid "Cannot recompose: Specified source layer ID %d not found"
 msgstr ""
 "Kan ikkje setja saman på nytt: Fann ikkje det spesifiserte kjeldelaget ID %d"
 
-#: plug-ins/common/compose.c:684
+#: plug-ins/common/compose.c:685
 #, c-format
 msgid "Cannot recompose: Specified layer #%d ID %d not found"
 msgstr ""
 "Kan ikkje setja saman på nytt: Fann ikkje det spesifiserte laget nr. %d ID %d"
 
-#: plug-ins/common/compose.c:713
+#: plug-ins/common/compose.c:714
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Fann ingen lag for biletet %d"
 
-#: plug-ins/common/compose.c:790
+#: plug-ins/common/compose.c:791
 msgid "Composing"
 msgstr "Set saman kanalane"
 
-#: plug-ins/common/compose.c:1091 plug-ins/common/compose.c:1492
+#: plug-ins/common/compose.c:1092 plug-ins/common/compose.c:1493
 msgid "At least one image is needed to compose"
 msgstr "Du må ha minst eitt bilete for å kunna setja saman"
 
-#: plug-ins/common/compose.c:1112
+#: plug-ins/common/compose.c:1113
 msgid "Drawables have different size"
 msgstr "Teikneområda har ulike storleikar"
 
-#: plug-ins/common/compose.c:1140
+#: plug-ins/common/compose.c:1141
 msgid "Images have different size"
 msgstr "Bileta har ulike storleikar"
 
-#: plug-ins/common/compose.c:1158
+#: plug-ins/common/compose.c:1159
 msgid "Error in getting layer IDs"
 msgstr "Feil: Fann ikkje ID for laget"
 
-#: plug-ins/common/compose.c:1291
+#: plug-ins/common/compose.c:1292
 msgid "Compose"
 msgstr "Set saman"
 
-#: plug-ins/common/compose.c:1306
+#: plug-ins/common/compose.c:1307
 msgid "Compose Channels"
 msgstr "Set saman kanalane"
 
 #. Channel representation grid
-#: plug-ins/common/compose.c:1321
+#: plug-ins/common/compose.c:1322
 msgid "Channel Representations"
 msgstr "Kanalrepresentasjon"
 
-#: plug-ins/common/compose.c:1381
+#: plug-ins/common/compose.c:1382
 msgid "Mask value"
 msgstr "Maskeverdi"
 
@@ -1789,11 +1791,11 @@ msgstr "Retinex-fordeling gjennom skalaar"
 msgid "Uniform"
 msgstr "Einsarta"
 
-#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/common/contrast-retinex.c:213 plug-ins/metadata/metadata-tags.c:306
 msgid "Low"
 msgstr "Låg"
 
-#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/common/contrast-retinex.c:214 plug-ins/metadata/metadata-tags.c:299
 msgid "High"
 msgstr "Høg"
 
@@ -2007,8 +2009,8 @@ msgstr "Kan ikkje arbeida på ei tom markering."
 #: plug-ins/common/file-png.c:1417 plug-ins/common/file-ps.c:1158
 #: plug-ins/common/file-ps.c:3756 plug-ins/common/file-psp.c:2845
 #: plug-ins/common/file-psp.c:2895 plug-ins/common/file-pvr.c:257
-#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:606
-#: plug-ins/common/file-raw-data.c:805 plug-ins/common/file-raw-data.c:1865
+#: plug-ins/common/file-qoi.c:275 plug-ins/common/file-raw-data.c:610
+#: plug-ins/common/file-raw-data.c:809 plug-ins/common/file-raw-data.c:1873
 #: plug-ins/common/file-seattle-filmworks.c:230
 #: plug-ins/common/file-sunras.c:434 plug-ins/common/file-svg.c:775
 #: plug-ins/common/file-tga.c:425 plug-ins/common/file-tim.c:277
@@ -2102,7 +2104,7 @@ msgstr "Byt dei to kurvene"
 #. The Reset button
 #: plug-ins/common/curve-bend.c:1337 plug-ins/common/sphere-designer.c:2642
 #: plug-ins/common/tile-small.c:517 plug-ins/gimpressionist/preview.c:182
-#: plug-ins/ifs-compose/ifs-compose.c:913
+#: plug-ins/ifs-compose/ifs-compose.c:914
 msgid "_Reset"
 msgstr "_Tilbakestill"
 
@@ -2382,7 +2384,7 @@ msgstr "O_verlapping"
 msgid "Overlap"
 msgstr "Overlapping"
 
-#: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:374
+#: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:378
 msgid "O_ffset"
 msgstr "Forskyving"
 
@@ -2486,7 +2488,7 @@ msgstr "Kvitnivå"
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-dicom.c:1656
 #: plug-ins/common/file-farbfeld.c:292 plug-ins/common/file-mng.c:1120
 #: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:855
-#: plug-ins/common/file-raw-data.c:1511 plug-ins/common/file-xmc.c:703
+#: plug-ins/common/file-raw-data.c:1519 plug-ins/common/file-xmc.c:703
 #: plug-ins/common/file-xmc.c:1030 plug-ins/file-bmp/bmp-load.c:800
 #: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
 #, c-format
@@ -2521,7 +2523,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "Dette programtillegget prøver å fjerna loddrette striper frå biletet."
 
 #: plug-ins/common/destripe.c:140 plug-ins/common/file-html-table.c:199
-#: plug-ins/common/file-ps.c:521 plug-ins/common/file-raw-data.c:364
+#: plug-ins/common/file-ps.c:521 plug-ins/common/file-raw-data.c:368
 #: plug-ins/common/smooth-palette.c:133 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "_Breidd"
@@ -2628,7 +2630,7 @@ msgstr "EOF (filslutt) eller feil ved lesing av biletheading"
 #: plug-ins/common/file-pcx.c:522 plug-ins/common/file-pdf-load.c:776
 #: plug-ins/common/file-pix.c:364 plug-ins/common/file-png.c:824
 #: plug-ins/common/file-pnm.c:688 plug-ins/common/file-ps.c:1148
-#: plug-ins/common/file-raw-data.c:796 plug-ins/common/file-raw-data.c:1857
+#: plug-ins/common/file-raw-data.c:800 plug-ins/common/file-raw-data.c:1865
 #: plug-ins/common/file-sunras.c:426 plug-ins/common/file-tga.c:417
 #: plug-ins/common/file-wbmp.c:240 plug-ins/common/file-wbmp.c:319
 #: plug-ins/common/file-wmf.c:616 plug-ins/common/file-xbm.c:721
@@ -2707,11 +2709,11 @@ msgstr "«%s»: EOF eller feil ved lesing av palettdata"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:358
-#: plug-ins/common/file-gif-export.c:944 plug-ins/common/file-html-table.c:358
+#: plug-ins/common/file-gif-export.c:945 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1819 plug-ins/common/file-jpegxl.c:1387
 #: plug-ins/common/file-pcx.c:1110 plug-ins/common/file-pix.c:645
 #: plug-ins/common/file-png.c:1985 plug-ins/common/file-pnm.c:1634
-#: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:350
+#: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:351
 #: plug-ins/common/file-sunras.c:606 plug-ins/common/file-svg.c:813
 #: plug-ins/common/file-tga.c:1215 plug-ins/common/file-tim.c:760
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
@@ -2720,7 +2722,7 @@ msgstr "«%s»: EOF eller feil ved lesing av palettdata"
 #: plug-ins/file-icns/file-icns-export.c:821 plug-ins/file-ico/ani-export.c:159
 #: plug-ins/file-ico/ico-export.c:1265 plug-ins/file-jpeg/jpeg-export.c:274
 #: plug-ins/file-psd/psd-export.c:2472 plug-ins/file-sgi/sgi.c:631
-#: plug-ins/file-tiff/file-tiff-export.c:1091
+#: plug-ins/file-tiff/file-tiff-export.c:1102
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Eksporterer «%s»"
@@ -3034,11 +3036,11 @@ msgstr "Ugyldig dimensjon: %d × %d"
 #: plug-ins/common/file-drhalo.c:298 plug-ins/common/file-drhalo.c:304
 #: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:116
 #: plug-ins/file-jpeg/jpeg-load.c:137 plug-ins/file-jpeg/jpeg-load.c:735
-#: plug-ins/file-raw/file-libraw.c:274 plug-ins/file-raw/file-libraw.c:283
-#: plug-ins/file-raw/file-libraw.c:292 plug-ins/file-raw/file-libraw.c:306
-#: plug-ins/file-raw/file-libraw.c:344 plug-ins/file-raw/file-libraw.c:363
-#: plug-ins/file-raw/file-libraw.c:424 plug-ins/file-raw/file-libraw.c:433
-#: plug-ins/file-raw/file-libraw.c:442 plug-ins/file-raw/file-libraw.c:466
+#: plug-ins/file-raw/file-libraw.c:278 plug-ins/file-raw/file-libraw.c:363
+#: plug-ins/file-raw/file-libraw.c:388 plug-ins/file-raw/file-libraw.c:425
+#: plug-ins/file-raw/file-libraw.c:443 plug-ins/file-raw/file-libraw.c:501
+#: plug-ins/file-raw/file-libraw.c:510 plug-ins/file-raw/file-libraw.c:519
+#: plug-ins/file-raw/file-libraw.c:543
 #, c-format
 msgid "Error reading data. Image may be corrupt."
 msgstr "Feil ved lesing av data. Biletet kan vera øydelagt."
@@ -3148,19 +3150,19 @@ msgstr ""
 msgid "Could not open '%s'"
 msgstr "Klarte ikkje opna «%s»"
 
-#: plug-ins/common/file-gif-export.c:155 plug-ins/common/file-gif-load.c:184
+#: plug-ins/common/file-gif-export.c:156 plug-ins/common/file-gif-load.c:184
 msgid "GIF image"
 msgstr "GIF-bilete"
 
-#: plug-ins/common/file-gif-export.c:157
+#: plug-ins/common/file-gif-export.c:158
 msgid "GIF"
 msgstr "GIF"
 
-#: plug-ins/common/file-gif-export.c:160
+#: plug-ins/common/file-gif-export.c:161
 msgid "exports files in GIF file format"
 msgstr "eksporterer filer i GIF-filformat"
 
-#: plug-ins/common/file-gif-export.c:163
+#: plug-ins/common/file-gif-export.c:164
 #, no-c-format
 msgid ""
 "Export a file in GIF format, with possible animation, transparency, and "
@@ -3175,96 +3177,96 @@ msgstr ""
 "alfa som gjennomsikt. Når han vert køyrd ikkje-interaktivt, er verdien for "
 "merknaden henta frå «gimp-comment»-parasitten."
 
-#: plug-ins/common/file-gif-export.c:192 plug-ins/common/file-mng.c:391
+#: plug-ins/common/file-gif-export.c:193 plug-ins/common/file-mng.c:391
 msgid "_Interlace"
 msgstr "_Flett saman"
 
-#: plug-ins/common/file-gif-export.c:193
+#: plug-ins/common/file-gif-export.c:194
 msgid "Try to export as interlaced"
 msgstr "Prøv å eksportera som samanfletta"
 
-#: plug-ins/common/file-gif-export.c:198
+#: plug-ins/common/file-gif-export.c:199
 msgid "Loop _Forever"
 msgstr "Uendeleg sløyfe"
 
-#: plug-ins/common/file-gif-export.c:199
+#: plug-ins/common/file-gif-export.c:200
 msgid "(animated gif) Loop infinitely"
 msgstr "(animert gif) Uendeleg sløyfe"
 
-#: plug-ins/common/file-gif-export.c:204
+#: plug-ins/common/file-gif-export.c:205
 msgid "_Number of repeats"
 msgstr "_Talet på repetisjonar"
 
-#: plug-ins/common/file-gif-export.c:205
+#: plug-ins/common/file-gif-export.c:206
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
 msgstr "(animert gif) Kor mange repetisjonar (Ignorert viss «loop» er Sann)"
 
-#: plug-ins/common/file-gif-export.c:211 plug-ins/file-fli/fli-gimp.c:248
+#: plug-ins/common/file-gif-export.c:212 plug-ins/file-fli/fli-gimp.c:248
 msgid "_Delay between frames when unspecified"
 msgstr "_Pause mellom rammene når uspesifisert"
 
-#: plug-ins/common/file-gif-export.c:212
+#: plug-ins/common/file-gif-export.c:213
 msgid "(animated gif) Default delay between frames in milliseconds"
 msgstr "(animert gif) Standard pause mellom rammene i millisekund"
 
-#: plug-ins/common/file-gif-export.c:218
+#: plug-ins/common/file-gif-export.c:219
 msgid "Frame disposal _when unspecified"
 msgstr "_Rammeovergang når uspesifisert"
 
-#: plug-ins/common/file-gif-export.c:219
+#: plug-ins/common/file-gif-export.c:220
 msgid "(animated gif) Default disposal type"
 msgstr "(animert gif) Standard overgangsstype"
 
-#: plug-ins/common/file-gif-export.c:220
+#: plug-ins/common/file-gif-export.c:221
 msgid "I don't care"
 msgstr "Det er meg likegyldig"
 
-#: plug-ins/common/file-gif-export.c:228
+#: plug-ins/common/file-gif-export.c:229
 msgid "_As animation"
 msgstr "Som _animasjon"
 
-#: plug-ins/common/file-gif-export.c:229
+#: plug-ins/common/file-gif-export.c:230
 msgid "Export GIF as animation?"
 msgstr "Eksportera GIF som animasjon?"
 
-#: plug-ins/common/file-gif-export.c:234
+#: plug-ins/common/file-gif-export.c:235
 msgid "_Use delay entered above for all frames"
 msgstr "_Bruk forsinkinga ovanfor for alle rammene"
 
-#: plug-ins/common/file-gif-export.c:235
+#: plug-ins/common/file-gif-export.c:236
 msgid "(animated gif) Use specified delay for all frames"
 msgstr "(animert gif) Bruk spesifisert forseinking for alle bileta"
 
-#: plug-ins/common/file-gif-export.c:240
+#: plug-ins/common/file-gif-export.c:241
 msgid "Use dis_posal entered above for all frames"
 msgstr "_Bruk rammeovergangen ovanfor for alle rammene"
 
-#: plug-ins/common/file-gif-export.c:242
+#: plug-ins/common/file-gif-export.c:243
 msgid "(animated gif) Use specified disposal for all frames"
 msgstr "(animert gif) Bruk spesifisert avhendingstype for alle rammene"
 
-#: plug-ins/common/file-gif-export.c:247
+#: plug-ins/common/file-gif-export.c:248
 msgid "Sa_ve comment"
 msgstr "Lagra _merknad"
 
-#: plug-ins/common/file-gif-export.c:248
+#: plug-ins/common/file-gif-export.c:249
 msgid "Save the image comment in the GIF file"
 msgstr "Lagra biletmerknadane i GIF-fila"
 
-#: plug-ins/common/file-gif-export.c:253
+#: plug-ins/common/file-gif-export.c:254
 msgid "Commen_t"
 msgstr "_Merknad"
 
-#: plug-ins/common/file-gif-export.c:254
+#: plug-ins/common/file-gif-export.c:255
 msgid "Image comment"
 msgstr "Biletmerknad"
 
-#: plug-ins/common/file-gif-export.c:549
+#: plug-ins/common/file-gif-export.c:550
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr ""
 "Greidde ikkje redusera fargane meir. Vert eksportert som ugjennomsiktig."
 
-#: plug-ins/common/file-gif-export.c:668
+#: plug-ins/common/file-gif-export.c:669
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -3273,7 +3275,7 @@ msgstr ""
 "Kan ikkje eksportera «%s». GIF-formatet støtter ikkje bilete som er meir enn "
 "%d pikslar høge eller breie."
 
-#: plug-ins/common/file-gif-export.c:691
+#: plug-ins/common/file-gif-export.c:692
 #, c-format
 msgid ""
 "Unable to export '%s'.  Please convert your image to 8 bit integer "
@@ -3282,7 +3284,7 @@ msgstr ""
 "Kan ikkje eksportera «%s». Konverter biletet til 8-bitars heiltalspresisjon "
 "sidan GIF-filformatet ikkje støttar høgare presisjon."
 
-#: plug-ins/common/file-gif-export.c:821
+#: plug-ins/common/file-gif-export.c:822
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3290,18 +3292,18 @@ msgstr ""
 "GIF-formatet godtek berre merknadar i 7-bit ASCII-kode. Ingen merknadar er "
 "lagra."
 
-#: plug-ins/common/file-gif-export.c:917
+#: plug-ins/common/file-gif-export.c:918
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Kan ikkje eksportera RGB-bilete. Konverter biletet til indeksert eller "
 "gråskala."
 
-#: plug-ins/common/file-gif-export.c:1152
+#: plug-ins/common/file-gif-export.c:1153
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Er lagt inn forseinkingar for å unngå unødig prosessorbelastning."
 
-#: plug-ins/common/file-gif-export.c:1224
+#: plug-ins/common/file-gif-export.c:1225
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3309,11 +3311,11 @@ msgstr ""
 "Biletet du prøver å eksportera som GIF inneheld lag som går utanfor kanten "
 "av biletet."
 
-#: plug-ins/common/file-gif-export.c:1230
+#: plug-ins/common/file-gif-export.c:1231
 msgid "Cr_op"
 msgstr "_Beskjer"
 
-#: plug-ins/common/file-gif-export.c:1241
+#: plug-ins/common/file-gif-export.c:1242
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -3321,7 +3323,7 @@ msgstr ""
 "Filformatet GIF tillét ikkje dette. Du må anten klippa alle laga til "
 "biletstorleiken eller la vera å eksportera dette biletet."
 
-#: plug-ins/common/file-gif-export.c:1299
+#: plug-ins/common/file-gif-export.c:1317
 msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
@@ -3329,15 +3331,15 @@ msgstr ""
 "GIF-formatet har berre støtte for 8 bitars presisjon.\n"
 "Biletet vert difor konvertert ved eksport, noko som kan endra pikselverdiane."
 
-#: plug-ins/common/file-gif-export.c:1367 plug-ins/common/file-mng.c:2050
+#: plug-ins/common/file-gif-export.c:1385 plug-ins/common/file-mng.c:2050
 msgid "milliseconds"
 msgstr "millisekund"
 
-#: plug-ins/common/file-gif-export.c:1402
+#: plug-ins/common/file-gif-export.c:1420
 msgid "Animated GIF"
 msgstr "Animert GIF"
 
-#: plug-ins/common/file-gif-export.c:1409
+#: plug-ins/common/file-gif-export.c:1427
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -3933,7 +3935,7 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr "Breidda for kvar tabellcelle. Kan vere eit fast tal eller i prosent."
 
 #: plug-ins/common/file-html-table.c:206 plug-ins/common/file-ps.c:528
-#: plug-ins/common/file-raw-data.c:369 plug-ins/common/smooth-palette.c:139
+#: plug-ins/common/file-raw-data.c:373 plug-ins/common/smooth-palette.c:139
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "_Høgd"
@@ -4101,8 +4103,9 @@ msgid "xvYCC"
 msgstr "xvYCC"
 
 #: plug-ins/common/file-jp2.c:249 plug-ins/common/file-jp2.c:295
-#: plug-ins/metadata/metadata-tags.c:290 plug-ins/metadata/metadata-tags.c:326
-#: plug-ins/metadata/metadata-tags.c:333 plug-ins/metadata/metadata-tags.c:340
+#: plug-ins/metadata/metadata-editor.c:2729
+#: plug-ins/metadata/metadata-tags.c:312 plug-ins/metadata/metadata-tags.c:348
+#: plug-ins/metadata/metadata-tags.c:357 plug-ins/metadata/metadata-tags.c:366
 msgid "Unknown"
 msgstr "Ukjend"
 
@@ -4235,19 +4238,19 @@ msgstr "Ustøtta JPEG 2000%s «%s» med %d-komponentar."
 
 #: plug-ins/common/file-jp2.c:1298 plug-ins/file-jpeg/jpeg-export.c:940
 #: plug-ins/file-psd/psd-export.c:3022
-#: plug-ins/file-tiff/file-tiff-export.c:1391
+#: plug-ins/file-tiff/file-tiff-export.c:1402
 msgid "No soft-proofing profile"
 msgstr "Ingen profil for utskriftssimulering"
 
 #: plug-ins/common/file-jp2.c:1306 plug-ins/common/file-jpegxl.c:2033
 #: plug-ins/file-jpeg/jpeg-export.c:948 plug-ins/file-psd/psd-export.c:3030
-#: plug-ins/file-tiff/file-tiff-export.c:1400
+#: plug-ins/file-tiff/file-tiff-export.c:1411
 msgid "Name of the color profile used for CMYK export."
 msgstr "Namnet på fargeprofilen bruk for XCMYK-eksport."
 
 #: plug-ins/common/file-jp2.c:1317 plug-ins/common/file-jpegxl.c:2052
 #: plug-ins/file-jpeg/jpeg-export.c:959 plug-ins/file-psd/psd-export.c:3041
-#: plug-ins/file-tiff/file-tiff-export.c:1422
+#: plug-ins/file-tiff/file-tiff-export.c:1433
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
@@ -4423,7 +4426,7 @@ msgstr ""
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
 #: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:730
-#: plug-ins/common/file-raw-data.c:821
+#: plug-ins/common/file-raw-data.c:825
 #: plug-ins/common/file-seattle-filmworks.c:242
 #: plug-ins/common/file-seattle-filmworks.c:283
 #: plug-ins/common/file-seattle-filmworks.c:293
@@ -4650,6 +4653,7 @@ msgstr "Førebels ikkje støtta PAA-format: «%d»"
 #: plug-ins/common/file-tim.c:577 plug-ins/common/file-tim.c:644
 #: plug-ins/file-cin/cineon-lib.c:169 plug-ins/file-cin/dpx-lib.c:280
 #: plug-ins/file-fli/fli-gimp.c:557 plug-ins/file-fli/fli-gimp.c:834
+#: plug-ins/file-tiff/file-tiff-export.c:796
 #, c-format
 msgid "Memory could not be allocated."
 msgstr "Klarte ikkje tildela minne."
@@ -4834,8 +4838,9 @@ msgstr "Høgre kant utanfor grensene (må vere mindre enn %d): %d"
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Nedre kant utanfor grensene (må vere mindre enn %d): %d"
 
-#: plug-ins/common/file-pcx.c:1310 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:822 plug-ins/common/file-svg.c:838
+#: plug-ins/common/file-pcx.c:1310 plug-ins/common/file-qoi.c:361
+#: plug-ins/common/file-qoi.c:378 plug-ins/common/file-svg.c:822
+#: plug-ins/common/file-svg.c:838
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Klarte ikkje skriva til fila «%s»: %s"
@@ -4974,7 +4979,7 @@ msgid "Export Image as Multi-Page PDF"
 msgstr "Eksporter biletet som PDF med fleire sider"
 
 #: plug-ins/common/file-pdf-export.c:1034
-#: plug-ins/metadata/metadata-editor.c:5557
+#: plug-ins/metadata/metadata-editor.c:3849
 msgid "_Export"
 msgstr "_Eksporter"
 
@@ -6172,208 +6177,208 @@ msgstr "Eksporter bilete i QOI-filformat (Heilt OK bilete)"
 msgid "Failed to read QOI file"
 msgstr "Klarte ikkje lesa QOI-fila"
 
-#: plug-ins/common/file-raw-data.c:348 plug-ins/common/file-raw-data.c:537
+#: plug-ins/common/file-raw-data.c:352 plug-ins/common/file-raw-data.c:541
 msgid "Raw image data"
 msgstr "Raw biletdata"
 
-#: plug-ins/common/file-raw-data.c:351
+#: plug-ins/common/file-raw-data.c:355
 msgid "Load raw images, specifying image information"
 msgstr "Last inn raw-bilete, spesifiser biletinformasjonen"
 
-#: plug-ins/common/file-raw-data.c:365
+#: plug-ins/common/file-raw-data.c:369
 msgid "Image width in number of pixels"
 msgstr "Biletbreidda som talet på pikslar"
 
-#: plug-ins/common/file-raw-data.c:370
+#: plug-ins/common/file-raw-data.c:374
 msgid "Image height in number of pixels"
 msgstr "Bilethøgda som talet på pikslar"
 
-#: plug-ins/common/file-raw-data.c:375
+#: plug-ins/common/file-raw-data.c:379
 msgid "Offset to beginning of image in raw data"
 msgstr "Forskyving til bilete i raw-data"
 
-#: plug-ins/common/file-raw-data.c:380
+#: plug-ins/common/file-raw-data.c:384
 msgid "Pi_xel format"
 msgstr "Pi_kselformat"
 
-#: plug-ins/common/file-raw-data.c:381
+#: plug-ins/common/file-raw-data.c:385
 msgid "The layout of pixel data, such as components and their order"
 msgstr ""
 "Utforminga av pikseldata, for eksempel komponentar og rekkjefølgja på dei"
 
-#: plug-ins/common/file-raw-data.c:382
+#: plug-ins/common/file-raw-data.c:386
 msgid "RGB 8-bit"
 msgstr "RGB 8-bitar"
 
-#: plug-ins/common/file-raw-data.c:383
+#: plug-ins/common/file-raw-data.c:387
 msgid "RGB 16-bit"
 msgstr "RGB 16-bitar"
 
-#: plug-ins/common/file-raw-data.c:384
+#: plug-ins/common/file-raw-data.c:388
 msgid "RGB 32-bit"
 msgstr "RGB 32-bitar"
 
-#: plug-ins/common/file-raw-data.c:385
+#: plug-ins/common/file-raw-data.c:389
 msgid "RGBA 8-bit"
 msgstr "RGBA 8-bitar"
 
-#: plug-ins/common/file-raw-data.c:386
+#: plug-ins/common/file-raw-data.c:390
 msgid "RGBA 16-bit"
 msgstr "RGBA 16-bitar"
 
-#: plug-ins/common/file-raw-data.c:387
+#: plug-ins/common/file-raw-data.c:391
 msgid "RGBA 32-bit"
 msgstr "RGBA 32-bitar"
 
-#: plug-ins/common/file-raw-data.c:388
+#: plug-ins/common/file-raw-data.c:392
 msgid "RGB565"
 msgstr "RGB565"
 
-#: plug-ins/common/file-raw-data.c:389
+#: plug-ins/common/file-raw-data.c:393
 msgid "BGR565"
 msgstr "BGR565"
 
-#: plug-ins/common/file-raw-data.c:390
+#: plug-ins/common/file-raw-data.c:394
 msgid "B&W 1 bit"
 msgstr "S&K 1 bit"
 
-#: plug-ins/common/file-raw-data.c:391
+#: plug-ins/common/file-raw-data.c:395
 msgid "Grayscale 2-bit"
 msgstr "Gråtone 2-bitar"
 
-#: plug-ins/common/file-raw-data.c:392
+#: plug-ins/common/file-raw-data.c:396
 msgid "Grayscale 4-bit"
 msgstr "Gråtone 4-bitar"
 
-#: plug-ins/common/file-raw-data.c:393
+#: plug-ins/common/file-raw-data.c:397
 msgid "Grayscale 8-bit"
 msgstr "Gråtone 8-bitar"
 
-#: plug-ins/common/file-raw-data.c:394
+#: plug-ins/common/file-raw-data.c:398
 msgid "Grayscale 16-bit"
 msgstr "Gråtone 16-bitar"
 
-#: plug-ins/common/file-raw-data.c:395
+#: plug-ins/common/file-raw-data.c:399
 msgid "Grayscale 32-bit"
 msgstr "Gråtone 32-bitar"
 
-#: plug-ins/common/file-raw-data.c:396
+#: plug-ins/common/file-raw-data.c:400
 msgid "Grayscale-Alpha 8-bit"
 msgstr "Gråtone-alfa 8-bitar"
 
-#: plug-ins/common/file-raw-data.c:397
+#: plug-ins/common/file-raw-data.c:401
 msgid "Grayscale-Alpha 16-bit"
 msgstr "Gråtone-alfa 16-bitar"
 
-#: plug-ins/common/file-raw-data.c:398
+#: plug-ins/common/file-raw-data.c:402
 msgid "Grayscale-Alpha 32-bit"
 msgstr "Gråtone-alfa 32-bitar"
 
-#: plug-ins/common/file-raw-data.c:399
+#: plug-ins/common/file-raw-data.c:403
 msgid "Indexed"
 msgstr "Indeksert"
 
-#: plug-ins/common/file-raw-data.c:400
+#: plug-ins/common/file-raw-data.c:404
 msgid "Indexed Alpha"
 msgstr "Indeksert alfa"
 
-#: plug-ins/common/file-raw-data.c:404
+#: plug-ins/common/file-raw-data.c:408
 msgid "_Data type"
 msgstr "_Data-type"
 
-#: plug-ins/common/file-raw-data.c:405
+#: plug-ins/common/file-raw-data.c:409
 msgid "Data type used to represent pixel values"
 msgstr "Data-type brukt for å representera pikselverdiar"
 
-#: plug-ins/common/file-raw-data.c:406
+#: plug-ins/common/file-raw-data.c:410
 msgid "Unsigned Integer"
 msgstr "Heiltal utan forteikn"
 
-#: plug-ins/common/file-raw-data.c:407
+#: plug-ins/common/file-raw-data.c:411
 msgid "Signed Integer"
 msgstr "Heiltal med forteikn"
 
-#: plug-ins/common/file-raw-data.c:408
+#: plug-ins/common/file-raw-data.c:412
 msgid "Floating Point"
 msgstr "Desimaltal"
 
-#: plug-ins/common/file-raw-data.c:412
+#: plug-ins/common/file-raw-data.c:416
 msgid "_Endianness"
 msgstr "_Byterekkjefølgje"
 
-#: plug-ins/common/file-raw-data.c:413
+#: plug-ins/common/file-raw-data.c:417
 msgid "Order of sequences of bytes"
 msgstr "Rekkjefølgja på sekvensar av bytes"
 
-#: plug-ins/common/file-raw-data.c:414
+#: plug-ins/common/file-raw-data.c:418
 msgid "Little Endian"
 msgstr "Little Endian"
 
-#: plug-ins/common/file-raw-data.c:415
+#: plug-ins/common/file-raw-data.c:419
 msgid "Big Endian"
 msgstr "Big Endian"
 
-#: plug-ins/common/file-raw-data.c:419
+#: plug-ins/common/file-raw-data.c:423
 msgid "Planar confi_guration"
 msgstr "_Planaroppsett"
 
-#: plug-ins/common/file-raw-data.c:420 plug-ins/common/file-raw-data.c:559
+#: plug-ins/common/file-raw-data.c:424 plug-ins/common/file-raw-data.c:563
 msgid "How color pixel data are stored"
 msgstr "Korleis data om fargepikslar vert lagra"
 
-#: plug-ins/common/file-raw-data.c:421 plug-ins/common/file-raw-data.c:560
+#: plug-ins/common/file-raw-data.c:425 plug-ins/common/file-raw-data.c:564
 msgid "Contiguous"
 msgstr "Tilstøytande"
 
-#: plug-ins/common/file-raw-data.c:422 plug-ins/common/file-raw-data.c:561
+#: plug-ins/common/file-raw-data.c:426 plug-ins/common/file-raw-data.c:565
 msgid "Planar"
 msgstr "Planar"
 
-#: plug-ins/common/file-raw-data.c:429 plug-ins/common/file-raw-data.c:490
+#: plug-ins/common/file-raw-data.c:433 plug-ins/common/file-raw-data.c:494
 msgid "Palette Offse_t"
 msgstr "Palett_forskyving"
 
-#: plug-ins/common/file-raw-data.c:430 plug-ins/common/file-raw-data.c:491
+#: plug-ins/common/file-raw-data.c:434 plug-ins/common/file-raw-data.c:495
 msgid "Offset to beginning of data in the palette file"
 msgstr "Forskyving til byrjinga av dataa i palettfila"
 
-#: plug-ins/common/file-raw-data.c:435 plug-ins/common/file-raw-data.c:496
-#: plug-ins/common/file-raw-data.c:566
+#: plug-ins/common/file-raw-data.c:439 plug-ins/common/file-raw-data.c:500
+#: plug-ins/common/file-raw-data.c:570
 msgid "Palette's la_yout"
 msgstr "Palett_utforming"
 
-#: plug-ins/common/file-raw-data.c:436 plug-ins/common/file-raw-data.c:497
-#: plug-ins/common/file-raw-data.c:567
+#: plug-ins/common/file-raw-data.c:440 plug-ins/common/file-raw-data.c:501
+#: plug-ins/common/file-raw-data.c:571
 msgid "The layout for the palette's color channels"
 msgstr "Utforminga av fargekanalane i paletten"
 
-#: plug-ins/common/file-raw-data.c:437 plug-ins/common/file-raw-data.c:498
-#: plug-ins/common/file-raw-data.c:568
+#: plug-ins/common/file-raw-data.c:441 plug-ins/common/file-raw-data.c:502
+#: plug-ins/common/file-raw-data.c:572
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: plug-ins/common/file-raw-data.c:438 plug-ins/common/file-raw-data.c:499
-#: plug-ins/common/file-raw-data.c:569
+#: plug-ins/common/file-raw-data.c:442 plug-ins/common/file-raw-data.c:503
+#: plug-ins/common/file-raw-data.c:573
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (BMP-stil)"
 
-#: plug-ins/common/file-raw-data.c:442 plug-ins/common/file-raw-data.c:503
+#: plug-ins/common/file-raw-data.c:446 plug-ins/common/file-raw-data.c:507
 msgid "_Palette File"
 msgstr "Pal_ettfil"
 
-#: plug-ins/common/file-raw-data.c:443 plug-ins/common/file-raw-data.c:504
+#: plug-ins/common/file-raw-data.c:447 plug-ins/common/file-raw-data.c:508
 msgid "The file containing palette data"
 msgstr "Fila inneheld palettdata"
 
-#: plug-ins/common/file-raw-data.c:455 plug-ins/common/file-raw-data.c:2980
+#: plug-ins/common/file-raw-data.c:459 plug-ins/common/file-raw-data.c:2988
 msgid "Digital Elevation Model data"
 msgstr "Digital elevasjonsmodelldata"
 
-#: plug-ins/common/file-raw-data.c:458
+#: plug-ins/common/file-raw-data.c:462
 msgid "Load HGT data as images"
 msgstr "Last inn HGT-data som bilete"
 
-#: plug-ins/common/file-raw-data.c:459
+#: plug-ins/common/file-raw-data.c:463
 msgid ""
 "Load Digital Elevation Model data in HGT format from the Shuttle Radar "
 "Topography Mission as images. Though the output image will be RGB, all "
@@ -6388,44 +6393,44 @@ msgstr ""
 "som eit andre steg, for eksempel med programtillegget «Fargelegg frå "
 "fargeovergang»."
 
-#: plug-ins/common/file-raw-data.c:479
+#: plug-ins/common/file-raw-data.c:483
 msgid "Sa_mple spacing"
 msgstr "_Prøveavstand"
 
-#: plug-ins/common/file-raw-data.c:480
+#: plug-ins/common/file-raw-data.c:484
 msgid "The sample spacing of the data."
 msgstr "Prøveavstanden for dataa."
 
-#: plug-ins/common/file-raw-data.c:481
+#: plug-ins/common/file-raw-data.c:485
 msgid "Auto-Detect"
 msgstr "Automatisk gjenkjenning"
 
-#: plug-ins/common/file-raw-data.c:482
+#: plug-ins/common/file-raw-data.c:486
 msgid "SRTM-1 (1 arc second)"
 msgstr "SRTM-1 (1 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:483
+#: plug-ins/common/file-raw-data.c:487
 msgid "SRTM-3 (3 arc seconds)"
 msgstr "SRTM-3 (3 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:540
+#: plug-ins/common/file-raw-data.c:544
 msgid "Dump images to disk in raw format"
 msgstr "Dump bilete til disk i raw-format"
 
-#: plug-ins/common/file-raw-data.c:558
+#: plug-ins/common/file-raw-data.c:562
 msgid "Planar configuration"
 msgstr "Planaroppsett"
 
-#: plug-ins/common/file-raw-data.c:575
+#: plug-ins/common/file-raw-data.c:579
 msgid "Raw Data"
 msgstr "Raw data"
 
-#: plug-ins/common/file-raw-data.c:618 plug-ins/file-psd/psd-util.c:316
+#: plug-ins/common/file-raw-data.c:622 plug-ins/file-psd/psd-util.c:316
 #, c-format
 msgid "Unexpected end of file"
 msgstr "Uventa filslutt"
 
-#: plug-ins/common/file-raw-data.c:651
+#: plug-ins/common/file-raw-data.c:655
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -6433,7 +6438,7 @@ msgstr ""
 "%d er ikkje ein gyldig prøveavstand. Gyldige verdiar er: 0 (automatisk "
 "gjenkjenning), 1 og 3."
 
-#: plug-ins/common/file-raw-data.c:664
+#: plug-ins/common/file-raw-data.c:668
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -6445,12 +6450,12 @@ msgstr ""
 "HGT-filer er: SRTM-1 og SRTM-3. Viss du kjenner varianten, køyr med argument "
 "1 eller 3."
 
-#: plug-ins/common/file-raw-data.c:1741
+#: plug-ins/common/file-raw-data.c:1749
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "Kan ikkje opna «%s» for stadfesting av storleiken: %s"
 
-#: plug-ins/common/file-raw-data.c:2859
+#: plug-ins/common/file-raw-data.c:2867
 msgid "Load Image from Raw Data"
 msgstr "Last biletet frå Raw Data"
 
@@ -6458,43 +6463,43 @@ msgstr "Last biletet frå Raw Data"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: plug-ins/common/file-raw-data.c:2974
+#: plug-ins/common/file-raw-data.c:2982
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Digital elevasjonsmodelldata (1 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:2977
+#: plug-ins/common/file-raw-data.c:2985
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Digital elevasjonsmodelldata (3 bogesekund)"
 
-#: plug-ins/common/file-raw-data.c:2984
+#: plug-ins/common/file-raw-data.c:2992
 msgid "Image"
 msgstr "Bilete"
 
-#: plug-ins/common/file-raw-data.c:2996
+#: plug-ins/common/file-raw-data.c:3004
 msgid "Palette"
 msgstr "Palett"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3086
+#: plug-ins/common/file-raw-data.c:3094
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Tilstøytande (%s)"
 
-#: plug-ins/common/file-raw-data.c:3088
+#: plug-ins/common/file-raw-data.c:3096
 msgid "_Contiguous"
 msgstr "_Tilstøytande"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3094
+#: plug-ins/common/file-raw-data.c:3102
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Planar (%s)"
 
-#: plug-ins/common/file-raw-data.c:3096
+#: plug-ins/common/file-raw-data.c:3104
 msgid "_Planar"
 msgstr "_Planar"
 
@@ -7351,8 +7356,8 @@ msgstr ""
 "«gtk-cursor-theme-size»."
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1274 plug-ins/file-webp/file-webp-export.c:203
-#: plug-ins/file-webp/file-webp-export.c:611
+#: plug-ins/common/file-xmc.c:1274 plug-ins/file-webp/file-webp-export.c:204
+#: plug-ins/file-webp/file-webp-export.c:615
 #, c-format
 msgid "Saving '%s'"
 msgstr "Lagrar «%s»"
@@ -8201,10 +8206,11 @@ msgid "Plug-in Browser"
 msgstr "Lesar for programtillegg"
 
 #: plug-ins/common/plugin-browser.c:615 plug-ins/common/unit-editor.c:115
-#: plug-ins/metadata/metadata-editor.c:617
-#: plug-ins/metadata/metadata-editor.c:653
-#: plug-ins/metadata/metadata-editor.c:660
-#: plug-ins/metadata/metadata-editor.c:667
+#: plug-ins/metadata/metadata-editor.c:467
+#: plug-ins/metadata/metadata-editor.c:496
+#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:517
+#: plug-ins/metadata/metadata-editor.c:524
 msgid "Name"
 msgstr "Namn"
 
@@ -8283,7 +8289,7 @@ msgstr "Qbist"
 msgid "Load QBE File"
 msgstr "Opna QBE-fil"
 
-#: plug-ins/common/qbist.c:846 plug-ins/imagemap/imap_file.c:76
+#: plug-ins/common/qbist.c:846 plug-ins/imagemap/imap_file.c:77
 msgid "All Files"
 msgstr "Alle filene"
 
@@ -8510,13 +8516,13 @@ msgstr "Palettutglatting"
 
 #: plug-ins/common/smooth-palette.c:496 plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:287
+#: plug-ins/print/print-page-layout.c:286
 msgid "_Width:"
 msgstr "_Breidd:"
 
 #: plug-ins/common/smooth-palette.c:501 plug-ins/imagemap/imap_cmd_guides.c:183
 #: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:289
+#: plug-ins/print/print-page-layout.c:288
 msgid "_Height:"
 msgstr "_Høgd:"
 
@@ -8941,7 +8947,7 @@ msgstr "Små fliser"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:484 plug-ins/ifs-compose/ifs-compose.c:725
+#: plug-ins/common/tile-small.c:484 plug-ins/ifs-compose/ifs-compose.c:726
 msgid "Flip"
 msgstr "Spegelvend"
 
@@ -10208,7 +10214,7 @@ msgstr "FITS HDU"
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS-eksport kan ikkje handsama bilete med alfakanalar"
 
-#: plug-ins/file-fits/fits.c:1031
+#: plug-ins/file-fits/fits.c:1090
 msgid "Open FITS File"
 msgstr "Opna FITS-fil"
 
@@ -11241,9 +11247,109 @@ msgstr ""
 "Dette programtillegget lastar inn ein miniatyr frå eit raw-bilete ved å "
 "kalla opp darktable-cli."
 
-#: plug-ins/file-raw/file-libraw.c:131
+#: plug-ins/file-raw/file-libraw.c:140
 msgid "Load thumbnail from a raw image"
 msgstr "Lastar ein miniatyr frå eit raw-bilete"
+
+#: plug-ins/file-raw/file-libraw.c:184
+msgid "Enable interpolation"
+msgstr "Slå på interpolering"
+
+#: plug-ins/file-raw/file-libraw.c:185
+msgid "Enable denoising and demosaicing steps"
+msgstr "Slå på steg for å gjera støyen og mosaikken mindre"
+
+#: plug-ins/file-raw/file-libraw.c:195
+msgid "Noise reduction"
+msgstr "Støyreduksjon"
+
+#: plug-ins/file-raw/file-libraw.c:196
+msgid ""
+"Controls FBDD (Fake Before Demosaicing Denoising) noise reduction before "
+"demosaic"
+msgstr ""
+"Kontrollerar FBDD (Fake Before Demosaicing Denoising) støyreduksjon før "
+"mosaikken vert fjerna"
+
+#: plug-ins/file-raw/file-libraw.c:197
+msgid "Disabled"
+msgstr "Slått av"
+
+#: plug-ins/file-raw/file-libraw.c:198
+msgid "Light FBDD reduction"
+msgstr "Lys FBDD-redusering"
+
+#: plug-ins/file-raw/file-libraw.c:199
+msgid "Full FBDD reduction"
+msgstr "Full FBDD-redusering"
+
+#: plug-ins/file-raw/file-libraw.c:204
+msgid "Demosaicing"
+msgstr "Fjernar mosaikk"
+
+#: plug-ins/file-raw/file-libraw.c:205
+msgid ""
+"Interpolation method to reconstruct a matrix of colored pixels from raw "
+"sensor data"
+msgstr ""
+"Interpoleringsmetode for å rekonstruera ei matrise med fargepikslar frå rå "
+"sensordata"
+
+#: plug-ins/file-raw/file-libraw.c:207 plug-ins/flame/flame.c:903
+#: plug-ins/lighting/lighting-main.c:176
+msgid "Linear"
+msgstr "Lineær"
+
+#: plug-ins/file-raw/file-libraw.c:208
+msgid "VNG"
+msgstr "VNG"
+
+#: plug-ins/file-raw/file-libraw.c:209
+msgid "PPG"
+msgstr "PPG"
+
+#: plug-ins/file-raw/file-libraw.c:210
+msgid "AHD"
+msgstr "AHD"
+
+#: plug-ins/file-raw/file-libraw.c:211
+msgid "DCB"
+msgstr "DCB"
+
+#: plug-ins/file-raw/file-libraw.c:212
+msgid "DHT"
+msgstr "DHT"
+
+#: plug-ins/file-raw/file-libraw.c:213
+msgid "Modified AHD"
+msgstr "Modifisert AHD"
+
+#: plug-ins/file-raw/file-libraw.c:219
+msgid "DCB color enhance"
+msgstr "DCB-fargeforbetring"
+
+#: plug-ins/file-raw/file-libraw.c:220
+msgid "Turns on DCB color enhance mode"
+msgstr "Slår på DCB-fargeforbetringsmodus"
+
+#: plug-ins/file-raw/file-libraw.c:223
+msgid "DCB iterations"
+msgstr "DCB-gjentakingar"
+
+#: plug-ins/file-raw/file-libraw.c:224
+msgid "Number of DCB correction passes"
+msgstr "Talet på DCB-gjentakingar"
+
+#: plug-ins/file-raw/file-libraw.c:272
+#, c-format
+msgid "Error initializing LibRaw."
+msgstr "Feil ved oppsettet av LibiRaw."
+
+#. TRANSLATORS: the "%s" will be the name of a RAW format, e.g. "Raw Canon".
+#: plug-ins/file-raw/file-libraw.c:610
+#, c-format
+msgid "Develop: %s"
+msgstr "Utvikling: %s"
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -11600,7 +11706,7 @@ msgstr ""
 "Alternativet «Lagra lag» er ikkje sett under forsøk på å eksportera fleire "
 "lag."
 
-#: plug-ins/file-tiff/file-tiff-export.c:516
+#: plug-ins/file-tiff/file-tiff-export.c:517
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -11608,11 +11714,11 @@ msgstr ""
 "Berre einsfarga bilete kan komprimerast med «CCITT Group 4» eller «CCITT "
 "Group 3»."
 
-#: plug-ins/file-tiff/file-tiff-export.c:530
+#: plug-ins/file-tiff/file-tiff-export.c:531
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Indekserte bilete kan ikkje komprimerast med «JPEG»."
 
-#: plug-ins/file-tiff/file-tiff-export.c:589
+#: plug-ins/file-tiff/file-tiff-export.c:590
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -11620,17 +11726,17 @@ msgstr ""
 "TIFF-formatet godtek berre merknadar i\n"
 "7 bit ASCII-kode. Ingen merknadar er lagra."
 
-#: plug-ins/file-tiff/file-tiff-export.c:866
+#: plug-ins/file-tiff/file-tiff-export.c:877
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Klarte ikkje skriva ei skannelinje på rad %d"
 
-#: plug-ins/file-tiff/file-tiff-export.c:1247
+#: plug-ins/file-tiff/file-tiff-export.c:1258
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Å skriva sider med ulik bitdjupn er merkeleg."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1370
+#: plug-ins/file-tiff/file-tiff-export.c:1381
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
@@ -11638,7 +11744,7 @@ msgstr ""
 "Åtvaring: Maksimal TIFF filstorleik overskride. Prøv igjen som BigTIFF eller "
 "med ein annan kompresjonsalgoritme, eller avbryt."
 
-#: plug-ins/file-tiff/file-tiff-export.c:1427
+#: plug-ins/file-tiff/file-tiff-export.c:1438
 #, c-format
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
@@ -12084,13 +12190,13 @@ msgstr "listeterminator"
 msgid "unknown error"
 msgstr "ukjend feil"
 
-#: plug-ins/file-webp/file-webp-export.c:213
-#: plug-ins/file-webp/file-webp-export.c:621
+#: plug-ins/file-webp/file-webp-export.c:214
+#: plug-ins/file-webp/file-webp-export.c:625
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Kan ikkje opna «%s» for skriving: %s"
 
-#: plug-ins/file-webp/file-webp-export.c:307
+#: plug-ins/file-webp/file-webp-export.c:311
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "WebP-feil: «%s»"
@@ -12285,10 +12391,6 @@ msgstr "_Slump"
 #: plug-ins/flame/flame.c:901
 msgid "Same"
 msgstr "Same"
-
-#: plug-ins/flame/flame.c:903 plug-ins/lighting/lighting-main.c:176
-msgid "Linear"
-msgstr "Lineær"
 
 #: plug-ins/flame/flame.c:904 plug-ins/lighting/lighting-main.c:178
 msgid "Sinusoidal"
@@ -12944,7 +13046,7 @@ msgid "Copy an object"
 msgstr "Kopier eit objekt"
 
 #: plug-ins/gfig/gfig-dialog.c:405 plug-ins/gfig/gfig-menu.ui:104
-#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:27
+#: plug-ins/ifs-compose/ifs-compose.c:961 plug-ins/ifs-compose/ifs-menus.ui:27
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "Fjern"
@@ -13151,7 +13253,7 @@ msgstr "Nett-type:"
 
 #: plug-ins/gfig/gfig-dialog.c:1426
 #: plug-ins/gradient-flare/gradient-flare.c:740
-#: plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/metadata/metadata-tags.c:303
 msgid "Normal"
 msgstr "Normal"
 
@@ -13269,7 +13371,7 @@ msgstr "Lukk"
 msgid "Edit"
 msgstr "Rediger"
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:963
 #: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1578
 #: plug-ins/imagemap/imap-menu.ui.in:32
 msgid "Undo"
@@ -13697,7 +13799,7 @@ msgid "Applies the paper as it is (without embossing it)"
 msgstr "Bruk papiret som det er, utan bossering (relieffverknad)"
 
 #. Scale
-#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:669
+#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:670
 msgid "Scale:"
 msgstr "Skalering:"
 
@@ -14238,179 +14340,179 @@ msgstr ""
 "Parsefeil i «%s»:\n"
 "%s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:434
+#: plug-ins/ifs-compose/ifs-compose.c:435
 msgid "_IFS Fractal..."
 msgstr "_IFS Fraktal …"
 
-#: plug-ins/ifs-compose/ifs-compose.c:440
+#: plug-ins/ifs-compose/ifs-compose.c:441
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Opprett ein IFS-fraktal (Iterated Function System)"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:641
+#: plug-ins/ifs-compose/ifs-compose.c:642
 msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:655
+#: plug-ins/ifs-compose/ifs-compose.c:656
 msgid "Y:"
 msgstr "Y:"
 
 #. Angle
-#: plug-ins/ifs-compose/ifs-compose.c:683
+#: plug-ins/ifs-compose/ifs-compose.c:684
 msgid "Angle:"
 msgstr "Vinkel:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:697
+#: plug-ins/ifs-compose/ifs-compose.c:698
 msgid "Asymmetry:"
 msgstr "Asymmetri:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:711
+#: plug-ins/ifs-compose/ifs-compose.c:712
 msgid "Shear:"
 msgstr "Forskyv:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:756
+#: plug-ins/ifs-compose/ifs-compose.c:757
 msgid "Simple"
 msgstr "Enkel"
 
-#: plug-ins/ifs-compose/ifs-compose.c:765
+#: plug-ins/ifs-compose/ifs-compose.c:766
 msgid "IFS Fractal: Target"
 msgstr "IFS-fraktal: Mål"
 
-#: plug-ins/ifs-compose/ifs-compose.c:771
+#: plug-ins/ifs-compose/ifs-compose.c:772
 msgid "Scale hue by:"
 msgstr "Skaler kulør med:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:786
+#: plug-ins/ifs-compose/ifs-compose.c:787
 msgid "Scale value by:"
 msgstr "Skaler lysverdi med:"
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:803
+#: plug-ins/ifs-compose/ifs-compose.c:804
 msgid "Full"
 msgstr "Heile"
 
-#: plug-ins/ifs-compose/ifs-compose.c:810
+#: plug-ins/ifs-compose/ifs-compose.c:811
 msgid "IFS Fractal: Red"
 msgstr "IFS-fraktal: Raud"
 
-#: plug-ins/ifs-compose/ifs-compose.c:818
+#: plug-ins/ifs-compose/ifs-compose.c:819
 msgid "IFS Fractal: Green"
 msgstr "IFS-fraktal: Grøn"
 
-#: plug-ins/ifs-compose/ifs-compose.c:826
+#: plug-ins/ifs-compose/ifs-compose.c:827
 msgid "IFS Fractal: Blue"
 msgstr "IFS-fraktal: Blå"
 
-#: plug-ins/ifs-compose/ifs-compose.c:834
+#: plug-ins/ifs-compose/ifs-compose.c:835
 msgid "IFS Fractal: Black"
 msgstr "IFS-fraktal: Svart"
 
-#: plug-ins/ifs-compose/ifs-compose.c:907
+#: plug-ins/ifs-compose/ifs-compose.c:908
 msgid "IFS Fractal"
 msgstr "IFS-fraktal"
 
-#: plug-ins/ifs-compose/ifs-compose.c:951 plug-ins/ifs-compose/ifs-menus.ui:6
+#: plug-ins/ifs-compose/ifs-compose.c:952 plug-ins/ifs-compose/ifs-menus.ui:6
 #: plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Flytt"
 
-#: plug-ins/ifs-compose/ifs-compose.c:953 plug-ins/ifs-compose/ifs-menus.ui:11
+#: plug-ins/ifs-compose/ifs-compose.c:954 plug-ins/ifs-compose/ifs-menus.ui:11
 msgid "Rotate"
 msgstr "Roter"
 
-#: plug-ins/ifs-compose/ifs-compose.c:955 plug-ins/ifs-compose/ifs-menus.ui:16
+#: plug-ins/ifs-compose/ifs-compose.c:956 plug-ins/ifs-compose/ifs-menus.ui:16
 msgid "Stretch"
 msgstr "Strekk"
 
-#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:23
+#: plug-ins/ifs-compose/ifs-compose.c:959 plug-ins/ifs-compose/ifs-menus.ui:23
 msgid "New"
 msgstr "Ny"
 
-#: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35
+#: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:35
 #: plug-ins/imagemap/imap_main.c:1580 plug-ins/imagemap/imap-menu.ui.in:36
 msgid "Redo"
 msgstr "Gjenopprett"
 
-#: plug-ins/ifs-compose/ifs-compose.c:966 plug-ins/ifs-compose/ifs-menus.ui:39
+#: plug-ins/ifs-compose/ifs-compose.c:967 plug-ins/ifs-compose/ifs-menus.ui:39
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 #: plug-ins/imagemap/imap-menu.ui.in:58
 msgid "Select All"
 msgstr "Vel alle"
 
-#: plug-ins/ifs-compose/ifs-compose.c:968 plug-ins/ifs-compose/ifs-menus.ui:43
+#: plug-ins/ifs-compose/ifs-compose.c:969 plug-ins/ifs-compose/ifs-menus.ui:43
 msgid "Recompute Center"
 msgstr "Berekna senter på nytt"
 
-#: plug-ins/ifs-compose/ifs-compose.c:971 plug-ins/ifs-compose/ifs-menus.ui:49
+#: plug-ins/ifs-compose/ifs-compose.c:972 plug-ins/ifs-compose/ifs-menus.ui:49
 msgid "Render Options"
 msgstr "Teikneinnstillingar"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1030
+#: plug-ins/ifs-compose/ifs-compose.c:1031
 msgid "Spatial Transformation"
 msgstr "Romtransformasjon"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1036
+#: plug-ins/ifs-compose/ifs-compose.c:1037
 msgid "Color Transformation"
 msgstr "Fargetransformasjon"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1046
+#: plug-ins/ifs-compose/ifs-compose.c:1047
 msgid "Relative probability:"
 msgstr "Relativ slump:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1210
+#: plug-ins/ifs-compose/ifs-compose.c:1211
 msgid "IFS Fractal Render Options"
 msgstr "Innstillingar for IFS-fraktal"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1232
+#: plug-ins/ifs-compose/ifs-compose.c:1233
 msgid "Max. memory:"
 msgstr "Maks minne:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1245
+#: plug-ins/ifs-compose/ifs-compose.c:1246
 msgid "Iterations:"
 msgstr "Gjentakingar:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1260
+#: plug-ins/ifs-compose/ifs-compose.c:1261
 msgid "Subdivide:"
 msgstr "Vidaredeling:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1274
+#: plug-ins/ifs-compose/ifs-compose.c:1275
 msgid "Spot radius:"
 msgstr "Punktradius:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1354
+#: plug-ins/ifs-compose/ifs-compose.c:1355
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Lager IFS (%d/%d)"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1517
+#: plug-ins/ifs-compose/ifs-compose.c:1518
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformasjon %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2480
+#: plug-ins/ifs-compose/ifs-compose.c:2500
 msgid "Save failed"
 msgstr "Mislukka lagring"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2563
-#: plug-ins/ifs-compose/ifs-compose.c:2576
+#: plug-ins/ifs-compose/ifs-compose.c:2584
+#: plug-ins/ifs-compose/ifs-compose.c:2598
 msgid "Open failed"
 msgstr "Klarte ikkje opna"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2571
+#: plug-ins/ifs-compose/ifs-compose.c:2592
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Fila «%s» ser ikkje ut til å vera ei IFS-fraktal-fil."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2611
+#: plug-ins/ifs-compose/ifs-compose.c:2633
 msgid "Save as IFS Fractal file"
 msgstr "Lagra som IFS-fraktal-fil"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2635
+#: plug-ins/ifs-compose/ifs-compose.c:2657
 msgid "Open IFS Fractal file"
 msgstr "Opna IFS-fraktal-fil"
 
@@ -14724,19 +14826,19 @@ msgstr "Områdeinnstillingar"
 msgid "Area #%d Settings"
 msgstr "Innstillingar for område nr %d"
 
-#: plug-ins/imagemap/imap_file.c:47
+#: plug-ins/imagemap/imap_file.c:48
 msgid "Error opening file"
 msgstr "Feil ved opning av fil"
 
-#: plug-ins/imagemap/imap_file.c:70
+#: plug-ins/imagemap/imap_file.c:71
 msgid "Load Image Map"
 msgstr "Hent biletkartet"
 
-#: plug-ins/imagemap/imap_file.c:81
+#: plug-ins/imagemap/imap_file.c:82
 msgid "Map file (*.map)"
 msgstr "Kartfiler (*.map)"
 
-#: plug-ins/imagemap/imap_file.c:126
+#: plug-ins/imagemap/imap_file.c:127
 msgid "Save Image Map"
 msgstr "Lagra biletkartet"
 
@@ -15504,7 +15606,7 @@ msgstr "Lyssetjingar"
 
 #: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:500
 #: plug-ins/map-object/map-object-ui.c:714
-#: plug-ins/print/print-page-layout.c:385
+#: plug-ins/print/print-page-layout.c:384
 msgid "Position"
 msgstr "Posisjon"
 
@@ -15880,7 +15982,7 @@ msgstr "Refleksjonsevne"
 
 #: plug-ins/map-object/map-object-ui.c:774
 #: plug-ins/map-object/map-object-ui.c:874
-#: plug-ins/print/print-page-layout.c:254
+#: plug-ins/print/print-page-layout.c:253
 msgid "Size"
 msgstr "Storleik"
 
@@ -15892,485 +15994,482 @@ msgstr "Bilete til bokssidene"
 msgid "Images for the Cap Faces"
 msgstr "Bilete for endeflatene"
 
-#: plug-ins/metadata/metadata-editor.c:491
+#: plug-ins/metadata/metadata-editor.c:340
 msgid "Document Title"
 msgstr "Tittel på dokumentet"
 
-#: plug-ins/metadata/metadata-editor.c:492
+#: plug-ins/metadata/metadata-editor.c:341
 msgid "Author"
 msgstr "Forfattar"
 
-#: plug-ins/metadata/metadata-editor.c:493
+#: plug-ins/metadata/metadata-editor.c:342
 msgid "Author Title"
 msgstr "Forfattaren sin tittel"
 
 #. Description tab
-#: plug-ins/metadata/metadata-editor.c:494
-#: plug-ins/metadata/metadata-editor.c:1238
+#: plug-ins/metadata/metadata-editor.c:343
+#: plug-ins/metadata/metadata-editor.c:1139
 msgid "Description"
 msgstr "Beskriving"
 
-#: plug-ins/metadata/metadata-editor.c:495
+#: plug-ins/metadata/metadata-editor.c:344
 msgid "Description Writer"
 msgstr "Beskriving skribent"
 
-#: plug-ins/metadata/metadata-editor.c:496
+#: plug-ins/metadata/metadata-editor.c:345
 msgid "Rating"
 msgstr "Rangering"
 
-#: plug-ins/metadata/metadata-editor.c:497
+#: plug-ins/metadata/metadata-editor.c:346
 msgid "Keywords"
 msgstr "Nøkkelord"
 
-#: plug-ins/metadata/metadata-editor.c:499
+#: plug-ins/metadata/metadata-editor.c:348
 msgid "Alt Text"
 msgstr "Alternativ tekst"
 
-#: plug-ins/metadata/metadata-editor.c:500
+#: plug-ins/metadata/metadata-editor.c:349
 msgid "Extended Description"
 msgstr "Utvida beskriving"
 
-#: plug-ins/metadata/metadata-editor.c:502
+#: plug-ins/metadata/metadata-editor.c:351
 msgid "Copyright Status"
 msgstr "Status for opphavsrett"
 
-#: plug-ins/metadata/metadata-editor.c:503
-#: plug-ins/metadata/metadata-editor.c:634
+#: plug-ins/metadata/metadata-editor.c:352
+#: plug-ins/metadata/metadata-editor.c:484
 msgid "Copyright Notice"
 msgstr "Merknadar om opphavsrett"
 
-#: plug-ins/metadata/metadata-editor.c:504
+#: plug-ins/metadata/metadata-editor.c:353
 msgid "Copyright URL"
 msgstr "Nettadresse for opphavsrett"
 
-#: plug-ins/metadata/metadata-editor.c:510
+#: plug-ins/metadata/metadata-editor.c:359
 msgid "Address"
 msgstr "Adresse"
 
-#: plug-ins/metadata/metadata-editor.c:511
-#: plug-ins/metadata/metadata-editor.c:526
-#: plug-ins/metadata/metadata-editor.c:547
-#: plug-ins/metadata/metadata-editor.c:607
+#: plug-ins/metadata/metadata-editor.c:360
+#: plug-ins/metadata/metadata-editor.c:375
+#: plug-ins/metadata/metadata-editor.c:396
+#: plug-ins/metadata/metadata-editor.c:457
 msgid "City"
 msgstr "By"
 
-#: plug-ins/metadata/metadata-editor.c:512
-#: plug-ins/metadata/metadata-editor.c:527
-#: plug-ins/metadata/metadata-editor.c:548
+#: plug-ins/metadata/metadata-editor.c:361
+#: plug-ins/metadata/metadata-editor.c:376
+#: plug-ins/metadata/metadata-editor.c:397
 msgid "State / Province"
 msgstr "Delstat/region"
 
-#: plug-ins/metadata/metadata-editor.c:513
+#: plug-ins/metadata/metadata-editor.c:362
 msgid "Postal Code"
 msgstr "Postkode"
 
-#: plug-ins/metadata/metadata-editor.c:514
-#: plug-ins/metadata/metadata-editor.c:528
-#: plug-ins/metadata/metadata-editor.c:549
-#: plug-ins/metadata/metadata-editor.c:609
+#: plug-ins/metadata/metadata-editor.c:363
+#: plug-ins/metadata/metadata-editor.c:377
+#: plug-ins/metadata/metadata-editor.c:398
+#: plug-ins/metadata/metadata-editor.c:459
 msgid "Country"
 msgstr "Land"
 
-#: plug-ins/metadata/metadata-editor.c:516
+#: plug-ins/metadata/metadata-editor.c:365
 msgid "Phone(s)"
 msgstr "Telefon(ar)"
 
-#: plug-ins/metadata/metadata-editor.c:517
+#: plug-ins/metadata/metadata-editor.c:366
 msgid "E-mail(s)"
 msgstr "E-post(ar)"
 
-#: plug-ins/metadata/metadata-editor.c:518
+#: plug-ins/metadata/metadata-editor.c:367
 msgid "Website(s)"
 msgstr "Nettside(r)"
 
-#: plug-ins/metadata/metadata-editor.c:520
+#: plug-ins/metadata/metadata-editor.c:369
 msgid "Creation Date"
 msgstr "Skapingsdato"
 
-#: plug-ins/metadata/metadata-editor.c:522
+#: plug-ins/metadata/metadata-editor.c:371
 msgid "Intellectual Genre"
 msgstr "Intellektuell sjanger"
 
-#: plug-ins/metadata/metadata-editor.c:523
+#: plug-ins/metadata/metadata-editor.c:372
 msgid "IPTC Scene Code"
 msgstr "IPTC-scenekode"
 
-#: plug-ins/metadata/metadata-editor.c:525
-#: plug-ins/metadata/metadata-editor.c:546
-#: plug-ins/metadata/metadata-editor.c:606
+#: plug-ins/metadata/metadata-editor.c:374
+#: plug-ins/metadata/metadata-editor.c:395
+#: plug-ins/metadata/metadata-editor.c:456
 msgid "Sublocation"
 msgstr "Underplassering"
 
-#: plug-ins/metadata/metadata-editor.c:529
-#: plug-ins/metadata/metadata-editor.c:550
+#: plug-ins/metadata/metadata-editor.c:378
+#: plug-ins/metadata/metadata-editor.c:399
 msgid "Country ISO-Code"
 msgstr "ISO-kode for landet"
 
-#: plug-ins/metadata/metadata-editor.c:531
+#: plug-ins/metadata/metadata-editor.c:380
 msgid "Urgency"
 msgstr "Nødvendig"
 
-#: plug-ins/metadata/metadata-editor.c:532
+#: plug-ins/metadata/metadata-editor.c:381
 msgid "Headline"
 msgstr "Overskrift"
 
-#: plug-ins/metadata/metadata-editor.c:533
+#: plug-ins/metadata/metadata-editor.c:382
 msgid "IPTC Subject Code"
 msgstr "IPTC subjektkode"
 
-#: plug-ins/metadata/metadata-editor.c:535
+#: plug-ins/metadata/metadata-editor.c:384
 msgid "Job Identifier"
 msgstr "Jobbidentifikator"
 
-#: plug-ins/metadata/metadata-editor.c:536
+#: plug-ins/metadata/metadata-editor.c:385
 msgid "Instructions"
 msgstr "Instruksjonar"
 
-#: plug-ins/metadata/metadata-editor.c:537
+#: plug-ins/metadata/metadata-editor.c:386
 msgid "Credit Line"
 msgstr "Kredittlinje"
 
-#: plug-ins/metadata/metadata-editor.c:538
-#: plug-ins/metadata/metadata-editor.c:632
+#: plug-ins/metadata/metadata-editor.c:387
+#: plug-ins/metadata/metadata-editor.c:482
 msgid "Source"
 msgstr "Kjelde"
 
-#: plug-ins/metadata/metadata-editor.c:539
+#: plug-ins/metadata/metadata-editor.c:388
 msgid "Usage Terms"
 msgstr "Bruksvilkår"
 
-#: plug-ins/metadata/metadata-editor.c:545
+#: plug-ins/metadata/metadata-editor.c:394
 msgid "Person Shown"
 msgstr "Vist person"
 
-#: plug-ins/metadata/metadata-editor.c:551
-#: plug-ins/metadata/metadata-editor.c:611
+#: plug-ins/metadata/metadata-editor.c:400
+#: plug-ins/metadata/metadata-editor.c:461
 msgid "World Region"
 msgstr "Verdsregion"
 
-#: plug-ins/metadata/metadata-editor.c:552
+#: plug-ins/metadata/metadata-editor.c:401
 msgid "Location Shown"
 msgstr "Vist plassering"
 
-#: plug-ins/metadata/metadata-editor.c:554
+#: plug-ins/metadata/metadata-editor.c:403
 msgid "Featured Organization"
 msgstr "Organisasjon"
 
-#: plug-ins/metadata/metadata-editor.c:556
+#: plug-ins/metadata/metadata-editor.c:405
 msgid "Organization Code"
 msgstr "Organisasjonskode"
 
-#: plug-ins/metadata/metadata-editor.c:558
+#: plug-ins/metadata/metadata-editor.c:407
 msgid "Event"
 msgstr "Hending"
 
-#: plug-ins/metadata/metadata-editor.c:559
+#: plug-ins/metadata/metadata-editor.c:408
 msgid "Artwork or Object"
 msgstr "Kunstverk eller objekt"
 
-#: plug-ins/metadata/metadata-editor.c:562
+#: plug-ins/metadata/metadata-editor.c:411
 msgid "Additional Model Info"
 msgstr "Ytterlegare informasjon om modellen"
 
-#: plug-ins/metadata/metadata-editor.c:563
+#: plug-ins/metadata/metadata-editor.c:412
 msgid "Model Age"
 msgstr "Modellalder"
 
-#: plug-ins/metadata/metadata-editor.c:564
+#: plug-ins/metadata/metadata-editor.c:413
 msgid "Minor Model Age Disclosure"
 msgstr "Opplysning om aldersgrensene for mindreårige modellar"
 
-#: plug-ins/metadata/metadata-editor.c:565
+#: plug-ins/metadata/metadata-editor.c:414
 msgid "Model Release Status"
 msgstr "Modellutgjevingsstatus"
 
-#: plug-ins/metadata/metadata-editor.c:566
-#: plug-ins/metadata/metadata-editor.c:640
+#: plug-ins/metadata/metadata-editor.c:415
+#: plug-ins/metadata/metadata-editor.c:490
 msgid "Model Release Identifier"
 msgstr "Identifikator for modellutgjeving"
 
-#: plug-ins/metadata/metadata-editor.c:569
-msgid "Image Supplier Name"
-msgstr "Namn på bileteleverandøren"
+#: plug-ins/metadata/metadata-editor.c:418
+msgid "Image Supplier"
+msgstr "Biletleverandør"
 
-#: plug-ins/metadata/metadata-editor.c:570
-msgid "Image Supplier ID"
-msgstr "Biletleverandør-ID"
-
-#: plug-ins/metadata/metadata-editor.c:571
+#: plug-ins/metadata/metadata-editor.c:420
 msgid "Supplier's Image ID"
 msgstr "Leverandøren sin bilet-ID"
 
-#: plug-ins/metadata/metadata-editor.c:572
+#: plug-ins/metadata/metadata-editor.c:421
 msgid "Registry Entry"
 msgstr "Registeroppføring"
 
-#: plug-ins/metadata/metadata-editor.c:574
+#: plug-ins/metadata/metadata-editor.c:423
 msgid "Max. Available Width"
 msgstr "Høgaste tilgjengelege breidd"
 
-#: plug-ins/metadata/metadata-editor.c:575
+#: plug-ins/metadata/metadata-editor.c:424
 msgid "Max. Available Height"
 msgstr "Største tilgjengelege høgd"
 
-#: plug-ins/metadata/metadata-editor.c:576
+#: plug-ins/metadata/metadata-editor.c:425
 msgid "Digital Source Type"
 msgstr "Type digital kjelde"
 
-#: plug-ins/metadata/metadata-editor.c:578
+#: plug-ins/metadata/metadata-editor.c:427
 msgid "Image Creator"
 msgstr "Biletet laga av"
 
-#: plug-ins/metadata/metadata-editor.c:580
+#: plug-ins/metadata/metadata-editor.c:429
 msgid "Copyright Owner"
 msgstr "Eigar av opphavsrett"
 
-#: plug-ins/metadata/metadata-editor.c:582
+#: plug-ins/metadata/metadata-editor.c:431
 msgid "Licensor"
 msgstr "Lisensinnehavar"
 
-#: plug-ins/metadata/metadata-editor.c:584
+#: plug-ins/metadata/metadata-editor.c:433
 msgid "Property Release Status"
 msgstr "Status for frigjeving av eigedelar"
 
-#: plug-ins/metadata/metadata-editor.c:585
+#: plug-ins/metadata/metadata-editor.c:434
 msgid "Property Release Identifier"
 msgstr "Identifikator for eigedomsfrigjeving"
 
-#: plug-ins/metadata/metadata-editor.c:587
+#: plug-ins/metadata/metadata-editor.c:436
 msgid "Data Mining"
 msgstr "Datagraving"
 
-#: plug-ins/metadata/metadata-editor.c:588
+#: plug-ins/metadata/metadata-editor.c:437
 msgid "Other Constraints"
 msgstr "Andre avgrensingar"
 
-#: plug-ins/metadata/metadata-editor.c:608
+#: plug-ins/metadata/metadata-editor.c:458
 msgid "Province / State"
 msgstr "Delstat/region"
 
-#: plug-ins/metadata/metadata-editor.c:610
+#: plug-ins/metadata/metadata-editor.c:460
 msgid "Country ISO Code"
 msgstr "ISO-kode for land"
 
-#: plug-ins/metadata/metadata-editor.c:623
+#: plug-ins/metadata/metadata-editor.c:473
 msgid "Code"
 msgstr "Kode"
 
-#: plug-ins/metadata/metadata-editor.c:629
+#: plug-ins/metadata/metadata-editor.c:479
 msgid "Title"
 msgstr "Tittel"
 
-#: plug-ins/metadata/metadata-editor.c:630
+#: plug-ins/metadata/metadata-editor.c:480
 msgid "Date Created"
 msgstr "Dato laga"
 
-#: plug-ins/metadata/metadata-editor.c:631
+#: plug-ins/metadata/metadata-editor.c:481
 msgid "Creator"
 msgstr "Laga av"
 
-#: plug-ins/metadata/metadata-editor.c:633
+#: plug-ins/metadata/metadata-editor.c:483
 msgid "Source Inventory ID"
 msgstr "Kjeldeinventar-ID"
 
-#: plug-ins/metadata/metadata-editor.c:646
-msgid "Organization Identifier"
-msgstr "Organisasjon-identifikator"
-
-#: plug-ins/metadata/metadata-editor.c:647
-msgid "Item Identifier"
-msgstr "Element-identifikator"
-
-#: plug-ins/metadata/metadata-editor.c:654
-#: plug-ins/metadata/metadata-editor.c:661
-#: plug-ins/metadata/metadata-editor.c:668
-#: plug-ins/metadata/metadata-editor.c:680
+#: plug-ins/metadata/metadata-editor.c:497
+#: plug-ins/metadata/metadata-editor.c:511
+#: plug-ins/metadata/metadata-editor.c:518
+#: plug-ins/metadata/metadata-editor.c:525
+#: plug-ins/metadata/metadata-editor.c:537
 msgid "Identifier"
 msgstr "Identifikator"
 
-#: plug-ins/metadata/metadata-editor.c:669
+#: plug-ins/metadata/metadata-editor.c:503
+msgid "Organization Identifier"
+msgstr "Organisasjon-identifikator"
+
+#: plug-ins/metadata/metadata-editor.c:504
+msgid "Item Identifier"
+msgstr "Element-identifikator"
+
+#: plug-ins/metadata/metadata-editor.c:526
 msgid "Phone Number 1"
 msgstr "Telefonnummer 1"
 
-#: plug-ins/metadata/metadata-editor.c:670
+#: plug-ins/metadata/metadata-editor.c:527
 msgid "Phone Type 1"
 msgstr "Telefontype 1"
 
-#: plug-ins/metadata/metadata-editor.c:671
+#: plug-ins/metadata/metadata-editor.c:528
 msgid "Phone Number 2"
 msgstr "Telefonnummer 2"
 
-#: plug-ins/metadata/metadata-editor.c:672
+#: plug-ins/metadata/metadata-editor.c:529
 msgid "Phone Type 2"
 msgstr "Telefon type 2"
 
-#: plug-ins/metadata/metadata-editor.c:673
+#: plug-ins/metadata/metadata-editor.c:530
 msgid "Email Address"
 msgstr "E-postadresse"
 
-#: plug-ins/metadata/metadata-editor.c:674
+#: plug-ins/metadata/metadata-editor.c:531
 msgid "Web Address"
 msgstr "Nettadresse"
 
-#: plug-ins/metadata/metadata-editor.c:687
+#: plug-ins/metadata/metadata-editor.c:560
 msgid "Category"
 msgstr "Kategori"
 
-#: plug-ins/metadata/metadata-editor.c:688
+#: plug-ins/metadata/metadata-editor.c:561
 msgid "Supplemental Category"
 msgstr "Supplerande kategori"
 
-#: plug-ins/metadata/metadata-editor.c:694
+#: plug-ins/metadata/metadata-editor.c:567
 msgid "Longitude"
 msgstr "Lengdegrad"
 
-#: plug-ins/metadata/metadata-editor.c:695
+#: plug-ins/metadata/metadata-editor.c:568
 msgid "Longitude Reference"
 msgstr "Lengdegradsreferanse"
 
-#: plug-ins/metadata/metadata-editor.c:696
+#: plug-ins/metadata/metadata-editor.c:569
 msgid "Latitude"
 msgstr "Breiddegrad"
 
-#: plug-ins/metadata/metadata-editor.c:697
+#: plug-ins/metadata/metadata-editor.c:570
 msgid "Latitude Reference"
 msgstr "Referanse til breiddegrad"
 
-#: plug-ins/metadata/metadata-editor.c:698
+#: plug-ins/metadata/metadata-editor.c:571
 msgid "Altitude"
 msgstr "Høgd"
 
-#: plug-ins/metadata/metadata-editor.c:700
+#: plug-ins/metadata/metadata-editor.c:573
 msgid "Altitude Reference"
 msgstr "Høgdereferanse"
 
-#: plug-ins/metadata/metadata-editor.c:706
+#: plug-ins/metadata/metadata-editor.c:579
 msgid "Patient"
 msgstr "Pasient"
 
-#: plug-ins/metadata/metadata-editor.c:707
+#: plug-ins/metadata/metadata-editor.c:580
 msgid "Patient ID"
 msgstr "Pasient-ID"
 
-#: plug-ins/metadata/metadata-editor.c:708
+#: plug-ins/metadata/metadata-editor.c:581
 msgid "Date of Birth"
 msgstr "Fødselsdato"
 
-#: plug-ins/metadata/metadata-editor.c:710
+#: plug-ins/metadata/metadata-editor.c:583
 msgid "Patient Sex"
 msgstr "Pasientkjønn"
 
-#: plug-ins/metadata/metadata-editor.c:712
+#: plug-ins/metadata/metadata-editor.c:585
 msgid "Study ID"
 msgstr "Studie-ID"
 
-#: plug-ins/metadata/metadata-editor.c:713
+#: plug-ins/metadata/metadata-editor.c:586
 msgid "Referring Physician"
 msgstr "Tilvisande lege"
 
-#: plug-ins/metadata/metadata-editor.c:714
+#: plug-ins/metadata/metadata-editor.c:587
 msgid "Study Date"
 msgstr "Studiedato"
 
-#: plug-ins/metadata/metadata-editor.c:716
+#: plug-ins/metadata/metadata-editor.c:589
 msgid "Study Description"
 msgstr "Studiebeskriving"
 
-#: plug-ins/metadata/metadata-editor.c:717
+#: plug-ins/metadata/metadata-editor.c:590
 msgid "Series Number"
 msgstr "Serienummer"
 
-#: plug-ins/metadata/metadata-editor.c:718
+#: plug-ins/metadata/metadata-editor.c:591
 msgid "Modality"
 msgstr "Modalitet"
 
-#: plug-ins/metadata/metadata-editor.c:719
+#: plug-ins/metadata/metadata-editor.c:592
 msgid "Series Date"
 msgstr "Seriedato"
 
-#: plug-ins/metadata/metadata-editor.c:721
+#: plug-ins/metadata/metadata-editor.c:594
 msgid "Series Description"
 msgstr "Seriebeskriving"
 
-#: plug-ins/metadata/metadata-editor.c:723
+#: plug-ins/metadata/metadata-editor.c:596
 msgid "Equipment Institution"
 msgstr "Utstyrsinstitusjon"
 
-#: plug-ins/metadata/metadata-editor.c:724
+#: plug-ins/metadata/metadata-editor.c:597
 msgid "Equipment Manufacturer"
 msgstr "Utsttyrsprodusent"
 
-#: plug-ins/metadata/metadata-editor.c:768
+#: plug-ins/metadata/metadata-editor.c:641
 msgid "_Edit Metadata"
 msgstr "_Rediger metadata"
 
-#: plug-ins/metadata/metadata-editor.c:772
+#: plug-ins/metadata/metadata-editor.c:645
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Rediger metadata (EXIF, IPTC, XMP)"
 
-#: plug-ins/metadata/metadata-editor.c:785
+#: plug-ins/metadata/metadata-editor.c:658
 msgid "Parent's window handle"
 msgstr "Overordna vindaugehandtak"
 
-#: plug-ins/metadata/metadata-editor.c:786
+#: plug-ins/metadata/metadata-editor.c:659
 msgid ""
 "The opaque handle of the window to set this plug-in's dialog transient to"
 msgstr ""
 "Det ugjennomsiktige handtaket på vindauget for å setja dette "
 "programtillegget sitt dialogvindauget forbigåande til"
 
-#: plug-ins/metadata/metadata-editor.c:1194
+#: plug-ins/metadata/metadata-editor.c:1095
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Metadataredigering: %s"
 
-#: plug-ins/metadata/metadata-editor.c:1202
+#: plug-ins/metadata/metadata-editor.c:1103
 msgid "_Write Metadata"
 msgstr "_Skriv metadata"
 
 #. IPTC tab
-#: plug-ins/metadata/metadata-editor.c:1244
+#: plug-ins/metadata/metadata-editor.c:1145
 #: plug-ins/metadata/metadata-viewer.c:310
 msgid "IPTC"
 msgstr "IPTC"
 
 #. IPTC Extension tab
-#: plug-ins/metadata/metadata-editor.c:1250
+#: plug-ins/metadata/metadata-editor.c:1151
 msgid "IPTC Extension"
 msgstr "IPTC-utviding"
 
 #. Categories tab
-#: plug-ins/metadata/metadata-editor.c:1356
+#: plug-ins/metadata/metadata-editor.c:1161
 msgid "Categories"
 msgstr "Kategoriar"
 
 #. GPS tab
-#: plug-ins/metadata/metadata-editor.c:1362
+#: plug-ins/metadata/metadata-editor.c:1167
 msgid "GPS"
 msgstr "GPS"
 
 #. DICOM tab
-#: plug-ins/metadata/metadata-editor.c:1373
+#: plug-ins/metadata/metadata-editor.c:1178
 msgid "DICOM"
 msgstr "DICOM"
 
-#: plug-ins/metadata/metadata-editor.c:1387
+#: plug-ins/metadata/metadata-editor.c:1192
 msgid "Import Metadata..."
 msgstr "Importer metadata …"
 
-#: plug-ins/metadata/metadata-editor.c:1393
+#: plug-ins/metadata/metadata-editor.c:1198
 msgid "Export Metadata..."
 msgstr "Eksporter metadata …"
 
-#: plug-ins/metadata/metadata-editor.c:1695
+#: plug-ins/metadata/metadata-editor.c:1554
 msgid "Choose Date"
 msgstr "Vel dato"
 
-#: plug-ins/metadata/metadata-editor.c:1700
+#: plug-ins/metadata/metadata-editor.c:1559
 msgid "Set Date"
 msgstr "Set dato"
 
-#: plug-ins/metadata/metadata-editor.c:2437
+#: plug-ins/metadata/metadata-editor.c:2086
 msgid ""
 "Enter or edit GPS value here.\n"
 "Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
@@ -16386,7 +16485,7 @@ msgstr ""
 "15.30 eller 10.45\n"
 "Slett all tekst for å fjerna gjeldande verdi."
 
-#: plug-ins/metadata/metadata-editor.c:2443
+#: plug-ins/metadata/metadata-editor.c:2092
 msgid ""
 "Enter or edit GPS altitude value here.\n"
 "A valid value consists of one number:\n"
@@ -16401,304 +16500,338 @@ msgstr ""
 "Avhengig av måleeining, skriv verdien i meter (m) eller fot (ft)\n"
 "Slett all tekst for å fjerna gjeldande verdi."
 
-#: plug-ins/metadata/metadata-editor.c:2577
-msgid "Unrated"
-msgstr "Ikkje rangert"
-
-#: plug-ins/metadata/metadata-editor.c:2587
-msgid "Rejected"
-msgstr "Avvist"
-
-#: plug-ins/metadata/metadata-editor.c:4599
+#: plug-ins/metadata/metadata-editor.c:2897
 #, c-format
 msgid "Failed to set metadata tag %s: %s"
 msgstr "Fekk ikkje sett metadatataggen %s: %s"
 
-#: plug-ins/metadata/metadata-editor.c:5519
+#: plug-ins/metadata/metadata-editor.c:3411
+#, c-format
+msgid "GPS Longitude Reference not set. Selected choice: %s"
+msgstr "GPS-lengdegradsreferanse ikkje gjeve. Vald val: %s"
+
+#: plug-ins/metadata/metadata-editor.c:3438
+#, c-format
+msgid "GPS Latitude Reference not set. Selected choice: %s"
+msgstr "GPS-breiddegradsreferanse ikkje gjeve. Vald val: %s"
+
+#: plug-ins/metadata/metadata-editor.c:3488
+#, c-format
+msgid ""
+"GPS Altitude Reference inconsistent with negative value. Changed choice to: "
+"%s"
+msgstr "GPS-høgdereferanse er feil med negativ verdi. Endra valet til %s"
+
+#: plug-ins/metadata/metadata-editor.c:3512
+#, c-format
+msgid "GPS Altitude Reference not set. Selected choice: %s"
+msgstr "GPS-høgdereferanse manglar. Vald val: %s"
+
+#: plug-ins/metadata/metadata-editor.c:3815
 msgid "Import Metadata File"
 msgstr "Importer metadatafil"
 
-#: plug-ins/metadata/metadata-editor.c:5522
+#: plug-ins/metadata/metadata-editor.c:3818
 msgid "_Import"
 msgstr "_Importer"
 
-#: plug-ins/metadata/metadata-editor.c:5554
+#: plug-ins/metadata/metadata-editor.c:3846
 msgid "Export Metadata File"
 msgstr "Eksporter metadatafil"
 
-#: plug-ins/metadata/metadata-tags.c:192 plug-ins/metadata/metadata-tags.c:222
-#: plug-ins/metadata/metadata-tags.c:299 plug-ins/metadata/metadata-tags.c:316
+#: plug-ins/metadata/metadata-impexp.c:108
+#, c-format
+msgid "Error parsing xml: %s."
+msgstr "Feil ved analyse av xml: %s."
+
+#: plug-ins/metadata/metadata-impexp.c:257
+#, c-format
+msgid "Error saving file: %s."
+msgstr "Feil ved lagring av fila: %s."
+
+#: plug-ins/metadata/metadata-tags.c:191 plug-ins/metadata/metadata-tags.c:221
+#: plug-ins/metadata/metadata-tags.c:321 plug-ins/metadata/metadata-tags.c:338
 msgid "Select a value"
 msgstr "Vel ein verdi"
 
-#: plug-ins/metadata/metadata-tags.c:193
+#: plug-ins/metadata/metadata-tags.c:192
 msgid "Original digital capture of a real life scene"
 msgstr "Original digital fangst av ein scene frå det verkelege livet"
 
-#: plug-ins/metadata/metadata-tags.c:194
+#: plug-ins/metadata/metadata-tags.c:193
 msgid "Multi-frame computational capture sampled from real life"
 msgstr "Multi-ramme datahandsamingsfangst henta frå det verkelege livet"
 
-#: plug-ins/metadata/metadata-tags.c:195
+#: plug-ins/metadata/metadata-tags.c:194
 msgid "Digitized from a negative on film"
 msgstr "Digitalisert frå negativfilm"
 
-#: plug-ins/metadata/metadata-tags.c:196
+#: plug-ins/metadata/metadata-tags.c:195
 msgid "Digitized from a positive on film"
 msgstr "Digitalisert frå positivfilm"
 
-#: plug-ins/metadata/metadata-tags.c:197
+#: plug-ins/metadata/metadata-tags.c:196
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitalisert frå ei utskrift på ikkje-gjennomsiktig medium"
 
-#: plug-ins/metadata/metadata-tags.c:198
+#: plug-ins/metadata/metadata-tags.c:197
 msgid "Edits by one or more humans using non-generative tools"
 msgstr ""
 "Redigeringar gjort av eitt eller fleire menneske med ikkje-regenerative "
 "verktøy"
 
-#: plug-ins/metadata/metadata-tags.c:200
+#: plug-ins/metadata/metadata-tags.c:199
 msgid "Edited using Generative AI"
 msgstr "Redigert med regenerativ KI"
 
-#: plug-ins/metadata/metadata-tags.c:201
+#: plug-ins/metadata/metadata-tags.c:200
 msgid "Algorithmically-altered media initiated by a human"
 msgstr "Algoritmisk-endra media utført av eit menneske"
 
-#: plug-ins/metadata/metadata-tags.c:202
+#: plug-ins/metadata/metadata-tags.c:201
 msgid "Digital art created by a human using non-generative tools"
 msgstr "Digital kunst laga av eit menneske med ikkje-regenerative verktøy"
 
-#: plug-ins/metadata/metadata-tags.c:203
+#: plug-ins/metadata/metadata-tags.c:202
 msgid "Digital media representation of data"
 msgstr "Digital mediapresentasjon av data"
 
-#: plug-ins/metadata/metadata-tags.c:204
+#: plug-ins/metadata/metadata-tags.c:203
 msgid "Created using Generative AI"
 msgstr "Laga med regenerativ KI"
 
-#: plug-ins/metadata/metadata-tags.c:205
+#: plug-ins/metadata/metadata-tags.c:204
 msgid "Pure algorithmic media"
 msgstr "Reine algoritmiske media"
 
-#: plug-ins/metadata/metadata-tags.c:206
+#: plug-ins/metadata/metadata-tags.c:205
 msgid "A capture of the contents of the screen"
 msgstr "Eit bilete av innhaldet på skjermen"
 
-#: plug-ins/metadata/metadata-tags.c:207
+#: plug-ins/metadata/metadata-tags.c:206
 msgid "Virtual event recording"
 msgstr "Opptak av virtuell hending"
 
-#: plug-ins/metadata/metadata-tags.c:208
+#: plug-ins/metadata/metadata-tags.c:207
 msgid "Composite of elements, which may or may not be generative AI"
 msgstr "Sett saman av element som kan vera generativ KI eller ikkje"
 
-#: plug-ins/metadata/metadata-tags.c:209
+#: plug-ins/metadata/metadata-tags.c:208
 msgid "Composite of captured elements from real life"
 msgstr "Samansett av innhenta element frå det verkelege livet"
 
-#: plug-ins/metadata/metadata-tags.c:210
+#: plug-ins/metadata/metadata-tags.c:209
 msgid "Composite including generative AI elements"
 msgstr "Samansetjinga inneheld generative KI-element"
 
-#: plug-ins/metadata/metadata-tags.c:211
+#: plug-ins/metadata/metadata-tags.c:210
 msgid "(Retired) Original media with minor human edits"
 msgstr "(Forelda) Opphavleg media med små redigeringar av menneske"
 
-#: plug-ins/metadata/metadata-tags.c:212
+#: plug-ins/metadata/metadata-tags.c:211
 msgid "(Retired) Created by software"
 msgstr "(Forelda) Laga med dataprogram"
 
-#: plug-ins/metadata/metadata-tags.c:213
+#: plug-ins/metadata/metadata-tags.c:212
 msgid "(Retired) Digital art"
 msgstr "(Forelda) Digital kunst"
 
-#: plug-ins/metadata/metadata-tags.c:224 plug-ins/metadata/metadata-tags.c:236
+#: plug-ins/metadata/metadata-tags.c:223 plug-ins/metadata/metadata-tags.c:235
 msgid "Not Applicable"
 msgstr "Ikke aktuelt"
 
-#: plug-ins/metadata/metadata-tags.c:225
+#: plug-ins/metadata/metadata-tags.c:224
 msgid "Unlimited Model Releases"
 msgstr "Uavgrensa modellutgjevingar"
 
-#: plug-ins/metadata/metadata-tags.c:226
+#: plug-ins/metadata/metadata-tags.c:225
 msgid "Limited or Incomplete Model Releases"
 msgstr "Avgrensa eller ufullstendige modellutgjevingar"
 
-#: plug-ins/metadata/metadata-tags.c:237
+#: plug-ins/metadata/metadata-tags.c:236
 msgid "Unlimited Property Releases"
 msgstr "Uavgrensa eigenskapsutgjevnadar"
 
-#: plug-ins/metadata/metadata-tags.c:238
+#: plug-ins/metadata/metadata-tags.c:237
 msgid "Limited or Incomplete Property Releases"
 msgstr "Avgrensa eller ufullstendige utgjevnadar"
 
-#: plug-ins/metadata/metadata-tags.c:247
+#: plug-ins/metadata/metadata-tags.c:246
 msgid "Age Unknown"
 msgstr "Alder ukjend"
 
-#: plug-ins/metadata/metadata-tags.c:248
+#: plug-ins/metadata/metadata-tags.c:247
 msgid "Age 25 or Over"
 msgstr "Alder 25 eller over"
 
-#: plug-ins/metadata/metadata-tags.c:249
+#: plug-ins/metadata/metadata-tags.c:248
 msgid "Age 24"
 msgstr "Alder 24"
 
-#: plug-ins/metadata/metadata-tags.c:250
+#: plug-ins/metadata/metadata-tags.c:249
 msgid "Age 23"
 msgstr "Alder 23"
 
-#: plug-ins/metadata/metadata-tags.c:251
+#: plug-ins/metadata/metadata-tags.c:250
 msgid "Age 22"
 msgstr "Alder 22"
 
-#: plug-ins/metadata/metadata-tags.c:252
+#: plug-ins/metadata/metadata-tags.c:251
 msgid "Age 21"
 msgstr "Alder 21"
 
-#: plug-ins/metadata/metadata-tags.c:253
+#: plug-ins/metadata/metadata-tags.c:252
 msgid "Age 20"
 msgstr "Alder 20"
 
-#: plug-ins/metadata/metadata-tags.c:254
+#: plug-ins/metadata/metadata-tags.c:253
 msgid "Age 19"
 msgstr "Alder 19"
 
-#: plug-ins/metadata/metadata-tags.c:255
+#: plug-ins/metadata/metadata-tags.c:254
 msgid "Age 18"
 msgstr "Alder 18"
 
-#: plug-ins/metadata/metadata-tags.c:256
+#: plug-ins/metadata/metadata-tags.c:255
 msgid "Age 17"
 msgstr "Alder 17"
 
-#: plug-ins/metadata/metadata-tags.c:257
+#: plug-ins/metadata/metadata-tags.c:256
 msgid "Age 16"
 msgstr "Alder 16"
 
-#: plug-ins/metadata/metadata-tags.c:258
+#: plug-ins/metadata/metadata-tags.c:257
 msgid "Age 15"
 msgstr "Alder 15"
 
-#: plug-ins/metadata/metadata-tags.c:259
+#: plug-ins/metadata/metadata-tags.c:258
 msgid "Age 14 or Under"
 msgstr "Alder 14 eller yngre"
 
-#: plug-ins/metadata/metadata-tags.c:268
+#: plug-ins/metadata/metadata-tags.c:267
 msgid "No prohibition defined"
 msgstr "Det er ikkje definert noko forbod"
 
-#: plug-ins/metadata/metadata-tags.c:269
+#: plug-ins/metadata/metadata-tags.c:268
 msgid "Allowed"
 msgstr "Tillate"
 
-#: plug-ins/metadata/metadata-tags.c:270
+#: plug-ins/metadata/metadata-tags.c:269
 msgid "Prohibited for AI/ML training"
 msgstr "Forbode for KI- og ML-øvingar"
 
-#: plug-ins/metadata/metadata-tags.c:271
+#: plug-ins/metadata/metadata-tags.c:270
 msgid "Prohibited for Generative AI/ML training"
 msgstr "Forbode for generative KI- og ML-øvingar"
 
-#: plug-ins/metadata/metadata-tags.c:272
+#: plug-ins/metadata/metadata-tags.c:271
 msgid "Prohibited except for search engine indexing"
 msgstr "Forbode med unnatak for søkjemotorindeksering"
 
-#: plug-ins/metadata/metadata-tags.c:273
+#: plug-ins/metadata/metadata-tags.c:272
 msgid "Prohibited"
 msgstr "Forbode"
 
-#: plug-ins/metadata/metadata-tags.c:274
+#: plug-ins/metadata/metadata-tags.c:273
 msgid "Prohibited, see Other Constraints property"
 msgstr "Forbode, sjå eigenskapen «Andre avgrensingar»"
 
-#: plug-ins/metadata/metadata-tags.c:275
+#: plug-ins/metadata/metadata-tags.c:274
 msgid ""
 "(Unsupported) Prohibited, see Embedded Encoded Rights Expression property"
 msgstr ""
 "(Ikkje støtta) Forbode, sjå eigenskapen for innebygd koda uttrykk for rettar"
 
-#: plug-ins/metadata/metadata-tags.c:276
+#: plug-ins/metadata/metadata-tags.c:275
 msgid "(Unsupported) Prohibited, see Linked Encoded Rights Expression property"
 msgstr ""
 "(Ikkje støtta) Forbode, sjå eigenskapen for lenkja koda uttrykk for rettar"
 
-#: plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/metadata/metadata-tags.c:285
+msgid "Unrated"
+msgstr "Ikkje rangert"
+
+#: plug-ins/metadata/metadata-tags.c:288 plug-ins/metadata/metadata-tags.c:301
 msgid "3"
 msgstr "3"
 
-#: plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/metadata/metadata-tags.c:290
+msgid "5"
+msgstr "5"
+
+#: plug-ins/metadata/metadata-tags.c:291
+msgid "Rejected"
+msgstr "Avvist"
+
+#: plug-ins/metadata/metadata-tags.c:304
 msgid "6"
 msgstr "6"
 
-#: plug-ins/metadata/metadata-tags.c:283
+#: plug-ins/metadata/metadata-tags.c:305
 msgid "7"
 msgstr "7"
 
-#. DO NOT SAVE
-#: plug-ins/metadata/metadata-tags.c:291
+#: plug-ins/metadata/metadata-tags.c:313
 msgid "Copyrighted"
 msgstr "Har opphavsrett"
 
-#. TRUE
-#: plug-ins/metadata/metadata-tags.c:292
+#: plug-ins/metadata/metadata-tags.c:314
 msgid "Public Domain"
 msgstr "Offentleg eigedom"
 
-#: plug-ins/metadata/metadata-tags.c:300
+#: plug-ins/metadata/metadata-tags.c:322
 msgid "Work"
 msgstr "Arbeid"
 
-#: plug-ins/metadata/metadata-tags.c:301
+#: plug-ins/metadata/metadata-tags.c:323
 msgid "Cell"
 msgstr "Celle"
 
-#: plug-ins/metadata/metadata-tags.c:302
+#: plug-ins/metadata/metadata-tags.c:324
 msgid "Fax"
 msgstr "Faks"
 
-#: plug-ins/metadata/metadata-tags.c:303
+#: plug-ins/metadata/metadata-tags.c:325
 msgid "Home"
 msgstr "Heim"
 
-#: plug-ins/metadata/metadata-tags.c:304
+#: plug-ins/metadata/metadata-tags.c:326
 msgid "Pager"
 msgstr "Sider"
 
-#: plug-ins/metadata/metadata-tags.c:317
+#: plug-ins/metadata/metadata-tags.c:339
 msgid "Male"
 msgstr "Male"
 
-#: plug-ins/metadata/metadata-tags.c:318
+#: plug-ins/metadata/metadata-tags.c:340
 msgid "Female"
 msgstr "Female"
 
-#: plug-ins/metadata/metadata-tags.c:319
+#: plug-ins/metadata/metadata-tags.c:341
 msgid "Other"
 msgstr "Anna"
 
-#: plug-ins/metadata/metadata-tags.c:326
+#: plug-ins/metadata/metadata-tags.c:349
 msgid "Above sea level"
 msgstr "Over havoverflata"
 
-#: plug-ins/metadata/metadata-tags.c:326
+#: plug-ins/metadata/metadata-tags.c:350
 msgid "Below sea level"
 msgstr "Under havoverflata"
 
-#: plug-ins/metadata/metadata-tags.c:333
+#: plug-ins/metadata/metadata-tags.c:358
 msgid "North"
 msgstr "Nord"
 
-#: plug-ins/metadata/metadata-tags.c:333
+#: plug-ins/metadata/metadata-tags.c:359
 msgid "South"
 msgstr "Sør"
 
-#: plug-ins/metadata/metadata-tags.c:340
+#: plug-ins/metadata/metadata-tags.c:367
 msgid "East"
 msgstr "Aust"
 
-#: plug-ins/metadata/metadata-tags.c:340
+#: plug-ins/metadata/metadata-tags.c:368
 msgid "West"
 msgstr "Vest"
 
@@ -16740,6 +16873,26 @@ msgstr " fot"
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu fleire bytes)"
+
+#: plug-ins/metadata/metadata-xml.c:112
+msgid ""
+"Older version metadata template found. Not all data will be set correctly!"
+msgstr "Fann ein mal for eldre metadata. Ikkje alle data vert sette korrekt."
+
+#: plug-ins/metadata/metadata-xml.c:150
+#, c-format
+msgid "Metadata import: too many rows for tag '%s'"
+msgstr "Metadataimport: for mange rader for taggen «%s»"
+
+#: plug-ins/metadata/metadata-xml.c:162
+#, c-format
+msgid "Metadata import: too many columns for tag '%s'"
+msgstr "Metadataimport: for mange kolonnar for taggen «%s»"
+
+#: plug-ins/metadata/metadata-xml.c:274
+#, c-format
+msgid "Too many rows for tag %s: limiting export to %d rows"
+msgstr "For mange rader for tagg %s: Eksporten vert avgrensa til %d rader"
 
 #: plug-ins/pagecurl/pagecurl.c:215
 msgid "_Pagecurl..."
@@ -16814,90 +16967,90 @@ msgstr "Ignorer side_margane"
 msgid "_Draw Crop Marks"
 msgstr "_Teikna klippemerke"
 
-#: plug-ins/print/print-page-layout.c:308
+#: plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
 msgstr "pikslar / %a"
 
-#: plug-ins/print/print-page-layout.c:329
+#: plug-ins/print/print-page-layout.c:328
 msgid "_X resolution:"
 msgstr "_X-oppløysing:"
 
-#: plug-ins/print/print-page-layout.c:333
+#: plug-ins/print/print-page-layout.c:332
 msgid "_Y resolution:"
 msgstr "_Y-oppløysing:"
 
-#: plug-ins/print/print-page-layout.c:336
+#: plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "_Last inn standardverdiane"
 
-#: plug-ins/print/print-page-layout.c:411
+#: plug-ins/print/print-page-layout.c:410
 msgid "_Left:"
 msgstr "_Venstre:"
 
-#: plug-ins/print/print-page-layout.c:432
+#: plug-ins/print/print-page-layout.c:431
 msgid "_Right:"
 msgstr "_Høgre:"
 
-#: plug-ins/print/print-page-layout.c:448
+#: plug-ins/print/print-page-layout.c:447
 msgid "_Top:"
 msgstr "_Topp:"
 
-#: plug-ins/print/print-page-layout.c:469
+#: plug-ins/print/print-page-layout.c:468
 msgid "_Bottom:"
 msgstr "_Botn:"
 
-#: plug-ins/print/print-page-layout.c:490
+#: plug-ins/print/print-page-layout.c:489
 msgid "C_enter:"
 msgstr "_Senter:"
 
 #. if and how to center the image on the page
-#: plug-ins/print/print-page-layout.c:497
+#: plug-ins/print/print-page-layout.c:496
 msgctxt "center-mode"
 msgid "None"
 msgstr "Ingen"
 
-#: plug-ins/print/print-page-layout.c:498
+#: plug-ins/print/print-page-layout.c:497
 msgid "Horizontally"
 msgstr "Vassrett"
 
-#: plug-ins/print/print-page-layout.c:499
+#: plug-ins/print/print-page-layout.c:498
 msgid "Vertically"
 msgstr "Loddrett"
 
-#: plug-ins/print/print-page-layout.c:500
+#: plug-ins/print/print-page-layout.c:499
 msgid "Both"
 msgstr "Begge"
 
-#: plug-ins/print/print.c:167
+#: plug-ins/print/print.c:170
 msgid "_Print..."
 msgstr "_Skriv ut …"
 
-#: plug-ins/print/print.c:172
+#: plug-ins/print/print.c:175
 msgid "Print the image"
 msgstr "Skriv ut biletet"
 
-#: plug-ins/print/print.c:191
+#: plug-ins/print/print.c:194
 msgid "Page Set_up..."
 msgstr "Sideoppse_tt …"
 
-#: plug-ins/print/print.c:196
+#: plug-ins/print/print.c:199
 msgid "Adjust page size and orientation for printing"
 msgstr "Juster sidestorleiken og sideorienteringa for utskriving"
 
-#: plug-ins/print/print.c:337 plug-ins/print/print.c:474
+#: plug-ins/print/print.c:344 plug-ins/print/print.c:499
 msgid "Image Settings"
 msgstr "Biletinnstillingar"
 
-#: plug-ins/print/print.c:441
+#: plug-ins/print/print.c:455
 msgid "An error occurred while trying to print:"
 msgstr "Feil ved utskrift:"
 
-#: plug-ins/print/print.c:475
+#: plug-ins/print/print.c:500
 msgid "_Print"
 msgstr "_Skriv ut"
 
-#: plug-ins/print/print.c:497
+#: plug-ins/print/print.c:524
 msgid "Printing"
 msgstr "Skriv ut"
 
@@ -17289,6 +17442,9 @@ msgstr "Fann ikkje TWAIN-drivaren. Ikkje råd å skanna"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "Overfører data frå skannar/kamera"
+
+#~ msgid "Image Supplier Name"
+#~ msgstr "Namn på bileteleverandøren"
 
 #~ msgid "Align visible layers"
 #~ msgstr "Innrett synlege lag"
@@ -18607,9 +18763,6 @@ msgstr "Overfører data frå skannar/kamera"
 #~ msgid "Stretch color saturation to cover maximum possible range"
 #~ msgstr "Strekker biletmetning for å dekke størst mogleg område"
 
-#~ msgid "_Color Enhance"
-#~ msgstr "_Fargeforsterkning"
-
 #~ msgid "Swap one color with another"
 #~ msgstr "Byter ein farge med ein annan"
 
@@ -18920,9 +19073,6 @@ msgstr "Overfører data frå skannar/kamera"
 
 #~ msgid "_Displace..."
 #~ msgstr "_Forskyv …"
-
-#~ msgid "Displacing"
-#~ msgstr "Forskyver"
 
 #~ msgid "Displace"
 #~ msgstr "Forskyv"
@@ -21069,9 +21219,6 @@ msgstr "Overfører data frå skannar/kamera"
 
 #~ msgid "Tile source image: useful for infinite planes"
 #~ msgstr "Flislegg kjeldebiletet: Nyttig for store flater"
-
-#~ msgid "Enable _antialiasing"
-#~ msgstr "Aktiver _kantutjamning"
 
 #~ msgid "Enable/disable jagged edges removal (antialiasing)"
 #~ msgstr "Slå fjerning av trappekant av/på (kantutglatting)"
