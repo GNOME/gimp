@@ -18,6 +18,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -27,12 +28,13 @@
 #include "gimppickbutton-private.h"
 #include "gimppickbutton-quartz.h"
 
+/* This file is compiled empty on macOS builds with X11. The endif is in the end */
 #ifdef GDK_WINDOWING_QUARTZ
+
 #include <AvailabilityMacros.h>
 #import <AppKit/AppKit.h>
 #include <Carbon/Carbon.h>  /* For virtual key codes ... */
 #include <ApplicationServices/ApplicationServices.h>
-#endif
 #if __MAC_OS_X_VERSION_MAX_ALLOWED >= 140000 /* SCScreenshotManager (checked at runtime) */
 #import <ScreenCaptureKit/ScreenCaptureKit.h>
 #endif
@@ -598,3 +600,5 @@ _gimp_pick_button_quartz_pick (GimpPickButton *button)
 
   [pool release];
 }
+
+#endif /* GDK_WINDOWING_QUARTZ */

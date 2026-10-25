@@ -192,7 +192,10 @@ libgimpwidgets_introspectable = [
 
 if platform_osx
   libgimpwidgets_sources += [
+    #When GTK is compiled with Quartz support (default)
     'gimppickbutton-quartz.c',
+    #When GTK is compiled with legacy X11 support
+    'gimppickbutton-xdg.c',
   ]
 elif platform_windows
   libgimpwidgets_sources += [

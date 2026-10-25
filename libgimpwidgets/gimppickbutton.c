@@ -20,6 +20,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 
 #ifdef GDK_WINDOWING_X11
@@ -48,7 +49,9 @@
 #elif defined (GDK_WINDOWING_WIN32)
 #include "gimppickbutton-win32.h"
 #else
+#ifndef PLATFORM_OSX
 #include "gimppickbutton-kwin.h"
+#endif
 #include "gimppickbutton-xdg.h"
 #endif
 
@@ -191,8 +194,10 @@ gimp_pick_button_clicked (GtkButton *button)
 #endif
   if (_gimp_pick_button_xdg_available ())
     _gimp_pick_button_xdg_pick (GIMP_PICK_BUTTON (button));
+#ifndef PLATFORM_OSX
   else if (_gimp_pick_button_kwin_available ())
     _gimp_pick_button_kwin_pick (GIMP_PICK_BUTTON (button));
+#endif
   else
     _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
 #endif
