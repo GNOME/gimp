@@ -72,7 +72,7 @@ static int        file_gex_close_callback (struct archive  *a,
 
 static gboolean   file_gex_validate_path  (const gchar     *path,
                                            const gchar     *file_name,
-                                           gboolean         first,
+                                           gboolean         leaf,
                                            gchar          **plugin_id,
                                            GError         **error);
 static gboolean   file_gex_validate       (GFile           *file,
@@ -134,7 +134,7 @@ file_gex_close_callback (struct archive  *a,
 static gboolean
 file_gex_validate_path (const gchar  *path,
                         const gchar  *file_name,
-                        gboolean      first,
+                        gboolean      leaf,
                         gchar       **plugin_id,
                         GError      **error)
 {
@@ -152,12 +152,18 @@ file_gex_validate_path (const gchar  *path,
 
   if (g_strcmp0 (dirname, ".") == 0)
     {
-      if (first)
+      if (leaf)
         {
-          *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                _("File not allowed in root of GIMP extension '%s': %s"),
-                                file_name, path);
-          valid = FALSE;
+          gchar *basename = g_path_get_basename (path);
+          /* Only leaf-file allowed at root is the mimetype. */
+          if (g_strcmp0 (basename, "mimetype") != 0)
+            {
+              *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+                                    _("File not allowed in root of GIMP extension '%s': %s"),
+                                    file_name, path);
+              valid = FALSE;
+            }
+          g_free (basename);
         }
       else
         {
@@ -175,7 +181,7 @@ file_gex_validate_path (const gchar  *path,
             {
               *plugin_id = g_strdup (path);
             }
-          }
+        }
     }
   else
     {
@@ -249,43 +255,98 @@ file_gex_validate (GFile        *file,
                   if (plugin_id && ! appdata_path)
                     appdata_path = g_strdup_printf ("%s/%s.metainfo.xml", plugin_id, plugin_id);
 
-                  if (appdata_path)
+                  if (g_strcmp0 ("mimetype", archive_entry_pathname (entry)) == 0)
                     {
-                      if (g_strcmp0 (appdata_path, archive_entry_pathname (entry)) == 0)
+                      GString *mimestring;
+                      gchar   *mimetype = NULL;
+
+                      if (archive_entry_filetype (entry) != AE_IFREG)
                         {
-                          const void      *buffer;
-                          GString         *appstring = g_string_new ("");
-                          la_int64_t       offset;
-                          size_t           size;
-
-                          while (TRUE)
-                            {
-                              r = archive_read_data_block (a, &buffer, &size, &offset);
-
-                              if (r == ARCHIVE_FATAL)
-                                {
-                                  *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                                        _("Fatal error when uncompressing GIMP extension '%s': %s"),
-                                                        gimp_file_get_utf8_name (file),
-                                                        archive_error_string (a));
-                                  g_string_free (appstring, TRUE);
-                                  break;
-                                }
-                              else if (r == ARCHIVE_EOF)
-                                {
-                                  appdata = g_string_free_to_bytes (appstring);
-                                  break;
-                                }
-
-                              appstring = g_string_append_len (appstring, (const gchar *) buffer, size);
-                            }
-                          continue;
+                          *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+                                                _("The file \"mimetype\" should be a regular file in GIMP extensi'%s'."),
+                                                gimp_file_get_utf8_name (file));
+                          break;
                         }
+                      else if (archive_entry_size (entry) != 16)
+                        {
+                          *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+                                                _("The file \"mimetype\" should be a regular file in GIMP extensi'%s'."),
+                                                gimp_file_get_utf8_name (file));
+                          break;
+                        }
+                      mimestring = g_string_new ("");
+                      while (TRUE)
+                        {
+                          const void *buffer;
+                          la_int64_t  offset;
+                          size_t      size;
+
+                          r = archive_read_data_block (a, &buffer, &size, &offset);
+
+                          if (r == ARCHIVE_FATAL)
+                            {
+                              *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+                                                    _("Fatal error when uncompressing GIMP extension '%s': %s"),
+                                                    gimp_file_get_utf8_name (file),
+                                                    archive_error_string (a));
+                              g_string_free (mimestring, TRUE);
+                              break;
+                            }
+                          else if (r == ARCHIVE_EOF)
+                            {
+                              mimetype = g_string_free (mimestring, FALSE);
+                              break;
+                            }
+
+                          mimestring = g_string_append_len (mimestring, (const gchar *) buffer, size);
+                        }
+
+                      if (g_strcmp0 (mimetype, "image/gimp-x-gex") != 0)
+                        {
+                          if (*error == NULL)
+                            *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+                                                  _("The \"mimetype\" file in GIMP extension '%s' does not contain \"image/gimp-x-gex\"."),
+                                                  gimp_file_get_utf8_name (file));
+                          break;
+                        }
+                      continue;
+                    }
+                  else if (appdata_path &&
+                           g_strcmp0 (appdata_path, archive_entry_pathname (entry)) == 0)
+                    {
+                      GString *appstring = g_string_new ("");
+
+                      while (TRUE)
+                        {
+                          const void *buffer;
+                          la_int64_t  offset;
+                          size_t      size;
+
+                          r = archive_read_data_block (a, &buffer, &size, &offset);
+
+                          if (r == ARCHIVE_FATAL)
+                            {
+                              *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+                                                    _("Fatal error when uncompressing GIMP extension '%s': %s"),
+                                                    gimp_file_get_utf8_name (file),
+                                                    archive_error_string (a));
+                              g_string_free (appstring, TRUE);
+                              break;
+                            }
+                          else if (r == ARCHIVE_EOF)
+                            {
+                              appdata = g_string_free_to_bytes (appstring);
+                              break;
+                            }
+
+                          appstring = g_string_append_len (appstring, (const gchar *) buffer, size);
+                        }
+                      continue;
                     }
                   archive_read_data_skip (a);
                 }
 
-              if (! (*error))
+              if (*error == NULL)
                 {
                   if (appdata)
                     {
@@ -328,12 +389,10 @@ file_gex_validate (GFile        *file,
                                             appdata_path);
                     }
                 }
-              if (appdata_path)
-                g_free (appdata_path);
-              if (appdata)
-                g_bytes_unref (appdata);
-              if (plugin_id)
-                g_free (plugin_id);
+
+              g_free (appdata_path);
+              g_free (plugin_id);
+              g_bytes_unref (appdata);
             }
           else
             {
@@ -345,8 +404,6 @@ file_gex_validate (GFile        *file,
 
           archive_read_close (a);
           archive_read_free (a);
-          if (! *error)
-            success = TRUE;
         }
       else
         {
@@ -362,6 +419,7 @@ file_gex_validate (GFile        *file,
                       gimp_file_get_utf8_name (file));
     }
 
+  success = (*error == NULL);
   return success;
 }
 
@@ -416,6 +474,10 @@ file_gex_decompress (GFile   *file,
                   gchar       *path;
                   size_t       size;
                   la_int64_t   offset;
+
+                  if (g_strcmp0 ("mimetype", archive_entry_pathname (entry)) == 0)
+                    /* Do not uncompress the mimetype file. */
+                    continue;
 
                   path = g_build_filename (g_file_get_path (ext_dir), archive_entry_pathname (entry), NULL);
 

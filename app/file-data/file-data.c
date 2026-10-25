@@ -453,7 +453,7 @@ file_data_init (Gimp *gimp)
                                    strlen ("gimp-plugin") + 1,
                                    NULL);
   gimp_plug_in_procedure_set_file_proc (proc, "gex", NULL, "",
-                                        "20, string, GIMP");
+                                        "30,string,mimetypeimage/gimp-x-gex");
   gimp_plug_in_procedure_set_generic_file_proc (proc, TRUE);
   gimp_plug_in_procedure_set_mime_types (proc, "image/gimp-x-gex");
   gimp_plug_in_procedure_set_handles_remote (proc);
