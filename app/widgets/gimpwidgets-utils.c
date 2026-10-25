@@ -24,6 +24,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #ifdef GDK_WINDOWING_WIN32
 #include <gdk/gdkwin32.h>
@@ -925,7 +926,7 @@ gimp_window_set_hint (GtkWindow      *window,
 
 /* similar to what we have in libgimp/gimpui.c */
 /* TODO: Restore when we use it on Windows */
-#if !defined(G_OS_WIN32) && !defined(PLATFORM_OSX)
+#if !defined(G_OS_WIN32) && !defined(GDK_WINDOWING_QUARTZ)
 static GdkWindow *
 gimp_get_foreign_window (gpointer window)
 {
@@ -2680,7 +2681,7 @@ gimp_window_set_transient_cb (GtkWidget   *window,
                               GdkEventAny *event G_GNUC_UNUSED,
                               GBytes      *handle)
 {
-#if !defined(G_OS_WIN32) && !defined(PLATFORM_OSX)
+#if !defined(G_OS_WIN32) && !defined(GDK_WINDOWING_QUARTZ)
   gboolean transient_set = FALSE;
 #endif
 

@@ -18,6 +18,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
@@ -31,6 +32,9 @@
 
 #include "libgimp/libgimp-intl.h"
 #include "libgimp/gimpui.h"
+
+/* This file is compiled empty on macOS builds with Quartz. The endif is in the end */
+#ifndef GDK_WINDOWING_QUARTZ
 
 gboolean
 _gimp_pick_button_xdg_available (void)
@@ -183,3 +187,5 @@ _gimp_pick_button_xdg_pick (GimpPickButton *button)
       g_free (opath);
     }
 }
+
+#endif /* !GDK_WINDOWING_QUARTZ */

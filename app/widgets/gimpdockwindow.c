@@ -28,7 +28,7 @@
 #ifdef _WIN32
 #include <gdk/gdkwin32.h>
 #endif
-#ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
 #include <gdk/quartz/gdkquartz-cocoa-access.h>
 #endif
 
@@ -137,7 +137,7 @@ static gboolean        gimp_dock_window_delete_event              (GtkWidget    
                                                                    GdkEventAny                *event);
 static gboolean        gimp_dock_window_key_press_event           (GtkWidget                  *widget,
                                                                    GdkEventKey                *event);
-#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (GDK_WINDOWING_QUARTZ)
 static void            gimp_dock_window_realize                   (GimpDockWindow             *dock_window,
                                                                    gpointer                    data);
 static void            gimp_dock_window_map                       (GimpDockWindow             *dock_window,
@@ -168,7 +168,7 @@ static void            gimp_dock_window_image_flush               (GimpImage    
                                                                    GimpDockWindow             *dock_window);
 static void            gimp_dock_window_update_title              (GimpDockWindow             *dock_window);
 static gboolean        gimp_dock_window_update_title_idle         (GimpDockWindow             *dock_window);
-#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (GDK_WINDOWING_QUARTZ)
 static gboolean        gimp_dock_window_update_focus_idle         (gpointer                    data);
 #endif
 static gchar         * gimp_dock_window_get_description           (GimpDockWindow             *dock_window,
@@ -287,7 +287,7 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
   gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dock_window), FALSE);
 
-#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (GDK_WINDOWING_QUARTZ)
   g_signal_connect (dock_window, "realize",
                     G_CALLBACK (gimp_dock_window_realize),
                     NULL);
@@ -769,14 +769,14 @@ gimp_dock_window_key_press_event (GtkWidget   *widget,
   return handled;
 }
 
-#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (GDK_WINDOWING_QUARTZ)
 static void
 gimp_dock_window_realize (GimpDockWindow *dock_window,
                           gpointer        data)
 {
   GimpGuiConfig *config;
   Gimp          *gimp;
-#ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
   NSWindow      *ns_window;
   NSUInteger     minimize_mask;
   NSButton      *maximize_button;
@@ -811,7 +811,7 @@ gimp_dock_window_realize (GimpDockWindow *dock_window,
                            g_object_ref (dock_window), g_object_unref);
 #endif
 
-#ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
           /* since GTK can not create NSPanel, let's make the NSWindow behave like one */
           ns_window = gdk_quartz_window_get_nswindow (gtk_widget_get_window (GTK_WIDGET (dock_window)));
           if (ns_window)
@@ -882,7 +882,7 @@ gimp_dock_window_map (GimpDockWindow *dock_window,
               return;
             }
 
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (G_OS_WIN32) || defined (GDK_WINDOWING_QUARTZ)
           /* re-mapping the dock window (e.g. with the Tab key) lets it steal
              focus, so focus back to the main window */
           g_object_set_data (G_OBJECT (dock_window), "gimp-dock-window-refocus-main",
@@ -1111,7 +1111,7 @@ gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
   return FALSE;
 }
 
-#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (GDK_WINDOWING_QUARTZ)
 static gboolean
 gimp_dock_window_update_focus_idle (gpointer data)
 {
@@ -1122,17 +1122,17 @@ gimp_dock_window_update_focus_idle (gpointer data)
 #ifdef _WIN32
   HWND            hwnd_window;
 #endif
-#ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
   NSWindow       *ns_window;
 #endif
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (G_OS_WIN32) || defined (GDK_WINDOWING_QUARTZ)
   gboolean        refocus_main;
 #endif
 
   if (! GTK_IS_WIDGET (dock_window) || ! gtk_widget_get_realized (GTK_WIDGET (dock_window)))
     return G_SOURCE_REMOVE;
 
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (G_OS_WIN32) || defined (GDK_WINDOWING_QUARTZ)
   /* set by gimp_dock_window_map() when the dock window is being re-mapped
    * (e.g. with the Tab key) which requires to refocus main window */
   refocus_main = (g_object_get_data (G_OBJECT (dock_window),
@@ -1207,7 +1207,7 @@ gimp_dock_window_update_focus_idle (gpointer data)
     }
 #endif
 
-#ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
   ns_window = gdk_quartz_window_get_nswindow (gtk_widget_get_window (GTK_WIDGET (dock_window)));
   if (ns_window)
     {
@@ -1282,7 +1282,7 @@ gimp_dock_window_factory_display_changed (GimpContext *context,
   if (display && dock_window->p->auto_follow_active)
     gimp_context_set_display (dock_window->p->context, display);
 
-#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+#if defined (GDK_WINDOWING_WAYLAND) || defined (G_OS_WIN32) || defined (GDK_WINDOWING_QUARTZ)
   if (gtk_widget_get_realized (GTK_WIDGET (dock_window)))
     {
       if (dock_window->p->context && dock_window->p->context->gimp)

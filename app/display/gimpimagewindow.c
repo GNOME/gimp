@@ -21,6 +21,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #ifdef G_OS_WIN32
 #define COBJMACROS
@@ -34,7 +35,9 @@
 #ifdef PLATFORM_OSX
 #include <unistd.h>
 #import <AppKit/AppKit.h>
+#ifdef GDK_WINDOWING_QUARTZ
 #include <gdk/quartz/gdkquartz-cocoa-access.h>
+#endif
 #endif
 
 #include "libgimpbase/gimpbase.h"
@@ -209,7 +212,7 @@ static GdkFilterReturn
                                                         gpointer             data);
 #endif
 
-#ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
 static gboolean  gimp_image_window_restore_cursor      (gpointer             canvas);
 #endif
 
@@ -917,7 +920,7 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
 
   private->window_state = event->new_window_state;
 
-#ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
   /* macOS does not restore the tool's cursor when the image window regains
      focus, leaving the canvas with the default arrow pointer (see: #7867). */
   if ((event->changed_mask     & GDK_WINDOW_STATE_FOCUSED) &&
@@ -1024,7 +1027,7 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
   return FALSE;
 }
 
-#ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
 static gboolean
 gimp_image_window_restore_cursor (gpointer canvas)
 {
@@ -1413,7 +1416,7 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
 }
 
 
-#ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
 static gboolean
 gimp_image_window_focus_idle (gpointer data)
 {
@@ -1491,7 +1494,7 @@ gimp_image_window_new (Gimp              *gimp,
                                          NULL, NULL, GDK_HINT_USER_POS);
         }
 
-#ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
       g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
                        gimp_image_window_focus_idle,
                        g_object_ref (window), g_object_unref);
