@@ -67,7 +67,8 @@ Core:
     got an implementation.
   * Alpha threshold for pixel picking (Move tool or Alt + Middle-click)
     has been lowered to near 0.
-  * GIMP Extensions can now ship GEGL operations (filters).
+  * GIMP Extensions can now ship GEGL operations (filters) and icon
+    themes.
 
 Tools:
 
@@ -93,6 +94,8 @@ Tools:
   * Path tool: new "Auto-connect on click" checkbox setting (ON by
     default) allowing to decide whether to auto-connect, or not, when
     clicking on the end node (instead allowing users to readjust it).
+  * Shape Creator tool: initial implementation for a new tool to create
+    common shapes as vector layers.
 
 Graphical User Interface:
 
@@ -140,6 +143,7 @@ Graphical User Interface:
     under the submenu "Edit > Paste as".
   * Store the localized path of menu models to show action's paths
     properly localized in the Action Search.
+  * New GUI testing infrastructure using the dogtail framework.
 
 Plug-Ins:
 
