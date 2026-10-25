@@ -47,6 +47,7 @@ endif
 
 ui_tests = [
   { 'name': 'startup' },
+  { 'name': 'welcome-dialog', 'timeout': 300 },
   { 'name': 'new-image' },
   { 'name': 'export-image',   'timeout': 300 },
   { 'name': 'color-swap' },
