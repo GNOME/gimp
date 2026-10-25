@@ -241,8 +241,8 @@ bundle(OPT_PREFIX, "etc/fonts")
 fonts_conf = GIMP_DISTRIB / "etc/fonts/fonts.conf"
 text = fonts_conf.read_text()
 new_text = text.replace(
-  f"{OPT_PREFIX}/var",
-  f"~/Library/Application Support/GIMP/{GIMP_APP_VERSION}"
+  f"{OPT_PREFIX}/var/cache",
+  f"~/Library/Caches/GIMP/{GIMP_APP_VERSION}"
 )
 fonts_conf.write_text(new_text)
 ### Needed for 'th' word breaking in Text tool etc
