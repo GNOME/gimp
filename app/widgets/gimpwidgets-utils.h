@@ -177,6 +177,9 @@ gboolean          gimp_is_win32_system_theme_dark      (void);
 #ifdef PLATFORM_OSX
 gboolean          themes_macos_is_dark_mode_active     (void);
 #endif
+#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101000
+gboolean          themes_macos_differentiate_without_color (void);
+#endif
 #if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
 gchar           * themes_get_system_accent_color       (gboolean           prefer_dark);
 #endif

@@ -2839,6 +2839,15 @@ themes_macos_is_dark_mode_active (void)
     return is_dark;
 }
 
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101000
+/* this is an accessibility feature. See: #12763 */
+gboolean
+themes_macos_differentiate_without_color (void)
+{
+  return [[NSWorkspace sharedWorkspace] accessibilityDisplayShouldDifferentiateWithoutColor];
+}
+#endif
+
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 101400
 /* returns the system accent color as a CSS hex string */
 gchar *
