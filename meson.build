@@ -880,14 +880,6 @@ libxpm = dependency('xpm', required: get_option('xpm'))
 
 have_qoi = cc.has_header('qoi.h')
 
-libiff = dependency('libiff', required: get_option('ilbm'))
-libilbm = dependency('libilbm', required: get_option('ilbm'))
-if libiff.found() and libilbm.found()
-  have_ilbm = true
-else
-  have_ilbm = cc.has_header('libilbm/ilbm.h', required: get_option('ilbm'))
-endif
-
 openexr_minver = '1.6.1'
 openexr = dependency('OpenEXR', version: '>='+openexr_minver,
   required: get_option('openexr')
@@ -2280,7 +2272,6 @@ final_message = [
 '''  X11 Mouse Cursor:    @0@'''.format(xmc.found()),
 '''  XPM:                 @0@'''.format(libxpm.found()),
 '''  Quite-OK Image:      @0@'''.format(have_qoi),
-'''  Amiga IFF/ILBM:      @0@'''.format(have_ilbm),
 '''  Email:               @0@'''.format(email_message),
 '''  FITS:                @0@'''.format(cfitsio_dep.found()),
 '''  Camera RAW:          @0@'''.format(libraw.found()),

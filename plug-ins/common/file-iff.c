@@ -374,6 +374,16 @@ load_image (GFile        *file,
         {
           cmap_size = chunk_size;
 
+          /* Currently, GIMP can only support 8-bit palettes */
+          if (cmap_size > 768)
+            {
+              g_set_error (error, G_FILE_ERROR,
+                           g_file_error_from_errno (errno),
+                           _("Invalid ILBM colormap size"));
+              fclose (fp);
+              return NULL;
+            }
+
           if (fread (cmap, chunk_size, 1, fp) == 0)
             break;
         }
@@ -656,7 +666,7 @@ convert_acbm (guchar   *body,
 
   if (! g_size_checked_mul (&plane_length, row_length, bmhd->height)   ||
       ! g_size_checked_mul (&interleaved, row_length,  bmhd->n_planes) ||
-      ! g_size_checked_mul (&alloc, interleaved, bmhd->height) ||
+      ! g_size_checked_mul (&alloc, interleaved, bmhd->height)         ||
       ! (pixels = g_try_malloc0 (alloc)))
     {
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
@@ -1047,7 +1057,7 @@ read_rgbn (guchar     *data,
           pixels[j++] = rgb[0];
           pixels[j++] = rgb[1];
           pixels[j++] = rgb[2];
-          if (has_alpha && j <= alloc)
+          if (has_alpha && j < alloc)
             pixels[j++] = rgb[3];
 
           count--;
