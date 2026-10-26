@@ -57,6 +57,9 @@ gimp_display_shell_render_set_scale (GimpDisplayShell *shell,
     {
       shell->render_scale = scale;
 
+      /* the render_cache is sized in device pixels, so it must be
+         reallocated when moving to monitors with other scales. See: #7687 */
+      g_clear_pointer (&shell->render_cache, cairo_surface_destroy);
       gimp_display_shell_render_invalidate_full (shell);
     }
 #endif
