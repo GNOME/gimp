@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-25 22:14+0000\n"
-"PO-Revision-Date: 2026-10-26 09:14+0100\n"
+"POT-Creation-Date: 2026-10-26 09:54+0000\n"
+"PO-Revision-Date: 2026-10-26 11:28+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -20169,7 +20169,7 @@ msgstr "Datoteka ni v mapi razširitve GIMP »%s« z id. »%s«: %s"
 
 #: app/file-data/file-data-gex.c:266 app/file-data/file-data-gex.c:273
 #, c-format
-msgid "The file \"mimetype\" should be a regular file in GIMP extensi'%s'."
+msgid "The file \"mimetype\" should be a regular file in GIMP extension '%s'."
 msgstr ""
 "Datoteka »mimetype« mora biti običajna datoteka v razširitvi GIMP-a »%s«."
 
