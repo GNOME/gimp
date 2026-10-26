@@ -34,6 +34,7 @@ common_plugins_list = [
   { 'name': 'file-glob', },
   { 'name': 'file-header', },
   { 'name': 'file-html-table', },
+  { 'name': 'file-iff', },
   { 'name': 'file-macpaint', },
   { 'name': 'file-paa', },
   { 'name': 'file-pat', },
@@ -156,17 +157,6 @@ endif
 if have_qoi
   common_plugins_list += {
     'name': 'file-qoi',
-  }
-endif
-
-if libiff.found() and libilbm.found()
-  common_plugins_list += {
-    'name': 'file-iff',
-    'deps': [ libiff, libilbm, ],
-  }
-elif have_ilbm
-  common_plugins_list += {
-    'name': 'file-iff',
   }
 endif
 
