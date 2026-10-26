@@ -149,11 +149,15 @@ gimp_clipboard_exit (Gimp *gimp)
       gtk_clipboard_store (clipboard);
     }
 
+#ifndef GDK_WINDOWING_QUARTZ
   if (clipboard)
     /* If we don't clear the clipboard, it keeps a reference on the object
-     * owner (i.e. Gimp object probably) which fails to finalize.
+     * owner (i.e. Gimp object probably) which fails to finalize, except
+     * on macOS Quartz where no reference is held on the owner so
+     * gtk_clipboard_clear() throw the stored data away (even when not the owner).
      */
     gtk_clipboard_clear (clipboard);
+#endif
 
   g_object_set_data (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY, NULL);
 }
