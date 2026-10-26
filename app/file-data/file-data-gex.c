@@ -263,14 +263,14 @@ file_gex_validate (GFile        *file,
                       if (archive_entry_filetype (entry) != AE_IFREG)
                         {
                           *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                                _("The file \"mimetype\" should be a regular file in GIMP extensi'%s'."),
+                                                _("The file \"mimetype\" should be a regular file in GIMP extension '%s'."),
                                                 gimp_file_get_utf8_name (file));
                           break;
                         }
                       else if (archive_entry_size (entry) != 16)
                         {
                           *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                                _("The file \"mimetype\" should be a regular file in GIMP extensi'%s'."),
+                                                _("The file \"mimetype\" should be a regular file in GIMP extension '%s'."),
                                                 gimp_file_get_utf8_name (file));
                           break;
                         }
