@@ -728,6 +728,13 @@ gui_pdb_dialog_new (Gimp          *gimp,
           if (progress)
             gimp_window_set_transient_for (GTK_WINDOW (dialog), progress);
 
+#ifdef G_OS_WIN32
+          /* cross-process transient-for is not set on Windows, so the
+             dialog (e.g. Resource Chooser) would be positioned on
+             the primary monitor. Center it on the monitor being used instead */
+          gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+#endif
+
           gtk_widget_set_visible (dialog, TRUE);
 
           /*  workaround for bug #360106  */

@@ -81,6 +81,10 @@ gimp_error_dialog_init (GimpErrorDialog *dialog)
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
+  /* messages often come from plug-ins or have no parent, so center it on
+     the monitor being used instead of wherever the system puts it */
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+
   dialog->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->vbox, TRUE, TRUE, 0);
