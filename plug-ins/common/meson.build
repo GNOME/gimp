@@ -158,17 +158,6 @@ if have_qoi
   }
 endif
 
-if libiff.found() and libilbm.found()
-  common_plugins_list += {
-    'name': 'file-iff',
-    'deps': [ libiff, libilbm, ],
-  }
-elif have_ilbm
-  common_plugins_list += {
-    'name': 'file-iff',
-  }
-endif
-
 if platform_windows
   common_plugins_list += { 'name': 'file-lnk', }
   if wia.found()
