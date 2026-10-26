@@ -301,7 +301,6 @@ help in that regard:
      gs                  -              ghostscript
      libaa               -              ASCII art
      libheif             @LIBHEIF_REQUIRED_VERSION@         HEIF (HEIC, AVIF)
-     libilbm             -              Amiga IFF/ILBM
      libjxl              @LIBJXL_REQUIRED_VERSION@          JPEG XL
      libmng              -              MNG
      libwebp             @WEBP_REQUIRED_VERSION@          WebP (built with --enable-libwebpmux and --enable-libwebpdemux)
