@@ -130,12 +130,13 @@ dashboard_log_record_cmd_callback (GimpAction *action,
                                                     GTK_RESPONSE_CANCEL,
                                                     -1);
 
-          gtk_window_set_screen (
+          gtk_window_set_transient_for (
             GTK_WINDOW (dialog),
-            gtk_widget_get_screen (GTK_WIDGET (dashboard)));
+            GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (dashboard))));
           gtk_window_set_role (GTK_WINDOW (dialog),
                                "gimp-dashboard-log-record");
-          gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+          gtk_window_set_position (GTK_WINDOW (dialog),
+                                   GTK_WIN_POS_CENTER_ON_PARENT);
 
           gtk_file_chooser_set_do_overwrite_confirmation (
             GTK_FILE_CHOOSER (dialog), TRUE);

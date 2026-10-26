@@ -992,16 +992,21 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
           if (gimp_session_info_is_session_managed (info))
             {
-              /* Make the dialog show up at the user position the
-               * first time it is shown. After it has been shown the
-               * first time we don't want it to show at the mouse the
-               * next time. Think of the use cases "hide and show with
-               * tab" and "change virtual desktops"
+              /* Make the dialog show up centered on its parent the
+               * first time it is shown. Dock windows, on the other hand,
+                 show up at the user position on the first time. After
+               * it has been shown the first time we don't want it to
+               * be positioned like that the next time. Think of the
+               * use cases "hide and show with tab" and "change virtual desktops"
                */
-              GIMP_LOG (WM, "setting GTK_WIN_POS_MOUSE for %p (\"%s\")\n",
+              GIMP_LOG (WM, "setting GTK_WIN_POS_%s for %p (\"%s\")\n",
+                        GIMP_IS_DOCK_WINDOW (dialog) ? "MOUSE" : "CENTER_ON_PARENT",
                         dialog, entry->identifier);
 
-              gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+              gtk_window_set_position (GTK_WINDOW (dialog),
+                                       GIMP_IS_DOCK_WINDOW (dialog) ?
+                                       GTK_WIN_POS_MOUSE :
+                                       GTK_WIN_POS_CENTER_ON_PARENT);
               g_signal_connect (dialog, "configure-event",
                                 G_CALLBACK (gimp_dialog_factory_set_user_pos),
                                 NULL);

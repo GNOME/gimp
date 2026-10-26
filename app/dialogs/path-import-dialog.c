@@ -103,9 +103,9 @@ path_import_dialog_new (GimpImage              *image,
                                            -1);
 
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-paths-import");
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-  gtk_window_set_screen (GTK_WINDOW (dialog),
-                         gtk_widget_get_screen (parent));
+  gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                GTK_WINDOW (gtk_widget_get_toplevel (parent)));
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER_ON_PARENT);
 
   if (import_folder)
     gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),

@@ -808,6 +808,7 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
       if (GTK_IS_WINDOW (parent))
         {
           gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
+          gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER_ON_PARENT);
           /* needed to have focus */
           gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
         }

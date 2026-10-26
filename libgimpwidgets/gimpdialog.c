@@ -304,7 +304,7 @@ gimp_dialog_set_property (GObject      *object,
                     gtk_window_set_screen (GTK_WINDOW (object),
                                            gtk_widget_get_screen (parent));
                     gtk_window_set_position (GTK_WINDOW (object),
-                                             GTK_WIN_POS_MOUSE);
+                                             GTK_WIN_POS_CENTER);
                   }
               }
           }
