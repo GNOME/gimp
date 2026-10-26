@@ -121,6 +121,12 @@ color_profile_import_dialog_run (GimpImage                 *image,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
+  /* no parent to be placed relative to (we are called while loading), so
+     center it before it is mapped like libgimp does for plug-in dialogs,
+     otherwise it can end up cropped on multi-monitor setups. See: #15270 */
+  if (! parent)
+    gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
