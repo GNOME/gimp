@@ -4,7 +4,7 @@
 #
 # runs on dogtail's hermetic session (dogtail.hermetic) - do_action over
 # AT-SPI, no coordinate math, no injector. needs mutter, dbus-run-session,
-# at-spi2-core and dogtail >= 2.1.0 for the configuring python (see
+# at-spi2-core and dogtail (dogtail_minver) for the configuring python (see
 # .gitlab-ci.yml). anything missing disables the suite here, with the
 # reason in the setup summary. once a test runs, a missing piece is a hard
 # error (exit 99), not a skip.
@@ -26,19 +26,14 @@ if not (mutter_prog.found() and dbus_run_session.found())
 endif
 
 # check the version from package metadata, importing dogtail pulls in gtk.
-dogtail_check = run_command(python, '-c',
+dogtail_found = run_command(python, '-c',
   '\n'.join([
-    '''import re, sys''',
-    '''from importlib.metadata import version, PackageNotFoundError''',
-    '''try:''',
-    '''    m = re.match(r'(\d+)\.(\d+)', version('dogtail'))''',
-    '''except PackageNotFoundError:''',
-    '''    sys.exit(1)''',
-    '''sys.exit(0 if m and (int(m[1]), int(m[2])) >= (2, 1) else 1)''']),
+    '''from importlib.metadata import version''',
+    '''print(version('dogtail'))''']),
   check: false)
 
-if dogtail_check.returncode() != 0
-  ui_tests_status = 'no (dogtail>=2.1.0 not installed for @0@)'.format(python.full_path())
+if dogtail_found.returncode() != 0 or not dogtail_found.stdout().strip().version_compare(dogtail_minver)
+  ui_tests_status = 'no (dogtail@0@ not installed for @1@)'.format(dogtail_minver, python.full_path())
   subdir_done()
 endif
 

@@ -1193,6 +1193,8 @@ python3_minver = '>=3.6'
 
 pygobject_minver = '>=3.0'
 
+dogtail_minver = '>=2.1.2'
+
 #Non-versioned python (e.g. on Windows)
 py_candidates = ['python']
 #Major versioned python (e.g. on Linux)
