@@ -1331,23 +1331,27 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       gegl_buffer_freeze_changed (dest_buffer);
       if (transform)
         {
+          /* explicit dest rect: an empty one makes the sync-back to the surface
+             empty when changing to a monitor with different scaling */
           gimp_color_transform_process_buffer (transform,
                                                src_buffer,
                                                GEGL_RECTANGLE (x - temp_buf_x,
                                                                y - temp_buf_y,
                                                                width, height),
                                                dest_buffer,
-                                               GEGL_RECTANGLE (0, 0, 0, 0));
+                                               GEGL_RECTANGLE (0, 0, width, height));
         }
       else
         {
+          /* explicit dest rect: an empty one makes the sync-back to the surface
+             empty when changing to a monitor with different scaling */
           gimp_gegl_buffer_copy (src_buffer,
                                  GEGL_RECTANGLE (x - temp_buf_x,
                                                  y - temp_buf_y,
                                                  width, height),
                                  GEGL_ABYSS_NONE,
                                  dest_buffer,
-                                 GEGL_RECTANGLE (0, 0, 0, 0));
+                                 GEGL_RECTANGLE (0, 0, width, height));
         }
       gegl_buffer_thaw_changed (dest_buffer);
 
