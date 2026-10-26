@@ -285,8 +285,12 @@ progress_error_dialog (GimpProgress *progress)
           GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (progress));
 
           if (GTK_IS_WINDOW (toplevel))
-            gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                          GTK_WINDOW (toplevel));
+            {
+              gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                            GTK_WINDOW (toplevel));
+              gtk_window_set_position (GTK_WINDOW (dialog),
+                                       GTK_WIN_POS_CENTER_ON_PARENT);
+            }
         }
       else
         {

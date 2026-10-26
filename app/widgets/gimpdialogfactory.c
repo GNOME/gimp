@@ -961,9 +961,13 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
                   gui_config = GIMP_GUI_CONFIG (factory->p->context->gimp->config);
 
+                  /* remmber_if_open is needed so windows opened on demand from
+                     a window (e.g. New Image) appear on that window's monitor,
+                     not the stored one */
                   gimp_session_info_apply_geometry (current_info,
                                                     monitor,
-                                                    gui_config->restore_monitor);
+                                                    gui_config->restore_monitor &&
+                                                    entry->remember_if_open);
                 }
 
               info = current_info;

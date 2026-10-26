@@ -595,6 +595,12 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
                                     NULL);
   idle_help->query_dialog = GTK_DIALOG (dialog);
 
+#ifdef G_OS_WIN32
+  /* without a usable parent, Windows puts the Help dialog on the primary
+     monitor. Center it on the monitor being used instead. */
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+#endif
+
   if (idle_help->progress)
     {
       gimp_window_set_transient_for (GTK_WINDOW (dialog), idle_help->progress);
