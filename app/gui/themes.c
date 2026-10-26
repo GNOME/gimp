@@ -611,6 +611,18 @@ themes_apply_theme (Gimp          *gimp,
 
         }
 
+#if defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101000
+      /* honor "Differentiate without Color": show the 1/0 on switches. See: #12763 */
+      if (! error && themes_macos_differentiate_without_color ())
+        {
+          g_output_stream_printf (
+            output, NULL, NULL, &error,
+            "\n"
+            "switch image { color: @fg-color; }\n"
+            "switch:checked image { color: @bg-color; }\n");
+        }
+#endif
+
 #if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
       /* when using the system theme (which is Adwaita on Windows/macOS), use
          the WinUI/Cocoa accent color instead of the hardcoded Adwaita blue */
