@@ -17,11 +17,10 @@ from contextlib import contextmanager
 try:
     from dogtail.hermetic.session import HermeticSession, HermeticSessionError, dump_tree
 except ImportError:
-    # meson.build only enables the ui suite with dogtail >= 2.1.0 installed,
+    # meson.build only enables the ui suite with dogtail installed,
     # so getting here is an environment error, not a skip.
-    sys.stderr.write("ERROR: dogtail.hermetic not installed (pip install "
-                     "'dogtail>=2.1.0'), but meson.build said it was present "
-                     "at configure time\n")
+    sys.stderr.write("ERROR: dogtail.hermetic not installed, but meson.build "
+                     "said it was present at configure time\n")
     sys.exit(99)
 
 
