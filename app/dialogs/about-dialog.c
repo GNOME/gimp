@@ -336,12 +336,23 @@ about_dialog_create (Gimp           *gimp,
 
   if (GIMP_GUI_CONFIG (config)->show_help_button)
     {
+      GtkWidget *button;
+      GtkWidget *parent;
+
       gimp_help_connect (dialog.dialog, NULL, gimp_standard_help_func,
                          GIMP_HELP_ABOUT_DIALOG, NULL, NULL);
 
       gtk_dialog_add_buttons (GTK_DIALOG (dialog.dialog),
                               _("_Help"), GTK_RESPONSE_HELP,
                               NULL);
+
+      /* GtkAboutDialog packs Credits and License first; put Help before
+         them so it is the leftmost button like in other dialogs */
+      button = gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog.dialog),
+                                                   GTK_RESPONSE_HELP);
+      parent = gtk_widget_get_parent (button);
+      if (GTK_IS_BOX (parent))
+        gtk_box_reorder_child (GTK_BOX (parent), button, 0);
     }
 
   gtk_style_context_add_class (gtk_widget_get_style_context (dialog.dialog),
