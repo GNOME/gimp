@@ -1070,7 +1070,7 @@ gimp_palette_load_ase (GimpContext   *context,
                    gimp_file_get_utf8_name (file));
       return NULL;
     }
-
+  header[7] = '\0';
 
   /* Checking header values */
   if (! g_str_has_prefix (header + 0, "ASEF") ||
