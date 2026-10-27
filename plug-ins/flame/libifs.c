@@ -836,7 +836,7 @@ interpolate (control_point  cps[],
     } /* for i */
 }
 
-
+#define MAXARGS 1000
 
 /*
  * split a string passed in ss into tokens on whitespace.
@@ -852,9 +852,12 @@ tokenize (char **ss,
   gint  len = 0;
 
   len = strlen (s);
-  while (*s != ';' && len > 0)
+  while (*s != ';' &&
+         len > 0   &&
+         i < MAXARGS)
     {
       char c = *s;
+
       switch (state)
         {
         case 0:
@@ -914,7 +917,6 @@ compare_xforms (const void *va,
   return 0;
 }
 
-#define MAXARGS 1000
 #define streql(x,y) (!strcmp(x,y))
 
 /*
