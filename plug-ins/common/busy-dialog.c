@@ -256,6 +256,9 @@ busy_dialog (gint         read_fd,
   /* the main window */
   if (! cancelable)
     {
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the GtkWindow skip-taskbar-hint property: g_object_new() will drop it and every property after it at runtime
+#endif
       window = g_object_new (GTK_TYPE_WINDOW,
                              "title",             _("Please Wait"),
                              "skip-taskbar-hint", TRUE,
@@ -272,6 +275,9 @@ busy_dialog (gint         read_fd,
     }
   else
     {
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the GtkWindow skip-taskbar-hint property: g_object_new() will drop it and every property after it at runtime
+#endif
       window = g_object_new (GTK_TYPE_DIALOG,
                              "title",             _("Please Wait"),
                              "skip-taskbar-hint", TRUE,

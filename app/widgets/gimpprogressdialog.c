@@ -225,6 +225,9 @@ gimp_progress_dialog_new (void)
                 "gtk-dialogs-use-header", &use_header_bar,
                 NULL);
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the GtkWindow skip-taskbar-hint and skip-pager-hint properties: g_object_new() will drop them and every property after them at runtime
+#endif
   return g_object_new (GIMP_TYPE_PROGRESS_DIALOG,
                        "title",             _("Progress"),
                        "role",              "progress",

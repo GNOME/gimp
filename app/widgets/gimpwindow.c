@@ -205,6 +205,9 @@ gimp_window_key_press_event (GtkWidget   *widget,
     gtk_widget_get_modifier_mask (widget,
                                   GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR);
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the gtk-enable-mnemonics setting: g_object_get() will leave enable_mnemonics unset at runtime
+#endif
   g_object_get (gtk_widget_get_settings (widget),
                 "gtk-enable-mnemonics", &enable_mnemonics,
                 NULL);
