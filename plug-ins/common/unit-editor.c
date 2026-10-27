@@ -261,14 +261,6 @@ on_app_activate (GApplication *gapp, gpointer user_data)
       gtk_box_set_spacing (GTK_BOX (action_container), 6);
     }
 
-  button = gtk_button_new_with_mnemonic (_("_Refresh"));
-  gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.refresh");
-  gtk_widget_set_visible (button, TRUE);
-  if (use_header_bar)
-    gtk_header_bar_pack_start (GTK_HEADER_BAR (action_container), button);
-  else
-    gtk_container_add (GTK_CONTAINER (action_container), button);
-
   if (gimp_show_help_button ())
     {
       button = gtk_button_new_with_mnemonic (_("_Help"));
@@ -279,8 +271,21 @@ on_app_activate (GApplication *gapp, gpointer user_data)
       if (use_header_bar)
         gtk_header_bar_pack_start (GTK_HEADER_BAR (action_container), button);
       else
-        gtk_container_add (GTK_CONTAINER (action_container), button);
+        {
+          gtk_container_add (GTK_CONTAINER (action_container), button);
+          /* separate the Help button on the left, like GtkDialog does */
+          gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (action_container),
+                                              button, TRUE);
+        }
     }
+
+  button = gtk_button_new_with_mnemonic (_("_Refresh"));
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.refresh");
+  gtk_widget_set_visible (button, TRUE);
+  if (use_header_bar)
+    gtk_header_bar_pack_start (GTK_HEADER_BAR (action_container), button);
+  else
+    gtk_container_add (GTK_CONTAINER (action_container), button);
 
   button = gtk_button_new_with_mnemonic (_("_OK"));
   g_signal_connect_swapped (button, "clicked",
