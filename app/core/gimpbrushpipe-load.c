@@ -118,7 +118,16 @@ gimp_brush_pipe_load (GimpContext   *context,
   while (*paramstring && g_ascii_isspace (*paramstring))
     paramstring++;
 
-  pipe->brushes = g_new0 (GimpBrush *, n_brushes);
+  if (! (pipe->brushes = g_try_new0 (GimpBrush *, n_brushes)))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file '%s': "
+                     "File is corrupt."),
+                   gimp_file_get_utf8_name (file));
+      g_object_unref (pipe);
+      g_string_free (buffer, TRUE);
+      return NULL;
+    }
 
   while (pipe->n_brushes < n_brushes)
     {
