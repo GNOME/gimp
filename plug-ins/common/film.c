@@ -756,23 +756,27 @@ create_hole_color (gint       width,
 {
   guchar *hole, *top, *bottom;
   gint    radius, length, k;
+  gsize   alloc;
 
   if (width <= 0 || height <= 0)
     return NULL;
 
-  hole = g_new (guchar, width * height * 3);
+  if (! g_size_checked_mul (&alloc, width, height) ||
+      ! g_size_checked_mul (&alloc, alloc, 3)   ||
+      ! (hole = g_try_new (guchar, alloc)))
+    return NULL;
 
   /* Fill a rectangle with white */
-  memset (hole, 255, width * height * 3);
+  memset (hole, 255, alloc);
   radius = height / 4;
   if (radius > width / 2)
     radius = width / 2;
   top = hole;
-  bottom = hole + (height-1) * width * 3;
-  for (k = radius-1; k > 0; k--)  /* Rounding corners */
+  bottom = hole + (alloc - ((gsize) width * 3));
+  for (k = radius - 1; k > 0; k--)  /* Rounding corners */
     {
-      length = (int)(radius - sqrt ((gdouble) (radius * radius - k * k))
-                     - 0.5);
+      length = (gint)(radius - sqrt ((gdouble) (radius * radius - k * k))
+                      - 0.5);
       if (length > 0)
         {
           set_pixels (length, top, film_color);
