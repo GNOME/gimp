@@ -1148,6 +1148,9 @@ gimp_spin_scale_mnemonics_notify (GtkWindow        *window,
   gboolean enable_mnemonics;
   gboolean auto_mnemonics;
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the gtk-enable-mnemonics and gtk-auto-mnemonics settings: g_object_get() will leave the values unset at runtime
+#endif
   g_object_get (gtk_widget_get_settings (GTK_WIDGET (scale)),
                 "gtk-enable-mnemonics", &enable_mnemonics,
                 "gtk-auto-mnemonics",   &auto_mnemonics,

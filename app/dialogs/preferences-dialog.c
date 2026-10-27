@@ -3467,6 +3467,9 @@ prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
 
 #ifdef G_OS_WIN32
 
+#if GTK_MAJOR_VERSION > 3
+#warning This gtk_get_major_version () == 3 check hides the Pointer Input API option: update the version check on GTK4
+#endif
   if ((gtk_get_major_version () == 3 &&
        gtk_get_minor_version () > 24) ||
       (gtk_get_major_version () == 3 &&

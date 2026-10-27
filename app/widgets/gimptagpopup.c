@@ -1111,6 +1111,9 @@ gimp_tag_popup_scroll_timeout (gpointer data)
   GimpTagPopup *popup = data;
   gboolean      touchscreen_mode;
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the gtk-touchscreen-mode setting: g_object_get() will leave the value unset at runtime
+#endif
   g_object_get (gtk_widget_get_settings (GTK_WIDGET (popup)),
                 "gtk-touchscreen-mode", &touchscreen_mode,
                 NULL);
@@ -1137,6 +1140,9 @@ gimp_tag_popup_scroll_timeout_initial (gpointer data)
   guint         timeout;
   gboolean      touchscreen_mode;
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the gtk-timeout-repeat and gtk-touchscreen-mode settings: g_object_get() will leave the values unset at runtime
+#endif
   g_object_get (gtk_widget_get_settings (GTK_WIDGET (popup)),
                 "gtk-timeout-repeat",   &timeout,
                 "gtk-touchscreen-mode", &touchscreen_mode,
@@ -1160,6 +1166,9 @@ gimp_tag_popup_start_scrolling (GimpTagPopup *popup)
   guint    timeout;
   gboolean touchscreen_mode;
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the gtk-timeout-repeat and gtk-touchscreen-mode settings: g_object_get() will leave the values unset at runtime
+#endif
   g_object_get (gtk_widget_get_settings (GTK_WIDGET (popup)),
                 "gtk-timeout-repeat",   &timeout,
                 "gtk-touchscreen-mode", &touchscreen_mode,
@@ -1180,6 +1189,9 @@ gimp_tag_popup_stop_scrolling (GimpTagPopup *popup)
 
   gimp_tag_popup_remove_scroll_timeout (popup);
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the gtk-touchscreen-mode setting: g_object_get() will leave the value unset at runtime
+#endif
   g_object_get (gtk_widget_get_settings (GTK_WIDGET (popup)),
                 "gtk-touchscreen-mode", &touchscreen_mode,
                 NULL);
@@ -1318,6 +1330,9 @@ gimp_tag_popup_handle_scrolling (GimpTagPopup *popup,
   gboolean     scroll_fast = FALSE;
   gboolean     touchscreen_mode;
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the gtk-touchscreen-mode setting: g_object_get() will leave the value unset at runtime
+#endif
   g_object_get (gtk_widget_get_settings (GTK_WIDGET (popup)),
                 "gtk-touchscreen-mode", &touchscreen_mode,
                 NULL);
@@ -1533,6 +1548,9 @@ gimp_tag_popup_button_scroll (GimpTagPopup   *popup,
     {
       gboolean touchscreen_mode;
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the gtk-touchscreen-mode setting: g_object_get() will leave the value unset at runtime
+#endif
       g_object_get (gtk_widget_get_settings (GTK_WIDGET (popup)),
                     "gtk-touchscreen-mode", &touchscreen_mode,
                     NULL);

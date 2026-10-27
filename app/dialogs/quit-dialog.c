@@ -392,6 +392,9 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
         hint = g_strdup_printf (_("Press %s to close all images."),
                                 accel_string);
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the GtkButton use-stock property: g_object_set() will skip it and every property after it at runtime
+#endif
       g_object_set (private->ok_button,
                     "label",     private->do_quit ? _("_Quit") : _("Cl_ose"),
                     "use-stock", TRUE,
@@ -427,6 +430,9 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
 
       icon = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
                                            GTK_ICON_SIZE_BUTTON);
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the GtkButton use-stock property: g_object_set() will skip it and every property after it at runtime
+#endif
       g_object_set (private->ok_button,
                     "label",     _("_Discard Changes"),
                     "use-stock", FALSE,
