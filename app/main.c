@@ -494,6 +494,9 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/gdk-pixbuf-2.0/2.10.0/loaders.cache", lib_dir);
       g_setenv ("GDK_PIXBUF_MODULE_FILE", tmp, TRUE);
       g_free (tmp);
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 loads modules from gtk-4.0/4.0.0 and has no immodules.cache (input methods are built in): update GTK_PATH and drop GTK_IM_MODULE_FILE
+#endif
       tmp = g_strdup_printf ("%s/gtk-3.0/3.0.0", lib_dir);
       g_setenv ("GTK_PATH", tmp, TRUE);
       g_free (tmp);
@@ -1345,6 +1348,9 @@ gimp_init_i18n (void)
 #ifdef PLATFORM_OSX
   /* keep the monetary sign characters ASCII so GtkSpinButton accepts
      the '-' (minus) character. See GNOME/gimp#13641 and GNOME/GTK!8802. */
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 GtkSpinButton hardcodes '-' and '+' instead of using localeconv(): evalute dropping this LC_MONETARY workaround
+#endif
   setlocale (LC_MONETARY, "C");
 
   /* keep the decimal point as '.', otherwise the vector glyphs drawn by AppKit
