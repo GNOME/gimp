@@ -52,6 +52,7 @@
 
 #ifndef GIMP_CONSOLE_COMPILATION
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
@@ -401,7 +402,9 @@ gimp_macos_setenv (const char * progname)
       g_free (tmp);
     }
 
+#ifdef GDK_WINDOWING_QUARTZ
   g_setenv ("GTK_IM_MODULE", "quartz", TRUE);
+#endif
 
 #if defined(ENABLE_RELOCATABLE_RESOURCES)
   /* helper to set environment variables for GIMP to be relocatable.
