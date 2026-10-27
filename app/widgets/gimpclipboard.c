@@ -397,6 +397,23 @@ gimp_clipboard_get_image (Gimp *gimp)
   return image;
 }
 
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 can paste 16-bit images: evaluate dropping this 8-bit TIFF workaround
+#endif
+static void
+gimp_clipboard_unpremultiply_pixbuf (GdkPixbuf *pixbuf)
+{
+  guint8 *pixels    = gdk_pixbuf_get_pixels (pixbuf);
+  gint    rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+
+  babl_process_rows (babl_fish (babl_format ("R'aG'aB'aA u8"),
+                                babl_format ("R'G'B'A u8")),
+                     pixels, rowstride,
+                     pixels, rowstride,
+                     gdk_pixbuf_get_width (pixbuf),
+                     gdk_pixbuf_get_height (pixbuf));
+}
+
 /**
  * gimp_clipboard_get_buffer:
  * @gimp: pointer to #Gimp
@@ -438,6 +455,16 @@ gimp_clipboard_get_buffer (Gimp *gimp)
           if (data)
             {
               GdkPixbuf *pixbuf = gtk_selection_data_get_pixbuf (data);
+
+              /* gdk-pixbuf's TIFF loader returns libtiff's RGBA raster,
+                 which is premultiplied so with darken semi-transparent edges.
+                 To have accurate colors, we undo it. See: #6569 */
+              if (pixbuf &&
+                  atom == gdk_atom_intern_static_string ("image/tiff") &&
+                  gdk_pixbuf_get_has_alpha (pixbuf))
+                {
+                  gimp_clipboard_unpremultiply_pixbuf (pixbuf);
+                }
 
               gtk_selection_data_free (data);
 
