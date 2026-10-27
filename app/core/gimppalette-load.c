@@ -1454,9 +1454,13 @@ gimp_palette_load_sbz (GimpContext   *context,
               if (xml_data == NULL)
                 {
                   entry_size = archive_entry_size (entry);
-                  xml_data   = (gchar *) g_malloc (entry_size);
 
-                  r = archive_read_data (a, xml_data, entry_size);
+                  if (entry_size > 0)
+                    {
+                      xml_data = (gchar *) g_malloc (entry_size);
+
+                      r = archive_read_data (a, xml_data, entry_size);
+                    }
                 }
               else
                 {
@@ -1472,9 +1476,14 @@ gimp_palette_load_sbz (GimpContext   *context,
             {
               GimpColorProfile *profile  = NULL;
               size_t            icc_size = archive_entry_size (entry);
-              uint8_t          *icc_data = g_malloc (icc_size);
+              uint8_t          *icc_data = NULL;
 
-              r = archive_read_data (a, icc_data, icc_size);
+              if (icc_size > 0)
+                {
+                  icc_data = g_malloc (icc_size);
+
+                  r = archive_read_data (a, icc_data, icc_size);
+                }
 
               if (icc_data)
                 profile = gimp_color_profile_new_from_icc_profile (icc_data, icc_size,
@@ -1598,9 +1607,13 @@ gimp_palette_load_procreate (GimpContext   *context,
           if (g_str_has_suffix (lower, ".json"))
             {
               entry_size = archive_entry_size (entry);
-              json_data  = (gchar *) g_malloc (entry_size);
 
-              r = archive_read_data (a, json_data, entry_size);
+              if (entry_size > 0)
+                {
+                  json_data  = (gchar *) g_malloc (entry_size);
+
+                  r = archive_read_data (a, json_data, entry_size);
+                }
               g_free (lower);
               break;
             }
@@ -1899,9 +1912,13 @@ gimp_palette_load_krita (GimpContext   *context,
               if (xml_data == NULL)
                 {
                   entry_size = archive_entry_size (entry);
-                  xml_data   = (gchar *) g_malloc (entry_size);
 
-                  r = archive_read_data (a, xml_data, entry_size);
+                  if (entry_size > 0)
+                    {
+                      xml_data = (gchar *) g_malloc (entry_size);
+
+                      r = archive_read_data (a, xml_data, entry_size);
+                    }
                 }
               else
                 {
@@ -1913,9 +1930,14 @@ gimp_palette_load_krita (GimpContext   *context,
             {
               GimpColorProfile *profile  = NULL;
               size_t            icc_size = archive_entry_size (entry);
-              uint8_t          *icc_data = g_malloc (icc_size);
+              uint8_t          *icc_data = NULL;
 
-              r = archive_read_data (a, icc_data, icc_size);
+              if (icc_size > 0)
+                {
+                  icc_data = g_malloc (icc_size);
+
+                  r = archive_read_data (a, icc_data, icc_size);
+                }
 
               if (icc_data)
                 profile = gimp_color_profile_new_from_icc_profile (icc_data, icc_size,
