@@ -1314,6 +1314,8 @@ gimp_gradient_tool_set_existing_filter (GimpGradientTool   *gradient_tool,
   GimpCoords               end_coords   = { 0, 0 };
   GeglNode                *existing_node;
   gchar                   *name;
+  gint                     off_x;
+  gint                     off_y;
 
   g_return_if_fail (GIMP_IS_GRADIENT_TOOL (gradient_tool));
   g_return_if_fail (display != NULL || GIMP_IS_DISPLAY (display));
@@ -1322,6 +1324,8 @@ gimp_gradient_tool_set_existing_filter (GimpGradientTool   *gradient_tool,
                                                  drawable_id));
 
   g_return_if_fail (drawable != NULL || GIMP_IS_DRAWABLE (drawable));
+
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
   filters = gimp_drawable_get_filters (drawable);
   gradient_tool->existing_filter =
@@ -1341,6 +1345,11 @@ gimp_gradient_tool_set_existing_filter (GimpGradientTool   *gradient_tool,
                  "end-x",   &end_coords.x,
                  "end-y",   &end_coords.y,
                  NULL);
+
+  start_coords.x += off_x;
+  start_coords.y += off_y;
+  end_coords.x   += off_x;
+  end_coords.y   += off_y;
 
   gimp_gradient_tool_button_press (tool, &start_coords, 0, GDK_BUTTON1_MASK,
                                    GIMP_BUTTON_PRESS_NORMAL, display);
