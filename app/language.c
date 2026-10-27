@@ -816,6 +816,9 @@ language_init (const gchar  *language,
 #ifdef PLATFORM_OSX
   /* keep the monetary sign characters ASCII so GtkSpinButton accepts
      the '-' (minus) character. See GNOME/gimp#13641 and GNOME/GTK!8802. */
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 GtkSpinButton hardcodes '-' and '+' instead of using localeconv(): evaluate dropping this LC_MONETARY workaround
+#endif
   setlocale (LC_MONETARY, "C");
 
   /* localize the native parts of the menu bar (the "Window" menu items,

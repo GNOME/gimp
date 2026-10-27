@@ -70,6 +70,9 @@ gimp_widgets_init_platform_settings (void)
      the formers are set by KDE, with no margin for error */
   if (g_getenv ("KDE_FULL_SESSION") != NULL &&
       g_getenv ("KDE_SESSION_VERSION") != NULL)
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 GtkDialog ignores gtk-alternative-button-order: handle the KDE/Windows button order differently
+#endif
     g_object_set (settings,
                   "gtk-alternative-button-order", TRUE,
                   "gtk-dialogs-use-header",       FALSE,
@@ -527,6 +530,9 @@ void
 gimp_widget_set_auto_transient (GtkWidget *dialog)
 {
 #ifdef PLATFORM_OSX
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 Quartz may have better macOS windowing support: evaluate dropping gimp_widget_set_auto_transient() but be very careful
+#endif
   NSWindow    *parent_window            = nil;
   NSWindow    *parent_window_forced     = (NSWindow *) g_object_get_data (G_OBJECT (dialog), "gimp-transient-parent-window");
   NSWindow    *dialog_window            = nil;

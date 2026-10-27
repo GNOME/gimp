@@ -205,6 +205,9 @@ gimp_controller_keyboard_init (GimpControllerKeyboard *keyboard)
 
 #ifdef PLATFORM_OSX
               /* on macOS, Cmd is also the Super and Hyper key. See: #13938 */
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 reports Cmd as GDK_META_MASK without virtual modifiers mapping: evalute if it works fine to drop this workaround
+#endif
               kevent->modifiers &= ~(GDK_SUPER_MASK |
                                      GDK_META_MASK);
 #endif
