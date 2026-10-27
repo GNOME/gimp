@@ -368,7 +368,8 @@ retinex (GObject      *config,
   guchar     *src        = NULL;
   guchar     *psrc       = NULL;
   gint        x, y, width, height;
-  gint        size, bytes;
+  gsize       size;
+  gint        bytes;
 
   /*
    * Get the size of the current image or its selection.
@@ -392,10 +393,9 @@ retinex (GObject      *config,
       bytes = babl_format_get_bytes_per_pixel (format);
 
       /* Allocate memory */
-      size = width * height * bytes;
-      src  = g_try_malloc (sizeof (guchar) * size);
-
-      if (src == NULL)
+      if (! g_size_checked_mul (&size, width, height) ||
+          ! g_size_checked_mul (&size, size, bytes)   ||
+          ! (src = g_try_malloc0 (sizeof (guchar) * size)))
         {
           g_warning ("Failed to allocate memory");
           return;
@@ -554,7 +554,11 @@ compute_coefs3 (gauss3_coefs *c, gfloat sigma)
 }
 
 static void
-gausssmooth (gfloat *in, gfloat *out, gint size, gint rowstride, gauss3_coefs *c)
+gausssmooth (gfloat       *in,
+             gfloat       *out,
+             gint          size,
+             gint          rowstride,
+             gauss3_coefs *c)
 {
   /*
    * Papers:  "Recursive Implementation of the gaussian filter.",
@@ -614,7 +618,7 @@ MSRCR (GObject *config,
 
   gint          scale,row,col;
   gint          i,j;
-  gint          size;
+  gsize         size;
   gint          channel;
   guchar       *psrc = NULL;            /* backup pointer for src buffer */
   gfloat       *dst  = NULL;            /* float buffer for algorithm */
@@ -649,9 +653,9 @@ MSRCR (GObject *config,
     }
 
   /* Allocate all the memory needed for algorithm*/
-  size = width * height * bytes;
-  dst = g_try_malloc (size * sizeof (gfloat));
-  if (dst == NULL)
+  if (! g_size_checked_mul (&size, width, height) ||
+      ! g_size_checked_mul (&size, size, bytes)   ||
+      ! (dst = g_try_malloc (size * sizeof (gfloat))))
     {
       g_warning ("Failed to allocate memory");
       return;
@@ -715,7 +719,7 @@ MSRCR (GObject *config,
            */
           for (row=0 ;row < height; row++)
             {
-              pos =  row * width;
+              pos = row * width;
               gausssmooth (in + pos, out + pos, width, 1, &coef);
             }
 
