@@ -338,10 +338,16 @@ gimp_preview_area_widget_draw (GtkWidget *widget,
     {
       const Babl *format    = babl_format ("R'G'B' u8");
       gint        rowstride = ((area->width * 3) + 3) & ~3;
-      guchar     *buf       = g_new (guchar, rowstride * area->height);
+      gsize       alloc;
+      guchar     *buf;
       guchar     *src       = area->buf;
-      guchar     *dest      = buf;
+      guchar     *dest;
       gint        i;
+
+      if (! g_size_checked_mul (&alloc, rowstride, area->height) ||
+          ! (buf = g_try_new0 (guchar, alloc)))
+        return FALSE;
+      dest = buf;
 
       for (i = 0; i < area->height; i++)
         {
@@ -567,8 +573,13 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
   if (! area->buf)
     {
+      gsize alloc;
+
       area->rowstride = ((area->width * 3) + 3) & ~3;
-      area->buf = g_new0 (guchar, area->rowstride * area->height);
+
+      if (! g_size_checked_mul (&alloc, area->rowstride, area->height) ||
+          ! (area->buf = g_try_new0 (guchar, alloc)))
+        return;
     }
 
   size = 1 << (2 + area->check_size);
@@ -870,8 +881,13 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
   if (! area->buf)
     {
+      gsize alloc;
+
       area->rowstride = ((area->width * 3) + 3) & ~3;
-      area->buf = g_new0 (guchar, area->rowstride * area->height);
+
+      if (! g_size_checked_mul (&alloc, area->rowstride, area->height) ||
+          ! (area->buf = g_try_new0 (guchar, alloc)))
+        return;
     }
 
   size = 1 << (2 + area->check_size);
@@ -1264,8 +1280,13 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
   if (! area->buf)
     {
+      gsize alloc;
+
       area->rowstride = ((area->width * 3) + 3) & ~3;
-      area->buf = g_new0 (guchar, area->rowstride * area->height);
+
+      if (! g_size_checked_mul (&alloc, area->rowstride, area->height) ||
+          ! (area->buf = g_try_new0 (guchar, alloc)))
+        return;
     }
 
   size = 1 << (2 + area->check_size);
@@ -1836,8 +1857,13 @@ gimp_preview_area_fill (GimpPreviewArea *area,
 
   if (! area->buf)
     {
+      gsize alloc;
+
       area->rowstride = ((area->width * 3) + 3) & ~3;
-      area->buf = g_new0 (guchar, area->rowstride * area->height);
+
+      if (! g_size_checked_mul (&alloc, area->rowstride, area->height) ||
+          ! (area->buf = g_try_new0 (guchar, alloc)))
+        return;
     }
 
   dest = area->buf + x * 3 + y * area->rowstride;
