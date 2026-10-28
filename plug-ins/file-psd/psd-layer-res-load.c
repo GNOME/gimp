@@ -1531,8 +1531,9 @@ load_resource_ltxt (const PSDlayerres  *res_a,
   IFDBG(3) g_debug ("Txt2 resource length: %u at offset %" G_GOFFSET_FORMAT,
                     res_len, PSD_TELL (input));
 
-  buf = g_malloc (res_len);
-  if (psd_read (input, buf, res_len, error) < res_len)
+  buf = g_try_malloc0 (res_len);
+  if (buf == NULL ||
+      psd_read (input, buf, res_len, error) < res_len)
     {
       psd_set_error (error);
       return -1;
@@ -2062,8 +2063,9 @@ load_resource_lvmk (const PSDlayerres  *res_a,
   lyr_a->vector.path_len = res_a->data_len - 8;
 
   /* We need to defer processing the path information until we have an image */
-  lyr_a->vector.path_data = g_malloc0 (lyr_a->vector.path_len);
-  if (psd_read (input, lyr_a->vector.path_data, lyr_a->vector.path_len,
+  lyr_a->vector.path_data = g_try_malloc0 (lyr_a->vector.path_len);
+  if (lyr_a->vector.path_data == NULL ||
+      psd_read (input, lyr_a->vector.path_data, lyr_a->vector.path_len,
                 error) < lyr_a->vector.path_len)
     {
       psd_set_error (error);
