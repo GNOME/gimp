@@ -6,6 +6,68 @@
 This is the stable branch of GIMP.
 
 
+Overview of Changes from GIMP 3.2.6 to GIMP 3.2.8
+=================================================
+
+Core:
+
+  - hicolor/ folder is not mandatory anymore for icon themes.
+  - Implementation to simulate cross-process transient windows on macOS
+    now uses the NotificationCenter API instead of the Accessibility one
+    which was too pervasive (repeatedly asking permission).
+  - Add DPI information when copying image to clipboard when compiled
+    with gdk-pixbuf 2.36 with backend supporting "x-dpi" and "y-dpi"
+    settings (which unfortunately right now means disabling glycin until
+    it gets support).
+  - Dashboard now use WorkingSetSize for memory usage on Windows, which
+    is more accurate.
+  - Dot to Dot support should now work better even on integer scaling.
+
+Graphical User Interface:
+
+  - Store the localized path of menu models to show action's paths
+    properly localized in the Action Search.
+  - System theme leaks fixed.
+  - Various Windows and macOS-specific windowing and color scheme bugs
+    fixed.
+  - GIMP now respects the macOS setting to differentiate the ON/OFF
+    state of switches without colors.
+  - Improved dialogs' initial positioning.
+
+Plug-Ins:
+
+  - Script-Fu "Add Border" (script-fu-addborder) script will now take
+    into account the alpha of the color given in argument for the fill
+    opacity of the border.
+  - ICO/CUR: sort icons on load using the same algorithm as is used on
+    export (cf. 3.2.6 notes).
+  - Screenshot: workaround Magnification API on HDR displays
+  - Print:
+    * Page Setup is not stuck to the default printer anymore on
+      Windows.
+    * Work around Windows 11's UnifiedPrintDialog.
+  - Better error handling added in several plug-ins.
+  - Various security bugs fixed.
+
+API:
+
+  - libgimp:
+    * gimp_procedure_add_menu_path() can now add submenus to named
+      subsections (and not only the action itself).
+    * Deprecate gimp_plug_in_add_menu_branch() in favor of
+      gimp_procedure_add_menu_path().
+  - libgimpwidgets:
+    * The macOS implementation of GimpPickButton was improved by using
+      ScreenCaptureKit.
+
+Build:
+
+  - Add support to localizing plugins on GIMP SDK for macOS.
+  - GIMP page on MS Store is now localized.
+  - New GUI unit testing infrastructure added.
+  - The XPM plug-in is not built on our official Windows builds anymore.
+
+
 Overview of Changes from GIMP 3.2.4 to GIMP 3.2.6
 =================================================
 
