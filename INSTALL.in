@@ -329,6 +329,12 @@ help in that regard:
      Lua 5.1 (or LuaJIT) and LGI: Lua plug-in example is disabled by
        default because of stability issues with the Lua binding.
 
+ 26. For GUI testing, you will need the following packages during
+     configuration. They will be used during a `ninja test` run:
+
+     * mutter
+     * dbus-run-session
+     * dogtail @DOGTAIL_REQUIRED_VERSION@
 
 
 Generic instructions for configuring and compiling auto-configured
