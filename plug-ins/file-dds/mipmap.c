@@ -501,6 +501,7 @@ scale_image (guchar       *dst,
   gfloat ysupport = support / yscale;
   guchar *d, *row, *col;
   guchar *tmp;
+  gsize   tmpsize;
 
   if (xsupport <= 0.5f)
     {
@@ -514,10 +515,16 @@ scale_image (guchar       *dst,
       yscale = 1.0f;
     }
 
+  if (! g_size_checked_mul (&tmpsize, sw, bpp))
+    return;
+
 #ifdef _OPENMP
-  tmp = g_malloc (sw * bpp * omp_get_max_threads ());
+  if (! g_size_checked_mul (&tmpsize, tmpsize, omp_get_max_threads ()) ||
+      ! (tmp = g_try_malloc0 (tmpsize)))
+    return;
 #else
-  tmp = g_malloc (sw * bpp);
+  if (! (tmp = g_try_malloc0 (tmpsize)))
+    return;
 #endif
 
 #ifdef _OPENMP
@@ -689,6 +696,8 @@ scale_volume_image (guchar       *dst,
   gfloat zsupport = support / zscale;
   guchar *d, *row, *col, *slice;
   guchar *tmp1, *tmp2;
+  gsize   tmp1size;
+  gsize   tmp2size;
 
   /* down to a 2D image, use the faster 2D image resampler */
   if (dd == 1 && sd == 1)
@@ -715,8 +724,13 @@ scale_volume_image (guchar       *dst,
       zscale = 1.0f;
     }
 
-  tmp1 = g_malloc (sh * sw * bpp);
-  tmp2 = g_malloc (dh * sw * bpp);
+  if (! g_size_checked_mul (&tmp1size, sw, sh)        ||
+      ! g_size_checked_mul (&tmp1size, tmp1size, bpp) ||
+      ! (tmp1 = g_try_malloc0 (tmp1size))             ||
+      ! g_size_checked_mul (&tmp2size, sw, dh)        ||
+      ! g_size_checked_mul (&tmp2size, tmp2size, bpp) ||
+      ! (tmp2 = g_try_malloc0 (tmp2size)))
+    return;
 
   for (z = 0; z < dd; ++z)
     {
