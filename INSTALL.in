@@ -334,6 +334,12 @@ help in that regard:
        plug-ins are disabled for lack of maintenance and issues with
        Webkit-GTK
 
+ 26. For GUI testing, you will need the following packages during
+     configuration. They will be used during a `ninja test` run:
+
+     * mutter
+     * dbus-run-session
+     * dogtail @DOGTAIL_REQUIRED_VERSION@
 
 
 Generic instructions for configuring and compiling auto-configured
