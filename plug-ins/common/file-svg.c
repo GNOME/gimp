@@ -433,6 +433,11 @@ svg_extract (GimpProcedure        *procedure,
 
                                     NULL);
 
+          gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                                    GTK_RESPONSE_YES,
+                                                    GTK_RESPONSE_NO,
+                                                    -1);
+
           gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_NO);
           gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
           gimp_window_set_transient (GTK_WINDOW (dialog));

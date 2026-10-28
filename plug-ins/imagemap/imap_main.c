@@ -805,6 +805,11 @@ do_data_changed_dialog (void (*continue_cb)(gpointer),
                                    GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
                                    _("Some data has been changed!"));
 
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                            GTK_RESPONSE_YES,
+                                            GTK_RESPONSE_NO,
+                                            -1);
+
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                             _("Do you really want to discard "
                                               "your changes?"));
@@ -1092,6 +1097,11 @@ do_image_size_changed_dialog (void)
                                         "%s</span>\n\n%s",
                                         _("Image size has changed."),
                                         _("Resize area's?"));
+
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                            GTK_RESPONSE_YES,
+                                            GTK_RESPONSE_NO,
+                                            -1);
 
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (dialog);

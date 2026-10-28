@@ -585,6 +585,10 @@ open_document (GFile        *file,
                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
                                     _("_OK"), GTK_RESPONSE_OK,
                                     NULL);
+          gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                                    GTK_RESPONSE_OK,
+                                                    GTK_RESPONSE_CANCEL,
+                                                    -1);
           gimp_window_set_transient (GTK_WINDOW (dialog));
           vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
           gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);

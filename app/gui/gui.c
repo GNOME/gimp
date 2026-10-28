@@ -351,6 +351,10 @@ gui_recover (gint n_recoveries)
                             _("_Discard"), GTK_RESPONSE_CANCEL,
                             _("_Recover"), GTK_RESPONSE_OK,
                             NULL);
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog),
                                    GTK_RESPONSE_OK);
 
