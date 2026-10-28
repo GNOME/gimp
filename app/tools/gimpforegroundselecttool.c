@@ -336,6 +336,10 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
                            NULL);
 
       gimp_tool_gui_set_auto_overlay (fg_select->gui, TRUE);
+      gimp_tool_gui_set_alternative_button_order (fg_select->gui,
+                                                  GTK_RESPONSE_APPLY,
+                                                  GTK_RESPONSE_CANCEL,
+                                                  -1);
 
       g_signal_connect (fg_select->gui, "response",
                         G_CALLBACK (gimp_foreground_select_tool_response),

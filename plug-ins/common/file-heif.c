@@ -2507,6 +2507,11 @@ load_dialog (struct heif_context *heif,
 
                             NULL);
 
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
+
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
