@@ -1266,11 +1266,13 @@ gimp_clipboard_send_pixbuf (GtkSelectionData *data,
       format      = "png";
       compression = "2";
     }
+#ifdef PLATFORM_OSX
   else if (target == gdk_atom_intern_static_string ("image/tiff"))
     {
       format      = "tiff";
       compression = "1"; /* COMPRESSION_NONE, libtiff's default */
     }
+#endif
 
   if (format)
     {
