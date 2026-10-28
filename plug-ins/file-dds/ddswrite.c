@@ -884,8 +884,8 @@ write_layer (FILE                *fp,
   guchar            *palette = NULL;
   gint               i, c;
   gint               x, y;
-  gint               size;
-  gint               fmtsize;
+  gsize              size;
+  gsize              fmtsize;
   gint               offset  = 0;
   gint               colors;
   gint               compression;
@@ -893,6 +893,7 @@ write_layer (FILE                *fp,
   gint               pixel_format;
   gboolean           perceptual_metric;
   gint               flags   = 0;
+  gsize              alloc;
 
   g_object_get (config,
                 "perceptual-metric",  &perceptual_metric,
@@ -906,7 +907,10 @@ write_layer (FILE                *fp,
 
   buffer = gimp_drawable_get_buffer (drawable);
 
-  src = g_malloc (w * h * bpp);
+  if (! g_size_checked_mul (&alloc, w, h)       ||
+      ! g_size_checked_mul (&alloc, alloc, bpp) ||
+      ! (src = g_try_malloc0 (alloc)))
+    return;
 
   if (basetype == GIMP_INDEXED)
     format = gimp_drawable_get_format (drawable);
@@ -928,7 +932,10 @@ write_layer (FILE                *fp,
 
       if (type == GIMP_INDEXEDA_IMAGE)
         {
-          tmp = g_malloc (w * h);
+          tmp = g_try_malloc0 ((gsize) w * h);
+          if (! tmp)
+            return;
+
           for (i = 0; i < w * h; ++i)
             tmp[i] = src[2 * i];
           g_free (src);
@@ -945,8 +952,14 @@ write_layer (FILE                *fp,
     {
       if (bpp != 4)
         {
-          fmtsize = w * h * 4;
-          fmtdst = g_malloc (fmtsize);
+          if (! g_size_checked_mul (&fmtsize, w, h)       ||
+              ! g_size_checked_mul (&fmtsize, fmtsize, 4) ||
+              ! (fmtdst = g_try_malloc0 (fmtsize)))
+            {
+              g_free (src);
+              return;
+            }
+
           convert_pixels (fmtdst, src, DDS_FORMAT_RGBA8, w, h, 0, bpp,
                           palette, 1);
           g_free (src);
@@ -972,8 +985,14 @@ write_layer (FILE                *fp,
     {
       if (bpp != 4)
         {
-          fmtsize = w * h * 4;
-          fmtdst = g_malloc (fmtsize);
+          if (! g_size_checked_mul (&fmtsize, w, h)       ||
+              ! g_size_checked_mul (&fmtsize, fmtsize, 4) ||
+              ! (fmtdst = g_try_malloc0 (fmtsize)))
+            {
+              g_free (src);
+              return;
+            }
+
           convert_pixels (fmtdst, src, DDS_FORMAT_RGBA8, w, h, 0, bpp,
                           palette, 1);
           g_free (src);
@@ -997,8 +1016,14 @@ write_layer (FILE                *fp,
   if (compression == DDS_COMPRESS_YCOCG ||
       compression == DDS_COMPRESS_YCOCGS) /* convert to YCoCG */
     {
-      fmtsize = w * h * 4;
-      fmtdst = g_malloc (fmtsize);
+      if (! g_size_checked_mul (&fmtsize, w, h)       ||
+          ! g_size_checked_mul (&fmtsize, fmtsize, 4) ||
+          ! (fmtdst = g_try_malloc0 (fmtsize)))
+        {
+          g_free (src);
+          return;
+        }
+
       convert_pixels (fmtdst, src, DDS_FORMAT_YCOCG, w, h, 0, bpp,
                       palette, 1);
       g_free (src);
@@ -1008,8 +1033,14 @@ write_layer (FILE                *fp,
 
   if (compression == DDS_COMPRESS_AEXP)
     {
-      fmtsize = w * h * 4;
-      fmtdst = g_malloc (fmtsize);
+      if (! g_size_checked_mul (&fmtsize, w, h)       ||
+          ! g_size_checked_mul (&fmtsize, fmtsize, 4) ||
+          ! (fmtdst = g_try_malloc0 (fmtsize)))
+        {
+          g_free (src);
+          return;
+        }
+
       convert_pixels (fmtdst, src, DDS_FORMAT_AEXP, w, h, 0, bpp,
                       palette, 1);
       g_free (src);
@@ -1025,18 +1056,25 @@ write_layer (FILE                *fp,
           if (pixel_format > DDS_FORMAT_DEFAULT && basetype == GIMP_INDEXED)
             {
               fmtsize = get_mipmapped_size (w, h, 3, 0, num_mipmaps, DDS_COMPRESS_NONE);
-              fmtdst = g_malloc (fmtsize);
+              if (! (fmtdst = g_try_malloc0 (fmtsize)))
+                {
+                  g_free (src);
+                  return;
+                }
+
               convert_pixels (fmtdst, src, DDS_FORMAT_RGB8, w, h, 0, bpp,
                               palette, 1);
               g_free (src);
-              src = fmtdst;
-              bpp = 3;
+              src     = fmtdst;
+              bpp     = 3;
               palette = NULL;
             }
 
           size = get_mipmapped_size (w, h, bpp, 0, num_mipmaps,
                                      DDS_COMPRESS_NONE);
-          dst = g_malloc (size);
+          if (! (dst = g_try_malloc0 (size)))
+            return;
+
           if (mipmaps == DDS_MIPMAP_GENERATE)
             {
               gint     mipmap_filter;
@@ -1078,7 +1116,11 @@ write_layer (FILE                *fp,
             {
               fmtsize = get_mipmapped_size (w, h, fmtbpp, 0, num_mipmaps,
                                             DDS_COMPRESS_NONE);
-              fmtdst = g_malloc (fmtsize);
+              if (! (fmtdst = g_try_malloc0 (fmtsize)))
+                {
+                  g_free (dst);
+                  return;
+                }
 
               convert_pixels (fmtdst, dst, pixel_format, w, h, 0, bpp,
                               palette, num_mipmaps);
@@ -1101,7 +1143,11 @@ write_layer (FILE                *fp,
         {
           if (pixel_format > DDS_FORMAT_DEFAULT)
             {
-              fmtdst = g_malloc (h * w * fmtbpp);
+              if (! g_size_checked_mul (&fmtsize, w, h)            ||
+                  ! g_size_checked_mul (&fmtsize, fmtsize, fmtbpp) ||
+                  ! (fmtdst = g_try_malloc0 (fmtsize)))
+                return;
+
               convert_pixels (fmtdst, src, pixel_format, w, h, 0, bpp,
                               palette, 1);
               g_free (src);
@@ -1115,14 +1161,19 @@ write_layer (FILE                *fp,
   else
     {
       size = get_mipmapped_size (w, h, bpp, 0, num_mipmaps, compression);
-
-      dst = g_malloc (size);
+      if (! (dst = g_try_malloc0 (size)))
+        return;
 
       if (basetype == GIMP_INDEXED)
         {
           fmtsize = get_mipmapped_size (w, h, 3, 0, num_mipmaps,
                                         DDS_COMPRESS_NONE);
-          fmtdst = g_malloc (fmtsize);
+          if (! (fmtdst = g_try_malloc0 (fmtsize)))
+            {
+              g_free (src);
+              return;
+            }
+
           convert_pixels (fmtdst, src, DDS_FORMAT_RGB8, w, h, 0, bpp,
                           palette, num_mipmaps);
           g_free (src);
@@ -1134,7 +1185,12 @@ write_layer (FILE                *fp,
         {
           fmtsize = get_mipmapped_size (w, h, bpp, 0, num_mipmaps,
                                         DDS_COMPRESS_NONE);
-          fmtdst = g_malloc (fmtsize);
+          if (! (fmtdst = g_try_malloc0 (fmtsize)))
+            {
+              g_free (src);
+              return;
+            }
+
           if (mipmaps == DDS_MIPMAP_GENERATE)
             {
               gint     mipmap_filter;
@@ -1205,7 +1261,7 @@ write_volume_mipmaps (FILE                *fp,
 {
   GList             *list;
   gint               i;
-  gint               size;
+  gsize              size;
   gint               offset;
   gint               colors;
   guchar            *src;
@@ -1223,6 +1279,7 @@ write_volume_mipmaps (FILE                *fp,
   gboolean           gamma_correct;
   gboolean           srgb;
   gdouble            gamma;
+  gsize              alloc;
 
   g_object_get (config,
                 "gamma-correct",      &gamma_correct,
@@ -1241,7 +1298,11 @@ write_volume_mipmaps (FILE                *fp,
   if (compression != DDS_COMPRESS_NONE)
     return;
 
-  src = g_malloc (w * h * bpp * d);
+  if (! g_size_checked_mul (&alloc, w, h)       ||
+      ! g_size_checked_mul (&alloc, alloc, bpp) ||
+      ! g_size_checked_mul (&alloc, alloc, d)   ||
+      ! (src = g_try_malloc0 (alloc)))
+    return;
 
   if (bpp == 1)
     format = babl_format ("Y' u8");
@@ -1269,7 +1330,16 @@ write_volume_mipmaps (FILE                *fp,
 
   if (gimp_drawable_type (layers->data) == GIMP_INDEXEDA_IMAGE)
     {
-      tmp = g_malloc (w * h * d);
+      gsize tmpsize;
+
+      if (! g_size_checked_mul (&tmpsize, w, h)       ||
+          ! g_size_checked_mul (&tmpsize, tmpsize, d) ||
+          ! (tmp = g_try_malloc0 (tmpsize)))
+        {
+          g_free (src);
+          return;
+        }
+
       for (i = 0; i < w * h * d; ++i)
         tmp[i] = src[2 * i];
       g_free (src);
@@ -1286,18 +1356,26 @@ write_volume_mipmaps (FILE                *fp,
     {
       size = get_volume_mipmapped_size (w, h, d, 3, 0, num_mipmaps,
                                         DDS_COMPRESS_NONE);
-      dst = g_malloc (size);
+      if (! (dst = g_try_malloc0 (size)))
+        {
+          g_free (src);
+          return;
+        }
+
       convert_pixels (dst, src, DDS_FORMAT_RGB8, w, h, d, bpp, palette, 1);
       g_free (src);
-      src = dst;
-      bpp = 3;
+      src     = dst;
+      bpp     = 3;
       palette = NULL;
     }
 
   size = get_volume_mipmapped_size (w, h, d, bpp, 0, num_mipmaps,
                                     compression);
-
-  dst = g_malloc (size);
+  if (! (dst = g_try_malloc0 (size)))
+    {
+      g_free (src);
+      return;
+    }
 
   offset = get_volume_mipmapped_size (w, h, d, bpp, 0, 1,
                                       compression);
@@ -1315,7 +1393,12 @@ write_volume_mipmaps (FILE                *fp,
                                         compression);
       offset = get_volume_mipmapped_size (w, h, d, fmtbpp, 0, 1,
                                           compression);
-      fmtdst = g_malloc (size);
+      if (! (fmtdst = g_try_malloc0 (size)))
+        {
+          g_free (src);
+          g_free (dst);
+          return;
+        }
 
       convert_pixels (fmtdst, dst, pixel_format, w, h, d, bpp,
                       palette, num_mipmaps);
