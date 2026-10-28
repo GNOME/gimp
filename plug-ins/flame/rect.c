@@ -89,7 +89,8 @@ render_rectangle (frame_spec    *spec,
                   int            nchan,
                   int progress(double))
 {
-  int      i, j, k, nsamples, nbuckets, batch_size, batch_num, sub_batch;
+  int      i, j, k, nsamples, batch_size, batch_num, sub_batch;
+  gsize    nbuckets;
   bucket  *buckets;
   abucket *accumulate;
   point   *points;
@@ -99,7 +100,7 @@ render_rectangle (frame_spec    *spec,
   int      width, height;               /* size of histogram */
   int      filter_width;
   int      oversample = spec->cps[0].spatial_oversample;
-  int      nbatches = spec->cps[0].nbatches;
+  gsize    nbatches   = spec->cps[0].nbatches;
   bucket   cmap[CMAP_SIZE];
   int      gutter_width;
   int      sbc;
@@ -117,13 +118,23 @@ render_rectangle (frame_spec    *spec,
 
   if (1)
     {
+      gsize alloc = 0;
+
       filter_width = (2.0 * FILTER_CUTOFF * oversample *
                       spec->cps[0].spatial_filter_radius);
       /* make sure it has same parity as oversample */
       if ((filter_width ^ oversample) & 1)
         filter_width++;
 
-      filter = g_malloc (sizeof (double) * filter_width * filter_width);
+      if (! g_size_checked_mul (&alloc, sizeof (double), filter_width) ||
+          ! g_size_checked_mul (&alloc, alloc, filter_width)           ||
+          ! (filter = g_try_malloc0 (alloc)))
+        {
+          g_printerr ("render_rectangle: cannot malloc %" G_GSIZE_FORMAT
+                      " bytes.\n", alloc);
+          exit (1);
+        }
+
       /* fill in the coefs */
       for (i = 0; i < filter_width; i++)
         for (j = 0; j < filter_width; j++)
@@ -134,10 +145,18 @@ render_rectangle (frame_spec    *spec,
               jj *= 2.0;
             filter[i + j * filter_width] = exp(-2.0 * (ii * ii + jj * jj));
           }
-      normalize_vector(filter, filter_width * filter_width);
+      normalize_vector (filter, filter_width * filter_width);
     }
-  temporal_filter = g_malloc (sizeof (double) * nbatches);
-  temporal_deltas = g_malloc (sizeof (double) * nbatches);
+  temporal_filter = g_try_malloc0 (sizeof (double) * nbatches);
+  temporal_deltas = g_try_malloc0 (sizeof (double) * nbatches);
+  if (! temporal_filter || ! temporal_deltas)
+    {
+      g_printerr ("render_rectangle: cannot malloc %" G_GSIZE_FORMAT
+                  " bytes.\n", sizeof (double) * nbatches);
+      exit (1);
+    }
+
+
   if (nbatches > 1)
     {
       double t;
@@ -146,9 +165,9 @@ render_rectangle (frame_spec    *spec,
         {
           t = temporal_deltas[i] = (2.0 * ((double) i / (nbatches - 1)) - 1.0)
                                    * spec->temporal_filter_radius;
-          temporal_filter[i] = exp(-2.0 * t * t);
+          temporal_filter[i] = exp (-2.0 * t * t);
         }
-      normalize_vector(temporal_filter, nbatches);
+      normalize_vector (temporal_filter, nbatches);
     }
   else
     {
@@ -162,30 +181,49 @@ render_rectangle (frame_spec    *spec,
   height = oversample * image_height + 2 * gutter_width;
   width  = oversample * image_width  + 2 * gutter_width;
 
-  nbuckets = width * height;
+  if (! g_size_checked_mul (&nbuckets, width, height))
+    {
+      g_printerr ("render_rectangle: cannot malloc %d bytes.\n",
+                  width * height);
+      exit (1);
+    }
+
   if (1)
     {
       static char *last_block = NULL;
       static int   last_block_size = 0;
-      int memory_rqd = (sizeof (bucket) * nbuckets +
-                        sizeof (abucket) * nbuckets +
-                        sizeof (point) * SUB_BATCH_SIZE);
+      gsize        tmp1;
+      gsize        tmp2;
+      gsize        memory_rqd = 0;
+
+      if (! g_size_checked_mul (&memory_rqd, sizeof (bucket), nbuckets) ||
+          ! g_size_checked_mul (&tmp1, sizeof (abucket), nbuckets)      ||
+          ! g_size_checked_mul (&tmp2, sizeof (point), SUB_BATCH_SIZE)  ||
+          ! g_size_checked_add (&memory_rqd, memory_rqd, tmp1)          ||
+          ! g_size_checked_add (&memory_rqd, memory_rqd, tmp2))
+        {
+          g_printerr ("render_rectangle: cannot malloc %" G_GSIZE_FORMAT
+                      " bytes.\n", memory_rqd);
+          exit (1);
+        }
+
       if (memory_rqd > last_block_size)
         {
           if (last_block != NULL)
             free (last_block);
-          last_block = g_try_malloc (memory_rqd);
+          last_block = g_try_malloc0 (memory_rqd);
           if (last_block == NULL)
             {
-              g_printerr ("render_rectangle: cannot malloc %d bytes.\n",
-                          memory_rqd);
+              g_printerr ("render_rectangle: cannot malloc %" G_GSIZE_FORMAT
+                          " bytes.\n",  memory_rqd);
               exit (1);
             }
           last_block_size = memory_rqd;
         }
-      buckets = (bucket *) last_block;
+      buckets    = (bucket *) last_block;
       accumulate = (abucket *) (last_block + sizeof (bucket) * nbuckets);
-      points = (point *)  (last_block + (sizeof (bucket) + sizeof (abucket)) * nbuckets);
+      points     = (point *)  (last_block + (sizeof (bucket) +
+                               sizeof (abucket)) * nbuckets);
     }
 
   memset ((char *) accumulate, 0, sizeof (abucket) * nbuckets);
