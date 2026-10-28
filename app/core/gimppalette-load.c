@@ -726,7 +726,8 @@ gimp_palette_load_acb (GimpContext   *context,
 
   /* Version and ID */
   if (! g_input_stream_read_all (input, &version, sizeof (version),
-                                 &bytes_read, NULL, error))
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (version))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Invalid ACB palette version."));
@@ -741,7 +742,8 @@ gimp_palette_load_acb (GimpContext   *context,
     }
 
   if (! g_input_stream_read_all (input, &version, sizeof (version),
-                                 &bytes_read, NULL, error))
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (version))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Invalid ACB palette identifier."));
@@ -808,7 +810,8 @@ gimp_palette_load_acb (GimpContext   *context,
   /* Number of colors */
   if (! g_input_stream_read_all (input, &number_of_colors,
                                  sizeof (number_of_colors), &bytes_read, NULL,
-                                 error))
+                                 error) ||
+      bytes_read != sizeof (number_of_colors))
     {
       g_strfreev (palette_prefix);
       g_strfreev (palette_suffix);
@@ -828,7 +831,8 @@ gimp_palette_load_acb (GimpContext   *context,
 
   /* Page information (currently unused) */
   if (! g_input_stream_read_all (input, &page, sizeof (page),
-                                 &bytes_read, NULL, error))
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (page))
     {
       g_strfreev (palette_prefix);
       g_strfreev (palette_suffix);
@@ -838,7 +842,8 @@ gimp_palette_load_acb (GimpContext   *context,
       return NULL;
     }
   if (! g_input_stream_read_all (input, &page, sizeof (page),
-                                 &bytes_read, NULL, error))
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (page))
     {
       g_strfreev (palette_prefix);
       g_strfreev (palette_suffix);
@@ -850,7 +855,8 @@ gimp_palette_load_acb (GimpContext   *context,
 
   /* Color Model */
   if (! g_input_stream_read_all (input, &color_space, sizeof (color_space),
-                                 &bytes_read, NULL, error))
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (color_space))
     {
       g_strfreev (palette_prefix);
       g_strfreev (palette_suffix);
@@ -891,7 +897,8 @@ gimp_palette_load_acb (GimpContext   *context,
 
       /* Color Code (not used) */
       if (! g_input_stream_read_all (input, color_code, sizeof (color_code),
-                                     &bytes_read, NULL, error))
+                                     &bytes_read, NULL, error) ||
+          bytes_read != sizeof (color_code))
         {
           g_free (palette_entry);
           g_free (full_palette_name);
@@ -906,7 +913,8 @@ gimp_palette_load_acb (GimpContext   *context,
           guchar rgb[3];
 
           if (! g_input_stream_read_all (input, rgb, sizeof (rgb),
-                                         &bytes_read, NULL, error))
+                                         &bytes_read, NULL, error) ||
+              bytes_read != sizeof (rgb))
             {
               g_free (palette_entry);
               g_free (full_palette_name);
@@ -925,7 +933,8 @@ gimp_palette_load_acb (GimpContext   *context,
           gfloat cmyk_f[4];
 
           if (! g_input_stream_read_all (input, cmyk, sizeof (cmyk),
-                                         &bytes_read, NULL, error))
+                                         &bytes_read, NULL, error) ||
+              bytes_read != sizeof (cmyk))
             {
               g_free (palette_entry);
               g_free (full_palette_name);
@@ -947,7 +956,8 @@ gimp_palette_load_acb (GimpContext   *context,
           gfloat lab_f[3];
 
           if (! g_input_stream_read_all (input, lab, sizeof (lab),
-                                         &bytes_read, NULL, error))
+                                         &bytes_read, NULL, error) ||
+              bytes_read != sizeof (lab))
             {
               g_free (palette_entry);
               g_free (full_palette_name);
@@ -997,7 +1007,8 @@ gimp_palette_load_acb_string (GInputStream  *input,
   gsize       bytes_read;
 
   if (! g_input_stream_read_all (input, &pal_name_len, sizeof (pal_name_len),
-                                 &bytes_read, NULL, error))
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (pal_name_len))
     {
       g_printerr (_("Invalid ACB palette name."));
       return NULL;
@@ -1018,7 +1029,8 @@ gimp_palette_load_acb_string (GInputStream  *input,
   for (gint i = 0; i < pal_name_len; i++)
     {
       if (! g_input_stream_read_all (input, &pal_name[i], 2,
-                                     &bytes_read, NULL, error))
+                                     &bytes_read, NULL, error) ||
+          bytes_read != 2)
         {
           g_printerr (_("Invalid ACB palette name."));
           g_free (pal_name);
