@@ -320,9 +320,13 @@ gimp_pattern_load_photoshop_channel (GDataInputStream  *data_input,
     }
   else
     {
-      if (! gimp_data_input_stream_rle_decode (data_input,
+      gsize channel_height = chan_bottom - chan_top;
+
+      if ((channel_height <= 0)                    ||
+          (channel_height > GIMP_PATTERN_MAX_SIZE) ||
+          ! gimp_data_input_stream_rle_decode (data_input,
                                                (gchar *) chan_buf, size,
-                                               chan_bottom-chan_top, error))
+                                               channel_height, error))
         {
           g_printerr ("Failed to decode channel %d\n", chan);
           update_last_error ();
