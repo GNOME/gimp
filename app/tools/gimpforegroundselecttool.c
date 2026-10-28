@@ -814,6 +814,12 @@ gimp_foreground_select_tool_options_notify (GimpTool         *tool,
           gimp_foreground_select_tool_set_preview (fg_select);
         }
     }
+  else if (! strcmp (pspec->name, "stroke-width"))
+    {
+      /* redraw the brush outline. See: #12510  */
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    }
   else if (! strcmp (pspec->name, "engine"))
     {
       if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
