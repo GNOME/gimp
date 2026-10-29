@@ -837,6 +837,7 @@ gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
       if (gradient_tool->existing_filter != NULL)
         {
           GeglNode *existing_node;
+          gdouble   opacity;
 
           existing_node =
             gimp_drawable_filter_get_operation (gradient_tool->existing_filter);
@@ -848,6 +849,10 @@ gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
 
           gimp_gradient_tool_copy_node (gradient_tool->render_node,
                                         existing_node);
+
+          opacity = gimp_drawable_filter_get_opacity (gradient_tool->filter);
+          gimp_drawable_filter_set_opacity (gradient_tool->existing_filter,
+                                            opacity);
 
           gimp_filter_set_active (GIMP_FILTER (gradient_tool->existing_filter),
                                   TRUE);
@@ -1314,6 +1319,7 @@ gimp_gradient_tool_set_existing_filter (GimpGradientTool   *gradient_tool,
   GimpCoords               end_coords   = { 0, 0 };
   GeglNode                *existing_node;
   gchar                   *name;
+  gdouble                  opacity;
   gint                     off_x;
   gint                     off_y;
 
@@ -1364,8 +1370,10 @@ gimp_gradient_tool_set_existing_filter (GimpGradientTool   *gradient_tool,
   gimp_drawable_filter_set_temporary (gradient_tool->filter, TRUE);
   gimp_drawable_filter_set_region (gradient_tool->filter,
                                    GIMP_FILTER_REGION_DRAWABLE);
-  gimp_drawable_filter_set_opacity (gradient_tool->filter,
-                                    gimp_context_get_opacity (context));
+
+  opacity = gimp_drawable_filter_get_opacity (gradient_tool->existing_filter);
+  gimp_drawable_filter_set_opacity (gradient_tool->filter, opacity);
+
   gimp_drawable_filter_set_mode (gradient_tool->filter,
                                  gimp_context_get_paint_mode (context),
                                  GIMP_LAYER_COLOR_SPACE_AUTO,
