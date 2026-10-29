@@ -24,6 +24,7 @@
 #include <babl/babl.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #ifdef _WIN32
 #include <dwmapi.h>
@@ -81,6 +82,7 @@ gimp_widgets_init_platform_settings (void)
 #endif
 
 #ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
 static void
 gimp_widgets_dialog_realize_quartz (GtkWidget *widget)
 {
@@ -95,6 +97,38 @@ gimp_widgets_dialog_realize_quartz (GtkWidget *widget)
 
   g_signal_chain_from_overridden_handler (widget);
 }
+
+static void
+gimp_widgets_update_cursor_size_quartz (void)
+{
+  /* GDK Quartz reports a fixed 32px cursor, so GTK places tooltips right under
+     it and a large pointer (Accessibility > Display > Pointer size) hides them.
+     Let's grow the arrow and gap only by ~14px per scale step. See: #14526 */
+  GtkSettings *settings = gtk_settings_get_default ();
+  CFTypeRef    value;
+  gdouble      scale = 1.0;
+
+  if (settings == NULL)
+    return;
+
+  CFPreferencesAppSynchronize (CFSTR ("com.apple.universalaccess"));
+  value = CFPreferencesCopyAppValue (CFSTR ("mouseDriverCursorSize"),
+                                     CFSTR ("com.apple.universalaccess"));
+  if (value != NULL)
+    {
+      if (CFGetTypeID (value) == CFNumberGetTypeID ())
+        CFNumberGetValue (value, kCFNumberDoubleType, &scale);
+
+      CFRelease (value);
+    }
+
+  /* 0 lets GTK use the default size */
+  g_object_set (settings,
+                "gtk-cursor-theme-size",
+                scale > 1.0 ? (gint) (32 + 14 * (scale - 1.0)) : 0,
+                NULL);
+}
+#endif
 
 /* the native file chooser panel currently shown, if any. It is tracked from
    the key notification so we do not need to cycle [NSApp windows] again */
@@ -341,9 +375,24 @@ gimp_widgets_init (GimpHelpFunc           standard_help_func,
 #endif
 
 #ifdef PLATFORM_OSX
+#ifdef GDK_WINDOWING_QUARTZ
   /* fix invisible title bar on macOS */
   g_signal_override_class_handler ("realize", GTK_TYPE_DIALOG,
                                    G_CALLBACK (gimp_widgets_dialog_realize_quartz));
+
+  /* fix tooltips hidden by a large system pointer on macOS. See: #14526 */
+  gimp_widgets_update_cursor_size_quartz ();
+  /* the pointer size is changed in System Settings, so refresh when
+     the user comes back to GIMP */
+  [[NSNotificationCenter defaultCenter]
+    addObserverForName: NSApplicationDidBecomeActiveNotification
+                object: nil
+                 queue: nil
+            usingBlock: ^(NSNotification *note)
+    {
+      gimp_widgets_update_cursor_size_quartz ();
+    }];
+#endif
 
   /* fix hidden native window on macOS */
   gimp_widgets_init_native_window_level ();
