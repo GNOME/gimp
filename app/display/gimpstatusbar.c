@@ -1824,6 +1824,10 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
 void
 gimp_statusbar_clear_cursor (GimpStatusbar *statusbar)
 {
+  /*  forget the last drawn string, otherwise coming back to the same
+      position would be skipped and stay blank. See: #12815 */
+  g_clear_pointer (&statusbar->cursor_string_last, g_free);
+
   gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), "");
   gtk_widget_set_sensitive (statusbar->cursor_label, TRUE);
 }
