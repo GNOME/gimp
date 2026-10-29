@@ -37,7 +37,7 @@ To fill data for a new entry:
 		name="አማርኛ" />
 	<iso_639_entry
 		dl_code="ar"
-		inno_code=""
+		inno_code="Languages\\Arabic.isl"
 		ms_code="ar"
 		name="اَلْعَرَبِيَّةُ" />
 	<iso_639_entry
@@ -47,7 +47,7 @@ To fill data for a new entry:
 		name="Asturianu" />
 	<iso_639_entry
 		dl_code="az"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Azerbaijan.isl"
 		ms_code="az-Latn"
 		name="Azərbaycan dili" />
 	<iso_639_entry
@@ -72,7 +72,7 @@ To fill data for a new entry:
 		name="Brezhoneg" />
 	<iso_639_entry
 		dl_code="bs"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Bosnian.isl"
 		ms_code="bs-Latn"
 		name="Bosanski" />
 	<iso_639_entry
@@ -82,7 +82,7 @@ To fill data for a new entry:
 		name="Català" />
 	<iso_639_entry
 		dl_code="ca@valencia"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Valencian.isl"
 		ms_code="ca-ES-valencia"
 		name="Valencià" />
 	<iso_639_entry
@@ -142,7 +142,7 @@ To fill data for a new entry:
 		name="Español" />
 	<iso_639_entry
 		dl_code="et"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Estonian.isl"
 		ms_code="et"
 		name="Eesti keel" />
 	<iso_639_entry
@@ -152,7 +152,7 @@ To fill data for a new entry:
 		name="Euskara" />
 	<iso_639_entry
 		dl_code="fa"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Farsi.isl"
 		ms_code="fa"
 		name="فارسی" />
 	<iso_639_entry
@@ -172,7 +172,7 @@ To fill data for a new entry:
 		name="Gaeilge" />
 	<iso_639_entry
 		dl_code="gd"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\ScottishGaelic.isl"
 		ms_code="gd-Latn"
 		name="Gàidhlig" />
 	<iso_639_entry
@@ -192,12 +192,12 @@ To fill data for a new entry:
 		name="עִבְֿרִית" />
 	<iso_639_entry
 		dl_code="hi"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Hindi.islu"
 		ms_code="hi"
 		name="हिन्दी" />
 	<iso_639_entry
 		dl_code="hr"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Croatian.isl"
 		ms_code="hr"
 		name="Hrvatski" />
 	<iso_639_entry
@@ -282,7 +282,7 @@ To fill data for a new entry:
 		name="Latviešu valoda" />
 	<iso_639_entry
 		dl_code="mk"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Macedonian.isl"
 		ms_code="mk"
 		name="македонски" />
 	<iso_639_entry
@@ -317,7 +317,7 @@ To fill data for a new entry:
 		name="Plattdütsch" />
 	<iso_639_entry
 		dl_code="ne"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Nepali.islu"
 		ms_code="ne"
 		name="नेपाली" />
 	<iso_639_entry
@@ -332,7 +332,7 @@ To fill data for a new entry:
 		name="Nynorsk" />
 	<iso_639_entry
 		dl_code="oc"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Occitan.isl"
 		ms_code=""
 		name="Occitan" />
 	<iso_639_entry
@@ -377,7 +377,7 @@ To fill data for a new entry:
 		name="Slovenčina (sk)" />
 	<iso_639_entry
 		dl_code="si"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Sinhala.islu"
 		ms_code="si"
 		name="සිංහල" />
 	<iso_639_entry
@@ -392,7 +392,7 @@ To fill data for a new entry:
 		name="Cрпски језик" />
 	<iso_639_entry
 		dl_code="sr@latin"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\SerbianLatin.isl"
 		ms_code="sr-Latn"
 		name="Cрпски језик (latin)" />
 	<iso_639_entry
@@ -422,7 +422,7 @@ To fill data for a new entry:
 		name="Türkçe" />
 	<iso_639_entry
 		dl_code="tt"
-		inno_code=""
+		inno_code="Languages\\Unofficial\\Tatar.isl"
 		ms_code="tt-Latn"
 		name="татар теле" />
 	<iso_639_entry
