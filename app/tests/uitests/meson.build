@@ -32,8 +32,8 @@ dogtail_found = run_command(python, '-c',
     '''print(version('dogtail'))''']),
   check: false)
 
-if dogtail_found.returncode() != 0 or not dogtail_found.stdout().strip().version_compare(dogtail_minver)
-  ui_tests_status = 'no (dogtail@0@ not installed for @1@)'.format(dogtail_minver, python.full_path())
+if dogtail_found.returncode() != 0 or not dogtail_found.stdout().strip().version_compare('>=' + dogtail_minver)
+  ui_tests_status = 'no (dogtail @0@ or higher not installed for @1@)'.format(dogtail_minver, python.full_path())
   subdir_done()
 endif
 

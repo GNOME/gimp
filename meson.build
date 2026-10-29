@@ -1170,18 +1170,18 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 ## Python
 
-python3_minver = '>=3.6'
+python3_minver   = '3.6'
+pygobject_minver = '3.0'
 
-pygobject_minver = '>=3.0'
-
-dogtail_minver = '>=2.1.2'
+# For GUI testing.
+dogtail_minver   = '2.1.2'
 
 #Non-versioned python (e.g. on Windows)
 py_candidates = ['python']
 #Major versioned python (e.g. on Linux)
 py_candidates += ['python3']
 #Minor versioned python (e.g. on MacPorts)
-foreach i : range(python3_minver.substring(2).split('.')[-1].to_int(), 40)
+foreach i : range(python3_minver.split('.')[-1].to_int(), 40)
   py_candidates += ['python3.' + i.to_string()]
 endforeach
 
@@ -1191,7 +1191,7 @@ pygobject_gexiv2_found = false
 foreach py : py_candidates
   #Check if PyGobject installation have pycairo (#13105)
   python_tmp = pythonmod.find_installation(py, modules: ['gi', 'cairo'], required: false)
-  if python_tmp.found() and python_tmp.language_version().version_compare(python3_minver)
+  if python_tmp.found() and python_tmp.language_version().version_compare('>=' + python3_minver)
     python = python_tmp
     #Check if PyGObject installation have minimum version
     pygobject_found = run_command(python_tmp, '-c',
@@ -1209,18 +1209,18 @@ foreach py : py_candidates
                                         '''except (ImportError):''',
                                         '''    sys.exit(1)''']),
                                         check: false).returncode() == 0
-    if pygobject_found.returncode() == 0 and pygobject_found.stdout().strip().version_compare(pygobject_minver) and pygobject_gexiv2_found
+    if pygobject_found.returncode() == 0 and pygobject_found.stdout().strip().version_compare('>=' + pygobject_minver) and pygobject_gexiv2_found
       break
     endif
   endif
 endforeach
 
-if not python.found() or not python.language_version().version_compare(python3_minver)
+if not python.found() or not python.language_version().version_compare('>=' + python3_minver)
   error('No suitable Python installation (with cairo and gi modules) found. Minimum supported version: @0@'.format(python3_minver))
 endif
 message('Found Python @0@'.format(python.language_version()))
 
-if pygobject_found.returncode() != 0 or not pygobject_found.stdout().strip().version_compare(pygobject_minver) or not pygobject_gexiv2_found
+if pygobject_found.returncode() != 0 or not pygobject_found.stdout().strip().version_compare('>=' + pygobject_minver) or not pygobject_gexiv2_found
   error('No suitable PyGObject (with GExiv2 submodule) found. Minimum supported version: @0@'.format(pygobject_minver))
 endif
 message('Found PyGObject: @0@'.format(pygobject_found.stdout().strip()))
