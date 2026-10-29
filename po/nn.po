@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-09-28 02:39+0000\n"
-"PO-Revision-Date: 2026-09-28 19:45+0200\n"
+"POT-Creation-Date: 2026-10-25 00:42+0000\n"
+"PO-Revision-Date: 2026-10-25 18:43+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -178,15 +178,15 @@ msgstr ""
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Viss du i staden ønskjer å avslutta straks, opna GIMP med --quit."
 
-#: app/gimp-update.c:424
+#: app/gimp-update.c:425
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Kanskje du manglar gio backends og treng å installera GVFS?"
 
-#: app/gimp-update.c:429
+#: app/gimp-update.c:430
 msgid "Perhaps you are missing GIO backends."
 msgstr "Kanskje du manglar GIO backends."
 
-#: app/gimp-update.c:466
+#: app/gimp-update.c:467
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -213,121 +213,121 @@ msgstr "brukar %s versjon %s"
 #. This must be localized with the system language itself, before we
 #. * apply any other language.
 #.
-#: app/language.c:69
+#: app/language.c:71
 msgid "System Language"
 msgstr "Systemspråk"
 
-#: app/main.c:169
+#: app/main.c:170
 msgid "Show version information and exit"
 msgstr "Vis versjonsinformasjonen og slutt av"
 
-#: app/main.c:174
+#: app/main.c:175
 msgid "Show license information and exit"
 msgstr "Vis lisensinformasjonen og slutt av"
 
-#: app/main.c:179
+#: app/main.c:180
 msgid "Be more verbose"
 msgstr "Forklar nærare"
 
-#: app/main.c:184
+#: app/main.c:185
 msgid "Start a new GIMP instance"
 msgstr "Byrja ei ny økt av GIMP"
 
-#: app/main.c:189
+#: app/main.c:190
 msgid "Open images as new"
 msgstr "Opna bilete som nytt"
 
-#: app/main.c:207
+#: app/main.c:208
 msgid "Run without a user interface"
 msgstr "Køyr utan brukargrensesnitt"
 
-#: app/main.c:212
+#: app/main.c:213
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Ikkje last inn penslar, fargeovergangar, mønsterelement, …"
 
-#: app/main.c:217
+#: app/main.c:218
 msgid "Do not load any fonts"
 msgstr "Ikkje last inn skrifttypar"
 
-#: app/main.c:222
+#: app/main.c:223
 msgid "Do not show a splash screen"
 msgstr "Ikkje vis ein oppstartskjerm"
 
-#: app/main.c:227
+#: app/main.c:228
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Ikkje bruk delt minne mellom GIMP og programtillegga"
 
-#: app/main.c:232
+#: app/main.c:233
 msgid "Do not use special CPU acceleration functions"
 msgstr "Ikkje bruk spesielle CPU-akseleratorar"
 
-#: app/main.c:237
+#: app/main.c:238
 msgid "Use an alternate sessionrc file"
 msgstr "Bruk ei alternativ sessionrc-fil"
 
-#: app/main.c:242
+#: app/main.c:243
 msgid "Use an alternate user gimprc file"
 msgstr "Bruk ei alternativ brukar-gimprc-fil"
 
-#: app/main.c:247
+#: app/main.c:248
 msgid "Use an alternate system gimprc file"
 msgstr "Bruk ei alternativ system-gimprc-fil"
 
-#: app/main.c:252
+#: app/main.c:253
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Batch-kommando som skal brukast (kan brukast fleire gongar)"
 
-#: app/main.c:257
+#: app/main.c:258
 msgid "The procedure to process batch commands with"
 msgstr "Prosedyren som vert brukt for å køyra batch kommandoane."
 
-#: app/main.c:262
+#: app/main.c:263
 msgid "Quit immediately after performing requested actions"
 msgstr "Avslutt straks etter å ha utført dei førespurde handlingane"
 
-#: app/main.c:267
+#: app/main.c:268
 msgid "Send messages to console instead of using a dialog"
 msgstr "Send meldingane til konsollen i staden for til eit dialogvindauge"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:273
+#: app/main.c:274
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB kompatibilitetsmodus (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:279
+#: app/main.c:280
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Feilfinning i tilfelle krasj (never|query|always)"
 
-#: app/main.c:284
+#: app/main.c:285
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Slå på signalhandsamarene for ikkje-fatale feil"
 
-#: app/main.c:289
+#: app/main.c:290
 msgid "Make all warnings fatal"
 msgstr "Gjer alle varslingane fatale"
 
-#: app/main.c:294
+#: app/main.c:295
 msgid "Output a gimprc file with default settings"
 msgstr "Gje ut ei gimprc-fil med standardinnstillingane"
 
-#: app/main.c:310
+#: app/main.c:311
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Send ei sortert liste over utgåtte prosedyrar i PDB"
 
-#: app/main.c:315
+#: app/main.c:316
 msgid "Show a preferences page with experimental features"
 msgstr "Vis ei oppsettside med eksperimentelle eigenskapar"
 
-#: app/main.c:320
+#: app/main.c:321
 msgid "Show an image submenu with debug actions"
 msgstr "Vis ein biletundermeny med feilfinningshandlingar"
 
-#: app/main.c:884
+#: app/main.c:887
 msgid "[FILE|URI...]"
 msgstr "[FIL|URI …]"
 
-#: app/main.c:914
+#: app/main.c:917
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -335,11 +335,11 @@ msgstr ""
 "GIMP greidde ikkje å setja opp det grafiske brukargrensesnittet.\n"
 "Kontroller oppsettet for skjermen og skjermdrivarane."
 
-#: app/main.c:1018
+#: app/main.c:1021
 msgid "Another GIMP instance is already running."
 msgstr "Ei anna økt av GIMP er i bruk."
 
-#: app/main.c:1102
+#: app/main.c:1105
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Trykk ein tast for å lukka vindauget)\n"
@@ -379,7 +379,7 @@ msgstr "Penselredigering"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:117 app/core/gimp-data-factories.c:398
-#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3583
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3589
 msgid "Brushes"
 msgstr "Penslar"
 
@@ -463,7 +463,7 @@ msgstr "Filter"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:174 app/core/gimp-data-factories.c:432
-#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3613
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3619
 msgid "Fonts"
 msgstr "Skrifttypar"
 
@@ -474,12 +474,12 @@ msgstr "Fargeovergangsredigering"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:180 app/core/gimp-data-factories.c:423
-#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3607
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3613
 msgid "Gradients"
 msgstr "Fargeovergangar"
 
 #: app/actions/actions.c:183 app/core/gimp-data-factories.c:439
-#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3619
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3625
 msgid "Tool Presets"
 msgstr "Verktøyforval"
 
@@ -494,7 +494,7 @@ msgstr "Rediger verktøyforvala"
 msgid "Help"
 msgstr "Hjelp"
 
-#: app/actions/actions.c:192 app/core/gimpimage.c:635
+#: app/actions/actions.c:192 app/core/gimpimage.c:636
 msgid "Image"
 msgstr "Bilete"
 
@@ -512,7 +512,7 @@ msgstr "Lag"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:201 app/core/gimp-data-factories.c:408
-#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3625
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3631
 msgid "MyPaint Brushes"
 msgstr "MyPaint-penslar"
 
@@ -523,17 +523,17 @@ msgstr "Palettredigering"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:207 app/core/gimp-data-factories.c:418
-#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3601
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3607
 msgid "Palettes"
 msgstr "Palettar"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:210 app/core/gimp-data-factories.c:413
-#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3595
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3601
 msgid "Patterns"
 msgstr "Mønsterelement"
 
-#: app/actions/actions.c:213 app/dialogs/preferences-dialog.c:3631
+#: app/actions/actions.c:213 app/dialogs/preferences-dialog.c:3637
 msgid "Plug-ins"
 msgstr "Programtillegg"
 
@@ -564,7 +564,7 @@ msgstr "Tekstverktøyet"
 msgid "Text Editor"
 msgstr "Teksthandsamar"
 
-#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:614
+#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:617
 msgid "Tool Options"
 msgstr "Verktøyinnstillingar"
 
@@ -2467,10 +2467,10 @@ msgid "240 Seconds"
 msgstr "240 sekund"
 
 #: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
-#: app/actions/edit-commands.c:175 app/actions/error-console-commands.c:97
+#: app/actions/edit-commands.c:175 app/actions/error-console-commands.c:98
 #: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
-#: app/actions/gradients-commands.c:80 app/actions/plug-in-commands.c:187
+#: app/actions/gradients-commands.c:81 app/actions/plug-in-commands.c:187
 #: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:64
 #: app/actions/text-tool-commands.c:168 app/actions/tool-options-commands.c:210
 #: app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
@@ -2491,21 +2491,21 @@ msgstr "240 sekund"
 #: app/dialogs/palette-import-dialog.c:161 app/dialogs/preferences-dialog.c:223
 #: app/dialogs/preferences-dialog.c:608 app/dialogs/preferences-dialog.c:1181
 #: app/dialogs/print-size-dialog.c:123 app/dialogs/quit-dialog.c:149
-#: app/dialogs/resize-dialog.c:228 app/dialogs/resolution-calibrate-dialog.c:73
+#: app/dialogs/resize-dialog.c:228 app/dialogs/resolution-calibrate-dialog.c:74
 #: app/dialogs/scale-dialog.c:138 app/dialogs/stroke-dialog.c:129
 #: app/dialogs/template-options-dialog.c:118
-#: app/dialogs/path-export-dialog.c:83 app/dialogs/path-import-dialog.c:93
+#: app/dialogs/path-export-dialog.c:84 app/dialogs/path-import-dialog.c:94
 #: app/display/gimpdisplayshell-close.c:181
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
 #: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
-#: app/tools/gimppathtool.c:1123 app/tools/gimptexttool.c:1870
+#: app/tools/gimppathtool.c:1127 app/tools/gimptexttool.c:1941
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
 #: app/widgets/gimpcontrollereditor.c:665 app/widgets/gimpcontrollerlist.c:573
 #: app/widgets/gimpdeviceeditor.c:463 app/widgets/gimpdeviceinfoeditor.c:837
-#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:337
+#: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:338
 #: app/widgets/gimphelp.c:594 app/widgets/gimpiconpicker.c:484
 #: app/widgets/gimpmodifierseditor.c:690 app/widgets/gimppdbdialog.c:148
 #: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:705
@@ -2516,12 +2516,12 @@ msgstr "_Avbryt"
 msgid "_Record"
 msgstr "_Spel inn"
 
-#: app/actions/dashboard-commands.c:144 app/dialogs/path-export-dialog.c:93
+#: app/actions/dashboard-commands.c:144 app/dialogs/path-export-dialog.c:94
 msgid "All Files"
 msgstr "Alle filene"
 
 #: app/actions/dashboard-commands.c:149
-#: app/actions/error-console-commands.c:105
+#: app/actions/error-console-commands.c:106
 msgid "Log Files (*.log)"
 msgstr "Loggfiler (*.log)"
 
@@ -2570,8 +2570,8 @@ msgstr "Skriv inn ei beskriving av markøren"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
-#: app/dialogs/welcome-dialog.c:1257 app/display/gimpdisplayshell-dnd.c:707
-#: app/display/gimpimagewindow.c:2395 app/widgets/gimplayertreeview.c:864
+#: app/dialogs/welcome-dialog.c:1263 app/display/gimpdisplayshell-dnd.c:707
+#: app/display/gimpimagewindow.c:2494 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -2584,7 +2584,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2570
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2571
 #: app/core/gimppalette.c:647 app/core/gimppalette-import.c:223
 #: app/dialogs/palette-import-dialog.c:776 app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -3737,108 +3737,121 @@ msgctxt "edit-action"
 msgid "Copy what is visible in the selected region"
 msgstr "Kopier det som er synleg i det valde området"
 
-#: app/actions/edit-actions.c:115
+#: app/actions/edit-actions.c:123
 msgctxt "edit-action"
 msgid "Paste as _New Image"
 msgstr "Lim inn som _nytt bilete"
 
-#: app/actions/edit-actions.c:116
+#. TRANSLATORS: variant of "Paste as _New Image" when inside "Crea_te" menu.
+#: app/actions/edit-actions.c:125
 msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "Frå _utklippstavla"
 
-#: app/actions/edit-actions.c:118
+#: app/actions/edit-actions.c:127
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "Opprett eit nytt bilete med innhaldet frå utklippstavla"
 
-#: app/actions/edit-actions.c:123
+#: app/actions/edit-actions.c:132
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "Klipp _ut namngjeve …"
 
-#: app/actions/edit-actions.c:124
+#: app/actions/edit-actions.c:133
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
 msgstr "Flytt dei valde pikslane til ein namngjeve buffer"
 
-#: app/actions/edit-actions.c:129
+#: app/actions/edit-actions.c:138
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "_Kopier namngjeve …"
 
-#: app/actions/edit-actions.c:130
+#: app/actions/edit-actions.c:139
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "Kopier dei valde pikslane til ein namngjeve buffer"
 
 #. GIMP_ICON_COPY_VISIBLE,
-#: app/actions/edit-actions.c:135
+#: app/actions/edit-actions.c:144
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "Kopier _synlege namngjevet …"
 
-#: app/actions/edit-actions.c:137
+#: app/actions/edit-actions.c:146
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
 msgstr "Kopier det som er synleg i det valde området"
 
-#: app/actions/edit-actions.c:142
+#: app/actions/edit-actions.c:151
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "_Lim inn namngjeve …"
 
-#: app/actions/edit-actions.c:143
+#: app/actions/edit-actions.c:152
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
 msgstr "Lim inn innhaldet frå ein namngjeve buffer"
 
-#: app/actions/edit-actions.c:148
+#: app/actions/edit-actions.c:157
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "_Slett utvalet"
 
-#: app/actions/edit-actions.c:149
+#: app/actions/edit-actions.c:158
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr "Slett det markerte området"
 
-#: app/actions/edit-actions.c:157
+#: app/actions/edit-actions.c:166
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "_Lim inn"
 
-#: app/actions/edit-actions.c:158
+#: app/actions/edit-actions.c:167
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
 msgstr "Lim inn frå utklippstavla"
 
-#: app/actions/edit-actions.c:163
+#: app/actions/edit-actions.c:172
 msgctxt "edit-action"
 msgid "Paste In P_lace"
 msgstr "Lim inn på _plass"
 
-#: app/actions/edit-actions.c:165
+#: app/actions/edit-actions.c:174
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard at its original position"
 msgstr "Lim innhaldet av utklippstavla inn i den opphavlege plasseringa"
 
-#: app/actions/edit-actions.c:170
+#: app/actions/edit-actions.c:179
 msgctxt "edit-action"
-msgid "_Paste as Single Layer"
+msgid "Paste as _Single Layer"
 msgstr "_Lim inn som eit enkelt lag"
 
-#: app/actions/edit-actions.c:171
+#. TRANSLATORS: variant of "Paste as _Single Layer" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:181
+msgctxt "edit-action"
+msgid "_Single Layer"
+msgstr "_Enkeltlag"
+
+#: app/actions/edit-actions.c:183
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as a single layer"
 msgstr "Lim inn innhaldet frå utklippstavla som eit enkelt lag"
 
-#: app/actions/edit-actions.c:176
+#: app/actions/edit-actions.c:188
 msgctxt "edit-action"
 msgid "Paste as Single Layer In P_lace"
 msgstr "Lim inn som eit enkelt lag på _plass"
 
-#: app/actions/edit-actions.c:178
+#. TRANSLATORS: variant of "Paste as Single Layer in P_lace" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:190
+msgctxt "edit-action"
+msgid "Single Layer In P_lace"
+msgstr "Lim inn som eit _enkelt lag på plass"
+
+#: app/actions/edit-actions.c:193
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard at its original position as a single layer"
@@ -3846,22 +3859,34 @@ msgstr ""
 "Lim innhaldet av utklippstavla inn i den opphavlege plasseringa som eit "
 "enkelt lag"
 
-#: app/actions/edit-actions.c:183
+#: app/actions/edit-actions.c:198
 msgctxt "edit-action"
 msgid "Paste as Floating Data _Into Selection"
 msgstr "Lim inn som _flytande data inn i utvalet"
 
-#: app/actions/edit-actions.c:185
+#. TRANSLATORS: variant of "Paste as Floating Data _Into Selection" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:200
+msgctxt "edit-action"
+msgid "Floating Data _Into Selection"
+msgstr "Flytande data inn _i utvalet"
+
+#: app/actions/edit-actions.c:203
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "Lim innhaldet av utklippstavla inn i det gjeldande utvalet"
 
-#: app/actions/edit-actions.c:190
+#: app/actions/edit-actions.c:208
 msgctxt "edit-action"
-msgid "Paste as Floating Data Int_o Selection In Place"
-msgstr "Lim inn som flytande data i _utvalet på plass"
+msgid "Paste as Floating Data Int_o Selection in Place"
+msgstr "Lim inn som flytande data i utvalet _på plass"
 
-#: app/actions/edit-actions.c:192
+#. TRANSLATORS: variant of "Paste as Floating Data Int_o Selection in Place" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:210
+msgctxt "edit-action"
+msgid "Floating Data Int_o Selection in Place"
+msgstr "Flytande data i utvalet _på plass"
+
+#: app/actions/edit-actions.c:213
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
@@ -3870,22 +3895,34 @@ msgstr ""
 "Lim innhaldet av utklippstavla inn i det gjeldande utvalet i opphavleg "
 "plassering"
 
-#: app/actions/edit-actions.c:198
+#: app/actions/edit-actions.c:219
 msgctxt "edit-action"
 msgid "Paste as _Floating Data"
 msgstr "Lim inn som _flytande data"
 
-#: app/actions/edit-actions.c:199
+#. TRANSLATORS: variant of "Paste as _Floating Data" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:221
+msgctxt "edit-action"
+msgid "_Floating Data"
+msgstr "_Flytande data"
+
+#: app/actions/edit-actions.c:223
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as Floating Data"
 msgstr "Lim inn finnhaldet i utklippstavla som flytande data"
 
-#: app/actions/edit-actions.c:204
+#: app/actions/edit-actions.c:228
 msgctxt "edit-action"
-msgid "Paste as Floa_ting Data In Place"
-msgstr "Lim inn som _flytande data på plass"
+msgid "Paste as Floa_ting Data in Place"
+msgstr "Lim inn som fly_tande data på plass"
 
-#: app/actions/edit-actions.c:205
+#. TRANSLATORS: variant of "Paste as Floa_ting Data in Place" when inside "Paste _as" menu.
+#: app/actions/edit-actions.c:230
+msgctxt "edit-action"
+msgid "Floa_ting Data in Place"
+msgstr "Fly_tande data på plass"
+
+#: app/actions/edit-actions.c:232
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard as Floating Data at its original position"
@@ -3893,51 +3930,51 @@ msgstr ""
 "Lim innhaldet av utklippstavla inn som flytande data på den opphavlege "
 "plasseringa"
 
-#: app/actions/edit-actions.c:213
+#: app/actions/edit-actions.c:240
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Fyll med _forgrunnsfarge"
 
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:241
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Fyll utvalet med forgrunnsfargen"
 
-#: app/actions/edit-actions.c:219
+#: app/actions/edit-actions.c:246
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Fyll med _bakgrunnsfarge"
 
-#: app/actions/edit-actions.c:220
+#: app/actions/edit-actions.c:247
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Fyll utvalet med bakgrunnsfargen"
 
-#: app/actions/edit-actions.c:225
+#: app/actions/edit-actions.c:252
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Fyll med mønsterelement"
 
-#: app/actions/edit-actions.c:226
+#: app/actions/edit-actions.c:253
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Fyll utvalet med det gjeldande mønsterelementet"
 
-#: app/actions/edit-actions.c:327 app/actions/edit-actions.c:329
+#: app/actions/edit-actions.c:354 app/actions/edit-actions.c:356
 #, c-format
 msgid "_Undo %s"
 msgstr "_Angra %s"
 
-#: app/actions/edit-actions.c:333 app/actions/edit-actions.c:335
+#: app/actions/edit-actions.c:360 app/actions/edit-actions.c:362
 #, c-format
 msgid "_Redo %s"
 msgstr "_Gjenta %s"
 
-#: app/actions/edit-actions.c:346
+#: app/actions/edit-actions.c:373
 msgid "_Undo"
 msgstr "_Angra"
 
-#: app/actions/edit-actions.c:347
+#: app/actions/edit-actions.c:374
 msgid "_Redo"
 msgstr "_Gjenta"
 
@@ -4113,14 +4150,14 @@ msgstr "Kan ikkje lagra. Ingenting er vald."
 msgid "Save Error Log to File"
 msgstr "Lagra feilloggen til fil"
 
-#: app/actions/error-console-commands.c:97 app/actions/gradients-commands.c:80
-#: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:83
+#: app/actions/error-console-commands.c:98 app/actions/gradients-commands.c:81
+#: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:84
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
 #: app/widgets/gimpsettingsbox.c:704
 msgid "_Save"
 msgstr "_Lagra"
 
-#: app/actions/error-console-commands.c:168
+#: app/actions/error-console-commands.c:169
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -4400,706 +4437,706 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/actions/filters-actions.c:66
+#: app/actions/filters-actions.c:78
 msgctxt "filters-action"
 msgid "_Antialias"
 msgstr "_Kantutjamning"
 
-#: app/actions/filters-actions.c:71
+#: app/actions/filters-actions.c:83
 msgctxt "filters-action"
 msgid "_Color Enhance"
 msgstr "_Fargeforbetring"
 
-#: app/actions/filters-actions.c:76
+#: app/actions/filters-actions.c:88
 msgctxt "filters-action"
 msgid "L_inear Invert"
 msgstr "_Inverter lineært"
 
-#: app/actions/filters-actions.c:81
+#: app/actions/filters-actions.c:93
 msgctxt "filters-action"
 msgid "In_vert"
 msgstr "_Inverter"
 
-#: app/actions/filters-actions.c:86
+#: app/actions/filters-actions.c:98
 msgctxt "filters-action"
 msgid "_Value Invert"
 msgstr "_Inverter verdiar"
 
-#: app/actions/filters-actions.c:91
+#: app/actions/filters-actions.c:103
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
 msgstr "Strekk kontrast _HSV"
 
-#: app/actions/filters-actions.c:99
+#: app/actions/filters-actions.c:111
 msgctxt "filters-action"
 msgid "_Dilate"
 msgstr "_Utvid"
 
-#: app/actions/filters-actions.c:100
+#: app/actions/filters-actions.c:112
 msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Auk lyse område i biletet"
 
-#: app/actions/filters-actions.c:115
+#: app/actions/filters-actions.c:127
 msgctxt "filters-action"
 msgid "_Erode"
 msgstr "_Eroder"
 
-#: app/actions/filters-actions.c:116
+#: app/actions/filters-actions.c:128
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Auk mørke område i biletet"
 
-#: app/actions/filters-actions.c:134
+#: app/actions/filters-actions.c:146
 msgctxt "filters-action"
 msgid "_Alien Map..."
 msgstr "_Alien Map …"
 
-#: app/actions/filters-actions.c:139
+#: app/actions/filters-actions.c:151
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
 msgstr "Bruk _lerret …"
 
-#: app/actions/filters-actions.c:144
+#: app/actions/filters-actions.c:156
 msgctxt "filters-action"
 msgid "Apply _Lens..."
 msgstr "L_upeeffekt …"
 
-#: app/actions/filters-actions.c:149
+#: app/actions/filters-actions.c:161
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
 msgstr "_Bayermatrise..."
 
-#: app/actions/filters-actions.c:154
+#: app/actions/filters-actions.c:166
 msgctxt "filters-action"
 msgid "_Bloom..."
 msgstr "_Lysglød ..."
 
-#: app/actions/filters-actions.c:159
+#: app/actions/filters-actions.c:171
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "_Lysstyrke-Kontrast …"
 
-#: app/actions/filters-actions.c:164
+#: app/actions/filters-actions.c:176
 msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "_Avbilding frå kart …"
 
-#: app/actions/filters-actions.c:169
+#: app/actions/filters-actions.c:181
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "Farge til _grå …"
 
-#: app/actions/filters-actions.c:174
+#: app/actions/filters-actions.c:186
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "Teikne_serie …"
 
-#: app/actions/filters-actions.c:179
+#: app/actions/filters-actions.c:191
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "_Kanalmiksar …"
 
-#: app/actions/filters-actions.c:184
+#: app/actions/filters-actions.c:196
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "Sjakk_brett …"
 
-#: app/actions/filters-actions.c:189
+#: app/actions/filters-actions.c:201
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "Farge_balanse …"
 
-#: app/actions/filters-actions.c:194
+#: app/actions/filters-actions.c:206
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "Byt _farge …"
 
-#: app/actions/filters-actions.c:199
+#: app/actions/filters-actions.c:211
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "_Innfarging …"
 
-#: app/actions/filters-actions.c:204
+#: app/actions/filters-actions.c:216
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "_Utjamning …"
 
-#: app/actions/filters-actions.c:209
+#: app/actions/filters-actions.c:221
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "_Roter fargane …"
 
-#: app/actions/filters-actions.c:214
+#: app/actions/filters-actions.c:226
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "Farge_temperatur …"
 
-#: app/actions/filters-actions.c:219
+#: app/actions/filters-actions.c:231
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "Farge til _alfa …"
 
-#: app/actions/filters-actions.c:224
+#: app/actions/filters-actions.c:236
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "_Trekk ut komponent …"
 
-#: app/actions/filters-actions.c:229
+#: app/actions/filters-actions.c:241
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "_Konturutjamningsmatrise …"
 
-#: app/actions/filters-actions.c:234
+#: app/actions/filters-actions.c:246
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "_Kubisme …"
 
-#: app/actions/filters-actions.c:239
+#: app/actions/filters-actions.c:251
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "_Kurver …"
 
-#: app/actions/filters-actions.c:244
+#: app/actions/filters-actions.c:256
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "_Teikna annakvar linje …"
 
-#: app/actions/filters-actions.c:249
+#: app/actions/filters-actions.c:261
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "_Mindre metting …"
 
-#: app/actions/filters-actions.c:254
+#: app/actions/filters-actions.c:266
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
 msgstr "_DoG kantfinning …"
 
-#: app/actions/filters-actions.c:259
+#: app/actions/filters-actions.c:271
 msgctxt "filters-action"
 msgid "D_iffraction Patterns..."
 msgstr "_Diffraksjonsmønster …"
 
-#: app/actions/filters-actions.c:264
+#: app/actions/filters-actions.c:276
 msgctxt "filters-action"
 msgid "_Displace..."
 msgstr "_Forskyv …"
 
-#: app/actions/filters-actions.c:269
+#: app/actions/filters-actions.c:281
 msgctxt "filters-action"
 msgid "Distance _Map..."
 msgstr "_Avstandskart …"
 
-#: app/actions/filters-actions.c:274
+#: app/actions/filters-actions.c:286
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "_Slagskugge …"
 
-#: app/actions/filters-actions.c:279
+#: app/actions/filters-actions.c:291
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "_Kant …"
 
-#: app/actions/filters-actions.c:284
+#: app/actions/filters-actions.c:296
 msgctxt "filters-action"
 msgid "_Laplace..."
 msgstr "_Laplace …"
 
-#: app/actions/filters-actions.c:289
+#: app/actions/filters-actions.c:301
 msgctxt "filters-action"
 msgid "_Neon..."
 msgstr "_Neon …"
 
-#: app/actions/filters-actions.c:294
+#: app/actions/filters-actions.c:306
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Sobelrelieff …"
 
-#: app/actions/filters-actions.c:299
+#: app/actions/filters-actions.c:311
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "_Relieff …"
 
-#: app/actions/filters-actions.c:304
+#: app/actions/filters-actions.c:316
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "_Gravyr …"
 
-#: app/actions/filters-actions.c:309
+#: app/actions/filters-actions.c:321
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Eksponering …"
 
-#: app/actions/filters-actions.c:314
+#: app/actions/filters-actions.c:326
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Fattal et al. 2002..."
 
-#: app/actions/filters-actions.c:319
+#: app/actions/filters-actions.c:331
 msgctxt "filters-action"
 msgid "_Focus Blur..."
 msgstr "_Fokussløring …"
 
-#: app/actions/filters-actions.c:324
+#: app/actions/filters-actions.c:336
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "Fraktal_spor …"
 
-#: app/actions/filters-actions.c:329
+#: app/actions/filters-actions.c:341
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "_Gaussisk sløring …"
 
-#: app/actions/filters-actions.c:334
+#: app/actions/filters-actions.c:346
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Selektiv gaussisk sløring …"
 
-#: app/actions/filters-actions.c:339
+#: app/actions/filters-actions.c:351
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
 msgstr "_GEGL-graf …"
 
-#: app/actions/filters-actions.c:344
+#: app/actions/filters-actions.c:356
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Rutenett …"
 
-#: app/actions/filters-actions.c:349
+#: app/actions/filters-actions.c:361
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "_Høgpass ..."
 
-#: app/actions/filters-actions.c:354
+#: app/actions/filters-actions.c:366
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "Kulør-_kroma …"
 
-#: app/actions/filters-actions.c:359
+#: app/actions/filters-actions.c:371
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "Kulør-_metting …"
 
-#: app/actions/filters-actions.c:364
+#: app/actions/filters-actions.c:376
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Illusjon …"
 
-#: app/actions/filters-actions.c:369
+#: app/actions/filters-actions.c:381
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "_Fargeovergang for bilete …"
 
-#: app/actions/filters-actions.c:374
+#: app/actions/filters-actions.c:386
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Kaleidoskop …"
 
-#: app/actions/filters-actions.c:379
+#: app/actions/filters-actions.c:391
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
 msgstr "_Linsesløring …"
 
-#: app/actions/filters-actions.c:384
+#: app/actions/filters-actions.c:396
 msgctxt "filters-action"
 msgid "Le_ns Distortion..."
 msgstr "Linse_feil …"
 
-#: app/actions/filters-actions.c:389
+#: app/actions/filters-actions.c:401
 msgctxt "filters-action"
 msgid "Lens _Flare..."
 msgstr "_Linserefleks …"
 
-#: app/actions/filters-actions.c:394
+#: app/actions/filters-actions.c:406
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "_Nivå …"
 
-#: app/actions/filters-actions.c:399
+#: app/actions/filters-actions.c:411
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
 msgstr "_Lineær sinusforma …"
 
-#: app/actions/filters-actions.c:404
+#: app/actions/filters-actions.c:416
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "_Vesle planet …"
 
-#: app/actions/filters-actions.c:409
+#: app/actions/filters-actions.c:421
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "_Lang skugge …"
 
-#: app/actions/filters-actions.c:414
+#: app/actions/filters-actions.c:426
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006..."
 
-#: app/actions/filters-actions.c:419
+#: app/actions/filters-actions.c:431
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Labyrint …"
 
-#: app/actions/filters-actions.c:424
+#: app/actions/filters-actions.c:436
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
 msgstr "Gjennomsnittleg kurvatursløring …"
 
-#: app/actions/filters-actions.c:429
+#: app/actions/filters-actions.c:441
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "_Mediansløring …"
 
-#: app/actions/filters-actions.c:434
+#: app/actions/filters-actions.c:446
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Monomiksar..."
 
-#: app/actions/filters-actions.c:439
+#: app/actions/filters-actions.c:451
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mosaikk …"
 
-#: app/actions/filters-actions.c:444
+#: app/actions/filters-actions.c:456
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Fartssløring, sirkulær …"
 
-#: app/actions/filters-actions.c:449
+#: app/actions/filters-actions.c:461
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "Fartssløring, _lineær …"
 
-#: app/actions/filters-actions.c:454
+#: app/actions/filters-actions.c:466
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "Fartssløring, _zoom …"
 
-#: app/actions/filters-actions.c:459
+#: app/actions/filters-actions.c:471
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Cellestøy …"
 
-#: app/actions/filters-actions.c:464
+#: app/actions/filters-actions.c:476
 msgctxt "filters-action"
 msgid "_Newsprint..."
 msgstr "_Avistrykk …"
 
-#: app/actions/filters-actions.c:469
+#: app/actions/filters-actions.c:481
 msgctxt "filters-action"
 msgid "_CIE lch Noise..."
 msgstr "_CIE-liknande støy..."
 
-#: app/actions/filters-actions.c:474
+#: app/actions/filters-actions.c:486
 msgctxt "filters-action"
 msgid "HS_V Noise..."
 msgstr "_HSV-støy …"
 
-#: app/actions/filters-actions.c:479
+#: app/actions/filters-actions.c:491
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Fargekast …"
 
-#: app/actions/filters-actions.c:484
+#: app/actions/filters-actions.c:496
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
 msgstr "_Perlin-støy …"
 
-#: app/actions/filters-actions.c:489
+#: app/actions/filters-actions.c:501
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "Fargeplu_kk …"
 
-#: app/actions/filters-actions.c:494
+#: app/actions/filters-actions.c:506
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB-støy …"
 
-#: app/actions/filters-actions.c:499
+#: app/actions/filters-actions.c:511
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "Støy_reduksjon …"
 
-#: app/actions/filters-actions.c:504
+#: app/actions/filters-actions.c:516
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Simplex-støy …"
 
-#: app/actions/filters-actions.c:509
+#: app/actions/filters-actions.c:521
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Nedsmelting …"
 
-#: app/actions/filters-actions.c:514
+#: app/actions/filters-actions.c:526
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Massiv støy …"
 
-#: app/actions/filters-actions.c:519
+#: app/actions/filters-actions.c:531
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "_Sprei …"
 
-#: app/actions/filters-actions.c:524
+#: app/actions/filters-actions.c:536
 msgctxt "filters-action"
 msgid "_Normal Map..."
 msgstr "_Normalt kart …"
 
-#: app/actions/filters-actions.c:529
+#: app/actions/filters-actions.c:541
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "_Forskyving …"
 
-#: app/actions/filters-actions.c:534
+#: app/actions/filters-actions.c:546
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "_Oljemaling …"
 
-#: app/actions/filters-actions.c:539
+#: app/actions/filters-actions.c:551
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Panoramaprojeksjon …"
 
-#: app/actions/filters-actions.c:544
+#: app/actions/filters-actions.c:556
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopi …"
 
-#: app/actions/filters-actions.c:549
+#: app/actions/filters-actions.c:561
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "Gjer om til _pikslar …"
 
-#: app/actions/filters-actions.c:554
+#: app/actions/filters-actions.c:566
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma …"
 
-#: app/actions/filters-actions.c:559
+#: app/actions/filters-actions.c:571
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "P_olarkoordinat …"
 
-#: app/actions/filters-actions.c:564
+#: app/actions/filters-actions.c:576
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterisering (plakat) …"
 
-#: app/actions/filters-actions.c:569
+#: app/actions/filters-actions.c:581
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "_Rekursiv transformering …"
 
-#: app/actions/filters-actions.c:574
+#: app/actions/filters-actions.c:586
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Fjern _raude auge …"
 
-#: app/actions/filters-actions.c:579
+#: app/actions/filters-actions.c:591
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005..."
 
-#: app/actions/filters-actions.c:584
+#: app/actions/filters-actions.c:596
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "_RGB-klipp …"
 
-#: app/actions/filters-actions.c:589
+#: app/actions/filters-actions.c:601
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Krusning …"
 
-#: app/actions/filters-actions.c:594
+#: app/actions/filters-actions.c:606
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Metning …"
 
-#: app/actions/filters-actions.c:599
+#: app/actions/filters-actions.c:611
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "Halvutflating …"
 
-#: app/actions/filters-actions.c:604
+#: app/actions/filters-actions.c:616
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia..."
 
-#: app/actions/filters-actions.c:609
+#: app/actions/filters-actions.c:621
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "_Uthev skuggane …"
 
-#: app/actions/filters-actions.c:614
+#: app/actions/filters-actions.c:626
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Forskyv …"
 
-#: app/actions/filters-actions.c:619
+#: app/actions/filters-actions.c:631
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus …"
 
-#: app/actions/filters-actions.c:624
+#: app/actions/filters-actions.c:636
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_Enkel lineær gjentakande gruppering …"
 
-#: app/actions/filters-actions.c:629
+#: app/actions/filters-actions.c:641
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symmetrisk næraste nabo …"
 
-#: app/actions/filters-actions.c:634
+#: app/actions/filters-actions.c:646
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Mjukglød …"
 
-#: app/actions/filters-actions.c:639
+#: app/actions/filters-actions.c:651
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "_Sfæriser …"
 
-#: app/actions/filters-actions.c:644
+#: app/actions/filters-actions.c:656
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "_Spiral …"
 
-#: app/actions/filters-actions.c:649
+#: app/actions/filters-actions.c:661
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Strekk kontrast …"
 
-#: app/actions/filters-actions.c:654
+#: app/actions/filters-actions.c:666
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Stress …"
 
-#: app/actions/filters-actions.c:659
+#: app/actions/filters-actions.c:671
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nova …"
 
-#: app/actions/filters-actions.c:664
+#: app/actions/filters-actions.c:676
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Terskel …"
 
-#: app/actions/filters-actions.c:669
+#: app/actions/filters-actions.c:681
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "Grenseverdi for _alfa …"
 
-#: app/actions/filters-actions.c:674
+#: app/actions/filters-actions.c:686
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "Glas_fliser …"
 
-#: app/actions/filters-actions.c:679
+#: app/actions/filters-actions.c:691
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Papirfliser …"
 
-#: app/actions/filters-actions.c:684
+#: app/actions/filters-actions.c:696
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Flislegg utan fuger …"
 
-#: app/actions/filters-actions.c:689
+#: app/actions/filters-actions.c:701
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "_Gjer skarpare (uskarpmaske) …"
 
-#: app/actions/filters-actions.c:694
+#: app/actions/filters-actions.c:706
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "_Verdiutbreiing …"
 
-#: app/actions/filters-actions.c:699
+#: app/actions/filters-actions.c:711
 msgctxt "filters-action"
 msgid "_Variable Blur..."
 msgstr "_Variabel sløring …"
 
-#: app/actions/filters-actions.c:704
+#: app/actions/filters-actions.c:716
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "Video_degradering …"
 
-#: app/actions/filters-actions.c:709
+#: app/actions/filters-actions.c:721
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vignettering …"
 
-#: app/actions/filters-actions.c:714
+#: app/actions/filters-actions.c:726
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Vasspikslar …"
 
-#: app/actions/filters-actions.c:719
+#: app/actions/filters-actions.c:731
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "Bøl_gjer …"
 
-#: app/actions/filters-actions.c:724
+#: app/actions/filters-actions.c:736
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Drei og knip …"
 
-#: app/actions/filters-actions.c:729
+#: app/actions/filters-actions.c:741
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "_Vind …"
 
-#: app/actions/filters-actions.c:737
+#: app/actions/filters-actions.c:749
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Gjenta siste"
 
-#: app/actions/filters-actions.c:739
+#: app/actions/filters-actions.c:751
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Køyr det sist brukte filteret med dei same innstillingane"
 
-#: app/actions/filters-actions.c:744
+#: app/actions/filters-actions.c:756
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "Vis siste _igjen"
 
-#: app/actions/filters-actions.c:745
+#: app/actions/filters-actions.c:757
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Vis dialogvindauget for det sist brukte filteret"
+
+#: app/actions/filters-actions.c:1117
+#, c-format
+msgid "Re_peat \"%s\""
+msgstr "_Gjenta «%s»"
+
+#: app/actions/filters-actions.c:1118
+#, c-format
+msgid "R_e-Show \"%s\""
+msgstr "Vis «%s» igjen"
+
+#: app/actions/filters-actions.c:1156
+msgid "Repeat Last"
+msgstr "Gjenta siste"
+
+#: app/actions/filters-actions.c:1158
+msgid "Re-Show Last"
+msgstr "Vis siste igjen"
+
+#: app/actions/filters-actions.c:1161 app/actions/filters-actions.c:1163
+msgid "No last used filters"
+msgstr "Ingen sist brukte filter"
 
 #. TRANSLATORS: %s is the title of a GEGL operation (filter), after
 #. * which we append "..." as the standardized labelling to indicate
 #. * that this action raises a dialog.
 #.
-#: app/actions/filters-actions.c:876
+#: app/actions/filters-actions.c:1352
 #, c-format
 msgid "%s..."
 msgstr "%s..."
-
-#: app/actions/filters-actions.c:1208
-#, c-format
-msgid "Re_peat \"%s\""
-msgstr "_Gjenta «%s»"
-
-#: app/actions/filters-actions.c:1209
-#, c-format
-msgid "R_e-Show \"%s\""
-msgstr "Vis «%s» igjen"
-
-#: app/actions/filters-actions.c:1247
-msgid "Repeat Last"
-msgstr "Gjenta siste"
-
-#: app/actions/filters-actions.c:1249
-msgid "Re-Show Last"
-msgstr "Vis siste igjen"
-
-#: app/actions/filters-actions.c:1252 app/actions/filters-actions.c:1254
-msgid "No last used filters"
-msgstr "Ingen sist brukte filter"
 
 #: app/actions/filters-commands.c:282 app/display/gimpdisplayshell-dnd.c:393
 #: app/tools/gimpfiltertool.c:334 app/tools/gimppainttool.c:355
@@ -5588,7 +5625,7 @@ msgstr "Rediger denne fargeovergangen"
 msgid "Save '%s' as POV-Ray"
 msgstr "Lagra «%s» som POV-Ray"
 
-#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:902
+#: app/actions/help-actions.c:39 menus/image-menu.ui.in.in:903
 msgctxt "help-action"
 msgid "_Help"
 msgstr "_Hjelp"
@@ -8520,7 +8557,7 @@ msgstr "Opna tekstfil (UTF-8)"
 
 #: app/actions/text-editor-commands.c:64 app/actions/text-tool-commands.c:168
 #: app/dialogs/file-open-location-dialog.c:81
-#: app/dialogs/path-import-dialog.c:94 app/dialogs/welcome-dialog.c:787
+#: app/dialogs/path-import-dialog.c:95 app/dialogs/welcome-dialog.c:793
 #: app/widgets/gimpiconpicker.c:484 app/widgets/gimpopendialog.c:87
 #: app/widgets/gimpsettingsbox.c:704
 msgid "_Open"
@@ -10267,15 +10304,15 @@ msgstr "Opna visinga"
 #: app/dialogs/input-devices-dialog.c:67 app/dialogs/item-options-dialog.c:148
 #: app/dialogs/keyboard-shortcuts-dialog.c:66
 #: app/dialogs/preferences-dialog.c:1182 app/dialogs/print-size-dialog.c:124
-#: app/dialogs/resolution-calibrate-dialog.c:74
+#: app/dialogs/resolution-calibrate-dialog.c:75
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
-#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:199
+#: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:200
 #: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpdeviceinfoeditor.c:838 app/widgets/gimperrordialog.c:76
-#: app/widgets/gimpfiledialog.c:180 app/widgets/gimpmodifierseditor.c:691
+#: app/widgets/gimpfiledialog.c:181 app/widgets/gimpmodifierseditor.c:691
 #: app/widgets/gimppdbdialog.c:146
 msgid "_OK"
 msgstr "_OK"
@@ -10317,7 +10354,7 @@ msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Byt til det førre biletet"
 
-#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:891
+#: app/actions/windows-actions.c:124 menus/image-menu.ui.in.in:892
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "_Tabulatorposisjon"
@@ -10633,7 +10670,7 @@ msgstr "Feil ved tolkinga av '%%s': linje lenger enn %s teikn."
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:860 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:862 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Feil ved skriving til «%s»: %s"
@@ -11780,7 +11817,7 @@ msgstr "Det høgaste talet på handlingar som skal lagrast i loggen."
 
 #: app/config/gimprc-deserialize.c:136 app/core/gimp-modules.c:130
 #: app/core/gimp-units.c:185 app/gui/session.c:309 app/menus/shortcuts-rc.c:148
-#: app/plug-in/plug-in-rc.c:257 app/tools/gimp-tools.c:504
+#: app/plug-in/plug-in-rc.c:257 app/tools/gimp-tools.c:506
 msgid "fatal parse error"
 msgstr "fatal feil i tolkinga"
 
@@ -12559,12 +12596,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Forankra flytande utval"
 
-#: app/core/core-enums.c:1342 app/core/gimp-edit.c:845
+#: app/core/core-enums.c:1342 app/core/gimp-edit.c:854
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Lim inn"
 
-#: app/core/core-enums.c:1343 app/core/gimp-edit.c:1207
+#: app/core/core-enums.c:1343 app/core/gimp-edit.c:1223
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Klipp ut"
@@ -12579,7 +12616,7 @@ msgctxt "undo-type"
 msgid "Vector"
 msgstr "Vektor"
 
-#: app/core/core-enums.c:1346 app/core/gimpdrawable-transform.c:718
+#: app/core/core-enums.c:1346 app/core/gimpdrawable-transform.c:719
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformer"
@@ -12930,7 +12967,7 @@ msgstr "Parasitter"
 
 #. initialize the module list
 #. Modules
-#: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3643
+#: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3649
 #: app/menus/menus.c:686
 msgid "Modules"
 msgstr "Modular"
@@ -12981,7 +13018,7 @@ msgstr "Sletting av «%s» feila: %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:403 app/core/gimpcontext.c:706
-#: app/dialogs/preferences-dialog.c:3589 app/tools/gimppaintoptions-gui.c:329
+#: app/dialogs/preferences-dialog.c:3595 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "Dynamisk"
 
@@ -13018,15 +13055,15 @@ msgstr "Kan ikkje klippa ut fordi det valde området er tomt."
 msgid "Cannot copy because the selected region is empty."
 msgstr "Kan ikkje kopiera fordi det valde området er tomt."
 
-#: app/core/gimp-edit.c:615 app/core/gimpimage-new.c:584
+#: app/core/gimp-edit.c:624 app/core/gimpimage-new.c:584
 msgid "Pasted Layer"
 msgstr "Innlimt lag"
 
-#: app/core/gimp-edit.c:1224
+#: app/core/gimp-edit.c:1240
 msgid "Global Buffer"
 msgstr "Global buffer"
 
-#: app/core/gimpextension.c:283
+#: app/core/gimpextension.c:285
 #, c-format
 msgid ""
 "Invalid AppStream metadata: failed to find default screenshot for extension "
@@ -13035,37 +13072,37 @@ msgstr ""
 "Ugyldige AppStream-metadata: fann ikkje standard skjermdump for utvidinga "
 "«%s»"
 
-#: app/core/gimpextension.c:309
+#: app/core/gimpextension.c:311
 #, c-format
 msgid "Invalid AppStream metadata: Error loading image: \"%s\""
 msgstr "Ugyldige AppStream-metadata: Feil ved lasting av biletet: «%s»"
 
-#: app/core/gimpextension.c:436
+#: app/core/gimpextension.c:438
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr "Utvidinga AppData må vera av typen «addon», fann «%s» i staden."
 
-#: app/core/gimpextension.c:452
+#: app/core/gimpextension.c:454
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "Utvidinga AppData må utvida «org.gimp.GIMP»."
 
-#: app/core/gimpextension.c:466
+#: app/core/gimpextension.c:468
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr "ID (\"%s\") og mappa (\"%s\") for utvidinga AppData må vera det same."
 
-#: app/core/gimpextension.c:494
+#: app/core/gimpextension.c:496
 #, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr "Utvidinga AppData må annonsera ein versjon i ein <release>-tagg."
 
-#: app/core/gimpextension.c:520
+#: app/core/gimpextension.c:522
 #, c-format
 msgid "Unsupported <relation> \"%s\" (type %s)."
 msgstr "Utan støtte for <relation> «%s» (type %s)."
 
-#: app/core/gimpextension.c:535
+#: app/core/gimpextension.c:537
 #, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
@@ -13074,37 +13111,37 @@ msgstr ""
 "<requires><id>org.gimp.GIMP</id></requires> for samanlikning av versjonar er "
 "obligatorisk."
 
-#: app/core/gimpextension.c:831
+#: app/core/gimpextension.c:863
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "«%s» er ikkje ein relativ bane."
 
-#: app/core/gimpextension.c:847
+#: app/core/gimpextension.c:879
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "«%s» er ikkje underordna utvidinga."
 
-#: app/core/gimpextension.c:863
+#: app/core/gimpextension.c:895
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "«%s» er ikkje ei mappe."
 
-#: app/core/gimpextension.c:877
+#: app/core/gimpextension.c:909
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "«%s» er ikkje gyldig fil."
 
-#: app/core/gimpextensionmanager.c:841
+#: app/core/gimpextensionmanager.c:880
 #, c-format
 msgid "System extensions cannot be uninstalled."
 msgstr "Det er ikkje råd å avinstallera systemutvidingar."
 
-#: app/core/gimpextensionmanager.c:1052
+#: app/core/gimpextensionmanager.c:1131
 #, c-format
 msgid "Skipping extension '%s': %s\n"
 msgstr "Hopp over utvidinga «%s»: %s\n"
 
-#: app/core/gimpextensionmanager.c:1060
+#: app/core/gimpextensionmanager.c:1139
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "Hopp over ukjend fil «%s» i utvidingsmappa.\n"
@@ -13178,7 +13215,7 @@ msgid "tags-locale:C"
 msgstr "tags-locale:nn"
 
 #: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:188
-#: app/gui/themes.c:872
+#: app/gui/themes.c:874
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Feil ved lukking av «%s»: %s"
@@ -13294,7 +13331,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ugyldig UTF-8-streng i penselfila «%s»."
 
 #: app/core/gimpbrush-load.c:265 app/core/gimppattern-load.c:167
-#: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:618
+#: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:635
 msgid "Unnamed"
 msgstr "Utan namn"
 
@@ -13518,7 +13555,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Roter kanalen"
 
-#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1050
+#: app/core/gimpchannel.c:287 app/core/gimpdrawable-transform.c:1084
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Transformer kanalen"
@@ -13775,7 +13812,7 @@ msgstr "Feil ved lasting av «%s»:"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:101
 #: app/file-data/file-data-gex.c:361 app/file-data/file-data-gex.c:511
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:405
+#: app/xcf/xcf.c:406
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Klarte ikkje opna «%s» for lesing: "
@@ -13860,22 +13897,22 @@ msgstr "Forskyv teiknemediet"
 msgid "Not enough points to stroke"
 msgstr "Ikkje nok punkt for oppstrekinga"
 
-#: app/core/gimpdrawable-transform.c:805 app/tools/gimpfliptool.c:139
+#: app/core/gimpdrawable-transform.c:806 app/tools/gimpfliptool.c:139
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Spegelvend"
 
-#: app/core/gimpdrawable-transform.c:888 app/tools/gimprotatetool.c:131
+#: app/core/gimpdrawable-transform.c:889 app/tools/gimprotatetool.c:131
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Roter"
 
-#: app/core/gimpdrawable-transform.c:1048 app/core/gimplayer.c:472
+#: app/core/gimpdrawable-transform.c:1082 app/core/gimplayer.c:472
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Transformeringslag"
 
-#: app/core/gimpdrawable-transform.c:1062
+#: app/core/gimpdrawable-transform.c:1096
 msgid "Transformation"
 msgstr "Transformering"
 
@@ -14128,201 +14165,206 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformer laggruppa"
 
-#: app/core/gimpimage.c:723 app/widgets/gimpsymmetryeditor.c:183
+#: app/core/gimpimage.c:724 app/widgets/gimpsymmetryeditor.c:183
 msgid "Symmetry"
 msgstr "Symmetri"
 
-#: app/core/gimpimage.c:2206 app/pdb/drawable-filter-cmds.c:661
+#: app/core/gimpimage.c:2207 app/pdb/drawable-filter-cmds.c:667
 #: app/widgets/gimpdrawabletreeview-filters.c:1033
 msgid "Remove filter"
 msgstr "Fjern filteret"
 
-#: app/core/gimpimage.c:2815
+#: app/core/gimpimage.c:2816
 msgid " (exported)"
 msgstr " (eksportert)"
 
-#: app/core/gimpimage.c:2819
+#: app/core/gimpimage.c:2820
 msgid " (overwritten)"
 msgstr " (overskrive)"
 
-#: app/core/gimpimage.c:2828
+#: app/core/gimpimage.c:2829
 msgid " (imported)"
 msgstr " (importert)"
 
-#: app/core/gimpimage.c:3076 app/core/gimpimage.c:3090
-#: app/core/gimpimage.c:3133
+#: app/core/gimpimage.c:3077 app/core/gimpimage.c:3091
+#: app/core/gimpimage.c:3134
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Lagmodus «%s» vart lagt til i %s"
 
-#: app/core/gimpimage.c:3158 app/core/gimpimage.c:3272
+#: app/core/gimpimage.c:3159 app/core/gimpimage.c:3299
 #, c-format
 msgid "Channel effects were saved in %s"
 msgstr "Kanaleffektane vart lagt til i %s"
 
-#: app/core/gimpimage.c:3167
+#: app/core/gimpimage.c:3168
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Laggrupper vart lagt til i %s"
 
-#: app/core/gimpimage.c:3174
+#: app/core/gimpimage.c:3175
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Det vart lagt til masker i laggrupper i %s"
 
-#: app/core/gimpimage.c:3181
+#: app/core/gimpimage.c:3182
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Posisjonslåsar på laggrupper vart lagt til i %s"
 
-#: app/core/gimpimage.c:3188
+#: app/core/gimpimage.c:3189
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Alfakanallåsar på laggrupper vart lagt til i %s"
 
-#: app/core/gimpimage.c:3196 app/core/gimpimage.c:3264
+#: app/core/gimpimage.c:3197 app/core/gimpimage.c:3291
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Synlegheitslås vart lagt til i %s"
 
-#: app/core/gimpimage.c:3207
+#: app/core/gimpimage.c:3208
 #, c-format
 msgid "Format of font information in text layer was changed in %s"
 msgstr "Formatet på skriftinformasjonen i tekstlag vart endra i %s"
 
-#: app/core/gimpimage.c:3215
+#: app/core/gimpimage.c:3216
 #, c-format
 msgid "Layer effects were added in %s"
 msgstr "Lageffektar vart lagt til i %s"
 
-#: app/core/gimpimage.c:3227
+#: app/core/gimpimage.c:3228
 #, c-format
 msgid "A new perceptual blending space was added in %s"
 msgstr "Eit nytt perseptuelt blandingsrom vart lagt til i %s"
 
-#: app/core/gimpimage.c:3241
+#: app/core/gimpimage.c:3242
 #, c-format
 msgid "Vector layers were added in %s"
 msgstr "Det vart lagt til vektorlag i %s"
 
-#: app/core/gimpimage.c:3249
+#: app/core/gimpimage.c:3250
 #, c-format
 msgid "Link layers were added in %s"
 msgstr "Det vart lagt til lenkjelag i %s"
 
-#: app/core/gimpimage.c:3281
+#: app/core/gimpimage.c:3274
+#, c-format
+msgid "Transformed text layers were added in %s"
+msgstr "Det vart lagt til transformerte tekstlag i %s"
+
+#: app/core/gimpimage.c:3308
 #, c-format
 msgid "Multiple path selection was added in %s"
 msgstr "Val av fleire stiar vart innført i %s"
 
-#: app/core/gimpimage.c:3293
+#: app/core/gimpimage.c:3320
 #, c-format
 msgid "Storing color tags in path was added in %s"
 msgstr "Lagring av fargetaggar i banar vart lagt til i %s"
 
-#: app/core/gimpimage.c:3300
+#: app/core/gimpimage.c:3327
 #, c-format
 msgid "Storing locks in path was added in %s"
 msgstr "Lagring av låsar banar vart lagt til i %s"
 
-#: app/core/gimpimage.c:3314
+#: app/core/gimpimage.c:3341
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Bilete med høg bitdjupn vart lagt til i %s"
 
-#: app/core/gimpimage.c:3322
+#: app/core/gimpimage.c:3349
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Koding av bilete med høg bitdjupn vart fiksa i %s"
 
-#: app/core/gimpimage.c:3330
+#: app/core/gimpimage.c:3357
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Intern zlib-komprimering vart lagt til i %s"
 
-#: app/core/gimpimage.c:3347
+#: app/core/gimpimage.c:3374
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Det vart lagt til støtte for bilete større enn 4GB i %s"
 
-#: app/core/gimpimage.c:3354
+#: app/core/gimpimage.c:3381
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Val av fleire lag vart lagt til i %s"
 
-#: app/core/gimpimage.c:3371
+#: app/core/gimpimage.c:3398
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Hjelpelinjer utføre lerretet vart lagt til i %s"
 
-#: app/core/gimpimage.c:3382
+#: app/core/gimpimage.c:3409
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Elementsetjing og mønstersøk i elementnamn vart lagt til i %s"
 
-#: app/core/gimpimage.c:3388
+#: app/core/gimpimage.c:3415
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Val av fleire kanalar vart lagt til i %s"
 
-#: app/core/gimpimage.c:3519
+#: app/core/gimpimage.c:3550
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Endra oppløysinga for biletet"
 
-#: app/core/gimpimage.c:3571
+#: app/core/gimpimage.c:3602
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Endra bileteining"
 
-#: app/core/gimpimage.c:4618
+#: app/core/gimpimage.c:4649
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "'gimp-comment'-parasittvalidering feila: merknaden inneheld ugyldig UTF-8"
 
-#: app/core/gimpimage.c:4680
+#: app/core/gimpimage.c:4711
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Fest parasitt til biletet"
 
-#: app/core/gimpimage.c:4725
+#: app/core/gimpimage.c:4756
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Fjern parasitt frå biletet"
 
-#: app/core/gimpimage.c:5698
+#: app/core/gimpimage.c:5729
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Legg til lag"
 
-#: app/core/gimpimage.c:5758 app/core/gimpimage.c:5789
+#: app/core/gimpimage.c:5789 app/core/gimpimage.c:5820
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Fjern lag"
 
-#: app/core/gimpimage.c:5783
+#: app/core/gimpimage.c:5814
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Fjern det flytande utvalet"
 
-#: app/core/gimpimage.c:5946
+#: app/core/gimpimage.c:5977
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Legg til kanal"
 
-#: app/core/gimpimage.c:5976 app/core/gimpimage.c:6004
+#: app/core/gimpimage.c:6007 app/core/gimpimage.c:6035
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Fjern kanal"
 
-#: app/core/gimpimage.c:6066
+#: app/core/gimpimage.c:6097
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Legg til bane"
 
-#: app/core/gimpimage.c:6101 app/core/gimpimage.c:6109
+#: app/core/gimpimage.c:6132 app/core/gimpimage.c:6140
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Fjern bane"
@@ -15678,22 +15720,22 @@ msgstr "Fila for verktøyinnstillingane er øydelagt."
 #. * installer/package revision.
 #. * For instance: "2.10.18 (revision 2)"
 #.
-#: app/dialogs/about-dialog.c:264
+#: app/dialogs/about-dialog.c:265
 #, c-format
 msgid "%s (revision %d)"
 msgstr "%s (revisjon %d)"
 
-#: app/dialogs/about-dialog.c:277
+#: app/dialogs/about-dialog.c:278
 msgid "About GIMP"
 msgstr "Om GIMP"
 
-#: app/dialogs/about-dialog.c:286
+#: app/dialogs/about-dialog.c:287
 msgid "Visit the GIMP website"
 msgstr "Besøk GIMP si nettside"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: app/dialogs/about-dialog.c:292
+#: app/dialogs/about-dialog.c:293
 msgid "translator-credits"
 msgstr ""
 "Kolbjørn Stuestøl 2025, 2026\n"
@@ -15701,16 +15743,16 @@ msgstr ""
 "Sigurd Gartmann\n"
 "Runar Ingebrigtsen"
 
-#: app/dialogs/about-dialog.c:360 app/widgets/gimpfiledialog.c:360
+#: app/dialogs/about-dialog.c:361 app/widgets/gimpfiledialog.c:361
 msgid "_Help"
 msgstr "_Hjelp"
 
-#: app/dialogs/about-dialog.c:553
+#: app/dialogs/about-dialog.c:554
 msgid "Update available!"
 msgstr "Oppdatering tilgjengeleg!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:583
+#: app/dialogs/about-dialog.c:584
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr ""
@@ -15719,17 +15761,17 @@ msgstr ""
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:593
+#: app/dialogs/about-dialog.c:594
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>Sleppmerknad</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:598
+#: app/dialogs/about-dialog.c:599
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Last ned GIMP %s (sloppe %s)\n"
 
-#: app/dialogs/about-dialog.c:623 app/dialogs/about-dialog.c:646
+#: app/dialogs/about-dialog.c:624 app/dialogs/about-dialog.c:647
 msgid "Check for updates"
 msgstr "Sjå etter oppdateringar"
 
@@ -15737,7 +15779,7 @@ msgstr "Sjå etter oppdateringar"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:667
+#: app/dialogs/about-dialog.c:668
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Sist kontrollert %s kl. %s"
@@ -15746,16 +15788,16 @@ msgstr "Sist kontrollert %s kl. %s"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:673
+#: app/dialogs/about-dialog.c:674
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "Oppdatert frå %s ved %s"
 
-#: app/dialogs/about-dialog.c:901
+#: app/dialogs/about-dialog.c:902
 msgid "GIMP is brought to you by"
 msgstr "GIMP er levert deg av"
 
-#: app/dialogs/about-dialog.c:976
+#: app/dialogs/about-dialog.c:977
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -15764,65 +15806,65 @@ msgstr ""
 "Dette er ei ustabil utviklingsutgåve\n"
 "utføring %s"
 
-#: app/dialogs/about-dialog.c:1084
+#: app/dialogs/about-dialog.c:1085
 msgid "built from source"
 msgstr "bygd frå kjelde"
 
 #. Translators: build id, revision number
-#: app/dialogs/about-dialog.c:1087
+#: app/dialogs/about-dialog.c:1088
 #, c-format
 msgid "%s revision %d"
 msgstr "%s revisjon %d"
 
-#: app/dialogs/about-dialog.c:1094 app/dialogs/module-dialog.c:366
+#: app/dialogs/about-dialog.c:1095 app/dialogs/module-dialog.c:366
 msgid "Version:"
 msgstr "Versjon:"
 
-#: app/dialogs/about-dialog.c:1096
+#: app/dialogs/about-dialog.c:1097
 msgid "OS:"
 msgstr "OS:"
 
-#: app/dialogs/about-dialog.c:1098 app/dialogs/about-dialog.c:1129
+#: app/dialogs/about-dialog.c:1099 app/dialogs/about-dialog.c:1130
 msgid "unknown"
-msgstr "Ukjend"
+msgstr "ukjend"
 
 #. Translators: total RAM, then how much of it is free
-#: app/dialogs/about-dialog.c:1115 app/dialogs/about-dialog.c:1122
-#: app/dialogs/about-dialog.c:1129
+#: app/dialogs/about-dialog.c:1116 app/dialogs/about-dialog.c:1123
+#: app/dialogs/about-dialog.c:1130
 msgid "Memory:"
 msgstr "Minne:"
 
-#: app/dialogs/about-dialog.c:1116
+#: app/dialogs/about-dialog.c:1117
 #, c-format
 msgid "%s (%s free)"
 msgstr "%s (%s fritt)"
 
-#: app/dialogs/about-dialog.c:1151
+#: app/dialogs/about-dialog.c:1152
 msgid "Swap:"
 msgstr "Byt:"
 
-#: app/dialogs/about-dialog.c:1152
+#: app/dialogs/about-dialog.c:1153
 #, c-format
 msgid "%s free on partition"
 msgstr "%s fritt i partisjonen"
 
-#: app/dialogs/about-dialog.c:1162
+#: app/dialogs/about-dialog.c:1163
 msgid "Library Versions:"
 msgstr "Bibliotekversjon:"
 
-#: app/dialogs/about-dialog.c:1236 app/dialogs/about-dialog.c:1294
+#: app/dialogs/about-dialog.c:1237 app/dialogs/about-dialog.c:1295
 msgid "Copy Version Information"
 msgstr "Kopier versjonsinformasjonen"
 
-#: app/dialogs/about-dialog.c:1291
+#: app/dialogs/about-dialog.c:1292
 msgid "Version Information"
 msgstr "Versjonsinformasjon"
 
-#: app/dialogs/about-dialog.c:1293
+#: app/dialogs/about-dialog.c:1294
 msgid "_Copy"
 msgstr "_Kopier"
 
-#: app/dialogs/about-dialog.c:1349
+#: app/dialogs/about-dialog.c:1350
 msgid "Copied Version Information"
 msgstr "Versjonsinformasjonen kopiert"
 
@@ -16100,8 +16142,8 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Er du sikker på at du vil slette «%s» frå lista og frå disken?"
 
-#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:196
-#: app/gui/gui-message.c:268
+#: app/dialogs/dialogs-constructors.c:238 app/gui/gui.c:197
+#: app/gui/gui-message.c:275
 msgid "GIMP Message"
 msgstr "GIMP-melding"
 
@@ -16214,11 +16256,11 @@ msgstr "Greidde ikkje opna «%s»."
 #: app/display/gimpcursorview.c:240 app/display/gimpcursorview.c:259
 #: app/display/gimpcursorview.c:265 app/display/gimpcursorview.c:286
 #: app/display/gimpcursorview.c:292 app/display/gimpcursorview.c:308
-#: app/display/gimpcursorview.c:315 app/display/gimpcursorview.c:738
-#: app/display/gimpcursorview.c:740 app/display/gimpcursorview.c:742
-#: app/display/gimpcursorview.c:744 app/display/gimpcursorview.c:824
-#: app/display/gimpcursorview.c:825 app/display/gimpcursorview.c:826
-#: app/display/gimpcursorview.c:827 app/widgets/gimphistogrameditor.c:820
+#: app/display/gimpcursorview.c:315 app/display/gimpcursorview.c:740
+#: app/display/gimpcursorview.c:742 app/display/gimpcursorview.c:744
+#: app/display/gimpcursorview.c:746 app/display/gimpcursorview.c:826
+#: app/display/gimpcursorview.c:827 app/display/gimpcursorview.c:828
+#: app/display/gimpcursorview.c:829 app/widgets/gimphistogrameditor.c:820
 msgid "n/a"
 msgstr "i/t"
 
@@ -16360,7 +16402,7 @@ msgstr "Flett berre innanfor _grupper som er i bruk"
 msgid "_Discard invisible layers"
 msgstr "_Fjern usynlege lag"
 
-#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:772
+#: app/dialogs/image-new-dialog.c:100 app/dialogs/welcome-dialog.c:778
 msgid "Create a New Image"
 msgstr "Laga eit nytt bilete"
 
@@ -16904,11 +16946,11 @@ msgstr ""
 "Verktøyinnstillingane dine vert tilbakestilte til standardverdiane neste "
 "gang du opnar GIMP."
 
-#: app/dialogs/preferences-dialog.c:831 app/dialogs/preferences-dialog.c:2803
+#: app/dialogs/preferences-dialog.c:831 app/dialogs/preferences-dialog.c:2809
 msgid "There's a local installation of the user manual."
 msgstr "Handboka er installert lokalt."
 
-#: app/dialogs/preferences-dialog.c:836 app/dialogs/preferences-dialog.c:2809
+#: app/dialogs/preferences-dialog.c:836 app/dialogs/preferences-dialog.c:2815
 msgid "The user manual is not installed locally."
 msgstr "Handboka er ikkje installert lokalt."
 
@@ -17352,8 +17394,8 @@ msgstr "Verktøyinnstillingar"
 #. Snapping Distance
 #. General
 #. general device information
-#: app/dialogs/preferences-dialog.c:1777 app/dialogs/preferences-dialog.c:2750
-#: app/dialogs/preferences-dialog.c:3153 app/dialogs/preferences-dialog.c:3177
+#: app/dialogs/preferences-dialog.c:1777 app/dialogs/preferences-dialog.c:2756
+#: app/dialogs/preferences-dialog.c:3159 app/dialogs/preferences-dialog.c:3183
 #: app/widgets/gimpcontrollereditor.c:190
 #: app/widgets/gimpdeviceinfoeditor.c:227
 msgid "General"
@@ -17552,591 +17594,591 @@ msgid "Huge"
 msgstr "Ekstra stor"
 
 #. Font sizes.
-#: app/dialogs/preferences-dialog.c:2175 app/dialogs/welcome-dialog.c:699
+#: app/dialogs/preferences-dialog.c:2178 app/dialogs/welcome-dialog.c:702
 msgid "Font Scaling"
 msgstr "Skalering sv skrift"
 
-#: app/dialogs/preferences-dialog.c:2177 app/dialogs/welcome-dialog.c:701
+#: app/dialogs/preferences-dialog.c:2180 app/dialogs/welcome-dialog.c:704
 msgid "Font scaling will not work with themes using absolute sizes."
 msgstr ""
 "Skaleringa av skrift verkar ikkje med tema som brukar absolutte storleikar."
 
-#: app/dialogs/preferences-dialog.c:2183 app/dialogs/welcome-dialog.c:707
+#: app/dialogs/preferences-dialog.c:2186 app/dialogs/welcome-dialog.c:710
 msgid "50%"
 msgstr "50 %"
 
-#: app/dialogs/preferences-dialog.c:2185 app/dialogs/welcome-dialog.c:709
+#: app/dialogs/preferences-dialog.c:2188 app/dialogs/welcome-dialog.c:712
 msgid "100%"
 msgstr "100 %"
 
-#: app/dialogs/preferences-dialog.c:2187 app/dialogs/welcome-dialog.c:711
+#: app/dialogs/preferences-dialog.c:2190 app/dialogs/welcome-dialog.c:714
 msgid "150%"
 msgstr "150 %"
 
-#: app/dialogs/preferences-dialog.c:2189 app/dialogs/welcome-dialog.c:713
+#: app/dialogs/preferences-dialog.c:2192 app/dialogs/welcome-dialog.c:716
 msgid "200%"
 msgstr "200 %"
 
-#: app/dialogs/preferences-dialog.c:2207
+#: app/dialogs/preferences-dialog.c:2213
 msgid "Reload C_urrent Theme"
 msgstr "Last _gjeldande tema på nytt"
 
-#: app/dialogs/preferences-dialog.c:2219 app/dialogs/preferences-dialog.c:2220
+#: app/dialogs/preferences-dialog.c:2225 app/dialogs/preferences-dialog.c:2226
 msgid "Icon Theme"
 msgstr "Ikontema"
 
-#: app/dialogs/preferences-dialog.c:2225
+#: app/dialogs/preferences-dialog.c:2231
 msgid "Select an Icon Theme"
 msgstr "Vel eit ikontema"
 
 #. TRANSLATORS: this is the name of GIMP's "Default" icon theme.
-#: app/dialogs/preferences-dialog.c:2306
+#: app/dialogs/preferences-dialog.c:2312
 msgctxt "icon-theme-name"
 msgid "Default"
 msgstr "Default"
 
 #. TRANSLATORS: this is the name of GIMP's "Legacy" icon theme.
-#: app/dialogs/preferences-dialog.c:2309
+#: app/dialogs/preferences-dialog.c:2315
 msgctxt "icon-theme-name"
 msgid "Legacy"
 msgstr "Legacy"
 
-#: app/dialogs/preferences-dialog.c:2351 app/dialogs/welcome-dialog.c:661
+#: app/dialogs/preferences-dialog.c:2357 app/dialogs/welcome-dialog.c:661
 msgid "Use symbolic icons if available"
 msgstr "Bruk ikonsymbol om tilgjengelege"
 
-#: app/dialogs/preferences-dialog.c:2361 app/dialogs/preferences-dialog.c:2362
+#: app/dialogs/preferences-dialog.c:2367 app/dialogs/preferences-dialog.c:2368
 #: app/widgets/gimptoolbox.c:547
 msgid "Toolbox"
 msgstr "Verktøykassen"
 
 #. Appearance
-#: app/dialogs/preferences-dialog.c:2370 app/dialogs/preferences-dialog.c:3236
+#: app/dialogs/preferences-dialog.c:2376 app/dialogs/preferences-dialog.c:3242
 #: app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "Utsjånad"
 
-#: app/dialogs/preferences-dialog.c:2374
+#: app/dialogs/preferences-dialog.c:2380
 msgid "Show GIMP _logo (drag-and-drop target)"
 msgstr "Vis GIMP-_logoen (dra og slepp)"
 
-#: app/dialogs/preferences-dialog.c:2378
+#: app/dialogs/preferences-dialog.c:2384
 msgid "Show _foreground & background color"
 msgstr "Vel _forgrunns- og bakgrunnsfarge"
 
-#: app/dialogs/preferences-dialog.c:2382
+#: app/dialogs/preferences-dialog.c:2388
 msgid "Show active _brush, pattern & gradient"
 msgstr "Vis _penslar, mønsterelement og fargeovergangar som er i bruk"
 
-#: app/dialogs/preferences-dialog.c:2386
+#: app/dialogs/preferences-dialog.c:2392
 msgid "Show active _image"
 msgstr "Vis biletet som er i bruk"
 
-#: app/dialogs/preferences-dialog.c:2395 app/dialogs/welcome-dialog.c:749
+#: app/dialogs/preferences-dialog.c:2401 app/dialogs/welcome-dialog.c:755
 msgid "Use tool _groups"
 msgstr "Bruk _verktøygrupper"
 
 #. Tool Editor
-#: app/dialogs/preferences-dialog.c:2402
+#: app/dialogs/preferences-dialog.c:2408
 msgid "Tools Configuration"
 msgstr "Verktøyoppsettet"
 
-#: app/dialogs/preferences-dialog.c:2417 app/dialogs/preferences-dialog.c:2418
+#: app/dialogs/preferences-dialog.c:2423 app/dialogs/preferences-dialog.c:2424
 msgid "Dialog Defaults"
 msgstr "Standardar for dialogmenyen"
 
-#: app/dialogs/preferences-dialog.c:2427
+#: app/dialogs/preferences-dialog.c:2433
 msgid "Reset Dialog _Defaults"
 msgstr "Tilbakestill _standarden for dialogvindauga"
 
 #. Color profile import dialog
-#: app/dialogs/preferences-dialog.c:2435
+#: app/dialogs/preferences-dialog.c:2441
 msgid "Color Profile Import Dialog"
 msgstr "Dialogvindauget for import av fargeprofilar"
 
-#: app/dialogs/preferences-dialog.c:2440
+#: app/dialogs/preferences-dialog.c:2446
 msgid "Color profile policy:"
 msgstr "Fargeprofil-policy:"
 
 #. All color profile chooser dialogs
-#: app/dialogs/preferences-dialog.c:2444
+#: app/dialogs/preferences-dialog.c:2450
 msgid "Color Profile File Dialogs"
 msgstr "Dialogvindauge for fargeprofilar"
 
-#: app/dialogs/preferences-dialog.c:2449
+#: app/dialogs/preferences-dialog.c:2455
 msgid "Profile folder:"
 msgstr "Profilmappe:"
 
-#: app/dialogs/preferences-dialog.c:2450
+#: app/dialogs/preferences-dialog.c:2456
 msgid "Select Default Folder for Color Profiles"
 msgstr "Vel standardmappe for fargeprofilar"
 
 #. Convert to Color Profile Dialog
-#: app/dialogs/preferences-dialog.c:2454
+#: app/dialogs/preferences-dialog.c:2460
 msgid "Convert to Color Profile Dialog"
 msgstr "Dialogvindauge for konvertering til fargeprofil"
 
-#: app/dialogs/preferences-dialog.c:2459
+#: app/dialogs/preferences-dialog.c:2465
 msgid "Rendering intent:"
 msgstr "Fargetilpassing:"
 
-#: app/dialogs/preferences-dialog.c:2463
+#: app/dialogs/preferences-dialog.c:2469
 msgid "Black point compensation"
 msgstr "Svartpunktkompensering"
 
 #. Convert Precision Dialog
-#: app/dialogs/preferences-dialog.c:2467
+#: app/dialogs/preferences-dialog.c:2473
 msgid "Precision Conversion Dialog"
 msgstr "Dialogvindauge for presisjonskonvertering"
 
-#: app/dialogs/preferences-dialog.c:2474
+#: app/dialogs/preferences-dialog.c:2480
 msgid "Dither layers:"
 msgstr "Jamn ut laga:"
 
-#: app/dialogs/preferences-dialog.c:2479
+#: app/dialogs/preferences-dialog.c:2485
 msgid "Dither text layers:"
 msgstr "Jamn ut tekstlaga:"
 
-#: app/dialogs/preferences-dialog.c:2484
+#: app/dialogs/preferences-dialog.c:2490
 msgid "Dither channels/masks:"
 msgstr "Jamn ut kanalar/masker:"
 
 #. Convert Indexed Dialog
-#: app/dialogs/preferences-dialog.c:2488
+#: app/dialogs/preferences-dialog.c:2494
 msgid "Indexed Conversion Dialog"
 msgstr "Dialogvindauge for indeksert konvertering"
 
-#: app/dialogs/preferences-dialog.c:2493
+#: app/dialogs/preferences-dialog.c:2499
 msgid "Colormap:"
 msgstr "Fargekart:"
 
-#: app/dialogs/preferences-dialog.c:2496
+#: app/dialogs/preferences-dialog.c:2502
 msgid "Maximum number of colors:"
 msgstr "Høgaste tal på fargar:"
 
-#: app/dialogs/preferences-dialog.c:2500
+#: app/dialogs/preferences-dialog.c:2506
 msgid "Remove unused and duplicate colors from colormap"
 msgstr "Fjern ubrukte fargar og duplikatfargar frå fargekartet"
 
-#: app/dialogs/preferences-dialog.c:2506
+#: app/dialogs/preferences-dialog.c:2512
 msgid "Color dithering:"
 msgstr "Fargeutjamning:"
 
-#: app/dialogs/preferences-dialog.c:2510
+#: app/dialogs/preferences-dialog.c:2516
 msgid "Enable dithering of transparency"
 msgstr "Slå på utjamning av gjennomsikt"
 
-#: app/dialogs/preferences-dialog.c:2513
+#: app/dialogs/preferences-dialog.c:2519
 msgid "Enable dithering of text layers"
 msgstr "Slå på utjamning av tekstlag"
 
 #. Filter Dialogs
-#: app/dialogs/preferences-dialog.c:2517
+#: app/dialogs/preferences-dialog.c:2523
 msgid "Filter Dialogs"
 msgstr "Dialogvindauga for filter"
 
-#: app/dialogs/preferences-dialog.c:2522
+#: app/dialogs/preferences-dialog.c:2528
 msgid "Keep recent settings:"
 msgstr "Behald gjeldande innstillingar:"
 
-#: app/dialogs/preferences-dialog.c:2526
+#: app/dialogs/preferences-dialog.c:2532
 msgid "Default to the last used settings"
 msgstr "Standard er å gå tilbake til dei sist brukte innstillingane"
 
 #. Canvas Size Dialog
-#: app/dialogs/preferences-dialog.c:2530
+#: app/dialogs/preferences-dialog.c:2536
 msgid "Canvas Size Dialog"
 msgstr "Dialogvindauget for storleiken på lerretet"
 
-#: app/dialogs/preferences-dialog.c:2535
+#: app/dialogs/preferences-dialog.c:2541
 msgid "Resize layers:"
 msgstr "Tilbakestill lagstorleiken:"
 
-#: app/dialogs/preferences-dialog.c:2538 app/dialogs/preferences-dialog.c:2564
+#: app/dialogs/preferences-dialog.c:2544 app/dialogs/preferences-dialog.c:2570
 msgid "Fill with:"
 msgstr "Fyll med:"
 
-#: app/dialogs/preferences-dialog.c:2542
+#: app/dialogs/preferences-dialog.c:2548
 msgid "Resize text layers"
 msgstr "Endra storleiken på tekstlaga"
 
 #. New Layer Dialog
-#: app/dialogs/preferences-dialog.c:2546
+#: app/dialogs/preferences-dialog.c:2552
 msgid "New Layer Dialog"
 msgstr "Nytt dialogvindauge for lag"
 
-#: app/dialogs/preferences-dialog.c:2551
+#: app/dialogs/preferences-dialog.c:2557
 msgid "Layer name:"
 msgstr "Lagnamn:"
 
-#: app/dialogs/preferences-dialog.c:2555
+#: app/dialogs/preferences-dialog.c:2561
 msgid "Fill type:"
 msgstr "Fylltype:"
 
 #. Layer Boundary Size Dialog
-#: app/dialogs/preferences-dialog.c:2559
+#: app/dialogs/preferences-dialog.c:2565
 msgid "Layer Boundary Size Dialog"
 msgstr "Dialogvindauge for storleik på laggrense"
 
 #. Add Layer Mask Dialog
-#: app/dialogs/preferences-dialog.c:2568
+#: app/dialogs/preferences-dialog.c:2574
 msgid "Add Layer Mask Dialog"
 msgstr "Legg til dialogvindauge for lagmaske"
 
-#: app/dialogs/preferences-dialog.c:2573
+#: app/dialogs/preferences-dialog.c:2579
 msgid "Layer mask type:"
 msgstr "Lagmasketype:"
 
-#: app/dialogs/preferences-dialog.c:2577
+#: app/dialogs/preferences-dialog.c:2583
 msgid "Invert mask"
 msgstr "Inverter maska"
 
-#: app/dialogs/preferences-dialog.c:2580
+#: app/dialogs/preferences-dialog.c:2586
 msgid "Edit mask immediately"
 msgstr "Rediger maska no"
 
 #. Merge Layers Dialog
-#: app/dialogs/preferences-dialog.c:2584
+#: app/dialogs/preferences-dialog.c:2590
 msgid "Merge Layers Dialog"
 msgstr "Dialogvindauget for «Flett lag»"
 
-#: app/dialogs/preferences-dialog.c:2591
+#: app/dialogs/preferences-dialog.c:2597
 msgid "Merged layer size:"
 msgstr "Fletta lagstorleik:"
 
-#: app/dialogs/preferences-dialog.c:2595
+#: app/dialogs/preferences-dialog.c:2601
 msgid "Merge within active groups only"
 msgstr "Flett berre innføre grupper som er i bruk"
 
-#: app/dialogs/preferences-dialog.c:2598
+#: app/dialogs/preferences-dialog.c:2604
 msgid "Discard invisible layers"
 msgstr "Fjern usynlege lag"
 
 #. New Channel Dialog
-#: app/dialogs/preferences-dialog.c:2602
+#: app/dialogs/preferences-dialog.c:2608
 msgid "New Channel Dialog"
 msgstr "Dialogvindauge for ny kanal"
 
-#: app/dialogs/preferences-dialog.c:2607
+#: app/dialogs/preferences-dialog.c:2613
 msgid "Channel name:"
 msgstr "Kanalnamn:"
 
-#: app/dialogs/preferences-dialog.c:2611
+#: app/dialogs/preferences-dialog.c:2617
 msgid "Color and opacity:"
 msgstr "Farge og gjennomsikt:"
 
-#: app/dialogs/preferences-dialog.c:2612
+#: app/dialogs/preferences-dialog.c:2618
 msgid "Default New Channel Color and Opacity"
 msgstr "Standard farge og gjennomsikt for ny kanal"
 
 #. New Path Dialog
-#: app/dialogs/preferences-dialog.c:2617
+#: app/dialogs/preferences-dialog.c:2623
 msgid "New Path Dialog"
 msgstr "Nytt dialogvindauge for banar"
 
-#: app/dialogs/preferences-dialog.c:2622
+#: app/dialogs/preferences-dialog.c:2628
 msgid "Path name:"
 msgstr "Namn på bane:"
 
 #. Export Path Dialog
-#: app/dialogs/preferences-dialog.c:2626
+#: app/dialogs/preferences-dialog.c:2632
 msgid "Export Paths Dialog"
 msgstr "Dialogvindauge for eksport av banar"
 
-#: app/dialogs/preferences-dialog.c:2631
+#: app/dialogs/preferences-dialog.c:2637
 msgid "Export folder:"
 msgstr "Eksportmappe::"
 
-#: app/dialogs/preferences-dialog.c:2632
+#: app/dialogs/preferences-dialog.c:2638
 msgid "Select Default Folder for Exporting Paths"
 msgstr "Vel standardmappe for eksportering av banar"
 
-#: app/dialogs/preferences-dialog.c:2636
+#: app/dialogs/preferences-dialog.c:2642
 msgid "Export the selected paths only"
 msgstr "Eksporter berre dei merkte banane"
 
 #. Import Path Dialog
-#: app/dialogs/preferences-dialog.c:2640
+#: app/dialogs/preferences-dialog.c:2646
 msgid "Import Paths Dialog"
 msgstr "Dialogvindauge for import av banar"
 
-#: app/dialogs/preferences-dialog.c:2645
+#: app/dialogs/preferences-dialog.c:2651
 msgid "Import folder:"
 msgstr "Importmappe:"
 
-#: app/dialogs/preferences-dialog.c:2646
+#: app/dialogs/preferences-dialog.c:2652
 msgid "Select Default Folder for Importing Paths"
 msgstr "Vel standardmappe for å importera banar"
 
-#: app/dialogs/preferences-dialog.c:2650
+#: app/dialogs/preferences-dialog.c:2656
 msgid "Merge imported paths"
 msgstr "Flett saman importerte banar"
 
-#: app/dialogs/preferences-dialog.c:2653
+#: app/dialogs/preferences-dialog.c:2659
 msgid "Scale imported paths"
 msgstr "Skaler importerte banar"
 
 #. Feather Selection Dialog
-#: app/dialogs/preferences-dialog.c:2657
+#: app/dialogs/preferences-dialog.c:2663
 msgid "Feather Selection Dialog"
 msgstr "Dialogvindauget for mjuke kantar"
 
-#: app/dialogs/preferences-dialog.c:2662
+#: app/dialogs/preferences-dialog.c:2668
 msgid "Feather radius:"
 msgstr "Radius for mjuke kantar:"
 
-#: app/dialogs/preferences-dialog.c:2666 app/dialogs/preferences-dialog.c:2688
-#: app/dialogs/preferences-dialog.c:2705
+#: app/dialogs/preferences-dialog.c:2672 app/dialogs/preferences-dialog.c:2694
+#: app/dialogs/preferences-dialog.c:2711
 msgid "Selected areas continue outside the image"
 msgstr "Merkte område held fram utføre biletet"
 
 #. Grow Selection Dialog
-#: app/dialogs/preferences-dialog.c:2670
+#: app/dialogs/preferences-dialog.c:2676
 msgid "Grow Selection Dialog"
 msgstr "Auk dialogvindauget for utval"
 
-#: app/dialogs/preferences-dialog.c:2675
+#: app/dialogs/preferences-dialog.c:2681
 msgid "Grow radius:"
 msgstr "Aukingsradius:"
 
 #. Shrink Selection Dialog
-#: app/dialogs/preferences-dialog.c:2679
+#: app/dialogs/preferences-dialog.c:2685
 msgid "Shrink Selection Dialog"
 msgstr "Krymp dialogvindauget for utval"
 
-#: app/dialogs/preferences-dialog.c:2684
+#: app/dialogs/preferences-dialog.c:2690
 msgid "Shrink radius:"
 msgstr "Krymperadius:"
 
 #. Border Selection Dialog
-#: app/dialogs/preferences-dialog.c:2692
+#: app/dialogs/preferences-dialog.c:2698
 msgid "Border Selection Dialog"
 msgstr "Dialogvindauget for kantutval"
 
-#: app/dialogs/preferences-dialog.c:2697
+#: app/dialogs/preferences-dialog.c:2703
 msgid "Border radius:"
 msgstr "Kantradius:"
 
-#: app/dialogs/preferences-dialog.c:2701
+#: app/dialogs/preferences-dialog.c:2707
 msgid "Border style:"
 msgstr "Kantstil:"
 
 #. Fill Options Dialog
-#: app/dialogs/preferences-dialog.c:2709
+#: app/dialogs/preferences-dialog.c:2715
 msgid "Fill Selection Outline & Fill Path Dialogs"
 msgstr "Fyll omrisset av utvalet og dialogvindauga for fyll bane"
 
 #. Stroke Options Dialog
-#: app/dialogs/preferences-dialog.c:2718
+#: app/dialogs/preferences-dialog.c:2724
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "Dialogvindauge for strok av utval og bane"
 
-#: app/dialogs/preferences-dialog.c:2741 app/dialogs/preferences-dialog.c:2742
+#: app/dialogs/preferences-dialog.c:2747 app/dialogs/preferences-dialog.c:2748
 msgid "Help System"
 msgstr "Hjelpsystemet"
 
-#: app/dialogs/preferences-dialog.c:2753
+#: app/dialogs/preferences-dialog.c:2759
 msgid "Show help _buttons"
 msgstr "Vis hjelp_knappar"
 
-#: app/dialogs/preferences-dialog.c:2758
+#: app/dialogs/preferences-dialog.c:2764
 msgid "Use the online version"
 msgstr "Bruk hjelp frå nettet"
 
-#: app/dialogs/preferences-dialog.c:2759
+#: app/dialogs/preferences-dialog.c:2765
 msgid "Use a locally installed copy"
 msgstr "Bruk ein lokal installert kopi"
 
-#: app/dialogs/preferences-dialog.c:2760
+#: app/dialogs/preferences-dialog.c:2766
 msgid "U_ser manual:"
 msgstr "_Brukarhandboka:"
 
-#: app/dialogs/preferences-dialog.c:2771
+#: app/dialogs/preferences-dialog.c:2777
 msgid "User interface language"
 msgstr "Språket i brukargrensesnittet"
 
 #. Action Search
-#: app/dialogs/preferences-dialog.c:2825
+#: app/dialogs/preferences-dialog.c:2831
 msgid "Action Search"
 msgstr "Handlingssøk"
 
-#: app/dialogs/preferences-dialog.c:2829
+#: app/dialogs/preferences-dialog.c:2835
 msgid "_Maximum History Size:"
 msgstr "_Maksimumstorleik for loggen:"
 
-#: app/dialogs/preferences-dialog.c:2833
+#: app/dialogs/preferences-dialog.c:2839
 msgid "C_lear Action History"
 msgstr "_Tøm handlingsloggen"
 
-#: app/dialogs/preferences-dialog.c:2847 app/dialogs/preferences-dialog.c:2848
+#: app/dialogs/preferences-dialog.c:2853 app/dialogs/preferences-dialog.c:2854
 msgid "Display"
 msgstr "Skjerm"
 
 #. Transparency
-#: app/dialogs/preferences-dialog.c:2857
+#: app/dialogs/preferences-dialog.c:2863
 msgid "Transparency"
 msgstr "Gjennomsikt"
 
-#: app/dialogs/preferences-dialog.c:2861
+#: app/dialogs/preferences-dialog.c:2867
 msgid "_Check style:"
 msgstr "_Kontroller stil:"
 
-#: app/dialogs/preferences-dialog.c:2895
+#: app/dialogs/preferences-dialog.c:2901
 msgid "Check _size:"
 msgstr "Rute_storleik:"
 
 #. Zoom Quality
-#: app/dialogs/preferences-dialog.c:2899
+#: app/dialogs/preferences-dialog.c:2905
 msgid "Zoom Quality"
 msgstr "Skaleringskvalitet"
 
-#: app/dialogs/preferences-dialog.c:2903
+#: app/dialogs/preferences-dialog.c:2909
 msgid "_Zoom quality:"
 msgstr "_Skaleringskvalitet:"
 
 #. Monitor Resolution
-#: app/dialogs/preferences-dialog.c:2907
+#: app/dialogs/preferences-dialog.c:2913
 msgid "Monitor Resolution"
 msgstr "Skjermoppløysing"
 
 #. Pixels
-#: app/dialogs/preferences-dialog.c:2911 app/display/gimpcursorview.c:224
+#: app/dialogs/preferences-dialog.c:2917 app/display/gimpcursorview.c:224
 #: app/widgets/gimpgrideditor.c:207 app/widgets/gimpgrideditor.c:242
 msgid "Pixels"
 msgstr "Pikslar"
 
-#: app/dialogs/preferences-dialog.c:2929 app/widgets/gimpgrideditor.c:203
+#: app/dialogs/preferences-dialog.c:2935 app/widgets/gimpgrideditor.c:203
 #: app/widgets/gimpgrideditor.c:238
 msgid "Horizontal"
 msgstr "Vassrett"
 
-#: app/dialogs/preferences-dialog.c:2931 app/widgets/gimpgrideditor.c:205
+#: app/dialogs/preferences-dialog.c:2937 app/widgets/gimpgrideditor.c:205
 #: app/widgets/gimpgrideditor.c:240
 msgid "Vertical"
 msgstr "Loddrett"
 
-#: app/dialogs/preferences-dialog.c:2933 app/widgets/gimpimagepropview.c:466
+#: app/dialogs/preferences-dialog.c:2939 app/widgets/gimpimagepropview.c:466
 msgid "ppi"
 msgstr "ppi"
 
-#: app/dialogs/preferences-dialog.c:2951
+#: app/dialogs/preferences-dialog.c:2957
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Finn automatisk. (Er no %d × %d ppi)"
 
-#: app/dialogs/preferences-dialog.c:2969
+#: app/dialogs/preferences-dialog.c:2975
 msgid "_Enter manually"
 msgstr "_Skriv inn manuelt"
 
-#: app/dialogs/preferences-dialog.c:2984
+#: app/dialogs/preferences-dialog.c:2990
 msgid "C_alibrate..."
 msgstr "_Kalibrer …"
 
-#: app/dialogs/preferences-dialog.c:3014 app/dialogs/preferences-dialog.c:3015
+#: app/dialogs/preferences-dialog.c:3020 app/dialogs/preferences-dialog.c:3021
 msgid "Window Management"
 msgstr "Vindaugehandsaming"
 
-#: app/dialogs/preferences-dialog.c:3020
+#: app/dialogs/preferences-dialog.c:3026
 msgid "Window Manager Hints"
 msgstr "Vindaugetypar"
 
-#: app/dialogs/preferences-dialog.c:3026
+#: app/dialogs/preferences-dialog.c:3032
 msgid "Hint for _docks and toolbox:"
 msgstr "_Hint for dokkpanel og verktøykassen:"
 
-#: app/dialogs/preferences-dialog.c:3029
+#: app/dialogs/preferences-dialog.c:3035
 msgid "Focus"
 msgstr "Fokus"
 
-#: app/dialogs/preferences-dialog.c:3033
+#: app/dialogs/preferences-dialog.c:3039
 msgid "Activate the _focused image"
 msgstr "Ta i bruk biletet som har _fokus"
 
 #. Window Positions
-#: app/dialogs/preferences-dialog.c:3037
+#: app/dialogs/preferences-dialog.c:3043
 msgid "Window Positions"
 msgstr "Vindaugeposisjonar"
 
-#: app/dialogs/preferences-dialog.c:3040
+#: app/dialogs/preferences-dialog.c:3046
 msgid "_Save window positions on exit"
 msgstr "_Lagra vindaugeposisjonane ved avslutning"
 
-#: app/dialogs/preferences-dialog.c:3043
+#: app/dialogs/preferences-dialog.c:3049
 msgid "Open windows on the same _monitor they were open before"
 msgstr "Opna vindauge i den skjermen dei var opna i tidlegare"
 
-#: app/dialogs/preferences-dialog.c:3047
+#: app/dialogs/preferences-dialog.c:3053
 msgid "Save Window Positions _Now"
 msgstr "Lagra vindaugeposisjonane _no"
 
-#: app/dialogs/preferences-dialog.c:3054
+#: app/dialogs/preferences-dialog.c:3060
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "Tilbakestill lagra vindaugeposisjonar til standardverdiane"
 
-#: app/dialogs/preferences-dialog.c:3069 app/dialogs/preferences-dialog.c:3070
+#: app/dialogs/preferences-dialog.c:3075 app/dialogs/preferences-dialog.c:3076
 msgid "Canvas Interaction"
 msgstr "Lerretsinteraksjon"
 
 #. Space Bar
-#: app/dialogs/preferences-dialog.c:3079
+#: app/dialogs/preferences-dialog.c:3085
 msgid "Space Bar"
 msgstr "Mellomromstast"
 
-#: app/dialogs/preferences-dialog.c:3085
+#: app/dialogs/preferences-dialog.c:3091
 msgid "_While space bar is pressed:"
 msgstr "_Medan mellomromstasten er nede:"
 
 #. Zoom by drag Behavior
-#: app/dialogs/preferences-dialog.c:3089 app/tools/gimpmagnifytool.c:93
+#: app/dialogs/preferences-dialog.c:3095 app/tools/gimpmagnifytool.c:93
 msgid "Zoom"
 msgstr "Lupe"
 
-#: app/dialogs/preferences-dialog.c:3095
+#: app/dialogs/preferences-dialog.c:3101
 msgid "Dra_g-to-zoom behavior:"
 msgstr "_Dra-til-skalerings-verkemåte:"
 
-#: app/dialogs/preferences-dialog.c:3101
+#: app/dialogs/preferences-dialog.c:3107
 msgid "Drag-to-zoom spe_ed:"
 msgstr "Dra-til-_skaleringsfart:"
 
-#: app/dialogs/preferences-dialog.c:3111 app/dialogs/preferences-dialog.c:3112
+#: app/dialogs/preferences-dialog.c:3117 app/dialogs/preferences-dialog.c:3118
 msgid "Modifiers"
 msgstr "Modifikatorar"
 
-#: app/dialogs/preferences-dialog.c:3123
+#: app/dialogs/preferences-dialog.c:3129
 msgid "_Reset Saved Modifiers Settings to Default Values"
 msgstr ""
 "_Tilbakestill lagra innstillingar for modifikatorane til standardverdiane"
 
-#: app/dialogs/preferences-dialog.c:3137
+#: app/dialogs/preferences-dialog.c:3143
 msgid "Snapping Behavior"
 msgstr "Innstillingar for festing"
 
-#: app/dialogs/preferences-dialog.c:3138
+#: app/dialogs/preferences-dialog.c:3144
 msgid "Snapping"
 msgstr "Festing"
 
-#: app/dialogs/preferences-dialog.c:3145
+#: app/dialogs/preferences-dialog.c:3151
 msgid "Default Behavior in Normal Mode"
 msgstr "Standard oppførsel i normalmodus"
 
-#: app/dialogs/preferences-dialog.c:3149
+#: app/dialogs/preferences-dialog.c:3155
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Standard oppførsel i fullskjermmodus"
 
-#: app/dialogs/preferences-dialog.c:3158
+#: app/dialogs/preferences-dialog.c:3164
 msgid "_Snapping distance:"
 msgstr "Feste_avstand:"
 
-#: app/dialogs/preferences-dialog.c:3167 app/dialogs/preferences-dialog.c:3168
+#: app/dialogs/preferences-dialog.c:3173 app/dialogs/preferences-dialog.c:3174
 msgid "Image Windows"
 msgstr "Biletvindauge"
 
-#: app/dialogs/preferences-dialog.c:3185
+#: app/dialogs/preferences-dialog.c:3191
 msgid "Merge menu and title bar"
 msgstr "Slå saman meny- og tittellinja"
 
-#: app/dialogs/preferences-dialog.c:3188
+#: app/dialogs/preferences-dialog.c:3194
 msgid ""
 "GIMP will try to convince your system not to decorate image windows. If it "
 "doesn't work properly on your system (i.e. you get 2 title bars), please "
@@ -18146,384 +18188,384 @@ msgstr ""
 "Viss det ikkje fungerer som det skal på systemet ditt (dvs. du får 2 "
 "tittellinjer), ver gild å rapporter dette."
 
-#: app/dialogs/preferences-dialog.c:3198
+#: app/dialogs/preferences-dialog.c:3204
 msgid "Use \"Show _all\" by default"
 msgstr "Bruk «Vis _alle» som standard"
 
-#: app/dialogs/preferences-dialog.c:3202
+#: app/dialogs/preferences-dialog.c:3208
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Bruk «_punkt for punkt» som standard"
 
-#: app/dialogs/preferences-dialog.c:3208
+#: app/dialogs/preferences-dialog.c:3214
 msgid "Marching ants s_peed:"
 msgstr "Farten på dei «marsjerende _maura»:"
 
 #. Zoom & Resize Behavior
-#: app/dialogs/preferences-dialog.c:3212
+#: app/dialogs/preferences-dialog.c:3218
 msgid "Zoom & Resize Behavior"
 msgstr "Oppførsel ved endring av visinga"
 
-#: app/dialogs/preferences-dialog.c:3216
+#: app/dialogs/preferences-dialog.c:3222
 msgid "Resize window on _zoom"
 msgstr "_Endra vindaugestorleik ved endring av biletvisinga"
 
-#: app/dialogs/preferences-dialog.c:3219
+#: app/dialogs/preferences-dialog.c:3225
 msgid "Resize window on image _size change"
 msgstr "_Tilpass vindauget etter biletformatet"
 
-#: app/dialogs/preferences-dialog.c:3225
+#: app/dialogs/preferences-dialog.c:3231
 msgid "Show entire image"
 msgstr "Vis heile bilete"
 
-#: app/dialogs/preferences-dialog.c:3227
+#: app/dialogs/preferences-dialog.c:3233
 msgid "Initial zoom _ratio:"
 msgstr "Format ved _opning:"
 
-#: app/dialogs/preferences-dialog.c:3235
+#: app/dialogs/preferences-dialog.c:3241
 msgid "Image Window Appearance"
 msgstr "Innstillingar for biletvindauget"
 
-#: app/dialogs/preferences-dialog.c:3245
+#: app/dialogs/preferences-dialog.c:3251
 msgid "Default Appearance in Normal Mode"
 msgstr "Standard utsjånad i normalmodus"
 
-#: app/dialogs/preferences-dialog.c:3250
+#: app/dialogs/preferences-dialog.c:3256
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Standard utsjånad i fullskjermmodus"
 
-#: app/dialogs/preferences-dialog.c:3259
+#: app/dialogs/preferences-dialog.c:3265
 msgid "Image Title & Statusbar Format"
 msgstr "Format for tittel- og statuslinjene i biletet"
 
-#: app/dialogs/preferences-dialog.c:3260
+#: app/dialogs/preferences-dialog.c:3266
 msgid "Title & Status"
 msgstr "Tittel og status"
 
-#: app/dialogs/preferences-dialog.c:3278
+#: app/dialogs/preferences-dialog.c:3284
 msgid "Current format"
 msgstr "Gjeldande format"
 
-#: app/dialogs/preferences-dialog.c:3279
+#: app/dialogs/preferences-dialog.c:3285
 msgid "Default format"
 msgstr "Standardformat"
 
-#: app/dialogs/preferences-dialog.c:3280
+#: app/dialogs/preferences-dialog.c:3286
 msgid "Show zoom percentage"
 msgstr "Vis forstørringa i prosent"
 
-#: app/dialogs/preferences-dialog.c:3281
+#: app/dialogs/preferences-dialog.c:3287
 msgid "Show zoom ratio"
 msgstr "Vis forstørringsforhold"
 
-#: app/dialogs/preferences-dialog.c:3282
+#: app/dialogs/preferences-dialog.c:3288
 msgid "Show image size"
 msgstr "Vis _storleik på bilete"
 
-#: app/dialogs/preferences-dialog.c:3283
+#: app/dialogs/preferences-dialog.c:3289
 msgid "Show drawable size"
 msgstr "Vis storleik på teiknemediet"
 
-#: app/dialogs/preferences-dialog.c:3296
+#: app/dialogs/preferences-dialog.c:3302
 msgid "Image Title Format"
 msgstr "Tittelformat for biletet"
 
-#: app/dialogs/preferences-dialog.c:3298
+#: app/dialogs/preferences-dialog.c:3304
 msgid "Image Statusbar Format"
 msgstr "Statuslinjeformat for biletet"
 
 #. Input Devices
-#: app/dialogs/preferences-dialog.c:3394 app/dialogs/preferences-dialog.c:3395
+#: app/dialogs/preferences-dialog.c:3400 app/dialogs/preferences-dialog.c:3401
 #: app/menus/menus.c:672
 msgid "Input Devices"
 msgstr "Inndataeiningar"
 
-#: app/dialogs/preferences-dialog.c:3406
+#: app/dialogs/preferences-dialog.c:3412
 msgid "Pointers"
 msgstr "Peikarar"
 
-#: app/dialogs/preferences-dialog.c:3413
+#: app/dialogs/preferences-dialog.c:3419
 msgid "Pointer _mode:"
 msgstr "Peikar_modus:"
 
-#: app/dialogs/preferences-dialog.c:3416
+#: app/dialogs/preferences-dialog.c:3422
 msgid "Pointer _handedness:"
 msgstr "_Lateralitet for peikar:"
 
-#: app/dialogs/preferences-dialog.c:3420
+#: app/dialogs/preferences-dialog.c:3426
 msgid "Paint Tools"
 msgstr "Teikneverktøya"
 
-#: app/dialogs/preferences-dialog.c:3424
+#: app/dialogs/preferences-dialog.c:3430
 msgid "Show _brush outline"
 msgstr "Vis _penselomriss"
 
-#: app/dialogs/preferences-dialog.c:3432
+#: app/dialogs/preferences-dialog.c:3438
 msgid "S_nap brush outline to stroke"
 msgstr "_Fest penselomriss til strok"
 
-#: app/dialogs/preferences-dialog.c:3436
+#: app/dialogs/preferences-dialog.c:3442
 msgid "Show pointer for paint _tools"
 msgstr "Vis peikar for teikneverktøya"
 
 #. Extended Input Devices
-#: app/dialogs/preferences-dialog.c:3440
+#: app/dialogs/preferences-dialog.c:3446
 msgid "Extended Input Devices"
 msgstr "Utvida inndataeiningar"
 
-#: app/dialogs/preferences-dialog.c:3456
+#: app/dialogs/preferences-dialog.c:3462
 msgid "Pointer Input API:"
 msgstr "Peikarinndata AP:"
 
-#: app/dialogs/preferences-dialog.c:3467
+#: app/dialogs/preferences-dialog.c:3473
 msgid "S_hare tool and tool options between input devices"
 msgstr "Del verktøy og verktøyinnstillingane mellom inndataeiningane"
 
-#: app/dialogs/preferences-dialog.c:3471
+#: app/dialogs/preferences-dialog.c:3477
 msgid "Configure E_xtended Input Devices..."
 msgstr "Set opp _utvida inndataeiningar …"
 
-#: app/dialogs/preferences-dialog.c:3478
+#: app/dialogs/preferences-dialog.c:3484
 msgid "_Save input device settings on exit"
 msgstr "_Lagra innstillingar for inndataeiningar ved avslutning"
 
-#: app/dialogs/preferences-dialog.c:3482
+#: app/dialogs/preferences-dialog.c:3488
 msgid "Save Input Device Settings _Now"
 msgstr "Lagra innstillingar for inndataeiningar _no"
 
-#: app/dialogs/preferences-dialog.c:3489
+#: app/dialogs/preferences-dialog.c:3495
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr ""
 "_Tilbakestill lagra innstillingar for inndataeiningar til standardverdiane"
 
-#: app/dialogs/preferences-dialog.c:3504
+#: app/dialogs/preferences-dialog.c:3510
 msgid "Additional Input Controllers"
 msgstr "Ekstra inndatakontrollelement"
 
-#: app/dialogs/preferences-dialog.c:3505
+#: app/dialogs/preferences-dialog.c:3511
 msgid "Input Controllers"
 msgstr "Inndatakontrollelement"
 
-#: app/dialogs/preferences-dialog.c:3520 app/dialogs/preferences-dialog.c:3521
+#: app/dialogs/preferences-dialog.c:3526 app/dialogs/preferences-dialog.c:3527
 msgid "Folders"
 msgstr "Mapper"
 
-#: app/dialogs/preferences-dialog.c:3528
+#: app/dialogs/preferences-dialog.c:3534
 msgid "Reset _Folders"
 msgstr "Tilbakestill _mappene"
 
-#: app/dialogs/preferences-dialog.c:3544
+#: app/dialogs/preferences-dialog.c:3550
 msgid "_Temporary folder:"
 msgstr "_Mellombels mappe:"
 
-#: app/dialogs/preferences-dialog.c:3545
+#: app/dialogs/preferences-dialog.c:3551
 msgid "Select Folder for Temporary Files"
 msgstr "Vel mappe for mellombels filer"
 
-#: app/dialogs/preferences-dialog.c:3549
+#: app/dialogs/preferences-dialog.c:3555
 msgid "_Swap folder:"
 msgstr "_Vekselmappe:"
 
-#: app/dialogs/preferences-dialog.c:3550
+#: app/dialogs/preferences-dialog.c:3556
 msgid "Select Swap Folder"
 msgstr "Vel mellomlagringsmappe"
 
-#: app/dialogs/preferences-dialog.c:3583
+#: app/dialogs/preferences-dialog.c:3589
 msgid "Brush Folders"
 msgstr "Penselmapper"
 
-#: app/dialogs/preferences-dialog.c:3586
+#: app/dialogs/preferences-dialog.c:3592
 msgid "Reset Brush _Folders"
 msgstr "Tilbakestill _penselmappene"
 
-#: app/dialogs/preferences-dialog.c:3587
+#: app/dialogs/preferences-dialog.c:3593
 msgid "Select Brush Folders"
 msgstr "Vel penselmapper"
 
-#: app/dialogs/preferences-dialog.c:3589
+#: app/dialogs/preferences-dialog.c:3595
 msgid "Dynamics Folders"
 msgstr "Mapper for dynamikk"
 
-#: app/dialogs/preferences-dialog.c:3592
+#: app/dialogs/preferences-dialog.c:3598
 msgid "Reset Dynamics _Folders"
 msgstr "Tilbakestill _dynamikkmapperne"
 
-#: app/dialogs/preferences-dialog.c:3593
+#: app/dialogs/preferences-dialog.c:3599
 msgid "Select Dynamics Folders"
 msgstr "Vel dynamikkmapper"
 
-#: app/dialogs/preferences-dialog.c:3595
+#: app/dialogs/preferences-dialog.c:3601
 msgid "Pattern Folders"
 msgstr "Mønstermapper"
 
-#: app/dialogs/preferences-dialog.c:3598
+#: app/dialogs/preferences-dialog.c:3604
 msgid "Reset Pattern _Folders"
 msgstr "Tilbakestill _mapper for mønsterelement"
 
-#: app/dialogs/preferences-dialog.c:3599
+#: app/dialogs/preferences-dialog.c:3605
 msgid "Select Pattern Folders"
 msgstr "Vel mapper for mønsterelement"
 
-#: app/dialogs/preferences-dialog.c:3601
+#: app/dialogs/preferences-dialog.c:3607
 msgid "Palette Folders"
 msgstr "Palettmapper"
 
-#: app/dialogs/preferences-dialog.c:3604
+#: app/dialogs/preferences-dialog.c:3610
 msgid "Reset Palette _Folders"
 msgstr "Tilbakestill _palettmappene"
 
-#: app/dialogs/preferences-dialog.c:3605
+#: app/dialogs/preferences-dialog.c:3611
 msgid "Select Palette Folders"
 msgstr "Vel palettmapper"
 
-#: app/dialogs/preferences-dialog.c:3607
+#: app/dialogs/preferences-dialog.c:3613
 msgid "Gradient Folders"
 msgstr "Mapper for fargeovergangar"
 
-#: app/dialogs/preferences-dialog.c:3610
+#: app/dialogs/preferences-dialog.c:3616
 msgid "Reset Gradient _Folders"
 msgstr "Tilbakestill _fargeovergangsmappene"
 
-#: app/dialogs/preferences-dialog.c:3611
+#: app/dialogs/preferences-dialog.c:3617
 msgid "Select Gradient Folders"
 msgstr "Vel fargeovergangsmapper"
 
-#: app/dialogs/preferences-dialog.c:3613
+#: app/dialogs/preferences-dialog.c:3619
 msgid "Font Folders"
 msgstr "Skrifttypemapper"
 
-#: app/dialogs/preferences-dialog.c:3616
+#: app/dialogs/preferences-dialog.c:3622
 msgid "Reset Font _Folders"
 msgstr "Tilbakestill _skrifttypemappene"
 
-#: app/dialogs/preferences-dialog.c:3617
+#: app/dialogs/preferences-dialog.c:3623
 msgid "Select Font Folders"
 msgstr "Vel skrifttypemapper"
 
-#: app/dialogs/preferences-dialog.c:3619
+#: app/dialogs/preferences-dialog.c:3625
 msgid "Tool Preset Folders"
 msgstr "Mapper for verktøyforvala"
 
-#: app/dialogs/preferences-dialog.c:3622
+#: app/dialogs/preferences-dialog.c:3628
 msgid "Reset Tool Preset _Folders"
 msgstr "Tilbakestill mappene for _verktøyforvala"
 
-#: app/dialogs/preferences-dialog.c:3623
+#: app/dialogs/preferences-dialog.c:3629
 msgid "Select Tool Preset Folders"
 msgstr "Rediger mappene for verktøyforvala"
 
-#: app/dialogs/preferences-dialog.c:3625
+#: app/dialogs/preferences-dialog.c:3631
 msgid "MyPaint Brush Folders"
 msgstr "MyPaint-penselmappene"
 
-#: app/dialogs/preferences-dialog.c:3628
+#: app/dialogs/preferences-dialog.c:3634
 msgid "Reset MyPaint Brush _Folders"
 msgstr "Tilbakestill _MyPaint-penselmappene"
 
-#: app/dialogs/preferences-dialog.c:3629
+#: app/dialogs/preferences-dialog.c:3635
 msgid "Select MyPaint Brush Folders"
 msgstr "Vel MyPaint-penselmappene"
 
-#: app/dialogs/preferences-dialog.c:3631
+#: app/dialogs/preferences-dialog.c:3637
 msgid "Plug-in Folders"
 msgstr "Mapper for programtillegg"
 
-#: app/dialogs/preferences-dialog.c:3634
+#: app/dialogs/preferences-dialog.c:3640
 msgid "Reset plug-in _Folders"
 msgstr "Tilbakestill mapper for _programtillegg"
 
-#: app/dialogs/preferences-dialog.c:3635
+#: app/dialogs/preferences-dialog.c:3641
 msgid "Select plug-in Folders"
 msgstr "Vel mapper for programtillegg"
 
-#: app/dialogs/preferences-dialog.c:3637
+#: app/dialogs/preferences-dialog.c:3643
 msgid "Scripts"
 msgstr "Skript"
 
-#: app/dialogs/preferences-dialog.c:3637
+#: app/dialogs/preferences-dialog.c:3643
 msgid "Script-Fu Folders"
 msgstr "Script-Fu-mapper"
 
-#: app/dialogs/preferences-dialog.c:3640
+#: app/dialogs/preferences-dialog.c:3646
 msgid "Reset Script-Fu _Folders"
 msgstr "Tilbakestill _Script-Fu-mappene"
 
-#: app/dialogs/preferences-dialog.c:3641
+#: app/dialogs/preferences-dialog.c:3647
 msgid "Select Script-Fu Folders"
 msgstr "Vel Script-Fu-mapper"
 
-#: app/dialogs/preferences-dialog.c:3643
+#: app/dialogs/preferences-dialog.c:3649
 msgid "Module Folders"
 msgstr "Modulmapper"
 
-#: app/dialogs/preferences-dialog.c:3646
+#: app/dialogs/preferences-dialog.c:3652
 msgid "Reset Module _Folders"
 msgstr "Tilbakestill _mapper for modular"
 
-#: app/dialogs/preferences-dialog.c:3647
+#: app/dialogs/preferences-dialog.c:3653
 msgid "Select Module Folders"
 msgstr "Vel mapper for modular"
 
-#: app/dialogs/preferences-dialog.c:3649
+#: app/dialogs/preferences-dialog.c:3655
 msgid "Interpreters"
 msgstr "Tolkar"
 
-#: app/dialogs/preferences-dialog.c:3649
+#: app/dialogs/preferences-dialog.c:3655
 msgid "Interpreter Folders"
 msgstr "Mapper for interpreter"
 
-#: app/dialogs/preferences-dialog.c:3652
+#: app/dialogs/preferences-dialog.c:3658
 msgid "Reset Interpreter _Folders"
 msgstr "Tilbakestill mappene for _tolkar"
 
-#: app/dialogs/preferences-dialog.c:3653
+#: app/dialogs/preferences-dialog.c:3659
 msgid "Select Interpreter Folders"
 msgstr "Vel mappe for interpreter"
 
-#: app/dialogs/preferences-dialog.c:3655
+#: app/dialogs/preferences-dialog.c:3661
 msgid "Environment"
 msgstr "Omgivnadar"
 
-#: app/dialogs/preferences-dialog.c:3655
+#: app/dialogs/preferences-dialog.c:3661
 msgid "Environment Folders"
 msgstr "Mapper for omgivnadar"
 
-#: app/dialogs/preferences-dialog.c:3658
+#: app/dialogs/preferences-dialog.c:3664
 msgid "Reset Environment _Folders"
 msgstr "Tilbakestill mapper for _omgivnadar"
 
-#: app/dialogs/preferences-dialog.c:3659
+#: app/dialogs/preferences-dialog.c:3665
 msgid "Select Environment Folders"
 msgstr "Vel mapper for omgivnadar"
 
-#: app/dialogs/preferences-dialog.c:3661
+#: app/dialogs/preferences-dialog.c:3667
 msgid "Themes"
 msgstr "Tema"
 
-#: app/dialogs/preferences-dialog.c:3661
+#: app/dialogs/preferences-dialog.c:3667
 msgid "Theme Folders"
 msgstr "Temamapper"
 
-#: app/dialogs/preferences-dialog.c:3664
+#: app/dialogs/preferences-dialog.c:3670
 msgid "Reset Theme _Folders"
 msgstr "Tilbakestill _temamappene"
 
-#: app/dialogs/preferences-dialog.c:3665
+#: app/dialogs/preferences-dialog.c:3671
 msgid "Select Theme Folders"
 msgstr "Vel temamapper"
 
-#: app/dialogs/preferences-dialog.c:3667
+#: app/dialogs/preferences-dialog.c:3673
 msgid "Icon Themes"
 msgstr "Ikontema"
 
-#: app/dialogs/preferences-dialog.c:3667
+#: app/dialogs/preferences-dialog.c:3673
 msgid "Icon Theme Folders"
 msgstr "Mappe for ikontema"
 
-#: app/dialogs/preferences-dialog.c:3670
+#: app/dialogs/preferences-dialog.c:3676
 msgid "Reset Icon Theme _Folders"
 msgstr "Tilbakestill mappene for _ikontema"
 
-#: app/dialogs/preferences-dialog.c:3671
+#: app/dialogs/preferences-dialog.c:3677
 msgid "Select Icon Theme Folders"
 msgstr "Vel mappe for ikontema"
 
@@ -18696,19 +18738,19 @@ msgstr "Skaler malen til %.2f ppi"
 msgid "Set image to %.2f ppi"
 msgstr "Set biletet til %.2f ppi"
 
-#: app/dialogs/resolution-calibrate-dialog.c:67
+#: app/dialogs/resolution-calibrate-dialog.c:68
 msgid "Calibrate Monitor Resolution"
 msgstr "Kalibrer oppløysinga for skjermen"
 
-#: app/dialogs/resolution-calibrate-dialog.c:120
+#: app/dialogs/resolution-calibrate-dialog.c:124
 msgid "Measure the rulers and enter their lengths:"
 msgstr "Mål linjalane og skriv inn lengdene:"
 
-#: app/dialogs/resolution-calibrate-dialog.c:145
+#: app/dialogs/resolution-calibrate-dialog.c:149
 msgid "_Horizontal:"
 msgstr "_Vassrett:"
 
-#: app/dialogs/resolution-calibrate-dialog.c:150
+#: app/dialogs/resolution-calibrate-dialog.c:154
 msgid "_Vertical:"
 msgstr "_Loddrett:"
 
@@ -18734,7 +18776,8 @@ msgstr "Vel strokstil"
 msgid "_Stroke"
 msgstr "_Strok"
 
-#: app/dialogs/stroke-dialog.c:174
+#: app/dialogs/stroke-dialog.c:174 app/tools/gimpshapeoptions.c:631
+#: app/tools/gimpshapetool.c:755
 msgid "Line"
 msgstr "Linje"
 
@@ -18782,7 +18825,7 @@ msgid "_Next Tip"
 msgstr "_Neste tips"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1102
+#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1108
 msgid "Learn more"
 msgstr "Lær meir"
 
@@ -18815,27 +18858,27 @@ msgstr "Logg for brukarinstallasjonen"
 msgid "Export Paths to SVG"
 msgstr "Eksporter banane til SVG"
 
-#: app/dialogs/path-export-dialog.c:98
+#: app/dialogs/path-export-dialog.c:99
 msgid "SVG (*.svg)"
 msgstr "SVG (*.svg)"
 
-#: app/dialogs/path-import-dialog.c:90
+#: app/dialogs/path-import-dialog.c:91
 msgid "Import Paths from SVG"
 msgstr "Importer banar fra SVG"
 
-#: app/dialogs/path-import-dialog.c:134
+#: app/dialogs/path-import-dialog.c:135
 msgid "All files (*.*)"
 msgstr "Alle filer (*.*)"
 
-#: app/dialogs/path-import-dialog.c:139
+#: app/dialogs/path-import-dialog.c:140
 msgid "Scalable SVG image (*.svg)"
 msgstr "Skalerbart SVG-bilete (*.svg)"
 
-#: app/dialogs/path-import-dialog.c:150
+#: app/dialogs/path-import-dialog.c:151
 msgid "_Merge imported paths"
 msgstr "_Flett sammen importerte banar"
 
-#: app/dialogs/path-import-dialog.c:160
+#: app/dialogs/path-import-dialog.c:161
 msgid "_Scale imported paths to fit image"
 msgstr "_Skaler importerte banar så dei passer biletstorleiken"
 
@@ -18939,55 +18982,55 @@ msgstr "Ikontema"
 msgid "Icon Scaling"
 msgstr "Skalering av ikon"
 
-#: app/dialogs/welcome-dialog.c:726
+#: app/dialogs/welcome-dialog.c:732
 msgid "GUI Language (requires restart)"
 msgstr "Språk for grafisk grensesnitt (krev omstart)"
 
-#: app/dialogs/welcome-dialog.c:731
+#: app/dialogs/welcome-dialog.c:737
 msgid "Additional Customizations"
 msgstr "Ekstra itilpassingar"
 
-#: app/dialogs/welcome-dialog.c:735
+#: app/dialogs/welcome-dialog.c:741
 msgid "Merge menu and title bar (requires restart)"
 msgstr "Slå saman meny- og tittellinja (krev omstart)"
 
-#: app/dialogs/welcome-dialog.c:743
+#: app/dialogs/welcome-dialog.c:749
 msgid "Enable check for updates (requires internet)"
 msgstr "Slå på «Sjå etter oppdateringar» (krev Internett)"
 
-#: app/dialogs/welcome-dialog.c:775
+#: app/dialogs/welcome-dialog.c:781
 msgid "C_reate"
 msgstr "_Opprett"
 
-#: app/dialogs/welcome-dialog.c:784
+#: app/dialogs/welcome-dialog.c:790
 msgid "Open an Existing Image"
 msgstr "Opna eit bilete som finst"
 
 #. Recent Files
-#: app/dialogs/welcome-dialog.c:796
+#: app/dialogs/welcome-dialog.c:802
 msgid "Recent Images"
 msgstr "Tidlegare brukte bilete"
 
-#: app/dialogs/welcome-dialog.c:811
+#: app/dialogs/welcome-dialog.c:817
 msgid "O_pen Selected Images"
 msgstr "_Opna det merkte biletet"
 
-#: app/dialogs/welcome-dialog.c:821
+#: app/dialogs/welcome-dialog.c:827
 msgid ""
 "Show on Start (You can show the Welcome dialog again from the \"Help\" menu)"
 msgstr ""
 "Vis ved oppstart. (Du kan sjå velkomstvindauget igjen frå «Hjelp»-menyen)"
 
-#: app/dialogs/welcome-dialog.c:847
+#: app/dialogs/welcome-dialog.c:853
 #, c-format
 msgid "Ways to contribute"
 msgstr "Måtar å bidra på"
 
-#: app/dialogs/welcome-dialog.c:856 app/dialogs/welcome-dialog.c:867
+#: app/dialogs/welcome-dialog.c:862 app/dialogs/welcome-dialog.c:873
 msgid "Report Bugs"
 msgstr "Rapporter feil"
 
-#: app/dialogs/welcome-dialog.c:858
+#: app/dialogs/welcome-dialog.c:864
 msgid ""
 "As any application, GIMP is not bug-free, so reporting bugs that you "
 "encounter is very important to the development."
@@ -18995,11 +19038,11 @@ msgstr ""
 "Som alle andre program, er heller ikkje GIMP feilfri, så det er viktig at du "
 "rapporterer feil som du måtte finna."
 
-#: app/dialogs/welcome-dialog.c:871 app/dialogs/welcome-dialog.c:881
+#: app/dialogs/welcome-dialog.c:877 app/dialogs/welcome-dialog.c:887
 msgid "Write Code"
 msgstr "Skriva kode"
 
-#: app/dialogs/welcome-dialog.c:873
+#: app/dialogs/welcome-dialog.c:879
 msgid ""
 "Our Developer Website is where you want to start learning about being a code "
 "contributor."
@@ -19007,37 +19050,37 @@ msgstr ""
 "Ønskjer du å skriva kode, er nettstaden vår den rette staden å læra om "
 "dette. (På engelsk)."
 
-#: app/dialogs/welcome-dialog.c:885 app/dialogs/welcome-dialog.c:895
+#: app/dialogs/welcome-dialog.c:891 app/dialogs/welcome-dialog.c:901
 msgid "Translate"
 msgstr "Omsett"
 
-#: app/dialogs/welcome-dialog.c:887
+#: app/dialogs/welcome-dialog.c:893
 msgid "Contact the respective translation team for your language"
 msgstr "Kontakt omsetjarlaget for språket ditt"
 
-#: app/dialogs/welcome-dialog.c:899
+#: app/dialogs/welcome-dialog.c:905
 msgid "Donate"
 msgstr "Donera"
 
-#: app/dialogs/welcome-dialog.c:901
+#: app/dialogs/welcome-dialog.c:907
 msgid "Donating money is important: it makes GIMP sustainable."
 msgstr "Det er viktig å donera pengar for å gjera GIMP berekraftig."
 
-#: app/dialogs/welcome-dialog.c:909
+#: app/dialogs/welcome-dialog.c:915
 msgid "Donate via Liberapay"
 msgstr "Doner via Liberapay"
 
-#: app/dialogs/welcome-dialog.c:913
+#: app/dialogs/welcome-dialog.c:919
 msgid "Other donation options"
 msgstr "Andre høve til å donera"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:947
+#: app/dialogs/welcome-dialog.c:953
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Utgjevingsmerknadar for GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:1062
+#: app/dialogs/welcome-dialog.c:1068
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Trykk på frigjorde element med eit %s punkt for å få ei omvising."
@@ -19744,153 +19787,163 @@ msgstr "Klikk og dra for å flytta linja"
 msgid "%s to move the whole line"
 msgstr "%s for å flytta heile linja"
 
-#: app/display/gimptoolpath.c:281 app/tools/gimppathoptions.c:122
+#: app/display/gimptoolpath.c:283 app/tools/gimppathoptions.c:123
 msgid "Edit Mode"
 msgstr "Arbeidsmodus"
 
-#: app/display/gimptoolpath.c:290 app/tools/gimppathoptions.c:130
+#: app/display/gimptoolpath.c:292 app/tools/gimppathoptions.c:131
 msgid "Polygonal"
 msgstr "Polygonal"
 
-#: app/display/gimptoolpath.c:291 app/tools/gimppathoptions.c:131
+#: app/display/gimptoolpath.c:293 app/tools/gimppathoptions.c:132
 msgid "Restrict editing to polygons"
 msgstr "Avgrens redigeringa til polygon"
 
-#: app/display/gimptoolpath.c:550
+#: app/display/gimptoolpath.c:300 app/tools/gimppathoptions.c:138
+msgid "Auto-connect on click"
+msgstr "Autotilkopling ved klikk"
+
+#: app/display/gimptoolpath.c:301 app/tools/gimppathoptions.c:139
+msgid "If checked, clicking on the end node in Design mode will close the path"
+msgstr ""
+"Viss denne er avmerkt, vert banen lukka når du klikkar på sluttnoden i "
+"«utformingsmodus»"
+
+#: app/display/gimptoolpath.c:567
 msgid "The selected path is locked."
 msgstr "Den valde banen er låst."
 
-#: app/display/gimptoolpath.c:640
+#: app/display/gimptoolpath.c:657
 msgid "Add Stroke"
 msgstr "Legg til strok"
 
-#: app/display/gimptoolpath.c:664
+#: app/display/gimptoolpath.c:681
 msgid "Add Anchor"
 msgstr "Legg til anker"
 
-#: app/display/gimptoolpath.c:688 app/display/gimptoolpath.c:2073
-#: app/display/gimptoolpath.c:2115
+#: app/display/gimptoolpath.c:705 app/display/gimptoolpath.c:2091
+#: app/display/gimptoolpath.c:2133
 msgid "Insert Anchor"
 msgstr "Set inn anker"
 
-#: app/display/gimptoolpath.c:717
+#: app/display/gimptoolpath.c:734
 msgid "Drag Handle"
 msgstr "Dra handtak"
 
-#: app/display/gimptoolpath.c:748
+#: app/display/gimptoolpath.c:765
 msgid "Drag Anchor"
 msgstr "Dra anker"
 
-#: app/display/gimptoolpath.c:766
+#: app/display/gimptoolpath.c:783
 msgid "Drag Anchors"
 msgstr "Dra anker"
 
-#: app/display/gimptoolpath.c:788
+#: app/display/gimptoolpath.c:805
 msgid "Drag Curve"
 msgstr "Dra kurve"
 
-#: app/display/gimptoolpath.c:817
+#: app/display/gimptoolpath.c:834
 msgid "Connect Strokes"
 msgstr "Kopla stroka saman"
 
-#: app/display/gimptoolpath.c:849
+#: app/display/gimptoolpath.c:866
 msgid "Drag Path"
 msgstr "Dra bane"
 
-#: app/display/gimptoolpath.c:860
+#: app/display/gimptoolpath.c:877
 msgid "Convert Edge"
 msgstr "Konverter kant"
 
-#: app/display/gimptoolpath.c:891
+#: app/display/gimptoolpath.c:908
 msgid "Delete Anchor"
 msgstr "Slett anker"
 
-#: app/display/gimptoolpath.c:914 app/display/gimptoolpath.c:2093
+#: app/display/gimptoolpath.c:931 app/display/gimptoolpath.c:2111
 msgid "Delete Segment"
 msgstr "Slett segment"
 
-#: app/display/gimptoolpath.c:1166
+#: app/display/gimptoolpath.c:1183
 msgid "Move Anchors"
 msgstr "Flytt ankera"
 
-#: app/display/gimptoolpath.c:1601
+#: app/display/gimptoolpath.c:1619
 msgid "Click to pick path to edit"
 msgstr "Klikk for å hente bane for redigering"
 
-#: app/display/gimptoolpath.c:1605
+#: app/display/gimptoolpath.c:1623
 msgid "Click to create a new path"
 msgstr "Klikk for å oppretta ein ny bane."
 
-#: app/display/gimptoolpath.c:1609
+#: app/display/gimptoolpath.c:1627
 msgid "Click to create a new component of the path"
 msgstr "Klikk for å oppretta ein ny komponent i banen."
 
-#: app/display/gimptoolpath.c:1613
+#: app/display/gimptoolpath.c:1631
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Klikk eller klikk-og-dra for å oppretta eit nytt anker"
 
-#: app/display/gimptoolpath.c:1623 app/display/gimptoolpath.c:1630
+#: app/display/gimptoolpath.c:1641 app/display/gimptoolpath.c:1648
 msgid "Click-Drag to move the anchor around"
 msgstr "Klikk-og-dra for å flytta ankeret rundt."
 
-#: app/display/gimptoolpath.c:1634 app/display/gimptoolpath.c:1657
+#: app/display/gimptoolpath.c:1652 app/display/gimptoolpath.c:1675
 msgid "Click-Drag to move the anchors around"
 msgstr "Klikk-og-dra for å flytta ankera rundt."
 
-#: app/display/gimptoolpath.c:1640
+#: app/display/gimptoolpath.c:1658
 msgid "Click-Drag to move the handle around"
 msgstr "Klikk-og-dra for å flytta handtaket rundt"
 
-#: app/display/gimptoolpath.c:1647
+#: app/display/gimptoolpath.c:1665
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Klikk-og-dra for å flytta handtaket symmetrisk"
 
-#: app/display/gimptoolpath.c:1662
+#: app/display/gimptoolpath.c:1680
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Klikk og dra for å endra forma på kurva"
 
-#: app/display/gimptoolpath.c:1665
+#: app/display/gimptoolpath.c:1683
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: symmetrisk"
 
-#: app/display/gimptoolpath.c:1670
+#: app/display/gimptoolpath.c:1688
 msgid "Click-Drag to move the component around"
 msgstr "Klikk og dra for å flytta komponenten"
 
-#: app/display/gimptoolpath.c:1678
+#: app/display/gimptoolpath.c:1696
 msgid "Click-Drag to move the path around"
 msgstr "Klikk og dra for å flytta banen."
 
-#: app/display/gimptoolpath.c:1682
+#: app/display/gimptoolpath.c:1700
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Klikk for å sette inn eit anker i banen"
 
-#: app/display/gimptoolpath.c:1690
+#: app/display/gimptoolpath.c:1708
 msgid "Click to delete this anchor"
 msgstr "Klikk for å sletta dette ankeret"
 
-#: app/display/gimptoolpath.c:1694
+#: app/display/gimptoolpath.c:1712
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Klikk for å kopla dette ankeret saman med det valde endepunktet"
 
-#: app/display/gimptoolpath.c:1699
+#: app/display/gimptoolpath.c:1717
 msgid "Click to open up the path"
 msgstr "Klikk for å opna banen."
 
-#: app/display/gimptoolpath.c:1703
+#: app/display/gimptoolpath.c:1721
 msgid "Click to make this node angular"
 msgstr "Klikk for å gjera denne noden vinkla"
 
-#: app/display/gimptoolpath.c:1707
+#: app/display/gimptoolpath.c:1725
 msgid "Clicking here does nothing, try clicking on path elements."
 msgstr "Å trykkja her gjer ingenting, prøv å trykkja på baneelementa."
 
-#: app/display/gimptoolpath.c:1915 app/display/gimptoolpath.c:2026
+#: app/display/gimptoolpath.c:1933 app/display/gimptoolpath.c:2044
 msgid "Delete Anchors"
 msgstr "Slett anker"
 
-#: app/display/gimptoolpath.c:2055
+#: app/display/gimptoolpath.c:2073
 msgid "Shift start"
 msgstr "Skift start"
 
@@ -19985,30 +20038,30 @@ msgstr ""
 msgid "Circular reference detected with '%s'."
 msgstr "Sirkulær referanse oppdaga med «%s»."
 
-#: app/file/file-remote.c:121
+#: app/file/file-remote.c:122
 msgid "Mounting remote volume"
 msgstr "Oppsetjing av fjernkontrollvolum"
 
-#: app/file/file-remote.c:320 app/file/file-remote.c:383
+#: app/file/file-remote.c:321 app/file/file-remote.c:384
 msgid "Opening remote file"
 msgstr "Opna ei ekstern fil"
 
-#: app/file/file-remote.c:449
+#: app/file/file-remote.c:450
 #, c-format
 msgid "Downloading image (%s of %s)"
 msgstr "Lastar ned bilete (%s av %s)"
 
-#: app/file/file-remote.c:453
+#: app/file/file-remote.c:454
 #, c-format
 msgid "Uploading image (%s of %s)"
 msgstr "Lastar opp biletet (%s of %s)"
 
-#: app/file/file-remote.c:476
+#: app/file/file-remote.c:477
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "%s av biletdata er lasta ned"
 
-#: app/file/file-remote.c:480
+#: app/file/file-remote.c:481
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "%s av biletdata er lasta opp"
@@ -21073,19 +21126,19 @@ msgstr "Verdi"
 msgid "The alpha value"
 msgstr "Alfaverdien"
 
-#: app/gui/gui.c:346
+#: app/gui/gui.c:349
 msgid "Image Recovery"
 msgstr "Gjenoppretting av biletet"
 
-#: app/gui/gui.c:348
+#: app/gui/gui.c:351
 msgid "_Discard"
 msgstr "_Forkast"
 
-#: app/gui/gui.c:349
+#: app/gui/gui.c:352
 msgid "_Recover"
 msgstr "_Gjenopprett"
 
-#: app/gui/gui.c:360
+#: app/gui/gui.c:363
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "OOOBS! Det ser ut til at GIMP vart gjenoppretta etter eit krasj!"
 
@@ -21095,7 +21148,7 @@ msgstr "OOOBS! Det ser ut til at GIMP vart gjenoppretta etter eit krasj!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:369
+#: app/gui/gui.c:372
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -21109,7 +21162,7 @@ msgstr[1] ""
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:640
+#: app/gui/gui.c:643
 msgid "Documents"
 msgstr "Dokument"
 
@@ -21121,7 +21174,7 @@ msgstr "GIMP oppstart"
 msgid "Loading"
 msgstr "Lastar inn"
 
-#: app/gui/themes.c:571
+#: app/gui/themes.c:573
 #, c-format
 msgid ""
 "Invalid theme: directory '%s' contains neither gimp-dark.css, gimp-gray.css, "
@@ -21244,8 +21297,10 @@ msgid "Tilt"
 msgstr "Helling"
 
 #. Blob shape widgets
+#. Shape Type
 #: app/paint/gimpinkoptions.c:107 app/tools/gimpgradientoptions.c:96
 #: app/tools/gimpgradientoptions.c:305 app/tools/gimpinkoptions-gui.c:99
+#: app/tools/gimpshapeoptions.c:124 app/tools/gimpshapeoptions.c:626
 msgid "Shape"
 msgstr "Form"
 
@@ -21730,7 +21785,7 @@ msgstr "Fann ingen banar i bufferen"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Greidde ikkje å importera banar frå «%s»: %s"
 
-#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:886
+#: app/path/gimpvectorlayer.c:200 app/tools/gimppathtool.c:890
 msgid "Vector Layer"
 msgstr "Vektorlag"
 
@@ -21781,6 +21836,10 @@ msgstr "Strokstil"
 #: app/pdb/channel-cmds.c:199
 msgid "Combine Masks"
 msgstr "Kombiner masker"
+
+#: app/pdb/context-cmds.c:2118 app/pdb/fonts-cmds.c:82 app/pdb/fonts-cmds.c:149
+msgid "Failed waiting for the loading of fonts."
+msgstr "Kunne ikkje venta på lastinga av skrifttypane."
 
 #: app/pdb/drawable-cmds.c:655
 msgid "Add filter"
@@ -22381,6 +22440,15 @@ msgstr "Utvid oppstrekinga av banen"
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Dataetiketten «%s» er ikkje ein kanonisk identifikator"
 
+#: app/pdb/progress-cmds.c:73 app/pdb/progress-cmds.c:107
+#: app/pdb/progress-cmds.c:135 app/pdb/progress-cmds.c:168
+#: app/pdb/progress-cmds.c:197 app/pdb/progress-cmds.c:227
+#: app/pdb/progress-cmds.c:264 app/pdb/progress-cmds.c:297
+#: app/pdb/progress-cmds.c:330
+#, c-format
+msgid "The plug-in is closing."
+msgstr "Programtillegget vert lukka."
+
 #: app/pdb/rasterizable-cmds.c:65
 #, c-format
 msgid "This item has already been rasterized."
@@ -22672,7 +22740,7 @@ msgstr "_Tilbakestill fargane"
 msgid "Preserve _luminosity"
 msgstr "Bevar farge_glød"
 
-#: app/propgui/gimppropgui-color-rotate.c:124
+#: app/propgui/gimppropgui-color-rotate.c:124 app/tools/gimpshapeoptions.c:695
 msgid "Clockwise"
 msgstr "Med klokka"
 
@@ -22991,12 +23059,12 @@ msgstr ""
 "Høvdingens kjære squaw\n"
 "får litt pizza i Mexico by."
 
-#: app/text/gimpfontfactory.c:525
+#: app/text/gimpfontfactory.c:498
 #, c-format
 msgid "Some fonts failed to load:%s"
 msgstr "Klarte ikkje lasta inn alle skrifttypane: %s"
 
-#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1742
+#: app/text/gimptext-compat.c:101 app/tools/gimptexttool.c:1813
 msgid "Add Text Layer"
 msgstr "Legg til tekstlag"
 
@@ -23008,43 +23076,43 @@ msgstr "Ugyldig markeringsformat i tekstparasitt"
 msgid "Empty text parasite"
 msgstr "Tom tekstparasitt"
 
-#: app/text/gimptextlayer.c:177
+#: app/text/gimptextlayer.c:178
 msgid "Text Layer"
 msgstr "Tekstlag"
 
-#: app/text/gimptextlayer.c:189
+#: app/text/gimptextlayer.c:188
 msgid "Rename Text Layer"
 msgstr "Gi nytt namn på tekstlaget"
 
-#: app/text/gimptextlayer.c:190 app/tools/gimptexttool.c:1307
+#: app/text/gimptextlayer.c:189 app/tools/gimptexttool.c:1352
 msgid "Move Text Layer"
 msgstr "Flytt tekstlaget"
 
-#: app/text/gimptextlayer.c:191
+#: app/text/gimptextlayer.c:190
 msgid "Scale Text Layer"
 msgstr "Skaler tekstlaget"
 
-#: app/text/gimptextlayer.c:192
+#: app/text/gimptextlayer.c:191
 msgid "Resize Text Layer"
 msgstr "Endra storleiken på tekstlaget"
 
-#: app/text/gimptextlayer.c:193
+#: app/text/gimptextlayer.c:192
 msgid "Flip Text Layer"
 msgstr "Spegelvender tekstlaget"
 
-#: app/text/gimptextlayer.c:194
+#: app/text/gimptextlayer.c:193
 msgid "Rotate Text Layer"
 msgstr "Roter tekstlaget"
 
-#: app/text/gimptextlayer.c:195
+#: app/text/gimptextlayer.c:194
 msgid "Transform Text Layer"
 msgstr "Transformer tekstlaget"
 
-#: app/text/gimptextlayer.c:833 app/text/gimptextlayer.c:974
+#: app/text/gimptextlayer.c:832 app/text/gimptextlayer.c:973
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Sidan skrifttypane manglar er ikkje tekstfunksjonane tilgjengelege."
 
-#: app/text/gimptextlayer.c:1189
+#: app/text/gimptextlayer.c:1188
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -23067,7 +23135,7 @@ msgstr ""
 "Nokre av teksteigenskapane kan vere feil. Du treng berre bry deg om dette "
 "dersom du ønskjer å redigera tekstlaget."
 
-#: app/text/gimptextlayout.c:707
+#: app/text/gimptextlayout.c:776
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -23610,15 +23678,19 @@ msgstr "_Kloning"
 msgid "Click to clone"
 msgstr "Klikk for å klona"
 
-#: app/tools/gimpclonetool.c:92 app/tools/gimpclonetool.c:97
+#: app/tools/gimpclonetool.c:92 app/tools/gimpclonetool.c:96
 #, c-format
 msgid "%s to set a new clone source"
 msgstr "%s for å setja ei ny klonekjelde"
 
-#. Translators: the translation of "Click" must be the first word
-#: app/tools/gimpclonetool.c:96
+#: app/tools/gimpclonetool.c:95
 msgid "Click to set a new clone source"
 msgstr "Klikk for å setja ei ny klonekjelde"
+
+#: app/tools/gimpclonetool.c:97
+#, c-format
+msgid "%s-click to set a new clone source"
+msgstr "%s-klikk for å setja ei ny klonekjelde"
 
 #: app/tools/gimpcoloroptions.c:71
 msgid "Use merged color value from all composited visible layers"
@@ -23929,42 +24001,42 @@ msgstr "%s for å avskugga"
 msgid "Type  (%s)"
 msgstr "Type (%s)"
 
-#: app/tools/gimpeditselectiontool.c:401 app/tools/gimpeditselectiontool.c:597
+#: app/tools/gimpeditselectiontool.c:401 app/tools/gimpeditselectiontool.c:598
 msgid "Move: "
 msgstr "Flytt: "
 
-#: app/tools/gimpeditselectiontool.c:1044
-#: app/tools/gimpeditselectiontool.c:1406
+#: app/tools/gimpeditselectiontool.c:1045
+#: app/tools/gimpeditselectiontool.c:1407
 msgid "Move Floating Selection"
 msgstr "Flytt det flytande utvalet"
 
-#: app/tools/gimpeditselectiontool.c:1290 app/tools/gimpmovetool.c:294
+#: app/tools/gimpeditselectiontool.c:1291 app/tools/gimpmovetool.c:294
 msgid "There are no paths to move."
 msgstr "Det er ingen bane å flytta."
 
-#: app/tools/gimpeditselectiontool.c:1298
+#: app/tools/gimpeditselectiontool.c:1299
 msgid "A selected path's position is locked."
 msgstr "Plasseringa av dei merkte banane er låst."
 
-#: app/tools/gimpeditselectiontool.c:1311 app/tools/gimpmovetool.c:339
+#: app/tools/gimpeditselectiontool.c:1312 app/tools/gimpmovetool.c:339
 msgid "There is no layer to move."
 msgstr "Det er ingen lag å flytta."
 
-#: app/tools/gimpeditselectiontool.c:1320
-#: app/tools/gimpeditselectiontool.c:1347 app/tools/gimpmovetool.c:348
+#: app/tools/gimpeditselectiontool.c:1321
+#: app/tools/gimpeditselectiontool.c:1348 app/tools/gimpmovetool.c:348
 msgid "The selected layer's position is locked."
 msgstr "Den merkte lagplassering er låst."
 
-#: app/tools/gimpeditselectiontool.c:1325 app/tools/gimpgradienttool.c:294
+#: app/tools/gimpeditselectiontool.c:1326 app/tools/gimpgradienttool.c:294
 #: app/tools/gimpmovetool.c:350
 msgid "The selected layer's pixels are locked."
 msgstr "Pikslane i det gjeldande laget er låst."
 
-#: app/tools/gimpeditselectiontool.c:1336
+#: app/tools/gimpeditselectiontool.c:1337
 msgid "A selected channel's position is locked."
 msgstr "Plasseringa av den merkte kanalen er låst."
 
-#: app/tools/gimpeditselectiontool.c:1358 app/tools/gimpmovetool.c:367
+#: app/tools/gimpeditselectiontool.c:1359 app/tools/gimpmovetool.c:367
 msgid "A selected layer's position is locked."
 msgstr "Den merkte lagplassering er låst."
 
@@ -24612,15 +24684,19 @@ msgstr "_Helbred"
 msgid "Click to heal"
 msgstr "Klikk for å helbrede"
 
-#: app/tools/gimphealtool.c:80 app/tools/gimphealtool.c:85
+#: app/tools/gimphealtool.c:80 app/tools/gimphealtool.c:84
 #, c-format
 msgid "%s to set a new heal source"
 msgstr "%s for å setja ei ny kjelde for helbredinga"
 
-#. Translators: the translation of "Click" must be the first word
-#: app/tools/gimphealtool.c:84
+#: app/tools/gimphealtool.c:83
 msgid "Click to set a new heal source"
 msgstr "Klikk for å setja ei ny kjelde for helbredinga"
+
+#: app/tools/gimphealtool.c:85
+#, c-format
+msgid "%s-click to set a new heal source"
+msgstr "%s-klikk for å setja ei ny kjelde for helbredinga"
 
 #: app/tools/gimphistogramoptions.c:64
 msgid "Histogram Scale"
@@ -24783,8 +24859,8 @@ msgstr "Automatisk tilpassing av vindauget"
 msgid "Resize image window to accommodate new zoom level"
 msgstr "Endra storleiken på biletvindauget slik at det passar til forstørringa"
 
-#: app/tools/gimpmagnifyoptions.c:92 app/tools/gimptransformoptions.c:97
-#: app/widgets/gimpdynamicseditor.c:163
+#: app/tools/gimpmagnifyoptions.c:92 app/tools/gimpshapeoptions.c:689
+#: app/tools/gimptransformoptions.c:97 app/widgets/gimpdynamicseditor.c:163
 #: app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
 msgstr "Retning"
@@ -25175,15 +25251,15 @@ msgstr "Det valde teikneelementet har ingen alfakanal."
 msgid "The selected layer's alpha channel is locked."
 msgstr "Alfakanalen i det valde laget er låst."
 
-#: app/tools/gimppathoptions.c:138
+#: app/tools/gimppathoptions.c:147
 msgid "Enable Fill"
 msgstr "Slå på fyll"
 
-#: app/tools/gimppathoptions.c:144
+#: app/tools/gimppathoptions.c:153
 msgid "Enable Stroke"
 msgstr "Slå på strok"
 
-#: app/tools/gimppathoptions.c:539
+#: app/tools/gimppathoptions.c:557
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -25197,12 +25273,12 @@ msgstr ""
 "%s: Snitt"
 
 #. Create a selection from the current path
-#: app/tools/gimppathoptions.c:550
+#: app/tools/gimppathoptions.c:568
 msgid "Selection from Path"
 msgstr "Opprett utval frå bane"
 
-#: app/tools/gimppathoptions.c:560 app/tools/gimppathtool.c:765
-#: app/tools/gimppathtool.c:1092
+#: app/tools/gimppathoptions.c:578 app/tools/gimppathtool.c:769
+#: app/tools/gimppathtool.c:1096
 msgid "Create New Vector Layer"
 msgstr "Opprett eit nytt vektorlag"
 
@@ -25214,27 +25290,27 @@ msgstr "Baneverktøyet: Opprett og rediger banar"
 msgid "Pat_hs"
 msgstr "_Banar"
 
-#: app/tools/gimppathtool.c:768
+#: app/tools/gimppathtool.c:772
 msgid "Create Vector Layer from Path"
 msgstr "Lag vektorlag frå bane"
 
-#: app/tools/gimppathtool.c:884
+#: app/tools/gimppathtool.c:888
 msgid "Add Vector Layer"
 msgstr "Legg til vektorlag"
 
-#: app/tools/gimppathtool.c:1115 app/tools/gimppathtool.c:1118
+#: app/tools/gimppathtool.c:1119 app/tools/gimppathtool.c:1122
 msgid "Confirm Path Editing"
 msgstr "Bekreft baneredigering"
 
-#: app/tools/gimppathtool.c:1122 app/tools/gimptexttool.c:1869
+#: app/tools/gimppathtool.c:1126 app/tools/gimptexttool.c:1940
 msgid "Create _New Layer"
 msgstr "Opprett eit _nytt lag"
 
-#: app/tools/gimppathtool.c:1124 app/tools/gimptexttool.c:1871
+#: app/tools/gimppathtool.c:1128 app/tools/gimptexttool.c:1942
 msgid "_Edit Anyway"
 msgstr "_Rediger likevel"
 
-#: app/tools/gimppathtool.c:1146
+#: app/tools/gimppathtool.c:1150
 msgid ""
 "The vector layer you picked was rasterized. Editing its path will discard "
 "any modifications."
@@ -25346,7 +25422,7 @@ msgstr "Tilpassa fast høgd"
 msgid "Unit of fixed width, height or size"
 msgstr "Eining for fast breidd, høgd eller storleik"
 
-#: app/tools/gimprectangleoptions.c:296
+#: app/tools/gimprectangleoptions.c:296 app/tools/gimpshapeoptions.c:148
 msgid "Expand from center"
 msgstr "Ekspander frå sentrum"
 
@@ -25576,6 +25652,88 @@ msgstr "Kan ikkje trekkja frå frå eit tomt utval."
 msgid "Cannot intersect with an empty selection."
 msgstr "Kan ikkje laga snitt med eit tomt utval."
 
+#: app/tools/gimpshapeoptions.c:133
+msgid "Draw directly on selected layers"
+msgstr "Teikna direkte på dei merkte laga"
+
+#: app/tools/gimpshapeoptions.c:134
+msgid ""
+"If checked, shapes will be drawn directly on any selected raster item "
+"instead of as a vector layer"
+msgstr ""
+"Viss denne er merkt, vert alle former teikna direkte på alle merkte rastera "
+"i staden for som eit vektorlag"
+
+#: app/tools/gimpshapeoptions.c:142
+msgid "Fixed aspect ratio"
+msgstr "Fast sideforhold"
+
+#: app/tools/gimpshapeoptions.c:154
+msgid "Number of sides"
+msgstr "Talet på sider"
+
+#: app/tools/gimpshapeoptions.c:162
+msgid "Spiral Direction"
+msgstr "Spiralretning"
+
+#: app/tools/gimpshapeoptions.c:170
+msgid "Fill"
+msgstr "Fyll"
+
+#. the stroke frame
+#: app/tools/gimpshapeoptions.c:201 app/tools/gimpwarpoptions.c:350
+msgid "Stroke"
+msgstr "Strok"
+
+#: app/tools/gimpshapeoptions.c:632 app/tools/gimpshapetool.c:759
+msgid "Rectangle"
+msgstr "Rektangel"
+
+#: app/tools/gimpshapeoptions.c:633 app/tools/gimpshapetool.c:763
+msgid "Ellipse"
+msgstr "Ellipse"
+
+#: app/tools/gimpshapeoptions.c:634 app/tools/gimpshapetool.c:767
+msgid "Polygon"
+msgstr "Polygon"
+
+#: app/tools/gimpshapeoptions.c:635 app/tools/gimpshapetool.c:771
+msgid "Star"
+msgstr "Stjerne"
+
+#: app/tools/gimpshapeoptions.c:636 app/tools/gimpshapetool.c:775
+msgid "Spiral"
+msgstr "Spiral"
+
+#: app/tools/gimpshapeoptions.c:650
+msgid "Shape specific settings"
+msgstr "Formspesifikke innstillingar"
+
+#: app/tools/gimpshapeoptions.c:678
+msgid "Sides"
+msgstr "Sider"
+
+#: app/tools/gimpshapeoptions.c:696
+msgid "Counter-clockwise"
+msgstr "Mot klokka"
+
+#: app/tools/gimpshapetool.c:134
+msgid "Shape Creator"
+msgstr "Formlagar"
+
+#: app/tools/gimpshapetool.c:135
+msgid "Shape Tool: Create vector and raster shapes"
+msgstr "Formverktøyet: Lag vektor- og rasterformer"
+
+#: app/tools/gimpshapetool.c:136
+msgid "Sh_ape"
+msgstr "_Form"
+
+#: app/tools/gimpshapetool.c:276
+#, c-format
+msgid "Add %s"
+msgstr "Legg til %s"
+
 #: app/tools/gimpsheartool.c:91 app/tools/gimptransformgridoptions.c:578
 #: app/tools/gimptransformgridoptions.c:587
 msgid "Shear"
@@ -25772,35 +25930,35 @@ msgstr "Boks:"
 msgid "Language:"
 msgstr "Språk:"
 
-#: app/tools/gimptexttool.c:224
+#: app/tools/gimptexttool.c:225
 msgid "Text"
 msgstr "Tekst"
 
-#: app/tools/gimptexttool.c:225
+#: app/tools/gimptexttool.c:226
 msgid "Text Tool: Create or edit text layers"
 msgstr "Tekstverktøyet: Oppretter eller redigerer tekstlag"
 
-#: app/tools/gimptexttool.c:226
+#: app/tools/gimptexttool.c:227
 msgid "Te_xt"
 msgstr "_Tekst"
 
-#: app/tools/gimptexttool.c:1109
+#: app/tools/gimptexttool.c:1154
 msgid "Fonts are still loading"
 msgstr "Lastar framleis skrifttypar"
 
-#: app/tools/gimptexttool.c:1120
+#: app/tools/gimptexttool.c:1165
 msgid "Text box: "
 msgstr "Tekstfelt: "
 
-#: app/tools/gimptexttool.c:1277
+#: app/tools/gimptexttool.c:1322
 msgid "Reshape Text Layer"
 msgstr "Endra forma på tekstlaget"
 
-#: app/tools/gimptexttool.c:1862 app/tools/gimptexttool.c:1865
+#: app/tools/gimptexttool.c:1933 app/tools/gimptexttool.c:1936
 msgid "Confirm Text Editing"
 msgstr "Bekreft tekstredigering"
 
-#: app/tools/gimptexttool.c:1893
+#: app/tools/gimptexttool.c:1964
 msgid ""
 "The text layer you picked was rasterized. Editing its text will discard any "
 "modifications."
@@ -25808,23 +25966,23 @@ msgstr ""
 "Tekstlaget du henta er rastert. Redigering av teksten vil fjerna eventuelle "
 "endringar."
 
-#: app/tools/gimptexttool.c:2513
+#: app/tools/gimptexttool.c:2584
 msgid "Text is required."
 msgstr "Tekst er nødvendig."
 
-#: app/tools/gimptexttool.c:2516
+#: app/tools/gimptexttool.c:2587
 msgid "No image."
 msgstr "Ingen bilete."
 
-#: app/tools/gimptexttool.c:2519
+#: app/tools/gimptexttool.c:2590
 msgid "No layer."
 msgstr "Inge lag."
 
-#: app/tools/gimptexttool.c:2530
+#: app/tools/gimptexttool.c:2601
 msgid "Exactly one path must be selected."
 msgstr "Nøyaktig éin bane må merkjast."
 
-#: app/tools/gimptexttool-editor.c:1492
+#: app/tools/gimptexttool-editor.c:1532
 msgid "GIMP Text Editor"
 msgstr "GIMP teksthandsamar"
 
@@ -26318,11 +26476,6 @@ msgstr "Rammer"
 #: app/tools/gimpwarpoptions.c:172
 msgid "Number of animation frames"
 msgstr "Talet på animasjonsrammer"
-
-#. the stroke frame
-#: app/tools/gimpwarpoptions.c:350
-msgid "Stroke"
-msgstr "Strok"
 
 #. the animation frame
 #: app/tools/gimpwarpoptions.c:372
@@ -27628,17 +27781,17 @@ msgid "Select fields"
 msgstr "Vel felt"
 
 #. Translators: "N/A" is an abbreviation for "not available"
-#: app/widgets/gimpdashboard.c:3331
+#: app/widgets/gimpdashboard.c:3332
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "I/T"
 
-#: app/widgets/gimpdashboard.c:3340 app/widgets/gimpdashboard.c:4348
+#: app/widgets/gimpdashboard.c:3341 app/widgets/gimpdashboard.c:4349
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Ja"
 
-#: app/widgets/gimpdashboard.c:3341 app/widgets/gimpdashboard.c:4349
+#: app/widgets/gimpdashboard.c:3342 app/widgets/gimpdashboard.c:4350
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nei"
@@ -27647,7 +27800,7 @@ msgstr "Nei"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: app/widgets/gimpdashboard.c:3425
+#: app/widgets/gimpdashboard.c:3426
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -27658,16 +27811,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: app/widgets/gimpdashboard.c:4338
+#: app/widgets/gimpdashboard.c:4339
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: app/widgets/gimpdashboard.c:4416
+#: app/widgets/gimpdashboard.c:4417
 msgid "N/A"
 msgstr "I/T"
 
-#: app/widgets/gimpdashboard.c:4794
+#: app/widgets/gimpdashboard.c:4795
 msgid "Resolving symbol information..."
 msgstr "Løyser symbolinformasjon …"
 
@@ -27887,11 +28040,11 @@ msgid "Configure this tab"
 msgstr "Innstillingar for fanen"
 
 #. Auto button
-#: app/widgets/gimpdockwindow.c:409
+#: app/widgets/gimpdockwindow.c:410
 msgid "Auto"
 msgstr "Auto"
 
-#: app/widgets/gimpdockwindow.c:420
+#: app/widgets/gimpdockwindow.c:421
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
@@ -28006,16 +28159,16 @@ msgstr "Etter filutvidinga"
 msgid "All export images"
 msgstr "Alle eksportbilete"
 
-#: app/widgets/gimpfiledialog.c:789
+#: app/widgets/gimpfiledialog.c:791
 msgid "Show _All Files"
 msgstr "Vis _alle filene"
 
-#: app/widgets/gimpfiledialog.c:821
+#: app/widgets/gimpfiledialog.c:823
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Vel fil_type (%s)"
 
-#: app/widgets/gimpfiledialog.c:823
+#: app/widgets/gimpfiledialog.c:825
 msgid "Select File _Type"
 msgstr "Vel fil_type"
 
@@ -28155,26 +28308,26 @@ msgstr "_Bakgrunnsfarge:"
 msgid "GIMP user manual is missing"
 msgstr "Finn ikkje GIMP-handboka"
 
-#: app/widgets/gimphelp.c:602
+#: app/widgets/gimphelp.c:616
 msgid "The GIMP user manual is not installed in your language."
 msgstr "Brukarhandboka til GIMP er ikkje innstallert i språket ditt."
 
-#: app/widgets/gimphelp.c:613
+#: app/widgets/gimphelp.c:627
 msgid "Read Selected _Language"
 msgstr "Les vald _språk"
 
-#: app/widgets/gimphelp.c:617
+#: app/widgets/gimphelp.c:631
 msgid "Available manuals..."
 msgstr "Tilgjengelege handbøker …"
 
-#: app/widgets/gimphelp.c:629
+#: app/widgets/gimphelp.c:643
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr ""
 "Du kan anten velja ei handbok i eit anna språk eller brukar nettversjonen."
 
-#: app/widgets/gimphelp.c:635
+#: app/widgets/gimphelp.c:649
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -28182,7 +28335,7 @@ msgstr ""
 "Du kan anten installera hjelppakken eller setja førehandsinnstillingane slik "
 "at du brukar nettversjonen av hjelp."
 
-#: app/widgets/gimphelp.c:640
+#: app/widgets/gimphelp.c:654
 msgid "Read _Online"
 msgstr "Les frå _Internett"
 
@@ -29088,22 +29241,22 @@ msgstr "Opna dialogvindauget for palettval"
 msgid "Open the font selection dialog"
 msgstr "Opna dialogvindauget for skriftval"
 
-#: app/widgets/gimpwidgets-utils.c:666
+#: app/widgets/gimpwidgets-utils.c:661
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (prøv %s)"
 
-#: app/widgets/gimpwidgets-utils.c:666
+#: app/widgets/gimpwidgets-utils.c:661
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:670
+#: app/widgets/gimpwidgets-utils.c:665
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (prøv %s, %s)"
 
-#: app/widgets/gimpwidgets-utils.c:674
+#: app/widgets/gimpwidgets-utils.c:669
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (prøv %s, %s, %s)"
@@ -29113,12 +29266,12 @@ msgstr "%s (prøv %s, %s, %s)"
 #. * (e.g. a checkbox settings) displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1481
+#: app/widgets/gimpwidgets-utils.c:1482
 #, c-format
 msgid "Switch \"%s\" ON"
 msgstr "Slå «%s» på"
 
-#: app/widgets/gimpwidgets-utils.c:1483
+#: app/widgets/gimpwidgets-utils.c:1484
 #, c-format
 msgid "Switch \"%s\" OFF"
 msgstr "Slå «%s» av"
@@ -29128,7 +29281,7 @@ msgstr "Slå «%s» av"
 #. * multi-choice settings displayed
 #. * in some dockable GUI.
 #.
-#: app/widgets/gimpwidgets-utils.c:1502
+#: app/widgets/gimpwidgets-utils.c:1503
 #, c-format
 msgid "Select \"%s\""
 msgstr "Vel \"%s\""
@@ -29136,27 +29289,27 @@ msgstr "Vel \"%s\""
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
-#: app/widgets/gimpwidgets-utils.c:1533
+#: app/widgets/gimpwidgets-utils.c:1534
 #, c-format
 msgid "Activate the \"%s\" tool"
 msgstr "Slå på «%s»-verktøyet"
 
-#: app/widgets/gimpwidgets-utils.c:2132
+#: app/widgets/gimpwidgets-utils.c:2133
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Innebygd gråtone (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2139
+#: app/widgets/gimpwidgets-utils.c:2140
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Innebygd RGB (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2159
+#: app/widgets/gimpwidgets-utils.c:2160
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Føretrekt gråtone (%s)"
 
-#: app/widgets/gimpwidgets-utils.c:2168
+#: app/widgets/gimpwidgets-utils.c:2169
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Føretrekt RGB (%s)"
@@ -29251,40 +29404,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Status og beskr"
 
-#: app/xcf/xcf.c:127 app/xcf/xcf.c:182
+#: app/xcf/xcf.c:128 app/xcf/xcf.c:183
 msgid "GIMP XCF image"
 msgstr "GIMP XCF-bilete"
 
-#: app/xcf/xcf.c:258 app/xcf/xcf.c:316
+#: app/xcf/xcf.c:259 app/xcf/xcf.c:317
 msgid "Memory Stream"
 msgstr "Minnestraum"
 
-#: app/xcf/xcf.c:261
+#: app/xcf/xcf.c:262
 #, c-format
 msgid "Opening '%s'"
 msgstr "Opnar «%s»"
 
-#: app/xcf/xcf.c:280
+#: app/xcf/xcf.c:281
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-feil: Har ikkje støtte for XCF-filversjon %dt"
 
-#: app/xcf/xcf.c:339
+#: app/xcf/xcf.c:340
 #, c-format
 msgid "Saving '%s'"
 msgstr "Lagrar «%s» …"
 
-#: app/xcf/xcf.c:347
+#: app/xcf/xcf.c:348
 #, c-format
 msgid "Closing '%s'"
 msgstr "Lukkar «%s»"
 
-#: app/xcf/xcf.c:365
+#: app/xcf/xcf.c:366
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Feil ved skriving til «%s»: "
 
-#: app/xcf/xcf.c:453
+#: app/xcf/xcf.c:454
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Feil ved laging av «%s»: "
@@ -29293,7 +29446,7 @@ msgstr "Feil ved laging av «%s»: "
 msgid "Invalid image mode and precision combination."
 msgstr "Ugyldig biletmodus og presisjonskombinasjon."
 
-#: app/xcf/xcf-load.c:900
+#: app/xcf/xcf-load.c:902
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -29302,7 +29455,7 @@ msgstr ""
 "Øydelagde «exif-data»-parasitt oppdaga\n"
 "Klarte ikkje overføra exif-data: %s"
 
-#: app/xcf/xcf-load.c:939
+#: app/xcf/xcf-load.c:941
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -29310,7 +29463,7 @@ msgstr ""
 "Øydelagd «gimp-metadata»-parasitt oppdaga\n"
 "Klarte ikkje overføra XMP-data."
 
-#: app/xcf/xcf-load.c:963
+#: app/xcf/xcf-load.c:965
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -29323,19 +29476,19 @@ msgstr ""
 "Viss du ikkje veit kva XNP er, har du truleg ikkje bruk for det. Rapportert "
 "feil: %s."
 
-#: app/xcf/xcf-load.c:1501
+#: app/xcf/xcf-load.c:1503
 msgid "Linked Layers"
 msgstr "Lenkja lag"
 
-#: app/xcf/xcf-load.c:1511
+#: app/xcf/xcf-load.c:1513
 msgid "Linked Channels"
 msgstr "Lenkja kanalar"
 
-#: app/xcf/xcf-load.c:1536
+#: app/xcf/xcf-load.c:1538
 msgid "Linked Paths"
 msgstr "Lenkja banar"
 
-#: app/xcf/xcf-load.c:1584
+#: app/xcf/xcf-load.c:1586
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -29343,14 +29496,14 @@ msgstr ""
 "Denne XCF-fila er øydelagt. Eg har lasta inn så mykje eg kunne, men fekk "
 "ikkje med alt."
 
-#: app/xcf/xcf-load.c:1611
+#: app/xcf/xcf-load.c:1613
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Denne XCF-fila er øydelagt. Det er ikkje råd å lasta inn noko som helst."
 
-#: app/xcf/xcf-load.c:1829
+#: app/xcf/xcf-load.c:1831
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -29360,7 +29513,7 @@ msgstr ""
 "lagrar indekserte fargekart feil.\n"
 "Støtter derimot gråtonekart."
 
-#: app/xcf/xcf-load.c:2660
+#: app/xcf/xcf-load.c:2662
 #, c-format
 msgid ""
 "XCF Warning: invalid link in XCF file. The link layer \"%s\" is downgraded "
@@ -29369,7 +29522,7 @@ msgstr ""
 "XCF-åtvaring: ugyldig lenkje i XCF-fil. Lenkjelaget «%s» er lasta ned til "
 "eit rasterlag."
 
-#: app/xcf/xcf-load.c:2680
+#: app/xcf/xcf-load.c:2682
 #, c-format
 msgid ""
 "XCF Warning: circular reference detected in XCF file. The link layer \"%s\" "
@@ -29378,7 +29531,7 @@ msgstr ""
 "XCF-åtvaring: sirkulær referanse opdaga i XCF-fil. Lenkjelaget «%s» er lasta "
 "ned til eit rasterlag."
 
-#: app/xcf/xcf-load.c:3411
+#: app/xcf/xcf-load.c:3421
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29391,7 +29544,7 @@ msgstr ""
 "Dette bør ikkje skje. Du bør rapportera problemet til utviklarane av "
 "filteret."
 
-#: app/xcf/xcf-load.c:4353
+#: app/xcf/xcf-load.c:4370
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
@@ -29726,147 +29879,147 @@ msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "_Teikneverktøya"
 
-#: menus/image-menu.ui.in.in:645
+#: menus/image-menu.ui.in.in:646
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "_Transformeringsverktøya"
 
-#: menus/image-menu.ui.in.in:684
+#: menus/image-menu.ui.in.in:685
 msgctxt "filters-action"
 msgid "Filte_rs"
 msgstr "Filt_er"
 
-#: menus/image-menu.ui.in.in:689
+#: menus/image-menu.ui.in.in:690
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "Tidlegare brukte"
 
-#: menus/image-menu.ui.in.in:698
+#: menus/image-menu.ui.in.in:699
 msgctxt "filters-action"
 msgid "_Blur"
 msgstr "S_løring"
 
-#: menus/image-menu.ui.in.in:713
+#: menus/image-menu.ui.in.in:714
 msgctxt "filters-action"
 msgid "En_hance"
 msgstr "For_betra"
 
-#: menus/image-menu.ui.in.in:723
+#: menus/image-menu.ui.in.in:724
 msgctxt "filters-action"
 msgid "_Distorts"
 msgstr "For_vrengningar"
 
-#: menus/image-menu.ui.in.in:742
+#: menus/image-menu.ui.in.in:743
 msgctxt "filters-action"
 msgid "_Light and Shadow"
 msgstr "_Lys og skugge"
 
-#: menus/image-menu.ui.in.in:757
+#: menus/image-menu.ui.in.in:758
 msgctxt "filters-action"
 msgid "_Noise"
 msgstr "Stø_y"
 
-#: menus/image-menu.ui.in.in:767
+#: menus/image-menu.ui.in.in:768
 msgctxt "filters-action"
 msgid "Edge-De_tect"
 msgstr "Finn _kantar"
 
-#: menus/image-menu.ui.in.in:776
+#: menus/image-menu.ui.in.in:777
 msgctxt "filters-action"
 msgid "_Generic"
 msgstr "_Generiske"
 
-#: menus/image-menu.ui.in.in:787
+#: menus/image-menu.ui.in.in:788
 msgctxt "filters-action"
 msgid "C_ombine"
 msgstr "K_ombiner"
 
-#: menus/image-menu.ui.in.in:790
+#: menus/image-menu.ui.in.in:791
 msgctxt "filters-action"
 msgid "_Artistic"
 msgstr "_Artistisk"
 
-#: menus/image-menu.ui.in.in:802
+#: menus/image-menu.ui.in.in:803
 msgctxt "filters-action"
 msgid "_Decor"
 msgstr "_Dekor"
 
-#: menus/image-menu.ui.in.in:805
+#: menus/image-menu.ui.in.in:806
 msgctxt "filters-action"
 msgid "_Map"
 msgstr "Ka_rt"
 
-#: menus/image-menu.ui.in.in:817
+#: menus/image-menu.ui.in.in:818
 msgctxt "filters-action"
 msgid "_Render"
 msgstr "_Teikning"
 
-#: menus/image-menu.ui.in.in:820
+#: menus/image-menu.ui.in.in:821
 msgctxt "filters-action"
 msgid "_Fractals"
 msgstr "_Fraktalar"
 
-#: menus/image-menu.ui.in.in:823
+#: menus/image-menu.ui.in.in:824
 msgctxt "filters-action"
 msgid "N_oise"
 msgstr "Stø_y"
 
-#: menus/image-menu.ui.in.in:831
+#: menus/image-menu.ui.in.in:832
 msgctxt "filters-action"
 msgid "_Pattern"
 msgstr "_Mønsterelement"
 
-#: menus/image-menu.ui.in.in:844
+#: menus/image-menu.ui.in.in:845
 msgctxt "filters-action"
 msgid "_Web"
 msgstr "_Nettsider"
 
-#: menus/image-menu.ui.in.in:850
+#: menus/image-menu.ui.in.in:851
 msgctxt "filters-action"
 msgid "An_imation"
 msgstr "Ani_masjon"
 
-#: menus/image-menu.ui.in.in:853
+#: menus/image-menu.ui.in.in:854
 msgctxt "filters-action"
 msgid "De_velopment"
 msgstr "_Utvikling"
 
-#: menus/image-menu.ui.in.in:855
+#: menus/image-menu.ui.in.in:856
 msgctxt "filters-action"
 msgid "Plug-In _Examples"
 msgstr "_Eksempel med programtillegg"
 
-#: menus/image-menu.ui.in.in:858
+#: menus/image-menu.ui.in.in:859
 msgctxt "filters-action"
 msgid "_Python-Fu"
 msgstr "_Python-Fu"
 
-#: menus/image-menu.ui.in.in:861
+#: menus/image-menu.ui.in.in:862
 msgctxt "filters-action"
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: menus/image-menu.ui.in.in:868
+#: menus/image-menu.ui.in.in:869
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "Vin_dauge"
 
-#: menus/image-menu.ui.in.in:871
+#: menus/image-menu.ui.in.in:872
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Tidlegare lukka dokkpanel"
 
-#: menus/image-menu.ui.in.in:875
+#: menus/image-menu.ui.in.in:876
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Dokkpanel"
 
-#: menus/image-menu.ui.in.in:907
+#: menus/image-menu.ui.in.in:908
 msgctxt "help-action"
 msgid "_User Manual"
 msgstr "_Brukarhandboka"
 
-#: menus/image-menu.ui.in.in:926
+#: menus/image-menu.ui.in.in:927
 msgctxt "help-action"
 msgid "_GIMP Online"
 msgstr "_GIMP på nettet"
