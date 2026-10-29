@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "dialogs-types.h"
 
@@ -152,7 +153,7 @@ static void
 path_export_dialog_realize (GtkWidget        *dialog,
                             PathExportDialog *data)
 {
-  gimp_window_set_title_bar_theme (data->image->gimp, dialog);
+  gimp_widget_set_title_bar_theme (dialog, gimp_gui_is_dark (data->image->gimp));
 }
 #endif
 

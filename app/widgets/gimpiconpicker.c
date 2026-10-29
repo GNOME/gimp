@@ -26,6 +26,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "widgets-types.h"
 
@@ -625,6 +626,6 @@ gimp_icon_picker_dialog_realize (GtkWidget *dialog,
   GimpIconPicker        *picker  = GIMP_ICON_PICKER (data);
   GimpIconPickerPrivate *private = GET_PRIVATE (picker);
 
-  gimp_window_set_title_bar_theme (private->gimp, dialog);
+  gimp_widget_set_title_bar_theme (dialog, gimp_gui_is_dark (private->gimp));
 }
 #endif

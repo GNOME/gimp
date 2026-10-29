@@ -22,6 +22,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "actions-types.h"
 
@@ -135,7 +136,8 @@ error_console_save_cmd_callback (GimpAction *action,
   gtk_window_present (GTK_WINDOW (console->file_dialog));
 
 #ifdef G_OS_WIN32
-  gimp_window_set_title_bar_theme (console->gimp, console->file_dialog);
+  gimp_widget_set_title_bar_theme (console->file_dialog,
+                                   gimp_gui_is_dark (console->gimp));
 #endif
 }
 

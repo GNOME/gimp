@@ -26,6 +26,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "widgets-types.h"
 
@@ -832,7 +833,7 @@ gimp_settings_box_dialog_realize (GtkWidget *dialog,
   GimpSettingsBox        *box     = (GimpSettingsBox *) data;
   GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
 
-  gimp_window_set_title_bar_theme (private->gimp, dialog);
+  gimp_widget_set_title_bar_theme (dialog, gimp_gui_is_dark (private->gimp));
 }
 #endif
 
