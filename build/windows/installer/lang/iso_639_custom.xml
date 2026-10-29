@@ -307,7 +307,7 @@ To fill data for a new entry:
 		name="မြန်မာဘာသာ" />
 	<iso_639_entry
 		dl_code="nb"
-		inno_code=""
+		inno_code="Languages\\Norwegian.isl"
 		ms_code="nb"
 		name="Bokmål" />
 	<iso_639_entry
@@ -327,7 +327,7 @@ To fill data for a new entry:
 		name="Nederlands" />
 	<iso_639_entry
 		dl_code="nn"
-		inno_code="Languages\\Norwegian.isl"
+		inno_code="Languages\\Unofficial\\NorwegianNynorsk.isl"
 		ms_code="nn"
 		name="Nynorsk" />
 	<iso_639_entry
