@@ -117,6 +117,7 @@ static void       gimp_link_update_buffer      (GimpLink              *link,
                                                 GimpProgress          *progress,
                                                 GError               **error);
 static void       gimp_link_start_monitoring   (GimpLink              *link);
+static void       gimp_link_stop_monitoring    (GimpLink              *link);
 static gchar    * gimp_link_get_relative_path  (GimpLink              *link,
                                                 GFile                 *parent,
                                                 gint                   n_back);
@@ -199,8 +200,8 @@ gimp_link_finalize (GObject *object)
 {
   GimpLink *link = GIMP_LINK (object);
 
+  gimp_link_stop_monitoring (link);
   g_clear_object (&link->p->file);
-  g_clear_object (&link->p->monitor);
   g_clear_object (&link->p->buffer);
   g_clear_error  (&link->p->error);
 
@@ -524,6 +525,8 @@ gimp_link_update_buffer (GimpLink      *link,
 static void
 gimp_link_start_monitoring (GimpLink *link)
 {
+  g_return_if_fail (GIMP_IS_LINK (link) && link->p->monitor == NULL);
+
   /* GFileMonitors created with the G_FILE_MONITOR_WATCH_HARD_LINKS flag
    * are not monitored on Windows. This was resolved in MR glib!4901.
    * TODO: remove the top #ifdef when we bump the GLib requirement.
@@ -538,6 +541,15 @@ gimp_link_start_monitoring (GimpLink *link)
   g_signal_connect (link->p->monitor, "changed",
                     G_CALLBACK (gimp_link_file_changed),
                     link);
+}
+
+static void
+gimp_link_stop_monitoring (GimpLink *link)
+{
+  if (link->p->idle_changed_source != 0)
+    g_source_remove (link->p->idle_changed_source);
+
+  g_clear_object (&link->p->monitor);
 }
 
 /**
@@ -759,11 +771,11 @@ gimp_link_set_file (GimpLink      *link,
       return;
     }
 
+  gimp_link_stop_monitoring (link);
+
   link->p->width      = vector_width;
   link->p->height     = vector_height;
   link->p->keep_ratio = keep_ratio;
-
-  g_clear_object (&link->p->monitor);
 
   g_set_object (&link->p->file, file);
 
@@ -814,7 +826,7 @@ gimp_link_freeze (GimpLink *link)
   g_return_if_fail (GIMP_IS_LINK (link));
   g_return_if_fail (link->p->monitor != NULL);
 
-  g_clear_object (&link->p->monitor);
+  gimp_link_stop_monitoring (link);
 }
 
 void
