@@ -310,7 +310,7 @@ load_image (GFile        *file,
   GimpImage   *image = NULL;
   BMHD         bmhd;
   guchar       cmap[768];
-  guint32      cmap_size;
+  guint32      cmap_size = 0;
   FILE        *fp;
   gchar        magic[5];
   guint32      file_size;
@@ -505,7 +505,7 @@ load_image (GFile        *file,
                               gimp_image_get_default_new_layer_mode (image));
       gimp_image_insert_layer (image, layer, NULL, 0);
 
-      if (pixel_size == 1)
+      if (pixel_size == 1 && cmap_size >= 3)
         gimp_palette_set_colormap (gimp_image_get_palette (image),
                                    babl_format ("R'G'B' u8"),
                                    cmap, cmap_size);
@@ -987,7 +987,7 @@ read_rgbn (guchar     *data,
 
   while (count > 0 && i < (data_size - 2))
     {
-      guchar  rgb[4];
+      guchar  rgb[4] = {0, 0, 0, 0};
       guint32 repeat;
 
       if (is_rgb8)
