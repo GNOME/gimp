@@ -41,6 +41,7 @@ languages = [
   { 'code': 'lv',    },
   { 'code': 'mr',    },
   { 'code': 'ms',    },
+  { 'code': 'nb',    },
   { 'code': 'nl',    },
   { 'code': 'nn',    },
   { 'code': 'pl',    },
