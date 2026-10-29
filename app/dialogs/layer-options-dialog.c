@@ -685,10 +685,16 @@ static void
 layer_options_file_set (GtkFileChooserButton *widget,
                         LayerOptionsDialog   *private)
 {
-  GFile *file;
+  GFile     *file;
+  GtkDialog *dialog;
+  gboolean   broken_link = FALSE;
+
+  dialog = GTK_DIALOG (gtk_widget_get_toplevel (GTK_WIDGET (widget)));
+  item_options_dialog_block_responses (GTK_WIDGET (dialog));
+  gtk_widget_set_sensitive (GTK_WIDGET (widget), FALSE);
 
   file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (widget));
-  if (file)
+  if (file != NULL)
     {
       gint width  = 0;
       gint height = 0;
@@ -708,7 +714,8 @@ layer_options_file_set (GtkFileChooserButton *widget,
         }
 
       gimp_link_set_file (private->link, file, width, height, TRUE, NULL, NULL);
-      if (gimp_link_is_broken (private->link))
+      broken_link = gimp_link_is_broken (private->link);
+      if (broken_link)
         {
           gimp_link_set_file (private->link, NULL, width, height, TRUE, NULL, NULL);
           g_signal_handlers_block_by_func (widget,
@@ -721,6 +728,11 @@ layer_options_file_set (GtkFileChooserButton *widget,
         }
     }
   g_clear_object (&file);
+
+  item_options_dialog_unblock_responses (GTK_WIDGET (dialog));
+  gtk_widget_set_sensitive (GTK_WIDGET (widget), TRUE);
+  /* Do not allow clicking OK with a file which won't load. */
+  gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, ! broken_link);
 }
 
 static void

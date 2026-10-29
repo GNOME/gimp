@@ -307,6 +307,36 @@ item_options_dialog_new (GimpImage               *image,
   return dialog;
 }
 
+void
+item_options_dialog_block_responses (GtkWidget *dialog)
+{
+  ItemOptionsDialog *private;
+
+  g_return_if_fail (GIMP_IS_VIEWABLE_DIALOG (dialog));
+
+  private = g_object_get_data (G_OBJECT (dialog), "item-options-dialog-private");
+  g_signal_handlers_block_by_func (dialog,
+                                   G_CALLBACK (item_options_dialog_response),
+                                   private);
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_OK, FALSE);
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL, FALSE);
+}
+
+void
+item_options_dialog_unblock_responses (GtkWidget *dialog)
+{
+  ItemOptionsDialog *private;
+
+  g_return_if_fail (GIMP_IS_VIEWABLE_DIALOG (dialog));
+
+  private = g_object_get_data (G_OBJECT (dialog), "item-options-dialog-private");
+  g_signal_handlers_unblock_by_func (dialog,
+                                     G_CALLBACK (item_options_dialog_response),
+                                     private);
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_OK, TRUE);
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL, TRUE);
+}
+
 GtkWidget *
 item_options_dialog_get_vbox (GtkWidget *dialog)
 {
