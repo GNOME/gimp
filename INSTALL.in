@@ -338,7 +338,7 @@ help in that regard:
 
      * mutter
      * dbus-run-session
-     * dogtail @DOGTAIL_REQUIRED_VERSION@
+     * dogtail >= @DOGTAIL_REQUIRED_VERSION@
 
 
 Generic instructions for configuring and compiling auto-configured
