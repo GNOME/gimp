@@ -54,6 +54,9 @@ GtkWidget * item_options_dialog_new (GimpImage               *image,
                                      GimpItemOptionsCallback  callback,
                                      gpointer                 user_data);
 
+void        item_options_dialog_block_responses      (GtkWidget   *dialog);
+void        item_options_dialog_unblock_responses    (GtkWidget   *dialog);
+
 GtkWidget * item_options_dialog_get_vbox             (GtkWidget   *dialog);
 GtkWidget * item_options_dialog_get_right_vbox       (GtkWidget   *dialog);
 GtkWidget * item_options_dialog_get_grid             (GtkWidget   *dialog,
