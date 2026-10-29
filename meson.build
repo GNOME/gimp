@@ -2279,6 +2279,8 @@ final_message = [
 '''  FITS:                @0@'''.format(cfitsio_dep.found()),
 '''  Camera RAW:          @0@'''.format(libraw.found()),
 '',
+#See: https://gitlab.gnome.org/GNOME/gimp/-/work_items/11597
+#and https://gitlab.gnome.org/GNOME/gimp/-/work_items/11895
 '''Experimental Plug-Ins (discouraged except for developers):''',
 '''  Lua plug-ins:        @0@'''.format(have_lua_output),
 '',
