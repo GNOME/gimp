@@ -298,12 +298,12 @@ gimp_eek (const gchar *reason,
 #if !defined(G_OS_WIN32) || !defined(GIMP_CONSOLE_COMPILATION)
   gboolean         eek_handled   = FALSE;
 #endif
-#ifndef GIMP_CONSOLE_COMPILATION
-  GimpCoreConfig  *config        = the_errors_gimp->config;
-  GimpDebugPolicy  debug_policy;
   GList           *iter;
   gint             num_idx;
   gint             i = 0;
+#ifndef GIMP_CONSOLE_COMPILATION
+  GimpCoreConfig  *config        = the_errors_gimp->config;
+  GimpDebugPolicy  debug_policy;
 
   /* GIMP has 2 ways to handle termination signals and fatal errors: one
    * is the stack trace mode which is set at start as command line
