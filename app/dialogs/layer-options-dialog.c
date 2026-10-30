@@ -68,7 +68,7 @@ struct _LayerOptionsDialog
   gdouble                   opacity;
   GimpFillType              fill_type;
   gboolean                  lock_alpha;
-  gboolean                  rename_text_layers;
+  gboolean                  auto_rename;
   GimpLayerOptionsCallback  callback;
   gpointer                  user_data;
 
@@ -163,24 +163,24 @@ layer_options_dialog_new (GimpImage                *image,
 
   private = g_slice_new0 (LayerOptionsDialog);
 
-  private->gimp               = image->gimp;
-  private->layer              = layer;
-  private->mode               = layer_mode;
-  private->blend_space        = layer_blend_space;
-  private->composite_space    = layer_composite_space;
-  private->composite_mode     = layer_composite_mode;
-  private->opacity            = layer_opacity * 100.0;
-  private->fill_type          = layer_fill_type;
-  private->lock_alpha         = layer_lock_alpha;
-  private->rename_text_layers = FALSE;
-  private->callback           = callback;
-  private->user_data          = user_data;
+  private->gimp            = image->gimp;
+  private->layer           = layer;
+  private->mode            = layer_mode;
+  private->blend_space     = layer_blend_space;
+  private->composite_space = layer_composite_space;
+  private->composite_mode  = layer_composite_mode;
+  private->opacity         = layer_opacity * 100.0;
+  private->fill_type       = layer_fill_type;
+  private->lock_alpha      = layer_lock_alpha;
+  private->auto_rename     = FALSE;
+  private->callback        = callback;
+  private->user_data       = user_data;
 
-  private->link               = NULL;
-  private->initial_path       = NULL;
+  private->link            = NULL;
+  private->initial_path    = NULL;
 
-  if (layer && gimp_item_is_text_layer (GIMP_ITEM (layer)))
-    private->rename_text_layers = gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (layer));
+  if (layer && gimp_item_is_rasterizable (GIMP_ITEM (layer)))
+    private->auto_rename = gimp_rasterizable_get_auto_rename (GIMP_RASTERIZABLE (layer));
 
   dialog = item_options_dialog_new (image, GIMP_ITEM (layer), context,
                                     parent, title, role,
@@ -512,10 +512,10 @@ layer_options_dialog_new (GimpImage                *image,
                                                GIMP_ICON_TOOL_TEXT,
                                                _("Set name from _text"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                    private->rename_text_layers);
+                                    private->auto_rename);
       g_signal_connect (button, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
-                        &private->rename_text_layers);
+                        &private->auto_rename);
 
       g_signal_connect (button, "toggled",
                         G_CALLBACK (layer_options_dialog_rename_toggled),
@@ -618,7 +618,7 @@ layer_options_dialog_callback (GtkWidget    *dialog,
                      item_lock_position,
                      item_lock_visibility,
                      private->lock_alpha,
-                     private->rename_text_layers,
+                     private->auto_rename,
                      private->user_data);
 }
 

@@ -121,7 +121,7 @@ static void   layers_new_callback             (GtkWidget             *dialog,
                                                gboolean               layer_lock_position,
                                                gboolean               layer_lock_visibility,
                                                gboolean               layer_lock_alpha,
-                                               gboolean               rename_text_layer,
+                                               gboolean               auto_rename,
                                                gpointer               user_data);
 static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                GimpImage             *image,
@@ -146,7 +146,7 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                gboolean               layer_lock_position,
                                                gboolean               layer_lock_visibility,
                                                gboolean               layer_lock_alpha,
-                                               gboolean               rename_text_layer,
+                                               gboolean               auto_rename,
                                                gpointer               user_data);
 static void   layers_add_mask_callback        (GtkWidget             *dialog,
                                                GList                 *layers,
@@ -2383,7 +2383,7 @@ layers_new_callback (GtkWidget              *dialog,
                      gboolean                layer_lock_position,
                      gboolean                layer_lock_visibility,
                      gboolean                layer_lock_alpha,
-                     gboolean                rename_text_layer, /* unused */
+                     gboolean                auto_rename, /* unused */
                      gpointer                user_data)
 {
   GimpDialogConfig *config     = GIMP_DIALOG_CONFIG (image->gimp->config);
@@ -2503,7 +2503,7 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
                                  gboolean                layer_lock_position,
                                  gboolean                layer_lock_visibility,
                                  gboolean                layer_lock_alpha,
-                                 gboolean                rename_text_layer,
+                                 gboolean                auto_rename,
                                  gpointer                user_data)
 {
   GimpItem *item = GIMP_ITEM (layer);
@@ -2539,7 +2539,15 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
                                     error->message);
               g_clear_error (&error);
             }
+          else
+            {
+              auto_rename = FALSE;
+            }
         }
+
+      if (GIMP_IS_RASTERIZABLE (layer))
+        gimp_rasterizable_set_auto_rename (GIMP_RASTERIZABLE (layer),
+                                           auto_rename);
 
       if (layer_mode != gimp_layer_get_mode (layer))
         gimp_layer_set_mode (layer, layer_mode, TRUE);
@@ -2593,10 +2601,6 @@ layers_edit_attributes_callback (GtkWidget              *dialog,
       gimp_image_undo_group_end (image);
       gimp_image_flush (image);
     }
-
-  if (GIMP_IS_RASTERIZABLE (layer))
-    gimp_rasterizable_set_auto_rename (GIMP_RASTERIZABLE (layer),
-                                       rename_text_layer);
 
   gtk_widget_destroy (dialog);
 }
