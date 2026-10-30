@@ -30,10 +30,10 @@
 # Nathan Follens <nfollens@gnome.org>, 2022, 2024.
 # Dick Groskamp <dikgro@yahoo.co.uk>, 2025.
 msgid ""
-msgstr "Project-Id-Version: GIMP .303\n"
+msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-10-29 21:35+0000\n"
-"PO-Revision-Date: 2026-10-30 12:32+01001\n"
+"PO-Revision-Date: 2026-10-30 14:36+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -4751,7 +4751,7 @@ msgstr "_Caleidoscoop..."
 #: app/actions/filters-actions.c:391
 msgctxt "filters-action"
 msgid "Le_ns Blur..."
-msgstr "Le_ns Vervaging..."
+msgstr "Le_nsvervaging..."
 
 #: app/actions/filters-actions.c:396
 msgctxt "filters-action"
