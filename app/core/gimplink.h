@@ -63,7 +63,7 @@ GimpLink            * gimp_link_duplicate         (GimpLink       *link);
 GFile               * gimp_link_get_file          (GimpLink       *link,
                                                    GFile          *parent,
                                                    gchar         **path);
-void                  gimp_link_set_file          (GimpLink       *layer,
+void                  gimp_link_set_file          (GimpLink       *link,
                                                    GFile          *file,
                                                    gint            vector_width,
                                                    gint            vector_height,
