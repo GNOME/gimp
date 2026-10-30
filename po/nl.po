@@ -30,10 +30,10 @@
 # Nathan Follens <nfollens@gnome.org>, 2022, 2024.
 # Dick Groskamp <dikgro@yahoo.co.uk>, 2025.
 msgid ""
-msgstr "Project-Id-Version: GIMP 3.0\n"
+msgstr "Project-Id-Version: GIMP .303\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-26 09:54+0000\n"
-"PO-Revision-Date: 2026-10-26 11:03+0100\n"
+"POT-Creation-Date: 2026-10-29 21:35+0000\n"
+"PO-Revision-Date: 2026-10-30 12:32+01001\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -219,117 +219,117 @@ msgstr "%s versie %s wordt gebruikt"
 msgid "System Language"
 msgstr "Systeemtaal"
 
-#: app/main.c:170
+#: app/main.c:171
 msgid "Show version information and exit"
 msgstr "Versie-informatie tonen en afsluiten"
 
-#: app/main.c:175
+#: app/main.c:176
 msgid "Show license information and exit"
 msgstr "Licentie-informatie tonen en afsluiten"
 
-#: app/main.c:180
+#: app/main.c:181
 msgid "Be more verbose"
 msgstr "Meer informatie geven"
 
-#: app/main.c:185
+#: app/main.c:186
 msgid "Start a new GIMP instance"
 msgstr "Een nieuwe instantie van GIMP opstarten"
 
-#: app/main.c:190
+#: app/main.c:191
 msgid "Open images as new"
 msgstr "Afbeeldingen openen als nieuw"
 
-#: app/main.c:208
+#: app/main.c:209
 msgid "Run without a user interface"
 msgstr "Uitvoeren zonder een gebruikersinterface"
 
-#: app/main.c:213
+#: app/main.c:214
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Geen penselen, kleurverlopen, patronen, … laden"
 
-#: app/main.c:218
+#: app/main.c:219
 msgid "Do not load any fonts"
 msgstr "Geen lettertypes laden"
 
-#: app/main.c:223
+#: app/main.c:224
 msgid "Do not show a splash screen"
 msgstr "Opstartvenster niet tonen"
 
-#: app/main.c:228
+#: app/main.c:229
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Geen gedeeld geheugen tussen GIMP en plug-ins gebruiken"
 
-#: app/main.c:233
+#: app/main.c:234
 msgid "Do not use special CPU acceleration functions"
 msgstr "Geen speciale functies voor CPU-versnelling gebruiken"
 
-#: app/main.c:238
+#: app/main.c:239
 msgid "Use an alternate sessionrc file"
 msgstr "Een alternatief sessionrc-bestand gebruiken"
 
-#: app/main.c:243
+#: app/main.c:244
 msgid "Use an alternate user gimprc file"
 msgstr "Een alternatief gebruikers-gimprc-bestand gebruiken"
 
-#: app/main.c:248
+#: app/main.c:249
 msgid "Use an alternate system gimprc file"
 msgstr "Een alternatief systeem-gimprc-bestand gebruiken"
 
-#: app/main.c:253
+#: app/main.c:254
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Uit te voeren batch-opdracht (kan meerdere keren worden gebruikt)"
 
-#: app/main.c:258
+#: app/main.c:259
 msgid "The procedure to process batch commands with"
 msgstr "De procedure waarmee batch-opdrachten worden verwerkt"
 
-#: app/main.c:263
+#: app/main.c:264
 msgid "Quit immediately after performing requested actions"
 msgstr "Stop onmiddellijk na het uitvoeren van de gevraagde acties"
 
-#: app/main.c:268
+#: app/main.c:269
 msgid "Send messages to console instead of using a dialog"
 msgstr "Waarschuwingen in console tonen in plaats van in een dialoogvenster"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:274
+#: app/main.c:275
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB compatibiliteitsmodus (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:280
+#: app/main.c:281
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Debuggen bij een crash (never|ask|always)"
 
-#: app/main.c:285
+#: app/main.c:286
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Niet-fatale debugsignaalhandlers inschakelen"
 
-#: app/main.c:290
+#: app/main.c:291
 msgid "Make all warnings fatal"
 msgstr "Alle waarschuwingen fataal laten zijn"
 
-#: app/main.c:295
+#: app/main.c:296
 msgid "Output a gimprc file with default settings"
 msgstr "Een gimprc-bestand produceren met standaard instellingen"
 
-#: app/main.c:311
+#: app/main.c:312
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Gesorteerde lijst van verouderde procedures in the PDB tonen"
 
-#: app/main.c:316
+#: app/main.c:317
 msgid "Show a preferences page with experimental features"
 msgstr "Een pagina Voorkeuren tonen met experimentele functies"
 
-#: app/main.c:321
+#: app/main.c:322
 msgid "Show an image submenu with debug actions"
 msgstr "Een submenu tonen met acties voor foutopsporing"
 
-#: app/main.c:887
+#: app/main.c:893
 msgid "[FILE|URI...]"
 msgstr "[BESTAND|URI...]"
 
-#: app/main.c:917
+#: app/main.c:923
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -337,12 +337,12 @@ msgstr "GIMP kon de grafische gebruikersinterface niet initialiseren.\n"
 "Zorg ervoor dat er een juiste instelling voor uw weergaveomgeving bestaat."
 
 # Er is al een instantie van GIMP opgestart. technotalk
-#: app/main.c:1021
+#: app/main.c:1027
 msgid "Another GIMP instance is already running."
 msgstr "Er is al een andere sessie van GIMP actief."
 
 # elke willekeurige toets sluit dit venster
-#: app/main.c:1105
+#: app/main.c:1111
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Druk op een willekeurige toets om dit venster te sluiten)\n"
@@ -377,7 +377,7 @@ msgstr "Penseelbewerker"
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:117 app/core/gimp-data-factories.c:398
-#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3589
+#: app/dialogs/dialogs.c:341 app/dialogs/preferences-dialog.c:3592
 msgid "Brushes"
 msgstr "Penselen"
 
@@ -465,7 +465,7 @@ msgstr "Filters"
 
 #. initialize the list of gimp fonts
 #: app/actions/actions.c:174 app/core/gimp-data-factories.c:432
-#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3619
+#: app/dialogs/dialogs.c:359 app/dialogs/preferences-dialog.c:3622
 msgid "Fonts"
 msgstr "Lettertypes"
 
@@ -476,12 +476,12 @@ msgstr "Bewerker kleurverlopen"
 
 #. initialize the list of gimp gradients
 #: app/actions/actions.c:180 app/core/gimp-data-factories.c:423
-#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3613
+#: app/dialogs/dialogs.c:353 app/dialogs/preferences-dialog.c:3616
 msgid "Gradients"
 msgstr "Kleurverlopen"
 
 #: app/actions/actions.c:183 app/core/gimp-data-factories.c:439
-#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3625
+#: app/dialogs/dialogs.c:365 app/dialogs/preferences-dialog.c:3628
 msgid "Tool Presets"
 msgstr "Gereedschapsvoorinstellingen"
 
@@ -514,7 +514,7 @@ msgstr "Lagen"
 
 #. initialize the list of mypaint brushes
 #: app/actions/actions.c:201 app/core/gimp-data-factories.c:408
-#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3631
+#: app/dialogs/dialogs.c:347 app/dialogs/preferences-dialog.c:3634
 msgid "MyPaint Brushes"
 msgstr "MyPaint-penselen"
 
@@ -525,17 +525,17 @@ msgstr "Paletbewerker"
 
 #. initialize the list of gimp palettes
 #: app/actions/actions.c:207 app/core/gimp-data-factories.c:418
-#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3607
+#: app/dialogs/dialogs.c:356 app/dialogs/preferences-dialog.c:3610
 msgid "Palettes"
 msgstr "Paletten"
 
 #. initialize the list of gimp patterns
 #: app/actions/actions.c:210 app/core/gimp-data-factories.c:413
-#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3601
+#: app/dialogs/dialogs.c:350 app/dialogs/preferences-dialog.c:3604
 msgid "Patterns"
 msgstr "Patronen"
 
-#: app/actions/actions.c:213 app/dialogs/preferences-dialog.c:3637
+#: app/actions/actions.c:213 app/dialogs/preferences-dialog.c:3640
 msgid "Plug-ins"
 msgstr "Plug-ins"
 
@@ -569,7 +569,7 @@ msgstr "Tekst"
 msgid "Text Editor"
 msgstr "Tekstverwerker"
 
-#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:617
+#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:621
 msgid "Tool Options"
 msgstr "Gereedschapsopties"
 
@@ -2532,52 +2532,52 @@ msgstr "_Annuleren"
 msgid "_Record"
 msgstr "_Opnemen"
 
-#: app/actions/dashboard-commands.c:144 app/dialogs/path-export-dialog.c:94
+#: app/actions/dashboard-commands.c:145 app/dialogs/path-export-dialog.c:94
 msgid "All Files"
 msgstr "Alle bestanden"
 
-#: app/actions/dashboard-commands.c:149
+#: app/actions/dashboard-commands.c:150
 #: app/actions/error-console-commands.c:106
 msgid "Log Files (*.log)"
 msgstr "Logbestanden (*.log)"
 
-#: app/actions/dashboard-commands.c:193
+#: app/actions/dashboard-commands.c:194
 msgid "Log samples per second"
 msgstr "Log-monsters per seconde"
 
-#: app/actions/dashboard-commands.c:197
+#: app/actions/dashboard-commands.c:198
 msgid "Sample fre_quency:"
 msgstr "Bemonsteringsfre_quentie:"
 
-#: app/actions/dashboard-commands.c:216
+#: app/actions/dashboard-commands.c:217
 msgid "_Backtrace"
 msgstr "_Backtrace"
 
-#: app/actions/dashboard-commands.c:217
+#: app/actions/dashboard-commands.c:218
 msgid "Include backtraces in log"
 msgstr "Backtraces opnemen in de logbestanden"
 
-#: app/actions/dashboard-commands.c:229
+#: app/actions/dashboard-commands.c:230
 msgid "_Messages"
 msgstr "_Berichten"
 
-#: app/actions/dashboard-commands.c:231
+#: app/actions/dashboard-commands.c:232
 msgid "Include diagnostic messages in log"
 msgstr "Diagnostische berichten opnemen in de logbestanden"
 
-#: app/actions/dashboard-commands.c:243
+#: app/actions/dashboard-commands.c:244
 msgid "Progressi_ve"
 msgstr "Pro_gressief"
 
-#: app/actions/dashboard-commands.c:245
+#: app/actions/dashboard-commands.c:246
 msgid "Produce complete log even if not properly terminated"
 msgstr "Een compleet log maken, zelfs na niet-normale beëindiging"
 
-#: app/actions/dashboard-commands.c:308
+#: app/actions/dashboard-commands.c:309
 msgid "Add Marker"
 msgstr "Markeerpunt toevoegen"
 
-#: app/actions/dashboard-commands.c:310
+#: app/actions/dashboard-commands.c:311
 msgid "Enter a description for the marker"
 msgstr "Geef een beschrijving van het markeerpunt"
 
@@ -4796,7 +4796,7 @@ msgstr "_Doolhof..."
 #: app/actions/filters-actions.c:436
 msgctxt "filters-action"
 msgid "Mean C_urvature Blur..."
-msgstr "_Mediaanvervaging..."
+msgstr "Ver_vaging gemiddelde kromming..."
 
 #: app/actions/filters-actions.c:441
 msgctxt "filters-action"
@@ -10745,7 +10745,7 @@ msgstr "Fout tijdens verwerken '%%s': regel langer dan %s karakters."
 
 #: app/config/gimpconfig-file.c:154 app/config/gimpconfig-file.c:206
 #: app/config/gimpconfig-file.c:223 app/core/gimp-tags.c:145
-#: app/gui/themes.c:862 app/tools/gimpfiltertool-settings.c:229
+#: app/gui/themes.c:874 app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Fout bij schrijven naar ‘%s’: %s"
@@ -12871,7 +12871,7 @@ msgstr "Parasieten"
 
 #. initialize the module list
 #. Modules
-#: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3649
+#: app/core/gimp.c:879 app/dialogs/preferences-dialog.c:3652
 #: app/menus/menus.c:686
 msgid "Modules"
 msgstr "Modules"
@@ -12922,7 +12922,7 @@ msgstr "Verwijderen van ‘%s’ mislukt: %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:403 app/core/gimpcontext.c:706
-#: app/dialogs/preferences-dialog.c:3595 app/tools/gimppaintoptions-gui.c:329
+#: app/dialogs/preferences-dialog.c:3598 app/tools/gimppaintoptions-gui.c:329
 msgid "Dynamics"
 msgstr "Gedrag"
 
@@ -13117,7 +13117,7 @@ msgid "tags-locale:C"
 msgstr "tags-locale:nl"
 
 #: app/core/gimp-tags.c:156 app/core/gimpimage-savable.c:188
-#: app/gui/themes.c:874
+#: app/gui/themes.c:886
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Fout bij het sluiten van ‘%s’: %s"
@@ -13369,11 +13369,12 @@ msgid "Brush Angle"
 msgstr "Hoek van penseel"
 
 #: app/core/gimpbrushpipe-load.c:86 app/core/gimpbrushpipe-load.c:110
+#: app/core/gimpbrushpipe-load.c:124
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Fatale leesfout in penseelbestand: ‘%s’: bestand is beschadigd."
 
-#: app/core/gimpbrushpipe-load.c:142
+#: app/core/gimpbrushpipe-load.c:151
 #, c-format
 msgid "Fatal parse error in brush file '%s': Inconsistent parameters."
 msgstr "Fatale leesfout in penseelbestand: ‘%s’: inconsistente parameters."
@@ -13609,7 +13610,7 @@ msgstr "Patroon"
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
 #: app/core/gimpgradient.c:133 app/pdb/drawable-edit-cmds.c:255
 #: app/tools/gimpgradientoptions.c:286 app/tools/gimpgradienttool.c:174
-#: app/tools/gimpgradienttool.c:872 app/tools/gimppaintoptions-gui.c:385
+#: app/tools/gimpgradienttool.c:877 app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "Kleurverlopen"
 
@@ -13765,7 +13766,7 @@ msgid "Merge filter"
 msgstr "Filter samenvoegen"
 
 #: app/core/gimpdrawable-gradient.c:125 app/core/gimpdrawable-gradient.c:137
-#: app/tools/gimpgradienttool.c:1195 app/tools/gimpgradienttool.c:1242
+#: app/tools/gimpgradienttool.c:1200 app/tools/gimpgradienttool.c:1247
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Kleurverloop"
@@ -14856,11 +14857,11 @@ msgstr "Maximale rechte lengte om te sluiten"
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Maximale rechte lengte (in pixels) om contouren te sluiten"
 
-#: app/core/gimplink.c:411
+#: app/core/gimplink.c:412
 msgid "The file got deleted"
 msgstr "Het bestand werd verwijderd"
 
-#: app/core/gimplink.c:506
+#: app/core/gimplink.c:507
 msgid "No file was set"
 msgstr "Er werd geen bestand ingesteld"
 
@@ -14990,8 +14991,8 @@ msgid "In line %d of palette file: "
 msgstr "In regel %d van paletbestand: "
 
 #: app/core/gimppalette-load.c:528 app/core/gimppalette-load.c:733
-#: app/core/gimppalette-load.c:1080 app/core/gimppalette-load.c:1631
-#: app/core/gimppalette-load.c:1652
+#: app/core/gimppalette-load.c:1092 app/core/gimppalette-load.c:1656
+#: app/core/gimppalette-load.c:1677
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Kon header van paletbestand ‘%s’ niet lezen: "
@@ -15000,119 +15001,119 @@ msgstr "Kon header van paletbestand ‘%s’ niet lezen: "
 msgid "Premature end of file."
 msgstr "Voortijdig einde bestand."
 
-#: app/core/gimppalette-load.c:743
+#: app/core/gimppalette-load.c:744
 #, c-format
 msgid "Invalid ACB palette version."
 msgstr "Ongeldige ACB-paletversie."
 
-#: app/core/gimppalette-load.c:750
+#: app/core/gimppalette-load.c:751
 #, c-format
 msgid "GIMP only supports version 1 ACB palettes"
 msgstr "GIMP ondersteunt alleen versie 1 ACB-paletten"
 
-#: app/core/gimppalette-load.c:758
+#: app/core/gimppalette-load.c:760
 #, c-format
 msgid "Invalid ACB palette identifier."
 msgstr "Ongeldige ACB-palet identificatie."
 
-#: app/core/gimppalette-load.c:774 app/core/gimppalette-load.c:793
-#: app/core/gimppalette-load.c:1013 app/core/gimppalette-load.c:1034
+#: app/core/gimppalette-load.c:776 app/core/gimppalette-load.c:795
+#: app/core/gimppalette-load.c:1024 app/core/gimppalette-load.c:1046
 #, c-format
 msgid "Invalid ACB palette name."
 msgstr "Ongeldige ACB-paletnaam."
 
-#: app/core/gimppalette-load.c:809
+#: app/core/gimppalette-load.c:811
 #, c-format
 msgid "Invalid ACB palette suffix."
 msgstr "Ongeldige ACB-palet extensie."
 
-#: app/core/gimppalette-load.c:828 app/core/gimppalette-load.c:1100
+#: app/core/gimppalette-load.c:831 app/core/gimppalette-load.c:1112
 #, c-format
 msgid "Invalid number of colors in palette."
 msgstr "Ongeldig aantal kleuren in het palet."
 
-#: app/core/gimppalette-load.c:835 app/core/gimppalette-load.c:1107
+#: app/core/gimppalette-load.c:838 app/core/gimppalette-load.c:1119
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "Ongeldig aantal kleuren: %s."
 
-#: app/core/gimppalette-load.c:848 app/core/gimppalette-load.c:858
+#: app/core/gimppalette-load.c:852 app/core/gimppalette-load.c:863
 #, c-format
 msgid "Invalid ACB palette page info."
 msgstr "Ongeldige ACB-palet pagina info."
 
-#: app/core/gimppalette-load.c:870 app/core/gimppalette-load.c:883
+#: app/core/gimppalette-load.c:876 app/core/gimppalette-load.c:889
 #, c-format
 msgid "Invalid ACB palette color space."
 msgstr "Ongeldige ACB-palet kleurruimte."
 
-#: app/core/gimppalette-load.c:1023
+#: app/core/gimppalette-load.c:1034
 #, c-format
 msgid "Invalid ACB name size."
 msgstr "Lengte van ACB-naam onjuist."
 
-#: app/core/gimppalette-load.c:1091
+#: app/core/gimppalette-load.c:1103
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "Ongeldige ASE-header: %s"
 
-#: app/core/gimppalette-load.c:1118
+#: app/core/gimppalette-load.c:1130
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "Ongeldig ASE-bestand: %s."
 
-#: app/core/gimppalette-load.c:1209
+#: app/core/gimppalette-load.c:1221
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "Ongeldige kleurcomponenten: %s."
 
-#: app/core/gimppalette-load.c:1221 app/core/gimppalette-load.c:1246
+#: app/core/gimppalette-load.c:1233 app/core/gimppalette-load.c:1258
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "Ongeldige ASE-kleur: %s."
 
-#: app/core/gimppalette-load.c:1278 app/core/gimppalette-load.c:1294
-#: app/core/gimppalette-load.c:1313
+#: app/core/gimppalette-load.c:1290 app/core/gimppalette-load.c:1306
+#: app/core/gimppalette-load.c:1325
 #, c-format
 msgid "Invalid ASE palette name."
 msgstr "Ongeldige ASE-paletnaam."
 
-#: app/core/gimppalette-load.c:1287
+#: app/core/gimppalette-load.c:1299
 #, c-format
 msgid "Invalid ASE block size."
 msgstr "Ongeldige ASE-blokgrootte."
 
-#: app/core/gimppalette-load.c:1303
+#: app/core/gimppalette-load.c:1315
 #, c-format
 msgid "Invalid ASE name size."
 msgstr "Lengte van ASE-naam onjuist."
 
-#: app/core/gimppalette-load.c:1432 app/core/gimppalette-load.c:1502
+#: app/core/gimppalette-load.c:1444 app/core/gimppalette-load.c:1523
 #, c-format
 msgid "Unable to read SBZ file: %s"
 msgstr "Kon SBZ-bestand niet lezen: %s"
 
-#: app/core/gimppalette-load.c:1530 app/core/gimppalette-load.c:1542
+#: app/core/gimppalette-load.c:1551 app/core/gimppalette-load.c:1563
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "Kon SBZ-bestand niet openen"
 
-#: app/core/gimppalette-load.c:1576 app/core/gimppalette-load.c:1613
+#: app/core/gimppalette-load.c:1597 app/core/gimppalette-load.c:1638
 #, c-format
 msgid "Unable to read Procreate swatches file: %s"
 msgstr "Kon bestand voor vooraf gedefinieerde kleuren niet lezen: %s niet lezen"
 
-#: app/core/gimppalette-load.c:1818 app/core/gimppalette-load.c:1829
+#: app/core/gimppalette-load.c:1843 app/core/gimppalette-load.c:1854
 #, c-format
 msgid "Unable to read Procreate swatches file"
 msgstr "Kon bestand voor vooraf gedefinieerde kleuren niet lezen"
 
-#: app/core/gimppalette-load.c:1877 app/core/gimppalette-load.c:1943
+#: app/core/gimppalette-load.c:1902 app/core/gimppalette-load.c:1977
 #, c-format
 msgid "Unable to read KPL file: %s"
 msgstr "Kan KPL-bestand niet lezen: %s"
 
-#: app/core/gimppalette-load.c:1971 app/core/gimppalette-load.c:1982
+#: app/core/gimppalette-load.c:2005 app/core/gimppalette-load.c:2016
 #, c-format
 msgid "Unable to open KPL file"
 msgstr "Kan KPL-bestand niet openen"
@@ -15163,7 +15164,7 @@ msgstr "Ongeldige UTF-8-tekenreeks in patroonbestand ‘%s’."
 msgid "Fatal parse error in pattern file: "
 msgstr "Fatale leesfout in patroonbestand: "
 
-#: app/core/gimppattern-load.c:378 app/core/gimppattern-load.c:385
+#: app/core/gimppattern-load.c:382 app/core/gimppattern-load.c:389
 msgid "Error reading Photoshop pattern."
 msgstr "Fout bij lezen van patroon van Photoshop."
 
@@ -15328,7 +15329,7 @@ msgstr "Penseelgedrag nabootsen"
 
 #. no undo (or redo) steps available
 #: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:509
-#: app/display/gimpstatusbar.c:2158 app/widgets/gimpimagepropview.c:407
+#: app/display/gimpstatusbar.c:2162 app/widgets/gimpimagepropview.c:407
 #: app/widgets/gimpsymmetryeditor.c:167 app/widgets/gimpsymmetryeditor.c:177
 msgid "None"
 msgstr "Geen"
@@ -15631,34 +15632,34 @@ msgstr "vertalers:\n"
 "Dick Groskamp\n"
 "Meer info over GNOME-NL https://matrix.to/#/#nl:gnome.org"
 
-#: app/dialogs/about-dialog.c:361 app/widgets/gimpfiledialog.c:361
+#: app/dialogs/about-dialog.c:364 app/widgets/gimpfiledialog.c:361
 msgid "_Help"
 msgstr "_Hulp"
 
 # types/typen/soorten
-#: app/dialogs/about-dialog.c:554
+#: app/dialogs/about-dialog.c:565
 msgid "Update available!"
 msgstr "Update beschikbaar!"
 
 #. This is actually a new revision of current version.
-#: app/dialogs/about-dialog.c:584
+#: app/dialogs/about-dialog.c:595
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
 msgstr "Download GIMP %s versie %d (uitgegeven op %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
-#: app/dialogs/about-dialog.c:594
+#: app/dialogs/about-dialog.c:605
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
 msgstr "<u>opmerkingen bij deze versie</u>: <i>%s</i>"
 
-#: app/dialogs/about-dialog.c:599
+#: app/dialogs/about-dialog.c:610
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
 msgstr "Download GIMP %s (van %s)\n"
 
-#: app/dialogs/about-dialog.c:624 app/dialogs/about-dialog.c:647
+#: app/dialogs/about-dialog.c:635 app/dialogs/about-dialog.c:658
 msgid "Check for updates"
 msgstr "Controleren op nieuwe versie"
 
@@ -15666,7 +15667,7 @@ msgstr "Controleren op nieuwe versie"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:668
+#: app/dialogs/about-dialog.c:679
 #, c-format
 msgid "Last checked on %s at %s"
 msgstr "Laatste controle was op %s om %s"
@@ -15675,16 +15676,16 @@ msgstr "Laatste controle was op %s om %s"
 #. * representation (e.g., 12/31/99), second is the time in the
 #. * locale's time representation (e.g., 23:13:48).
 #.
-#: app/dialogs/about-dialog.c:674
+#: app/dialogs/about-dialog.c:685
 #, c-format
 msgid "Up to date as of %s at %s"
 msgstr "Up-to-date vanaf %s om %s"
 
-#: app/dialogs/about-dialog.c:902
+#: app/dialogs/about-dialog.c:913
 msgid "GIMP is brought to you by"
 msgstr "GIMP is gemaakt door"
 
-#: app/dialogs/about-dialog.c:977
+#: app/dialogs/about-dialog.c:988
 #, c-format
 msgid ""
 "This is a development build\n"
@@ -15692,67 +15693,67 @@ msgid ""
 msgstr "Dit is een ontwikkelversie\n"
 "commit %s"
 
-#: app/dialogs/about-dialog.c:1085
+#: app/dialogs/about-dialog.c:1096
 msgid "built from source"
 msgstr "gebouwd uit bron"
 
 #. Translators: build id, revision number
-#: app/dialogs/about-dialog.c:1088
+#: app/dialogs/about-dialog.c:1099
 #, c-format
 msgid "%s revision %d"
 msgstr "%s revisie %d"
 
-#: app/dialogs/about-dialog.c:1095 app/dialogs/module-dialog.c:366
+#: app/dialogs/about-dialog.c:1106 app/dialogs/module-dialog.c:366
 msgid "Version:"
 msgstr "Versie:"
 
-#: app/dialogs/about-dialog.c:1097
+#: app/dialogs/about-dialog.c:1108
 msgid "OS:"
 msgstr "Besturingssysteem:"
 
-#: app/dialogs/about-dialog.c:1099 app/dialogs/about-dialog.c:1130
+#: app/dialogs/about-dialog.c:1110 app/dialogs/about-dialog.c:1141
 msgid "unknown"
 msgstr "onbekend"
 
 #. Translators: total RAM, then how much of it is free
-#: app/dialogs/about-dialog.c:1116 app/dialogs/about-dialog.c:1123
-#: app/dialogs/about-dialog.c:1130
+#: app/dialogs/about-dialog.c:1127 app/dialogs/about-dialog.c:1134
+#: app/dialogs/about-dialog.c:1141
 msgid "Memory:"
 msgstr "Geheugen:"
 
-#: app/dialogs/about-dialog.c:1117
+#: app/dialogs/about-dialog.c:1128
 #, c-format
 msgid "%s (%s free)"
 msgstr "%s (%s vrij)"
 
-#: app/dialogs/about-dialog.c:1152
+#: app/dialogs/about-dialog.c:1163
 msgid "Swap:"
 msgstr "Wisselgeheugen:"
 
-#: app/dialogs/about-dialog.c:1153
+#: app/dialogs/about-dialog.c:1164
 #, c-format
 msgid "%s free on partition"
 msgstr "%s vrij op partitie"
 
-#: app/dialogs/about-dialog.c:1163
+#: app/dialogs/about-dialog.c:1174
 msgid "Library Versions:"
 msgstr "Versies bibliotheek:"
 
-#: app/dialogs/about-dialog.c:1237 app/dialogs/about-dialog.c:1295
+#: app/dialogs/about-dialog.c:1248 app/dialogs/about-dialog.c:1306
 msgid "Copy Version Information"
 msgstr "Versie-informatie kopiëren"
 
 # muisaanwijzer/pointer
-#: app/dialogs/about-dialog.c:1292
+#: app/dialogs/about-dialog.c:1303
 msgid "Version Information"
 msgstr "Versie-informatie"
 
-#: app/dialogs/about-dialog.c:1294
+#: app/dialogs/about-dialog.c:1305
 msgid "_Copy"
 msgstr "_Kopiëren"
 
 # muisaanwijzer/pointer
-#: app/dialogs/about-dialog.c:1350
+#: app/dialogs/about-dialog.c:1361
 msgid "Copied Version Information"
 msgstr "Versie-informatie gekopieerd"
 
@@ -15873,12 +15874,12 @@ msgstr "Profiel_details"
 #  absolute colorimetric
 # 03/02/08: bij Adobeprogramma’s is dit de "renderintentie"
 #: app/dialogs/color-profile-dialog.c:290
-#: app/dialogs/color-profile-import-dialog.c:197
+#: app/dialogs/color-profile-import-dialog.c:203
 msgid "_Rendering Intent:"
 msgstr "_Renderintentie:"
 
 #: app/dialogs/color-profile-dialog.c:306
-#: app/dialogs/color-profile-import-dialog.c:213
+#: app/dialogs/color-profile-import-dialog.c:219
 msgid "_Black Point Compensation"
 msgstr "_Zwartpuntcompensatie"
 
@@ -15918,33 +15919,33 @@ msgstr "Be_houden"
 msgid "_Convert"
 msgstr "_Omzetten"
 
-#: app/dialogs/color-profile-import-dialog.c:130
+#: app/dialogs/color-profile-import-dialog.c:136
 #, c-format
 msgid "The image '%s' has an embedded color profile"
 msgstr "Afbeelding ‘%s’ heeft een ingebed kleurprofiel"
 
-#: app/dialogs/color-profile-import-dialog.c:151
+#: app/dialogs/color-profile-import-dialog.c:157
 msgid "Built-in Profile"
 msgstr "Ingebouwd profiel"
 
-#: app/dialogs/color-profile-import-dialog.c:161
+#: app/dialogs/color-profile-import-dialog.c:167
 msgid "Convert the image to the preferred grayscale color profile?"
 msgstr "Afbeelding naar preferent grijswaarden-kleurprofiel converteren?"
 
-#: app/dialogs/color-profile-import-dialog.c:163
+#: app/dialogs/color-profile-import-dialog.c:169
 msgid "Convert the image to the preferred RGB color profile?"
 msgstr "De afbeelding naar preferent RGB-kleurprofiel converteren?"
 
-#: app/dialogs/color-profile-import-dialog.c:167
+#: app/dialogs/color-profile-import-dialog.c:173
 msgid "Preferred Profile"
 msgstr "Voorkeursprofiel"
 
-#: app/dialogs/color-profile-import-dialog.c:222
-#: app/dialogs/metadata-rotation-import-dialog.c:257
+#: app/dialogs/color-profile-import-dialog.c:228
+#: app/dialogs/metadata-rotation-import-dialog.c:263
 msgid "_Don't ask me again"
 msgstr "_Niet opnieuw vragen"
 
-#: app/dialogs/color-profile-import-dialog.c:224
+#: app/dialogs/color-profile-import-dialog.c:230
 msgid "Your choice can later be edited in Preferences > Color Management"
 msgstr "Uw keuze kan later worden aangepast in Voorkeuren > Kleurbeheer"
 
@@ -16599,20 +16600,20 @@ msgstr "Origineel _behouden"
 msgid "_Rotate"
 msgstr "D_raaien"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:128
+#: app/dialogs/metadata-rotation-import-dialog.c:134
 #, c-format
 msgid "The image '%s' contains Exif orientation metadata"
 msgstr "Deze afbeelding ‘%s’ bevat EXIF oriëntatie metagegevens"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:187
+#: app/dialogs/metadata-rotation-import-dialog.c:193
 msgid "Original"
 msgstr "Origineel"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:216
+#: app/dialogs/metadata-rotation-import-dialog.c:222
 msgid "Rotated"
 msgstr "Gedraaid"
 
-#: app/dialogs/metadata-rotation-import-dialog.c:245
+#: app/dialogs/metadata-rotation-import-dialog.c:251
 msgid "Would you like to rotate the image?"
 msgstr "Wilt u de afbeelding roteren?"
 
@@ -16722,7 +16723,7 @@ msgstr "In_terval:"
 
 #. The "Preview" frame
 #: app/dialogs/palette-import-dialog.c:351
-#: app/tools/gimpforegroundselecttool.c:1318
+#: app/tools/gimpforegroundselecttool.c:1328
 msgid "Preview"
 msgstr "Voorbeeld"
 
@@ -18218,259 +18219,259 @@ msgstr "_Muisaanwijzer tonen bij tekengereedschap"
 msgid "Extended Input Devices"
 msgstr "Extra invoerapparaten"
 
-#: app/dialogs/preferences-dialog.c:3462
+#: app/dialogs/preferences-dialog.c:3465
 msgid "Pointer Input API:"
 msgstr "Muisaanwijzer-API:"
 
-#: app/dialogs/preferences-dialog.c:3473
+#: app/dialogs/preferences-dialog.c:3476
 msgid "S_hare tool and tool options between input devices"
 msgstr "Gereedsc_happen en opties delen tussen invoerapparaten"
 
-#: app/dialogs/preferences-dialog.c:3477
+#: app/dialogs/preferences-dialog.c:3480
 msgid "Configure E_xtended Input Devices..."
 msgstr "_Uitgebreide invoerapparaten configureren..."
 
-#: app/dialogs/preferences-dialog.c:3484
+#: app/dialogs/preferences-dialog.c:3487
 msgid "_Save input device settings on exit"
 msgstr "Apparaat_instellingen opslaan bij afsluiten"
 
-#: app/dialogs/preferences-dialog.c:3488
+#: app/dialogs/preferences-dialog.c:3491
 msgid "Save Input Device Settings _Now"
 msgstr "Apparaatinstellingen _nu opslaan"
 
-#: app/dialogs/preferences-dialog.c:3495
+#: app/dialogs/preferences-dialog.c:3498
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "Opgeslagen instellingen invoerapparaat _terugzetten op standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3510
+#: app/dialogs/preferences-dialog.c:3513
 msgid "Additional Input Controllers"
 msgstr "Extra invoerapparaten"
 
-#: app/dialogs/preferences-dialog.c:3511
+#: app/dialogs/preferences-dialog.c:3514
 msgid "Input Controllers"
 msgstr "Invoerapparaten"
 
-#: app/dialogs/preferences-dialog.c:3526 app/dialogs/preferences-dialog.c:3527
+#: app/dialogs/preferences-dialog.c:3529 app/dialogs/preferences-dialog.c:3530
 msgid "Folders"
 msgstr "Mappen"
 
-#: app/dialogs/preferences-dialog.c:3534
+#: app/dialogs/preferences-dialog.c:3537
 msgid "Reset _Folders"
 msgstr "_Mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3550
+#: app/dialogs/preferences-dialog.c:3553
 msgid "_Temporary folder:"
 msgstr "_Tijdelijke map:"
 
-#: app/dialogs/preferences-dialog.c:3551
+#: app/dialogs/preferences-dialog.c:3554
 msgid "Select Folder for Temporary Files"
 msgstr "Een map selecteren voor tijdelijke bestanden"
 
-#: app/dialogs/preferences-dialog.c:3555
+#: app/dialogs/preferences-dialog.c:3558
 msgid "_Swap folder:"
 msgstr "Map wi_sselgeheugen:"
 
-#: app/dialogs/preferences-dialog.c:3556
+#: app/dialogs/preferences-dialog.c:3559
 msgid "Select Swap Folder"
 msgstr "Map wisselgeheugen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3589
+#: app/dialogs/preferences-dialog.c:3592
 msgid "Brush Folders"
 msgstr "Penseelmappen"
 
-#: app/dialogs/preferences-dialog.c:3592
+#: app/dialogs/preferences-dialog.c:3595
 msgid "Reset Brush _Folders"
 msgstr "Penseel_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3593
+#: app/dialogs/preferences-dialog.c:3596
 msgid "Select Brush Folders"
 msgstr "Penseelmappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3595
+#: app/dialogs/preferences-dialog.c:3598
 msgid "Dynamics Folders"
 msgstr "Mappen voor penseelgedrag"
 
-#: app/dialogs/preferences-dialog.c:3598
+#: app/dialogs/preferences-dialog.c:3601
 msgid "Reset Dynamics _Folders"
 msgstr "Penseelgedrag-_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3599
+#: app/dialogs/preferences-dialog.c:3602
 msgid "Select Dynamics Folders"
 msgstr "Mappen voor penseelgedrag selecteren"
 
-#: app/dialogs/preferences-dialog.c:3601
+#: app/dialogs/preferences-dialog.c:3604
 msgid "Pattern Folders"
 msgstr "Patroonmappen"
 
-#: app/dialogs/preferences-dialog.c:3604
+#: app/dialogs/preferences-dialog.c:3607
 msgid "Reset Pattern _Folders"
 msgstr "Patroon_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3605
+#: app/dialogs/preferences-dialog.c:3608
 msgid "Select Pattern Folders"
 msgstr "Patroonmappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3607
+#: app/dialogs/preferences-dialog.c:3610
 msgid "Palette Folders"
 msgstr "Paletmappen"
 
-#: app/dialogs/preferences-dialog.c:3610
+#: app/dialogs/preferences-dialog.c:3613
 msgid "Reset Palette _Folders"
 msgstr "Palet_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3611
+#: app/dialogs/preferences-dialog.c:3614
 msgid "Select Palette Folders"
 msgstr "Paletmappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3613
+#: app/dialogs/preferences-dialog.c:3616
 msgid "Gradient Folders"
 msgstr "Kleurverloopmappen"
 
-#: app/dialogs/preferences-dialog.c:3616
+#: app/dialogs/preferences-dialog.c:3619
 msgid "Reset Gradient _Folders"
 msgstr "Kleurverloop_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3617
+#: app/dialogs/preferences-dialog.c:3620
 msgid "Select Gradient Folders"
 msgstr "Kleurverloopmappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3619
+#: app/dialogs/preferences-dialog.c:3622
 msgid "Font Folders"
 msgstr "Lettertypemappen"
 
-#: app/dialogs/preferences-dialog.c:3622
+#: app/dialogs/preferences-dialog.c:3625
 msgid "Reset Font _Folders"
 msgstr "Lettertype_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3623
+#: app/dialogs/preferences-dialog.c:3626
 msgid "Select Font Folders"
 msgstr "Lettertypemappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3625
+#: app/dialogs/preferences-dialog.c:3628
 msgid "Tool Preset Folders"
 msgstr "Mappen voor gereedschapsvoorinstellingen"
 
-#: app/dialogs/preferences-dialog.c:3628
+#: app/dialogs/preferences-dialog.c:3631
 msgid "Reset Tool Preset _Folders"
 msgstr "_Mappen voor gereedschapsvoorinstellingen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3629
+#: app/dialogs/preferences-dialog.c:3632
 msgid "Select Tool Preset Folders"
 msgstr "Mappen voor gereedschapsvoorinstellingen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3631
+#: app/dialogs/preferences-dialog.c:3634
 msgid "MyPaint Brush Folders"
 msgstr "MyPaint-penseelmappen"
 
-#: app/dialogs/preferences-dialog.c:3634
+#: app/dialogs/preferences-dialog.c:3637
 msgid "Reset MyPaint Brush _Folders"
 msgstr "MyPaint-penseel_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3635
+#: app/dialogs/preferences-dialog.c:3638
 msgid "Select MyPaint Brush Folders"
 msgstr "MyPaint-penseelmappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3637
+#: app/dialogs/preferences-dialog.c:3640
 msgid "Plug-in Folders"
 msgstr "Plug-in-mappen"
 
-#: app/dialogs/preferences-dialog.c:3640
+#: app/dialogs/preferences-dialog.c:3643
 msgid "Reset plug-in _Folders"
 msgstr "Plug-in-_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3641
+#: app/dialogs/preferences-dialog.c:3644
 msgid "Select plug-in Folders"
 msgstr "Plug-in-mappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3643
+#: app/dialogs/preferences-dialog.c:3646
 msgid "Scripts"
 msgstr "Scripts"
 
-#: app/dialogs/preferences-dialog.c:3643
+#: app/dialogs/preferences-dialog.c:3646
 msgid "Script-Fu Folders"
 msgstr "Script-Fu-mappen"
 
-#: app/dialogs/preferences-dialog.c:3646
+#: app/dialogs/preferences-dialog.c:3649
 msgid "Reset Script-Fu _Folders"
 msgstr "Script-Fu-_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3647
+#: app/dialogs/preferences-dialog.c:3650
 msgid "Select Script-Fu Folders"
 msgstr "Script-Fu-mappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3649
+#: app/dialogs/preferences-dialog.c:3652
 msgid "Module Folders"
 msgstr "Modulemappen"
 
-#: app/dialogs/preferences-dialog.c:3652
+#: app/dialogs/preferences-dialog.c:3655
 msgid "Reset Module _Folders"
 msgstr "Module_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3653
+#: app/dialogs/preferences-dialog.c:3656
 msgid "Select Module Folders"
 msgstr "Modulemappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3655
+#: app/dialogs/preferences-dialog.c:3658
 msgid "Interpreters"
 msgstr "Interpreters"
 
-#: app/dialogs/preferences-dialog.c:3655
+#: app/dialogs/preferences-dialog.c:3658
 msgid "Interpreter Folders"
 msgstr "Interpreter-mappen"
 
-#: app/dialogs/preferences-dialog.c:3658
+#: app/dialogs/preferences-dialog.c:3661
 msgid "Reset Interpreter _Folders"
 msgstr "Interpreter-_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3659
+#: app/dialogs/preferences-dialog.c:3662
 msgid "Select Interpreter Folders"
 msgstr "Interpreter-mappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3661
+#: app/dialogs/preferences-dialog.c:3664
 msgid "Environment"
 msgstr "Omgeving"
 
-#: app/dialogs/preferences-dialog.c:3661
+#: app/dialogs/preferences-dialog.c:3664
 msgid "Environment Folders"
 msgstr "Omgevingsmappen"
 
-#: app/dialogs/preferences-dialog.c:3664
+#: app/dialogs/preferences-dialog.c:3667
 msgid "Reset Environment _Folders"
 msgstr "Omgevings_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3665
+#: app/dialogs/preferences-dialog.c:3668
 msgid "Select Environment Folders"
 msgstr "Omgevingsmappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3667
+#: app/dialogs/preferences-dialog.c:3670
 msgid "Themes"
 msgstr "Thema's"
 
-#: app/dialogs/preferences-dialog.c:3667
+#: app/dialogs/preferences-dialog.c:3670
 msgid "Theme Folders"
 msgstr "Themamappen"
 
-#: app/dialogs/preferences-dialog.c:3670
+#: app/dialogs/preferences-dialog.c:3673
 msgid "Reset Theme _Folders"
 msgstr "Thema_mappen terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3671
+#: app/dialogs/preferences-dialog.c:3674
 msgid "Select Theme Folders"
 msgstr "Themamappen selecteren"
 
-#: app/dialogs/preferences-dialog.c:3673
+#: app/dialogs/preferences-dialog.c:3676
 msgid "Icon Themes"
 msgstr "Pictogramthema's"
 
-#: app/dialogs/preferences-dialog.c:3673
+#: app/dialogs/preferences-dialog.c:3676
 msgid "Icon Theme Folders"
 msgstr "Mappen met pictogramthema's"
 
-#: app/dialogs/preferences-dialog.c:3676
+#: app/dialogs/preferences-dialog.c:3679
 msgid "Reset Icon Theme _Folders"
 msgstr "_Mappen met pictogramthema's terugzetten naar standaardwaarden"
 
-#: app/dialogs/preferences-dialog.c:3677
+#: app/dialogs/preferences-dialog.c:3680
 msgid "Select Icon Theme Folders"
 msgstr "Mappen selecteren met pictogramthema's"
 
@@ -18543,25 +18544,25 @@ msgstr "Druk op %s om af te sluiten."
 msgid "Press %s to close all images."
 msgstr "Druk op %s om alle afbeeldingen te sluiten."
 
-#: app/dialogs/quit-dialog.c:328 app/dialogs/user-install-dialog.c:90
+#: app/dialogs/quit-dialog.c:331 app/dialogs/user-install-dialog.c:90
 msgid "_Quit"
 msgstr "GIMP _afsluiten"
 
-#: app/dialogs/quit-dialog.c:328
+#: app/dialogs/quit-dialog.c:331
 msgid "Cl_ose"
 msgstr "_Sluiten"
 
-#: app/dialogs/quit-dialog.c:352
+#: app/dialogs/quit-dialog.c:355
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr "Druk op %s om alle wijzigingen te verwerpen en af te sluiten."
 
-#: app/dialogs/quit-dialog.c:355
+#: app/dialogs/quit-dialog.c:358
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr "Druk op %s om alle wijzigingen te verwerpen en alle afbeeldingen te sluiten."
 
-#: app/dialogs/quit-dialog.c:363 app/display/gimpdisplayshell-close.c:182
+#: app/dialogs/quit-dialog.c:369 app/display/gimpdisplayshell-close.c:182
 msgid "_Discard Changes"
 msgstr "_Wijzigingen verwerpen"
 
@@ -19463,7 +19464,7 @@ msgstr "De weergave van het afdrukvoorbeeld in-/uitschakelen als er een afdrukvo
 msgid "_Proof Colors"
 msgstr "Kleuren a_fdrukvoorbeeld"
 
-#: app/display/gimpstatusbar.c:508 app/display/gimpstatusbar.c:2165
+#: app/display/gimpstatusbar.c:508 app/display/gimpstatusbar.c:2169
 msgid "Current Soft-Proofing Profile"
 msgstr "Huidig kleurprofiel voor afdrukvoorbeeld"
 
@@ -21062,7 +21063,7 @@ msgstr "Wijzigingen _verwerpen"
 msgid "_Recover"
 msgstr "He_rstel"
 
-#: app/gui/gui.c:363
+#: app/gui/gui.c:367
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Oeps! Het lijkt erop dat GIMP zich herstelde van een crash!"
 
@@ -21072,7 +21073,7 @@ msgstr "Oeps! Het lijkt erop dat GIMP zich herstelde van een crash!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:372
+#: app/gui/gui.c:376
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -21084,7 +21085,7 @@ msgstr[1] "%d afbeeldingen werden gered tijdens de crash. Wilt u proberen ze ter
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:643
+#: app/gui/gui.c:647
 msgid "Documents"
 msgstr "Documenten"
 
@@ -21092,7 +21093,7 @@ msgstr "Documenten"
 msgid "GIMP Startup"
 msgstr "Opstarten van GIMP"
 
-#: app/gui/splash.c:371
+#: app/gui/splash.c:374
 msgid "Loading"
 msgstr "Laden"
 
@@ -21773,7 +21774,7 @@ msgstr "Filter toevoegen"
 msgid "Plug-in"
 msgstr "Plug-in"
 
-#: app/pdb/drawable-cmds.c:1192 app/tools/gimpforegroundselecttool.c:1041
+#: app/pdb/drawable-cmds.c:1192 app/tools/gimpforegroundselecttool.c:1051
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Voorgrond selecteren"
@@ -24009,7 +24010,7 @@ msgstr "%s: wisselen origineel en gefilterde"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: wisselen horizontaal en verticaal"
 
-#: app/tools/gimpfiltertool.c:1284 app/tools/gimpgradienttool.c:845
+#: app/tools/gimpfiltertool.c:1284 app/tools/gimpgradienttool.c:846
 msgid "Edit filter"
 msgstr "Filter bewerken"
 
@@ -24028,7 +24029,7 @@ msgstr "Importeren ‘%s’-instellingen"
 msgid "Export '%s' Settings"
 msgstr "Exporteren ‘%s’-instellingen"
 
-#: app/tools/gimpfiltertool.c:2240 app/tools/gimpgradienttool.c:1372
+#: app/tools/gimpfiltertool.c:2240 app/tools/gimpgradienttool.c:1389
 #, c-format
 msgid "Editing '%s'..."
 msgstr "Bewerken ‘%s’…"
@@ -24174,44 +24175,44 @@ msgstr "Kan niet uit meer dan één laag tegelijk selecteren."
 msgid "Dialog for foreground select"
 msgstr "Dialoogvenster voorgrondselectie"
 
-#: app/tools/gimpforegroundselecttool.c:345
+#: app/tools/gimpforegroundselecttool.c:349
 msgid "_Preview mask"
 msgstr "_Voorbeeldmasker"
 
-#: app/tools/gimpforegroundselecttool.c:356
+#: app/tools/gimpforegroundselecttool.c:360
 msgid "Select foreground pixels"
 msgstr "Voorgrondpixels selecteren"
 
-#: app/tools/gimpforegroundselecttool.c:632
-#: app/tools/gimpforegroundselecttool.c:637
+#: app/tools/gimpforegroundselecttool.c:636
+#: app/tools/gimpforegroundselecttool.c:641
 msgid "Roughly outline the object to extract"
 msgstr "Teken een ruwe omtrek rond het object dat geëxtraheerd moet worden"
 
-#: app/tools/gimpforegroundselecttool.c:633
+#: app/tools/gimpforegroundselecttool.c:637
 msgid "press Enter to refine."
 msgstr "druk op Enter om te verfijnen."
 
-#: app/tools/gimpforegroundselecttool.c:660
+#: app/tools/gimpforegroundselecttool.c:664
 msgid "Selecting foreground"
 msgstr "Voorgrond selecteren"
 
-#: app/tools/gimpforegroundselecttool.c:662
+#: app/tools/gimpforegroundselecttool.c:666
 msgid "Selecting background"
 msgstr "Achtergrond selecteren"
 
-#: app/tools/gimpforegroundselecttool.c:664
+#: app/tools/gimpforegroundselecttool.c:668
 msgid "Selecting unknown"
 msgstr "Onbekend selecteren"
 
-#: app/tools/gimpforegroundselecttool.c:667
+#: app/tools/gimpforegroundselecttool.c:671
 msgid "press Enter to preview."
 msgstr "druk op Enter voor een voorbeeld."
 
-#: app/tools/gimpforegroundselecttool.c:669
+#: app/tools/gimpforegroundselecttool.c:673
 msgid "press Escape to exit preview or Enter to apply."
 msgstr "druk op Esc om voorbeeld te sluiten of op Enter om toe te passen."
 
-#: app/tools/gimpforegroundselecttool.c:1314
+#: app/tools/gimpforegroundselecttool.c:1324
 msgid "Paint mask"
 msgstr "Schildermasker"
 
@@ -26619,7 +26620,7 @@ msgstr "Percentage van breedte van penseel"
 msgid "(None)"
 msgstr "(Geen)"
 
-#: app/widgets/gimpclipboard.c:442 app/widgets/gimpclipboard.c:456
+#: app/widgets/gimpclipboard.c:473 app/widgets/gimpclipboard.c:487
 msgid "Clipboard"
 msgstr "Klembord"
 
@@ -27037,12 +27038,12 @@ msgstr "Cursor rechts"
 msgid "Keyboard"
 msgstr "Toetsenbord"
 
-#: app/widgets/gimpcontrollerkeyboard.c:240
+#: app/widgets/gimpcontrollerkeyboard.c:243
 msgid "Keyboard Events"
 msgstr "Toetsenbordacties"
 
-#: app/widgets/gimpcontrollerkeyboard.c:241
-#: app/widgets/gimpcontrollerwheel.c:240
+#: app/widgets/gimpcontrollerkeyboard.c:244
+#: app/widgets/gimpcontrollerwheel.c:243
 msgid "Ready"
 msgstr "Voltooid"
 
@@ -27163,7 +27164,7 @@ msgstr "Rechts schuiven"
 msgid "Mouse Wheel"
 msgstr "Muiswiel"
 
-#: app/widgets/gimpcontrollerwheel.c:239
+#: app/widgets/gimpcontrollerwheel.c:242
 msgid "Mouse Wheel Events"
 msgstr "Muiswielacties"
 
@@ -27972,11 +27973,11 @@ msgstr "Toewijzingsmatrix"
 msgid "Icon:"
 msgstr "Pictogram:"
 
-#: app/widgets/gimperrordialog.c:176
+#: app/widgets/gimperrordialog.c:180
 msgid "Too many error messages!"
 msgstr "Teveel foutmeldingen!"
 
-#: app/widgets/gimperrordialog.c:177
+#: app/widgets/gimperrordialog.c:181
 msgid "Messages are redirected to stderr."
 msgstr "Berichten worden naar de stderr gevoerd."
 
@@ -27984,7 +27985,7 @@ msgstr "Berichten worden naar de stderr gevoerd."
 #. * like "GIMP Message" or
 #. * "PNG Message"
 #.
-#: app/widgets/gimperrordialog.c:203
+#: app/widgets/gimperrordialog.c:207
 #, c-format
 msgid "%s Message"
 msgstr "%s Bericht"
@@ -28155,31 +28156,31 @@ msgstr "_Achtergrondkleur:"
 msgid "GIMP user manual is missing"
 msgstr "De GIMP-gebruikershandleiding ontbreekt"
 
-#: app/widgets/gimphelp.c:616
+#: app/widgets/gimphelp.c:623
 msgid "The GIMP user manual is not installed in your language."
 msgstr "De GIMP gebruikershandleiding in uw taal is niet geïnstalleerd."
 
-#: app/widgets/gimphelp.c:627
+#: app/widgets/gimphelp.c:634
 msgid "Read Selected _Language"
 msgstr "_Lees geselecteerde taal"
 
-#: app/widgets/gimphelp.c:631
+#: app/widgets/gimphelp.c:638
 msgid "Available manuals..."
 msgstr "Beschikbare handleidingen..."
 
-#: app/widgets/gimphelp.c:643
+#: app/widgets/gimphelp.c:650
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr "U kunt een handleiding in een andere taal kiezen of de online versie lezen."
 
-#: app/widgets/gimphelp.c:649
+#: app/widgets/gimphelp.c:656
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
 msgstr "U kunt het extra hulppakket installeren of aangeven dat u de online-versie wilt gebruiken."
 
-#: app/widgets/gimphelp.c:654
+#: app/widgets/gimphelp.c:661
 msgid "Read _Online"
 msgstr "_Online lezen"
 
@@ -28533,7 +28534,7 @@ msgstr "Kan terugroepen van %s niet uitvoeren.\n"
 msgid "Plug-In"
 msgstr "Plug-in"
 
-#: app/widgets/gimpprogressdialog.c:229
+#: app/widgets/gimpprogressdialog.c:232
 msgid "Progress"
 msgstr "Voortgang"
 
@@ -29400,7 +29401,7 @@ msgstr "Fout bij schrijven XCF: kon geen %d geheugen reserveren."
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
 msgstr "Fout bij schrijven XCF: niet ondersteund BPC bij schrijven pixel: %d"
 
-#: app-tools/gimp-debug-tool.c:119
+#: app-tools/gimp-debug-tool.c:178
 msgid "GIMP Crash Debug"
 msgstr "GIMP-crash: debug"
 
