@@ -590,6 +590,40 @@ gimp_color_frame_set_has_coords (GimpColorFrame *frame,
     }
 }
 
+#if GEGL_MINOR_VERSION == 4 && GEGL_MICRO_VERSION < 72
+static gint
+gegl_color_cmp (GeglColor *color1,
+                GeglColor *color2)
+{
+  const Babl *format1;
+  const Babl *format2;
+
+  if (color1 == NULL || color2 == NULL)
+    return color2 ? -1 : (color1 ? 1 : 0);
+
+  g_return_val_if_fail (GEGL_IS_COLOR (color1), -1);
+  g_return_val_if_fail (GEGL_IS_COLOR (color2), -1);
+
+  format1 = gegl_color_get_format (color1);
+  format2 = gegl_color_get_format (color2);
+  if (format1 != format2)
+    {
+      return 1;
+    }
+  else
+    {
+      guint8 pixel1[48];
+      guint8 pixel2[48];
+
+      gegl_color_get_pixel (color1, format1, pixel1);
+      gegl_color_get_pixel (color2, format2, pixel2);
+
+      return memcmp (pixel1, pixel2,
+                     babl_format_get_bytes_per_pixel (format1));
+    }
+}
+#endif
+
 /**
  * gimp_color_frame_set_color:
  * @frame:          The #GimpColorFrame.
