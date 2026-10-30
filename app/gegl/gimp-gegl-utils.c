@@ -573,6 +573,16 @@ gimp_gegl_op_blacklisted (const gchar  *name,
     "transform",
     "video"
   };
+  /* I think that "gimp-offset" from the "transform" category might be
+   * our only exception as it's called as a subclass tool of
+   * GimpFilterTool and allows being applied non-destructively. AFAIK
+   * all other transform ops are not currently allowed as NDE, though
+   * eventually, we'll want all of them as well.
+   */
+  static const gchar * const category_exceptions[] =
+  {
+    "gimp:offset",
+  };
   static const gchar * const name_blacklist[] =
   {
     /* these ops are blacklisted for other reasons */
@@ -627,6 +637,12 @@ gimp_gegl_op_blacklisted (const gchar  *name,
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            "Filters in namespace \"gimp:\" are hidden.");
       return TRUE;
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (category_exceptions); i++)
+    {
+      if (g_strcmp0 (name, category_exceptions[i]) == 0)
+        return FALSE;
     }
 
   for (i = 0; i < G_N_ELEMENTS (name_blacklist); i++)
