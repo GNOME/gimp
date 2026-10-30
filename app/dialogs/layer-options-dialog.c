@@ -690,14 +690,15 @@ layer_options_file_set (GtkFileChooserButton *widget,
   gboolean   broken_link = FALSE;
 
   dialog = GTK_DIALOG (gtk_widget_get_toplevel (GTK_WIDGET (widget)));
-  item_options_dialog_block_responses (GTK_WIDGET (dialog));
+  gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, FALSE);
   gtk_widget_set_sensitive (GTK_WIDGET (widget), FALSE);
 
   file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (widget));
   if (file != NULL)
     {
-      gint width  = 0;
-      gint height = 0;
+      GimpLink *link   = private->link;
+      gint      width  = 0;
+      gint      height = 0;
 
       if (private->layer)
         {
@@ -713,26 +714,50 @@ layer_options_file_set (GtkFileChooserButton *widget,
             }
         }
 
-      gimp_link_set_file (private->link, file, width, height, TRUE, NULL, NULL);
-      broken_link = gimp_link_is_broken (private->link);
-      if (broken_link)
+      /* gimp_link_set_file() will load a plug-in, which will itself
+       * run a sub main-loop, which means other events can be processed
+       * during that time, and in particular it is possible to close the
+       * dialog. That's why I add a weak pointer to verify if the Layer
+       * Options dialog still exists once the link is finally updated.
+       *
+       * This is also why we set the OK button as insensitive (letting
+       * the link of a link layer be updated possibly seconds after one
+       * clicked the OK button would be confusing and bug prone). Only
+       * Cancel is sensitive, so this handler may still run while the
+       * source widget may already be gone. In which case, as it meant
+       * the user canceled the action, we just clean up after ourselves
+       * (it should be the link's last ref).
+       */
+      g_object_add_weak_pointer (G_OBJECT (widget), (gpointer *) &widget);
+      g_object_ref (link);
+      gimp_link_set_file (link, file, width, height, TRUE, NULL, NULL);
+      g_object_unref (link);
+      if (widget)
         {
-          gimp_link_set_file (private->link, NULL, width, height, TRUE, NULL, NULL);
-          g_signal_handlers_block_by_func (widget,
-                                           G_CALLBACK (layer_options_file_set),
-                                           private);
-          gtk_file_chooser_unselect_file (GTK_FILE_CHOOSER (widget), file);
-          g_signal_handlers_unblock_by_func (widget,
-                                             G_CALLBACK (layer_options_file_set),
-                                             private);
+          g_object_remove_weak_pointer (G_OBJECT (widget), (gpointer *) &widget);
+          broken_link = gimp_link_is_broken (link);
+          if (broken_link)
+            {
+              gimp_link_set_file (private->link, NULL, width, height, TRUE, NULL, NULL);
+              g_signal_handlers_block_by_func (widget,
+                                               G_CALLBACK (layer_options_file_set),
+                                               private);
+              gtk_file_chooser_unselect_file (GTK_FILE_CHOOSER (widget), file);
+              g_signal_handlers_unblock_by_func (widget,
+                                                 G_CALLBACK (layer_options_file_set),
+                                                 private);
+            }
         }
     }
-  g_clear_object (&file);
 
-  item_options_dialog_unblock_responses (GTK_WIDGET (dialog));
-  gtk_widget_set_sensitive (GTK_WIDGET (widget), TRUE);
-  /* Do not allow clicking OK with a file which won't load. */
-  gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, ! broken_link);
+  if (widget)
+    {
+      gtk_widget_set_sensitive (GTK_WIDGET (widget), TRUE);
+      /* Do not allow clicking OK with a file which won't load. */
+      gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, ! broken_link);
+    }
+
+  g_clear_object (&file);
 }
 
 static void
