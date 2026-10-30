@@ -2710,8 +2710,11 @@ xcf_load_layer_props (XcfInfo    *info,
                                              "image", image,
                                              NULL);
 
-                      gimp_link_layer_set_link (GIMP_LINK_LAYER (*layer), link, FALSE);
+                      /* Flags must be set before the link, in order not
+                       * to have a name change if auto-rename is disabled.
+                       */
                       gimp_link_layer_set_xcf_flags (GIMP_LINK_LAYER (*layer), flags);
+                      gimp_link_layer_set_link (GIMP_LINK_LAYER (*layer), link, FALSE);
 
                       if (! gimp_link_layer_is_monitored (GIMP_LINK_LAYER (*layer)) ||
                           gimp_link_is_broken (gimp_link_layer_get_link (GIMP_LINK_LAYER (*layer))))
