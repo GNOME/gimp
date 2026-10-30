@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <fribidi.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -121,6 +122,9 @@ static void      gimp_text_style_editor_kerning_changed   (GtkAdjustment       *
                                                            GimpTextStyleEditor *editor);
 static void      gimp_text_style_editor_set_kerning       (GimpTextStyleEditor *editor,
                                                            GtkTextTag          *kerning_tag);
+
+static void      gimp_text_style_editor_direction_toggled (GtkToggleButton     *toggle,
+                                                           GimpTextStyleEditor *editor);
 
 static void      gimp_text_style_editor_update            (GimpTextStyleEditor *editor);
 static gboolean  gimp_text_style_editor_update_idle       (GimpTextStyleEditor *editor);
@@ -380,24 +384,6 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 }
 
 static void
-gimp_text_style_editor_direction_toggled (GtkToggleButton *toggle,
-                                          GimpTextStyleEditor *editor)
-{
-  if (gtk_toggle_button_get_active (toggle))
-    {
-      GimpTextDirection dir;
-      dir = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (toggle), "dir"));
-
-      if (editor->text)
-        {
-          /* Setting direction AND permanently flagging it as manually overridden */
-          g_object_set (editor->text, "base-dir-auto", FALSE,
-                        "base-direction", dir, NULL);
-        }
-    }
-}
-
-static void
 gimp_text_style_editor_constructed (GObject *object)
 {
   GimpTextStyleEditor *editor = GIMP_TEXT_STYLE_EDITOR (object);
@@ -502,12 +488,6 @@ gimp_text_style_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (editor->direction_rtl_button), icon);
   gtk_box_pack_start (GTK_BOX (dir_box), editor->direction_rtl_button,
                       FALSE, FALSE, 0);
-
-  /*glib handles base direction enum */
-  g_object_set_data (G_OBJECT (editor->direction_ltr_button), "dir",
-                     GINT_TO_POINTER (GIMP_TEXT_DIRECTION_LTR));
-  g_object_set_data (G_OBJECT (editor->direction_rtl_button), "dir",
-                     GINT_TO_POINTER (GIMP_TEXT_DIRECTION_RTL));
 
   g_signal_connect (editor->direction_ltr_button,
                     "toggled",
@@ -1182,6 +1162,27 @@ gimp_text_style_editor_set_kerning (GimpTextStyleEditor *editor,
 }
 
 static void
+gimp_text_style_editor_direction_toggled (GtkToggleButton     *toggle,
+                                          GimpTextStyleEditor *editor)
+{
+  if (gtk_toggle_button_get_active (toggle) && editor->text)
+    {
+      GimpTextDirection direction;
+
+      if (GTK_WIDGET (toggle) == editor->direction_ltr_button)
+        direction = GIMP_TEXT_DIRECTION_LTR;
+      else
+        direction = GIMP_TEXT_DIRECTION_RTL;
+
+      /* Setting direction AND permanently flagging it as manually overridden */
+      g_object_set (editor->text,
+                    "base-dir-auto",  FALSE,
+                    "base-direction", direction,
+                    NULL);
+    }
+}
+
+static void
 gimp_text_style_editor_update (GimpTextStyleEditor *editor)
 {
   if (editor->update_idle_id)
@@ -1484,36 +1485,49 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
                                _("Change font of selected text"), NULL);
     }
 
-    
-  /* using pango to get initial direction, unless overridden by user*/
-  if (editor->text && editor->text->text)
+  /* Get initial direction, unless overridden by user. */
+  if (editor->text && editor->text->text && editor->text->base_dir_auto)
     {
-      if (editor->text->base_dir_auto)
+      FriBidiParType   auto_direction;
+      FriBidiChar     *fbc = g_new (FriBidiChar, strlen (editor->text->text));
+      FriBidiStrIndex  fbc_len;
+      FriBidiCharType *types;
+      FriBidiCharSet   charset = fribidi_parse_charset ("UTF-8");
+
+      g_return_val_if_fail (charset != 0, G_SOURCE_REMOVE);
+
+      fbc_len = fribidi_charset_to_unicode (charset, editor->text->text,
+                                            strlen (editor->text->text), fbc);
+      types   = g_new (FriBidiCharType, fbc_len);
+
+      fribidi_get_bidi_types (fbc, fbc_len, types);
+      auto_direction = fribidi_get_par_direction (types, fbc_len);
+
+      g_free (types);
+      g_free (fbc);
+
+      switch (auto_direction)
         {
-          PangoDirection auto_dir;
-
-          /* bypassing the compiler warning just this once */
-          G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-          auto_dir = pango_find_base_dir (editor->text->text, -1);
-          G_GNUC_END_IGNORE_DEPRECATIONS
-
-          if (auto_dir == PANGO_DIRECTION_RTL && 
-              editor->text->base_dir != GIMP_TEXT_DIRECTION_RTL)
-            {
-              g_object_set (editor->text, "base-direction",
-                            GIMP_TEXT_DIRECTION_RTL,
-                            "justify", GIMP_TEXT_JUSTIFY_RIGHT, NULL);
-            }
-
-          else if (auto_dir == PANGO_DIRECTION_LTR && 
-                   editor->text->base_dir != GIMP_TEXT_DIRECTION_LTR)
-            {
-              g_object_set (editor->text, "base-direction",
-                            GIMP_TEXT_DIRECTION_LTR,
-                            "justify", GIMP_TEXT_JUSTIFY_LEFT, NULL);
-            }
+        case FRIBIDI_PAR_RTL:
+          if (editor->text->base_dir != GIMP_TEXT_DIRECTION_RTL)
+            g_object_set (editor->text, "base-direction",
+                          GIMP_TEXT_DIRECTION_RTL,
+                          "justify", GIMP_TEXT_JUSTIFY_RIGHT, NULL);
+          break;
+        case FRIBIDI_PAR_LTR:
+          /* This function can only return RTL, LTR or ON (neutral).
+           * We keep LTR for the latest.
+           * Weak directions are never returned as base directions.
+           */
+        default:
+          if (editor->text->base_dir != GIMP_TEXT_DIRECTION_LTR)
+            g_object_set (editor->text, "base-direction",
+                          GIMP_TEXT_DIRECTION_LTR,
+                          "justify", GIMP_TEXT_JUSTIFY_LEFT, NULL);
+          break;
         }
     }
+
   /* sync canvas ui buttons with GimpText state */
   if (editor->text)
     {
@@ -1525,11 +1539,11 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
                                        editor);
 
       if (editor->text->base_dir == GIMP_TEXT_DIRECTION_RTL)
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (
-                                        editor->direction_rtl_button), TRUE);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (editor->direction_rtl_button),
+                                      TRUE);
       else if (editor->text->base_dir == GIMP_TEXT_DIRECTION_LTR)
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (
-                                        editor->direction_ltr_button), TRUE);
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (editor->direction_ltr_button),
+                                      TRUE);
 
       g_signal_handlers_unblock_by_func (editor->direction_ltr_button,
                                          gimp_text_style_editor_direction_toggled,
