@@ -22,6 +22,9 @@ Core:
   - Dashboard now use WorkingSetSize for memory usage on Windows, which
     is more accurate.
   - Dot to Dot support should now work better even on integer scaling.
+  - Allow canceling font loading in the middle when quitting GIMP early.
+  - Offset is allowed again as a non-destructive filter (it was
+    disallowed on loading by mistake).
 
 Graphical User Interface:
 
@@ -33,6 +36,10 @@ Graphical User Interface:
   - GIMP now respects the macOS setting to differentiate the ON/OFF
     state of switches without colors.
   - Improved dialogs' initial positioning.
+  - When updating the file linked by a link layer in the "Layer
+    Attributes" dialog, do not allow to click OK or to select another
+    file while the new image is being loaded. Canceling the dialog
+    remains possible though.
 
 Plug-Ins:
 
@@ -48,6 +55,11 @@ Plug-Ins:
     * Work around Windows 11's UnifiedPrintDialog.
   - Better error handling added in several plug-ins.
   - Various security bugs fixed.
+  - IFF:
+    * Ported from libiff/libilbm to internal code (the external libs
+      were no longer maintained) though this updated plug-in is currently
+      not built in this branch.
+    * Support for RGBN/RGB8 variants added with the new custom code.
 
 API:
 
@@ -59,6 +71,11 @@ API:
   - libgimpwidgets:
     * The macOS implementation of GimpPickButton was improved by using
       ScreenCaptureKit.
+
+Utilities:
+
+  - gimp-debug-tool (the tool which pops up when GIMP crashes) is now
+    properly localized and themed.
 
 Build:
 
