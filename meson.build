@@ -549,6 +549,9 @@ endif
 
 conf.set_quoted('MYPAINT_BRUSHES_DIR', mypaint_brushes_dir)
 
+fribidi_minver = '1.0.8'
+fribidi        = dependency('fribidi')
+
 pango_minver = '1.50.0'
 if platform_osx
   pango_macos_recommended_version = '1.55.0'
