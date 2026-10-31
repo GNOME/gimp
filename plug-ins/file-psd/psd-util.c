@@ -1477,31 +1477,45 @@ parse_text_loop (guint32      len,
 
         case ')': /* end of binary value */
           {
-            gchar  *name_utf16;
-            gchar  *name_utf8;
-            GError *error = NULL;
-            gsize   bw, br;
+            if (! data->reading_binary)
+              {
+                g_warning ("Unexpected end of binary value token: loading may be incorrect!");
+                data->bufpos++;
+                continue;
+              }
 
             data->reading_binary = FALSE;
             data->val_len = data->bufpos - data->value_start_pos;
 
-            /* Get the name as UTF-8 from UTF-16 data. */
-            name_utf16 = g_malloc0 (data->val_len + 2);
-            memcpy (name_utf16, &buf[data->value_start_pos+2], data->val_len-2);
-            name_utf8 = g_convert (name_utf16, data->val_len, "utf-8", "utf-16BE", &br, &bw, &error);
-
-            if (error)
+            if (data->val_len >= 2)
               {
-                g_warning ("Error converting utf-16 to utf-8: %s", error->message);
-                g_clear_error (&error);
+                gchar  *name_utf16;
+                gchar  *name_utf8;
+                GError *error = NULL;
+                gsize   bw, br;
+
+                /* Get the name as UTF-8 from UTF-16 data. */
+                name_utf16 = g_malloc0 (data->val_len + 2);
+                memcpy (name_utf16, &buf[data->value_start_pos+2], data->val_len-2);
+                name_utf8 = g_convert (name_utf16, data->val_len, "utf-8", "utf-16BE", &br, &bw, &error);
+
+                if (error)
+                  {
+                    g_warning ("Error converting utf-16 to utf-8: %s", error->message);
+                    g_clear_error (&error);
+                  }
+                IFDBG(3) g_debug ("Text value: '%s'", name_utf8);
+
+                json_object_set_string_member (member_obj, "type", "string");
+                json_object_set_string_member (member_obj, "value", name_utf8);
+
+                g_free (name_utf16);
+                g_free (name_utf8);
               }
-            IFDBG(3) g_debug ("Text value: '%s'", name_utf8);
-
-            json_object_set_string_member (member_obj, "type", "string");
-            json_object_set_string_member (member_obj, "value", name_utf8);
-
-            g_free (name_utf16);
-            g_free (name_utf8);
+            else
+              {
+                g_warning ("Error converting utf-16 to utf-8: %s", "invalid utf-16 length");
+              }
 
             IFDBG(4) g_debug ("Binary value end, value length: %u bytes", data->val_len);
           }
