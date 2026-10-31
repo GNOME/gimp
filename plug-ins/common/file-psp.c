@@ -2446,6 +2446,7 @@ read_selection_block (FILE      *f,
   guchar         *pixels;
   gint            width;
   gint            height;
+  gsize           alloc;
 
   current_location = ftell (f);
   fseek (f, 0, SEEK_END);
@@ -2551,9 +2552,9 @@ read_selection_block (FILE      *f,
   selection = gimp_image_get_selection (image);
   buffer    = gimp_drawable_get_buffer (GIMP_DRAWABLE (selection));
 
-  pixels = g_try_malloc0 ((gsize) gegl_buffer_get_width (buffer) *
-                          gegl_buffer_get_height (buffer));
-  if (pixels == NULL)
+  if (! g_size_checked_mul (&alloc, gegl_buffer_get_width (buffer),
+                            gegl_buffer_get_height (buffer)) ||
+      ! (pixels = g_try_malloc0 (alloc)))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Error reading channel information chunk"));
