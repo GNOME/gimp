@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-29 21:35+0000\n"
-"PO-Revision-Date: 2026-10-30 14:36+0100\n"
+"POT-Creation-Date: 2026-10-30 21:49+0000\n"
+"PO-Revision-Date: 2026-10-31 17:31+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -6229,7 +6229,7 @@ msgstr "Afbeelding schalen"
 
 #  Scaling
 #. Scaling
-#: app/actions/image-commands.c:1523 app/actions/layers-commands.c:2696
+#: app/actions/image-commands.c:1523 app/actions/layers-commands.c:2700
 #: app/dialogs/preferences-dialog.c:1805 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -7252,7 +7252,7 @@ msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Laag bijsnijden tot inhoud"
 msgstr[1] "%d lagen bijsnijden tot inhoud"
 
-#: app/actions/layers-commands.c:1642 app/actions/layers-commands.c:2627
+#: app/actions/layers-commands.c:1642 app/actions/layers-commands.c:2631
 msgid "Add Layer Masks"
 msgstr "Laagmaskers toevoegen"
 
@@ -14392,7 +14392,7 @@ msgctxt "undo-type"
 msgid "Crop Image"
 msgstr "Afbeelding bijsnijden"
 
-#: app/core/gimpimage-crop.c:78 app/core/gimpimage-resize.c:93
+#: app/core/gimpimage-crop.c:78 app/core/gimpimage-resize.c:96
 msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "Grootte afbeelding wijzigen"
@@ -23012,7 +23012,7 @@ msgstr "Problemen bij het parsen van de tekstparasiet voor laag ‘%s’:\n"
 "\n"
 "Sommige teksteigenschappen zouden verkeerd kunnen zijn. Tenzij u de tekstlaag zou willen bewerken, hoeft u zich daar geen zorgen om te maken."
 
-#: app/text/gimptextlayout.c:776
+#: app/text/gimptextlayout.c:777
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -25825,7 +25825,7 @@ msgstr "Geen laag."
 msgid "Exactly one path must be selected."
 msgstr "U moet precies één pad selecteren."
 
-#: app/tools/gimptexttool-editor.c:1532
+#: app/tools/gimptexttool-editor.c:1519
 msgid "GIMP Text Editor"
 msgstr "GIMP-tekstbewerker"
 
@@ -26671,192 +26671,192 @@ msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: n/a for Not Available.
-#: app/widgets/gimpcolorframe.c:777 app/widgets/gimpcolorframe.c:779
+#: app/widgets/gimpcolorframe.c:807 app/widgets/gimpcolorframe.c:809
 msgctxt "Coordinates"
 msgid "n/a"
 msgstr "niet beschikbaar"
 
 #. TRANSLATORS: V for Value (grayscale)
-#: app/widgets/gimpcolorframe.c:798 app/widgets/gimpcolorframe.c:944
+#: app/widgets/gimpcolorframe.c:828 app/widgets/gimpcolorframe.c:974
 msgctxt "Grayscale"
 msgid "V:"
 msgstr "V:"
 
 #. TRANSLATORS: A for Alpha (color transparency)
-#: app/widgets/gimpcolorframe.c:802 app/widgets/gimpcolorframe.c:815
-#: app/widgets/gimpcolorframe.c:879 app/widgets/gimpcolorframe.c:948
-#: app/widgets/gimpcolorframe.c:1001 app/widgets/gimpcolorframe.c:1028
-#: app/widgets/gimpcolorframe.c:1056 app/widgets/gimpcolorframe.c:1084
-#: app/widgets/gimpcolorframe.c:1111 app/widgets/gimpcolorframe.c:1158
+#: app/widgets/gimpcolorframe.c:832 app/widgets/gimpcolorframe.c:845
+#: app/widgets/gimpcolorframe.c:909 app/widgets/gimpcolorframe.c:978
+#: app/widgets/gimpcolorframe.c:1031 app/widgets/gimpcolorframe.c:1058
+#: app/widgets/gimpcolorframe.c:1086 app/widgets/gimpcolorframe.c:1114
+#: app/widgets/gimpcolorframe.c:1141 app/widgets/gimpcolorframe.c:1188
 msgctxt "Alpha channel"
 msgid "A:"
 msgstr "A:"
 
 #. TRANSLATORS: R for Red (RGB)
-#: app/widgets/gimpcolorframe.c:807 app/widgets/gimpcolorframe.c:871
+#: app/widgets/gimpcolorframe.c:837 app/widgets/gimpcolorframe.c:901
 msgctxt "RGB"
 msgid "R:"
 msgstr "R:"
 
 #. TRANSLATORS: G for Green (RGB)
-#: app/widgets/gimpcolorframe.c:809 app/widgets/gimpcolorframe.c:873
+#: app/widgets/gimpcolorframe.c:839 app/widgets/gimpcolorframe.c:903
 msgctxt "RGB"
 msgid "G:"
 msgstr "G:"
 
 #. TRANSLATORS: B for Blue (RGB)
-#: app/widgets/gimpcolorframe.c:811 app/widgets/gimpcolorframe.c:875
+#: app/widgets/gimpcolorframe.c:841 app/widgets/gimpcolorframe.c:905
 msgctxt "RGB"
 msgid "B:"
 msgstr "B:"
 
 #. TRANSLATORS: Index of the color in the palette.
-#: app/widgets/gimpcolorframe.c:820
+#: app/widgets/gimpcolorframe.c:850
 msgctxt "Indexed color"
 msgid "Index:"
 msgstr "Index:"
 
-#: app/widgets/gimpcolorframe.c:852 app/widgets/gimpcolorframe.c:885
-#: app/widgets/gimpcolorframe.c:951 app/widgets/gimpcolorframe.c:1160
+#: app/widgets/gimpcolorframe.c:882 app/widgets/gimpcolorframe.c:915
+#: app/widgets/gimpcolorframe.c:981 app/widgets/gimpcolorframe.c:1190
 msgctxt "Color"
 msgid "Profile:"
 msgstr "Profiel:"
 
-#: app/widgets/gimpcolorframe.c:859 app/widgets/gimpcolorframe.c:860
-#: app/widgets/gimpcolorframe.c:933 app/widgets/gimpcolorframe.c:934
-#: app/widgets/gimpcolorframe.c:985 app/widgets/gimpcolorframe.c:986
-#: app/widgets/gimpcolorframe.c:1185 app/widgets/gimpcolorframe.c:1186
+#: app/widgets/gimpcolorframe.c:889 app/widgets/gimpcolorframe.c:890
+#: app/widgets/gimpcolorframe.c:963 app/widgets/gimpcolorframe.c:964
+#: app/widgets/gimpcolorframe.c:1015 app/widgets/gimpcolorframe.c:1016
+#: app/widgets/gimpcolorframe.c:1215 app/widgets/gimpcolorframe.c:1216
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. TRANSLATORS: Hex for Hexadecimal (representation of a color)
-#: app/widgets/gimpcolorframe.c:882
+#: app/widgets/gimpcolorframe.c:912
 msgctxt "Color representation"
 msgid "Hex:"
 msgstr "Hex:"
 
-#: app/widgets/gimpcolorframe.c:887 app/widgets/gimpcolorframe.c:953
-#: app/widgets/gimpcolorframe.c:1162
+#: app/widgets/gimpcolorframe.c:917 app/widgets/gimpcolorframe.c:983
+#: app/widgets/gimpcolorframe.c:1192
 msgctxt "Color"
 msgid "No Profile"
 msgstr "Geen profiel"
 
 #. TRANSLATORS: H for Hue (HSV color space)
-#: app/widgets/gimpcolorframe.c:993
+#: app/widgets/gimpcolorframe.c:1023
 msgctxt "HSV color space"
 msgid "H:"
 msgstr "H:"
 
 #. TRANSLATORS: S for Saturation (HSV color space)
-#: app/widgets/gimpcolorframe.c:995
+#: app/widgets/gimpcolorframe.c:1025
 msgctxt "HSV color space"
 msgid "S:"
 msgstr "S:"
 
 #. TRANSLATORS: V for Value (HSV color space)
-#: app/widgets/gimpcolorframe.c:997
+#: app/widgets/gimpcolorframe.c:1027
 msgctxt "HSV color space"
 msgid "V:"
 msgstr "V:"
 
 #. TRANSLATORS: L for Lightness (LCH color space)
-#: app/widgets/gimpcolorframe.c:1020
+#: app/widgets/gimpcolorframe.c:1050
 msgctxt "LCH color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: C for Chroma (LCH color space)
-#: app/widgets/gimpcolorframe.c:1022
+#: app/widgets/gimpcolorframe.c:1052
 msgctxt "LCH color space"
 msgid "C*:"
 msgstr "C*:"
 
 #. TRANSLATORS: H for Hue angle (LCH color space)
-#: app/widgets/gimpcolorframe.c:1024
+#: app/widgets/gimpcolorframe.c:1054
 msgctxt "LCH color space"
 msgid "h°:"
 msgstr "h°:"
 
 #. TRANSLATORS: L* for Lightness (Lab color space)
-#: app/widgets/gimpcolorframe.c:1048
+#: app/widgets/gimpcolorframe.c:1078
 msgctxt "Lab color space"
 msgid "L*:"
 msgstr "L*:"
 
 #. TRANSLATORS: a* color channel in Lab color space
-#: app/widgets/gimpcolorframe.c:1050
+#: app/widgets/gimpcolorframe.c:1080
 msgctxt "Lab color space"
 msgid "a*:"
 msgstr "a*:"
 
 #. TRANSLATORS: b* color channel in Lab color space
-#: app/widgets/gimpcolorframe.c:1052
+#: app/widgets/gimpcolorframe.c:1082
 msgctxt "Lab color space"
 msgid "b*:"
 msgstr "b*:"
 
 #. TRANSLATORS: x from xyY color space
-#: app/widgets/gimpcolorframe.c:1076
+#: app/widgets/gimpcolorframe.c:1106
 msgctxt "xyY color space"
 msgid "x:"
 msgstr "x:"
 
 #. TRANSLATORS: y from xyY color space
-#: app/widgets/gimpcolorframe.c:1078
+#: app/widgets/gimpcolorframe.c:1108
 msgctxt "xyY color space"
 msgid "y:"
 msgstr "y:"
 
 #. TRANSLATORS: Y from xyY color space
-#: app/widgets/gimpcolorframe.c:1080
+#: app/widgets/gimpcolorframe.c:1110
 msgctxt "xyY color space"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: Y from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1103
+#: app/widgets/gimpcolorframe.c:1133
 msgctxt "Yu'v' color space"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: u' from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1105
+#: app/widgets/gimpcolorframe.c:1135
 msgctxt "Yu'v' color space"
 msgid "u':"
 msgstr "u:"
 
 #. TRANSLATORS: v' from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1107
+#: app/widgets/gimpcolorframe.c:1137
 msgctxt "Yu'v' color space"
 msgid "v':"
 msgstr "v:"
 
 #. TRANSLATORS: C for Cyan (CMYK)
-#: app/widgets/gimpcolorframe.c:1149
+#: app/widgets/gimpcolorframe.c:1179
 msgctxt "CMYK"
 msgid "C:"
 msgstr "C:"
 
 #. TRANSLATORS: M for Magenta (CMYK)
-#: app/widgets/gimpcolorframe.c:1151
+#: app/widgets/gimpcolorframe.c:1181
 msgctxt "CMYK"
 msgid "M:"
 msgstr "M:"
 
 #. TRANSLATORS: Y for Yellow (CMYK)
-#: app/widgets/gimpcolorframe.c:1153
+#: app/widgets/gimpcolorframe.c:1183
 msgctxt "CMYK"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: K for Key/black (CMYK)
-#: app/widgets/gimpcolorframe.c:1155
+#: app/widgets/gimpcolorframe.c:1185
 msgctxt "CMYK"
 msgid "K:"
 msgstr "K:"
 
-#: app/widgets/gimpcolorframe.c:1203
+#: app/widgets/gimpcolorframe.c:1233
 msgctxt "Color value"
 msgid "n/a"
 msgstr "niet beschikbaar"
@@ -28854,55 +28854,63 @@ msgstr "Wegschrijven tekstbestand ‘%s’ mislukt: %s"
 msgid "_Use selected font"
 msgstr "Geselecteerd lettertype gebr_uiken"
 
-#: app/widgets/gimptextstyleeditor.c:255
+#: app/widgets/gimptextstyleeditor.c:259
 msgid "Drag to move the text style editor"
 msgstr "Slepen om de bewerker voor de tekstopmaak te verplaatsen"
 
-#: app/widgets/gimptextstyleeditor.c:275 app/widgets/gimptextstyleeditor.c:1415
+#: app/widgets/gimptextstyleeditor.c:279 app/widgets/gimptextstyleeditor.c:1485
 msgid "Change font of selected text"
 msgstr "Lettertype van geselecteerde tekst wijzigen"
 
-#: app/widgets/gimptextstyleeditor.c:285
+#: app/widgets/gimptextstyleeditor.c:289
 msgid "Change size of selected text"
 msgstr "De grootte van de geselecteerde tekst wijzigen"
 
-#: app/widgets/gimptextstyleeditor.c:292 app/widgets/gimptextstyleeditor.c:303
+#: app/widgets/gimptextstyleeditor.c:296 app/widgets/gimptextstyleeditor.c:307
 msgid "Change color of selected text"
 msgstr "Kleur van de geselecteerde tekst wijzigen"
 
-#: app/widgets/gimptextstyleeditor.c:317
+#: app/widgets/gimptextstyleeditor.c:321
 msgid "Restore On-Canvas Editor Position"
 msgstr "Positie voor op canvas bewerken herstellen"
 
-#: app/widgets/gimptextstyleeditor.c:339
+#: app/widgets/gimptextstyleeditor.c:343
 msgid "Clear style of selected text"
 msgstr "Stijl van geselecteerde tekst wissen"
 
-#: app/widgets/gimptextstyleeditor.c:359
+#: app/widgets/gimptextstyleeditor.c:363
 msgid "Change kerning of selected text"
 msgstr "Kerning van geselecteerde tekst wijzigen"
 
-#: app/widgets/gimptextstyleeditor.c:375
+#: app/widgets/gimptextstyleeditor.c:379
 msgid "Change baseline of selected text"
 msgstr "Basislijn van geselecteerde tekst wijzigen"
 
-#: app/widgets/gimptextstyleeditor.c:414
+#: app/widgets/gimptextstyleeditor.c:420
 msgid "Bold"
 msgstr "Vet"
 
-#: app/widgets/gimptextstyleeditor.c:417
+#: app/widgets/gimptextstyleeditor.c:423
 msgid "Italic"
 msgstr "Cursief"
 
-#: app/widgets/gimptextstyleeditor.c:420
+#: app/widgets/gimptextstyleeditor.c:426
 msgid "Underline"
 msgstr "Onderstreept"
 
-#: app/widgets/gimptextstyleeditor.c:423
+#: app/widgets/gimptextstyleeditor.c:429
 msgid "Strikethrough"
 msgstr "Doorhalen"
 
-#: app/widgets/gimptextstyleeditor.c:1407
+#: app/widgets/gimptextstyleeditor.c:473
+msgid "Left-to-Right"
+msgstr "Links-naar-rechts"
+
+#: app/widgets/gimptextstyleeditor.c:485
+msgid "Right-to-Left"
+msgstr "Rechts-naar-links"
+
+#: app/widgets/gimptextstyleeditor.c:1477
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "Lettertype ‘%s’ niet beschikbaar"
@@ -29358,7 +29366,7 @@ msgid ""
 "is downgraded to a raster layer."
 msgstr "XCF waarschuwing: cirkelverwijzing gedetecteerd in XCF-bestand. De gekoppelde laag ‘%s’ is gedowngraded naar een rasterlaag."
 
-#: app/xcf/xcf-load.c:3421
+#: app/xcf/xcf-load.c:3424
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29368,7 +29376,7 @@ msgid ""
 msgstr "XCF waarschuwing: versie %s van filter ‘%s’ heeft geen eigenschap %s. De eigenschap werd genegeerd en het filter zou niet juist kunnen renderen.\n"
 "Dit zou niet voor moeten komen. U zou het probleem moeten rapporteren bij de ontwikkelaars van het filter."
 
-#: app/xcf/xcf-load.c:4370
+#: app/xcf/xcf-load.c:4373
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
