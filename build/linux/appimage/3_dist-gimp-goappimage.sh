@@ -646,11 +646,13 @@ printf "\nexec \"\$APPDIR\"/usr/bin/$APP_ID \"\$@\"" >> "$APP_DIR/AppRun"
 chmod +x $APP_DIR/AppRun
 
 ## 4.2. Copy icon assets (similarly to flatpaks's 'rename-icon')
-printf "(INFO): copying $APP_ID.svg asset to AppDir\n"
+printf "(INFO): copying $APP_ID.png asset to AppDir\n"
 find "$USR_DIR/share/icons/hicolor" \( -iname *.svg -and ! -iname $APP_ID*.svg \) -execdir ln -sf "{}" $APP_ID.svg \;
 find "$USR_DIR/share/icons/hicolor" \( -iname *.png -and ! -iname $APP_ID*.png \) -execdir ln -sf "{}" $APP_ID.png \;
-cp -L "$USR_DIR/share/icons/hicolor/scalable/apps/$APP_ID.svg" $APP_DIR
-ln -sfr "$APP_DIR/$APP_ID.svg" $APP_DIR/.DirIcon
+# Note: appimagetool doesn't accept SVG anymore so we use the PNG of
+# highest resolution instead.
+cp -L "$USR_DIR/share/icons/hicolor/512x512/apps/$APP_ID.png" $APP_DIR
+ln -sfr "$APP_DIR/$APP_ID.png" $APP_DIR/.DirIcon
 
 ## 4.3. Configure .desktop asset (similarly to flatpaks's 'rename-desktop-file')
 printf "(INFO): configuring $APP_ID.desktop\n"
