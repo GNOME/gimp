@@ -1,7 +1,7 @@
 # Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
-desktop/org.gimp.GIMP.appdata.xml.in.in
+desktop/org.gimp.GIMP.appdata.xml.in.in.in
 desktop/gimp.desktop.in.in
 
 app/about.h

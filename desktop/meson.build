@@ -23,19 +23,23 @@ desktopfile = i18n.merge_file(
   install_dir: get_option('datadir') / 'applications',
 )
 
+## The AppStream metadata goes through 3 transformations:
 appdatafilename = 'org.gimp.GIMP.appdata.xml'
-appdatafilein = configure_file(
-  input : appdatafilename+'.in.in',
-  output: appdatafilename+'.in',
-  configuration: desktop_conf,
-)
-appdatafile = i18n.merge_file(
-  input : appdatafilein,
-  output: appdatafilename,
-  po_dir: po_dir,
-  install: true,
-  install_dir: get_option('datadir') / 'metainfo',
-)
+# 1. Replacing variables at configure time.
+appdatafilein = configure_file(input : appdatafilename+'.in.in.in',
+                               output: appdatafilename+'.in.in',
+                               configuration: desktop_conf)
+# 2. Removing our custom "demo" attributes (used in app/dialogs/meson.build).
+cleaned_appdatafile = custom_target(appdatafilename+'.in',
+                                    input : [ 'appstream.xsl', appdatafilein],
+                                    output : [ appdatafilename+'.in' ],
+                                    command: [ xsltproc, '-o', '@OUTPUT@', '@INPUT0@', '@INPUT1@' ])
+# 3. Localization.
+appdatafile = i18n.merge_file(input : cleaned_appdatafile,
+                              output: appdatafilename,
+                              po_dir: po_dir,
+                              install: true,
+                              install_dir: get_option('datadir') / 'metainfo')
 
 if desktop_validate.found()
   test('validate-desktop',
