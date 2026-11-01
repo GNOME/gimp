@@ -223,7 +223,7 @@ gimp_image_pick_color (GimpImage   *image,
     }
 
   if (picked_buffer_copy)
-    *picked_buffer_copy = gimp_gegl_buffer_dup (gimp_pickable_get_buffer (pickable));
+    *picked_buffer_copy = gimp_gegl_buffer_dup (gimp_pickable_get_buffer (pickable), NULL);
 
   if (pick_image)
     g_object_unref (pick_image);
