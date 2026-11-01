@@ -688,8 +688,7 @@ image_pick_color_invoker (GimpProcedure         *procedure,
                                            sample_merged,
                                            sample_average,
                                            average_radius,
-                                           NULL,
-                                           NULL,
+                                           NULL, NULL, NULL,
                                            &color);
 
           g_list_free (drawable_list);

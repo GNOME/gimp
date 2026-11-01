@@ -147,7 +147,8 @@ gimp_color_picker_tool_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_color_tool_enable (GIMP_COLOR_TOOL (object),
-                          GIMP_COLOR_TOOL_GET_OPTIONS (tool));
+                          GIMP_COLOR_TOOL_GET_OPTIONS (tool),
+                          FALSE);
 }
 
 static void

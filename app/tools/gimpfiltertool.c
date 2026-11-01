@@ -136,6 +136,7 @@ static gboolean  gimp_filter_tool_can_pick_color (GimpColorTool       *color_too
 static gboolean  gimp_filter_tool_pick_color     (GimpColorTool       *color_tool,
                                                   const GimpCoords    *coords,
                                                   GimpDisplay         *display,
+                                                  GeglBuffer         **picked_buffer_copy,
                                                   const Babl         **sample_format,
                                                   gpointer             pixel,
                                                   GeglColor          **color);
@@ -986,6 +987,7 @@ static gboolean
 gimp_filter_tool_pick_color (GimpColorTool     *color_tool,
                              const GimpCoords  *coords,
                              GimpDisplay       *display,
+                             GeglBuffer       **picked_buffer_copy,
                              const Babl       **sample_format,
                              gpointer           pixel,
                              GeglColor        **color)
@@ -1000,9 +1002,9 @@ gimp_filter_tool_pick_color (GimpColorTool     *color_tool,
   g_return_val_if_fail (color != NULL && GEGL_IS_COLOR (*color), FALSE);
   g_return_val_if_fail (sample_format != NULL, FALSE);
 
-  picked = GIMP_COLOR_TOOL_CLASS (parent_class)->pick (color_tool, coords,
-                                                       display, sample_format,
-                                                       pixel, color);
+  picked = GIMP_COLOR_TOOL_CLASS (parent_class)->pick (color_tool, coords, display,
+                                                       picked_buffer_copy,
+                                                       sample_format, pixel, color);
 
   if (! picked && filter_tool->pick_abyss)
     {
@@ -2382,7 +2384,8 @@ gimp_filter_tool_enable_color_picking (GimpFilterTool *filter_tool,
   filter_tool->pick_abyss      = pick_abyss;
 
   gimp_color_tool_enable (GIMP_COLOR_TOOL (filter_tool),
-                          GIMP_COLOR_TOOL_GET_OPTIONS (filter_tool));
+                          GIMP_COLOR_TOOL_GET_OPTIONS (filter_tool),
+                          TRUE);
 }
 
 void

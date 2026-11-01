@@ -799,7 +799,7 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
                                  int_x, int_y,
                                  show_all,
                                  view->priv->sample_merged,
-                                 FALSE, 0.0,
+                                 FALSE, 0.0, NULL,
                                  &sample_format, pixel, &color))
         {
           gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_1),

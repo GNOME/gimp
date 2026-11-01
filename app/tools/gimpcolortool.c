@@ -104,6 +104,7 @@ static gboolean
 static gboolean   gimp_color_tool_real_pick  (GimpColorTool         *color_tool,
                                               const GimpCoords      *coords,
                                               GimpDisplay           *display,
+                                              GeglBuffer           **picked_buffer_copy,
                                               const Babl           **sample_format,
                                               gpointer               pixel,
                                               GeglColor            **color);
@@ -173,6 +174,9 @@ gimp_color_tool_init (GimpColorTool *color_tool)
 {
   GimpTool *tool = GIMP_TOOL (color_tool);
 
+  color_tool->save_picked_buffer = FALSE;
+  color_tool->picked_buffer      = NULL;
+
   gimp_tool_control_set_action_size (tool->control,
                                      "tools-color-average-radius-set");
 }
@@ -183,6 +187,7 @@ gimp_color_tool_finalize (GObject *object)
   GimpColorTool *color_tool = GIMP_COLOR_TOOL (object);
 
   g_clear_object (&color_tool->options);
+  g_clear_object (&color_tool->picked_buffer);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -238,6 +243,7 @@ gimp_color_tool_button_release (GimpTool              *tool,
         {
           gimp_color_tool_pick (color_tool, coords, display,
                                 GIMP_COLOR_PICK_STATE_END);
+          g_clear_object (&color_tool->picked_buffer);
         }
     }
   else
@@ -456,6 +462,7 @@ static gboolean
 gimp_color_tool_real_pick (GimpColorTool     *color_tool,
                            const GimpCoords  *coords,
                            GimpDisplay       *display,
+                           GeglBuffer       **picked_buffer_copy,
                            const Babl       **sample_format,
                            gpointer           pixel,
                            GeglColor        **color)
@@ -473,9 +480,8 @@ gimp_color_tool_real_pick (GimpColorTool     *color_tool,
                                 color_tool->options->sample_merged,
                                 color_tool->options->sample_average,
                                 color_tool->options->average_radius,
-                                sample_format,
-                                pixel,
-                                color);
+                                picked_buffer_copy, sample_format,
+                                pixel, color);
 }
 
 static void
@@ -637,7 +643,9 @@ gimp_color_tool_pick (GimpColorTool      *tool,
   color = gegl_color_new ("black");
 
   if (klass->pick &&
-      klass->pick (tool, coords, display, &sample_format, pixel, &color))
+      klass->pick (tool, coords, display,
+                   tool->save_picked_buffer ? &tool->picked_buffer : NULL,
+                   &sample_format, pixel, &color))
     g_signal_emit (tool, gimp_color_tool_signals[PICKED], 0,
                    coords, display, pick_state,
                    sample_format, pixel, color);
@@ -650,7 +658,8 @@ gimp_color_tool_pick (GimpColorTool      *tool,
 
 void
 gimp_color_tool_enable (GimpColorTool    *color_tool,
-                        GimpColorOptions *options)
+                        GimpColorOptions *options,
+                        gboolean          save_picked_buffer)
 {
   GimpTool *tool;
 
@@ -670,6 +679,15 @@ gimp_color_tool_enable (GimpColorTool    *color_tool,
   /*  color picking doesn't snap, see bug #768058  */
   color_tool->saved_snap_to = gimp_tool_control_get_snap_to (tool->control);
   gimp_tool_control_set_snap_to (tool->control, FALSE);
+
+/*
+ * If TRUE, we ask the @color_tool to save and reuse the same buffer
+ * from the moment it is pressed to the moment it is released.
+ * This is useful for types of color tools which can modify the
+ * rendering while color picking, such as GimpFilterTool in
+ * sample_merged mode.
+ */
+  color_tool->save_picked_buffer = save_picked_buffer;
 
   color_tool->enabled = TRUE;
 }

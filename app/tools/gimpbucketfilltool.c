@@ -824,7 +824,8 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
 
           GIMP_TOOL (tool)->display = display;
           gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
-                                  GIMP_COLOR_OPTIONS (info->tool_options));
+                                  GIMP_COLOR_OPTIONS (info->tool_options),
+                                  FALSE);
         }
       else
         {

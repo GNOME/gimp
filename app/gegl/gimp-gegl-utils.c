@@ -551,6 +551,50 @@ gimp_gegl_buffer_set_extent (GeglBuffer          *buffer,
   return gegl_buffer_set_extent (buffer, extent);
 }
 
+gboolean
+gimp_gegl_buffer_pick_color (GeglBuffer  *buffer,
+                             gint         x,
+                             gint         y,
+                             gboolean     sample_average,
+                             gdouble      average_radius,
+                             const Babl **sample_format,
+                             gpointer     pixel,
+                             GeglColor  **color)
+{
+  const Babl *format;
+  guint8      sample[48];
+
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), FALSE);
+  g_return_val_if_fail (color != NULL && GEGL_IS_COLOR (*color), FALSE);
+
+  format = gegl_buffer_get_format (buffer);
+
+  gegl_buffer_sample (buffer, x, y, NULL, sample, format,
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+
+  if (sample_average)
+    {
+      gint radius = floor (average_radius);
+
+      gimp_gegl_average_color (buffer,
+                               GEGL_RECTANGLE (x - radius,
+                                               y - radius,
+                                               2 * radius + 1,
+                                               2 * radius + 1),
+                               TRUE, GEGL_ABYSS_NONE, format, sample);
+    }
+
+  if (pixel)
+    memcpy (pixel, sample, babl_format_get_bytes_per_pixel (format));
+
+  if (sample_format)
+    *sample_format = format;
+
+  gegl_color_set_pixel (*color, format, sample);
+
+  return TRUE;
+}
+
 
 /*  private functions  */
 
