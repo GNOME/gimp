@@ -276,8 +276,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
   if (gimp_image_pick_color (image_editor->image, drawables, x, y,
                              FALSE, options->sample_merged,
                              FALSE, 0.0,
-                             NULL,
-                             NULL, &color))
+                             NULL, NULL, NULL, &color))
     {
       gimp_channel_select_by_color (gimp_image_get_mask (image_editor->image),
                                     drawables,

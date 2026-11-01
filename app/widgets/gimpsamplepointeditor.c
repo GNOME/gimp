@@ -571,9 +571,7 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
                                      FALSE,
                                      editor->sample_merged,
                                      FALSE, 0.0,
-                                     &format,
-                                     pixel,
-                                     &color))
+                                     NULL, &format, pixel, &color))
             {
               gimp_color_frame_set_color (color_frame, FALSE, color, x, y);
             }

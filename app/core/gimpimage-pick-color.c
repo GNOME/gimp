@@ -28,6 +28,7 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimpchannel.h"
@@ -51,6 +52,7 @@ gimp_image_pick_color (GimpImage   *image,
                        gboolean     sample_merged,
                        gboolean     sample_average,
                        gdouble      average_radius,
+                       GeglBuffer **picked_buffer_copy,
                        const Babl **sample_format,
                        gpointer     pixel,
                        GeglColor  **color)
@@ -62,6 +64,34 @@ gimp_image_pick_color (GimpImage   *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (color != NULL && GEGL_IS_COLOR (*color), FALSE);
+
+  if (picked_buffer_copy && *picked_buffer_copy)
+    {
+      g_return_val_if_fail (GEGL_IS_BUFFER (*picked_buffer_copy), FALSE);
+      /* If we stored a copy of the pickable, we shortcut the whole
+       * pickable finding and assume that picking this buffer will get
+       * us the same result.
+       */
+      result = gimp_gegl_buffer_pick_color (*picked_buffer_copy, x, y,
+                                            sample_average, average_radius,
+                                            sample_format, pixel, color);
+      if (show_all && sample_merged && ! result)
+        {
+          guint8      sample[48];
+          const Babl *format = gegl_buffer_get_format (*picked_buffer_copy);
+          int         bpp    = babl_format_get_bytes_per_pixel (format);
+
+          memset (sample, 0, bpp);
+          if (pixel)
+            memcpy (pixel, sample, babl_format_get_bytes_per_pixel (format));
+          if (sample_format)
+            *sample_format = format;
+          gegl_color_set_pixel (*color, format, sample);
+          result = TRUE;
+        }
+
+      return result;
+    }
 
   for (iter = drawables; iter; iter = iter->next)
     {
@@ -150,22 +180,18 @@ gimp_image_pick_color (GimpImage   *image,
                                      ! (show_all && sample_merged),
                                      average_radius,
                                      pixel, color);
-
   if (show_all && sample_merged)
     {
       GimpColorProfile *profile = gimp_image_get_color_profile (image);
       const Babl *space         = NULL;
-      gdouble     sample[4]     = {};
       const Babl *format;
+      guint       sample[48];
 
       if (profile)
         space = gimp_color_profile_get_space (profile,
                                               GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                               NULL);
       format = babl_format_with_space ("RaGaBaA double", space);
-
-      if (! result)
-        memset (pixel, 0, babl_format_get_bytes_per_pixel (*sample_format));
 
       if (sample_average)
         {
@@ -179,12 +205,25 @@ gimp_image_pick_color (GimpImage   *image,
                                                    2 * radius + 1),
                                    FALSE, GEGL_ABYSS_NONE, format, sample);
         }
+      else if (! result)
+        {
+          memset (sample, 0, babl_format_get_bytes_per_pixel (*sample_format));
+        }
 
       if (! result || sample_average)
-        gegl_color_set_pixel (*color, format, sample);
+        {
+          gegl_color_set_pixel (*color, format, sample);
+          if (pixel)
+            memcpy (pixel, sample, babl_format_get_bytes_per_pixel (format));
+          if (sample_format)
+            *sample_format = format;
+        }
 
       result = TRUE;
     }
+
+  if (picked_buffer_copy)
+    *picked_buffer_copy = gimp_gegl_buffer_dup (gimp_pickable_get_buffer (pickable));
 
   if (pick_image)
     g_object_unref (pick_image);

@@ -484,7 +484,8 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
                     gimp_draw_tool_stop (draw_tool);
 
                   gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
-                                          GIMP_COLOR_OPTIONS (info->tool_options));
+                                          GIMP_COLOR_OPTIONS (info->tool_options),
+                                          FALSE);
 
                   switch (GIMP_COLOR_TOOL (tool)->pick_target)
                     {

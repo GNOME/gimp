@@ -42,6 +42,9 @@ struct _GimpColorTool
   GimpColorOptions    *options;
   gboolean             saved_snap_to;
 
+  gboolean             save_picked_buffer;
+  GeglBuffer          *picked_buffer;
+
   GimpColorPickTarget  pick_target;
 
   gboolean             can_pick;
@@ -61,6 +64,7 @@ struct _GimpColorToolClass
   gboolean (* pick)     (GimpColorTool      *tool,
                          const GimpCoords   *coords,
                          GimpDisplay        *display,
+                         GeglBuffer        **picked_buffer_copy,
                          const Babl        **sample_format,
                          gpointer            pixel,
                          GeglColor         **color);
@@ -79,7 +83,8 @@ struct _GimpColorToolClass
 GType      gimp_color_tool_get_type   (void);
 
 void       gimp_color_tool_enable     (GimpColorTool    *color_tool,
-                                       GimpColorOptions *options);
+                                       GimpColorOptions *options,
+                                       gboolean          save_picked_buffer);
 void       gimp_color_tool_disable    (GimpColorTool    *color_tool);
 gboolean   gimp_color_tool_is_enabled (GimpColorTool    *color_tool);
 

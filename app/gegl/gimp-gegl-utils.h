@@ -67,3 +67,12 @@ GeglBuffer  * gimp_gegl_buffer_resize                 (GeglBuffer          *buff
 
 gboolean      gimp_gegl_buffer_set_extent             (GeglBuffer          *buffer,
                                                        const GeglRectangle *extent);
+
+gboolean      gimp_gegl_buffer_pick_color             (GeglBuffer          *buffer,
+                                                       gint                 x,
+                                                       gint                 y,
+                                                       gboolean             sample_average,
+                                                       gdouble              average_radius,
+                                                       const Babl         **sample_format,
+                                                       gpointer             pixel,
+                                                       GeglColor          **color);
