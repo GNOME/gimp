@@ -559,7 +559,7 @@ if ("$CI_COMMIT_TAG" -eq (git describe --all | Foreach-Object {$_ -replace 'tags
         $jsonObject = msstore submission get $env:PRODUCT_ID | ConvertFrom-Json -AsHashtable; if ("$LASTEXITCODE" -gt '0') { exit 1 }
         ###Get changelog and others from Linux appdata
         $xmlObject = New-Object XML
-        $xmlObject.Load("$PWD\desktop\org.gimp.GIMP.appdata.xml.in.in")
+        $xmlObject.Load("$PWD\desktop\org.gimp.GIMP.appdata.xml.in.in.in")
         if ($xmlObject.component.releases.release[0].version -ne ("$env:GIMP_VERSION".ToLower() -replace '-','~'))
           {
             #This check is needed to ensure the right release notes etc when the submission is (rarely) done manually/locally
