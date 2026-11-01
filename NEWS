@@ -26,6 +26,17 @@ Core:
   - Offset is allowed again as a non-destructive filter (it was
     disallowed on loading by mistake).
 
+Tools:
+
+  - Text tool: improved support of RTL languages.
+    * The arrow keys should now behave correctly in RTL and with LTR
+      text mixed in RTL text.
+    * New RTL and LTR direction icons are shown on the tool's on-canvas
+      UI.
+    * Until you manually choose one of RTL or LTR directions, the tool
+      will automatically detect the base direction of entered text,
+      using the "Unicode Bidirectional Algorithm".
+
 Graphical User Interface:
 
   - Store the localized path of menu models to show action's paths
