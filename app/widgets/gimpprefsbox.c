@@ -276,6 +276,7 @@ gimp_prefs_box_tree_select_callback (GtkTreeSelection *sel,
   gchar               *page_icon_name;
   gint                 page_icon_size;
   gchar               *page_help_id;
+  GtkWidget           *page;
 
   if (! gtk_tree_selection_get_selected (sel, &model, &iter))
     return;
@@ -295,8 +296,10 @@ gimp_prefs_box_tree_select_callback (GtkTreeSelection *sel,
                                 page_icon_size);
   g_free (page_icon_name);
 
-  gtk_stack_set_visible_child_name (GTK_STACK (private->stack),
-                                    page_help_id);
+  page = gtk_stack_get_child_by_name (GTK_STACK (private->stack), page_help_id);
+  gtk_widget_set_visible (g_object_get_data (G_OBJECT (page), "gimp-prefs-box-page"),
+                          TRUE);
+  gtk_stack_set_visible_child (GTK_STACK (private->stack), page);
 
   g_free (page_help_id);
 }
@@ -351,7 +354,12 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_add (GTK_CONTAINER (viewport), vbox);
-  gtk_widget_set_visible (vbox, TRUE);
+  /* Each page is marked as hidden until first shown. That way, GTK doesn't
+   * have to style and measure all pages when opening or closing.
+   */
+  gtk_widget_set_visible (vbox,
+                          page_vbox == gtk_stack_get_visible_child (GTK_STACK (private->stack)));
+  g_object_set_data (G_OBJECT (page_vbox), "gimp-prefs-box-page", vbox);
 
   gtk_tree_store_append (private->store, iter, parent);
   gtk_tree_store_set (private->store, iter,
