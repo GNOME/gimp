@@ -13,6 +13,7 @@ gimp_debug_tool = executable('gimp-debug-tool' + exec_ver,
     gio,
     gegl,
     gtk3,
+    gexiv2,
   ],
   link_with: [
     libapp,
