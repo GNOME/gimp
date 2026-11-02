@@ -51,6 +51,8 @@ Graphical User Interface:
     Attributes" dialog, do not allow to click OK or to select another
     file while the new image is being loaded. Canceling the dialog
     remains possible though.
+  - The slow display of the Preferences dialog got sped up
+    significantly.
 
 Plug-Ins:
 
