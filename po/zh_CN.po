@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-27 23:31+0000\n"
-"PO-Revision-Date: 2026-10-28 07:42+0800\n"
+"POT-Creation-Date: 2026-11-01 16:26+0000\n"
+"PO-Revision-Date: 2026-11-02 09:13+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -34,20 +34,20 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Gtranslator 51.0\n"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:15
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:15
 msgid "The GIMP team"
 msgstr "GIMP 团队"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:16 desktop/gimp.desktop.in.in:4
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:16 desktop/gimp.desktop.in.in:4
 #: app/about.h:25
 msgid "GNU Image Manipulation Program"
 msgstr "GNU 图像处理程序"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:17
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:17
 msgid "High-end image creation and manipulation"
 msgstr "高端图像创作和处理"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:19
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:19
 msgid ""
 "GIMP is an acronym for GNU Image Manipulation Program. It is Community-"
 "driven Free Software for high-end image creation and manipulation."
@@ -55,7 +55,7 @@ msgstr ""
 "GIMP 是 GNU 图像处理程序（GNU Image Manipulation Program）的缩写。GIMP 是一个"
 "由社区驱动用于高端图像创作和处理的自由软件。"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:23
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:23
 msgid ""
 "It has many capabilities. It can be used as a paint program, an expert "
 "quality photo retouching program, image composition, an online batch "
@@ -65,7 +65,7 @@ msgstr ""
 "GIMP 功能强大。它可以作为简单的画图程序，专家级的照片后期程序，图像合成、在线"
 "批处理程序，大批量图像渲染器或者图像格式转化器等使用。"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:29
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:29
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
@@ -77,7 +77,7 @@ msgstr ""
 "复杂的图像处理过程，GIMP 的先进脚本接口都允许你将它们轻松写成脚本。GIMP 可用"
 "于 Linux、Microsoft Windows 和 macOS。"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:47
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:47
 msgid ""
 "Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom "
 "(CC by-sa 4.0 International)"
@@ -85,29 +85,29 @@ msgstr ""
 "GIMP 中正在编辑的“ZeMarmot”场景 4 剪辑 15。创作者 Aryeom（CC by-sa 4.0 "
 "International）"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:51
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:51
 msgid ""
 "Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 "
 "International)"
 msgstr ""
 "GIMP 中正在编辑的海滩上的海鸥。拍摄者 Iana（CC by-sa 4.0 International）"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:55
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:55
 msgid ""
 "Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 "
 "International)"
 msgstr ""
 "GIMP 中正在编辑的索菲亚的人像。拍摄者索菲亚（CC by-sa 4.0 International）"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:59
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:59
 msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
 msgstr "GIMP 中正在编辑的扫描版画。创作者 Liam（CC0）"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:67 app/about.h:22
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:67 app/about.h:22
 msgid "GIMP"
 msgstr "GIMP"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:68
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:68
 msgid "Photoshop"
 msgstr "Photoshop"
 
@@ -572,7 +572,7 @@ msgstr "文本工具"
 msgid "Text Editor"
 msgstr "文本编辑器"
 
-#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:617
+#: app/actions/actions.c:234 app/dialogs/dialogs.c:316 app/gui/gui.c:621
 msgid "Tool Options"
 msgstr "工具选项"
 
@@ -2503,7 +2503,7 @@ msgstr "240 秒"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
+#: app/tools/gimpfiltertool.c:371 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimppathtool.c:1127 app/tools/gimptexttool.c:1941
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
@@ -5129,7 +5129,7 @@ msgid "%s..."
 msgstr "%s…"
 
 #: app/actions/filters-commands.c:282 app/display/gimpdisplayshell-dnd.c:393
-#: app/tools/gimpfiltertool.c:334 app/tools/gimppainttool.c:355
+#: app/tools/gimpfiltertool.c:335 app/tools/gimppainttool.c:355
 #: app/tools/gimptransformtool.c:739
 #: app/widgets/gimpdrawabletreeview-filters.c:824
 msgid "A selected layer is not visible."
@@ -6173,7 +6173,7 @@ msgid "Scale Image"
 msgstr "缩放图像"
 
 #. Scaling
-#: app/actions/image-commands.c:1523 app/actions/layers-commands.c:2696
+#: app/actions/image-commands.c:1523 app/actions/layers-commands.c:2700
 #: app/dialogs/preferences-dialog.c:1805 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:375
 #: app/tools/gimpscaletool.c:122
@@ -7174,7 +7174,7 @@ msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "剪裁 %d 个图层到内容"
 
-#: app/actions/layers-commands.c:1642 app/actions/layers-commands.c:2627
+#: app/actions/layers-commands.c:1642 app/actions/layers-commands.c:2631
 msgid "Add Layer Masks"
 msgstr "添加图层蒙板"
 
@@ -8061,7 +8061,7 @@ msgstr "重置所有滤镜"
 #: app/dialogs/preferences-dialog.c:1180 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
+#: app/tools/gimpfiltertool.c:370 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:264
 msgid "_Reset"
 msgstr "重置(_R)"
@@ -10252,7 +10252,7 @@ msgstr "打开显示器"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:200
-#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
+#: app/tools/gimpfiltertool.c:372 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpdeviceinfoeditor.c:838 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:181 app/widgets/gimpmodifierseditor.c:691
@@ -13500,7 +13500,7 @@ msgstr "图案"
 #: app/core/gimpcontext.c:727 app/core/gimpcontext.c:728
 #: app/core/gimpgradient.c:133 app/pdb/drawable-edit-cmds.c:255
 #: app/tools/gimpgradientoptions.c:286 app/tools/gimpgradienttool.c:174
-#: app/tools/gimpgradienttool.c:872 app/tools/gimppaintoptions-gui.c:385
+#: app/tools/gimpgradienttool.c:877 app/tools/gimppaintoptions-gui.c:385
 msgid "Gradient"
 msgstr "渐变"
 
@@ -13662,7 +13662,7 @@ msgid "Merge filter"
 msgstr "合并滤镜"
 
 #: app/core/gimpdrawable-gradient.c:125 app/core/gimpdrawable-gradient.c:137
-#: app/tools/gimpgradienttool.c:1195 app/tools/gimpgradienttool.c:1242
+#: app/tools/gimpgradienttool.c:1200 app/tools/gimpgradienttool.c:1247
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "渐变"
@@ -14286,7 +14286,7 @@ msgctxt "undo-type"
 msgid "Crop Image"
 msgstr "剪裁图像"
 
-#: app/core/gimpimage-crop.c:78 app/core/gimpimage-resize.c:93
+#: app/core/gimpimage-crop.c:78 app/core/gimpimage-resize.c:96
 msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "改变图像大小"
@@ -14744,11 +14744,11 @@ msgstr "最大直线结束长度"
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "结束线条艺术的最大直线长度（像素）"
 
-#: app/core/gimplink.c:411
+#: app/core/gimplink.c:412
 msgid "The file got deleted"
 msgstr "该文件已被删除"
 
-#: app/core/gimplink.c:506
+#: app/core/gimplink.c:507
 msgid "No file was set"
 msgstr "未设定文件"
 
@@ -14878,8 +14878,8 @@ msgid "In line %d of palette file: "
 msgstr "色板文件的第 %d 行："
 
 #: app/core/gimppalette-load.c:528 app/core/gimppalette-load.c:733
-#: app/core/gimppalette-load.c:1080 app/core/gimppalette-load.c:1644
-#: app/core/gimppalette-load.c:1665
+#: app/core/gimppalette-load.c:1092 app/core/gimppalette-load.c:1656
+#: app/core/gimppalette-load.c:1677
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "无法从色板文件“%s”中读取文件头："
@@ -14888,119 +14888,119 @@ msgstr "无法从色板文件“%s”中读取文件头："
 msgid "Premature end of file."
 msgstr "过早的文件结尾。"
 
-#: app/core/gimppalette-load.c:743
+#: app/core/gimppalette-load.c:744
 #, c-format
 msgid "Invalid ACB palette version."
 msgstr "无效的 ACB 色板版本。"
 
-#: app/core/gimppalette-load.c:750
+#: app/core/gimppalette-load.c:751
 #, c-format
 msgid "GIMP only supports version 1 ACB palettes"
 msgstr "GIMP 仅支持版本 1 的 ACB 色板"
 
-#: app/core/gimppalette-load.c:758
+#: app/core/gimppalette-load.c:760
 #, c-format
 msgid "Invalid ACB palette identifier."
 msgstr "无效的 ACB 色板标识符。"
 
-#: app/core/gimppalette-load.c:774 app/core/gimppalette-load.c:793
-#: app/core/gimppalette-load.c:1013 app/core/gimppalette-load.c:1034
+#: app/core/gimppalette-load.c:776 app/core/gimppalette-load.c:795
+#: app/core/gimppalette-load.c:1024 app/core/gimppalette-load.c:1046
 #, c-format
 msgid "Invalid ACB palette name."
 msgstr "无效的 ACB 色板名称。"
 
-#: app/core/gimppalette-load.c:809
+#: app/core/gimppalette-load.c:811
 #, c-format
 msgid "Invalid ACB palette suffix."
 msgstr "无效的 ACB 色板后缀。"
 
-#: app/core/gimppalette-load.c:828 app/core/gimppalette-load.c:1100
+#: app/core/gimppalette-load.c:831 app/core/gimppalette-load.c:1112
 #, c-format
 msgid "Invalid number of colors in palette."
 msgstr "无效的色板颜色数量。"
 
-#: app/core/gimppalette-load.c:835 app/core/gimppalette-load.c:1107
+#: app/core/gimppalette-load.c:838 app/core/gimppalette-load.c:1119
 #, c-format
 msgid "Invalid number of colors: %s."
 msgstr "无效的颜色数量：%s。"
 
-#: app/core/gimppalette-load.c:848 app/core/gimppalette-load.c:858
+#: app/core/gimppalette-load.c:852 app/core/gimppalette-load.c:863
 #, c-format
 msgid "Invalid ACB palette page info."
 msgstr "无效的 ACB 色板页面信息。"
 
-#: app/core/gimppalette-load.c:870 app/core/gimppalette-load.c:883
+#: app/core/gimppalette-load.c:876 app/core/gimppalette-load.c:889
 #, c-format
 msgid "Invalid ACB palette color space."
 msgstr "无效的 ACB 色板色彩空间。"
 
-#: app/core/gimppalette-load.c:1023
+#: app/core/gimppalette-load.c:1034
 #, c-format
 msgid "Invalid ACB name size."
 msgstr "无效的 ACB 名称大小。"
 
-#: app/core/gimppalette-load.c:1091
+#: app/core/gimppalette-load.c:1103
 #, c-format
 msgid "Invalid ASE header: %s"
 msgstr "无效的 ASE 文件头：%s"
 
-#: app/core/gimppalette-load.c:1118
+#: app/core/gimppalette-load.c:1130
 #, c-format
 msgid "Invalid ASE file: %s."
 msgstr "无效的 ASE 文件：%s。"
 
-#: app/core/gimppalette-load.c:1209
+#: app/core/gimppalette-load.c:1221
 #, c-format
 msgid "Invalid color components: %s."
 msgstr "无效的颜色分量：%s。"
 
-#: app/core/gimppalette-load.c:1221 app/core/gimppalette-load.c:1246
+#: app/core/gimppalette-load.c:1233 app/core/gimppalette-load.c:1258
 #, c-format
 msgid "Invalid ASE color entry: %s."
 msgstr "无效的 ASE 颜色条目：%s。"
 
-#: app/core/gimppalette-load.c:1278 app/core/gimppalette-load.c:1294
-#: app/core/gimppalette-load.c:1313
+#: app/core/gimppalette-load.c:1290 app/core/gimppalette-load.c:1306
+#: app/core/gimppalette-load.c:1325
 #, c-format
 msgid "Invalid ASE palette name."
 msgstr "无效的 ASE 色板名称。"
 
-#: app/core/gimppalette-load.c:1287
+#: app/core/gimppalette-load.c:1299
 #, c-format
 msgid "Invalid ASE block size."
 msgstr "无效的 ASE 块大小。"
 
-#: app/core/gimppalette-load.c:1303
+#: app/core/gimppalette-load.c:1315
 #, c-format
 msgid "Invalid ASE name size."
 msgstr "无效的 ASE 名称大小。"
 
-#: app/core/gimppalette-load.c:1432 app/core/gimppalette-load.c:1511
+#: app/core/gimppalette-load.c:1444 app/core/gimppalette-load.c:1523
 #, c-format
 msgid "Unable to read SBZ file: %s"
 msgstr "无法读取 SBZ 文件：%s"
 
-#: app/core/gimppalette-load.c:1539 app/core/gimppalette-load.c:1551
+#: app/core/gimppalette-load.c:1551 app/core/gimppalette-load.c:1563
 #, c-format
 msgid "Unable to open SBZ file"
 msgstr "无法打开 SBZ 文件"
 
-#: app/core/gimppalette-load.c:1585 app/core/gimppalette-load.c:1626
+#: app/core/gimppalette-load.c:1597 app/core/gimppalette-load.c:1638
 #, c-format
 msgid "Unable to read Procreate swatches file: %s"
 msgstr "无法读取 Procreate 色板文件：%s"
 
-#: app/core/gimppalette-load.c:1831 app/core/gimppalette-load.c:1842
+#: app/core/gimppalette-load.c:1843 app/core/gimppalette-load.c:1854
 #, c-format
 msgid "Unable to read Procreate swatches file"
 msgstr "无法读取 Procreate 色板文件"
 
-#: app/core/gimppalette-load.c:1890 app/core/gimppalette-load.c:1965
+#: app/core/gimppalette-load.c:1902 app/core/gimppalette-load.c:1977
 #, c-format
 msgid "Unable to read KPL file: %s"
 msgstr "无法读取 KPL 文件：%s"
 
-#: app/core/gimppalette-load.c:1993 app/core/gimppalette-load.c:2004
+#: app/core/gimppalette-load.c:2005 app/core/gimppalette-load.c:2016
 #, c-format
 msgid "Unable to open KPL file"
 msgstr "无法打开 KPL 文件"
@@ -15053,7 +15053,7 @@ msgstr "图案文件“%s”中含有无效的 UTF-8 字符串。"
 msgid "Fatal parse error in pattern file: "
 msgstr "图案文件中出现致命解析错误："
 
-#: app/core/gimppattern-load.c:378 app/core/gimppattern-load.c:385
+#: app/core/gimppattern-load.c:382 app/core/gimppattern-load.c:389
 msgid "Error reading Photoshop pattern."
 msgstr "读取 Photoshop 图案时出错。"
 
@@ -15220,7 +15220,7 @@ msgstr "模拟动态笔刷"
 
 #. no undo (or redo) steps available
 #: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:509
-#: app/display/gimpstatusbar.c:2158 app/widgets/gimpimagepropview.c:407
+#: app/display/gimpstatusbar.c:2162 app/widgets/gimpimagepropview.c:407
 #: app/widgets/gimpsymmetryeditor.c:167 app/widgets/gimpsymmetryeditor.c:177
 msgid "None"
 msgstr "无"
@@ -16199,7 +16199,7 @@ msgid "Image Properties"
 msgstr "图像属性"
 
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:116
-#: app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:352
+#: app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:353
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:741
 #: app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:222
 #: app/widgets/gimpcriticaldialog.c:244 app/widgets/gimpsettingsbox.c:642
@@ -16591,7 +16591,7 @@ msgstr "间隔(_N)："
 
 #. The "Preview" frame
 #: app/dialogs/palette-import-dialog.c:351
-#: app/tools/gimpforegroundselecttool.c:1318
+#: app/tools/gimpforegroundselecttool.c:1328
 msgid "Preview"
 msgstr "预览"
 
@@ -19273,7 +19273,7 @@ msgstr ""
 msgid "_Proof Colors"
 msgstr "启用软打样(_P)"
 
-#: app/display/gimpstatusbar.c:508 app/display/gimpstatusbar.c:2165
+#: app/display/gimpstatusbar.c:508 app/display/gimpstatusbar.c:2169
 msgid "Current Soft-Proofing Profile"
 msgstr "当前软打样特性文件"
 
@@ -19379,7 +19379,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "单击并拖动以旋转对焦"
 
 #: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729
-#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:681
+#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:682
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s 可限定角度"
@@ -20726,7 +20726,7 @@ msgid "Turn colors into shades of gray"
 msgstr "将颜色转换为灰度色调"
 
 #: app/operations/gimpoperationdesaturate.c:92
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1487
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1489
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimptransform3doptions.c:77
 #: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:397
 #: app/widgets/gimplayertreeview.c:286
@@ -20783,7 +20783,7 @@ msgstr "使用颜色替换半透明部分"
 msgid "The color"
 msgstr "颜色"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1450
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1452
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -20843,7 +20843,7 @@ msgstr "丢弃(_D)"
 msgid "_Recover"
 msgstr "恢复(_R)"
 
-#: app/gui/gui.c:363
+#: app/gui/gui.c:367
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 
@@ -20853,7 +20853,7 @@ msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:372
+#: app/gui/gui.c:376
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20864,7 +20864,7 @@ msgstr[0] "从崩溃中抢救了 %d 张图像。您想要尝试并恢复它们�
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:643
+#: app/gui/gui.c:647
 msgid "Documents"
 msgstr "文档"
 
@@ -21548,7 +21548,7 @@ msgstr "添加滤镜"
 msgid "Plug-in"
 msgstr "插件"
 
-#: app/pdb/drawable-cmds.c:1192 app/tools/gimpforegroundselecttool.c:1041
+#: app/pdb/drawable-cmds.c:1192 app/tools/gimpforegroundselecttool.c:1051
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "前景选择"
@@ -22038,7 +22038,7 @@ msgstr "自动剪裁图像"
 msgid "Autocrop layer"
 msgstr "自动裁剪图层"
 
-#: app/pdb/image-cmds.c:2616
+#: app/pdb/image-cmds.c:2615
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "图像分辨率超出范围，使用默认的分辨率替代。"
@@ -22801,7 +22801,7 @@ msgstr ""
 "\n"
 "某些文本属性可能有错。除非您要编辑的是文本图层，否则不必担心。"
 
-#: app/text/gimptextlayout.c:776
+#: app/text/gimptextlayout.c:777
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -23189,7 +23189,7 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "无法填充多个图层。仅选择一个图层。"
 
 #: app/tools/gimpbucketfilltool.c:601 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:311
+#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:312
 #: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:213
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:300
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
@@ -23206,13 +23206,13 @@ msgstr "激活图层不可见。"
 msgid "No valid line art source selected."
 msgstr "未选择有效的线条艺术源。"
 
-#: app/tools/gimpbucketfilltool.c:813 app/tools/gimpbucketfilltool.c:953
-#: app/tools/gimpcolorpickertool.c:271 app/tools/gimppainttool.c:499
+#: app/tools/gimpbucketfilltool.c:813 app/tools/gimpbucketfilltool.c:954
+#: app/tools/gimpcolorpickertool.c:272 app/tools/gimppainttool.c:500
 msgid "Click in any image to pick the background color"
 msgstr "在图像中任意单击可拾取背景色"
 
-#: app/tools/gimpbucketfilltool.c:820 app/tools/gimpbucketfilltool.c:962
-#: app/tools/gimpcolorpickertool.c:263 app/tools/gimppainttool.c:493
+#: app/tools/gimpbucketfilltool.c:820 app/tools/gimpbucketfilltool.c:963
+#: app/tools/gimpcolorpickertool.c:264 app/tools/gimppainttool.c:494
 msgid "Click in any image to pick the foreground color"
 msgstr "在图像中任意单击以拾取前景色"
 
@@ -23392,15 +23392,15 @@ msgstr "颜色拾取工具：从图像像素中设定颜色"
 msgid "C_olor Picker"
 msgstr "颜色拾取(_O)"
 
-#: app/tools/gimpcolorpickertool.c:256
+#: app/tools/gimpcolorpickertool.c:257
 msgid "Click in any image to view its color"
 msgstr "在图像中任意单击以查看其颜色"
 
-#: app/tools/gimpcolorpickertool.c:279
+#: app/tools/gimpcolorpickertool.c:280
 msgid "Click in any image to add the color to the palette"
 msgstr "在图像中任意单击可将颜色添加到调色板"
 
-#: app/tools/gimpcolorpickertool.c:347
+#: app/tools/gimpcolorpickertool.c:348
 msgid "Color Picker Information"
 msgstr "颜色拾取信息"
 
@@ -23538,7 +23538,7 @@ msgstr[0] "缩放 %d 个图层"
 msgid "_Curves..."
 msgstr "曲线(_C)…"
 
-#: app/tools/gimpcurvestool.c:215 app/tools/gimpfiltertool.c:307
+#: app/tools/gimpcurvestool.c:215 app/tools/gimpfiltertool.c:308
 #: app/tools/gimplevelstool.c:211 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
@@ -23745,24 +23745,24 @@ msgstr ""
 "如果启用，滤镜将立即合并。\n"
 "否则，它会成为可编辑的非破坏性滤镜。"
 
-#: app/tools/gimpfiltertool.c:322 app/tools/gimpselectiontool.c:595
+#: app/tools/gimpfiltertool.c:323 app/tools/gimpselectiontool.c:595
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "一个选中项目的像素已被锁定。"
 
-#: app/tools/gimpfiltertool.c:452
+#: app/tools/gimpfiltertool.c:453
 msgid "Disabled because this filter depends on another image."
 msgstr "已禁用，因为该滤镜依赖于另一幅图像。"
 
 #. TRANSLATORS: The %s will be replaced by the name of the
 #. * layer type.
-#: app/tools/gimpfiltertool.c:458
+#: app/tools/gimpfiltertool.c:459
 #: app/widgets/gimpdrawabletreeview-filters.c:624
 #, c-format
 msgid "Disabled because filters cannot be merged on: %s."
 msgstr "已禁用，因为滤镜无法合并到：%s。"
 
-#: app/tools/gimpfiltertool.c:463
+#: app/tools/gimpfiltertool.c:464
 msgid ""
 "Disabled because GEGL Graph is unsafe.\n"
 "For development purpose, set environment variable "
@@ -23771,48 +23771,48 @@ msgstr ""
 "已禁用，因为 GEGL 图表不安全。\n"
 "对于开发目的，可设置环境变量 GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT。"
 
-#: app/tools/gimpfiltertool.c:784
+#: app/tools/gimpfiltertool.c:785
 msgid "Click to switch the original and filtered sides"
 msgstr "单击以在原始图片和应用滤镜图片之间切换"
 
-#: app/tools/gimpfiltertool.c:788
+#: app/tools/gimpfiltertool.c:789
 msgid "Click to switch between vertical and horizontal"
 msgstr "单击以在竖直视图和水平视图之间切换"
 
-#: app/tools/gimpfiltertool.c:792
+#: app/tools/gimpfiltertool.c:793
 msgid "Click to move the split guide"
 msgstr "单击以移动分割参考线"
 
-#: app/tools/gimpfiltertool.c:794
+#: app/tools/gimpfiltertool.c:795
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s：切换原始图片和应用滤镜图片"
 
-#: app/tools/gimpfiltertool.c:795
+#: app/tools/gimpfiltertool.c:796
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s：切换水平视图和竖直视图"
 
-#: app/tools/gimpfiltertool.c:1284 app/tools/gimpgradienttool.c:845
+#: app/tools/gimpfiltertool.c:1286 app/tools/gimpgradienttool.c:846
 msgid "Edit filter"
 msgstr "编辑滤镜"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1463
+#: app/tools/gimpfiltertool.c:1465
 msgid "Blending Options"
 msgstr "混合选项"
 
-#: app/tools/gimpfiltertool.c:1973 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "导入“%s”设置"
 
-#: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1977 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "导出“%s”设置"
 
-#: app/tools/gimpfiltertool.c:2240 app/tools/gimpgradienttool.c:1381
+#: app/tools/gimpfiltertool.c:2242 app/tools/gimpgradienttool.c:1389
 #, c-format
 msgid "Editing '%s'..."
 msgstr "正在编辑“%s”…"
@@ -23955,44 +23955,44 @@ msgstr "无法从多个图层选择。"
 msgid "Dialog for foreground select"
 msgstr "前景选择对话框"
 
-#: app/tools/gimpforegroundselecttool.c:345
+#: app/tools/gimpforegroundselecttool.c:349
 msgid "_Preview mask"
 msgstr "预览蒙板"
 
-#: app/tools/gimpforegroundselecttool.c:356
+#: app/tools/gimpforegroundselecttool.c:360
 msgid "Select foreground pixels"
 msgstr "选择前景像素"
 
-#: app/tools/gimpforegroundselecttool.c:632
-#: app/tools/gimpforegroundselecttool.c:637
+#: app/tools/gimpforegroundselecttool.c:636
+#: app/tools/gimpforegroundselecttool.c:641
 msgid "Roughly outline the object to extract"
 msgstr "为对象画一个粗略的轮廓以便提取"
 
-#: app/tools/gimpforegroundselecttool.c:633
+#: app/tools/gimpforegroundselecttool.c:637
 msgid "press Enter to refine."
 msgstr "按回车键提取。"
 
-#: app/tools/gimpforegroundselecttool.c:660
+#: app/tools/gimpforegroundselecttool.c:664
 msgid "Selecting foreground"
 msgstr "正在选择前景"
 
-#: app/tools/gimpforegroundselecttool.c:662
+#: app/tools/gimpforegroundselecttool.c:666
 msgid "Selecting background"
 msgstr "正在选择背景"
 
-#: app/tools/gimpforegroundselecttool.c:664
+#: app/tools/gimpforegroundselecttool.c:668
 msgid "Selecting unknown"
 msgstr "正在选择未知"
 
-#: app/tools/gimpforegroundselecttool.c:667
+#: app/tools/gimpforegroundselecttool.c:671
 msgid "press Enter to preview."
 msgstr "按回车键预览。"
 
-#: app/tools/gimpforegroundselecttool.c:669
+#: app/tools/gimpforegroundselecttool.c:673
 msgid "press Escape to exit preview or Enter to apply."
 msgstr "按 Esc 键退出预览或回车键应用。"
 
-#: app/tools/gimpforegroundselecttool.c:1314
+#: app/tools/gimpforegroundselecttool.c:1324
 msgid "Paint mask"
 msgstr "绘画蒙板"
 
@@ -24860,16 +24860,16 @@ msgstr "无法在多个图层上绘制。仅选择一个图层。"
 msgid "Cannot paint on layer groups."
 msgstr "不能在图层组上绘画。"
 
-#: app/tools/gimppainttool.c:712
+#: app/tools/gimppainttool.c:713
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s 可画出直线"
 
-#: app/tools/gimppainttool.c:947
+#: app/tools/gimppainttool.c:948
 msgid "The selected drawable does not have an alpha channel."
 msgstr "选中可绘区没有透明通道。"
 
-#: app/tools/gimppainttool.c:958
+#: app/tools/gimppainttool.c:959
 msgid "The selected layer's alpha channel is locked."
 msgstr "选中图层的透明通道已被锁定。"
 
@@ -25589,7 +25589,7 @@ msgstr "无图层。"
 msgid "Exactly one path must be selected."
 msgstr "必须选择一个路径。"
 
-#: app/tools/gimptexttool-editor.c:1532
+#: app/tools/gimptexttool-editor.c:1519
 msgid "GIMP Text Editor"
 msgstr "GIMP 文本编辑器"
 
@@ -26423,192 +26423,192 @@ msgid "Y:"
 msgstr "Y："
 
 #. TRANSLATORS: n/a for Not Available.
-#: app/widgets/gimpcolorframe.c:777 app/widgets/gimpcolorframe.c:779
+#: app/widgets/gimpcolorframe.c:807 app/widgets/gimpcolorframe.c:809
 msgctxt "Coordinates"
 msgid "n/a"
 msgstr "n/a"
 
 #. TRANSLATORS: V for Value (grayscale)
-#: app/widgets/gimpcolorframe.c:798 app/widgets/gimpcolorframe.c:944
+#: app/widgets/gimpcolorframe.c:828 app/widgets/gimpcolorframe.c:974
 msgctxt "Grayscale"
 msgid "V:"
 msgstr "V："
 
 #. TRANSLATORS: A for Alpha (color transparency)
-#: app/widgets/gimpcolorframe.c:802 app/widgets/gimpcolorframe.c:815
-#: app/widgets/gimpcolorframe.c:879 app/widgets/gimpcolorframe.c:948
-#: app/widgets/gimpcolorframe.c:1001 app/widgets/gimpcolorframe.c:1028
-#: app/widgets/gimpcolorframe.c:1056 app/widgets/gimpcolorframe.c:1084
-#: app/widgets/gimpcolorframe.c:1111 app/widgets/gimpcolorframe.c:1158
+#: app/widgets/gimpcolorframe.c:832 app/widgets/gimpcolorframe.c:845
+#: app/widgets/gimpcolorframe.c:909 app/widgets/gimpcolorframe.c:978
+#: app/widgets/gimpcolorframe.c:1031 app/widgets/gimpcolorframe.c:1058
+#: app/widgets/gimpcolorframe.c:1086 app/widgets/gimpcolorframe.c:1114
+#: app/widgets/gimpcolorframe.c:1141 app/widgets/gimpcolorframe.c:1188
 msgctxt "Alpha channel"
 msgid "A:"
 msgstr "A："
 
 #. TRANSLATORS: R for Red (RGB)
-#: app/widgets/gimpcolorframe.c:807 app/widgets/gimpcolorframe.c:871
+#: app/widgets/gimpcolorframe.c:837 app/widgets/gimpcolorframe.c:901
 msgctxt "RGB"
 msgid "R:"
 msgstr "R："
 
 #. TRANSLATORS: G for Green (RGB)
-#: app/widgets/gimpcolorframe.c:809 app/widgets/gimpcolorframe.c:873
+#: app/widgets/gimpcolorframe.c:839 app/widgets/gimpcolorframe.c:903
 msgctxt "RGB"
 msgid "G:"
 msgstr "G："
 
 #. TRANSLATORS: B for Blue (RGB)
-#: app/widgets/gimpcolorframe.c:811 app/widgets/gimpcolorframe.c:875
+#: app/widgets/gimpcolorframe.c:841 app/widgets/gimpcolorframe.c:905
 msgctxt "RGB"
 msgid "B:"
 msgstr "B："
 
 #. TRANSLATORS: Index of the color in the palette.
-#: app/widgets/gimpcolorframe.c:820
+#: app/widgets/gimpcolorframe.c:850
 msgctxt "Indexed color"
 msgid "Index:"
 msgstr "索引："
 
-#: app/widgets/gimpcolorframe.c:852 app/widgets/gimpcolorframe.c:885
-#: app/widgets/gimpcolorframe.c:951 app/widgets/gimpcolorframe.c:1160
+#: app/widgets/gimpcolorframe.c:882 app/widgets/gimpcolorframe.c:915
+#: app/widgets/gimpcolorframe.c:981 app/widgets/gimpcolorframe.c:1190
 msgctxt "Color"
 msgid "Profile:"
 msgstr "特性文件："
 
-#: app/widgets/gimpcolorframe.c:859 app/widgets/gimpcolorframe.c:860
-#: app/widgets/gimpcolorframe.c:933 app/widgets/gimpcolorframe.c:934
-#: app/widgets/gimpcolorframe.c:985 app/widgets/gimpcolorframe.c:986
-#: app/widgets/gimpcolorframe.c:1185 app/widgets/gimpcolorframe.c:1186
+#: app/widgets/gimpcolorframe.c:889 app/widgets/gimpcolorframe.c:890
+#: app/widgets/gimpcolorframe.c:963 app/widgets/gimpcolorframe.c:964
+#: app/widgets/gimpcolorframe.c:1015 app/widgets/gimpcolorframe.c:1016
+#: app/widgets/gimpcolorframe.c:1215 app/widgets/gimpcolorframe.c:1216
 #, c-format
 msgid "%s"
 msgstr "%s"
 
 #. TRANSLATORS: Hex for Hexadecimal (representation of a color)
-#: app/widgets/gimpcolorframe.c:882
+#: app/widgets/gimpcolorframe.c:912
 msgctxt "Color representation"
 msgid "Hex:"
 msgstr "Hex："
 
-#: app/widgets/gimpcolorframe.c:887 app/widgets/gimpcolorframe.c:953
-#: app/widgets/gimpcolorframe.c:1162
+#: app/widgets/gimpcolorframe.c:917 app/widgets/gimpcolorframe.c:983
+#: app/widgets/gimpcolorframe.c:1192
 msgctxt "Color"
 msgid "No Profile"
 msgstr "无特性文件"
 
 #. TRANSLATORS: H for Hue (HSV color space)
-#: app/widgets/gimpcolorframe.c:993
+#: app/widgets/gimpcolorframe.c:1023
 msgctxt "HSV color space"
 msgid "H:"
 msgstr "H："
 
 #. TRANSLATORS: S for Saturation (HSV color space)
-#: app/widgets/gimpcolorframe.c:995
+#: app/widgets/gimpcolorframe.c:1025
 msgctxt "HSV color space"
 msgid "S:"
 msgstr "S："
 
 #. TRANSLATORS: V for Value (HSV color space)
-#: app/widgets/gimpcolorframe.c:997
+#: app/widgets/gimpcolorframe.c:1027
 msgctxt "HSV color space"
 msgid "V:"
 msgstr "V："
 
 #. TRANSLATORS: L for Lightness (LCH color space)
-#: app/widgets/gimpcolorframe.c:1020
+#: app/widgets/gimpcolorframe.c:1050
 msgctxt "LCH color space"
 msgid "L*:"
 msgstr "L*："
 
 #. TRANSLATORS: C for Chroma (LCH color space)
-#: app/widgets/gimpcolorframe.c:1022
+#: app/widgets/gimpcolorframe.c:1052
 msgctxt "LCH color space"
 msgid "C*:"
 msgstr "C*："
 
 #. TRANSLATORS: H for Hue angle (LCH color space)
-#: app/widgets/gimpcolorframe.c:1024
+#: app/widgets/gimpcolorframe.c:1054
 msgctxt "LCH color space"
 msgid "h°:"
 msgstr "h°："
 
 #. TRANSLATORS: L* for Lightness (Lab color space)
-#: app/widgets/gimpcolorframe.c:1048
+#: app/widgets/gimpcolorframe.c:1078
 msgctxt "Lab color space"
 msgid "L*:"
 msgstr "L*："
 
 #. TRANSLATORS: a* color channel in Lab color space
-#: app/widgets/gimpcolorframe.c:1050
+#: app/widgets/gimpcolorframe.c:1080
 msgctxt "Lab color space"
 msgid "a*:"
 msgstr "a*："
 
 #. TRANSLATORS: b* color channel in Lab color space
-#: app/widgets/gimpcolorframe.c:1052
+#: app/widgets/gimpcolorframe.c:1082
 msgctxt "Lab color space"
 msgid "b*:"
 msgstr "b*："
 
 #. TRANSLATORS: x from xyY color space
-#: app/widgets/gimpcolorframe.c:1076
+#: app/widgets/gimpcolorframe.c:1106
 msgctxt "xyY color space"
 msgid "x:"
 msgstr "x："
 
 #. TRANSLATORS: y from xyY color space
-#: app/widgets/gimpcolorframe.c:1078
+#: app/widgets/gimpcolorframe.c:1108
 msgctxt "xyY color space"
 msgid "y:"
 msgstr "y："
 
 #. TRANSLATORS: Y from xyY color space
-#: app/widgets/gimpcolorframe.c:1080
+#: app/widgets/gimpcolorframe.c:1110
 msgctxt "xyY color space"
 msgid "Y:"
 msgstr "Y："
 
 #. TRANSLATORS: Y from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1103
+#: app/widgets/gimpcolorframe.c:1133
 msgctxt "Yu'v' color space"
 msgid "Y:"
 msgstr "Y："
 
 #. TRANSLATORS: u' from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1105
+#: app/widgets/gimpcolorframe.c:1135
 msgctxt "Yu'v' color space"
 msgid "u':"
 msgstr "u'："
 
 #. TRANSLATORS: v' from Yu'v' color space
-#: app/widgets/gimpcolorframe.c:1107
+#: app/widgets/gimpcolorframe.c:1137
 msgctxt "Yu'v' color space"
 msgid "v':"
 msgstr "v'："
 
 #. TRANSLATORS: C for Cyan (CMYK)
-#: app/widgets/gimpcolorframe.c:1149
+#: app/widgets/gimpcolorframe.c:1179
 msgctxt "CMYK"
 msgid "C:"
 msgstr "C："
 
 #. TRANSLATORS: M for Magenta (CMYK)
-#: app/widgets/gimpcolorframe.c:1151
+#: app/widgets/gimpcolorframe.c:1181
 msgctxt "CMYK"
 msgid "M:"
 msgstr "M："
 
 #. TRANSLATORS: Y for Yellow (CMYK)
-#: app/widgets/gimpcolorframe.c:1153
+#: app/widgets/gimpcolorframe.c:1183
 msgctxt "CMYK"
 msgid "Y:"
 msgstr "Y："
 
 #. TRANSLATORS: K for Key/black (CMYK)
-#: app/widgets/gimpcolorframe.c:1155
+#: app/widgets/gimpcolorframe.c:1185
 msgctxt "CMYK"
 msgid "K:"
 msgstr "K："
 
-#: app/widgets/gimpcolorframe.c:1203
+#: app/widgets/gimpcolorframe.c:1233
 msgctxt "Color value"
 msgid "n/a"
 msgstr "n/a"
@@ -28583,55 +28583,63 @@ msgstr "写入文本文件“%s”失败：%s"
 msgid "_Use selected font"
 msgstr "使用选中字体(_U)"
 
-#: app/widgets/gimptextstyleeditor.c:255
+#: app/widgets/gimptextstyleeditor.c:259
 msgid "Drag to move the text style editor"
 msgstr "拖拽以移动文本样式编辑器"
 
-#: app/widgets/gimptextstyleeditor.c:275 app/widgets/gimptextstyleeditor.c:1415
+#: app/widgets/gimptextstyleeditor.c:279 app/widgets/gimptextstyleeditor.c:1485
 msgid "Change font of selected text"
 msgstr "改变选中文本的字体"
 
-#: app/widgets/gimptextstyleeditor.c:285
+#: app/widgets/gimptextstyleeditor.c:289
 msgid "Change size of selected text"
 msgstr "改变选中文本的大小"
 
-#: app/widgets/gimptextstyleeditor.c:292 app/widgets/gimptextstyleeditor.c:303
+#: app/widgets/gimptextstyleeditor.c:296 app/widgets/gimptextstyleeditor.c:307
 msgid "Change color of selected text"
 msgstr "改变选中文本的颜色"
 
-#: app/widgets/gimptextstyleeditor.c:317
+#: app/widgets/gimptextstyleeditor.c:321
 msgid "Restore On-Canvas Editor Position"
 msgstr "还原画布上编辑器的位置"
 
-#: app/widgets/gimptextstyleeditor.c:339
+#: app/widgets/gimptextstyleeditor.c:343
 msgid "Clear style of selected text"
 msgstr "清除选中文本的样式"
 
-#: app/widgets/gimptextstyleeditor.c:359
+#: app/widgets/gimptextstyleeditor.c:363
 msgid "Change kerning of selected text"
 msgstr "改变选中文本的字距"
 
-#: app/widgets/gimptextstyleeditor.c:375
+#: app/widgets/gimptextstyleeditor.c:379
 msgid "Change baseline of selected text"
 msgstr "改变选中文本的基线"
 
-#: app/widgets/gimptextstyleeditor.c:414
+#: app/widgets/gimptextstyleeditor.c:420
 msgid "Bold"
 msgstr "粗体"
 
-#: app/widgets/gimptextstyleeditor.c:417
+#: app/widgets/gimptextstyleeditor.c:423
 msgid "Italic"
 msgstr "斜体"
 
-#: app/widgets/gimptextstyleeditor.c:420
+#: app/widgets/gimptextstyleeditor.c:426
 msgid "Underline"
 msgstr "下划线"
 
-#: app/widgets/gimptextstyleeditor.c:423
+#: app/widgets/gimptextstyleeditor.c:429
 msgid "Strikethrough"
 msgstr "删除线"
 
-#: app/widgets/gimptextstyleeditor.c:1407
+#: app/widgets/gimptextstyleeditor.c:473
+msgid "Left-to-Right"
+msgstr "左至右"
+
+#: app/widgets/gimptextstyleeditor.c:485
+msgid "Right-to-Left"
+msgstr "右至左"
+
+#: app/widgets/gimptextstyleeditor.c:1477
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "字体“%s”在此系统上不可用"
@@ -29098,7 +29106,7 @@ msgid ""
 msgstr ""
 "XCF 警告：检测到 XCF 文件中有循环引用。链接图层“%s”已降级为栅格化图层。"
 
-#: app/xcf/xcf-load.c:3421
+#: app/xcf/xcf-load.c:3424
 #, c-format
 msgid ""
 "XCF Warning: version %s of filter \"%s\" does not have the %s property. The "
@@ -29110,7 +29118,7 @@ msgstr ""
 "染。\n"
 "这种情况不应发生。您应将该问题报告给滤镜的开发者。"
 
-#: app/xcf/xcf-load.c:4370
+#: app/xcf/xcf-load.c:4373
 #, c-format
 msgid ""
 "XCF Warning: version '%s' of filter '%s' is unsupported. The filter was "
