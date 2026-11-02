@@ -197,7 +197,6 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
   GimpProcedureConfig      *config;
   GimpImage                *image    = NULL;
   GimpMetadata             *metadata = NULL;
-  gchar                    *mimetype = NULL;
   GimpMetadataLoadFlags     flags    = GIMP_METADATA_LOAD_ALL;
   GimpPDBStatusType         status   = GIMP_PDB_EXECUTION_ERROR;
   GimpRunMode               run_mode;
@@ -219,34 +218,7 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
     }
 
   config   = _gimp_procedure_create_run_config (procedure);
-  mimetype = (gchar *) gimp_file_procedure_get_mime_types (GIMP_FILE_PROCEDURE (procedure));
-
-  if (mimetype != NULL)
-    {
-      char *delim;
-
-      mimetype = g_strdup (mimetype);
-      mimetype = g_strstrip (mimetype);
-      delim = strstr (mimetype, ",");
-      if (delim)
-        *delim = '\0';
-      /* Though docs only writes about the list being comma-separated, our
-       * code apparently also split by spaces.
-       */
-      delim = strstr (mimetype, " ");
-      if (delim)
-        *delim = '\0';
-      delim = strstr (mimetype, "\t");
-      if (delim)
-        *delim = '\0';
-
-      metadata = gimp_metadata_load_from_file (file, NULL);
-      g_free (mimetype);
-    }
-  else
-    {
-      flags = GIMP_METADATA_LOAD_NONE;
-    }
+  metadata = gimp_metadata_load_from_file (file, NULL);
 
   if (metadata == NULL)
     metadata = gimp_metadata_new ();
@@ -284,7 +256,10 @@ gimp_load_procedure_run (GimpProcedure        *procedure,
         }
     }
 
-  if (image != NULL && metadata != NULL && flags != GIMP_METADATA_LOAD_NONE)
+  if (image != NULL && metadata != NULL && flags != GIMP_METADATA_LOAD_NONE &&
+      (gexiv2_metadata_has_exif (GEXIV2_METADATA (metadata)) ||
+       gexiv2_metadata_has_xmp (GEXIV2_METADATA (metadata))  ||
+       gexiv2_metadata_has_iptc (GEXIV2_METADATA (metadata))))
     _gimp_image_metadata_load_finish (image, NULL, metadata, flags);
 
   if (image)
