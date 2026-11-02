@@ -1,6 +1,6 @@
-From 6c5250296ec20b7b05b49485f2671863065865ac Mon Sep 17 00:00:00 2001
+From f9413e553540b4cd3289f21427082acbf1ddf693 Mon Sep 17 00:00:00 2001
 From: Bruno Lopes <brunvonlope@outlook.com>
-Date: Mon, 26 Oct 2026 10:38:10 -0300
+Date: Mon, 2 Nov 2026 11:16:00 -0300
 Subject: [PATCH] Disable some things due to lack of packages
 
 ---
@@ -99,7 +99,7 @@ index 26f9c67963..61a3ace0a8 100644
    /*  docks  */
    DOCK ("gimp-dock",
 diff --git a/app/dialogs/meson.build b/app/dialogs/meson.build
-index 672cd934eb..d49a1958bc 100644
+index 518efbbcd6..a1863534a1 100644
 --- a/app/dialogs/meson.build
 +++ b/app/dialogs/meson.build
 @@ -22,7 +22,6 @@ libappdialogs_sources = [
@@ -238,7 +238,7 @@ index 2bbd2beebd..6ebee4bb45 100644
  
    /* Give automatic tests a chance to use plug-ins from the build
 diff --git a/app/widgets/meson.build b/app/widgets/meson.build
-index fb9d335a85..5e5c30e29d 100644
+index 4d026e8c33..a8715f4302 100644
 --- a/app/widgets/meson.build
 +++ b/app/widgets/meson.build
 @@ -120,8 +120,6 @@ libappwidgets_sources = [
@@ -278,7 +278,7 @@ index 011c790216..10d4f2f60c 100644
    gobject_introspection_warning = '\n      '.join(['',
      'GObject Introspection is disabled while cross-compiling because',
 diff --git a/meson.build b/meson.build
-index 570551f929..aa345828af 100644
+index a79bcaf706..29f9066d51 100644
 --- a/meson.build
 +++ b/meson.build
 @@ -292,7 +292,7 @@ warning_cflags_common = [
@@ -290,7 +290,7 @@ index 570551f929..aa345828af 100644
    '-Winit-self',
    '-Wlogical-op',
    '-Wmissing-declarations',
-@@ -702,7 +702,7 @@ endif
+@@ -705,7 +705,7 @@ endif
  # Check for extension support
  
  appstream_minver = '0.16.1'
@@ -299,31 +299,31 @@ index 570551f929..aa345828af 100644
  
  libarchive = dependency('libarchive')
  
-@@ -1196,7 +1196,7 @@ pygobject_found = ''
+@@ -1193,7 +1193,7 @@ pygobject_found = ''
  pygobject_gexiv2_found = false
  foreach py : py_candidates
    #Check if PyGobject installation have pycairo (#13105)
 -  python_tmp = pythonmod.find_installation(py, modules: ['gi', 'cairo'], required: false)
 +  python_tmp = pythonmod.find_installation(py, required: false)
-   if python_tmp.found() and python_tmp.language_version().version_compare(python3_minver)
+   if python_tmp.found() and python_tmp.language_version().version_compare('>=' + python3_minver)
      python = python_tmp
      #Check if PyGObject installation have minimum version
-@@ -1215,9 +1215,7 @@ foreach py : py_candidates
+@@ -1212,9 +1212,7 @@ foreach py : py_candidates
                                          '''except (ImportError):''',
                                          '''    sys.exit(1)''']),
                                          check: false).returncode() == 0
--    if pygobject_found.returncode() == 0 and pygobject_found.stdout().strip().version_compare(pygobject_minver) and pygobject_gexiv2_found
+-    if pygobject_found.returncode() == 0 and pygobject_found.stdout().strip().version_compare('>=' + pygobject_minver) and pygobject_gexiv2_found
 -      break
 -    endif
 +    break
    endif
  endforeach
  
-@@ -1226,11 +1224,6 @@ if not python.found() or not python.language_version().version_compare(python3_m
+@@ -1223,11 +1221,6 @@ if not python.found() or not python.language_version().version_compare('>=' + py
  endif
  message('Found Python @0@'.format(python.language_version()))
  
--if pygobject_found.returncode() != 0 or not pygobject_found.stdout().strip().version_compare(pygobject_minver) or not pygobject_gexiv2_found
+-if pygobject_found.returncode() != 0 or not pygobject_found.stdout().strip().version_compare('>=' + pygobject_minver) or not pygobject_gexiv2_found
 -  error('No suitable PyGObject (with GExiv2 submodule) found. Minimum supported version: @0@'.format(pygobject_minver))
 -endif
 -message('Found PyGObject: @0@'.format(pygobject_found.stdout().strip()))
@@ -331,7 +331,7 @@ index 570551f929..aa345828af 100644
  ## Javascript
  
  gjs = find_program('gjs', required: false)
-@@ -1984,15 +1977,11 @@ subdir('libgimpwidgets')
+@@ -1982,15 +1975,11 @@ subdir('libgimpwidgets')
  subdir('libgimp')
  
  # Executables, plugins
@@ -347,7 +347,7 @@ index 570551f929..aa345828af 100644
  ################################################################################
  # Make GIMP runnable without being installed for unit-testing or as a build
  # tool.
-@@ -2025,13 +2014,13 @@ if get_option('debug-self-in-build')
+@@ -2023,13 +2012,13 @@ if get_option('debug-self-in-build')
  endif
  gimp_run_env.set('GIMP_PYTHON_WITH_GI', python.full_path())
  
@@ -363,7 +363,7 @@ index 570551f929..aa345828af 100644
    gimp_run_env.set('GIMP_SELF_IN_BUILD', gimp_real_exe.full_path())
  
    menu_paths=meson.global_build_root() / 'menus:' + meson.global_source_root() / 'menus'
-@@ -2090,21 +2079,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
+@@ -2088,21 +2077,6 @@ if meson.can_run_host_binaries() and have_gobject_introspection
      gimp_run_env.prepend('GIMP_TEMP_UPDATE_RPATH', libgimpwidgets.full_path())
    endif
  else
@@ -385,7 +385,7 @@ index 570551f929..aa345828af 100644
  endif
  
  gimp_exe = find_program('tools'/'in-build-gimp.py')
-@@ -2113,7 +2087,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
+@@ -2111,7 +2085,7 @@ gimp_exe = find_program('tools'/'in-build-gimp.py')
  # Subdirs: part 2
  
  # gimp-data submodule part 2
@@ -394,7 +394,7 @@ index 570551f929..aa345828af 100644
  
  # Unit testing
  subdir('app/tests')
-@@ -2303,7 +2277,7 @@ final_message = [
+@@ -2302,7 +2276,7 @@ final_message = [
  '''  UI tests             @0@'''.format(ui_tests_status),
  '',
  '''Documentation:''',
