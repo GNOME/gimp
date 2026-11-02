@@ -301,7 +301,7 @@ gimp_eek (const gchar *reason,
   GList           *iter;
   gint             num_idx;
   gint             i = 0;
-#ifndef GIMP_CONSOLE_COMPILATION
+#if !defined(GIMP_CONSOLE_COMPILATION) && (!defined(G_OS_WIN32) || defined(HAVE_EXCHNDL))
   GimpCoreConfig  *config        = the_errors_gimp->config;
   GimpDebugPolicy  debug_policy;
 
