@@ -137,9 +137,9 @@ gimp_tree_proxy_dispose (GObject *object)
 
 static void
 gimp_tree_proxy_set_property (GObject      *object,
-                             guint         property_id,
-                             const GValue *value,
-                             GParamSpec   *pspec)
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
 {
   GimpTreeProxy *tree_proxy = GIMP_TREE_PROXY (object);
 
@@ -161,9 +161,9 @@ gimp_tree_proxy_set_property (GObject      *object,
 
 static void
 gimp_tree_proxy_get_property (GObject    *object,
-                             guint       property_id,
-                             GValue     *value,
-                             GParamSpec *pspec)
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
 {
   GimpTreeProxy *tree_proxy = GIMP_TREE_PROXY (object);
 
