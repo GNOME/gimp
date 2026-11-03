@@ -330,7 +330,7 @@ load_image (GFile        *file,
               if (repeat_val > highest_index)
                 highest_index = repeat_val;
 
-              if (pixel + value >= max_pixels)
+              if (pixel + value > max_pixels)
                 {
                   gimp_message (_("Invalid data: image may be corrupt."));
                   pixel += value;
@@ -342,7 +342,7 @@ load_image (GFile        *file,
             }
           else /* if ((run_count & 0x80) == 0) */
             {
-              if (i + value >= line_size || pixel + value >= max_pixels)
+              if (i + value >= line_size || pixel + value > max_pixels)
                 {
                   gimp_message (_("Invalid data: image may be corrupt."));
                   pixel += value;
@@ -356,6 +356,8 @@ load_image (GFile        *file,
                 }
               x += value;
             }
+          if (pixel == max_pixels)
+            break;
         }
 
       y++;
