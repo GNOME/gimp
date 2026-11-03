@@ -305,7 +305,7 @@ welcome_dialog_new (Gimp       *gimp,
   if (! show_welcome_page)
     gtk_stack_set_visible_child_name (GTK_STACK (stack), "gimp-welcome-create");
 
-  if (gimp_welcome_dialog_n_items > 0)
+  if (gimp_welcome_dialog_n_items > 0 || gimp_welcome_dialog_intro_n_paragraphs > 0)
     {
       main_vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                            "gimp-wilber",
@@ -980,20 +980,17 @@ welcome_dialog_create_release_page (Gimp      *gimp,
                                     GtkWidget *welcome_dialog,
                                     GtkWidget *main_vbox)
 {
-  GtkWidget  *scrolled_window;
-  GtkWidget  *hbox;
-  GtkWidget  *image;
-  GtkWidget  *listbox;
-  GtkWidget  *widget;
-
-  gchar      *release_link;
-  gchar      *markup;
-  gchar      *tmp;
+  GtkWidget *hbox;
+  GtkWidget *image;
+  GtkWidget *widget;
+  gchar     *release_link;
+  gchar     *markup;
+  gchar     *tmp;
 
   /*****************/
   /* Release Notes */
   /*****************/
-  if (gimp_welcome_dialog_n_items > 0)
+  if (gimp_welcome_dialog_n_items > 0 || gimp_welcome_dialog_intro_n_paragraphs > 0)
     {
       gint n_demos = 0;
 
@@ -1024,7 +1021,7 @@ welcome_dialog_create_release_page (Gimp      *gimp,
 
       /* Release note introduction. */
 
-      if (gimp_welcome_dialog_intro_n_paragraphs)
+      if (gimp_welcome_dialog_intro_n_paragraphs > 0)
         {
           GString *introduction = NULL;
 
@@ -1050,56 +1047,62 @@ welcome_dialog_create_release_page (Gimp      *gimp,
 
       /* Release note's change items. */
 
-      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-      gtk_box_pack_start (GTK_BOX (main_vbox), scrolled_window, TRUE, TRUE, 0);
-      gtk_widget_set_visible (scrolled_window, TRUE);
-
-      listbox = gtk_list_box_new ();
-
-      for (gint i = 0; i < gimp_welcome_dialog_n_items; i++)
+      if (gimp_welcome_dialog_n_items > 0)
         {
-          GtkWidget *row;
-          gchar     *markup;
-          gchar     *text;
+          GtkWidget *scrolled_window;
+          GtkWidget *listbox;
 
-          text = g_markup_escape_text (_((gchar *) gimp_welcome_dialog_items[i]), -1);
+          scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+          gtk_box_pack_start (GTK_BOX (main_vbox), scrolled_window, TRUE, TRUE, 0);
+          gtk_widget_set_visible (scrolled_window, TRUE);
 
-          /* Add a bold dot for pretty listing. */
-          if (i < gimp_welcome_dialog_n_items &&
-              gimp_welcome_dialog_demos[i] != NULL)
+          listbox = gtk_list_box_new ();
+
+          for (gint i = 0; i < gimp_welcome_dialog_n_items; i++)
             {
-              markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x96\xb6</span>  %s", text);
-              n_demos++;
+              GtkWidget *row;
+              gchar     *markup;
+              gchar     *text;
+
+              text = g_markup_escape_text (_((gchar *) gimp_welcome_dialog_items[i]), -1);
+
+              /* Add a bold dot for pretty listing. */
+              if (i < gimp_welcome_dialog_n_items &&
+                  gimp_welcome_dialog_demos[i] != NULL)
+                {
+                  markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x96\xb6</span>  %s", text);
+                  n_demos++;
+                }
+              else
+                {
+                  markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x80\xa2</span>  %s", text);
+                }
+
+              row = gtk_list_box_row_new ();
+              widget = gtk_label_new (NULL);
+              gtk_label_set_markup (GTK_LABEL (widget), markup);
+              gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
+              gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
+              gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_LEFT);
+              gtk_widget_set_halign (widget, GTK_ALIGN_START);
+              gtk_label_set_xalign (GTK_LABEL (widget), 0.0);
+              gtk_container_add (GTK_CONTAINER (row), widget);
+
+              gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
+              gtk_widget_show_all (row);
+
+              g_free (markup);
+              g_free (text);
             }
-          else
-            {
-              markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x80\xa2</span>  %s", text);
-            }
+          gtk_container_add (GTK_CONTAINER (scrolled_window), listbox);
+          gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
+                                           GTK_SELECTION_NONE);
 
-          row = gtk_list_box_row_new ();
-          widget = gtk_label_new (NULL);
-          gtk_label_set_markup (GTK_LABEL (widget), markup);
-          gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
-          gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
-          gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_LEFT);
-          gtk_widget_set_halign (widget, GTK_ALIGN_START);
-          gtk_label_set_xalign (GTK_LABEL (widget), 0.0);
-          gtk_container_add (GTK_CONTAINER (row), widget);
-
-          gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
-          gtk_widget_show_all (row);
-
-          g_free (markup);
-          g_free (text);
+          g_signal_connect (listbox, "row-activated",
+                            G_CALLBACK (welcome_dialog_release_item_activated),
+                            gimp);
+          gtk_widget_set_visible (listbox, TRUE);
         }
-      gtk_container_add (GTK_CONTAINER (scrolled_window), listbox);
-      gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
-                                       GTK_SELECTION_NONE);
-
-      g_signal_connect (listbox, "row-activated",
-                        G_CALLBACK (welcome_dialog_release_item_activated),
-                        gimp);
-      gtk_widget_set_visible (listbox, TRUE);
 
       if (n_demos > 0)
         {
