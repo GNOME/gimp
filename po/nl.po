@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-30 21:49+0000\n"
-"PO-Revision-Date: 2026-10-31 17:31+0100\n"
+"POT-Creation-Date: 2026-11-03 10:38+0000\n"
+"PO-Revision-Date: 2026-11-0 13:09+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -43,27 +43,27 @@ msgstr "Project-Id-Version: GIMP 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: OmegaT 6.2.0\n"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:15
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:15
 msgid "The GIMP team"
 msgstr "Het GIMP-team"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:16 desktop/gimp.desktop.in.in:4
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:16 desktop/gimp.desktop.in.in:4
 #: app/about.h:25
 msgid "GNU Image Manipulation Program"
 msgstr "GNU Image Manipulation Program"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:17
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:17
 msgid "High-end image creation and manipulation"
 msgstr "Hoogwaardig programma voor maken en bewerken van afbeeldingen"
 
 # j
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:19
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:19
 msgid ""
 "GIMP is an acronym for GNU Image Manipulation Program. It is Community-"
 "driven Free Software for high-end image creation and manipulation."
 msgstr "GIMP is een acroniem voor GNU Image Manipulation Program. Door de gemeenschap gemaakte vrije software voor hoogwaardig maken en bewerken van afbeeldingen."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:23
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:23
 msgid ""
 "It has many capabilities. It can be used as a paint program, an expert "
 "quality photo retouching program, image composition, an online batch "
@@ -71,7 +71,7 @@ msgid ""
 "converter, etc."
 msgstr "Het heeft vele mogelijkheden. Het kan worden gebruikt als een tekenprogramma, een expert kwaliteitsprogramma voor het bewerken van foto's, een online systeem voor massaverwerking, een massaproductie afbeeldingsrenderer, een conversieprogramma voor afbeeldingsindelingen, etc."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:29
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:29
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
@@ -80,33 +80,33 @@ msgid ""
 "Microsoft Windows and macOS."
 msgstr "GIMP is te vervangen en uit te breiden. Het is ontworpen om te worden uitgebreid met plug-ins en uitbreidingen om bijna alles te kunnen doen. De gevorderde interface voor scripten maakt bijna alles mogelijk, van de meest eenvoudige taak tot de meest complexe procedures voor het bewerken van afbeeldingen, om eenvoudig te worden gescript. GIMP is beschikbaar voor Linux, Microsoft Windows en macOS."
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:47
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:47
 msgid ""
 "Scene 4 cut 15 of \"ZeMarmot\" being edited in GIMP. Illustration by Aryeom "
 "(CC by-sa 4.0 International)"
 msgstr "Scene 4 deel 15 van \"ZeMarmot\" dat wordt bewerkt in GIMP. Illustratie door Aryeom (CC by-sa 4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:51
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:51
 msgid ""
 "Gull on beach photograph being edited in GIMP. Photo by Iana (CC by-sa 4.0 "
 "International)"
 msgstr "Zeemeeuw op het strand die wordt bewerkt in GIMP. Foto door Iana (CC by-sa 4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:55
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:55
 msgid ""
 "Portrait of Sofiia being edited in GIMP. Photo by Sofia (CC by-sa 4.0 "
 "International)"
 msgstr "Portret van Sofia dat wordt bewerkt in GIMP. Foto door Sofia (CC by-sa 4.0 International)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:59
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:59
 msgid "Scanned engraving being edited in GIMP. Artwork by Liam (CC0)"
 msgstr "Gescande gravering die wordt bewerkt in GIMP. Kunstwerk door Liam (CC0)"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:67 app/about.h:22
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:67 app/about.h:22
 msgid "GIMP"
 msgstr "GIMP"
 
-#: desktop/org.gimp.GIMP.appdata.xml.in.in:68
+#: desktop/org.gimp.GIMP.appdata.xml.in.in.in:68
 msgid "Photoshop"
 msgstr "Photoshop"
 
@@ -2515,7 +2515,7 @@ msgstr "240 Seconden"
 #: app/display/gimpdisplayshell-filter-dialog.c:87
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
 #: app/display/gimpdisplayshell-scale-dialog.c:131
-#: app/tools/gimpfiltertool.c:370 app/tools/gimpforegroundselecttool.c:333
+#: app/tools/gimpfiltertool.c:371 app/tools/gimpforegroundselecttool.c:333
 #: app/tools/gimppathtool.c:1127 app/tools/gimptexttool.c:1941
 #: app/tools/gimptransformgridtool.c:1264 app/tools/gimptransformtool.c:429
 #: app/widgets/gimpactionview.c:621 app/widgets/gimpcolordialog.c:492
@@ -2586,7 +2586,7 @@ msgstr "Geef een beschrijving van het markeerpunt"
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
-#: app/dialogs/welcome-dialog.c:1263 app/display/gimpdisplayshell-dnd.c:707
+#: app/dialogs/welcome-dialog.c:1266 app/display/gimpdisplayshell-dnd.c:707
 #: app/display/gimpimagewindow.c:2497 app/widgets/gimplayertreeview.c:864
 #: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -4898,7 +4898,7 @@ msgstr "Ve_rspreiden..."
 #: app/actions/filters-actions.c:536
 msgctxt "filters-action"
 msgid "_Normal Map..."
-msgstr "_Normaal Afbeelden..."
+msgstr "_Normale kaart..."
 
 #: app/actions/filters-actions.c:541
 msgctxt "filters-action"
@@ -5157,7 +5157,7 @@ msgid "%s..."
 msgstr "%s..."
 
 #: app/actions/filters-commands.c:282 app/display/gimpdisplayshell-dnd.c:393
-#: app/tools/gimpfiltertool.c:334 app/tools/gimppainttool.c:355
+#: app/tools/gimpfiltertool.c:335 app/tools/gimppainttool.c:355
 #: app/tools/gimptransformtool.c:739
 #: app/widgets/gimpdrawabletreeview-filters.c:824
 msgid "A selected layer is not visible."
@@ -8151,7 +8151,7 @@ msgstr "Alle filters terugzetten"
 #: app/dialogs/preferences-dialog.c:1180 app/dialogs/print-size-dialog.c:122
 #: app/dialogs/scale-dialog.c:137 app/dialogs/stroke-dialog.c:128
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
-#: app/tools/gimpfiltertool.c:369 app/tools/gimptransformgridtool.c:1261
+#: app/tools/gimpfiltertool.c:370 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:491 app/widgets/gimpcolordisplayeditor.c:264
 msgid "_Reset"
 msgstr "_Standaardwaarden"
@@ -10383,7 +10383,7 @@ msgstr "Weergave openen"
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:124
 #: app/display/gimpdisplayshell-scale-dialog.c:132 app/gui/gui.c:200
-#: app/tools/gimpfiltertool.c:371 app/widgets/gimpcolordialog.c:493
+#: app/tools/gimpfiltertool.c:372 app/widgets/gimpcolordialog.c:493
 #: app/widgets/gimpcontrollereditor.c:666
 #: app/widgets/gimpdeviceinfoeditor.c:838 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:181 app/widgets/gimpmodifierseditor.c:691
@@ -16325,7 +16325,7 @@ msgid "Image Properties"
 msgstr "Afbeeldingsinfo"
 
 #: app/dialogs/image-properties-dialog.c:68 app/dialogs/module-dialog.c:116
-#: app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:352
+#: app/dialogs/welcome-dialog.c:207 app/tools/gimpcolorpickertool.c:353
 #: app/tools/gimpgradienttool-editor.c:1818 app/tools/gimpmeasuretool.c:741
 #: app/widgets/gimpcontrollerlist.c:652 app/widgets/gimpcriticaldialog.c:222
 #: app/widgets/gimpcriticaldialog.c:244 app/widgets/gimpsettingsbox.c:642
@@ -18731,7 +18731,7 @@ msgid "_Next Tip"
 msgstr "V_olgende tip"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1108
+#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1111
 msgid "Learn more"
 msgstr "Meer leren"
 
@@ -18978,12 +18978,12 @@ msgid "Other donation options"
 msgstr "Andere opties voor doneren"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:953
+#: app/dialogs/welcome-dialog.c:950
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Uitgaveopmerkingen bij GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:1068
+#: app/dialogs/welcome-dialog.c:1071
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Klik op een item met een pijlpunt van %s om een rondleiding te krijgen."
@@ -19200,7 +19200,7 @@ msgstr "Snelmasker aan/uit"
 msgid "Navigate the image display"
 msgstr "Navigeren door de afbeelding"
 
-#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1619
+#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1608
 #: app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "Sleep hier afbeeldingen naar toe om ze te openen"
@@ -19580,7 +19580,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "Klikken en slepen om het scherpstelpunt te draaien"
 
 #: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729
-#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:681
+#: app/display/gimptoolline.c:1556 app/tools/gimppainttool.c:682
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s om hoeken te beperken"
@@ -20946,7 +20946,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Kleuren omzetten naar grijstinten"
 
 #: app/operations/gimpoperationdesaturate.c:92
-#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1487
+#: app/operations/gimpoperationsettings.c:91 app/tools/gimpfiltertool.c:1489
 #: app/tools/gimppaintoptions-gui.c:112 app/tools/gimptransform3doptions.c:77
 #: app/widgets/gimpdeviceinfo.c:179 app/widgets/gimpdeviceinfoeditor.c:397
 #: app/widgets/gimplayertreeview.c:286
@@ -21003,7 +21003,7 @@ msgstr "Transparante delen vervangen door een kleur"
 msgid "The color"
 msgstr "De kleur"
 
-#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1450
+#: app/operations/gimpoperationsettings.c:76 app/tools/gimpfiltertool.c:1452
 #: app/tools/gimpflipoptions.c:156 app/tools/gimptransformoptions.c:113
 #: app/tools/gimptransformoptions.c:307
 msgid "Clipping"
@@ -22250,7 +22250,7 @@ msgstr "Afbeelding automatisch bijsnijden"
 msgid "Autocrop layer"
 msgstr "Laag automatisch bijsnijden"
 
-#: app/pdb/image-cmds.c:2616
+#: app/pdb/image-cmds.c:2615
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Afbeeldingsresolutie is buiten het bereik, in plaats daarvan wordt de standaardresolutie gebruikt."
@@ -23401,7 +23401,7 @@ msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Kan meerdere lagen niet vullen. Selecteer slechts een laag."
 
 #: app/tools/gimpbucketfilltool.c:601 app/tools/gimpcagetool.c:231
-#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:311
+#: app/tools/gimpcurvestool.c:217 app/tools/gimpfiltertool.c:312
 #: app/tools/gimpforegroundselecttool.c:297 app/tools/gimplevelstool.c:213
 #: app/tools/gimpoffsettool.c:191 app/tools/gimppainttool.c:300
 #: app/tools/gimpperspectiveclonetool.c:224 app/tools/gimpthresholdtool.c:160
@@ -23418,13 +23418,13 @@ msgstr "De actieve laag is niet zichtbaar."
 msgid "No valid line art source selected."
 msgstr "Geen geldige bron lijnkunst geselecteerd."
 
-#: app/tools/gimpbucketfilltool.c:813 app/tools/gimpbucketfilltool.c:953
-#: app/tools/gimpcolorpickertool.c:271 app/tools/gimppainttool.c:499
+#: app/tools/gimpbucketfilltool.c:813 app/tools/gimpbucketfilltool.c:954
+#: app/tools/gimpcolorpickertool.c:272 app/tools/gimppainttool.c:500
 msgid "Click in any image to pick the background color"
 msgstr "Klik op een afbeelding om de achtergrondkleur te kiezen"
 
-#: app/tools/gimpbucketfilltool.c:820 app/tools/gimpbucketfilltool.c:962
-#: app/tools/gimpcolorpickertool.c:263 app/tools/gimppainttool.c:493
+#: app/tools/gimpbucketfilltool.c:820 app/tools/gimpbucketfilltool.c:963
+#: app/tools/gimpcolorpickertool.c:264 app/tools/gimppainttool.c:494
 msgid "Click in any image to pick the foreground color"
 msgstr "Klik op een afbeelding om de voorgrondkleur te kiezen"
 
@@ -23607,15 +23607,15 @@ msgstr "Pipet: kleuren kiezen op basis van beeldpunten"
 msgid "C_olor Picker"
 msgstr "P_ipet"
 
-#: app/tools/gimpcolorpickertool.c:256
+#: app/tools/gimpcolorpickertool.c:257
 msgid "Click in any image to view its color"
 msgstr "Klik in een afbeelding om de kleur ervan te bekijken"
 
-#: app/tools/gimpcolorpickertool.c:279
+#: app/tools/gimpcolorpickertool.c:280
 msgid "Click in any image to add the color to the palette"
 msgstr "Klik in een afbeelding om de kleur toe te voegen aan het palet"
 
-#: app/tools/gimpcolorpickertool.c:347
+#: app/tools/gimpcolorpickertool.c:348
 msgid "Color Picker Information"
 msgstr "Pipetinformatie"
 
@@ -23755,7 +23755,7 @@ msgstr[1] "Grootte %d lagen wijzigen"
 msgid "_Curves..."
 msgstr "_Curves…"
 
-#: app/tools/gimpcurvestool.c:215 app/tools/gimpfiltertool.c:307
+#: app/tools/gimpcurvestool.c:215 app/tools/gimpfiltertool.c:308
 #: app/tools/gimplevelstool.c:211 app/tools/gimpoffsettool.c:189
 #: app/tools/gimpthresholdtool.c:158
 msgid "Cannot modify multiple drawables. Select only one."
@@ -23963,24 +23963,24 @@ msgid ""
 msgstr "Indien ingeschakeld, het filter wordt onmiddellijk samengevoegd.\n"
 "Anders wordt het een bewerkbaar niet-destructief filter."
 
-#: app/tools/gimpfiltertool.c:322 app/tools/gimpselectiontool.c:595
+#: app/tools/gimpfiltertool.c:323 app/tools/gimpselectiontool.c:595
 #, c-format
 msgid "A selected item's pixels are locked."
 msgstr "De beeldpunten van het geselecteerde object zijn vergrendeld."
 
-#: app/tools/gimpfiltertool.c:452
+#: app/tools/gimpfiltertool.c:453
 msgid "Disabled because this filter depends on another image."
 msgstr "Uitgeschakeld, omdat deze afbeelding afhankelijk is van een andere afbeelding."
 
 #. TRANSLATORS: The %s will be replaced by the name of the
 #. * layer type.
-#: app/tools/gimpfiltertool.c:458
+#: app/tools/gimpfiltertool.c:459
 #: app/widgets/gimpdrawabletreeview-filters.c:624
 #, c-format
 msgid "Disabled because filters cannot be merged on: %s."
 msgstr "Uitgeschakeld, omdat filters niet kunnen worden samengevoegd op: %s."
 
-#: app/tools/gimpfiltertool.c:463
+#: app/tools/gimpfiltertool.c:464
 msgid ""
 "Disabled because GEGL Graph is unsafe.\n"
 "For development purpose, set environment variable "
@@ -23988,48 +23988,48 @@ msgid ""
 msgstr "Uitgeschakeld, omdat GEGL Graph niet veilig is.\n"
 "Voor ontwikkelen, stel de omgevingsvariabele GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT in."
 
-#: app/tools/gimpfiltertool.c:784
+#: app/tools/gimpfiltertool.c:785
 msgid "Click to switch the original and filtered sides"
 msgstr "Klik om te wisselen tussen originele en gefilterde kanten"
 
-#: app/tools/gimpfiltertool.c:788
+#: app/tools/gimpfiltertool.c:789
 msgid "Click to switch between vertical and horizontal"
 msgstr "Klik om tussen verticaal en horizontaal te wisselen"
 
-#: app/tools/gimpfiltertool.c:792
+#: app/tools/gimpfiltertool.c:793
 msgid "Click to move the split guide"
 msgstr "Klik om de splits-hulplijn te verplaatsen"
 
-#: app/tools/gimpfiltertool.c:794
+#: app/tools/gimpfiltertool.c:795
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: wisselen origineel en gefilterde"
 
-#: app/tools/gimpfiltertool.c:795
+#: app/tools/gimpfiltertool.c:796
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: wisselen horizontaal en verticaal"
 
-#: app/tools/gimpfiltertool.c:1284 app/tools/gimpgradienttool.c:846
+#: app/tools/gimpfiltertool.c:1286 app/tools/gimpgradienttool.c:846
 msgid "Edit filter"
 msgstr "Filter bewerken"
 
 #. The blending-options expander
-#: app/tools/gimpfiltertool.c:1463
+#: app/tools/gimpfiltertool.c:1465
 msgid "Blending Options"
 msgstr "Mengopties"
 
-#: app/tools/gimpfiltertool.c:1973 app/tools/gimpfiltertool-settings.c:71
+#: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importeren ‘%s’-instellingen"
 
-#: app/tools/gimpfiltertool.c:1975 app/tools/gimpfiltertool-settings.c:73
+#: app/tools/gimpfiltertool.c:1977 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exporteren ‘%s’-instellingen"
 
-#: app/tools/gimpfiltertool.c:2240 app/tools/gimpgradienttool.c:1389
+#: app/tools/gimpfiltertool.c:2242 app/tools/gimpgradienttool.c:1389
 #, c-format
 msgid "Editing '%s'..."
 msgstr "Bewerken ‘%s’…"
@@ -25090,16 +25090,16 @@ msgstr "Kan niet tekenen op meerdere lagen. Selecteer slechts een laag."
 msgid "Cannot paint on layer groups."
 msgstr "Tekenen op laaggroepen niet mogelijk."
 
-#: app/tools/gimppainttool.c:712
+#: app/tools/gimppainttool.c:713
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s voor een rechte lijn"
 
-#: app/tools/gimppainttool.c:947
+#: app/tools/gimppainttool.c:948
 msgid "The selected drawable does not have an alpha channel."
 msgstr "Het geselecteerde tekenobject heeft geen alfakanaal."
 
-#: app/tools/gimppainttool.c:958
+#: app/tools/gimppainttool.c:959
 msgid "The selected layer's alpha channel is locked."
 msgstr "Het alfakanaal van een geselecteerde laag is vergrendeld."
 
