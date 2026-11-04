@@ -32,7 +32,7 @@ IMAGE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 # "GNU Image Manipulation Program version 3.3.1"
 VERSION = subprocess.run([GIMP, "--version"], capture_output=True,
                          text=True).stdout.split()[-1]
-STABLE = int(VERSION.split(".")[1]) % 2 == 0
+RELEASE = int(VERSION.split(".")[2]) % 2 == 0
 
 
 def welcome_dialog(app):
@@ -60,10 +60,10 @@ def check_tabs(dlg, run, want_selected):
         fail("%s: expected %r tab selected, got %r" % (run, want_selected, selected))
 
     has_notes = any(t.name == "Release Notes" for t in tabs(dlg))
-    if has_notes != STABLE:
+    if has_notes != RELEASE:
         fail("%s: Release Notes tab %s on %s version %s"
              % (run, "present" if has_notes else "missing",
-                "stable" if STABLE else "unstable", VERSION))
+                "release" if RELEASE else "development", VERSION))
 
 
 def close_dialog(app, dlg, run):
