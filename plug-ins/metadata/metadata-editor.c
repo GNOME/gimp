@@ -2289,7 +2289,7 @@ metadata_dialog_editor_set_metadata (metadata_editor *meta_info)
           gdouble  gps_value;
           gchar   *str;
 
-          if (gexiv2_metadata_try_get_gps_longitude (metadata, &gps_value, NULL))
+          if (metadata_get_gps_longitude (metadata, &gps_value, NULL))
             {
               str = metadata_format_gps_longitude_latitude (gps_value);
               gtk_entry_set_text (GTK_ENTRY (widget), str);
@@ -2305,7 +2305,7 @@ metadata_dialog_editor_set_metadata (metadata_editor *meta_info)
           gdouble  gps_value;
           gchar   *str;
 
-          if (gexiv2_metadata_try_get_gps_latitude (metadata, &gps_value, NULL))
+          if (metadata_get_gps_latitude (metadata, &gps_value, NULL))
             {
               str = metadata_format_gps_longitude_latitude (gps_value);
               gtk_entry_set_text (GTK_ENTRY (widget), str);
@@ -2321,7 +2321,7 @@ metadata_dialog_editor_set_metadata (metadata_editor *meta_info)
           gdouble  gps_value;
           gchar   *str;
 
-          if (gexiv2_metadata_try_get_gps_altitude (metadata, &gps_value, NULL))
+          if (metadata_get_gps_altitude (metadata, &gps_value, NULL))
             {
               str = metadata_format_gps_altitude (gps_value, TRUE, "");
               gtk_entry_set_text (GTK_ENTRY (widget), str);

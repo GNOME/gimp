@@ -26,6 +26,35 @@ G_BEGIN_DECLS
 
 #include <gexiv2/gexiv2.h>
 
+#if GEXIV2_CHECK_VERSION (0, 16, 0)
+#define gexiv2_metadata_try_register_xmp_namespace      gexiv2_metadata_register_xmp_namespace
+#define gexiv2_metadata_try_get_xmp_namespace_for_tag   gexiv2_metadata_get_xmp_namespace_for_tag
+#define gexiv2_metadata_try_get_tag_string              gexiv2_metadata_get_tag_string
+#define gexiv2_metadata_try_set_tag_string              gexiv2_metadata_set_tag_string
+#define gexiv2_metadata_try_get_tag_interpreted_string  gexiv2_metadata_get_tag_interpreted_string
+#define gexiv2_metadata_try_set_xmp_tag_struct          gexiv2_metadata_set_xmp_tag_struct
+#define gexiv2_metadata_try_has_tag                     gexiv2_metadata_has_tag
+#define gexiv2_metadata_try_get_tag_multiple            gexiv2_metadata_get_tag_multiple
+#define gexiv2_metadata_try_set_tag_multiple            gexiv2_metadata_set_tag_multiple
+#define gexiv2_metadata_try_get_tag_type                gexiv2_metadata_get_tag_type
+#define gexiv2_metadata_try_get_exif_tag_rational       gexiv2_metadata_get_exif_tag_rational
+#define gexiv2_metadata_try_set_exif_tag_rational       gexiv2_metadata_set_exif_tag_rational
+#define gexiv2_metadata_try_get_tag_long                gexiv2_metadata_get_tag_long
+#define gexiv2_metadata_try_set_tag_long                gexiv2_metadata_set_tag_long
+#define gexiv2_metadata_try_clear_tag                   gexiv2_metadata_clear_tag
+#define gexiv2_metadata_try_get_tag_raw                 gexiv2_metadata_get_tag_raw
+#define gexiv2_metadata_try_get_orientation             gexiv2_metadata_get_orientation
+#define gexiv2_metadata_try_set_orientation             gexiv2_metadata_set_orientation
+#define gexiv2_metadata_try_erase_exif_thumbnail        gexiv2_metadata_erase_exif_thumbnail
+#define gexiv2_metadata_try_set_exif_thumbnail_from_buffer \
+                                                        gexiv2_metadata_set_exif_thumbnail_from_buffer
+#define gexiv2_metadata_try_get_metadata_pixel_width    gexiv2_metadata_get_metadata_pixel_width
+#define gexiv2_metadata_try_get_metadata_pixel_height   gexiv2_metadata_get_metadata_pixel_height
+#define gexiv2_metadata_try_set_metadata_pixel_width    gexiv2_metadata_set_metadata_pixel_width
+#define gexiv2_metadata_try_set_metadata_pixel_height   gexiv2_metadata_set_metadata_pixel_height
+#define gexiv2_metadata_try_generate_xmp_packet         gexiv2_metadata_generate_xmp_packet
+#endif
+
 
 #define GIMP_TYPE_METADATA (gimp_metadata_get_type ())
 G_DECLARE_FINAL_TYPE (GimpMetadata, gimp_metadata, GIMP, METADATA, GExiv2Metadata)

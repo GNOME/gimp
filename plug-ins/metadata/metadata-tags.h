@@ -360,9 +360,21 @@ extern const gint   n_locationcreated;
 extern const list_references list_metadata[];
 extern const gint            n_list_metadata;
 
-gchar * metadata_format_gps_longitude_latitude (const gdouble  value);
-gchar * metadata_format_gps_altitude           (const gdouble  value,
-                                                gboolean       use_meter,
-                                                gchar         *measurement_symbol);
+gchar   * metadata_format_gps_longitude_latitude (const gdouble    value);
+gchar   * metadata_format_gps_altitude           (const gdouble    value,
+                                                  gboolean         use_meter,
+                                                  gchar           *measurement_symbol);
+
+gboolean  metadata_get_gps_longitude             (GExiv2Metadata  *self,
+                                                  gdouble         *longitude,
+                                                  GError         **error);
+
+gboolean  metadata_get_gps_latitude              (GExiv2Metadata  *self,
+                                                  gdouble         *latitude,
+                                                  GError         **error);
+
+gboolean  metadata_get_gps_altitude              (GExiv2Metadata  *self,
+                                                  gdouble         *altitude,
+                                                  GError         **error);
 
 #endif /* __METADATA_TAGS_H__ */
