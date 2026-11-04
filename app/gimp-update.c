@@ -48,6 +48,7 @@
 #endif
 
 #include "gimp-intl.h"
+#include "gimp-log.h"
 #include "gimp-update.h"
 #include "gimp-version.h"
 
@@ -136,6 +137,8 @@ gimp_update_known (GimpCoreConfig *config,
        (gimp_version_cmp (last_version, NULL) == 0 &&
         build_revision <= gimp_version_get_revision ())))
     {
+      GIMP_LOG (UPDATE, "'%s' is not newer than running %s (cmp=%d), discarding",
+                last_version, GIMP_VERSION, gimp_version_cmp (last_version, NULL));
       last_version = NULL;
     }
 
@@ -159,6 +162,9 @@ gimp_update_known (GimpCoreConfig *config,
                 NULL);
 
   /* Are we running an old GIMP? */
+  GIMP_LOG (UPDATE, "update available: %s (last-known-release='%s')",
+            last_version != NULL ? "YES" : "NO",
+            last_version ? last_version : "(null)");
   return (last_version != NULL);
 }
 
@@ -291,6 +297,8 @@ gimp_update_get_highest (JsonParser  *parser,
           if (release_date)
             {
               *highest_version = g_strdup (json_object_get_string_member (version, "version"));
+              GIMP_LOG (UPDATE, "selected version '%s' (date '%s', revision %d)",
+                        *highest_version, release_date, *build_revision);
               break;
             }
         }
@@ -341,6 +349,8 @@ gimp_check_updates_process (const gchar    *source,
   GError      *error             = NULL;
   JsonParser  *parser;
 
+  GIMP_LOG (UPDATE, "processing %s (%" G_GSIZE_FORMAT " bytes)",
+            source, file_length);
   parser = json_parser_new ();
   if (! json_parser_load_from_data (parser, file_contents, file_length, &error))
     {
@@ -534,6 +544,14 @@ gimp_update_auto_check (GimpCoreConfig *config,
                gimp_version_cmp (GIMP_VERSION,
                                  config->config_version) > 0);
 
+  GIMP_LOG (UPDATE, "running %s (config_version='%s', first-run-after-update=%s, "
+            "check_updates pref=%s, package check-update=%s)",
+            GIMP_VERSION,
+            config->config_version ? config->config_version : "(null)",
+            is_update ? "yes" : "no",
+            config->check_updates ? "yes" : "no",
+            gimp_version_check_update () ? "yes" : "no");
+
   if (is_update || GIMP_GUI_CONFIG (config)->show_welcome_dialog)
     {
 #ifndef GIMP_CONSOLE_COMPILATION
@@ -610,6 +628,7 @@ gimp_update_check (GimpCoreConfig *config)
   NSURLSession        *session;
 
   gimp_versions = gimp_get_version_url ();
+  GIMP_LOG (UPDATE, "[macOS] fetching versions from '%s'", gimp_versions);
 
   request = [[NSMutableURLRequest alloc] init];
   [request setURL:[NSURL URLWithString:@(gimp_versions)]];
@@ -659,6 +678,7 @@ gimp_update_check (GimpCoreConfig *config)
 #else
   GFile *gimp_versions;
 
+  GIMP_LOG (UPDATE, "[GIO] fetching versions from '%s'", gimp_get_version_url ());
   gimp_versions = g_file_new_for_uri (gimp_get_version_url ());
 
   g_file_load_contents_async (gimp_versions, NULL, gimp_check_updates_callback, config);

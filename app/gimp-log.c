@@ -45,7 +45,8 @@ static const GDebugKey log_keys[] =
   { "rectangle-tool",     GIMP_LOG_RECTANGLE_TOOL     },
   { "brush-cache",        GIMP_LOG_BRUSH_CACHE        },
   { "projection",         GIMP_LOG_PROJECTION         },
-  { "xcf",                GIMP_LOG_XCF                }
+  { "xcf",                GIMP_LOG_XCF                },
+  { "update",             GIMP_LOG_UPDATE             }
 };
 
 static const gchar * const log_domains[] =

@@ -44,7 +44,8 @@ typedef enum
   GIMP_LOG_BRUSH_CACHE        = 1 << 18,
   GIMP_LOG_PROJECTION         = 1 << 19,
   GIMP_LOG_XCF                = 1 << 20,
-  GIMP_LOG_MAGIC_MATCH        = 1 << 21
+  GIMP_LOG_MAGIC_MATCH        = 1 << 21,
+  GIMP_LOG_UPDATE             = 1 << 22
 } GimpLogFlags;
 
 
@@ -112,6 +113,7 @@ void             gimp_log_remove_handler (GimpLogHandler  handler);
 #define BRUSH_CACHE        GIMP_LOG_BRUSH_CACHE
 #define PROJECTION         GIMP_LOG_PROJECTION
 #define XCF                GIMP_LOG_XCF
+#define UPDATE             GIMP_LOG_UPDATE
 
 #if 0 /* last resort */
 #  define GIMP_LOG /* nothing => no varargs, no log */
