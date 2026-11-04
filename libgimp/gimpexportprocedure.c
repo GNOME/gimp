@@ -416,7 +416,7 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
       mimetype = (gchar *) gimp_file_procedure_get_mime_types (GIMP_FILE_PROCEDURE (procedure));
       if (mimetype == NULL)
         {
-          g_printerr ("%s: ERROR: the GimpExportProcedureConfig object was created "
+          g_printerr ("%s: ERROR: the GimpProcedureConfig object was created "
                       "with export_metadata but you didn't set any MimeType with gimp_file_procedure_set_mime_types()!\n",
                       G_STRFUNC);
         }
@@ -490,7 +490,7 @@ gimp_export_procedure_run (GimpProcedure        *procedure,
   plug_in = gimp_procedure_get_plug_in (procedure);
   if (G_OBJECT (config)->ref_count > 1 &&
       _gimp_plug_in_manage_memory_manually (plug_in))
-    g_printerr ("%s: ERROR: the GimpExportProcedureConfig object was refed "
+    g_printerr ("%s: ERROR: the GimpProcedureConfig object was refed "
                 "by plug-in, it MUST NOT do that!\n", G_STRFUNC);
 
   if (free_options)
