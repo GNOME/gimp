@@ -9,7 +9,8 @@ project('gimp',
   ],
 )
 
-project_url = 'https://gitlab.gnome.org/GNOME/gimp'
+project_url = 'https://www.gimp.org'
+gitlab_url  = 'https://gitlab.gnome.org/GNOME/gimp'
 project_url_issues = 'https://www.gimp.org/bugs/' #see Infrastructure/gimp-web@d6d0559d
 
 conf = configuration_data()
@@ -1887,6 +1888,14 @@ endif
 conf.set_quoted('PACKAGE_BUGREPORT', project_url_issues)
 conf.set_quoted('BUG_REPORT_URL', bug_report_url)
 
+# Unlike the BUG_REPORT_URL which may be some more generic link, let's
+# also set a Gitlab URL to link to bugs or MRs.
+conf.set_quoted('GIMP_GITLAB_URL', gitlab_url)
+
+# Verify if this is a build from a Gitlab MR.
+mr_id = run_command(python, '.gitlab/get-merge-request-id.py', check: true).stdout().to_int()
+conf.set('GIMP_MR_ID', mr_id > 0 ? mr_id : false)
+
 configure_file(
   output: 'config.h',
   configuration: conf
@@ -2321,6 +2330,13 @@ final_message = [
 ]
 
 message('\n'.join(final_message))
+
+if mr_id != 0
+  message('''
+    This is a development build for merge request !@0@:
+      @1@/-/merge_requests/@0@
+  '''.format(mr_id, gitlab_url))
+endif
 
 if bug_report_url == project_url_issues
   message('''

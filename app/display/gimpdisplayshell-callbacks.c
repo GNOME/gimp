@@ -646,7 +646,7 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
 
   cairo_restore (cr);
 
-#ifdef GIMP_UNSTABLE
+#if defined(GIMP_UNSTABLE) || ! defined (GIMP_RELEASE) || defined (GIMP_MR_ID)
   {
     GtkWidget       *widget  = GTK_WIDGET (shell);
     GtkStyleContext *context = gtk_widget_get_style_context (widget);
@@ -657,17 +657,26 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
     gint             height;
     gdouble          scale;
     GdkRGBA          color;
+    const gchar     *msg_title  = _("Unstable Development Version");
+    const gchar     *msg_main   = _("Please test bugs against "
+                                   "latest git master branch "
+                                   "before reporting them.");
+    gchar           *git_info;
+
+#ifdef GIMP_MR_ID
+    git_info = g_strdup_printf (_("Merge Request !%d - Commit %s"),
+                                GIMP_MR_ID, GIMP_GIT_VERSION_ABBREV);
+#else
+    git_info = g_strdup_printf (_("Commit %s"), GIMP_GIT_VERSION_ABBREV);
+#endif
 
     layout = gtk_widget_create_pango_layout (shell->canvas, NULL);
 
-    msg = g_strdup_printf (_("<big>Unstable Development Version</big>\n\n"
-                             "<small>commit <tt>%s</tt></small>\n\n"
-                             "<small>Please test bugs against "
-                             "latest git master branch\n"
-                             "before reporting them.</small>"),
-                             GIMP_GIT_VERSION_ABBREV);
+    msg = g_strdup_printf ("<big>%s</big>\n\n"
+                           "<small><tt>%s</tt></small>\n\n"
+                           "<small>%s</small>",
+                           msg_title, git_info, msg_main);
     pango_layout_set_markup (layout, msg, -1);
-    g_free (msg);
     pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
 
     pango_layout_get_pixel_size (layout, &width, &height);
@@ -690,6 +699,8 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
     pango_cairo_show_layout (cr, layout);
 
     g_object_unref (layout);
+    g_free (git_info);
+    g_free (msg);
   }
-#endif /* GIMP_UNSTABLE */
+#endif /* defined(GIMP_UNSTABLE) || ! defined (GIMP_RELEASE) || defined (GIMP_MR_ID) */
 }

@@ -84,12 +84,18 @@ gimp_version (gboolean be_verbose,
       lib_versions = gimp_library_versions (localized);
       verbose_info = g_strdup_printf ("git-describe: %s\n"
                                       "Build: %s rev %d for %s\n"
+#ifdef GIMP_MR_ID
+                                      "Merge request: %s/-/merge_requests/%d\n"
+#endif
                                       "# C compiler #\n%s\n"
                                       "# Libraries #\n%s",
                                       GIMP_GIT_VERSION,
                                       GIMP_BUILD_ID,
                                       gimp_version_get_revision (),
                                       GIMP_BUILD_PLATFORM_FAMILY,
+#ifdef GIMP_MR_ID
+                                      GIMP_GITLAB_URL, GIMP_MR_ID,
+#endif
                                       CC_VERSION,
                                       lib_versions);
       g_free (lib_versions);

@@ -113,10 +113,10 @@ static gboolean    about_dialog_anim_draw     (GtkWidget       *widget,
 static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
 
-#ifndef GIMP_RELEASE
+#if defined(GIMP_UNSTABLE) || ! defined (GIMP_RELEASE) || defined (GIMP_MR_ID)
 static void        about_dialog_add_unstable_message
                                               (GtkWidget       *vbox);
-#endif /* ! GIMP_RELEASE */
+#endif /* defined(GIMP_UNSTABLE) || ! defined (GIMP_RELEASE) || defined (GIMP_MR_ID) */
 
 static void        about_dialog_last_release_changed
                                               (GimpCoreConfig   *config,
@@ -322,9 +322,9 @@ about_dialog_create (Gimp           *gimp,
         {
           if (dialog.use_animation)
             about_dialog_add_animation (children->data, &dialog);
-#ifndef GIMP_RELEASE
+#if defined(GIMP_UNSTABLE) || ! defined (GIMP_RELEASE) || defined (GIMP_MR_ID)
           about_dialog_add_unstable_message (children->data);
-#endif /* ! GIMP_RELEASE */
+#endif /* defined(GIMP_UNSTABLE) || ! defined (GIMP_RELEASE) || defined (GIMP_MR_ID) */
 #ifdef CHECK_UPDATE
           if (gimp_version_check_update ())
             about_dialog_add_update (&dialog, config);
@@ -961,17 +961,32 @@ about_dialog_timer (gpointer data)
   return G_SOURCE_CONTINUE;
 }
 
-#ifndef GIMP_RELEASE
-
+#if defined(GIMP_UNSTABLE) || ! defined (GIMP_RELEASE) || defined (GIMP_MR_ID)
 static void
 about_dialog_add_unstable_message (GtkWidget *vbox)
 {
-  GtkWidget *label;
-  gchar     *text;
+  GtkWidget   *label;
+#if defined (GIMP_RELEASE) && defined (GIMP_MR_ID)
+  const gchar *header = _("This is a test release build");
+#else
+  const gchar *header = _("This is a development build");
+#endif
+  gchar       *git_info;
+  gchar       *text;
 
-  text = g_strdup_printf (_("This is a development build\n"
-                            "commit %s"), GIMP_GIT_VERSION_ABBREV);
+#ifdef GIMP_MR_ID
+  git_info = g_strdup_printf (_("Merge Request !%d - Commit %s"),
+                              GIMP_MR_ID, GIMP_GIT_VERSION_ABBREV);
+  text     = g_strdup_printf (_("%s\n<a href='%s/-/merge_requests/%d'>%s</a>"),
+                              header, GIMP_GITLAB_URL, GIMP_MR_ID, git_info);
+#else
+  git_info = g_strdup_printf (_("Commit %s"), GIMP_GIT_VERSION_ABBREV);
+  text     = g_strdup_printf (_("%s\n%s"), header, git_info);
+#endif
+
   label = gtk_label_new (text);
+  gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+  g_free (git_info);
   g_free (text);
 
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
@@ -983,8 +998,7 @@ about_dialog_add_unstable_message (GtkWidget *vbox)
   gtk_box_reorder_child (GTK_BOX (vbox), label, 2);
   gtk_widget_set_visible (label, TRUE);
 }
-
-#endif /* ! GIMP_RELEASE */
+#endif /* defined(GIMP_UNSTABLE) || ! defined (GIMP_RELEASE) || defined (GIMP_MR_ID) */
 
 static void
 about_dialog_last_release_changed (GimpCoreConfig   *config,
