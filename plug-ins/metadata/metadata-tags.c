@@ -614,3 +614,89 @@ metadata_format_gps_altitude (const gdouble  value,
 
   return g_strdup_printf ("%.2f%s", gps_value, measurement_symbol);
 }
+
+gboolean
+metadata_get_gps_longitude (GExiv2Metadata  *self,
+                            gdouble         *longitude,
+                            GError         **error)
+{
+#if GEXIV2_CHECK_VERSION (0, 16, 0)
+  gdouble res;
+
+  g_return_val_if_fail (longitude != NULL, FALSE);
+
+  res = gexiv2_metadata_get_gps_longitude (self, error);
+
+  if (! isnan (res) && ! isinf (res))
+    {
+      *longitude = res;
+
+      return TRUE;
+    }
+  else
+    {
+      *longitude = 0.0;
+
+      return FALSE;
+    }
+#else
+    return gexiv2_metadata_try_get_gps_longitude (self, longitude, error);
+#endif
+}
+
+gboolean
+metadata_get_gps_latitude (GExiv2Metadata  *self,
+                           gdouble         *latitude,
+                           GError         **error)
+{
+#if GEXIV2_CHECK_VERSION (0, 16, 0)
+  gdouble res;
+
+  g_return_val_if_fail (latitude != NULL, FALSE);
+
+  res = gexiv2_metadata_get_gps_latitude (self, error);
+
+  if (! isnan (res) && ! isinf (res))
+    {
+      *latitude = res;
+
+      return TRUE;
+    }
+  else
+    {
+      *latitude = 0.0;
+
+      return FALSE;
+    }
+#else
+    return gexiv2_metadata_try_get_gps_latitude (self, latitude, error);
+#endif
+}
+
+gboolean
+metadata_get_gps_altitude (GExiv2Metadata  *self,
+                           gdouble         *altitude,
+                           GError         **error)
+{
+#if GEXIV2_CHECK_VERSION (0, 16, 0)
+  gdouble res;
+
+  g_return_val_if_fail (altitude != NULL, FALSE);
+
+  res = gexiv2_metadata_get_gps_altitude (self, error);
+  if (! isnan (res) && ! isinf (res))
+    {
+      *altitude = res;
+
+      return TRUE;
+    }
+  else
+    {
+      *altitude = 0.0;
+
+      return FALSE;
+    }
+#else
+    return gexiv2_metadata_try_get_gps_altitude (self, altitude, error);
+#endif
+}

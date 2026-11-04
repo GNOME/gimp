@@ -603,8 +603,8 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
               gchar  *value;
               GError *error = NULL;
 
-              if (gexiv2_metadata_try_get_gps_longitude (GEXIV2_METADATA (metadata),
-                                                         &lng, &error))
+              if (metadata_get_gps_longitude (GEXIV2_METADATA (metadata),
+                                              &lng, &error))
                 {
                   str = metadata_format_gps_longitude_latitude (lng);
                   metadata_dialog_add_tag (store,
@@ -622,8 +622,8 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
               metadata_dialog_add_translated_tag (metadata, store,
                                                   "Exif.GPSInfo.GPSLongitudeRef");
 
-              if (gexiv2_metadata_try_get_gps_latitude (GEXIV2_METADATA (metadata),
-                                                        &lat, &error))
+              if (metadata_get_gps_latitude (GEXIV2_METADATA (metadata),
+                                             &lat, &error))
                 {
                   str = metadata_format_gps_longitude_latitude (lat);
                   metadata_dialog_add_tag (store,
@@ -641,8 +641,8 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
               metadata_dialog_add_translated_tag (metadata, store,
                                                   "Exif.GPSInfo.GPSLatitudeRef");
 
-              if (gexiv2_metadata_try_get_gps_altitude (GEXIV2_METADATA (metadata),
-                                                        &alt, &error))
+              if (metadata_get_gps_altitude (GEXIV2_METADATA (metadata),
+                                             &alt, &error))
                 {
                   gchar  *str2, *str3;
                   GError *error = NULL;

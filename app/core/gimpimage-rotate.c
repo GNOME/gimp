@@ -21,6 +21,8 @@
 #include <gegl.h>
 #include <gexiv2/gexiv2.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "config/gimpdialogconfig.h"
