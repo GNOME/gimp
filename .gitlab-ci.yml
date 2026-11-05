@@ -344,7 +344,7 @@ gimp-debian-nonreloc:
           git diff;
           exit 1;
         fi;
-        if [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ]; then
+        if [ "$CI_PIPELINE_SOURCE" != "merge_request_event" ] || [[ "$CI_MERGE_REQUEST_LABELS" =~ "Release" ]]; then
           ninja dist > ninja_dist.log 2>&1 || { cat ninja_dist.log; exit 1; };
         fi;
         printf "\e[0Ksection_end:`date +%s`:gimp_tar\r\e[0K\n";
