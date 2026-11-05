@@ -306,8 +306,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/aous72/OpenJPH/archive/refs/tags/0.32.0.tar.gz",
-                            "sha256": "5cb1ebe18e5ee1322d23ff2130b37562d447d1ad5586c3d16cf84be3ae30f719",
+                            "url": "https://github.com/aous72/OpenJPH/archive/refs/tags/0.33.0.tar.gz",
+                            "sha256": "3437f296ff8531b35558650b0ed7fde45cad39394329eef4064a3d4900cf101f",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 375199,
