@@ -4,7 +4,7 @@
 # quit and relaunched 5 times on the same config dir:
 #
 # -> 1st start (fresh config counts as an update): Welcome tab, with
-#    "You installed GIMP x.y.z"
+#    "You installed GIMP x.y.z!"
 # -> 2nd start: Create tab
 # -> 3rd start with an image on the command line: no dialog
 # -> 4th start: Create tab again, uncheck "Show on Start"
@@ -118,7 +118,7 @@ with gimp_session(GIMP, MUTTER) as (session, app, proc):
     run = "1st start"
     dlg = wait_for_dialog(app, run)
     check_tabs(dlg, run, "Welcome")
-    installed = "You installed GIMP %s" % VERSION
+    installed = "You installed GIMP %s!" % VERSION
     if find_first(dlg, lambda n: n.roleName == "label"
                   and n.name == installed, max_depth=40) is None:
         fail("%s: no %r label in the Welcome tab:\n%s"
