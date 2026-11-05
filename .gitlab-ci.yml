@@ -1185,3 +1185,37 @@ dist-mac-weekly:
     paths:
       - build/macos/dmg/_Output/
     expire_in: *long_expire
+
+## Reporting job
+
+mr-reporting:
+  extends: .default
+  rules:
+    - <<: *CI_MERGE
+      when: always
+  interruptible: true
+  stage: .post
+  needs:
+    - job: dist-appimage-weekly
+      optional: true
+    - job: dist-snap-weekly
+      optional: true
+    - job: dist-installer-weekly
+      optional: true
+    - job: dist-store-weekly
+      optional: true
+    - job: dist-mac-weekly
+      optional: true
+    - job: dist-flatpak-weekly
+      optional: true
+  before_script:
+    - |
+      set +xv
+      echo -e "\e[0Ksection_start:`date +%s`:prepare_environment[collapsed=true]\r\e[0KPrepare environment"
+      apt update && apt install -y --no-install-recommends python3 python3-pip python3-venv
+      python3 -m venv .venv && source .venv/bin/activate
+      pip install --upgrade pip
+      pip install python-gitlab==8.2.0
+      echo -e "\e[0Ksection_end:`date +%s`:prepare_environment\r\e[0K"
+  script:
+    - python3 .gitlab/report-mr-pipeline.py
