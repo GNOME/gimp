@@ -119,7 +119,7 @@ def gimp_session(gimp_exe, mutter_exe, extra_environment=None, install_input=Fal
     except HermeticSessionError as e:
         hard_error("hermetic session failed to boot: %s" % e)
     if install_input:
-        session.install_input()
+        session.install_input().connectMonitor()
 
     config_dir = tempfile.mkdtemp(prefix="gimp-uitest-config-")
     session.config_dir = config_dir  # tests that read gimprc back need the path
