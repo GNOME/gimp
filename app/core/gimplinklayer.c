@@ -113,6 +113,12 @@ static void       gimp_link_layer_flip           (GimpItem              *item,
                                                   GimpOrientationType    flip_type,
                                                   gdouble                axis,
                                                   gboolean               clip_result);
+static void       gimp_link_layer_rotate         (GimpItem              *item,
+                                                  GimpContext           *context,
+                                                  GimpRotationType       rotate_type,
+                                                  gdouble                center_x,
+                                                  gdouble                center_y,
+                                                  gboolean               clip_result);
 static void       gimp_link_layer_scale          (GimpItem              *item,
                                                   gint                   new_width,
                                                   gint                   new_height,
@@ -201,6 +207,7 @@ gimp_link_layer_class_init (GimpLinkLayerClass *klass)
   item_class->rename                = gimp_rasterizable_rename;
   item_class->translate             = gimp_link_layer_translate;
   item_class->flip                  = gimp_link_layer_flip;
+  item_class->rotate                = gimp_link_layer_rotate;
   item_class->scale                 = gimp_link_layer_scale;
   item_class->transform             = gimp_link_layer_transform;
 
@@ -427,6 +434,29 @@ gimp_link_layer_flip (GimpItem            *item,
   else
     {
       GIMP_ITEM_CLASS (parent_class)->flip (item, context, flip_type, axis, clip_result);
+    }
+}
+
+static void
+gimp_link_layer_rotate (GimpItem            *item,
+                        GimpContext         *context,
+                        GimpRotationType     rotate_type,
+                        gdouble              center_x,
+                        gdouble              center_y,
+                        gboolean             clip_result)
+{
+  GimpLinkLayer *layer = GIMP_LINK_LAYER (item);
+
+  if (gimp_link_is_monitored (layer->p->link))
+    {
+      GimpMatrix3 matrix = layer->p->matrix;
+
+      gimp_transform_matrix_rotate (&matrix, rotate_type, center_x, center_y);
+      gimp_link_layer_set_transform (layer, &matrix, layer->p->interpolation, TRUE);
+    }
+  else
+    {
+      GIMP_ITEM_CLASS (parent_class)->rotate (item, context, rotate_type, center_x, center_y, clip_result);
     }
 }
 
