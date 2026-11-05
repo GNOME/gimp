@@ -2050,10 +2050,6 @@ static gint free_ent = 0;        /* first unused entry */
  */
 static gint  clear_flg = 0;
 
-static gint  offset;
-static glong in_count  = 1;        /* length of input */
-static glong out_count = 0;        /* # of codes output (for debugging) */
-
 /*
  * compress stdin to stdout
  *
@@ -2126,10 +2122,7 @@ no_compress (GOutputStream  *output,
   /*
    * Set up the necessary values
    */
-  offset = 0;
-  out_count = 0;
   clear_flg = 0;
-  in_count = 1;
 
   ClearCode = (1 << (init_bits - 1));
   EOFCode = ClearCode + 1;
@@ -2158,15 +2151,12 @@ no_compress (GOutputStream  *output,
 
   while ((c = gif_next_pixel (ReadValue)) != EOF)
     {
-      ++in_count;
-
       fcode = (long) (((long) c << maxbits) + ent);
       i = (((gint) c << hshift) ^ ent);        /* xor hashing */
 
       if (! output_code (output, (gint) ent, error))
         return FALSE;
 
-      ++out_count;
       ent = c;
 
       if (free_ent < maxmaxcode)
@@ -2186,8 +2176,6 @@ no_compress (GOutputStream  *output,
    */
   if (! output_code (output, (gint) ent, error))
     return FALSE;
-
-  ++out_count;
 
   if (! output_code (output, (gint) EOFCode, error))
     return FALSE;
@@ -2220,10 +2208,7 @@ rle_compress (GOutputStream  *output,
   /*
    * Set up the necessary values
    */
-  offset = 0;
-  out_count = 0;
   clear_flg = 0;
-  in_count = 1;
 
   ClearCode = (1 << (init_bits - 1));
   EOFCode = ClearCode + 1;
@@ -2253,8 +2238,6 @@ rle_compress (GOutputStream  *output,
 
   while ((c = gif_next_pixel (ReadValue)) != EOF)
     {
-      ++in_count;
-
       fcode = (long) (((long) c << maxbits) + ent);
       i = (((gint) c << hshift) ^ ent);        /* xor hashing */
 
@@ -2286,7 +2269,6 @@ rle_compress (GOutputStream  *output,
       if (! output_code (output, (gint) ent, error))
         return FALSE;
 
-      ++out_count;
       last = ent = c;
       if (free_ent < maxmaxcode)
         {
@@ -2305,8 +2287,6 @@ rle_compress (GOutputStream  *output,
    */
   if (! output_code (output, (gint) ent, error))
     return FALSE;
-
-  ++out_count;
 
   if (! output_code (output, (gint) EOFCode, error))
     return FALSE;
@@ -2339,10 +2319,7 @@ normal_compress (GOutputStream  *output,
   /*
    * Set up the necessary values
    */
-  offset = 0;
-  out_count = 0;
   clear_flg = 0;
-  in_count = 1;
 
   ClearCode = (1 << (init_bits - 1));
   EOFCode = ClearCode + 1;
@@ -2372,8 +2349,6 @@ normal_compress (GOutputStream  *output,
 
   while ((c = gif_next_pixel (ReadValue)) != EOF)
     {
-      ++in_count;
-
       fcode = (long) (((long) c << maxbits) + ent);
       i = (((gint) c << hshift) ^ ent);        /* xor hashing */
 
@@ -2402,7 +2377,6 @@ normal_compress (GOutputStream  *output,
       if (! output_code (output, (gint) ent, error))
         return FALSE;
 
-      ++out_count;
       ent = c;
       if (free_ent < maxmaxcode)
         {
@@ -2421,8 +2395,6 @@ normal_compress (GOutputStream  *output,
    */
   if (! output_code (output, (gint) ent, error))
     return FALSE;
-
-  ++out_count;
 
   if (! output_code (output, (gint) EOFCode, error))
     return FALSE;
