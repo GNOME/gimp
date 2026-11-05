@@ -445,9 +445,9 @@ gui_macos_shortcut (const GdkEventKey *kevent)
     redirect = TRUE;
 
   /* on macOS, Cmd+Shift+/ opens the Help menu. See: #7111 */
-  else if ((kevent->keyval == GDK_KEY_question ||
-            (kevent->keyval == GDK_KEY_slash && (kevent->state & GDK_SHIFT_MASK))) &&
-           (kevent->state & primary))
+  else if ((kevent->state & primary) &&
+           (kevent->keyval == GDK_KEY_question ||
+            ((kevent->state & GDK_SHIFT_MASK) && kevent->keyval == GDK_KEY_slash)))
     redirect = TRUE;
 
   if (redirect)

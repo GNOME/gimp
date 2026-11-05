@@ -84,9 +84,35 @@
 #include "gimp-log.h"
 
 #ifdef PLATFORM_OSX
-/* macOS virtual keycode for the physical "grave/section" key (kVK_ANSI_Grave),
-   stable across keyboard layouts even when it is a dead key (e.g. Brazilian ABNT2) */
-#define GIMP_MACOS_KVK_ANSI_GRAVE 50
+/* macOS keycode for the physical "grave/section" key (kVK_ANSI_Grave), stable
+   across most keyboard layouts even when it is a dead key (e.g. Brazilian ABNT2) */
+static gboolean
+gimp_macos_is_grave_key (const GdkEventKey *kevent)
+{
+  GdkKeymap *keymap = gdk_keymap_get_for_display (gdk_display_get_default ());
+  guint      base_keyval = 0;
+
+  if (! keymap)
+    return FALSE;
+
+  gdk_keymap_translate_keyboard_state (keymap,
+                                       kevent->hardware_keycode,
+                                       0, 0,
+                                       &base_keyval, NULL, NULL, NULL);
+
+  /* GTK3 is QWERTY-centric (#11835) so let's have at least a latin-centric
+     list of most used layouts (more than half of our users) as workaround */
+  switch (base_keyval)
+    {
+    case GDK_KEY_grave:              /* `        US/ANSI QWERTY              */
+    case GDK_KEY_dead_grave:         /* dead `   Brazilian Portuguese QWERTY */
+    case GDK_KEY_masculine:          /* º        European Spanish QWERTY     */
+    case GDK_KEY_twosuperior:        /* ²        French AZERTY               */
+      return TRUE;
+    default:
+      return FALSE;
+    }
+}
 #endif
 
 
@@ -335,7 +361,7 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
 
 #ifdef PLATFORM_OSX
         /* on macOS, Cmd+` is used instead of Alt+Tab. See: #428 */
-        if (kevent->hardware_keycode == GIMP_MACOS_KVK_ANSI_GRAVE &&
+        if (gimp_macos_is_grave_key (kevent) &&
             (kevent->state & gimp_get_primary_accelerator_mask ()) ==
             gimp_get_primary_accelerator_mask ())
           {
@@ -1090,7 +1116,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
 #ifdef PLATFORM_OSX
             /* on macOS, Cmd+` is used instead of Alt+Tab. See: #428 */
-            if (kevent->hardware_keycode == GIMP_MACOS_KVK_ANSI_GRAVE &&
+            if (gimp_macos_is_grave_key (kevent) &&
                 (kevent->state & gimp_get_primary_accelerator_mask ()) ==
                 gimp_get_primary_accelerator_mask ())
               {
