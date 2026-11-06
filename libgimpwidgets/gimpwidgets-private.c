@@ -218,6 +218,63 @@ gimp_widgets_init_native_window_level (void)
 }
 #endif
 
+#ifdef G_OS_WIN32
+static GdkFilterReturn
+gimp_widgets_erase_bkgnd_filter (GdkXEvent *xevent,
+                                 GdkEvent  *event,
+                                 gpointer   data)
+{
+  MSG             *msg = (MSG *) xevent;
+  GdkWindow       *window;
+  gpointer         user_data = NULL;
+  GtkWidget       *widget;
+  GtkStyleContext *style;
+  GdkRGBA         *color          = NULL;
+  gboolean         use_dark_mode  = FALSE;
+  HDC              hdc;
+  RECT             rc;
+
+  if (msg->message != WM_ERASEBKGND)
+    return GDK_FILTER_CONTINUE;
+
+  window = gdk_win32_window_lookup_for_display (gdk_display_get_default (),
+                                                msg->hwnd);
+  if (! window || gdk_window_get_window_type (window) == GDK_WINDOW_CHILD)
+    return GDK_FILTER_CONTINUE;
+
+  gdk_window_get_user_data (window, &user_data);
+  widget = GTK_WIDGET (user_data);
+
+  if (! widget)
+    return GDK_FILTER_CONTINUE;
+
+  style = gtk_widget_get_style_context (widget);
+  gtk_style_context_get (style, gtk_style_context_get_state (style),
+                         GTK_STYLE_PROPERTY_BACKGROUND_COLOR, &color,
+                         NULL);
+  if (color)
+    {
+      /* if the bg color is below the threshold, then we're likely in dark mode */
+      if (color->red < 0.5 && color->green < 0.5 && color->blue < 0.5)
+        use_dark_mode = TRUE;
+
+      gdk_rgba_free (color);
+    }
+
+  /* when the theme background is dark, fill the erase with pure black instead;
+     for a light background, let the default (white) handling through */
+  if (! use_dark_mode)
+    return GDK_FILTER_CONTINUE;
+
+  hdc = (HDC) msg->wParam;
+  GetClientRect (msg->hwnd, &rc);
+  /* this needs to be a pure/100% black, otherwise DWM glitches gray */
+  FillRect (hdc, &rc, (HBRUSH) GetStockObject (BLACK_BRUSH));
+
+  return GDK_FILTER_REMOVE;
+}
+#endif
+
 static void
 gimp_widgets_init_foreign_enums (void)
 {
@@ -396,6 +453,12 @@ gimp_widgets_init (GimpHelpFunc           standard_help_func,
 
   /* fix hidden native window on macOS */
   gimp_widgets_init_native_window_level ();
+#endif
+
+#ifdef G_OS_WIN32
+  /* catch the first WM_ERASEBKGND of each toplevel to avoid the white
+     FOUC flash before the first GTK frame is drawn. See: #7723 */
+  gdk_window_add_filter (NULL, gimp_widgets_erase_bkgnd_filter, NULL);
 #endif
 
   gimp_widgets_initialized = TRUE;
