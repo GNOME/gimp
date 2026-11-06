@@ -1213,6 +1213,43 @@ gimp_dnd_set_uri_list_data (GtkWidget        *widget,
   return TRUE;
 }
 
+GFile *
+gimp_dnd_copy_dropped_file (GFile   *file,
+                            GError **error)
+{
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+#ifdef G_OS_WIN32
+  /* See: https://gitlab.gnome.org/GNOME/gimp/-/issues/8014 */
+  if (g_file_has_uri_scheme (file, "file"))
+    {
+      gchar *basename  = g_file_get_basename (file);
+      gchar *copy_name = g_strdup_printf ("%s-%s",
+                                          g_uuid_string_random (), basename);
+      gchar *copy_path = g_build_filename (g_get_tmp_dir (), copy_name, NULL);
+      GFile *copy      = g_file_new_for_path (copy_path);
+
+      g_free (basename);
+      g_free (copy_name);
+
+      if (! g_file_copy (file, copy, G_FILE_COPY_OVERWRITE,
+                         NULL, NULL, NULL, error))
+        {
+          g_object_unref (copy);
+          g_free (copy_path);
+
+          return NULL;
+        }
+
+      g_free (copy_path);
+
+      return copy;
+    }
+#endif
+
+  return g_object_ref (file);
+}
+
 void
 gimp_dnd_uri_list_source_add (GtkWidget              *widget,
                               GimpDndDragUriListFunc  get_uri_list_func,

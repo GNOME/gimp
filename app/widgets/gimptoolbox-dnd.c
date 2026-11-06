@@ -154,11 +154,25 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
   for (list = uri_list; list; list = g_list_next (list))
     {
       GFile             *file = g_file_new_for_uri (list->data);
+      GFile             *open_file;
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
+      /* on Windows, the drag source may delete the dropped file as soon
+         as the drag completes, so get it from the temp dir. See: #8014 */
+      open_file = gimp_dnd_copy_dropped_file (file, &error);
+      if (! open_file)
+        {
+          gimp_message (context->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
+                        _("Opening '%s' failed:\n\n%s"),
+                        gimp_file_get_utf8_name (file), error->message);
+          g_clear_error (&error);
+          g_object_unref (file);
+          continue;
+        }
+
       file_open_with_display (context->gimp, context, NULL,
-                              file, FALSE,
+                              open_file, FALSE,
                               G_OBJECT (gimp_widget_get_monitor (widget)),
                               &status, &error);
 
@@ -180,6 +194,8 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
           g_clear_error (&error);
         }
 
+
+      g_object_unref (open_file);
       g_object_unref (file);
     }
 }

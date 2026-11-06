@@ -614,9 +614,19 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
   for (list = uri_list; list; list = g_list_next (list))
     {
       GFile             *file  = g_file_new_for_uri (list->data);
+      GFile             *open_file;
       GimpPDBStatusType  status;
       GError            *error = NULL;
       gboolean           warn  = FALSE;
+
+      /* on Windows, the drag source may delete the dropped file as soon
+         as the drag completes, so get it from the temp dir. See: #8014 */
+      open_file = gimp_dnd_copy_dropped_file (file, &error);
+      if (! open_file)
+        {
+          warn = TRUE;
+        }
+
 
       if (! shell->display)
         {
@@ -626,6 +636,12 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
           return;
         }
 
+      if (! open_file)
+        {
+          g_object_unref (file);
+          continue;
+        }
+
       if (open_as_layers)
         {
           GList *new_layers;
@@ -633,7 +649,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
           new_layers = file_open_layers (shell->display->gimp, context,
                                          GIMP_PROGRESS (shell->display),
                                          image, FALSE, FALSE,
-                                         file, GIMP_RUN_INTERACTIVE, NULL,
+                                         open_file, GIMP_RUN_INTERACTIVE, NULL,
                                          &status, &error);
 
           if (new_layers)
@@ -670,7 +686,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
           new_image = file_open_with_display (shell->display->gimp, context,
                                               NULL,
-                                              file, FALSE,
+                                              open_file, FALSE,
                                               G_OBJECT (gimp_widget_get_monitor (widget)),
                                               &status, &error);
 
@@ -682,7 +698,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
           /*  open the first image in the empty display  */
           image = file_open_with_display (shell->display->gimp, context,
                                           GIMP_PROGRESS (shell->display),
-                                          file, FALSE,
+                                          open_file, FALSE,
                                           G_OBJECT (gimp_widget_get_monitor (widget)),
                                           &status, &error);
 
@@ -709,6 +725,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
           g_clear_error (&error);
         }
 
+      g_object_unref (open_file);
       g_object_unref (file);
     }
 
