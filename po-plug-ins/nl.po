@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-1105 17:56+0000\n"
-"PO-Revision-Date: 2026-11-06 11:20+0100\n"
+"POT-Creation-Date: 2026-11-05 17:56+0000\n"
+"PO-Revision-Date: 2026-11-06 15:51+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -8637,7 +8637,7 @@ msgstr "Schaal Y"
 #: plug-ins/common/sphere-designer.c:2901
 #: plug-ins/map-object/map-object-main.c:401
 msgid "Scale Z"
-msgstr "Schalen Z"
+msgstr "Schaal Z"
 
 #: plug-ins/common/sphere-designer.c:2910
 msgid "Rotate X"
@@ -15228,7 +15228,7 @@ msgstr "Trans_parante achtergrond"
 #: plug-ins/lighting/lighting-main.c:322
 #: plug-ins/map-object/map-object-main.c:346
 msgid "Make background transparent"
-msgstr "Achtergrgond _transparant maken"
+msgstr "Achtergrond _transparant maken"
 
 #: plug-ins/lighting/lighting-main.c:327
 msgid "_Distance"
@@ -15317,7 +15317,7 @@ msgstr "Projecteren op bol"
 #: plug-ins/map-object/map-object-apply.c:239
 #: plug-ins/map-object/map-object-apply.c:268
 msgid "Map to box"
-msgstr "Projecteren op kubus"
+msgstr "Projecteren op blok"
 
 #: plug-ins/map-object/map-object-apply.c:240
 #: plug-ins/map-object/map-object-apply.c:271
@@ -15326,7 +15326,7 @@ msgstr "Projecteren op cilinder"
 
 #: plug-ins/map-object/map-object-main.c:124
 msgid "Map _Object..."
-msgstr "Op _object projecteren..."
+msgstr "Projecteren op _object..."
 
 #: plug-ins/map-object/map-object-main.c:128
 msgid "Map the image to an object (plane, sphere, box or cylinder)"
