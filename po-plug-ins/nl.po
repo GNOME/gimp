@@ -14,9 +14,9 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-31 16:19+0000\n"
-"PO-Revision-Date: 2026-11-02 11:39+0100\n"
-"Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
+"POT-Creation-Date: 2026-1105 17:56+0000\n"
+"PO-Revision-Date: 2026-11-06 11:20+0100\n"
+"Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -12007,7 +12007,7 @@ msgstr "_Vlam…"
 
 #: plug-ins/flame/flame.c:184
 msgid "Create cosmic recursive fractal flames"
-msgstr "Kosmische recursieve fractalvlammen aanmaken"
+msgstr "Kosmische recursieve fractaalvlammen aanmaken"
 
 #: plug-ins/flame/flame.c:192
 msgid "_Brightness"
@@ -12281,19 +12281,19 @@ msgstr "_Kleuren"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:739
 msgid "_Fractals"
-msgstr "_Fractals"
+msgstr "_Fractalen"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:757
 msgid "Fractal Parameters"
-msgstr "Fractalparameters"
+msgstr "Fractaalparameters"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:790
 msgid "Load a fractal from file"
-msgstr "Een fractal uit een bestand inladen"
+msgstr "Een fractaal uit een bestand inladen"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:798
 msgid "Save active fractal to file"
-msgstr "Actieve fractal opslaan in bestand"
+msgstr "Actieve fractaal opslaan in bestand"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:850
 msgid "Color Density"
@@ -12305,7 +12305,7 @@ msgstr "Kleurfunctie"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:927
 msgid "FractalExplorer Gradient"
-msgstr "FractalExplorer-kleurverloop"
+msgstr "Fractaalontdekker-kleurverloop"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:988
 msgid "Presets"
@@ -12322,12 +12322,12 @@ msgstr "Fractalparameters inladen"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1512
 msgid "Save Fractal Parameters"
-msgstr "Fractalparameters opslaan"
+msgstr "Fractaalparameters opslaan"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1732
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
-msgstr "‘%s’ is geen FractalExplorer-bestand"
+msgstr "‘%s’ is geen Fractaalontdekker-bestand"
 
 # What is the Dutch translation of 'corrupt' here?
 # Beschadigd -pm
@@ -12338,19 +12338,19 @@ msgstr "‘%s’ is beschadigd. Regel %d Optie-deel onjuist"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:241
 msgid "_Fractal Explorer..."
-msgstr "_Fractal-ontdekker…"
+msgstr "_Fractaalontdekker…"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:245
 msgid "Render fractal art"
-msgstr "Fractals genereren"
+msgstr "Fractalen genereren"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:256
 msgid "Fr_actal type"
-msgstr "Fr_actaltype"
+msgstr "Fr_actaaltype"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:257
 msgid "Type of fractal pattern"
-msgstr "Type van fractalpatroon"
+msgstr "Type van fractaalpatroon"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:258
 msgid "Mandelbrot"
@@ -12390,7 +12390,7 @@ msgstr "Link_s"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:273
 msgid "X min fractal image delimiter"
-msgstr "Minimale X fractal generator parameter"
+msgstr "Minimale X fractaal generator parameter"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:278
 #: plug-ins/map-object/map-object-main.c:385
@@ -12399,7 +12399,7 @@ msgstr "R_echts"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:279
 msgid "X max fractal image delimiter"
-msgstr "Maximale X fractal generator parameter"
+msgstr "Maximale X fractaal generator parameter"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:284
 #: plug-ins/map-object/map-object-main.c:370
@@ -12408,7 +12408,7 @@ msgstr "Bove_n"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:285
 msgid "Y min fractal image delimiter"
-msgstr "Minimale Y fractal generator parameter"
+msgstr "Minimale Y fractaal generator parameter"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:290
 #: plug-ins/map-object/map-object-main.c:414
@@ -12417,7 +12417,7 @@ msgstr "_Onderaan"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:291
 msgid "Y max fractal image delimiter"
-msgstr "Maximale Y fractal generator parameter"
+msgstr "Maximale Y fractaal generator parameter"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:296
 msgid "Iteratio_ns"
@@ -12570,7 +12570,7 @@ msgstr "Fractal wissen"
 #: plug-ins/fractal-explorer/fractal-explorer.c:1192
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr "Bestand ‘%s’ is geen bestand van FractalExplorer"
+msgstr "Bestand ‘%s’ is geen bestand van Fractaalontdekker"
 
 # What is the Dutch translation of 'corrupt' here?
 #: plug-ins/fractal-explorer/fractal-explorer.c:1202
@@ -12583,7 +12583,7 @@ msgstr "Bestand ‘%s’ is beschadigd.\n"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:1288
 msgid "My first fractal"
-msgstr "Mijn eerste fractal"
+msgstr "Mijn eerste fractaal"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:1352
 msgid "Select folder and rescan collection"
@@ -12591,19 +12591,19 @@ msgstr "Kies een map en scan de verzameling opnieuw"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:1363
 msgid "Apply currently selected fractal"
-msgstr "De geselecteerde fractal toepassen"
+msgstr "De geselecteerde fractaal toepassen"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:1374
 msgid "Delete currently selected fractal"
-msgstr "De geselecteerde fractal wissen"
+msgstr "De geselecteerde fractaal wissen"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:1397
 msgid "Rescan for Fractals"
-msgstr "Herscan op zoek naar fractals"
+msgstr "Herscan op zoek naar fractalen"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:1416
 msgid "Add FractalExplorer Path"
-msgstr "FractalExplorer-pad toevoegen"
+msgstr "Fractaalverkenner-pad toevoegen"
 
 #: plug-ins/gfig/gfig-bezier.c:402
 msgid "Closed"
