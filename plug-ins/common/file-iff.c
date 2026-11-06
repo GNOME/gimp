@@ -416,18 +416,20 @@ load_image (GFile        *file,
             break;
         }
 
-      width      = bitMapHeader->w;
-      height     = bitMapHeader->h;
-      nPlanes    = bitMapHeader->nPlanes;
-      row_length = ((width + 15) / 16) * 2;
-      pixel_size = nPlanes / 8;
-      aspect_x   = bitMapHeader->xAspect;
-      aspect_y   = bitMapHeader->yAspect;
+      /* Odd lengths are padded by 1 */
+      if (chunk_size % 2 != 0)
+        if (fseek (fp, 1, SEEK_CUR) != 0)
+          break;
+    }
 
-      if (nPlanes <= 0)
-        {
-          return image;
-        }
+  /* If we have valid data, then create image */
+  if (has_bmhd && pixels)
+    {
+      GimpLayer     *layer;
+      GeglBuffer    *buffer;
+      GimpImageType  layer_type;
+      guchar        *real_pixels;
+      guint32        row_length = get_row_length (bmhd.width);
 
       /* Check for ILBM variants in CMAG chunk */
       if (camg)
