@@ -128,6 +128,9 @@ void  gimp_dnd_uri_list_dest_add      (GtkWidget              *widget,
                                        gpointer                data);
 void  gimp_dnd_uri_list_dest_remove   (GtkWidget              *widget);
 
+GFile * gimp_dnd_copy_dropped_file    (GFile                  *file,
+                                       GError                **error);
+
 
 /*  color dnd functions  */
 
