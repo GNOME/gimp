@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-03 10:38+0000\n"
-"PO-Revision-Date: 2026-11-0 13:09+0100\n"
+"POT-Creation-Date: 2026-11-05 13:44+0000\n"
+"PO-Revision-Date: 2026-11-06 11:56+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -181,15 +181,15 @@ msgstr "GIMP wordt nu uitgevoerd als een proces op de achtergrond. U kunt dat op
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Als u, in plaats daarvan, direct wilt stoppen, roep GIMP dan aan met --quit."
 
-#: app/gimp-update.c:425
+#: app/gimp-update.c:435
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Misschien ontbreken er GIO-backends en moet u GVFS installeren?"
 
-#: app/gimp-update.c:430
+#: app/gimp-update.c:440
 msgid "Perhaps you are missing GIO backends."
 msgstr "Misschien ontbreken er GIO-backends."
 
-#: app/gimp-update.c:467
+#: app/gimp-update.c:477
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -19433,7 +19433,7 @@ msgstr "(ongewijzigd)"
 msgid "(none)"
 msgstr "(geen)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1811
+#: app/display/gimpdisplayshell-tool-events.c:1837
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Gekozen laag: ‘%s’"
@@ -29798,7 +29798,7 @@ msgstr "_Decoreren"
 #: menus/image-menu.ui.in.in:806
 msgctxt "filters-action"
 msgid "_Map"
-msgstr "_Projecties"
+msgstr "_Projecteren"
 
 # betere vertaling?
 #: menus/image-menu.ui.in.in:818
@@ -29809,7 +29809,7 @@ msgstr "Gene_reren"
 #: menus/image-menu.ui.in.in:821
 msgctxt "filters-action"
 msgid "_Fractals"
-msgstr "_Fractals"
+msgstr "_Fractalen"
 
 #: menus/image-menu.ui.in.in:824
 msgctxt "filters-action"
