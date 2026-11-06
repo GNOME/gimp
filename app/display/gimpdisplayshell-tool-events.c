@@ -237,6 +237,14 @@ gimp_display_shell_events (GtkWidget        *widget,
          */
         if (kevent->state & GDK_BUTTON1_MASK)
           {
+#ifdef G_OS_WIN32
+            /* the Windows virtual/accessibility keyboard (osk.exe, not TapTip.exe)
+               reports GDK_BUTTON1_MASK in the state of its synthetic key events,
+               so never drop printable text keys here. See: #1243 */
+            if (gdk_keyval_to_unicode (kevent->keyval) != 0)
+              break;
+#endif
+
             if (kevent->keyval == GDK_KEY_Shift_L   ||
                 kevent->keyval == GDK_KEY_Shift_R   ||
                 kevent->keyval == GDK_KEY_Control_L ||
@@ -1056,6 +1064,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GimpTool    *active_tool;
 
         active_tool = tool_manager_get_active (gimp);
+
+#ifdef G_OS_WIN32
+        /* the Windows virtual/accessibility keyboard (osk.exe, not TapTip.exe)
+           reports GDK_BUTTON1_MASK in the state of its synthetic key events,
+           so strip it for printable keys so they are not treated as "button held".
+           This is needed for using the text box without leaking shortcuts */
+        if ((state & GDK_BUTTON1_MASK) && gdk_keyval_to_unicode (kevent->keyval) != 0)
+          state &= ~GDK_BUTTON1_MASK;
+#endif
 
         if (state & GDK_BUTTON1_MASK)
           {
