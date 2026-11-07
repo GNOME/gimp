@@ -1122,7 +1122,9 @@ gimp_attach_console_window (void)
       return;
     }
 
-  /* If run on native shell, attach to it */
+  /* If run on native shell, attach to it.
+     Like consoleAllocationPolicy=detached from Win11_24H2 but more customized
+     so we only run when gimp_attach_console_window is called (e.g. gimp -c)*/
   if (AttachConsole (ATTACH_PARENT_PROCESS) != 0)
     {
       /* 'r' is needed to prevent interleaving and '+' to support colors */
