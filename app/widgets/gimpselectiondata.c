@@ -22,6 +22,11 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#include <shellapi.h>
+#endif
+
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
@@ -277,6 +282,51 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
 
   return uri_list;
 }
+
+#ifdef G_OS_WIN32
+GList *
+gimp_selection_data_get_uri_list_from_hdrop (void)
+{
+  GList *uri_list = NULL;
+
+  if (IsClipboardFormatAvailable (CF_HDROP) && OpenClipboard (NULL))
+    {
+      HDROP hdrop = (HDROP) GetClipboardData (CF_HDROP);
+
+      if (hdrop)
+        {
+          UINT count = DragQueryFileW (hdrop, 0xFFFFFFFF, NULL, 0);
+          UINT i;
+
+          for (i = 0; i < count; i++)
+            {
+              UINT      len   = DragQueryFileW (hdrop, i, NULL, 0);
+              wchar_t  *wpath = g_new (wchar_t, len + 1);
+              gchar    *path;
+              gchar    *uri;
+
+              DragQueryFileW (hdrop, i, wpath, len + 1);
+              path = g_utf16_to_utf8 (wpath, -1, NULL, NULL, NULL);
+              g_free (wpath);
+
+              if (path)
+                {
+                  uri = g_filename_to_uri (path, NULL, NULL);
+
+                  if (uri)
+                    uri_list = g_list_append (uri_list, uri);
+
+                  g_free (path);
+                }
+            }
+        }
+
+      CloseClipboard ();
+    }
+
+  return uri_list;
+}
+#endif
 
 void
 gimp_selection_data_set_color (GtkSelectionData *selection,

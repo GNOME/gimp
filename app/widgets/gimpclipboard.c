@@ -22,6 +22,10 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include "libgimpmath/gimpmath.h"
 
 #include "widgets-types.h"
@@ -335,6 +339,12 @@ gimp_clipboard_has_uris (Gimp *gimp)
   if (clipboard &&
       gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
     {
+#ifdef G_OS_WIN32
+      /* Windows Explorer does not reliably offer text/uri-list for
+         copied files, so use the native CF_HDROP list directly */
+      if (IsClipboardFormatAvailable (CF_HDROP))
+        return TRUE;
+#endif
       return (gimp_clipboard_wait_for_uris (gimp) != GDK_NONE);
     }
 
@@ -404,11 +414,19 @@ gimp_clipboard_get_uris (Gimp *gimp)
 
           gimp_set_busy (gimp);
 
+#ifdef G_OS_WIN32
+          /* Windows Explorer does not reliably offer text/uri-list for
+             copied files, so use the native CF_HDROP list directly */
+          uri_list = gimp_selection_data_get_uri_list_from_hdrop ();
+#endif
+
           data = gtk_clipboard_wait_for_contents (clipboard, atom);
 
           if (data)
             {
-              uri_list = gimp_selection_data_get_uri_list (data);
+              /* on Windows, only if gimp_selection_data_get_uri_list_from_hdrop fails */
+              if (! uri_list)
+                uri_list = gimp_selection_data_get_uri_list (data);
 
               gtk_selection_data_free (data);
             }
