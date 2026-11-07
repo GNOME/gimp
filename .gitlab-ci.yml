@@ -99,20 +99,18 @@ workflow:
   interruptible: false
   variables: {}
 
-.default:
+.default-stage-matters:
   ## 5. On CUSTOM builds though web GUI, API or schedules.
   ## Scheduled CI ($CI_PIPELINE_SOURCE == "schedule") will run regularly all
   ## the 'distribution_pipeline' and 'test_pipeline' above. To run them without
   ## waiting for schedules: https://gitlab.gnome.org/GNOME/gimp/-/pipelines/new
   interruptible: false
 
-
   # Common jobs behavior
   retry:
     max: 1
     when:
       - 'scheduler_failure'
-  needs: []
   # Default Docker image (keep variables: DEB_VERSION: consistent with devel-docs/os-support.txt)
   image: $CI_REGISTRY_IMAGE:build-debian-${DEB_VERSION}-${RUNNER}
   variables:
@@ -129,6 +127,10 @@ workflow:
   artifacts:
     name: "${CI_JOB_NAME_SLUG}${VARIANT}-${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
     when: always
+
+.default:
+  extends: .default-stage-matters
+  needs: []
 
 .artifacts_durations:
   deps_duration: &short_expire "4 hours"
@@ -1230,25 +1232,12 @@ dist-mac-weekly:
 ## Reporting job
 
 mr-reporting:
-  extends: .default
+  extends: .default-stage-matters
   rules:
     - <<: *CI_MERGE
       when: always
   interruptible: true
   stage: .post
-  needs:
-    - job: dist-appimage-weekly
-      optional: true
-    - job: dist-snap-weekly
-      optional: true
-    - job: dist-installer-weekly
-      optional: true
-    - job: dist-store-weekly
-      optional: true
-    - job: dist-mac-weekly
-      optional: true
-    - job: dist-flatpak-weekly
-      optional: true
   before_script:
     - |
       set +xv
