@@ -23,6 +23,9 @@
 void            gimp_selection_data_set_uri_list  (GtkSelectionData *selection,
                                                    GList            *uris);
 GList         * gimp_selection_data_get_uri_list  (GtkSelectionData *selection);
+#ifdef G_OS_WIN32
+GList         * gimp_selection_data_get_uri_list_from_hdrop (void);
+#endif
 
 
 /*  color  */
