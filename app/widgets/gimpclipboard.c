@@ -85,6 +85,7 @@ static GdkAtom   gimp_clipboard_wait_for_image   (Gimp             *gimp);
 static GdkAtom   gimp_clipboard_wait_for_buffer  (Gimp             *gimp);
 static GdkAtom   gimp_clipboard_wait_for_svg     (Gimp             *gimp);
 static GdkAtom   gimp_clipboard_wait_for_curve   (Gimp             *gimp);
+static GdkAtom   gimp_clipboard_wait_for_uris    (Gimp             *gimp);
 
 static void      gimp_clipboard_send_image       (GtkClipboard     *clipboard,
                                                   GtkSelectionData *data,
@@ -312,6 +313,35 @@ gimp_clipboard_has_curve (Gimp *gimp)
 }
 
 /**
+ * gimp_clipboard_has_uris:
+ * @gimp: pointer to #Gimp
+ *
+ * Tests if there's a text/uri-list in %GDK_SELECTION_CLIPBOARD.
+ * This is done in a main-loop similar to
+ * gtk_clipboard_wait_is_text_available(). The same caveats apply here.
+ *
+ * Returns: %TRUE if there's a text/uri-list in the clipboard, %FALSE otherwise
+ **/
+gboolean
+gimp_clipboard_has_uris (Gimp *gimp)
+{
+  GtkClipboard *clipboard;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                             GDK_SELECTION_CLIPBOARD);
+
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
+    {
+      return (gimp_clipboard_wait_for_uris (gimp) != GDK_NONE);
+    }
+
+  return FALSE;
+}
+
+/**
  * gimp_clipboard_get_object:
  * @gimp: pointer to #Gimp
  *
@@ -337,6 +367,57 @@ gimp_clipboard_get_object (Gimp *gimp)
     object = GIMP_OBJECT (gimp_clipboard_get_buffer (gimp));
 
   return object;
+}
+
+/**
+ * gimp_clipboard_get_uris:
+ * @gimp: pointer to #Gimp
+ *
+ * Retrieves a list of URIs from the text/uri-list target of
+ * %GDK_SELECTION_CLIPBOARD, like when copy-pasting files in a file
+ * manager. This is handled the same way as drag-and-dropping files.
+ *
+ * The returned list must be freed with
+ * g_list_free_full (list, g_free) when no longer needed.
+ *
+ * Returns: (nullable) (transfer full): a list of URI strings, or %NULL
+ **/
+GList *
+gimp_clipboard_get_uris (Gimp *gimp)
+{
+  GtkClipboard *clipboard;
+  GList        *uri_list = NULL;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                             GDK_SELECTION_CLIPBOARD);
+
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
+    {
+      GdkAtom atom = gimp_clipboard_wait_for_uris (gimp);
+
+      if (atom != GDK_NONE)
+        {
+          GtkSelectionData *data;
+
+          gimp_set_busy (gimp);
+
+          data = gtk_clipboard_wait_for_contents (clipboard, atom);
+
+          if (data)
+            {
+              uri_list = gimp_selection_data_get_uri_list (data);
+
+              gtk_selection_data_free (data);
+            }
+
+          gimp_unset_busy (gimp);
+        }
+    }
+
+  return uri_list;
 }
 
 /**
@@ -1165,6 +1246,35 @@ gimp_clipboard_wait_for_svg (Gimp *gimp)
           else if (targets[i] == svg_xml_atom)
             {
               result = svg_xml_atom;
+              break;
+            }
+        }
+
+      g_free (targets);
+    }
+
+  return result;
+}
+
+static GdkAtom
+gimp_clipboard_wait_for_uris (Gimp *gimp)
+{
+  GdkAtom *targets;
+  gint     n_targets;
+  GdkAtom  result = GDK_NONE;
+
+  targets = gimp_clipboard_wait_for_targets (gimp, &n_targets);
+
+  if (targets)
+    {
+      GdkAtom uri_list_atom = gdk_atom_intern_static_string ("text/uri-list");
+      gint    i;
+
+      for (i = 0; i < n_targets; i++)
+        {
+          if (targets[i] == uri_list_atom)
+            {
+              result = uri_list_atom;
               break;
             }
         }
