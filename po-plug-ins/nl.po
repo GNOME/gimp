@@ -15,7 +15,7 @@ msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-11-05 17:56+0000\n"
-"PO-Revision-Date: 2026-11-06 15:51+0100\n"
+"PO-Revision-Date: 2026-11-07 16:10+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -8713,11 +8713,11 @@ msgstr "Een nieuwe afbeelding maken"
 
 #: plug-ins/common/tile.c:258 plug-ins/common/tile-small.c:374
 msgid "Tiling"
-msgstr "Betegeling"
+msgstr "Betegelen"
 
 #: plug-ins/common/tile.c:481
 msgid "Tile"
-msgstr "Tegel"
+msgstr "Betegelen"
 
 #: plug-ins/common/tile.c:483
 msgid "Tile to New Size"
@@ -8902,7 +8902,7 @@ msgstr "Onvolledige invoer"
 
 #: plug-ins/common/unit-editor.c:584
 msgid "Please fill in all text fields."
-msgstr "Vul aub alle tekstvelden in."
+msgstr "Vul alle tekstvelden in."
 
 #: plug-ins/common/van-gogh-lic.c:144
 msgid "_Van Gogh (LIC)..."
@@ -9012,11 +9012,11 @@ msgstr "Van Gogh (LIC)"
 
 #: plug-ins/common/warp.c:216
 msgid "_Warp..."
-msgstr "_Verdraaien..."
+msgstr "_Vervormen..."
 
 #: plug-ins/common/warp.c:220
 msgid "Twist or smear image in many different ways"
-msgstr "Een afbeelding verdraaien of uitsmeren op veel verschillende manieren"
+msgstr "Een afbeelding vervormen of uitsmeren op veel verschillende manieren"
 
 #: plug-ins/common/warp.c:222
 msgid ""
@@ -9031,7 +9031,7 @@ msgstr "Stap_grootte"
 
 #: plug-ins/common/warp.c:235
 msgid "Pixel displacement multiplier"
-msgstr "Pixel verplaatsing factor"
+msgstr "Pixel verplaatsingsfactor"
 
 #: plug-ins/common/warp.c:240
 msgid "Dis_placement Map"
@@ -9088,19 +9088,19 @@ msgstr "Voorgrondkleur"
 
 #: plug-ins/common/warp.c:275
 msgid "_Magnitude Map"
-msgstr "Groottekaart"
+msgstr "Sterktekaart"
 
 #: plug-ins/common/warp.c:276
 msgid "Magnitude control map"
-msgstr "Groottekaart"
+msgstr "Sterktekaart"
 
 #: plug-ins/common/warp.c:281
 msgid "_Use magnitude map"
-msgstr "Groottekaart gebruiken"
+msgstr "Sterktekaart gebruiken"
 
 #: plug-ins/common/warp.c:282
 msgid "Use magnitude map"
-msgstr "Groottekaart gebruiken"
+msgstr "Sterktekaart gebruiken"
 
 #: plug-ins/common/warp.c:287
 msgid "Su_bsteps"
@@ -9108,27 +9108,27 @@ msgstr "Su_bstappen"
 
 #: plug-ins/common/warp.c:288
 msgid "Substeps between image updates"
-msgstr "Substappen tussen updates van de afbeelding"
+msgstr "Substappen tussen bijwerken van de afbeelding"
 
 #: plug-ins/common/warp.c:293
 msgid "Gradient Ma_p"
-msgstr "Kleurverloop_projectie"
+msgstr "Kleurverloop_kaart"
 
 #: plug-ins/common/warp.c:294
 msgid "Gradient control map"
-msgstr "Kleurverloopprojectie"
+msgstr "Kleurverloopkaart"
 
 #: plug-ins/common/warp.c:299
 msgid "Gradient s_cale"
-msgstr "Kleurverloopschaal"
+msgstr "Schaal kleurverloop"
 
 #: plug-ins/common/warp.c:300
 msgid "Scaling factor for gradient map (0=don't use)"
-msgstr "Schaalfactor voor kleurverloopprojectie (0=niet gebruiken)"
+msgstr "Schaalfactor voor kleurverloopkaart (0=niet gebruiken)"
 
 #: plug-ins/common/warp.c:305
 msgid "_Vector Map"
-msgstr "Kleurverloop _vector"
+msgstr "_Vectorkaart"
 
 #: plug-ins/common/warp.c:306
 msgid "Fixed vector control map"
@@ -9136,7 +9136,7 @@ msgstr "Vaste vectorkaart"
 
 #: plug-ins/common/warp.c:311
 msgid "Vector magn_itude"
-msgstr "Vectorgrootte"
+msgstr "Sterkte vector"
 
 #: plug-ins/common/warp.c:312
 msgid "Scaling factor for fixed vector map (0=don't use)"
@@ -9152,7 +9152,7 @@ msgstr "Hoek voor de Vaste vectorkaart"
 
 #: plug-ins/common/warp.c:399
 msgid "Warp"
-msgstr "Werpen"
+msgstr "Vervormen"
 
 #: plug-ins/common/warp.c:418
 msgid "Basic Options"
