@@ -42,6 +42,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimprasterizable.h"
+#include "core/gimpprogress.h"
 
 #include "path/gimppath-import.h"
 #include "path/gimpvectorlayer.h"
@@ -63,6 +64,9 @@
 #include "tools/gimptools-utils.h"
 #include "tools/tool_manager.h"
 
+#include "file/file-open.h"
+#include "file/gimp-file.h"
+
 #include "actions.h"
 #include "edit-commands.h"
 
@@ -77,6 +81,9 @@ static void       edit_paste                         (GimpDisplay   *display,
                                                       GimpPasteType  paste_type,
                                                       gboolean       merged,
                                                       gboolean       try_svg);
+static gboolean   edit_paste_uris                    (Gimp          *gimp,
+                                                      GimpDisplay   *display,
+                                                      GtkWidget     *widget);
 static void       cut_named_buffer_callback          (GtkWidget     *widget,
                                                       const gchar   *name,
                                                       gpointer       data);
@@ -364,6 +371,15 @@ edit_paste_cmd_callback (GimpAction *action,
         }
     }
 
+  /* if there is a text/uri-list in the clipboard (e.g. files copied from
+     a file manager), open like a drag-and-drop would. See: #9402 */
+  if (display && gimp_clipboard_has_uris (action_data_get_gimp (data)))
+    {
+      if (edit_paste_uris (action_data_get_gimp (data), display,
+                           action_data_get_widget (data)))
+        return;
+    }
+
   return_if_no_image (image, data);
 
   if (! display)
@@ -427,6 +443,14 @@ edit_paste_as_new_image_cmd_callback (GimpAction *action,
   GimpImage  *image = NULL;
   return_if_no_gimp (gimp, data);
   return_if_no_widget (widget, data);
+
+  /* if there is a text/uri-list in the clipboard (e.g. files copied from
+     a file manager), open like a drag-and-drop would. See: #9402 */
+  if (gimp_clipboard_has_uris (gimp))
+    {
+      if (edit_paste_uris (gimp, NULL, widget))
+        return;
+    }
 
   paste = gimp_clipboard_get_object (gimp);
 
@@ -695,6 +719,105 @@ check_drawable_alpha (GimpDrawable *drawable,
     }
 
   return TRUE;
+}
+
+static gboolean
+edit_paste_uris (Gimp        *gimp,
+                 GimpDisplay *display,
+                 GtkWidget   *widget)
+{
+  GList    *uri_list;
+  GList    *list;
+  gboolean  handled = FALSE;
+
+  uri_list = gimp_clipboard_get_uris (gimp);
+
+  if (! uri_list)
+    return FALSE;
+
+  for (list = uri_list; list; list = g_list_next (list))
+    {
+      GFile             *file = g_file_new_for_uri (list->data);
+      GimpImage         *image = display ? gimp_display_get_image (display) : NULL;
+      GimpPDBStatusType  status;
+      GError            *error = NULL;
+
+      /* with an image open in @display, the files are added as layers; otherwise
+         they are opened as new images. Returns %TRUE if URIs were found and handled */
+      if (image)
+        {
+          GList *new_layers;
+
+          new_layers = file_open_layers (gimp, gimp_get_user_context (gimp),
+                                         display ? GIMP_PROGRESS (display) : NULL,
+                                         image, FALSE, FALSE,
+                                         file, GIMP_RUN_INTERACTIVE, NULL,
+                                         &status, &error);
+
+          if (new_layers)
+            {
+              gint x      = 0;
+              gint y      = 0;
+              gint width  = gimp_image_get_width  (image);
+              gint height = gimp_image_get_height (image);
+
+              if (display)
+                {
+                  gimp_display_shell_untransform_viewport (
+                    gimp_display_get_shell (display),
+                    ! gimp_display_shell_get_infinite_canvas (gimp_display_get_shell (display)),
+                    &x, &y, &width, &height);
+                }
+
+              gimp_image_add_layers (image, new_layers,
+                                     GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                     x, y, width, height,
+                                     _("Drop layers"));
+
+              g_list_free (new_layers);
+              handled = TRUE;
+            }
+          else if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
+            {
+              gimp_message (gimp, display ? G_OBJECT (display) : NULL,
+                            GIMP_MESSAGE_ERROR,
+                            _("Opening '%s' failed:\n\n%s"),
+                            gimp_file_get_utf8_name (file), error->message);
+            }
+        }
+      else
+        {
+          GimpImage *new_image;
+
+          new_image = file_open_with_display (gimp, gimp_get_user_context (gimp),
+                                              display ? GIMP_PROGRESS (display) : NULL,
+                                              file, FALSE,
+                                              widget ? G_OBJECT (gimp_widget_get_monitor (widget)) : NULL,
+                                              &status, &error);
+
+          if (new_image)
+            {
+              handled = TRUE;
+            }
+          else if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
+            {
+              gimp_message (gimp, display ? G_OBJECT (display) : NULL,
+                            GIMP_MESSAGE_ERROR,
+                            _("Opening '%s' failed:\n\n%s"),
+                            gimp_file_get_utf8_name (file), error->message);
+            }
+        }
+
+      g_clear_error (&error);
+      g_object_unref (file);
+    }
+
+  g_list_free_full (uri_list, g_free);
+
+  if (handled && display && gimp_display_get_image (display))
+    gimp_image_flush (gimp_display_get_image (display));
+
+  return handled;
 }
 
 static void
