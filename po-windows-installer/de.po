@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-08-02 17:50+0000\n"
-"PO-Revision-Date: 2026-09-13 13:21+0200\n"
+"POT-Creation-Date: 2026-10-14 13:34+0000\n"
+"PO-Revision-Date: 2026-10-19 22:39+0200\n"
 "Last-Translator: Ulf Martin Prill <ulf_martin_prill@gmx.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.10\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -55,8 +55,8 @@ msgstr ""
 "instabil sein kann und Sie Ihre Arbeit verlieren könnten.%nSollten Probleme "
 "auftreten, bestätigen Sie zunächst, dass diese nicht bereits in GIT behoben "
 "wurden, bevor Sie sich an die Entwickler wenden oder es in GIMP gitlab "
-"melden:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nMöchten Sie trotzdem "
-"mit der Installation fortfahren?"
+"melden:%n_https://www.gimp.org/bugs%n%nMöchten Sie trotzdem mit der "
+"Installation fortfahren?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
 #: build/windows/installer/lang/setup.isl.xml.in:43
@@ -185,30 +185,41 @@ msgstr ""
 "geschrieben wurden."
 
 #: build/windows/installer/lang/setup.isl.xml.in:140
+msgid "JavaScript scripting"
+msgstr "JavaScript-Skriptumgebung"
+
+#: build/windows/installer/lang/setup.isl.xml.in:144
+msgid ""
+"Allows you to use GIMP plugins written in JavaScript scripting language."
+msgstr ""
+"Erlaubt Ihnen, GIMP-Plugins zu nutzen, die in der Skriptsprache JavaScript "
+"geschrieben wurden."
+
+#: build/windows/installer/lang/setup.isl.xml.in:148
 msgid "MyPaint brushes"
 msgstr "MyPaint-Pinsel"
 
-#: build/windows/installer/lang/setup.isl.xml.in:144
+#: build/windows/installer/lang/setup.isl.xml.in:152
 msgid "Install the default set of MyPaint brushes"
 msgstr "Den Standardsatz der MyPaint-Pinsel einrichten"
 
-#: build/windows/installer/lang/setup.isl.xml.in:148
+#: build/windows/installer/lang/setup.isl.xml.in:156
 msgid "PostScript support"
 msgstr "Postscript-Unterstützung"
 
-#: build/windows/installer/lang/setup.isl.xml.in:152
+#: build/windows/installer/lang/setup.isl.xml.in:160
 msgid "Allow GIMP to load PostScript files"
 msgstr "Ermöglicht es GIMP, Postscript- und PDF-Dateien zu laden"
 
-#: build/windows/installer/lang/setup.isl.xml.in:157
+#: build/windows/installer/lang/setup.isl.xml.in:165
 msgid "Additional icons:"
 msgstr "Zusätzliche Verknüpfungen:"
 
-#: build/windows/installer/lang/setup.isl.xml.in:161
+#: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Create a &desktop icon"
 msgstr "&Desktop-Verknüpfung erstellen"
 
-#: build/windows/installer/lang/setup.isl.xml.in:166
+#: build/windows/installer/lang/setup.isl.xml.in:174
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -217,47 +228,47 @@ msgstr ""
 "Fehler beim Laden von Plugins auftauchen, probieren Sie, GIMP zu "
 "deinstallieren und neu zu installieren."
 
-#: build/windows/installer/lang/setup.isl.xml.in:170
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Error extracting temporary data."
 msgstr "Fehler beim Entpacken temporärer Dateien."
 
-#: build/windows/installer/lang/setup.isl.xml.in:174
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Error updating Python interpreter info."
 msgstr "Fehler bei der Aktualisierung des Python-Interpreters."
 
-#: build/windows/installer/lang/setup.isl.xml.in:178
+#: build/windows/installer/lang/setup.isl.xml.in:186
 msgid "Trying to create Restore Point..."
 msgstr "Es wird versucht, einen Wiederherstellungspunkt zu erstellen …"
 
-#: build/windows/installer/lang/setup.isl.xml.in:182
+#: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Cleaning up old files..."
 msgstr "Alte Dateien werden bereinigt …"
 
-#: build/windows/installer/lang/setup.isl.xml.in:187
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Beachten Sie: GIMP ist Freie Software.%n%nBitte besuchen Sie"
 
-#: build/windows/installer/lang/setup.isl.xml.in:191
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "for free updates."
 msgstr "für kostenlose Aktualisierungen."
 
-#: build/windows/installer/lang/setup.isl.xml.in:195
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Umgebung für die GIMP Python-Erweiterung wird eingerichtet …"
 
-#: build/windows/installer/lang/setup.isl.xml.in:198
+#: build/windows/installer/lang/setup.isl.xml.in:206
 msgid "Setting up GIMP environment..."
 msgstr "Umgebung für GIMP wird eingerichtet …"
 
-#: build/windows/installer/lang/setup.isl.xml.in:203
+#: build/windows/installer/lang/setup.isl.xml.in:211
 msgid "Launch GIMP"
 msgstr "GIMP jetzt starten"
 
-#: build/windows/installer/lang/setup.isl.xml.in:208
+#: build/windows/installer/lang/setup.isl.xml.in:216
 msgid "Removing add-on"
 msgstr "Erweiterung wird entfernt"
 
-#: build/windows/installer/lang/setup.isl.xml.in:213
+#: build/windows/installer/lang/setup.isl.xml.in:221
 msgid ""
 "Do you want to delete your personal GIMP files (e.g. settings, tool presets, "
 "custom brushes)?%n%nA copy will be made on Desktop."
@@ -266,7 +277,7 @@ msgstr ""
 "Werkzeugvoreinstellungen, eigene Pinsel) löschen?%n%nEine Kopie wird auf dem "
 "Schreibtisch erstellt."
 
-#: build/windows/installer/lang/setup.isl.xml.in:217
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Internal error (%1)."
 msgstr "Interner Fehler (%1)."
 
