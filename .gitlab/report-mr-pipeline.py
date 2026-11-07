@@ -44,8 +44,8 @@ def main():
 
   artifacts = { }
   base_path = 'artifacts/browse/'
-  for job in pipeline.jobs.list():
-    if job.stage != 'distribution':
+  for job in pipeline.jobs.list(iterator=True):
+    if job.stage != 'distribution' or job.status != 'success':
       continue
     if job.name == 'dist-appimage-weekly':
       url = os.path.join(job.web_url, base_path, 'build/linux/appimage/_Output/')
