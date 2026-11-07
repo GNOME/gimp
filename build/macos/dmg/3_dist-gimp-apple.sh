@@ -33,7 +33,7 @@ printf "\e[0Ksection_end:`date +%s`:mac_tlkt\r\e[0K\n"
 # 2. GLOBAL INFO
 printf "\e[0Ksection_start:`date +%s`:mac_info\r\e[0KGetting DMG global info\n"
 if [ "$BUILD_DIR" = '' ]; then
-  export BUILD_DIR=$(find $PWD -maxdepth 1 -iname "_build*$(uname -m)" | head -n 1)
+  export BUILD_DIR=$(find $PWD -maxdepth 1 -iname "_build*" | head -n 1)
 fi
 if [ ! -f "$BUILD_DIR/config.h" ]; then
   printf "\033[31m(ERROR)\033[0m: config.h file not found. You can configure GIMP with meson to generate it.\n"
