@@ -1219,7 +1219,6 @@ gimp_dnd_copy_dropped_file (GFile   *file,
 {
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
-#ifdef G_OS_WIN32
   /* See: https://gitlab.gnome.org/GNOME/gimp/-/issues/8014 */
   if (g_file_has_uri_scheme (file, "file"))
     {
@@ -1245,7 +1244,6 @@ gimp_dnd_copy_dropped_file (GFile   *file,
 
       return copy;
     }
-#endif
 
   return g_object_ref (file);
 }
