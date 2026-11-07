@@ -381,7 +381,7 @@ gimp-debian-nonreloc:
     - <<: *CI_RELEASE
   parallel:
     matrix:
-      - RUNNER: [aarch64, x86_64_v3]
+      - RUNNER: [aarch64]
   tags:
     - $RUNNER
 
@@ -592,7 +592,7 @@ gimp-snap:
       variables: *exe_msix_vars
   parallel:
     matrix:
-      - RUNNER: [windows-aarch64, win32-ps]
+      - RUNNER: [windows-aarch64]
   tags:
     - $RUNNER
   variables:
@@ -680,7 +680,7 @@ gimp-win:
       variables: *dmg_vars
   parallel:
     matrix:
-      - ARCH: [arm64, x86_64]
+      - ARCH: [arm64]
   tags:
     - macos
     - marathon
