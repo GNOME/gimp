@@ -968,17 +968,16 @@ themes_theme_settings_portal_changed (GDBusProxy  *proxy,
 void
 themes_set_title_bar (Gimp *gimp)
 {
-  GList *windows = gimp_get_image_windows (gimp);
+  GList *windows = gtk_window_list_toplevels ();
   GList *iter;
 
   for (iter = windows; iter; iter = g_list_next (iter))
     {
-      GtkWidget *window = GTK_WIDGET (windows->data);
+      GtkWidget *window = GTK_WIDGET (iter->data);
 
       gimp_widget_set_title_bar_theme (window, gimp_gui_is_dark (gimp));
     }
 
-  if (windows)
-    g_list_free (windows);
+  g_list_free (windows);
 }
 #endif
