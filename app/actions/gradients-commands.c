@@ -43,6 +43,10 @@
 
 /*  local function prototypes  */
 
+#ifdef G_OS_WIN32
+static void   gradients_save_as_pov_dialog_realize (GtkWidget    *dialog,
+                                                    GimpContext  *context);
+#endif
 static void   gradients_save_as_pov_ray_response (GtkWidget    *dialog,
                                                   gint          response_id,
                                                   GimpGradient *gradient);
@@ -113,6 +117,12 @@ gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
                                g_object_ref (gradient),
                                G_CONNECT_SWAPPED);
 
+#ifdef G_OS_WIN32
+      g_signal_connect (dialog, "realize",
+                        G_CALLBACK (gradients_save_as_pov_dialog_realize),
+                        context);
+#endif
+
       gimp_help_connect (dialog, NULL, gimp_standard_help_func,
                          GIMP_HELP_GRADIENT_SAVE_AS_POV, NULL, NULL);
 
@@ -121,14 +131,19 @@ gradients_save_as_pov_ray_cmd_callback (GimpAction *action,
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
-
-#ifdef G_OS_WIN32
-  gimp_widget_set_title_bar_theme (dialog, gimp_gui_is_dark (context->gimp));
-#endif
 }
 
 
 /*  private functions  */
+
+#ifdef G_OS_WIN32
+static void
+gradients_save_as_pov_dialog_realize (GtkWidget   *dialog,
+                                      GimpContext *context)
+{
+  gimp_widget_set_title_bar_theme (dialog, gimp_gui_is_dark (context->gimp));
+}
+#endif
 
 static void
 gradients_save_as_pov_ray_response (GtkWidget    *dialog,

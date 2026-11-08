@@ -40,6 +40,10 @@
 
 /*  local function prototypes  */
 
+#ifdef G_OS_WIN32
+static void   error_console_file_dialog_realize (GtkWidget        *dialog,
+                                                 GimpErrorConsole *console);
+#endif
 static void   error_console_save_response (GtkWidget        *dialog,
                                            gint              response_id,
                                            GimpErrorConsole *console);
@@ -129,16 +133,17 @@ error_console_save_cmd_callback (GimpAction *action,
                         G_CALLBACK (gtk_true),
                         NULL);
 
+#ifdef G_OS_WIN32
+      g_signal_connect (dialog, "realize",
+                        G_CALLBACK (error_console_file_dialog_realize),
+                        console);
+#endif
+
       gimp_help_connect (dialog, NULL, gimp_standard_help_func,
                          GIMP_HELP_ERRORS_DIALOG, NULL, NULL);
     }
 
   gtk_window_present (GTK_WINDOW (console->file_dialog));
-
-#ifdef G_OS_WIN32
-  gimp_widget_set_title_bar_theme (console->file_dialog,
-                                   gimp_gui_is_dark (console->gimp));
-#endif
 }
 
 void
@@ -176,6 +181,15 @@ error_console_highlight_info_cmd_callback (GimpAction *action,
 
 
 /*  private functions  */
+
+#ifdef G_OS_WIN32
+static void
+error_console_file_dialog_realize (GtkWidget        *dialog,
+                                    GimpErrorConsole *console)
+{
+  gimp_widget_set_title_bar_theme (dialog, gimp_gui_is_dark (console->gimp));
+}
+#endif
 
 static void
 error_console_save_response (GtkWidget        *dialog,
