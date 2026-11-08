@@ -373,6 +373,9 @@ edit_paste_cmd_callback (GimpAction *action,
 
   /* if there is a text/uri-list in the clipboard (e.g. files copied from
      a file manager), open like a drag-and-drop would. See: #9402 */
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 clipboard is async GdkClipboard/GdkContentProvider based: gimp_clipboard_has_uris()/gimp_clipboard_get_uris() must become async reads on GTK4
+#endif
   if (display && gimp_clipboard_has_uris (action_data_get_gimp (data)))
     {
       if (edit_paste_uris (action_data_get_gimp (data), display,
@@ -446,6 +449,9 @@ edit_paste_as_new_image_cmd_callback (GimpAction *action,
 
   /* if there is a text/uri-list in the clipboard (e.g. files copied from
      a file manager), open like a drag-and-drop would. See: #9402 */
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 clipboard is async GdkClipboard/GdkContentProvider based: gimp_clipboard_has_uris()/gimp_clipboard_get_uris() must become async reads on GTK4
+#endif
   if (gimp_clipboard_has_uris (gimp))
     {
       if (edit_paste_uris (gimp, NULL, widget))

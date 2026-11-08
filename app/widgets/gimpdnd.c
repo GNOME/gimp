@@ -1221,6 +1221,9 @@ gimp_dnd_copy_dropped_file (GFile   *file,
 
 #ifdef G_OS_WIN32
   /* See: https://gitlab.gnome.org/GNOME/gimp/-/issues/8014 */
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 DnD moved to GdkContentProvider/GdkDropTargetAsync: evaluate if copying dropped files to the temp dir is still needed
+#endif
   if (g_file_has_uri_scheme (file, "file"))
     {
       gchar *basename  = g_file_get_basename (file);
