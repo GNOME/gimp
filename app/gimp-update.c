@@ -564,8 +564,7 @@ gimp_update_auto_check (GimpCoreConfig *config,
        */
       if (! gimp->no_interface &&
           (is_update || ! files_loaded))
-        gtk_widget_set_visible (welcome_dialog_create (gimp, is_update),
-                                TRUE);
+        gtk_window_present (GTK_WINDOW (welcome_dialog_create (gimp, is_update)));
 
       /* Do not check for new updates when GIMP was just updated. */
       if (is_update)
