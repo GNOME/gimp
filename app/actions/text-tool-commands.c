@@ -22,6 +22,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "actions-types.h"
 
@@ -50,6 +51,10 @@
 
 /*  local function prototypes  */
 
+#ifdef G_OS_WIN32
+static void   text_tool_file_dialog_realize  (GtkWidget    *dialog,
+                                              GimpTextTool *tool);
+#endif
 static void   text_tool_load_dialog_response (GtkWidget    *dialog,
                                               gint          response_id,
                                               GimpTextTool *tool);
@@ -185,6 +190,12 @@ text_tool_load_cmd_callback (GimpAction *action,
                         G_CALLBACK (gtk_true),
                         NULL);
 
+#ifdef G_OS_WIN32
+      g_signal_connect (dialog, "realize",
+                        G_CALLBACK (text_tool_file_dialog_realize),
+                        text_tool);
+#endif
+
       dialogs_attach_dialog (G_OBJECT (text_tool),
                              "gimp-text-file-dialog", dialog);
     }
@@ -262,6 +273,16 @@ text_tool_restore_on_canvas_editor_position_cmd_callback (GimpAction *action,
 
 
 /*  private functions  */
+
+#ifdef G_OS_WIN32
+static void
+text_tool_file_dialog_realize (GtkWidget    *dialog,
+                               GimpTextTool *tool)
+{
+  gimp_widget_set_title_bar_theme (dialog,
+                                   gimp_gui_is_dark (GIMP_TOOL (tool)->tool_info->gimp));
+}
+#endif
 
 static void
 text_tool_load_dialog_response (GtkWidget    *dialog,

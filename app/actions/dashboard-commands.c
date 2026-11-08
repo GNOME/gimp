@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "actions-types.h"
 
@@ -29,6 +30,7 @@
 #include "widgets/gimpdashboard.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs/dialogs.h"
 
@@ -46,6 +48,10 @@ typedef struct
 
 /*  local function prototypes  */
 
+#ifdef G_OS_WIN32
+static void                     dashboard_log_record_dialog_realize (GtkWidget             *dialog,
+                                                                     GimpDashboard         *dashboard);
+#endif
 static void                     dashboard_log_record_response      (GtkWidget              *dialog,
                                                                     int                     response_id,
                                                                     GimpDashboard          *dashboard);
@@ -263,6 +269,12 @@ dashboard_log_record_cmd_callback (GimpAction *action,
                             G_CALLBACK (gtk_true),
                             NULL);
 
+#ifdef G_OS_WIN32
+          g_signal_connect (dialog, "realize",
+                            G_CALLBACK (dashboard_log_record_dialog_realize),
+                            dashboard);
+#endif
+
           gimp_help_connect (dialog, NULL, gimp_standard_help_func,
                              GIMP_HELP_DASHBOARD_LOG_RECORD, NULL, NULL);
 
@@ -355,6 +367,16 @@ dashboard_low_swap_space_warning_cmd_callback (GimpAction *action,
 
 
 /*  private functions  */
+
+#ifdef G_OS_WIN32
+static void
+dashboard_log_record_dialog_realize (GtkWidget     *dialog,
+                                     GimpDashboard *dashboard)
+{
+  gimp_widget_set_title_bar_theme (dialog,
+                                   gimp_gui_is_dark (gimp_editor_get_ui_manager (GIMP_EDITOR (dashboard))->gimp));
+}
+#endif
 
 static void
 dashboard_log_record_response (GtkWidget     *dialog,

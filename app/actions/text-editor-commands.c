@@ -22,6 +22,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "actions-types.h"
 
@@ -31,6 +32,7 @@
 #include "widgets/gimptextbuffer.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "text-editor-commands.h"
 
@@ -39,6 +41,10 @@
 
 /*  local function prototypes  */
 
+#ifdef G_OS_WIN32
+static void   text_editor_file_dialog_realize (GtkWidget      *dialog,
+                                               GimpTextEditor *editor);
+#endif
 static void   text_editor_load_response (GtkWidget      *dialog,
                                          gint            response_id,
                                          GimpTextEditor *editor);
@@ -85,6 +91,12 @@ text_editor_load_cmd_callback (GimpAction *action,
       g_signal_connect (dialog, "delete-event",
                         G_CALLBACK (gtk_true),
                         NULL);
+#ifdef G_OS_WIN32
+      g_signal_connect (dialog, "realize",
+                        G_CALLBACK (text_editor_file_dialog_realize),
+                        editor);
+#endif
+
     }
 
   gtk_window_present (GTK_WINDOW (editor->file_dialog));
@@ -118,6 +130,16 @@ text_editor_direction_cmd_callback (GimpAction *action,
 
 
 /*  private functions  */
+
+#ifdef G_OS_WIN32
+static void
+text_editor_file_dialog_realize (GtkWidget      *dialog,
+                                 GimpTextEditor *editor)
+{
+  gimp_widget_set_title_bar_theme (dialog,
+                                   gimp_gui_is_dark (editor->ui_manager->gimp));
+}
+#endif
 
 static void
 text_editor_load_response (GtkWidget      *dialog,
