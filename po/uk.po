@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-02 14:32+0000\n"
-"PO-Revision-Date: 2026-11-02 20:40+0200\n"
+"POT-Creation-Date: 2026-11-08 17:32+0000\n"
+"PO-Revision-Date: 2026-11-08 21:48+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -190,15 +190,15 @@ msgstr ""
 "Якщо ви хочете негайно завершити роботу програми, запустіть GIMP з "
 "параметром --quit."
 
-#: app/gimp-update.c:425
+#: app/gimp-update.c:435
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Можливо, не вистачає механізму GIO, і треба встановити GVFS?"
 
-#: app/gimp-update.c:430
+#: app/gimp-update.c:440
 msgid "Perhaps you are missing GIO backends."
 msgstr "Можливо, у вас не вистачає модулів обробки GIO."
 
-#: app/gimp-update.c:467
+#: app/gimp-update.c:477
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -212,12 +212,12 @@ msgstr ""
 msgid "%s version %s"
 msgstr "%s версії %s"
 
-#: app/gimp-version.c:164 app/gimp-version.c:283
+#: app/gimp-version.c:170 app/gimp-version.c:289
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "використовує %s версії %s (зібрано з версією %s)"
 
-#: app/gimp-version.c:305
+#: app/gimp-version.c:311
 #, c-format
 msgid "using %s version %s"
 msgstr "з використанням версії %s %s"
@@ -1123,7 +1123,7 @@ msgstr[2] "Опустити канали додолу"
 msgstr[3] "Опустити канал додолу"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:535
-#: app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260
+#: app/display/gimpdisplayshell-dnd.c:784 app/widgets/gimpchanneltreeview.c:260
 #: app/widgets/gimplayertreeview.c:906
 #, c-format
 msgid "%s Channel Copy"
@@ -2488,8 +2488,8 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 секунд"
 
-#: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
-#: app/actions/edit-commands.c:175 app/actions/error-console-commands.c:98
+#: app/actions/dashboard-commands.c:127 app/actions/documents-commands.c:263
+#: app/actions/edit-commands.c:182 app/actions/error-console-commands.c:98
 #: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:81 app/actions/plug-in-commands.c:187
@@ -2534,67 +2534,69 @@ msgstr "240 секунд"
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: app/actions/dashboard-commands.c:122
+#: app/actions/dashboard-commands.c:128
 msgid "_Record"
 msgstr "_Записати"
 
-#: app/actions/dashboard-commands.c:145 app/dialogs/path-export-dialog.c:94
+#: app/actions/dashboard-commands.c:151 app/dialogs/path-export-dialog.c:94
 msgid "All Files"
 msgstr "усі файли"
 
-#: app/actions/dashboard-commands.c:150
+#: app/actions/dashboard-commands.c:156
 #: app/actions/error-console-commands.c:106
 msgid "Log Files (*.log)"
 msgstr "файли журналів (*.log)"
 
-#: app/actions/dashboard-commands.c:194
+#: app/actions/dashboard-commands.c:200
 msgid "Log samples per second"
 msgstr "Записувати до журналу кількість зразків за секунду"
 
-#: app/actions/dashboard-commands.c:198
+#: app/actions/dashboard-commands.c:204
 msgid "Sample fre_quency:"
 msgstr "_Частота зразків:"
 
-#: app/actions/dashboard-commands.c:217
+#: app/actions/dashboard-commands.c:223
 msgid "_Backtrace"
 msgstr "З_воротне трасування"
 
-#: app/actions/dashboard-commands.c:218
+#: app/actions/dashboard-commands.c:224
 msgid "Include backtraces in log"
 msgstr "Включити зворотне трасування до журналу"
 
-#: app/actions/dashboard-commands.c:230
+#: app/actions/dashboard-commands.c:236
 msgid "_Messages"
 msgstr "П_овідомлення"
 
-#: app/actions/dashboard-commands.c:232
+#: app/actions/dashboard-commands.c:238
 msgid "Include diagnostic messages in log"
 msgstr "Включити до журналу діагностичні повідомлення"
 
-#: app/actions/dashboard-commands.c:244
+#: app/actions/dashboard-commands.c:250
 msgid "Progressi_ve"
 msgstr "П_рогресивний"
 
-#: app/actions/dashboard-commands.c:246
+#: app/actions/dashboard-commands.c:252
 msgid "Produce complete log even if not properly terminated"
 msgstr "Створити повний журнал, навіть якщо його не завершено належним чином"
 
-#: app/actions/dashboard-commands.c:309
+#: app/actions/dashboard-commands.c:321
 msgid "Add Marker"
 msgstr "Додати позначку"
 
-#: app/actions/dashboard-commands.c:311
+#: app/actions/dashboard-commands.c:323
 msgid "Enter a description for the marker"
 msgstr "Введіть опис позначки"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:418
+#: app/actions/edit-commands.c:790 app/actions/edit-commands.c:812
 #: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:254
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
-#: app/dialogs/welcome-dialog.c:1263 app/display/gimpdisplayshell-dnd.c:707
+#: app/dialogs/welcome-dialog.c:1266 app/display/gimpdisplayshell-dnd.c:726
 #: app/display/gimpimagewindow.c:2497 app/widgets/gimplayertreeview.c:864
-#: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
+#: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:170
+#: app/widgets/gimptoolbox-dnd.c:195
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3461,7 +3463,7 @@ msgstr "Вилучити записи про файли, які вже недо�
 msgid "Clear Document History"
 msgstr "Забути відриті раніше документи"
 
-#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:176
+#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:183
 #: app/dialogs/preferences-dialog.c:609
 msgid "Cl_ear"
 msgstr "О_чистити"
@@ -3997,20 +3999,20 @@ msgstr "_Скасувати"
 msgid "_Redo"
 msgstr "Пове_рнути"
 
-#: app/actions/edit-commands.c:167
+#: app/actions/edit-commands.c:174
 msgid "Clear Undo History"
 msgstr "Спорожнити журнал дій"
 
-#: app/actions/edit-commands.c:194
+#: app/actions/edit-commands.c:201
 msgid "Really clear image's undo history?"
 msgstr "Справді хочете спорожнити журнал скасувань дій?"
 
-#: app/actions/edit-commands.c:207
+#: app/actions/edit-commands.c:214
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Спорожнення журналу дій із цим зображенням звільнить %s пам'яті."
 
-#: app/actions/edit-commands.c:251
+#: app/actions/edit-commands.c:258
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
@@ -4019,72 +4021,77 @@ msgstr[1] "Вирізати %d шари у буфер обміну."
 msgstr[2] "Вирізати %d шарів у буфер обміну."
 msgstr[3] "Вирізати шар у буфер обміну."
 
-#: app/actions/edit-commands.c:256
+#: app/actions/edit-commands.c:263
 msgid "Cut pixels to the clipboard."
 msgstr "Вирізати пікселі в буфер обміну."
 
-#: app/actions/edit-commands.c:299
+#: app/actions/edit-commands.c:306
 msgid "Copied layer to the clipboard."
 msgstr "Шар скопійовано в буфер обміну."
 
-#: app/actions/edit-commands.c:300 app/actions/edit-commands.c:332
+#: app/actions/edit-commands.c:307 app/actions/edit-commands.c:339
 msgid "Copied pixels to the clipboard."
 msgstr "Пікселі скопійовано в буфер обміну."
 
-#: app/actions/edit-commands.c:449 app/actions/edit-commands.c:798
+#: app/actions/edit-commands.c:479 app/actions/edit-commands.c:927
 #: app/tools/gimpseamlessclonetool.c:304
 msgid "There is no image data in the clipboard to paste."
 msgstr "У буфері обміну нічого немає."
 
-#: app/actions/edit-commands.c:465
+#: app/actions/edit-commands.c:495
 msgid "Cut Named"
 msgstr "Вирізання в буфер з назвою"
 
-#: app/actions/edit-commands.c:468 app/actions/edit-commands.c:490
-#: app/actions/edit-commands.c:512
+#: app/actions/edit-commands.c:498 app/actions/edit-commands.c:520
+#: app/actions/edit-commands.c:542
 msgid "Enter a name for this buffer"
 msgstr "Введіть назву цього буфера"
 
-#: app/actions/edit-commands.c:487
+#: app/actions/edit-commands.c:517
 msgid "Copy Named"
 msgstr "Копіювання з буфера з назвою"
 
-#: app/actions/edit-commands.c:509
+#: app/actions/edit-commands.c:539
 msgid "Copy Visible Named"
 msgstr "Копіювати видиме з назвою"
 
-#: app/actions/edit-commands.c:557
+#: app/actions/edit-commands.c:587
 msgid "Clear"
 msgstr "Очистити"
 
-#: app/actions/edit-commands.c:689
+#: app/actions/edit-commands.c:719
 msgid "A selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
-#: app/actions/edit-commands.c:755
+#: app/actions/edit-commands.c:781 app/display/gimpdisplayshell-dnd.c:676
+#: app/widgets/gimpitemtreeview.c:1600 app/widgets/gimplayertreeview.c:855
+msgid "Drop layers"
+msgstr "Перемістити шари"
+
+#: app/actions/edit-commands.c:884
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Вставлено як новий шар, оскільки ціль не є окремим шаром або маскою шарів."
 
-#: app/actions/edit-commands.c:762
+#: app/actions/edit-commands.c:891
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Вставлено як новий шар, тому що ціль є групою шарів."
 
-#: app/actions/edit-commands.c:769
+#: app/actions/edit-commands.c:898
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Вставлено як новий шар, бо цільові пікселі заблоковано."
 
-#: app/actions/edit-commands.c:815
+#: app/actions/edit-commands.c:944
 msgid "There are no selected layers or channels to cut from."
 msgstr "Немає позначених шарів або каналів для вирізання."
 
-#: app/actions/edit-commands.c:820 app/actions/edit-commands.c:853
-#: app/actions/edit-commands.c:878
+#: app/actions/edit-commands.c:949 app/actions/edit-commands.c:982
+#: app/actions/edit-commands.c:1007
 msgid "(Unnamed Buffer)"
 msgstr "(Буфер без назви)"
 
-#: app/actions/edit-commands.c:848
+#: app/actions/edit-commands.c:977
 msgid "There are no selected layers or channels to copy from."
 msgstr "Немає позначених шарів або каналів для копіювання."
 
@@ -15916,74 +15923,108 @@ msgstr "Є актуальним станом на %s, %s"
 msgid "GIMP is brought to you by"
 msgstr "GIMP створили для вас"
 
+#: app/dialogs/about-dialog.c:986
+#| msgid ""
+#| "This is a development build\n"
+#| "commit %s"
+msgid "This is a test release build"
+msgstr "Це найсвіжіша версія у розробці"
+
 #: app/dialogs/about-dialog.c:988
+#| msgid ""
+#| "This is a development build\n"
+#| "commit %s"
+msgid "This is a development build"
+msgstr "Це версія у розробці"
+
+#: app/dialogs/about-dialog.c:994 app/display/gimpdisplayshell-callbacks.c:667
+#, c-format
+msgid "Merge Request !%d - Commit %s"
+msgstr "Запит щодо об'єднання !%d - внесок %s"
+
+#: app/dialogs/about-dialog.c:996
 #, c-format
 msgid ""
-"This is a development build\n"
-"commit %s"
+"%s\n"
+"<a href='%s/-/merge_requests/%d'>%s</a>"
 msgstr ""
-"Це версія у розробці\n"
-"внесок %s"
+"%s\n"
+"<a href='%s/-/merge_requests/%d'>%s</a>"
 
-#: app/dialogs/about-dialog.c:1096
+#: app/dialogs/about-dialog.c:999 app/display/gimpdisplayshell-callbacks.c:670
+#, c-format
+#| msgid "Comment"
+msgid "Commit %s"
+msgstr "Внесок %s"
+
+#: app/dialogs/about-dialog.c:1000
+#, c-format
+msgid ""
+"%s\n"
+"%s"
+msgstr ""
+"%s\n"
+"%s"
+
+#: app/dialogs/about-dialog.c:1111
 msgid "built from source"
 msgstr "зібрано з початкового коду"
 
 #. Translators: build id, revision number
-#: app/dialogs/about-dialog.c:1099
+#: app/dialogs/about-dialog.c:1114
 #, c-format
 msgid "%s revision %d"
 msgstr "%s, модифікація %d"
 
-#: app/dialogs/about-dialog.c:1106 app/dialogs/module-dialog.c:366
+#: app/dialogs/about-dialog.c:1121 app/dialogs/module-dialog.c:366
 msgid "Version:"
 msgstr "Версія:"
 
-#: app/dialogs/about-dialog.c:1108
+#: app/dialogs/about-dialog.c:1123
 msgid "OS:"
 msgstr "ОС:"
 
-#: app/dialogs/about-dialog.c:1110 app/dialogs/about-dialog.c:1141
+#: app/dialogs/about-dialog.c:1125 app/dialogs/about-dialog.c:1156
 msgid "unknown"
 msgstr "невідома"
 
 #. Translators: total RAM, then how much of it is free
-#: app/dialogs/about-dialog.c:1127 app/dialogs/about-dialog.c:1134
-#: app/dialogs/about-dialog.c:1141
+#: app/dialogs/about-dialog.c:1142 app/dialogs/about-dialog.c:1149
+#: app/dialogs/about-dialog.c:1156
 msgid "Memory:"
 msgstr "Пам’ять:"
 
-#: app/dialogs/about-dialog.c:1128
+#: app/dialogs/about-dialog.c:1143
 #, c-format
 msgid "%s (%s free)"
 msgstr "%s (%s вільні)"
 
-#: app/dialogs/about-dialog.c:1163
+#: app/dialogs/about-dialog.c:1178
 msgid "Swap:"
 msgstr "Резервна пам'ять:"
 
-#: app/dialogs/about-dialog.c:1164
+#: app/dialogs/about-dialog.c:1179
 #, c-format
 msgid "%s free on partition"
 msgstr "Вільні на розділі %s"
 
-#: app/dialogs/about-dialog.c:1174
+#: app/dialogs/about-dialog.c:1189
 msgid "Library Versions:"
 msgstr "Версії бібліотек:"
 
-#: app/dialogs/about-dialog.c:1248 app/dialogs/about-dialog.c:1306
+#: app/dialogs/about-dialog.c:1263 app/dialogs/about-dialog.c:1321
 msgid "Copy Version Information"
 msgstr "Копіювати дані щодо версії"
 
-#: app/dialogs/about-dialog.c:1303
+#: app/dialogs/about-dialog.c:1318
 msgid "Version Information"
 msgstr "Дані щодо версії"
 
-#: app/dialogs/about-dialog.c:1305
+#: app/dialogs/about-dialog.c:1320
 msgid "_Copy"
 msgstr "_Копіювати"
 
-#: app/dialogs/about-dialog.c:1361
+#: app/dialogs/about-dialog.c:1376
 msgid "Copied Version Information"
 msgstr "Дані щодо версії скопійовано"
 
@@ -18948,7 +18989,7 @@ msgid "_Next Tip"
 msgstr "_Наступна"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1108
+#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1111
 msgid "Learn more"
 msgstr "Дізнатись більше"
 
@@ -19207,12 +19248,12 @@ msgid "Other donation options"
 msgstr "Інші варіанти фінансової підтримки"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:953
+#: app/dialogs/welcome-dialog.c:950
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Нотатки щодо випуску GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:1068
+#: app/dialogs/welcome-dialog.c:1071
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Натисніть пункти опису випуску з позначкою %s, щоб переглянути огляд."
@@ -19433,22 +19474,23 @@ msgstr "Навігація на зображенні"
 msgid "Drop image files here to open them"
 msgstr "Перетягніть сюди зображення, які хочете відкрити"
 
-#: app/display/gimpdisplayshell-callbacks.c:663
-#, c-format
+#: app/display/gimpdisplayshell-callbacks.c:660
+msgid "Unstable Development Version"
+msgstr "Нестабільна версія у розробці"
+
+#: app/display/gimpdisplayshell-callbacks.c:661
+#| msgid ""
+#| "<big>Unstable Development Version</big>\n"
+#| "\n"
+#| "<small>commit <tt>%s</tt></small>\n"
+#| "\n"
+#| "<small>Please test bugs against latest git master branch\n"
+#| "before reporting them.</small>"
 msgid ""
-"<big>Unstable Development Version</big>\n"
-"\n"
-"<small>commit <tt>%s</tt></small>\n"
-"\n"
-"<small>Please test bugs against latest git master branch\n"
-"before reporting them.</small>"
+"Please test bugs against latest git master branch before reporting them."
 msgstr ""
-"<big>Нестабільна версія у розробці</big>\n"
-"\n"
-"<small>модифікація <tt>%s</tt></small>\n"
-"\n"
-"<small>Будь ласка, скористайтеся останньою версією із git master перед\n"
-"тим, як повідомляти про будь-які вади цієї версії</small>"
+"Будь ласка, перш ніж повідомляти про вади, перевірте, чи є вони в останній ве"
+"рсії із git master."
 
 #: app/display/gimpdisplayshell-close.c:170
 #: app/display/gimpdisplayshell-close.c:268
@@ -19526,8 +19568,8 @@ msgid "The image has been exported to '%s'."
 msgstr "Зображення експортовано у «%s»."
 
 #: app/display/gimpdisplayshell-dnd.c:257
-#: app/display/gimpdisplayshell-dnd.c:767
-#: app/display/gimpdisplayshell-dnd.c:826
+#: app/display/gimpdisplayshell-dnd.c:787
+#: app/display/gimpdisplayshell-dnd.c:846
 msgid "Drop New Layer"
 msgstr "Опускання нового шару"
 
@@ -19577,14 +19619,9 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Опустити колір на шар"
 
-#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1600
-#: app/widgets/gimplayertreeview.c:855
-msgid "Drop layers"
-msgstr "Перемістити шари"
-
-#: app/display/gimpdisplayshell-dnd.c:800
-#: app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:932
-#: app/widgets/gimptoolbox-dnd.c:277
+#: app/display/gimpdisplayshell-dnd.c:820
+#: app/display/gimpdisplayshell-dnd.c:837 app/widgets/gimplayertreeview.c:932
+#: app/widgets/gimptoolbox-dnd.c:296
 msgid "Dropped Buffer"
 msgstr "Переміщений буфер"
 
@@ -19676,7 +19713,7 @@ msgstr "(не змінено)"
 msgid "(none)"
 msgstr "(немає)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1811
+#: app/display/gimpdisplayshell-tool-events.c:1860
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Вибрано шар: '%s'"
@@ -22741,15 +22778,15 @@ msgstr "Не вдалось запустити розширення «%s»"
 msgid "Unknown file type"
 msgstr "Невідомий тип файла"
 
-#: app/plug-in/gimppluginmanager-restore.c:217
+#: app/plug-in/gimppluginmanager-restore.c:229
 msgid "Loading extension plug-ins"
 msgstr "Завантаження розширень"
 
-#: app/plug-in/gimppluginmanager-restore.c:251
+#: app/plug-in/gimppluginmanager-restore.c:263
 msgid "Searching plug-ins"
 msgstr "Пошук додатків"
 
-#: app/plug-in/gimppluginmanager-restore.c:370
+#: app/plug-in/gimppluginmanager-restore.c:384
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
@@ -22758,24 +22795,24 @@ msgstr ""
 "Пропущено потенційний додаток «%s»: додатки слід встановлювати до "
 "підкаталогів.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:377
+#: app/plug-in/gimppluginmanager-restore.c:391
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "Пропускаємо невідомий файл «%s» у каталозі додатків.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:424
+#: app/plug-in/gimppluginmanager-restore.c:438
 msgid "Resource configuration"
 msgstr "Налаштовування ресурсів"
 
-#: app/plug-in/gimppluginmanager-restore.c:460
+#: app/plug-in/gimppluginmanager-restore.c:474
 msgid "Querying new Plug-ins"
 msgstr "Опитування нових доповнень"
 
-#: app/plug-in/gimppluginmanager-restore.c:514
+#: app/plug-in/gimppluginmanager-restore.c:528
 msgid "Initializing Plug-ins"
 msgstr "Ініціалізація доповнень"
 
-#: app/plug-in/gimppluginmanager-restore.c:587
+#: app/plug-in/gimppluginmanager-restore.c:601
 msgid "Starting Extensions"
 msgstr "Запуск розширень"
 
@@ -26968,7 +27005,7 @@ msgstr "Відсоток ширини пензлів"
 msgid "(None)"
 msgstr "(Немає)"
 
-#: app/widgets/gimpclipboard.c:473 app/widgets/gimpclipboard.c:487
+#: app/widgets/gimpclipboard.c:572 app/widgets/gimpclipboard.c:586
 msgid "Clipboard"
 msgstr "Буфер обміну"
 
@@ -28976,7 +29013,7 @@ msgstr "меню"
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: app/widgets/gimpselectiondata.c:250
+#: app/widgets/gimpselectiondata.c:255
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -28987,7 +29024,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpselectiondata.c:254
+#: app/widgets/gimpselectiondata.c:259
 msgid "Invalid UTF-8"
 msgstr "неправильний рядок UTF-8"
 
