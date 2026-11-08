@@ -180,6 +180,18 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
 }
 
 
+#ifdef G_OS_WIN32
+/* on Windows, any file with an extension is considered executable, so
+   e.g. ".pdb"/CodeView files would be wrongly picked. See also: #14554 */
+static gboolean
+gimp_plug_in_manager_skip_file (const gchar *filename)
+{
+  return g_str_has_suffix (filename, ".pdb");
+}
+#else
+#define gimp_plug_in_manager_skip_file(filename) (FALSE)
+#endif
+
 /* search for binaries in the plug-in directory path */
 static void
 gimp_plug_in_manager_search (GimpPlugInManager  *manager,
@@ -339,6 +351,7 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                         *ext = '\0';
 
                       if (g_strcmp0 (file_name, g_file_info_get_name (info)) == 0 &&
+                          ! gimp_plug_in_manager_skip_file (g_file_info_get_name (info2)) &&
                           gimp_file_is_executable (child2))
                         {
                           gimp_plug_in_manager_add_from_file (manager, child2, child,
@@ -358,7 +371,8 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                   g_object_unref (enumerator2);
                 }
             }
-          else if (gimp_file_is_executable (child))
+          else if (! gimp_plug_in_manager_skip_file (g_file_info_get_name (info)) &&
+                   gimp_file_is_executable (child))
             {
               if (g_getenv ("GIMP_TESTING_PLUGINDIRS"))
                 {
