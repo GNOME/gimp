@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-05 13:44+0000\n"
-"PO-Revision-Date: 2026-11-06 11:56+0100\n"
+"POT-Creation-Date: 2026-11-08 00:26+0000\n"
+"PO-Revision-Date: 2026-11-08 13:54+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -202,12 +202,12 @@ msgstr "Een nieuwe versie van GIMP (%s) werd uitgegeven.\n"
 msgid "%s version %s"
 msgstr "%s versie %s"
 
-#: app/gimp-version.c:164 app/gimp-version.c:283
+#: app/gimp-version.c:170 app/gimp-version.c:289
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "%s versie %s wordt gebruikt (gecompileerd met versie %s)"
 
-#: app/gimp-version.c:305
+#: app/gimp-version.c:311
 #, c-format
 msgid "using %s version %s"
 msgstr "%s versie %s wordt gebruikt"
@@ -1113,7 +1113,7 @@ msgstr[0] "Kanaal onderaan"
 msgstr[1] "Kanalen onderaan"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:535
-#: app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260
+#: app/display/gimpdisplayshell-dnd.c:784 app/widgets/gimpchanneltreeview.c:260
 #: app/widgets/gimplayertreeview.c:906
 #, c-format
 msgid "%s Channel Copy"
@@ -2483,7 +2483,7 @@ msgid "240 Seconds"
 msgstr "240 Seconden"
 
 #: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
-#: app/actions/edit-commands.c:175 app/actions/error-console-commands.c:98
+#: app/actions/edit-commands.c:182 app/actions/error-console-commands.c:98
 #: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
 #: app/actions/gradients-commands.c:81 app/actions/plug-in-commands.c:187
@@ -2582,13 +2582,15 @@ msgid "Enter a description for the marker"
 msgstr "Geef een beschrijving van het markeerpunt"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:418
+#: app/actions/edit-commands.c:790 app/actions/edit-commands.c:812
 #: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:254
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
-#: app/dialogs/welcome-dialog.c:1266 app/display/gimpdisplayshell-dnd.c:707
+#: app/dialogs/welcome-dialog.c:1266 app/display/gimpdisplayshell-dnd.c:726
 #: app/display/gimpimagewindow.c:2497 app/widgets/gimplayertreeview.c:864
-#: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:178
+#: app/widgets/gimptoolbox.c:852 app/widgets/gimptoolbox-dnd.c:170
+#: app/widgets/gimptoolbox-dnd.c:195
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3464,7 +3466,7 @@ msgid "Clear Document History"
 msgstr "Documentgeschiedenis wissen"
 
 # wissen
-#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:176
+#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:183
 #: app/dialogs/preferences-dialog.c:609
 msgid "Cl_ear"
 msgstr "_Wissen"
@@ -3997,92 +3999,97 @@ msgstr "_Ongedaan maken"
 msgid "_Redo"
 msgstr "Op_nieuw uitvoeren"
 
-#: app/actions/edit-commands.c:167
+#: app/actions/edit-commands.c:174
 msgid "Clear Undo History"
 msgstr "Geschiedenis Ongedaan maken wissen"
 
-#: app/actions/edit-commands.c:194
+#: app/actions/edit-commands.c:201
 msgid "Really clear image's undo history?"
 msgstr "De geschiedenis van deze afbeelding echt wissen?"
 
-#: app/actions/edit-commands.c:207
+#: app/actions/edit-commands.c:214
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Het wissen van de geschiedenis voor deze afbeelding zal %s geheugen vrijmaken."
 
-#: app/actions/edit-commands.c:251
+#: app/actions/edit-commands.c:258
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
 msgstr[0] "Laag naar het klembord knippen."
 msgstr[1] "%d lagen naar het klembord knippen."
 
-#: app/actions/edit-commands.c:256
+#: app/actions/edit-commands.c:263
 msgid "Cut pixels to the clipboard."
 msgstr "Pixels naar het klembord knippen."
 
-#: app/actions/edit-commands.c:299
+#: app/actions/edit-commands.c:306
 msgid "Copied layer to the clipboard."
 msgstr "Laag naar het klembord gekopieerd."
 
-#: app/actions/edit-commands.c:300 app/actions/edit-commands.c:332
+#: app/actions/edit-commands.c:307 app/actions/edit-commands.c:339
 msgid "Copied pixels to the clipboard."
 msgstr "Pixels naar het klembord gekopieerd."
 
-#: app/actions/edit-commands.c:449 app/actions/edit-commands.c:798
+#: app/actions/edit-commands.c:479 app/actions/edit-commands.c:927
 #: app/tools/gimpseamlessclonetool.c:304
 msgid "There is no image data in the clipboard to paste."
 msgstr "Er staan in het klembord geen afbeeldingsgegevens om te plakken."
 
-#: app/actions/edit-commands.c:465
+#: app/actions/edit-commands.c:495
 msgid "Cut Named"
 msgstr "Benoemd knippen"
 
-#: app/actions/edit-commands.c:468 app/actions/edit-commands.c:490
-#: app/actions/edit-commands.c:512
+#: app/actions/edit-commands.c:498 app/actions/edit-commands.c:520
+#: app/actions/edit-commands.c:542
 msgid "Enter a name for this buffer"
 msgstr "Geef een naam voor deze buffer"
 
-#: app/actions/edit-commands.c:487
+#: app/actions/edit-commands.c:517
 msgid "Copy Named"
 msgstr "Benoemd kopiëren"
 
-#: app/actions/edit-commands.c:509
+#: app/actions/edit-commands.c:539
 msgid "Copy Visible Named"
 msgstr "Zichtbare benoemd kopiëren"
 
 # wissen
-#: app/actions/edit-commands.c:557
+#: app/actions/edit-commands.c:587
 msgid "Clear"
 msgstr "Leeg maken"
 
-#: app/actions/edit-commands.c:689
+#: app/actions/edit-commands.c:719
 msgid "A selected layer's alpha channel is locked."
 msgstr "Het alfakanaal van een geselecteerde laag is vergrendeld."
 
-#: app/actions/edit-commands.c:755
+#: app/actions/edit-commands.c:781 app/display/gimpdisplayshell-dnd.c:676
+#: app/widgets/gimpitemtreeview.c:1600 app/widgets/gimplayertreeview.c:855
+msgid "Drop layers"
+msgstr "Lagen neerzetten"
+
+#: app/actions/edit-commands.c:884
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr "Geplakt als een nieuwe laag omdat het doel geen enkele laag of laagmasker is."
 
-#: app/actions/edit-commands.c:762
+#: app/actions/edit-commands.c:891
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Geplakt als een nieuwe laag omdat het doel een laaggroep is."
 
-#: app/actions/edit-commands.c:769
+#: app/actions/edit-commands.c:898
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Geplakt als nieuwe laag omdat doelpixels vergrendeld zijn."
 
-#: app/actions/edit-commands.c:815
+#: app/actions/edit-commands.c:944
 msgid "There are no selected layers or channels to cut from."
 msgstr "Er is geen geselecteerde laag of kanaal om van te knippen."
 
-#: app/actions/edit-commands.c:820 app/actions/edit-commands.c:853
-#: app/actions/edit-commands.c:878
+#: app/actions/edit-commands.c:949 app/actions/edit-commands.c:982
+#: app/actions/edit-commands.c:1007
 msgid "(Unnamed Buffer)"
 msgstr "(Naamloze buffer)"
 
-#: app/actions/edit-commands.c:848
+#: app/actions/edit-commands.c:977
 msgid "There are no selected layers or channels to copy from."
 msgstr "Er is geen geselecteerde laag of kanaal om van te kopiëren."
 
@@ -15419,7 +15426,7 @@ msgstr "Positie horizontale as"
 # bedekking misschien? pm
 #: app/core/gimpsymmetry-tiling.c:99
 msgid "Tiling"
-msgstr "Betegeling"
+msgstr "Betegelen"
 
 #: app/core/gimpsymmetry-tiling.c:104
 msgid "Interval X"
@@ -15685,75 +15692,101 @@ msgstr "Up-to-date vanaf %s om %s"
 msgid "GIMP is brought to you by"
 msgstr "GIMP is gemaakt door"
 
+#: app/dialogs/about-dialog.c:986
+msgid "This is a test release build"
+msgstr "Dit is een testuitgave"
+
 #: app/dialogs/about-dialog.c:988
+msgid "This is a development build"
+msgstr "Dit is een ontwikkelingsversie"
+
+#: app/dialogs/about-dialog.c:994 app/display/gimpdisplayshell-callbacks.c:667
+#, c-format
+msgid "Merge Request !%d - Commit %s"
+msgstr "Merge Request !%d - Commit %s"
+
+#: app/dialogs/about-dialog.c:996
 #, c-format
 msgid ""
-"This is a development build\n"
-"commit %s"
-msgstr "Dit is een ontwikkelversie\n"
-"commit %s"
+"%s\n"
+"<a href='%s/-/merge_requests/%d'>%s</a>"
+msgstr "%s\n"
+"<a href='%s/-/merge_requests/%d'>%s</a>"
 
-#: app/dialogs/about-dialog.c:1096
+#: app/dialogs/about-dialog.c:999 app/display/gimpdisplayshell-callbacks.c:670
+#, c-format
+msgid "Commit %s"
+msgstr "Commit %s"
+
+#: app/dialogs/about-dialog.c:1000
+#, c-format
+msgid ""
+"%s\n"
+"%s"
+msgstr "%s\n"
+"%s"
+
+#: app/dialogs/about-dialog.c:1111
 msgid "built from source"
 msgstr "gebouwd uit bron"
 
 #. Translators: build id, revision number
-#: app/dialogs/about-dialog.c:1099
+#: app/dialogs/about-dialog.c:1114
 #, c-format
 msgid "%s revision %d"
 msgstr "%s revisie %d"
 
-#: app/dialogs/about-dialog.c:1106 app/dialogs/module-dialog.c:366
+#: app/dialogs/about-dialog.c:1121 app/dialogs/module-dialog.c:366
 msgid "Version:"
 msgstr "Versie:"
 
-#: app/dialogs/about-dialog.c:1108
+#: app/dialogs/about-dialog.c:1123
 msgid "OS:"
 msgstr "Besturingssysteem:"
 
-#: app/dialogs/about-dialog.c:1110 app/dialogs/about-dialog.c:1141
+#: app/dialogs/about-dialog.c:1125 app/dialogs/about-dialog.c:1156
 msgid "unknown"
 msgstr "onbekend"
 
 #. Translators: total RAM, then how much of it is free
-#: app/dialogs/about-dialog.c:1127 app/dialogs/about-dialog.c:1134
-#: app/dialogs/about-dialog.c:1141
+#: app/dialogs/about-dialog.c:1142 app/dialogs/about-dialog.c:1149
+#: app/dialogs/about-dialog.c:1156
 msgid "Memory:"
 msgstr "Geheugen:"
 
-#: app/dialogs/about-dialog.c:1128
+#: app/dialogs/about-dialog.c:1143
 #, c-format
 msgid "%s (%s free)"
 msgstr "%s (%s vrij)"
 
-#: app/dialogs/about-dialog.c:1163
+#: app/dialogs/about-dialog.c:1178
 msgid "Swap:"
 msgstr "Wisselgeheugen:"
 
-#: app/dialogs/about-dialog.c:1164
+#: app/dialogs/about-dialog.c:1179
 #, c-format
 msgid "%s free on partition"
 msgstr "%s vrij op partitie"
 
-#: app/dialogs/about-dialog.c:1174
+#: app/dialogs/about-dialog.c:1189
 msgid "Library Versions:"
 msgstr "Versies bibliotheek:"
 
-#: app/dialogs/about-dialog.c:1248 app/dialogs/about-dialog.c:1306
+#: app/dialogs/about-dialog.c:1263 app/dialogs/about-dialog.c:1321
 msgid "Copy Version Information"
 msgstr "Versie-informatie kopiëren"
 
 # muisaanwijzer/pointer
-#: app/dialogs/about-dialog.c:1303
+#: app/dialogs/about-dialog.c:1318
 msgid "Version Information"
 msgstr "Versie-informatie"
 
-#: app/dialogs/about-dialog.c:1305
+#: app/dialogs/about-dialog.c:1320
 msgid "_Copy"
 msgstr "_Kopiëren"
 
 # muisaanwijzer/pointer
-#: app/dialogs/about-dialog.c:1361
+#: app/dialogs/about-dialog.c:1376
 msgid "Copied Version Information"
 msgstr "Versie-informatie gekopieerd"
 
@@ -19205,23 +19238,17 @@ msgstr "Navigeren door de afbeelding"
 msgid "Drop image files here to open them"
 msgstr "Sleep hier afbeeldingen naar toe om ze te openen"
 
+#: app/display/gimpdisplayshell-callbacks.c:660
+msgid "Unstable Development Version"
+msgstr "Instabiele ontwikkelingsversie"
+
 # 2.10 is stable dus kan onvertaald blijven
 # pm
-#: app/display/gimpdisplayshell-callbacks.c:663
-#, c-format
+#: app/display/gimpdisplayshell-callbacks.c:661
 msgid ""
-"<big>Unstable Development Version</big>\n"
-"\n"
-"<small>commit <tt>%s</tt></small>\n"
-"\n"
-"<small>Please test bugs against latest git master branch\n"
-"before reporting them.</small>"
-msgstr "<big>Instabiele ontwikkelversie</big>\n"
-"\n"
-"<small>versie <tt>%s</tt></small>\n"
-"\n"
-"<small>Test softwarefouten met de laatste master-branch op git\n"
-"voor deze te rapporteren.</small>"
+"Please test bugs against latest git master branch before reporting them."
+msgstr "Test softwarefouten met de laatste branch master van Git\n"
+"voor ze te rapporteren."
 
 #: app/display/gimpdisplayshell-close.c:170
 #: app/display/gimpdisplayshell-close.c:268
@@ -19277,8 +19304,8 @@ msgstr "De afbeelding is geëxporteerd naar ‘%s’."
 
 # Drag and drop
 #: app/display/gimpdisplayshell-dnd.c:257
-#: app/display/gimpdisplayshell-dnd.c:767
-#: app/display/gimpdisplayshell-dnd.c:826
+#: app/display/gimpdisplayshell-dnd.c:787
+#: app/display/gimpdisplayshell-dnd.c:846
 msgid "Drop New Layer"
 msgstr "Nieuwe laag neerzetten"
 
@@ -19330,14 +19357,9 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Kleur naar laag neerzetten"
 
-#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1600
-#: app/widgets/gimplayertreeview.c:855
-msgid "Drop layers"
-msgstr "Lagen neerzetten"
-
-#: app/display/gimpdisplayshell-dnd.c:800
-#: app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:932
-#: app/widgets/gimptoolbox-dnd.c:277
+#: app/display/gimpdisplayshell-dnd.c:820
+#: app/display/gimpdisplayshell-dnd.c:837 app/widgets/gimplayertreeview.c:932
+#: app/widgets/gimptoolbox-dnd.c:296
 msgid "Dropped Buffer"
 msgstr "Neergezette buffer"
 
@@ -19433,7 +19455,7 @@ msgstr "(ongewijzigd)"
 msgid "(none)"
 msgstr "(geen)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1837
+#: app/display/gimpdisplayshell-tool-events.c:1860
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Gekozen laag: ‘%s’"
@@ -26620,7 +26642,7 @@ msgstr "Percentage van breedte van penseel"
 msgid "(None)"
 msgstr "(Geen)"
 
-#: app/widgets/gimpclipboard.c:473 app/widgets/gimpclipboard.c:487
+#: app/widgets/gimpclipboard.c:572 app/widgets/gimpclipboard.c:586
 msgid "Clipboard"
 msgstr "Klembord"
 
@@ -27547,7 +27569,7 @@ msgstr "Aantal lopende asynchrone bewerkingen"
 #: app/widgets/gimpdashboard.c:740
 msgctxt "dashboard-variable"
 msgid "Tile"
-msgstr "Tegel"
+msgstr "Betegelen"
 
 #: app/widgets/gimpdashboard.c:741
 msgid "Total size of tile memory"
@@ -28609,7 +28631,7 @@ msgstr "menu"
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: app/widgets/gimpselectiondata.c:250
+#: app/widgets/gimpselectiondata.c:255
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -28619,7 +28641,7 @@ msgstr "De bestandsnaam ‘%s’ kon niet naar een geldige URI worden geconverte
 "\n"
 "%s"
 
-#: app/widgets/gimpselectiondata.c:254
+#: app/widgets/gimpselectiondata.c:259
 msgid "Invalid UTF-8"
 msgstr "Ongeldige UTF-8"
 
