@@ -64,7 +64,7 @@
         <array>
           <string>image/x-xcf</string>
         </array>
-        <key>CFBundleTypeIconFiles</key>
+        <key>CFBundleTypeIconFile</key>
         <array>
           <string>fileicon-xcf.icns</string>
         </array>
