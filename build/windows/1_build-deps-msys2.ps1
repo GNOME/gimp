@@ -99,7 +99,7 @@ function self_build ([string]$repo, [array]$branch, [array]$patches, [array]$opt
       {
         ### For tagged jobs (i.e. release or test jobs for upcoming releases), use the
         ### last tag. Otherwise use the default branch's HEAD.
-        if (($repo -like '*babl*' -or $repo -like '*gegl*') -and $CI_COMMIT_TAG)
+        if (($repo -like '*babl*' -or $repo -like '*gegl*') -and ($CI_COMMIT_TAG -or "$CI_MERGE_REQUEST_LABELS" -match 'Release'))
           {
             $tag_branch = (git ls-remote --exit-code --refs --sort=version:refname $repo refs/tags/$($dep.ToUpper())_[0-9]*_[0-9]*_[0-9]* | Select-Object -Last 1).Split('refs/')[-1]
           }

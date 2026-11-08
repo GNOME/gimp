@@ -59,9 +59,9 @@ sudo snapcraft pull --destructive-mode --build-for=$(dpkg --print-architecture) 
 printf "\e[0Ksection_end:`date +%s`:deps_install\r\e[0K\n"
 
 printf "\e[0Ksection_start:`date +%s`:babl_build[collapsed=true]\r\e[0KBuilding babl\n"
-if [ "$CI_COMMIT_TAG" ] && grep 'grade: devel' build/linux/snap/snapcraft.yaml >/dev/null 2>&1; then
+if { [ "$CI_COMMIT_TAG" ] || (echo "$CI_MERGE_REQUEST_LABELS" | grep -q 'Release'); } && grep 'grade: devel' build/linux/snap/snapcraft.yaml >/dev/null 2>&1; then
   #needed to avoid unreproducible testing builds. See: https://developer.gimp.org/core/maintainer/release/
-  printf '\033[31m(ERROR)\033[0m: non-tagged babl and GEGL source should not be used on CI_COMMIT_TAG pipelines. Please, change grade value to stable on snapcraft.yaml\n'
+  printf '\033[31m(ERROR)\033[0m: non-tagged babl and GEGL source should not be used on CI_COMMIT_TAG or CI_MERGE_REQUEST_LABELS=Release pipelines. Please, change grade value to stable on snapcraft.yaml\n'
   exit 1
 fi
 sudo snapcraft stage babl --destructive-mode --build-for=$(dpkg --print-architecture) --verbosity=verbose

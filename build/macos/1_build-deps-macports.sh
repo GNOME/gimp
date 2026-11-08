@@ -87,7 +87,7 @@ self_build()
     exit 1
   fi
   if [ ! -d "$dep" ]; then
-    if ( echo $1 | grep -q 'babl' || echo $1 | grep -q 'gegl' ) && [ "$CI_COMMIT_TAG" ]; then
+    if ( echo $1 | grep -q 'babl' || echo $1 | grep -q 'gegl' ) && { [ "$CI_COMMIT_TAG" ] || (echo "$CI_MERGE_REQUEST_LABELS" | grep -q 'Release'); }; then
       tag_branch=$(git ls-remote --tags --exit-code --refs $1 | grep -oi "$(echo "$dep" | tr '[:lower:]' '[:upper:]')_[0-9]*_[0-9]*_[0-9]*" | sort --version-sort | tail -1)
     else
       tag_branch=$(echo "$2" | grep -qv ".patch" && echo "${2:-master}" || echo "master")
