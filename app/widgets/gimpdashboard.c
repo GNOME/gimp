@@ -461,6 +461,9 @@ static gchar    * gimp_dashboard_format_value                   (VariableType   
 static void       gimp_dashboard_label_set_text                 (GtkLabel            *label,
                                                                  const gchar         *text);
 
+static gboolean   gimp_dashboard_recording_menu_press           (GtkWidget           *widget,
+                                                                 GdkEventButton      *bevent,
+                                                                 GtkWidget           *menu);
 
 /*  static variables  */
 
@@ -1026,6 +1029,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
   GtkWidget            *expander;
   GtkWidget            *hbox;
   GtkWidget            *button;
+  GtkWidget            *spinbutton;
   GtkWidget            *image;
   GtkWidget            *menu;
   GtkWidget            *item;
@@ -1274,6 +1278,92 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                                        group_info->default_active);
       gimp_dashboard_update_group (dashboard, group);
     }
+
+  /* Recording options */
+  priv->log_params = *(gimp_dashboard_log_get_default_params (dashboard));
+
+  expander = gtk_expander_new (_("Recording Options"));
+  gtk_expander_set_label_fill (GTK_EXPANDER (expander), TRUE);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_expander_set_label_widget (GTK_EXPANDER (expander), hbox);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  label = gtk_label_new ("Recording options");
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (label, TRUE);
+
+  button = gtk_button_new ();
+  gimp_help_set_help_data (button, _("Select options"),
+                           NULL);
+  gtk_widget_set_can_focus (button, FALSE);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+
+  image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
+                                        GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
+  gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_MENU_LEFT,
+                                GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_set_visible (image, TRUE);
+
+  menu = gtk_menu_new ();
+  gtk_menu_attach_to_widget (GTK_MENU (menu), button, NULL);
+
+  g_signal_connect_object (expander, "button-press-event",
+                           G_CALLBACK (gimp_dashboard_recording_menu_press),
+                           menu, 0);
+
+  /* Menu options */
+  item = gtk_check_menu_item_new_with_label ("Backtrace");
+  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+                                  priv->log_params.backtrace);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_set_visible (item, TRUE);
+
+  item = gtk_check_menu_item_new_with_label ("Messages");
+  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+                                  priv->log_params.messages);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_set_visible (item, TRUE);
+
+  item = gtk_check_menu_item_new_with_label ("Progressive");
+  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+                                  priv->log_params.progressive);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_set_visible (item, TRUE);
+
+  frame = gimp_frame_new (NULL);
+  gtk_container_add (GTK_CONTAINER (expander), frame);
+  gtk_widget_set_visible (frame, TRUE);
+
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2 * content_spacing);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  label = gtk_label_new_with_mnemonic (_("Sample fre_quency:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (label, TRUE);
+
+  spinbutton = gimp_spin_button_new_with_range (1, 1000, 1);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_set_visible (spinbutton, TRUE);
+
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (spinbutton),
+                             priv->log_params.sample_frequency);
+
+  gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
+  gtk_widget_set_visible (expander, TRUE);
 
   /* sampler thread
    *
@@ -4426,6 +4516,40 @@ gimp_dashboard_label_set_text (GtkLabel    *label,
    */
   if (g_strcmp0 (gtk_label_get_text (label), text))
     gtk_label_set_text (label, text);
+}
+
+static gboolean
+gimp_dashboard_recording_menu_press (GtkWidget           *widget,
+                                     GdkEventButton      *bevent,
+                                     GtkWidget           *menu)
+{
+  GtkWidget     *button = gtk_menu_get_attach_widget (GTK_MENU (menu));
+  GtkAllocation  expander_allocation;
+  GtkAllocation  allocation;
+
+  gtk_widget_get_allocation (widget,
+                             &expander_allocation);
+  gtk_widget_get_allocation (button,
+                             &allocation);
+
+  allocation.x -= expander_allocation.x;
+  allocation.y -= expander_allocation.y;
+
+  if (bevent->button == 1                          &&
+      bevent->x >= allocation.x                    &&
+      bevent->x <  allocation.x + allocation.width &&
+      bevent->y >= allocation.y                    &&
+      bevent->y <  allocation.y + allocation.height)
+    {
+      gtk_menu_popup_at_widget (GTK_MENU (menu), button,
+                                GDK_GRAVITY_WEST,
+                                GDK_GRAVITY_NORTH_EAST,
+                                (GdkEvent *) bevent);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 
