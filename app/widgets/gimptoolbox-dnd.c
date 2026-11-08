@@ -160,6 +160,9 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
 
       /* on Windows, the drag source may delete the dropped file as soon
          as the drag completes, so get it from the temp dir. See: #8014 */
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 DnD moved to GdkContentProvider/GdkDropTargetAsync: evaluate if copying dropped files to the temp dir is still needed
+#endif
       open_file = gimp_dnd_copy_dropped_file (file, &error);
       if (! open_file)
         {

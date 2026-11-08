@@ -241,6 +241,9 @@ gimp_display_shell_events (GtkWidget        *widget,
             /* the Windows virtual/accessibility keyboard (osk.exe, not TapTip.exe)
                reports GDK_BUTTON1_MASK in the state of its synthetic key events,
                so never drop printable text keys here. See: #1243 */
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 may not leak GDK_BUTTON1_MASK for osk.exe synthetic events: evaluate if this workaround is still needed
+#endif
             if (gdk_keyval_to_unicode (kevent->keyval) != 0)
               break;
 #endif
@@ -1070,6 +1073,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
            reports GDK_BUTTON1_MASK in the state of its synthetic key events,
            so strip it for printable keys so they are not treated as "button held".
            This is needed for using the text box without leaking shortcuts */
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 may not leak GDK_BUTTON1_MASK for osk.exe synthetic events: evaluate if this workaround is still needed
+#endif
         if ((state & GDK_BUTTON1_MASK) && gdk_keyval_to_unicode (kevent->keyval) != 0)
           state &= ~GDK_BUTTON1_MASK;
 #endif
