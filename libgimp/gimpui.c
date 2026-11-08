@@ -559,15 +559,14 @@ gimp_ui_theme_changed (GFileMonitor      *monitor,
                        GFileMonitorEvent  event_type,
                        GtkCssProvider    *css_provider)
 {
-  GError *error = NULL;
-  gchar  *contents;
+  GError  *error = NULL;
+  gchar   *contents;
+  gboolean prefer_dark_theme = FALSE;
 
   file = gimp_directory_file ("theme.css", NULL);
 
   if (g_file_load_contents (file, NULL, &contents, NULL, NULL, &error))
     {
-      gboolean prefer_dark_theme;
-
       prefer_dark_theme = strstr (contents, "/* prefer-dark-theme */") != NULL;
 
       g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
@@ -589,6 +588,19 @@ gimp_ui_theme_changed (GFileMonitor      *monitor,
                   gimp_file_get_utf8_name (file), error->message);
       g_clear_error (&error);
     }
+
+#if defined(G_OS_WIN32) || (defined(PLATFORM_OSX) && MAC_OS_X_VERSION_MIN_REQUIRED >= 101400)
+  {
+    GList *windows = gtk_window_list_toplevels ();
+    GList *iter;
+
+    for (iter = windows; iter; iter = g_list_next (iter))
+      gimp_widget_set_title_bar_theme (GTK_WIDGET (iter->data),
+                                       prefer_dark_theme ? TRUE : FALSE);
+
+    g_list_free (windows);
+  }
+#endif
 
   g_object_unref (file);
 }
