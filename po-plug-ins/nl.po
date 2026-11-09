@@ -15,7 +15,7 @@ msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-11-05 17:56+0000\n"
-"PO-Revision-Date: 2026-11-07 16:10+0100\n"
+"PO-Revision-Date: 2026-11-09 15:19+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -12555,17 +12555,17 @@ msgstr "Loglog gladmaken gebruiken om ‘strepen’ in het resultaat te vermijde
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:493
 msgid "Rendering fractal"
-msgstr "Fractal wordt gegenereerd"
+msgstr "Fractaal wordt gegenereerd"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:878
 #: plug-ins/gradient-flare/gradient-flare.c:3351
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "Weet u zeker dat u \"%s\" uit de lijst en van de schijf wilt verwijderen?"
+msgstr "Weet u zeker dat u ‘%s’ uit de lijst en van de schijf wilt verwijderen?"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:882
 msgid "Delete Fractal"
-msgstr "Fractal wissen"
+msgstr "Fractaal wissen"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:1192
 #, c-format
@@ -12603,7 +12603,7 @@ msgstr "Herscan op zoek naar fractalen"
 
 #: plug-ins/fractal-explorer/fractal-explorer.c:1416
 msgid "Add FractalExplorer Path"
-msgstr "Fractaalverkenner-pad toevoegen"
+msgstr "Pad van Fractaalontdekker toevoegen"
 
 #: plug-ins/gfig/gfig-bezier.c:402
 msgid "Closed"
