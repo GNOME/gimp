@@ -24,6 +24,8 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+#include "gimpcolorpickertool.h"
+#include "gimpfiltertool.h"
 
 #include "config/gimpdisplayconfig.h"
 
@@ -359,6 +361,18 @@ gimp_color_tool_cursor_update (GimpTool         *tool,
                                GimpDisplay      *display)
 {
   GimpColorTool *color_tool = GIMP_COLOR_TOOL (tool);
+
+  /* paint and bucket fill tools temporarily enable color picking with Ctrl.
+     If the release event is missed, e.g. when duplicating with Ctrl + D,
+     the picker cursor would stick forever, so recover here. See: #14290 */
+  if (color_tool->enabled                             &&
+      ! (state & gimp_get_constrain_behavior_mask ()) &&
+      ! GIMP_IS_COLOR_PICKER_TOOL (tool)              &&
+      ! GIMP_IS_FILTER_TOOL (tool))
+    {
+      gimp_tool_pop_status (tool, display);
+      gimp_color_tool_disable (color_tool);
+    }
 
   if (color_tool->enabled)
     {
