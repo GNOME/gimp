@@ -159,8 +159,6 @@ dashboard_log_record_cmd_callback (GimpAction *action,
           Gimp *gimp;
 
           gimp = gimp_editor_get_ui_manager (GIMP_EDITOR (dashboard))->gimp;
-
-
           gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
                                 error->message);
         }

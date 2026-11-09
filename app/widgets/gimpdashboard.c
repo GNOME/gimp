@@ -4475,7 +4475,7 @@ gimp_dashboard_add_recording_options (GimpDashboard *dashboard,
                         "content-spacing", &content_spacing,
                         NULL);
 
-  priv->recording_options_expander = gtk_expander_new (_("Recording Options"));
+  priv->recording_options_expander = gtk_expander_new (NULL);
   gtk_expander_set_label_fill (GTK_EXPANDER (priv->recording_options_expander),
                                TRUE);
 
@@ -4484,7 +4484,7 @@ gimp_dashboard_add_recording_options (GimpDashboard *dashboard,
                                  hbox);
   gtk_widget_set_visible (hbox, TRUE);
 
-  label = gtk_label_new ("Recording options");
+  label = gtk_label_new (_("Recording Options"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
