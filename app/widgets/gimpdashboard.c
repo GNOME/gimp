@@ -4545,7 +4545,7 @@ gimp_dashboard_add_recording_options (GimpDashboard *dashboard,
     GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dashboard),
                                         "gimp-dashboard-progressive"));
 
-  item = gtk_check_menu_item_new_with_label ("Backtrace");
+  item = gtk_check_menu_item_new_with_mnemonic (_("_Backtrace"));
   gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
                                   priv->log_params.backtrace);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -4555,7 +4555,7 @@ gimp_dashboard_add_recording_options (GimpDashboard *dashboard,
                            G_CALLBACK (gimp_dashboard_backtrace_toggled),
                            dashboard, 0);
 
-  item = gtk_check_menu_item_new_with_label ("Messages");
+  item = gtk_check_menu_item_new_with_mnemonic (_("_Messages"));
   gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
                                   priv->log_params.messages);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -4565,7 +4565,7 @@ gimp_dashboard_add_recording_options (GimpDashboard *dashboard,
                            G_CALLBACK (gimp_dashboard_messages_toggled),
                            dashboard, 0);
 
-  item = gtk_check_menu_item_new_with_label ("Progressive");
+  item = gtk_check_menu_item_new_with_mnemonic (_("Progressi_ve"));
   gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
                                   priv->log_params.progressive);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
