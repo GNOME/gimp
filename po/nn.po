@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-02 15:16+0000\n"
-"PO-Revision-Date: 2026-11-02 17:23+0100\n"
+"POT-Creation-Date: 2026-11-08 17:34+0000\n"
+"PO-Revision-Date: 2026-11-09 18:27+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -178,15 +178,15 @@ msgstr ""
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "Viss du i staden ønskjer å avslutta straks, opna GIMP med --quit."
 
-#: app/gimp-update.c:425
+#: app/gimp-update.c:435
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Kanskje du manglar gio backends og treng å installera GVFS?"
 
-#: app/gimp-update.c:430
+#: app/gimp-update.c:440
 msgid "Perhaps you are missing GIO backends."
 msgstr "Kanskje du manglar GIO backends."
 
-#: app/gimp-update.c:467
+#: app/gimp-update.c:477
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -200,12 +200,12 @@ msgstr ""
 msgid "%s version %s"
 msgstr "%s versjon %s"
 
-#: app/gimp-version.c:164 app/gimp-version.c:283
+#: app/gimp-version.c:170 app/gimp-version.c:289
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "brukar %s versjon %s (kompilert mot versjon %s)"
 
-#: app/gimp-version.c:305
+#: app/gimp-version.c:311
 #, c-format
 msgid "using %s version %s"
 msgstr "brukar %s versjon %s"
@@ -1103,7 +1103,7 @@ msgstr[0] "Senk kanalen til botnen"
 msgstr[1] "Senk kanal til botnen"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
-#: app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260
+#: app/display/gimpdisplayshell-dnd.c:784 app/widgets/gimpchanneltreeview.c:260
 #: app/widgets/gimplayertreeview.c:901
 #, c-format
 msgid "%s Channel Copy"
@@ -2466,13 +2466,13 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 sekund"
 
-#: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
-#: app/actions/edit-commands.c:175 app/actions/error-console-commands.c:102
+#: app/actions/dashboard-commands.c:127 app/actions/documents-commands.c:263
+#: app/actions/edit-commands.c:182 app/actions/error-console-commands.c:106
 #: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
-#: app/actions/gradients-commands.c:81 app/actions/plug-in-commands.c:187
-#: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
-#: app/actions/text-tool-commands.c:167 app/actions/tool-options-commands.c:210
+#: app/actions/gradients-commands.c:85 app/actions/plug-in-commands.c:187
+#: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:71
+#: app/actions/text-tool-commands.c:172 app/actions/tool-options-commands.c:210
 #: app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
 #: app/dialogs/color-profile-dialog.c:154
 #: app/dialogs/color-profile-dialog.c:172
@@ -2513,66 +2513,67 @@ msgstr "240 sekund"
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: app/actions/dashboard-commands.c:122
+#: app/actions/dashboard-commands.c:128
 msgid "_Record"
 msgstr "_Spel inn"
 
-#: app/actions/dashboard-commands.c:145
+#: app/actions/dashboard-commands.c:151
 msgid "All Files"
 msgstr "Alle filene"
 
-#: app/actions/dashboard-commands.c:150
+#: app/actions/dashboard-commands.c:156
 msgid "Log Files (*.log)"
 msgstr "Loggfiler (*.log)"
 
-#: app/actions/dashboard-commands.c:194
+#: app/actions/dashboard-commands.c:200
 msgid "Log samples per second"
 msgstr "Logg prøver per sekund"
 
-#: app/actions/dashboard-commands.c:198
+#: app/actions/dashboard-commands.c:204
 msgid "Sample fre_quency:"
 msgstr "_Prøvefrekvens:"
 
-#: app/actions/dashboard-commands.c:217
+#: app/actions/dashboard-commands.c:223
 msgid "_Backtrace"
 msgstr "_Bakovrspor"
 
-#: app/actions/dashboard-commands.c:218
+#: app/actions/dashboard-commands.c:224
 msgid "Include backtraces in log"
 msgstr "Ta med bakoverspor i loggen"
 
-#: app/actions/dashboard-commands.c:230
+#: app/actions/dashboard-commands.c:236
 msgid "_Messages"
 msgstr "_Meldingar"
 
-#: app/actions/dashboard-commands.c:232
+#: app/actions/dashboard-commands.c:238
 msgid "Include diagnostic messages in log"
 msgstr "Ta med diagnostiske meldingar i loggen"
 
-#: app/actions/dashboard-commands.c:244
+#: app/actions/dashboard-commands.c:250
 msgid "Progressi_ve"
 msgstr "_Framgang"
 
-#: app/actions/dashboard-commands.c:246
+#: app/actions/dashboard-commands.c:252
 msgid "Produce complete log even if not properly terminated"
 msgstr "Lag ein fullstendig logg sjølv om han ikkje er korrekt avslutta"
 
-#: app/actions/dashboard-commands.c:309
+#: app/actions/dashboard-commands.c:321
 msgid "Add Marker"
 msgstr "Legg til markør"
 
-#: app/actions/dashboard-commands.c:311
+#: app/actions/dashboard-commands.c:323
 msgid "Enter a description for the marker"
 msgstr "Skriv inn ei beskriving av markøren"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:418
+#: app/actions/edit-commands.c:790 app/actions/edit-commands.c:812
 #: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:254
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
-#: app/display/gimpdisplayshell-dnd.c:707 app/display/gimpimagewindow.c:2497
+#: app/display/gimpdisplayshell-dnd.c:726 app/display/gimpimagewindow.c:2497
 #: app/widgets/gimplayertreeview.c:859 app/widgets/gimptoolbox.c:852
-#: app/widgets/gimptoolbox-dnd.c:178
+#: app/widgets/gimptoolbox-dnd.c:170 app/widgets/gimptoolbox-dnd.c:195
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3439,7 +3440,7 @@ msgstr "Fjern innslag der den tilhøyrande fila ikkje er tilgjengeleg"
 msgid "Clear Document History"
 msgstr "Tøm dokumentloggen"
 
-#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:176
+#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:183
 #: app/dialogs/preferences-dialog.c:617
 msgid "Cl_ear"
 msgstr "_Tøm"
@@ -3941,92 +3942,97 @@ msgstr "_Angra"
 msgid "_Redo"
 msgstr "_Gjenta"
 
-#: app/actions/edit-commands.c:167
+#: app/actions/edit-commands.c:174
 msgid "Clear Undo History"
 msgstr "Tøm angreloggen"
 
-#: app/actions/edit-commands.c:194
+#: app/actions/edit-commands.c:201
 msgid "Really clear image's undo history?"
 msgstr "Er du sikker på at du vil tømma angreloggen til biletet?"
 
-#: app/actions/edit-commands.c:207
+#: app/actions/edit-commands.c:214
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Tømmer du angreloggen for dette biletet, vil du få frigjort %s minne."
 
-#: app/actions/edit-commands.c:251
+#: app/actions/edit-commands.c:258
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
 msgstr[0] "Klipp ut laget til utklippstavla."
 msgstr[1] "Klipp ut %d lag til utklippstavla."
 
-#: app/actions/edit-commands.c:256
+#: app/actions/edit-commands.c:263
 msgid "Cut pixels to the clipboard."
 msgstr "Klipp pikslar til utklippstavla."
 
-#: app/actions/edit-commands.c:299
+#: app/actions/edit-commands.c:306
 msgid "Copied layer to the clipboard."
 msgstr "Kopierte laget til utklippstavla."
 
-#: app/actions/edit-commands.c:300 app/actions/edit-commands.c:332
+#: app/actions/edit-commands.c:307 app/actions/edit-commands.c:339
 msgid "Copied pixels to the clipboard."
 msgstr "Kopierte pikslar til utklippstavla."
 
-#: app/actions/edit-commands.c:449 app/actions/edit-commands.c:798
+#: app/actions/edit-commands.c:479 app/actions/edit-commands.c:927
 #: app/tools/gimpseamlessclonetool.c:304
 msgid "There is no image data in the clipboard to paste."
 msgstr "Det er ingen biletdata i utklippstavla å lime inn."
 
-#: app/actions/edit-commands.c:465
+#: app/actions/edit-commands.c:495
 msgid "Cut Named"
 msgstr "Klipp ut namngjeve"
 
-#: app/actions/edit-commands.c:468 app/actions/edit-commands.c:490
-#: app/actions/edit-commands.c:512
+#: app/actions/edit-commands.c:498 app/actions/edit-commands.c:520
+#: app/actions/edit-commands.c:542
 msgid "Enter a name for this buffer"
 msgstr "Skriv inn eit namn for denne bufferen"
 
-#: app/actions/edit-commands.c:487
+#: app/actions/edit-commands.c:517
 msgid "Copy Named"
 msgstr "Kopier namngjeve"
 
-#: app/actions/edit-commands.c:509
+#: app/actions/edit-commands.c:539
 msgid "Copy Visible Named"
 msgstr "Kopier synleg namngjeve"
 
-#: app/actions/edit-commands.c:557
+#: app/actions/edit-commands.c:587
 msgid "Clear"
 msgstr "Tøm"
 
-#: app/actions/edit-commands.c:689
+#: app/actions/edit-commands.c:719
 msgid "A selected layer's alpha channel is locked."
 msgstr "Alfakanalen i det valde laget er låst."
 
-#: app/actions/edit-commands.c:755
+#: app/actions/edit-commands.c:781 app/display/gimpdisplayshell-dnd.c:676
+#: app/widgets/gimpitemtreeview.c:1600 app/widgets/gimplayertreeview.c:850
+msgid "Drop layers"
+msgstr "Slepp lag"
+
+#: app/actions/edit-commands.c:884
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Limt inn som nytt lag fordi målet ikkje er eit enkelt lag eller ei lagmaske."
 
-#: app/actions/edit-commands.c:762
+#: app/actions/edit-commands.c:891
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Vart limt inn som nytt lag fordi målet er ei laggruppe."
 
-#: app/actions/edit-commands.c:769
+#: app/actions/edit-commands.c:898
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Limt inn som nytt lag fordi pikslane i mållaget er låst."
 
-#: app/actions/edit-commands.c:815
+#: app/actions/edit-commands.c:944
 msgid "There are no selected layers or channels to cut from."
 msgstr "Det er ingen merkte lag eller kanalar å klippa frå."
 
-#: app/actions/edit-commands.c:820 app/actions/edit-commands.c:853
-#: app/actions/edit-commands.c:878
+#: app/actions/edit-commands.c:949 app/actions/edit-commands.c:982
+#: app/actions/edit-commands.c:1007
 msgid "(Unnamed Buffer)"
 msgstr "(Buffer utan namn)"
 
-#: app/actions/edit-commands.c:848
+#: app/actions/edit-commands.c:977
 msgid "There are no selected layers or channels to copy from."
 msgstr "Det er ingen merkte lag eller kanalar å kopiera frå."
 
@@ -4105,22 +4111,22 @@ msgctxt "error-console-action"
 msgid "Highlight error console on messages"
 msgstr "Uthev feilkonsollen ved meldingar"
 
-#: app/actions/error-console-commands.c:90
+#: app/actions/error-console-commands.c:94
 msgid "Cannot save. Nothing is selected."
 msgstr "Kan ikkje lagra. Ingenting er vald."
 
-#: app/actions/error-console-commands.c:99
+#: app/actions/error-console-commands.c:103
 msgid "Save Error Log to File"
 msgstr "Lagra feilloggen til fil"
 
-#: app/actions/error-console-commands.c:103 app/actions/gradients-commands.c:82
+#: app/actions/error-console-commands.c:107 app/actions/gradients-commands.c:86
 #: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:89
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
 #: app/widgets/gimpsettingsbox.c:709
 msgid "_Save"
 msgstr "_Lagra"
 
-#: app/actions/error-console-commands.c:195
+#: app/actions/error-console-commands.c:209
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -5583,7 +5589,7 @@ msgctxt "gradients-action"
 msgid "Edit this gradient"
 msgstr "Rediger denne fargeovergangen"
 
-#: app/actions/gradients-commands.c:75
+#: app/actions/gradients-commands.c:79
 #, c-format
 msgid "Save '%s' as POV-Ray"
 msgstr "Lagra «%s» som POV-Ray"
@@ -8467,11 +8473,11 @@ msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Loddrett, venstre til høgre (ståande retning)"
 
-#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:163
+#: app/actions/text-editor-commands.c:67 app/actions/text-tool-commands.c:168
 msgid "Open Text File (UTF-8)"
 msgstr "Opna tekstfil (UTF-8)"
 
-#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:168
+#: app/actions/text-editor-commands.c:72 app/actions/text-tool-commands.c:173
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:95 app/dialogs/welcome-dialog.c:798
 #: app/widgets/gimpiconpicker.c:491 app/widgets/gimpopendialog.c:87
@@ -8479,7 +8485,7 @@ msgstr "Opna tekstfil (UTF-8)"
 msgid "_Open"
 msgstr "_Opna"
 
-#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:280
+#: app/actions/text-editor-commands.c:162 app/actions/text-tool-commands.c:301
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:297
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1658
@@ -8597,7 +8603,7 @@ msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Loddrett, venstre til høgre (ståande retning)"
 
-#: app/actions/text-tool-commands.c:231
+#: app/actions/text-tool-commands.c:242
 #, c-format
 msgid "Text along path failed: %s"
 msgstr "Tekst langs bane mislukkast: %s"
@@ -15623,14 +15629,41 @@ msgstr "Oppdatert frå %s ved %s"
 msgid "GIMP is brought to you by"
 msgstr "GIMP er levert deg av"
 
+#: app/dialogs/about-dialog.c:970
+msgid "This is a test release build"
+msgstr "Dette er ein testversjon"
+
 #: app/dialogs/about-dialog.c:972
+msgid "This is a development build"
+msgstr "Dette er ein utviklingsversjon"
+
+#: app/dialogs/about-dialog.c:978 app/display/gimpdisplayshell-callbacks.c:667
+#, c-format
+msgid "Merge Request !%d - Commit %s"
+msgstr "Spørsmål om samanslåing!%d – Utfør %s"
+
+#: app/dialogs/about-dialog.c:980
 #, c-format
 msgid ""
-"This is a development build\n"
-"commit %s"
+"%s\n"
+"<a href='%s/-/merge_requests/%d'>%s</a>"
 msgstr ""
-"Dette er ei ustabil utviklingsutgåve\n"
-"utføring %s"
+"%s\n"
+"<a href='%s/-/merge_requests/%d'>%s</a>"
+
+#: app/dialogs/about-dialog.c:983 app/display/gimpdisplayshell-callbacks.c:670
+#, c-format
+msgid "Commit %s"
+msgstr "Utfør %s"
+
+#: app/dialogs/about-dialog.c:984
+#, c-format
+msgid ""
+"%s\n"
+"%s"
+msgstr ""
+"%s\n"
+"%s"
 
 #: app/dialogs/action-search-dialog.c:68
 msgid "Search Actions"
@@ -18596,7 +18629,7 @@ msgid "_Next Tip"
 msgstr "_Neste tips"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1160
+#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1163
 msgid "Learn more"
 msgstr "Lær meir"
 
@@ -18854,12 +18887,12 @@ msgid "Other donation options"
 msgstr "Andre høve til å donera"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:1007
+#: app/dialogs/welcome-dialog.c:1004
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Utgjevingsmerknadar for GIMP %s"
 
-#: app/dialogs/welcome-dialog.c:1120
+#: app/dialogs/welcome-dialog.c:1123
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "Trykk på frigjorde element med eit %s punkt for å få ei omvising."
@@ -19080,22 +19113,14 @@ msgstr "Naviger i biletvisinga"
 msgid "Drop image files here to open them"
 msgstr "Slepp biletfilene her for å opna dei"
 
-#: app/display/gimpdisplayshell-callbacks.c:663
-#, c-format
+#: app/display/gimpdisplayshell-callbacks.c:660
+msgid "Unstable Development Version"
+msgstr "Ustabil utviklingsversjon"
+
+#: app/display/gimpdisplayshell-callbacks.c:661
 msgid ""
-"<big>Unstable Development Version</big>\n"
-"\n"
-"<small>commit <tt>%s</tt></small>\n"
-"\n"
-"<small>Please test bugs against latest git master branch\n"
-"before reporting them.</small>"
-msgstr ""
-"<big>Ustabil utviklingsversjon</big>\n"
-"\n"
-"<small>send inn <tt>%s</tt></small>\n"
-"\n"
-"<small>Sjekk feil mot den siste git master branch\n"
-"før du sender inn.</small>"
+"Please test bugs against latest git master branch before reporting them."
+msgstr "Sjekk feil mot den siste git master branch før du sender inn."
 
 #: app/display/gimpdisplayshell-close.c:170
 #: app/display/gimpdisplayshell-close.c:268
@@ -19161,8 +19186,8 @@ msgid "The image has been exported to '%s'."
 msgstr "Biletet er eksportert til «%s»."
 
 #: app/display/gimpdisplayshell-dnd.c:257
-#: app/display/gimpdisplayshell-dnd.c:767
-#: app/display/gimpdisplayshell-dnd.c:826
+#: app/display/gimpdisplayshell-dnd.c:787
+#: app/display/gimpdisplayshell-dnd.c:846
 msgid "Drop New Layer"
 msgstr "Slepp nytt lag"
 
@@ -19212,14 +19237,9 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Slepp farge i laget"
 
-#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1600
-#: app/widgets/gimplayertreeview.c:850
-msgid "Drop layers"
-msgstr "Slepp lag"
-
-#: app/display/gimpdisplayshell-dnd.c:800
-#: app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:927
-#: app/widgets/gimptoolbox-dnd.c:277
+#: app/display/gimpdisplayshell-dnd.c:820
+#: app/display/gimpdisplayshell-dnd.c:837 app/widgets/gimplayertreeview.c:927
+#: app/widgets/gimptoolbox-dnd.c:296
 msgid "Dropped Buffer"
 msgstr "Sluppe buffer"
 
@@ -19311,7 +19331,7 @@ msgstr "(tomt)"
 msgid "(none)"
 msgstr "(ingen)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1811
+#: app/display/gimpdisplayshell-tool-events.c:1860
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Lag henta: «%s»"
@@ -22310,15 +22330,15 @@ msgstr "Fekk ikkje til å køyra programtillegget «%s»"
 msgid "Unknown file type"
 msgstr "Ukjent filtype"
 
-#: app/plug-in/gimppluginmanager-restore.c:214
+#: app/plug-in/gimppluginmanager-restore.c:226
 msgid "Loading extension plug-ins"
 msgstr "Lastar inn programutvidingar"
 
-#: app/plug-in/gimppluginmanager-restore.c:234
+#: app/plug-in/gimppluginmanager-restore.c:246
 msgid "Searching plug-ins"
 msgstr "Søkjer etter programtillegg"
 
-#: app/plug-in/gimppluginmanager-restore.c:353
+#: app/plug-in/gimppluginmanager-restore.c:367
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
@@ -22327,24 +22347,24 @@ msgstr ""
 "Hoppar over potensielt programtillegg «%s»_ Programtillegg må vera "
 "installerte i undermapper.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:360
+#: app/plug-in/gimppluginmanager-restore.c:374
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "Hoppar over den ukjende fila «%s» i mappa for programtillegg.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:407
+#: app/plug-in/gimppluginmanager-restore.c:421
 msgid "Resource configuration"
 msgstr "Ressursoppsett"
 
-#: app/plug-in/gimppluginmanager-restore.c:443
+#: app/plug-in/gimppluginmanager-restore.c:457
 msgid "Querying new Plug-ins"
 msgstr "Kontrollerar nye programtillegg"
 
-#: app/plug-in/gimppluginmanager-restore.c:497
+#: app/plug-in/gimppluginmanager-restore.c:511
 msgid "Initializing Plug-ins"
 msgstr "Klargjer programtillegga"
 
-#: app/plug-in/gimppluginmanager-restore.c:570
+#: app/plug-in/gimppluginmanager-restore.c:584
 msgid "Starting Extensions"
 msgstr "Starter programutvidingar"
 
@@ -26427,7 +26447,7 @@ msgstr "Prosent av penselbreidda"
 msgid "(None)"
 msgstr "(Ingen)"
 
-#: app/widgets/gimpclipboard.c:473 app/widgets/gimpclipboard.c:487
+#: app/widgets/gimpclipboard.c:572 app/widgets/gimpclipboard.c:586
 msgid "Clipboard"
 msgstr "Utklippstavle"
 
@@ -28447,7 +28467,7 @@ msgstr "%s: %s"
 msgid "menu"
 msgstr "meny"
 
-#: app/widgets/gimpselectiondata.c:250
+#: app/widgets/gimpselectiondata.c:255
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -28458,7 +28478,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpselectiondata.c:254
+#: app/widgets/gimpselectiondata.c:259
 msgid "Invalid UTF-8"
 msgstr "Ugyldig UTF-8"
 
