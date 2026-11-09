@@ -15,7 +15,7 @@ msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-11-05 17:56+0000\n"
-"PO-Revision-Date: 2026-11-09 15:19+0100\n"
+"PO-Revision-Date: 2026-11-09 16:31+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -12872,7 +12872,7 @@ msgstr "Eerste Gfig"
 
 #: plug-ins/gfig/gfig-dialog.c:992
 msgid "This tool has no options"
-msgstr "Deze tool heeft geen opties"
+msgstr "Dit gereedschap heeft geen opties"
 
 #. Put buttons in
 #: plug-ins/gfig/gfig-dialog.c:1208
