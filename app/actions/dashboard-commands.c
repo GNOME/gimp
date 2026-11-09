@@ -37,13 +37,6 @@
 #include "gimp-intl.h"
 
 
-typedef struct
-{
-  GFile                  *folder;
-  GimpDashboardLogParams  params;
-} DashboardLogDialogInfo;
-
-
 /*  local function prototypes  */
 
 static void                     dashboard_log_record_response      (GtkNativeDialog        *dialog,
@@ -250,7 +243,7 @@ dashboard_log_record_response (GtkNativeDialog *dialog,
       GError *error = NULL;
 
       file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
-      if (! gimp_dashboard_log_start_recording (dashboard, file, NULL, &error))
+      if (! gimp_dashboard_log_start_recording (dashboard, file, &error))
         {
           Gimp *gimp;
 

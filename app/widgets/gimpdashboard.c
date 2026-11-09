@@ -295,6 +295,14 @@ struct _GroupData
   FieldData        *fields;
 };
 
+struct _GimpDashboardLogParams
+{
+  gint     sample_frequency;
+  gboolean backtrace;
+  gboolean messages;
+  gboolean progressive;
+};
+
 struct _GimpDashboardPrivate
 {
   Gimp                         *gimp;
@@ -328,6 +336,7 @@ struct _GimpDashboardPrivate
 
   GtkWidget                    *log_record_button;
   GtkLabel                     *log_add_marker_label;
+  GtkWidget                    *recording_options_expander;
 };
 
 
@@ -461,9 +470,19 @@ static gchar    * gimp_dashboard_format_value                   (VariableType   
 static void       gimp_dashboard_label_set_text                 (GtkLabel            *label,
                                                                  const gchar         *text);
 
+static void       gimp_dashboard_add_recording_options          (GimpDashboard       *dashboard,
+                                                                 GtkWidget           *vbox);
 static gboolean   gimp_dashboard_recording_menu_press           (GtkWidget           *widget,
                                                                  GdkEventButton      *bevent,
                                                                  GtkWidget           *menu);
+static void       gimp_dashboard_sample_frequency_changed       (GtkAdjustment       *adjustment,
+                                                                 GimpDashboard       *dashboard);
+static void       gimp_dashboard_backtrace_toggled              (GtkWidget           *item,
+                                                                 GimpDashboard       *dashboard);
+static void       gimp_dashboard_messages_toggled               (GtkWidget           *item,
+                                                                 GimpDashboard       *dashboard);
+static void       gimp_dashboard_progressive_toggled            (GtkWidget           *item,
+                                                                 GimpDashboard       *dashboard);
 
 /*  static variables  */
 
@@ -1029,7 +1048,6 @@ gimp_dashboard_init (GimpDashboard *dashboard)
   GtkWidget            *expander;
   GtkWidget            *hbox;
   GtkWidget            *button;
-  GtkWidget            *spinbutton;
   GtkWidget            *image;
   GtkWidget            *menu;
   GtkWidget            *item;
@@ -1279,91 +1297,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       gimp_dashboard_update_group (dashboard, group);
     }
 
-  /* Recording options */
-  priv->log_params = *(gimp_dashboard_log_get_default_params (dashboard));
-
-  expander = gtk_expander_new (_("Recording Options"));
-  gtk_expander_set_label_fill (GTK_EXPANDER (expander), TRUE);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_expander_set_label_widget (GTK_EXPANDER (expander), hbox);
-  gtk_widget_set_visible (hbox, TRUE);
-
-  label = gtk_label_new ("Recording options");
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_set_visible (label, TRUE);
-
-  button = gtk_button_new ();
-  gimp_help_set_help_data (button, _("Select options"),
-                           NULL);
-  gtk_widget_set_can_focus (button, FALSE);
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_set_visible (button, TRUE);
-
-  image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
-                                        GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
-  gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_MENU_LEFT,
-                                GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_set_visible (image, TRUE);
-
-  menu = gtk_menu_new ();
-  gtk_menu_attach_to_widget (GTK_MENU (menu), button, NULL);
-
-  g_signal_connect_object (expander, "button-press-event",
-                           G_CALLBACK (gimp_dashboard_recording_menu_press),
-                           menu, 0);
-
-  /* Menu options */
-  item = gtk_check_menu_item_new_with_label ("Backtrace");
-  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-                                  priv->log_params.backtrace);
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  gtk_widget_set_visible (item, TRUE);
-
-  item = gtk_check_menu_item_new_with_label ("Messages");
-  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-                                  priv->log_params.messages);
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  gtk_widget_set_visible (item, TRUE);
-
-  item = gtk_check_menu_item_new_with_label ("Progressive");
-  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
-                                  priv->log_params.progressive);
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  gtk_widget_set_visible (item, TRUE);
-
-  frame = gimp_frame_new (NULL);
-  gtk_container_add (GTK_CONTAINER (expander), frame);
-  gtk_widget_set_visible (frame, TRUE);
-
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2 * content_spacing);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_set_visible (vbox2, TRUE);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_set_visible (hbox, TRUE);
-
-  label = gtk_label_new_with_mnemonic (_("Sample fre_quency:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_set_visible (label, TRUE);
-
-  spinbutton = gimp_spin_button_new_with_range (1, 1000, 1);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_set_visible (spinbutton, TRUE);
-
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON (spinbutton),
-                             priv->log_params.sample_frequency);
-
-  gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
-  gtk_widget_set_visible (expander, TRUE);
+  gimp_dashboard_add_recording_options (dashboard, vbox);
 
   /* sampler thread
    *
@@ -4518,6 +4452,164 @@ gimp_dashboard_label_set_text (GtkLabel    *label,
     gtk_label_set_text (label, text);
 }
 
+static void
+gimp_dashboard_add_recording_options (GimpDashboard *dashboard,
+                                      GtkWidget     *vbox)
+{
+  GimpDashboardPrivate *priv;
+  GtkWidget            *hbox;
+  GtkWidget            *vbox2;
+  GtkWidget            *button;
+  GtkWidget            *spinbutton;
+  GtkAdjustment        *adjustment;
+  GtkWidget            *label;
+  GtkWidget            *image;
+  GtkWidget            *frame;
+  GtkWidget            *menu;
+  GtkWidget            *item;
+  gint                  content_spacing;
+
+  priv = dashboard->priv = gimp_dashboard_get_instance_private (dashboard);
+
+  gtk_widget_style_get (GTK_WIDGET (dashboard),
+                        "content-spacing", &content_spacing,
+                        NULL);
+
+  priv->recording_options_expander = gtk_expander_new (_("Recording Options"));
+  gtk_expander_set_label_fill (GTK_EXPANDER (priv->recording_options_expander),
+                               TRUE);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_expander_set_label_widget (GTK_EXPANDER (priv->recording_options_expander),
+                                 hbox);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  label = gtk_label_new ("Recording options");
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (label, TRUE);
+
+  button = gtk_button_new ();
+  gimp_help_set_help_data (button, _("Select options"),
+                           NULL);
+  gtk_widget_set_can_focus (button, FALSE);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (button, TRUE);
+
+  image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
+                                        GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
+  gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_MENU_LEFT,
+                                GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_set_visible (image, TRUE);
+
+  menu = gtk_menu_new ();
+  gtk_menu_attach_to_widget (GTK_MENU (menu), button, NULL);
+
+  g_signal_connect_object (priv->recording_options_expander,
+                           "button-press-event",
+                           G_CALLBACK (gimp_dashboard_recording_menu_press),
+                           menu, 0);
+
+  /* Menu options */
+  if (! g_object_get_data (G_OBJECT (dashboard), "gimp-dashboard-sample-frequency"))
+    g_object_set_data (G_OBJECT (dashboard), "gimp-dashboard-sample-frequency",
+                       GINT_TO_POINTER (10));
+  priv->log_params.sample_frequency =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dashboard),
+                                        "gimp-dashboard-sample-frequency"));
+
+  if (! g_object_get_data (G_OBJECT (dashboard), "gimp-dashboard-backtrace"))
+    g_object_set_data (G_OBJECT (dashboard), "gimp-dashboard-backtrace",
+                       GINT_TO_POINTER (TRUE));
+  priv->log_params.backtrace =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dashboard),
+                                        "gimp-dashboard-backtrace"));
+
+  if (! g_object_get_data (G_OBJECT (dashboard), "gimp-dashboard-messages"))
+    g_object_set_data (G_OBJECT (dashboard), "gimp-dashboard-messages",
+                       GINT_TO_POINTER (TRUE));
+  priv->log_params.messages =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dashboard),
+                                        "gimp-dashboard-messages"));
+
+  if (! g_object_get_data (G_OBJECT (dashboard), "gimp-dashboard-progressive"))
+    g_object_set_data (G_OBJECT (dashboard), "gimp-dashboard-progressive",
+                       GINT_TO_POINTER (FALSE));
+  priv->log_params.progressive =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dashboard),
+                                        "gimp-dashboard-progressive"));
+
+  item = gtk_check_menu_item_new_with_label ("Backtrace");
+  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+                                  priv->log_params.backtrace);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_set_visible (item, TRUE);
+
+  g_signal_connect_object (item, "toggled",
+                           G_CALLBACK (gimp_dashboard_backtrace_toggled),
+                           dashboard, 0);
+
+  item = gtk_check_menu_item_new_with_label ("Messages");
+  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+                                  priv->log_params.messages);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_set_visible (item, TRUE);
+
+  g_signal_connect_object (item, "toggled",
+                           G_CALLBACK (gimp_dashboard_messages_toggled),
+                           dashboard, 0);
+
+  item = gtk_check_menu_item_new_with_label ("Progressive");
+  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item),
+                                  priv->log_params.progressive);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_set_visible (item, TRUE);
+
+  g_signal_connect_object (item, "toggled",
+                           G_CALLBACK (gimp_dashboard_progressive_toggled),
+                           dashboard, 0);
+
+  frame = gimp_frame_new (NULL);
+  gtk_container_add (GTK_CONTAINER (priv->recording_options_expander), frame);
+  gtk_widget_set_visible (frame, TRUE);
+
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2 * content_spacing);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_set_visible (vbox2, TRUE);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_set_visible (hbox, TRUE);
+
+  label = gtk_label_new_with_mnemonic (_("Sample fre_quency:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_set_visible (label, TRUE);
+
+  spinbutton = gimp_spin_button_new_with_range (LOG_SAMPLE_FREQUENCY_MIN,
+                                                LOG_SAMPLE_FREQUENCY_MAX,
+                                                1);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_set_visible (spinbutton, TRUE);
+
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (spinbutton),
+                             priv->log_params.sample_frequency);
+
+  adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
+  g_signal_connect_object (adjustment, "value-changed",
+                           G_CALLBACK (gimp_dashboard_sample_frequency_changed),
+                           dashboard, 0);
+
+  gtk_box_pack_start (GTK_BOX (vbox), priv->recording_options_expander, FALSE,
+                      FALSE, 0);
+  gtk_widget_set_visible (priv->recording_options_expander, TRUE);
+}
+
 static gboolean
 gimp_dashboard_recording_menu_press (GtkWidget           *widget,
                                      GdkEventButton      *bevent,
@@ -4552,6 +4644,61 @@ gimp_dashboard_recording_menu_press (GtkWidget           *widget,
   return FALSE;
 }
 
+static void
+gimp_dashboard_sample_frequency_changed (GtkAdjustment *adjustment,
+                                         GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv;
+
+  priv = dashboard->priv = gimp_dashboard_get_instance_private (dashboard);
+
+  priv->log_params.sample_frequency = gtk_adjustment_get_value (adjustment);
+  g_object_set_data (G_OBJECT (dashboard), "gimp-dashboard-sample-frequency",
+                     GINT_TO_POINTER (priv->log_params.sample_frequency));
+}
+
+static void
+gimp_dashboard_backtrace_toggled (GtkWidget     *item,
+                                  GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv;
+
+  priv = dashboard->priv = gimp_dashboard_get_instance_private (dashboard);
+
+  priv->log_params.backtrace =
+    gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (item));
+  g_object_set_data (G_OBJECT (dashboard), "gimp-dashboard-backtrace",
+                     GINT_TO_POINTER (priv->log_params.backtrace));
+}
+
+static void
+gimp_dashboard_messages_toggled  (GtkWidget     *item,
+                                  GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv;
+
+  priv = dashboard->priv = gimp_dashboard_get_instance_private (dashboard);
+
+  priv->log_params.messages =
+    gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (item));
+  g_object_set_data (G_OBJECT (dashboard), "gimp-dashboard-messages",
+                     GINT_TO_POINTER (priv->log_params.messages));
+}
+
+static void
+gimp_dashboard_progressive_toggled (GtkWidget     *item,
+                                    GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv;
+
+  priv = dashboard->priv = gimp_dashboard_get_instance_private (dashboard);
+
+  priv->log_params.progressive =
+    gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (item));
+  g_object_set_data (G_OBJECT (dashboard), "gimp-dashboard-progressive",
+                     GINT_TO_POINTER (priv->log_params.progressive));
+}
+
 
 /*  public functions  */
 
@@ -4574,10 +4721,9 @@ gimp_dashboard_new (Gimp            *gimp,
 }
 
 gboolean
-gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
-                                    GFile                         *file,
-                                    const GimpDashboardLogParams  *params,
-                                    GError                       **error)
+gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
+                                    GFile          *file,
+                                    GError        **error)
 {
   GimpDashboardPrivate  *priv;
   GimpUIManager         *ui_manager;
@@ -4599,10 +4745,8 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
 
   g_return_val_if_fail (! gimp_dashboard_log_is_recording (dashboard), FALSE);
 
-  if (! params)
-    params = gimp_dashboard_log_get_default_params (dashboard);
-
-  priv->log_params = *params;
+  /* Don't allow changing recording settings while recording */
+  gtk_widget_set_sensitive (priv->recording_options_expander, FALSE);
 
   if (g_getenv ("GIMP_PERFORMANCE_LOG_SAMPLE_FREQUENCY"))
     {
@@ -4891,6 +5035,8 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
 
   if (! gimp_dashboard_log_is_recording (dashboard))
     return TRUE;
+
+  gtk_widget_set_sensitive (priv->recording_options_expander, TRUE);
 
   g_mutex_lock (&priv->mutex);
 
