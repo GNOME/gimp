@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-01 16:28+0000\n"
-"PO-Revision-Date: 2026-11-02 09:15+0800\n"
+"POT-Creation-Date: 2026-11-08 17:34+0000\n"
+"PO-Revision-Date: 2026-11-09 08:53+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -188,15 +188,15 @@ msgstr "GIMP 现在作为后台进程运行。您可以随时按 Ctrl-C（SIGINT
 msgid "If you wanted to quit immediately instead, call GIMP with --quit."
 msgstr "如果您想要立即退出，可以带 --quit 命令选项调用 GIMP。"
 
-#: app/gimp-update.c:425
+#: app/gimp-update.c:435
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "可能您缺少 GIO 后端而需要安装 GVFS？"
 
-#: app/gimp-update.c:430
+#: app/gimp-update.c:440
 msgid "Perhaps you are missing GIO backends."
 msgstr "可能您缺少 GIO 后端。"
 
-#: app/gimp-update.c:467
+#: app/gimp-update.c:477
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -210,12 +210,12 @@ msgstr ""
 msgid "%s version %s"
 msgstr "%s 版本 %s"
 
-#: app/gimp-version.c:164 app/gimp-version.c:283
+#: app/gimp-version.c:170 app/gimp-version.c:289
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "使用 %s 版本 %s（针对版本 %s 编译）"
 
-#: app/gimp-version.c:305
+#: app/gimp-version.c:311
 #, c-format
 msgid "using %s version %s"
 msgstr "使用 %s 版本 %s"
@@ -1107,7 +1107,7 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "通道移至底端"
 
 #: app/actions/channels-commands.c:401 app/core/gimpimage-new.c:534
-#: app/display/gimpdisplayshell-dnd.c:764 app/widgets/gimpchanneltreeview.c:260
+#: app/display/gimpdisplayshell-dnd.c:784 app/widgets/gimpchanneltreeview.c:260
 #: app/widgets/gimplayertreeview.c:901
 #, c-format
 msgid "%s Channel Copy"
@@ -2470,13 +2470,13 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 秒"
 
-#: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
-#: app/actions/edit-commands.c:175 app/actions/error-console-commands.c:102
+#: app/actions/dashboard-commands.c:127 app/actions/documents-commands.c:263
+#: app/actions/edit-commands.c:182 app/actions/error-console-commands.c:106
 #: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
-#: app/actions/gradients-commands.c:81 app/actions/plug-in-commands.c:187
-#: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:65
-#: app/actions/text-tool-commands.c:167 app/actions/tool-options-commands.c:210
+#: app/actions/gradients-commands.c:85 app/actions/plug-in-commands.c:187
+#: app/actions/templates-commands.c:248 app/actions/text-editor-commands.c:71
+#: app/actions/text-tool-commands.c:172 app/actions/tool-options-commands.c:210
 #: app/actions/window-commands.c:77 app/dialogs/color-profile-dialog.c:136
 #: app/dialogs/color-profile-dialog.c:154
 #: app/dialogs/color-profile-dialog.c:172
@@ -2517,66 +2517,67 @@ msgstr "240 秒"
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: app/actions/dashboard-commands.c:122
+#: app/actions/dashboard-commands.c:128
 msgid "_Record"
 msgstr "记录(_R)"
 
-#: app/actions/dashboard-commands.c:145
+#: app/actions/dashboard-commands.c:151
 msgid "All Files"
 msgstr "全部文件"
 
-#: app/actions/dashboard-commands.c:150
+#: app/actions/dashboard-commands.c:156
 msgid "Log Files (*.log)"
 msgstr "日志文件 (*.log)"
 
-#: app/actions/dashboard-commands.c:194
+#: app/actions/dashboard-commands.c:200
 msgid "Log samples per second"
 msgstr "每秒钟日志采样"
 
-#: app/actions/dashboard-commands.c:198
+#: app/actions/dashboard-commands.c:204
 msgid "Sample fre_quency:"
 msgstr "采样频率(_Q)："
 
-#: app/actions/dashboard-commands.c:217
+#: app/actions/dashboard-commands.c:223
 msgid "_Backtrace"
 msgstr "回溯追踪(_B)"
 
-#: app/actions/dashboard-commands.c:218
+#: app/actions/dashboard-commands.c:224
 msgid "Include backtraces in log"
 msgstr "在日志中包含回溯追踪"
 
-#: app/actions/dashboard-commands.c:230
+#: app/actions/dashboard-commands.c:236
 msgid "_Messages"
 msgstr "消息(_M)"
 
-#: app/actions/dashboard-commands.c:232
+#: app/actions/dashboard-commands.c:238
 msgid "Include diagnostic messages in log"
 msgstr "在日志中包含诊断消息"
 
-#: app/actions/dashboard-commands.c:244
+#: app/actions/dashboard-commands.c:250
 msgid "Progressi_ve"
 msgstr "渐进(_V)"
 
-#: app/actions/dashboard-commands.c:246
+#: app/actions/dashboard-commands.c:252
 msgid "Produce complete log even if not properly terminated"
 msgstr "即使没有正确结束仍然生成完整日志"
 
-#: app/actions/dashboard-commands.c:309
+#: app/actions/dashboard-commands.c:321
 msgid "Add Marker"
 msgstr "添加标记"
 
-#: app/actions/dashboard-commands.c:311
+#: app/actions/dashboard-commands.c:323
 msgid "Enter a description for the marker"
 msgstr "为该标记添加描述"
 
 #: app/actions/data-commands.c:90 app/actions/documents-commands.c:418
+#: app/actions/edit-commands.c:790 app/actions/edit-commands.c:812
 #: app/actions/file-commands.c:234 app/dialogs/file-open-dialog.c:254
 #: app/dialogs/file-open-dialog.c:300
 #: app/dialogs/file-open-location-dialog.c:219
 #: app/dialogs/file-open-location-dialog.c:235
-#: app/display/gimpdisplayshell-dnd.c:707 app/display/gimpimagewindow.c:2497
+#: app/display/gimpdisplayshell-dnd.c:726 app/display/gimpimagewindow.c:2497
 #: app/widgets/gimplayertreeview.c:859 app/widgets/gimptoolbox.c:852
-#: app/widgets/gimptoolbox-dnd.c:178
+#: app/widgets/gimptoolbox-dnd.c:170 app/widgets/gimptoolbox-dnd.c:195
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3443,7 +3444,7 @@ msgstr "将不可用的相关文件项目删除"
 msgid "Clear Document History"
 msgstr "清除文档历史"
 
-#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:176
+#: app/actions/documents-commands.c:264 app/actions/edit-commands.c:183
 #: app/dialogs/preferences-dialog.c:617
 msgid "Cl_ear"
 msgstr "清除(_E)"
@@ -3936,90 +3937,95 @@ msgstr "撤消(_U)"
 msgid "_Redo"
 msgstr "重做(_R)"
 
-#: app/actions/edit-commands.c:167
+#: app/actions/edit-commands.c:174
 msgid "Clear Undo History"
 msgstr "清除撤消历史"
 
-#: app/actions/edit-commands.c:194
+#: app/actions/edit-commands.c:201
 msgid "Really clear image's undo history?"
 msgstr "真的要清除图像的撤消历史吗？"
 
-#: app/actions/edit-commands.c:207
+#: app/actions/edit-commands.c:214
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "清除此图像的撤消历史可释放 %s 的内存。"
 
-#: app/actions/edit-commands.c:251
+#: app/actions/edit-commands.c:258
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
 msgstr[0] "将 %d 个图层剪切到剪贴板。"
 
-#: app/actions/edit-commands.c:256
+#: app/actions/edit-commands.c:263
 msgid "Cut pixels to the clipboard."
 msgstr "将像素剪切到剪贴板。"
 
-#: app/actions/edit-commands.c:299
+#: app/actions/edit-commands.c:306
 msgid "Copied layer to the clipboard."
 msgstr "将图层复制到剪贴板。"
 
-#: app/actions/edit-commands.c:300 app/actions/edit-commands.c:332
+#: app/actions/edit-commands.c:307 app/actions/edit-commands.c:339
 msgid "Copied pixels to the clipboard."
 msgstr "将像素复制到剪贴板。"
 
-#: app/actions/edit-commands.c:449 app/actions/edit-commands.c:798
+#: app/actions/edit-commands.c:479 app/actions/edit-commands.c:927
 #: app/tools/gimpseamlessclonetool.c:304
 msgid "There is no image data in the clipboard to paste."
 msgstr "剪贴板中没有可粘贴的图像数据。"
 
-#: app/actions/edit-commands.c:465
+#: app/actions/edit-commands.c:495
 msgid "Cut Named"
 msgstr "剪切命名"
 
-#: app/actions/edit-commands.c:468 app/actions/edit-commands.c:490
-#: app/actions/edit-commands.c:512
+#: app/actions/edit-commands.c:498 app/actions/edit-commands.c:520
+#: app/actions/edit-commands.c:542
 msgid "Enter a name for this buffer"
 msgstr "为这个缓冲区输入一个名字"
 
-#: app/actions/edit-commands.c:487
+#: app/actions/edit-commands.c:517
 msgid "Copy Named"
 msgstr "复制命名"
 
-#: app/actions/edit-commands.c:509
+#: app/actions/edit-commands.c:539
 msgid "Copy Visible Named"
 msgstr "复制可见命名"
 
-#: app/actions/edit-commands.c:557
+#: app/actions/edit-commands.c:587
 msgid "Clear"
 msgstr "清空"
 
-#: app/actions/edit-commands.c:689
+#: app/actions/edit-commands.c:719
 msgid "A selected layer's alpha channel is locked."
 msgstr "一个选中图层的透明通道已被锁定。"
 
-#: app/actions/edit-commands.c:755
+#: app/actions/edit-commands.c:781 app/display/gimpdisplayshell-dnd.c:676
+#: app/widgets/gimpitemtreeview.c:1600 app/widgets/gimplayertreeview.c:850
+msgid "Drop layers"
+msgstr "拖放图层"
+
+#: app/actions/edit-commands.c:884
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr "粘贴为新图层，因为目标不是单个图层或图层蒙板。"
 
-#: app/actions/edit-commands.c:762
+#: app/actions/edit-commands.c:891
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "粘贴为新图层，因为目标为图层组。"
 
-#: app/actions/edit-commands.c:769
+#: app/actions/edit-commands.c:898
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "粘贴为新图层，因为目标像素已被锁定。"
 
-#: app/actions/edit-commands.c:815
+#: app/actions/edit-commands.c:944
 msgid "There are no selected layers or channels to cut from."
 msgstr "没有选中的图层或通道可以剪切。"
 
-#: app/actions/edit-commands.c:820 app/actions/edit-commands.c:853
-#: app/actions/edit-commands.c:878
+#: app/actions/edit-commands.c:949 app/actions/edit-commands.c:982
+#: app/actions/edit-commands.c:1007
 msgid "(Unnamed Buffer)"
 msgstr "（未命名缓冲区）"
 
-#: app/actions/edit-commands.c:848
+#: app/actions/edit-commands.c:977
 msgid "There are no selected layers or channels to copy from."
 msgstr "没有选中的图层或通道可以复制。"
 
@@ -4098,22 +4104,22 @@ msgctxt "error-console-action"
 msgid "Highlight error console on messages"
 msgstr "出现消息时高亮显示错误控制台"
 
-#: app/actions/error-console-commands.c:90
+#: app/actions/error-console-commands.c:94
 msgid "Cannot save. Nothing is selected."
 msgstr "无法保存。没有选中任何内容。"
 
-#: app/actions/error-console-commands.c:99
+#: app/actions/error-console-commands.c:103
 msgid "Save Error Log to File"
 msgstr "将出错日志保存到文件"
 
-#: app/actions/error-console-commands.c:103 app/actions/gradients-commands.c:82
+#: app/actions/error-console-commands.c:107 app/actions/gradients-commands.c:86
 #: app/dialogs/file-save-dialog.c:759 app/dialogs/path-export-dialog.c:89
 #: app/display/gimpdisplayshell-close.c:179 app/widgets/gimpsavedialog.c:142
 #: app/widgets/gimpsettingsbox.c:709
 msgid "_Save"
 msgstr "保存(_S)"
 
-#: app/actions/error-console-commands.c:195
+#: app/actions/error-console-commands.c:209
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -5563,7 +5569,7 @@ msgctxt "gradients-action"
 msgid "Edit this gradient"
 msgstr "编辑该渐变"
 
-#: app/actions/gradients-commands.c:75
+#: app/actions/gradients-commands.c:79
 #, c-format
 msgid "Save '%s' as POV-Ray"
 msgstr "将“%s”保存为 POV-Ray"
@@ -8415,11 +8421,11 @@ msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "竖排，从左到右（竖直方向）"
 
-#: app/actions/text-editor-commands.c:61 app/actions/text-tool-commands.c:163
+#: app/actions/text-editor-commands.c:67 app/actions/text-tool-commands.c:168
 msgid "Open Text File (UTF-8)"
 msgstr "打开文本文件 (UTF-8)"
 
-#: app/actions/text-editor-commands.c:66 app/actions/text-tool-commands.c:168
+#: app/actions/text-editor-commands.c:72 app/actions/text-tool-commands.c:173
 #: app/dialogs/file-open-location-dialog.c:81
 #: app/dialogs/path-import-dialog.c:95 app/dialogs/welcome-dialog.c:798
 #: app/widgets/gimpiconpicker.c:491 app/widgets/gimpopendialog.c:87
@@ -8427,7 +8433,7 @@ msgstr "打开文本文件 (UTF-8)"
 msgid "_Open"
 msgstr "打开(_O)"
 
-#: app/actions/text-editor-commands.c:140 app/actions/text-tool-commands.c:280
+#: app/actions/text-editor-commands.c:162 app/actions/text-tool-commands.c:301
 #: app/config/gimpconfig-file.c:73 app/core/gimppalette-import.c:526
 #: app/plug-in/gimpenvirontable.c:289 app/plug-in/gimpinterpreterdb.c:297
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1658
@@ -8545,7 +8551,7 @@ msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "竖排，从左到右（竖直方向）"
 
-#: app/actions/text-tool-commands.c:231
+#: app/actions/text-tool-commands.c:242
 #, c-format
 msgid "Text along path failed: %s"
 msgstr "文字对齐路径失败：%s"
@@ -15387,14 +15393,41 @@ msgstr "已是最新 %s %s"
 msgid "GIMP is brought to you by"
 msgstr "GIMP 的提供者为"
 
+#: app/dialogs/about-dialog.c:970
+msgid "This is a test release build"
+msgstr "这是一个测试发布构建"
+
 #: app/dialogs/about-dialog.c:972
+msgid "This is a development build"
+msgstr "这是一个开发版本构建"
+
+#: app/dialogs/about-dialog.c:978 app/display/gimpdisplayshell-callbacks.c:667
+#, c-format
+msgid "Merge Request !%d - Commit %s"
+msgstr "合并请求 !%d - 提交 %s"
+
+#: app/dialogs/about-dialog.c:980
 #, c-format
 msgid ""
-"This is a development build\n"
-"commit %s"
+"%s\n"
+"<a href='%s/-/merge_requests/%d'>%s</a>"
 msgstr ""
-"这是一个开发版本构建\n"
-"提交编号 %s"
+"%s\n"
+"<a href='%s/-/merge_requests/%d'>%s</a>"
+
+#: app/dialogs/about-dialog.c:983 app/display/gimpdisplayshell-callbacks.c:670
+#, c-format
+msgid "Commit %s"
+msgstr "提交 %s"
+
+#: app/dialogs/about-dialog.c:984
+#, c-format
+msgid ""
+"%s\n"
+"%s"
+msgstr ""
+"%s\n"
+"%s"
 
 #: app/dialogs/action-search-dialog.c:68
 msgid "Search Actions"
@@ -18319,7 +18352,7 @@ msgid "_Next Tip"
 msgstr "后一条提示(_N)"
 
 #. a link to the related section in the user manual
-#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1160
+#: app/dialogs/tips-dialog.c:197 app/dialogs/welcome-dialog.c:1163
 msgid "Learn more"
 msgstr "了解更多"
 
@@ -18574,12 +18607,12 @@ msgid "Other donation options"
 msgstr "其他捐助选项"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: app/dialogs/welcome-dialog.c:1007
+#: app/dialogs/welcome-dialog.c:1004
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "GIMP %s 发布记录"
 
-#: app/dialogs/welcome-dialog.c:1120
+#: app/dialogs/welcome-dialog.c:1123
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr "在带有 %s 项目符号的发布项目上点击来获取导览。"
@@ -18795,26 +18828,19 @@ msgstr "切换快速蒙板"
 msgid "Navigate the image display"
 msgstr "导航图像显示"
 
-#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1619
+#: app/display/gimpdisplayshell.c:818 app/display/gimpdisplayshell.c:1608
 #: app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "拖动图像到此处以打开"
 
-#: app/display/gimpdisplayshell-callbacks.c:663
-#, c-format
+#: app/display/gimpdisplayshell-callbacks.c:660
+msgid "Unstable Development Version"
+msgstr "不稳定的开发版本"
+
+#: app/display/gimpdisplayshell-callbacks.c:661
 msgid ""
-"<big>Unstable Development Version</big>\n"
-"\n"
-"<small>commit <tt>%s</tt></small>\n"
-"\n"
-"<small>Please test bugs against latest git master branch\n"
-"before reporting them.</small>"
-msgstr ""
-"<big>不稳定的开发版本</big>\n"
-"\n"
-"<small>Git 提交 <tt>%s</tt></small>\n"
-"\n"
-"<small>请在报告问题前使用最新的 Git master 分支进行测试。</small>"
+"Please test bugs against latest git master branch before reporting them."
+msgstr "请在报告问题前使用最新的 git master 分支进行测试。"
 
 #: app/display/gimpdisplayshell-close.c:170
 #: app/display/gimpdisplayshell-close.c:268
@@ -18866,8 +18892,8 @@ msgid "The image has been exported to '%s'."
 msgstr "图像已导出到“%s”。"
 
 #: app/display/gimpdisplayshell-dnd.c:257
-#: app/display/gimpdisplayshell-dnd.c:767
-#: app/display/gimpdisplayshell-dnd.c:826
+#: app/display/gimpdisplayshell-dnd.c:787
+#: app/display/gimpdisplayshell-dnd.c:846
 msgid "Drop New Layer"
 msgstr "拖放新图层"
 
@@ -18917,14 +18943,9 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "将颜色拖放到图层"
 
-#: app/display/gimpdisplayshell-dnd.c:657 app/widgets/gimpitemtreeview.c:1600
-#: app/widgets/gimplayertreeview.c:850
-msgid "Drop layers"
-msgstr "拖放图层"
-
-#: app/display/gimpdisplayshell-dnd.c:800
-#: app/display/gimpdisplayshell-dnd.c:817 app/widgets/gimplayertreeview.c:927
-#: app/widgets/gimptoolbox-dnd.c:277
+#: app/display/gimpdisplayshell-dnd.c:820
+#: app/display/gimpdisplayshell-dnd.c:837 app/widgets/gimplayertreeview.c:927
+#: app/widgets/gimptoolbox-dnd.c:296
 msgid "Dropped Buffer"
 msgstr "拖放的缓冲区"
 
@@ -19016,7 +19037,7 @@ msgstr "（干净）"
 msgid "(none)"
 msgstr "（无）"
 
-#: app/display/gimpdisplayshell-tool-events.c:1811
+#: app/display/gimpdisplayshell-tool-events.c:1860
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "拾取的图层：“%s”"
@@ -21969,39 +21990,39 @@ msgstr "“%s”插件启用失败"
 msgid "Unknown file type"
 msgstr "未知文件类型"
 
-#: app/plug-in/gimppluginmanager-restore.c:214
+#: app/plug-in/gimppluginmanager-restore.c:226
 msgid "Loading extension plug-ins"
 msgstr "正在加载扩展插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:234
+#: app/plug-in/gimppluginmanager-restore.c:246
 msgid "Searching plug-ins"
 msgstr "正在搜索插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:353
+#: app/plug-in/gimppluginmanager-restore.c:367
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr "跳过潜在的插件“%s”：插件必须安装在子文件夹中。\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:360
+#: app/plug-in/gimppluginmanager-restore.c:374
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "跳过插件文件夹中的未知文件“%s”。\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:407
+#: app/plug-in/gimppluginmanager-restore.c:421
 msgid "Resource configuration"
 msgstr "资源配置"
 
-#: app/plug-in/gimppluginmanager-restore.c:443
+#: app/plug-in/gimppluginmanager-restore.c:457
 msgid "Querying new Plug-ins"
 msgstr "正在查询新的插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:497
+#: app/plug-in/gimppluginmanager-restore.c:511
 msgid "Initializing Plug-ins"
 msgstr "正在初始化插件"
 
-#: app/plug-in/gimppluginmanager-restore.c:570
+#: app/plug-in/gimppluginmanager-restore.c:584
 msgid "Starting Extensions"
 msgstr "正在启动扩展"
 
@@ -26016,7 +26037,7 @@ msgstr "笔刷宽度的百分比"
 msgid "(None)"
 msgstr "（无）"
 
-#: app/widgets/gimpclipboard.c:473 app/widgets/gimpclipboard.c:487
+#: app/widgets/gimpclipboard.c:572 app/widgets/gimpclipboard.c:586
 msgid "Clipboard"
 msgstr "剪贴板"
 
@@ -28012,7 +28033,7 @@ msgstr "%s: %s"
 msgid "menu"
 msgstr "菜单"
 
-#: app/widgets/gimpselectiondata.c:250
+#: app/widgets/gimpselectiondata.c:255
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -28023,7 +28044,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpselectiondata.c:254
+#: app/widgets/gimpselectiondata.c:259
 msgid "Invalid UTF-8"
 msgstr "无效的 UTF-8"
 
