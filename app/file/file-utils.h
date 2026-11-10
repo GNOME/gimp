@@ -19,6 +19,7 @@
 
 #pragma once
 
+GFile     * file_utils_file_check_existing  (GFile        *file);
 
 GFile     * file_utils_filename_to_file  (Gimp         *gimp,
                                           const gchar  *filename,

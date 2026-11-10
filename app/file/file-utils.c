@@ -167,6 +167,47 @@ file_utils_filename_to_file (Gimp         *gimp,
   return file;
 }
 
+GFile *
+file_utils_file_check_existing (GFile *file)
+{
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+#if !defined (G_OS_WIN32) && !defined (PLATFORM_OSX)
+  /* colons are forbidden on Windows, and on macOS due to historical reasons,
+     but valid in file names on Linux and other POSIX systems */
+  if (! g_file_is_native (file))
+    {
+      gchar *uri = g_file_get_uri (file);
+      gchar *path = g_uri_unescape_string (uri, NULL);
+
+      g_free (uri);
+
+      if (path && ! g_path_is_absolute (path) &&
+          ! g_file_test (path, G_FILE_TEST_EXISTS))
+        {
+          GFile *parsed = g_file_parse_name (path);
+
+          g_free (path);
+          path = g_file_get_path (parsed);
+          g_object_unref (parsed);
+        }
+
+      if (path && g_file_test (path, G_FILE_TEST_EXISTS))
+        {
+          GFile *local_file = g_file_new_for_path (path);
+
+          g_free (path);
+
+          return local_file;
+        }
+
+      g_free (path);
+    }
+#endif
+
+  return g_object_ref (file);
+}
+
 GdkPixbuf *
 file_utils_load_thumbnail (GFile *file)
 {
