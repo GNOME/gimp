@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-08 17:32+0000\n"
-"PO-Revision-Date: 2026-11-08 21:48+0200\n"
+"POT-Creation-Date: 2026-11-10 02:43+0000\n"
+"PO-Revision-Date: 2026-11-10 07:55+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2488,7 +2488,17 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 секунд"
 
-#: app/actions/dashboard-commands.c:127 app/actions/documents-commands.c:263
+#: app/actions/dashboard-commands.c:107
+#| msgctxt "dashboard-action"
+#| msgid "Start/stop recording performance log"
+msgid "Record Performance Log"
+msgstr "Записувати журнал швидкодії"
+
+#: app/actions/dashboard-commands.c:110
+msgid "_Record"
+msgstr "_Записати"
+
+#: app/actions/dashboard-commands.c:110 app/actions/documents-commands.c:263
 #: app/actions/edit-commands.c:182 app/actions/error-console-commands.c:98
 #: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
@@ -2534,56 +2544,20 @@ msgstr "240 секунд"
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: app/actions/dashboard-commands.c:128
-msgid "_Record"
-msgstr "_Записати"
-
-#: app/actions/dashboard-commands.c:151 app/dialogs/path-export-dialog.c:94
+#: app/actions/dashboard-commands.c:116 app/dialogs/path-export-dialog.c:94
 msgid "All Files"
 msgstr "усі файли"
 
-#: app/actions/dashboard-commands.c:156
+#: app/actions/dashboard-commands.c:121
 #: app/actions/error-console-commands.c:106
 msgid "Log Files (*.log)"
 msgstr "файли журналів (*.log)"
 
-#: app/actions/dashboard-commands.c:200
-msgid "Log samples per second"
-msgstr "Записувати до журналу кількість зразків за секунду"
-
-#: app/actions/dashboard-commands.c:204
-msgid "Sample fre_quency:"
-msgstr "_Частота зразків:"
-
-#: app/actions/dashboard-commands.c:223
-msgid "_Backtrace"
-msgstr "З_воротне трасування"
-
-#: app/actions/dashboard-commands.c:224
-msgid "Include backtraces in log"
-msgstr "Включити зворотне трасування до журналу"
-
-#: app/actions/dashboard-commands.c:236
-msgid "_Messages"
-msgstr "П_овідомлення"
-
-#: app/actions/dashboard-commands.c:238
-msgid "Include diagnostic messages in log"
-msgstr "Включити до журналу діагностичні повідомлення"
-
-#: app/actions/dashboard-commands.c:250
-msgid "Progressi_ve"
-msgstr "П_рогресивний"
-
-#: app/actions/dashboard-commands.c:252
-msgid "Produce complete log even if not properly terminated"
-msgstr "Створити повний журнал, навіть якщо його не завершено належним чином"
-
-#: app/actions/dashboard-commands.c:321
+#: app/actions/dashboard-commands.c:183
 msgid "Add Marker"
 msgstr "Додати позначку"
 
-#: app/actions/dashboard-commands.c:323
+#: app/actions/dashboard-commands.c:185
 msgid "Enter a description for the marker"
 msgstr "Введіть опис позначки"
 
@@ -15924,16 +15898,10 @@ msgid "GIMP is brought to you by"
 msgstr "GIMP створили для вас"
 
 #: app/dialogs/about-dialog.c:986
-#| msgid ""
-#| "This is a development build\n"
-#| "commit %s"
 msgid "This is a test release build"
 msgstr "Це найсвіжіша версія у розробці"
 
 #: app/dialogs/about-dialog.c:988
-#| msgid ""
-#| "This is a development build\n"
-#| "commit %s"
 msgid "This is a development build"
 msgstr "Це версія у розробці"
 
@@ -15953,7 +15921,6 @@ msgstr ""
 
 #: app/dialogs/about-dialog.c:999 app/display/gimpdisplayshell-callbacks.c:670
 #, c-format
-#| msgid "Comment"
 msgid "Commit %s"
 msgstr "Внесок %s"
 
@@ -19479,18 +19446,11 @@ msgid "Unstable Development Version"
 msgstr "Нестабільна версія у розробці"
 
 #: app/display/gimpdisplayshell-callbacks.c:661
-#| msgid ""
-#| "<big>Unstable Development Version</big>\n"
-#| "\n"
-#| "<small>commit <tt>%s</tt></small>\n"
-#| "\n"
-#| "<small>Please test bugs against latest git master branch\n"
-#| "before reporting them.</small>"
 msgid ""
 "Please test bugs against latest git master branch before reporting them."
 msgstr ""
-"Будь ласка, перш ніж повідомляти про вади, перевірте, чи є вони в останній ве"
-"рсії із git master."
+"Будь ласка, перш ніж повідомляти про вади, перевірте, чи є вони в останній "
+"версії із git master."
 
 #: app/display/gimpdisplayshell-close.c:170
 #: app/display/gimpdisplayshell-close.c:268
@@ -27718,316 +27678,316 @@ msgstr "Сталося декілька критичних помилок у GIM
 msgid "_Restart GIMP"
 msgstr "Пе_резапустити GIMP"
 
-#: app/widgets/gimpdashboard.c:473 app/widgets/gimpdashboard.c:525
+#: app/widgets/gimpdashboard.c:495 app/widgets/gimpdashboard.c:547
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Зайнято"
 
-#: app/widgets/gimpdashboard.c:474
+#: app/widgets/gimpdashboard.c:496
 msgid "Tile cache occupied size"
 msgstr "Розмір, зайнятий кешем плиток"
 
-#: app/widgets/gimpdashboard.c:483
+#: app/widgets/gimpdashboard.c:505
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Максимум"
 
-#: app/widgets/gimpdashboard.c:484
+#: app/widgets/gimpdashboard.c:506
 msgid "Maximal tile cache occupied size"
 msgstr "Максимальний розмір, зайнятий кешем плиток"
 
-#: app/widgets/gimpdashboard.c:493 app/widgets/gimpdashboard.c:545
+#: app/widgets/gimpdashboard.c:515 app/widgets/gimpdashboard.c:567
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Обмеження"
 
-#: app/widgets/gimpdashboard.c:494
+#: app/widgets/gimpdashboard.c:516
 msgid "Tile cache size limit"
 msgstr "Обмеження розміру кешу плиток"
 
-#: app/widgets/gimpdashboard.c:502 app/widgets/gimpdashboard.c:628
+#: app/widgets/gimpdashboard.c:524 app/widgets/gimpdashboard.c:650
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Стискання"
 
-#: app/widgets/gimpdashboard.c:503
+#: app/widgets/gimpdashboard.c:525
 msgid "Tile cache compression ratio"
 msgstr "Рівень стискання кешу плиток"
 
-#: app/widgets/gimpdashboard.c:512
+#: app/widgets/gimpdashboard.c:534
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Влучення/Промахи"
 
-#: app/widgets/gimpdashboard.c:513
+#: app/widgets/gimpdashboard.c:535
 msgid "Tile cache hit/miss ratio"
 msgstr "Відношення влучень до промахів у кеші плиток"
 
-#: app/widgets/gimpdashboard.c:526
+#: app/widgets/gimpdashboard.c:548
 msgid "Swap file occupied size"
 msgstr "Об'єм, зайнятий файлом резервної пам'яті"
 
-#: app/widgets/gimpdashboard.c:535 app/widgets/gimpdashboard.c:692
+#: app/widgets/gimpdashboard.c:557 app/widgets/gimpdashboard.c:714
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Розмір"
 
-#: app/widgets/gimpdashboard.c:536
+#: app/widgets/gimpdashboard.c:558
 msgid "Swap file size"
 msgstr "Розмір файла резервної пам'яті"
 
-#: app/widgets/gimpdashboard.c:546
+#: app/widgets/gimpdashboard.c:568
 msgid "Swap file size limit"
 msgstr "Обмеження розміру файла резервної пам'яті"
 
-#: app/widgets/gimpdashboard.c:553
+#: app/widgets/gimpdashboard.c:575
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr "У черзі"
 
-#: app/widgets/gimpdashboard.c:554
+#: app/widgets/gimpdashboard.c:576
 msgid "Size of data queued for writing to the swap"
 msgstr "Обсяг даних у черзі для запису до файла резервної пам'яті"
 
-#: app/widgets/gimpdashboard.c:563
+#: app/widgets/gimpdashboard.c:585
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr "Зупинок черги"
 
-#: app/widgets/gimpdashboard.c:564
+#: app/widgets/gimpdashboard.c:586
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
 "Кількість разів, коли система зупиняла запис до файла резервної пам'яті "
 "через переповнення черги"
 
-#: app/widgets/gimpdashboard.c:573
+#: app/widgets/gimpdashboard.c:595
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr "Заповненість черги"
 
-#: app/widgets/gimpdashboard.c:574
+#: app/widgets/gimpdashboard.c:596
 msgid "Whether the swap queue is full"
 msgstr "Чи є черга резервної пам'яті заповненою"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: app/widgets/gimpdashboard.c:585
+#: app/widgets/gimpdashboard.c:607
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Прочитано"
 
-#: app/widgets/gimpdashboard.c:586
+#: app/widgets/gimpdashboard.c:608
 msgid "Total amount of data read from the swap"
 msgstr "Загальний обсяг даних, які прочитано з файла резервної пам'яті"
 
-#: app/widgets/gimpdashboard.c:595
+#: app/widgets/gimpdashboard.c:617
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Пропускання читання"
 
-#: app/widgets/gimpdashboard.c:596
+#: app/widgets/gimpdashboard.c:618
 msgid "The rate at which data is read from the swap"
 msgstr "Частота, із якою дані читаються з файла резервної пам'яті"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: app/widgets/gimpdashboard.c:608
+#: app/widgets/gimpdashboard.c:630
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Записано"
 
-#: app/widgets/gimpdashboard.c:609
+#: app/widgets/gimpdashboard.c:631
 msgid "Total amount of data written to the swap"
 msgstr "Загальний обсяг даних, записаних до файла резервної пам'яті"
 
-#: app/widgets/gimpdashboard.c:618
+#: app/widgets/gimpdashboard.c:640
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Пропускання запису"
 
-#: app/widgets/gimpdashboard.c:619
+#: app/widgets/gimpdashboard.c:641
 msgid "The rate at which data is written to the swap"
 msgstr "Частота, із якою дані записуються до файла резервної пам'яті"
 
-#: app/widgets/gimpdashboard.c:629
+#: app/widgets/gimpdashboard.c:651
 msgid "Swap compression ratio"
 msgstr "Рівень стискання файла резервної пам'яті"
 
-#: app/widgets/gimpdashboard.c:642
+#: app/widgets/gimpdashboard.c:664
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Використання"
 
-#: app/widgets/gimpdashboard.c:643
+#: app/widgets/gimpdashboard.c:665
 msgid "Total CPU usage"
 msgstr "Загальне використання процесора"
 
-#: app/widgets/gimpdashboard.c:651 app/widgets/gimpdashboard.c:660
-#: app/widgets/gimpdashboard.c:722
+#: app/widgets/gimpdashboard.c:673 app/widgets/gimpdashboard.c:682
+#: app/widgets/gimpdashboard.c:744
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Активний"
 
-#: app/widgets/gimpdashboard.c:652
+#: app/widgets/gimpdashboard.c:674
 msgid "Whether the CPU is active"
 msgstr "Чи є процесор активним"
 
-#: app/widgets/gimpdashboard.c:661
+#: app/widgets/gimpdashboard.c:683
 msgid "Total amount of time the CPU has been active"
 msgstr "Загальна тривалість активності процесора"
 
-#: app/widgets/gimpdashboard.c:674
+#: app/widgets/gimpdashboard.c:696
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Використано"
 
-#: app/widgets/gimpdashboard.c:675
+#: app/widgets/gimpdashboard.c:697
 msgid "Amount of memory used by the process"
 msgstr "Обсяг пам'яті, використаний процесом"
 
-#: app/widgets/gimpdashboard.c:683
+#: app/widgets/gimpdashboard.c:705
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Доступно"
 
-#: app/widgets/gimpdashboard.c:684
+#: app/widgets/gimpdashboard.c:706
 msgid "Amount of available physical memory"
 msgstr "Обсяг доступної фізичної пам'яті"
 
-#: app/widgets/gimpdashboard.c:693
+#: app/widgets/gimpdashboard.c:715
 msgid "Physical memory size"
 msgstr "Розмір фізичної пам'яті"
 
-#: app/widgets/gimpdashboard.c:704
+#: app/widgets/gimpdashboard.c:726
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Множинне відтворення"
 
-#: app/widgets/gimpdashboard.c:705
+#: app/widgets/gimpdashboard.c:727
 msgid "Total size of processed mipmapped data"
 msgstr "Загальний розмір оброблених даних множинного відтворення"
 
-#: app/widgets/gimpdashboard.c:713
+#: app/widgets/gimpdashboard.c:735
 msgctxt "dashboard-variable"
 msgid "Assigned"
 msgstr "Присвоїти"
 
-#: app/widgets/gimpdashboard.c:714
+#: app/widgets/gimpdashboard.c:736
 msgid "Number of assigned worker threads"
 msgstr "Кількість пов'язаних потоків обробки"
 
-#: app/widgets/gimpdashboard.c:723
+#: app/widgets/gimpdashboard.c:745
 msgid "Number of active worker threads"
 msgstr "Кількість активних потоків обробки"
 
-#: app/widgets/gimpdashboard.c:731
+#: app/widgets/gimpdashboard.c:753
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Асинхронні"
 
-#: app/widgets/gimpdashboard.c:732
+#: app/widgets/gimpdashboard.c:754
 msgid "Number of ongoing asynchronous operations"
 msgstr "Кількість виконуваних асинхронних операцій"
 
-#: app/widgets/gimpdashboard.c:740
+#: app/widgets/gimpdashboard.c:762
 msgctxt "dashboard-variable"
 msgid "Tile"
 msgstr "Плитка"
 
-#: app/widgets/gimpdashboard.c:741
+#: app/widgets/gimpdashboard.c:763
 msgid "Total size of tile memory"
 msgstr "Загальний обсяг пам'яті для плиток"
 
-#: app/widgets/gimpdashboard.c:750
+#: app/widgets/gimpdashboard.c:772
 msgctxt "dashboard-variable"
 msgid "Scratch"
 msgstr "Тимчасова"
 
-#: app/widgets/gimpdashboard.c:751
+#: app/widgets/gimpdashboard.c:773
 msgid "Total size of scratch memory"
 msgstr "Загальний обсяг тимчасової пам'яті"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
 #.
-#: app/widgets/gimpdashboard.c:762
+#: app/widgets/gimpdashboard.c:784
 msgctxt "dashboard-variable"
 msgid "TempBuf"
 msgstr "TempBuf"
 
-#: app/widgets/gimpdashboard.c:763
+#: app/widgets/gimpdashboard.c:785
 msgid "Total size of temporary buffers"
 msgstr "Загальний обсяг тимчасових буферів"
 
-#: app/widgets/gimpdashboard.c:775
+#: app/widgets/gimpdashboard.c:797
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Кеш"
 
-#: app/widgets/gimpdashboard.c:776
+#: app/widgets/gimpdashboard.c:798
 msgid "In-memory tile cache"
 msgstr "Кеш плиток у пам'яті"
 
-#: app/widgets/gimpdashboard.c:812
+#: app/widgets/gimpdashboard.c:834
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Резервна пам'ять"
 
-#: app/widgets/gimpdashboard.c:813
+#: app/widgets/gimpdashboard.c:835
 msgid "On-disk tile swap"
 msgstr "Резервна пам'ять для плиток на диску"
 
-#: app/widgets/gimpdashboard.c:877
+#: app/widgets/gimpdashboard.c:899
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "Процесор"
 
-#: app/widgets/gimpdashboard.c:878
+#: app/widgets/gimpdashboard.c:900
 msgid "CPU usage"
 msgstr "Використання процесора"
 
-#: app/widgets/gimpdashboard.c:913
+#: app/widgets/gimpdashboard.c:935
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Пам'ять"
 
-#: app/widgets/gimpdashboard.c:914
+#: app/widgets/gimpdashboard.c:936
 msgid "Memory usage"
 msgstr "Використання пам'яті"
 
-#: app/widgets/gimpdashboard.c:922
+#: app/widgets/gimpdashboard.c:944
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Кеш"
 
-#: app/widgets/gimpdashboard.c:956
+#: app/widgets/gimpdashboard.c:978
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Інше"
 
-#: app/widgets/gimpdashboard.c:957
+#: app/widgets/gimpdashboard.c:979
 msgid "Miscellaneous information"
 msgstr "Різноманітні відомості"
 
-#: app/widgets/gimpdashboard.c:1150
+#: app/widgets/gimpdashboard.c:1172
 msgid "Select fields"
 msgstr "Виберіть поля"
 
 #. Translators: "N/A" is an abbreviation for "not available"
-#: app/widgets/gimpdashboard.c:3332
+#: app/widgets/gimpdashboard.c:3356
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "н/д"
 
-#: app/widgets/gimpdashboard.c:3341 app/widgets/gimpdashboard.c:4349
+#: app/widgets/gimpdashboard.c:3365 app/widgets/gimpdashboard.c:4373
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Так"
 
-#: app/widgets/gimpdashboard.c:3342 app/widgets/gimpdashboard.c:4350
+#: app/widgets/gimpdashboard.c:3366 app/widgets/gimpdashboard.c:4374
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Ні"
@@ -28036,7 +27996,7 @@ msgstr "Ні"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: app/widgets/gimpdashboard.c:3426
+#: app/widgets/gimpdashboard.c:3450
 #, c-format
 msgid "%g/s"
 msgstr "%g/с"
@@ -28047,16 +28007,42 @@ msgstr "%g/с"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: app/widgets/gimpdashboard.c:4339
+#: app/widgets/gimpdashboard.c:4363
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
 
-#: app/widgets/gimpdashboard.c:4417
+#: app/widgets/gimpdashboard.c:4441
 msgid "N/A"
 msgstr "н/д"
 
-#: app/widgets/gimpdashboard.c:4795
+#: app/widgets/gimpdashboard.c:4487
+#| msgid "Blending Options"
+msgid "Recording Options"
+msgstr "Параметри записування"
+
+#: app/widgets/gimpdashboard.c:4496
+#| msgid "Selection"
+msgid "Select options"
+msgstr "Вибір параметрів"
+
+#: app/widgets/gimpdashboard.c:4548
+msgid "_Backtrace"
+msgstr "З_воротне трасування"
+
+#: app/widgets/gimpdashboard.c:4558
+msgid "_Messages"
+msgstr "П_овідомлення"
+
+#: app/widgets/gimpdashboard.c:4568
+msgid "Progressi_ve"
+msgstr "П_рогресивний"
+
+#: app/widgets/gimpdashboard.c:4590
+msgid "Sample fre_quency:"
+msgstr "_Частота зразків:"
+
+#: app/widgets/gimpdashboard.c:5065
 msgid "Resolving symbol information..."
 msgstr "Визначаємо дані щодо символу…"
 
@@ -30391,6 +30377,19 @@ msgstr "Меню шаблону інструментів"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Меню журналу скасувань"
+
+#~ msgid "Log samples per second"
+#~ msgstr "Записувати до журналу кількість зразків за секунду"
+
+#~ msgid "Include backtraces in log"
+#~ msgstr "Включити зворотне трасування до журналу"
+
+#~ msgid "Include diagnostic messages in log"
+#~ msgstr "Включити до журналу діагностичні повідомлення"
+
+#~ msgid "Produce complete log even if not properly terminated"
+#~ msgstr ""
+#~ "Створити повний журнал, навіть якщо його не завершено належним чином"
 
 #, c-format
 #~ msgid "Memory: %s (%s free)\n"
