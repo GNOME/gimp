@@ -44,6 +44,7 @@
 
 #include "file-remote.h"
 #include "file-save.h"
+#include "file-utils.h"
 #include "gimp-file.h"
 
 #include "gimp-intl.h"
@@ -65,6 +66,7 @@ file_save (Gimp                *gimp,
 {
   GimpValueArray    *return_vals;
   GFile             *orig_file;
+  GFile             *checked_file;
   GimpPDBStatusType  status     = GIMP_PDB_EXECUTION_ERROR;
   GFile             *local_file = NULL;
   gboolean           mounted    = TRUE;
@@ -82,6 +84,11 @@ file_save (Gimp                *gimp,
                         GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (error == NULL || *error == NULL,
                         GIMP_PDB_CALLING_ERROR);
+
+  /* on Linux, a filename containing a colon (e.g. "foo:foo.jpg") may
+     have been wrongly parsed as a URI and thus be non-native. See: #8471. */
+  checked_file = file_utils_file_check_existing (file);
+  file         = checked_file;
 
   orig_file = file;
 
@@ -293,6 +300,7 @@ file_save (Gimp                *gimp,
 
  out:
   g_object_unref (orig_file);
+  g_object_unref (checked_file);
   g_object_unref (image);
 
   return status;
