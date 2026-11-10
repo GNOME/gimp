@@ -200,8 +200,21 @@ gimp_unique_dbus_open (const gchar **filenames,
 
           for (i = 0; filenames[i] && success; i++)
             {
-              GFile *file;
+              GFile *file = NULL;
 
+#if !defined(G_OS_WIN32) && !defined(PLATFORM_OSX)
+              /* on Linux, a filename containing a colon (e.g. "foo:foo.jpg") may
+                 have been wrongly parsed as a URI and thus be non-native. See: #8471. */
+              if (! g_path_is_absolute (filenames[i]) &&
+                  g_file_test (filenames[i], G_FILE_TEST_EXISTS))
+                {
+                  gchar *absolute = g_build_filename (cwd, filenames[i], NULL);
+
+                  file = g_file_new_for_path (absolute);
+                  g_free (absolute);
+                }
+              else
+#endif
               file = g_file_new_for_commandline_arg_and_cwd (filenames[i], cwd);
 
               if (file)

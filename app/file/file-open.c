@@ -54,6 +54,7 @@
 #include "file-import.h"
 #include "file-open.h"
 #include "file-remote.h"
+#include "file-utils.h"
 #include "gimp-file.h"
 
 #include "gimp-intl.h"
@@ -116,6 +117,7 @@ file_open_image (Gimp                *gimp,
 {
   GimpValueArray *return_vals;
   GFile          *orig_file;
+  GFile          *checked_file;
   GimpImage      *image       = NULL;
   GFile          *local_file  = NULL;
 
@@ -126,9 +128,17 @@ file_open_image (Gimp                *gimp,
   g_return_val_if_fail (status != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
+  /* on Linux, a filename containing a colon (e.g. "foo:foo.jpg") may
+     have been wrongly parsed as a URI and thus be non-native. See: #8471. */
+  checked_file = file_utils_file_check_existing (file);
+  file         = checked_file;
+
   if (! file_open_pre_check (gimp, file, NULL, FALSE, progress,
                              &file_proc, &local_file, status, error))
-    return NULL;
+    {
+      g_object_unref (checked_file);
+      return NULL;
+    }
 
   *status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -244,6 +254,8 @@ file_open_image (Gimp                *gimp,
       /* Enables undo again */
       file_open_sanitize_image (image, as_new);
     }
+
+  g_object_unref (checked_file);
 
   return image;
 }
