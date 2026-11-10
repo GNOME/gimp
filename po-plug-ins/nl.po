@@ -8080,7 +8080,7 @@ msgstr "Deze Plug-in is gebaseerd op een artikel van Jörn Loviscach (verschenen
 
 #: plug-ins/common/qbist.c:204
 msgid "_Anti-aliasing"
-msgstr "_Anti-aliasing"
+msgstr "R_anden glad maken"
 
 #: plug-ins/common/qbist.c:205
 msgid "Enable anti-aliasing using an oversampling algorithm"
