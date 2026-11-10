@@ -32,8 +32,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-08 00:26+0000\n"
-"PO-Revision-Date: 2026-11-08 13:54+0100\n"
+"POT-Creation-Date: 2026-11-10 02:43+0000\n"
+"PO-Revision-Date: 2026-11-10 08:52+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -2482,7 +2482,15 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 Seconden"
 
-#: app/actions/dashboard-commands.c:121 app/actions/documents-commands.c:263
+#: app/actions/dashboard-commands.c:107
+msgid "Record Performance Log"
+msgstr "Prestatielog opnemen"
+
+#: app/actions/dashboard-commands.c:110
+msgid "_Record"
+msgstr "_Opnemen"
+
+#: app/actions/dashboard-commands.c:110 app/actions/documents-commands.c:263
 #: app/actions/edit-commands.c:182 app/actions/error-console-commands.c:98
 #: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
@@ -2528,56 +2536,20 @@ msgstr "240 Seconden"
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: app/actions/dashboard-commands.c:122
-msgid "_Record"
-msgstr "_Opnemen"
-
-#: app/actions/dashboard-commands.c:145 app/dialogs/path-export-dialog.c:94
+#: app/actions/dashboard-commands.c:116 app/dialogs/path-export-dialog.c:94
 msgid "All Files"
 msgstr "Alle bestanden"
 
-#: app/actions/dashboard-commands.c:150
+#: app/actions/dashboard-commands.c:121
 #: app/actions/error-console-commands.c:106
 msgid "Log Files (*.log)"
 msgstr "Logbestanden (*.log)"
 
-#: app/actions/dashboard-commands.c:194
-msgid "Log samples per second"
-msgstr "Log-monsters per seconde"
-
-#: app/actions/dashboard-commands.c:198
-msgid "Sample fre_quency:"
-msgstr "Bemonsteringsfre_quentie:"
-
-#: app/actions/dashboard-commands.c:217
-msgid "_Backtrace"
-msgstr "_Backtrace"
-
-#: app/actions/dashboard-commands.c:218
-msgid "Include backtraces in log"
-msgstr "Backtraces opnemen in de logbestanden"
-
-#: app/actions/dashboard-commands.c:230
-msgid "_Messages"
-msgstr "_Berichten"
-
-#: app/actions/dashboard-commands.c:232
-msgid "Include diagnostic messages in log"
-msgstr "Diagnostische berichten opnemen in de logbestanden"
-
-#: app/actions/dashboard-commands.c:244
-msgid "Progressi_ve"
-msgstr "Pro_gressief"
-
-#: app/actions/dashboard-commands.c:246
-msgid "Produce complete log even if not properly terminated"
-msgstr "Een compleet log maken, zelfs na niet-normale beëindiging"
-
-#: app/actions/dashboard-commands.c:309
+#: app/actions/dashboard-commands.c:183
 msgid "Add Marker"
 msgstr "Markeerpunt toevoegen"
 
-#: app/actions/dashboard-commands.c:311
+#: app/actions/dashboard-commands.c:185
 msgid "Enter a description for the marker"
 msgstr "Geef een beschrijving van het markeerpunt"
 
@@ -22475,39 +22447,39 @@ msgstr "Plug-in ‘%s’ kon niet worden uitgevoerd"
 msgid "Unknown file type"
 msgstr "Onbekend bestandstype"
 
-#: app/plug-in/gimppluginmanager-restore.c:217
+#: app/plug-in/gimppluginmanager-restore.c:229
 msgid "Loading extension plug-ins"
 msgstr "Laden van uitbreidingen-plug-ins"
 
-#: app/plug-in/gimppluginmanager-restore.c:251
+#: app/plug-in/gimppluginmanager-restore.c:263
 msgid "Searching plug-ins"
 msgstr "Opzoeken plug-ins"
 
-#: app/plug-in/gimppluginmanager-restore.c:370
+#: app/plug-in/gimppluginmanager-restore.c:384
 #, c-format
 msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr "Potentiële plug-in ‘%s’ overgeslagen: plug-ins moeten geïnstalleerd zijn in submappen.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:377
+#: app/plug-in/gimppluginmanager-restore.c:391
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
 msgstr "Onbekend bestand ‘%s’ in plug-in map overgeslagen.\n"
 
-#: app/plug-in/gimppluginmanager-restore.c:424
+#: app/plug-in/gimppluginmanager-restore.c:438
 msgid "Resource configuration"
 msgstr "Bronconfiguratie"
 
-#: app/plug-in/gimppluginmanager-restore.c:460
+#: app/plug-in/gimppluginmanager-restore.c:474
 msgid "Querying new Plug-ins"
 msgstr "Nieuwe plug-ins worden opgevraagd"
 
-#: app/plug-in/gimppluginmanager-restore.c:514
+#: app/plug-in/gimppluginmanager-restore.c:528
 msgid "Initializing Plug-ins"
 msgstr "Plug-ins worden geïnitialiseerd"
 
-#: app/plug-in/gimppluginmanager-restore.c:587
+#: app/plug-in/gimppluginmanager-restore.c:601
 msgid "Starting Extensions"
 msgstr "Uitbreidingen starten"
 
@@ -27347,321 +27319,321 @@ msgstr "GIMP ondervond meerdere kritieke fouten!"
 msgid "_Restart GIMP"
 msgstr "He_rstart GIMP"
 
-#: app/widgets/gimpdashboard.c:473 app/widgets/gimpdashboard.c:525
+#: app/widgets/gimpdashboard.c:495 app/widgets/gimpdashboard.c:547
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Bezet"
 
-#: app/widgets/gimpdashboard.c:474
+#: app/widgets/gimpdashboard.c:496
 msgid "Tile cache occupied size"
 msgstr "Gebruikt cache-geheugen"
 
-#: app/widgets/gimpdashboard.c:483
+#: app/widgets/gimpdashboard.c:505
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Maximum"
 
-#: app/widgets/gimpdashboard.c:484
+#: app/widgets/gimpdashboard.c:506
 msgid "Maximal tile cache occupied size"
 msgstr "Maximaal gebruikt cache-geheugen"
 
-#: app/widgets/gimpdashboard.c:493 app/widgets/gimpdashboard.c:545
+#: app/widgets/gimpdashboard.c:515 app/widgets/gimpdashboard.c:567
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Limiet"
 
-#: app/widgets/gimpdashboard.c:494
+#: app/widgets/gimpdashboard.c:516
 msgid "Tile cache size limit"
 msgstr "Limiet cache-geheugen"
 
-#: app/widgets/gimpdashboard.c:502 app/widgets/gimpdashboard.c:628
+#: app/widgets/gimpdashboard.c:524 app/widgets/gimpdashboard.c:650
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Compressie"
 
-#: app/widgets/gimpdashboard.c:503
+#: app/widgets/gimpdashboard.c:525
 msgid "Tile cache compression ratio"
 msgstr "Compressieratio cache-geheugen"
 
-#: app/widgets/gimpdashboard.c:512
+#: app/widgets/gimpdashboard.c:534
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Geraakt/gemist"
 
-#: app/widgets/gimpdashboard.c:513
+#: app/widgets/gimpdashboard.c:535
 msgid "Tile cache hit/miss ratio"
 msgstr "Verhouding geraakt/gemist"
 
-#: app/widgets/gimpdashboard.c:526
+#: app/widgets/gimpdashboard.c:548
 msgid "Swap file occupied size"
 msgstr "Gebruikt wisselgeheugen"
 
-#: app/widgets/gimpdashboard.c:535 app/widgets/gimpdashboard.c:692
+#: app/widgets/gimpdashboard.c:557 app/widgets/gimpdashboard.c:714
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Grootte"
 
-#: app/widgets/gimpdashboard.c:536
+#: app/widgets/gimpdashboard.c:558
 msgid "Swap file size"
 msgstr "Omvang wisselgeheugen"
 
-#: app/widgets/gimpdashboard.c:546
+#: app/widgets/gimpdashboard.c:568
 msgid "Swap file size limit"
 msgstr "Maximale grootte wisselgeheugen"
 
-#: app/widgets/gimpdashboard.c:553
+#: app/widgets/gimpdashboard.c:575
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr "In wachtrij"
 
-#: app/widgets/gimpdashboard.c:554
+#: app/widgets/gimpdashboard.c:576
 msgid "Size of data queued for writing to the swap"
 msgstr "Omvang data in wachtrij om naar wisselbestand te schrijven"
 
-#: app/widgets/gimpdashboard.c:563
+#: app/widgets/gimpdashboard.c:585
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr "Klaargezet voor wachtrij"
 
-#: app/widgets/gimpdashboard.c:564
+#: app/widgets/gimpdashboard.c:586
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr "Aantal keren dat het schrijven naar het wisselbestand is opgehouden, als gevolg van een volle wachtrij"
 
-#: app/widgets/gimpdashboard.c:573
+#: app/widgets/gimpdashboard.c:595
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr "Wachtrij vol"
 
 # Vind string niet terug in dashboard
 # pm
-#: app/widgets/gimpdashboard.c:574
+#: app/widgets/gimpdashboard.c:596
 msgid "Whether the swap queue is full"
 msgstr "Of het wisselgeheugen vol is"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: app/widgets/gimpdashboard.c:585
+#: app/widgets/gimpdashboard.c:607
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Gelezen"
 
-#: app/widgets/gimpdashboard.c:586
+#: app/widgets/gimpdashboard.c:608
 msgid "Total amount of data read from the swap"
 msgstr "Totale hoeveelheid gegevens uit wisselgeheugen gelezen"
 
-#: app/widgets/gimpdashboard.c:595
+#: app/widgets/gimpdashboard.c:617
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Leesdoorvoer"
 
-#: app/widgets/gimpdashboard.c:596
+#: app/widgets/gimpdashboard.c:618
 msgid "The rate at which data is read from the swap"
 msgstr "De snelheid waarmee gegevens uit het wisselgeheugen worden gelezen"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: app/widgets/gimpdashboard.c:608
+#: app/widgets/gimpdashboard.c:630
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Geschreven"
 
-#: app/widgets/gimpdashboard.c:609
+#: app/widgets/gimpdashboard.c:631
 msgid "Total amount of data written to the swap"
 msgstr "Totale hoeveelheid gegevens die naar het wisselgeheugen zijn geschreven"
 
-#: app/widgets/gimpdashboard.c:618
+#: app/widgets/gimpdashboard.c:640
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Schrijfdoorvoer"
 
-#: app/widgets/gimpdashboard.c:619
+#: app/widgets/gimpdashboard.c:641
 msgid "The rate at which data is written to the swap"
 msgstr "De snelheid waarmee data naar het wisselgeheugen worden geschreven"
 
-#: app/widgets/gimpdashboard.c:629
+#: app/widgets/gimpdashboard.c:651
 msgid "Swap compression ratio"
 msgstr "Compressieratio wisselgeheugen"
 
-#: app/widgets/gimpdashboard.c:642
+#: app/widgets/gimpdashboard.c:664
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Gebruik"
 
-#: app/widgets/gimpdashboard.c:643
+#: app/widgets/gimpdashboard.c:665
 msgid "Total CPU usage"
 msgstr "Totaal processorgebruik"
 
-#: app/widgets/gimpdashboard.c:651 app/widgets/gimpdashboard.c:660
-#: app/widgets/gimpdashboard.c:722
+#: app/widgets/gimpdashboard.c:673 app/widgets/gimpdashboard.c:682
+#: app/widgets/gimpdashboard.c:744
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Actief"
 
-#: app/widgets/gimpdashboard.c:652
+#: app/widgets/gimpdashboard.c:674
 msgid "Whether the CPU is active"
 msgstr "Of de processor actief is"
 
-#: app/widgets/gimpdashboard.c:661
+#: app/widgets/gimpdashboard.c:683
 msgid "Total amount of time the CPU has been active"
 msgstr "Totale tijd dat processor actief was"
 
-#: app/widgets/gimpdashboard.c:674
+#: app/widgets/gimpdashboard.c:696
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Gebruikt"
 
-#: app/widgets/gimpdashboard.c:675
+#: app/widgets/gimpdashboard.c:697
 msgid "Amount of memory used by the process"
 msgstr "Hoeveelheid geheugen dat een proces gebruikt"
 
 # types/typen/soorten
-#: app/widgets/gimpdashboard.c:683
+#: app/widgets/gimpdashboard.c:705
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Beschikbaar"
 
-#: app/widgets/gimpdashboard.c:684
+#: app/widgets/gimpdashboard.c:706
 msgid "Amount of available physical memory"
 msgstr "Hoeveelheid beschikbaar fysiek geheugen"
 
-#: app/widgets/gimpdashboard.c:693
+#: app/widgets/gimpdashboard.c:715
 msgid "Physical memory size"
 msgstr "Fysieke geheugenomvang"
 
 # Vind string niet terug in interface, wel in broncode
 # pm
-#: app/widgets/gimpdashboard.c:704
+#: app/widgets/gimpdashboard.c:726
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Mipmapped"
 
 # Vind string niet terug in interface, wel in broncode
 # pm
-#: app/widgets/gimpdashboard.c:705
+#: app/widgets/gimpdashboard.c:727
 msgid "Total size of processed mipmapped data"
 msgstr "Totale omvang verwerkte mipmapped-data"
 
-#: app/widgets/gimpdashboard.c:713
+#: app/widgets/gimpdashboard.c:735
 msgctxt "dashboard-variable"
 msgid "Assigned"
 msgstr "Toegewezen"
 
-#: app/widgets/gimpdashboard.c:714
+#: app/widgets/gimpdashboard.c:736
 msgid "Number of assigned worker threads"
 msgstr "Aantal toegewezen werk-threads"
 
-#: app/widgets/gimpdashboard.c:723
+#: app/widgets/gimpdashboard.c:745
 msgid "Number of active worker threads"
 msgstr "Aantal actieve werk-threads"
 
-#: app/widgets/gimpdashboard.c:731
+#: app/widgets/gimpdashboard.c:753
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Async"
 
-#: app/widgets/gimpdashboard.c:732
+#: app/widgets/gimpdashboard.c:754
 msgid "Number of ongoing asynchronous operations"
 msgstr "Aantal lopende asynchrone bewerkingen"
 
-#: app/widgets/gimpdashboard.c:740
+#: app/widgets/gimpdashboard.c:762
 msgctxt "dashboard-variable"
 msgid "Tile"
 msgstr "Betegelen"
 
-#: app/widgets/gimpdashboard.c:741
+#: app/widgets/gimpdashboard.c:763
 msgid "Total size of tile memory"
 msgstr "Totale omvang tegelgeheugen"
 
-#: app/widgets/gimpdashboard.c:750
+#: app/widgets/gimpdashboard.c:772
 msgctxt "dashboard-variable"
 msgid "Scratch"
 msgstr "Klad"
 
-#: app/widgets/gimpdashboard.c:751
+#: app/widgets/gimpdashboard.c:773
 msgid "Total size of scratch memory"
 msgstr "Totale omvang scratch-geheugen"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
 #.
-#: app/widgets/gimpdashboard.c:762
+#: app/widgets/gimpdashboard.c:784
 msgctxt "dashboard-variable"
 msgid "TempBuf"
 msgstr "TempBuf"
 
-#: app/widgets/gimpdashboard.c:763
+#: app/widgets/gimpdashboard.c:785
 msgid "Total size of temporary buffers"
 msgstr "Totale omvang tijdelijke buffers"
 
-#: app/widgets/gimpdashboard.c:775
+#: app/widgets/gimpdashboard.c:797
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Cache-geheugen"
 
-#: app/widgets/gimpdashboard.c:776
+#: app/widgets/gimpdashboard.c:798
 msgid "In-memory tile cache"
 msgstr "Cache-geheugen"
 
-#: app/widgets/gimpdashboard.c:812
+#: app/widgets/gimpdashboard.c:834
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Wisselgeheugen"
 
-#: app/widgets/gimpdashboard.c:813
+#: app/widgets/gimpdashboard.c:835
 msgid "On-disk tile swap"
 msgstr "Wisselgeheugen"
 
-#: app/widgets/gimpdashboard.c:877
+#: app/widgets/gimpdashboard.c:899
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "Processor"
 
-#: app/widgets/gimpdashboard.c:878
+#: app/widgets/gimpdashboard.c:900
 msgid "CPU usage"
 msgstr "Processorgebruik"
 
-#: app/widgets/gimpdashboard.c:913
+#: app/widgets/gimpdashboard.c:935
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Geheugen"
 
-#: app/widgets/gimpdashboard.c:914
+#: app/widgets/gimpdashboard.c:936
 msgid "Memory usage"
 msgstr "Geheugengebruik"
 
-#: app/widgets/gimpdashboard.c:922
+#: app/widgets/gimpdashboard.c:944
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Cache"
 
-#: app/widgets/gimpdashboard.c:956
+#: app/widgets/gimpdashboard.c:978
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Diversen"
 
-#: app/widgets/gimpdashboard.c:957
+#: app/widgets/gimpdashboard.c:979
 msgid "Miscellaneous information"
 msgstr "Diverse informatie"
 
-#: app/widgets/gimpdashboard.c:1150
+#: app/widgets/gimpdashboard.c:1172
 msgid "Select fields"
 msgstr "Velden selecteren"
 
 #. Translators: "N/A" is an abbreviation for "not available"
-#: app/widgets/gimpdashboard.c:3332
+#: app/widgets/gimpdashboard.c:3356
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-#: app/widgets/gimpdashboard.c:3341 app/widgets/gimpdashboard.c:4349
+#: app/widgets/gimpdashboard.c:3365 app/widgets/gimpdashboard.c:4373
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Ja"
 
-#: app/widgets/gimpdashboard.c:3342 app/widgets/gimpdashboard.c:4350
+#: app/widgets/gimpdashboard.c:3366 app/widgets/gimpdashboard.c:4374
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Geen"
@@ -27670,7 +27642,7 @@ msgstr "Geen"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: app/widgets/gimpdashboard.c:3426
+#: app/widgets/gimpdashboard.c:3450
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -27681,16 +27653,40 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: app/widgets/gimpdashboard.c:4339
+#: app/widgets/gimpdashboard.c:4363
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: app/widgets/gimpdashboard.c:4417
+#: app/widgets/gimpdashboard.c:4441
 msgid "N/A"
 msgstr "Niet beschikbaar"
 
-#: app/widgets/gimpdashboard.c:4795
+#: app/widgets/gimpdashboard.c:4487
+msgid "Recording Options"
+msgstr "Opties voor opnemen"
+
+#: app/widgets/gimpdashboard.c:4496
+msgid "Select options"
+msgstr "Opties selecteren"
+
+#: app/widgets/gimpdashboard.c:4548
+msgid "_Backtrace"
+msgstr "_Backtrace"
+
+#: app/widgets/gimpdashboard.c:4558
+msgid "_Messages"
+msgstr "_Berichten"
+
+#: app/widgets/gimpdashboard.c:4568
+msgid "Progressi_ve"
+msgstr "Pro_gressief"
+
+#: app/widgets/gimpdashboard.c:4590
+msgid "Sample fre_quency:"
+msgstr "Bemonsteringsfre_quentie:"
+
+#: app/widgets/gimpdashboard.c:5065
 msgid "Resolving symbol information..."
 msgstr "Verwerken symboolinformatie..."
 
@@ -30015,6 +30011,18 @@ msgstr "Menu Gereedschapsvoorinstellingen"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Menu Geschiedenis"
+
+#~ msgid "Log samples per second"
+#~ msgstr "Log-monsters per seconde"
+
+#~ msgid "Include backtraces in log"
+#~ msgstr "Backtraces opnemen in de logbestanden"
+
+#~ msgid "Include diagnostic messages in log"
+#~ msgstr "Diagnostische berichten opnemen in de logbestanden"
+
+#~ msgid "Produce complete log even if not properly terminated"
+#~ msgstr "Een compleet log maken, zelfs na niet-normale beëindiging"
 
 #, c-format
 #~ msgid "Memory: %s (%s free)\n"
