@@ -14804,7 +14804,7 @@ msgstr "Doel"
 
 #: plug-ins/imagemap/imap_settings.c:95
 msgid "Settings for this Mapfile"
-msgstr "Instelling voor dit mapbestand"
+msgstr "Instelling voor dit kaartbestand"
 
 #: plug-ins/imagemap/imap_settings.c:100
 msgid "Filename:"
@@ -14836,7 +14836,7 @@ msgstr "_Beschrijving:"
 
 #: plug-ins/imagemap/imap_settings.c:135
 msgid "Map File Format"
-msgstr "Bestandsindeling voor afbeeldingskaart"
+msgstr "Bestandsindeling voor beeldkaart"
 
 #: plug-ins/imagemap/imap_source.c:68
 msgid "View Source"
