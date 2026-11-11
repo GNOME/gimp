@@ -15,7 +15,7 @@ msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2026-11-05 17:56+0000\n"
-"PO-Revision-Date: 2026-11-09 16:31+0100\n"
+"PO-Revision-Date: 2026-11-11 10:42+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -14183,19 +14183,19 @@ msgstr "Openen is mislukt"
 #: plug-ins/ifs-compose/ifs-compose.c:2592
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
-msgstr "Bestand ‘%s’ lijkt geen IFS-fractalbestand te zijn."
+msgstr "Bestand ‘%s’ lijkt geen IFS-fractaalbestand te zijn."
 
 #: plug-ins/ifs-compose/ifs-compose.c:2633
 msgid "Save as IFS Fractal file"
-msgstr "Opslaan als IFS-fractalbestand"
+msgstr "Opslaan als IFS-fractaalbestand"
 
 #: plug-ins/ifs-compose/ifs-compose.c:2657
 msgid "Open IFS Fractal file"
-msgstr "IFS-fractalbestand openen"
+msgstr "IFS-fractaalbestand openen"
 
 #: plug-ins/imagemap/imap_about.c:44
 msgid "Image Map Plug-in"
-msgstr "Plug-in beeldkaart"
+msgstr "Plug-in Beeldkaart"
 
 #: plug-ins/imagemap/imap_about.c:48
 msgid "Copyright © 1999-2005 by Maurits Rijk"
@@ -14506,7 +14506,7 @@ msgstr "Fout bij het openen van het bestand"
 
 #: plug-ins/imagemap/imap_file.c:71
 msgid "Load Image Map"
-msgstr "Afbeeldingskaart laden"
+msgstr "Beeldkaart laden"
 
 #: plug-ins/imagemap/imap_file.c:82
 msgid "Map file (*.map)"
@@ -14694,7 +14694,7 @@ msgstr "Algemeen"
 
 #: plug-ins/imagemap/imap_preferences.c:415
 msgid "Default Map Type"
-msgstr "Standaard maptype"
+msgstr "Standaard kaarttype"
 
 #: plug-ins/imagemap/imap_preferences.c:434
 msgid "_Prompt for area info"
