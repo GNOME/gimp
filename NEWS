@@ -69,6 +69,12 @@ Core:
     has been lowered to near 0.
   * GIMP Extensions can now ship GEGL operations (filters) and icon
     themes.
+  * Support Windows accessibility keyboard (typing or sending shortcuts
+    in GIMP with virtual keyboards or similar tools).
+  * Support pasting from Linux Loupe and macOS Finder by favoring
+    text/uri-list data in the clipboard.
+  * Support pasting from Windows Explorer by using the native CF_HDROP
+    if available.
 
 Tools:
 
@@ -406,3 +412,5 @@ Build:
     and when it is skipped on purpose, make sure we added a reason why).
   * Add support to localizing plugins on GIMP SDK for macOS.
   * GIMP page on MS Store is now localized.
+  * Merge request with ~Release label will now simulate a release
+    pipeline.
