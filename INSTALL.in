@@ -259,6 +259,7 @@ help in that regard:
      cairo                @CAIRO_REQUIRED_VERSION@
      Fontconfig           @FONTCONFIG_REQUIRED_VERSION@
      freetype2            @FREETYPE2_REQUIRED_VERSION@
+     fribidi              @FRIBIDI_REQUIRED_VERSION@
      GDK-PixBuf           @GDK_PIXBUF_REQUIRED_VERSION@
      GEGL                 @GEGL_REQUIRED_VERSION@
      gexiv2               @GEXIV2_REQUIRED_VERSION@ (< @GEXIV2_MAX_VERSION@)
