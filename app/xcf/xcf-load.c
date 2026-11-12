@@ -3072,7 +3072,7 @@ xcf_load_channel_props (XcfInfo      *info,
                   info->selected_channels = g_list_delete_link (info->selected_channels, iter);
                   break;
                 }
-            info->linked_channels = g_list_remove (info->linked_channels, channel);
+            info->linked_channels = g_list_remove (info->linked_channels, *channel);
 
             mask =
               gimp_selection_new (image,
