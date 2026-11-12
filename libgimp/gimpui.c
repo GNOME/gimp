@@ -563,6 +563,16 @@ gimp_ui_theme_changed (GFileMonitor      *monitor,
   gchar   *contents;
   gboolean prefer_dark_theme = FALSE;
 
+  /*
+   * Antivirus-like programs (as seen on Mac OS) may scan the theme file,
+   * which changes its "last read" time stamp. That is an "attribute change"
+   * here. Let's ignore this case or we risk going into an infinite loop.
+   * Also mildly useful besides Mac OS, since reloading the theme for something
+   * like a "chmod" is unnecessary.
+   */
+  if (event_type == G_FILE_MONITOR_EVENT_ATTRIBUTE_CHANGED)
+    return;
+
   file = gimp_directory_file ("theme.css", NULL);
 
   if (g_file_load_contents (file, NULL, &contents, NULL, NULL, &error))
