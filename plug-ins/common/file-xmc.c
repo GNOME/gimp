@@ -129,6 +129,8 @@
 #define CURSOR_DEFAULT_DELAY    50
 #define CURSOR_MINIMUM_DELAY    5
 
+#define MAX_COMMENT_ARRAY_LEN   3
+
 #define div_255(x)       (((x) + 0x80 + (((x) + 0x80) >> 8)) >> 8)
 #define READ32(f, e)     read32 ((f), (e)); if (*(e)) return NULL;
 #define DISPLAY_DIGIT(x) ((x) > 100) ? 3 : ((x) > 10) ? 2 : 1
@@ -779,28 +781,32 @@ load_image (GFile   *file,
   if (commentsp)
     {
       GimpParasite *parasite;
-      gchar        *comments[3] = { NULL, };
+      gchar        *comments[MAX_COMMENT_ARRAY_LEN] = { NULL, };
 
       for (i = 0; i < commentsp->ncomment; ++i)
         {
-          gint type = commentsp->comments[i]->comment_type -1;
+          guint type = commentsp->comments[i]->comment_type - 1;
 
           DM_XMC ("comment type=%d\tcomment=%s\n",
                   commentsp->comments[i]->comment_type,
                   commentsp->comments[i]->comment);
 
-          if (comments[type])
+          if (type < MAX_COMMENT_ARRAY_LEN)
             {
-              gchar *tmp = g_strjoin ("\n",
-                                      comments[type],
-                                      commentsp->comments[i]->comment,
-                                      NULL);
-              g_free (comments[type]);
-              comments[type] = tmp;
-            }
-          else
-            {
-              comments[type] = g_strdup (commentsp->comments[i]->comment);
+              if (comments[type])
+                {
+                  gchar *tmp = g_strjoin ("\n",
+                                          comments[type],
+                                          commentsp->comments[i]->comment,
+                                          NULL);
+
+                  g_free (comments[type]);
+                  comments[type] = tmp;
+                }
+              else
+                {
+                  comments[type] = g_strdup (commentsp->comments[i]->comment);
+                }
             }
         }
 
@@ -1713,7 +1719,7 @@ set_cursor_comments (GObject *config)
   if (arraylen == 0)
     return NULL;
 
-  xcCommentsp = XcursorCommentsCreate (arraylen);
+  xcCommentsp           = XcursorCommentsCreate (arraylen);
   xcCommentsp->ncomment = arraylen;
 
   for (i = 0; i < arraylen; ++i)
