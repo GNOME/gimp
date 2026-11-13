@@ -704,6 +704,7 @@ dx_dinput_event_dispatch (GSource     *source,
           cevent.any.event_id =
             input->num_button_events +
             i*NUM_EVENTS_PER_AXIS;
+          memset (&cevent.value.value, 0, sizeof (GValue));
           g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
           if (*curr - *prev < 0)
             {
@@ -735,6 +736,7 @@ dx_dinput_event_dispatch (GSource     *source,
             input->num_button_events +
             input->num_axis_events +
             i*NUM_EVENTS_PER_SLIDER;
+          memset (&cevent.value.value, 0, sizeof (GValue));
           g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
           if (*curr - *prev < 0)
             {
@@ -790,6 +792,7 @@ dx_dinput_event_dispatch (GSource     *source,
             input->num_axis_events +
             input->num_slider_events +
             i*NUM_EVENTS_PER_POV;
+          memset (&cevent.value.value, 0, sizeof (GValue));
           g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
           g_value_set_double (&cevent.value.value, currx - prevx);
           gimp_controller_event (controller, &cevent);
