@@ -676,6 +676,7 @@ linux_input_read_event (GIOChannel   *io,
                 cevent.any.source   = controller;
                 cevent.any.event_id = G_N_ELEMENTS (key_events) + i;
 
+                memset (&cevent.value.value, 0, sizeof (GValue));
                 g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
 
                 if (ev.value < 0)
