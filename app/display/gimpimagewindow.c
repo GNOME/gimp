@@ -2634,10 +2634,11 @@ gimp_image_window_session_update (GimpImageWindow *window,
         {
           /* We're initializing. If we're in single-window mode, this
            * will be the only window, so start to session manage
-           * it. If we're in multi-window mode, we will find out if we
-           * should session manage ourselves when we get a display
+           * it. Do the same for multi-window mode, otherwise the empty
+           * window will not have a size in due time. See: #16945.
            */
-          if (strcmp (new_entry_id, GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID) == 0)
+          if (strcmp (new_entry_id, GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID) == 0 ||
+              strcmp (new_entry_id, GIMP_EMPTY_IMAGE_WINDOW_ENTRY_ID) == 0)
             {
               gimp_image_window_session_apply (window, new_entry_id, monitor);
             }
