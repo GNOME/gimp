@@ -110,33 +110,33 @@ static void             load_1               (FILE                  *fp,
                                               gint                   width,
                                               gint                   height,
                                               guchar                *buf,
-                                              guint16                bytes);
+                                              gsize                  bytes);
 static void             load_4               (FILE                  *fp,
                                               gint                   width,
                                               gint                   height,
                                               guchar                *buf,
-                                              guint16                bytes);
+                                              gsize                  bytes);
 static void             load_sub_8           (FILE                  *fp,
                                               gint                   width,
                                               gint                   height,
                                               gint                   bpp,
                                               gint                   plane,
                                               guchar                *buf,
-                                              guint16                bytes);
+                                              gsize                  bytes);
 static void             load_8               (FILE                  *fp,
                                               gint                   width,
                                               gint                   height,
                                               guchar                *buf,
-                                              guint16                bytes);
+                                              gsize                  bytes);
 static void             load_24              (FILE                  *fp,
                                               gint                   width,
                                               gint                   height,
                                               guchar                *buf,
-                                              guint16                bytes,
+                                              gsize                  bytes,
                                               guint8                 planes);
 static void             readline             (FILE                  *fp,
                                               guchar                *buf,
-                                              gint                   bytes);
+                                              gsize                  bytes);
 
 static gboolean         export_image         (GFile                 *file,
                                               GimpImage             *image,
@@ -629,7 +629,9 @@ load_image (GimpProcedure  *procedure,
             GError        **error)
 {
   GeglBuffer   *buffer;
-  guint16       offset_x, offset_y, bytesperline, computed_bytesperline;
+  guint16       offset_x, offset_y;
+  gsize         bytesperline;
+  gsize         computed_bytesperline;
   gint32        width, height;
   guint16       resolution_x, resolution_y;
   GimpImage    *image;
@@ -911,7 +913,7 @@ load_8 (FILE    *fp,
         gint     width,
         gint     height,
         guchar  *buf,
-        guint16  bytes)
+        gsize    bytes)
 {
   gint    row;
   guchar *line = g_new0 (guchar, bytes + 1);
@@ -931,7 +933,7 @@ load_24 (FILE    *fp,
          gint     width,
          gint     height,
          guchar  *buf,
-         guint16  bytes,
+         gsize    bytes,
          guint8   planes)
 {
   gint    x, y, c;
@@ -958,7 +960,7 @@ load_1 (FILE    *fp,
         gint     width,
         gint     height,
         guchar  *buf,
-        guint16  bytes)
+        gsize    bytes)
 {
   gint    x, y;
   guchar *line = g_new0 (guchar, bytes + 1);
@@ -984,7 +986,7 @@ load_4 (FILE    *fp,
         gint     width,
         gint     height,
         guchar  *buf,
-        guint16  bytes)
+        gsize    bytes)
 {
   gint    x, y, c;
   guchar *line = g_new0 (guchar, bytes + 1);
@@ -1015,7 +1017,7 @@ load_sub_8 (FILE    *fp,
             gint     bpp,
             gint     plane,
             guchar  *buf,
-            guint16  bytes)
+            gsize    bytes)
 {
   gint    x, y, c, b;
   guchar *line = g_new0 (guchar, bytes + 1);
@@ -1048,7 +1050,7 @@ load_sub_8 (FILE    *fp,
 static void
 readline (FILE   *fp,
           guchar *buf,
-          gint    bytes)
+          gsize   bytes)
 {
   static guchar count = 0, value = 0;
 
