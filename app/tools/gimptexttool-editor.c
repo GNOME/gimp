@@ -123,6 +123,14 @@ static void     gimp_text_tool_im_delete_preedit  (GimpTextTool    *text_tool);
 
 static void     gimp_text_tool_editor_copy_selection_to_clipboard
                                                   (GimpTextTool    *text_tool);
+static gboolean gimp_text_tool_style_editor_font_entry_focus_in
+                                                  (GtkWidget     *widget,
+                                                   GdkEventFocus *event,
+                                                   gpointer       user_data);
+static gboolean gimp_text_tool_style_editor_font_entry_focus_out
+                                                  (GtkWidget     *widget,
+                                                   GdkEventFocus *event,
+                                                   gpointer       user_data);
 
 static void   gimp_text_tool_fix_position         (GimpTextTool    *text_tool,
                                                    gdouble         *x,
@@ -259,6 +267,12 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
                                text_tool, 0);
       g_signal_connect_object (editor->dnd_handle, "motion-notify-event",
                                G_CALLBACK (gimp_text_tool_style_overlay_button_motion),
+                               text_tool, 0);
+      g_signal_connect_object (editor->font_entry, "focus-in-event",
+                               G_CALLBACK (gimp_text_tool_style_editor_font_entry_focus_in),
+                               text_tool, 0);
+      g_signal_connect_object (editor->font_entry, "focus-out-event",
+                               G_CALLBACK (gimp_text_tool_style_editor_font_entry_focus_out),
                                text_tool, 0);
 
       text_tool->overlay_dragging = FALSE;
@@ -2182,4 +2196,43 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
     }
 
   return TRUE;
+}
+
+static gboolean
+gimp_text_tool_style_editor_font_entry_focus_in (GtkWidget     *widget,
+                                                  GdkEventFocus *event,
+                                                  gpointer       user_data)
+{
+  GimpTextTool     *text_tool = GIMP_TEXT_TOOL (user_data);
+  GimpTool         *tool      = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell     = gimp_display_get_shell (tool->display);
+
+  if (text_tool->preedit_active)
+    gimp_text_tool_abort_im_context (text_tool);
+
+  gtk_im_context_focus_out (text_tool->im_context);
+  gtk_im_context_set_client_window (text_tool->im_context, NULL);
+
+  if (gtk_widget_has_focus (shell->canvas))
+    gtk_widget_grab_focus (shell->canvas);
+
+  return FALSE;
+}
+
+static gboolean
+gimp_text_tool_style_editor_font_entry_focus_out (GtkWidget     *widget,
+                                                   GdkEventFocus *event,
+                                                   gpointer       user_data)
+{
+  GimpTextTool     *text_tool = GIMP_TEXT_TOOL (user_data);
+  GimpTool         *tool      = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell     = gimp_display_get_shell (tool->display);
+
+  gtk_im_context_set_client_window (text_tool->im_context,
+                                    gtk_widget_get_window (shell->canvas));
+  text_tool->needs_im_reset = TRUE;
+  gimp_text_tool_reset_im_context (text_tool);
+  gtk_im_context_focus_in (text_tool->im_context);
+
+  return FALSE;
 }
