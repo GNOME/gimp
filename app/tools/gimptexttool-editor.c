@@ -123,6 +123,22 @@ static void     gimp_text_tool_im_delete_preedit  (GimpTextTool    *text_tool);
 
 static void     gimp_text_tool_editor_copy_selection_to_clipboard
                                                   (GimpTextTool    *text_tool);
+static void          gimp_text_tool_create_im_context     (GimpTextTool     *text_tool);
+static void          gimp_text_tool_destroy_im_context    (GimpTextTool     *text_tool);
+static void          gimp_text_tool_attach_im_context     (GimpTextTool     *text_tool,
+                                                           GimpDisplayShell *shell);
+#ifdef G_OS_WIN32
+static GtkEditable * gimp_text_tool_get_overlay_editable  (GimpTextTool    *text_tool);
+static void          gimp_text_tool_toplevel_set_focus    (GtkWindow       *window,
+                                                           GtkWidget       *focus,
+                                                           GimpTextTool    *text_tool);
+#endif
+static gboolean      gimp_text_tool_canvas_focus_in       (GtkWidget       *widget,
+                                                           GdkEventFocus   *event,
+                                                           gpointer         user_data);
+static gboolean      gimp_text_tool_canvas_focus_out      (GtkWidget       *widget,
+                                                           GdkEventFocus   *event,
+                                                           gpointer         user_data);
 
 static void   gimp_text_tool_fix_position         (GimpTextTool    *text_tool,
                                                    gdouble         *x,
@@ -151,7 +167,6 @@ static gboolean gimp_text_tool_style_overlay_button_motion
 void
 gimp_text_tool_editor_init (GimpTextTool *text_tool)
 {
-  text_tool->im_context     = gtk_im_multicontext_new ();
   text_tool->needs_im_reset = FALSE;
 
   text_tool->preedit_string = NULL;
@@ -159,34 +174,13 @@ gimp_text_tool_editor_init (GimpTextTool *text_tool)
   text_tool->overwrite_mode = FALSE;
   text_tool->x_pos          = -1;
 
-  g_signal_connect (text_tool->im_context, "preedit-start",
-                    G_CALLBACK (gimp_text_tool_im_preedit_start),
-                    text_tool);
-  g_signal_connect (text_tool->im_context, "preedit-end",
-                    G_CALLBACK (gimp_text_tool_im_preedit_end),
-                    text_tool);
-  g_signal_connect (text_tool->im_context, "preedit-changed",
-                    G_CALLBACK (gimp_text_tool_im_preedit_changed),
-                    text_tool);
-  g_signal_connect (text_tool->im_context, "commit",
-                    G_CALLBACK (gimp_text_tool_im_commit),
-                    text_tool);
-  g_signal_connect (text_tool->im_context, "retrieve-surrounding",
-                    G_CALLBACK (gimp_text_tool_im_retrieve_surrounding),
-                    text_tool);
-  g_signal_connect (text_tool->im_context, "delete-surrounding",
-                    G_CALLBACK (gimp_text_tool_im_delete_surrounding),
-                    text_tool);
+  gimp_text_tool_create_im_context (text_tool);
 }
 
 void
 gimp_text_tool_editor_finalize (GimpTextTool *text_tool)
 {
-  if (text_tool->im_context)
-    {
-      g_object_unref (text_tool->im_context);
-      text_tool->im_context = NULL;
-    }
+  gimp_text_tool_destroy_im_context (text_tool);
 }
 
 void
@@ -196,13 +190,41 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
   GimpTextOptions  *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
   GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
 
-  gtk_im_context_set_client_window (text_tool->im_context,
-                                    gtk_widget_get_window (shell->canvas));
+  if (gtk_widget_has_focus (shell->canvas))
+    gimp_text_tool_attach_im_context (text_tool, shell);
 
-  text_tool->needs_im_reset = TRUE;
-  gimp_text_tool_reset_im_context (text_tool);
+  /* track canvas focus changes so IM context is only active while
+     the canvas has focus. See: #13171 */
+  g_signal_handlers_disconnect_by_func (shell->canvas,
+                                        gimp_text_tool_canvas_focus_in,
+                                        text_tool);
+  g_signal_handlers_disconnect_by_func (shell->canvas,
+                                        gimp_text_tool_canvas_focus_out,
+                                        text_tool);
+  g_signal_connect_object (shell->canvas, "focus-in-event",
+                           G_CALLBACK (gimp_text_tool_canvas_focus_in),
+                           text_tool, 0);
+  g_signal_connect_object (shell->canvas, "focus-out-event",
+                           G_CALLBACK (gimp_text_tool_canvas_focus_out),
+                           text_tool, 0);
 
-  gtk_im_context_focus_in (text_tool->im_context);
+#ifdef G_OS_WIN32
+  {
+    /* track toplevel GtkWindow::set-focus on Windows so IM context state
+       stays synchronized between the canvas and style overlay entries. See: #13560 */
+    GtkWidget *toplevel = gtk_widget_get_toplevel (shell->canvas);
+
+    if (GTK_IS_WINDOW (toplevel))
+      {
+        g_signal_handlers_disconnect_by_func (toplevel,
+                                              gimp_text_tool_toplevel_set_focus,
+                                              text_tool);
+        g_signal_connect_object (toplevel, "set-focus",
+                                 G_CALLBACK (gimp_text_tool_toplevel_set_focus),
+                                 text_tool, 0);
+      }
+  }
+#endif
 
   if (options->use_editor)
     gimp_text_tool_editor_dialog (text_tool);
@@ -339,7 +361,34 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
 void
 gimp_text_tool_editor_halt (GimpTextTool *text_tool)
 {
+  GimpTool        *tool    = GIMP_TOOL (text_tool);
   GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
+
+  if (tool->display)
+    {
+      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+
+      /* disconnect canvas focus handlers when halting the editor
+         so focus changes no longer update IM context state. See: #13171 */
+      g_signal_handlers_disconnect_by_func (shell->canvas,
+                                            gimp_text_tool_canvas_focus_in,
+                                            text_tool);
+      g_signal_handlers_disconnect_by_func (shell->canvas,
+                                            gimp_text_tool_canvas_focus_out,
+                                            text_tool);
+#ifdef G_OS_WIN32
+      {
+        /* disconnect the toplevel GtkWindow::set-focus handler when halting
+           sthe editor so focus changes no longer update this text tool. See: #13560 */
+        GtkWidget *toplevel = gtk_widget_get_toplevel (shell->canvas);
+
+        if (GTK_IS_WINDOW (toplevel))
+          g_signal_handlers_disconnect_by_func (toplevel,
+                                                gimp_text_tool_toplevel_set_focus,
+                                                text_tool);
+      }
+#endif
+    }
 
   if (text_tool->style_overlay)
     {
@@ -535,7 +584,7 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
           return TRUE;
 
         default:
-          break;
+          return FALSE;
         }
     }
 
@@ -628,6 +677,12 @@ gboolean
 gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
                                    GdkEventKey  *kevent)
 {
+  GimpTool         *tool  = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+
+  if (! gtk_widget_has_focus (shell->canvas))
+    return FALSE;
+
   if (gtk_im_context_filter_keypress (text_tool->im_context, kevent))
     {
       text_tool->needs_im_reset = TRUE;
@@ -677,32 +732,15 @@ gimp_text_tool_abort_im_context (GimpTextTool *text_tool)
    * a clean way... mitch
    */
 
-  gtk_im_context_focus_out (text_tool->im_context);
-  gtk_im_context_set_client_window (text_tool->im_context, NULL);
+  gimp_text_tool_destroy_im_context (text_tool);
+  gimp_text_tool_create_im_context (text_tool);
 
-  g_object_unref (text_tool->im_context);
-  text_tool->im_context = gtk_im_multicontext_new ();
-  gtk_im_context_set_client_window (text_tool->im_context,
-                                    gtk_widget_get_window (shell->canvas));
-  gtk_im_context_focus_in (text_tool->im_context);
-  g_signal_connect (text_tool->im_context, "preedit-start",
-                    G_CALLBACK (gimp_text_tool_im_preedit_start),
-                    text_tool);
-  g_signal_connect (text_tool->im_context, "preedit-end",
-                    G_CALLBACK (gimp_text_tool_im_preedit_end),
-                    text_tool);
-  g_signal_connect (text_tool->im_context, "preedit-changed",
-                    G_CALLBACK (gimp_text_tool_im_preedit_changed),
-                    text_tool);
-  g_signal_connect (text_tool->im_context, "commit",
-                    G_CALLBACK (gimp_text_tool_im_commit),
-                    text_tool);
-  g_signal_connect (text_tool->im_context, "retrieve-surrounding",
-                    G_CALLBACK (gimp_text_tool_im_retrieve_surrounding),
-                    text_tool);
-  g_signal_connect (text_tool->im_context, "delete-surrounding",
-                    G_CALLBACK (gimp_text_tool_im_delete_surrounding),
-                    text_tool);
+  if (gtk_widget_has_focus (shell->canvas))
+    {
+      gtk_im_context_set_client_window (text_tool->im_context,
+                                        gtk_widget_get_window (shell->canvas));
+      gtk_im_context_focus_in (text_tool->im_context);
+    }
 }
 
 void
@@ -804,6 +842,9 @@ gimp_text_tool_editor_update_im_cursor (GimpTextTool *text_tool)
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
   shell = gimp_display_get_shell (GIMP_TOOL (text_tool)->display);
+
+  if (! gtk_widget_has_focus (shell->canvas))
+    return;
 
   if (text_tool->text)
     gimp_text_tool_editor_get_cursor_rect (text_tool,
@@ -1572,6 +1613,12 @@ static void
 gimp_text_tool_im_preedit_start (GtkIMContext *context,
                                  GimpTextTool *text_tool)
 {
+  GimpTool         *tool  = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell = tool->display ? gimp_display_get_shell (tool->display) : NULL;
+
+  if (! shell || ! gtk_widget_has_focus (shell->canvas))
+    return;
+
   GIMP_LOG (TEXT_EDITING, "preedit start");
 
   text_tool->preedit_active = TRUE;
@@ -1592,8 +1639,13 @@ static void
 gimp_text_tool_im_preedit_changed (GtkIMContext *context,
                                    GimpTextTool *text_tool)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
-  PangoAttrList *attrs;
+  GimpTool         *tool   = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell  = tool->display ? gimp_display_get_shell (tool->display) : NULL;
+  GtkTextBuffer    *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  PangoAttrList    *attrs;
+
+  if (! shell || ! gtk_widget_has_focus (shell->canvas))
+    return;
 
   GIMP_LOG (TEXT_EDITING, "preedit changed");
 
@@ -1743,7 +1795,35 @@ gimp_text_tool_im_commit (GtkIMContext *context,
                           const gchar  *str,
                           GimpTextTool *text_tool)
 {
-  gboolean preedit_active = text_tool->preedit_active;
+  GimpTool         *tool           = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell          = tool->display ? gimp_display_get_shell (tool->display) : NULL;
+  gboolean          preedit_active = text_tool->preedit_active;
+
+  if (! shell)
+    return;
+
+  if (! gtk_widget_has_focus (shell->canvas))
+    {
+#ifdef G_OS_WIN32
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed GdkOffscreenWindow: evaluate dropping this Win32 IM workaround
+#endif
+      /* forward committed IM text into the focused style overlay entry
+         when the canvas does not have focus on Windows. See: #13560 */
+      GtkEditable *editable = gimp_text_tool_get_overlay_editable (text_tool);
+
+      if (editable)
+        {
+          gint pos;
+
+          gtk_editable_delete_selection (editable);
+          pos = gtk_editable_get_position (editable);
+          gtk_editable_insert_text (editable, str, -1, &pos);
+          gtk_editable_set_position (editable, pos);
+        }
+#endif
+      return;
+    }
 
   gimp_text_tool_im_delete_preedit (text_tool);
 
@@ -2117,4 +2197,170 @@ gimp_text_tool_style_overlay_button_motion (GtkWidget      *widget,
     }
 
   return TRUE;
+}
+
+static void
+gimp_text_tool_create_im_context (GimpTextTool *text_tool)
+{
+  text_tool->im_context = gtk_im_multicontext_new ();
+
+  g_signal_connect (text_tool->im_context, "preedit-start",
+                    G_CALLBACK (gimp_text_tool_im_preedit_start),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "preedit-end",
+                    G_CALLBACK (gimp_text_tool_im_preedit_end),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "preedit-changed",
+                    G_CALLBACK (gimp_text_tool_im_preedit_changed),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "commit",
+                    G_CALLBACK (gimp_text_tool_im_commit),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "retrieve-surrounding",
+                    G_CALLBACK (gimp_text_tool_im_retrieve_surrounding),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "delete-surrounding",
+                    G_CALLBACK (gimp_text_tool_im_delete_surrounding),
+                    text_tool);
+}
+
+static void
+gimp_text_tool_destroy_im_context (GimpTextTool *text_tool)
+{
+  if (text_tool->im_context)
+    {
+      gtk_im_context_focus_out (text_tool->im_context);
+      gtk_im_context_set_client_window (text_tool->im_context, NULL);
+      g_object_unref (text_tool->im_context);
+      text_tool->im_context = NULL;
+    }
+}
+
+static void
+gimp_text_tool_attach_im_context (GimpTextTool     *text_tool,
+                                  GimpDisplayShell *shell)
+{
+  gtk_im_context_set_client_window (text_tool->im_context,
+                                    gtk_widget_get_window (shell->canvas));
+  text_tool->needs_im_reset = TRUE;
+  gimp_text_tool_reset_im_context (text_tool);
+  gtk_im_context_focus_in (text_tool->im_context);
+}
+
+static void
+gimp_text_tool_detach_im_context (GimpTextTool *text_tool)
+{
+  if (text_tool->preedit_active)
+    gimp_text_tool_abort_im_context (text_tool);
+
+  text_tool->needs_im_reset = TRUE;
+  gimp_text_tool_reset_im_context (text_tool);
+
+  /* destroy and recreate the IM context without a client window so
+     any platform IM filter is unregistered while unfocused. See: #13171 */
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 may not need destroying and recreating GtkIMContext on focus-out: evaluate using gtk_im_context_focus_out() alone
+#endif
+  gimp_text_tool_destroy_im_context (text_tool);
+  gimp_text_tool_create_im_context (text_tool);
+}
+
+#ifdef G_OS_WIN32
+static gboolean
+gimp_text_tool_is_overlay_editable (GimpTextTool *text_tool,
+                                    GtkWidget    *widget)
+{
+  return (widget &&
+          text_tool->style_overlay &&
+          GTK_IS_EDITABLE (widget) &&
+          gtk_widget_is_ancestor (widget, text_tool->style_overlay));
+}
+
+static GtkEditable *
+gimp_text_tool_get_overlay_editable (GimpTextTool *text_tool)
+{
+  GimpTool         *tool  = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell = tool->display ? gimp_display_get_shell (tool->display) : NULL;
+  GtkWidget        *toplevel;
+  GtkWidget        *focus;
+
+  if (! shell)
+    return NULL;
+
+  toplevel = gtk_widget_get_toplevel (shell->canvas);
+  if (! GTK_IS_WINDOW (toplevel))
+    return NULL;
+
+  focus = gtk_window_get_focus (GTK_WINDOW (toplevel));
+  if (gimp_text_tool_is_overlay_editable (text_tool, focus))
+    return GTK_EDITABLE (focus);
+
+  return NULL;
+}
+
+static void
+gimp_text_tool_toplevel_set_focus (GtkWindow    *window,
+                                   GtkWidget    *focus,
+                                   GimpTextTool *text_tool)
+{
+  GimpTool         *tool  = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell = tool->display ? gimp_display_get_shell (tool->display) : NULL;
+  gboolean          is_overlay_editable;
+
+  if (! shell)
+    return;
+
+  is_overlay_editable = gimp_text_tool_is_overlay_editable (text_tool, focus);
+
+  if (focus == shell->canvas || is_overlay_editable)
+    {
+      if (text_tool->preedit_active && is_overlay_editable)
+        gimp_text_tool_abort_im_context (text_tool);
+
+      gimp_text_tool_attach_im_context (text_tool, shell);
+    }
+  else
+    {
+      gimp_text_tool_detach_im_context (text_tool);
+    }
+}
+#endif
+
+static gboolean
+gimp_text_tool_canvas_focus_in (GtkWidget     *widget,
+                                GdkEventFocus *event,
+                                gpointer       user_data)
+{
+  GimpTextTool     *text_tool = GIMP_TEXT_TOOL (user_data);
+  GimpTool         *tool      = GIMP_TOOL (text_tool);
+  GimpDisplayShell *shell     = gimp_display_get_shell (tool->display);
+
+  gimp_text_tool_attach_im_context (text_tool, shell);
+  gimp_text_tool_editor_update_im_cursor (text_tool);
+
+  return FALSE;
+}
+
+static gboolean
+gimp_text_tool_canvas_focus_out (GtkWidget     *widget,
+                                 GdkEventFocus *event,
+                                 gpointer       user_data)
+{
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (user_data);
+
+#ifdef G_OS_WIN32
+  /* on Windows, GtkWindow::set-focus runs after focus-out-event, so let
+     toplevel_set_focus() decide if im_context is active for an overlay. See: #13560 */
+  if (text_tool->preedit_active)
+    gimp_text_tool_abort_im_context (text_tool);
+
+  text_tool->needs_im_reset = TRUE;
+  gimp_text_tool_reset_im_context (text_tool);
+#else
+  /* detach IM context on focus-out so it does not intercept input
+     in other widgets. See: #13171 */
+  gimp_text_tool_detach_im_context (text_tool);
+#endif
+
+  return FALSE;
 }
