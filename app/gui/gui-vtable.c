@@ -1028,7 +1028,8 @@ gui_inhibit (Gimp *gimp)
     }
 
   app = GTK_APPLICATION (g_application_get_default ());
-  if (app == NULL)
+  if (app == NULL ||
+      ! g_application_get_is_registered (G_APPLICATION (app)))
     /* This may happen when quitting. The GtkApplication is finalized
      * faster than the images without display.
      */
