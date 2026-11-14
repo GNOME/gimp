@@ -259,7 +259,7 @@ wia_main (GimpProcedure       *procedure,
 
               return gimp_procedure_new_return_values (procedure,
                                                        GIMP_PDB_EXECUTION_ERROR,
-                                                       NULL);
+                                                       error);
             }
 
           if (nFiles > 0)
@@ -319,12 +319,14 @@ wia_main (GimpProcedure       *procedure,
         }
       else
         {
+          CoUninitialize ();
+
           g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
                        _("WIA driver not found, scanning not available"));
 
           return gimp_procedure_new_return_values (procedure,
                                                    GIMP_PDB_EXECUTION_ERROR,
-                                                   NULL);
+                                                   error);
         }
 
       CoUninitialize ();
