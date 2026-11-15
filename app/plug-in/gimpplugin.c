@@ -45,6 +45,7 @@
 
 #ifdef __APPLE__
 #include <sys/ioctl.h>
+#include <poll.h>
 #endif
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
@@ -113,6 +114,7 @@ static gboolean   gimp_plug_in_flush                  (GIOChannel   *channel,
 
 #ifdef __APPLE__
 static guint      gimp_plug_in_wire_count_bytes_ready (GIOChannel   *channel);
+static gboolean   gimp_plug_in_wire_pipe_is_eof       (GIOChannel   *channel);
 #endif
 
 
@@ -206,9 +208,14 @@ gimp_plug_in_recv_message (GIOChannel   *channel,
    *
    * There must be at least 4 bytes of message type
    * else reads will hang, and the app appear non-responsive.
+   *
+   * Workaround for #16332:
+   * at EOF (dead plug-in) FIONREAD is also 0 but macOS reports only G_IO_IN,
+   * so fall through and let the read below fail and tear the plug-in down.
    */
 
-  if (gimp_plug_in_wire_count_bytes_ready (channel) < 4)
+  if (gimp_plug_in_wire_count_bytes_ready (channel) < 4 &&
+      ! gimp_plug_in_wire_pipe_is_eof (channel))
     return TRUE;
 #endif
 
@@ -387,6 +394,24 @@ gimp_plug_in_wire_count_bytes_ready (GIOChannel *channel)
 
   g_debug ("%s bytes ready: %d", G_STRFUNC, result);
   return result;
+}
+
+/* Returns TRUE if the read end of the channel's pipe reports HUP or ERR,
+ * i.e. the write end has been closed (the plug-in process exited).
+ */
+static gboolean
+gimp_plug_in_wire_pipe_is_eof (GIOChannel *channel)
+{
+  struct pollfd pfd;
+
+  pfd.fd      = g_io_channel_unix_get_fd (channel);
+  pfd.events  = POLLIN | POLLPRI;
+  pfd.revents = 0;
+
+  if (poll (&pfd, 1, 0) < 0)
+    return FALSE;
+
+  return (pfd.revents & (POLLHUP | POLLERR)) != 0;
 }
 #endif
 
