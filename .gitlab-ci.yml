@@ -1196,6 +1196,8 @@ dist-mac-weekly:
 mr-reporting:
   extends: .default-stage-matters
   rules:
+    - if: '$CI_PROJECT_NAMESPACE != "GNOME"'
+      when: never
     - <<: *CI_MERGE
       when: always
   interruptible: true
