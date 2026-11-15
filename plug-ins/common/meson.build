@@ -16,6 +16,7 @@ common_plugins_list = [
   { 'name': 'depth-merge', },
   { 'name': 'despeckle', },
   { 'name': 'destripe', },
+  { 'name': 'file-cals', },
   { 'name': 'file-cel', },
   { 'name': 'file-compressor',
     'deps': [ gio, libarchive, liblzma, pango, bz2, zlib, ],
