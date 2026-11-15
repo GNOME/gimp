@@ -170,7 +170,6 @@ cals_load (GimpProcedure         *procedure,
   return_vals = gimp_procedure_new_return_values (procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
-
   GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
@@ -182,7 +181,7 @@ load_image (GFile        *file,
             GimpRunMode   run_mode,
             GError      **error)
 {
-  GimpImage *image  = NULL;
+  GimpImage *image;
   gchar      header_row[128];
   GString   *comment_str;
   gchar     *header_type;
@@ -274,7 +273,8 @@ load_image (GFile        *file,
       ! (data = g_try_malloc0 (file_size)))
     {
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                   _("There was not enough memory to complete the operation."));
+                   _("There was not enough memory to complete the "
+                     "operation."));
       fclose (fp);
       g_string_free (comment_str, TRUE);
       return NULL;
@@ -338,12 +338,12 @@ convert_to_tiff (GFile    *file,
                  guchar   *data,
                  GError  **error)
 {
-  GimpImage      *image;
   GFile          *temp_file;
   FILE           *temp_fp;
   gushort         temp_short;
   guint32         temp_int;
   GimpProcedure  *procedure;
+  GimpImage      *image            = NULL;
   GimpValueArray *return_vals      = NULL;
   const gushort   num_tags         = 8;
   const guint32   header_size      = 110;
@@ -358,10 +358,8 @@ convert_to_tiff (GFile    *file,
                                        { 279, 4, 1, image_size }
                                      };
 
-  image     = NULL;
   temp_file = gimp_temp_file ("tiff");
-
-  temp_fp = g_fopen (g_file_peek_path (temp_file), "wb");
+  temp_fp   = g_fopen (g_file_peek_path (temp_file), "wb");
 
   if (! temp_fp)
     {
