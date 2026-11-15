@@ -48,7 +48,7 @@
 #include <mach/mach.h>
 #endif
 
-#if defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__)
+#if defined(HAVE_LIBBACKTRACE)
 #include <backtrace.h>
 #endif
 
@@ -137,7 +137,7 @@ static GimpBacktrace    *handler_backtrace;
 static gint              handler_n_remaining_threads;
 static gint              handler_lock;
 
-#if defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__)
+#if defined(HAVE_LIBBACKTRACE)
 static struct backtrace_state *backtrace_state;
 #endif
 
@@ -431,7 +431,7 @@ gimp_backtrace_signal_handler (gint signum)
 void
 gimp_backtrace_init (void)
 {
-#if defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__)
+#if defined(HAVE_LIBBACKTRACE)
   backtrace_state = backtrace_create_state (NULL, 0, NULL, NULL);
 #endif
 }
@@ -771,7 +771,7 @@ gimp_backtrace_get_frame_address (GimpBacktrace *backtrace,
   return backtrace->threads[thread].frames[frame];
 }
 
-#if defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__)
+#if defined(HAVE_LIBBACKTRACE)
 static void
 gimp_backtrace_syminfo_callback (GimpBacktraceAddressInfo *info,
                                  guintptr                  pc,
@@ -802,7 +802,7 @@ gimp_backtrace_pcinfo_callback (GimpBacktraceAddressInfo *info,
 
   return 0;
 }
-#endif /* defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__) */
+#endif /* defined(HAVE_LIBBACKTRACE) */
 
 gboolean
 gimp_backtrace_get_address_info (guintptr                  address,
@@ -840,7 +840,7 @@ gimp_backtrace_get_address_info (guintptr                  address,
     result = TRUE;
   }
 
-#if defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__)
+#if defined(HAVE_LIBBACKTRACE)
   if (backtrace_state)
     {
       backtrace_syminfo (
@@ -857,7 +857,7 @@ gimp_backtrace_get_address_info (guintptr                  address,
 
       result = TRUE;
     }
-#endif /* defined(HAVE_LIBBACKTRACE) && !defined(__APPLE__) */
+#endif /* defined(HAVE_LIBBACKTRACE) */
 
 #ifdef HAVE_LIBUNWIND
 /* we use libunwind to get the symbol name, when available, even if dladdr() or

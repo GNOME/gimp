@@ -57,30 +57,6 @@
     ],
     "modules": [
         {
-            "//": "This dep is tricky to be included in the SDK: https://gitlab.com/freedesktop-sdk/freedesktop-sdk/-/issues/1826",
-            "name": "libbacktrace",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/ianlancetaylor/libbacktrace.git",
-                    "commit": "1db85642e3fca189cf4e076f840a45d6934b2456"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "autoreconf -vfi"
-                    ]
-                }
-            ],
-            "config-opts": [
-                "--enable-shared"
-            ],
-            "cleanup": [
-                "/include",
-                "/lib/pkgconfig"
-            ]
-        },
-        {
             "//": "libappstream is only on the SDK, not on runtime: https://gitlab.gnome.org/GNOME/gnome-build-meta/-/work_items/1305",
             "name": "appstream",
             "sources": [

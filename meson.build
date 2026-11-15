@@ -747,7 +747,8 @@ if get_option('libbacktrace') and platform_linux
 else
   libbacktrace = no_dep
 endif
-conf.set('HAVE_LIBBACKTRACE', libbacktrace.found())
+#newer libbacktrace crashes badly. See: #16947
+#conf.set('HAVE_LIBBACKTRACE', libbacktrace.found())
 
 ## Check for libunwind
 # In most platforms, unw_*() functions are in the libunwind library.
@@ -780,10 +781,11 @@ elif platform_windows
 elif platform_linux
   if not have_execinfo_h
     dashboard_backtrace='no (missing: execinfo.h)'
-  elif not libbacktrace.found() and not have_unwind
-    dashboard_backtrace='rough (missing: libbacktrace and libunwind)'
-  elif not libbacktrace.found()
-    dashboard_backtrace='partially detailed (missing: libbacktrace)'
+  #newer libbacktrace crashes badly. See: #16947
+  #elif not libbacktrace.found() and not have_unwind
+    #dashboard_backtrace='rough (missing: libbacktrace and libunwind)'
+  #elif not libbacktrace.found()
+    #dashboard_backtrace='partially detailed (missing: libbacktrace)'
   elif not have_unwind
     dashboard_backtrace='partially detailed (missing: libunwind)'
   else
