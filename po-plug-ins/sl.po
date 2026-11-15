@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-15 16:47+0000\n"
-"PO-Revision-Date: 2026-11-15 20:45+0100\n"
+"POT-Creation-Date: 2026-11-15 21:37+0000\n"
+"PO-Revision-Date: 2026-11-15 22:54+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -9450,10 +9450,15 @@ msgstr "_Skener/Fotoaparat ..."
 msgid "Unable to read scanned images."
 msgstr "Optično branih slik ni mogoče prebrati."
 
-#: plug-ins/common/wia.c:323
+#: plug-ins/common/wia.c:325
 #, c-format
 msgid "WIA driver not found, scanning not available"
 msgstr "Gonilnika WIA ni možno najti, optično branje ni na voljo"
+
+#: plug-ins/common/wia.c:336
+#, c-format
+msgid "Failed to initialize COM for scanning."
+msgstr "Ni možno inicializirati COM za optično branje."
 
 #: plug-ins/file-bmp/bmp-export.c:562 plug-ins/file-fli/fli.c:91
 #: plug-ins/file-fli/fli.c:110 plug-ins/file-fli/fli.c:131
