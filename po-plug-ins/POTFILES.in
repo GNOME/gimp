@@ -26,6 +26,7 @@ plug-ins/common/depth-merge.c
 plug-ins/common/despeckle.c
 plug-ins/common/destripe.c
 plug-ins/common/file-aa.c
+plug-ins/common/file-cals.c
 plug-ins/common/file-cel.c
 plug-ins/common/file-csource.c
 plug-ins/common/file-compressor.c
