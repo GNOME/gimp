@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-05 17:56+0000\n"
-"PO-Revision-Date: 2026-11-11 10:42+0100\n"
+"POT-Creation-Date: 2026-11-15 21:37+0000\n"
+"PO-Revision-Date: 2026-11-16 10:07+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -602,8 +602,8 @@ msgstr "Rolgordijnen"
 #: plug-ins/common/file-drhalo.c:237 plug-ins/common/file-farbfeld.c:301
 #: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1227
 #: plug-ins/common/file-iff.c:505 plug-ins/common/file-jp2.c:1626
-#: plug-ins/common/file-macpaint.c:246 plug-ins/common/file-pcx.c:726
-#: plug-ins/common/file-pcx.c:734 plug-ins/common/file-pcx.c:742
+#: plug-ins/common/file-macpaint.c:246 plug-ins/common/file-pcx.c:728
+#: plug-ins/common/file-pcx.c:736 plug-ins/common/file-pcx.c:744
 #: plug-ins/common/file-pix.c:427 plug-ins/common/file-png.c:1127
 #: plug-ins/common/file-pnm.c:850 plug-ins/common/file-qoi.c:296
 #: plug-ins/common/file-raw-data.c:833 plug-ins/common/file-raw-data.c:1967
@@ -1240,11 +1240,11 @@ msgstr "CML-verkennerparameters opslaan"
 #: plug-ins/common/cml-explorer.c:2197 plug-ins/common/curve-bend.c:755
 #: plug-ins/common/file-dicom.c:1579 plug-ins/common/file-farbfeld.c:366
 #: plug-ins/common/file-mng.c:1279 plug-ins/common/file-mng.c:1629
-#: plug-ins/common/file-pcx.c:1240 plug-ins/common/file-pdf-export.c:683
+#: plug-ins/common/file-pcx.c:1242 plug-ins/common/file-pdf-export.c:683
 #: plug-ins/common/file-png.c:1993 plug-ins/common/file-raw-data.c:1535
 #: plug-ins/common/file-raw-data.c:1564 plug-ins/common/file-sunras.c:615
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-tim.c:768
-#: plug-ins/common/file-xmc.c:1287 plug-ins/common/sphere-designer.c:2208
+#: plug-ins/common/file-xmc.c:1293 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:301 plug-ins/file-fli/fli-gimp.c:823
 #: plug-ins/file-icns/file-icns-export.c:442 plug-ins/file-ico/ani-export.c:167
 #: plug-ins/file-ico/ico-export.c:1277 plug-ins/file-jpeg/jpeg-export.c:319
@@ -1975,7 +1975,8 @@ msgid "Cannot operate on empty selections."
 msgstr "Kan niet op lege selecties werken."
 
 #  Do not rely on librsvg setting GError on failure!
-#: plug-ins/common/curve-bend.c:808 plug-ins/common/file-cel.c:330
+#: plug-ins/common/curve-bend.c:808 plug-ins/common/file-cals.c:203
+#: plug-ins/common/file-cals.c:367 plug-ins/common/file-cel.c:330
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
 #: plug-ins/common/file-drhalo.c:200 plug-ins/common/file-farbfeld.c:267
 #: plug-ins/common/file-gif-load.c:479 plug-ins/common/file-iff.c:332
@@ -1992,8 +1993,8 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/common/file-sunras.c:434 plug-ins/common/file-svg.c:780
 #: plug-ins/common/file-tga.c:425 plug-ins/common/file-tim.c:277
 #: plug-ins/common/file-wbmp.c:248 plug-ins/common/file-wbmp.c:327
-#: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:656
-#: plug-ins/common/file-xmc.c:904 plug-ins/common/file-xwd.c:465
+#: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:658
+#: plug-ins/common/file-xmc.c:910 plug-ins/common/file-xwd.c:465
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-cin/cineon-lib.c:90 plug-ins/file-cin/dpx-lib.c:131
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
@@ -2467,18 +2468,19 @@ msgstr "Witniveau"
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-dicom.c:1656
 #: plug-ins/common/file-farbfeld.c:292 plug-ins/common/file-iff.c:673
 #: plug-ins/common/file-iff.c:724 plug-ins/common/file-mng.c:1120
-#: plug-ins/common/file-pcx.c:718 plug-ins/common/file-pcx.c:855
-#: plug-ins/common/file-raw-data.c:1519 plug-ins/common/file-xmc.c:703
-#: plug-ins/common/file-xmc.c:1030 plug-ins/file-bmp/bmp-load.c:800
+#: plug-ins/common/file-pcx.c:720 plug-ins/common/file-pcx.c:857
+#: plug-ins/common/file-raw-data.c:1519 plug-ins/common/file-xmc.c:705
+#: plug-ins/common/file-xmc.c:1036 plug-ins/file-bmp/bmp-load.c:800
 #: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
 
-#: plug-ins/common/despeckle.c:369 plug-ins/common/file-drhalo.c:253
-#: plug-ins/common/file-farbfeld.c:310 plug-ins/common/file-macpaint.c:259
-#: plug-ins/file-fits/fits.c:499 plug-ins/file-fits/fits.c:581
-#: plug-ins/file-psd/psd-load.c:5847 plug-ins/file-tiff/file-tiff-load.c:2000
+#: plug-ins/common/despeckle.c:369 plug-ins/common/file-cals.c:276
+#: plug-ins/common/file-drhalo.c:253 plug-ins/common/file-farbfeld.c:310
+#: plug-ins/common/file-macpaint.c:259 plug-ins/file-fits/fits.c:499
+#: plug-ins/file-fits/fits.c:581 plug-ins/file-psd/psd-load.c:5847
+#: plug-ins/file-tiff/file-tiff-load.c:2000
 #: plug-ins/file-tiff/file-tiff-load.c:2104
 #: plug-ins/file-tiff/file-tiff-load.c:2126
 #: plug-ins/file-tiff/file-tiff-load.c:2319
@@ -2550,6 +2552,75 @@ msgstr "_Formaat"
 msgid "File type to use"
 msgstr "Te gebruiken bestandstype"
 
+#: plug-ins/common/file-cals.c:126
+msgid "CALS Image"
+msgstr "CALS-afbeelding"
+
+#: plug-ins/common/file-cals.c:129
+msgid "Load file in the CALS file format"
+msgstr "Laad bestand in bestandsindeling CALS"
+
+#. Read file pointer
+#. File header
+#. KiSS file type
+#. Bits per pixel
+#. Dimensions of image
+#. Layer offsets
+#. Number of colors
+#. Image
+#. Layer
+#. Temporary buffer
+#. Pixel data
+#. Buffer for layer
+#. Counters
+#. Number of items read from file
+#. max. rows allocated
+#. column, highest column ever used
+#.
+#. * Open the file for reading...
+#.
+#: plug-ins/common/file-cals.c:208 plug-ins/common/file-cel.c:373
+#: plug-ins/common/file-dicom.c:353 plug-ins/common/file-gegl.c:333
+#: plug-ins/common/file-gif-load.c:471 plug-ins/common/file-heif.c:1054
+#: plug-ins/common/file-jp2.c:1376 plug-ins/common/file-mng.c:1058
+#: plug-ins/common/file-pcx.c:479 plug-ins/common/file-pcx.c:522
+#: plug-ins/common/file-pdf-load.c:780 plug-ins/common/file-pix.c:364
+#: plug-ins/common/file-png.c:824 plug-ins/common/file-pnm.c:688
+#: plug-ins/common/file-ps.c:1148 plug-ins/common/file-raw-data.c:800
+#: plug-ins/common/file-raw-data.c:1865 plug-ins/common/file-sunras.c:426
+#: plug-ins/common/file-tga.c:417 plug-ins/common/file-wbmp.c:240
+#: plug-ins/common/file-wbmp.c:319 plug-ins/common/file-wmf.c:616
+#: plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:648
+#: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
+#: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
+#: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:490
+#: plug-ins/file-icns/file-icns-load.c:639 plug-ins/file-ico/ani-load.c:59
+#: plug-ins/file-ico/ico-load.c:759 plug-ins/file-jpeg/jpeg-load.c:101
+#: plug-ins/file-psd/psd-load.c:270
+#: plug-ins/file-raw/file-another-rawtherapee.c:353
+#: plug-ins/file-raw/file-darktable.c:470
+#: plug-ins/file-raw/file-rawtherapee.c:355 plug-ins/file-sgi/sgi.c:315
+#: plug-ins/file-tiff/file-tiff-load.c:326
+#, c-format
+msgid "Opening '%s'"
+msgstr "Openen van ‘%s’"
+
+#: plug-ins/common/file-cals.c:221 plug-ins/common/file-cals.c:286
+#: plug-ins/common/file-paa.c:233 plug-ins/common/file-paa.c:270
+#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:647
+#: plug-ins/common/file-pvr.c:311 plug-ins/common/file-pvr.c:354
+#: plug-ins/common/file-pvr.c:366 plug-ins/common/file-tim.c:363
+#: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
+#: plug-ins/common/file-tim.c:538
+#, c-format
+msgid "Could not read header from '%s'"
+msgstr "Kan de header niet lezen van ‘%s’"
+
+#: plug-ins/common/file-cals.c:264
+#, c-format
+msgid "CALS type %d not yet supported"
+msgstr "CALS type %d wordt nog niet ondersteund"
+
 #: plug-ins/common/file-cel.c:140 plug-ins/common/file-cel.c:172
 msgid "KISS CEL"
 msgstr "KISS CEL"
@@ -2581,50 +2652,6 @@ msgstr "Voor deze KISS CEL-afbeelding is een paletbestand vereist."
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "EOF of fout tijdens lezen afbeeldings-header"
-
-#. Read file pointer
-#. File header
-#. KiSS file type
-#. Bits per pixel
-#. Dimensions of image
-#. Layer offsets
-#. Number of colors
-#. Image
-#. Layer
-#. Temporary buffer
-#. Pixel data
-#. Buffer for layer
-#. Counters
-#. Number of items read from file
-#. max. rows allocated
-#. column, highest column ever used
-#.
-#. * Open the file for reading...
-#.
-#: plug-ins/common/file-cel.c:373 plug-ins/common/file-dicom.c:353
-#: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:471
-#: plug-ins/common/file-heif.c:1054 plug-ins/common/file-jp2.c:1376
-#: plug-ins/common/file-mng.c:1058 plug-ins/common/file-pcx.c:479
-#: plug-ins/common/file-pcx.c:522 plug-ins/common/file-pdf-load.c:780
-#: plug-ins/common/file-pix.c:364 plug-ins/common/file-png.c:824
-#: plug-ins/common/file-pnm.c:688 plug-ins/common/file-ps.c:1148
-#: plug-ins/common/file-raw-data.c:800 plug-ins/common/file-raw-data.c:1865
-#: plug-ins/common/file-sunras.c:426 plug-ins/common/file-tga.c:417
-#: plug-ins/common/file-wbmp.c:240 plug-ins/common/file-wbmp.c:319
-#: plug-ins/common/file-wmf.c:616 plug-ins/common/file-xbm.c:721
-#: plug-ins/common/file-xmc.c:646 plug-ins/common/file-xpm.c:360
-#: plug-ins/common/file-xwd.c:457 plug-ins/file-bmp/bmp-load.c:265
-#: plug-ins/file-exr/file-exr.c:197 plug-ins/file-faxg3/faxg3.c:247
-#: plug-ins/file-fli/fli-gimp.c:490 plug-ins/file-icns/file-icns-load.c:639
-#: plug-ins/file-ico/ani-load.c:59 plug-ins/file-ico/ico-load.c:759
-#: plug-ins/file-jpeg/jpeg-load.c:101 plug-ins/file-psd/psd-load.c:270
-#: plug-ins/file-raw/file-another-rawtherapee.c:353
-#: plug-ins/file-raw/file-darktable.c:470
-#: plug-ins/file-raw/file-rawtherapee.c:355 plug-ins/file-sgi/sgi.c:315
-#: plug-ins/file-tiff/file-tiff-load.c:326
-#, c-format
-msgid "Opening '%s'"
-msgstr "Openen van ‘%s’"
 
 #: plug-ins/common/file-cel.c:424
 #, c-format
@@ -2687,7 +2714,7 @@ msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:358
 #: plug-ins/common/file-gif-export.c:945 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1819 plug-ins/common/file-jpegxl.c:1387
-#: plug-ins/common/file-pcx.c:1110 plug-ins/common/file-pix.c:645
+#: plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:645
 #: plug-ins/common/file-png.c:1985 plug-ins/common/file-pnm.c:1634
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:351
 #: plug-ins/common/file-sunras.c:606 plug-ins/common/file-svg.c:818
@@ -4540,16 +4567,6 @@ msgstr "Laad bestand in de bestandsindeling PAA"
 msgid "Load file in the Bohemia Interactive PAA file format"
 msgstr "Laad bestand in de bestandsindeling Bohemia Interactive PAA"
 
-#: plug-ins/common/file-paa.c:233 plug-ins/common/file-paa.c:270
-#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:645
-#: plug-ins/common/file-pvr.c:311 plug-ins/common/file-pvr.c:354
-#: plug-ins/common/file-pvr.c:366 plug-ins/common/file-tim.c:363
-#: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
-#: plug-ins/common/file-tim.c:538
-#, c-format
-msgid "Could not read header from '%s'"
-msgstr "Kan de header niet lezen van ‘%s’"
-
 #: plug-ins/common/file-paa.c:256
 #, c-format
 msgid "Currently unsupported PAA format: '%d'"
@@ -4679,72 +4696,72 @@ msgstr "Mixed-mode DCX afbeelding niet ingeladen"
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s: Kon niet alle DCX afbeeldingen inladen: %s\n"
 
-#: plug-ins/common/file-pcx.c:655
+#: plug-ins/common/file-pcx.c:657
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "‘%s’ is geen PCX-bestand"
 
-#: plug-ins/common/file-pcx.c:671 plug-ins/common/file-wbmp.c:462
+#: plug-ins/common/file-pcx.c:673 plug-ins/common/file-wbmp.c:462
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
 #: plug-ins/file-psd/psd-load.c:740
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingsbreedte: %d"
 
-#: plug-ins/common/file-pcx.c:678 plug-ins/common/file-wbmp.c:468
+#: plug-ins/common/file-pcx.c:680 plug-ins/common/file-wbmp.c:468
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
 #: plug-ins/file-psd/psd-load.c:732
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ongeldige of niet-ondersteunde afbeeldingshoogte: %d"
 
-#: plug-ins/common/file-pcx.c:688
+#: plug-ins/common/file-pcx.c:690
 #, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "Ongebruikelijke PCX-soort, ik geef op"
 
-#: plug-ins/common/file-pcx.c:701
+#: plug-ins/common/file-pcx.c:703
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Ongeldig aantal bytes per regel in PCX-kop"
 
-#: plug-ins/common/file-pcx.c:708
+#: plug-ins/common/file-pcx.c:710
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Resolutie-overloop in XCX-header, gebruik 72x72"
 
-#: plug-ins/common/file-pcx.c:867
+#: plug-ins/common/file-pcx.c:869
 #, c-format
 msgid "Unusual PCX flavor, giving up"
 msgstr "Ongebruikelijke PCX-soort, ik geef op"
 
-#: plug-ins/common/file-pcx.c:892
+#: plug-ins/common/file-pcx.c:894
 msgid "Import from PCX"
 msgstr "Uit PCX importeren"
 
-#: plug-ins/common/file-pcx.c:1178 plug-ins/common/file-pnm.c:1630
+#: plug-ins/common/file-pcx.c:1180 plug-ins/common/file-pnm.c:1630
 msgid "Cannot export images with alpha channel."
 msgstr "Kan geen afbeeldingen met alfakanaal exporteren."
 
-#: plug-ins/common/file-pcx.c:1203
+#: plug-ins/common/file-pcx.c:1205
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Ongeldige X-verschuiving: %d"
 
-#: plug-ins/common/file-pcx.c:1211
+#: plug-ins/common/file-pcx.c:1213
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Ongeldige Y-verschuiving: %d"
 
-#: plug-ins/common/file-pcx.c:1219
+#: plug-ins/common/file-pcx.c:1221
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Rechterkant valt buiten grens (moet < %d zijn): %d"
 
-#: plug-ins/common/file-pcx.c:1228
+#: plug-ins/common/file-pcx.c:1230
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Onderkant valt buiten grens (moet < %d zijn): %d"
 
-#: plug-ins/common/file-pcx.c:1310 plug-ins/common/file-qoi.c:361
+#: plug-ins/common/file-pcx.c:1312 plug-ins/common/file-qoi.c:361
 #: plug-ins/common/file-qoi.c:378 plug-ins/common/file-svg.c:827
 #: plug-ins/common/file-svg.c:843
 #, c-format
@@ -6924,7 +6941,7 @@ msgstr "_Opmerking opslaan"
 msgid "Write a comment at the beginning of the file."
 msgstr "Een opmerking aan het begin van het bestand opnemen."
 
-#: plug-ins/common/file-xbm.c:225 plug-ins/common/file-xmc.c:447
+#: plug-ins/common/file-xbm.c:225 plug-ins/common/file-xmc.c:449
 #: plug-ins/common/mail.c:254
 msgid "Co_mment"
 msgstr "Op_merking"
@@ -6960,7 +6977,7 @@ msgid "X coordinate of hotspot"
 msgstr "X-coördinaat van de hotspot"
 
 # What does 'Hot Spot' mean here?
-#: plug-ins/common/file-xbm.c:252 plug-ins/common/file-xmc.c:382
+#: plug-ins/common/file-xbm.c:252 plug-ins/common/file-xmc.c:384
 msgid "Hot spot _Y"
 msgstr "Hot spot _Y"
 
@@ -7033,107 +7050,107 @@ msgid ""
 msgstr "Schrijven van een opmerking zal het XBM-bestand onleesbaar maken voor sommige toepassingen.\n"
 "De opmerking zal het inbedden van de XBM in C-broncode niet beïnvloeden."
 
-#: plug-ins/common/file-xmc.c:300 plug-ins/common/file-xmc.c:348
-#: plug-ins/common/file-xmc.c:350
+#: plug-ins/common/file-xmc.c:302 plug-ins/common/file-xmc.c:350
+#: plug-ins/common/file-xmc.c:352
 msgid "X11 Mouse Cursor"
 msgstr "X11 Muiscursor"
 
-#: plug-ins/common/file-xmc.c:303
+#: plug-ins/common/file-xmc.c:305
 msgid "Loads files of X11 Mouse Cursor file format"
 msgstr "Inladen van bestanden in de bestandsindeling X11 Muis Cursor"
 
-#: plug-ins/common/file-xmc.c:305
+#: plug-ins/common/file-xmc.c:307
 msgid "This plug-in loads X11 Mouse Cursor (XMC) files."
 msgstr "Deze plug-in laadt bestanden in de bestandsindeling X11 Muis Cursor (XMC)."
 
-#: plug-ins/common/file-xmc.c:330
+#: plug-ins/common/file-xmc.c:332
 msgid ""
 "Loads only first frame of X11 Mouse Cursor's animation sequence which "
 "nominal size is the closest of thumb-size to be used as a thumbnail"
 msgstr "Laadt alleen het eerste frame van een X11 Muis Cursor-bestand van de reeks waarvan de grootte het best past bij de afmeting om als pictogram te gebruiken"
 
-#: plug-ins/common/file-xmc.c:353
+#: plug-ins/common/file-xmc.c:355
 msgid "Exports files of X11 cursor file"
 msgstr "Exporteren van bestanden in de bestandsindeling X11 Muis Cursor"
 
-#: plug-ins/common/file-xmc.c:354
+#: plug-ins/common/file-xmc.c:356
 msgid "This plug-in exports X11 Mouse Cursor (XMC) files"
 msgstr "Deze plug-in exporteert een afbeelding in de bestandsindeling X11 Muis Cursor (XMC)"
 
 # What does 'Hot Spot' mean here?
-#: plug-ins/common/file-xmc.c:375
+#: plug-ins/common/file-xmc.c:377
 msgid "Hot spot _X"
 msgstr "Hotspot _X"
 
-#: plug-ins/common/file-xmc.c:376
+#: plug-ins/common/file-xmc.c:378
 msgid "X-coordinate of hot spot (use -1, -1 to keep original hot spot)"
 msgstr "X-coördinaat van de hotspot (gebruik -1, -1 om de originele hotspot te behouden)"
 
-#: plug-ins/common/file-xmc.c:383
+#: plug-ins/common/file-xmc.c:385
 msgid "Y-coordinate of hot spot (use -1, -1 to keep original hot spot)"
 msgstr "Y-coördinaat van de hotspot (gebruik -1, -1 om de originele hotspot te behouden)"
 
-#: plug-ins/common/file-xmc.c:389
+#: plug-ins/common/file-xmc.c:391
 msgid "_Auto Crop all frames"
 msgstr "_Alle frames automatisch bijsnijden"
 
-#: plug-ins/common/file-xmc.c:390
+#: plug-ins/common/file-xmc.c:392
 msgid "Remove the empty borders of all frames."
 msgstr "Lege randen van alle frames verwijderen."
 
-#: plug-ins/common/file-xmc.c:395
+#: plug-ins/common/file-xmc.c:397
 msgid "Si_ze where unspecified"
 msgstr "A_fmeting indien niet opgegeven"
 
-#: plug-ins/common/file-xmc.c:396
+#: plug-ins/common/file-xmc.c:398
 msgid "Default frame size if unspecified"
 msgstr "Standaard afmetingen van frames, indien niet apart opgegeven"
 
-#: plug-ins/common/file-xmc.c:410
+#: plug-ins/common/file-xmc.c:412
 msgid "_Use default size for all frames"
 msgstr "D_eze afmetingen voor alle frames gebruiken"
 
-#: plug-ins/common/file-xmc.c:411
+#: plug-ins/common/file-xmc.c:413
 msgid "Use default size for all frames"
 msgstr "Deze afmetingen voor alle frames gebruiken"
 
-#: plug-ins/common/file-xmc.c:416
+#: plug-ins/common/file-xmc.c:418
 msgid "_Delay where unspecified"
 msgstr "_Vertraging tussen frames indien niet apart opgegeven"
 
-#: plug-ins/common/file-xmc.c:417
+#: plug-ins/common/file-xmc.c:419
 msgid "Default time span in milliseconds in which each frame is rendered"
 msgstr "Geef tijdspanne in milliseconden op waarbinnen elk frame wordt opgebouwd"
 
-#: plug-ins/common/file-xmc.c:423
+#: plug-ins/common/file-xmc.c:425
 msgid "Use default delay for all _frames"
 msgstr "Deze ve_rtraging voor alle frames gebruiken"
 
-#: plug-ins/common/file-xmc.c:424
+#: plug-ins/common/file-xmc.c:426
 msgid "Use default delay for all frames"
 msgstr "Standaard vertraging voor alle frames gebruiken"
 
-#: plug-ins/common/file-xmc.c:429
+#: plug-ins/common/file-xmc.c:431
 msgid "C_opyright"
 msgstr "Auteursre_cht"
 
-#: plug-ins/common/file-xmc.c:430
+#: plug-ins/common/file-xmc.c:432
 msgid "Copyright information"
 msgstr "Geef Auteursrecht-informatie op"
 
-#: plug-ins/common/file-xmc.c:438
+#: plug-ins/common/file-xmc.c:440
 msgid "Lice_nse"
 msgstr "Lice_ntie"
 
-#: plug-ins/common/file-xmc.c:439
+#: plug-ins/common/file-xmc.c:441
 msgid "License information"
 msgstr "Geef licentie-informatie op"
 
-#: plug-ins/common/file-xmc.c:448
+#: plug-ins/common/file-xmc.c:450
 msgid "Optional comment"
 msgstr "Optionele opmerking"
 
-#: plug-ins/common/file-xmc.c:559
+#: plug-ins/common/file-xmc.c:561
 #, c-format
 msgid ""
 "Cannot set the hot spot!\n"
@@ -7141,50 +7158,50 @@ msgid ""
 msgstr "Kan de hotspot niet instellen!\n"
 "U moet lagen herschikken zodat ze allemaal een kruising hebben."
 
-#: plug-ins/common/file-xmc.c:663
+#: plug-ins/common/file-xmc.c:665
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "‘%s’ is geen geldige X-cursor."
 
-#: plug-ins/common/file-xmc.c:676
+#: plug-ins/common/file-xmc.c:678
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "Frame %d van ‘%s’ is te breed voor een X-cursor."
 
-#: plug-ins/common/file-xmc.c:684
+#: plug-ins/common/file-xmc.c:686
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Frame %d van ‘%s’ is te hoog voor een X-cursor."
 
-#: plug-ins/common/file-xmc.c:964
+#: plug-ins/common/file-xmc.c:970
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "er is geen beeldgedeelte in \"%s\"."
 
-#: plug-ins/common/file-xmc.c:1005
+#: plug-ins/common/file-xmc.c:1011
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "‘%s’ is te breed voor een X-cursor."
 
-#: plug-ins/common/file-xmc.c:1014
+#: plug-ins/common/file-xmc.c:1020
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "‘%s’ is te hoog voor een X-cursor."
 
-#: plug-ins/common/file-xmc.c:1086
+#: plug-ins/common/file-xmc.c:1092
 #, c-format
 msgid "A read error occurred."
 msgstr "Er trad een leesfout op."
 
-#: plug-ins/common/file-xmc.c:1125
+#: plug-ins/common/file-xmc.c:1131
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr "Voer de X-coördinaat van de hotspot in. De oorsprong is de linkerbovenhoek."
 
-#: plug-ins/common/file-xmc.c:1136
+#: plug-ins/common/file-xmc.c:1142
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr "Voer de Y-coördinaat van de hotspot in. De oorsprong is de linkerbovenhoek."
 
-#: plug-ins/common/file-xmc.c:1148
+#: plug-ins/common/file-xmc.c:1154
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -7194,7 +7211,7 @@ msgstr "Lege randen van alle frames verwijderen.\n"
 "Dit verkleint de bestandsgrootte en zou het probleem kunnen oplossen dat sommige grote cursors het scherm verstoren.\n"
 "Deselecteer als u van plan bent de geëxporteerde cursor te bewerken met andere programma's."
 
-#: plug-ins/common/file-xmc.c:1160
+#: plug-ins/common/file-xmc.c:1166
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -7209,28 +7226,28 @@ msgstr "Kies de nominale grootte voor de frames.\n"
 "Het wordt alleen gebruikt om te bepalen welk frame afhankelijk is van welke animatiereeks en welke reeks wordt gebruikt is gebaseerd op de waarde van \"gtk-cursor-theme-size\"."
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1274 plug-ins/file-webp/file-webp-export.c:204
+#: plug-ins/common/file-xmc.c:1280 plug-ins/file-webp/file-webp-export.c:204
 #: plug-ins/file-webp/file-webp-export.c:615
 #, c-format
 msgid "Saving '%s'"
 msgstr "Opslaan van ‘%s’"
 
-#: plug-ins/common/file-xmc.c:1345
+#: plug-ins/common/file-xmc.c:1351
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "Frame ‘%s’ is te breed. Verklein het tot niet meer dan %dpx."
 
-#: plug-ins/common/file-xmc.c:1355
+#: plug-ins/common/file-xmc.c:1361
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "Frame ‘%s’ is te hoog. Verklein het tot niet meer dan %dpx."
 
-#: plug-ins/common/file-xmc.c:1365
+#: plug-ins/common/file-xmc.c:1371
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Breedte en/of hoogte van frame ‘%s’ is nul!"
 
-#: plug-ins/common/file-xmc.c:1407
+#: plug-ins/common/file-xmc.c:1413
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -7239,7 +7256,7 @@ msgid ""
 msgstr "Kan de cursor niet exporteren omdat de hotspot niet op ‘%s’ staat.\n"
 "Probeer de positie van de hotspot, geometrie van de laag te wijzigen of exporteer zonder automatisch bijsnijden."
 
-#: plug-ins/common/file-xmc.c:1567
+#: plug-ins/common/file-xmc.c:1573
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -7249,7 +7266,7 @@ msgid ""
 msgstr "Uw cursor werd met succes geëexporteerd, maar die bevat een of meer frames waarvan de breedte of hoogte meer is dan %ipx, een historische maximale dimensiewaarde voor X bitmap-cursors.\n"
 "Het zou door sommige omgevingen niet ondersteund kunnen worden."
 
-#: plug-ins/common/file-xmc.c:1575
+#: plug-ins/common/file-xmc.c:1581
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -7258,7 +7275,7 @@ msgid ""
 msgstr "Uw cursor werd met succes geëexporteerd, maar die bevat een of meer frames waarvan de nominale grootte niet wordt ondersteund door de instellingen van GNOME.\n"
 "U kunt eraan voldoen door \"Vervang de grootte van alle frames…\" te selecteren in het dialoogvenster voor exporteren, of uw cursor zou niet kunnen verschijnen in de instellingen van GNOME."
 
-#: plug-ins/common/file-xmc.c:1858
+#: plug-ins/common/file-xmc.c:1864
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -7268,7 +7285,7 @@ msgstr "Uw cursor werd met succes geëxporteerd, maar het bevat een of meer fram
 "We hebben het verkleind tot %dpx. U zou de geëxporteerde cursor moeten controleren."
 
 #. translators: the %i is *always* 8 here
-#: plug-ins/common/file-xmc.c:1955
+#: plug-ins/common/file-xmc.c:1961
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -9258,10 +9275,15 @@ msgstr "_Scanner/camera…"
 msgid "Unable to read scanned images."
 msgstr "Kan gescande afbeeldingen niet lezen."
 
-#: plug-ins/common/wia.c:323
+#: plug-ins/common/wia.c:325
 #, c-format
 msgid "WIA driver not found, scanning not available"
 msgstr "WIA stuurprogramma niet gevonden, scannen niet beschikbaar"
+
+#: plug-ins/common/wia.c:336
+#, c-format
+msgid "Failed to initialize COM for scanning."
+msgstr "Initialiseren van COM voor scannen mislukt."
 
 #: plug-ins/file-bmp/bmp-export.c:562 plug-ins/file-fli/fli.c:91
 #: plug-ins/file-fli/fli.c:110 plug-ins/file-fli/fli.c:131
@@ -12318,7 +12340,7 @@ msgstr "Schrijven ‘%s’ misluikte: %s"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1488
 msgid "Load Fractal Parameters"
-msgstr "Fractalparameters inladen"
+msgstr "Fractaalparameters inladen"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1512
 msgid "Save Fractal Parameters"
@@ -14307,7 +14329,7 @@ msgid ""
 "their width, height, and spacing from each other. This allows you to rapidly "
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
-msgstr "Hulplijnen zijn vooraf gedefinieerde rechthoeken die de afbeelding bedekken. U definieert ze met hun breedte, hoogte en afstand tot elkaar. Dat stelt u in staat snel het meest voorkomende type afbeeldingskaart te maken - collectie afbeeldingen van \"miniaturen\", geschikt voor navigatiebalken."
+msgstr "Hulplijnen zijn vooraf gedefinieerde rechthoeken die de afbeelding bedekken. U definieert ze met hun breedte, hoogte en afstand tot elkaar. Dat stelt u in staat snel het meest voorkomende type beeldkaart te maken - collectie afbeeldingen van \"miniaturen\", geschikt voor navigatiebalken."
 
 #: plug-ins/imagemap/imap_cmd_guides.c:178
 msgid "_Left start at:"
@@ -14453,7 +14475,7 @@ msgstr "_URL die geactiveerd wordt als op dit gebied wordt geklikt: (verplicht)"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:311
 msgid "Select HTML file"
-msgstr "Html-bestand selecteren"
+msgstr "HTML-bestand selecteren"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:320
 msgid "Relati_ve link"
@@ -14579,7 +14601,7 @@ msgstr "Wilt u uw veranderingen werkelijk wegdoen?"
 #: plug-ins/imagemap/imap_main.c:1079
 #, c-format
 msgid "File \"%s\" saved."
-msgstr "Bestand \"%s\" opgeslagen."
+msgstr "Bestand ‘%s’ opgeslagen."
 
 #: plug-ins/imagemap/imap_main.c:1083
 msgid "Couldn't save file:"
