@@ -1110,6 +1110,9 @@ conf.set('HAVE_DX_DINPUT', directx.found())
 # Windows Image Acquistion (WIA)
 wia = platform_windows ? cc.find_library('wiaguid') : no_dep
 
+# ImageCapture and ImageKit/Quartz (for macOS Scanner)
+imagekit = platform_osx ? dependency('appleframeworks', modules: ['ImageCaptureCore', 'Quartz'], required: true) : no_dep
+
 cfitsio_dep = dependency('cfitsio', required: get_option('fits'))
 
 # Fallback support for Camera RAW imports

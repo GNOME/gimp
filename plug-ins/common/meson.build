@@ -170,6 +170,12 @@ if platform_windows
   endif
 endif
 
+if platform_osx
+  common_plugins_list += { 'name': 'ikscanner',
+    'deps': [ imagekit ],
+  }
+endif
+
 if platform_linux
   common_plugins_list += {
     'name': 'file-desktop-link',
