@@ -8134,7 +8134,7 @@ msgstr "_Ongedaan maken"
 
 #: plug-ins/common/sample-colorize.c:325
 msgid "_Sample Colorize..."
-msgstr "_Inkleuren met monstering..."
+msgstr "_Inkleuren met monsters..."
 
 # 29/03/08: niet letterlijk, maar wel duidelijk zo
 #: plug-ins/common/sample-colorize.c:329
@@ -8179,7 +8179,7 @@ msgstr "AAN: gebruik alle subkleuren met dezelfde intensiteit. UIT: gebruik slec
 
 #: plug-ins/common/sample-colorize.c:366
 msgid "Smooth sam_ples"
-msgstr "_Gladde monstering"
+msgstr "_Gladde monsters"
 
 #: plug-ins/common/sample-colorize.c:367
 msgid ""
