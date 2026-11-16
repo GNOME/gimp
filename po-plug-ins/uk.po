@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-15 16:47+0000\n"
-"PO-Revision-Date: 2026-11-15 20:39+0200\n"
+"POT-Creation-Date: 2026-11-15 21:37+0000\n"
+"PO-Revision-Date: 2026-11-16 21:00+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2581,12 +2581,10 @@ msgid "File type to use"
 msgstr "Тип файлів, яким слід скористатися"
 
 #: plug-ins/common/file-cals.c:126
-#| msgid "PAA Image"
 msgid "CALS Image"
 msgstr "Зображення CALS"
 
 #: plug-ins/common/file-cals.c:129
-#| msgid "Load file in the PAA file format"
 msgid "Load file in the CALS file format"
 msgstr "Завантажити файл у форматі CALS"
 
@@ -2648,7 +2646,6 @@ msgstr "Не вдається зчитати заголовок з «%s»"
 
 #: plug-ins/common/file-cals.c:264
 #, c-format
-#| msgid "Image with %d bpc not yet supported."
 msgid "CALS type %d not yet supported"
 msgstr "Підтримку типу CALS %d ще не передбачено"
 
@@ -9551,10 +9548,15 @@ msgstr "_Сканер/Камера..."
 msgid "Unable to read scanned images."
 msgstr "Не вдалося прочитати скановані зображення."
 
-#: plug-ins/common/wia.c:323
+#: plug-ins/common/wia.c:325
 #, c-format
 msgid "WIA driver not found, scanning not available"
 msgstr "Не знайдено драйвера WIA. Не можна скористатися скануванням"
+
+#: plug-ins/common/wia.c:336
+#, c-format
+msgid "Failed to initialize COM for scanning."
+msgstr "Не вдалося ініціалізувати COM для сканування."
 
 #: plug-ins/file-bmp/bmp-export.c:562 plug-ins/file-fli/fli.c:91
 #: plug-ins/file-fli/fli.c:110 plug-ins/file-fli/fli.c:131
