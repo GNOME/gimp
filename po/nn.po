@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-08 17:32+0000\n"
-"PO-Revision-Date: 2026-11-09 18:22+0100\n"
+"POT-Creation-Date: 2026-11-16 00:03+0000\n"
+"PO-Revision-Date: 2026-11-16 16:46+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -2466,7 +2466,15 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 sekund"
 
-#: app/actions/dashboard-commands.c:127 app/actions/documents-commands.c:263
+#: app/actions/dashboard-commands.c:107
+msgid "Record Performance Log"
+msgstr "Byrja opptak av ytingslogg"
+
+#: app/actions/dashboard-commands.c:110
+msgid "_Record"
+msgstr "_Spel inn"
+
+#: app/actions/dashboard-commands.c:110 app/actions/documents-commands.c:263
 #: app/actions/edit-commands.c:182 app/actions/error-console-commands.c:98
 #: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
@@ -2512,56 +2520,20 @@ msgstr "240 sekund"
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: app/actions/dashboard-commands.c:128
-msgid "_Record"
-msgstr "_Spel inn"
-
-#: app/actions/dashboard-commands.c:151 app/dialogs/path-export-dialog.c:94
+#: app/actions/dashboard-commands.c:116 app/dialogs/path-export-dialog.c:94
 msgid "All Files"
 msgstr "Alle filene"
 
-#: app/actions/dashboard-commands.c:156
+#: app/actions/dashboard-commands.c:121
 #: app/actions/error-console-commands.c:106
 msgid "Log Files (*.log)"
 msgstr "Loggfiler (*.log)"
 
-#: app/actions/dashboard-commands.c:200
-msgid "Log samples per second"
-msgstr "Logg prøver per sekund"
-
-#: app/actions/dashboard-commands.c:204
-msgid "Sample fre_quency:"
-msgstr "_Prøvefrekvens:"
-
-#: app/actions/dashboard-commands.c:223
-msgid "_Backtrace"
-msgstr "_Bakovrspor"
-
-#: app/actions/dashboard-commands.c:224
-msgid "Include backtraces in log"
-msgstr "Ta med bakoverspor i loggen"
-
-#: app/actions/dashboard-commands.c:236
-msgid "_Messages"
-msgstr "_Meldingar"
-
-#: app/actions/dashboard-commands.c:238
-msgid "Include diagnostic messages in log"
-msgstr "Ta med diagnostiske meldingar i loggen"
-
-#: app/actions/dashboard-commands.c:250
-msgid "Progressi_ve"
-msgstr "_Framgang"
-
-#: app/actions/dashboard-commands.c:252
-msgid "Produce complete log even if not properly terminated"
-msgstr "Lag ein fullstendig logg sjølv om han ikkje er korrekt avslutta"
-
-#: app/actions/dashboard-commands.c:321
+#: app/actions/dashboard-commands.c:183
 msgid "Add Marker"
 msgstr "Legg til markør"
 
-#: app/actions/dashboard-commands.c:323
+#: app/actions/dashboard-commands.c:185
 msgid "Enter a description for the marker"
 msgstr "Skriv inn ei beskriving av markøren"
 
@@ -14999,39 +14971,39 @@ msgstr "Fila vart sletta"
 msgid "No file was set"
 msgstr "Inga fil vart sett"
 
-#: app/core/gimplinklayer.c:219
+#: app/core/gimplinklayer.c:225
 msgid "Link Layer"
 msgstr "Lenkjelag"
 
-#: app/core/gimplinklayer.c:228
+#: app/core/gimplinklayer.c:235
 msgid "Rename Link Layer"
 msgstr "Gje lenkjelaget nytt namn"
 
-#: app/core/gimplinklayer.c:229
+#: app/core/gimplinklayer.c:236
 msgid "Move Link Layer"
 msgstr "Flytt lenkjelaget"
 
-#: app/core/gimplinklayer.c:230
+#: app/core/gimplinklayer.c:237
 msgid "Scale Link Layer"
 msgstr "Skaler lenkjelaget"
 
-#: app/core/gimplinklayer.c:231
+#: app/core/gimplinklayer.c:238
 msgid "Resize Link Layer"
 msgstr "Endra storleik på lenkjelaget"
 
-#: app/core/gimplinklayer.c:232
+#: app/core/gimplinklayer.c:239
 msgid "Flip Link Layer"
 msgstr "Spegelvend lenkjelaget"
 
-#: app/core/gimplinklayer.c:233
+#: app/core/gimplinklayer.c:240
 msgid "Rotate Link Layer"
 msgstr "Roter lenkjelaget"
 
-#: app/core/gimplinklayer.c:234 app/core/gimplinklayer.c:598
+#: app/core/gimplinklayer.c:241 app/core/gimplinklayer.c:628
 msgid "Transform Link Layer"
 msgstr "Transformer lenkjelaget"
 
-#: app/core/gimplinklayer.c:997
+#: app/core/gimplinklayer.c:1027
 msgid "Set layer link"
 msgstr "Set laglenkja"
 
@@ -20019,43 +19991,43 @@ msgstr "Klikk og dra for å flytta omdreiingspunktet"
 msgid "Click-Drag to shear"
 msgstr "Klikk og dra for å dela"
 
-#: app/file/file-open.c:216
+#: app/file/file-open.c:226
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr ""
 "%s programtillegget rapporterte vellukka køyring, men returnerte ikkje noko "
 "bilete"
 
-#: app/file/file-open.c:227
+#: app/file/file-open.c:237
 #, c-format
 msgid "%s plug-in could not open image"
 msgstr "programtillegget %s greidde ikkje å opna biletet"
 
-#: app/file/file-open.c:643
+#: app/file/file-open.c:655
 msgid "Image doesn't contain any layers"
 msgstr "Biletet inneheld ingen lag"
 
-#: app/file/file-open.c:702
+#: app/file/file-open.c:714
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Feil ved opninga av «%s»: %s"
 
-#: app/file/file-open.c:899 app/file/file-save.c:122
+#: app/file/file-open.c:911 app/file/file-save.c:129
 msgid "Not a regular file"
 msgstr "Ikkje ei vanleg fil"
 
-#: app/file/file-open.c:908 app/file/file-save.c:131
+#: app/file/file-open.c:920 app/file/file-save.c:138
 msgid "Permission denied"
 msgstr "Tilgang nekta"
 
-#: app/file/file-open.c:972
+#: app/file/file-open.c:984
 #, c-format
 msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
 msgstr ""
 "Har støtte berre for filbanar på plattforma. Kan ikkje opna «%s» som lenkje."
 
-#: app/file/file-open.c:1012
+#: app/file/file-open.c:1024
 #, c-format
 msgid "Circular reference detected with '%s'."
 msgstr "Sirkulær referanse oppdaga med «%s»."
@@ -20088,11 +20060,11 @@ msgstr "%s av biletdata er lasta ned"
 msgid "Uploaded %s of image data"
 msgstr "%s av biletdata er lasta opp"
 
-#: app/file/file-save.c:115
+#: app/file/file-save.c:122
 msgid "Failed to get file information"
 msgstr "Fekk ikkje tak i filinformasjonen"
 
-#: app/file/file-save.c:287
+#: app/file/file-save.c:294
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Programtillegget %s klarte ikkje lagra biletet"
@@ -22551,7 +22523,7 @@ msgstr "Feil fortolkarreferanse i fortolkarfila %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Feil binærformatstreng i fortolkarfila %s"
 
-#: app/plug-in/gimpplugin.c:254
+#: app/plug-in/gimpplugin.c:261
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -27518,315 +27490,315 @@ msgstr "GIMP oppdaga fleire kritiske feil!"
 msgid "_Restart GIMP"
 msgstr "Start _GIMP på nytt"
 
-#: app/widgets/gimpdashboard.c:473 app/widgets/gimpdashboard.c:525
+#: app/widgets/gimpdashboard.c:495 app/widgets/gimpdashboard.c:547
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Oppteke"
 
-#: app/widgets/gimpdashboard.c:474
+#: app/widgets/gimpdashboard.c:496
 msgid "Tile cache occupied size"
 msgstr "Oppteken storleik på mellomlageret"
 
-#: app/widgets/gimpdashboard.c:483
+#: app/widgets/gimpdashboard.c:505
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Maksimum"
 
-#: app/widgets/gimpdashboard.c:484
+#: app/widgets/gimpdashboard.c:506
 msgid "Maximal tile cache occupied size"
 msgstr "Høgaste okkuperte storleik for mellomlagringa av fliser"
 
-#: app/widgets/gimpdashboard.c:493 app/widgets/gimpdashboard.c:545
+#: app/widgets/gimpdashboard.c:515 app/widgets/gimpdashboard.c:567
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Grense"
 
-#: app/widgets/gimpdashboard.c:494
+#: app/widgets/gimpdashboard.c:516
 msgid "Tile cache size limit"
 msgstr "Grensa for storleik på mellomlageret"
 
-#: app/widgets/gimpdashboard.c:502 app/widgets/gimpdashboard.c:628
+#: app/widgets/gimpdashboard.c:524 app/widgets/gimpdashboard.c:650
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Komprimering"
 
-#: app/widgets/gimpdashboard.c:503
+#: app/widgets/gimpdashboard.c:525
 msgid "Tile cache compression ratio"
 msgstr "Komprimeringsforholdet for mellomlageret"
 
-#: app/widgets/gimpdashboard.c:512
+#: app/widgets/gimpdashboard.c:534
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Treff/Bom"
 
-#: app/widgets/gimpdashboard.c:513
+#: app/widgets/gimpdashboard.c:535
 msgid "Tile cache hit/miss ratio"
 msgstr "Treff/bom-forholdet for mellomlageret"
 
-#: app/widgets/gimpdashboard.c:526
+#: app/widgets/gimpdashboard.c:548
 msgid "Swap file occupied size"
 msgstr "Brukt storleik på vekselfila"
 
-#: app/widgets/gimpdashboard.c:535 app/widgets/gimpdashboard.c:692
+#: app/widgets/gimpdashboard.c:557 app/widgets/gimpdashboard.c:714
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Storleik"
 
-#: app/widgets/gimpdashboard.c:536
+#: app/widgets/gimpdashboard.c:558
 msgid "Swap file size"
 msgstr "Storleik på vekselfila"
 
-#: app/widgets/gimpdashboard.c:546
+#: app/widgets/gimpdashboard.c:568
 msgid "Swap file size limit"
 msgstr "Avgrensa storleik på vekselfila"
 
-#: app/widgets/gimpdashboard.c:553
+#: app/widgets/gimpdashboard.c:575
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr "Sett i kø"
 
-#: app/widgets/gimpdashboard.c:554
+#: app/widgets/gimpdashboard.c:576
 msgid "Size of data queued for writing to the swap"
 msgstr "Storleiken på data i kø for skriving til vekselfila"
 
-#: app/widgets/gimpdashboard.c:563
+#: app/widgets/gimpdashboard.c:585
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr "Køen steiler"
 
-#: app/widgets/gimpdashboard.c:564
+#: app/widgets/gimpdashboard.c:586
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
 "Kor mange gongar skrivinga til vekselfila er stoppa på grunn av full kø"
 
-#: app/widgets/gimpdashboard.c:573
+#: app/widgets/gimpdashboard.c:595
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr "Køen er full"
 
-#: app/widgets/gimpdashboard.c:574
+#: app/widgets/gimpdashboard.c:596
 msgid "Whether the swap queue is full"
 msgstr "Om vekselkøen er full"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: app/widgets/gimpdashboard.c:585
+#: app/widgets/gimpdashboard.c:607
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Les"
 
-#: app/widgets/gimpdashboard.c:586
+#: app/widgets/gimpdashboard.c:608
 msgid "Total amount of data read from the swap"
 msgstr "Kor mykje data som er lese frå vekselfila"
 
-#: app/widgets/gimpdashboard.c:595
+#: app/widgets/gimpdashboard.c:617
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Les gjennomstrøyming"
 
-#: app/widgets/gimpdashboard.c:596
+#: app/widgets/gimpdashboard.c:618
 msgid "The rate at which data is read from the swap"
 msgstr "Farten som data vert lesne frå vekselfila"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: app/widgets/gimpdashboard.c:608
+#: app/widgets/gimpdashboard.c:630
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Skrive"
 
-#: app/widgets/gimpdashboard.c:609
+#: app/widgets/gimpdashboard.c:631
 msgid "Total amount of data written to the swap"
 msgstr "Kor mykje data som er skrive til vekselfila"
 
-#: app/widgets/gimpdashboard.c:618
+#: app/widgets/gimpdashboard.c:640
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Skriv gjennomstreking"
 
-#: app/widgets/gimpdashboard.c:619
+#: app/widgets/gimpdashboard.c:641
 msgid "The rate at which data is written to the swap"
 msgstr "Farten som data vert skrivne til vekselfila"
 
-#: app/widgets/gimpdashboard.c:629
+#: app/widgets/gimpdashboard.c:651
 msgid "Swap compression ratio"
 msgstr "Byt komprimeringsforhold"
 
-#: app/widgets/gimpdashboard.c:642
+#: app/widgets/gimpdashboard.c:664
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Bruk"
 
-#: app/widgets/gimpdashboard.c:643
+#: app/widgets/gimpdashboard.c:665
 msgid "Total CPU usage"
 msgstr "Totalt CPU-bruk"
 
-#: app/widgets/gimpdashboard.c:651 app/widgets/gimpdashboard.c:660
-#: app/widgets/gimpdashboard.c:722
+#: app/widgets/gimpdashboard.c:673 app/widgets/gimpdashboard.c:682
+#: app/widgets/gimpdashboard.c:744
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "I bruk"
 
-#: app/widgets/gimpdashboard.c:652
+#: app/widgets/gimpdashboard.c:674
 msgid "Whether the CPU is active"
 msgstr "Om CPU er i bruk"
 
-#: app/widgets/gimpdashboard.c:661
+#: app/widgets/gimpdashboard.c:683
 msgid "Total amount of time the CPU has been active"
 msgstr "Kor lenge CPU har vore i bruk totalt"
 
-#: app/widgets/gimpdashboard.c:674
+#: app/widgets/gimpdashboard.c:696
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Brukt"
 
-#: app/widgets/gimpdashboard.c:675
+#: app/widgets/gimpdashboard.c:697
 msgid "Amount of memory used by the process"
 msgstr "Kor mykje minne som er brukt av prosessen"
 
-#: app/widgets/gimpdashboard.c:683
+#: app/widgets/gimpdashboard.c:705
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Tilgjengelege"
 
-#: app/widgets/gimpdashboard.c:684
+#: app/widgets/gimpdashboard.c:706
 msgid "Amount of available physical memory"
 msgstr "Mengda av tilgjengeleg fysisk minne"
 
-#: app/widgets/gimpdashboard.c:693
+#: app/widgets/gimpdashboard.c:715
 msgid "Physical memory size"
 msgstr "Fysisk minnestorleik"
 
-#: app/widgets/gimpdashboard.c:704
+#: app/widgets/gimpdashboard.c:726
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Mipmappa"
 
-#: app/widgets/gimpdashboard.c:705
+#: app/widgets/gimpdashboard.c:727
 msgid "Total size of processed mipmapped data"
 msgstr "Totalstorleik på prosesserte mipmapdata"
 
-#: app/widgets/gimpdashboard.c:713
+#: app/widgets/gimpdashboard.c:735
 msgctxt "dashboard-variable"
 msgid "Assigned"
 msgstr "Tilordna"
 
-#: app/widgets/gimpdashboard.c:714
+#: app/widgets/gimpdashboard.c:736
 msgid "Number of assigned worker threads"
 msgstr "Talet på tildelte arbeidartrådar"
 
-#: app/widgets/gimpdashboard.c:723
+#: app/widgets/gimpdashboard.c:745
 msgid "Number of active worker threads"
 msgstr "Talet på arbeidartråde i bruk"
 
-#: app/widgets/gimpdashboard.c:731
+#: app/widgets/gimpdashboard.c:753
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Asynkron"
 
-#: app/widgets/gimpdashboard.c:732
+#: app/widgets/gimpdashboard.c:754
 msgid "Number of ongoing asynchronous operations"
 msgstr "Talet på køyrande asynkrone operasjonar"
 
-#: app/widgets/gimpdashboard.c:740
+#: app/widgets/gimpdashboard.c:762
 msgctxt "dashboard-variable"
 msgid "Tile"
 msgstr "Flis"
 
-#: app/widgets/gimpdashboard.c:741
+#: app/widgets/gimpdashboard.c:763
 msgid "Total size of tile memory"
 msgstr "Total minnestorleik"
 
-#: app/widgets/gimpdashboard.c:750
+#: app/widgets/gimpdashboard.c:772
 msgctxt "dashboard-variable"
 msgid "Scratch"
 msgstr "Frå grunnen"
 
-#: app/widgets/gimpdashboard.c:751
+#: app/widgets/gimpdashboard.c:773
 msgid "Total size of scratch memory"
 msgstr "Total storleik på scratch-minnet"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
 #.
-#: app/widgets/gimpdashboard.c:762
+#: app/widgets/gimpdashboard.c:784
 msgctxt "dashboard-variable"
 msgid "TempBuf"
 msgstr "TempBuf"
 
-#: app/widgets/gimpdashboard.c:763
+#: app/widgets/gimpdashboard.c:785
 msgid "Total size of temporary buffers"
 msgstr "Totalstorleik på mellombels bufferar"
 
-#: app/widgets/gimpdashboard.c:775
+#: app/widgets/gimpdashboard.c:797
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Mellomlager"
 
-#: app/widgets/gimpdashboard.c:776
+#: app/widgets/gimpdashboard.c:798
 msgid "In-memory tile cache"
 msgstr "Flismellomlager i minnet"
 
-#: app/widgets/gimpdashboard.c:812
+#: app/widgets/gimpdashboard.c:834
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Byt"
 
-#: app/widgets/gimpdashboard.c:813
+#: app/widgets/gimpdashboard.c:835
 msgid "On-disk tile swap"
 msgstr "Vekselfil på disk for fliser"
 
-#: app/widgets/gimpdashboard.c:877
+#: app/widgets/gimpdashboard.c:899
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "CPU"
 
-#: app/widgets/gimpdashboard.c:878
+#: app/widgets/gimpdashboard.c:900
 msgid "CPU usage"
 msgstr "CPU-bruk"
 
-#: app/widgets/gimpdashboard.c:913
+#: app/widgets/gimpdashboard.c:935
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Minne"
 
-#: app/widgets/gimpdashboard.c:914
+#: app/widgets/gimpdashboard.c:936
 msgid "Memory usage"
 msgstr "Minnebruk"
 
-#: app/widgets/gimpdashboard.c:922
+#: app/widgets/gimpdashboard.c:944
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Mellomlager"
 
-#: app/widgets/gimpdashboard.c:956
+#: app/widgets/gimpdashboard.c:978
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Ymse"
 
-#: app/widgets/gimpdashboard.c:957
+#: app/widgets/gimpdashboard.c:979
 msgid "Miscellaneous information"
 msgstr "Ymse informasjon"
 
-#: app/widgets/gimpdashboard.c:1150
+#: app/widgets/gimpdashboard.c:1172
 msgid "Select fields"
 msgstr "Vel felt"
 
 #. Translators: "N/A" is an abbreviation for "not available"
-#: app/widgets/gimpdashboard.c:3332
+#: app/widgets/gimpdashboard.c:3356
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "I/T"
 
-#: app/widgets/gimpdashboard.c:3341 app/widgets/gimpdashboard.c:4349
+#: app/widgets/gimpdashboard.c:3365 app/widgets/gimpdashboard.c:4373
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Ja"
 
-#: app/widgets/gimpdashboard.c:3342 app/widgets/gimpdashboard.c:4350
+#: app/widgets/gimpdashboard.c:3366 app/widgets/gimpdashboard.c:4374
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nei"
@@ -27835,7 +27807,7 @@ msgstr "Nei"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: app/widgets/gimpdashboard.c:3426
+#: app/widgets/gimpdashboard.c:3450
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -27846,16 +27818,40 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: app/widgets/gimpdashboard.c:4339
+#: app/widgets/gimpdashboard.c:4363
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: app/widgets/gimpdashboard.c:4417
+#: app/widgets/gimpdashboard.c:4441
 msgid "N/A"
 msgstr "I/T"
 
-#: app/widgets/gimpdashboard.c:4795
+#: app/widgets/gimpdashboard.c:4487
+msgid "Recording Options"
+msgstr "Opptaksinnstillingar"
+
+#: app/widgets/gimpdashboard.c:4496
+msgid "Select options"
+msgstr "Vel innstillingar"
+
+#: app/widgets/gimpdashboard.c:4548
+msgid "_Backtrace"
+msgstr "_Bakovrspor"
+
+#: app/widgets/gimpdashboard.c:4558
+msgid "_Messages"
+msgstr "_Meldingar"
+
+#: app/widgets/gimpdashboard.c:4568
+msgid "Progressi_ve"
+msgstr "_Framgang"
+
+#: app/widgets/gimpdashboard.c:4590
+msgid "Sample fre_quency:"
+msgstr "_Prøvefrekvens:"
+
+#: app/widgets/gimpdashboard.c:5065
 msgid "Resolving symbol information..."
 msgstr "Løyser symbolinformasjon …"
 
@@ -30181,6 +30177,18 @@ msgstr "Meny for verktøyinnstillingane"
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Angre angreloggen"
+
+#~ msgid "Log samples per second"
+#~ msgstr "Logg prøver per sekund"
+
+#~ msgid "Include backtraces in log"
+#~ msgstr "Ta med bakoverspor i loggen"
+
+#~ msgid "Include diagnostic messages in log"
+#~ msgstr "Ta med diagnostiske meldingar i loggen"
+
+#~ msgid "Produce complete log even if not properly terminated"
+#~ msgstr "Lag ein fullstendig logg sjølv om han ikkje er korrekt avslutta"
 
 #, c-format
 #~ msgid "Memory: %s (%s free)\n"
