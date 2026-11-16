@@ -187,7 +187,8 @@ stages:
 deps-debian-nonreloc:
   extends: .debian-nonreloc
   stage: dependencies
-  image: quay.io/containers/aio:latest
+  #see: https://github.com/podman-container-tools/buildah/issues/6910
+  image: quay.io/containers/aio:v2026.05.20
   variables:
     GIT_STRATEGY: none
   script:
