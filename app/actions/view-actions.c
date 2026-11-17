@@ -414,34 +414,38 @@ static const GimpEnumActionEntry view_zoom_explicit_actions[] =
     10000, FALSE,
     GIMP_HELP_VIEW_ZOOM_100 },
 
+  /* `at` is needed as fallback at least for US QWERTY + Numpad. See: #2796 */
   { "view-zoom-1-2", NULL,
     NC_("view-zoom-action", "Zoom 1:2 (50%)"),
     NC_("view-zoom-action", "1:_2  (50%)"),
-    { "<shift>2", "<shift>KP_2", NULL },
+    { "<shift>2", "at", "<shift>KP_2", NULL },
     NC_("view-zoom-action", "Zoom 1:2"),
     5000, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
+  /* `numbersign` is needed as fallback at least for US QWERTY + Numpad. See: #2796 */
   { "view-zoom-1-4", NULL,
     NC_("view-zoom-action", "Zoom 1:4 (25%)"),
     NC_("view-zoom-action", "1:_4  (25%)"),
-    { "<shift>3", "<shift>KP_3", NULL },
+    { "<shift>3", "numbersign", "<shift>KP_3", NULL },
     NC_("view-zoom-action", "Zoom 1:4"),
     2500, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
+  /* `dollar` is needed as fallback at least for US QWERTY + Numpad. See: #2796 */
   { "view-zoom-1-8", NULL,
     NC_("view-zoom-action", "Zoom 1:8 (12.5%)"),
     NC_("view-zoom-action", "1:_8  (12.5%)"),
-    { "<shift>4", "<shift>KP_4", NULL },
+    { "<shift>4", "dollar", "<shift>KP_4", NULL },
     NC_("view-zoom-action", "Zoom 1:8"),
     1250, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
+  /* `percent` is needed as fallback at least for US QWERTY + Numpad. See: #2796 */
   { "view-zoom-1-16", NULL,
     NC_("view-zoom-action", "Zoom 1:16 (6.25%)"),
     NC_("view-zoom-action", "1:1_6  (6.25%)"),
-    { "<shift>5", "<shift>KP_5", NULL },
+    { "<shift>5", "percent", "<shift>KP_5", NULL },
     NC_("view-zoom-action", "Zoom 1:16"),
     625, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
