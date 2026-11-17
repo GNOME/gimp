@@ -5048,7 +5048,7 @@ xcf_load_tile (XcfInfo       *info,
 {
   gint    bpp       = babl_format_get_bytes_per_pixel (format);
   gint    tile_size = bpp * tile_rect->width * tile_rect->height;
-  guchar *tile_data = g_alloca (tile_size);
+  guchar *tile_data = g_alloca0 (tile_size);
 
   if (info->file_version <= 11)
     {
@@ -5080,7 +5080,7 @@ xcf_load_tile_rle (XcfInfo       *info,
 {
   gint    bpp       = babl_format_get_bytes_per_pixel (format);
   gint    tile_size = bpp * tile_rect->width * tile_rect->height;
-  guchar *tile_data = g_alloca (tile_size);
+  guchar *tile_data = g_alloca0 (tile_size);
   guchar  nonzero   = FALSE;
   gsize   bytes_read;
   gint    i;
@@ -5097,7 +5097,7 @@ xcf_load_tile_rle (XcfInfo       *info,
   if (data_length <= 0)
     return TRUE;
 
-  xcfdata = xcfodata = g_alloca (data_length);
+  xcfdata = xcfodata = g_alloca0 (data_length);
 
   /* we have to read directly instead of xcf_read_* because we may be
    * reading past the end of the file here
@@ -5235,7 +5235,7 @@ xcf_load_tile_zlib (XcfInfo       *info,
   int       status;
   gint      bpp       = babl_format_get_bytes_per_pixel (format);
   gint      tile_size = bpp * tile_rect->width * tile_rect->height;
-  guchar   *tile_data = g_alloca (tile_size);
+  guchar   *tile_data = g_alloca0 (tile_size);
   gsize     bytes_read;
   guchar   *xcfdata;
 
@@ -5248,7 +5248,7 @@ xcf_load_tile_zlib (XcfInfo       *info,
   if (data_length <= 0)
     return TRUE;
 
-  xcfdata = g_alloca (data_length);
+  xcfdata = g_alloca0 (data_length);
 
   /* we have to read directly instead of xcf_read_* because we may be
    * reading past the end of the file here
