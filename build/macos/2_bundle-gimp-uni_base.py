@@ -292,7 +292,7 @@ clean(GIMP_DISTRIB, "lib/Python.framework/*.pyc")
 pythonpath = Path(f"{GIMP_DISTRIB}/lib/Python.framework/Versions/{PYTHON_VERSION}/lib/python{PYTHON_VERSION}")
 for d in (pythonpath, pythonpath / "site-packages"):
   sitecustomize = d / "sitecustomize.py"
-  code = """\nimport os\nimport certifi\n\n# Only set if not already configured by user\nif not os.environ.get('SSL_CERT_FILE'):\n    os.environ['SSL_CERT_FILE'] = certifi.where()\n"""
+  code = """\nimport os\nimport certifi\n\n# Only set if not already configured by user\nif not os.environ.get('SSL_CERT_FILE'):\n    os.environ['SSL_CERT_FILE'] = certifi.where()\n\n# Unset PYTHONHOME (set by app/main.c) so external Python subprocesses (e.g. venvs) don't inherit GIMP's\nos.environ.pop('PYTHONHOME', None)\n"""
   if sitecustomize.exists() and code.strip() not in sitecustomize.read_text():
     sitecustomize.write_text(sitecustomize.read_text() + code)
   elif not sitecustomize.exists():
