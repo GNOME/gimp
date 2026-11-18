@@ -779,7 +779,7 @@ save_layer (TIFF        *tif,
 
   /* array to rearrange data */
   base_channels    = babl_format_get_n_components (format);
-  bytes_per_sample = bitspersample / 8;
+  bytes_per_sample = MAX (1, bitspersample / 8);
 
   if (! g_size_checked_mul (&base_bytesperrow, cols, base_channels)    ||
       ! g_size_checked_mul (&base_bytesperrow, base_bytesperrow,
