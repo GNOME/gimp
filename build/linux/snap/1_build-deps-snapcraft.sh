@@ -30,9 +30,14 @@ fi #End of check
 
 if [ -z "$GITLAB_CI" ] || [ "$1" = '--install-snaps' ]; then
   GNOME_SDK=$(grep '^_SDK_SNAP' $(sudo find $(dirname $(which snapcraft))/.. -name gnome.py | grep -i extensions) | sed -n "s/.*\"$base_target\": *\"\\([^\"]*\\)\".*/\\1/p")
+  if [ -z "$GNOME_SDK" ]; then
+    GNOME_SDK=$(awk '/^_SDK_SNAP/{f=1} f{print; if (/}/) exit}' $(sudo find $(dirname $(which snapcraft))/.. -name gnome.py | grep -i extensions | head -n 1) | sed -n "s/.*\"$base_target\": *\"\\([^\"]*\\)\".*/\\1/p")
+  fi
   gnome_runtime=$(echo $GNOME_SDK | sed 's/-sdk//')
   mesa_runtime="mesa-$(echo $GNOME_SDK | sed -n 's/.*-\([0-9]\+\)-sdk/\1/p')"
+  echo "Installing snaps: $GNOME_SDK, $gnome_runtime, $mesa_runtime"
   for snap in $GNOME_SDK $gnome_runtime $mesa_runtime; do
+    echo "Installing snap: $snap"
     if [ -z "$GITLAB_CI" ]; then
       sudo snap refresh
       sudo snap install $snap

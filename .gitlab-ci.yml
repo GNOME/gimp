@@ -505,7 +505,7 @@ gimp-flatpak:
     - $RUNNER
   image: $CI_REGISTRY_IMAGE:build-snap-${SNAPCRAFT_BASE_VERSION}-${RUNNER}
   variables:
-    SNAPCRAFT_BASE_VERSION: "8_core24"
+    SNAPCRAFT_BASE_VERSION: "9_core24"
     RUNNER: x86_64_v3 #runner-image used by snap dist job
   timeout: 40m
 
