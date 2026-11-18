@@ -37,6 +37,8 @@ include:
     ref: aec7a6ce7bb38902c70641526f6611e27141784a
 #needed by deps-debian* and deps-snap
 .buildah_prepare_image:
+  #see: https://github.com/podman-container-tools/buildah/issues/6910
+  image: quay.io/containers/aio:v2026.05.20
   script:
     - export BUILDAH_FORMAT=docker
     - export BUILDAH_ISOLATION=chroot
@@ -186,8 +188,7 @@ stages:
 deps-debian-nonreloc:
   extends: .debian-nonreloc
   stage: dependencies
-  #see: https://github.com/podman-container-tools/buildah/issues/6910
-  image: quay.io/containers/aio:v2026.05.20
+  image: !reference [.buildah_prepare_image, image]
   variables:
     GIT_STRATEGY: none
   script:
@@ -510,7 +511,7 @@ gimp-flatpak:
 deps-snap:
   extends: .snap
   stage: dependencies
-  image: quay.io/containers/aio:latest
+  image: !reference [.buildah_prepare_image, image]
   script:
     # Install deps
     - echo "FROM ghcr.io/canonical/snapcraft:${SNAPCRAFT_BASE_VERSION}" > Dockerfile
