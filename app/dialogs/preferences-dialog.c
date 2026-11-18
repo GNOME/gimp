@@ -1201,6 +1201,8 @@ prefs_dialog_new (Gimp       *gimp,
                                             GTK_RESPONSE_CANCEL,
                                             -1);
 
+  gtk_window_set_default_size (GTK_WINDOW (dialog), 900, 640);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (prefs_response),
                     dialog);
