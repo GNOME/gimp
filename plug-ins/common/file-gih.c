@@ -379,6 +379,22 @@ gih_export (GimpProcedure        *procedure,
       image_width  = gimp_image_get_width (image);
       image_height = gimp_image_get_height (image);
 
+      /* Make sure cell dimensions are valid */
+      if (image_width < cell_width)
+        {
+          cell_width = image_width;
+          g_object_set (config,
+                        "cell-width", image_width,
+                        NULL);
+        }
+      if (image_height < cell_height)
+        {
+          cell_height = image_height;
+          g_object_set (config,
+                        "cell-height", image_height,
+                        NULL);
+        }
+
       spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config), "cell-width");
       G_PARAM_SPEC_INT (spec)->default_value = image_width;
       G_PARAM_SPEC_INT (spec)->maximum       = image_width;
