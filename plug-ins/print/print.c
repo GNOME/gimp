@@ -22,6 +22,24 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#ifdef GDK_WINDOWING_QUARTZ
+#include <AvailabilityMacros.h>
+#import <AppKit/AppKit.h>
+#include <glib/gstdio.h>
+
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 1090
+#define NSPaperOrientationPortrait   ((NSInteger) NSPortraitOrientation)
+#define NSPaperOrientationLandscape  ((NSInteger) NSLandscapeOrientation)
+#define NSModalResponseOK            NSOKButton
+#endif
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 101200
+#define NSEventMaskAny               NSAnyEventMask
+#endif
+#if MAC_OS_X_VERSION_MIN_REQUIRED < 110000
+#define NSPrintingPaginationModeClip NSClipPagination
+#endif
+#endif
+
 #include "print.h"
 #include "print-settings.h"
 #include "print-page-layout.h"
@@ -97,11 +115,13 @@ static void        draw_page                (GtkPrintOperation *print,
                                              gint               page_nr,
                                              PrintData         *data);
 
+#ifndef GDK_WINDOWING_QUARTZ
 static GtkWidget * create_custom_widget     (GtkPrintOperation *operation,
                                              PrintData         *data);
 static void        custom_widget_apply      (GtkPrintOperation *operation,
                                              GtkWidget         *widget,
                                              PrintData         *data);
+#endif
 
 #ifndef EMBED_PAGE_SETUP
 static gchar     * print_temp_proc_name     (GimpImage         *image);
@@ -266,7 +286,9 @@ print_image (GimpImage *image,
   GtkPrintOperationResult  result;
   GimpLayer               *layer;
   PrintData                data;
+#ifndef GDK_WINDOWING_QUARTZ
   GtkWidget               *printwindow;
+#endif
 #ifndef EMBED_PAGE_SETUP
   gchar                   *temp_proc;
 #endif
@@ -320,6 +342,249 @@ print_image (GimpImage *image,
   if (interactive)
     {
       gimp_ui_init (PLUG_IN_BINARY);
+
+      g_signal_connect_swapped (operation, "end-print",
+                                G_CALLBACK (print_settings_save),
+                                &data);
+
+#ifdef GDK_WINDOWING_QUARTZ
+      {
+        NSPrintInfo          *print_info          = [[NSPrintInfo sharedPrintInfo] copy];
+        GtkPrintSettings     *print_info_settings = gtk_print_operation_get_print_settings (operation);
+        GtkPageSetup         *print_info_setup    = gtk_print_operation_get_default_page_setup (operation);
+        NSPrintPanel         *print_panel         = [NSPrintPanel printPanel];
+        NSNotificationCenter *print_panel_notif   = [NSNotificationCenter defaultCenter];
+        __block id            print_panel_observ  = nil;
+        NSInteger             print_panel_response;
+
+        /* restore saved printer and page setup into NSPrintInfo */
+        if (print_info_settings && gtk_print_settings_get_printer (print_info_settings))
+          {
+            NSPrinter *settings_printer;
+
+            settings_printer = [NSPrinter printerWithName:
+                               [NSString stringWithUTF8String:gtk_print_settings_get_printer (print_info_settings)]];
+            if (settings_printer)
+              [print_info setPrinter:settings_printer];
+          }
+        if (print_info_setup)
+          {
+            GtkPageOrientation  setup_orient = gtk_page_setup_get_orientation (print_info_setup);
+            GtkPaperSize       *setup_paper  = gtk_page_setup_get_paper_size (print_info_setup);
+            gdouble             setup_w      = gtk_paper_size_get_width (setup_paper, GTK_UNIT_POINTS);
+            gdouble             setup_h      = gtk_paper_size_get_height (setup_paper, GTK_UNIT_POINTS);
+
+            if (setup_orient == GTK_PAGE_ORIENTATION_LANDSCAPE ||
+                setup_orient == GTK_PAGE_ORIENTATION_REVERSE_LANDSCAPE)
+              {
+                [print_info setOrientation:NSPaperOrientationLandscape];
+                [print_info setPaperSize:NSMakeSize (setup_h, setup_w)];
+              }
+            else
+              {
+                [print_info setOrientation:NSPaperOrientationPortrait];
+                [print_info setPaperSize:NSMakeSize (setup_w, setup_h)];
+              }
+          }
+        [print_panel setOptions:([print_panel options] & ~NSPrintPanelShowsPageRange) |
+                                NSPrintPanelShowsPaperSize |
+                                NSPrintPanelShowsOrientation];
+
+        /* present the native macOS print dialog */
+        print_panel_observ = [print_panel_notif addObserverForName:NSWindowDidUpdateNotification
+                                                            object:nil
+                                                             queue:[NSOperationQueue mainQueue]
+                                                        usingBlock:^(NSNotification *note) {
+          NSWindow *print_panel_win = [note object];
+
+          /* complicatedly center the NSPanel */
+          if ([print_panel_win isKindOfClass:[NSPanel class]] && [print_panel_win isVisible])
+            {
+              NSScreen *screen = [print_panel_win screen] ? [print_panel_win screen] : [NSScreen mainScreen];
+
+              if (screen)
+                {
+                  NSRect visible = [screen visibleFrame];
+                  NSRect frame   = [print_panel_win frame];
+
+                  frame.origin.x = visible.origin.x + (visible.size.width  - frame.size.width)  / 2.0;
+                  frame.origin.y = MAX (visible.origin.y,
+                                        visible.origin.y + (visible.size.height - frame.size.height) / 2.0);
+                  [print_panel_win setFrameOrigin:frame.origin];
+                }
+
+              [NSApp activateIgnoringOtherApps:YES];
+              [print_panel_win makeKeyAndOrderFront:nil];
+              [print_panel_notif removeObserver:print_panel_observ];
+              print_panel_observ = nil;
+            }
+        }];
+        /* complicatedly focus the NSPanel */
+        [NSApp finishLaunching];
+        [NSApp activateIgnoringOtherApps:YES];
+        {
+          NSDate *deadline = [NSDate dateWithTimeIntervalSinceNow:0.25];
+
+          while (! [NSApp isActive] && [deadline timeIntervalSinceNow] > 0)
+            {
+              NSEvent *ev = [NSApp nextEventMatchingMask:NSEventMaskAny
+                                               untilDate:deadline
+                                                  inMode:NSDefaultRunLoopMode
+                                                 dequeue:YES];
+              if (ev)
+                [NSApp sendEvent:ev];
+            }
+        }
+        print_panel_response = [print_panel runModalWithPrintInfo:print_info];
+        if (print_panel_observ)
+          {
+            [print_panel_notif removeObserver:print_panel_observ];
+            print_panel_observ = nil;
+          }
+        if (print_panel_response == NSModalResponseOK)
+          {
+            NSSize        setup_size      = [print_info paperSize];
+            NSRect        setup_bounds    = [print_info imageablePageBounds];
+            gdouble       setup_left      = MAX (0.0, setup_bounds.origin.x);
+            gdouble       setup_right     = MAX (0.0, setup_size.width  - (setup_bounds.origin.x + setup_bounds.size.width));
+            gdouble       setup_bottom    = MAX (0.0, setup_bounds.origin.y);
+            gdouble       setup_top       = MAX (0.0, setup_size.height - (setup_bounds.origin.y + setup_bounds.size.height));
+            const gchar  *setup_name      = [print_info paperName] ? [[print_info paperName] UTF8String] : "custom";
+            const gchar  *setup_disp_name = [print_info localizedPaperName] ? [[print_info localizedPaperName] UTF8String] : "Custom";
+            GtkPaperSize *setup_paper;
+            gchar        *print_op_pdf_path = NULL;
+            gint          print_op_pdf_fd;
+
+            /* sync chosen paper size, orientation and margins back to GTK */
+            if (setup_bounds.size.width <= 0.0 || setup_bounds.size.height <= 0.0)
+              setup_left = setup_right = setup_top = setup_bottom = 0.0;
+            print_info_setup = gtk_page_setup_new ();
+            if ([print_info orientation] == NSPaperOrientationLandscape)
+              {
+                setup_paper = gtk_paper_size_new_custom (setup_name, setup_disp_name,
+                                                         setup_size.height, setup_size.width,
+                                                         GTK_UNIT_POINTS);
+                gtk_page_setup_set_paper_size (print_info_setup, setup_paper);
+                gtk_page_setup_set_orientation (print_info_setup, GTK_PAGE_ORIENTATION_LANDSCAPE);
+                gtk_page_setup_set_top_margin (print_info_setup, setup_left, GTK_UNIT_POINTS);
+                gtk_page_setup_set_bottom_margin (print_info_setup, setup_right, GTK_UNIT_POINTS);
+                gtk_page_setup_set_left_margin (print_info_setup, setup_bottom, GTK_UNIT_POINTS);
+                gtk_page_setup_set_right_margin (print_info_setup, setup_top, GTK_UNIT_POINTS);
+              }
+            else
+              {
+                setup_paper = gtk_paper_size_new_custom (setup_name, setup_disp_name,
+                                                         setup_size.width, setup_size.height,
+                                                         GTK_UNIT_POINTS);
+                gtk_page_setup_set_paper_size (print_info_setup, setup_paper);
+                gtk_page_setup_set_orientation (print_info_setup, GTK_PAGE_ORIENTATION_PORTRAIT);
+                gtk_page_setup_set_top_margin (print_info_setup, setup_top, GTK_UNIT_POINTS);
+                gtk_page_setup_set_bottom_margin (print_info_setup, setup_bottom, GTK_UNIT_POINTS);
+                gtk_page_setup_set_left_margin (print_info_setup, setup_left, GTK_UNIT_POINTS);
+                gtk_page_setup_set_right_margin (print_info_setup, setup_right, GTK_UNIT_POINTS);
+              }
+            gtk_paper_size_free (setup_paper);
+            gtk_print_operation_set_default_page_setup (operation, print_info_setup);
+            g_object_unref (print_info_setup);
+            if ([print_info printer] && [[print_info printer] name])
+              {
+                print_info_settings = print_info_settings ? g_object_ref (print_info_settings) : gtk_print_settings_new ();
+                gtk_print_settings_set_printer (print_info_settings, [[[print_info printer] name] UTF8String]);
+                gtk_print_operation_set_print_settings (operation, print_info_settings);
+                g_object_unref (print_info_settings);
+              }
+
+            /* export via GTK to open Image Settings dialog and render the page */
+            print_op_pdf_fd = g_file_open_tmp ("gimp-print-XXXXXX.pdf", &print_op_pdf_path, error);
+            if (print_op_pdf_fd != -1)
+              {
+                g_close (print_op_pdf_fd, NULL);
+                gtk_print_operation_set_export_filename (operation, print_op_pdf_path);
+                result = gtk_print_operation_run (operation,
+                                                  GTK_PRINT_OPERATION_ACTION_EXPORT,
+                                                  NULL, error);
+                if (result == GTK_PRINT_OPERATION_RESULT_APPLY)
+                  {
+                    NSAutoreleasePool *pool              = [[NSAutoreleasePool alloc] init];
+                    NSData            *print_op_pdf_data = [NSData dataWithContentsOfFile:[NSString stringWithUTF8String:print_op_pdf_path]];
+                    NSPDFImageRep     *print_op_pdf_rep  = print_op_pdf_data ? [NSPDFImageRep imageRepWithData:print_op_pdf_data] : nil;
+
+                    if (print_op_pdf_rep)
+                      {
+                        NSImage          *print_op_pdf_img      = [[NSImage alloc] initWithSize:setup_size];
+                        NSImageView      *print_op_pdf_img_view = [[NSImageView alloc] initWithFrame:NSMakeRect (0, 0, setup_size.width, setup_size.height)];
+                        NSPrintOperation *print_op;
+                        gchar            *print_op_name = gimp_image_get_name (image);
+
+                        /* send the rendered PDF via NSPrintOperation with all NSPrintPanel options */
+                        [print_op_pdf_img addRepresentation:print_op_pdf_rep];
+                        [print_op_pdf_img_view setImage:print_op_pdf_img];
+                        [print_op_pdf_img_view setImageScaling:NSImageScaleNone];
+                        /* print 1:1 since margins and placement are already baked into the PDF */
+                        {
+                          PMPaperMargins print_op_margins = { 0.0, 0.0, 0.0, 0.0 };
+                          PMPaper        print_op_paper   = NULL;
+                          PMPageFormat   print_op_format  = NULL;
+
+                          if (PMPaperCreateCustom (NULL, CFSTR ("gimp-full-page"), CFSTR ("Full Page"),
+                                                   setup_size.width, setup_size.height,
+                                                   &print_op_margins, &print_op_paper) == noErr)
+                            {
+                              if (PMCreatePageFormatWithPMPaper (&print_op_format, print_op_paper) == noErr)
+                                {
+                                  PMCopyPageFormat (print_op_format, (PMPageFormat) [print_info PMPageFormat]);
+                                  [print_info updateFromPMPageFormat];
+                                  PMRelease (print_op_format);
+                                }
+                              PMRelease (print_op_paper);
+                            }
+                        }
+                        [print_info setLeftMargin:0.0];
+                        [print_info setRightMargin:0.0];
+                        [print_info setTopMargin:0.0];
+                        [print_info setBottomMargin:0.0];
+                        [print_info setHorizontallyCentered:NO];
+                        [print_info setVerticallyCentered:NO];
+                        [print_info setHorizontalPagination:NSPrintingPaginationModeClip];
+                        [print_info setVerticalPagination:NSPrintingPaginationModeClip];
+                        print_op = [NSPrintOperation printOperationWithView:print_op_pdf_img_view
+                                                                  printInfo:print_info];
+                        [print_op setShowsPrintPanel:NO];
+                        [print_op setShowsProgressPanel:NO];
+                        if (print_op_name)
+                          [print_op setJobTitle:[NSString stringWithUTF8String:print_op_name]];
+                        g_free (print_op_name);
+
+                        if (! [print_op runOperation])
+                          result = GTK_PRINT_OPERATION_RESULT_ERROR;
+
+                        [print_op_pdf_img_view release];
+                        [print_op_pdf_img release];
+                      }
+                    else
+                      {
+                        result = GTK_PRINT_OPERATION_RESULT_ERROR;
+                      }
+
+                    [pool release];
+                  }
+
+                g_unlink (print_op_pdf_path);
+                g_free (print_op_pdf_path);
+              }
+            else
+              {
+                result = GTK_PRINT_OPERATION_RESULT_ERROR;
+              }
+          }
+        else
+          {
+            result = GTK_PRINT_OPERATION_RESULT_CANCEL;
+          }
+
+        [print_info release];
+      }
+#else
       printwindow = NULL;
 #if defined(PLATFORM_OSX)
       /* create top level window and make it transient to use correct monitor.
@@ -329,10 +594,6 @@ print_image (GimpImage *image,
       gtk_widget_set_visible (printwindow, TRUE);
       gimp_widget_set_title_bar_theme (printwindow, -1);
 #endif
-
-      g_signal_connect_swapped (operation, "end-print",
-                                G_CALLBACK (print_settings_save),
-                                &data);
 
       g_signal_connect (operation, "create-custom-widget",
                         G_CALLBACK (create_custom_widget),
@@ -353,6 +614,7 @@ print_image (GimpImage *image,
 
       if (printwindow)
         gtk_widget_destroy (printwindow);
+#endif
 
       if (result == GTK_PRINT_OPERATION_RESULT_APPLY ||
           result == GTK_PRINT_OPERATION_RESULT_IN_PROGRESS)
@@ -499,15 +761,27 @@ begin_print (GtkPrintOperation *operation,
       dialog     = gtk_dialog_new_with_buttons (_("Image Settings"), NULL, 0,
                                                 _("_Print"), GTK_RESPONSE_ACCEPT,
                                                 _("_Cancel"), GTK_RESPONSE_REJECT, NULL);
+      gimp_window_set_transient (GTK_WINDOW (dialog));
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           data->layout_gui, TRUE, TRUE, 0);
+
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
+      gtk_widget_realize (dialog);
+      gimp_widget_set_title_bar_theme (dialog, -1);
+#endif
+
+#ifdef PLATFORM_OSX
+      /* since `dialog` is not created with gimp_dialog_new, drop minimize manually */
+      gdk_window_set_functions (gtk_widget_get_window (dialog),
+                                GDK_FUNC_RESIZE |
+                                GDK_FUNC_MOVE   |
+                                GDK_FUNC_CLOSE  |
+                                GDK_FUNC_MAXIMIZE);
+#endif
+
       gtk_widget_show_all (dialog);
 
       data->has_layout_gui = TRUE;
-
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
-      gimp_widget_set_title_bar_theme (dialog, -1);
-#endif
 
       if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)
         {
@@ -562,6 +836,7 @@ draw_page (GtkPrintOperation *operation,
 }
 
 
+#ifndef GDK_WINDOWING_QUARTZ
 /*
  * This callback creates a "custom" widget that gets inserted into the
  * print operation dialog.
@@ -586,6 +861,7 @@ custom_widget_apply (GtkPrintOperation *operation,
   /* only emitted if the print dialog actually showed the custom widget */
   data->has_layout_gui = TRUE;
 }
+#endif
 
 #ifndef EMBED_PAGE_SETUP
 static GimpValueArray *
