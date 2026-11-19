@@ -52,8 +52,9 @@ if [ "$CI_PIPELINE_SOURCE" = 'schedule' ]; then
   #Check dependencies versions with flatpak-external-data-checker
   export FLATPAK_SYSTEM_HELPER_ON_SESSION=foo
   flatpak install --user https://dl.flathub.org/repo/appstream/org.flathub.flatpak-external-data-checker.flatpakref -y
-  if ! flatpak run --user --filesystem=$CI_PROJECT_DIR org.flathub.flatpak-external-data-checker \
-                   --check-outdated build/linux/flatpak/org.gimp.GIMP-nightly.json; then
+  if ! flatpak run --user --filesystem=$CI_PROJECT_DIR --env=GIT_CONFIG_COUNT=1 --env=GIT_CONFIG_KEY_0=safe.directory \
+                          --env=GIT_CONFIG_VALUE_0="$CI_PROJECT_DIR" org.flathub.flatpak-external-data-checker \
+                          --check-outdated build/linux/flatpak/org.gimp.GIMP-nightly.json; then
     printf "\033[31m(ERROR)\033[0m: Some dependencies sources are outdated. Please, update them on the manifest.\n"
     exit 1
   else
