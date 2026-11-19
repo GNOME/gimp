@@ -28,6 +28,7 @@ typedef void (* GimpPathImportCallback) (GtkWidget *dialog,
 
 
 GtkWidget * path_import_dialog_new (GimpImage                 *image,
+                                    GimpContext               *context,
                                     GtkWidget                 *parent,
                                     GFile                     *import_folder,
                                     gboolean                   merge_paths,

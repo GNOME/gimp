@@ -495,6 +495,7 @@ EXPORTS
 	gimp_path_freeze
 	gimp_path_import_buffer
 	gimp_path_import_file
+	gimp_path_import_get_preview
 	gimp_path_new
 	gimp_path_stroke_add
 	gimp_path_stroke_get_next
