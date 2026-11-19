@@ -275,13 +275,13 @@ path_import_dialog_file_set (GtkFileChooser   *widget,
                              PathImportDialog *private)
 {
   GFile  *file;
-  GError *error = NULL;
-  GList  *paths = NULL;
 
   file = gtk_file_chooser_get_file (widget);
   if (file != NULL)
     {
-      gboolean success;
+      GError   *error = NULL;
+      GList    *paths = NULL;
+      gboolean  success;
 
       success = gimp_path_import_get_preview (private->image, file,
                                               NULL, 0, private->scale_paths,
@@ -291,5 +291,7 @@ path_import_dialog_file_set (GtkFileChooser   *widget,
                               success ? GIMP_VIEWABLE (paths->data) : NULL);
 
       g_list_free (paths);
+      if (error)
+        g_free (error);
     }
 }
