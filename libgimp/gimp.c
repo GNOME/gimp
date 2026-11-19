@@ -81,7 +81,10 @@
 #endif
 
 #ifdef __APPLE__
+#include <AvailabilityMacros.h>
 #include <Cocoa/Cocoa.h>
+#include <objc/runtime.h>
+#include <xlocale.h>
 #endif
 
 #include <locale.h>
@@ -148,6 +151,51 @@ static gchar              *_icon_theme_dir       = NULL;
 static const gchar        *progname              = NULL;
 
 static GimpStackTraceMode  stack_trace_mode      = GIMP_STACK_TRACE_NEVER;
+
+
+#ifdef PLATFORM_OSX
+static void
+setlocale_lc_numeric (void)
+{
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 /* imp_implementationWithBlock */
+  typedef void * (* SvgDocumentFunc) (id, SEL);
+
+  Class           glyph_class;
+  SEL             glyph_selector;
+  Method          glyph_method = NULL;
+  SvgDocumentFunc glyph_method_original;
+  locale_t        glyph_locale_custom;
+  id              glyph_method_custom;
+
+  /* find the method that decodes the vector glyphs */
+  glyph_class = objc_getClass ("_CUIThemeVectorGlyphRendition");
+  glyph_selector = sel_registerName ("svgDocument");
+  if (glyph_class)
+    glyph_method = class_getInstanceMethod (glyph_class, glyph_selector);
+  if (! glyph_method)
+    return;
+  glyph_method_original = (SvgDocumentFunc) method_getImplementation (glyph_method);
+
+  /* setting LC_NUMERIC* affects spin buttons etc so let's restrict to CoreUI.
+     We do that by making AppKit call the wrapper instead of the original method */
+  glyph_locale_custom = newlocale (LC_NUMERIC_MASK, "C", NULL);
+  glyph_method_custom = (id) ^ void * (id self)
+    {
+      locale_t  glyph_locale_old;
+      void     *glyph;
+
+      glyph_locale_old = uselocale (glyph_locale_custom);
+      glyph = glyph_method_original (self, glyph_selector);
+      uselocale (glyph_locale_old);
+
+      return glyph;
+    };
+
+  method_setImplementation (glyph_method,
+                            imp_implementationWithBlock (glyph_method_custom));
+#endif
+}
+#endif /* PLATFORM_OSX */
 
 
 /**
@@ -585,6 +633,9 @@ gimp_main (GType  plug_in_type,
 #warning GTK4 GtkSpinButton hardcodes '-' and '+' instead of using localeconv(): evaluate dropping this LC_MONETARY workaround
 #endif
   setlocale (LC_MONETARY, "C");
+
+  /* copied from app/main.c, otherwise the Print plugin crashes on macOS 27 */
+  setlocale_lc_numeric ();
 #endif
 
   gimp_bind_text_domain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
