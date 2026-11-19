@@ -97,6 +97,14 @@ static gboolean  gimp_session_info_restore_docks      (GimpRestoreDocksData *dat
 
 static void      gimp_session_info_monitor_invalidate (GdkMonitor           *monitor,
                                                        GimpSessionInfo      *info);
+static gboolean  gimp_session_info_monitor_invalidate_idle
+                                                      (GimpSessionInfo      *info);
+static void      gimp_session_info_monitor_added      (GdkDisplay           *display,
+                                                       GdkMonitor           *monitor,
+                                                       GimpSessionInfo      *info);
+static gboolean  gimp_session_info_monitor_added_idle (GimpSessionInfo      *info);
+static void      gimp_session_info_set_monitor        (GimpSessionInfo      *info,
+                                                       GdkMonitor           *monitor);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpSessionInfo, gimp_session_info, GIMP_TYPE_OBJECT,
@@ -141,6 +149,9 @@ gimp_session_info_finalize (GObject *object)
   gimp_session_info_clear_info (info);
 
   gimp_session_info_set_widget (info, NULL);
+
+  g_clear_pointer (&info->p->disconnected_manufacturer, g_free);
+  g_clear_pointer (&info->p->disconnected_model, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -207,7 +218,8 @@ gimp_session_info_serialize (GimpConfig       *config,
       gimp_config_writer_close (writer);
     }
 
-  if (info->p->monitor != DEFAULT_MONITOR)
+  if (info->p->monitor != DEFAULT_MONITOR &&
+      info->p->monitor != gdk_display_get_primary_monitor (gdk_monitor_get_display (info->p->monitor)))
     {
       gimp_config_writer_open (writer, "monitor");
       gimp_config_writer_printf (writer, "%d", monitor_number (info->p->monitor));
@@ -500,8 +512,24 @@ static void
 gimp_session_info_dialog_show (GtkWidget       *widget,
                                GimpSessionInfo *info)
 {
+  GdkDisplay   *display = gtk_widget_get_display (widget);
+  GdkMonitor   *monitor;
+  GdkRectangle  rect    = { 0, };
+
+  if (info->p->monitor != DEFAULT_MONITOR)
+    monitor = info->p->monitor;
+  else
+    monitor = gdk_display_get_primary_monitor (display);
+
+  if (monitor == NULL)
+    monitor = gdk_display_get_monitor (display, 0);
+
+  if (monitor != NULL)
+    gdk_monitor_get_geometry (monitor, &rect);
+
   gtk_window_move (GTK_WINDOW (widget),
-                   info->p->x, info->p->y);
+                   rect.x + info->p->x,
+                   rect.y + info->p->y);
 
   if (gimp_session_info_get_remember_size (info) &&
       info->p->width  > 0 &&
@@ -571,18 +599,110 @@ gimp_session_info_monitor_invalidate (GdkMonitor      *monitor,
 {
   /* When a monitor is disconnected, even if it is connected again, it
    * will now be a different object. We need to get rid of the dangling
-   * pointer.
-   *
-   * TODO: maybe storing also the manufacturer/model (and in GTK4, the
-   * description) may be a good way to retrieve a monitor upon
-   * reconnection so that a window stay associated to the same monitor,
-   * even when disconnecting/reconnecting (e.g. a laptop plugged to a
-   * desktop display).
+   * pointer, and remember its manufacturer/model so the window can be
+   * moved back if the monitor is reconnected.
    */
+  GdkDisplay *display = gdk_monitor_get_display (monitor);
+
   g_signal_handlers_disconnect_by_func (monitor,
                                         G_CALLBACK (gimp_session_info_monitor_invalidate),
                                         info);
   info->p->monitor = DEFAULT_MONITOR;
+
+  g_clear_pointer (&info->p->disconnected_manufacturer, g_free);
+  g_clear_pointer (&info->p->disconnected_model, g_free);
+  info->p->disconnected_manufacturer = g_strdup (gdk_monitor_get_manufacturer (monitor));
+  info->p->disconnected_model        = g_strdup (gdk_monitor_get_model (monitor));
+
+  g_signal_handlers_disconnect_by_func (display,
+                                        G_CALLBACK (gimp_session_info_monitor_added),
+                                        info);
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the GdkDisplay monitor-added signal: connect to items-changed on gdk_display_get_monitors() instead
+#endif
+  g_signal_connect_object (display, "monitor-added",
+                           G_CALLBACK (gimp_session_info_monitor_added),
+                           info, 0);
+
+  /* needed for docks */
+  if (GTK_IS_WINDOW (info->p->widget))
+    g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                     (GSourceFunc) gimp_session_info_monitor_invalidate_idle,
+                     g_object_ref (info), g_object_unref);
+}
+
+static gboolean
+gimp_session_info_monitor_invalidate_idle (GimpSessionInfo *info)
+{
+  if (GTK_IS_WINDOW (info->p->widget))
+    {
+      GdkDisplay *display = gtk_widget_get_display (info->p->widget);
+      GdkMonitor *monitor = gdk_display_get_primary_monitor (display);
+
+      if (monitor == NULL)
+        monitor = gdk_display_get_monitor (display, 0);
+
+      if (monitor != NULL)
+        gimp_session_info_apply_geometry (info, monitor, FALSE);
+    }
+
+  return G_SOURCE_REMOVE;
+}
+
+static void
+gimp_session_info_monitor_added (GdkDisplay      *display,
+                                 GdkMonitor      *monitor,
+                                 GimpSessionInfo *info)
+{
+  if (g_strcmp0 (gdk_monitor_get_manufacturer (monitor),
+                 info->p->disconnected_manufacturer) == 0 &&
+      g_strcmp0 (gdk_monitor_get_model (monitor),
+                 info->p->disconnected_model) == 0)
+    {
+      g_signal_handlers_disconnect_by_func (display,
+                                            G_CALLBACK (gimp_session_info_monitor_added),
+                                            info);
+      g_clear_pointer (&info->p->disconnected_manufacturer, g_free);
+      g_clear_pointer (&info->p->disconnected_model, g_free);
+
+      gimp_session_info_set_monitor (info, monitor);
+
+      /* needed for docks */
+      if (GTK_IS_WINDOW (info->p->widget))
+        g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                         (GSourceFunc) gimp_session_info_monitor_added_idle,
+                         g_object_ref (info), g_object_unref);
+    }
+}
+
+static gboolean
+gimp_session_info_monitor_added_idle (GimpSessionInfo *info)
+{
+  if (GTK_IS_WINDOW (info->p->widget) && info->p->monitor != DEFAULT_MONITOR)
+    gimp_session_info_apply_geometry (info, info->p->monitor, FALSE);
+
+  return G_SOURCE_REMOVE;
+}
+
+static void
+gimp_session_info_set_monitor (GimpSessionInfo *info,
+                               GdkMonitor      *monitor)
+{
+  /* Store the monitor and track its invalidation so monitor-relative
+   * coordinates can be converted back to global coordinates when
+   * re-showing the window, and windows moved if the monitor disconnects.
+   */
+  if (info->p->monitor != NULL)
+    g_signal_handlers_disconnect_by_func (info->p->monitor,
+                                          G_CALLBACK (gimp_session_info_monitor_invalidate),
+                                          info);
+
+  info->p->monitor = monitor;
+
+  if (info->p->monitor != NULL)
+    g_signal_connect_object (info->p->monitor, "invalidate",
+                             G_CALLBACK (gimp_session_info_monitor_invalidate),
+                             info, 0);
 }
 
 
@@ -657,11 +777,14 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
                                   GdkMonitor      *current_monitor,
                                   gboolean         apply_stored_monitor)
 {
+  GdkDisplay     *display;
   GdkMonitor     *monitor;
   GdkRectangle    rect;
   GdkRectangle    work_rect;
   GdkGravity      gravity;
   GdkWindowHints  hints;
+  gint            x;
+  gint            y;
   gint            width;
   gint            height;
 
@@ -669,14 +792,12 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
   g_return_if_fail (GTK_IS_WINDOW (info->p->widget));
   g_return_if_fail (GDK_IS_MONITOR (current_monitor));
 
+  display = gdk_monitor_get_display (current_monitor);
   monitor = current_monitor;
 
   if (apply_stored_monitor)
     {
-      GdkDisplay *display = gdk_monitor_get_display (current_monitor);
-      gint        n_monitors;
-
-      n_monitors = gdk_display_get_n_monitors (display);
+      gint n_monitors = gdk_display_get_n_monitors (display);
 
       if (info->p->monitor                  != DEFAULT_MONITOR &&
           monitor_number (info->p->monitor) <  n_monitors)
@@ -686,14 +807,16 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
       else
         {
           monitor = gdk_display_get_primary_monitor (display);
+          if (monitor == NULL)
+            monitor = current_monitor;
         }
     }
 
   gdk_monitor_get_geometry (monitor, &rect);
   gdk_monitor_get_workarea (monitor, &work_rect);
 
-  info->p->x += rect.x;
-  info->p->y += rect.y;
+  x = info->p->x + rect.x;
+  y = info->p->y + rect.y;
 
 #ifdef PLATFORM_OSX
   /* a window which doesn't fit the work area (e.g. saved while fullscreen or
@@ -730,12 +853,12 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
       height = requisition.height;
     }
 
-  info->p->x = CLAMP (info->p->x,
-                      work_rect.x,
-                      work_rect.x + work_rect.width  - width);
-  info->p->y = CLAMP (info->p->y,
-                      work_rect.y,
-                      work_rect.y + work_rect.height - height);
+  x = CLAMP (x,
+             work_rect.x,
+             work_rect.x + work_rect.width  - width);
+  y = CLAMP (y,
+             work_rect.y,
+             work_rect.y + work_rect.height - height);
 
   if (gimp_session_info_get_remember_size (info) &&
       info->p->width  > 0 &&
@@ -779,15 +902,20 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
 
   if (gravity == GDK_GRAVITY_SOUTH_EAST ||
       gravity == GDK_GRAVITY_NORTH_EAST)
-    info->p->x = work_rect.x + work_rect.width - width;
+    x = work_rect.x + work_rect.width - width;
 
   if (gravity == GDK_GRAVITY_SOUTH_WEST ||
       gravity == GDK_GRAVITY_SOUTH_EAST)
-    info->p->y = work_rect.y + work_rect.height - height;
+    y = work_rect.y + work_rect.height - height;
+
+  info->p->x = x - rect.x;
+  info->p->y = y - rect.y;
+  /* keep stored monitor in sync with monitor-relative position. See: #6193 */
+  gimp_session_info_set_monitor (info, monitor);
 
   gtk_window_set_gravity (GTK_WINDOW (info->p->widget), gravity);
   gtk_window_move (GTK_WINDOW (info->p->widget),
-                   info->p->x, info->p->y);
+                   x, y);
 
   hints = GDK_HINT_USER_POS;
   if (gimp_session_info_get_remember_size (info))
@@ -804,9 +932,14 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
    *  because window managers behave even "smarter" then...
    */
   if (GTK_IS_WINDOW (info->p->widget))
-    g_signal_connect (info->p->widget, "show",
-                      G_CALLBACK (gimp_session_info_dialog_show),
-                      info);
+    {
+      g_signal_handlers_disconnect_by_func (info->p->widget,
+                                            gimp_session_info_dialog_show,
+                                            info);
+      g_signal_connect (info->p->widget, "show",
+                        G_CALLBACK (gimp_session_info_dialog_show),
+                        info);
+    }
 }
 
 /**
@@ -864,20 +997,8 @@ gimp_session_info_read_geometry (GimpSessionInfo   *info,
           info->p->height = 0;
         }
 
-      if (info->p->monitor != NULL)
-        g_signal_handlers_disconnect_by_func (info->p->monitor,
-                                              G_CALLBACK (gimp_session_info_monitor_invalidate),
-                                              info);
-
-      info->p->monitor = DEFAULT_MONITOR;
-
-      if (monitor != gdk_display_get_primary_monitor (display))
-        info->p->monitor = monitor;
-
-      if (info->p->monitor != NULL)
-        g_signal_connect_object (info->p->monitor, "invalidate",
-                                 G_CALLBACK (gimp_session_info_monitor_invalidate),
-                                 info, 0);
+      /* keep stored monitor in sync with monitor-relative position. See: #6193 */
+      gimp_session_info_set_monitor (info, monitor);
     }
 
   info->p->open = FALSE;
