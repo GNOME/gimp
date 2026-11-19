@@ -55,12 +55,12 @@ struct _PathImportDialog
 
 
 /*  local function prototypes  */
-static void   path_import_dialog_free     (PathImportDialog     *private);
-static void   path_import_dialog_response (GtkWidget            *dialog,
-                                           gint                  response_id,
-                                           PathImportDialog     *private);
-static void   path_import_dialog_file_set (GtkFileChooser       *widget,
-                                           PathImportDialog     *private);
+static void   path_import_dialog_free     (PathImportDialog *private);
+static void   path_import_dialog_response (GtkWidget        *dialog,
+                                           gint              response_id,
+                                           PathImportDialog *private);
+static void   path_import_dialog_file_set (GtkFileChooser   *widget,
+                                           PathImportDialog *private);
 
 /*  public function  */
 

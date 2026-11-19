@@ -336,7 +336,6 @@ gimp_path_import_get_preview  (GimpImage    *image,
                                GError      **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (buffer != NULL || len == 0, FALSE);
   g_return_val_if_fail (ret_paths == NULL || *ret_paths == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
