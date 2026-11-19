@@ -126,7 +126,7 @@ path_import_dialog_new (GimpImage              *image,
   gtk_widget_set_visible (vbox, TRUE);
 
   /* The "Select Path" frame */
-  frame = gimp_frame_new (_("Select Path"));
+  frame = gimp_frame_new (_("Select Source"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_set_visible (frame, TRUE);
 
