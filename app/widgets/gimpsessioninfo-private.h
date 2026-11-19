@@ -35,6 +35,8 @@ struct _GimpSessionInfoPrivate
   gboolean                right_align;
   gboolean                bottom_align;
   GdkMonitor             *monitor;
+  gchar                  *disconnected_manufacturer;
+  gchar                  *disconnected_model;
 
   /*  only valid while restoring and saving the session  */
   gboolean                open;
