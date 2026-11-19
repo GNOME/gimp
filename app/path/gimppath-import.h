@@ -21,20 +21,27 @@
 #pragma once
 
 
-gboolean  gimp_path_import_file   (GimpImage    *image,
-                                   GFile        *file,
-                                   gboolean      merge,
-                                   gboolean      scale,
-                                   GimpPath     *parent,
-                                   gint          position,
-                                   GList       **ret_paths,
-                                   GError      **error);
-gboolean  gimp_path_import_buffer (GimpImage    *image,
-                                   const gchar  *buffer,
-                                   gsize         len,
-                                   gboolean      merge,
-                                   gboolean      scale,
-                                   GimpPath     *parent,
-                                   gint          position,
-                                   GList       **ret_paths,
-                                   GError      **error);
+gboolean  gimp_path_import_file         (GimpImage    *image,
+                                         GFile        *file,
+                                         gboolean      merge,
+                                         gboolean      scale,
+                                         GimpPath     *parent,
+                                         gint          position,
+                                         GList       **ret_paths,
+                                         GError      **error);
+gboolean  gimp_path_import_buffer       (GimpImage    *image,
+                                         const gchar  *buffer,
+                                         gsize         len,
+                                         gboolean      merge,
+                                         gboolean      scale,
+                                         GimpPath     *parent,
+                                         gint          position,
+                                         GList       **ret_paths,
+                                         GError      **error);
+gboolean  gimp_path_import_get_preview  (GimpImage    *image,
+                                         GFile        *file,
+                                         const gchar  *buffer,
+                                         gsize         len,
+                                         gboolean      scale,
+                                         GList       **ret_paths,
+                                         GError      **error);

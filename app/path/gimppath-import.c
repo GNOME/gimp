@@ -123,6 +123,7 @@ static gboolean  gimp_path_import  (GimpImage            *image,
                                     gsize                 len,
                                     gboolean              merge,
                                     gboolean              scale,
+                                    gboolean              add_to_image,
                                     GimpPath             *parent,
                                     gint                  position,
                                     GList               **ret_paths,
@@ -216,12 +217,13 @@ static GList    * parse_path_data     (const gchar  *data);
 
 /**
  * gimp_path_import_file:
- * @image:    the #GimpImage to add the paths to
- * @file:     a SVG file
- * @merge:    should multiple paths be merged into a single #GimpPath object
- * @scale:    should the SVG be scaled to fit the image dimensions
- * @position: position in the image's path stack where to add the paths
- * @error:    location to store possible errors
+ * @image:     the #GimpImage to add the paths to
+ * @file:      a SVG file
+ * @merge:     should multiple paths be merged into a single #GimpPath object
+ * @scale:     should the SVG be scaled to fit the image dimensions
+ * @position:  position in the image's path stack where to add the paths
+ * @ret_paths: A #GList that the paths can be returned to the caller in
+ * @error:     location to store possible errors
  *
  * Imports one or more paths and basic shapes from a SVG file.
  *
@@ -257,18 +259,19 @@ gimp_path_import_file (GimpImage    *image,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return gimp_path_import (image, file, NULL, 0, merge, scale,
-                           parent, position,
+                           TRUE, parent, position,
                            ret_paths, error);
 }
 
 /**
- * gimp_path_import_string:
- * @image:  the #GimpImage to add the paths to
- * @buffer: a character buffer to parse
- * @len:    number of bytes in @str or -1 if @str is %NUL-terminated
- * @merge:  should multiple paths be merged into a single #GimpPath object
- * @scale:  should the SVG be scaled to fit the image dimensions
- * @error:  location to store possible errors
+ * gimp_path_import_buffer:
+ * @image:     the #GimpImage to add the paths to
+ * @buffer:    a character buffer to parse
+ * @len:       number of bytes in @buffer or -1 if @buffer is %NUL-terminated
+ * @merge:     should multiple paths be merged into a single #GimpPath object
+ * @scale:     should the SVG be scaled to fit the image dimensions
+ * @ret_paths: A #GList that the paths can be returned to the caller in
+ * @error:     location to store possible errors
  *
  * Imports one or more paths and basic shapes from a SVG file.
  *
@@ -305,8 +308,49 @@ gimp_path_import_buffer (GimpImage    *image,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   return gimp_path_import (image, NULL, buffer, len, merge, scale,
-                           parent, position,
+                           TRUE, parent, position,
                            ret_paths, error);
+}
+
+/**
+ * gimp_path_import_get_preview:
+ * @image:     the #GimpImage used to create the paths
+ * @file:      a SVG file
+ * @buffer:    a character buffer to parse
+ * @len:       number of bytes in @buffer or -1 if @buffer is %NUL-terminated
+ * @scale:     should the SVG be scaled to fit the image dimensions
+ * @ret_paths: A #GList that the merged path will be stored in
+ * @error:     location to store possible errors
+ *
+ * Returns a merged #GimpPath to use as a preview
+ *
+ * Returns: %TRUE on success, %FALSE if an error occurred
+ **/
+gboolean
+gimp_path_import_get_preview  (GimpImage    *image,
+                               GFile        *file,
+                               const gchar  *buffer,
+                               gsize         len,
+                               gboolean      scale,
+                               GList       **ret_paths,
+                               GError      **error)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (buffer != NULL || len == 0, FALSE);
+  g_return_val_if_fail (ret_paths == NULL || *ret_paths == NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (file)
+    g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  else
+    g_return_val_if_fail (buffer != NULL || len == 0, FALSE);
+
+  if (file)
+    return gimp_path_import (image, file, NULL, 0, TRUE, scale,
+                             FALSE, NULL, 0, ret_paths, error);
+  else
+    return gimp_path_import (image, NULL, buffer, len, TRUE, scale,
+                             FALSE, NULL, 0, ret_paths, error);
 }
 
 static gboolean
@@ -316,6 +360,7 @@ gimp_path_import (GimpImage    *image,
                   gsize         len,
                   gboolean      merge,
                   gboolean      scale,
+                  gboolean      add_to_image,
                   GimpPath     *parent,
                   gint          position,
                   GList       **ret_paths,
@@ -359,8 +404,9 @@ gimp_path_import (GimpImage    *image,
 
           merge = merge && base->paths->next;
 
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PATHS_IMPORT,
-                                       _("Import Paths"));
+          if (add_to_image)
+            gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PATHS_IMPORT,
+                                         _("Import Paths"));
 
           for (paths = base->paths; paths; paths = paths->next)
             {
@@ -372,8 +418,9 @@ gimp_path_import (GimpImage    *image,
                   path = gimp_path_new (image,
                                         ((merge || ! svg_path->id) ?
                                          _("Imported Path") : svg_path->id));
-                  gimp_image_add_path (image, path,
-                                       parent, position, TRUE);
+                  if (add_to_image)
+                    gimp_image_add_path (image, path,
+                                         parent, position, TRUE);
                   gimp_path_freeze (path);
 
                   if (ret_paths)
@@ -396,7 +443,8 @@ gimp_path_import (GimpImage    *image,
           if (merge)
             gimp_path_thaw (path);
 
-          gimp_image_undo_group_end (image);
+          if (add_to_image)
+            gimp_image_undo_group_end (image);
         }
       else
         {

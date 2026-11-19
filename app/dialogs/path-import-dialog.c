@@ -28,6 +28,7 @@
 #include "core/gimpimage.h"
 
 #include "path/gimppath.h"
+#include "path/gimppath-import.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpview.h"
@@ -58,11 +59,14 @@ static void   path_import_dialog_free     (PathImportDialog     *private);
 static void   path_import_dialog_response (GtkWidget            *dialog,
                                            gint                  response_id,
                                            PathImportDialog     *private);
+static void   path_import_dialog_file_set (GtkFileChooser       *widget,
+                                           PathImportDialog     *private);
 
 /*  public function  */
 
 GtkWidget *
 path_import_dialog_new (GimpImage              *image,
+                        GimpContext            *context,
                         GtkWidget              *parent,
                         GFile                  *import_folder,
                         gboolean                merge_paths,
@@ -125,7 +129,7 @@ path_import_dialog_new (GimpImage              *image,
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_set_visible (vbox, TRUE);
 
-  /* The "Select Path" frame */
+  /* The "Select Source" frame */
   frame = gimp_frame_new (_("Select Source"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_set_visible (frame, TRUE);
@@ -136,6 +140,10 @@ path_import_dialog_new (GimpImage              *image,
   gtk_container_add (GTK_CONTAINER (frame), private->file_chooser);
   gtk_widget_set_visible (private->file_chooser, TRUE);
 
+  g_signal_connect (private->file_chooser, "file-set",
+                    G_CALLBACK (path_import_dialog_file_set),
+                    private);
+
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("All files (*.*)"));
   gtk_file_filter_add_pattern (filter, "*");
@@ -144,8 +152,8 @@ path_import_dialog_new (GimpImage              *image,
 
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("Scalable SVG image (*.svg)"));
-  gtk_file_filter_add_pattern (filter, "*.[Ss][Vv][Gg]");
-  gtk_file_filter_add_mime_type (filter, "image/svg+xml");
+  gtk_file_filter_add_pattern (filter, "*.svg");
+  gtk_file_filter_add_pattern (filter, "*.SVG");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (private->file_chooser),
                                filter);
 
@@ -195,10 +203,10 @@ path_import_dialog_new (GimpImage              *image,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_set_visible (vbox, TRUE);
 
-  private->preview = gimp_view_new_full_by_types (NULL,
+  private->preview = gimp_view_new_full_by_types (context,
                                                   GIMP_TYPE_VIEW,
                                                   GIMP_TYPE_PATH,
-                                                  192, 192, 1,
+                                                  148, 148, 1,
                                                   TRUE, FALSE, FALSE);
   gtk_widget_set_halign (private->preview, 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), private->preview, FALSE, FALSE, 0);
@@ -217,6 +225,10 @@ path_import_dialog_new (GimpImage              *image,
 static void
 path_import_dialog_free (PathImportDialog *private)
 {
+  g_signal_handlers_disconnect_by_func (private->file_chooser,
+                                        G_CALLBACK (path_import_dialog_file_set),
+                                        private);
+
   g_slice_free (PathImportDialog, private);
 }
 
@@ -255,5 +267,29 @@ path_import_dialog_response (GtkWidget        *dialog,
   else
     {
       gtk_widget_destroy (dialog);
+    }
+}
+
+static void
+path_import_dialog_file_set (GtkFileChooser   *widget,
+                             PathImportDialog *private)
+{
+  GFile  *file;
+  GError *error = NULL;
+  GList  *paths = NULL;
+
+  file = gtk_file_chooser_get_file (widget);
+  if (file != NULL)
+    {
+      gboolean success;
+
+      success = gimp_path_import_get_preview (private->image, file,
+                                              NULL, 0, private->scale_paths,
+                                              &paths, &error);
+
+      gimp_view_set_viewable (GIMP_VIEW (private->preview),
+                              success ? GIMP_VIEWABLE (paths->data) : NULL);
+
+      g_list_free (paths);
     }
 }

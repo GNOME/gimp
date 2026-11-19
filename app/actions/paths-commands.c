@@ -840,7 +840,9 @@ paths_import_cmd_callback (GimpAction *action,
         folder = gimp_file_new_for_config_path (config->path_import_path,
                                                 NULL);
 
-      dialog = path_import_dialog_new (image, widget,
+      dialog = path_import_dialog_new (image,
+                                       action_data_get_context (data),
+                                       widget,
                                        folder,
                                        config->path_import_merge,
                                        config->path_import_scale,
