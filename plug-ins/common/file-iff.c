@@ -82,6 +82,7 @@ typedef struct
 } BMHD;
 
 #define convert_4_to_8_bit(val4)	((((val4) << 4) * (gint16) 17) / 16)
+#define MAX_N_PLANES 32
 
 
 GType                   iff_get_type         (void);
@@ -657,7 +658,7 @@ convert_acbm (guchar   *body,
 {
   guchar *pixels = NULL;
   gsize   alloc;
-  guint32 offsets[32]; /* Maximum number of planes */
+  guint32 offsets[MAX_N_PLANES + 1];
   guint32 offset      = 0;
   guint32 base_offset = 0;
   guint32 row_length  = get_row_length (bmhd->width);
@@ -675,6 +676,7 @@ convert_acbm (guchar   *body,
       return NULL;
     }
 
+  bmhd->n_planes = MIN (bmhd->n_planes, MAX_N_PLANES);
   for (gint i = 0; i < bmhd->n_planes; i++)
     {
       offsets[i] = offset;
