@@ -863,12 +863,7 @@ gimp_thumb_png_name (const gchar *uri)
       n = digest[i] & 0xF;
       name[i * 2 + 1] = (n > 9) ? 'a' + n - 10 : '0' + n;
     }
-
-#ifndef _UCRT
-  strncpy (name + 32, ".png", 5);
-#else
-  strncpy_s (name + 32, 8, ".png", 5);
-#endif
+  g_strlcpy (name + 32, ".png", 5);
 
   return (const gchar *) name;
 }

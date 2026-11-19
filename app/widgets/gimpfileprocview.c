@@ -504,17 +504,9 @@ gimp_file_proc_view_pattern_from_extension (const gchar *extension,
   pattern = g_new (gchar, 6 + 4 * len);
 
   if (is_meta)
-#ifndef _UCRT
-    strcpy (pattern, "*.*.");
-#else
-    strcpy_s (pattern, 6 + 4 * len, "*.*.");
-#endif
+    g_strlcpy (pattern, "*.*.", 6 + 4 * len);
   else
-#ifndef _UCRT
-    strcpy (pattern, "*.");
-#else
-    strcpy_s (pattern, 6 + 4 * len, "*.");
-#endif
+    g_strlcpy (pattern, "*.", 6 + 4 * len);
 
   for (i = 0, p = pattern + 2; i < len; i++, p+= 4)
     {
