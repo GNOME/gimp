@@ -1948,13 +1948,10 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
                   sizeof (statusbar->cursor_format_str),
                   "%%s%%.%df%%s%%.%df%%s",
                   w_digits, h_digits);
-#ifndef _UCRT
-      strcpy (statusbar->cursor_format_str_f, statusbar->cursor_format_str);
-#else
-      strcpy_s (statusbar->cursor_format_str_f,
-                sizeof (statusbar->cursor_format_str_f),
-                statusbar->cursor_format_str);
-#endif
+
+      g_strlcpy (statusbar->cursor_format_str_f, statusbar->cursor_format_str,
+                 sizeof (statusbar->cursor_format_str_f));
+
       g_snprintf (statusbar->length_format_str,
                   sizeof (statusbar->length_format_str),
                   "%%s%%.%df%%s", MAX (w_digits, h_digits));
