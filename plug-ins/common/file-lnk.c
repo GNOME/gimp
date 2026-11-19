@@ -254,11 +254,9 @@ load_image (GFile        *file,
 
   if (link_size > 0)
     {
-      gchar file_name[link_size];
-
-      /* Jump to link address and read in the real file name */
-      if (fseek (fp, base + link_pos, SEEK_SET) < 0 ||
-          fread (file_name, sizeof (gchar), link_size, fp) != link_size)
+      gchar *file_name;
+      
+      if (! (file_name = g_try_malloc0 (link_size)))
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Invalid file."));
@@ -266,9 +264,21 @@ load_image (GFile        *file,
           return NULL;
         }
 
+      /* Jump to link address and read in the real file name */
+      if (fseek (fp, base + link_pos, SEEK_SET) < 0 ||
+          fread (file_name, sizeof (gchar), link_size, fp) != link_size)
+        {
+          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Invalid file."));
+          g_free (file_name);
+          fclose (fp);
+          return NULL;
+        }
+
       file_name[link_size - 1] = '\0';
       image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
                               g_file_new_for_path (file_name));
+      g_free (file_name);
 
       if (! image)
         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
