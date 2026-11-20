@@ -42,7 +42,7 @@ if [ -z "$GITLAB_CI" ] || [ "$1" = '--install-snaps' ]; then
       sudo snap install $snap
     elif [ ! -d /snap/$snap/ ]; then
       #snapd can not be used to install snaps on CI since it is a daemon so we manually "install" them
-      curl --progress-bar -L -o ${snap}.snap $(curl --progress-bar -H 'Snap-Device-Series: 16' https://api.snapcraft.io/v2/snaps/info/$snap | jq -r --arg arch "$(dpkg --print-architecture)" '.["channel-map"][] | select(.channel.architecture == $arch and .channel.track == "latest" and .channel.risk == "stable") | .download.url')
+      curl --retry 2 --retry-all-errors -f --progress-bar -L -o ${snap}.snap $(curl --retry 2 --retry-all-errors -f --progress-bar -H 'Snap-Device-Series: 16' https://api.snapcraft.io/v2/snaps/info/$snap | jq -r --arg arch "$(dpkg --print-architecture)" '.["channel-map"][] | select(.channel.architecture == $arch and .channel.track == "latest" and .channel.risk == "stable") | .download.url')
       mkdir -p /snap/$snap/current
       unsquashfs -d /snap/$snap/current ${snap}.snap
       rm -f ${snap}.snap
