@@ -1,5 +1,6 @@
 python_plugins = [
   { 'name': 'colorxhtml' },
+  { 'name': 'file-krita' },
   { 'name': 'file-openraster' },
   { 'name': 'foggify' },
   { 'name': 'gradients-save-as-css' },

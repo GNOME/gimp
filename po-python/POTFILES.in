@@ -3,6 +3,7 @@
 
 plug-ins/python/colorxhtml.py
 plug-ins/python/file-openraster.py
+plug-ins/python/file-krita.py
 plug-ins/python/foggify.py
 plug-ins/python/gradients-save-as-css.py
 plug-ins/python/histogram-export.py
