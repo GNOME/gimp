@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-Python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 17:59+0000\n"
-"PO-Revision-Date: 2026-05-25 22:43+0200\n"
+"POT-Creation-Date: 2026-11-20 23:19+0000\n"
+"PO-Revision-Date: 2026-11-21 00:49+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: sl.libreoffice.org\n"
 "Language: sl\n"
@@ -81,25 +81,45 @@ msgstr "Zapiši ločeno datoteko CSS"
 msgid "Choose File"
 msgstr "Izberite datoteko"
 
-#: plug-ins/python/file-openraster.py:507
-#: plug-ins/python/file-openraster.py:508
+#: plug-ins/python/file-openraster.py:509
+#: plug-ins/python/file-openraster.py:510
 msgid "export an OpenRaster (.ora) file"
 msgstr "izvozite datoteko OpenRaster (.ora)"
 
-#: plug-ins/python/file-openraster.py:510
-#: plug-ins/python/file-openraster.py:516
+#: plug-ins/python/file-openraster.py:512
+#: plug-ins/python/file-openraster.py:518
 msgid "OpenRaster"
 msgstr "OpenRaster"
 
-#: plug-ins/python/file-openraster.py:517
-#: plug-ins/python/file-openraster.py:518
+#: plug-ins/python/file-openraster.py:519
+#: plug-ins/python/file-openraster.py:520
 msgid "load an OpenRaster (.ora) file"
 msgstr "naloži datoteko OpenRaster (.ora)"
 
-#: plug-ins/python/file-openraster.py:527
-#: plug-ins/python/file-openraster.py:528
+#: plug-ins/python/file-openraster.py:529
+#: plug-ins/python/file-openraster.py:530
 msgid "loads a thumbnail from an OpenRaster (.ora) file"
 msgstr "naloži sličico iz datoteke OpenRaster (.ora)"
+
+#: plug-ins/python/file-krita.py:851
+msgid "Krita"
+msgstr "Krita"
+
+#: plug-ins/python/file-krita.py:852
+msgid "Loads a Krita (.kra) file"
+msgstr "Naloži datoteko Krita (.kra)"
+
+#: plug-ins/python/file-krita.py:862
+msgid "Krita (merged)"
+msgstr "Krita (spojeno)"
+
+#: plug-ins/python/file-krita.py:863
+msgid "Loads the merged image from a Krita (.kra) file"
+msgstr "Naloži spojeno sličico iz datoteke Krita (.kra)"
+
+#: plug-ins/python/file-krita.py:874
+msgid "Loads a thumbnail from a Krita (.kra) file"
+msgstr "Naloži ogledno sličico iz datoteke Krita (.kra)"
 
 #: plug-ins/python/foggify.py:120
 msgid "Add a layer of fog"
@@ -162,7 +182,7 @@ msgstr "Shrani preliv kot CSS …"
 #: plug-ins/python/palette-export-as-kpl.py:177
 #: plug-ins/python/palette-offset.py:53 plug-ins/python/palette-sort.py:350
 #: plug-ins/python/palette-to-gradient.py:146
-#: plug-ins/python/python-console/python-console.py:323
+#: plug-ins/python/python-console/python-console.py:325
 msgid "Run mode"
 msgstr "Izvajalni način"
 
@@ -170,7 +190,7 @@ msgstr "Izvajalni način"
 #: plug-ins/python/palette-export-as-kpl.py:178
 #: plug-ins/python/palette-offset.py:54 plug-ins/python/palette-sort.py:351
 #: plug-ins/python/palette-to-gradient.py:147
-#: plug-ins/python/python-console/python-console.py:324
+#: plug-ins/python/python-console/python-console.py:326
 msgid "The run mode"
 msgstr "Izvajalni način"
 
@@ -546,60 +566,60 @@ msgstr "Novo ustvarjeni preliv"
 msgid "Python Console"
 msgstr "Konzola Pythona"
 
-#: plug-ins/python/python-console/python-console.py:81
-#: plug-ins/python/python-console/python-console.py:279
+#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:281
 msgid "_Save"
 msgstr "_Shrani"
 
-#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:83
 msgid "Cl_ear"
 msgstr "Po_čisti"
 
-#: plug-ins/python/python-console/python-console.py:83
+#: plug-ins/python/python-console/python-console.py:84
 msgid "_Browse..."
 msgstr "Pre_brskaj ..."
 
-#: plug-ins/python/python-console/python-console.py:84
-#: plug-ins/python/python-console/python-console.py:227
+#: plug-ins/python/python-console/python-console.py:85
+#: plug-ins/python/python-console/python-console.py:229
 msgid "_Close"
 msgstr "Z_apri"
 
-#: plug-ins/python/python-console/python-console.py:224
+#: plug-ins/python/python-console/python-console.py:225
 msgid "Python Procedure Browser"
 msgstr "Brskalnik procedur Python"
 
-#: plug-ins/python/python-console/python-console.py:226
+#: plug-ins/python/python-console/python-console.py:228
 msgid "_Apply"
 msgstr "_Uveljavi"
 
-#: plug-ins/python/python-console/python-console.py:252
+#: plug-ins/python/python-console/python-console.py:254
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s' ni mogoče odpreti za pisanje: %s"
 
-#: plug-ins/python/python-console/python-console.py:267
+#: plug-ins/python/python-console/python-console.py:269
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Ni mogoče pisati v '%s': %s"
 
-#: plug-ins/python/python-console/python-console.py:276
+#: plug-ins/python/python-console/python-console.py:278
 msgid "Save Python-Fu Console Output"
 msgstr "Shrani izhod konzole Python-Fu"
 
-#: plug-ins/python/python-console/python-console.py:278
+#: plug-ins/python/python-console/python-console.py:280
 #: plug-ins/python/spyro-plus.py:1748
 msgid "_Cancel"
 msgstr "Pre_kliči"
 
-#: plug-ins/python/python-console/python-console.py:316
+#: plug-ins/python/python-console/python-console.py:318
 msgid "Python _Console"
 msgstr "_Konzola Pythona"
 
-#: plug-ins/python/python-console/python-console.py:317
+#: plug-ins/python/python-console/python-console.py:319
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktivni tolmač GIMP za Python"
 
-#: plug-ins/python/python-console/python-console.py:318
+#: plug-ins/python/python-console/python-console.py:320
 msgid "Type in commands and see results"
 msgstr "Vnesite ukaze in si oglejte rezultate"
 
@@ -623,22 +643,22 @@ msgstr "Ponovno nariši na zadnji aktivni plasti"
 msgid "As Path"
 msgstr "Kot pot"
 
-#: plug-ins/python/spyro-plus.py:110 plug-ins/python/spyro-plus.py:2268
+#: plug-ins/python/spyro-plus.py:110 plug-ins/python/spyro-plus.py:2269
 msgid "Circle"
 msgstr "Krog"
 
-#: plug-ins/python/spyro-plus.py:146 plug-ins/python/spyro-plus.py:2272
+#: plug-ins/python/spyro-plus.py:146 plug-ins/python/spyro-plus.py:2273
 msgid "Polygon-Star"
 msgstr "Mnogokotna zvezda"
 
 #. Sine wave on a circle ring.
 #: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:1009
-#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2273
+#: plug-ins/python/spyro-plus.py:2264 plug-ins/python/spyro-plus.py:2274
 msgid "Sine"
 msgstr "Sinus"
 
 #. Semi-circles, based on a polygon
-#: plug-ins/python/spyro-plus.py:172 plug-ins/python/spyro-plus.py:2274
+#: plug-ins/python/spyro-plus.py:172 plug-ins/python/spyro-plus.py:2275
 msgid "Bumps"
 msgstr "Izbokline"
 
@@ -650,47 +670,47 @@ msgstr "Pladenj"
 msgid "Frame"
 msgstr "Okvir"
 
-#: plug-ins/python/spyro-plus.py:434 plug-ins/python/spyro-plus.py:2271
+#: plug-ins/python/spyro-plus.py:434 plug-ins/python/spyro-plus.py:2272
 msgid "Selection"
 msgstr "Izbor"
 
-#: plug-ins/python/spyro-plus.py:539 plug-ins/python/spyro-plus.py:2308
+#: plug-ins/python/spyro-plus.py:539 plug-ins/python/spyro-plus.py:2309
 msgid "Pencil"
 msgstr "Svinčnik"
 
-#: plug-ins/python/spyro-plus.py:555 plug-ins/python/spyro-plus.py:2309
+#: plug-ins/python/spyro-plus.py:555 plug-ins/python/spyro-plus.py:2310
 msgid "AirBrush"
 msgstr "Barvna pršilka"
 
-#: plug-ins/python/spyro-plus.py:622 plug-ins/python/spyro-plus.py:2306
+#: plug-ins/python/spyro-plus.py:622 plug-ins/python/spyro-plus.py:2307
 msgid "Preview"
 msgstr "Predogled"
 
-#: plug-ins/python/spyro-plus.py:627 plug-ins/python/spyro-plus.py:2310
+#: plug-ins/python/spyro-plus.py:627 plug-ins/python/spyro-plus.py:2311
 msgid "Stroke"
 msgstr "Poteza"
 
-#: plug-ins/python/spyro-plus.py:674 plug-ins/python/spyro-plus.py:2307
+#: plug-ins/python/spyro-plus.py:674 plug-ins/python/spyro-plus.py:2308
 msgid "PaintBrush"
 msgstr "Slikarski čopič"
 
-#: plug-ins/python/spyro-plus.py:678 plug-ins/python/spyro-plus.py:2311
+#: plug-ins/python/spyro-plus.py:678 plug-ins/python/spyro-plus.py:2312
 msgid "Ink"
 msgstr "Črnilo"
 
-#: plug-ins/python/spyro-plus.py:679 plug-ins/python/spyro-plus.py:2312
+#: plug-ins/python/spyro-plus.py:679 plug-ins/python/spyro-plus.py:2313
 msgid "MyPaintBrush"
 msgstr "Čopič MyPaint"
 
-#: plug-ins/python/spyro-plus.py:995 plug-ins/python/spyro-plus.py:2261
+#: plug-ins/python/spyro-plus.py:995 plug-ins/python/spyro-plus.py:2262
 msgid "Spyrograph"
 msgstr "Spirograf"
 
-#: plug-ins/python/spyro-plus.py:1002 plug-ins/python/spyro-plus.py:2262
+#: plug-ins/python/spyro-plus.py:1002 plug-ins/python/spyro-plus.py:2263
 msgid "Epitrochoid"
 msgstr "Epitrohoida"
 
-#: plug-ins/python/spyro-plus.py:1029 plug-ins/python/spyro-plus.py:2264
+#: plug-ins/python/spyro-plus.py:1029 plug-ins/python/spyro-plus.py:2265
 msgid "Lissajous"
 msgstr "Lissajous"
 
@@ -707,7 +727,7 @@ msgstr ""
 "zobnika."
 
 #. TODO: Add Clone option once it's fixed
-#: plug-ins/python/spyro-plus.py:1491 plug-ins/python/spyro-plus.py:2314
+#: plug-ins/python/spyro-plus.py:1491 plug-ins/python/spyro-plus.py:2315
 msgid "Tool"
 msgstr "Orodje"
 
@@ -863,7 +883,7 @@ msgstr ""
 "Sukanje vzorca, v stopinjah. Začetni položaj gibljivega zobnika v fiksnem "
 "zobniku."
 
-#: plug-ins/python/spyro-plus.py:1693 plug-ins/python/spyro-plus.py:2275
+#: plug-ins/python/spyro-plus.py:1693 plug-ins/python/spyro-plus.py:2276
 msgid "Shape"
 msgstr "Oblika"
 
@@ -909,8 +929,8 @@ msgstr "Rob (sl. t.)"
 msgid "Margin from edge of selection."
 msgstr "Rob od konca izbora."
 
-#: plug-ins/python/spyro-plus.py:1733 plug-ins/python/spyro-plus.py:2296
-#: plug-ins/python/spyro-plus.py:2297
+#: plug-ins/python/spyro-plus.py:1733 plug-ins/python/spyro-plus.py:2297
+#: plug-ins/python/spyro-plus.py:2298
 msgid "Make width and height equal"
 msgstr "Naj bosta širina in višina enaki"
 
@@ -958,31 +978,31 @@ msgstr ""
 msgid "Spyrogimp"
 msgstr "Spiro-gimp"
 
-#: plug-ins/python/spyro-plus.py:1787 plug-ins/python/spyro-plus.py:2250
+#: plug-ins/python/spyro-plus.py:1788 plug-ins/python/spyro-plus.py:2251
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Nariše spirografe z uporabo trenutnih nastavitev orodja in izbora."
 
-#: plug-ins/python/spyro-plus.py:1800
+#: plug-ins/python/spyro-plus.py:1801
 msgid "Curve Pattern"
 msgstr "Vzorec krivulje"
 
-#: plug-ins/python/spyro-plus.py:1803
+#: plug-ins/python/spyro-plus.py:1804
 msgid "Fixed Gear"
 msgstr "Fiksen zobnik"
 
-#: plug-ins/python/spyro-plus.py:1806
+#: plug-ins/python/spyro-plus.py:1807
 msgid "Size"
 msgstr "Velikost"
 
-#: plug-ins/python/spyro-plus.py:2162
+#: plug-ins/python/spyro-plus.py:2163
 msgid "Rendering Pattern"
 msgstr "Upodabljanje vzorca"
 
-#: plug-ins/python/spyro-plus.py:2174
+#: plug-ins/python/spyro-plus.py:2175
 msgid "Please wait : Rendering Pattern"
 msgstr "Prosimo, počakajte: upodabljanje vzorca"
 
-#: plug-ins/python/spyro-plus.py:2251
+#: plug-ins/python/spyro-plus.py:2252
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
@@ -990,59 +1010,59 @@ msgstr ""
 "Uporablja trenutne nastavitve orodja za risanje spirografnih vzorcev. "
 "Velikost in mesto vzorca temeljita na trenutnem izboru."
 
-#: plug-ins/python/spyro-plus.py:2254
+#: plug-ins/python/spyro-plus.py:2255
 msgid "Spyrogimp..."
 msgstr "Spiro-gimp ..."
 
-#: plug-ins/python/spyro-plus.py:2265
+#: plug-ins/python/spyro-plus.py:2266
 msgid "Curve Type"
 msgstr "Vrsta krivulje"
 
-#: plug-ins/python/spyro-plus.py:2269
+#: plug-ins/python/spyro-plus.py:2270
 msgid "rack"
 msgstr "Pladenj"
 
-#: plug-ins/python/spyro-plus.py:2270
+#: plug-ins/python/spyro-plus.py:2271
 msgid "frame"
 msgstr "Okvir"
 
-#: plug-ins/python/spyro-plus.py:2277
+#: plug-ins/python/spyro-plus.py:2278
 msgid "Si_des"
 msgstr "Stra_ni"
 
-#: plug-ins/python/spyro-plus.py:2278
+#: plug-ins/python/spyro-plus.py:2279
 msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
 msgstr ""
 "Število strani fiksnega zobatega kolesa (3 ali več). Uporabljajo ga le "
 "nekateri liki."
 
-#: plug-ins/python/spyro-plus.py:2280
+#: plug-ins/python/spyro-plus.py:2281
 msgid "_Morph"
 msgstr "Preo_blikuj"
 
-#: plug-ins/python/spyro-plus.py:2281
+#: plug-ins/python/spyro-plus.py:2282
 msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
 msgstr ""
 "Preoblikuj kot lik fiksnega zobatega kolesa. Uporabljajo ga samo nekateri "
 "liki."
 
-#: plug-ins/python/spyro-plus.py:2283
+#: plug-ins/python/spyro-plus.py:2284
 msgid "Fi_xed gear teeth"
 msgstr "Zobci fi_ksnega zobnika"
 
-#: plug-ins/python/spyro-plus.py:2284 plug-ins/python/spyro-plus.py:2287
+#: plug-ins/python/spyro-plus.py:2285 plug-ins/python/spyro-plus.py:2288
 msgid "Number of teeth for fixed gear."
 msgstr "Število zobcev fiksnega zobatega kolesa."
 
-#: plug-ins/python/spyro-plus.py:2286
+#: plug-ins/python/spyro-plus.py:2287
 msgid "Mo_ving gear teeth"
 msgstr "Zobci giblji_vega zobnika"
 
-#: plug-ins/python/spyro-plus.py:2289
+#: plug-ins/python/spyro-plus.py:2290
 msgid "_Hole radius (%)"
 msgstr "Pol_mer luknje (%)"
 
-#: plug-ins/python/spyro-plus.py:2290
+#: plug-ins/python/spyro-plus.py:2291
 msgid ""
 "Location of hole in moving gear in percent, where 100 means that the hole is "
 "at the edge of the gear, and 0 means the hole is at the center"
@@ -1050,31 +1070,31 @@ msgstr ""
 "Mesto luknje v gibljivem zobatem kolesu v odstotkih, kjer 100 pomeni, da je "
 "luknja na robu zobatega kolesa, 0 pa pomeni, da je luknja v središču."
 
-#: plug-ins/python/spyro-plus.py:2293
+#: plug-ins/python/spyro-plus.py:2294
 msgid "Margin (_px)"
 msgstr "Rob (sl. _t.)"
 
-#: plug-ins/python/spyro-plus.py:2294
+#: plug-ins/python/spyro-plus.py:2295
 msgid "Margin from selection, in pixels"
 msgstr "Rob od izbora, v slikovnih točkah"
 
-#: plug-ins/python/spyro-plus.py:2299 plug-ins/python/spyro-plus.py:2302
+#: plug-ins/python/spyro-plus.py:2300 plug-ins/python/spyro-plus.py:2303
 msgid "_Rotation"
 msgstr "Su_kanje"
 
-#: plug-ins/python/spyro-plus.py:2300
+#: plug-ins/python/spyro-plus.py:2301
 msgid "Pattern rotation, in degrees"
 msgstr "Sukanje vzorca, v stopinjah"
 
-#: plug-ins/python/spyro-plus.py:2303
+#: plug-ins/python/spyro-plus.py:2304
 msgid "Shape rotation of fixed gear, in degrees"
 msgstr "Sukanje lika fiksnega zobnika, v stopinjah"
 
-#: plug-ins/python/spyro-plus.py:2317
+#: plug-ins/python/spyro-plus.py:2318
 msgid "Long _Gradient"
 msgstr "Dol_gi preliv"
 
-#: plug-ins/python/spyro-plus.py:2318
+#: plug-ins/python/spyro-plus.py:2319
 msgid ""
 "Whether to apply a long gradient to match the length of the pattern. Only "
 "applicable to some of the tools."
