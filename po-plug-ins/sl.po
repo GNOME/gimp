@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-15 21:37+0000\n"
-"PO-Revision-Date: 2026-11-15 22:54+0100\n"
+"POT-Creation-Date: 2026-11-19 17:42+0000\n"
+"PO-Revision-Date: 2026-11-20 07:54+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -608,7 +608,7 @@ msgstr "Rolete"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-drhalo.c:237 plug-ins/common/file-farbfeld.c:301
 #: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1227
-#: plug-ins/common/file-iff.c:505 plug-ins/common/file-jp2.c:1626
+#: plug-ins/common/file-iff.c:506 plug-ins/common/file-jp2.c:1626
 #: plug-ins/common/file-macpaint.c:246 plug-ins/common/file-pcx.c:728
 #: plug-ins/common/file-pcx.c:736 plug-ins/common/file-pcx.c:744
 #: plug-ins/common/file-pix.c:427 plug-ins/common/file-png.c:1127
@@ -1999,7 +1999,7 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/common/file-cals.c:367 plug-ins/common/file-cel.c:330
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
 #: plug-ins/common/file-drhalo.c:200 plug-ins/common/file-farbfeld.c:267
-#: plug-ins/common/file-gif-load.c:479 plug-ins/common/file-iff.c:332
+#: plug-ins/common/file-gif-load.c:479 plug-ins/common/file-iff.c:333
 #: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:197
 #: plug-ins/common/file-mng.c:1066 plug-ins/common/file-mng.c:1813
 #: plug-ins/common/file-paa.c:191 plug-ins/common/file-pcx.c:487
@@ -2019,8 +2019,8 @@ msgstr "Ne deluje na praznih izborih."
 #: plug-ins/file-cin/cineon-lib.c:90 plug-ins/file-cin/dpx-lib.c:131
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:447
-#: plug-ins/file-fli/fli-gimp.c:498 plug-ins/file-icns/file-icns-load.c:647
-#: plug-ins/file-icns/file-icns-load.c:697 plug-ins/file-ico/ani-load.c:67
+#: plug-ins/file-fli/fli-gimp.c:498 plug-ins/file-icns/file-icns-load.c:630
+#: plug-ins/file-icns/file-icns-load.c:680 plug-ins/file-ico/ani-load.c:67
 #: plug-ins/file-ico/ico-load.c:767 plug-ins/file-ico/ico-load.c:977
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:713
 #: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
@@ -2484,8 +2484,8 @@ msgid "White level"
 msgstr "Raven beline"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-dicom.c:1656
-#: plug-ins/common/file-farbfeld.c:292 plug-ins/common/file-iff.c:673
-#: plug-ins/common/file-iff.c:724 plug-ins/common/file-mng.c:1120
+#: plug-ins/common/file-farbfeld.c:292 plug-ins/common/file-iff.c:674
+#: plug-ins/common/file-iff.c:726 plug-ins/common/file-mng.c:1120
 #: plug-ins/common/file-pcx.c:720 plug-ins/common/file-pcx.c:857
 #: plug-ins/common/file-raw-data.c:1519 plug-ins/common/file-xmc.c:705
 #: plug-ins/common/file-xmc.c:1036 plug-ins/file-bmp/bmp-load.c:800
@@ -2614,7 +2614,7 @@ msgstr "Naloži datoteko v zapisu CALS"
 #: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:490
-#: plug-ins/file-icns/file-icns-load.c:639 plug-ins/file-ico/ani-load.c:59
+#: plug-ins/file-icns/file-icns-load.c:622 plug-ins/file-ico/ani-load.c:59
 #: plug-ins/file-ico/ico-load.c:759 plug-ins/file-jpeg/jpeg-load.c:101
 #: plug-ins/file-psd/psd-load.c:270
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
@@ -3061,7 +3061,7 @@ msgstr "Neveljavne mere: %d x %d"
 
 #: plug-ins/common/file-drhalo.c:277 plug-ins/common/file-drhalo.c:283
 #: plug-ins/common/file-drhalo.c:298 plug-ins/common/file-drhalo.c:304
-#: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:116
+#: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:110
 #: plug-ins/file-jpeg/jpeg-load.c:137 plug-ins/file-jpeg/jpeg-load.c:735
 #: plug-ins/file-raw/file-libraw.c:278 plug-ins/file-raw/file-libraw.c:363
 #: plug-ins/file-raw/file-libraw.c:388 plug-ins/file-raw/file-libraw.c:425
@@ -3649,27 +3649,27 @@ msgid "Describe how the layers will be split"
 msgstr "Opišite, kako bodo plasti razdeljene"
 
 #: plug-ins/common/file-gih.c:246
-msgid "D_imension"
-msgstr "D_imenzija"
+msgid "D_imensions"
+msgstr "M_ere"
 
 #: plug-ins/common/file-gih.c:247
 msgid "How many dimensions the animated brush has"
 msgstr "Koliko dimenzij ima animirani čopič"
 
-#: plug-ins/common/file-gih.c:529
+#: plug-ins/common/file-gih.c:545
 msgid "Width Mismatch!"
 msgstr "Neujemanje po širini!"
 
-#: plug-ins/common/file-gih.c:530
+#: plug-ins/common/file-gih.c:546
 msgid "Height Mismatch!"
 msgstr "Neujemanje po višini!"
 
-#: plug-ins/common/file-gih.c:577
+#: plug-ins/common/file-gih.c:593
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "Prikaže se kot mreža %d × %d na vsaki plasti"
 
-#: plug-ins/common/file-gih.c:763
+#: plug-ins/common/file-gih.c:779
 msgid "Ranks:"
 msgstr "Razred:"
 
@@ -4058,24 +4058,24 @@ msgstr "Možnosti ustvarjanja tabele"
 msgid "Table Options"
 msgstr "Možnosti tabele"
 
-#: plug-ins/common/file-iff.c:197
+#: plug-ins/common/file-iff.c:198
 msgid "Amiga IFF"
 msgstr "Amiga IFF"
 
-#: plug-ins/common/file-iff.c:200
+#: plug-ins/common/file-iff.c:201
 msgid "Load file in the IFF file format"
 msgstr "Naloži datoteko v zapisu IFF"
 
-#: plug-ins/common/file-iff.c:225
+#: plug-ins/common/file-iff.c:226
 msgid "Load IFF file as thumbnail"
 msgstr "Naloži datoteko IFF kot sličico"
 
-#: plug-ins/common/file-iff.c:382 plug-ins/common/file-iff.c:601
+#: plug-ins/common/file-iff.c:383 plug-ins/common/file-iff.c:602
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "Neveljavna velikost kataloga barv ILBM"
 
-#: plug-ins/common/file-iff.c:558
+#: plug-ins/common/file-iff.c:559
 #, c-format
 msgid "ILBM contains no image data - likely a palette file"
 msgstr ""
@@ -4435,8 +4435,8 @@ msgstr ""
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
-#: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:730
-#: plug-ins/common/file-raw-data.c:825
+#: plug-ins/common/file-lnk.c:262 plug-ins/common/file-lnk.c:272
+#: plug-ins/common/file-pnm.c:730 plug-ins/common/file-raw-data.c:825
 #: plug-ins/common/file-seattle-filmworks.c:242
 #: plug-ins/common/file-seattle-filmworks.c:283
 #: plug-ins/common/file-seattle-filmworks.c:293
@@ -6036,7 +6036,7 @@ msgstr "Napaka pri branju kosa razširjenega bloka"
 msgid "Error reading colorprofile chunk"
 msgstr "Napaka pri branju kosa podatkov o barvnem profilu"
 
-#: plug-ins/common/file-psp.c:2857 plug-ins/file-icns/file-icns-load.c:130
+#: plug-ins/common/file-psp.c:2857 plug-ins/file-icns/file-icns-load.c:124
 #, c-format
 msgid "Error reading file header."
 msgstr "Napaka pri branju glave datoteke."
@@ -10453,18 +10453,18 @@ msgstr ""
 "18x18, 24x24, 32x32, 36x36, 48x48, 64x64, 128x128, 256x256, 512x512 in "
 "1024x1024."
 
-#: plug-ins/file-icns/file-icns-load.c:124
+#: plug-ins/file-icns/file-icns-load.c:118
 #, c-format
 msgid "Invalid header. Possibly corrupt image."
 msgstr "Neveljavna glava. Slika je morda poškodovana."
 
-#: plug-ins/file-icns/file-icns-load.c:551
+#: plug-ins/file-icns/file-icns-load.c:534
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "Napaka pri odpiranju začasne datoteke %s »%s« za nalaganje icns: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:689 plug-ins/file-jpeg/jpeg-load.c:699
+#: plug-ins/file-icns/file-icns-load.c:672 plug-ins/file-jpeg/jpeg-load.c:699
 #: plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:623
@@ -10473,7 +10473,7 @@ msgstr "Napaka pri odpiranju začasne datoteke %s »%s« za nalaganje icns: %s"
 msgid "Opening thumbnail for '%s'"
 msgstr "Odpri sličico predogleda za »%s« ..."
 
-#: plug-ins/file-icns/file-icns-load.c:768
+#: plug-ins/file-icns/file-icns-load.c:751
 #, c-format
 msgid "Invalid or corrupt icns resource file."
 msgstr "Neveljavna ali okvarjena datoteka vira icns."
