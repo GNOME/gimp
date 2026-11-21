@@ -1,4 +1,4 @@
-﻿/* GIMP - The GNU Image Manipulation Program
+/* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -402,6 +402,9 @@ gimp_macos_setenv (const char * progname)
       g_free (tmp);
     }
 
+#if GTK_MAJOR_VERSION > 3
+#error Change all GDK_WINDOWING_QUARTZ instances to GDK_WINDOWING_MACOS
+#endif
 #ifdef GDK_WINDOWING_QUARTZ
   g_setenv ("GTK_IM_MODULE", "quartz", TRUE);
 #endif
