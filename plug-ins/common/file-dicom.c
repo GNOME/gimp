@@ -345,6 +345,7 @@ load_image (GFile   *file,
   gint        high_bit          = 0;
   guint8     *pix_buf           = NULL;
   guint64     pixbuf_size       = 0;
+  gsize       allocation        = 0;
   gboolean    is_signed         = FALSE;
   guint8      in_sequence       = 0;
   gboolean    implicit_encoding = FALSE;
@@ -391,7 +392,7 @@ load_image (GFile   *file,
       return NULL;
     }
 
-  while (!feof (dicom))
+  while (! feof (dicom))
     {
       guint16  group_word;
       guint16  element_word;
@@ -724,7 +725,7 @@ load_image (GFile   *file,
       return NULL;
     }
 
-  if (samples_per_pixel > 3)
+  if (samples_per_pixel > 3 || samples_per_pixel < 1)
     {
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
                    _("'%s' has samples per pixel of %d which GIMP cannot handle."),
@@ -735,7 +736,10 @@ load_image (GFile   *file,
       return NULL;
     }
 
-  if ((guint64) width * height * (bpp >> 3) * samples_per_pixel > pixbuf_size)
+  if (! g_size_checked_mul (&allocation, width, height)                 ||
+      ! g_size_checked_mul (&allocation, allocation, (bpp >> 3))        ||
+      ! g_size_checked_mul (&allocation, allocation, samples_per_pixel) ||
+      allocation > pixbuf_size)
     {
       g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
                    _("'%s' has not enough pixel data. Possibly corrupt image."),
