@@ -1,7 +1,7 @@
 name: gimp-experimental
 adopt-info: gimp
 grade: devel #see parts:babl_or_gegl:override-pull
-base: core24
+base: core26
 compression: lzo
 confinement: strict
 
@@ -28,7 +28,7 @@ apps:
       #AVIF, HEIC and HEJ2 plug-ins support
       LIBHEIF_PLUGIN_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libheif/plugins
       #PostScript plug-in support
-      GS_LIB: $SNAP/usr/share/ghostscript/10.02.1/Resource/Init
+      GS_LIB: $SNAP/usr/share/ghostscript/10.06.0/Resource/Init
       #Acessibility support
       GTK_MODULES: ""
     slots:
@@ -70,7 +70,7 @@ plugs:
     custom-device: intel-npu-device
   npu-libs:
     interface: content
-    content: npu-libs-2404
+    content: npu-libs-2604
     target: $SNAP/npu-libs
   gimp-plugins:
     interface: content
@@ -95,8 +95,8 @@ parts:
       - BABL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/babl-0.1
       - GEGL_PATH: $CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gegl-0.4
       #FIXME: GNOME SDK is not setting these runtime vars required by glib-networking and pango tests on gimp build
-      - GIO_MODULE_DIR: ${SNAPCRAFT_GNOME_SDK:-/snap/gnome-46-2404-sdk/current/}usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gio/modules
-      - LIBTHAI_DICTDIR: ${SNAPCRAFT_GNOME_SDK:-/snap/gnome-46-2404-sdk/current/}usr/share/libthai
+      - GIO_MODULE_DIR: ${SNAPCRAFT_GNOME_SDK}usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gio/modules
+      - LIBTHAI_DICTDIR: ${SNAPCRAFT_GNOME_SDK}usr/share/libthai
 
   babl:
     source: https://gitlab.gnome.org/GNOME/babl.git
@@ -156,6 +156,7 @@ parts:
     stage-packages:
       - graphviz #FIXME: https://github.com/ubuntu/gnome-sdk/issues/324
       - libmaxflow0
+      - libopenexr-3-1-30
       - libumfpack6
 
   gimp:
@@ -203,6 +204,7 @@ parts:
       - xsltproc
     stage-packages:
       - gir1.2-gexiv2-0.10
+      - libcfitsio10t64
       - libgs10
       - libheif-plugin-dav1d
       - libheif-plugin-aomenc
