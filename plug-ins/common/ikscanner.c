@@ -184,11 +184,13 @@ scanner_next_document_name (void)
 
   [scanner_window.contentView addSubview: scanner_container];
   [scanner_window makeKeyAndOrderFront: nil];
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 140000
   if (@available(macOS 14.0, *))
     {
       [NSApp activate];
     }
   else
+#endif
     {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -283,12 +285,14 @@ scanner_next_document_name (void)
       gimp_app = [NSRunningApplication runningApplicationWithProcessIdentifier: gimp_pid];
       if (gimp_app)
         {
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 140000
           if (@available(macOS 14.0, *))
             {
               [[NSApplication sharedApplication] yieldActivationToApplication:gimp_app];
               [gimp_app activateFromApplication:[NSRunningApplication currentApplication] options:0];
             }
           else
+#endif
             {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"

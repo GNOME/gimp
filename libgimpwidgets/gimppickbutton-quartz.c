@@ -289,7 +289,9 @@
 #endif
 #if MAC_OS_X_VERSION_MIN_REQUIRED < 140000
   /* deprecated in macOS 14 and obsoleted in macOS 15 by ScreenCaptureKit */
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 140000
   if (! @available(macOS 14.0, *))
+#endif
     root_image_ref = CGWindowListCreateImage (rect,
                                               kCGWindowListOptionOnScreenOnly,
                                               kCGNullWindowID,
