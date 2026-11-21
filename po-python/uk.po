@@ -2,25 +2,24 @@
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2010.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
+# SPDX-FileCopyrightText: 2018, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Yuri Chornoivan <yurchor@ukr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 17:59+0000\n"
-"PO-Revision-Date: 2026-05-26 16:47+0300\n"
+"POT-Creation-Date: 2026-11-20 23:19+0000\n"
+"PO-Revision-Date: 2026-11-21 13:19+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 23.04.3\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #: plug-ins/python/colorxhtml.py:77
-#| msgid "Save as colored HTML text..."
 msgid "Export as colored HTML text..."
 msgstr "Експортувати як кольоровий текст HTML…"
 
@@ -29,12 +28,10 @@ msgid "Saving as colored XHTML"
 msgstr "Збереження кольорового XHTML"
 
 #: plug-ins/python/colorxhtml.py:210
-#| msgid "Save as colored HTML text"
 msgid "Exports as colored HTML text"
 msgstr "Експортує дані як кольоровий текст HTML"
 
 #: plug-ins/python/colorxhtml.py:211
-#| msgid "Save as colored HTML text"
 msgid "Exports the image as colored XHTML text"
 msgstr "Експортує зображення як кольоровий текст XHTML"
 
@@ -79,25 +76,48 @@ msgstr "Записати окремий файл CSS"
 msgid "Choose File"
 msgstr "Виберіть файл"
 
-#: plug-ins/python/file-openraster.py:507
-#: plug-ins/python/file-openraster.py:508
+#: plug-ins/python/file-openraster.py:509
+#: plug-ins/python/file-openraster.py:510
 msgid "export an OpenRaster (.ora) file"
 msgstr "експортувати файл OpenRaster (.ora)"
 
-#: plug-ins/python/file-openraster.py:510
-#: plug-ins/python/file-openraster.py:516
+#: plug-ins/python/file-openraster.py:512
+#: plug-ins/python/file-openraster.py:518
 msgid "OpenRaster"
 msgstr "OpenRaster"
 
-#: plug-ins/python/file-openraster.py:517
-#: plug-ins/python/file-openraster.py:518
+#: plug-ins/python/file-openraster.py:519
+#: plug-ins/python/file-openraster.py:520
 msgid "load an OpenRaster (.ora) file"
 msgstr "завантажити файл OpenRaster (.ora)"
 
-#: plug-ins/python/file-openraster.py:527
-#: plug-ins/python/file-openraster.py:528
+#: plug-ins/python/file-openraster.py:529
+#: plug-ins/python/file-openraster.py:530
 msgid "loads a thumbnail from an OpenRaster (.ora) file"
 msgstr "завантажує мініатюру з файла OpenRaster (.ora)"
+
+#: plug-ins/python/file-krita.py:851
+msgid "Krita"
+msgstr "Krita"
+
+#: plug-ins/python/file-krita.py:852
+#| msgid "load an OpenRaster (.ora) file"
+msgid "Loads a Krita (.kra) file"
+msgstr "Завантажує файл Krita (.kra)"
+
+#: plug-ins/python/file-krita.py:862
+msgid "Krita (merged)"
+msgstr "Krita (об'єднане)"
+
+#: plug-ins/python/file-krita.py:863
+#| msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgid "Loads the merged image from a Krita (.kra) file"
+msgstr "Завантажує об'єднане зображення з файла Krita (.kra)"
+
+#: plug-ins/python/file-krita.py:874
+#| msgid "loads a thumbnail from an OpenRaster (.ora) file"
+msgid "Loads a thumbnail from a Krita (.kra) file"
+msgstr "Завантажує мініатюру з файла Krita (.kra)"
 
 #: plug-ins/python/foggify.py:120
 msgid "Add a layer of fog"
@@ -160,7 +180,7 @@ msgstr "Зберегти градієнт як CSS…"
 #: plug-ins/python/palette-export-as-kpl.py:177
 #: plug-ins/python/palette-offset.py:53 plug-ins/python/palette-sort.py:350
 #: plug-ins/python/palette-to-gradient.py:146
-#: plug-ins/python/python-console/python-console.py:323
+#: plug-ins/python/python-console/python-console.py:325
 msgid "Run mode"
 msgstr "Режим виконання"
 
@@ -168,7 +188,7 @@ msgstr "Режим виконання"
 #: plug-ins/python/palette-export-as-kpl.py:178
 #: plug-ins/python/palette-offset.py:54 plug-ins/python/palette-sort.py:351
 #: plug-ins/python/palette-to-gradient.py:147
-#: plug-ins/python/python-console/python-console.py:324
+#: plug-ins/python/python-console/python-console.py:326
 msgid "The run mode"
 msgstr "Режим виконання"
 
@@ -549,60 +569,60 @@ msgstr "Новостворений градієнт"
 msgid "Python Console"
 msgstr "Консоль Python"
 
-#: plug-ins/python/python-console/python-console.py:81
-#: plug-ins/python/python-console/python-console.py:279
+#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:281
 msgid "_Save"
 msgstr "З_берегти"
 
-#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:83
 msgid "Cl_ear"
 msgstr "О_чистити"
 
-#: plug-ins/python/python-console/python-console.py:83
+#: plug-ins/python/python-console/python-console.py:84
 msgid "_Browse..."
 msgstr "О_гляд..."
 
-#: plug-ins/python/python-console/python-console.py:84
-#: plug-ins/python/python-console/python-console.py:227
+#: plug-ins/python/python-console/python-console.py:85
+#: plug-ins/python/python-console/python-console.py:229
 msgid "_Close"
 msgstr "_Закрити"
 
-#: plug-ins/python/python-console/python-console.py:224
+#: plug-ins/python/python-console/python-console.py:225
 msgid "Python Procedure Browser"
 msgstr "Перегляд процедур Python"
 
-#: plug-ins/python/python-console/python-console.py:226
+#: plug-ins/python/python-console/python-console.py:228
 msgid "_Apply"
 msgstr "Заст_осувати"
 
-#: plug-ins/python/python-console/python-console.py:252
+#: plug-ins/python/python-console/python-console.py:254
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не вдається відкрити '%s' для запису: %s"
 
-#: plug-ins/python/python-console/python-console.py:267
+#: plug-ins/python/python-console/python-console.py:269
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Не вдається записати у '%s': %s"
 
-#: plug-ins/python/python-console/python-console.py:276
+#: plug-ins/python/python-console/python-console.py:278
 msgid "Save Python-Fu Console Output"
 msgstr "Зберегти вивід консолі Python-Fu"
 
-#: plug-ins/python/python-console/python-console.py:278
+#: plug-ins/python/python-console/python-console.py:280
 #: plug-ins/python/spyro-plus.py:1748
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: plug-ins/python/python-console/python-console.py:316
+#: plug-ins/python/python-console/python-console.py:318
 msgid "Python _Console"
 msgstr "_Консоль Python"
 
-#: plug-ins/python/python-console/python-console.py:317
+#: plug-ins/python/python-console/python-console.py:319
 msgid "Interactive GIMP Python interpreter"
 msgstr "Інтерактивна інтерпретатор Python у GIMP"
 
-#: plug-ins/python/python-console/python-console.py:318
+#: plug-ins/python/python-console/python-console.py:320
 msgid "Type in commands and see results"
 msgstr "Введіть команди і перегляньте результат"
 
@@ -626,22 +646,22 @@ msgstr "Перемалювати на останньому активному ш
 msgid "As Path"
 msgstr "Як контур"
 
-#: plug-ins/python/spyro-plus.py:110 plug-ins/python/spyro-plus.py:2268
+#: plug-ins/python/spyro-plus.py:110 plug-ins/python/spyro-plus.py:2269
 msgid "Circle"
 msgstr "Коло"
 
-#: plug-ins/python/spyro-plus.py:146 plug-ins/python/spyro-plus.py:2272
+#: plug-ins/python/spyro-plus.py:146 plug-ins/python/spyro-plus.py:2273
 msgid "Polygon-Star"
 msgstr "Зірка-багатокутник"
 
 #. Sine wave on a circle ring.
 #: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:1009
-#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2273
+#: plug-ins/python/spyro-plus.py:2264 plug-ins/python/spyro-plus.py:2274
 msgid "Sine"
 msgstr "Синус"
 
 #. Semi-circles, based on a polygon
-#: plug-ins/python/spyro-plus.py:172 plug-ins/python/spyro-plus.py:2274
+#: plug-ins/python/spyro-plus.py:172 plug-ins/python/spyro-plus.py:2275
 msgid "Bumps"
 msgstr "Рельєфність"
 
@@ -653,47 +673,47 @@ msgstr "Кремальєра"
 msgid "Frame"
 msgstr "Рамка"
 
-#: plug-ins/python/spyro-plus.py:434 plug-ins/python/spyro-plus.py:2271
+#: plug-ins/python/spyro-plus.py:434 plug-ins/python/spyro-plus.py:2272
 msgid "Selection"
 msgstr "Вибране"
 
-#: plug-ins/python/spyro-plus.py:539 plug-ins/python/spyro-plus.py:2308
+#: plug-ins/python/spyro-plus.py:539 plug-ins/python/spyro-plus.py:2309
 msgid "Pencil"
 msgstr "Олівець"
 
-#: plug-ins/python/spyro-plus.py:555 plug-ins/python/spyro-plus.py:2309
+#: plug-ins/python/spyro-plus.py:555 plug-ins/python/spyro-plus.py:2310
 msgid "AirBrush"
 msgstr "Аерограф"
 
-#: plug-ins/python/spyro-plus.py:622 plug-ins/python/spyro-plus.py:2306
+#: plug-ins/python/spyro-plus.py:622 plug-ins/python/spyro-plus.py:2307
 msgid "Preview"
 msgstr "Перегляд"
 
-#: plug-ins/python/spyro-plus.py:627 plug-ins/python/spyro-plus.py:2310
+#: plug-ins/python/spyro-plus.py:627 plug-ins/python/spyro-plus.py:2311
 msgid "Stroke"
 msgstr "Штрих"
 
-#: plug-ins/python/spyro-plus.py:674 plug-ins/python/spyro-plus.py:2307
+#: plug-ins/python/spyro-plus.py:674 plug-ins/python/spyro-plus.py:2308
 msgid "PaintBrush"
 msgstr "Пензель"
 
-#: plug-ins/python/spyro-plus.py:678 plug-ins/python/spyro-plus.py:2311
+#: plug-ins/python/spyro-plus.py:678 plug-ins/python/spyro-plus.py:2312
 msgid "Ink"
 msgstr "Перо"
 
-#: plug-ins/python/spyro-plus.py:679 plug-ins/python/spyro-plus.py:2312
+#: plug-ins/python/spyro-plus.py:679 plug-ins/python/spyro-plus.py:2313
 msgid "MyPaintBrush"
 msgstr "МійПензель"
 
-#: plug-ins/python/spyro-plus.py:995 plug-ins/python/spyro-plus.py:2261
+#: plug-ins/python/spyro-plus.py:995 plug-ins/python/spyro-plus.py:2262
 msgid "Spyrograph"
 msgstr "Спірограф"
 
-#: plug-ins/python/spyro-plus.py:1002 plug-ins/python/spyro-plus.py:2262
+#: plug-ins/python/spyro-plus.py:1002 plug-ins/python/spyro-plus.py:2263
 msgid "Epitrochoid"
 msgstr "Епітрохоїда"
 
-#: plug-ins/python/spyro-plus.py:1029 plug-ins/python/spyro-plus.py:2264
+#: plug-ins/python/spyro-plus.py:1029 plug-ins/python/spyro-plus.py:2265
 msgid "Lissajous"
 msgstr "Ліссажу"
 
@@ -710,7 +730,7 @@ msgstr ""
 "нерухомої шестерні."
 
 #. TODO: Add Clone option once it's fixed
-#: plug-ins/python/spyro-plus.py:1491 plug-ins/python/spyro-plus.py:2314
+#: plug-ins/python/spyro-plus.py:1491 plug-ins/python/spyro-plus.py:2315
 msgid "Tool"
 msgstr "Інструмент"
 
@@ -868,7 +888,7 @@ msgstr ""
 "Кут обертання візерунка у градусах. Початкова позиція рухомої шестерні на "
 "нерухомій шестерні."
 
-#: plug-ins/python/spyro-plus.py:1693 plug-ins/python/spyro-plus.py:2275
+#: plug-ins/python/spyro-plus.py:1693 plug-ins/python/spyro-plus.py:2276
 msgid "Shape"
 msgstr "Форма"
 
@@ -914,8 +934,8 @@ msgstr "Поле (у пікселях)"
 msgid "Margin from edge of selection."
 msgstr "Поле від краю позначеного."
 
-#: plug-ins/python/spyro-plus.py:1733 plug-ins/python/spyro-plus.py:2296
-#: plug-ins/python/spyro-plus.py:2297
+#: plug-ins/python/spyro-plus.py:1733 plug-ins/python/spyro-plus.py:2297
+#: plug-ins/python/spyro-plus.py:2298
 msgid "Make width and height equal"
 msgstr "Зробити ширину і висоту однаковими"
 
@@ -965,33 +985,33 @@ msgstr ""
 msgid "Spyrogimp"
 msgstr "Спіроґімп"
 
-#: plug-ins/python/spyro-plus.py:1787 plug-ins/python/spyro-plus.py:2250
+#: plug-ins/python/spyro-plus.py:1788 plug-ins/python/spyro-plus.py:2251
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
 "Малює спірографи на основі поточних параметрів засобів та позначених "
 "фрагментів."
 
-#: plug-ins/python/spyro-plus.py:1800
+#: plug-ins/python/spyro-plus.py:1801
 msgid "Curve Pattern"
 msgstr "Візерунок на кривій"
 
-#: plug-ins/python/spyro-plus.py:1803
+#: plug-ins/python/spyro-plus.py:1804
 msgid "Fixed Gear"
 msgstr "Нерухома шестерня"
 
-#: plug-ins/python/spyro-plus.py:1806
+#: plug-ins/python/spyro-plus.py:1807
 msgid "Size"
 msgstr "Розмір"
 
-#: plug-ins/python/spyro-plus.py:2162
+#: plug-ins/python/spyro-plus.py:2163
 msgid "Rendering Pattern"
 msgstr "Обробляємо візерунок"
 
-#: plug-ins/python/spyro-plus.py:2174
+#: plug-ins/python/spyro-plus.py:2175
 msgid "Please wait : Rendering Pattern"
 msgstr "Будь ласка, зачекайте: обробляємо візерунок"
 
-#: plug-ins/python/spyro-plus.py:2251
+#: plug-ins/python/spyro-plus.py:2252
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
@@ -1000,60 +1020,60 @@ msgstr ""
 "спірографів. Розмір і розташування візерунка буде засновано на поточній "
 "позначеній ділянці."
 
-#: plug-ins/python/spyro-plus.py:2254
+#: plug-ins/python/spyro-plus.py:2255
 msgid "Spyrogimp..."
 msgstr "Спіроґімп…"
 
-#: plug-ins/python/spyro-plus.py:2265
+#: plug-ins/python/spyro-plus.py:2266
 msgid "Curve Type"
 msgstr "Тип кривої"
 
-#: plug-ins/python/spyro-plus.py:2269
+#: plug-ins/python/spyro-plus.py:2270
 msgid "rack"
 msgstr "кремальєра"
 
-#: plug-ins/python/spyro-plus.py:2270
+#: plug-ins/python/spyro-plus.py:2271
 msgid "frame"
 msgstr "рамка"
 
-#: plug-ins/python/spyro-plus.py:2277
+#: plug-ins/python/spyro-plus.py:2278
 msgid "Si_des"
 msgstr "С_торони"
 
-#: plug-ins/python/spyro-plus.py:2278
+#: plug-ins/python/spyro-plus.py:2279
 msgid ""
 "Number of sides of fixed gear (3 or greater). Only used by some shapes."
 msgstr ""
 "Кількість сторін нерухомої шестерні (3 або більше). Використовують лише для "
 "деяких форм."
 
-#: plug-ins/python/spyro-plus.py:2280
+#: plug-ins/python/spyro-plus.py:2281
 msgid "_Morph"
 msgstr "_Морфінг"
 
-#: plug-ins/python/spyro-plus.py:2281
+#: plug-ins/python/spyro-plus.py:2282
 msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
 msgstr ""
 "Морфінг форми нерухомої шестерні, від 0 до 1. Використовують лише для деяких "
 "форм."
 
-#: plug-ins/python/spyro-plus.py:2283
+#: plug-ins/python/spyro-plus.py:2284
 msgid "Fi_xed gear teeth"
 msgstr "З_убець нерухомої шестерні"
 
-#: plug-ins/python/spyro-plus.py:2284 plug-ins/python/spyro-plus.py:2287
+#: plug-ins/python/spyro-plus.py:2285 plug-ins/python/spyro-plus.py:2288
 msgid "Number of teeth for fixed gear."
 msgstr "Кількість зубців нерухомої шестерні."
 
-#: plug-ins/python/spyro-plus.py:2286
+#: plug-ins/python/spyro-plus.py:2287
 msgid "Mo_ving gear teeth"
 msgstr "Зубець _рухомої шестерні"
 
-#: plug-ins/python/spyro-plus.py:2289
+#: plug-ins/python/spyro-plus.py:2290
 msgid "_Hole radius (%)"
 msgstr "Радіус д_ірки (%)"
 
-#: plug-ins/python/spyro-plus.py:2290
+#: plug-ins/python/spyro-plus.py:2291
 msgid ""
 "Location of hole in moving gear in percent, where 100 means that the hole is "
 "at the edge of the gear, and 0 means the hole is at the center"
@@ -1061,31 +1081,31 @@ msgstr ""
 "Розташування отвору у рухомій шестерні у відсотках, де 100 означає отвір на "
 "краю шестерні, а 0 означає отвір у центрі"
 
-#: plug-ins/python/spyro-plus.py:2293
+#: plug-ins/python/spyro-plus.py:2294
 msgid "Margin (_px)"
 msgstr "Поле (у пі_кселях)"
 
-#: plug-ins/python/spyro-plus.py:2294
+#: plug-ins/python/spyro-plus.py:2295
 msgid "Margin from selection, in pixels"
 msgstr "Поле з позначення, у пікселях"
 
-#: plug-ins/python/spyro-plus.py:2299 plug-ins/python/spyro-plus.py:2302
+#: plug-ins/python/spyro-plus.py:2300 plug-ins/python/spyro-plus.py:2303
 msgid "_Rotation"
 msgstr "_Поворот"
 
-#: plug-ins/python/spyro-plus.py:2300
+#: plug-ins/python/spyro-plus.py:2301
 msgid "Pattern rotation, in degrees"
 msgstr "Обертання візерунка у градусах"
 
-#: plug-ins/python/spyro-plus.py:2303
+#: plug-ins/python/spyro-plus.py:2304
 msgid "Shape rotation of fixed gear, in degrees"
 msgstr "Кут обертання форми нерухомої шестерні у градусах"
 
-#: plug-ins/python/spyro-plus.py:2317
+#: plug-ins/python/spyro-plus.py:2318
 msgid "Long _Gradient"
 msgstr "Довгий _градієнт"
 
-#: plug-ins/python/spyro-plus.py:2318
+#: plug-ins/python/spyro-plus.py:2319
 msgid ""
 "Whether to apply a long gradient to match the length of the pattern. Only "
 "applicable to some of the tools."
