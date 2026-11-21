@@ -219,6 +219,9 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
         g_signal_handlers_disconnect_by_func (toplevel,
                                               gimp_text_tool_toplevel_set_focus,
                                               text_tool);
+#if GTK_MAJOR_VERSION > 3
+#warning GTK4 removed the GtkWindow set-focus signal: connect to notify::focus-widget instead (or evaluate dropping this Win32 IM workaround)
+#endif
         g_signal_connect_object (toplevel, "set-focus",
                                  G_CALLBACK (gimp_text_tool_toplevel_set_focus),
                                  text_tool, 0);
