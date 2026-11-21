@@ -122,6 +122,10 @@ parts:
       - -Dpkgconfig.relocatable=true
       - -Dgi-docgen=disabled
       - -Dwith-docs=false
+    prime:
+      - -usr/bin
+      - -usr/share/gir-1.0
+      - -usr/share/vala
 
   gegl:
     after:
@@ -158,6 +162,40 @@ parts:
       - libmaxflow0
       - libopenexr-3-1-30
       - libumfpack6
+    prime:
+      - -usr/bin/circo
+      - -usr/bin/fc-*
+      - -usr/bin/fdp
+      - -usr/bin/gegl-imgcmp
+      - -usr/bin/gvpr
+      - -usr/bin/neato
+      - -usr/bin/nop
+      - -usr/bin/osage
+      - -usr/bin/patchwork
+      - -usr/bin/sfdp
+      - -usr/bin/twopi
+      - -usr/lib/*linux*/graphviz/libgvplugin_core*
+      - -usr/lib/*linux*/graphviz/libgvplugin_gd*
+      - -usr/lib/*linux*/libgvpr*
+      - -etc/fonts
+      - -usr/share/apport
+      - -usr/share/doc
+      - -usr/share/doc-base
+      - -usr/share/fontconfig
+      - -usr/share/fonts/truetype
+      - -usr/share/gegl*
+      - -usr/share/gir-1.0
+      - -usr/share/graphviz
+      - -usr/share/lintian
+      - -usr/share/man
+      - -usr/share/vala
+      - -usr/share/xml
+    override-prime: |
+      craftctl default
+      # generate graphviz config* file in the primed graphviz plugin directory
+      GVBINDIR="$CRAFT_PRIME/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/graphviz" \
+        LD_LIBRARY_PATH="$CRAFT_PRIME/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:$CRAFT_STAGE/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR:${LD_LIBRARY_PATH:-}" \
+        "$CRAFT_PRIME/usr/bin/dot" -c
 
   gimp:
     after:
@@ -228,6 +266,66 @@ parts:
       craftctl default
     parse-info:
       - usr/share/metainfo/org.gimp.GIMP.appdata.xml
+    prime:
+      - -usr/bin/bdf*
+      - -usr/bin/browse
+      - -usr/bin/debconf*
+      - -usr/bin/fonttosfnt
+      - -usr/bin/mkfont*
+      - -usr/bin/ucs2any
+      - -usr/bin/xdg-desktop-icon
+      - -usr/bin/xdg-desktop-menu
+      - -usr/bin/xdg-icon-resource
+      - -usr/bin/xdg-mime
+      - -usr/bin/xdg-open
+      - -usr/bin/xdg-screensaver
+      - -usr/bin/xdg-settings
+      - -usr/bin/X11
+      - -usr/sbin
+      - -usr/lib/*linux*/avahi
+      - -etc/apt
+      - -etc/deb*
+      - -etc/fonts
+      - -etc/ghostscript
+      - -etc/init*
+      - -etc/ldap
+      - -etc/paperspecs
+      - -etc/X11
+      - -usr/share/aclocal
+      - -usr/share/bash-completion
+      - -usr/share/bug
+      - -usr/share/debconf
+      - -usr/share/doc
+      - -usr/share/doc-base
+      - -usr/share/fontconfig
+      - -usr/share/fonts/cmap
+      - -usr/share/fonts/cMap
+      - -usr/share/fonts/opentype
+      - -usr/share/fonts/truetype
+      - -usr/share/fonts/X11
+      - -usr/share/ghostscript/fonts
+      - -usr/share/ghostscript/*.*.*/lib
+      - -usr/share/ghostscript/*.*.*/Resource/CIDFont
+      - -usr/share/ghostscript/*.*.*/Resource/CMap
+      - -usr/share/ghostscript/*.*.*/Resource/ColorSpace
+      - -usr/share/ghostscript/*.*.*/Resource/Decoding
+      - -usr/share/ghostscript/*.*.*/Resource/Encoding
+      - -usr/share/ghostscript/*.*.*/Resource/Font
+      - -usr/share/ghostscript/*.*.*/Resource/IdiomSet
+      - -usr/share/ghostscript/*.*.*/Resource/SubstCID
+      - -usr/share/gir-1.0
+      - -usr/share/lintian
+      - -usr/share/man
+      - -usr/share/metainfo/de.urwpp.URWCoreFontSetLevel*.metainfo.xml
+      - -usr/share/mypaint-data/1.0
+      - -usr/share/perl5
+      - -usr/share/pixmaps
+      - -usr/share/pkgconfig
+      - -usr/share/vala
+      - -usr/share/xml
+      - -usr/share/X11
+      - -var
+      - -**/libmypaint.mo
     override-prime: |
       # get gimp icon for proper desktop integration
       cp $CRAFT_STAGE/usr/share/icons/hicolor/scalable/apps/gimp.svg $CRAFT_PRIME/gimp
