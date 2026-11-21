@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 17:59+0000\n"
-"PO-Revision-Date: 2026-07-26 11:09+0800\n"
+"POT-Creation-Date: 2026-11-20 23:19+0000\n"
+"PO-Revision-Date: 2026-11-21 08:21+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 50.0\n"
+"X-Generator: Gtranslator 51.0\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: plug-ins/python/colorxhtml.py:77
@@ -78,25 +78,45 @@ msgstr "写入单独的 CSS 文件"
 msgid "Choose File"
 msgstr "选择文件"
 
-#: plug-ins/python/file-openraster.py:507
-#: plug-ins/python/file-openraster.py:508
+#: plug-ins/python/file-openraster.py:509
+#: plug-ins/python/file-openraster.py:510
 msgid "export an OpenRaster (.ora) file"
 msgstr "导出 OpenRaster（.ora）文件"
 
-#: plug-ins/python/file-openraster.py:510
-#: plug-ins/python/file-openraster.py:516
+#: plug-ins/python/file-openraster.py:512
+#: plug-ins/python/file-openraster.py:518
 msgid "OpenRaster"
 msgstr "OpenRaster"
 
-#: plug-ins/python/file-openraster.py:517
-#: plug-ins/python/file-openraster.py:518
+#: plug-ins/python/file-openraster.py:519
+#: plug-ins/python/file-openraster.py:520
 msgid "load an OpenRaster (.ora) file"
 msgstr "加载 OpenRaster（.ora）文件"
 
-#: plug-ins/python/file-openraster.py:527
-#: plug-ins/python/file-openraster.py:528
+#: plug-ins/python/file-openraster.py:529
+#: plug-ins/python/file-openraster.py:530
 msgid "loads a thumbnail from an OpenRaster (.ora) file"
 msgstr "从 OpenRaster（.ora）文件加载缩略图"
+
+#: plug-ins/python/file-krita.py:851
+msgid "Krita"
+msgstr "Krita"
+
+#: plug-ins/python/file-krita.py:852
+msgid "Loads a Krita (.kra) file"
+msgstr "加载 Krita（.kra）文件"
+
+#: plug-ins/python/file-krita.py:862
+msgid "Krita (merged)"
+msgstr "Krita（已合并）"
+
+#: plug-ins/python/file-krita.py:863
+msgid "Loads the merged image from a Krita (.kra) file"
+msgstr "从 Krita（.kra）文件加载已合并图像"
+
+#: plug-ins/python/file-krita.py:874
+msgid "Loads a thumbnail from a Krita (.kra) file"
+msgstr "从 Krita（.kra）文件加载缩略图"
 
 #: plug-ins/python/foggify.py:120
 msgid "Add a layer of fog"
@@ -159,7 +179,7 @@ msgstr "将渐变保存为 CSS…"
 #: plug-ins/python/palette-export-as-kpl.py:177
 #: plug-ins/python/palette-offset.py:53 plug-ins/python/palette-sort.py:350
 #: plug-ins/python/palette-to-gradient.py:146
-#: plug-ins/python/python-console/python-console.py:323
+#: plug-ins/python/python-console/python-console.py:325
 msgid "Run mode"
 msgstr "运行模式"
 
@@ -167,7 +187,7 @@ msgstr "运行模式"
 #: plug-ins/python/palette-export-as-kpl.py:178
 #: plug-ins/python/palette-offset.py:54 plug-ins/python/palette-sort.py:351
 #: plug-ins/python/palette-to-gradient.py:147
-#: plug-ins/python/python-console/python-console.py:324
+#: plug-ins/python/python-console/python-console.py:326
 msgid "The run mode"
 msgstr "运行模式"
 
@@ -541,60 +561,60 @@ msgstr "新创建的渐变"
 msgid "Python Console"
 msgstr "Python 控制台"
 
-#: plug-ins/python/python-console/python-console.py:81
-#: plug-ins/python/python-console/python-console.py:279
+#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:281
 msgid "_Save"
 msgstr "保存(_S)"
 
-#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:83
 msgid "Cl_ear"
 msgstr "清空(_E)"
 
-#: plug-ins/python/python-console/python-console.py:83
+#: plug-ins/python/python-console/python-console.py:84
 msgid "_Browse..."
 msgstr "浏览(_B)…"
 
-#: plug-ins/python/python-console/python-console.py:84
-#: plug-ins/python/python-console/python-console.py:227
+#: plug-ins/python/python-console/python-console.py:85
+#: plug-ins/python/python-console/python-console.py:229
 msgid "_Close"
 msgstr "关闭(_C)"
 
-#: plug-ins/python/python-console/python-console.py:224
+#: plug-ins/python/python-console/python-console.py:225
 msgid "Python Procedure Browser"
 msgstr "Python 过程浏览器"
 
-#: plug-ins/python/python-console/python-console.py:226
+#: plug-ins/python/python-console/python-console.py:228
 msgid "_Apply"
 msgstr "应用(_A)"
 
-#: plug-ins/python/python-console/python-console.py:252
+#: plug-ins/python/python-console/python-console.py:254
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "无法打开“%s”以供写入：%s"
 
-#: plug-ins/python/python-console/python-console.py:267
+#: plug-ins/python/python-console/python-console.py:269
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "无法写入到“%s”：%s"
 
-#: plug-ins/python/python-console/python-console.py:276
+#: plug-ins/python/python-console/python-console.py:278
 msgid "Save Python-Fu Console Output"
 msgstr "保存 Python-Fu 控制台输出"
 
-#: plug-ins/python/python-console/python-console.py:278
+#: plug-ins/python/python-console/python-console.py:280
 #: plug-ins/python/spyro-plus.py:1748
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: plug-ins/python/python-console/python-console.py:316
+#: plug-ins/python/python-console/python-console.py:318
 msgid "Python _Console"
 msgstr "Python 控制台(_C)"
 
-#: plug-ins/python/python-console/python-console.py:317
+#: plug-ins/python/python-console/python-console.py:319
 msgid "Interactive GIMP Python interpreter"
 msgstr "交互性 GIMP Python 解释器"
 
-#: plug-ins/python/python-console/python-console.py:318
+#: plug-ins/python/python-console/python-console.py:320
 msgid "Type in commands and see results"
 msgstr "输入命令并查看结果"
 
@@ -618,22 +638,22 @@ msgstr "在上个活动图层上重绘"
 msgid "As Path"
 msgstr "作为路径"
 
-#: plug-ins/python/spyro-plus.py:110 plug-ins/python/spyro-plus.py:2268
+#: plug-ins/python/spyro-plus.py:110 plug-ins/python/spyro-plus.py:2269
 msgid "Circle"
 msgstr "圆"
 
-#: plug-ins/python/spyro-plus.py:146 plug-ins/python/spyro-plus.py:2272
+#: plug-ins/python/spyro-plus.py:146 plug-ins/python/spyro-plus.py:2273
 msgid "Polygon-Star"
 msgstr "多边星形"
 
 #. Sine wave on a circle ring.
 #: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:1009
-#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2273
+#: plug-ins/python/spyro-plus.py:2264 plug-ins/python/spyro-plus.py:2274
 msgid "Sine"
 msgstr "正弦"
 
 #. Semi-circles, based on a polygon
-#: plug-ins/python/spyro-plus.py:172 plug-ins/python/spyro-plus.py:2274
+#: plug-ins/python/spyro-plus.py:172 plug-ins/python/spyro-plus.py:2275
 msgid "Bumps"
 msgstr "凹凸"
 
@@ -645,47 +665,47 @@ msgstr "齿条"
 msgid "Frame"
 msgstr "框架"
 
-#: plug-ins/python/spyro-plus.py:434 plug-ins/python/spyro-plus.py:2271
+#: plug-ins/python/spyro-plus.py:434 plug-ins/python/spyro-plus.py:2272
 msgid "Selection"
 msgstr "选区"
 
-#: plug-ins/python/spyro-plus.py:539 plug-ins/python/spyro-plus.py:2308
+#: plug-ins/python/spyro-plus.py:539 plug-ins/python/spyro-plus.py:2309
 msgid "Pencil"
 msgstr "铅笔"
 
-#: plug-ins/python/spyro-plus.py:555 plug-ins/python/spyro-plus.py:2309
+#: plug-ins/python/spyro-plus.py:555 plug-ins/python/spyro-plus.py:2310
 msgid "AirBrush"
 msgstr "喷枪"
 
-#: plug-ins/python/spyro-plus.py:622 plug-ins/python/spyro-plus.py:2306
+#: plug-ins/python/spyro-plus.py:622 plug-ins/python/spyro-plus.py:2307
 msgid "Preview"
 msgstr "预览"
 
-#: plug-ins/python/spyro-plus.py:627 plug-ins/python/spyro-plus.py:2310
+#: plug-ins/python/spyro-plus.py:627 plug-ins/python/spyro-plus.py:2311
 msgid "Stroke"
 msgstr "描边"
 
-#: plug-ins/python/spyro-plus.py:674 plug-ins/python/spyro-plus.py:2307
+#: plug-ins/python/spyro-plus.py:674 plug-ins/python/spyro-plus.py:2308
 msgid "PaintBrush"
 msgstr "绘画笔刷"
 
-#: plug-ins/python/spyro-plus.py:678 plug-ins/python/spyro-plus.py:2311
+#: plug-ins/python/spyro-plus.py:678 plug-ins/python/spyro-plus.py:2312
 msgid "Ink"
 msgstr "墨水"
 
-#: plug-ins/python/spyro-plus.py:679 plug-ins/python/spyro-plus.py:2312
+#: plug-ins/python/spyro-plus.py:679 plug-ins/python/spyro-plus.py:2313
 msgid "MyPaintBrush"
 msgstr "MyPaint 笔刷"
 
-#: plug-ins/python/spyro-plus.py:995 plug-ins/python/spyro-plus.py:2261
+#: plug-ins/python/spyro-plus.py:995 plug-ins/python/spyro-plus.py:2262
 msgid "Spyrograph"
 msgstr "斯派罗图形"
 
-#: plug-ins/python/spyro-plus.py:1002 plug-ins/python/spyro-plus.py:2262
+#: plug-ins/python/spyro-plus.py:1002 plug-ins/python/spyro-plus.py:2263
 msgid "Epitrochoid"
 msgstr "外旋轮线"
 
-#: plug-ins/python/spyro-plus.py:1029 plug-ins/python/spyro-plus.py:2264
+#: plug-ins/python/spyro-plus.py:1029 plug-ins/python/spyro-plus.py:2265
 msgid "Lissajous"
 msgstr "利萨如曲线"
 
@@ -700,7 +720,7 @@ msgid ""
 msgstr "外旋轮线图案是当移动齿轮在固定齿轮外边时产生的。"
 
 #. TODO: Add Clone option once it's fixed
-#: plug-ins/python/spyro-plus.py:1491 plug-ins/python/spyro-plus.py:2314
+#: plug-ins/python/spyro-plus.py:1491 plug-ins/python/spyro-plus.py:2315
 msgid "Tool"
 msgstr "工具"
 
@@ -842,7 +862,7 @@ msgid ""
 "gear in the fixed gear."
 msgstr "图案的旋转（度数）。移动齿轮在固定齿轮中的起始位置。"
 
-#: plug-ins/python/spyro-plus.py:1693 plug-ins/python/spyro-plus.py:2275
+#: plug-ins/python/spyro-plus.py:1693 plug-ins/python/spyro-plus.py:2276
 msgid "Shape"
 msgstr "形状"
 
@@ -886,8 +906,8 @@ msgstr "边界（像素）"
 msgid "Margin from edge of selection."
 msgstr "自选区边缘的边界。"
 
-#: plug-ins/python/spyro-plus.py:1733 plug-ins/python/spyro-plus.py:2296
-#: plug-ins/python/spyro-plus.py:2297
+#: plug-ins/python/spyro-plus.py:1733 plug-ins/python/spyro-plus.py:2297
+#: plug-ins/python/spyro-plus.py:2298
 msgid "Make width and height equal"
 msgstr "使宽度和高度相等"
 
@@ -931,115 +951,115 @@ msgstr "选择是否保存为新图层，在上个活动图层上重绘或保存
 msgid "Spyrogimp"
 msgstr "斯派罗图案"
 
-#: plug-ins/python/spyro-plus.py:1787 plug-ins/python/spyro-plus.py:2250
+#: plug-ins/python/spyro-plus.py:1788 plug-ins/python/spyro-plus.py:2251
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "使用当前工具设置和选区绘制斯派罗图形。"
 
-#: plug-ins/python/spyro-plus.py:1800
+#: plug-ins/python/spyro-plus.py:1801
 msgid "Curve Pattern"
 msgstr "曲线图案"
 
-#: plug-ins/python/spyro-plus.py:1803
+#: plug-ins/python/spyro-plus.py:1804
 msgid "Fixed Gear"
 msgstr "固定齿轮"
 
-#: plug-ins/python/spyro-plus.py:1806
+#: plug-ins/python/spyro-plus.py:1807
 msgid "Size"
 msgstr "大小"
 
-#: plug-ins/python/spyro-plus.py:2162
+#: plug-ins/python/spyro-plus.py:2163
 msgid "Rendering Pattern"
 msgstr "渲染图案"
 
-#: plug-ins/python/spyro-plus.py:2174
+#: plug-ins/python/spyro-plus.py:2175
 msgid "Please wait : Rendering Pattern"
 msgstr "请稍等：正在渲染图案"
 
-#: plug-ins/python/spyro-plus.py:2251
+#: plug-ins/python/spyro-plus.py:2252
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
 msgstr "使用当前的工具设置来绘制斯派罗图案。图案的大小和位置基于当前选区决定。"
 
-#: plug-ins/python/spyro-plus.py:2254
+#: plug-ins/python/spyro-plus.py:2255
 msgid "Spyrogimp..."
 msgstr "斯派罗图案…"
 
-#: plug-ins/python/spyro-plus.py:2265
+#: plug-ins/python/spyro-plus.py:2266
 msgid "Curve Type"
 msgstr "曲线类型"
 
-#: plug-ins/python/spyro-plus.py:2269
+#: plug-ins/python/spyro-plus.py:2270
 msgid "rack"
 msgstr "支架"
 
-#: plug-ins/python/spyro-plus.py:2270
+#: plug-ins/python/spyro-plus.py:2271
 msgid "frame"
 msgstr "框架"
 
-#: plug-ins/python/spyro-plus.py:2277
+#: plug-ins/python/spyro-plus.py:2278
 msgid "Si_des"
 msgstr "边数(_D)"
 
-#: plug-ins/python/spyro-plus.py:2278
+#: plug-ins/python/spyro-plus.py:2279
 msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
 msgstr "固定齿轮的边数（3 或更多）。仅被部分形状使用。"
 
-#: plug-ins/python/spyro-plus.py:2280
+#: plug-ins/python/spyro-plus.py:2281
 msgid "_Morph"
 msgstr "变形(_M)"
 
-#: plug-ins/python/spyro-plus.py:2281
+#: plug-ins/python/spyro-plus.py:2282
 msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
 msgstr "固定齿轮的变形，在 0 和 1 之间。仅被部分形状使用。"
 
-#: plug-ins/python/spyro-plus.py:2283
+#: plug-ins/python/spyro-plus.py:2284
 msgid "Fi_xed gear teeth"
 msgstr "固定齿轮齿数(_X)"
 
-#: plug-ins/python/spyro-plus.py:2284 plug-ins/python/spyro-plus.py:2287
+#: plug-ins/python/spyro-plus.py:2285 plug-ins/python/spyro-plus.py:2288
 msgid "Number of teeth for fixed gear."
 msgstr "固定齿轮的齿数。"
 
-#: plug-ins/python/spyro-plus.py:2286
+#: plug-ins/python/spyro-plus.py:2287
 msgid "Mo_ving gear teeth"
 msgstr "移动齿轮齿数(_V)"
 
-#: plug-ins/python/spyro-plus.py:2289
+#: plug-ins/python/spyro-plus.py:2290
 msgid "_Hole radius (%)"
 msgstr "孔洞半径（%）(_H)"
 
-#: plug-ins/python/spyro-plus.py:2290
+#: plug-ins/python/spyro-plus.py:2291
 msgid ""
 "Location of hole in moving gear in percent, where 100 means that the hole is "
 "at the edge of the gear, and 0 means the hole is at the center"
 msgstr "移动齿轮中孔洞位置的百分比，100 代表孔洞在齿轮边缘，0 代表孔洞在中心"
 
-#: plug-ins/python/spyro-plus.py:2293
+#: plug-ins/python/spyro-plus.py:2294
 msgid "Margin (_px)"
 msgstr "边界（像素）(_P)"
 
-#: plug-ins/python/spyro-plus.py:2294
+#: plug-ins/python/spyro-plus.py:2295
 msgid "Margin from selection, in pixels"
 msgstr "来自选区的边界，以像素为单位"
 
-#: plug-ins/python/spyro-plus.py:2299 plug-ins/python/spyro-plus.py:2302
+#: plug-ins/python/spyro-plus.py:2300 plug-ins/python/spyro-plus.py:2303
 msgid "_Rotation"
 msgstr "旋转(_R)"
 
-#: plug-ins/python/spyro-plus.py:2300
+#: plug-ins/python/spyro-plus.py:2301
 msgid "Pattern rotation, in degrees"
 msgstr "图案旋转，以度数为单位"
 
-#: plug-ins/python/spyro-plus.py:2303
+#: plug-ins/python/spyro-plus.py:2304
 msgid "Shape rotation of fixed gear, in degrees"
 msgstr "固定齿轮的形状旋转，以度数为单位"
 
-#: plug-ins/python/spyro-plus.py:2317
+#: plug-ins/python/spyro-plus.py:2318
 msgid "Long _Gradient"
 msgstr "长渐变(_G)"
 
-#: plug-ins/python/spyro-plus.py:2318
+#: plug-ins/python/spyro-plus.py:2319
 msgid ""
 "Whether to apply a long gradient to match the length of the pattern. Only "
 "applicable to some of the tools."
