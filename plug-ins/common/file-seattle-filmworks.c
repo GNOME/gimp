@@ -262,7 +262,7 @@ load_image (GFile        *file,
       GimpValueArray *return_vals     = NULL;
       GFile          *temp_file       = NULL;
       FILE           *temp_fp;
-      gint            data_size       = file_size - 0xE0;
+      gsize           data_size       = file_size - 0xE0;
       guchar         *data            = NULL;
       gint            jpeg_start;
       gint            jpeg_data;
@@ -343,7 +343,7 @@ load_image (GFile        *file,
       fclose (fp);
 
       /* Convert SFW to JPEG format */
-      while (index < data_size - 4)
+      while (index + 4 < data_size)
         {
           if (data[index]     == 0xFF &&
               data[index + 1] == 0xC8 &&
@@ -356,7 +356,7 @@ load_image (GFile        *file,
 
       /* Uncompressed SFW94A are convolved BMPs,
        * which aren't yet supported. */
-      if (index >= data_size - 4)
+      if (index + 4 >= data_size)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Uncompressed SFW94A format is not yet supported."));
@@ -371,7 +371,7 @@ load_image (GFile        *file,
       data[index + 3] = 0xE0;
 
       index += 6;
-      if (index > data_size - 13)
+      if (index + 13 > data_size)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Invalid file."));
@@ -432,7 +432,7 @@ load_image (GFile        *file,
       jpeg_data = index;
 
       /* Search for ending marker */
-      while (index < data_size - 2)
+      while (index + 2 < data_size)
         {
           if (data[index]     == 0xFF &&
               data[index + 1] == 0xC9)
