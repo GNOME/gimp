@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-18 15:15+0000\n"
-"PO-Revision-Date: 2026-11-19 08:17+0800\n"
+"POT-Creation-Date: 2026-11-20 20:19+0000\n"
+"PO-Revision-Date: 2026-11-21 08:24+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -91,7 +91,7 @@ msgstr "C 语言插件示例"
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1102
 #: plug-ins/metadata/metadata-editor.c:1558
 #: plug-ins/metadata/metadata-editor.c:3818
-#: plug-ins/metadata/metadata-editor.c:3849 plug-ins/print/print.c:501
+#: plug-ins/metadata/metadata-editor.c:3849 plug-ins/print/print.c:763
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -603,7 +603,7 @@ msgstr "百叶窗"
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-drhalo.c:237 plug-ins/common/file-farbfeld.c:301
 #: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1227
-#: plug-ins/common/file-iff.c:505 plug-ins/common/file-jp2.c:1626
+#: plug-ins/common/file-iff.c:506 plug-ins/common/file-jp2.c:1626
 #: plug-ins/common/file-macpaint.c:246 plug-ins/common/file-pcx.c:728
 #: plug-ins/common/file-pcx.c:736 plug-ins/common/file-pcx.c:744
 #: plug-ins/common/file-pix.c:427 plug-ins/common/file-png.c:1127
@@ -1971,7 +1971,7 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/file-cals.c:367 plug-ins/common/file-cel.c:330
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
 #: plug-ins/common/file-drhalo.c:200 plug-ins/common/file-farbfeld.c:267
-#: plug-ins/common/file-gif-load.c:479 plug-ins/common/file-iff.c:332
+#: plug-ins/common/file-gif-load.c:479 plug-ins/common/file-iff.c:333
 #: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:197
 #: plug-ins/common/file-mng.c:1066 plug-ins/common/file-mng.c:1813
 #: plug-ins/common/file-paa.c:191 plug-ins/common/file-pcx.c:487
@@ -1991,8 +1991,8 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/file-cin/cineon-lib.c:90 plug-ins/file-cin/dpx-lib.c:131
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:447
-#: plug-ins/file-fli/fli-gimp.c:498 plug-ins/file-icns/file-icns-load.c:647
-#: plug-ins/file-icns/file-icns-load.c:697 plug-ins/file-ico/ani-load.c:67
+#: plug-ins/file-fli/fli-gimp.c:498 plug-ins/file-icns/file-icns-load.c:630
+#: plug-ins/file-icns/file-icns-load.c:680 plug-ins/file-ico/ani-load.c:67
 #: plug-ins/file-ico/ico-load.c:767 plug-ins/file-ico/ico-load.c:977
 #: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:713
 #: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
@@ -2453,8 +2453,8 @@ msgid "White level"
 msgstr "白色级别"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-dicom.c:1656
-#: plug-ins/common/file-farbfeld.c:292 plug-ins/common/file-iff.c:673
-#: plug-ins/common/file-iff.c:724 plug-ins/common/file-mng.c:1120
+#: plug-ins/common/file-farbfeld.c:292 plug-ins/common/file-iff.c:674
+#: plug-ins/common/file-iff.c:726 plug-ins/common/file-mng.c:1120
 #: plug-ins/common/file-pcx.c:720 plug-ins/common/file-pcx.c:857
 #: plug-ins/common/file-raw-data.c:1519 plug-ins/common/file-xmc.c:705
 #: plug-ins/common/file-xmc.c:1036 plug-ins/file-bmp/bmp-load.c:800
@@ -2581,7 +2581,7 @@ msgstr "加载 CALS 格式的文件"
 #: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:490
-#: plug-ins/file-icns/file-icns-load.c:639 plug-ins/file-ico/ani-load.c:59
+#: plug-ins/file-icns/file-icns-load.c:622 plug-ins/file-ico/ani-load.c:59
 #: plug-ins/file-ico/ico-load.c:759 plug-ins/file-jpeg/jpeg-load.c:101
 #: plug-ins/file-psd/psd-load.c:270
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
@@ -3019,7 +3019,7 @@ msgstr "无效的尺寸：%d x %d"
 
 #: plug-ins/common/file-drhalo.c:277 plug-ins/common/file-drhalo.c:283
 #: plug-ins/common/file-drhalo.c:298 plug-ins/common/file-drhalo.c:304
-#: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:116
+#: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:110
 #: plug-ins/file-jpeg/jpeg-load.c:137 plug-ins/file-jpeg/jpeg-load.c:735
 #: plug-ins/file-raw/file-libraw.c:278 plug-ins/file-raw/file-libraw.c:363
 #: plug-ins/file-raw/file-libraw.c:388 plug-ins/file-raw/file-libraw.c:425
@@ -3588,27 +3588,27 @@ msgid "Describe how the layers will be split"
 msgstr "描述图层分割的方式"
 
 #: plug-ins/common/file-gih.c:246
-msgid "D_imension"
+msgid "D_imensions"
 msgstr "尺寸(_I)"
 
 #: plug-ins/common/file-gih.c:247
 msgid "How many dimensions the animated brush has"
 msgstr "动画笔刷具有的尺寸数量"
 
-#: plug-ins/common/file-gih.c:529
+#: plug-ins/common/file-gih.c:545
 msgid "Width Mismatch!"
 msgstr "宽度不匹配！"
 
-#: plug-ins/common/file-gih.c:530
+#: plug-ins/common/file-gih.c:546
 msgid "Height Mismatch!"
 msgstr "高度不匹配！"
 
-#: plug-ins/common/file-gih.c:577
+#: plug-ins/common/file-gih.c:593
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "在每个图层上显示为 %d × %d 网格"
 
-#: plug-ins/common/file-gih.c:763
+#: plug-ins/common/file-gih.c:779
 msgid "Ranks:"
 msgstr "等级："
 
@@ -3992,24 +3992,24 @@ msgstr "表格创建选项"
 msgid "Table Options"
 msgstr "表格选项"
 
-#: plug-ins/common/file-iff.c:197
+#: plug-ins/common/file-iff.c:198
 msgid "Amiga IFF"
 msgstr "Amiga IFF"
 
-#: plug-ins/common/file-iff.c:200
+#: plug-ins/common/file-iff.c:201
 msgid "Load file in the IFF file format"
 msgstr "加载 IFF 格式的文件"
 
-#: plug-ins/common/file-iff.c:225
+#: plug-ins/common/file-iff.c:226
 msgid "Load IFF file as thumbnail"
 msgstr "将 IFF 文件加载为缩略图"
 
-#: plug-ins/common/file-iff.c:382 plug-ins/common/file-iff.c:601
+#: plug-ins/common/file-iff.c:383 plug-ins/common/file-iff.c:602
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "无效的 ILBM 颜色表大小"
 
-#: plug-ins/common/file-iff.c:558
+#: plug-ins/common/file-iff.c:559
 #, c-format
 msgid "ILBM contains no image data - likely a palette file"
 msgstr "ILBM 未包含图像数据——可能为色板文件"
@@ -4360,8 +4360,8 @@ msgstr "打开 .lnk 文件且如果其指向图像，将会使 GIMP 打开该链
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
-#: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:730
-#: plug-ins/common/file-raw-data.c:825
+#: plug-ins/common/file-lnk.c:262 plug-ins/common/file-lnk.c:272
+#: plug-ins/common/file-pnm.c:730 plug-ins/common/file-raw-data.c:825
 #: plug-ins/common/file-seattle-filmworks.c:242
 #: plug-ins/common/file-seattle-filmworks.c:283
 #: plug-ins/common/file-seattle-filmworks.c:293
@@ -5929,7 +5929,7 @@ msgstr "读取扩展的数据块出错"
 msgid "Error reading colorprofile chunk"
 msgstr "读取特性文件数据块时出错"
 
-#: plug-ins/common/file-psp.c:2857 plug-ins/file-icns/file-icns-load.c:130
+#: plug-ins/common/file-psp.c:2857 plug-ins/file-icns/file-icns-load.c:124
 #, c-format
 msgid "Error reading file header."
 msgstr "读取文件头部信息出错。"
@@ -10272,18 +10272,18 @@ msgstr ""
 "无效的图层尺寸。有效的图层大小为 16x12、16x16、18x18、24x24、32x32、36x36、"
 "48x48、64x64、128x128、256x256、512x512 或 1024x1024。"
 
-#: plug-ins/file-icns/file-icns-load.c:124
+#: plug-ins/file-icns/file-icns-load.c:118
 #, c-format
 msgid "Invalid header. Possibly corrupt image."
 msgstr "无效的头部信息。图像可能已损坏。"
 
-#: plug-ins/file-icns/file-icns-load.c:551
+#: plug-ins/file-icns/file-icns-load.c:534
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "试图打开临时的 %s 文件“%s”用于加载 icns 时出错：%s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:689 plug-ins/file-jpeg/jpeg-load.c:699
+#: plug-ins/file-icns/file-icns-load.c:672 plug-ins/file-jpeg/jpeg-load.c:699
 #: plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:623
@@ -10292,7 +10292,7 @@ msgstr "试图打开临时的 %s 文件“%s”用于加载 icns 时出错：%s"
 msgid "Opening thumbnail for '%s'"
 msgstr "打开“%s”的缩略图"
 
-#: plug-ins/file-icns/file-icns-load.c:768
+#: plug-ins/file-icns/file-icns-load.c:751
 #, c-format
 msgid "Invalid or corrupt icns resource file."
 msgstr "无效或损坏的 icns 资源文件。"
@@ -16740,35 +16740,35 @@ msgstr "竖直"
 msgid "Both"
 msgstr "皆有"
 
-#: plug-ins/print/print.c:170
+#: plug-ins/print/print.c:190
 msgid "_Print..."
 msgstr "打印(_P)…"
 
-#: plug-ins/print/print.c:175
+#: plug-ins/print/print.c:195
 msgid "Print the image"
 msgstr "打印图像"
 
-#: plug-ins/print/print.c:194
+#: plug-ins/print/print.c:214
 msgid "Page Set_up..."
 msgstr "页面设置(_U)…"
 
-#: plug-ins/print/print.c:199
+#: plug-ins/print/print.c:219
 msgid "Adjust page size and orientation for printing"
 msgstr "调整打印页面的大小和方向"
 
-#: plug-ins/print/print.c:344 plug-ins/print/print.c:499
+#: plug-ins/print/print.c:605 plug-ins/print/print.c:761
 msgid "Image Settings"
 msgstr "图像设置"
 
-#: plug-ins/print/print.c:455
+#: plug-ins/print/print.c:717
 msgid "An error occurred while trying to print:"
 msgstr "试图打印时发生错误："
 
-#: plug-ins/print/print.c:500
+#: plug-ins/print/print.c:762
 msgid "_Print"
 msgstr "打印(_P)"
 
-#: plug-ins/print/print.c:524
+#: plug-ins/print/print.c:798
 msgid "Printing"
 msgstr "打印"
 
