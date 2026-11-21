@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-10-02 22:16+0000\n"
-"PO-Revision-Date: 2026-10-05 08:07+0800\n"
+"POT-Creation-Date: 2026-11-19 17:44+0000\n"
+"PO-Revision-Date: 2026-11-21 08:28+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -33,7 +33,7 @@ msgstr "C 语言插件示例"
 
 #: extensions/goat-exercises/goat-exercise-c.c:148 plug-ins/common/blinds.c:200
 #: plug-ins/common/border-average.c:198 plug-ins/common/checkerboard.c:174
-#: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:586
+#: plug-ins/common/cml-explorer.c:565 plug-ins/common/compose.c:587
 #: plug-ins/common/contrast-retinex.c:247 plug-ins/common/crop-zealous.c:149
 #: plug-ins/common/curve-bend.c:625 plug-ins/common/decompose.c:385
 #: plug-ins/common/depth-merge.c:291 plug-ins/common/despeckle.c:235
@@ -48,7 +48,7 @@ msgstr "C 语言插件示例"
 #: plug-ins/flame/flame.c:297 plug-ins/fractal-explorer/fractal-explorer.c:427
 #: plug-ins/gfig/gfig.c:213 plug-ins/gimpressionist/gimp.c:184
 #: plug-ins/gradient-flare/gradient-flare.c:925
-#: plug-ins/ifs-compose/ifs-compose.c:492 plug-ins/imagemap/imap_main.c:265
+#: plug-ins/ifs-compose/ifs-compose.c:493 plug-ins/imagemap/imap_main.c:265
 #: plug-ins/lighting/lighting-main.c:777
 #: plug-ins/map-object/map-object-main.c:537 plug-ins/pagecurl/pagecurl.c:297
 #, c-format
@@ -64,14 +64,14 @@ msgstr "C 语言插件示例"
 #: extensions/goat-exercises/goat-exercise-lua.lua:73
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: extensions/goat-exercises/goat-exercise-vala.vala:73
-#: plug-ins/common/busy-dialog.c:283 plug-ins/common/cml-explorer.c:1374
+#: plug-ins/common/busy-dialog.c:290 plug-ins/common/cml-explorer.c:1374
 #: plug-ins/common/cml-explorer.c:2144 plug-ins/common/cml-explorer.c:2354
 #: plug-ins/common/curve-bend.c:1892 plug-ins/common/curve-bend.c:1927
-#: plug-ins/common/file-gif-export.c:1229 plug-ins/common/file-heif.c:2505
+#: plug-ins/common/file-gif-export.c:1230 plug-ins/common/file-heif.c:2505
 #: plug-ins/common/file-pdf-export.c:1052 plug-ins/common/file-pdf-load.c:585
 #: plug-ins/common/qbist.c:839 plug-ins/common/qbist.c:881
 #: plug-ins/common/sphere-designer.c:2294
-#: plug-ins/common/sphere-designer.c:2658 plug-ins/common/unit-editor.c:469
+#: plug-ins/common/sphere-designer.c:2658 plug-ins/common/unit-editor.c:474
 #: plug-ins/flame/flame.c:617 plug-ins/flame/flame.c:823
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1504
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1542
@@ -83,15 +83,15 @@ msgstr "C 语言插件示例"
 #: plug-ins/gimpressionist/presets.c:654 plug-ins/gimpressionist/sizemap.c:401
 #: plug-ins/gradient-flare/gradient-flare.c:3360
 #: plug-ins/gradient-flare/gradient-flare.c:3474
-#: plug-ins/ifs-compose/ifs-compose.c:914
-#: plug-ins/ifs-compose/ifs-compose.c:2615
-#: plug-ins/ifs-compose/ifs-compose.c:2652 plug-ins/imagemap/imap_browse.c:80
-#: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:73
-#: plug-ins/imagemap/imap_file.c:128 plug-ins/lighting/lighting-ui.c:738
+#: plug-ins/ifs-compose/ifs-compose.c:915
+#: plug-ins/ifs-compose/ifs-compose.c:2634
+#: plug-ins/ifs-compose/ifs-compose.c:2671 plug-ins/imagemap/imap_browse.c:80
+#: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:74
+#: plug-ins/imagemap/imap_file.c:129 plug-ins/lighting/lighting-ui.c:738
 #: plug-ins/lighting/lighting-ui.c:882 plug-ins/metadata/metadata-editor.c:1189
 #: plug-ins/metadata/metadata-editor.c:1692
 #: plug-ins/metadata/metadata-editor.c:5468
-#: plug-ins/metadata/metadata-editor.c:5503 plug-ins/print/print.c:476
+#: plug-ins/metadata/metadata-editor.c:5503 plug-ins/print/print.c:501
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -143,13 +143,13 @@ msgstr "JavaScript（GJS）插件示例"
 #: extensions/goat-exercises/goat-exercise-py3.py:81
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2506
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2659
-#: plug-ins/common/unit-editor.c:285 plug-ins/file-exr/file-exr.c:457
+#: plug-ins/common/unit-editor.c:290 plug-ins/file-exr/file-exr.c:457
 #: plug-ins/file-psd/psd-load.c:4155 plug-ins/flame/flame.c:824
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:655 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:3475
-#: plug-ins/ifs-compose/ifs-compose.c:915
+#: plug-ins/ifs-compose/ifs-compose.c:916
 #: plug-ins/imagemap/imap_default_dialog.c:109
 msgid "_OK"
 msgstr "确定(_O)"
@@ -335,7 +335,7 @@ msgstr "网格(_G)"
 
 #: plug-ins/common/align-layers.c:236 plug-ins/common/grid.c:741
 #: plug-ins/gfig/gfig-dialog.c:1352 plug-ins/gfig/gfig-menu.ui:31
-#: plug-ins/imagemap/imap_main.c:1603 plug-ins/imagemap/imap-menu.ui.in:189
+#: plug-ins/imagemap/imap_main.c:1613 plug-ins/imagemap/imap-menu.ui.in:189
 #: plug-ins/imagemap/imap-menu.ui.in:281
 msgid "Grid"
 msgstr "网格"
@@ -482,11 +482,11 @@ msgstr "动画回放："
 #. 2 styles of default frame disposals: cumulative layers and one
 #. * frame per layer.
 #.
-#: plug-ins/common/animation-play.c:799 plug-ins/common/file-gif-export.c:221
+#: plug-ins/common/animation-play.c:799 plug-ins/common/file-gif-export.c:222
 msgid "Cumulative layers (combine)"
 msgstr "累积图层（组合）"
 
-#: plug-ins/common/animation-play.c:804 plug-ins/common/file-gif-export.c:222
+#: plug-ins/common/animation-play.c:804 plug-ins/common/file-gif-export.c:223
 msgid "One frame per layer (replace)"
 msgstr "每图层一帧（替换）"
 
@@ -602,25 +602,25 @@ msgstr "百叶窗"
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1246
+#: plug-ins/common/blinds.c:260 plug-ins/common/compose.c:1247
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
 #: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
 #: plug-ins/common/file-farbfeld.c:307 plug-ins/common/file-gegl.c:446
-#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:436
-#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-pcx.c:729
-#: plug-ins/common/file-pcx.c:737 plug-ins/common/file-pcx.c:745
+#: plug-ins/common/file-gif-load.c:1229 plug-ins/common/file-iff.c:506
+#: plug-ins/common/file-jp2.c:1629 plug-ins/common/file-pcx.c:731
+#: plug-ins/common/file-pcx.c:739 plug-ins/common/file-pcx.c:747
 #: plug-ins/common/file-pix.c:431 plug-ins/common/file-png.c:1082
 #: plug-ins/common/file-pnm.c:850 plug-ins/common/file-qoi.c:296
-#: plug-ins/common/file-raw-data.c:834 plug-ins/common/file-raw-data.c:1964
+#: plug-ins/common/file-raw-data.c:838 plug-ins/common/file-raw-data.c:1972
 #: plug-ins/common/file-sunras.c:1061 plug-ins/common/file-tga.c:1103
 #: plug-ins/common/file-tim.c:403 plug-ins/common/file-tim.c:551
 #: plug-ins/common/file-wbmp.c:398 plug-ins/common/file-wbmp.c:475
-#: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:864
+#: plug-ins/common/file-xbm.c:891 plug-ins/common/film.c:868
 #: plug-ins/common/smooth-palette.c:301 plug-ins/common/tile.c:398
 #: plug-ins/file-bmp/bmp-load.c:809 plug-ins/file-exr/file-exr.c:301
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:254
-#: plug-ins/file-psd/psd-image-res-load.c:1103
+#: plug-ins/file-psd/psd-image-res-load.c:1120
 #: plug-ins/file-psd/psd-load.c:3330 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1588
 #: plug-ins/file-tiff/file-tiff-load.c:2683
@@ -716,16 +716,16 @@ msgstr "边界大小"
 msgid "Number of Colors"
 msgstr "颜色数量"
 
-#: plug-ins/common/busy-dialog.c:259 plug-ins/common/busy-dialog.c:275
+#: plug-ins/common/busy-dialog.c:263 plug-ins/common/busy-dialog.c:282
 msgid "Please Wait"
 msgstr "请稍等"
 
 #. the title label
-#: plug-ins/common/busy-dialog.c:303
+#: plug-ins/common/busy-dialog.c:310
 msgid "Please wait for the operation to complete"
 msgstr "请等待操作完成"
 
-#: plug-ins/common/busy-dialog.c:364
+#: plug-ins/common/busy-dialog.c:389
 msgid "Canceling..."
 msgstr "正在取消…"
 
@@ -1033,9 +1033,9 @@ msgstr "随机种子"
 #: plug-ins/flame/flame.c:1235
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:794
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1505
-#: plug-ins/gfig/gfig-dialog.c:774 plug-ins/ifs-compose/ifs-compose.c:911
-#: plug-ins/ifs-compose/ifs-compose.c:2653 plug-ins/imagemap/imap_browse.c:81
-#: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
+#: plug-ins/gfig/gfig-dialog.c:774 plug-ins/ifs-compose/ifs-compose.c:912
+#: plug-ins/ifs-compose/ifs-compose.c:2672 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/imagemap/imap_file.c:75 plug-ins/lighting/lighting-ui.c:492
 #: plug-ins/lighting/lighting-ui.c:883
 msgid "_Open"
 msgstr "打开(_O)"
@@ -1050,8 +1050,8 @@ msgstr "打开(_O)"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:802
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1543
 #: plug-ins/gfig/gfig-dialog.c:824 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:912
-#: plug-ins/ifs-compose/ifs-compose.c:2616 plug-ins/imagemap/imap_file.c:129
+#: plug-ins/ifs-compose/ifs-compose.c:913
+#: plug-ins/ifs-compose/ifs-compose.c:2635 plug-ins/imagemap/imap_file.c:130
 #: plug-ins/lighting/lighting-ui.c:486 plug-ins/lighting/lighting-ui.c:739
 msgid "_Save"
 msgstr "保存(_S)"
@@ -1215,7 +1215,7 @@ msgstr "当前设置的图表"
 #: plug-ins/common/procedure-browser.c:169
 #: plug-ins/filter-browser/filter-browser.c:745 plug-ins/gfig/gfig-dialog.c:350
 #: plug-ins/gfig/gfig-dialog.c:1210 plug-ins/gfig/gfig-dialog.c:1355
-#: plug-ins/ifs-compose/ifs-compose.c:1214
+#: plug-ins/ifs-compose/ifs-compose.c:1215
 #: plug-ins/metadata/metadata-viewer.c:223
 msgid "_Close"
 msgstr "关闭(_C)"
@@ -1231,11 +1231,11 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/cml-explorer.c:2210 plug-ins/common/curve-bend.c:755
 #: plug-ins/common/file-dicom.c:1579 plug-ins/common/file-farbfeld.c:372
 #: plug-ins/common/file-mng.c:875 plug-ins/common/file-mng.c:1225
-#: plug-ins/common/file-pcx.c:1244 plug-ins/common/file-pdf-export.c:683
-#: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1532
-#: plug-ins/common/file-raw-data.c:1561 plug-ins/common/file-sunras.c:616
+#: plug-ins/common/file-pcx.c:1246 plug-ins/common/file-pdf-export.c:683
+#: plug-ins/common/file-png.c:1944 plug-ins/common/file-raw-data.c:1540
+#: plug-ins/common/file-raw-data.c:1569 plug-ins/common/file-sunras.c:616
 #: plug-ins/common/file-tga.c:1225 plug-ins/common/file-tim.c:768
-#: plug-ins/common/file-xmc.c:1288 plug-ins/common/sphere-designer.c:2208
+#: plug-ins/common/file-xmc.c:1294 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:336 plug-ins/file-fli/fli-gimp.c:808
 #: plug-ins/file-icns/file-icns-export.c:442
 #: plug-ins/file-ico/ico-export.c:1374 plug-ins/file-ico/ico-export.c:1595
@@ -1243,7 +1243,7 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/file-tiff/file-tiff-export.c:1087
 #: plug-ins/file-tiff/file-tiff-export.c:1177 plug-ins/flame/flame.c:585
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1406
-#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2475
+#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2494
 #: plug-ins/lighting/lighting-ui.c:808
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1382,279 +1382,279 @@ msgstr "重新整理颜色表"
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
 #.
-#: plug-ins/common/compose.c:209
+#: plug-ins/common/compose.c:210
 msgid "_Red:"
 msgstr "红色(_R)："
 
-#: plug-ins/common/compose.c:210
+#: plug-ins/common/compose.c:211
 msgid "_Green:"
 msgstr "绿色(_G)："
 
-#: plug-ins/common/compose.c:211
+#: plug-ins/common/compose.c:212
 msgid "_Blue:"
 msgstr "蓝色(_B)："
 
-#: plug-ins/common/compose.c:212
+#: plug-ins/common/compose.c:213
 msgid "_Alpha:"
 msgstr "透明(_A)："
 
-#: plug-ins/common/compose.c:214 plug-ins/common/compose.c:218
+#: plug-ins/common/compose.c:215 plug-ins/common/compose.c:219
 msgid "_Hue:"
 msgstr "色相(_H)："
 
-#: plug-ins/common/compose.c:215 plug-ins/common/compose.c:219
+#: plug-ins/common/compose.c:216 plug-ins/common/compose.c:220
 msgid "_Saturation:"
 msgstr "饱和度(_S)："
 
-#: plug-ins/common/compose.c:216
+#: plug-ins/common/compose.c:217
 msgid "_Value:"
 msgstr "明度(_V)："
 
-#: plug-ins/common/compose.c:220
+#: plug-ins/common/compose.c:221
 msgid "_Lightness:"
 msgstr "亮度(_L)："
 
-#: plug-ins/common/compose.c:222
+#: plug-ins/common/compose.c:223
 msgid "_Cyan:"
 msgstr "青色(_C)："
 
-#: plug-ins/common/compose.c:223
+#: plug-ins/common/compose.c:224
 msgid "_Magenta:"
 msgstr "品红(_M)："
 
-#: plug-ins/common/compose.c:224
+#: plug-ins/common/compose.c:225
 msgid "_Yellow:"
 msgstr "黄色(_Y)："
 
-#: plug-ins/common/compose.c:225
+#: plug-ins/common/compose.c:226
 msgid "_Black:"
 msgstr "黑色(_B)："
 
-#: plug-ins/common/compose.c:227
+#: plug-ins/common/compose.c:228
 msgid "_L:"
 msgstr "_L:"
 
-#: plug-ins/common/compose.c:228
+#: plug-ins/common/compose.c:229
 msgid "_A:"
 msgstr "_A:"
 
-#: plug-ins/common/compose.c:229
+#: plug-ins/common/compose.c:230
 msgid "_B:"
 msgstr "_B:"
 
-#: plug-ins/common/compose.c:231
+#: plug-ins/common/compose.c:232
 msgid "_L"
 msgstr "_L"
 
-#: plug-ins/common/compose.c:232
+#: plug-ins/common/compose.c:233
 msgid "_C"
 msgstr "_C"
 
-#: plug-ins/common/compose.c:233
+#: plug-ins/common/compose.c:234
 msgid "_H"
 msgstr "_H"
 
-#: plug-ins/common/compose.c:235
+#: plug-ins/common/compose.c:236
 msgid "_Luma y470:"
 msgstr "亮度 y470(_L)："
 
-#: plug-ins/common/compose.c:236
+#: plug-ins/common/compose.c:237
 msgid "_Blueness cb470:"
 msgstr "蓝色差 cb470(_B)："
 
-#: plug-ins/common/compose.c:237
+#: plug-ins/common/compose.c:238
 msgid "_Redness cr470:"
 msgstr "红色差 cr470(_R)："
 
-#: plug-ins/common/compose.c:239
+#: plug-ins/common/compose.c:240
 msgid "_Luma y709:"
 msgstr "亮度 y709(_L)："
 
-#: plug-ins/common/compose.c:240
+#: plug-ins/common/compose.c:241
 msgid "_Blueness cb709:"
 msgstr "蓝色差 cb709(_B)："
 
-#: plug-ins/common/compose.c:241
+#: plug-ins/common/compose.c:242
 msgid "_Redness cr709:"
 msgstr "红色差 cr709(_R)："
 
-#: plug-ins/common/compose.c:247 plug-ins/common/compose.c:441
-#: plug-ins/common/compose.c:504 plug-ins/common/decompose.c:192
+#: plug-ins/common/compose.c:248 plug-ins/common/compose.c:442
+#: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:192
 #: plug-ins/common/decompose.c:299 plug-ins/common/file-heif.c:317
 #: plug-ins/common/file-heif.c:438
 msgid "RGB"
 msgstr "RGB"
 
-#: plug-ins/common/compose.c:254 plug-ins/common/compose.c:442
-#: plug-ins/common/compose.c:505 plug-ins/common/decompose.c:193
+#: plug-ins/common/compose.c:255 plug-ins/common/compose.c:443
+#: plug-ins/common/compose.c:506 plug-ins/common/decompose.c:193
 #: plug-ins/common/decompose.c:300
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:262 plug-ins/common/compose.c:443
-#: plug-ins/common/compose.c:506 plug-ins/common/decompose.c:200
+#: plug-ins/common/compose.c:263 plug-ins/common/compose.c:444
+#: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:200
 #: plug-ins/common/decompose.c:302
 msgid "HSV"
 msgstr "HSV"
 
-#: plug-ins/common/compose.c:269 plug-ins/common/compose.c:444
-#: plug-ins/common/compose.c:507 plug-ins/common/decompose.c:205
+#: plug-ins/common/compose.c:270 plug-ins/common/compose.c:445
+#: plug-ins/common/compose.c:508 plug-ins/common/decompose.c:205
 #: plug-ins/common/decompose.c:303
 msgid "HSL"
 msgstr "HSL"
 
-#: plug-ins/common/compose.c:276 plug-ins/common/compose.c:445
-#: plug-ins/common/compose.c:508 plug-ins/common/decompose.c:210
+#: plug-ins/common/compose.c:277 plug-ins/common/compose.c:446
+#: plug-ins/common/compose.c:509 plug-ins/common/decompose.c:210
 #: plug-ins/common/decompose.c:304 plug-ins/common/file-jp2.c:249
 #: plug-ins/common/file-jp2.c:295
 msgid "CMYK"
 msgstr "CMYK"
 
-#: plug-ins/common/compose.c:284 plug-ins/common/compose.c:446
-#: plug-ins/common/compose.c:509 plug-ins/common/decompose.c:216
+#: plug-ins/common/compose.c:285 plug-ins/common/compose.c:447
+#: plug-ins/common/compose.c:510 plug-ins/common/decompose.c:216
 #: plug-ins/common/decompose.c:305
 msgid "LAB"
 msgstr "LAB"
 
-#: plug-ins/common/compose.c:291 plug-ins/common/compose.c:447
-#: plug-ins/common/compose.c:510 plug-ins/common/decompose.c:218
+#: plug-ins/common/compose.c:292 plug-ins/common/compose.c:448
+#: plug-ins/common/compose.c:511 plug-ins/common/decompose.c:218
 #: plug-ins/common/decompose.c:306
 msgid "LCH"
 msgstr "LCH"
 
-#: plug-ins/common/compose.c:298
+#: plug-ins/common/compose.c:299
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: plug-ins/common/compose.c:305
+#: plug-ins/common/compose.c:306
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: plug-ins/common/compose.c:312
+#: plug-ins/common/compose.c:313
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: plug-ins/common/compose.c:319
+#: plug-ins/common/compose.c:320
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
-#: plug-ins/common/compose.c:381
+#: plug-ins/common/compose.c:382
 msgid "What to compose: "
 msgstr "合成结果："
 
-#: plug-ins/common/compose.c:406
+#: plug-ins/common/compose.c:407
 msgid "C_ompose..."
 msgstr "合成(_O)…"
 
-#: plug-ins/common/compose.c:410
+#: plug-ins/common/compose.c:411
 msgid "Create an image using multiple gray images as color channels"
 msgstr "使用多重灰度图像作为颜色通道创建图像"
 
-#: plug-ins/common/compose.c:412
+#: plug-ins/common/compose.c:413
 msgid "This function creates a new image from multiple gray images"
 msgstr "该功能从多重灰度图像创建新的图像"
 
-#: plug-ins/common/compose.c:421
+#: plug-ins/common/compose.c:422
 msgid "Image 2"
 msgstr "图像 2"
 
-#: plug-ins/common/compose.c:422
+#: plug-ins/common/compose.c:423
 msgid "Second input image"
 msgstr "第 2 输入图像"
 
-#: plug-ins/common/compose.c:427
+#: plug-ins/common/compose.c:428
 msgid "Image 3"
 msgstr "图像 3"
 
-#: plug-ins/common/compose.c:428
+#: plug-ins/common/compose.c:429
 msgid "Third input image"
 msgstr "第 3 输入图像"
 
-#: plug-ins/common/compose.c:433
+#: plug-ins/common/compose.c:434
 msgid "Image 4"
 msgstr "图像 4"
 
-#: plug-ins/common/compose.c:434
+#: plug-ins/common/compose.c:435
 msgid "Fourth input image"
 msgstr "第 4 输入图像"
 
-#: plug-ins/common/compose.c:439 plug-ins/common/compose.c:502
+#: plug-ins/common/compose.c:440 plug-ins/common/compose.c:503
 #: plug-ins/common/decompose.c:297
 msgid "Color _model"
 msgstr "色彩模型(_M)"
 
-#: plug-ins/common/compose.c:448 plug-ins/common/compose.c:511
+#: plug-ins/common/compose.c:449 plug-ins/common/compose.c:512
 #: plug-ins/common/decompose.c:307
 msgid "YCbCr ITU R470"
 msgstr "YCbCr ITU R470"
 
-#: plug-ins/common/compose.c:449 plug-ins/common/compose.c:512
+#: plug-ins/common/compose.c:450 plug-ins/common/compose.c:513
 #: plug-ins/common/decompose.c:308
 msgid "YCbCr ITU R709"
 msgstr "YCbCr ITU R709"
 
-#: plug-ins/common/compose.c:450 plug-ins/common/compose.c:513
+#: plug-ins/common/compose.c:451 plug-ins/common/compose.c:514
 #: plug-ins/common/decompose.c:309
 msgid "YCbCr ITU R470 256"
 msgstr "YCbCr ITU R470 256"
 
-#: plug-ins/common/compose.c:451 plug-ins/common/compose.c:514
+#: plug-ins/common/compose.c:452 plug-ins/common/compose.c:515
 #: plug-ins/common/decompose.c:310
 msgid "YCbCr ITU R709 256"
 msgstr "YCbCr ITU R709 256"
 
-#: plug-ins/common/compose.c:457 plug-ins/common/compose.c:520
+#: plug-ins/common/compose.c:458 plug-ins/common/compose.c:521
 #: plug-ins/common/smooth-palette.c:158
 msgid "New image"
 msgstr "新建图像"
 
-#: plug-ins/common/compose.c:458 plug-ins/common/compose.c:521
+#: plug-ins/common/compose.c:459 plug-ins/common/compose.c:522
 #: plug-ins/common/smooth-palette.c:159
 msgid "Output image"
 msgstr "输出图像"
 
-#: plug-ins/common/compose.c:473
+#: plug-ins/common/compose.c:474
 msgid "Compose an image from multiple drawables of gray images"
 msgstr "从多个灰度图像的可绘区合成图像"
 
-#: plug-ins/common/compose.c:475
+#: plug-ins/common/compose.c:476
 msgid ""
 "This function creates a new image from multiple drawables of gray images"
 msgstr "该功能从多个灰度图像的可绘区创建新的图像"
 
-#: plug-ins/common/compose.c:484
+#: plug-ins/common/compose.c:485
 msgid "Drawable 2"
 msgstr "可绘区 2"
 
-#: plug-ins/common/compose.c:485
+#: plug-ins/common/compose.c:486
 msgid "Second input drawable"
 msgstr "第 2 输入可绘区"
 
-#: plug-ins/common/compose.c:490
+#: plug-ins/common/compose.c:491
 msgid "Drawable 3"
 msgstr "可绘区 3"
 
-#: plug-ins/common/compose.c:491
+#: plug-ins/common/compose.c:492
 msgid "Third input drawable"
 msgstr "第 3 输入可绘区"
 
-#: plug-ins/common/compose.c:496
+#: plug-ins/common/compose.c:497
 msgid "Drawable 4"
 msgstr "可绘区 4"
 
-#: plug-ins/common/compose.c:497
+#: plug-ins/common/compose.c:498
 msgid "Fourth input drawable"
 msgstr "第 4 输入可绘区"
 
-#: plug-ins/common/compose.c:537
+#: plug-ins/common/compose.c:538
 msgid "R_ecompose"
 msgstr "重新合成(_E)"
 
-#: plug-ins/common/compose.c:541
+#: plug-ins/common/compose.c:542
 msgid "Recompose an image that was previously decomposed"
 msgstr "重新合成之前被分解的图像"
 
-#: plug-ins/common/compose.c:543
+#: plug-ins/common/compose.c:544
 msgid ""
 "This function recombines the grayscale layers produced by Decompose into a "
 "single RGB or RGBA layer, and replaces the originally decomposed layer with "
@@ -1663,65 +1663,65 @@ msgstr ""
 "该功能将由分解为单独 RGB 或 RGBA 图层所产生的灰度图层重新合并，并用合并结果替"
 "换原始分解图层。"
 
-#: plug-ins/common/compose.c:606
+#: plug-ins/common/compose.c:607
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr "如果当前图像原是由“分解”生成的，您只能运行“重新合成”。"
 
-#: plug-ins/common/compose.c:649
+#: plug-ins/common/compose.c:650
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr "扫描“分解数据”寄生物错误：找到的图层太少"
 
-#: plug-ins/common/compose.c:664
+#: plug-ins/common/compose.c:665
 #, c-format
 msgid "Cannot recompose: Specified source layer ID %d not found"
 msgstr "无法重新合成：指定的源图层标识 %d 未找到"
 
-#: plug-ins/common/compose.c:684
+#: plug-ins/common/compose.c:685
 #, c-format
 msgid "Cannot recompose: Specified layer #%d ID %d not found"
 msgstr "无法重新合成：指定的图层 #%d 标识 %d 未找到"
 
-#: plug-ins/common/compose.c:713
+#: plug-ins/common/compose.c:714
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "无法为图像 %d 获取图层"
 
-#: plug-ins/common/compose.c:790
+#: plug-ins/common/compose.c:791
 msgid "Composing"
 msgstr "合成"
 
-#: plug-ins/common/compose.c:1091 plug-ins/common/compose.c:1492
+#: plug-ins/common/compose.c:1092 plug-ins/common/compose.c:1493
 msgid "At least one image is needed to compose"
 msgstr "合成至少需要一幅图像"
 
-#: plug-ins/common/compose.c:1112
+#: plug-ins/common/compose.c:1113
 msgid "Drawables have different size"
 msgstr "可绘区大小不一致"
 
-#: plug-ins/common/compose.c:1140
+#: plug-ins/common/compose.c:1141
 msgid "Images have different size"
 msgstr "图像的大小不一致"
 
-#: plug-ins/common/compose.c:1158
+#: plug-ins/common/compose.c:1159
 msgid "Error in getting layer IDs"
 msgstr "获取图层标识时出错"
 
-#: plug-ins/common/compose.c:1291
+#: plug-ins/common/compose.c:1292
 msgid "Compose"
 msgstr "合成"
 
-#: plug-ins/common/compose.c:1306
+#: plug-ins/common/compose.c:1307
 msgid "Compose Channels"
 msgstr "合成通道"
 
 #. Channel representation grid
-#: plug-ins/common/compose.c:1321
+#: plug-ins/common/compose.c:1322
 msgid "Channel Representations"
 msgstr "通道代表"
 
-#: plug-ins/common/compose.c:1381
+#: plug-ins/common/compose.c:1382
 msgid "Mask value"
 msgstr "蒙板明度"
 
@@ -1796,7 +1796,7 @@ msgstr "视网膜皮层"
 msgid "Retinex Image Enhancement"
 msgstr "Retinex 图像增强"
 
-#: plug-ins/common/contrast-retinex.c:647
+#: plug-ins/common/contrast-retinex.c:651
 msgid "Retinex: filtering"
 msgstr "Retinex：过滤"
 
@@ -1970,26 +1970,26 @@ msgstr "无法对空选区进行操作。"
 #: plug-ins/common/curve-bend.c:808 plug-ins/common/file-cel.c:330
 #: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
 #: plug-ins/common/file-farbfeld.c:273 plug-ins/common/file-gif-load.c:481
-#: plug-ins/common/file-iff.c:277 plug-ins/common/file-lnk.c:200
+#: plug-ins/common/file-iff.c:333 plug-ins/common/file-lnk.c:200
 #: plug-ins/common/file-mng.c:1409 plug-ins/common/file-paa.c:191
 #: plug-ins/common/file-pcx.c:490 plug-ins/common/file-pcx.c:533
 #: plug-ins/common/file-png.c:800 plug-ins/common/file-png.c:1370
 #: plug-ins/common/file-ps.c:1161 plug-ins/common/file-ps.c:3757
-#: plug-ins/common/file-psp.c:2805 plug-ins/common/file-psp.c:2855
+#: plug-ins/common/file-psp.c:2806 plug-ins/common/file-psp.c:2856
 #: plug-ins/common/file-pvr.c:257 plug-ins/common/file-qoi.c:275
-#: plug-ins/common/file-raw-data.c:611 plug-ins/common/file-raw-data.c:810
-#: plug-ins/common/file-raw-data.c:1870
+#: plug-ins/common/file-raw-data.c:615 plug-ins/common/file-raw-data.c:814
+#: plug-ins/common/file-raw-data.c:1878
 #: plug-ins/common/file-seattle-filmworks.c:232
-#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:756
+#: plug-ins/common/file-sunras.c:435 plug-ins/common/file-svg.c:761
 #: plug-ins/common/file-tga.c:427 plug-ins/common/file-tim.c:277
 #: plug-ins/common/file-wbmp.c:250 plug-ins/common/file-wbmp.c:329
-#: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:657
-#: plug-ins/common/file-xmc.c:905 plug-ins/common/file-xwd.c:465
+#: plug-ins/common/file-xbm.c:729 plug-ins/common/file-xmc.c:659
+#: plug-ins/common/file-xmc.c:911 plug-ins/common/file-xwd.c:465
 #: plug-ins/common/sphere-designer.c:2089 plug-ins/file-bmp/bmp-load.c:276
 #: plug-ins/file-dds/ddsread.c:169 plug-ins/file-faxg3/faxg3.c:263
 #: plug-ins/file-fits/fits.c:369 plug-ins/file-fli/fli-gimp.c:440
-#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:647
-#: plug-ins/file-icns/file-icns-load.c:697 plug-ins/file-ico/ico-load.c:767
+#: plug-ins/file-fli/fli-gimp.c:491 plug-ins/file-icns/file-icns-load.c:630
+#: plug-ins/file-icns/file-icns-load.c:680 plug-ins/file-ico/ico-load.c:767
 #: plug-ins/file-ico/ico-load.c:947 plug-ins/file-ico/ico-load.c:1231
 #: plug-ins/file-jpeg/jpeg-load.c:106 plug-ins/file-jpeg/jpeg-load.c:706
 #: plug-ins/file-psd/psd-export.c:2456 plug-ins/file-psd/psd-load.c:190
@@ -2070,7 +2070,7 @@ msgstr "交换两条曲线"
 #. The Reset button
 #: plug-ins/common/curve-bend.c:1337 plug-ins/common/sphere-designer.c:2657
 #: plug-ins/common/tile-small.c:518 plug-ins/gimpressionist/preview.c:182
-#: plug-ins/ifs-compose/ifs-compose.c:913
+#: plug-ins/ifs-compose/ifs-compose.c:914
 msgid "_Reset"
 msgstr "重置(_R)"
 
@@ -2349,7 +2349,7 @@ msgstr "叠加(_V)"
 msgid "Overlap"
 msgstr "叠加"
 
-#: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:377
+#: plug-ins/common/depth-merge.c:252 plug-ins/common/file-raw-data.c:381
 msgid "O_ffset"
 msgstr "偏移(_F)"
 
@@ -2449,9 +2449,10 @@ msgid "White level"
 msgstr "白色级别"
 
 #: plug-ins/common/despeckle.c:358 plug-ins/common/file-dicom.c:1656
-#: plug-ins/common/file-farbfeld.c:298 plug-ins/common/file-pcx.c:721
-#: plug-ins/common/file-pcx.c:858 plug-ins/common/file-raw-data.c:1516
-#: plug-ins/common/file-xmc.c:704 plug-ins/common/file-xmc.c:1031
+#: plug-ins/common/file-farbfeld.c:298 plug-ins/common/file-iff.c:674
+#: plug-ins/common/file-iff.c:726 plug-ins/common/file-pcx.c:723
+#: plug-ins/common/file-pcx.c:860 plug-ins/common/file-raw-data.c:1524
+#: plug-ins/common/file-xmc.c:706 plug-ins/common/file-xmc.c:1037
 #: plug-ins/file-bmp/bmp-load.c:800
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
@@ -2485,7 +2486,7 @@ msgid "This plug-in tries to remove vertical stripes from an image."
 msgstr "该插件尝试从图像中移除竖直条纹。"
 
 #: plug-ins/common/destripe.c:140 plug-ins/common/file-html-table.c:199
-#: plug-ins/common/file-ps.c:524 plug-ins/common/file-raw-data.c:367
+#: plug-ins/common/file-ps.c:524 plug-ins/common/file-raw-data.c:371
 #: plug-ins/common/smooth-palette.c:134 plug-ins/imagemap/imap_grid.c:258
 msgid "_Width"
 msgstr "宽度(_W)"
@@ -2587,17 +2588,17 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/common/file-gegl.c:333 plug-ins/common/file-gif-load.c:473
 #: plug-ins/common/file-heif.c:1054 plug-ins/common/file-jp2.c:1379
 #: plug-ins/common/file-pcx.c:482 plug-ins/common/file-pcx.c:525
-#: plug-ins/common/file-pdf-load.c:776 plug-ins/common/file-pix.c:368
+#: plug-ins/common/file-pdf-load.c:780 plug-ins/common/file-pix.c:368
 #: plug-ins/common/file-png.c:792 plug-ins/common/file-pnm.c:688
-#: plug-ins/common/file-ps.c:1151 plug-ins/common/file-raw-data.c:801
-#: plug-ins/common/file-raw-data.c:1862 plug-ins/common/file-sunras.c:427
+#: plug-ins/common/file-ps.c:1151 plug-ins/common/file-raw-data.c:805
+#: plug-ins/common/file-raw-data.c:1870 plug-ins/common/file-sunras.c:427
 #: plug-ins/common/file-tga.c:419 plug-ins/common/file-wbmp.c:242
 #: plug-ins/common/file-wbmp.c:321 plug-ins/common/file-wmf.c:618
-#: plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:647
+#: plug-ins/common/file-xbm.c:721 plug-ins/common/file-xmc.c:649
 #: plug-ins/common/file-xpm.c:360 plug-ins/common/file-xwd.c:457
 #: plug-ins/file-bmp/bmp-load.c:265 plug-ins/file-exr/file-exr.c:197
 #: plug-ins/file-faxg3/faxg3.c:247 plug-ins/file-fli/fli-gimp.c:483
-#: plug-ins/file-icns/file-icns-load.c:639 plug-ins/file-ico/ico-load.c:759
+#: plug-ins/file-icns/file-icns-load.c:622 plug-ins/file-ico/ico-load.c:759
 #: plug-ins/file-ico/ico-load.c:939 plug-ins/file-jpeg/jpeg-load.c:97
 #: plug-ins/file-psd/psd-load.c:203
 #: plug-ins/file-raw/file-another-rawtherapee.c:353
@@ -2667,12 +2668,12 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:825 plug-ins/common/file-farbfeld.c:364
-#: plug-ins/common/file-gif-export.c:944 plug-ins/common/file-html-table.c:358
+#: plug-ins/common/file-gif-export.c:945 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1822 plug-ins/common/file-jpegxl.c:1389
-#: plug-ins/common/file-pcx.c:1114 plug-ins/common/file-pix.c:649
+#: plug-ins/common/file-pcx.c:1116 plug-ins/common/file-pix.c:649
 #: plug-ins/common/file-png.c:1936 plug-ins/common/file-pnm.c:1634
-#: plug-ins/common/file-ps.c:1375 plug-ins/common/file-qoi.c:350
-#: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:794
+#: plug-ins/common/file-ps.c:1375 plug-ins/common/file-qoi.c:351
+#: plug-ins/common/file-sunras.c:607 plug-ins/common/file-svg.c:799
 #: plug-ins/common/file-tga.c:1217 plug-ins/common/file-tim.c:760
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:328
@@ -3026,19 +3027,19 @@ msgstr "OpenEXR 图像"
 msgid "Could not open '%s'"
 msgstr "无法打开“%s”"
 
-#: plug-ins/common/file-gif-export.c:155 plug-ins/common/file-gif-load.c:184
+#: plug-ins/common/file-gif-export.c:156 plug-ins/common/file-gif-load.c:184
 msgid "GIF image"
 msgstr "GIF 图像"
 
-#: plug-ins/common/file-gif-export.c:157
+#: plug-ins/common/file-gif-export.c:158
 msgid "GIF"
 msgstr "GIF"
 
-#: plug-ins/common/file-gif-export.c:160
+#: plug-ins/common/file-gif-export.c:161
 msgid "exports files in GIF file format"
 msgstr "以 GIF 文件格式导出文件"
 
-#: plug-ins/common/file-gif-export.c:163
+#: plug-ins/common/file-gif-export.c:164
 #, no-c-format
 msgid ""
 "Export a file in GIF format, with possible animation, transparency, and "
@@ -3051,102 +3052,102 @@ msgstr ""
 "并将“as-animation”参数设为 TRUE。该插件将把 <50% 透明通道解释为透明度。在非交"
 "互式运行时，注释将取自“gimp-comment”寄生物。"
 
-#: plug-ins/common/file-gif-export.c:192 plug-ins/common/file-mng.c:285
+#: plug-ins/common/file-gif-export.c:193 plug-ins/common/file-mng.c:285
 msgid "_Interlace"
 msgstr "交错(_I)"
 
-#: plug-ins/common/file-gif-export.c:193
+#: plug-ins/common/file-gif-export.c:194
 msgid "Try to export as interlaced"
 msgstr "尝试以隔行扫描导出"
 
-#: plug-ins/common/file-gif-export.c:198
+#: plug-ins/common/file-gif-export.c:199
 msgid "Loop _Forever"
 msgstr "永远循环(_F)"
 
-#: plug-ins/common/file-gif-export.c:199
+#: plug-ins/common/file-gif-export.c:200
 msgid "(animated gif) Loop infinitely"
 msgstr "（GIF 动画）无限循环"
 
-#: plug-ins/common/file-gif-export.c:204
+#: plug-ins/common/file-gif-export.c:205
 msgid "_Number of repeats"
 msgstr "重复次数(_N)"
 
-#: plug-ins/common/file-gif-export.c:205
+#: plug-ins/common/file-gif-export.c:206
 msgid "(animated gif) Number of repeats (Ignored if 'loop' is TRUE)"
 msgstr "（GIF 动画）重复的次数（如果“loop”为 TRUE 则忽略该选项）"
 
-#: plug-ins/common/file-gif-export.c:211
+#: plug-ins/common/file-gif-export.c:212
 msgid "_Delay between frames when unspecified"
 msgstr "未指定时帧之间的延时(_D)"
 
-#: plug-ins/common/file-gif-export.c:212
+#: plug-ins/common/file-gif-export.c:213
 msgid "(animated gif) Default delay between frames in milliseconds"
 msgstr "（GIF 动画）以毫秒为单位的默认帧间延时"
 
-#: plug-ins/common/file-gif-export.c:218
+#: plug-ins/common/file-gif-export.c:219
 msgid "Frame disposal _when unspecified"
 msgstr "未指定时的帧处理(_W)"
 
-#: plug-ins/common/file-gif-export.c:219
+#: plug-ins/common/file-gif-export.c:220
 msgid "(animated gif) Default disposal type"
 msgstr "（GIF 动画）默认处理类型"
 
-#: plug-ins/common/file-gif-export.c:220
+#: plug-ins/common/file-gif-export.c:221
 msgid "I don't care"
 msgstr "我不关心"
 
-#: plug-ins/common/file-gif-export.c:228
+#: plug-ins/common/file-gif-export.c:229
 msgid "_As animation"
 msgstr "作为动画(_A)"
 
-#: plug-ins/common/file-gif-export.c:229
+#: plug-ins/common/file-gif-export.c:230
 msgid "Export GIF as animation?"
 msgstr "导出 GIF 为动画吗？"
 
-#: plug-ins/common/file-gif-export.c:234
+#: plug-ins/common/file-gif-export.c:235
 msgid "_Use delay entered above for all frames"
 msgstr "上面输入的延迟用于所有帧(_U)"
 
-#: plug-ins/common/file-gif-export.c:235
+#: plug-ins/common/file-gif-export.c:236
 msgid "(animated gif) Use specified delay for all frames"
 msgstr "（GIF 动画）为所有帧使用指定延时"
 
-#: plug-ins/common/file-gif-export.c:240
+#: plug-ins/common/file-gif-export.c:241
 msgid "Use dis_posal entered above for all frames"
 msgstr "上面输入的处理用于所有帧(_P)"
 
-#: plug-ins/common/file-gif-export.c:242
+#: plug-ins/common/file-gif-export.c:243
 msgid "(animated gif) Use specified disposal for all frames"
 msgstr "（GIF 动画）为所有帧使用指定处理"
 
-#: plug-ins/common/file-gif-export.c:247
+#: plug-ins/common/file-gif-export.c:248
 msgid "Sa_ve comment"
 msgstr "保存注释(_V)"
 
-#: plug-ins/common/file-gif-export.c:248
+#: plug-ins/common/file-gif-export.c:249
 msgid "Save the image comment in the GIF file"
 msgstr "在 GIF 文件中保存图像注释"
 
-#: plug-ins/common/file-gif-export.c:253
+#: plug-ins/common/file-gif-export.c:254
 msgid "Commen_t"
 msgstr "注释(_T)"
 
-#: plug-ins/common/file-gif-export.c:254
+#: plug-ins/common/file-gif-export.c:255
 msgid "Image comment"
 msgstr "图像注释"
 
-#: plug-ins/common/file-gif-export.c:549
+#: plug-ins/common/file-gif-export.c:550
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "无法简单地进一步减少颜色。正在作为不透明导出。"
 
-#: plug-ins/common/file-gif-export.c:668
+#: plug-ins/common/file-gif-export.c:669
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr "无法导出“%s”。GIF 文件格式不支持宽度或高度大于 %d 像素的图像。"
 
-#: plug-ins/common/file-gif-export.c:691
+#: plug-ins/common/file-gif-export.c:692
 #, c-format
 msgid ""
 "Unable to export '%s'.  Please convert your image to 8 bit integer "
@@ -3154,32 +3155,32 @@ msgid ""
 msgstr ""
 "无法导出“%s”。请将您的图像转换为 8 位整数精度，GIF 文件格式不支持更高的精度。"
 
-#: plug-ins/common/file-gif-export.c:821
+#: plug-ins/common/file-gif-export.c:822
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr "GIF 格式只支持 7 位 ASCII 编码的注释。注释没有被保存。"
 
-#: plug-ins/common/file-gif-export.c:917
+#: plug-ins/common/file-gif-export.c:918
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr "无法导出 RGB 颜色图像。请先转换成索引颜色或灰度。"
 
-#: plug-ins/common/file-gif-export.c:1152
+#: plug-ins/common/file-gif-export.c:1153
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "插入了延时以防止生成严重阻塞 CPU 的动画。"
 
-#: plug-ins/common/file-gif-export.c:1224
+#: plug-ins/common/file-gif-export.c:1225
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr "您试图导出为 GIF 的图像含有超出图像实际边界的图层。"
 
-#: plug-ins/common/file-gif-export.c:1230
+#: plug-ins/common/file-gif-export.c:1231
 msgid "Cr_op"
 msgstr "剪裁(_O)"
 
-#: plug-ins/common/file-gif-export.c:1241
+#: plug-ins/common/file-gif-export.c:1242
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -3187,7 +3188,7 @@ msgstr ""
 "GIF 文件格式不允许这种情况。您可以选择裁掉所有图层中超出图像边界的部分，或者"
 "取消导出。"
 
-#: plug-ins/common/file-gif-export.c:1299
+#: plug-ins/common/file-gif-export.c:1317
 msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
@@ -3195,15 +3196,15 @@ msgstr ""
 "GIF 格式仅支持 8 位整数精度。\n"
 "您的图像将在导出时被转换，这可能会改变像素值。"
 
-#: plug-ins/common/file-gif-export.c:1367 plug-ins/common/file-mng.c:1645
+#: plug-ins/common/file-gif-export.c:1385 plug-ins/common/file-mng.c:1645
 msgid "milliseconds"
 msgstr "毫秒"
 
-#: plug-ins/common/file-gif-export.c:1402
+#: plug-ins/common/file-gif-export.c:1420
 msgid "Animated GIF"
 msgstr "GIF 动画"
 
-#: plug-ins/common/file-gif-export.c:1409
+#: plug-ins/common/file-gif-export.c:1427
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -3261,7 +3262,7 @@ msgstr "帧信息"
 msgid "local colormap"
 msgstr "局部颜色表"
 
-#: plug-ins/common/file-gif-load.c:651 plug-ins/common/file-iff.c:453
+#: plug-ins/common/file-gif-load.c:651
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr "非正方形像素。如果启用点对点模式则图像可能会看起来扁了。"
@@ -3483,27 +3484,27 @@ msgid "Describe how the layers will be split"
 msgstr "描述图层分割的方式"
 
 #: plug-ins/common/file-gih.c:246
-msgid "D_imension"
+msgid "D_imensions"
 msgstr "尺寸(_I)"
 
 #: plug-ins/common/file-gih.c:247
 msgid "How many dimensions the animated brush has"
 msgstr "动画笔刷具有的尺寸数量"
 
-#: plug-ins/common/file-gih.c:529
+#: plug-ins/common/file-gih.c:545
 msgid "Width Mismatch!"
 msgstr "宽度不匹配！"
 
-#: plug-ins/common/file-gih.c:530
+#: plug-ins/common/file-gih.c:546
 msgid "Height Mismatch!"
 msgstr "高度不匹配！"
 
-#: plug-ins/common/file-gih.c:577
+#: plug-ins/common/file-gih.c:593
 #, c-format
 msgid "Displays as a %d × %d grid on each layer"
 msgstr "在每个图层上显示为 %d × %d 网格"
 
-#: plug-ins/common/file-gih.c:763
+#: plug-ins/common/file-gih.c:779
 msgid "Ranks:"
 msgstr "等级："
 
@@ -3730,19 +3731,19 @@ msgstr "主要"
 msgid "Load HEIF Image"
 msgstr "载入 HEIF 图像"
 
-#: plug-ins/common/file-heif.c:2515
+#: plug-ins/common/file-heif.c:2522
 msgid "Select Image"
 msgstr "选择图像"
 
-#: plug-ins/common/file-heif.c:2664 plug-ins/common/file-jpegxl.c:2018
+#: plug-ins/common/file-heif.c:2671 plug-ins/common/file-jpegxl.c:2018
 msgid "8 bit/channel"
 msgstr "8 位/通道"
 
-#: plug-ins/common/file-heif.c:2665
+#: plug-ins/common/file-heif.c:2672
 msgid "10 bit/channel"
 msgstr "10 位/通道"
 
-#: plug-ins/common/file-heif.c:2666
+#: plug-ins/common/file-heif.c:2673
 msgid "12 bit/channel"
 msgstr "12 位/通道"
 
@@ -3791,7 +3792,7 @@ msgid "The width for each table cell. Can be a number or a percent."
 msgstr "每个单元格的宽度。可以是一个数字或百分数。"
 
 #: plug-ins/common/file-html-table.c:206 plug-ins/common/file-ps.c:531
-#: plug-ins/common/file-raw-data.c:372 plug-ins/common/smooth-palette.c:140
+#: plug-ins/common/file-raw-data.c:376 plug-ins/common/smooth-palette.c:140
 #: plug-ins/imagemap/imap_grid.c:264
 msgid "_Height"
 msgstr "高度(_H)"
@@ -3884,36 +3885,27 @@ msgstr "表格创建选项"
 msgid "Table Options"
 msgstr "表格选项"
 
-#: plug-ins/common/file-iff.c:151
+#: plug-ins/common/file-iff.c:198
 msgid "Amiga IFF"
 msgstr "Amiga IFF"
 
-#: plug-ins/common/file-iff.c:154
+#: plug-ins/common/file-iff.c:201
 msgid "Load file in the IFF file format"
 msgstr "加载 IFF 格式的文件"
 
-#: plug-ins/common/file-iff.c:179
+#: plug-ins/common/file-iff.c:226
 msgid "Load IFF file as thumbnail"
 msgstr "将 IFF 文件加载为缩略图"
 
-#: plug-ins/common/file-iff.c:290
-#, c-format
-msgid "This is not an ILBM image"
-msgstr "这不是 ILBM 图像"
-
-#: plug-ins/common/file-iff.c:319
-msgid "Invalid or missing ILBM image"
-msgstr "无效或缺失的 ILBM 图像"
-
-#: plug-ins/common/file-iff.c:334
-#, c-format
-msgid "ILBM contains no image data - likely a palette file"
-msgstr "ILBM 未包含图像数据——可能为色板文件"
-
-#: plug-ins/common/file-iff.c:370 plug-ins/common/file-iff.c:389
+#: plug-ins/common/file-iff.c:383 plug-ins/common/file-iff.c:602
 #, c-format
 msgid "Invalid ILBM colormap size"
 msgstr "无效的 ILBM 颜色表大小"
+
+#: plug-ins/common/file-iff.c:559
+#, c-format
+msgid "ILBM contains no image data - likely a palette file"
+msgstr "ILBM 未包含图像数据——可能为色板文件"
 
 #: plug-ins/common/file-jp2.c:214 plug-ins/common/file-jp2.c:309
 msgid "JPEG 2000 image"
@@ -4261,8 +4253,8 @@ msgstr "打开 .lnk 文件且如果其指向图像，将会使 GIMP 打开该链
 
 #: plug-ins/common/file-lnk.c:210 plug-ins/common/file-lnk.c:225
 #: plug-ins/common/file-lnk.c:234 plug-ins/common/file-lnk.c:247
-#: plug-ins/common/file-lnk.c:264 plug-ins/common/file-pnm.c:730
-#: plug-ins/common/file-raw-data.c:826
+#: plug-ins/common/file-lnk.c:262 plug-ins/common/file-lnk.c:272
+#: plug-ins/common/file-pnm.c:730 plug-ins/common/file-raw-data.c:830
 #: plug-ins/common/file-seattle-filmworks.c:244
 #: plug-ins/common/file-seattle-filmworks.c:285
 #: plug-ins/common/file-seattle-filmworks.c:295
@@ -4448,7 +4440,7 @@ msgid "Load file in the Bohemia Interactive PAA file format"
 msgstr "加载波希米亚互动 PAA 格式的文件"
 
 #: plug-ins/common/file-paa.c:233 plug-ins/common/file-paa.c:270
-#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:648
+#: plug-ins/common/file-paa.c:291 plug-ins/common/file-pcx.c:650
 #: plug-ins/common/file-pvr.c:311 plug-ins/common/file-pvr.c:354
 #: plug-ins/common/file-pvr.c:366 plug-ins/common/file-tim.c:363
 #: plug-ins/common/file-tim.c:391 plug-ins/common/file-tim.c:478
@@ -4583,68 +4575,69 @@ msgstr "未加载混合模式 DCX 图像"
 msgid "%s: Could not load all DCX images: %s\n"
 msgstr "%s：无法加载所有 DCX 图像：%s\n"
 
-#: plug-ins/common/file-pcx.c:658
+#: plug-ins/common/file-pcx.c:660
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "“%s”不是 PCX 文件"
 
-#: plug-ins/common/file-pcx.c:674 plug-ins/common/file-wbmp.c:464
+#: plug-ins/common/file-pcx.c:676 plug-ins/common/file-wbmp.c:464
 #: plug-ins/common/file-xpm.c:390 plug-ins/file-bmp/bmp-load.c:606
 #: plug-ins/file-psd/psd-load.c:646
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "不支持或无效的图像宽度：%d"
 
-#: plug-ins/common/file-pcx.c:681 plug-ins/common/file-wbmp.c:470
+#: plug-ins/common/file-pcx.c:683 plug-ins/common/file-wbmp.c:470
 #: plug-ins/common/file-xpm.c:398 plug-ins/file-bmp/bmp-load.c:615
 #: plug-ins/file-psd/psd-load.c:638
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "不支持或无效的图像高度：%d"
 
-#: plug-ins/common/file-pcx.c:691 plug-ins/common/file-pcx.c:871
+#: plug-ins/common/file-pcx.c:693 plug-ins/common/file-pcx.c:873
 #, c-format
 msgid "Unusual PCX flavour, giving up"
 msgstr "异常的 PCX 类型，放弃"
 
-#: plug-ins/common/file-pcx.c:704
+#: plug-ins/common/file-pcx.c:706
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "PCX 文件头中的无效的每行字节数"
 
-#: plug-ins/common/file-pcx.c:711
+#: plug-ins/common/file-pcx.c:713
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "XCX 文件头中的分辨率超出边界，将使用 72×72"
 
-#: plug-ins/common/file-pcx.c:896
+#: plug-ins/common/file-pcx.c:898
 msgid "Import from PCX"
 msgstr "从 PCX 导入"
 
-#: plug-ins/common/file-pcx.c:1182 plug-ins/common/file-pnm.c:1630
+#: plug-ins/common/file-pcx.c:1184 plug-ins/common/file-pnm.c:1630
 msgid "Cannot export images with alpha channel."
 msgstr "无法导出带有透明通道的图像。"
 
-#: plug-ins/common/file-pcx.c:1207
+#: plug-ins/common/file-pcx.c:1209
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "无效的 X 偏移：%d"
 
-#: plug-ins/common/file-pcx.c:1215
+#: plug-ins/common/file-pcx.c:1217
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "无效的 Y 偏移：%d"
 
-#: plug-ins/common/file-pcx.c:1223
+#: plug-ins/common/file-pcx.c:1225
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "右边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1232
+#: plug-ins/common/file-pcx.c:1234
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "下边框超出边界（须 < %d）：%d"
 
-#: plug-ins/common/file-pcx.c:1314 plug-ins/common/file-qoi.c:369
-#: plug-ins/common/file-svg.c:803 plug-ins/common/file-svg.c:819
+#: plug-ins/common/file-pcx.c:1316 plug-ins/common/file-qoi.c:361
+#: plug-ins/common/file-qoi.c:378 plug-ins/common/file-svg.c:808
+#: plug-ins/common/file-svg.c:824
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "写入文件“%s”失败：%s"
@@ -4884,16 +4877,16 @@ msgstr "PDF 被密码保护，请输入密码："
 msgid "Encrypted PDF"
 msgstr "加密 PDF"
 
-#: plug-ins/common/file-pdf-load.c:609
+#: plug-ins/common/file-pdf-load.c:613
 msgid "Wrong password! Please input the right one:"
 msgstr "密码错误！请输入正确密码："
 
-#: plug-ins/common/file-pdf-load.c:627
+#: plug-ins/common/file-pdf-load.c:631
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "无法载入“%s”：%s"
 
-#: plug-ins/common/file-pdf-load.c:1101
+#: plug-ins/common/file-pdf-load.c:1105
 msgid "Error getting number of pages from the given PDF file."
 msgstr "从指定 PDF 文件获取页数时出错。"
 
@@ -5243,7 +5236,7 @@ msgstr "以 PFM 格式导出文件"
 msgid "PFM export handles all images without transparency."
 msgstr "PFM 导出会处理所有不带透明度的图像。"
 
-#: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:116
+#: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:110
 #: plug-ins/file-jpeg/jpeg-load.c:133 plug-ins/file-jpeg/jpeg-load.c:728
 #, c-format
 msgid "Error reading data. Image may be corrupt."
@@ -5738,8 +5731,8 @@ msgid "Error creating layer"
 msgstr "创建图层出错"
 
 #: plug-ins/common/file-psp.c:2160 plug-ins/common/file-psp.c:2207
-#: plug-ins/common/file-psp.c:2535 plug-ins/common/file-psp.c:2559
-#: plug-ins/common/file-psp.c:2574
+#: plug-ins/common/file-psp.c:2536 plug-ins/common/file-psp.c:2560
+#: plug-ins/common/file-psp.c:2575
 #, c-format
 msgid "Error reading channel information chunk"
 msgstr "读取通道信息数据块出错"
@@ -5759,102 +5752,102 @@ msgstr "通道信息数据块中的无效通道类型 %d"
 msgid "Error reading tube data chunk"
 msgstr "读取管道数据块出错"
 
-#: plug-ins/common/file-psp.c:2458 plug-ins/common/file-psp.c:2475
-#: plug-ins/common/file-psp.c:2497 plug-ins/common/file-psp.c:2505
+#: plug-ins/common/file-psp.c:2459 plug-ins/common/file-psp.c:2476
+#: plug-ins/common/file-psp.c:2498 plug-ins/common/file-psp.c:2506
 #, c-format
 msgid "Error reading selection chunk"
 msgstr "读取选区块时出错"
 
-#: plug-ins/common/file-psp.c:2467
+#: plug-ins/common/file-psp.c:2468
 #, c-format
 msgid "Invalid selection chunk size"
 msgstr "无效的选区块大小"
 
-#: plug-ins/common/file-psp.c:2489 plug-ins/common/file-psp.c:2513
-#: plug-ins/common/file-psp.c:2547 plug-ins/common/file-psp.c:2590
+#: plug-ins/common/file-psp.c:2490 plug-ins/common/file-psp.c:2514
+#: plug-ins/common/file-psp.c:2548 plug-ins/common/file-psp.c:2591
 #, c-format
 msgid "Error reading end of selection chunk"
 msgstr "读取选区块末尾时出错"
 
-#: plug-ins/common/file-psp.c:2522
+#: plug-ins/common/file-psp.c:2523
 #, c-format
 msgid "Invalid selection sub-block %s, should be CHANNEL"
 msgstr "无效的选区子数据块 %s，应该为通道"
 
-#: plug-ins/common/file-psp.c:2615
+#: plug-ins/common/file-psp.c:2616
 #, c-format
 msgid "Error reading extended block chunk header"
 msgstr "读取扩展的数据块头部信息出错"
 
-#: plug-ins/common/file-psp.c:2622
+#: plug-ins/common/file-psp.c:2623
 #, c-format
 msgid "Invalid extended block chunk header"
 msgstr "无效的扩展数据块头部信息"
 
-#: plug-ins/common/file-psp.c:2633
+#: plug-ins/common/file-psp.c:2634
 #, c-format
 msgid "Invalid extended block chunk size"
 msgstr "无效的扩展数据块大小"
 
-#: plug-ins/common/file-psp.c:2654
+#: plug-ins/common/file-psp.c:2655
 #, c-format
 msgid "Error reading extended chunk grid data"
 msgstr "读取扩展的数据块网格数据出错"
 
-#: plug-ins/common/file-psp.c:2682
+#: plug-ins/common/file-psp.c:2683
 #, c-format
 msgid "Error reading extended chunk guide data"
 msgstr "读取扩展的数据块参考线数据出错"
 
-#: plug-ins/common/file-psp.c:2700
+#: plug-ins/common/file-psp.c:2701
 #, c-format
 msgid "Invalid guide orientation"
 msgstr "无效的参考线方向"
 
-#: plug-ins/common/file-psp.c:2714
+#: plug-ins/common/file-psp.c:2715
 #, c-format
 msgid "Error reading extended block chunk"
 msgstr "读取扩展的数据块出错"
 
-#: plug-ins/common/file-psp.c:2740 plug-ins/common/file-psp.c:2752
-#: plug-ins/common/file-psp.c:2763
+#: plug-ins/common/file-psp.c:2741 plug-ins/common/file-psp.c:2753
+#: plug-ins/common/file-psp.c:2764
 #, c-format
 msgid "Error reading colorprofile chunk"
 msgstr "读取特性文件数据块时出错"
 
-#: plug-ins/common/file-psp.c:2816 plug-ins/file-icns/file-icns-load.c:130
+#: plug-ins/common/file-psp.c:2817 plug-ins/file-icns/file-icns-load.c:124
 #, c-format
 msgid "Error reading file header."
 msgstr "读取文件头部信息出错。"
 
-#: plug-ins/common/file-psp.c:2823
+#: plug-ins/common/file-psp.c:2824
 #, c-format
 msgid "Incorrect file signature."
 msgstr "错误的文件签名。"
 
-#: plug-ins/common/file-psp.c:2837
+#: plug-ins/common/file-psp.c:2838
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
 msgstr "不支持的 PSP 文件格式版本 %d.%d。"
 
-#: plug-ins/common/file-psp.c:2857 plug-ins/file-psd/psd-load.c:1307
+#: plug-ins/common/file-psp.c:2858 plug-ins/file-psd/psd-load.c:1307
 #: plug-ins/file-psd/psd-load.c:1341 plug-ins/file-psd/psd-load.c:1371
 #: plug-ins/file-psd/psd-load.c:1408
 #, c-format
 msgid "invalid block size"
 msgstr "无效的数据块大小"
 
-#: plug-ins/common/file-psp.c:2866
+#: plug-ins/common/file-psp.c:2867
 #, c-format
 msgid "Duplicate General Image Attributes block."
 msgstr "重制通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:2894
+#: plug-ins/common/file-psp.c:2895
 #, c-format
 msgid "Missing General Image Attributes block."
 msgstr "缺失通常的图像属性数据块。"
 
-#: plug-ins/common/file-psp.c:3019
+#: plug-ins/common/file-psp.c:3020
 #, c-format
 msgid "Exporting not implemented yet."
 msgstr "尚未实现导出功能。"
@@ -5946,207 +5939,207 @@ msgstr "以 QOI（Quite OK 图像）格式导出图像"
 msgid "Failed to read QOI file"
 msgstr "读取 QOI 文件失败"
 
-#: plug-ins/common/file-raw-data.c:348 plug-ins/common/file-raw-data.c:541
+#: plug-ins/common/file-raw-data.c:352 plug-ins/common/file-raw-data.c:545
 msgid "Raw image data"
 msgstr "Raw 图像数据"
 
-#: plug-ins/common/file-raw-data.c:351 plug-ins/common/file-raw-data.c:353
+#: plug-ins/common/file-raw-data.c:355 plug-ins/common/file-raw-data.c:357
 msgid "Load raw images, specifying image information"
 msgstr "加载 Raw 图像，指定图像信息"
 
-#: plug-ins/common/file-raw-data.c:368
+#: plug-ins/common/file-raw-data.c:372
 msgid "Image width in number of pixels"
 msgstr "图像宽度（像素数量）"
 
-#: plug-ins/common/file-raw-data.c:373
+#: plug-ins/common/file-raw-data.c:377
 msgid "Image height in number of pixels"
 msgstr "图像高度（像素数量）"
 
-#: plug-ins/common/file-raw-data.c:378
+#: plug-ins/common/file-raw-data.c:382
 msgid "Offset to beginning of image in raw data"
 msgstr "在 Raw 数据中图像起始的偏移"
 
-#: plug-ins/common/file-raw-data.c:383
+#: plug-ins/common/file-raw-data.c:387
 msgid "Pi_xel format"
 msgstr "像素格式(_X)"
 
-#: plug-ins/common/file-raw-data.c:384
+#: plug-ins/common/file-raw-data.c:388
 msgid "The layout of pixel data, such as components and their order"
 msgstr "像素数据的布局，比如分量和它们的顺序"
 
-#: plug-ins/common/file-raw-data.c:385
+#: plug-ins/common/file-raw-data.c:389
 msgid "RGB 8-bit"
 msgstr "RGB 8 位"
 
-#: plug-ins/common/file-raw-data.c:386
+#: plug-ins/common/file-raw-data.c:390
 msgid "RGB 16-bit"
 msgstr "RGB 16 位"
 
-#: plug-ins/common/file-raw-data.c:387
+#: plug-ins/common/file-raw-data.c:391
 msgid "RGB 32-bit"
 msgstr "RGB 32 位"
 
-#: plug-ins/common/file-raw-data.c:388
+#: plug-ins/common/file-raw-data.c:392
 msgid "RGBA 8-bit"
 msgstr "RGBA 8 位"
 
-#: plug-ins/common/file-raw-data.c:389
+#: plug-ins/common/file-raw-data.c:393
 msgid "RGBA 16-bit"
 msgstr "RGBA 16 位"
 
-#: plug-ins/common/file-raw-data.c:390
+#: plug-ins/common/file-raw-data.c:394
 msgid "RGBA 32-bit"
 msgstr "RGBA 32 位"
 
-#: plug-ins/common/file-raw-data.c:391
+#: plug-ins/common/file-raw-data.c:395
 msgid "RGB565"
 msgstr "RGB565"
 
-#: plug-ins/common/file-raw-data.c:392
+#: plug-ins/common/file-raw-data.c:396
 msgid "BGR565"
 msgstr "BGR565"
 
-#: plug-ins/common/file-raw-data.c:393
+#: plug-ins/common/file-raw-data.c:397
 msgid "B&W 1 bit"
 msgstr "黑白 1 位"
 
-#: plug-ins/common/file-raw-data.c:394
+#: plug-ins/common/file-raw-data.c:398
 msgid "Grayscale 2-bit"
 msgstr "灰度 2 位"
 
-#: plug-ins/common/file-raw-data.c:395
+#: plug-ins/common/file-raw-data.c:399
 msgid "Grayscale 4-bit"
 msgstr "灰度 4 位"
 
-#: plug-ins/common/file-raw-data.c:396
+#: plug-ins/common/file-raw-data.c:400
 msgid "Grayscale 8-bit"
 msgstr "灰度 8 位"
 
-#: plug-ins/common/file-raw-data.c:397
+#: plug-ins/common/file-raw-data.c:401
 msgid "Grayscale 16-bit"
 msgstr "灰度 16 位"
 
-#: plug-ins/common/file-raw-data.c:398
+#: plug-ins/common/file-raw-data.c:402
 msgid "Grayscale 32-bit"
 msgstr "灰度 32 位"
 
-#: plug-ins/common/file-raw-data.c:399
+#: plug-ins/common/file-raw-data.c:403
 msgid "Grayscale-Alpha 8-bit"
 msgstr "灰度透明 8 位"
 
-#: plug-ins/common/file-raw-data.c:400
+#: plug-ins/common/file-raw-data.c:404
 msgid "Grayscale-Alpha 16-bit"
 msgstr "灰度透明 16 位"
 
-#: plug-ins/common/file-raw-data.c:401
+#: plug-ins/common/file-raw-data.c:405
 msgid "Grayscale-Alpha 32-bit"
 msgstr "灰度透明 32 位"
 
-#: plug-ins/common/file-raw-data.c:402
+#: plug-ins/common/file-raw-data.c:406
 msgid "Indexed"
 msgstr "索引"
 
-#: plug-ins/common/file-raw-data.c:403
+#: plug-ins/common/file-raw-data.c:407
 msgid "Indexed Alpha"
 msgstr "索引透明"
 
-#: plug-ins/common/file-raw-data.c:407
+#: plug-ins/common/file-raw-data.c:411
 msgid "_Data type"
 msgstr "数据类型(_D)"
 
-#: plug-ins/common/file-raw-data.c:408
+#: plug-ins/common/file-raw-data.c:412
 msgid "Data type used to represent pixel values"
 msgstr "用来表现像素值的数据类型"
 
-#: plug-ins/common/file-raw-data.c:409
+#: plug-ins/common/file-raw-data.c:413
 msgid "Unsigned Integer"
 msgstr "无符号整数"
 
-#: plug-ins/common/file-raw-data.c:410
+#: plug-ins/common/file-raw-data.c:414
 msgid "Signed Integer"
 msgstr "有符号整数"
 
-#: plug-ins/common/file-raw-data.c:411
+#: plug-ins/common/file-raw-data.c:415
 msgid "Floating Point"
 msgstr "浮点"
 
-#: plug-ins/common/file-raw-data.c:415
+#: plug-ins/common/file-raw-data.c:419
 msgid "_Endianness"
 msgstr "字节顺序(_E)"
 
-#: plug-ins/common/file-raw-data.c:416
+#: plug-ins/common/file-raw-data.c:420
 msgid "Order of sequences of bytes"
 msgstr "字节序列的排序"
 
-#: plug-ins/common/file-raw-data.c:417
+#: plug-ins/common/file-raw-data.c:421
 msgid "Little Endian"
 msgstr "小端"
 
-#: plug-ins/common/file-raw-data.c:418
+#: plug-ins/common/file-raw-data.c:422
 msgid "Big Endian"
 msgstr "大端"
 
-#: plug-ins/common/file-raw-data.c:422
+#: plug-ins/common/file-raw-data.c:426
 msgid "Planar confi_guration"
 msgstr "平面配置(_G)"
 
-#: plug-ins/common/file-raw-data.c:423 plug-ins/common/file-raw-data.c:564
+#: plug-ins/common/file-raw-data.c:427 plug-ins/common/file-raw-data.c:568
 msgid "How color pixel data are stored"
 msgstr "颜色像素数据存储的方式"
 
-#: plug-ins/common/file-raw-data.c:424 plug-ins/common/file-raw-data.c:565
+#: plug-ins/common/file-raw-data.c:428 plug-ins/common/file-raw-data.c:569
 msgid "Contiguous"
 msgstr "连续"
 
-#: plug-ins/common/file-raw-data.c:425 plug-ins/common/file-raw-data.c:566
+#: plug-ins/common/file-raw-data.c:429 plug-ins/common/file-raw-data.c:570
 msgid "Planar"
 msgstr "平面"
 
-#: plug-ins/common/file-raw-data.c:432 plug-ins/common/file-raw-data.c:493
+#: plug-ins/common/file-raw-data.c:436 plug-ins/common/file-raw-data.c:497
 msgid "Palette Offse_t"
 msgstr "色板偏移(_T)"
 
-#: plug-ins/common/file-raw-data.c:433 plug-ins/common/file-raw-data.c:494
+#: plug-ins/common/file-raw-data.c:437 plug-ins/common/file-raw-data.c:498
 msgid "Offset to beginning of data in the palette file"
 msgstr "色板文件中数据起始的偏移"
 
-#: plug-ins/common/file-raw-data.c:438 plug-ins/common/file-raw-data.c:499
-#: plug-ins/common/file-raw-data.c:571
+#: plug-ins/common/file-raw-data.c:442 plug-ins/common/file-raw-data.c:503
+#: plug-ins/common/file-raw-data.c:575
 msgid "Palette's la_yout"
 msgstr "色板布局(_Y)"
 
-#: plug-ins/common/file-raw-data.c:439 plug-ins/common/file-raw-data.c:500
-#: plug-ins/common/file-raw-data.c:572
+#: plug-ins/common/file-raw-data.c:443 plug-ins/common/file-raw-data.c:504
+#: plug-ins/common/file-raw-data.c:576
 msgid "The layout for the palette's color channels"
 msgstr "色板颜色通道的布局"
 
-#: plug-ins/common/file-raw-data.c:440 plug-ins/common/file-raw-data.c:501
-#: plug-ins/common/file-raw-data.c:573
+#: plug-ins/common/file-raw-data.c:444 plug-ins/common/file-raw-data.c:505
+#: plug-ins/common/file-raw-data.c:577
 msgid "R, G, B (normal)"
 msgstr "R，G，B（正常）"
 
-#: plug-ins/common/file-raw-data.c:441 plug-ins/common/file-raw-data.c:502
-#: plug-ins/common/file-raw-data.c:574
+#: plug-ins/common/file-raw-data.c:445 plug-ins/common/file-raw-data.c:506
+#: plug-ins/common/file-raw-data.c:578
 msgid "B, G, R, X (BMP style)"
 msgstr "B，G，R，X（BMP 风格）"
 
-#: plug-ins/common/file-raw-data.c:445 plug-ins/common/file-raw-data.c:506
+#: plug-ins/common/file-raw-data.c:449 plug-ins/common/file-raw-data.c:510
 msgid "_Palette File"
 msgstr "色板文件(_P)"
 
-#: plug-ins/common/file-raw-data.c:446 plug-ins/common/file-raw-data.c:507
+#: plug-ins/common/file-raw-data.c:450 plug-ins/common/file-raw-data.c:511
 msgid "The file containing palette data"
 msgstr "该文件包含色板数据"
 
-#: plug-ins/common/file-raw-data.c:458 plug-ins/common/file-raw-data.c:2985
+#: plug-ins/common/file-raw-data.c:462 plug-ins/common/file-raw-data.c:2993
 msgid "Digital Elevation Model data"
 msgstr "数字高程模型数据"
 
-#: plug-ins/common/file-raw-data.c:461
+#: plug-ins/common/file-raw-data.c:465
 msgid "Load HGT data as images"
 msgstr "加载 HGT 数据为图像"
 
-#: plug-ins/common/file-raw-data.c:462
+#: plug-ins/common/file-raw-data.c:466
 msgid ""
 "Load Digital Elevation Model data in HGT format from the Shuttle Radar "
 "Topography Mission as images. Though the output image will be RGB, all "
@@ -6158,50 +6151,50 @@ msgstr ""
 "输出图像为 RGB，但所有颜色默认为灰度且对比度在大部分地形起伏上都相当低。因此"
 "您可能想要将高度重映射到颜色作为第二步处理，比如使用“渐变映射”插件。"
 
-#: plug-ins/common/file-raw-data.c:482
+#: plug-ins/common/file-raw-data.c:486
 msgid "Sa_mple spacing"
 msgstr "采样区间(_M)"
 
-#: plug-ins/common/file-raw-data.c:483
+#: plug-ins/common/file-raw-data.c:487
 msgid "The sample spacing of the data."
 msgstr "该数据的采样区间。"
 
-#: plug-ins/common/file-raw-data.c:484
+#: plug-ins/common/file-raw-data.c:488
 msgid "Auto-Detect"
 msgstr "自动检测"
 
-#: plug-ins/common/file-raw-data.c:485
+#: plug-ins/common/file-raw-data.c:489
 msgid "SRTM-1 (1 arc second)"
 msgstr "SRTM-1（1 角秒）"
 
-#: plug-ins/common/file-raw-data.c:486
+#: plug-ins/common/file-raw-data.c:490
 msgid "SRTM-3 (3 arc seconds)"
 msgstr "SRTM-3（3 角秒）"
 
-#: plug-ins/common/file-raw-data.c:544 plug-ins/common/file-raw-data.c:545
+#: plug-ins/common/file-raw-data.c:548 plug-ins/common/file-raw-data.c:549
 msgid "Dump images to disk in raw format"
 msgstr "以 Raw 格式将图像转存到磁盘"
 
-#: plug-ins/common/file-raw-data.c:563
+#: plug-ins/common/file-raw-data.c:567
 msgid "Planar configuration"
 msgstr "平面配置"
 
-#: plug-ins/common/file-raw-data.c:580
+#: plug-ins/common/file-raw-data.c:584
 msgid "Raw Data"
 msgstr "Raw 数据"
 
-#: plug-ins/common/file-raw-data.c:623 plug-ins/file-psd/psd-util.c:199
+#: plug-ins/common/file-raw-data.c:627 plug-ins/file-psd/psd-util.c:199
 #, c-format
 msgid "Unexpected end of file"
 msgstr "意料之外的文件尾"
 
-#: plug-ins/common/file-raw-data.c:656
+#: plug-ins/common/file-raw-data.c:660
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
 msgstr "%d 不是有效的采样空间。有效数值为：0（自动检测），1 和 3。"
 
-#: plug-ins/common/file-raw-data.c:669
+#: plug-ins/common/file-raw-data.c:673
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -6211,12 +6204,12 @@ msgstr ""
 "自动检测采样空间失败。“%s”不是有效的 HGT 文件或尚未支持它的变体。支持的 HGT "
 "文件为：SRTM-1 和 SRTM-3。如果您知道该变体，用参数 1 或 3 运行。"
 
-#: plug-ins/common/file-raw-data.c:1746
+#: plug-ins/common/file-raw-data.c:1754
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "无法打开“%s”实现大小验证：%s"
 
-#: plug-ins/common/file-raw-data.c:2864
+#: plug-ins/common/file-raw-data.c:2872
 msgid "Load Image from Raw Data"
 msgstr "从 Raw 数据载入图像"
 
@@ -6224,43 +6217,43 @@ msgstr "从 Raw 数据载入图像"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: plug-ins/common/file-raw-data.c:2979
+#: plug-ins/common/file-raw-data.c:2987
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "数字高程模型数据（1 角秒）"
 
-#: plug-ins/common/file-raw-data.c:2982
+#: plug-ins/common/file-raw-data.c:2990
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "数字高程模型数据（3 角秒）"
 
-#: plug-ins/common/file-raw-data.c:2989
+#: plug-ins/common/file-raw-data.c:2997
 msgid "Image"
 msgstr "图像"
 
-#: plug-ins/common/file-raw-data.c:3001
+#: plug-ins/common/file-raw-data.c:3009
 msgid "Palette"
 msgstr "色板"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3091
+#: plug-ins/common/file-raw-data.c:3099
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "连续（%s）(_C)"
 
-#: plug-ins/common/file-raw-data.c:3093
+#: plug-ins/common/file-raw-data.c:3101
 msgid "_Contiguous"
 msgstr "连续(_C)"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: plug-ins/common/file-raw-data.c:3099
+#: plug-ins/common/file-raw-data.c:3107
 #, c-format
 msgid "_Planar (%s)"
 msgstr "平面（%s）(_P)"
 
-#: plug-ins/common/file-raw-data.c:3101
+#: plug-ins/common/file-raw-data.c:3109
 msgid "_Planar"
 msgstr "平面(_P)"
 
@@ -6502,7 +6495,7 @@ msgstr "是(_Y)"
 #. * cases. Instead of this, we need to ask each and every time, in
 #. * case it might be the huge data error.
 #.
-#: plug-ins/common/file-svg.c:437
+#: plug-ins/common/file-svg.c:442
 msgid ""
 "A parsing error occurred.\n"
 "Disabling safety limits may help. Malicious SVG files may use this to "
@@ -6511,28 +6504,28 @@ msgstr ""
 "发生了解析错误。\n"
 "禁用安全限制可能会有帮助。恶意 SVG 文件可能会用此消耗过多内存。"
 
-#: plug-ins/common/file-svg.c:449
+#: plug-ins/common/file-svg.c:454
 msgid "For security reasons, this should only be used for trusted input!"
 msgstr "为了安全原因，该选项应仅用于信任的输入！"
 
-#: plug-ins/common/file-svg.c:456
+#: plug-ins/common/file-svg.c:461
 msgid "Retry without limits preventing to parse huge data?"
 msgstr "不带阻止解析巨量数据的限制来重试吗？"
 
-#: plug-ins/common/file-svg.c:758 plug-ins/file-exr/file-exr.c:380
+#: plug-ins/common/file-svg.c:763 plug-ins/file-exr/file-exr.c:380
 #: plug-ins/file-exr/file-exr.c:394
 msgid "Unknown reason"
 msgstr "未知原因"
 
-#: plug-ins/common/file-svg.c:764
+#: plug-ins/common/file-svg.c:769
 msgid "Rendering SVG"
 msgstr "渲染 SVG"
 
-#: plug-ins/common/file-svg.c:774
+#: plug-ins/common/file-svg.c:779
 msgid "Rendered SVG"
 msgstr "已渲染的 SVG"
 
-#: plug-ins/common/file-svg.c:1130
+#: plug-ins/common/file-svg.c:1135
 msgid ""
 "The SVG format only requires viewers to display image links for SVG, PNG, "
 "and JPEG images.\n"
@@ -6795,7 +6788,7 @@ msgstr "写入注释(_W)"
 msgid "Write a comment at the beginning of the file."
 msgstr "在文件开头写入注释。"
 
-#: plug-ins/common/file-xbm.c:225 plug-ins/common/file-xmc.c:448
+#: plug-ins/common/file-xbm.c:225 plug-ins/common/file-xmc.c:450
 #: plug-ins/common/mail.c:254
 msgid "Co_mment"
 msgstr "注释(_M)"
@@ -6828,7 +6821,7 @@ msgstr "热点 X(_P)"
 msgid "X coordinate of hotspot"
 msgstr "热点的 X 坐标"
 
-#: plug-ins/common/file-xbm.c:252 plug-ins/common/file-xmc.c:383
+#: plug-ins/common/file-xbm.c:252 plug-ins/common/file-xmc.c:385
 msgid "Hot spot _Y"
 msgstr "热点 Y(_Y)"
 
@@ -6906,20 +6899,20 @@ msgstr ""
 "写入注释将使该 XBM 文件无法被一些应用读取。\n"
 "该注释不会影响将 XBM 嵌入 C 源代码。"
 
-#: plug-ins/common/file-xmc.c:300 plug-ins/common/file-xmc.c:349
-#: plug-ins/common/file-xmc.c:351
+#: plug-ins/common/file-xmc.c:302 plug-ins/common/file-xmc.c:351
+#: plug-ins/common/file-xmc.c:353
 msgid "X11 Mouse Cursor"
 msgstr "X11 鼠标指针"
 
-#: plug-ins/common/file-xmc.c:303
+#: plug-ins/common/file-xmc.c:305
 msgid "Loads files of X11 Mouse Cursor file format"
 msgstr "加载 X11 鼠标指针格式的文件"
 
-#: plug-ins/common/file-xmc.c:305
+#: plug-ins/common/file-xmc.c:307
 msgid "This plug-in loads X11 Mouse Cursor (XMC) files."
 msgstr "该插件加载 X11 鼠标指针（XMC）文件。"
 
-#: plug-ins/common/file-xmc.c:330
+#: plug-ins/common/file-xmc.c:332
 msgid ""
 "Loads only first frame of X11 Mouse Cursor's animation sequence which "
 "nominal size is the closest of thumb-size to be used as a thumbnail"
@@ -6927,87 +6920,87 @@ msgstr ""
 "仅加载 X11 鼠标指针动画序列的第一帧，其正常尺寸最接近缩略图大小可作为缩略图使"
 "用"
 
-#: plug-ins/common/file-xmc.c:354
+#: plug-ins/common/file-xmc.c:356
 msgid "Exports files of X11 cursor file"
 msgstr "导出 X11 指针文件"
 
-#: plug-ins/common/file-xmc.c:355
+#: plug-ins/common/file-xmc.c:357
 msgid "This plug-in exports X11 Mouse Cursor (XMC) files"
 msgstr "该插件导出 X11 鼠标指针（XMC）文件。"
 
-#: plug-ins/common/file-xmc.c:376
+#: plug-ins/common/file-xmc.c:378
 msgid "Hot spot _X"
 msgstr "热点 _X"
 
-#: plug-ins/common/file-xmc.c:377
+#: plug-ins/common/file-xmc.c:379
 msgid "X-coordinate of hot spot (use -1, -1 to keep original hot spot)"
 msgstr "热点的 X 轴坐标（使用 -1, -1 可保持原始热点）"
 
-#: plug-ins/common/file-xmc.c:384
+#: plug-ins/common/file-xmc.c:386
 msgid "Y-coordinate of hot spot (use -1, -1 to keep original hot spot)"
 msgstr "热点的 Y 轴坐标（使用 -1, -1 可保持原始热点）"
 
-#: plug-ins/common/file-xmc.c:390
+#: plug-ins/common/file-xmc.c:392
 msgid "_Auto Crop all frames"
 msgstr "自动裁切所有帧(_A)"
 
-#: plug-ins/common/file-xmc.c:391
+#: plug-ins/common/file-xmc.c:393
 msgid "Remove the empty borders of all frames."
 msgstr "移除所有帧的空白边缘。"
 
-#: plug-ins/common/file-xmc.c:396
+#: plug-ins/common/file-xmc.c:398
 msgid "Si_ze where unspecified"
 msgstr "未指定的大小(_Z)"
 
-#: plug-ins/common/file-xmc.c:397
+#: plug-ins/common/file-xmc.c:399
 msgid "Default frame size if unspecified"
 msgstr "如果未指定则使用默认帧大小"
 
-#: plug-ins/common/file-xmc.c:411
+#: plug-ins/common/file-xmc.c:413
 msgid "_Use default size for all frames"
 msgstr "为所有帧使用默认大小(_U)"
 
-#: plug-ins/common/file-xmc.c:412
+#: plug-ins/common/file-xmc.c:414
 msgid "Use default size for all frames"
 msgstr "为所有帧使用默认大小"
 
-#: plug-ins/common/file-xmc.c:417
+#: plug-ins/common/file-xmc.c:419
 msgid "_Delay where unspecified"
 msgstr "未指定的延迟(_D)"
 
-#: plug-ins/common/file-xmc.c:418
+#: plug-ins/common/file-xmc.c:420
 msgid "Default time span in milliseconds in which each frame is rendered"
 msgstr "默认每帧渲染的以毫秒为单位的时间跨度"
 
-#: plug-ins/common/file-xmc.c:424
+#: plug-ins/common/file-xmc.c:426
 msgid "Use default delay for all _frames"
 msgstr "为所有帧使用默认延时(_F)"
 
-#: plug-ins/common/file-xmc.c:425
+#: plug-ins/common/file-xmc.c:427
 msgid "Use default delay for all frames"
 msgstr "为所有帧使用默认延时"
 
-#: plug-ins/common/file-xmc.c:430
+#: plug-ins/common/file-xmc.c:432
 msgid "C_opyright"
 msgstr "版权(_O)"
 
-#: plug-ins/common/file-xmc.c:431
+#: plug-ins/common/file-xmc.c:433
 msgid "Copyright information"
 msgstr "版权信息"
 
-#: plug-ins/common/file-xmc.c:439
+#: plug-ins/common/file-xmc.c:441
 msgid "Lice_nse"
 msgstr "许可证(_N)"
 
-#: plug-ins/common/file-xmc.c:440
+#: plug-ins/common/file-xmc.c:442
 msgid "License information"
 msgstr "许可证信息"
 
-#: plug-ins/common/file-xmc.c:449
+#: plug-ins/common/file-xmc.c:451
 msgid "Optional comment"
 msgstr "可选注释"
 
-#: plug-ins/common/file-xmc.c:560
+#: plug-ins/common/file-xmc.c:562
 #, c-format
 msgid ""
 "Cannot set the hot spot!\n"
@@ -7016,50 +7009,50 @@ msgstr ""
 "无法设置热点！\n"
 "您需要调整图层位置以使它们全部都有一个交集。"
 
-#: plug-ins/common/file-xmc.c:664
+#: plug-ins/common/file-xmc.c:666
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "“%s”不是有效的 X 指针。"
 
-#: plug-ins/common/file-xmc.c:677
+#: plug-ins/common/file-xmc.c:679
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "“%2$s”的第 %1$d 帧对于 X 指针太宽了。"
 
-#: plug-ins/common/file-xmc.c:685
+#: plug-ins/common/file-xmc.c:687
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "“%2$s”的第 %1$d 帧对于 X 指针太高了。"
 
-#: plug-ins/common/file-xmc.c:965
+#: plug-ins/common/file-xmc.c:971
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "“%s”中没有图像块。"
 
-#: plug-ins/common/file-xmc.c:1006
+#: plug-ins/common/file-xmc.c:1012
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "“%s”对于 X 指针太宽了。"
 
-#: plug-ins/common/file-xmc.c:1015
+#: plug-ins/common/file-xmc.c:1021
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "“%s”对于 X 指针太高了。"
 
-#: plug-ins/common/file-xmc.c:1087
+#: plug-ins/common/file-xmc.c:1093
 #, c-format
 msgid "A read error occurred."
 msgstr "出现读取错误。"
 
-#: plug-ins/common/file-xmc.c:1126
+#: plug-ins/common/file-xmc.c:1132
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr "输入热点的 X 坐标。原点是左上角。"
 
-#: plug-ins/common/file-xmc.c:1137
+#: plug-ins/common/file-xmc.c:1143
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr "输入热点的 Y 坐标。原点是左上角。"
 
-#: plug-ins/common/file-xmc.c:1149
+#: plug-ins/common/file-xmc.c:1155
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -7070,7 +7063,7 @@ msgstr ""
 "这将减小文件的尺寸并可能修复一些大的指针扰乱屏幕的问题。\n"
 "如果您打算在其他程序中编辑导出的指针则不要选取。"
 
-#: plug-ins/common/file-xmc.c:1161
+#: plug-ins/common/file-xmc.c:1167
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -7087,28 +7080,28 @@ msgstr ""
 "哪个动画序列。"
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1275 plug-ins/file-webp/file-webp-export.c:203
-#: plug-ins/file-webp/file-webp-export.c:611
+#: plug-ins/common/file-xmc.c:1281 plug-ins/file-webp/file-webp-export.c:204
+#: plug-ins/file-webp/file-webp-export.c:615
 #, c-format
 msgid "Saving '%s'"
 msgstr "保存“%s”"
 
-#: plug-ins/common/file-xmc.c:1346
+#: plug-ins/common/file-xmc.c:1352
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "帧“%s”太宽了。请减少至不超过 %d 像素。"
 
-#: plug-ins/common/file-xmc.c:1356
+#: plug-ins/common/file-xmc.c:1362
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "帧“%s”太高了。请减少至不超过 %d 像素。"
 
-#: plug-ins/common/file-xmc.c:1366
+#: plug-ins/common/file-xmc.c:1372
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "帧“%s”的宽度和/或高度为零！"
 
-#: plug-ins/common/file-xmc.c:1408
+#: plug-ins/common/file-xmc.c:1414
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -7118,7 +7111,7 @@ msgstr ""
 "不能导出该指针，因为热点不在帧“%s”上。\n"
 "请尝试改变热点位置、图层几何形状或导出时不要自动裁切。"
 
-#: plug-ins/common/file-xmc.c:1568
+#: plug-ins/common/file-xmc.c:1574
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -7130,7 +7123,7 @@ msgstr ""
 "值）的帧。\n"
 "它可能不被某些环境支持。"
 
-#: plug-ins/common/file-xmc.c:1576
+#: plug-ins/common/file-xmc.c:1582
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -7141,7 +7134,7 @@ msgstr ""
 "您可以在导出对话框中选中“替换所有帧的尺寸”以解决这个问题，否则您的光标在 "
 "GNOME 设置中可能无法显示。"
 
-#: plug-ins/common/file-xmc.c:1859
+#: plug-ins/common/file-xmc.c:1865
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -7152,7 +7145,7 @@ msgstr ""
 "我们限制它至 %d 像素。您应该检查导出的光标。"
 
 #. translators: the %i is *always* 8 here
-#: plug-ins/common/file-xmc.c:1956
+#: plug-ins/common/file-xmc.c:1962
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -7450,45 +7443,45 @@ msgstr "合成图像"
 msgid "\"Filmstrip\" cannot be run without any input images"
 msgstr "“胶卷”无法在没有任何输入图像的情况下运行"
 
-#: plug-ins/common/film.c:990
+#: plug-ins/common/film.c:994
 msgid "Available images:"
 msgstr "可用图像："
 
-#: plug-ins/common/film.c:991
+#: plug-ins/common/film.c:995
 msgid "On film:"
 msgstr "放入胶卷："
 
-#: plug-ins/common/film.c:1042 plug-ins/common/unit-editor.c:470
+#: plug-ins/common/film.c:1046 plug-ins/common/unit-editor.c:475
 msgid "_Add"
 msgstr "添加(_A)"
 
-#: plug-ins/common/film.c:1042 plug-ins/imagemap/imap_polygon.c:531
+#: plug-ins/common/film.c:1046 plug-ins/imagemap/imap_polygon.c:531
 msgid "_Remove"
 msgstr "移除(_R)"
 
-#: plug-ins/common/film.c:1073 plug-ins/common/film.c:1139
+#: plug-ins/common/film.c:1077 plug-ins/common/film.c:1143
 msgid "Filmstrip"
 msgstr "胶卷"
 
-#: plug-ins/common/film.c:1087
+#: plug-ins/common/film.c:1091
 msgid "Numbering"
 msgstr "计数"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1105
+#: plug-ins/common/film.c:1109
 msgid "Image Selection"
 msgstr "图像选择"
 
-#: plug-ins/common/film.c:1155
+#: plug-ins/common/film.c:1159
 msgid "All Values are Fractions of the Strip Height"
 msgstr "所有的值都是胶卷高度的分数"
 
 #. Fill the notebook.
-#: plug-ins/common/film.c:1162
+#: plug-ins/common/film.c:1166
 msgid "Ad_vanced"
 msgstr "高级(_V)"
 
-#: plug-ins/common/film.c:1163
+#: plug-ins/common/film.c:1167
 msgid "_Selection"
 msgstr "选区(_S)"
 
@@ -8211,13 +8204,13 @@ msgstr "平滑色板"
 
 #: plug-ins/common/smooth-palette.c:497 plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:287
+#: plug-ins/print/print-page-layout.c:286
 msgid "_Width:"
 msgstr "宽度(_W)："
 
 #: plug-ins/common/smooth-palette.c:502 plug-ins/imagemap/imap_cmd_guides.c:183
 #: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:289
+#: plug-ins/print/print-page-layout.c:288
 msgid "_Height:"
 msgstr "高度(_H)："
 
@@ -8638,7 +8631,7 @@ msgstr "小图平铺"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:485 plug-ins/ifs-compose/ifs-compose.c:725
+#: plug-ins/common/tile-small.c:485 plug-ins/ifs-compose/ifs-compose.c:726
 msgid "Flip"
 msgstr "翻转"
 
@@ -8745,55 +8738,55 @@ msgstr "创建或改动 GIMP 中使用的单位"
 msgid "Unit Editor"
 msgstr "单位编辑器"
 
+#: plug-ins/common/unit-editor.c:266
+msgid "_Help"
+msgstr "帮助(_H)"
+
 #. destroy model automatically with view
 #. Put buttons in
-#: plug-ins/common/unit-editor.c:264
+#: plug-ins/common/unit-editor.c:282
 #: plug-ins/fractal-explorer/fractal-explorer.c:1347
 #: plug-ins/gimpressionist/presets.c:1085
 msgid "_Refresh"
 msgstr "刷新(_R)"
 
-#: plug-ins/common/unit-editor.c:274
-msgid "_Help"
-msgstr "帮助(_H)"
-
-#: plug-ins/common/unit-editor.c:314
+#: plug-ins/common/unit-editor.c:319
 msgid "Create a new unit from scratch"
 msgstr "重新创建一个新的单位"
 
-#: plug-ins/common/unit-editor.c:321
+#: plug-ins/common/unit-editor.c:326
 msgid "Create a new unit using the currently selected unit as template"
 msgstr "以当前选中的单位为模板创建一个新的单位"
 
-#: plug-ins/common/unit-editor.c:465
+#: plug-ins/common/unit-editor.c:470
 msgid "Add a New Unit"
 msgstr "添加新单位"
 
-#: plug-ins/common/unit-editor.c:494
+#: plug-ins/common/unit-editor.c:499
 msgid "_Name:"
 msgstr "名称(_N)："
 
-#: plug-ins/common/unit-editor.c:506
+#: plug-ins/common/unit-editor.c:511
 msgid "_Factor:"
 msgstr "系数(_F)："
 
-#: plug-ins/common/unit-editor.c:517
+#: plug-ins/common/unit-editor.c:522
 msgid "_Digits:"
 msgstr "位数(_D)："
 
-#: plug-ins/common/unit-editor.c:529
+#: plug-ins/common/unit-editor.c:534
 msgid "_Symbol:"
 msgstr "符号(_S)："
 
-#: plug-ins/common/unit-editor.c:541
+#: plug-ins/common/unit-editor.c:546
 msgid "_Abbreviation:"
 msgstr "缩写(_A)："
 
-#: plug-ins/common/unit-editor.c:576
+#: plug-ins/common/unit-editor.c:581
 msgid "Incomplete input"
 msgstr "输入不完整"
 
-#: plug-ins/common/unit-editor.c:579
+#: plug-ins/common/unit-editor.c:584
 msgid "Please fill in all text fields."
 msgstr "请填写所有的文字区域。"
 
@@ -9279,7 +9272,7 @@ msgstr "扫描仪/相机(_S)…"
 msgid "Unable to read scanned images."
 msgstr "无法读取扫描的图像。"
 
-#: plug-ins/common/wia.c:323
+#: plug-ins/common/wia.c:325
 #, c-format
 msgid "WIA driver not found, scanning not available"
 msgstr "未发现 WIA 驱动，扫描不可用"
@@ -9749,7 +9742,7 @@ msgstr "用于应保持透明测试覆盖的透明测试阈值"
 msgid "Loading: %s"
 msgstr "正在加载：%s"
 
-#: plug-ins/file-dds/ddsread.c:256
+#: plug-ins/file-dds/ddsread.c:261
 #, c-format
 msgid ""
 "Unsupported DDS pixel format:\n"
@@ -9758,78 +9751,83 @@ msgstr ""
 "不支持的 DDS 像素格式：\n"
 "bpp：%d，Rmask：%x，Gmask：%x，Bmask：%x，Amask：%x，flags：%u"
 
-#: plug-ins/file-dds/ddsread.c:405
+#: plug-ins/file-dds/ddsread.c:410
 #, c-format
 msgid "Image size is too big to handle."
 msgstr "图像尺寸太大无法处理。"
 
-#: plug-ins/file-dds/ddsread.c:518
+#: plug-ins/file-dds/ddsread.c:523
 #, c-format
 msgid "Invalid or corrupted DDS header."
 msgstr "无效或损坏的 DDS 头部信息。"
 
-#: plug-ins/file-dds/ddsread.c:530
+#: plug-ins/file-dds/ddsread.c:535
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "无法分配新图像。"
 
-#: plug-ins/file-dds/ddsread.c:546
+#: plug-ins/file-dds/ddsread.c:551
 #, c-format
 msgid "Error reading palette."
 msgstr "读取色板出错。"
 
-#: plug-ins/file-dds/ddsread.c:869
+#: plug-ins/file-dds/ddsread.c:874
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "无效的 DDS 格式魔法数字。"
 
-#: plug-ins/file-dds/ddsread.c:885
+#: plug-ins/file-dds/ddsread.c:890
 msgid ""
 "File lacks expected pixel format flags! Image may not be decoded correctly."
 msgstr "文件缺少预期的像素格式标签！图像可能无法正确解码。"
 
-#: plug-ins/file-dds/ddsread.c:920
+#: plug-ins/file-dds/ddsread.c:925 plug-ins/file-dds/ddsread.c:1073
 #, c-format
 msgid "Invalid pixel format."
 msgstr "无效的像素格式。"
 
-#: plug-ins/file-dds/ddsread.c:945
+#: plug-ins/file-dds/ddsread.c:950
 #, c-format
 msgid "Unsupported format (FourCC: %c%c%c%c, hex: %08x)"
 msgstr "不支持的格式（四字符代码：%c%c%c%c，hex：%08x）"
 
-#: plug-ins/file-dds/ddsread.c:967
+#: plug-ins/file-dds/ddsread.c:972
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "用于 RGB 数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:978
+#: plug-ins/file-dds/ddsread.c:983
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "用于亮度数据的无效 bpp 值：%d"
 
-#: plug-ins/file-dds/ddsread.c:1000
+#: plug-ins/file-dds/ddsread.c:993 plug-ins/file-faxg3/faxg3.c:569
+#, c-format
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr "无效的图像尺寸（%d x %d）。图像可能已损坏。"
+
+#: plug-ins/file-dds/ddsread.c:1017
 #, c-format
 msgid "Invalid DX10 header"
 msgstr "无效 DX10 头部信息"
 
-#: plug-ins/file-dds/ddsread.c:1038
+#: plug-ins/file-dds/ddsread.c:1055
 #, c-format
 msgid "Unsupported DXGI Format: %u"
 msgstr "不支持的 DXGI 格式：%u"
 
-#: plug-ins/file-dds/ddsread.c:1226 plug-ins/file-dds/ddsread.c:1291
-#: plug-ins/file-dds/ddsread.c:1311
+#: plug-ins/file-dds/ddsread.c:1259 plug-ins/file-dds/ddsread.c:1324
+#: plug-ins/file-dds/ddsread.c:1344
 #, c-format
 msgid "Requested data exceeds size of file.\n"
 msgstr "请求的数据超出文件大小。\n"
 
-#: plug-ins/file-dds/ddsread.c:1234 plug-ins/file-dds/ddsread.c:1318
+#: plug-ins/file-dds/ddsread.c:1267 plug-ins/file-dds/ddsread.c:1351
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "意料之外的文件尾。\n"
 
-#: plug-ins/file-dds/ddsread.c:1648
+#: plug-ins/file-dds/ddsread.c:1681
 msgid "Open DDS"
 msgstr "打开 DDS"
 
@@ -9838,7 +9836,7 @@ msgstr "打开 DDS"
 msgid "Saving: %s"
 msgstr "正在保存：%s"
 
-#: plug-ins/file-dds/ddswrite.c:1991
+#: plug-ins/file-dds/ddswrite.c:2074
 msgid "Mipmap Options"
 msgstr "多级纹理选项"
 
@@ -9910,11 +9908,6 @@ msgstr "G3 传真图像"
 msgid "Could not create buffer to process image data."
 msgstr "无法创建缓冲区来处理图像数据。"
 
-#: plug-ins/file-faxg3/faxg3.c:569
-#, c-format
-msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
-msgstr "无效的图像尺寸（%d x %d）。图像可能已损坏。"
-
 #: plug-ins/file-faxg3/faxg3.c:579
 #, c-format
 msgid "Could not create image."
@@ -9970,7 +9963,7 @@ msgstr "FITS HDU"
 msgid "FITS export cannot handle images with alpha channels"
 msgstr "FITS 导出无法处理带透明通道的图像"
 
-#: plug-ins/file-fits/fits.c:1031
+#: plug-ins/file-fits/fits.c:1090
 msgid "Open FITS File"
 msgstr "打开 FITS 文件"
 
@@ -10203,18 +10196,18 @@ msgstr ""
 "无效的图层尺寸。有效的图层大小为 16x12、16x16、18x18、24x24、32x32、36x36、"
 "48x48、64x64、128x128、256x256、512x512 或 1024x1024。"
 
-#: plug-ins/file-icns/file-icns-load.c:124
+#: plug-ins/file-icns/file-icns-load.c:118
 #, c-format
 msgid "Invalid header. Possibly corrupt image."
 msgstr "无效的头部信息。图像可能已损坏。"
 
-#: plug-ins/file-icns/file-icns-load.c:551
+#: plug-ins/file-icns/file-icns-load.c:534
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "试图打开临时的 %s 文件“%s”用于加载 icns 时出错：%s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:689 plug-ins/file-jpeg/jpeg-load.c:692
+#: plug-ins/file-icns/file-icns-load.c:672 plug-ins/file-jpeg/jpeg-load.c:692
 #: plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:623
@@ -10223,7 +10216,7 @@ msgstr "试图打开临时的 %s 文件“%s”用于加载 icns 时出错：%s"
 msgid "Opening thumbnail for '%s'"
 msgstr "打开“%s”的缩略图"
 
-#: plug-ins/file-icns/file-icns-load.c:768
+#: plug-ins/file-icns/file-icns-load.c:751
 #, c-format
 msgid "Invalid or corrupt icns resource file."
 msgstr "无效或损坏的 icns 资源文件。"
@@ -11654,13 +11647,13 @@ msgstr "列表终止符"
 msgid "unknown error"
 msgstr "未知错误"
 
-#: plug-ins/file-webp/file-webp-export.c:213
-#: plug-ins/file-webp/file-webp-export.c:621
+#: plug-ins/file-webp/file-webp-export.c:214
+#: plug-ins/file-webp/file-webp-export.c:625
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "无法打开“%s”并写入：%s"
 
-#: plug-ins/file-webp/file-webp-export.c:307
+#: plug-ins/file-webp/file-webp-export.c:311
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "WebP 错误：“%s”"
@@ -12418,7 +12411,7 @@ msgid "Create line"
 msgstr "创建线段"
 
 #: plug-ins/gfig/gfig-dialog.c:382 plug-ins/gfig/gfig-dialog.c:1429
-#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1620
+#: plug-ins/gfig/gfig-menu.ui:49 plug-ins/imagemap/imap_main.c:1630
 #: plug-ins/imagemap/imap-menu.ui.in:163 plug-ins/imagemap/imap-menu.ui.in:251
 msgid "Rectangle"
 msgstr "矩形"
@@ -12429,7 +12422,7 @@ msgstr "创建矩形"
 
 #: plug-ins/gfig/gfig-dialog.c:384 plug-ins/gfig/gfig-menu.ui:54
 #: plug-ins/gradient-flare/gradient-flare.c:4013
-#: plug-ins/imagemap/imap_main.c:1622 plug-ins/imagemap/imap-menu.ui.in:168
+#: plug-ins/imagemap/imap_main.c:1632 plug-ins/imagemap/imap-menu.ui.in:168
 #: plug-ins/imagemap/imap-menu.ui.in:256
 msgid "Circle"
 msgstr "圆"
@@ -12456,7 +12449,7 @@ msgstr "创建弧线"
 
 #: plug-ins/gfig/gfig-dialog.c:390 plug-ins/gfig/gfig-menu.ui:69
 #: plug-ins/gradient-flare/gradient-flare.c:4030
-#: plug-ins/imagemap/imap_main.c:1624 plug-ins/imagemap/imap-menu.ui.in:173
+#: plug-ins/imagemap/imap_main.c:1634 plug-ins/imagemap/imap-menu.ui.in:173
 #: plug-ins/imagemap/imap-menu.ui.in:261
 msgid "Polygon"
 msgstr "多边形"
@@ -12504,7 +12497,7 @@ msgstr "移动一个点"
 #: plug-ins/gfig/gfig-dialog.c:403 plug-ins/gfig/gfig-dialog.c:1286
 #: plug-ins/gfig/gfig-menu.ui:99 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: plug-ins/imagemap/imap_main.c:1585 plug-ins/imagemap/imap-menu.ui.in:44
+#: plug-ins/imagemap/imap_main.c:1595 plug-ins/imagemap/imap-menu.ui.in:44
 #: plug-ins/imagemap/imap-menu.ui.in:322 plug-ins/imagemap/imap-menu.ui.in:359
 msgid "Copy"
 msgstr "复制"
@@ -12514,7 +12507,7 @@ msgid "Copy an object"
 msgstr "复制一个对象"
 
 #: plug-ins/gfig/gfig-dialog.c:405 plug-ins/gfig/gfig-menu.ui:104
-#: plug-ins/ifs-compose/ifs-compose.c:960 plug-ins/ifs-compose/ifs-menus.ui:27
+#: plug-ins/ifs-compose/ifs-compose.c:961 plug-ins/ifs-compose/ifs-menus.ui:27
 #: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:182
 msgid "Delete"
 msgstr "删除"
@@ -12814,11 +12807,11 @@ msgstr "试图打开临时文件“%s”用于加载寄生物时出错：%s"
 msgid "File"
 msgstr "文件"
 
-#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1569
+#: plug-ins/gfig/gfig-menu.ui:8 plug-ins/imagemap/imap_main.c:1579
 msgid "Open"
 msgstr "打开"
 
-#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1572
+#: plug-ins/gfig/gfig-menu.ui:12 plug-ins/imagemap/imap_main.c:1582
 #: plug-ins/imagemap/imap-menu.ui.in:9
 msgid "Save"
 msgstr "保存"
@@ -12832,8 +12825,8 @@ msgstr "关闭"
 msgid "Edit"
 msgstr "编辑"
 
-#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:962
-#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1578
+#: plug-ins/gfig/gfig-menu.ui:23 plug-ins/ifs-compose/ifs-compose.c:963
+#: plug-ins/ifs-compose/ifs-menus.ui:31 plug-ins/imagemap/imap_main.c:1588
 #: plug-ins/imagemap/imap-menu.ui.in:32
 msgid "Undo"
 msgstr "撤消"
@@ -12843,7 +12836,7 @@ msgstr "撤消"
 msgid "Clear"
 msgstr "清除"
 
-#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1575
+#: plug-ins/gfig/gfig-menu.ui:35 plug-ins/imagemap/imap_main.c:1585
 #: plug-ins/imagemap/imap-menu.ui.in:74
 msgid "Preferences"
 msgstr "首选项"
@@ -13262,7 +13255,7 @@ msgid "Applies the paper as it is (without embossing it)"
 msgstr "按原样应用画纸（不带浮雕效果）"
 
 #. Scale
-#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:669
+#: plug-ins/gimpressionist/paper.c:191 plug-ins/ifs-compose/ifs-compose.c:670
 msgid "Scale:"
 msgstr "缩放："
 
@@ -13889,179 +13882,179 @@ msgstr ""
 "解析“%s”出错：\n"
 "%s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:434
+#: plug-ins/ifs-compose/ifs-compose.c:435
 msgid "_IFS Fractal..."
 msgstr "IFS 分形(_I)…"
 
-#: plug-ins/ifs-compose/ifs-compose.c:440
+#: plug-ins/ifs-compose/ifs-compose.c:441
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "创建一个迭代函数系统（IFS）分形"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:641
+#: plug-ins/ifs-compose/ifs-compose.c:642
 msgid "X:"
 msgstr "X："
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:655
+#: plug-ins/ifs-compose/ifs-compose.c:656
 msgid "Y:"
 msgstr "Y："
 
 #. Angle
-#: plug-ins/ifs-compose/ifs-compose.c:683
+#: plug-ins/ifs-compose/ifs-compose.c:684
 msgid "Angle:"
 msgstr "角度："
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:697
+#: plug-ins/ifs-compose/ifs-compose.c:698
 msgid "Asymmetry:"
 msgstr "不对称度："
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:711
+#: plug-ins/ifs-compose/ifs-compose.c:712
 msgid "Shear:"
 msgstr "切变："
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:756
+#: plug-ins/ifs-compose/ifs-compose.c:757
 msgid "Simple"
 msgstr "简单"
 
-#: plug-ins/ifs-compose/ifs-compose.c:765
+#: plug-ins/ifs-compose/ifs-compose.c:766
 msgid "IFS Fractal: Target"
 msgstr "IFS 分形：目标"
 
-#: plug-ins/ifs-compose/ifs-compose.c:771
+#: plug-ins/ifs-compose/ifs-compose.c:772
 msgid "Scale hue by:"
 msgstr "色相尺度："
 
-#: plug-ins/ifs-compose/ifs-compose.c:786
+#: plug-ins/ifs-compose/ifs-compose.c:787
 msgid "Scale value by:"
 msgstr "亮度尺度："
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:803
+#: plug-ins/ifs-compose/ifs-compose.c:804
 msgid "Full"
 msgstr "完全"
 
-#: plug-ins/ifs-compose/ifs-compose.c:810
+#: plug-ins/ifs-compose/ifs-compose.c:811
 msgid "IFS Fractal: Red"
 msgstr "IFS 分形：红"
 
-#: plug-ins/ifs-compose/ifs-compose.c:818
+#: plug-ins/ifs-compose/ifs-compose.c:819
 msgid "IFS Fractal: Green"
 msgstr "IFS 分形：绿"
 
-#: plug-ins/ifs-compose/ifs-compose.c:826
+#: plug-ins/ifs-compose/ifs-compose.c:827
 msgid "IFS Fractal: Blue"
 msgstr "IFS 分形：蓝"
 
-#: plug-ins/ifs-compose/ifs-compose.c:834
+#: plug-ins/ifs-compose/ifs-compose.c:835
 msgid "IFS Fractal: Black"
 msgstr "IFS 分形：黑"
 
-#: plug-ins/ifs-compose/ifs-compose.c:907
+#: plug-ins/ifs-compose/ifs-compose.c:908
 msgid "IFS Fractal"
 msgstr "IFS 分形"
 
-#: plug-ins/ifs-compose/ifs-compose.c:951 plug-ins/ifs-compose/ifs-menus.ui:6
+#: plug-ins/ifs-compose/ifs-compose.c:952 plug-ins/ifs-compose/ifs-menus.ui:6
 #: plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "移动"
 
-#: plug-ins/ifs-compose/ifs-compose.c:953 plug-ins/ifs-compose/ifs-menus.ui:11
+#: plug-ins/ifs-compose/ifs-compose.c:954 plug-ins/ifs-compose/ifs-menus.ui:11
 msgid "Rotate"
 msgstr "旋转"
 
-#: plug-ins/ifs-compose/ifs-compose.c:955 plug-ins/ifs-compose/ifs-menus.ui:16
+#: plug-ins/ifs-compose/ifs-compose.c:956 plug-ins/ifs-compose/ifs-menus.ui:16
 msgid "Stretch"
 msgstr "拉伸"
 
-#: plug-ins/ifs-compose/ifs-compose.c:958 plug-ins/ifs-compose/ifs-menus.ui:23
+#: plug-ins/ifs-compose/ifs-compose.c:959 plug-ins/ifs-compose/ifs-menus.ui:23
 msgid "New"
 msgstr "新建"
 
-#: plug-ins/ifs-compose/ifs-compose.c:964 plug-ins/ifs-compose/ifs-menus.ui:35
-#: plug-ins/imagemap/imap_main.c:1580 plug-ins/imagemap/imap-menu.ui.in:36
+#: plug-ins/ifs-compose/ifs-compose.c:965 plug-ins/ifs-compose/ifs-menus.ui:35
+#: plug-ins/imagemap/imap_main.c:1590 plug-ins/imagemap/imap-menu.ui.in:36
 msgid "Redo"
 msgstr "重做"
 
-#: plug-ins/ifs-compose/ifs-compose.c:966 plug-ins/ifs-compose/ifs-menus.ui:39
+#: plug-ins/ifs-compose/ifs-compose.c:967 plug-ins/ifs-compose/ifs-menus.ui:39
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 #: plug-ins/imagemap/imap-menu.ui.in:58
 msgid "Select All"
 msgstr "全部选择"
 
-#: plug-ins/ifs-compose/ifs-compose.c:968 plug-ins/ifs-compose/ifs-menus.ui:43
+#: plug-ins/ifs-compose/ifs-compose.c:969 plug-ins/ifs-compose/ifs-menus.ui:43
 msgid "Recompute Center"
 msgstr "重新计算中心"
 
-#: plug-ins/ifs-compose/ifs-compose.c:971 plug-ins/ifs-compose/ifs-menus.ui:49
+#: plug-ins/ifs-compose/ifs-compose.c:972 plug-ins/ifs-compose/ifs-menus.ui:49
 msgid "Render Options"
 msgstr "渲染选项"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1030
+#: plug-ins/ifs-compose/ifs-compose.c:1031
 msgid "Spatial Transformation"
 msgstr "空间变换"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1036
+#: plug-ins/ifs-compose/ifs-compose.c:1037
 msgid "Color Transformation"
 msgstr "颜色变换"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1046
+#: plug-ins/ifs-compose/ifs-compose.c:1047
 msgid "Relative probability:"
 msgstr "相对概率："
 
-#: plug-ins/ifs-compose/ifs-compose.c:1210
+#: plug-ins/ifs-compose/ifs-compose.c:1211
 msgid "IFS Fractal Render Options"
 msgstr "IFS 分形渲染选项"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1232
+#: plug-ins/ifs-compose/ifs-compose.c:1233
 msgid "Max. memory:"
 msgstr "最大内存："
 
-#: plug-ins/ifs-compose/ifs-compose.c:1245
+#: plug-ins/ifs-compose/ifs-compose.c:1246
 msgid "Iterations:"
 msgstr "迭代次数："
 
-#: plug-ins/ifs-compose/ifs-compose.c:1260
+#: plug-ins/ifs-compose/ifs-compose.c:1261
 msgid "Subdivide:"
 msgstr "细分："
 
-#: plug-ins/ifs-compose/ifs-compose.c:1274
+#: plug-ins/ifs-compose/ifs-compose.c:1275
 msgid "Spot radius:"
 msgstr "点半径："
 
-#: plug-ins/ifs-compose/ifs-compose.c:1354
+#: plug-ins/ifs-compose/ifs-compose.c:1355
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "渲染 IFS（%d/%d）"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1517
+#: plug-ins/ifs-compose/ifs-compose.c:1518
 #, c-format
 msgid "Transformation %s"
 msgstr "变换 %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2480
+#: plug-ins/ifs-compose/ifs-compose.c:2499
 msgid "Save failed"
 msgstr "保存失败"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2563
-#: plug-ins/ifs-compose/ifs-compose.c:2576
+#: plug-ins/ifs-compose/ifs-compose.c:2582
+#: plug-ins/ifs-compose/ifs-compose.c:2595
 msgid "Open failed"
 msgstr "打开失败"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2571
+#: plug-ins/ifs-compose/ifs-compose.c:2590
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "文件“%s”似乎不是 IFS 分形文件。"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2611
+#: plug-ins/ifs-compose/ifs-compose.c:2630
 msgid "Save as IFS Fractal file"
 msgstr "另存为 IFS 分形文件"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2648
+#: plug-ins/ifs-compose/ifs-compose.c:2667
 msgid "Open IFS Fractal file"
 msgstr "打开 IFS 分形文件"
 
@@ -14110,7 +14103,7 @@ msgstr "创建"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:54
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: plug-ins/imagemap/imap_main.c:1583 plug-ins/imagemap/imap-menu.ui.in:40
+#: plug-ins/imagemap/imap_main.c:1593 plug-ins/imagemap/imap-menu.ui.in:40
 #: plug-ins/imagemap/imap-menu.ui.in:318 plug-ins/imagemap/imap-menu.ui.in:355
 msgid "Cut"
 msgstr "剪切"
@@ -14255,7 +14248,7 @@ msgstr "提到最前"
 msgid "Move Up"
 msgstr "上移"
 
-#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1587
+#: plug-ins/imagemap/imap_cmd_paste.c:50 plug-ins/imagemap/imap_main.c:1597
 #: plug-ins/imagemap/imap-menu.ui.in:48 plug-ins/imagemap/imap-menu.ui.in:293
 msgid "Paste"
 msgstr "粘贴"
@@ -14373,15 +14366,15 @@ msgstr "区域设置"
 msgid "Area #%d Settings"
 msgstr "区域 #%d 设置"
 
-#: plug-ins/imagemap/imap_file.c:47
+#: plug-ins/imagemap/imap_file.c:48
 msgid "Error opening file"
 msgstr "打开文件出错"
 
-#: plug-ins/imagemap/imap_file.c:69
+#: plug-ins/imagemap/imap_file.c:70
 msgid "Load Image Map"
 msgstr "载入图像映像"
 
-#: plug-ins/imagemap/imap_file.c:124
+#: plug-ins/imagemap/imap_file.c:125
 msgid "Save Image Map"
 msgstr "保存图像映像"
 
@@ -14441,85 +14434,85 @@ msgstr "<未命名>"
 msgid "Some data has been changed!"
 msgstr "一些数据已改变！"
 
-#: plug-ins/imagemap/imap_main.c:809
+#: plug-ins/imagemap/imap_main.c:814
 msgid "Do you really want to discard your changes?"
 msgstr "您真的要放弃您的修改吗？"
 
-#: plug-ins/imagemap/imap_main.c:1074
+#: plug-ins/imagemap/imap_main.c:1079
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "文件“%s”已保存。"
 
-#: plug-ins/imagemap/imap_main.c:1078
+#: plug-ins/imagemap/imap_main.c:1083
 msgid "Couldn't save file:"
 msgstr "无法保存文件："
 
-#: plug-ins/imagemap/imap_main.c:1093
+#: plug-ins/imagemap/imap_main.c:1098
 msgid "Image size has changed."
 msgstr "图像大小已改变。"
 
-#: plug-ins/imagemap/imap_main.c:1094
+#: plug-ins/imagemap/imap_main.c:1099
 msgid "Resize area's?"
 msgstr "重置区域大小吗？"
 
-#: plug-ins/imagemap/imap_main.c:1141
+#: plug-ins/imagemap/imap_main.c:1151
 msgid "Couldn't read file:"
 msgstr "无法读取文件："
 
-#: plug-ins/imagemap/imap_main.c:1194
+#: plug-ins/imagemap/imap_main.c:1204
 #, c-format
 msgid "URL: %s"
 msgstr "URL：%s"
 
-#: plug-ins/imagemap/imap_main.c:1590 plug-ins/imagemap/imap-menu.ui.in:105
+#: plug-ins/imagemap/imap_main.c:1600 plug-ins/imagemap/imap-menu.ui.in:105
 #: plug-ins/imagemap/imap-menu.ui.in:271
 msgid "Zoom In"
 msgstr "放大"
 
-#: plug-ins/imagemap/imap_main.c:1592 plug-ins/imagemap/imap-menu.ui.in:109
+#: plug-ins/imagemap/imap_main.c:1602 plug-ins/imagemap/imap-menu.ui.in:109
 #: plug-ins/imagemap/imap-menu.ui.in:275
 msgid "Zoom Out"
 msgstr "缩小"
 
-#: plug-ins/imagemap/imap_main.c:1595
+#: plug-ins/imagemap/imap_main.c:1605
 msgid "Edit Map Info"
 msgstr "编辑映像信息"
 
-#: plug-ins/imagemap/imap_main.c:1598
+#: plug-ins/imagemap/imap_main.c:1608
 msgid "Move Area to Front"
 msgstr "移动区域至最前"
 
-#: plug-ins/imagemap/imap_main.c:1600
+#: plug-ins/imagemap/imap_main.c:1610
 msgid "Move Area to Bottom"
 msgstr "移动区域至底部"
 
-#: plug-ins/imagemap/imap_main.c:1618 plug-ins/imagemap/imap-menu.ui.in:158
+#: plug-ins/imagemap/imap_main.c:1628 plug-ins/imagemap/imap-menu.ui.in:158
 #: plug-ins/imagemap/imap-menu.ui.in:246
 msgid "Arrow"
 msgstr "箭头"
 
-#: plug-ins/imagemap/imap_main.c:1618
+#: plug-ins/imagemap/imap_main.c:1628
 msgid "Select Existing Area"
 msgstr "选择现有区域"
 
-#: plug-ins/imagemap/imap_main.c:1620
+#: plug-ins/imagemap/imap_main.c:1630
 msgid "Define Rectangle area"
 msgstr "定义矩形区域"
 
-#: plug-ins/imagemap/imap_main.c:1622
+#: plug-ins/imagemap/imap_main.c:1632
 msgid "Define Circle/Oval area"
 msgstr "定义圆/椭圆区域"
 
-#: plug-ins/imagemap/imap_main.c:1624
+#: plug-ins/imagemap/imap_main.c:1634
 msgid "Define Polygon area"
 msgstr "定义多边形区域"
 
-#: plug-ins/imagemap/imap_main.c:1627 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1637 plug-ins/imagemap/imap_menu.c:180
 #: plug-ins/imagemap/imap-menu.ui.in:302 plug-ins/imagemap/imap-menu.ui.in:339
 msgid "Edit Area Info..."
 msgstr "编辑区域信息…"
 
-#: plug-ins/imagemap/imap_main.c:1627 plug-ins/imagemap/imap_menu.c:180
+#: plug-ins/imagemap/imap_main.c:1637 plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "编辑选中区域的信息"
 
@@ -15149,7 +15142,7 @@ msgstr "光源设置"
 
 #: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:500
 #: plug-ins/map-object/map-object-ui.c:714
-#: plug-ins/print/print-page-layout.c:385
+#: plug-ins/print/print-page-layout.c:384
 msgid "Position"
 msgstr "位置"
 
@@ -15525,7 +15518,7 @@ msgstr "反射率"
 
 #: plug-ins/map-object/map-object-ui.c:774
 #: plug-ins/map-object/map-object-ui.c:874
-#: plug-ins/print/print-page-layout.c:254
+#: plug-ins/print/print-page-layout.c:253
 msgid "Size"
 msgstr "大小"
 
@@ -16371,90 +16364,90 @@ msgstr "忽略页面边距(_M)"
 msgid "_Draw Crop Marks"
 msgstr "绘制剪裁标记(_D)"
 
-#: plug-ins/print/print-page-layout.c:308
+#: plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
 msgstr "像素/%a"
 
-#: plug-ins/print/print-page-layout.c:329
+#: plug-ins/print/print-page-layout.c:328
 msgid "_X resolution:"
 msgstr "_X 分辨率："
 
-#: plug-ins/print/print-page-layout.c:333
+#: plug-ins/print/print-page-layout.c:332
 msgid "_Y resolution:"
 msgstr "_Y 分辨率："
 
-#: plug-ins/print/print-page-layout.c:336
+#: plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "加载默认值(_L)"
 
-#: plug-ins/print/print-page-layout.c:411
+#: plug-ins/print/print-page-layout.c:410
 msgid "_Left:"
 msgstr "左(_L)："
 
-#: plug-ins/print/print-page-layout.c:432
+#: plug-ins/print/print-page-layout.c:431
 msgid "_Right:"
 msgstr "右(_R)："
 
-#: plug-ins/print/print-page-layout.c:448
+#: plug-ins/print/print-page-layout.c:447
 msgid "_Top:"
 msgstr "上(_T)："
 
-#: plug-ins/print/print-page-layout.c:469
+#: plug-ins/print/print-page-layout.c:468
 msgid "_Bottom:"
 msgstr "下(_B)："
 
-#: plug-ins/print/print-page-layout.c:490
+#: plug-ins/print/print-page-layout.c:489
 msgid "C_enter:"
 msgstr "中心(_E)："
 
 #. if and how to center the image on the page
-#: plug-ins/print/print-page-layout.c:497
+#: plug-ins/print/print-page-layout.c:496
 msgctxt "center-mode"
 msgid "None"
 msgstr "无"
 
-#: plug-ins/print/print-page-layout.c:498
+#: plug-ins/print/print-page-layout.c:497
 msgid "Horizontally"
 msgstr "水平"
 
-#: plug-ins/print/print-page-layout.c:499
+#: plug-ins/print/print-page-layout.c:498
 msgid "Vertically"
 msgstr "竖直"
 
-#: plug-ins/print/print-page-layout.c:500
+#: plug-ins/print/print-page-layout.c:499
 msgid "Both"
 msgstr "皆有"
 
-#: plug-ins/print/print.c:167
+#: plug-ins/print/print.c:170
 msgid "_Print..."
 msgstr "打印(_P)…"
 
-#: plug-ins/print/print.c:172
+#: plug-ins/print/print.c:175
 msgid "Print the image"
 msgstr "打印图像"
 
-#: plug-ins/print/print.c:191
+#: plug-ins/print/print.c:194
 msgid "Page Set_up..."
 msgstr "页面设置(_U)…"
 
-#: plug-ins/print/print.c:196
+#: plug-ins/print/print.c:199
 msgid "Adjust page size and orientation for printing"
 msgstr "调整打印页面的大小和方向"
 
-#: plug-ins/print/print.c:337 plug-ins/print/print.c:474
+#: plug-ins/print/print.c:344 plug-ins/print/print.c:499
 msgid "Image Settings"
 msgstr "图像设置"
 
-#: plug-ins/print/print.c:441
+#: plug-ins/print/print.c:455
 msgid "An error occurred while trying to print:"
 msgstr "试图打印时发生错误："
 
-#: plug-ins/print/print.c:475
+#: plug-ins/print/print.c:500
 msgid "_Print"
 msgstr "打印(_P)"
 
-#: plug-ins/print/print.c:497
+#: plug-ins/print/print.c:524
 msgid "Printing"
 msgstr "打印"
 
@@ -16820,6 +16813,13 @@ msgstr "未发现 TWAIN 驱动，扫描不可用"
 #: plug-ins/twain/twain.c:490
 msgid "Transferring data from scanner/camera"
 msgstr "从扫描仪/相机传送数据"
+
+#, c-format
+#~ msgid "This is not an ILBM image"
+#~ msgstr "这不是 ILBM 图像"
+
+#~ msgid "Invalid or missing ILBM image"
+#~ msgstr "无效或缺失的 ILBM 图像"
 
 #~ msgid "TIM Image"
 #~ msgstr "TIM 图像"
