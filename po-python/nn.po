@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-05-25 17:59+0000\n"
-"PO-Revision-Date: 2026-05-26 22:30+0200\n"
+"POT-Creation-Date: 2026-11-20 23:19+0000\n"
+"PO-Revision-Date: 2026-11-22 17:26+0100\n"
 "Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
 "Language-Team: Norwegian nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
@@ -74,25 +74,45 @@ msgstr "Skriv ei eiga CSS-fil"
 msgid "Choose File"
 msgstr "Vel fil"
 
-#: plug-ins/python/file-openraster.py:507
-#: plug-ins/python/file-openraster.py:508
+#: plug-ins/python/file-openraster.py:509
+#: plug-ins/python/file-openraster.py:510
 msgid "export an OpenRaster (.ora) file"
 msgstr "eksporter ei OpenRaste-file (.ora)"
 
-#: plug-ins/python/file-openraster.py:510
-#: plug-ins/python/file-openraster.py:516
+#: plug-ins/python/file-openraster.py:512
+#: plug-ins/python/file-openraster.py:518
 msgid "OpenRaster"
 msgstr "OpenRaster"
 
-#: plug-ins/python/file-openraster.py:517
-#: plug-ins/python/file-openraster.py:518
+#: plug-ins/python/file-openraster.py:519
+#: plug-ins/python/file-openraster.py:520
 msgid "load an OpenRaster (.ora) file"
 msgstr "last inn ei OpenRaste-file (.ora)"
 
-#: plug-ins/python/file-openraster.py:527
-#: plug-ins/python/file-openraster.py:528
+#: plug-ins/python/file-openraster.py:529
+#: plug-ins/python/file-openraster.py:530
 msgid "loads a thumbnail from an OpenRaster (.ora) file"
 msgstr "lastar ein miniatyr frå ei OpenRaste-file (.ora)"
+
+#: plug-ins/python/file-krita.py:851
+msgid "Krita"
+msgstr "Krita"
+
+#: plug-ins/python/file-krita.py:852
+msgid "Loads a Krita (.kra) file"
+msgstr "last inn ei Krita-fil (.kra)"
+
+#: plug-ins/python/file-krita.py:862
+msgid "Krita (merged)"
+msgstr "Krita (fletta)"
+
+#: plug-ins/python/file-krita.py:863
+msgid "Loads the merged image from a Krita (.kra) file"
+msgstr "Lastar den samanfletta biletfila frå ei Krita-fil (kra)"
+
+#: plug-ins/python/file-krita.py:874
+msgid "Loads a thumbnail from a Krita (.kra) file"
+msgstr "Lastar ein miniatyr frå ei Krita-file (.kra)"
 
 #: plug-ins/python/foggify.py:120
 msgid "Add a layer of fog"
@@ -155,7 +175,7 @@ msgstr "Lagra fargeovergangen som CSS …"
 #: plug-ins/python/palette-export-as-kpl.py:177
 #: plug-ins/python/palette-offset.py:53 plug-ins/python/palette-sort.py:350
 #: plug-ins/python/palette-to-gradient.py:146
-#: plug-ins/python/python-console/python-console.py:323
+#: plug-ins/python/python-console/python-console.py:325
 msgid "Run mode"
 msgstr "Køyremodus"
 
@@ -163,7 +183,7 @@ msgstr "Køyremodus"
 #: plug-ins/python/palette-export-as-kpl.py:178
 #: plug-ins/python/palette-offset.py:54 plug-ins/python/palette-sort.py:351
 #: plug-ins/python/palette-to-gradient.py:147
-#: plug-ins/python/python-console/python-console.py:324
+#: plug-ins/python/python-console/python-console.py:326
 msgid "The run mode"
 msgstr "Køyremodusen"
 
@@ -539,60 +559,60 @@ msgstr "Den nyleg laga fargeovergangen"
 msgid "Python Console"
 msgstr "Python-konsoll"
 
-#: plug-ins/python/python-console/python-console.py:81
-#: plug-ins/python/python-console/python-console.py:279
+#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:281
 msgid "_Save"
 msgstr "_Lagra"
 
-#: plug-ins/python/python-console/python-console.py:82
+#: plug-ins/python/python-console/python-console.py:83
 msgid "Cl_ear"
 msgstr "_Slett"
 
-#: plug-ins/python/python-console/python-console.py:83
+#: plug-ins/python/python-console/python-console.py:84
 msgid "_Browse..."
 msgstr "_Bla gjennom …"
 
-#: plug-ins/python/python-console/python-console.py:84
-#: plug-ins/python/python-console/python-console.py:227
+#: plug-ins/python/python-console/python-console.py:85
+#: plug-ins/python/python-console/python-console.py:229
 msgid "_Close"
 msgstr "_Lukk"
 
-#: plug-ins/python/python-console/python-console.py:224
+#: plug-ins/python/python-console/python-console.py:225
 msgid "Python Procedure Browser"
 msgstr "Python prosedyrelesar"
 
-#: plug-ins/python/python-console/python-console.py:226
+#: plug-ins/python/python-console/python-console.py:228
 msgid "_Apply"
 msgstr "_Bruk"
 
-#: plug-ins/python/python-console/python-console.py:252
+#: plug-ins/python/python-console/python-console.py:254
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kunne ikkje opna «%s» for skriving: %s"
 
-#: plug-ins/python/python-console/python-console.py:267
+#: plug-ins/python/python-console/python-console.py:269
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Klarte ikkje skriva til «%s»: %s"
 
-#: plug-ins/python/python-console/python-console.py:276
+#: plug-ins/python/python-console/python-console.py:278
 msgid "Save Python-Fu Console Output"
 msgstr "Lagra utdata frå Python-Fu-konsollen"
 
-#: plug-ins/python/python-console/python-console.py:278
+#: plug-ins/python/python-console/python-console.py:280
 #: plug-ins/python/spyro-plus.py:1748
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: plug-ins/python/python-console/python-console.py:316
+#: plug-ins/python/python-console/python-console.py:318
 msgid "Python _Console"
 msgstr "_Python-konsoll"
 
-#: plug-ins/python/python-console/python-console.py:317
+#: plug-ins/python/python-console/python-console.py:319
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktiv Gimp Python-fortolkar"
 
-#: plug-ins/python/python-console/python-console.py:318
+#: plug-ins/python/python-console/python-console.py:320
 msgid "Type in commands and see results"
 msgstr "Skriv inn kommandoar og sjå resultata"
 
@@ -616,22 +636,22 @@ msgstr "Teikna sist brukte lag på nytt"
 msgid "As Path"
 msgstr "Som bane"
 
-#: plug-ins/python/spyro-plus.py:110 plug-ins/python/spyro-plus.py:2268
+#: plug-ins/python/spyro-plus.py:110 plug-ins/python/spyro-plus.py:2269
 msgid "Circle"
 msgstr "Sirkel"
 
-#: plug-ins/python/spyro-plus.py:146 plug-ins/python/spyro-plus.py:2272
+#: plug-ins/python/spyro-plus.py:146 plug-ins/python/spyro-plus.py:2273
 msgid "Polygon-Star"
 msgstr "Mangekant – Stjerne"
 
 #. Sine wave on a circle ring.
 #: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:1009
-#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2273
+#: plug-ins/python/spyro-plus.py:2264 plug-ins/python/spyro-plus.py:2274
 msgid "Sine"
 msgstr "Sinus"
 
 #. Semi-circles, based on a polygon
-#: plug-ins/python/spyro-plus.py:172 plug-ins/python/spyro-plus.py:2274
+#: plug-ins/python/spyro-plus.py:172 plug-ins/python/spyro-plus.py:2275
 msgid "Bumps"
 msgstr "Humpar"
 
@@ -643,47 +663,47 @@ msgstr "Hylle"
 msgid "Frame"
 msgstr "Ramme"
 
-#: plug-ins/python/spyro-plus.py:434 plug-ins/python/spyro-plus.py:2271
+#: plug-ins/python/spyro-plus.py:434 plug-ins/python/spyro-plus.py:2272
 msgid "Selection"
 msgstr "Utval"
 
-#: plug-ins/python/spyro-plus.py:539 plug-ins/python/spyro-plus.py:2308
+#: plug-ins/python/spyro-plus.py:539 plug-ins/python/spyro-plus.py:2309
 msgid "Pencil"
 msgstr "Blyant"
 
-#: plug-ins/python/spyro-plus.py:555 plug-ins/python/spyro-plus.py:2309
+#: plug-ins/python/spyro-plus.py:555 plug-ins/python/spyro-plus.py:2310
 msgid "AirBrush"
 msgstr "Luftpensel"
 
-#: plug-ins/python/spyro-plus.py:622 plug-ins/python/spyro-plus.py:2306
+#: plug-ins/python/spyro-plus.py:622 plug-ins/python/spyro-plus.py:2307
 msgid "Preview"
 msgstr "Førehandsvising"
 
-#: plug-ins/python/spyro-plus.py:627 plug-ins/python/spyro-plus.py:2310
+#: plug-ins/python/spyro-plus.py:627 plug-ins/python/spyro-plus.py:2311
 msgid "Stroke"
 msgstr "Strok"
 
-#: plug-ins/python/spyro-plus.py:674 plug-ins/python/spyro-plus.py:2307
+#: plug-ins/python/spyro-plus.py:674 plug-ins/python/spyro-plus.py:2308
 msgid "PaintBrush"
 msgstr "Målarpensel"
 
-#: plug-ins/python/spyro-plus.py:678 plug-ins/python/spyro-plus.py:2311
+#: plug-ins/python/spyro-plus.py:678 plug-ins/python/spyro-plus.py:2312
 msgid "Ink"
 msgstr "Blekk"
 
-#: plug-ins/python/spyro-plus.py:679 plug-ins/python/spyro-plus.py:2312
+#: plug-ins/python/spyro-plus.py:679 plug-ins/python/spyro-plus.py:2313
 msgid "MyPaintBrush"
 msgstr "MyPaint-pensel"
 
-#: plug-ins/python/spyro-plus.py:995 plug-ins/python/spyro-plus.py:2261
+#: plug-ins/python/spyro-plus.py:995 plug-ins/python/spyro-plus.py:2262
 msgid "Spyrograph"
 msgstr "Spyrograf"
 
-#: plug-ins/python/spyro-plus.py:1002 plug-ins/python/spyro-plus.py:2262
+#: plug-ins/python/spyro-plus.py:1002 plug-ins/python/spyro-plus.py:2263
 msgid "Epitrochoid"
 msgstr "Epitrokoide"
 
-#: plug-ins/python/spyro-plus.py:1029 plug-ins/python/spyro-plus.py:2264
+#: plug-ins/python/spyro-plus.py:1029 plug-ins/python/spyro-plus.py:2265
 msgid "Lissajous"
 msgstr "Lissajousfigur"
 
@@ -700,7 +720,7 @@ msgstr ""
 "hjulet."
 
 #. TODO: Add Clone option once it's fixed
-#: plug-ins/python/spyro-plus.py:1491 plug-ins/python/spyro-plus.py:2314
+#: plug-ins/python/spyro-plus.py:1491 plug-ins/python/spyro-plus.py:2315
 msgid "Tool"
 msgstr "Verktøy"
 
@@ -857,7 +877,7 @@ msgstr ""
 "Rotering av mønsteret i grader. Startposisjonen for det roterande hjulet i "
 "det faste hjulet."
 
-#: plug-ins/python/spyro-plus.py:1693 plug-ins/python/spyro-plus.py:2275
+#: plug-ins/python/spyro-plus.py:1693 plug-ins/python/spyro-plus.py:2276
 msgid "Shape"
 msgstr "Form"
 
@@ -903,8 +923,8 @@ msgstr "Marg (px)"
 msgid "Margin from edge of selection."
 msgstr "Marg frå kanten av utvalet."
 
-#: plug-ins/python/spyro-plus.py:1733 plug-ins/python/spyro-plus.py:2296
-#: plug-ins/python/spyro-plus.py:2297
+#: plug-ins/python/spyro-plus.py:1733 plug-ins/python/spyro-plus.py:2297
+#: plug-ins/python/spyro-plus.py:2298
 msgid "Make width and height equal"
 msgstr "Gjer høgd og breidd like"
 
@@ -953,31 +973,31 @@ msgstr ""
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
-#: plug-ins/python/spyro-plus.py:1787 plug-ins/python/spyro-plus.py:2250
+#: plug-ins/python/spyro-plus.py:1788 plug-ins/python/spyro-plus.py:2251
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Teiknar spyrografar med dei gjeldande verktøyinnstillingane og utvala."
 
-#: plug-ins/python/spyro-plus.py:1800
+#: plug-ins/python/spyro-plus.py:1801
 msgid "Curve Pattern"
 msgstr "Kurvemønster"
 
-#: plug-ins/python/spyro-plus.py:1803
+#: plug-ins/python/spyro-plus.py:1804
 msgid "Fixed Gear"
 msgstr "Fast tannhjul"
 
-#: plug-ins/python/spyro-plus.py:1806
+#: plug-ins/python/spyro-plus.py:1807
 msgid "Size"
 msgstr "Storleik"
 
-#: plug-ins/python/spyro-plus.py:2162
+#: plug-ins/python/spyro-plus.py:2163
 msgid "Rendering Pattern"
 msgstr "Gjengjevingsmønster"
 
-#: plug-ins/python/spyro-plus.py:2174
+#: plug-ins/python/spyro-plus.py:2175
 msgid "Please wait : Rendering Pattern"
 msgstr "Vent: Gjengjev mønsteret"
 
-#: plug-ins/python/spyro-plus.py:2251
+#: plug-ins/python/spyro-plus.py:2252
 msgid ""
 "Uses current tool settings to draw Spyrograph patterns. The size and "
 "location of the pattern is based on the current selection."
@@ -985,59 +1005,59 @@ msgstr ""
 "Bruk dei gjeldande verktøyinnstillingane for å teikna spyrografmønstera. "
 "Storleiken og plasseringa av mønsteret er basert på det gjeldande utvalet."
 
-#: plug-ins/python/spyro-plus.py:2254
+#: plug-ins/python/spyro-plus.py:2255
 msgid "Spyrogimp..."
 msgstr "Spyrogimp ..."
 
-#: plug-ins/python/spyro-plus.py:2265
+#: plug-ins/python/spyro-plus.py:2266
 msgid "Curve Type"
 msgstr "Kurvetype"
 
-#: plug-ins/python/spyro-plus.py:2269
+#: plug-ins/python/spyro-plus.py:2270
 msgid "rack"
 msgstr "hylle"
 
-#: plug-ins/python/spyro-plus.py:2270
+#: plug-ins/python/spyro-plus.py:2271
 msgid "frame"
 msgstr "ramme"
 
-#: plug-ins/python/spyro-plus.py:2277
+#: plug-ins/python/spyro-plus.py:2278
 msgid "Si_des"
 msgstr "_Sider"
 
-#: plug-ins/python/spyro-plus.py:2278
+#: plug-ins/python/spyro-plus.py:2279
 msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
 msgstr ""
 "Talet på sider på det faste tannhjulet (3 eller fleire). Vert berre brukt på "
 "nokre av formene."
 
-#: plug-ins/python/spyro-plus.py:2280
+#: plug-ins/python/spyro-plus.py:2281
 msgid "_Morph"
 msgstr "_Morf"
 
-#: plug-ins/python/spyro-plus.py:2281
+#: plug-ins/python/spyro-plus.py:2282
 msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
 msgstr ""
 "Morf-forma på det faste tannhjulet, mellom 0 og 1. Vert brukt berre på nokre "
 "av formene."
 
-#: plug-ins/python/spyro-plus.py:2283
+#: plug-ins/python/spyro-plus.py:2284
 msgid "Fi_xed gear teeth"
 msgstr "Tenner i _fast tannhjul"
 
-#: plug-ins/python/spyro-plus.py:2284 plug-ins/python/spyro-plus.py:2287
+#: plug-ins/python/spyro-plus.py:2285 plug-ins/python/spyro-plus.py:2288
 msgid "Number of teeth for fixed gear."
 msgstr "Talet på tenner i det faste tannhjulet."
 
-#: plug-ins/python/spyro-plus.py:2286
+#: plug-ins/python/spyro-plus.py:2287
 msgid "Mo_ving gear teeth"
 msgstr "Tenner i det _roterande hjulet"
 
-#: plug-ins/python/spyro-plus.py:2289
+#: plug-ins/python/spyro-plus.py:2290
 msgid "_Hole radius (%)"
 msgstr "_Holradius (%)"
 
-#: plug-ins/python/spyro-plus.py:2290
+#: plug-ins/python/spyro-plus.py:2291
 msgid ""
 "Location of hole in moving gear in percent, where 100 means that the hole is "
 "at the edge of the gear, and 0 means the hole is at the center"
@@ -1045,31 +1065,31 @@ msgstr ""
 "Plasseringa av hol i det roterande tannhjulet, der 100 betyr at holet er ved "
 "kanten av hjulet og 0 at holet er i midten"
 
-#: plug-ins/python/spyro-plus.py:2293
+#: plug-ins/python/spyro-plus.py:2294
 msgid "Margin (_px)"
 msgstr "Marg (_px)"
 
-#: plug-ins/python/spyro-plus.py:2294
+#: plug-ins/python/spyro-plus.py:2295
 msgid "Margin from selection, in pixels"
 msgstr "Margen frå utvalet, i pikslar"
 
-#: plug-ins/python/spyro-plus.py:2299 plug-ins/python/spyro-plus.py:2302
+#: plug-ins/python/spyro-plus.py:2300 plug-ins/python/spyro-plus.py:2303
 msgid "_Rotation"
 msgstr "_Roterering"
 
-#: plug-ins/python/spyro-plus.py:2300
+#: plug-ins/python/spyro-plus.py:2301
 msgid "Pattern rotation, in degrees"
 msgstr "Mønsterrotering i grader"
 
-#: plug-ins/python/spyro-plus.py:2303
+#: plug-ins/python/spyro-plus.py:2304
 msgid "Shape rotation of fixed gear, in degrees"
 msgstr "Formrotering av det faste tannhjulet i grader"
 
-#: plug-ins/python/spyro-plus.py:2317
+#: plug-ins/python/spyro-plus.py:2318
 msgid "Long _Gradient"
 msgstr "_Lang fargeovergang"
 
-#: plug-ins/python/spyro-plus.py:2318
+#: plug-ins/python/spyro-plus.py:2319
 msgid ""
 "Whether to apply a long gradient to match the length of the pattern. Only "
 "applicable to some of the tools."
