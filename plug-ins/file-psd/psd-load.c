@@ -3306,11 +3306,13 @@ add_merged_image (GimpImage     *image,
   if (img_a->merged_image_only ||
       img_a->num_layers == 0)            /* Merged image - Photoshop 2 style */
     {
+      guint has_alpha = (img_a->transparency || alpha_channel);
+
       image_type = get_gimp_image_type (img_a->base_type,
                                         img_a->transparency || alpha_channel);
 
       layer_size = (gsize) img_a->columns * img_a->rows;
-      pixels = g_malloc (layer_size * base_channels * bps);
+      pixels     = g_malloc0 (layer_size * (base_channels + has_alpha) * bps);
       for (cidx = 0; cidx < base_channels; ++cidx)
         {
           for (gint64 i = 0; i < layer_size; ++i)
@@ -3340,7 +3342,8 @@ add_merged_image (GimpImage     *image,
         {
           guchar *dst0;
 
-          dst0 = g_malloc (base_channels * layer_size * sizeof(float));
+          dst0 = g_malloc0 ((base_channels + has_alpha) * layer_size *
+                            sizeof (float));
           psd_convert_cmyk_to_srgb (img_a,
                                     dst0, pixels,
                                     img_a->columns, img_a->rows,
@@ -3353,7 +3356,8 @@ add_merged_image (GimpImage     *image,
         {
           guchar *dst0;
 
-          dst0 = g_malloc (base_channels * layer_size * sizeof(float));
+          dst0 = g_malloc0 ((base_channels + has_alpha) * layer_size *
+                            sizeof (float));
           psd_convert_lab_to_srgb (img_a,
                                    dst0, pixels,
                                    img_a->columns, img_a->rows,
