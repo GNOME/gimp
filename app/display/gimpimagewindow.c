@@ -203,9 +203,11 @@ static gboolean  gimp_image_window_window_state_event  (GtkWidget           *wid
                                                         GdkEventWindowState *event);
 static void      gimp_image_window_style_updated       (GtkWidget           *widget);
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(GDK_WINDOWING_QUARTZ)
 static void      gimp_image_window_realize             (GtkWidget           *widget,
                                                         gpointer             data);
+#endif
+#ifdef G_OS_WIN32
 static GdkFilterReturn
                  gimp_image_window_csd_filter          (GdkXEvent           *xevent,
                                                         GdkEvent            *event,
@@ -214,6 +216,8 @@ static GdkFilterReturn
 
 #ifdef GDK_WINDOWING_QUARTZ
 static gboolean  gimp_image_window_restore_cursor      (gpointer             canvas);
+static void      gimp_image_window_update_document_edited
+                                                       (GimpImageWindow     *window);
 #endif
 
 static void      gimp_image_window_monitor_changed     (GimpWindow          *window,
@@ -388,11 +392,12 @@ gimp_image_window_session_managed_iface_init (GimpSessionManagedInterface *iface
   iface->set_aux_info = gimp_image_window_set_aux_info;
 }
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(GDK_WINDOWING_QUARTZ)
 static void
 gimp_image_window_realize (GtkWidget *widget,
                            gpointer   data)
 {
+#ifdef G_OS_WIN32
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (widget);
 
   gimp_widget_set_title_bar_theme (widget, gimp_gui_is_dark (private->gimp));
@@ -412,8 +417,15 @@ gimp_image_window_realize (GtkWidget *widget,
          autohidden taskbar can't be revealed with the mouse. See: #12688. */
       SetPropW (hwnd, L"NonRudeHWND", (HANDLE) TRUE);
     }
-}
+#endif
 
+#ifdef GDK_WINDOWING_QUARTZ
+  gimp_image_window_update_document_edited (GIMP_IMAGE_WINDOW (widget));
+#endif
+}
+#endif
+
+#ifdef G_OS_WIN32
 static GdkFilterReturn
 gimp_image_window_csd_filter (GdkXEvent *xevent,
                               GdkEvent  *event,
@@ -461,7 +473,7 @@ gimp_image_window_constructed (GObject *object)
   gimp_assert (GIMP_IS_GIMP (private->gimp));
   gimp_assert (GIMP_IS_DIALOG_FACTORY (private->dialog_factory));
 
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) || defined(GDK_WINDOWING_QUARTZ)
   g_signal_connect (window, "realize",
                     G_CALLBACK (gimp_image_window_realize),
                     NULL);
@@ -1055,6 +1067,28 @@ gimp_image_window_restore_cursor (gpointer canvas)
     g_object_unref (custom_cursor);
 
   return G_SOURCE_REMOVE;
+}
+
+static void
+gimp_image_window_update_document_edited (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private    = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GdkWindow              *gdk_window = gtk_widget_get_window (GTK_WIDGET (window));
+  NSWindow               *ns_window;
+  GimpImage              *image      = NULL;
+
+  if (! gdk_window)
+    return;
+
+  ns_window = gdk_quartz_window_get_nswindow (gdk_window);
+  if (! ns_window)
+    return;
+
+  if (private->active_shell && private->active_shell->display)
+    image = gimp_display_get_image (private->active_shell->display);
+
+  /* show (or not) circle indicator on macOS close button like "proxy windows" */
+  [ns_window setDocumentEdited:(image && gimp_image_is_dirty (image)) ? YES : NO];
 }
 #endif
 
@@ -2363,6 +2397,9 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
                     window);
 
   gtk_window_set_title (GTK_WINDOW (window), shell->title);
+#ifdef GDK_WINDOWING_QUARTZ
+  gimp_image_window_update_document_edited (window);
+#endif
 
   if (gtk_widget_get_window (GTK_WIDGET (window)))
     {
@@ -2409,6 +2446,9 @@ gimp_image_window_page_removed (GtkNotebook     *notebook,
                 window, NULL);
       gimp_image_window_disconnect_from_active_shell (window);
       private->active_shell = NULL;
+#ifdef GDK_WINDOWING_QUARTZ
+      gimp_image_window_update_document_edited (window);
+#endif
     }
 }
 
@@ -2563,6 +2603,9 @@ gimp_image_window_image_notify (GimpDisplay      *display,
                           GIMP_VIEWABLE (gimp_display_get_image (display)));
 
   gimp_image_window_update_ui_manager (window);
+#ifdef GDK_WINDOWING_QUARTZ
+  gimp_image_window_update_document_edited (window);
+#endif
 }
 
 static void
@@ -2734,6 +2777,9 @@ gimp_image_window_shell_title_notify (GimpDisplayShell *shell,
                                       GimpImageWindow  *window)
 {
   gtk_window_set_title (GTK_WINDOW (window), shell->title);
+#ifdef GDK_WINDOWING_QUARTZ
+  gimp_image_window_update_document_edited (window);
+#endif
 }
 
 static void
