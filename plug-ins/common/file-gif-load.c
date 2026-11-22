@@ -533,6 +533,16 @@ load_image (GFile     *file,
   GifScreen.Background      = buf[5];
   GifScreen.AspectRatio     = buf[6];
 
+  if (GifScreen.Width > GIMP_MAX_IMAGE_SIZE ||
+      GifScreen.Height > GIMP_MAX_IMAGE_SIZE)
+    {
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   _("Image dimensions too large: width %d x height %d"),
+                   GifScreen.Width, GifScreen.Height);
+      fclose (fd);
+      return NULL;
+    }
+
   if (BitSet (buf[4], LOCALCOLORMAP))
     {
       /* Global Colormap */
@@ -1516,12 +1526,13 @@ ReadJeffsImage (FILE       *fd,
   guchar    block_size = 255;
   z_stream  zs;
   guchar    block[255];
-  guchar   *compressed;
-  guchar   *indexes;
+  guchar   *compressed = NULL;
+  guchar   *indexes    = NULL;
   guint     data_size;
-  guint     count = 0;
-  guint     pos   = 0;
-  guint     mask  = 0;
+  guint     compressed_data_size;
+  guint     count      = 0;
+  guint     pos        = 0;
+  guint     mask       = 0;
   gint      ret;
 
   /* Indexes are stored as 1, 2, 4, or 8 bits per pixel
@@ -1538,18 +1549,18 @@ ReadJeffsImage (FILE       *fd,
         mask |= 1 << i;
     }
 
-  data_size = len * height;
-  if (alpha_frame)
-    data_size *= 2;
-  compressed = g_try_malloc (data_size * 255);
-  indexes    = g_try_malloc (data_size);
-
-  if (compressed == NULL ||
-      indexes    == NULL)
+  if (! g_uint_checked_mul (&data_size, len, height)               ||
+      (alpha_frame                                                 &&
+       ! g_uint_checked_mul (&data_size, data_size, 2))            ||
+      ! g_uint_checked_mul (&compressed_data_size, data_size, 255) ||
+      ! (compressed = g_try_malloc0 (compressed_data_size))        ||
+      ! (indexes = g_try_malloc0 (data_size)))
     {
       read_error (_("image data"), *image, error);
-      g_free (compressed);
-      g_free (indexes);
+      if (compressed)
+        g_free (compressed);
+      if (indexes)
+        g_free (indexes);
       return FALSE;
     }
 
@@ -1579,7 +1590,7 @@ ReadJeffsImage (FILE       *fd,
 
       for (gint i = 0; i < block_size; i++)
         {
-          if ((i + count) >= (data_size * 255))
+          if ((i + count) >= (compressed_data_size))
             {
               read_error (_("image data"), *image, error);
               g_free (compressed);
