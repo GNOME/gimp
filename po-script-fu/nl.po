@@ -1489,7 +1489,7 @@ msgstr "Kleur hooglichten"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Highlight opacity"
-msgstr "Helderheid buiten selectie"
+msgstr "Dekking hooglichten"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow color"
