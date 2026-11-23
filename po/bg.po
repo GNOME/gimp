@@ -174,7 +174,7 @@
 # clipping path пътека за срязване
 # clamp фиксиране (на стойности)
 # bump map карта на неравностите
-# alien map чуждестранна карта
+# alien map извънземна карта
 # normalize нормализация
 # swap file файл за допълнителна виртуална памет
 # raw digital camera file необработено изображение от камера
@@ -241,6 +241,19 @@
 # f-stop апертура
 # tristimulus при три стимула
 # aux image помощно изображение
+# aux channels допълнителни канали
+# adjustment layer корекционен слой
+# demosaicing премахване на мозайката
+# correction pass коригиращо преминаване
+# develop проявяване
+# composite image композитно изображение
+# link layer свързан слой
+# text layer текстов слой
+# vector layer векторен слой
+# raster layer растерен слой
+# pinch защипване
+# whirl водовъртеж
+# staggered шахматно
 #
 # TODO:
 # composition guides водачи на композицията
@@ -257,11 +270,6 @@
 # blend-reflect смесване с отражение
 # seed edges начални стойности за граници
 # FPS кдр./сек.
-# link layer свързан слой
-# text layer текстов слой
-# vector layer векторен слой
-# raster layer растерен слой
-#
 #
 #
 # msgid "Enable the N-Point Deformation tool."
@@ -280,8 +288,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-08 17:32+0000\n"
-"PO-Revision-Date: 2026-11-09 16:55+0100\n"
+"POT-Creation-Date: 2026-11-16 00:03+0000\n"
+"PO-Revision-Date: 2026-11-18 21:33+0100\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -2752,7 +2760,15 @@ msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 секунди"
 
-#: app/actions/dashboard-commands.c:127 app/actions/documents-commands.c:263
+#: app/actions/dashboard-commands.c:107
+msgid "Record Performance Log"
+msgstr "Записване на журнал за производителността"
+
+#: app/actions/dashboard-commands.c:110
+msgid "_Record"
+msgstr "_Записване"
+
+#: app/actions/dashboard-commands.c:110 app/actions/documents-commands.c:263
 #: app/actions/edit-commands.c:182 app/actions/error-console-commands.c:98
 #: app/actions/file-commands.c:463 app/actions/gradient-editor-commands.c:410
 #: app/actions/gradient-editor-commands.c:521
@@ -2798,56 +2814,20 @@ msgstr "240 секунди"
 msgid "_Cancel"
 msgstr "_Отказ"
 
-#: app/actions/dashboard-commands.c:128
-msgid "_Record"
-msgstr "_Записване"
-
-#: app/actions/dashboard-commands.c:151 app/dialogs/path-export-dialog.c:94
+#: app/actions/dashboard-commands.c:116 app/dialogs/path-export-dialog.c:94
 msgid "All Files"
 msgstr "Всички файлове"
 
-#: app/actions/dashboard-commands.c:156
+#: app/actions/dashboard-commands.c:121
 #: app/actions/error-console-commands.c:106
 msgid "Log Files (*.log)"
 msgstr "Журнални файлове („*.log“)"
 
-#: app/actions/dashboard-commands.c:200
-msgid "Log samples per second"
-msgstr "Журнални записи в секунда"
-
-#: app/actions/dashboard-commands.c:204
-msgid "Sample fre_quency:"
-msgstr "_Честота на записите:"
-
-#: app/actions/dashboard-commands.c:223
-msgid "_Backtrace"
-msgstr "_Състояние на стека"
-
-#: app/actions/dashboard-commands.c:224
-msgid "Include backtraces in log"
-msgstr "Включване на състоянието на стека в журнала"
-
-#: app/actions/dashboard-commands.c:236
-msgid "_Messages"
-msgstr "_Съобщения"
-
-#: app/actions/dashboard-commands.c:238
-msgid "Include diagnostic messages in log"
-msgstr "Включване на диагностичните съобщения в журнала"
-
-#: app/actions/dashboard-commands.c:250
-msgid "Progressi_ve"
-msgstr "_Пъ̀лни записи"
-
-#: app/actions/dashboard-commands.c:252
-msgid "Produce complete log even if not properly terminated"
-msgstr "Вписване на пълен журнален запис дори и да не е завършен правилно"
-
-#: app/actions/dashboard-commands.c:321
+#: app/actions/dashboard-commands.c:183
 msgid "Add Marker"
 msgstr "Добавяне на маркер"
 
-#: app/actions/dashboard-commands.c:323
+#: app/actions/dashboard-commands.c:185
 msgid "Enter a description for the marker"
 msgstr "Въведете описание на маркера"
 
@@ -5377,7 +5357,7 @@ msgstr "_Вълни…"
 #: app/actions/filters-actions.c:736
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
-msgstr "_Защипване и въртене…"
+msgstr "_Защипване и водовъртеж…"
 
 #: app/actions/filters-actions.c:741
 msgctxt "filters-action"
@@ -15365,39 +15345,39 @@ msgstr "Файлът бе изтрит"
 msgid "No file was set"
 msgstr "Не е зададен файл"
 
-#: app/core/gimplinklayer.c:219
+#: app/core/gimplinklayer.c:225
 msgid "Link Layer"
 msgstr "Свързан слой"
 
-#: app/core/gimplinklayer.c:228
+#: app/core/gimplinklayer.c:235
 msgid "Rename Link Layer"
 msgstr "Преименуване на свързан слой"
 
-#: app/core/gimplinklayer.c:229
+#: app/core/gimplinklayer.c:236
 msgid "Move Link Layer"
 msgstr "Преместване на свързан слой"
 
-#: app/core/gimplinklayer.c:230
+#: app/core/gimplinklayer.c:237
 msgid "Scale Link Layer"
 msgstr "Мащабиране на свързан слой"
 
-#: app/core/gimplinklayer.c:231
+#: app/core/gimplinklayer.c:238
 msgid "Resize Link Layer"
 msgstr "Преоразмеряване на свързан слой"
 
-#: app/core/gimplinklayer.c:232
+#: app/core/gimplinklayer.c:239
 msgid "Flip Link Layer"
 msgstr "Обръщане на свързан слой"
 
-#: app/core/gimplinklayer.c:233
+#: app/core/gimplinklayer.c:240
 msgid "Rotate Link Layer"
 msgstr "Завъртане на свързан слой"
 
-#: app/core/gimplinklayer.c:234 app/core/gimplinklayer.c:598
+#: app/core/gimplinklayer.c:241 app/core/gimplinklayer.c:628
 msgid "Transform Link Layer"
 msgstr "Трансформиране на свързан слой"
 
-#: app/core/gimplinklayer.c:997
+#: app/core/gimplinklayer.c:1027
 msgid "Set layer link"
 msgstr "Задаване на свързан слой"
 
@@ -20423,34 +20403,34 @@ msgstr "Натиснете с влачене за преместване на т
 msgid "Click-Drag to shear"
 msgstr "Натиснете с влачене за килване"
 
-#: app/file/file-open.c:216
+#: app/file/file-open.c:226
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Приставката %s върна съобщение за УСПЕХ, но не върна изображение"
 
-#: app/file/file-open.c:227
+#: app/file/file-open.c:237
 #, c-format
 msgid "%s plug-in could not open image"
 msgstr "Приставката %s не може да отвори изображението"
 
-#: app/file/file-open.c:643
+#: app/file/file-open.c:655
 msgid "Image doesn't contain any layers"
 msgstr "Изображението не съдържа слоеве"
 
-#: app/file/file-open.c:702
+#: app/file/file-open.c:714
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Грешка при отварянето на „%s“: %s"
 
-#: app/file/file-open.c:899 app/file/file-save.c:122
+#: app/file/file-open.c:911 app/file/file-save.c:129
 msgid "Not a regular file"
 msgstr "Необичаен файл"
 
-#: app/file/file-open.c:908 app/file/file-save.c:131
+#: app/file/file-open.c:920 app/file/file-save.c:138
 msgid "Permission denied"
 msgstr "Няма права̀"
 
-#: app/file/file-open.c:972
+#: app/file/file-open.c:984
 #, c-format
 msgid ""
 "Only platform-native file paths are supported: '%s' cannot be opened as link."
@@ -20458,7 +20438,7 @@ msgstr ""
 "Поддържат се само платформено-съвместимите файлови пътища: „%s“ не може да "
 "се отвори като връзка."
 
-#: app/file/file-open.c:1012
+#: app/file/file-open.c:1024
 #, c-format
 msgid "Circular reference detected with '%s'."
 msgstr "Зацикляне на указателите от „%s“."
@@ -20491,11 +20471,11 @@ msgstr "Свалени са %s данни на изображения"
 msgid "Uploaded %s of image data"
 msgstr "Качени са %s данни на изображения"
 
-#: app/file/file-save.c:115
+#: app/file/file-save.c:122
 msgid "Failed to get file information"
 msgstr "Информацията за файла не може да се получи"
 
-#: app/file/file-save.c:287
+#: app/file/file-save.c:294
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Приставката %s не може да запази изображението"
@@ -22965,7 +22945,7 @@ msgstr "Грешка във файла „%s“: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Грешка във файла „%s“"
 
-#: app/plug-in/gimpplugin.c:254
+#: app/plug-in/gimpplugin.c:261
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -27952,315 +27932,315 @@ msgstr "GIMP получи няколко критични грешки!"
 msgid "_Restart GIMP"
 msgstr "_Рестартиране на GIMP"
 
-#: app/widgets/gimpdashboard.c:473 app/widgets/gimpdashboard.c:525
+#: app/widgets/gimpdashboard.c:495 app/widgets/gimpdashboard.c:547
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Заети"
 
-#: app/widgets/gimpdashboard.c:474
+#: app/widgets/gimpdashboard.c:496
 msgid "Tile cache occupied size"
 msgstr "Размер на кеша за плочки"
 
-#: app/widgets/gimpdashboard.c:483
+#: app/widgets/gimpdashboard.c:505
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Максимален"
 
-#: app/widgets/gimpdashboard.c:484
+#: app/widgets/gimpdashboard.c:506
 msgid "Maximal tile cache occupied size"
 msgstr "Максимален размер на кеша за плочки"
 
-#: app/widgets/gimpdashboard.c:493 app/widgets/gimpdashboard.c:545
+#: app/widgets/gimpdashboard.c:515 app/widgets/gimpdashboard.c:567
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Ограничение"
 
-#: app/widgets/gimpdashboard.c:494
+#: app/widgets/gimpdashboard.c:516
 msgid "Tile cache size limit"
 msgstr "Ограничение на размера на кеша за плочки"
 
-#: app/widgets/gimpdashboard.c:502 app/widgets/gimpdashboard.c:628
+#: app/widgets/gimpdashboard.c:524 app/widgets/gimpdashboard.c:650
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Компресия"
 
-#: app/widgets/gimpdashboard.c:503
+#: app/widgets/gimpdashboard.c:525
 msgid "Tile cache compression ratio"
 msgstr "Коефициент на компресия на кеша за плочки"
 
-#: app/widgets/gimpdashboard.c:512
+#: app/widgets/gimpdashboard.c:534
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Попадение/Пропуск"
 
-#: app/widgets/gimpdashboard.c:513
+#: app/widgets/gimpdashboard.c:535
 msgid "Tile cache hit/miss ratio"
 msgstr "Отношение попадение/пропуск на кеша за плочки"
 
-#: app/widgets/gimpdashboard.c:526
+#: app/widgets/gimpdashboard.c:548
 msgid "Swap file occupied size"
 msgstr "Заето място за странициране"
 
-#: app/widgets/gimpdashboard.c:535 app/widgets/gimpdashboard.c:692
+#: app/widgets/gimpdashboard.c:557 app/widgets/gimpdashboard.c:714
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Размер"
 
-#: app/widgets/gimpdashboard.c:536
+#: app/widgets/gimpdashboard.c:558
 msgid "Swap file size"
 msgstr "Размер на файла за странициране"
 
-#: app/widgets/gimpdashboard.c:546
+#: app/widgets/gimpdashboard.c:568
 msgid "Swap file size limit"
 msgstr "Ограничение на размера на файла за странициране"
 
-#: app/widgets/gimpdashboard.c:553
+#: app/widgets/gimpdashboard.c:575
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr "В опашката"
 
-#: app/widgets/gimpdashboard.c:554
+#: app/widgets/gimpdashboard.c:576
 msgid "Size of data queued for writing to the swap"
 msgstr "Размер на данните в опашката за запис във файла за странициране"
 
-#: app/widgets/gimpdashboard.c:563
+#: app/widgets/gimpdashboard.c:585
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr "Забавяния на опашката"
 
-#: app/widgets/gimpdashboard.c:564
+#: app/widgets/gimpdashboard.c:586
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
 "Брой пъти записът във файла за странициране е забавян поради пълна опашка"
 
-#: app/widgets/gimpdashboard.c:573
+#: app/widgets/gimpdashboard.c:595
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr "Пълна опашка"
 
-#: app/widgets/gimpdashboard.c:574
+#: app/widgets/gimpdashboard.c:596
 msgid "Whether the swap queue is full"
 msgstr "Дали опашката за странициране е пълна"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: app/widgets/gimpdashboard.c:585
+#: app/widgets/gimpdashboard.c:607
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Прочетено"
 
-#: app/widgets/gimpdashboard.c:586
+#: app/widgets/gimpdashboard.c:608
 msgid "Total amount of data read from the swap"
 msgstr "Общо количество данни прочетени от файла за странициране"
 
-#: app/widgets/gimpdashboard.c:595
+#: app/widgets/gimpdashboard.c:617
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Скорост на четене"
 
-#: app/widgets/gimpdashboard.c:596
+#: app/widgets/gimpdashboard.c:618
 msgid "The rate at which data is read from the swap"
 msgstr "Скорост на четене на данните във файла за странициране"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: app/widgets/gimpdashboard.c:608
+#: app/widgets/gimpdashboard.c:630
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Записано"
 
-#: app/widgets/gimpdashboard.c:609
+#: app/widgets/gimpdashboard.c:631
 msgid "Total amount of data written to the swap"
 msgstr "Общо количество данни записани във файла за странициране"
 
-#: app/widgets/gimpdashboard.c:618
+#: app/widgets/gimpdashboard.c:640
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Скорост на запис"
 
-#: app/widgets/gimpdashboard.c:619
+#: app/widgets/gimpdashboard.c:641
 msgid "The rate at which data is written to the swap"
 msgstr "Скорост на запис на данните във файла за странициране"
 
-#: app/widgets/gimpdashboard.c:629
+#: app/widgets/gimpdashboard.c:651
 msgid "Swap compression ratio"
 msgstr "Коефициент на компресия на файла за странициране"
 
-#: app/widgets/gimpdashboard.c:642
+#: app/widgets/gimpdashboard.c:664
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Натоварване"
 
-#: app/widgets/gimpdashboard.c:643
+#: app/widgets/gimpdashboard.c:665
 msgid "Total CPU usage"
 msgstr "Общо натоварване на ЦП"
 
-#: app/widgets/gimpdashboard.c:651 app/widgets/gimpdashboard.c:660
-#: app/widgets/gimpdashboard.c:722
+#: app/widgets/gimpdashboard.c:673 app/widgets/gimpdashboard.c:682
+#: app/widgets/gimpdashboard.c:744
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Активност"
 
-#: app/widgets/gimpdashboard.c:652
+#: app/widgets/gimpdashboard.c:674
 msgid "Whether the CPU is active"
 msgstr "Дали ЦП е активен"
 
-#: app/widgets/gimpdashboard.c:661
+#: app/widgets/gimpdashboard.c:683
 msgid "Total amount of time the CPU has been active"
 msgstr "Общо време на работа на ЦП"
 
-#: app/widgets/gimpdashboard.c:674
+#: app/widgets/gimpdashboard.c:696
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Ползвани"
 
-#: app/widgets/gimpdashboard.c:675
+#: app/widgets/gimpdashboard.c:697
 msgid "Amount of memory used by the process"
 msgstr "Памет ползвана от процеса"
 
-#: app/widgets/gimpdashboard.c:683
+#: app/widgets/gimpdashboard.c:705
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Налична"
 
-#: app/widgets/gimpdashboard.c:684
+#: app/widgets/gimpdashboard.c:706
 msgid "Amount of available physical memory"
 msgstr "Налична физическа памет"
 
-#: app/widgets/gimpdashboard.c:693
+#: app/widgets/gimpdashboard.c:715
 msgid "Physical memory size"
 msgstr "Размер на физическата памет"
 
-#: app/widgets/gimpdashboard.c:704
+#: app/widgets/gimpdashboard.c:726
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Пирамидални данни"
 
-#: app/widgets/gimpdashboard.c:705
+#: app/widgets/gimpdashboard.c:727
 msgid "Total size of processed mipmapped data"
 msgstr "Общ размер на пирамидалните данни (mipmap)"
 
-#: app/widgets/gimpdashboard.c:713
+#: app/widgets/gimpdashboard.c:735
 msgctxt "dashboard-variable"
 msgid "Assigned"
 msgstr "Зададени"
 
-#: app/widgets/gimpdashboard.c:714
+#: app/widgets/gimpdashboard.c:736
 msgid "Number of assigned worker threads"
 msgstr "Брой зададени работещи нишки-работници"
 
-#: app/widgets/gimpdashboard.c:723
+#: app/widgets/gimpdashboard.c:745
 msgid "Number of active worker threads"
 msgstr "Брой действащи нишки-работници"
 
-#: app/widgets/gimpdashboard.c:731
+#: app/widgets/gimpdashboard.c:753
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Асинхронни"
 
-#: app/widgets/gimpdashboard.c:732
+#: app/widgets/gimpdashboard.c:754
 msgid "Number of ongoing asynchronous operations"
 msgstr "Брой още незавършили асинхронни действия"
 
-#: app/widgets/gimpdashboard.c:740
+#: app/widgets/gimpdashboard.c:762
 msgctxt "dashboard-variable"
 msgid "Tile"
 msgstr "Плочки"
 
-#: app/widgets/gimpdashboard.c:741
+#: app/widgets/gimpdashboard.c:763
 msgid "Total size of tile memory"
 msgstr "Общ размер на паметта за плочки"
 
-#: app/widgets/gimpdashboard.c:750
+#: app/widgets/gimpdashboard.c:772
 msgctxt "dashboard-variable"
 msgid "Scratch"
 msgstr "Временна"
 
-#: app/widgets/gimpdashboard.c:751
+#: app/widgets/gimpdashboard.c:773
 msgid "Total size of scratch memory"
 msgstr "Общ размер на временната памет"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
 #.
-#: app/widgets/gimpdashboard.c:762
+#: app/widgets/gimpdashboard.c:784
 msgctxt "dashboard-variable"
 msgid "TempBuf"
 msgstr "Буфери"
 
-#: app/widgets/gimpdashboard.c:763
+#: app/widgets/gimpdashboard.c:785
 msgid "Total size of temporary buffers"
 msgstr "Общ размер на временните буфери"
 
-#: app/widgets/gimpdashboard.c:775
+#: app/widgets/gimpdashboard.c:797
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Кеш"
 
-#: app/widgets/gimpdashboard.c:776
+#: app/widgets/gimpdashboard.c:798
 msgid "In-memory tile cache"
 msgstr "Кеш за плочки"
 
-#: app/widgets/gimpdashboard.c:812
+#: app/widgets/gimpdashboard.c:834
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Странициране"
 
-#: app/widgets/gimpdashboard.c:813
+#: app/widgets/gimpdashboard.c:835
 msgid "On-disk tile swap"
 msgstr "Странициране върху диска за плочки"
 
-#: app/widgets/gimpdashboard.c:877
+#: app/widgets/gimpdashboard.c:899
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "ЦП"
 
-#: app/widgets/gimpdashboard.c:878
+#: app/widgets/gimpdashboard.c:900
 msgid "CPU usage"
 msgstr "Ползван ЦП"
 
-#: app/widgets/gimpdashboard.c:913
+#: app/widgets/gimpdashboard.c:935
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Процесор"
 
-#: app/widgets/gimpdashboard.c:914
+#: app/widgets/gimpdashboard.c:936
 msgid "Memory usage"
 msgstr "Ползвана памет"
 
-#: app/widgets/gimpdashboard.c:922
+#: app/widgets/gimpdashboard.c:944
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Кеш"
 
-#: app/widgets/gimpdashboard.c:956
+#: app/widgets/gimpdashboard.c:978
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Допълнителни"
 
-#: app/widgets/gimpdashboard.c:957
+#: app/widgets/gimpdashboard.c:979
 msgid "Miscellaneous information"
 msgstr "Допълнителна информация"
 
-#: app/widgets/gimpdashboard.c:1150
+#: app/widgets/gimpdashboard.c:1172
 msgid "Select fields"
 msgstr "Избиране на полета"
 
 #. Translators: "N/A" is an abbreviation for "not available"
-#: app/widgets/gimpdashboard.c:3332
+#: app/widgets/gimpdashboard.c:3356
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Няма"
 
-#: app/widgets/gimpdashboard.c:3341 app/widgets/gimpdashboard.c:4349
+#: app/widgets/gimpdashboard.c:3365 app/widgets/gimpdashboard.c:4373
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Да"
 
-#: app/widgets/gimpdashboard.c:3342 app/widgets/gimpdashboard.c:4350
+#: app/widgets/gimpdashboard.c:3366 app/widgets/gimpdashboard.c:4374
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Не"
@@ -28269,7 +28249,7 @@ msgstr "Не"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: app/widgets/gimpdashboard.c:3426
+#: app/widgets/gimpdashboard.c:3450
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -28280,16 +28260,40 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: app/widgets/gimpdashboard.c:4339
+#: app/widgets/gimpdashboard.c:4363
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: app/widgets/gimpdashboard.c:4417
+#: app/widgets/gimpdashboard.c:4441
 msgid "N/A"
 msgstr "Няма"
 
-#: app/widgets/gimpdashboard.c:4795
+#: app/widgets/gimpdashboard.c:4487
+msgid "Recording Options"
+msgstr "Настройки на записване"
+
+#: app/widgets/gimpdashboard.c:4496
+msgid "Select options"
+msgstr "Избор на опции"
+
+#: app/widgets/gimpdashboard.c:4548
+msgid "_Backtrace"
+msgstr "_Състояние на стека"
+
+#: app/widgets/gimpdashboard.c:4558
+msgid "_Messages"
+msgstr "_Съобщения"
+
+#: app/widgets/gimpdashboard.c:4568
+msgid "Progressi_ve"
+msgstr "_Пъ̀лни записи"
+
+#: app/widgets/gimpdashboard.c:4590
+msgid "Sample fre_quency:"
+msgstr "_Честота на записите:"
+
+#: app/widgets/gimpdashboard.c:5065
 msgid "Resolving symbol information..."
 msgstr "Откриване на информацията за символите…"
 
