@@ -352,10 +352,15 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   GtkAdjustment    *adjustment;
   GtkWidget        *bar;
   gint              border;
+  GtkIconSize       button_size  = GTK_ICON_SIZE_MENU;
 
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
   gimp_settings_box_show_legacy (GIMP_SETTINGS_BOX (filter_tool->settings_box));
+
+  gtk_widget_style_get (GTK_WIDGET (gimp_display_get_shell (GIMP_TOOL (tool)->display)),
+                        "button-icon-size", &button_size,
+                        NULL);
 
   /*  The combo box for selecting channels  */
   main_frame = gimp_frame_new (NULL);
@@ -405,6 +410,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (tool_options),
                                        "histogram-scale", "gimp-histogram",
                                        0, 0);
+  gimp_enum_icon_box_set_icon_size (hbox2, button_size);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
 
   /*  The linear/perceptual radio buttons  */
@@ -418,6 +424,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (config), "trc",
                                        "gimp-color-space",
                                        -1, -1);
+  gimp_enum_icon_box_set_icon_size (hbox2, button_size);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);

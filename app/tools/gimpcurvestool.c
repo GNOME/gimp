@@ -203,9 +203,7 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   GimpHistogramChannel  channel;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
-    {
-      return FALSE;
-    }
+    return FALSE;
 
   drawables = gimp_image_get_selected_drawables (image);
   if (g_list_length (drawables) != 1)
@@ -464,10 +462,15 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   GtkWidget        *button;
   GtkWidget        *bar;
   GtkWidget        *combo;
+  GtkIconSize       button_size  = GTK_ICON_SIZE_MENU;
 
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
   gimp_settings_box_show_legacy (GIMP_SETTINGS_BOX (filter_tool->settings_box));
+
+  gtk_widget_style_get (GTK_WIDGET (gimp_display_get_shell (GIMP_TOOL (tool)->display)),
+                        "button-icon-size", &button_size,
+                        NULL);
 
   /*  The combo box for selecting channels  */
   main_frame = gimp_frame_new (NULL);
@@ -519,12 +522,14 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (tool_options),
                                        "histogram-scale", "gimp-histogram",
                                        0, 0);
+  gimp_enum_icon_box_set_icon_size (hbox2, button_size);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
 
   /*  The linear/perceptual radio buttons  */
   hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (config), "trc",
                                        "gimp-color-space",
                                        -1, -1);
+  gimp_enum_icon_box_set_icon_size (hbox2, button_size);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
@@ -648,7 +653,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 
   hbox2 = gimp_enum_icon_box_new (GIMP_TYPE_CURVE_POINT_TYPE,
                                   "gimp-curve-point",
-                                  GTK_ICON_SIZE_MENU,
+                                  button_size,
                                   G_CALLBACK (curves_point_type_callback),
                                   tool, NULL,
                                   &tool->point_type);
