@@ -47,6 +47,7 @@
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimplayermodebox.h"
 #include "widgets/gimpopendialog.h"
+#include "widgets/gimpview.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "item-options-dialog.h"
@@ -155,9 +156,6 @@ layer_options_dialog_new (GimpImage                *image,
   GtkWidget            *tags;
   GtkWidget            *area;
   GimpLayerModeContext  mode_context;
-  GdkPixbuf            *pixbuf;
-  gint                  width;
-  gint                  height;
   gdouble               xres;
   gdouble               yres;
   gint                  row = 0;
@@ -545,20 +543,12 @@ layer_options_dialog_new (GimpImage                *image,
   /* Add larger image preview */
   vbox = item_options_dialog_get_right_vbox (dialog);
 
-  width  = gimp_item_get_width  (GIMP_ITEM (layer));
-  height = gimp_item_get_height (GIMP_ITEM (layer));
-
-  area = gimp_offset_area_new (width, height);
-  gtk_box_pack_start (GTK_BOX (vbox), area, TRUE, TRUE, 0);
+  area = gimp_view_new (context, GIMP_VIEWABLE (layer), 200, 1, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), area, TRUE, FALSE, 0);
   gtk_widget_set_visible (area, TRUE);
 
-  gimp_viewable_get_preview_size (GIMP_VIEWABLE (layer), 200, TRUE, TRUE,
-                                  &width, &height);
-  pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (layer), context,
-                                     width, height, 1, NULL);
-
-  if (pixbuf)
-    gimp_offset_area_set_pixbuf (GIMP_OFFSET_AREA (area), pixbuf);
+  /* Hide unnecessary header icon */
+  gtk_widget_set_visible (GIMP_VIEWABLE_DIALOG (dialog)->view, FALSE);
 
   gtk_box_reorder_child (GTK_BOX (vbox), area, 0);
 
