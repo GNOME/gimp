@@ -48,6 +48,8 @@ struct _GimpHistogramEditor
   gboolean              update_pending;
 
   GtkWidget            *menu;
+  GtkWidget            *scale_menu;
+  GtkWidget            *color_menu;
   GtkWidget            *box;
   GtkWidget            *labels[7];
   GtkWidget            *toggle;
