@@ -117,7 +117,7 @@ prefs_button_add (const gchar *icon_name,
 {
   GtkWidget *button;
 
-  button = gimp_icon_button_new (icon_name, GTK_ICON_SIZE_BUTTON, label);
+  button = gimp_icon_button_new (icon_name, label);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 

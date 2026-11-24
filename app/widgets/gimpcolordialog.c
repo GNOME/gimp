@@ -246,7 +246,7 @@ gimp_color_dialog_constructed (GObject *object)
   gtk_widget_set_visible (hbox, TRUE);
 
   /* Button for adding to color history. */
-  button = gimp_icon_button_new (GIMP_ICON_LIST_ADD, GTK_ICON_SIZE_MENU, NULL);
+  button = gimp_icon_button_new (GIMP_ICON_LIST_ADD, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (button), FALSE, FALSE, 0);
   gimp_help_set_help_data (button,
                            _("Add the current color to the color history"),

@@ -648,7 +648,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
-  button = gimp_icon_button_new (GIMP_ICON_TOOL_CURVES, button_size,
+  button = gimp_icon_button_new (GIMP_ICON_TOOL_CURVES,
                                  _("Edit these Settings as Curves"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);

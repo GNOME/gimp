@@ -270,18 +270,12 @@ gimp_brightness_contrast_tool_motion (GimpTool         *tool,
 static void
 gimp_brightness_contrast_tool_dialog (GimpFilterTool *filter_tool)
 {
-  GimpTool                   *tool        = GIMP_TOOL (filter_tool);
-  GimpBrightnessContrastTool *bc_tool     = GIMP_BRIGHTNESS_CONTRAST_TOOL (filter_tool);
+  GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (filter_tool);
   GtkWidget                  *main_vbox;
   GtkWidget                  *scale;
   GtkWidget                  *button;
-  GtkIconSize                 button_size = GTK_ICON_SIZE_MENU;
 
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
-
-  gtk_widget_style_get (GTK_WIDGET (gimp_display_get_shell (tool->display)),
-                        "button-icon-size", &button_size,
-                        NULL);
 
   /*  Create the brightness scale widget  */
   scale = gimp_prop_spin_scale_new (filter_tool->config, "brightness",
@@ -299,7 +293,7 @@ gimp_brightness_contrast_tool_dialog (GimpFilterTool *filter_tool)
 
   bc_tool->contrast_scale = scale;
 
-  button = gimp_icon_button_new (GIMP_ICON_TOOL_LEVELS, button_size,
+  button = gimp_icon_button_new (GIMP_ICON_TOOL_LEVELS,
                                  _("Edit these Settings as Levels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);

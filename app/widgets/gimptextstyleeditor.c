@@ -293,10 +293,11 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     editor);
 
   /* Restore position button */
-  editor->restore_position_button =
-    gimp_icon_button_new (GIMP_ICON_RESET, GTK_ICON_SIZE_MENU, NULL);
+  editor->restore_position_button = gimp_icon_button_new (GIMP_ICON_RESET, NULL);
   gtk_button_set_relief (GTK_BUTTON (editor->restore_position_button),
                          GTK_RELIEF_NONE);
+  gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (editor->restore_position_button))),
+                                GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
 
   gimp_help_set_help_data (editor->restore_position_button,
                            _("Restore On-Canvas Editor Position"), NULL);

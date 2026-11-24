@@ -34,9 +34,8 @@
 /*  public functions  */
 
 GtkWidget *
-gimp_icon_button_new (const gchar       *icon_name,
-                      const GtkIconSize  icon_size,
-                      const gchar       *label)
+gimp_icon_button_new (const gchar *icon_name,
+                      const gchar *label)
 {
   GtkWidget *button;
   GtkWidget *image;
@@ -52,7 +51,7 @@ gimp_icon_button_new (const gchar       *icon_name,
       gtk_container_add (GTK_CONTAINER (button), hbox);
       gtk_widget_set_visible (hbox, TRUE);
 
-      image = gtk_image_new_from_icon_name (icon_name, icon_size);
+      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
       gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
       gtk_widget_set_visible (image, TRUE);
 
@@ -63,7 +62,7 @@ gimp_icon_button_new (const gchar       *icon_name,
     }
   else
     {
-      image = gtk_image_new_from_icon_name (icon_name, icon_size);
+      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_set_visible (image, TRUE);
     }

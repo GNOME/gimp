@@ -18,8 +18,7 @@
 #pragma once
 
 
-GtkWidget * gimp_icon_button_new         (const gchar       *icon_name,
-                                          const GtkIconSize  icon_size,
-                                          const gchar       *label);
+GtkWidget * gimp_icon_button_new         (const gchar      *icon_name,
+                                          const gchar      *label);
 
-GtkWidget * gimp_color_profile_label_new (GimpColorProfile  *profile);
+GtkWidget * gimp_color_profile_label_new (GimpColorProfile *profile);

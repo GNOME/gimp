@@ -280,8 +280,10 @@ resize_dialog_new (GimpViewable       *viewable,
                     private);
 
   /* reset template button */
-  button = gimp_icon_button_new (GIMP_ICON_RESET, GTK_ICON_SIZE_MENU, NULL);
+  button = gimp_icon_button_new (GIMP_ICON_RESET, NULL);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
+                                GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_set_visible (button, TRUE);
 
