@@ -306,25 +306,30 @@ load_image (GFile        *file,
                        (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
 #endif
             }
-          else if (marker->marker == JPEG_APP0 + 13)
+          else if ((marker->marker == JPEG_APP0 + 13) &&
+                   (len > sizeof (JPEG_APP_HEADER_PS)))
             {
-              photoshop_data = g_realloc (photoshop_data,
-                                          (gsize) photoshop_len + len - sizeof (JPEG_APP_HEADER_PS));
+              photoshop_data =
+                g_try_realloc (photoshop_data,
+                               (gsize) photoshop_len + len - sizeof (JPEG_APP_HEADER_PS));
 
-              memcpy (photoshop_data + photoshop_len,
-                      data + sizeof (JPEG_APP_HEADER_PS),
-                      len - sizeof (JPEG_APP_HEADER_PS));
-
-              photoshop_len += len;
-              photoshop_len -= sizeof (JPEG_APP_HEADER_PS);
-
-              if (ps_metadata_loaded)
-                *ps_metadata_loaded = TRUE;
-
+              if (photoshop_data)
+                {
+                  memcpy (photoshop_data + photoshop_len,
+                          data + sizeof (JPEG_APP_HEADER_PS),
+                          len - sizeof (JPEG_APP_HEADER_PS));
+                  
+                  photoshop_len += len;
+                  photoshop_len -= sizeof (JPEG_APP_HEADER_PS);
+                  
+                  if (ps_metadata_loaded)
+                    *ps_metadata_loaded = TRUE;
+                  
 #ifdef GIMP_UNSTABLE
-              g_print ("jpeg-load: found Photoshop block (%d bytes) %s\n",
-                       (gint) (len - sizeof (JPEG_APP_HEADER_PS)), data);
+                  g_print ("jpeg-load: found Photoshop block (%d bytes) %s\n",
+                           (gint) (len - sizeof (JPEG_APP_HEADER_PS)), data);
 #endif
+                }
             }
         }
 
