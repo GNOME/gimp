@@ -63,6 +63,8 @@ enum
   N_LABELS
 };
 
+#define CONTROL_HEIGHT 14
+
 
 static void     gimp_histogram_editor_docked_iface_init (GimpDockedInterface *iface);
 
@@ -75,6 +77,7 @@ static void     gimp_histogram_editor_get_property  (GObject            *object,
                                                      guint               property_id,
                                                      GValue             *value,
                                                      GParamSpec         *pspec);
+static void     gimp_histogram_editor_style_updated (GtkWidget          *widget);
 
 static void     gimp_histogram_editor_set_aux_info  (GimpDocked          *docked,
                                                      GList               *aux_info);
@@ -115,11 +118,14 @@ static void
 gimp_histogram_editor_class_init (GimpHistogramEditorClass *klass)
 {
   GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
+  GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
   object_class->finalize        = gimp_histogram_editor_finalize;
   object_class->set_property    = gimp_histogram_editor_set_property;
   object_class->get_property    = gimp_histogram_editor_get_property;
+
+  widget_class->style_updated   = gimp_histogram_editor_style_updated;
 
   image_editor_class->set_image = gimp_histogram_editor_set_image;
 
@@ -178,14 +184,18 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gimp_help_set_help_data (editor->menu,
                            _("Histogram channel"), NULL);
 
-  menu = gimp_prop_enum_icon_box_new (G_OBJECT (view),
-                                      "histogram-scale", "gimp-histogram",
-                                      0, 0);
+  editor->scale_menu = menu =
+    gimp_prop_enum_icon_box_new (G_OBJECT (view),
+                                 "histogram-scale", "gimp-histogram",
+                                 0, 0);
+  gimp_enum_icon_box_set_icon_size (menu, GTK_ICON_SIZE_MENU);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
 
-  menu = gimp_prop_enum_icon_box_new (G_OBJECT (editor), "trc",
-                                      "gimp-color-space",
-                                      -1, -1);
+  editor->color_menu = menu =
+    gimp_prop_enum_icon_box_new (G_OBJECT (editor), "trc",
+                                 "gimp-color-space",
+                                 -1, -1);
+  gimp_enum_icon_box_set_icon_size (menu, GTK_ICON_SIZE_MENU);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
 
   gtk_box_pack_start (GTK_BOX (editor), editor->box, TRUE, TRUE, 0);
@@ -262,6 +272,8 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_set_visible (label, TRUE);
+
+  gimp_histogram_editor_style_updated (GTK_WIDGET (editor));
 }
 
 static void
@@ -341,6 +353,40 @@ gimp_histogram_editor_get_property (GObject    *object,
 }
 
 static void
+gimp_histogram_editor_style_updated (GtkWidget *widget)
+{
+  GimpHistogramEditor *editor          = GIMP_HISTOGRAM_EDITOR (widget);
+  gint                 handle_bar_size = CONTROL_HEIGHT;
+  GtkIconSize          button_size;
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+
+  gtk_widget_style_get (widget,
+                        "button-icon-size", &button_size,
+                        NULL);
+
+  gimp_enum_icon_box_set_icon_size (editor->scale_menu, button_size);
+  gimp_enum_icon_box_set_icon_size (editor->color_menu, button_size);
+
+  switch (button_size)
+    {
+    case GTK_ICON_SIZE_LARGE_TOOLBAR:
+      handle_bar_size += 4;
+      break;
+
+    case GTK_ICON_SIZE_DND:
+      handle_bar_size += 8;
+      break;
+
+    default:
+      handle_bar_size = CONTROL_HEIGHT;
+    }
+  gtk_widget_set_size_request (GIMP_HISTOGRAM_BOX (editor->box)->slider_bar,
+                               -1, handle_bar_size);
+}
+
+
+static void
 gimp_histogram_editor_set_aux_info (GimpDocked *docked,
                                     GList      *aux_info)
 {
@@ -397,6 +443,9 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_histogram_editor_menu_update,
                                             editor);
+      g_signal_handlers_disconnect_by_func (image_editor->image->gimp->config,
+                                            gimp_histogram_editor_style_updated,
+                                            editor);
 
       if (editor->histogram)
         {
@@ -424,6 +473,14 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       g_signal_connect_object (image, "mask-changed",
                                G_CALLBACK (gimp_histogram_editor_update),
                                editor, G_CONNECT_SWAPPED);
+      g_signal_connect_object (image->gimp->config,
+                               "notify::override-theme-icon-size",
+                               G_CALLBACK (gimp_histogram_editor_style_updated),
+                               editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (image->gimp->config,
+                               "notify::custom-icon-size",
+                               G_CALLBACK (gimp_histogram_editor_style_updated),
+                               editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
     }
 
   gimp_histogram_editor_layer_changed (image, editor);
