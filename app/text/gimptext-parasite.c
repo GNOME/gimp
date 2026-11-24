@@ -84,6 +84,7 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
   g_object_set (text, "font", gimp_font_get_standard(), NULL);
 
   parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
+  parasite_data = g_strndup (parasite_data, parasite_data_size);
   if (parasite_data)
     {
       gboolean      has_markup   = g_str_has_prefix (parasite_data, "(markup ");
