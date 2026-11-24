@@ -2089,7 +2089,7 @@ load_contiguous (TIFF         *tif,
     {
       gsize allocation;
       gint  n_components = babl_format_get_n_components (src_format);
-      gint  buf_bpp = MAX(bytes_per_pixel, src_bpp);
+      gint  buf_bpp = MAX (bytes_per_pixel, src_bpp);
 
       TIFFGetField (tif, TIFFTAG_TILEWIDTH,  &tile_width);
       TIFFGetField (tif, TIFFTAG_TILELENGTH, &tile_height);
@@ -2111,15 +2111,15 @@ load_contiguous (TIFF         *tif,
       tile_width  = image_width;
       tile_height = 1;
 
-      buffer = g_malloc (TIFFScanlineSize (tif));
+      buffer = g_malloc0 (TIFFScanlineSize (tif));
     }
 
-  if (tiff_mode != GIMP_TIFF_DEFAULT && bps < 8)
+  if (bps < 8)
     {
       gsize tile_area = (gsize) tile_width * tile_height;
 
       needs_upscale = TRUE;
-      bw_buffer = g_try_malloc (tile_area);
+      bw_buffer     = g_try_malloc0 (tile_area);
 
       if (! bw_buffer)
         {
@@ -2297,22 +2297,22 @@ load_separate (TIFF         *tif,
       TIFFGetField (tif, TIFFTAG_TILEWIDTH,  &tile_width);
       TIFFGetField (tif, TIFFTAG_TILELENGTH, &tile_height);
 
-      buffer = g_malloc (TIFFTileSize (tif));
+      buffer = g_malloc0 (TIFFTileSize (tif));
     }
   else
     {
       tile_width  = image_width;
       tile_height = 1;
 
-      buffer = g_malloc (TIFFScanlineSize (tif));
+      buffer = g_malloc0 (TIFFScanlineSize (tif));
     }
 
-  if (tiff_mode != GIMP_TIFF_DEFAULT && bps < 8)
+  if (bps < 8)
     {
       gsize tile_area = (gsize) tile_width * tile_height;
 
       needs_upscale = TRUE;
-      bw_buffer = g_try_malloc (tile_area);
+      bw_buffer     = g_try_malloc0 (tile_area);
 
       if (! bw_buffer)
         {
@@ -3325,6 +3325,9 @@ convert_int2uint (guchar *buffer,
 {
   gint bytes_per_pixel = bps / 8;
   gint y;
+
+  if (bytes_per_pixel < 1)
+    return;
 
   for (y = 0; y < height; y++)
     {
