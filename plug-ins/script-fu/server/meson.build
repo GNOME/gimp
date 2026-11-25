@@ -23,6 +23,13 @@ if not meson.is_cross_build()
     )
   endif
 
+  plugin_link_args = []
+  plugin_link_depends = []
+  if platform_osx
+    plugin_link_args += [ '-Wl,-sectcreate,__TEXT,__info_plist,' + gimp_plugins_plist ]
+    plugin_link_depends += gimp_plugins_plist_file
+  endif
+
   # The differences from the script-fu executable:
   #    name and sources
   #    also links with winsock
@@ -43,6 +50,8 @@ if not meson.is_cross_build()
                             scriptfuInclude,
                           ],
                           link_with : libscriptfu,
+                          link_args: plugin_link_args,
+                          link_depends: plugin_link_depends,
                           win_subsystem: 'windows',
                           install: true,
                           install_dir: gimpplugindir / 'plug-ins' / plugin_name)
