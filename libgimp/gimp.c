@@ -155,6 +155,41 @@ static GimpStackTraceMode  stack_trace_mode      = GIMP_STACK_TRACE_NEVER;
 
 #ifdef PLATFORM_OSX
 static void
+language_set_macos_lang (void)
+{
+  const gchar *language = g_getenv ("LANGUAGE");
+
+  if (language && strlen (language) > 0)
+    {
+      gchar       **parts  = g_strsplit_set (language, "@.", 2);
+      const gchar  *script = "";
+      gchar        *identifier;
+
+      /* turn the GIMP/gettext language code into one that macOS understand */
+      if (! g_ascii_strcasecmp (parts[1] ? parts[1] : "", "latin"))
+        script = "-Latn";
+      else if (! g_ascii_strcasecmp (parts[1] ? parts[1] : "", "cyrillic"))
+        script = "-Cyrl";
+      identifier = g_strconcat (g_strdelimit (parts[0], "_", '-'), script, NULL);
+
+      @autoreleasepool
+        {
+          NSUserDefaults      *defaults = [NSUserDefaults standardUserDefaults];
+          NSDictionary        *domain   = [defaults volatileDomainForName:NSArgumentDomain];
+          NSMutableDictionary *args     = domain ? [domain mutableCopy] : [[NSMutableDictionary alloc] init];
+          NSString            *ns_lang  = [NSString stringWithUTF8String:identifier];
+
+          [args setObject:@[ns_lang] forKey:@"AppleLanguages"];
+          [defaults setVolatileDomain:args forName:NSArgumentDomain];
+          [args release];
+        }
+
+      g_free (identifier);
+      g_strfreev (parts);
+    }
+}
+
+static void
 setlocale_lc_numeric (void)
 {
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1070 /* imp_implementationWithBlock */
@@ -633,6 +668,9 @@ gimp_main (GType  plug_in_type,
 #warning GTK4 GtkSpinButton hardcodes '-' and '+' instead of using localeconv(): evaluate dropping this LC_MONETARY workaround
 #endif
   setlocale (LC_MONETARY, "C");
+
+  /* similar to app/language.c, localize native macOS dialogs (e.g. Print, Scanner) */
+  language_set_macos_lang ();
 
   /* copied from app/main.c, otherwise the Print plugin crashes on macOS 27 */
   setlocale_lc_numeric ();
