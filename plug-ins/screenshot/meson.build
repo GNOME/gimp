@@ -39,12 +39,21 @@ if platform_windows
   plugin_sources += windows.compile_resources('screenshot-win32.rc')
 endif
 
+plugin_link_args = []
+plugin_link_depends = []
+if platform_osx
+  plugin_link_args += [ '-Wl,-sectcreate,__TEXT,__info_plist,' + gimp_plugins_plist ]
+  plugin_link_depends += gimp_plugins_plist_file
+endif
+
 plugin_exe = executable('screenshot',
                         plugin_sources,
                         dependencies: [
                           libgimpui_dep,
                           x11, xmu, xext, xfixes,
                         ],
+                        link_args: plugin_link_args,
+                        link_depends: plugin_link_depends,
                         win_subsystem: 'windows',
                         install: true,
                         install_dir: gimpplugindir / 'plug-ins' / plugin_name)

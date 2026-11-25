@@ -1,3 +1,6 @@
+gimp_plugins_plist = meson.project_source_root() / 'build' / 'macos' / 'Info-plug-ins.plist'
+gimp_plugins_plist_file = files('../build/macos/Info-plug-ins.plist')
+
 subdir('common')
 
 all_plugins_sources = []
