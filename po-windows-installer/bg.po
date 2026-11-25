@@ -1,14 +1,14 @@
 # Bulgarian translation of gimp-windows-installer po-file.
-# Copyright (C) 2023, 2024 Alexander Shopov <ash@kambanaria.org>.
+# Copyright (C) 2023, 2024, 2026 Alexander Shopov <ash@kambanaria.org>.
 # This file is distributed under the same license as the GIMP package.
-# Alexander Shopov <ash@kambanaria.org>, 2023, 2024.
+# Alexander Shopov <ash@kambanaria.org>, 2023, 2024, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2025-12-28 11:26+0000\n"
-"PO-Revision-Date: 2026-03-11 09:58+0100\n"
+"POT-Creation-Date: 2026-10-14 13:34+0000\n"
+"PO-Revision-Date: 2026-11-23 23:04+0100\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -45,15 +45,14 @@ msgid ""
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
-"installation anyway?"
+"www.gimp.org/bugs%n%nDo you wish to continue with installation anyway?"
 msgstr ""
 "Тази версия на GIMP е за разработчици и тестъри — някои възможности може да "
 "не са завършени или да не са стабилни.%nТази версия не е за ежедневна "
 "употреба, защото може да забива и да загубите данни.%nАко срещнете проблеми, "
 "първо проверете дали вече не са поправени в GIT, преди да се свържете с "
 "разработчиците или да ги докладвате в Gitlab на GIMP:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nИскате ли да продължите с инсталацията "
+"gitlab.gnome.org/GNOME/gimp/bugs%n%nИскате ли да продължите с инсталацията "
 "въпреки това?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:30
@@ -178,32 +177,29 @@ msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr "Позволява ползването на приставки на GIMP написани на Lua."
 
 #: build/windows/installer/lang/setup.isl.xml.in:140
+msgid "JavaScript scripting"
+msgstr "Скриптове на JavaScript"
+
+#: build/windows/installer/lang/setup.isl.xml.in:144
+msgid ""
+"Allows you to use GIMP plugins written in JavaScript scripting language."
+msgstr "Позволява ползването на приставки на GIMP написани на JavaScript."
+
+#: build/windows/installer/lang/setup.isl.xml.in:148
 msgid "MyPaint brushes"
 msgstr "Четки от MyPaint"
 
-#: build/windows/installer/lang/setup.isl.xml.in:144
+#: build/windows/installer/lang/setup.isl.xml.in:152
 msgid "Install the default set of MyPaint brushes"
 msgstr "Инсталиране на стандартния набор от четки от MyPaint"
 
-#: build/windows/installer/lang/setup.isl.xml.in:148
+#: build/windows/installer/lang/setup.isl.xml.in:156
 msgid "PostScript support"
 msgstr "Поддръжка на PostScript"
 
-#: build/windows/installer/lang/setup.isl.xml.in:152
+#: build/windows/installer/lang/setup.isl.xml.in:160
 msgid "Allow GIMP to load PostScript files"
 msgstr "Позволяване на GIMP да зарежда файлове на PostScript"
-
-#: build/windows/installer/lang/setup.isl.xml.in:156
-msgid "Support for 32-bit plug-ins"
-msgstr "Поддръжка на 32-битови приставки"
-
-#: build/windows/installer/lang/setup.isl.xml.in:160
-msgid ""
-"Include files necessary for using 32-bit plug-ins.%nRequired for TWAIN "
-"support."
-msgstr ""
-"Включване на файловете за поддръжка на 32-битовите приставки.%nНеобходимо е "
-"за поддръжката на TWAIN."
 
 #: build/windows/installer/lang/setup.isl.xml.in:165
 msgid "Additional icons:"
