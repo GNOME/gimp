@@ -969,7 +969,13 @@ gimp_session_info_read_geometry (GimpSessionInfo   *info,
       GdkMonitor   *monitor;
       GdkRectangle  geometry;
 
+#ifndef GDK_WINDOWING_QUARTZ
       gtk_window_get_position (GTK_WINDOW (info->p->widget), &x, &y);
+#else
+      /* on Quartz, gtk_window_get_position() returns the frame origin
+         (including the title bar), which causes a growing offset to top */
+      gdk_window_get_origin (window, &x, &y);
+#endif
 
       /* Don't write negative values to the sessionrc, they are
        * interpreted as relative to the right, respective bottom edge
