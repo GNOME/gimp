@@ -99,7 +99,7 @@ static void       gimp_search_popup_realize              (GimpSearchPopup   *sea
 static void       gimp_search_popup_confirm              (GimpPopup *popup);
 
 /* Signal handlers on the search entry */
-static void       keyword_entry_icon_press               (GtkEntry             *entry,
+static void       keyword_entry_icon_release             (GtkEntry             *entry,
                                                           GtkEntryIconPosition  icon_pos,
                                                           GdkEvent             *event,
                                                           GimpSearchPopup      *popup);
@@ -473,8 +473,9 @@ gimp_search_popup_constructed (GObject *object)
                          GDK_SCROLL_MASK       |
                          GDK_SMOOTH_SCROLL_MASK);
 
-  g_signal_connect (popup->priv->keyword_entry, "icon-press",
-                    G_CALLBACK (keyword_entry_icon_press),
+  /* use icon-release so NSEventTypeLeftMouseUp does not refocus on macOS */
+  g_signal_connect (popup->priv->keyword_entry, "icon-release",
+                    G_CALLBACK (keyword_entry_icon_release),
                     popup);
   g_signal_connect (popup->priv->keyword_entry, "key-press-event",
                     G_CALLBACK (keyword_entry_key_press_event),
@@ -613,10 +614,10 @@ gimp_search_popup_confirm (GimpPopup *popup)
 }
 
 static void
-keyword_entry_icon_press (GtkEntry             *entry,
-                          GtkEntryIconPosition  icon_pos,
-                          GdkEvent             *event,
-                          GimpSearchPopup      *popup)
+keyword_entry_icon_release (GtkEntry             *entry,
+                            GtkEntryIconPosition  icon_pos,
+                            GdkEvent             *event,
+                            GimpSearchPopup      *popup)
 {
   if (icon_pos == GTK_ENTRY_ICON_SECONDARY)
     gimp_search_popup_help (popup);
