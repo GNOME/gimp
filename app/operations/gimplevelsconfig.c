@@ -271,12 +271,16 @@ gimp_levels_config_set_property (GObject      *object,
       break;
 
     case PROP_CHANNEL:
-      self->channel = g_value_get_enum (value);
-      g_object_notify (object, "low-input");
-      g_object_notify (object, "high-input");
-      g_object_notify (object, "gamma");
-      g_object_notify (object, "low-output");
-      g_object_notify (object, "high-output");
+      if (g_value_get_enum (value) >= GIMP_HISTOGRAM_VALUE &&
+          g_value_get_enum (value) <= GIMP_HISTOGRAM_ALPHA)
+        {
+          self->channel = g_value_get_enum (value);
+          g_object_notify (object, "low-input");
+          g_object_notify (object, "high-input");
+          g_object_notify (object, "gamma");
+          g_object_notify (object, "low-output");
+          g_object_notify (object, "high-output");
+        }
       break;
 
     case PROP_LOW_INPUT:
