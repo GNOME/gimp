@@ -645,7 +645,7 @@ gimp_widget_set_auto_transient (GtkWidget *dialog)
 #if GTK_MAJOR_VERSION > 3
 #warning GTK4 Quartz may have better macOS windowing support: evaluate dropping gimp_widget_set_auto_transient() but be very careful
 #endif
-  NSWindow    *parent_window            = nil;
+  __block NSWindow *parent_window       = nil;
   NSWindow    *parent_window_forced     = (NSWindow *) g_object_get_data (G_OBJECT (dialog), "gimp-transient-parent-window");
   NSWindow    *dialog_window            = nil;
   const gchar *dialog_window_gtk_title  = gtk_window_get_title (GTK_WINDOW (dialog));
@@ -689,6 +689,7 @@ gimp_widget_set_auto_transient (GtkWidget *dialog)
       __block id            deactivate_observer = nil;
       __block id            focus_save_observer = nil;
       __block id            focus_set_observer  = nil;
+      __block id            parent_close_observer = nil;
       __block id            close_observer      = nil;
       NSNotificationCenter *center              = [NSNotificationCenter defaultCenter];
 
@@ -712,7 +713,7 @@ gimp_widget_set_auto_transient (GtkWidget *dialog)
                              usingBlock:^(NSNotification * _Nonnull note) {
         dispatch_async(dispatch_get_main_queue(), ^{
           NSWindow *key_window = [NSApp keyWindow];
-          if ([NSApp isActive] && key_window != parent_window && key_window != dialog_window
+          if (parent_window && [NSApp isActive] && key_window != parent_window && key_window != dialog_window
               && ! gimp_widgets_native_window_visible ())
             [dialog_window orderOut:nil];
         });
@@ -737,14 +738,27 @@ gimp_widget_set_auto_transient (GtkWidget *dialog)
           if ([parent_window isMiniaturized])
             [parent_window deminiaturize:nil];
           [parent_window orderFront:nil];
-          if ([dialog_window isVisible])
+          if (parent_window && [dialog_window isVisible])
             [dialog_window orderWindow:NSWindowAbove relativeTo:[parent_window windowNumber]];
 
-          if (focus_saved == parent_window)
+          if (parent_window && focus_saved == parent_window)
             [parent_window makeKeyWindow];
           else if (! gimp_widgets_native_window_visible ())
             [dialog_window makeKeyAndOrderFront:nil];
         });
+      }];
+
+      /* parent window closed before dialog, stop referencing it */
+      parent_close_observer = [center
+                               addObserverForName:NSWindowWillCloseNotification
+                               object:parent_window
+                               queue:[NSOperationQueue mainQueue]
+                               usingBlock:^(NSNotification * _Nonnull note) {
+        parent_window = nil;
+
+        if (activate_observer)     { [center removeObserver:activate_observer];     activate_observer     = nil; }
+        if (deactivate_observer)   { [center removeObserver:deactivate_observer];   deactivate_observer   = nil; }
+        if (parent_close_observer) { [center removeObserver:parent_close_observer]; parent_close_observer = nil; }
       }];
 
       /* gimp main window is active but dialog is gone, show main window focused */
@@ -753,12 +767,14 @@ gimp_widget_set_auto_transient (GtkWidget *dialog)
                         object:dialog_window
                         queue:[NSOperationQueue mainQueue]
                         usingBlock:^(NSNotification * _Nonnull note) {
-        [parent_window makeKeyWindow];
+        if (parent_window)
+          [parent_window makeKeyWindow];
 
         if (activate_observer)   [center removeObserver:activate_observer];
         if (deactivate_observer) [center removeObserver:deactivate_observer];
         if (focus_save_observer) [center removeObserver:focus_save_observer];
         if (focus_set_observer)  [center removeObserver:focus_set_observer];
+        if (parent_close_observer) [center removeObserver:parent_close_observer];
         if (close_observer)      [center removeObserver:close_observer];
       }];
 
