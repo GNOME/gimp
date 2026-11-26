@@ -49,44 +49,45 @@
 #include "gimpsamplepoint.h"
 
 
-static void          gimp_image_duplicate_resolution       (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_save_source_file (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_colormap         (GimpImage *image,
-                                                            GimpImage *new_image);
-static GimpItem    * gimp_image_duplicate_item             (GimpItem  *item,
-                                                            GimpImage *new_image);
-static GList       * gimp_image_duplicate_layers           (GimpImage *image,
-                                                            GimpImage *new_image);
-static GList       * gimp_image_duplicate_channels         (GimpImage *image,
-                                                            GimpImage *new_image);
-static GList       * gimp_image_duplicate_paths            (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_floating_sel     (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_mask             (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_components       (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_guides           (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_sample_points    (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_grid             (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_metadata         (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_quick_mask       (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_parasites        (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_color_profile    (GimpImage *image,
-                                                            GimpImage *new_image);
-static void          gimp_image_duplicate_simulation_profile
-                                                           (GimpImage *image,
-                                                            GimpImage *new_image);
-
+static void          gimp_image_duplicate_resolution         (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_save_source_file   (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_colormap           (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static GimpItem    * gimp_image_duplicate_item               (GimpItem    *item,
+                                                              GimpImage   *new_image);
+static GList       * gimp_image_duplicate_layers             (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static GList       * gimp_image_duplicate_channels           (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static GList       * gimp_image_duplicate_paths              (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_floating_sel       (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_mask               (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_components         (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_guides             (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_sample_points      (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_grid               (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_metadata           (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_quick_mask         (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_parasites          (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_color_profile      (GimpImage   *image,
+                                                              GimpImage   *new_image);
+static void          gimp_image_duplicate_simulation_profile (GimpImage   *image,
+                                                              GimpImage   *new_image);
+/* Helper Method */
+static void          gimp_image_duplicate_restore_selection  (GimpImage   *image,
+                                                              GimpChannel *selection);
 
 GimpImage *
 gimp_image_duplicate (GimpImage *image)
@@ -95,6 +96,8 @@ gimp_image_duplicate (GimpImage *image)
   GList        *active_layers;
   GList        *active_channels;
   GList        *active_path;
+
+  GimpChannel  *selection;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -125,11 +128,22 @@ gimp_image_duplicate (GimpImage *image)
   /*  Copy the colormap if necessary  */
   gimp_image_duplicate_colormap (image, new_image);
 
+  /* Prevent selection from interfering with filter masks */
+  selection =
+    GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (image)),
+                                       GIMP_TYPE_CHANNEL));
+  gimp_channel_clear (gimp_image_get_mask (image), NULL, FALSE);
+
   /*  Copy the layers  */
   active_layers = gimp_image_duplicate_layers (image, new_image);
 
   /*  Copy the channels  */
   active_channels = gimp_image_duplicate_channels (image, new_image);
+
+  /* Restore original selection after possible filters applied */
+  gimp_image_duplicate_restore_selection (image, selection);
+  g_object_ref_sink (selection);
+  g_object_unref (selection);
 
   /*  Copy any path  */
   active_path = gimp_image_duplicate_paths (image, new_image);
@@ -595,4 +609,23 @@ gimp_image_duplicate_simulation_profile (GimpImage *image,
   gimp_image_set_simulation_profile (new_image, profile);
   gimp_image_set_simulation_intent (new_image, intent);
   gimp_image_set_simulation_bpc (new_image, bpc);
+}
+
+/* Helper method */
+static void
+gimp_image_duplicate_restore_selection (GimpImage   *image,
+                                        GimpChannel *selection)
+{
+  GimpDrawable *mask;
+  GimpDrawable *original_mask;
+
+  mask          = GIMP_DRAWABLE (gimp_image_get_mask (image));
+  original_mask = GIMP_DRAWABLE (selection);
+
+  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (original_mask), NULL,
+                         GEGL_ABYSS_NONE, gimp_drawable_get_buffer (mask),
+                         NULL);
+
+  GIMP_CHANNEL (mask)->bounds_known   = FALSE;
+  GIMP_CHANNEL (mask)->boundary_known = FALSE;
 }
