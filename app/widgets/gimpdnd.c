@@ -1226,12 +1226,26 @@ gimp_dnd_copy_dropped_file (GFile   *file,
 #endif
   if (g_file_has_uri_scheme (file, "file"))
     {
-      gchar *basename  = g_file_get_basename (file);
-      gchar *copy_name = g_strdup_printf ("%s-%s",
-                                          g_uuid_string_random (), basename);
-      gchar *copy_path = g_build_filename (g_get_tmp_dir (), copy_name, NULL);
-      GFile *copy      = g_file_new_for_path (copy_path);
+      gchar *uuid;
+      gchar *basename;
+      gchar *copy_name;
+      GFile *copy;
+      GFile *tmp_dir = g_file_new_for_path (g_get_tmp_dir ());
 
+      if (! g_file_has_prefix (file, tmp_dir))
+        {
+          g_object_unref (tmp_dir);
+          return g_object_ref (file);
+        }
+
+      uuid      = g_uuid_string_random ();
+      basename  = g_file_get_basename (file);
+      copy_name = g_strdup_printf ("%s-%s",
+                                   uuid, basename);
+      copy      = g_file_get_child (tmp_dir, copy_name);
+
+      g_object_unref (tmp_dir);
+      g_free (uuid);
       g_free (basename);
       g_free (copy_name);
 
@@ -1239,12 +1253,9 @@ gimp_dnd_copy_dropped_file (GFile   *file,
                          NULL, NULL, NULL, error))
         {
           g_object_unref (copy);
-          g_free (copy_path);
 
           return NULL;
         }
-
-      g_free (copy_path);
 
       return copy;
     }

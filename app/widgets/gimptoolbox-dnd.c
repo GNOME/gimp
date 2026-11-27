@@ -175,7 +175,7 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
         }
 
       file_open_with_display (context->gimp, context, NULL,
-                              open_file, FALSE,
+                              open_file, open_file != file,
                               G_OBJECT (gimp_widget_get_monitor (widget)),
                               &status, &error);
 
@@ -197,6 +197,8 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
           g_clear_error (&error);
         }
 
+      if (open_file != file)
+        g_file_delete (open_file, NULL, NULL);
 
       g_object_unref (open_file);
       g_object_unref (file);
