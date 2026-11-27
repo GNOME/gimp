@@ -246,7 +246,6 @@ static guchar            g_sample_color_tab[256 * 3];
 static guchar            g_dst_preview_buffer[PREVIEW_SIZE_X * PREVIEW_SIZE_Y * 4 ];  /* color copy with mask of dst in previewsize */
 
 static gint32  g_tol_col_err;
-static gint32  g_max_col_err;
 static gint    g_Sdebug = FALSE;
 static gint    g_show_progress = FALSE;
 
@@ -3072,7 +3071,6 @@ main_colorize (gint                 mc_flags,
   /* calculate value of tolerable color error */
   max = color_error (0,0, 0, 255, 255, 255); /* 260100 */
   g_tol_col_err = (((float)max  * (g_values.tol_col_err * g_values.tol_col_err)) / (100.0 *100.0));
-  g_max_col_err = max;
 
   rc = 0;
 

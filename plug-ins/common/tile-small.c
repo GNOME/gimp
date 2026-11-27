@@ -224,7 +224,7 @@ static gint   do_vert = FALSE;
 static gint   opacity = 100;
 
 /* Stuff for the preview bit */
-static gint     sel_x1, sel_y1, sel_x2, sel_y2;
+static gint     sel_x1, sel_y1;
 static gint     sel_width, sel_height;
 static gint     preview_width, preview_height;
 static gboolean has_alpha;
@@ -332,9 +332,6 @@ tile_run (GimpProcedure        *procedure,
                                                GIMP_PDB_SUCCESS,
                                                NULL);
     }
-
-  sel_x2 = sel_x1 + sel_width;
-  sel_y2 = sel_y1 + sel_height;
 
   /* Calculate preview size */
 

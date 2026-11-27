@@ -19,7 +19,7 @@ static double        radius;
 static Quat          qNow, qDown, qDrag;
 static HVect         vNow, vDown, vFrom, vTo, vrFrom, vrTo;
 static HMatrix       mNow, mDown;
-static unsigned int  showResult, dragging;
+static unsigned int  dragging;
 static ConstraintSet sets[NSets];
 static int           setSizes[NSets];
 static AxisSet       axisSet;
@@ -81,7 +81,7 @@ ArcBall_Init (void)
   for (i=15; i>=0; i--)
     ((double *)mNow)[i] = ((double *)mDown)[i] = ((double *)mId)[i];
 
-  showResult = dragging = FALSE;
+  dragging = FALSE;
   axisSet = NoAxes;
   sets[CameraAxes] = mId[X];
   setSizes[CameraAxes] = 3;
