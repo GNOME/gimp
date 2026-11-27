@@ -774,6 +774,7 @@ begin_print (GtkPrintOperation *operation,
       dialog     = gtk_dialog_new_with_buttons (_("Image Settings"), NULL, 0,
                                                 _("_Print"), GTK_RESPONSE_ACCEPT,
                                                 _("_Cancel"), GTK_RESPONSE_REJECT, NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
       gimp_window_set_transient (GTK_WINDOW (dialog));
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           data->layout_gui, TRUE, TRUE, 0);

@@ -152,6 +152,9 @@ print_page_layout_gui (PrintData   *data,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_set_visible (frame, TRUE);
 
+  gimp_size_entry_set_activates_default (info.size_entry, TRUE);
+  gimp_size_entry_set_activates_default (info.resolution_entry, TRUE);
+
   g_object_unref (label_group);
   g_object_unref (entry_group);
 
