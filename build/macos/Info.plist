@@ -65,9 +65,7 @@
           <string>image/x-xcf</string>
         </array>
         <key>CFBundleTypeIconFile</key>
-        <array>
-          <string>fileicon-xcf.icns</string>
-        </array>
+        <string>fileicon-xcf.icns</string>
         <key>CFBundleTypeName</key>
         <string>eXperimental Computing Facility file</string>
         <key>CFBundleTypeRole</key>
