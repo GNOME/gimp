@@ -523,12 +523,6 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/girepository-1.0", lib_dir);
       g_setenv ("GI_TYPELIB_PATH", tmp, TRUE);
       g_free (tmp);
-      tmp = g_strdup_printf ("%s/lib/Python.framework/Versions/%s", gimp_installation_directory(), PYTHON_VERSION);
-      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
-        {
-          g_setenv ("PYTHONHOME", tmp, TRUE);
-        }
-      g_free (tmp);
 
       g_free (lib_dir);
       g_free (share_dir);
