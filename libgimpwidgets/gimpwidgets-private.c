@@ -38,6 +38,9 @@
 #ifdef PLATFORM_OSX
 #include <AvailabilityMacros.h>
 #import <AppKit/AppKit.h>
+#ifdef GDK_WINDOWING_QUARTZ
+#include <gdk/quartz/gdkquartz-cocoa-access.h>
+#endif
 #endif
 
 #include "libgimpbase/gimpbase.h"
@@ -625,6 +628,36 @@ gimp_widget_set_title_bar_theme (GtkWidget *widget,
     [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]];
   else
     [NSApp setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
+#endif
+#endif
+}
+
+/**
+ * gimp_widget_drop_title_bar_min:
+ * @widget: a realized dialog or window.
+ *
+ * Removes the minimize button from the title bar of @widget on macOS.
+ * It will no-op on other platforms.
+ */
+void
+gimp_widget_drop_title_bar_min (GtkWidget *widget)
+{
+#ifdef GDK_WINDOWING_QUARTZ
+  GdkWindow *window;
+  NSWindow  *ns_window;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  window = gtk_widget_get_window (widget);
+  if (! window)
+    return;
+
+  ns_window = gdk_quartz_window_get_nswindow (window);
+  if (ns_window)
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= 101200
+    [ns_window setStyleMask:[ns_window styleMask] & ~NSWindowStyleMaskMiniaturizable];
+#else
+    [ns_window setStyleMask:[ns_window styleMask] & ~NSMiniaturizableWindowMask];
 #endif
 #endif
 }

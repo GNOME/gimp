@@ -24,6 +24,9 @@
 
 #include <gtk/gtk.h>
 
+#include <libgimp/gimpui.h>
+#include "libgimpwidgets/gimpwidgets-private.h"
+
 #include "imap_about.h"
 #include "imap_main.h"
 
@@ -61,11 +64,7 @@ do_about_dialog (GSimpleAction *action,
 #ifdef PLATFORM_OSX
        /* since `dialog` is not created with gimp_dialog_new, drop minimize manually */
        gtk_widget_realize (dialog);
-       gdk_window_set_functions (gtk_widget_get_window (dialog),
-                                 GDK_FUNC_RESIZE |
-                                 GDK_FUNC_MOVE   |
-                                 GDK_FUNC_CLOSE  |
-                                 GDK_FUNC_MAXIMIZE);
+       gimp_widget_drop_title_bar_min (dialog);
 #endif
      }
 
