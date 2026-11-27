@@ -732,9 +732,16 @@ print_show_error (const gchar *message)
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                             "%s", message);
 
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
 #if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   gtk_widget_realize (dialog);
   gimp_widget_set_title_bar_theme (dialog, -1);
+#endif
+
+#ifdef PLATFORM_OSX
+  /* since `dialog` is not created with gimp_dialog_new, drop minimize manually */
+  gimp_widget_drop_title_bar_min (dialog);
 #endif
 
   gtk_dialog_run (GTK_DIALOG (dialog));
