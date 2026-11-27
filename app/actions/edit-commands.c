@@ -783,7 +783,11 @@ edit_paste_uris (Gimp        *gimp,
               g_list_free (new_layers);
               handled = TRUE;
             }
-          else if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
+          else if (status == GIMP_PDB_CANCEL)
+            {
+              handled = TRUE;
+            }
+          else if (status != GIMP_PDB_SUCCESS)
             {
               gimp_message (gimp, display ? G_OBJECT (display) : NULL,
                             GIMP_MESSAGE_ERROR,
@@ -805,7 +809,11 @@ edit_paste_uris (Gimp        *gimp,
             {
               handled = TRUE;
             }
-          else if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
+          else if (status == GIMP_PDB_CANCEL)
+            {
+              handled = TRUE;
+            }
+          else if (status != GIMP_PDB_SUCCESS)
             {
               gimp_message (gimp, display ? G_OBJECT (display) : NULL,
                             GIMP_MESSAGE_ERROR,
