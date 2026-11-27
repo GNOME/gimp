@@ -96,9 +96,6 @@ static void       gimp_dialog_response            (GtkDialog    *dialog,
 static void       gimp_dialog_realize             (GtkWidget    *dialog);
 #endif
 
-#ifdef PLATFORM_OSX
-static void       gimp_dialog_drop_title_bar_min  (GtkWidget    *dialog);
-#endif
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
 
@@ -183,7 +180,7 @@ gimp_dialog_init (GimpDialog *dialog)
      the dialogs put GIMP on a pending state and are hard to
      find in the dock, so we drop minimize like Linux and Windows. */
   g_signal_connect (GTK_WIDGET (dialog), "realize",
-                    G_CALLBACK (gimp_dialog_drop_title_bar_min),
+                    G_CALLBACK (gimp_widget_drop_title_bar_min),
                     NULL);
 
   /* restore the focus manually for MWM sake */
@@ -806,19 +803,3 @@ gimp_dialog_realize (GtkWidget *dialog)
 }
 #endif
 
-#ifdef PLATFORM_OSX
-static void
-gimp_dialog_drop_title_bar_min (GtkWidget *dialog)
-{
-  GdkWindow *window = gtk_widget_get_window (dialog);
-
-  if (window)
-    {
-      gdk_window_set_functions (window,
-                                GDK_FUNC_RESIZE |
-                                GDK_FUNC_MOVE   |
-                                GDK_FUNC_CLOSE  |
-                                GDK_FUNC_MAXIMIZE);
-    }
-}
-#endif

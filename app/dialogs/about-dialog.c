@@ -385,16 +385,7 @@ about_dialog_realize (GtkWidget *widget,
 
 #ifdef PLATFORM_OSX
   /* since `widget` is not created with gimp_dialog_new, drop minimize manually */
-  GdkWindow *window = gtk_widget_get_window (widget);
-
-  if (window)
-    {
-      gdk_window_set_functions (window,
-                                GDK_FUNC_RESIZE |
-                                GDK_FUNC_MOVE   |
-                                GDK_FUNC_CLOSE  |
-                                GDK_FUNC_MAXIMIZE);
-    }
+  gimp_widget_drop_title_bar_min (widget);
 #endif
 }
 #endif

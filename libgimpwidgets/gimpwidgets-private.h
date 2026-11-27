@@ -50,6 +50,7 @@ void  gimp_widget_set_bound_property  (GtkWidget             *widget,
 
 void  gimp_widget_set_title_bar_theme (GtkWidget             *widget,
                                        gint                   use_dark_mode);
+void  gimp_widget_drop_title_bar_min  (GtkWidget             *widget);
 
 void  gimp_widget_set_auto_transient  (GtkWidget             *dialog);
 
