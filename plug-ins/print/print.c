@@ -36,9 +36,30 @@
 #if MAC_OS_X_VERSION_MIN_REQUIRED < 101200
 #define NSEventMaskAny               NSAnyEventMask
 #endif
-#if MAC_OS_X_VERSION_MIN_REQUIRED < 110000
-#define NSPrintingPaginationModeClip NSClipPagination
-#endif
+
+/* print 1:1 since margins and placement are already baked into the PDF.
+   We prefer custom NSImageView instead of PMPaperCreateCustom to preserve orientation. */
+@interface GimpPrintPDFView : NSImageView
+@end
+
+@implementation GimpPrintPDFView
+- (BOOL) knowsPageRange: (NSRangePointer) range
+{
+  range->location = 1;
+  range->length   = 1;
+  return YES;
+}
+
+- (NSRect) rectForPage: (NSInteger) page
+{
+  return [self bounds];
+}
+
+- (NSPoint) locationOfPrintRect: (NSRect) aRect
+{
+  return NSZeroPoint;
+}
+@end
 #endif
 
 #include "print.h"
@@ -516,7 +537,8 @@ print_image (GimpImage *image,
                     if (print_op_pdf_rep)
                       {
                         NSImage          *print_op_pdf_img      = [[NSImage alloc] initWithSize:setup_size];
-                        NSImageView      *print_op_pdf_img_view = [[NSImageView alloc] initWithFrame:NSMakeRect (0, 0, setup_size.width, setup_size.height)];
+                        /* print 1:1 since margins and placement are already baked into the PDF */
+                        GimpPrintPDFView *print_op_pdf_img_view = [[GimpPrintPDFView alloc] initWithFrame:NSMakeRect (0, 0, setup_size.width, setup_size.height)];
                         NSPrintOperation *print_op;
                         gchar            *print_op_name = gimp_image_get_name (image);
 
@@ -524,33 +546,6 @@ print_image (GimpImage *image,
                         [print_op_pdf_img addRepresentation:print_op_pdf_rep];
                         [print_op_pdf_img_view setImage:print_op_pdf_img];
                         [print_op_pdf_img_view setImageScaling:NSImageScaleNone];
-                        /* print 1:1 since margins and placement are already baked into the PDF */
-                        {
-                          PMPaperMargins print_op_margins = { 0.0, 0.0, 0.0, 0.0 };
-                          PMPaper        print_op_paper   = NULL;
-                          PMPageFormat   print_op_format  = NULL;
-
-                          if (PMPaperCreateCustom (NULL, CFSTR ("gimp-full-page"), CFSTR ("Full Page"),
-                                                   setup_size.width, setup_size.height,
-                                                   &print_op_margins, &print_op_paper) == noErr)
-                            {
-                              if (PMCreatePageFormatWithPMPaper (&print_op_format, print_op_paper) == noErr)
-                                {
-                                  PMCopyPageFormat (print_op_format, (PMPageFormat) [print_info PMPageFormat]);
-                                  [print_info updateFromPMPageFormat];
-                                  PMRelease (print_op_format);
-                                }
-                              PMRelease (print_op_paper);
-                            }
-                        }
-                        [print_info setLeftMargin:0.0];
-                        [print_info setRightMargin:0.0];
-                        [print_info setTopMargin:0.0];
-                        [print_info setBottomMargin:0.0];
-                        [print_info setHorizontallyCentered:NO];
-                        [print_info setVerticallyCentered:NO];
-                        [print_info setHorizontalPagination:NSPrintingPaginationModeClip];
-                        [print_info setVerticalPagination:NSPrintingPaginationModeClip];
                         print_op = [NSPrintOperation printOperationWithView:print_op_pdf_img_view
                                                                   printInfo:print_info];
                         [print_op setShowsPrintPanel:NO];
