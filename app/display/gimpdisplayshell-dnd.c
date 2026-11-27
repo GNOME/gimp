@@ -689,7 +689,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
           new_image = file_open_with_display (shell->display->gimp, context,
                                               NULL,
-                                              open_file, FALSE,
+                                              open_file, open_file != file,
                                               G_OBJECT (gimp_widget_get_monitor (widget)),
                                               &status, &error);
 
@@ -701,7 +701,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
           /*  open the first image in the empty display  */
           image = file_open_with_display (shell->display->gimp, context,
                                           GIMP_PROGRESS (shell->display),
-                                          open_file, FALSE,
+                                          open_file, open_file != file,
                                           G_OBJECT (gimp_widget_get_monitor (widget)),
                                           &status, &error);
 
@@ -727,6 +727,9 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
                         gimp_file_get_utf8_name (file), error->message);
           g_clear_error (&error);
         }
+
+      if (open_file != file)
+        g_file_delete (open_file, NULL, NULL);
 
       g_object_unref (open_file);
       g_object_unref (file);
