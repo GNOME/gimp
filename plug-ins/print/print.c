@@ -23,6 +23,7 @@
 #include <libgimp/gimpui.h>
 
 #ifdef GDK_WINDOWING_QUARTZ
+#include <errno.h>
 #include <AvailabilityMacros.h>
 #import <AppKit/AppKit.h>
 #include <glib/gstdio.h>
@@ -506,7 +507,10 @@ print_image (GimpImage *image,
                 if (result == GTK_PRINT_OPERATION_RESULT_APPLY)
                   {
                     NSAutoreleasePool *pool              = [[NSAutoreleasePool alloc] init];
-                    NSData            *print_op_pdf_data = [NSData dataWithContentsOfFile:[NSString stringWithUTF8String:print_op_pdf_path]];
+                    NSError           *print_op_error    = nil;
+                    NSData            *print_op_pdf_data = [NSData dataWithContentsOfFile:[NSString stringWithUTF8String:print_op_pdf_path]
+                                                                                  options:0
+                                                                                    error:&print_op_error];
                     NSPDFImageRep     *print_op_pdf_rep  = print_op_pdf_data ? [NSPDFImageRep imageRepWithData:print_op_pdf_data] : nil;
 
                     if (print_op_pdf_rep)
@@ -556,13 +560,27 @@ print_image (GimpImage *image,
                         g_free (print_op_name);
 
                         if (! [print_op runOperation])
-                          result = GTK_PRINT_OPERATION_RESULT_ERROR;
+                          {
+                            g_set_error_literal (error,
+                                                 GTK_PRINT_ERROR,
+                                                 GTK_PRINT_ERROR_GENERAL,
+                                                 g_strerror (EIO));
+                            result = GTK_PRINT_OPERATION_RESULT_ERROR;
+                          }
 
                         [print_op_pdf_img_view release];
                         [print_op_pdf_img release];
                       }
                     else
                       {
+                        const gchar *print_op_msg = (print_op_error && [print_op_error localizedDescription])
+                                                    ? [[print_op_error localizedDescription] UTF8String]
+                                                    : g_strerror (EIO);
+
+                        g_set_error_literal (error,
+                                             GTK_PRINT_ERROR,
+                                             GTK_PRINT_ERROR_GENERAL,
+                                             print_op_msg);
                         result = GTK_PRINT_OPERATION_RESULT_ERROR;
                       }
 
