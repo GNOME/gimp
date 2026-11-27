@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <AvailabilityMacros.h>
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
@@ -263,6 +264,14 @@ scanner_next_document_name (void)
                   fileData: (NSData *)data
                      error: (NSError *)error
 {
+  if (error)
+    {
+      if (error.localizedDescription)
+        gimp_message ([error.localizedDescription UTF8String]);
+      gimp_progress_end ();
+      return;
+    }
+
   if (url)
     {
       const char *filename = [[url path] UTF8String];
@@ -272,7 +281,15 @@ scanner_next_document_name (void)
       g_object_unref (file);
 
       if (image)
-        gimp_display_new (image);
+        {
+          gimp_display_new (image);
+        }
+      else
+        {
+          const gchar *last_error = gimp_pdb_get_last_error (gimp_get_pdb ());
+
+          gimp_message ((last_error && *last_error) ? last_error : g_strerror (EIO));
+        }
 
       g_unlink (filename);
       gimp_progress_end ();
