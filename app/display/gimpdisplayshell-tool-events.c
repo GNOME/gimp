@@ -86,12 +86,18 @@
 #ifdef PLATFORM_OSX
 /* macOS keycode for the physical "grave/section" key (kVK_ANSI_Grave), stable
    across most keyboard layouts even when it is a dead key (e.g. Brazilian ABNT2) */
+#define GIMP_MACOS_KVK_ANSI_GRAVE 50
+
 static gboolean
 gimp_macos_is_grave_key (const GdkEventKey *kevent)
 {
-  GdkKeymap *keymap = gdk_keymap_get_for_display (gdk_display_get_default ());
+  GdkKeymap *keymap;
   guint      base_keyval = 0;
 
+  if (kevent->hardware_keycode == GIMP_MACOS_KVK_ANSI_GRAVE)
+    return TRUE;
+
+  keymap = gdk_keymap_get_for_display (gdk_display_get_default ());
   if (! keymap)
     return FALSE;
 
