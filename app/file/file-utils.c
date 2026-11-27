@@ -183,6 +183,7 @@ file_utils_file_check_existing (GFile *file)
       g_free (uri);
 
       if (path && ! g_path_is_absolute (path) &&
+          ! g_strstr_len (path, -1, "://") &&
           ! g_file_test (path, G_FILE_TEST_EXISTS))
         {
           GFile *parsed = g_file_parse_name (path);
