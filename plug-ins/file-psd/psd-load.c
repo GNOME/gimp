@@ -3442,8 +3442,7 @@ add_merged_image (GimpImage     *image,
     }
 
   /* ----- Draw extra alpha channels ----- */
-  if (extra_channels                   /* Extra alpha channels */
-      && image)
+  if (extra_channels && image)         /* Extra alpha channels */
     {
       IFDBG(2) g_debug ("Add extra channels");
       pixels = g_malloc(0);
@@ -3473,19 +3472,22 @@ add_merged_image (GimpImage     *image,
                 alpha_visible = TRUE;
               }
           if (! alpha_name && img_a->alpha_names)
-            if (offset < img_a->alpha_names->len
-                && i + offset <= img_a->alpha_names->len)
-              alpha_name = g_ptr_array_index (img_a->alpha_names, i + offset);
+            {
+              if (offset < img_a->alpha_names->len &&
+                  (i + offset) < img_a->alpha_names->len)
+                alpha_name = g_ptr_array_index (img_a->alpha_names,
+                                                i + offset);
+            }
           if (! alpha_name)
             alpha_name = g_strdup (_("Extra"));
 
           if (offset < img_a->alpha_id_count &&
-              offset + i <= img_a->alpha_id_count)
+              offset + i < img_a->alpha_id_count)
             alpha_id = img_a->alpha_id[i + offset];
           else
             alpha_id = 0;
           if (offset < img_a->alpha_display_count &&
-              i + offset <= img_a->alpha_display_count)
+              i + offset < img_a->alpha_display_count)
             {
               alpha_rgb = gegl_color_duplicate (img_a->alpha_display_info[i + offset]->gimp_color);
               alpha_opacity = img_a->alpha_display_info[i + offset]->opacity;
