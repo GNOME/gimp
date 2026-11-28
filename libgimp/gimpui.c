@@ -30,10 +30,13 @@
 #include <gdk/gdkx.h>
 #endif
 
+#ifdef PLATFORM_OSX
+#include <AvailabilityMacros.h>
 #ifdef GDK_WINDOWING_QUARTZ
 #include <unistd.h>
 #include <libproc.h>
 #include <Cocoa/Cocoa.h>
+#endif
 #endif
 
 #ifdef GDK_WINDOWING_WAYLAND
