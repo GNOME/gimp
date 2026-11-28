@@ -1448,9 +1448,6 @@ load_apng_image (GFile      *file,
         {
           while (! feof (fp))
             {
-              guint region_width;
-              guint region_height;
-
               png_id = read_apng_chunk (fp, &chunk);
               if (! png_id)
                 {
@@ -1486,6 +1483,9 @@ load_apng_image (GFile      *file,
                 }
               else if (png_id == id_fcTL && (! idat_read || is_animated))
                 {
+                  guint region_width;
+                  guint region_height;
+
                   /* Check if we've gotten past the first frame (standard PNG),
                    * and are reading in the remaining APNG frames */
                   if (idat_read)
@@ -1512,10 +1512,11 @@ load_apng_image (GFile      *file,
                   apng_frame.delay_num = png_get_uint_16 (chunk.data + 28);
                   apng_frame.delay_den = png_get_uint_16 (chunk.data + 30);
 
-                  region_width  = apng_frame.offset_x + apng_frame.width;
-                  region_height = apng_frame.offset_y + apng_frame.height;
-
-                  if (region_width > (guint) gimp_image_get_width (image)  ||
+                  if (! g_uint_checked_add (&region_width, apng_frame.offset_x,
+                                            apng_frame.width)              ||
+                      ! g_uint_checked_add (&region_height, apng_frame.offset_y,
+                                            apng_frame.height)             ||
+                      region_width > (guint) gimp_image_get_width (image)  ||
                       region_height > (guint) gimp_image_get_height (image))
                     {
                       fclose (fp);
