@@ -14,8 +14,8 @@
 msgid ""
 msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-11-19 17:42+0000\n"
-"PO-Revision-Date: 2026-11-20 09:53+0100\n"
+"POT-Creation-Date: 2026-11-28 03:09+0000\n"
+"PO-Revision-Date: 2026-11-28 13:08+0100\n"
 "Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -43,7 +43,7 @@ msgstr "Plug-in voorbeeld in C"
 #: plug-ins/common/destripe.c:173 plug-ins/common/gradient-map.c:214
 #: plug-ins/common/grid.c:310 plug-ins/common/hot.c:312
 #: plug-ins/common/jigsaw.c:537 plug-ins/common/nl-filter.c:215
-#: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:425
+#: plug-ins/common/qbist.c:254 plug-ins/common/sample-colorize.c:424
 #: plug-ins/common/smooth-palette.c:192 plug-ins/common/sparkle.c:301
 #: plug-ins/common/sphere-designer.c:3187 plug-ins/common/tile.c:222
 #: plug-ins/common/tile-small.c:311 plug-ins/common/van-gogh-lic.c:240
@@ -87,14 +87,14 @@ msgstr "Plug-In Voorbeeld in C"
 #: plug-ins/gradient-flare/gradient-flare.c:3360
 #: plug-ins/gradient-flare/gradient-flare.c:3474
 #: plug-ins/ifs-compose/ifs-compose.c:915
-#: plug-ins/ifs-compose/ifs-compose.c:2636
-#: plug-ins/ifs-compose/ifs-compose.c:2660 plug-ins/imagemap/imap_browse.c:79
+#: plug-ins/ifs-compose/ifs-compose.c:2632
+#: plug-ins/ifs-compose/ifs-compose.c:2656 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:74
 #: plug-ins/imagemap/imap_file.c:130 plug-ins/lighting/lighting-ui.c:737
 #: plug-ins/lighting/lighting-ui.c:869 plug-ins/metadata/metadata-editor.c:1102
 #: plug-ins/metadata/metadata-editor.c:1558
 #: plug-ins/metadata/metadata-editor.c:3818
-#: plug-ins/metadata/metadata-editor.c:3849 plug-ins/print/print.c:501
+#: plug-ins/metadata/metadata-editor.c:3849 plug-ins/print/print.c:782
 msgid "_Cancel"
 msgstr "_Annuleren"
 
@@ -146,7 +146,7 @@ msgstr "Plug-in voorbeeld in Javascript (GJS)"
 #: plug-ins/common/cml-explorer.c:1375 plug-ins/common/file-heif.c:2506
 #: plug-ins/common/file-pdf-load.c:586 plug-ins/common/sphere-designer.c:2644
 #: plug-ins/common/unit-editor.c:290 plug-ins/file-exr/file-exr.c:457
-#: plug-ins/file-psd/psd-load.c:6292 plug-ins/flame/flame.c:808
+#: plug-ins/file-psd/psd-load.c:6298 plug-ins/flame/flame.c:808
 #: plug-ins/fractal-explorer/fractal-explorer.c:1403
 #: plug-ins/gimpressionist/orientmap.c:529
 #: plug-ins/gimpressionist/presets.c:655 plug-ins/gimpressionist/sizemap.c:402
@@ -598,9 +598,9 @@ msgstr "Rolgordijnen"
 #.
 #: plug-ins/common/blinds.c:259 plug-ins/common/compose.c:1247
 #: plug-ins/common/decompose.c:642 plug-ins/common/file-cel.c:475
-#: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:765
+#: plug-ins/common/file-cel.c:480 plug-ins/common/file-dicom.c:769
 #: plug-ins/common/file-drhalo.c:237 plug-ins/common/file-farbfeld.c:301
-#: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1227
+#: plug-ins/common/file-gegl.c:446 plug-ins/common/file-gif-load.c:1237
 #: plug-ins/common/file-iff.c:506 plug-ins/common/file-jp2.c:1626
 #: plug-ins/common/file-macpaint.c:246 plug-ins/common/file-pcx.c:728
 #: plug-ins/common/file-pcx.c:736 plug-ins/common/file-pcx.c:744
@@ -616,7 +616,7 @@ msgstr "Rolgordijnen"
 #: plug-ins/file-faxg3/faxg3.c:583 plug-ins/file-fits/fits.c:706
 #: plug-ins/file-jpeg/jpeg-load.c:261
 #: plug-ins/file-psd/psd-image-res-load.c:1130
-#: plug-ins/file-psd/psd-load.c:5468 plug-ins/file-raw/file-libraw.c:465
+#: plug-ins/file-psd/psd-load.c:5470 plug-ins/file-raw/file-libraw.c:465
 #: plug-ins/file-raw/file-libraw.c:576 plug-ins/file-sgi/sgi.c:456
 #: plug-ins/file-tiff/file-tiff-load.c:1679
 #: plug-ins/file-tiff/file-tiff-load.c:2769
@@ -723,7 +723,7 @@ msgstr "Momentje"
 msgid "Please wait for the operation to complete"
 msgstr "Wacht alstublieft tot bewerking is afgerond"
 
-#: plug-ins/common/busy-dialog.c:389
+#: plug-ins/common/busy-dialog.c:385
 msgid "Canceling..."
 msgstr "Stoppen…"
 
@@ -1038,7 +1038,7 @@ msgstr "Willekeurige waarde"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:784
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1491
 #: plug-ins/gfig/gfig-dialog.c:772 plug-ins/ifs-compose/ifs-compose.c:912
-#: plug-ins/ifs-compose/ifs-compose.c:2660 plug-ins/imagemap/imap_browse.c:79
+#: plug-ins/ifs-compose/ifs-compose.c:2656 plug-ins/imagemap/imap_browse.c:79
 #: plug-ins/imagemap/imap_file.c:74 plug-ins/lighting/lighting-ui.c:492
 #: plug-ins/lighting/lighting-ui.c:869
 msgid "_Open"
@@ -1055,7 +1055,7 @@ msgstr "_Openen"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1515
 #: plug-ins/gfig/gfig-dialog.c:811 plug-ins/gimpressionist/brush.c:269
 #: plug-ins/ifs-compose/ifs-compose.c:913
-#: plug-ins/ifs-compose/ifs-compose.c:2636 plug-ins/imagemap/imap_file.c:130
+#: plug-ins/ifs-compose/ifs-compose.c:2632 plug-ins/imagemap/imap_file.c:130
 #: plug-ins/lighting/lighting-ui.c:486 plug-ins/lighting/lighting-ui.c:737
 msgid "_Save"
 msgstr "Op_slaan"
@@ -1238,21 +1238,21 @@ msgid "Save CML Explorer Parameters"
 msgstr "CML-verkennerparameters opslaan"
 
 #: plug-ins/common/cml-explorer.c:2197 plug-ins/common/curve-bend.c:755
-#: plug-ins/common/file-dicom.c:1579 plug-ins/common/file-farbfeld.c:366
+#: plug-ins/common/file-dicom.c:1583 plug-ins/common/file-farbfeld.c:366
 #: plug-ins/common/file-mng.c:1279 plug-ins/common/file-mng.c:1629
 #: plug-ins/common/file-pcx.c:1242 plug-ins/common/file-pdf-export.c:683
-#: plug-ins/common/file-png.c:1993 plug-ins/common/file-raw-data.c:1535
+#: plug-ins/common/file-png.c:1994 plug-ins/common/file-raw-data.c:1535
 #: plug-ins/common/file-raw-data.c:1564 plug-ins/common/file-sunras.c:615
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-tim.c:768
 #: plug-ins/common/file-xmc.c:1293 plug-ins/common/sphere-designer.c:2208
 #: plug-ins/file-bmp/bmp-export.c:301 plug-ins/file-fli/fli-gimp.c:823
-#: plug-ins/file-icns/file-icns-export.c:442 plug-ins/file-ico/ani-export.c:167
+#: plug-ins/file-icns/file-icns-export.c:442 plug-ins/file-ico/ani-export.c:175
 #: plug-ins/file-ico/ico-export.c:1277 plug-ins/file-jpeg/jpeg-export.c:319
 #: plug-ins/file-psd/psd-export.c:2534 plug-ins/file-psd/psd-export.c:2702
 #: plug-ins/file-tiff/file-tiff-export.c:1112
 #: plug-ins/file-tiff/file-tiff-export.c:1233 plug-ins/flame/flame.c:584
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1396
-#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2494
+#: plug-ins/gfig/gfig.c:915 plug-ins/ifs-compose/ifs-compose.c:2490
 #: plug-ins/lighting/lighting-ui.c:796
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1977,7 +1977,7 @@ msgstr "Kan niet op lege selecties werken."
 #  Do not rely on librsvg setting GError on failure!
 #: plug-ins/common/curve-bend.c:808 plug-ins/common/file-cals.c:203
 #: plug-ins/common/file-cals.c:367 plug-ins/common/file-cel.c:330
-#: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:361
+#: plug-ins/common/file-cel.c:382 plug-ins/common/file-dicom.c:362
 #: plug-ins/common/file-drhalo.c:200 plug-ins/common/file-farbfeld.c:267
 #: plug-ins/common/file-gif-load.c:479 plug-ins/common/file-iff.c:333
 #: plug-ins/common/file-lnk.c:200 plug-ins/common/file-macpaint.c:197
@@ -2002,7 +2002,7 @@ msgstr "Kan niet op lege selecties werken."
 #: plug-ins/file-fli/fli-gimp.c:498 plug-ins/file-icns/file-icns-load.c:630
 #: plug-ins/file-icns/file-icns-load.c:680 plug-ins/file-ico/ani-load.c:67
 #: plug-ins/file-ico/ico-load.c:767 plug-ins/file-ico/ico-load.c:977
-#: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:713
+#: plug-ins/file-jpeg/jpeg-load.c:110 plug-ins/file-jpeg/jpeg-load.c:718
 #: plug-ins/file-psd/psd-export.c:2540 plug-ins/file-psd/psd-export.c:2708
 #: plug-ins/file-psd/psd-load.c:257 plug-ins/file-psd/psd-load.c:262
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
@@ -2033,7 +2033,7 @@ msgstr "Opties"
 #. Preview area, top of column
 #. preview
 #: plug-ins/common/curve-bend.c:1200 plug-ins/gimpressionist/orientmap.c:589
-#: plug-ins/gimpressionist/sizemap.c:462 plug-ins/print/print-page-layout.c:180
+#: plug-ins/gimpressionist/sizemap.c:462 plug-ins/print/print-page-layout.c:183
 msgid "Preview"
 msgstr "Voorbeeld"
 
@@ -2081,7 +2081,7 @@ msgstr "De twee curves verwisselen"
 
 #. The Reset button
 #: plug-ins/common/curve-bend.c:1337 plug-ins/common/sphere-designer.c:2642
-#: plug-ins/common/tile-small.c:517 plug-ins/gimpressionist/preview.c:182
+#: plug-ins/common/tile-small.c:514 plug-ins/gimpressionist/preview.c:182
 #: plug-ins/ifs-compose/ifs-compose.c:914
 msgid "_Reset"
 msgstr "Te_rug naar standaardwaarden"
@@ -2465,13 +2465,14 @@ msgstr "_Witniveau"
 msgid "White level"
 msgstr "Witniveau"
 
-#: plug-ins/common/despeckle.c:358 plug-ins/common/file-dicom.c:1656
-#: plug-ins/common/file-farbfeld.c:292 plug-ins/common/file-iff.c:674
-#: plug-ins/common/file-iff.c:726 plug-ins/common/file-mng.c:1120
-#: plug-ins/common/file-pcx.c:720 plug-ins/common/file-pcx.c:857
-#: plug-ins/common/file-raw-data.c:1519 plug-ins/common/file-xmc.c:705
-#: plug-ins/common/file-xmc.c:1036 plug-ins/file-bmp/bmp-load.c:800
-#: plug-ins/file-cin/cineon-lib.c:114 plug-ins/file-cin/dpx-lib.c:185
+#: plug-ins/common/despeckle.c:358 plug-ins/common/file-dicom.c:1660
+#: plug-ins/common/file-farbfeld.c:292 plug-ins/common/file-gif-load.c:540
+#: plug-ins/common/file-iff.c:674 plug-ins/common/file-iff.c:726
+#: plug-ins/common/file-mng.c:1120 plug-ins/common/file-pcx.c:720
+#: plug-ins/common/file-pcx.c:857 plug-ins/common/file-raw-data.c:1519
+#: plug-ins/common/file-xmc.c:705 plug-ins/common/file-xmc.c:1036
+#: plug-ins/file-bmp/bmp-load.c:800 plug-ins/file-cin/cineon-lib.c:114
+#: plug-ins/file-cin/dpx-lib.c:185
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
@@ -2479,7 +2480,7 @@ msgstr "Afbeeldingsafmetingen te groot: breedte %d x hoogte %d"
 #: plug-ins/common/despeckle.c:369 plug-ins/common/file-cals.c:276
 #: plug-ins/common/file-drhalo.c:253 plug-ins/common/file-farbfeld.c:310
 #: plug-ins/common/file-macpaint.c:259 plug-ins/file-fits/fits.c:499
-#: plug-ins/file-fits/fits.c:581 plug-ins/file-psd/psd-load.c:5847
+#: plug-ins/file-fits/fits.c:581 plug-ins/file-psd/psd-load.c:5853
 #: plug-ins/file-tiff/file-tiff-load.c:2000
 #: plug-ins/file-tiff/file-tiff-load.c:2104
 #: plug-ins/file-tiff/file-tiff-load.c:2126
@@ -2580,7 +2581,7 @@ msgstr "Laad bestand in bestandsindeling CALS"
 #. * Open the file for reading...
 #.
 #: plug-ins/common/file-cals.c:208 plug-ins/common/file-cel.c:373
-#: plug-ins/common/file-dicom.c:353 plug-ins/common/file-gegl.c:333
+#: plug-ins/common/file-dicom.c:354 plug-ins/common/file-gegl.c:333
 #: plug-ins/common/file-gif-load.c:471 plug-ins/common/file-heif.c:1054
 #: plug-ins/common/file-jp2.c:1376 plug-ins/common/file-mng.c:1058
 #: plug-ins/common/file-pcx.c:479 plug-ins/common/file-pcx.c:522
@@ -2715,14 +2716,14 @@ msgstr "‘%s’: EOF of fout tijdens lezen paletdata"
 #: plug-ins/common/file-gif-export.c:945 plug-ins/common/file-html-table.c:358
 #: plug-ins/common/file-jp2.c:1819 plug-ins/common/file-jpegxl.c:1387
 #: plug-ins/common/file-pcx.c:1112 plug-ins/common/file-pix.c:645
-#: plug-ins/common/file-png.c:1985 plug-ins/common/file-pnm.c:1634
+#: plug-ins/common/file-png.c:1986 plug-ins/common/file-pnm.c:1634
 #: plug-ins/common/file-ps.c:1372 plug-ins/common/file-qoi.c:351
 #: plug-ins/common/file-sunras.c:606 plug-ins/common/file-svg.c:818
 #: plug-ins/common/file-tga.c:1215 plug-ins/common/file-tim.c:760
 #: plug-ins/common/file-xbm.c:1030 plug-ins/common/file-xpm.c:720
 #: plug-ins/common/file-xwd.c:693 plug-ins/file-bmp/bmp-export.c:293
 #: plug-ins/file-fits/fits.c:679 plug-ins/file-fli/fli-gimp.c:787
-#: plug-ins/file-icns/file-icns-export.c:821 plug-ins/file-ico/ani-export.c:159
+#: plug-ins/file-icns/file-icns-export.c:821 plug-ins/file-ico/ani-export.c:167
 #: plug-ins/file-ico/ico-export.c:1265 plug-ins/file-jpeg/jpeg-export.c:274
 #: plug-ins/file-psd/psd-export.c:2472 plug-ins/file-sgi/sgi.c:631
 #: plug-ins/file-tiff/file-tiff-export.c:1102
@@ -2957,51 +2958,51 @@ msgid ""
 "DICOM tags are filled with default dummy values."
 msgstr "Sla een afbeelding op in de medische standaard indelingen van DICOM. De standaard is gedefinieerd op http://medical.nema.org/. De bestandsindeling wordt gedefinieerd in deel 10 van de standaard. De bestanden worden niet gecomprimeerd opgeslagen en de verplichte tags voor DICOM worden gevuld met standaard dummy-waarden."
 
-#: plug-ins/common/file-dicom.c:387
+#: plug-ins/common/file-dicom.c:388
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "‘%s’ is geen DICOM-bestand."
 
-#: plug-ins/common/file-dicom.c:509
+#: plug-ins/common/file-dicom.c:510
 #, c-format
 msgid "'%s' has an incorrect value for field size. Possibly corrupt image."
 msgstr "'%s' heeft een onjuiste waarde voor de veldgrootte. Mogelijk een corrupte afbeelding."
 
-#: plug-ins/common/file-dicom.c:570
+#: plug-ins/common/file-dicom.c:571
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "Syntaxis voor overdracht %s wordt niet ondersteund door GIMP."
 
-#: plug-ins/common/file-dicom.c:625
+#: plug-ins/common/file-dicom.c:626
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr "%s wordt niet ondersteund door GIMP in combinatie met %d monsters per pixel"
 
-#: plug-ins/common/file-dicom.c:708
+#: plug-ins/common/file-dicom.c:709
 #, c-format
 msgid "'%s' has a bpp of %d which GIMP cannot handle."
 msgstr "‘%s’ heeft een bpp van %d dat GIMP niet kan afhandelen."
 
-#: plug-ins/common/file-dicom.c:719 plug-ins/file-fits/fits.c:484
+#: plug-ins/common/file-dicom.c:720 plug-ins/file-fits/fits.c:484
 #, c-format
 msgid "'%s' has a larger image size (%d x %d) than GIMP can handle."
 msgstr "‘%s’ heeft een grotere afbeeldingsgrootte (%d x %d) dan GIMP kan afhandelen."
 
-#: plug-ins/common/file-dicom.c:730
+#: plug-ins/common/file-dicom.c:731
 #, c-format
 msgid "'%s' has samples per pixel of %d which GIMP cannot handle."
 msgstr "‘%s’ heeft monsters per pixel van %d dat GIMP niet kan afhandelen."
 
-#: plug-ins/common/file-dicom.c:741
+#: plug-ins/common/file-dicom.c:745
 #, c-format
 msgid "'%s' has not enough pixel data. Possibly corrupt image."
 msgstr "‘%s’ heeft niet voldoende pixelgegevens. Mogelijk een corrupte afbeelding."
 
-#: plug-ins/common/file-dicom.c:1544
+#: plug-ins/common/file-dicom.c:1548
 msgid "Cannot save images with alpha channel."
 msgstr "Kan afbeeldingen met alfakanaal niet opslaan."
 
-#: plug-ins/common/file-dicom.c:1563 plug-ins/common/file-ps.c:1367
+#: plug-ins/common/file-dicom.c:1567 plug-ins/common/file-ps.c:1367
 #: plug-ins/common/file-xwd.c:688 plug-ins/file-fits/fits.c:674
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -3029,7 +3030,7 @@ msgstr "Ongeldige afmetingen: %d x %d"
 #: plug-ins/common/file-drhalo.c:277 plug-ins/common/file-drhalo.c:283
 #: plug-ins/common/file-drhalo.c:298 plug-ins/common/file-drhalo.c:304
 #: plug-ins/common/file-pnm.c:718 plug-ins/file-icns/file-icns-load.c:110
-#: plug-ins/file-jpeg/jpeg-load.c:137 plug-ins/file-jpeg/jpeg-load.c:735
+#: plug-ins/file-jpeg/jpeg-load.c:137 plug-ins/file-jpeg/jpeg-load.c:740
 #: plug-ins/file-raw/file-libraw.c:278 plug-ins/file-raw/file-libraw.c:363
 #: plug-ins/file-raw/file-libraw.c:388 plug-ins/file-raw/file-libraw.c:425
 #: plug-ins/file-raw/file-libraw.c:443 plug-ins/file-raw/file-libraw.c:501
@@ -3302,22 +3303,22 @@ msgid ""
 "of the layers to the image borders, or cancel this export."
 msgstr "De bestandsindeling GIF staat dit niet toe.  U kunt ervoor kiezen om alle lagen bij te snijden tot de grenzen van de afbeelding, of dit exporteren annuleren."
 
-#: plug-ins/common/file-gif-export.c:1317
+#: plug-ins/common/file-gif-export.c:1313
 msgid ""
 "The GIF format only supports 8 bit integer precision.\n"
 "Your image will be converted on export, which may change the pixel values."
 msgstr "De indeling GIF ondersteunt alleen 8bit integer precisie.\n"
 "Uw afbeelding zal worden geconverteerd bij exporteren, wat de pixelwaarden zou kunnen wijzigen."
 
-#: plug-ins/common/file-gif-export.c:1385 plug-ins/common/file-mng.c:2050
+#: plug-ins/common/file-gif-export.c:1381 plug-ins/common/file-mng.c:2050
 msgid "milliseconds"
 msgstr "milliseconden"
 
-#: plug-ins/common/file-gif-export.c:1420
+#: plug-ins/common/file-gif-export.c:1416
 msgid "Animated GIF"
 msgstr "Geanimeerde GIF"
 
-#: plug-ins/common/file-gif-export.c:1427
+#: plug-ins/common/file-gif-export.c:1423
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -3351,103 +3352,103 @@ msgstr "Dit is geen bestand van Jeff's Image Format: onjuiste magische code"
 msgid "screen descriptor"
 msgstr "schermbeschrijving"
 
-#: plug-ins/common/file-gif-load.c:542
+#: plug-ins/common/file-gif-load.c:552
 msgid "global colormap"
 msgstr "globale kleurenkaart"
 
-#: plug-ins/common/file-gif-load.c:554 plug-ins/common/file-gif-load.c:1189
-#: plug-ins/common/file-gif-load.c:1531 plug-ins/common/file-gif-load.c:1550
-#: plug-ins/common/file-gif-load.c:1564 plug-ins/common/file-gif-load.c:1574
-#: plug-ins/common/file-gif-load.c:1584 plug-ins/common/file-gif-load.c:1606
+#: plug-ins/common/file-gif-load.c:564 plug-ins/common/file-gif-load.c:1199
+#: plug-ins/common/file-gif-load.c:1542 plug-ins/common/file-gif-load.c:1559
+#: plug-ins/common/file-gif-load.c:1575 plug-ins/common/file-gif-load.c:1585
+#: plug-ins/common/file-gif-load.c:1595 plug-ins/common/file-gif-load.c:1617
 msgid "image data"
 msgstr "afbeelding data"
 
-#: plug-ins/common/file-gif-load.c:571
+#: plug-ins/common/file-gif-load.c:581
 msgid "extension data"
 msgstr "extensie data"
 
-#: plug-ins/common/file-gif-load.c:591
+#: plug-ins/common/file-gif-load.c:601
 msgid "frame info"
 msgstr "frame info"
 
-#: plug-ins/common/file-gif-load.c:604
+#: plug-ins/common/file-gif-load.c:614
 msgid "local colormap"
 msgstr "lokale kleurenkaart"
 
-#: plug-ins/common/file-gif-load.c:649
+#: plug-ins/common/file-gif-load.c:659
 msgid ""
 "Non-square pixels. Image might look squashed if Dot for Dot mode is enabled."
 msgstr "Niet-vierkante pixels. Afbeelding lijkt platgeslagen als modus Dot for Dot is ingeschakeld."
 
-#: plug-ins/common/file-gif-load.c:705 plug-ins/common/file-gif-load.c:710
+#: plug-ins/common/file-gif-load.c:715 plug-ins/common/file-gif-load.c:720
 #, c-format
 msgid "Error reading %s. %s"
 msgstr "Fout bij lezen van %s. %s"
 
-#: plug-ins/common/file-gif-load.c:706 plug-ins/common/file-gif-load.c:711
-#: plug-ins/common/file-gif-load.c:871 plug-ins/common/file-gif-load.c:879
-#: plug-ins/common/file-gif-load.c:910 plug-ins/common/file-gif-load.c:964
-#: plug-ins/common/file-gif-load.c:1054 plug-ins/common/file-gif-load.c:1073
-#: plug-ins/common/file-gif-load.c:1175 plug-ins/common/file-gif-load.c:1179
-#: plug-ins/common/file-gif-load.c:1325
+#: plug-ins/common/file-gif-load.c:716 plug-ins/common/file-gif-load.c:721
+#: plug-ins/common/file-gif-load.c:881 plug-ins/common/file-gif-load.c:889
+#: plug-ins/common/file-gif-load.c:920 plug-ins/common/file-gif-load.c:974
+#: plug-ins/common/file-gif-load.c:1064 plug-ins/common/file-gif-load.c:1083
+#: plug-ins/common/file-gif-load.c:1185 plug-ins/common/file-gif-load.c:1189
+#: plug-ins/common/file-gif-load.c:1335
 msgid "Image may be corrupt!"
 msgstr "Afbeelding is mogelijk beschadigd!"
 
-#: plug-ins/common/file-gif-load.c:871
+#: plug-ins/common/file-gif-load.c:881
 msgid "Error reading data size"
 msgstr "Fout bij het lezen bestandsgrootte"
 
-#: plug-ins/common/file-gif-load.c:879
+#: plug-ins/common/file-gif-load.c:889
 msgid "Error reading data"
 msgstr "Fout bij het lezen van de gegevens"
 
-#: plug-ins/common/file-gif-load.c:910
+#: plug-ins/common/file-gif-load.c:920
 msgid "Not enough compressed data"
 msgstr "Onvoldoende kanalen: %d"
 
-#: plug-ins/common/file-gif-load.c:964
+#: plug-ins/common/file-gif-load.c:974
 msgid "Value out of range for code size"
 msgstr "Ongeldige waarde voor code omvang"
 
-#: plug-ins/common/file-gif-load.c:1053
+#: plug-ins/common/file-gif-load.c:1063
 msgid "Invalid code, expecting end of data marker"
 msgstr "Ongeldige code, markering einde gegevens verwacht"
 
-#: plug-ins/common/file-gif-load.c:1073
+#: plug-ins/common/file-gif-load.c:1083
 msgid "Unexpected extra data"
 msgstr "Onverwachte extra gegevens"
 
-#: plug-ins/common/file-gif-load.c:1092
+#: plug-ins/common/file-gif-load.c:1102
 msgid "Invalid table entry"
 msgstr "Ongeldige waarde in tabel"
 
-#: plug-ins/common/file-gif-load.c:1092 plug-ins/common/file-gif-load.c:1098
+#: plug-ins/common/file-gif-load.c:1102 plug-ins/common/file-gif-load.c:1108
 msgid "Image is corrupt!"
 msgstr "De afbeelding is beschadigd!"
 
-#: plug-ins/common/file-gif-load.c:1098
+#: plug-ins/common/file-gif-load.c:1108
 msgid "Circular table entry"
 msgstr "Circulaire waarde in de tabel"
 
-#: plug-ins/common/file-gif-load.c:1174
+#: plug-ins/common/file-gif-load.c:1184
 #, c-format
 msgid "%s. %s"
 msgstr "%s. %s"
 
-#: plug-ins/common/file-gif-load.c:1175 plug-ins/common/file-gif-load.c:1179
+#: plug-ins/common/file-gif-load.c:1185 plug-ins/common/file-gif-load.c:1189
 msgid "Invalid frame dimensions"
 msgstr "Ongeldige afmetingen kader"
 
-#: plug-ins/common/file-gif-load.c:1196
+#: plug-ins/common/file-gif-load.c:1206
 msgid "compressed image data"
 msgstr "gecomprimeerde afbeeldingsgegevens"
 
-#: plug-ins/common/file-gif-load.c:1229
+#: plug-ins/common/file-gif-load.c:1239
 #, c-format
 msgid "Background (%d%s)"
 msgstr "Achtergrond (%d%s)"
 
-#: plug-ins/common/file-gif-load.c:1256
+#: plug-ins/common/file-gif-load.c:1266
 #, c-format
 msgid "Opening '%s' (frame %d)"
 msgstr "‘%s’ wordt geopend (frame %d)"
@@ -3456,30 +3457,30 @@ msgstr "‘%s’ wordt geopend (frame %d)"
 # --
 # kader of beeldje in het kader van een animatie; maar frame is correct Nederlands, zie Groene Boekje
 # pm
-#: plug-ins/common/file-gif-load.c:1285
+#: plug-ins/common/file-gif-load.c:1295
 #, c-format
 msgid "Frame %d"
 msgstr "Frame %d"
 
-#: plug-ins/common/file-gif-load.c:1287 plug-ins/common/file-mng.c:1139
-#: plug-ins/common/file-png.c:3065 plug-ins/file-webp/file-webp-load.c:227
+#: plug-ins/common/file-gif-load.c:1297 plug-ins/common/file-mng.c:1139
+#: plug-ins/common/file-png.c:3066 plug-ins/file-webp/file-webp-load.c:227
 #, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Frame %d (%d%s)"
 
-#: plug-ins/common/file-gif-load.c:1318
+#: plug-ins/common/file-gif-load.c:1328
 #, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
 msgstr "GIF: Niet gedocumenteerde GIF composiettype %d wordt niet afgehandeld.  Animatie zou niet af kunnen spelen of niet perfect opnieuw kunnen worden opgeslagen."
 
-#: plug-ins/common/file-gif-load.c:1324
+#: plug-ins/common/file-gif-load.c:1334
 #, c-format
 msgid "Unknown composite type %d. %s"
 msgstr "Onbekend composiettype %d. %s"
 
-#: plug-ins/common/file-gif-load.c:1367
+#: plug-ins/common/file-gif-load.c:1377
 #, c-format
 msgid ""
 "Can't handle non-alpha RGB frames.\n"
@@ -3487,11 +3488,11 @@ msgid ""
 msgstr "Kan geen niet-alfa RGB-frames afhandelen.\n"
 "Dien een bugrapport in op https://gitlab.gnome.org/GNOME/gimp/issues"
 
-#: plug-ins/common/file-gif-load.c:1496
+#: plug-ins/common/file-gif-load.c:1506
 msgid "Too much compressed data, ignoring extra..."
 msgstr "Te veel gecomprimeerde gegevens, negeert extra…."
 
-#: plug-ins/common/file-gif-load.c:1614
+#: plug-ins/common/file-gif-load.c:1625
 msgid "inflate failed"
 msgstr "comprimeren mislukt"
 
@@ -4537,7 +4538,7 @@ msgstr "Aanmaakdatum-en-tijd opslaan"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:993 plug-ins/common/file-png.c:2854
+#: plug-ins/common/file-mng.c:993 plug-ins/common/file-png.c:2855
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Kon de transparantie niet zonder verlies opslaan, in de plaats daarvan wordt de dekking opgeslagen."
 
@@ -5193,52 +5194,52 @@ msgid "Importing APNG frames from '%s'"
 msgstr "Importeren van frames APNG uit ‘%s’"
 
 #: plug-ins/common/file-png.c:1446 plug-ins/common/file-png.c:1483
-#: plug-ins/common/file-png.c:1510
+#: plug-ins/common/file-png.c:1507
 #, c-format
 msgid "Could not read APNG frames. They will be discarded."
 msgstr "Kon geen APNG-frames lezen. Ze zullen worden genegeerd."
 
-#: plug-ins/common/file-png.c:1574
+#: plug-ins/common/file-png.c:1575
 #, c-format
 msgid "Invalid APNG: fcTL frame dimensions exceed IHDR allocation"
 msgstr "Ongeldige APNG: fcTL frame-dimensies overschrijden IHDR allocation"
 
-#: plug-ins/common/file-png.c:1619
+#: plug-ins/common/file-png.c:1620
 #, c-format
 msgid "Invalid APNG: Image data appeared before actTL chunk."
 msgstr "Ongeldige APNG: gegevens van de afbeelding verschenen voor het gedeelte actTL."
 
-#: plug-ins/common/file-png.c:1708
+#: plug-ins/common/file-png.c:1709
 msgid "Apply PNG Offset"
 msgstr "PNG-verschuiving toepassen"
 
-#: plug-ins/common/file-png.c:1712
+#: plug-ins/common/file-png.c:1713
 msgid "Ignore PNG offset"
 msgstr "PNG-verschuiving negeren"
 
-#: plug-ins/common/file-png.c:1713
+#: plug-ins/common/file-png.c:1714
 msgid "Apply PNG offset to layer"
 msgstr "PNG-verschuiving toepassen op laag"
 
-#: plug-ins/common/file-png.c:1738
+#: plug-ins/common/file-png.c:1739
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr "De afbeelding PNG die u importeert specificeert een verschuiving van %d, %d. Wilt u die verschuiving echt op de laag toepassen?"
 
-#: plug-ins/common/file-png.c:1950
+#: plug-ins/common/file-png.c:1951
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Fout tijdens het maken van de PNG write-struct tijdens het exporteren van ‘%s’."
 
-#: plug-ins/common/file-png.c:1959
+#: plug-ins/common/file-png.c:1960
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr "Fout bij exporteren van ‘%s’.\n"
 " Kon geen PNG header infostructuur maken."
 
-#: plug-ins/common/file-png.c:1967
+#: plug-ins/common/file-png.c:1968
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Fout bij exporteren van ‘%s’.\n"
@@ -7791,7 +7792,7 @@ msgstr "Een legpuzzelpatroon toevoegen aan de afbeelding"
 msgid "Jigsaw puzzle look"
 msgstr "Legpuzzelstijl"
 
-#: plug-ins/common/jigsaw.c:483 plug-ins/common/tile-small.c:497
+#: plug-ins/common/jigsaw.c:483 plug-ins/common/tile-small.c:494
 msgid "_Horizontal"
 msgstr "_Horizontaal"
 
@@ -7799,7 +7800,7 @@ msgstr "_Horizontaal"
 msgid "Number of pieces going across"
 msgstr "Horizontaal aantal stukken"
 
-#: plug-ins/common/jigsaw.c:489 plug-ins/common/tile-small.c:507
+#: plug-ins/common/jigsaw.c:489 plug-ins/common/tile-small.c:504
 msgid "_Vertical"
 msgstr "_Verticaal"
 
@@ -8132,162 +8133,162 @@ msgstr "Als QBE-bestand opslaan"
 msgid "_Undo"
 msgstr "_Ongedaan maken"
 
-#: plug-ins/common/sample-colorize.c:325
+#: plug-ins/common/sample-colorize.c:324
 msgid "_Sample Colorize..."
 msgstr "_Inkleuren met monsters..."
 
 # 29/03/08: niet letterlijk, maar wel duidelijk zo
-#: plug-ins/common/sample-colorize.c:329
+#: plug-ins/common/sample-colorize.c:328
 msgid "Colorize image using a sample image as a guide"
 msgstr "Een afbeelding inkleuren op basis van de kleuren van een andere afbeelding"
 
-#: plug-ins/common/sample-colorize.c:339
+#: plug-ins/common/sample-colorize.c:338
 msgid "Sample drawable"
 msgstr "Voorbeeld tekening"
 
-#: plug-ins/common/sample-colorize.c:340
+#: plug-ins/common/sample-colorize.c:339
 msgid "Sample drawable (should be of Type RGB or RGBA)"
 msgstr "Voorbeeld tekening (moet van Type RGB of RGBA zijn)"
 
-#: plug-ins/common/sample-colorize.c:345
+#: plug-ins/common/sample-colorize.c:344
 msgid "Hold _intensity"
 msgstr "_Intensiteit behouden"
 
-#: plug-ins/common/sample-colorize.c:346
+#: plug-ins/common/sample-colorize.c:345
 msgid "Hold brightness intensity levels"
 msgstr "Helderheidsniveaus behouden"
 
-#: plug-ins/common/sample-colorize.c:351
+#: plug-ins/common/sample-colorize.c:350
 msgid "Original i_ntensity"
 msgstr "Oorspronkelijke i_ntensiteit"
 
-#: plug-ins/common/sample-colorize.c:352
+#: plug-ins/common/sample-colorize.c:351
 msgid ""
 "TRUE: hold brightness of original intensity levels, FALSE: Hold Intensity of "
 "input levels"
 msgstr "AAN: de helderheid van de oorspronkelijke intensiteitsniveaus behouden, UIT: de intensiteit van de invoerniveaus behouden"
 
-#: plug-ins/common/sample-colorize.c:359
+#: plug-ins/common/sample-colorize.c:358
 msgid "Us_e subcolors"
 msgstr "Subkleuren g_ebruiken"
 
-#: plug-ins/common/sample-colorize.c:360
+#: plug-ins/common/sample-colorize.c:359
 msgid ""
 "TRUE: Use all subcolors of same intensity, FALSE: Use only one color per "
 "intensity"
 msgstr "AAN: gebruik alle subkleuren met dezelfde intensiteit. UIT: gebruik slechts één kleur per intensiteit"
 
-#: plug-ins/common/sample-colorize.c:366
+#: plug-ins/common/sample-colorize.c:365
 msgid "Smooth sam_ples"
 msgstr "_Gladde monsters"
 
-#: plug-ins/common/sample-colorize.c:367
+#: plug-ins/common/sample-colorize.c:366
 msgid ""
 "TRUE: guess samplecolors for the missing intensity values, FALSE: use only "
 "colors found in the sample"
 msgstr "AAN: raad de voorbeeldkleuren voor de ontbrekende intensiteitswaarden, UIT: gebruik alleen de kleuren die in het monster voorkomen"
 
-#: plug-ins/common/sample-colorize.c:374
+#: plug-ins/common/sample-colorize.c:373
 msgid "_Low"
 msgstr "_Laagste"
 
-#: plug-ins/common/sample-colorize.c:375
+#: plug-ins/common/sample-colorize.c:374
 msgid "Intensity of lowest input"
 msgstr "Laagste intensiteit in de invoer"
 
-#: plug-ins/common/sample-colorize.c:380
+#: plug-ins/common/sample-colorize.c:379
 msgid "_High"
 msgstr "_Hoogste"
 
-#: plug-ins/common/sample-colorize.c:381
+#: plug-ins/common/sample-colorize.c:380
 msgid "Intensity of highest input"
 msgstr "Hoogste intensiteit in de invoer"
 
-#: plug-ins/common/sample-colorize.c:386
+#: plug-ins/common/sample-colorize.c:385
 msgid "Ga_mma"
 msgstr "Ga_mma"
 
-#: plug-ins/common/sample-colorize.c:387
+#: plug-ins/common/sample-colorize.c:386
 msgid "Gamma adjustment factor, 1.0 is linear"
 msgstr "Gamma aanpassing factor, 1.0 is lineair"
 
-#: plug-ins/common/sample-colorize.c:392
+#: plug-ins/common/sample-colorize.c:391
 msgid "Lo_w"
 msgstr "Laa_gste"
 
-#: plug-ins/common/sample-colorize.c:393
+#: plug-ins/common/sample-colorize.c:392
 msgid "Lowest sample color intensity"
 msgstr "Laagste intensiteit in het monster"
 
-#: plug-ins/common/sample-colorize.c:398
+#: plug-ins/common/sample-colorize.c:397
 msgid "Hi_gh"
 msgstr "H_oogste"
 
-#: plug-ins/common/sample-colorize.c:399
+#: plug-ins/common/sample-colorize.c:398
 msgid "Highest sample color intensity"
 msgstr "Hoogste intensiteit in het monster"
 
-#: plug-ins/common/sample-colorize.c:1417
+#: plug-ins/common/sample-colorize.c:1416
 msgid "Sample Colorize"
 msgstr "Inkleuren met monsters"
 
 #. layer combo_box (Dst)
-#: plug-ins/common/sample-colorize.c:1429
+#: plug-ins/common/sample-colorize.c:1428
 msgid "Destination:"
 msgstr "Doel:"
 
 #. layer combo_box (Sample)
-#: plug-ins/common/sample-colorize.c:1444
+#: plug-ins/common/sample-colorize.c:1443
 msgid "Sample:"
 msgstr "Monster:"
 
 #  Add extra menu items for Inverted Gradient
-#: plug-ins/common/sample-colorize.c:1453
+#: plug-ins/common/sample-colorize.c:1452
 msgid "From reverse gradient"
 msgstr "Uit omgekeerd kleurverloop"
 
 #  Add extra menu items for Gradient
-#: plug-ins/common/sample-colorize.c:1458
+#: plug-ins/common/sample-colorize.c:1457
 msgid "From gradient"
 msgstr "Uit kleurverloop"
 
 #. check button
-#: plug-ins/common/sample-colorize.c:1476
+#: plug-ins/common/sample-colorize.c:1475
 msgid "Sho_w selection"
 msgstr "Selectie _tonen"
 
 #. check button
-#: plug-ins/common/sample-colorize.c:1487
+#: plug-ins/common/sample-colorize.c:1486
 msgid "Show co_lor"
 msgstr "K_leur tonen"
 
 #. check button
-#: plug-ins/common/sample-colorize.c:1502
+#: plug-ins/common/sample-colorize.c:1501
 msgid "Show selec_tion"
 msgstr "Selectie _tonen"
 
 #. check button
-#: plug-ins/common/sample-colorize.c:1513
+#: plug-ins/common/sample-colorize.c:1512
 msgid "Show c_olor"
 msgstr "Kleur t_onen"
 
-#: plug-ins/common/sample-colorize.c:1636
+#: plug-ins/common/sample-colorize.c:1635
 msgid "Input levels:"
 msgstr "Invoerniveaus:"
 
-#: plug-ins/common/sample-colorize.c:1666
+#: plug-ins/common/sample-colorize.c:1665
 msgid "Output levels:"
 msgstr "Uitvoerniveaus:"
 
-#: plug-ins/common/sample-colorize.c:1716
+#: plug-ins/common/sample-colorize.c:1715
 msgid "Get _Sample Colors"
 msgstr "_Kleurmonsters ophalen"
 
-#: plug-ins/common/sample-colorize.c:2590
+#: plug-ins/common/sample-colorize.c:2589
 msgid "Sample analyze"
 msgstr "Monsteranalyse"
 
-#: plug-ins/common/sample-colorize.c:3001
+#: plug-ins/common/sample-colorize.c:3000
 msgid "Remap colorized"
 msgstr "Kleurenkaart bijwerken"
 
@@ -8339,13 +8340,13 @@ msgstr "Glad palet"
 
 #: plug-ins/common/smooth-palette.c:496 plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:398
-#: plug-ins/print/print-page-layout.c:286
+#: plug-ins/print/print-page-layout.c:289
 msgid "_Width:"
 msgstr "_Breedte:"
 
 #: plug-ins/common/smooth-palette.c:501 plug-ins/imagemap/imap_cmd_guides.c:183
 #: plug-ins/imagemap/imap_rectangle.c:405
-#: plug-ins/print/print-page-layout.c:288
+#: plug-ins/print/print-page-layout.c:291
 msgid "_Height:"
 msgstr "_Hoogte:"
 
@@ -8623,7 +8624,7 @@ msgstr "Kleurkeuzedialoogvenster"
 
 #: plug-ins/common/sphere-designer.c:2845
 msgid "Scale"
-msgstr "Schalen"
+msgstr "Schaal"
 
 #: plug-ins/common/sphere-designer.c:2853
 msgid "Turbulence"
@@ -8728,7 +8729,7 @@ msgstr "Nieuwe _afbeelding"
 msgid "Create a new image"
 msgstr "Een nieuwe afbeelding maken"
 
-#: plug-ins/common/tile.c:258 plug-ins/common/tile-small.c:374
+#: plug-ins/common/tile.c:258 plug-ins/common/tile-small.c:371
 msgid "Tiling"
 msgstr "Betegelen"
 
@@ -8760,37 +8761,37 @@ msgstr "Aantal tegels om te maken"
 msgid "Region selected for filter is empty."
 msgstr "Gebied geselecteerd voor filter is leeg."
 
-#: plug-ins/common/tile-small.c:440
+#: plug-ins/common/tile-small.c:437
 msgid "Small Tiles"
 msgstr "Kleine tegels"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:484 plug-ins/ifs-compose/ifs-compose.c:726
+#: plug-ins/common/tile-small.c:481 plug-ins/ifs-compose/ifs-compose.c:726
 msgid "Flip"
 msgstr "Spiegelen"
 
-#: plug-ins/common/tile-small.c:533
+#: plug-ins/common/tile-small.c:530
 msgid "A_ll tiles"
 msgstr "A_lle tegels"
 
-#: plug-ins/common/tile-small.c:546
+#: plug-ins/common/tile-small.c:543
 msgid "Al_ternate tiles"
 msgstr "Af_wisselende tegels"
 
-#: plug-ins/common/tile-small.c:559
+#: plug-ins/common/tile-small.c:556
 msgid "_Explicit tile"
 msgstr "Be_paalde tegel"
 
-#: plug-ins/common/tile-small.c:564
+#: plug-ins/common/tile-small.c:561
 msgid "Ro_w:"
 msgstr "Ri_j:"
 
-#: plug-ins/common/tile-small.c:589
+#: plug-ins/common/tile-small.c:586
 msgid "Col_umn:"
 msgstr "_Kolom:"
 
-#: plug-ins/common/tile-small.c:621
+#: plug-ins/common/tile-small.c:618
 #: plug-ins/fractal-explorer/fractal-explorer.c:1358
 #: plug-ins/gimpressionist/orientmap.c:527
 #: plug-ins/gimpressionist/presets.c:1072 plug-ins/gimpressionist/sizemap.c:400
@@ -8798,11 +8799,11 @@ msgstr "_Kolom:"
 msgid "_Apply"
 msgstr "Toep_assen"
 
-#: plug-ins/common/tile-small.c:638
+#: plug-ins/common/tile-small.c:635
 msgid "O_pacity"
 msgstr "D_ekking"
 
-#: plug-ins/common/tile-small.c:649
+#: plug-ins/common/tile-small.c:646
 msgid "Number of Segments"
 msgstr "Aantal segmenten"
 
@@ -9250,7 +9251,7 @@ msgstr "Ontleding"
 #: plug-ins/common/wavelet-decompose.c:278
 #, c-format
 msgid "Scale %d"
-msgstr "Schalen %d"
+msgstr "Schaal %d"
 
 #: plug-ins/common/wavelet-decompose.c:302
 msgid "Residual"
@@ -10278,7 +10279,7 @@ msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr "Fout bij openen tijdelijk %s bestand ‘%s’ voor laden icns: %s"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:672 plug-ins/file-jpeg/jpeg-load.c:699
+#: plug-ins/file-icns/file-icns-load.c:672 plug-ins/file-jpeg/jpeg-load.c:704
 #: plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-another-rawtherapee.c:469
 #: plug-ins/file-raw/file-darktable.c:623
@@ -10450,7 +10451,7 @@ msgid "JPEG preview"
 msgstr "JPEG-voorbeeld"
 
 #  Do not rely on librsvg setting GError on failure!
-#: plug-ins/file-jpeg/jpeg-load.c:586
+#: plug-ins/file-jpeg/jpeg-load.c:591
 #, c-format
 msgid ""
 "Error trying to open temporary %s file '%s' for jpeg metadata loading: %s"
@@ -10687,7 +10688,7 @@ msgid ""
 "Layers will be merged on export."
 msgstr "Photoshop ondersteunt geen geïndexeerde afbeeldingen die meer dan een laag hebben. Lagen zullen bij exporteren worden samengevoegd."
 
-#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:6331
+#: plug-ins/file-psd/psd-export.c:3266 plug-ins/file-psd/psd-load.c:6337
 msgid "Compatibility Notice"
 msgstr "Melding compatibiliteit"
 
@@ -10803,7 +10804,7 @@ msgstr "Niet-ondersteunde of ongeldige grootte laagmasker: %dx%d"
 msgid "Invalid block size."
 msgstr "Ongeldige blokgrootte"
 
-#: plug-ins/file-psd/psd-load.c:1986 plug-ins/file-psd/psd-load.c:5839
+#: plug-ins/file-psd/psd-load.c:1986 plug-ins/file-psd/psd-load.c:5845
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ongeldige of niet-ondersteunde kanaalgrootte"
@@ -10839,20 +10840,20 @@ msgstr "Lijn"
 msgid "Unhandled Stroke type: expect incorrect rendering."
 msgstr "Niet afgehandeld type Streek: verwacht onjuist renderen."
 
-#: plug-ins/file-psd/psd-load.c:5614
+#: plug-ins/file-psd/psd-load.c:5620
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:5916
+#: plug-ins/file-psd/psd-load.c:5922
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Kon gegevens niet decomprimeren"
 
-#: plug-ins/file-psd/psd-load.c:6308
+#: plug-ins/file-psd/psd-load.c:6314
 msgid "Duotone Import"
 msgstr "Duotone Import"
 
-#: plug-ins/file-psd/psd-load.c:6309
+#: plug-ins/file-psd/psd-load.c:6315
 msgid ""
 "Image will be imported as Grayscale.\n"
 "Duotone color space data has been saved\n"
@@ -10860,7 +10861,7 @@ msgid ""
 msgstr "Afbeelding zal worden geïmporteerd als Grijswaarden.\n"
 "Duotoon kleurruimte informatie is opgeslagen en kan bij exporteren opnieuw worden gebruikt."
 
-#: plug-ins/file-psd/psd-load.c:6332
+#: plug-ins/file-psd/psd-load.c:6338
 msgid ""
 "This PSD file contains features that\n"
 "are not yet fully supported in GIMP:"
@@ -11693,28 +11694,28 @@ msgid ""
 "Error trying to open temporary %s file '%s' for tiff metadata loading: %s"
 msgstr "Fout bij openen tijdelijk %s bestand ‘%s’ om TIFF metagegevens in te laden: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3370
+#: plug-ins/file-tiff/file-tiff-load.c:3373
 msgid "Import from TIFF"
 msgstr "Uit TIFF importeren"
 
 #. Show Reduced
-#: plug-ins/file-tiff/file-tiff-load.c:3393
+#: plug-ins/file-tiff/file-tiff-load.c:3396
 msgid "_Show reduced images"
 msgstr "Ge_reduceerde afbeeldingen tonen"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3445
+#: plug-ins/file-tiff/file-tiff-load.c:3448
 msgid "Process extra channel as:"
 msgstr "Extra kanaal verwerken als:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3448
+#: plug-ins/file-tiff/file-tiff-load.c:3451
 msgid "_Non-premultiplied alpha"
 msgstr "_Niet vooraf vermenigvuldigde alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3449
+#: plug-ins/file-tiff/file-tiff-load.c:3452
 msgid "Pre_multiplied alpha"
 msgstr "Vooraf ver_menigvuldigde alfa"
 
-#: plug-ins/file-tiff/file-tiff-load.c:3450
+#: plug-ins/file-tiff/file-tiff-load.c:3453
 msgid "Channe_l"
 msgstr "_Kanaal"
 
@@ -14193,37 +14194,37 @@ msgstr "IFS wordt gerenderd (%d/%d)…"
 msgid "Transformation %s"
 msgstr "Transformatie %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2500
+#: plug-ins/ifs-compose/ifs-compose.c:2496
 msgid "Save failed"
 msgstr "Opslaan is mislukt"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2584
-#: plug-ins/ifs-compose/ifs-compose.c:2598
+#: plug-ins/ifs-compose/ifs-compose.c:2580
+#: plug-ins/ifs-compose/ifs-compose.c:2594
 msgid "Open failed"
 msgstr "Openen is mislukt"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2592
+#: plug-ins/ifs-compose/ifs-compose.c:2588
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Bestand ‘%s’ lijkt geen IFS-fractaalbestand te zijn."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2633
+#: plug-ins/ifs-compose/ifs-compose.c:2629
 msgid "Save as IFS Fractal file"
 msgstr "Opslaan als IFS-fractaalbestand"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2657
+#: plug-ins/ifs-compose/ifs-compose.c:2653
 msgid "Open IFS Fractal file"
 msgstr "IFS-fractaalbestand openen"
 
-#: plug-ins/imagemap/imap_about.c:44
+#: plug-ins/imagemap/imap_about.c:47
 msgid "Image Map Plug-in"
 msgstr "Plug-in Beeldkaart"
 
-#: plug-ins/imagemap/imap_about.c:48
+#: plug-ins/imagemap/imap_about.c:51
 msgid "Copyright © 1999-2005 by Maurits Rijk"
 msgstr "Copyright © 1999-2005 door Maurits Rijk"
 
-#: plug-ins/imagemap/imap_about.c:50
+#: plug-ins/imagemap/imap_about.c:53
 msgid "Released under the GNU General Public License"
 msgstr "Uitgebracht onder de GNU General Public License"
 
@@ -15302,7 +15303,7 @@ msgstr "Lichtinstellingen"
 
 #: plug-ins/lighting/lighting-ui.c:332 plug-ins/map-object/map-object-ui.c:500
 #: plug-ins/map-object/map-object-ui.c:714
-#: plug-ins/print/print-page-layout.c:384
+#: plug-ins/print/print-page-layout.c:387
 msgid "Position"
 msgstr "Positie"
 
@@ -15679,7 +15680,7 @@ msgstr "Mate van weerspiegeling"
 
 #: plug-ins/map-object/map-object-ui.c:774
 #: plug-ins/map-object/map-object-ui.c:874
-#: plug-ins/print/print-page-layout.c:253
+#: plug-ins/print/print-page-layout.c:256
 msgid "Size"
 msgstr "Grootte"
 
@@ -16694,99 +16695,99 @@ msgstr "Oor in laag"
 msgid "Page Curl"
 msgstr "Oor in pagina"
 
-#: plug-ins/print/print-page-layout.c:158
+#: plug-ins/print/print-page-layout.c:161
 msgid "Ignore Page _Margins"
 msgstr "Pagina_marges negeren"
 
 #. crop marks toggle
-#: plug-ins/print/print-page-layout.c:169
+#: plug-ins/print/print-page-layout.c:172
 msgid "_Draw Crop Marks"
 msgstr "_Plaats snijmarkeringen"
 
-#: plug-ins/print/print-page-layout.c:307
+#: plug-ins/print/print-page-layout.c:310
 #, c-format
 msgid "pixels/%a"
 msgstr "beeldpunten/%a"
 
-#: plug-ins/print/print-page-layout.c:328
+#: plug-ins/print/print-page-layout.c:331
 msgid "_X resolution:"
 msgstr "Resolutie _X:"
 
-#: plug-ins/print/print-page-layout.c:332
+#: plug-ins/print/print-page-layout.c:335
 msgid "_Y resolution:"
 msgstr "Resolutie _Y:"
 
-#: plug-ins/print/print-page-layout.c:335
+#: plug-ins/print/print-page-layout.c:338
 msgid "_Load Defaults"
 msgstr "St_andaardwaarden laden"
 
-#: plug-ins/print/print-page-layout.c:410
+#: plug-ins/print/print-page-layout.c:413
 msgid "_Left:"
 msgstr "_Links:"
 
-#: plug-ins/print/print-page-layout.c:431
+#: plug-ins/print/print-page-layout.c:434
 msgid "_Right:"
 msgstr "_Rechts:"
 
-#: plug-ins/print/print-page-layout.c:447
+#: plug-ins/print/print-page-layout.c:450
 msgid "_Top:"
 msgstr "_Boven:"
 
-#: plug-ins/print/print-page-layout.c:468
+#: plug-ins/print/print-page-layout.c:471
 msgid "_Bottom:"
 msgstr "_Onder:"
 
-#: plug-ins/print/print-page-layout.c:489
+#: plug-ins/print/print-page-layout.c:492
 msgid "C_enter:"
 msgstr "_Midden:"
 
 #. if and how to center the image on the page
-#: plug-ins/print/print-page-layout.c:496
+#: plug-ins/print/print-page-layout.c:499
 msgctxt "center-mode"
 msgid "None"
 msgstr "Geen"
 
-#: plug-ins/print/print-page-layout.c:497
+#: plug-ins/print/print-page-layout.c:500
 msgid "Horizontally"
 msgstr "Horizontaal"
 
-#: plug-ins/print/print-page-layout.c:498
+#: plug-ins/print/print-page-layout.c:501
 msgid "Vertically"
 msgstr "Verticaal"
 
-#: plug-ins/print/print-page-layout.c:499
+#: plug-ins/print/print-page-layout.c:502
 msgid "Both"
 msgstr "Beide"
 
-#: plug-ins/print/print.c:170
+#: plug-ins/print/print.c:212
 msgid "_Print..."
 msgstr "_Afdrukken..."
 
-#: plug-ins/print/print.c:175
+#: plug-ins/print/print.c:217
 msgid "Print the image"
 msgstr "De afbeelding afdrukken"
 
-#: plug-ins/print/print.c:194
+#: plug-ins/print/print.c:236
 msgid "Page Set_up..."
 msgstr "Pagina_instellingen..."
 
-#: plug-ins/print/print.c:199
+#: plug-ins/print/print.c:241
 msgid "Adjust page size and orientation for printing"
 msgstr "Paginagrootte en -oriëntatie aanpassen om af te drukken"
 
-#: plug-ins/print/print.c:344 plug-ins/print/print.c:499
+#: plug-ins/print/print.c:618 plug-ins/print/print.c:781
 msgid "Image Settings"
 msgstr "Afbeeldingsinstellingen"
 
-#: plug-ins/print/print.c:455
+#: plug-ins/print/print.c:730
 msgid "An error occurred while trying to print:"
 msgstr "Er deed zich een fout voor bij het proberen af te drukken:"
 
-#: plug-ins/print/print.c:500
+#: plug-ins/print/print.c:783
 msgid "_Print"
 msgstr "Af_drukken"
 
-#: plug-ins/print/print.c:524
+#: plug-ins/print/print.c:819
 msgid "Printing"
 msgstr "Afdrukken"
 
