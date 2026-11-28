@@ -48,33 +48,33 @@ struct _BorderAverageClass
 #define BORDER_AVERAGE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), BORDER_AVERAGE_TYPE, BorderAverage))
 
 
-GType                   border_average_get_type               (void);
+GType                   border_average_get_type         (void);
 
-static GList          * border_average_query_procedures       (GimpPlugIn           *plug_in);
-static GimpProcedure  * border_average_create_procedure       (GimpPlugIn           *plug_in,
-                                                               const gchar          *name);
+static GList          * border_average_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure  * border_average_create_procedure (GimpPlugIn           *plug_in,
+                                                         const gchar          *name);
 
-static GimpValueArray * border_average_run                    (GimpProcedure        *procedure,
-                                                               GimpRunMode           run_mode,
-                                                               GimpImage            *image,
-                                                               GimpDrawable        **drawables,
-                                                               GimpProcedureConfig  *config,
-                                                               gpointer              run_data);
+static GimpValueArray * border_average_run              (GimpProcedure        *procedure,
+                                                         GimpRunMode           run_mode,
+                                                         GimpImage            *image,
+                                                         GimpDrawable        **drawables,
+                                                         GimpProcedureConfig  *config,
+                                                         gpointer              run_data);
 
 
-static void      borderaverage        (GObject      *config,
-                                       GeglBuffer   *buffer,
-                                       GimpDrawable *drawable,
-                                       GeglColor    *result);
+static void             borderaverage                   (GObject              *config,
+                                                         GeglBuffer           *buffer,
+                                                         GimpDrawable         *drawable,
+                                                         GeglColor            *result);
 
-static gboolean  borderaverage_dialog (GimpProcedure *procedure,
-                                       GObject       *config,
-                                       GimpImage     *image,
-                                       GimpDrawable  *drawable);
+static gboolean         borderaverage_dialog            (GimpProcedure        *procedure,
+                                                         GObject              *config,
+                                                         GimpImage            *image,
+                                                         GimpDrawable         *drawable);
 
-static void      add_new_color        (const guchar *buffer,
-                                       gint         *cube,
-                                       gint          bucket_expo);
+static void             add_new_color                   (const guchar         *buffer,
+                                                         gint                 *cube,
+                                                         gint                  bucket_expo);
 
 
 G_DEFINE_TYPE (BorderAverage, border_average, GIMP_TYPE_PLUG_IN)
@@ -120,7 +120,7 @@ border_average_create_procedure (GimpPlugIn  *plug_in,
                                             GIMP_PDB_PROC_TYPE_PLUGIN,
                                             border_average_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
@@ -218,8 +218,8 @@ border_average_run (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      /*  Make sure that the drawable is RGB color  */
-      if (gimp_drawable_is_rgb (drawable))
+      /*  Make sure that the drawable is not indexed  */
+      if (! gimp_drawable_is_indexed (drawable))
         {
           gimp_progress_init ( _("Border Average"));
           borderaverage (G_OBJECT (config), buffer, drawable, result_color);
