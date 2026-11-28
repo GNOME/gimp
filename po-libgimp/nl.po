@@ -9,11 +9,11 @@
 # Paul Mathijsse <paul.matthijsse@wanadoo.fr>, 2021.
 # GJR <g.j.roelvink@proton.me>, 2024-2025.
 msgid ""
-msgstr "Project-Id-Version: GIMP 30.\n"
+msgstr "Project-Id-Version: GIMP 3.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2026-07-20 20:36+0000\n"
-"PO-Revision-Date: 2026-07-22 12:59+0200\n"
-"Last-Translator: Dick Groskamp <dikgro@yahoo.co.uk>\n"
+"POT-Creation-Date: 2026-11-27 01:03+0000\n"
+"PO-Revision-Date: 2026-07-28 11:29+0100\n"
+"Last-Translator: Dick Groskamp <dikgro@ziggo.nl>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -270,7 +270,7 @@ msgstr "Achtergrond"
 msgid "GIMP"
 msgstr "GIMP"
 
-#: libgimp/gimploadprocedure.c:276 libgimp/gimpvectorloadprocedure.c:448
+#: libgimp/gimploadprocedure.c:248 libgimp/gimpvectorloadprocedure.c:420
 #, c-format
 msgid ""
 "This file loading plug-in returned SUCCESS as a status without an image. "
@@ -392,63 +392,63 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedure komt met uw zoekopdracht overeen"
 msgstr[1] "%d procedures komen met uw zoekopdracht overeen"
 
-#: libgimp/gimpprocedure.c:2270
+#: libgimp/gimpprocedure.c:2292
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Procedure ‘%s’ gaf geen waarden terug"
 
-#: libgimp/gimpprocedure.c:2476
+#: libgimp/gimpprocedure.c:2498
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr "Procedure ‘%s’ gaf een verkeerd type waarde terug als teruggegeven waarde ‘%s’ (#%d). Verwachtte %s, kreeg %s."
 
-#: libgimp/gimpprocedure.c:2488
+#: libgimp/gimpprocedure.c:2510
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' "
 "(#%d). Expected %s, got %s."
 msgstr "Procedure ‘%s’ werd aangeroepen met een verkeerd type waarde voor argument ‘%s’ (#%d). Verwachtte %s, kreeg %s."
 
-#: libgimp/gimpprocedure.c:2523
+#: libgimp/gimpprocedure.c:2545
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr "Procedure ‘%s’ gaf  ‘%s’ terug als waarde ‘%s’ (#%d, type %s). Die waarde ligt buiten het bereik."
 
-#: libgimp/gimpprocedure.c:2537
+#: libgimp/gimpprocedure.c:2559
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr "Procedure ‘%s’ is aangeroepen met waarde ‘%s’ als argument ‘%s’ (#%d, type %s). Die waarde ligt buiten het bereik."
 
-#: libgimp/gimpprocedure.c:2581
+#: libgimp/gimpprocedure.c:2603
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedure ‘%s’ gaf een ongeldige UTF-8 tekenreeks terug voor argument ‘%s’."
 
-#: libgimp/gimpprocedure.c:2591
+#: libgimp/gimpprocedure.c:2613
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr "Procedure ‘%s’ werd aangeroepen met een ongeldige UTF-8 tekenreeks voor argument ‘%s’."
 
-#: libgimp/gimpproceduredialog.c:345 libgimp/gimpproceduredialog.c:650
+#: libgimp/gimpproceduredialog.c:345 libgimp/gimpproceduredialog.c:651
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 msgid "_Open"
 msgstr "_Openen"
 
-#: libgimp/gimpproceduredialog.c:347 libgimp/gimpproceduredialog.c:652
+#: libgimp/gimpproceduredialog.c:347 libgimp/gimpproceduredialog.c:653
 msgid "_Export"
 msgstr "_Exporteren"
 
-#: libgimp/gimpproceduredialog.c:349 libgimp/gimpproceduredialog.c:654
+#: libgimp/gimpproceduredialog.c:349 libgimp/gimpproceduredialog.c:655
 #: libgimpwidgets/gimpcolorbutton.c:553 libgimpwidgets/gimpfilechooser.c:713
-#: libgimpwidgets/gimpfileentry.c:463 libgimpwidgets/gimpquerybox.c:276
+#: libgimpwidgets/gimpfileentry.c:464 libgimpwidgets/gimpquerybox.c:276
 #: libgimpwidgets/gimpquerybox.c:339 libgimpwidgets/gimpquerybox.c:405
 #: libgimpwidgets/gimpquerybox.c:481
 msgid "_OK"
@@ -461,53 +461,53 @@ msgstr "Te_rug naar standaardwaarden"
 #: libgimp/gimpproceduredialog.c:375 libgimpwidgets/gimpcolorbutton.c:552
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:182
-#: libgimpwidgets/gimpfilechooser.c:713 libgimpwidgets/gimpfileentry.c:463
+#: libgimpwidgets/gimpfilechooser.c:713 libgimpwidgets/gimpfileentry.c:464
 #: libgimpwidgets/gimpquerybox.c:276 libgimpwidgets/gimpquerybox.c:339
 #: libgimpwidgets/gimpquerybox.c:405 libgimpwidgets/gimpquerybox.c:481
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: libgimp/gimpproceduredialog.c:416
+#: libgimp/gimpproceduredialog.c:417
 msgid "_Load Saved Settings"
 msgstr "Opgeslagen instellingen _laden"
 
-#: libgimp/gimpproceduredialog.c:417
+#: libgimp/gimpproceduredialog.c:418
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Laad de instellingen opgeslagen met de knop ‘Instellingen opslaan’"
 
-#: libgimp/gimpproceduredialog.c:429
+#: libgimp/gimpproceduredialog.c:430
 msgid "_Save Settings"
 msgstr "Instellingen op_slaan"
 
-#: libgimp/gimpproceduredialog.c:430
+#: libgimp/gimpproceduredialog.c:431
 msgid "Store current settings for later reuse"
 msgstr "Bewaar de huidige instellingen voor later gebruik"
 
-#: libgimp/gimpproceduredialog.c:1023
+#: libgimp/gimpproceduredialog.c:1024
 msgid "Brush Chooser"
 msgstr "Penseelkiezer"
 
-#: libgimp/gimpproceduredialog.c:1027
+#: libgimp/gimpproceduredialog.c:1028
 msgid "Font Chooser"
 msgstr "Lettertypekiezer"
 
-#: libgimp/gimpproceduredialog.c:1031
+#: libgimp/gimpproceduredialog.c:1032
 msgid "Gradient Chooser"
 msgstr "Verloopkiezer"
 
-#: libgimp/gimpproceduredialog.c:1035
+#: libgimp/gimpproceduredialog.c:1036
 msgid "Palette Chooser"
 msgstr "Paletkiezer"
 
-#: libgimp/gimpproceduredialog.c:1039
+#: libgimp/gimpproceduredialog.c:1040
 msgid "Pattern Chooser"
 msgstr "Patroonkiezer"
 
-#: libgimp/gimpproceduredialog.c:2956
+#: libgimp/gimpproceduredialog.c:2957
 msgid "Reset to _Initial Values"
 msgstr "Terugzetten op beg_inwaarden"
 
-#: libgimp/gimpproceduredialog.c:2965
+#: libgimp/gimpproceduredialog.c:2966
 msgid "Reset to _Factory Defaults"
 msgstr "Terugzetten naar _fabriekswaarden"
 
@@ -631,17 +631,17 @@ msgstr "Eenheid"
 msgid "Physical unit"
 msgstr "Fysieke eenheid"
 
-#: libgimp/gimpvectorloadprocedure.c:371
+#: libgimp/gimpvectorloadprocedure.c:343
 msgid ""
 "dimensions could neither be extracted nor computed from the vector image's "
 "data."
 msgstr "afmetingen kunnen niet worden gevonden of berekend uit de gegevens van de vectorafbeelding."
 
-#: libgimp/gimpvectorloadprocedure.c:376
+#: libgimp/gimpvectorloadprocedure.c:348
 msgid "Vector image loading plug-in failed: "
 msgstr "Plug-in om vectorafbeelding te laden faalde: "
 
-#: libgimp/gimpvectorloadprocedure.c:400
+#: libgimp/gimpvectorloadprocedure.c:372
 msgid ""
 "Dimensions cannot be 0 and no native dimensions could be extracted from the "
 "vector image."
@@ -1732,7 +1732,7 @@ msgstr "Middentonen"
 #: libgimpbase/gimpbaseenums.c:1870
 msgctxt "transfer-mode"
 msgid "Highlights"
-msgstr "Hoge lichten"
+msgstr "Hooglichten"
 
 # vooruit/heen/voorwaarts
 #: libgimpbase/gimpbaseenums.c:1899
@@ -1871,7 +1871,7 @@ msgstr "Kon kleurprofiel niet in geheugen bewaren"
 msgid "(unnamed profile)"
 msgstr "(naamloos profiel)"
 
-#: libgimpcolor/gimpcolorprofile.c:621 libgimpwidgets/gimpcolorselect.c:2083
+#: libgimpcolor/gimpcolorprofile.c:621 libgimpwidgets/gimpcolorselect.c:2094
 #, c-format
 msgid "Model: %s"
 msgstr "Model: %s"
@@ -2143,11 +2143,11 @@ msgstr "fatale verwerkingsfout"
 
 # padrepresentatie - lelijk!
 # pm
-#: libgimpconfig/gimpconfig-path.c:513
+#: libgimpconfig/gimpconfig-path.c:512
 msgid "File has no path representation"
 msgstr "Het bestand heeft geen pad"
 
-#: libgimpconfig/gimpconfig-path.c:600
+#: libgimpconfig/gimpconfig-path.c:599
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Kan niet uitbreiden ${%s}"
@@ -2303,7 +2303,7 @@ msgstr "Schalen"
 #. * string, but for now, I had to preserve string freeze.
 #.
 #: libgimpwidgets/gimpcolorscales.c:359 libgimpwidgets/gimpcolorscales.c:691
-#: libgimpwidgets/gimpcolorselect.c:2094 modules/color-selector-water.c:206
+#: libgimpwidgets/gimpcolorselect.c:2105 modules/color-selector-water.c:206
 #: modules/color-selector-water.c:242 modules/color-selector-wheel.c:136
 #: modules/color-selector-wheel.c:175
 msgid "Profile: sRGB"
@@ -2325,14 +2325,14 @@ msgstr "LCh"
 msgid "HSV"
 msgstr "HSV"
 
-#: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2113
+#: libgimpwidgets/gimpcolorscales.c:708 libgimpwidgets/gimpcolorselect.c:2124
 #: modules/color-selector-cmyk.c:326 modules/color-selector-cmyk.c:410
 #: modules/color-selector-water.c:258 modules/color-selector-wheel.c:191
 #, c-format
 msgid "Profile: %s"
 msgstr "Profiel: %s"
 
-#: libgimpwidgets/gimpcolorscales.c:722 libgimpwidgets/gimpcolorselect.c:2126
+#: libgimpwidgets/gimpcolorscales.c:722 libgimpwidgets/gimpcolorselect.c:2137
 #: modules/color-selector-water.c:267 modules/color-selector-wheel.c:200
 msgid "Profile: <i>unknown</i>"
 msgstr "Profiel: <i>onbekend</i>"
@@ -2374,7 +2374,7 @@ msgstr "De naam van het apparaat"
 msgid "The controller's state, as human-readable string"
 msgstr "De status van het apparaat in leesbare tekst"
 
-#: libgimpwidgets/gimpdialog.c:248
+#: libgimpwidgets/gimpdialog.c:270
 msgid "_Help"
 msgstr "_Hulp"
 
@@ -2403,11 +2403,11 @@ msgstr "Geeft aan of het bestand al dan niet bestaat"
 msgid "Can't show file in file manager: %s"
 msgstr "Bestand kan niet worden weergegeven in bestandsbeheer: %s"
 
-#: libgimpwidgets/gimpfileentry.c:453
+#: libgimpwidgets/gimpfileentry.c:454
 msgid "Select Folder"
 msgstr "Kies map"
 
-#: libgimpwidgets/gimpfileentry.c:455
+#: libgimpwidgets/gimpfileentry.c:456
 msgid "Select File"
 msgstr "Kies bestand"
 
@@ -2511,7 +2511,7 @@ msgstr "Verwijder geselecteerde map uit de lijst"
 msgid "Writable"
 msgstr "Schrijfbaar"
 
-#: libgimpwidgets/gimppickbutton.c:143
+#: libgimpwidgets/gimppickbutton.c:146
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2565,17 +2565,17 @@ msgstr "Gebruik een willekeurig getal als bron voor het genereren van een volgen
 msgid "_Randomize"
 msgstr "_Willekeurig maken"
 
-#: libgimpwidgets/gimpwidgets-private.c:51
+#: libgimpwidgets/gimpwidgets-private.c:286
 msgctxt "input-mode"
 msgid "Disabled"
-msgstr "Niet geactiveerd"
+msgstr "Uitgeschakeld"
 
-#: libgimpwidgets/gimpwidgets-private.c:52
+#: libgimpwidgets/gimpwidgets-private.c:287
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Scherm"
 
-#: libgimpwidgets/gimpwidgets-private.c:53
+#: libgimpwidgets/gimpwidgets-private.c:288
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Venster"
@@ -2920,16 +2920,16 @@ msgstr "POV %d Y-zicht"
 msgid "POV %d Return"
 msgstr "POV %d terugkeren"
 
-#: modules/controller-dx-dinput.c:1082
+#: modules/controller-dx-dinput.c:1085
 msgid "DirectInput Events"
 msgstr "DirectInput-gebeurtenis"
 
-#: modules/controller-dx-dinput.c:1093 modules/controller-linux-input.c:525
+#: modules/controller-dx-dinput.c:1096 modules/controller-linux-input.c:525
 #: modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Geen apparaat geconfigureerd"
 
-#: modules/controller-dx-dinput.c:1118 modules/controller-linux-input.c:588
+#: modules/controller-dx-dinput.c:1121 modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Apparaat is niet beschikbaar"
 
@@ -3186,7 +3186,7 @@ msgstr "Waarschuwingskleur schaduwen"
 
 #: modules/display-filter-clip-warning.c:185
 msgid "Show highlights"
-msgstr "Toon hoge lichten"
+msgstr "Toon hooglichten"
 
 #: modules/display-filter-clip-warning.c:186
 msgid "Show warning for pixels with a component greater than one"
@@ -3194,11 +3194,11 @@ msgstr "Toon waarschuwing voor pixels met een component groter dan één"
 
 #: modules/display-filter-clip-warning.c:194
 msgid "Highlights color"
-msgstr "Kleur hoge lichten"
+msgstr "Kleur hooglichten"
 
 #: modules/display-filter-clip-warning.c:195
 msgid "Highlights warning color"
-msgstr "Waarschuwingskleur hoge lichten"
+msgstr "Waarschuwingskleur hooglichten"
 
 #: modules/display-filter-clip-warning.c:206
 msgid "Show bogus"
