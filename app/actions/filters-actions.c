@@ -68,7 +68,8 @@ static void              filters_actions_generate_actions  (GimpActionGroup     
                                                             gboolean                     first_setup,
                                                             gboolean                     new_actions);
 static gboolean          filters_is_non_interactive        (const gchar                 *action_name);
-
+static gchar           * filters_get_grayscale_reason      (gboolean                     is_grayscale);
+static gchar           * filters_get_alpha_reason          (gboolean                     has_alpha);
 
 /*  private variables  */
 
@@ -894,8 +895,8 @@ filters_actions_update (GimpActionGroup *group,
       g_list_free (drawables);
    }
 
-#define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+#define SET_SENSITIVE(action,condition,reason) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, reason)
 
   actions = gimp_action_group_list_actions (group);
   for (iter = actions; iter; iter = iter->next)
@@ -907,7 +908,7 @@ filters_actions_update (GimpActionGroup *group,
 
       if (filters_is_non_interactive (action_name))
         {
-          SET_SENSITIVE (action_name, writable);
+          SET_SENSITIVE (action_name, writable, NULL);
         }
       else if (GIMP_IS_STRING_ACTION (action))
         {
@@ -928,7 +929,8 @@ filters_actions_update (GimpActionGroup *group,
                * variable is set.
                */
               SET_SENSITIVE (gimp_action_get_name (action), writable &&
-                             (g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") != NULL || ! force_nde));
+                             (g_getenv ("GIMP_ALLOW_GEGL_GRAPH_LAYER_EFFECT") != NULL || ! force_nde),
+                             NULL);
             }
           else if (gegl_has_operation (opname))
             {
@@ -942,32 +944,32 @@ filters_actions_update (GimpActionGroup *group,
                  */
                 sensitive = ! actions_filter_get_aux (action_name);
 
-              SET_SENSITIVE (gimp_action_get_name (action), sensitive);
+              SET_SENSITIVE (gimp_action_get_name (action), sensitive, NULL);
             }
         }
     }
   g_list_free (actions);
 
   /* Special-cased filters */
-  SET_SENSITIVE ("filters-c2g",                     writable && !gray);
-  SET_SENSITIVE ("filters-color-balance",           writable && !gray);
-  SET_SENSITIVE ("filters-color-enhance",           writable && !force_nde && !gray);
-  SET_SENSITIVE ("filters-colorize",                writable && !gray);
-  SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
-  SET_SENSITIVE ("filters-color-to-alpha",          writable && supports_alpha);
-  SET_SENSITIVE ("filters-desaturate",              writable && !gray);
+  SET_SENSITIVE ("filters-c2g",               writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-color-balance",     writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-color-enhance",     writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-colorize",          writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-color-temperature", writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-color-to-alpha",    writable && supports_alpha, NULL);
+  SET_SENSITIVE ("filters-desaturate",        writable && ! gray, filters_get_grayscale_reason (gray));
 
-  SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
-  SET_SENSITIVE ("filters-edge",                    writable);
-  SET_SENSITIVE ("filters-hue-saturation",          writable && !gray);
-  SET_SENSITIVE ("filters-long-shadow",             writable && alpha);
-  SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
-  SET_SENSITIVE ("filters-noise-hsv",               writable && !gray);
-  SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
-  SET_SENSITIVE ("filters-saturation",              writable && !gray);
-  SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
-  SET_SENSITIVE ("filters-sepia",                   writable && !gray);
-  SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
+  SET_SENSITIVE ("filters-dropshadow",        writable && alpha,  filters_get_alpha_reason (alpha));
+  SET_SENSITIVE ("filters-edge",              writable, NULL);
+  SET_SENSITIVE ("filters-hue-saturation",    writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-long-shadow",       writable && alpha,  filters_get_alpha_reason (alpha));
+  SET_SENSITIVE ("filters-mono-mixer",        writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-noise-hsv",         writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-red-eye-removal",   writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-saturation",        writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-semi-flatten",      writable && alpha,  filters_get_alpha_reason (alpha));
+  SET_SENSITIVE ("filters-sepia",             writable && ! gray, filters_get_grayscale_reason (gray));
+  SET_SENSITIVE ("filters-threshold-alpha",   writable && alpha,  filters_get_alpha_reason (alpha));
 
 #undef SET_SENSITIVE
 
@@ -1405,4 +1407,22 @@ filters_is_non_interactive (const gchar *action_name)
       return TRUE;
 
   return FALSE;
+}
+
+static gchar *
+filters_get_grayscale_reason (gboolean is_grayscale)
+{
+  if (is_grayscale)
+    return _("This filter requires a non-grayscale image");
+
+  return NULL;
+}
+
+static gchar *
+filters_get_alpha_reason (gboolean has_alpha)
+{
+  if (! has_alpha)
+    return _("This filter requires an alpha channel");
+
+  return NULL;
 }
