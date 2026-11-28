@@ -168,7 +168,7 @@ scanner_next_document_name (void)
   g_free (title);
   [scanner_window setLevel: NSFloatingWindowLevel];
   [scanner_window center];
-  scanner_container = [[IKScannerDeviceView alloc] initWithFrame: scanner_window.contentView.bounds];
+  scanner_container = [[IKScannerDeviceView alloc] initWithFrame: [[scanner_window contentView] bounds]];
   scanner_container.autoresizingMask       = NSViewWidthSizable | NSViewHeightSizable;
 
   /* set displaysDownloadsDirectoryControl otherwise we get 'folder is not writable' error */
@@ -183,7 +183,7 @@ scanner_next_document_name (void)
   scanner_container.transferMode                      = IKScannerDeviceViewTransferModeFileBased;
   self.scanner_container                              = scanner_container;
 
-  [scanner_window.contentView addSubview: scanner_container];
+  [[scanner_window contentView] addSubview: scanner_container];
   [scanner_window makeKeyAndOrderFront: nil];
 #if __MAC_OS_X_VERSION_MAX_ALLOWED >= 140000
   if (@available(macOS 14.0, *))
